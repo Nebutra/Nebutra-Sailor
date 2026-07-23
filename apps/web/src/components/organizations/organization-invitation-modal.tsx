@@ -85,19 +85,16 @@ export function OrganizationInvitationModal({
     return (
       <section
         aria-labelledby="invitation-declined-heading"
-        className="mx-auto w-full max-w-md rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
+        className="mx-auto w-full max-w-md rounded-[var(--radius-2xl)] border border-border bg-background p-6 shadow-sm"
       >
-        <h2
-          id="invitation-declined-heading"
-          className="text-lg font-semibold text-[var(--neutral-12)]"
-        >
+        <h2 id="invitation-declined-heading" className="text-lg font-semibold text-foreground">
           {t("declinedView")}
         </h2>
-        <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("success")}</p>
+        <p className="mt-2 text-sm text-muted-foreground">{t("success")}</p>
         <button
           type="button"
           onClick={() => router.push("/")}
-          className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90"
+          className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-[hsl(var(--foreground))] px-4 py-2.5 text-sm font-medium text-[hsl(var(--background))] transition hover:opacity-90"
         >
           {t("backToDashboard")}
         </button>
@@ -108,7 +105,7 @@ export function OrganizationInvitationModal({
   return (
     <section
       aria-labelledby="invitation-heading"
-      className="mx-auto w-full max-w-md rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
+      className="mx-auto w-full max-w-md rounded-[var(--radius-2xl)] border border-border bg-background p-6 shadow-sm"
     >
       <div className="flex items-center gap-3">
         {logoUrl ? (
@@ -116,7 +113,7 @@ export function OrganizationInvitationModal({
           <img
             src={logoUrl}
             alt=""
-            className="h-12 w-12 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] object-cover"
+            className="h-12 w-12 rounded-[var(--radius-lg)] border border-border object-cover"
           />
         ) : (
           <img
@@ -124,26 +121,24 @@ export function OrganizationInvitationModal({
             alt=""
             width={48}
             height={48}
-            className="h-12 w-12 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] object-cover"
+            className="h-12 w-12 rounded-[var(--radius-lg)] border border-border object-cover"
           />
         )}
         <div className="min-w-0">
-          <p className="truncate text-sm text-[var(--neutral-11)]">{t("title")}</p>
-          <p className="truncate text-base font-semibold text-[var(--neutral-12)]">
-            {organizationName}
-          </p>
+          <p className="truncate text-sm text-muted-foreground">{t("title")}</p>
+          <p className="truncate text-base font-semibold text-foreground">{organizationName}</p>
         </div>
       </div>
 
-      <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--neutral-3)] px-3 py-1 text-xs font-medium text-[var(--neutral-12)]">
-        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[var(--blue-9)]" />
+      <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
         {t("roleLabel", { role: roleLabel })}
       </div>
 
-      <h2 id="invitation-heading" className="mt-5 text-lg font-semibold text-[var(--neutral-12)]">
+      <h2 id="invitation-heading" className="mt-5 text-lg font-semibold text-foreground">
         {t("heading", { organizationName })}
       </h2>
-      <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+      <p className="mt-2 text-sm text-muted-foreground">{t("description")}</p>
 
       {errorKey ? (
         <p
@@ -159,7 +154,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleDecline}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-3)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "decline" ? t("declining") : t("decline")}
         </button>
@@ -167,7 +162,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleAccept}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] bg-[hsl(var(--foreground))] px-4 py-2.5 text-sm font-medium text-[hsl(var(--background))] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "accept" ? t("accepting") : t("accept")}
         </button>

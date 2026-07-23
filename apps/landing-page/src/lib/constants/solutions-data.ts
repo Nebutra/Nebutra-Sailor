@@ -84,7 +84,7 @@ export const SOLUTION_GROUPS: SolutionGroup[] = [
   {
     id: "go-to-market",
     label: { en: "Go-to-Market", zh: "出海与增长" },
-    auroraColors: ["#0033FE", "#0BF1C3", "#06b6d4", "#38bdf8"],
+    auroraColors: ["hsl(var(--primary))", "#0BF1C3", "#06b6d4", "#38bdf8"],
     solutionSlugs: ["go-global", "growth"],
   },
   {

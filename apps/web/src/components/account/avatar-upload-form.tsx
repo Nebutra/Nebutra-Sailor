@@ -285,13 +285,13 @@ export function AvatarUploadForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-      <h2 className="text-base font-semibold text-[var(--neutral-12)]">{t("title")}</h2>
-      <p className="mt-1 mb-4 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+      <h2 className="text-base font-semibold text-foreground">{t("title")}</h2>
+      <p className="mt-1 mb-4 text-sm text-muted-foreground">{t("description")}</p>
 
       <div className="flex items-center gap-4">
         {state.avatarUrl ? (
-          <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]">
+          <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border bg-muted">
             <NextImage
               src={state.avatarUrl}
               alt="User avatar"
@@ -307,7 +307,7 @@ export function AvatarUploadForm({
             alt="Avatar preview"
             width={80}
             height={80}
-            className="size-20 rounded-full border border-[var(--neutral-6)] object-cover"
+            className="size-20 rounded-full border border-border object-cover"
           />
         )}
 
@@ -320,8 +320,8 @@ export function AvatarUploadForm({
           onDrop={handleDrop}
           className={`flex flex-1 flex-col items-start gap-2 rounded-[var(--radius-md)] border border-dashed px-4 py-3 ${
             state.dragActive
-              ? "border-[var(--blue-9)] bg-[var(--blue-2)]"
-              : "border-[var(--neutral-7)] bg-[var(--neutral-2)]"
+              ? "border-[hsl(var(--primary))] bg-[var(--blue-2)]"
+              : "border-border bg-muted"
           }`}
         >
           <input
@@ -337,13 +337,13 @@ export function AvatarUploadForm({
           />
           <label
             htmlFor="account-avatar-input"
-            className={`inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] ${
+            className={`inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted ${
               pending ? "cursor-not-allowed opacity-50" : ""
             }`}
           >
             {pending ? t("uploading") : t("uploadButton")}
           </label>
-          <p className="text-xs text-[var(--neutral-11)]">{t("description")}</p>
+          <p className="text-xs text-muted-foreground">{t("description")}</p>
           {state.avatarUrl && (
             <button
               type="button"

@@ -28,21 +28,19 @@ async function ResetPasswordPageContent({ params }: PageProps) {
     <AuthSplitLayout>
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-            {t("title")}
-          </h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
         </div>
         {isValid ? (
           <ResetPasswordForm token={token} />
         ) : (
           <section
             aria-live="polite"
-            className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+            className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
             role="alert"
           >
-            <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("invalidTitle")}</h3>
-            <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("invalidDescription")}</p>
+            <h3 className="text-sm font-medium text-foreground">{t("invalidTitle")}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{t("invalidDescription")}</p>
           </section>
         )}
       </div>

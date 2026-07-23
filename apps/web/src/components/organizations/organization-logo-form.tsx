@@ -230,17 +230,17 @@ export function OrganizationLogoForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-      <h3 className="text-sm font-medium text-[var(--neutral-12)]">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+      <h3 className="text-sm font-medium text-foreground">
         {t("organizations.settings.logo.title")}
       </h3>
-      <p className="mt-1 mb-4 text-sm text-[var(--neutral-11)]">
+      <p className="mt-1 mb-4 text-sm text-muted-foreground">
         {t("organizations.settings.logo.description")}
       </p>
 
       <div className="flex items-center gap-4">
         {logoUrl ? (
-          <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]">
+          <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border bg-muted">
             <NextImage
               src={logoUrl}
               alt={`${orgName} logo`}
@@ -253,10 +253,10 @@ export function OrganizationLogoForm({
         ) : (
           <div
             role="img"
-            className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]"
+            className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border bg-muted"
             aria-label="Organization logo preview"
           >
-            <span className="text-sm font-semibold text-[var(--neutral-11)]">
+            <span className="text-sm font-semibold text-muted-foreground">
               {initialsFor(orgName)}
             </span>
           </div>
@@ -277,7 +277,7 @@ export function OrganizationLogoForm({
           />
           <label
             htmlFor="organization-logo-input"
-            className={`inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] ${
+            className={`inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted ${
               pending ? "cursor-not-allowed opacity-50" : ""
             }`}
           >

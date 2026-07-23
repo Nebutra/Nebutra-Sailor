@@ -71,7 +71,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               {pricing("title")}
             </h1>
-            <p className="mt-4 text-lg text-[var(--neutral-11)]">{pricing("description")}</p>
+            <p className="mt-4 text-lg text-muted-foreground">{pricing("description")}</p>
 
             {/* Social Proof */}
             <div className="mt-8 flex flex-col items-center justify-center gap-6">
@@ -120,25 +120,25 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
         <div className="mt-24">
           <AnimateIn preset="emerge" inView>
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-[var(--neutral-12)]">{faq("title")}</h2>
-              <p className="mt-3 text-[var(--neutral-11)]">{faq("description")}</p>
+              <h2 className="text-3xl font-bold text-foreground">{faq("title")}</h2>
+              <p className="mt-3 text-muted-foreground">{faq("description")}</p>
             </div>
           </AnimateIn>
 
           <AnimateInGroup
             stagger="normal"
-            className="mx-auto mt-12 max-w-3xl divide-y divide-[var(--neutral-7)]"
+            className="mx-auto mt-12 max-w-3xl divide-y divide-border"
           >
             {(["q1", "q2", "q3"] as const).map((qKey) => (
               <AnimateIn key={qKey} preset="fadeUp">
                 <details className="group py-6">
-                  <summary className="flex cursor-pointer items-center justify-between text-left font-medium text-[var(--neutral-12)]">
+                  <summary className="flex cursor-pointer items-center justify-between text-left font-medium text-foreground">
                     {faq(`${qKey}.q` as FaqTranslationKey)}
-                    <span className="ml-4 shrink-0 text-[var(--neutral-11)] transition-transform group-open:rotate-45">
+                    <span className="ml-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-45">
                       +
                     </span>
                   </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--neutral-11)]">
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     {faq(`${qKey}.a` as FaqTranslationKey)}
                   </p>
                 </details>
@@ -149,10 +149,10 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
 
         {/* Contact nudge */}
         <AnimateIn preset="fade" inView>
-          <p className="mt-16 text-center text-sm text-[var(--neutral-11)]">
+          <p className="mt-16 text-center text-sm text-muted-foreground">
             <Link
               href="/contact"
-              className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
+              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
             >
               {faq("contactNudge")}
             </Link>

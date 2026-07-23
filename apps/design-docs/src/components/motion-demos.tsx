@@ -44,15 +44,15 @@ export function MotionDemos() {
                     Metaphor: Data materializing from the cloud / Database entry
                 ------------------------------------------------------------ */}
         <MagicCard
-          className="h-full p-0 rounded-3xl border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)] shadow-sm"
-          gradientColor="var(--neutral-3)"
+          className="h-full p-0 rounded-3xl border-border flex flex-col overflow-hidden bg-background shadow-sm"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="h-64 w-full bg-zinc-50 dark:bg-zinc-950/50 relative flex items-center justify-center border-b border-[var(--neutral-5)] overflow-hidden p-6">
+          <div className="h-64 w-full bg-zinc-50 dark:bg-zinc-950/50 relative flex items-center justify-center border-b border-border overflow-hidden p-6">
             <div className="absolute inset-0 bg-[url('/grid.svg')] bg-[size:32px_32px] opacity-[0.03] dark:opacity-[0.05]" />
 
             <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden [mask-image:linear-gradient(to_bottom,white_30%,transparent_100%)]">
               <motion.div
-                className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-900 shadow-md border border-[var(--neutral-5)] flex items-center justify-center z-10 shrink-0 mt-4 mb-2"
+                className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-900 shadow-md border border-border flex items-center justify-center z-10 shrink-0 mt-4 mb-2"
                 initial={shouldReduceMotion ? false : "initial"}
                 whileInView="animate"
                 viewport={{ once: false, amount: 0.5 }}
@@ -65,11 +65,11 @@ export function MotionDemos() {
                   },
                 }}
               >
-                <Database className="w-5 h-5 text-[#0033FE] dark:text-[#0BF1C3]" />
+                <Database className="w-5 h-5 text-[hsl(var(--primary))] dark:text-[#0BF1C3]" />
               </motion.div>
 
               <AnimatedList delay={800} className="w-full relative z-10">
-                <div className="flex flex-row items-center gap-3 p-3 bg-white dark:bg-zinc-900/80 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.02)] border border-[var(--neutral-5)] w-full max-w-[220px] mx-auto backdrop-blur-sm">
+                <div className="flex flex-row items-center gap-3 p-3 bg-white dark:bg-zinc-900/80 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.02)] border border-border w-full max-w-[220px] mx-auto backdrop-blur-sm">
                   <div className="h-8 w-8 rounded-full bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center shrink-0">
                     <User className="h-4 w-4 text-blue-500" />
                   </div>
@@ -78,7 +78,7 @@ export function MotionDemos() {
                     <div className="h-1.5 w-12 bg-zinc-100 dark:bg-zinc-800/50 rounded-full" />
                   </div>
                 </div>
-                <div className="flex flex-row items-center gap-3 p-3 bg-white dark:bg-zinc-900/80 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.02)] border border-[var(--neutral-5)] w-full max-w-[220px] mx-auto backdrop-blur-sm">
+                <div className="flex flex-row items-center gap-3 p-3 bg-white dark:bg-zinc-900/80 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.02)] border border-border w-full max-w-[220px] mx-auto backdrop-blur-sm">
                   <div className="h-8 w-8 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0">
                     <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                   </div>
@@ -105,10 +105,10 @@ export function MotionDemos() {
               entering the viewport from a zero-state.
             </p>
             <div className="flex items-center gap-2 mt-auto">
-              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-[var(--neutral-5)]">
+              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-border">
                 duration: 0.6s
               </code>
-              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-[var(--neutral-5)]">
+              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-border">
                 [0.16, 1, 0.3, 1]
               </code>
             </div>
@@ -120,10 +120,10 @@ export function MotionDemos() {
                     Metaphor: Data streaming through pipelines / Network transfer
                 ------------------------------------------------------------ */}
         <MagicCard
-          className="h-full p-0 rounded-3xl border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)] shadow-sm"
-          gradientColor="var(--neutral-3)"
+          className="h-full p-0 rounded-3xl border-border flex flex-col overflow-hidden bg-background shadow-sm"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="h-64 w-full bg-zinc-50 dark:bg-zinc-950/50 relative flex items-center justify-center p-8 border-b border-[var(--neutral-5)] overflow-hidden">
+          <div className="h-64 w-full bg-zinc-50 dark:bg-zinc-950/50 relative flex items-center justify-center p-8 border-b border-border overflow-hidden">
             <div className="absolute inset-0 bg-[url('/grid.svg')] bg-[size:32px_32px] opacity-[0.03] dark:opacity-[0.05]" />
 
             {/* Horizontal Pipeline Metaphor utilizing AnimatedBeam */}
@@ -133,14 +133,14 @@ export function MotionDemos() {
             >
               <div
                 ref={fromRef}
-                className="w-12 h-12 rounded-2xl border border-[var(--neutral-5)] bg-white dark:bg-zinc-900 flex items-center justify-center relative z-20 shadow-sm mt-8"
+                className="w-12 h-12 rounded-2xl border border-border bg-white dark:bg-zinc-900 flex items-center justify-center relative z-20 shadow-sm mt-8"
               >
                 <Server className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
               </div>
 
               <div
                 ref={toRef}
-                className="w-12 h-12 rounded-2xl border border-[var(--neutral-5)] bg-white dark:bg-zinc-900 flex items-center justify-center relative z-20 shadow-sm mb-8"
+                className="w-12 h-12 rounded-2xl border border-border bg-white dark:bg-zinc-900 flex items-center justify-center relative z-20 shadow-sm mb-8"
               >
                 <Shield className="w-5 h-5 text-zinc-800 dark:text-zinc-200" />
               </div>
@@ -152,7 +152,7 @@ export function MotionDemos() {
                 curvature={25}
                 pathWidth={2}
                 pathOpacity={0.15}
-                gradientStartColor="#0033FE"
+                gradientStartColor="hsl(var(--primary))"
                 gradientStopColor="#0BF1C3"
                 duration={2}
               />
@@ -173,10 +173,10 @@ export function MotionDemos() {
               transitions and sequential data loads.
             </p>
             <div className="flex items-center gap-2 mt-auto">
-              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-[var(--neutral-5)]">
+              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-border">
                 duration: 0.4s
               </code>
-              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-[var(--neutral-5)]">
+              <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-1.5 rounded-md border border-border">
                 [0, 0, 0.2, 1]
               </code>
             </div>
@@ -191,7 +191,7 @@ export function MotionDemos() {
           className="h-full p-0 rounded-3xl border-zinc-800 flex flex-col overflow-hidden bg-[#0A0A0A] shadow-sm lg:col-span-2 xl:col-span-1"
           gradientColor="#1a1a1a"
           gradientFrom="#0BF1C3"
-          gradientTo="#0033FE"
+          gradientTo="hsl(var(--primary))"
         >
           <div className="h-64 w-full bg-[#050505] relative flex flex-col items-center justify-center p-8 border-b border-zinc-800 overflow-hidden">
             {/* High-tech Flickering Grid Background */}

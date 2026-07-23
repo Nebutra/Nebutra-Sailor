@@ -48,12 +48,12 @@ export function RateLimitGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
-      <header className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">
-        <Lightning className="h-3 w-3 text-[var(--brand-primary)]" />
-        <span className="truncate text-[var(--neutral-12)]">{copy.header}</span>
+      <header className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
+        <Lightning className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <span className="truncate text-foreground">{copy.header}</span>
       </header>
 
       <div
@@ -69,34 +69,34 @@ export function RateLimitGlyph({ locale }: SubpackageGlyphProps) {
               className="h-2.5 w-2.5 rounded-full"
               style={
                 filled
-                  ? { background: "var(--brand-primary)" }
+                  ? { background: "hsl(var(--primary))" }
                   : {
                       background: "transparent",
-                      border: "1px solid var(--neutral-7)",
+                      border: "1px solid hsl(var(--border))",
                     }
               }
             />
           );
         })}
-        <span className="ml-1 font-mono text-[10px] tabular-nums text-[var(--neutral-10)]">
+        <span className="ml-1 font-mono text-[10px] tabular-nums text-muted-foreground">
           {TOKENS_LEFT}/{TOKEN_TOTAL}
         </span>
       </div>
 
       <ul className="flex min-w-0 flex-1 flex-col gap-1 font-mono text-[10px] leading-tight">
         {DECISIONS.map((row) => (
-          <li key={row.path} className="flex items-center gap-1.5 text-[var(--neutral-12)]">
-            <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[var(--neutral-9)]" />
+          <li key={row.path} className="flex items-center gap-1.5 text-foreground">
+            <ArrowRight className="h-2.5 w-2.5 shrink-0 text-muted-foreground" />
             <span className="min-w-0 truncate">{row.path}</span>
             <Badge variant={row.variant} size="sm" className="px-1.5 py-0 text-[9px] font-medium">
               {row.status}
             </Badge>
-            <span className="ml-auto shrink-0 truncate text-[var(--neutral-10)]">{row.detail}</span>
+            <span className="ml-auto shrink-0 truncate text-muted-foreground">{row.detail}</span>
           </li>
         ))}
       </ul>
 
-      <footer className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-10)]">
+      <footer className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
         <Clock className="h-3 w-3" />
         <span className="truncate">{copy.footer}</span>
       </footer>

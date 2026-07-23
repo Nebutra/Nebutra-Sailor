@@ -79,19 +79,19 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
     return (
       <section
         aria-live="polite"
-        className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+        className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
       >
-        <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("successTitle")}</h3>
-        <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("success")}</p>
+        <h3 className="text-sm font-medium text-foreground">{t("successTitle")}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{t("success")}</p>
       </section>
     );
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="mb-5">
-        <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+        <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
       </div>
 
       {errorMessage && (
@@ -107,7 +107,7 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("emailLabel")}
                 </FormLabel>
                 <FormControl>

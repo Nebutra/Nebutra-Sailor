@@ -15,11 +15,11 @@ export default async function Layer0DemoPage() {
 
   if (!enabled) {
     return (
-      <main className="min-h-screen bg-[color:var(--neutral-2)] p-8 text-[color:var(--neutral-12)]">
+      <main className="min-h-screen bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
             <h1 className="font-semibold text-xl">Layer 0 demo disabled</h1>
-            <p className="mt-2 text-[color:var(--neutral-11)] text-sm">
+            <p className="mt-2 text-muted-foreground text-sm">
               <code>{FLAGS.LAYER0_DEMO}</code> is off by default.
             </p>
           </Card>
@@ -29,11 +29,11 @@ export default async function Layer0DemoPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[color:var(--neutral-2)] p-8 text-[color:var(--neutral-12)]">
+    <main className="min-h-screen bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-5xl flex-col gap-6">
         <header>
           <h1 className="font-semibold text-2xl">Layer 0 capability loop</h1>
-          <p className="mt-1 text-[color:var(--neutral-11)] text-sm">
+          <p className="mt-1 text-muted-foreground text-sm">
             Provider, gateway, trace, sandbox, content, and event contracts are wired through
             tenant-scoped local defaults.
           </p>
@@ -43,7 +43,7 @@ export default async function Layer0DemoPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-[color:var(--neutral-11)]">
+                <tr className="text-left text-muted-foreground">
                   <th className="py-2">Capability</th>
                   <th className="py-2">Doctor</th>
                   <th className="py-2">Debug file</th>
@@ -51,7 +51,7 @@ export default async function Layer0DemoPage() {
               </thead>
               <tbody>
                 {rows.map(([capability, doctor, debug]) => (
-                  <tr key={capability} className="border-[color:var(--neutral-6)] border-t">
+                  <tr key={capability} className="border-border border-t">
                     <td className="py-2">
                       <code>{capability}</code>
                     </td>
@@ -70,9 +70,7 @@ export default async function Layer0DemoPage() {
 
         <Card className="p-6">
           <h2 className="font-medium">Integration command</h2>
-          <pre className="mt-3 overflow-x-auto rounded bg-[color:var(--neutral-3)] p-3 text-xs">
-            pnpm layer0:demo
-          </pre>
+          <pre className="mt-3 overflow-x-auto rounded bg-muted p-3 text-xs">pnpm layer0:demo</pre>
         </Card>
       </div>
     </main>

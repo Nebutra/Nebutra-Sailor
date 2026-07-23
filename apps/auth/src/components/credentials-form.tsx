@@ -166,10 +166,10 @@ export function CredentialsForm({
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
           {mode === "sign-in" ? tSignIn("title") : tSignUp("title")}
         </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">
           {mode === "sign-in" ? tSignIn("subtitle") : tSignUp("subtitle")}
         </p>
       </div>
@@ -178,8 +178,8 @@ export function CredentialsForm({
         <>
           <OAuthButtons providers={enabledOAuthProviders} returnTo={returnTo} />
           <div className="relative my-6">
-            <div className="h-px w-full bg-[var(--neutral-6)]" aria-hidden />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs font-medium text-[var(--neutral-9)]">
+            <div className="h-px w-full bg-[hsl(var(--border))]" aria-hidden />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs font-medium text-muted-foreground">
               {tSignIn("dividerOr")}
             </span>
           </div>
@@ -195,10 +195,7 @@ export function CredentialsForm({
         {mode === "sign-up" ? (
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="auth-first-name"
-                className="text-sm font-medium text-[var(--neutral-12)]"
-              >
+              <label htmlFor="auth-first-name" className="text-sm font-medium text-foreground">
                 {tSignUp("firstNameLabel")}
               </label>
               <Input
@@ -207,15 +204,12 @@ export function CredentialsForm({
                 onChange={(e) => setFirstName(e.target.value)}
                 autoComplete="given-name"
                 size="lg"
-                className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+                className="h-12 border-border bg-background text-foreground shadow-none"
                 placeholder={tSignUp("firstNamePlaceholder")}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="auth-last-name"
-                className="text-sm font-medium text-[var(--neutral-12)]"
-              >
+              <label htmlFor="auth-last-name" className="text-sm font-medium text-foreground">
                 {tSignUp("lastNameLabel")}
               </label>
               <Input
@@ -224,7 +218,7 @@ export function CredentialsForm({
                 onChange={(e) => setLastName(e.target.value)}
                 autoComplete="family-name"
                 size="lg"
-                className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+                className="h-12 border-border bg-background text-foreground shadow-none"
                 placeholder={tSignUp("lastNamePlaceholder")}
               />
             </div>
@@ -232,7 +226,7 @@ export function CredentialsForm({
         ) : null}
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="auth-email" className="text-sm font-medium text-[var(--neutral-12)]">
+          <label htmlFor="auth-email" className="text-sm font-medium text-foreground">
             {tSignIn("emailLabel")}
           </label>
           <Input
@@ -243,14 +237,14 @@ export function CredentialsForm({
             onChange={(e) => setEmail(e.target.value)}
             autoComplete={passkeyEnabled ? "username webauthn" : "email"}
             size="lg"
-            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={tSignIn("emailPlaceholder")}
           />
         </div>
 
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
-            <label htmlFor="auth-password" className="text-sm font-medium text-[var(--neutral-12)]">
+            <label htmlFor="auth-password" className="text-sm font-medium text-foreground">
               {tSignIn("passwordLabel")}
             </label>
             {mode === "sign-in" ? (
@@ -274,7 +268,7 @@ export function CredentialsForm({
               onKeyUp={onKeyEvent}
               autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
               size="lg"
-              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
+              className="h-12 border-border bg-background pr-12 text-foreground shadow-none"
               placeholder={tSignIn("passwordPlaceholder")}
               aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
             />
@@ -283,7 +277,7 @@ export function CredentialsForm({
               onClick={() => setShowPassword((v) => !v)}
               aria-label={showPassword ? tSignIn("hidePassword") : tSignIn("showPassword")}
               aria-pressed={showPassword}
-              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
+              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--primary))]"
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" aria-hidden />
@@ -297,7 +291,7 @@ export function CredentialsForm({
               id="caps-lock-warning"
               role="status"
               aria-live="polite"
-              className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
+              className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,hsl(var(--muted-foreground)))]"
             >
               <AlertTriangle aria-hidden className="h-3.5 w-3.5" />
               {tSignIn("capsLockOn")}
@@ -333,7 +327,7 @@ export function CredentialsForm({
         <Button
           type="submit"
           disabled={loading}
-          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {mode === "sign-in"
             ? loading
@@ -370,7 +364,7 @@ export function CredentialsForm({
         </div>
       ) : null}
 
-      <p className="mt-6 text-sm text-[var(--neutral-9)]">
+      <p className="mt-6 text-sm text-muted-foreground">
         {mode === "sign-in" ? (
           <>
             {tSignIn("newToProduct")}{" "}

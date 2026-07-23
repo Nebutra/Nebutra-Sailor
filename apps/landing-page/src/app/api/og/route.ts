@@ -40,7 +40,7 @@ const themePalette = {
     glowB: "rgba(11,241,195,0.20)", // colors.accent["500"] at 20% opacity
     title: "#0a0a0a",
     subtitle: "rgba(10,10,10,0.66)",
-    accent: colors.primary["500"], // "#0033FE"
+    accent: colors.primary["500"], // "hsl(var(--primary))"
   },
 } as const;
 

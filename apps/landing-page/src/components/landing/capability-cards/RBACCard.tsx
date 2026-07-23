@@ -49,7 +49,7 @@ export function RBACCard() {
       {/* High-Fidelity Matrix Table Bleed */}
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="w-full max-w-[440px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom flex flex-col"
+        className="w-full max-w-[440px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-border bg-background dark:bg-muted transition-transform duration-150 group-hover:-translate-y-px origin-bottom flex flex-col"
       >
         {/* Header */}
         <div className="flex items-center gap-2 px-6 py-4 border-b border-border/60 text-[11px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-semibold bg-muted/20/[0.02]">

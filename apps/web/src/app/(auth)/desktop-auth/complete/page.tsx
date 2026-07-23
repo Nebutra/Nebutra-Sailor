@@ -37,14 +37,14 @@ function buildDesktopRedirectUrl(scheme: string, token: string, state: string): 
 function DesktopAuthError() {
   return (
     <AuthSplitLayout>
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm">
-        <p className="text-xs font-medium uppercase tracking-normal text-[var(--neutral-10)]">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-sm">
+        <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
           Desktop sign-in
         </p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-normal text-[var(--neutral-12)]">
+        <h1 className="mt-2 text-2xl font-semibold tracking-normal text-foreground">
           This desktop sign-in link is invalid
         </h1>
-        <p className="mt-3 text-sm leading-6 text-[var(--neutral-10)]">
+        <p className="mt-3 text-sm leading-6 text-muted-foreground">
           Restart sign-in from {DESKTOP_APP_NAME} to create a fresh, short-lived handoff.
         </p>
       </section>

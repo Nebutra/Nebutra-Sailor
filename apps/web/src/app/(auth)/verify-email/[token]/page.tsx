@@ -57,7 +57,7 @@ async function VerifyEmailPageContent({ params }: PageProps) {
     <AuthSplitLayout>
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
             {result.success ? t("successTitle") : t("failureTitle")}
           </h1>
         </div>

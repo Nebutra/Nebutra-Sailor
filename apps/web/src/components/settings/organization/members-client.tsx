@@ -252,7 +252,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                       <td className="px-3 py-2">
                         <div className="flex items-center gap-2">
                           <div
-                            className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[var(--brand-primary)] text-xs font-semibold text-white"
+                            className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-xs font-semibold text-white"
                             aria-hidden
                           >
                             {(displayName?.[0] ?? "?").toUpperCase()}

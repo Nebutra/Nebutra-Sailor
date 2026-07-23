@@ -42,7 +42,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
         "fixed left-0 right-0 top-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300",
         isScrolled
           ? "border-b border-transparent bg-white/85 backdrop-blur-md dark:border-transparent dark:bg-black/80 shadow-sm"
-          : "bg-transparent max-lg:border-b max-lg:border-[var(--neutral-6)] max-lg:bg-[var(--neutral-1)]/90 max-lg:backdrop-blur-md dark:max-lg:bg-black/75",
+          : "bg-transparent max-lg:border-b max-lg:border-border max-lg:bg-background/90 max-lg:backdrop-blur-md dark:max-lg:bg-black/75",
         isForcedDark ? "dark" : "",
       )}
     >
@@ -82,7 +82,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
           </a>
           <a
             href={`${APP_URL}/sign-up`}
-            className="whitespace-nowrap rounded-[var(--radius-lg)] bg-[color:var(--neutral-12)] px-3 py-1.5 text-[0.8rem] font-medium text-[color:var(--neutral-1)] shadow-sm transition-colors hover:bg-[color:var(--neutral-11)] xl:px-4 xl:py-2 xl:text-sm"
+            className="whitespace-nowrap rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-3 py-1.5 text-[0.8rem] font-medium text-[color:hsl(var(--background))] shadow-sm transition-colors hover:bg-[color:hsl(var(--muted-foreground))] xl:px-4 xl:py-2 xl:text-sm"
           >
             {t("getStarted")}
           </a>

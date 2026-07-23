@@ -16,7 +16,7 @@ export function PreviewShell({ templates }: PreviewShellProps) {
 
   if (!selected) {
     return (
-      <div className="flex h-screen items-center justify-center text-sm text-[var(--neutral-10)]">
+      <div className="flex h-screen items-center justify-center text-sm text-muted-foreground">
         No templates registered in @nebutra/email.
       </div>
     );

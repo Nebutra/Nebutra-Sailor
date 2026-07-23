@@ -21,7 +21,7 @@ import { exportThemeToDesignMd, importDesignMdToThemeTokens } from "../design-md
 const VALID_FIXTURE = `---
 name: Test Brand
 colors:
-  primary: "#0033FE"
+  primary: "hsl(var(--primary))"
   accent: "#0BF1C3"
   background: "#ffffff"
   foreground: "#111111"

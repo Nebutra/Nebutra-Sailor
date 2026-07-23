@@ -44,7 +44,7 @@ export function ConsentForm({ uid }: ConsentFormProps) {
         type="button"
         onClick={() => handleConsent(false)}
         disabled={isLoading}
-        className="flex-1 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] py-3 text-sm font-medium text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] disabled:opacity-50"
+        className="flex-1 rounded-[var(--radius-lg)] border border-border bg-muted py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-50"
       >
         Deny
       </button>
@@ -52,7 +52,7 @@ export function ConsentForm({ uid }: ConsentFormProps) {
         type="button"
         onClick={() => handleConsent(true)}
         disabled={isLoading}
-        className="flex-1 rounded-[var(--radius-lg)] bg-[var(--neutral-12)] py-3 text-sm font-semibold text-[var(--neutral-1)] transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="flex-1 rounded-[var(--radius-lg)] bg-[hsl(var(--foreground))] py-3 text-sm font-semibold text-[hsl(var(--background))] transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {isLoading ? "Authorizing…" : "Authorize"}
       </button>

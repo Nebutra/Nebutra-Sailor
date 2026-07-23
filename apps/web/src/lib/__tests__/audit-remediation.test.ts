@@ -58,7 +58,7 @@ describe("UI/UX audit remediation invariants", () => {
   it("keeps app icons aligned with Nebutra blue-cyan gradient", () => {
     const appleIcon = readFromRepo("apps/landing-page/src/app/apple-icon.tsx");
 
-    expect(appleIcon).toContain("#0033FE");
+    expect(appleIcon).toContain("hsl(var(--primary))");
     expect(appleIcon).toContain("#0BF1C3");
     expect(appleIcon).not.toContain("#3B82F6");
     expect(appleIcon).not.toContain("#8B5CF6");

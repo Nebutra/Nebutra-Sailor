@@ -100,7 +100,7 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((value) => !value)}
-        className="group inline-flex min-h-10 items-center gap-1.5 rounded-full border border-transparent px-3 text-sm font-medium text-[var(--neutral-11)] transition-[background-color,color,border-color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] hover:border-[var(--neutral-6)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)] motion-reduce:transition-none"
+        className="group inline-flex min-h-10 items-center gap-1.5 rounded-full border border-transparent px-3 text-sm font-medium text-muted-foreground transition-[background-color,color,border-color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] hover:border-border hover:bg-muted hover:text-foreground motion-reduce:transition-none"
       >
         {isZh ? "探索此页" : "Explore here"}
         <ChevronDown
@@ -115,16 +115,16 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
         <div
           id={menuId}
           role="menu"
-          className="absolute right-0 top-full mt-2 w-72 rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 shadow-[var(--shadow-lg)]"
+          className="absolute right-0 top-full mt-2 w-72 rounded-[var(--radius-xl)] border border-border bg-background p-2 shadow-[var(--shadow-lg)]"
         >
           <Link
             href={contactHref}
             role="menuitem"
             onClick={() => setOpen(false)}
-            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)]"
+            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-foreground transition-colors hover:bg-muted"
           >
             <Message
-              className="size-4 shrink-0 text-[var(--neutral-10)] transition-colors group-hover:text-[var(--blue-9)]"
+              className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"
               aria-hidden
             />
             {isZh ? "询问这个页面" : "Ask questions about this page"}
@@ -133,10 +133,10 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
             type="button"
             role="menuitem"
             onClick={copyPageAsMarkdown}
-            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)]"
+            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-foreground transition-colors hover:bg-muted"
           >
             <Copy
-              className="size-4 shrink-0 text-[var(--neutral-10)] transition-colors group-hover:text-[var(--blue-9)]"
+              className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"
               aria-hidden
             />
             {copied ? (isZh ? "已复制" : "Copied") : isZh ? "复制链接" : "Copy link"}
@@ -151,19 +151,19 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
   const [activeTopicIndex, setActiveTopicIndex] = useState(0);
 
   return (
-    <div className="border-y border-[var(--neutral-6)] py-4 sm:py-5">
+    <div className="border-y border-border py-4 sm:py-5">
       <BlogExploreMenu contactHref={contactHref} isZh={isZh} />
 
       <div className="grid gap-10 py-10 sm:py-14 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-16">
         <div className="flex flex-col justify-center gap-5">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--neutral-2)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
             <BookOpen className="size-3.5" aria-hidden />
             {isZh ? "Nebutra Journal · 技术札记" : "Nebutra Journal"}
           </div>
-          <h1 className="text-balance text-4xl font-semibold text-[var(--neutral-12)] sm:text-5xl">
+          <h1 className="text-balance text-4xl font-semibold text-foreground sm:text-5xl">
             {isZh ? "工程、产品与治理笔记" : "Notes on engineering, product, and governance"}
           </h1>
-          <p className="max-w-xl text-base leading-7 text-[var(--neutral-11)]">
+          <p className="max-w-xl text-base leading-7 text-muted-foreground">
             {isZh
               ? "少量、认真、可复用的文章：记录 Nebutra 在工程、产品、治理和 AI 原生交付中的真实取舍。"
               : "Sparse, careful writing on Nebutra's engineering, product, governance, and AI-native delivery decisions."}
@@ -171,7 +171,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
         </div>
 
         <nav aria-label={isZh ? "博客主题" : "Blog topics"} className="min-w-0">
-          <p className="mb-4 text-xs font-semibold uppercase text-[var(--neutral-10)]">
+          <p className="mb-4 text-xs font-semibold uppercase text-muted-foreground">
             {isZh ? "按主题浏览" : "Browse by topic"}
           </p>
           <div className="flex flex-col">
@@ -186,7 +186,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
                   className="group relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
                 >
                   <span
-                    className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-[1.05] text-[var(--neutral-12)] transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
+                    className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-[1.05] text-foreground transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
                       active ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-70"
                     }`}
                   >
@@ -225,7 +225,7 @@ function BlogRailPostCard({
 
   return (
     <article
-      className={`min-w-[18rem] max-w-[18rem] border-l border-[var(--neutral-6)] px-5 py-6 transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:min-w-[22rem] sm:max-w-[22rem] ${
+      className={`min-w-[18rem] max-w-[18rem] border-l border-border px-5 py-6 transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:min-w-[22rem] sm:max-w-[22rem] ${
         active ? "-translate-y-2" : "translate-y-0"
       } ${dimmed ? "opacity-35" : "opacity-100"}`}
     >
@@ -237,13 +237,11 @@ function BlogRailPostCard({
         onPointerEnter={() => setActivePostId(post.id)}
         className="group block h-full rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
       >
-        <p className="text-xs font-medium text-[var(--neutral-10)]">
-          {post.dateLabel ?? "Undated"}
-        </p>
-        <h2 className="mt-3 line-clamp-3 text-lg font-semibold leading-snug text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
+        <p className="text-xs font-medium text-muted-foreground">{post.dateLabel ?? "Undated"}</p>
+        <h2 className="mt-3 line-clamp-3 text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-[hsl(var(--primary))]">
           {post.title}
         </h2>
-        <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-[var(--neutral-10)]">
+        <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
           {post.readTime}
           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
         </span>
@@ -310,7 +308,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   return (
     <section
       aria-label={isZh ? "最新文章" : "Latest posts"}
-      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-[var(--neutral-6)]"
+      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-border"
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => {
         setPaused(false);
@@ -325,7 +323,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
         }
       }}
     >
-      <div className="border-t border-[var(--neutral-6)]" />
+      <div className="border-t border-border" />
       <div className="relative overflow-hidden">
         <div
           ref={trackRef}
@@ -344,11 +342,11 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
         </div>
       </div>
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[var(--neutral-1)] to-transparent sm:w-24"
+        className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-background to-transparent sm:w-24"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[var(--neutral-1)] to-transparent sm:w-24"
+        className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-background to-transparent sm:w-24"
         aria-hidden
       />
     </section>

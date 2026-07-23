@@ -48,20 +48,20 @@ const SEVERITY_TONE: Record<Severity, { bg: string; border: string; text: string
     text: "var(--status-warning)",
   },
   info: {
-    bg: "color-mix(in oklab, var(--brand-primary) 14%, transparent)",
-    border: "color-mix(in oklab, var(--brand-primary) 32%, transparent)",
-    text: "var(--brand-primary)",
+    bg: "color-mix(in oklab, hsl(var(--primary)) 14%, transparent)",
+    border: "color-mix(in oklab, hsl(var(--primary)) 32%, transparent)",
+    text: "hsl(var(--primary))",
   },
 };
 
 export function ErrorsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-[var(--radius-md)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
-      <div className="flex items-center justify-between text-[10px] text-[var(--neutral-11)]">
-        <span className="flex items-center gap-1 font-medium text-[var(--neutral-12)]">
+      <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+        <span className="flex items-center gap-1 font-medium text-foreground">
           <Cross className="h-3 w-3" aria-hidden />
           Recent errors
         </span>
@@ -74,10 +74,10 @@ export function ErrorsGlyph(_props: SubpackageGlyphProps) {
           return (
             <div
               key={row.code}
-              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1"
+              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-border bg-background px-2 py-1"
             >
               <div className="flex min-w-0 items-center gap-1.5">
-                <span className="font-mono text-[9px] text-[var(--neutral-10)] tabular-nums">
+                <span className="font-mono text-[9px] text-muted-foreground tabular-nums">
                   {row.time}
                 </span>
                 <Badge
@@ -91,11 +91,9 @@ export function ErrorsGlyph(_props: SubpackageGlyphProps) {
                 >
                   {row.label}
                 </Badge>
-                <code className="truncate font-mono text-[9px] text-[var(--neutral-12)]">
-                  {row.code}
-                </code>
+                <code className="truncate font-mono text-[9px] text-foreground">{row.code}</code>
               </div>
-              <span className="shrink-0 font-mono text-[9px] text-[var(--neutral-11)]">
+              <span className="shrink-0 font-mono text-[9px] text-muted-foreground">
                 {row.occurrences}
               </span>
             </div>
@@ -103,16 +101,16 @@ export function ErrorsGlyph(_props: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="flex flex-1 flex-col justify-end gap-0.5 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1">
-        <code className="truncate font-mono text-[9px] text-[var(--neutral-11)]">
+      <div className="flex flex-1 flex-col justify-end gap-0.5 rounded-[var(--radius-sm)] border border-border bg-background px-2 py-1">
+        <code className="truncate font-mono text-[9px] text-muted-foreground">
           at packages/commerce/billing/src/charge.ts:42
         </code>
-        <code className="truncate font-mono text-[9px] text-[var(--neutral-11)]">
+        <code className="truncate font-mono text-[9px] text-muted-foreground">
           at @nebutra/queue: retryHandler
         </code>
       </div>
 
-      <div className="flex items-center gap-1 text-[9px] text-[var(--neutral-10)]">
+      <div className="flex items-center gap-1 text-[9px] text-muted-foreground">
         <Bug className="h-2.5 w-2.5" aria-hidden />
         <span className="font-mono">Sentry · structured logs</span>
       </div>

@@ -46,14 +46,14 @@ function ActivityList({
   const firstRevealedRef = React.useRef<HTMLLIElement>(null);
 
   return (
-    <div className="w-full max-w-xl space-y-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4">
+    <div className="w-full max-w-xl space-y-3 rounded-[var(--radius-lg)] border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-4">
       <ul id={listId} className="space-y-2">
         {visibleItems.map((item, index) => (
           <li
             key={item}
             ref={index === 5 ? firstRevealedRef : undefined}
             tabIndex={index === 5 ? -1 : undefined}
-            className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-3 py-2 text-[var(--neutral-12)] text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="rounded-[var(--radius-md)] border border-[hsl(var(--border))] bg-[hsl(var(--muted))] px-3 py-2 text-[hsl(var(--foreground))] text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {item}
           </li>

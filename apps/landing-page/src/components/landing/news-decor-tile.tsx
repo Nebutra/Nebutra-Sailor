@@ -9,10 +9,10 @@ import type { ComponentType } from "react";
 export type NewsDecorVariant = "aurora" | "nebula" | "cyan" | "violet";
 
 const VARIANT_BACKGROUND: Record<NewsDecorVariant, string> = {
-  aurora: "var(--brand-gradient)",
-  nebula: "linear-gradient(135deg, var(--brand-tertiary), var(--blue-9))",
-  cyan: "linear-gradient(135deg, var(--cyan-9), var(--blue-9))",
-  violet: "linear-gradient(150deg, var(--blue-9), var(--brand-tertiary))",
+  aurora: "hsl(var(--primary))",
+  nebula: "linear-gradient(135deg, var(--brand-tertiary), hsl(var(--primary)))",
+  cyan: "linear-gradient(135deg, var(--cyan-9), hsl(var(--primary)))",
+  violet: "linear-gradient(150deg, hsl(var(--primary)), var(--brand-tertiary))",
 };
 
 const VARIANT_GLYPH: Record<NewsDecorVariant, ComponentType<{ className?: string }>> = {

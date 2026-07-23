@@ -66,15 +66,15 @@ export default function AuditLogPage() {
     <PermissionGate
       require="audit_log:read"
       fallback={
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-6 text-sm text-[var(--neutral-11)]">
+        <div className="rounded-[var(--radius-lg)] border border-border p-6 text-sm text-muted-foreground">
           {t("forbidden")}
         </div>
       }
     >
       <div className="space-y-6">
         <div>
-          <h2 className="text-lg font-semibold text-[var(--neutral-12)]">{t("title")}</h2>
-          <p className="mt-1 max-w-2xl text-sm text-[var(--neutral-11)]">{t("description")}</p>
+          <h2 className="text-lg font-semibold text-foreground">{t("title")}</h2>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{t("description")}</p>
         </div>
 
         <AuditLogFilters onChange={setFilters} />
@@ -93,7 +93,7 @@ export default function AuditLogPage() {
               type="button"
               onClick={() => void logsQuery.fetchNextPage()}
               disabled={logsQuery.isFetchingNextPage}
-              className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium hover:bg-[var(--neutral-2)] disabled:opacity-50"
+              className="rounded-[var(--radius-md)] border border-border px-4 py-2 text-sm font-medium hover:bg-muted disabled:opacity-50"
             >
               {logsQuery.isFetchingNextPage ? t("loading") : t("loadMore")}
             </button>

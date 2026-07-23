@@ -30,7 +30,7 @@ const SPANS: readonly Span[] = [
     indent: 0,
     widthPct: 100,
     ms: "248ms",
-    color: "var(--blue-9)",
+    color: "hsl(var(--primary))",
     offsetPct: 0,
   },
   {
@@ -38,7 +38,7 @@ const SPANS: readonly Span[] = [
     indent: 1,
     widthPct: 50,
     ms: "124ms",
-    color: "var(--neutral-9)",
+    color: "hsl(var(--muted-foreground))",
     offsetPct: 4,
   },
   {
@@ -64,10 +64,10 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <span className="flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-11)]">
+          <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
             <ChartActivity className="h-2.5 w-2.5" />
             {copy.header}
           </span>
@@ -82,12 +82,12 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
           {SPANS.map((span) => (
             <div key={span.label} className="flex items-center gap-2">
               <span
-                className="flex-shrink-0 truncate font-mono text-[9px] text-[var(--neutral-11)]"
+                className="flex-shrink-0 truncate font-mono text-[9px] text-muted-foreground"
                 style={{ width: 90, paddingLeft: span.indent * 6 }}
               >
                 {span.label}
               </span>
-              <div className="relative h-2 flex-1 rounded-[var(--radius-sm)] bg-[var(--neutral-3)]">
+              <div className="relative h-2 flex-1 rounded-[var(--radius-sm)] bg-muted">
                 <div
                   className="absolute top-0 h-full rounded-[var(--radius-sm)]"
                   style={{
@@ -99,7 +99,7 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
                 />
               </div>
               <span
-                className="flex-shrink-0 font-mono text-[9px] text-[var(--neutral-10)]"
+                className="flex-shrink-0 font-mono text-[9px] text-muted-foreground"
                 style={{ width: 32, textAlign: "right" }}
               >
                 {span.ms}
@@ -110,7 +110,7 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Footer */}
         <div className="flex items-center justify-between">
-          <span className="flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-10)]">
+          <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
             <Lightning className="h-2.5 w-2.5" />
             {copy.footer}
           </span>

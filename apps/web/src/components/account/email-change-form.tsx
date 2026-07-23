@@ -80,12 +80,12 @@ export function EmailChangeForm({
   return (
     <section
       aria-labelledby="email-change-heading"
-      className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+      className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
     >
-      <h2 id="email-change-heading" className="text-base font-semibold text-[var(--neutral-12)]">
+      <h2 id="email-change-heading" className="text-base font-semibold text-foreground">
         {t("title")}
       </h2>
-      <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+      <p className="mt-2 text-sm text-muted-foreground">{t("description")}</p>
 
       <Form {...form}>
         <form
@@ -98,7 +98,7 @@ export function EmailChangeForm({
             name="newEmail"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("newEmailLabel")}
                 </FormLabel>
                 <FormControl>
@@ -116,7 +116,7 @@ export function EmailChangeForm({
           <button
             type="submit"
             disabled={submitting || newEmail.trim() === ""}
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting ? t("submitting") : t("submit")}
           </button>

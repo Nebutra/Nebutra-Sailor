@@ -55,13 +55,13 @@ async function EmailChangeConfirmContent({ params }: PageProps) {
     <AuthSplitLayout>
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
             {result.success ? t("successTitle") : t("failureTitle")}
           </h1>
         </div>
         <section
           aria-live="polite"
-          className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center"
+          className="rounded-[var(--radius-lg)] border border-border bg-background p-6 text-center"
         >
           {result.success ? (
             <>
@@ -71,7 +71,7 @@ async function EmailChangeConfirmContent({ params }: PageProps) {
               >
                 ✓
               </div>
-              <p className="mt-4 text-sm text-[var(--neutral-11)]">
+              <p className="mt-4 text-sm text-muted-foreground">
                 {result.newEmail
                   ? t("successWithEmail", { email: result.newEmail })
                   : t("successDescription")}
@@ -79,7 +79,7 @@ async function EmailChangeConfirmContent({ params }: PageProps) {
               <div className="mt-5">
                 <Link
                   href="/settings/account"
-                  className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+                  className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
                 >
                   {t("continueCta")}
                 </Link>
@@ -93,16 +93,16 @@ async function EmailChangeConfirmContent({ params }: PageProps) {
               >
                 ⚠
               </div>
-              <p className="mt-4 text-sm text-[var(--neutral-11)]" role="alert">
+              <p className="mt-4 text-sm text-muted-foreground" role="alert">
                 {t("failureDescription")}
               </p>
-              <p className="mt-1 text-xs text-[var(--neutral-11)]">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {t("errorCode", { code: result.errorCode ?? "UNKNOWN" })}
               </p>
               <div className="mt-5">
                 <Link
                   href="/settings/account"
-                  className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]"
+                  className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
                 >
                   {t("backCta")}
                 </Link>

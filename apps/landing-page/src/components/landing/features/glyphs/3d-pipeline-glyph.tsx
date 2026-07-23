@@ -16,9 +16,9 @@ function ExtChip({ label }: { label: string }) {
     <span
       className="inline-flex h-[16px] items-center rounded-[3px] px-1 font-mono text-[9.5px] leading-none"
       style={{
-        background: "var(--neutral-3)",
-        border: "1px solid var(--neutral-6)",
-        color: "var(--neutral-11)",
+        background: "hsl(var(--muted))",
+        border: "1px solid hsl(var(--border))",
+        color: "hsl(var(--muted-foreground))",
       }}
     >
       {label}
@@ -39,15 +39,15 @@ function StageCard({
     <div
       className="flex min-w-0 flex-1 flex-col gap-1.5 rounded-[6px] px-2 py-2"
       style={{
-        background: "var(--neutral-1)",
-        border: "1px solid var(--neutral-6)",
+        background: "hsl(var(--background))",
+        border: "1px solid hsl(var(--border))",
       }}
     >
       <div className="flex items-center gap-1">
-        <span style={{ color: "var(--neutral-10)" }}>{icon}</span>
+        <span style={{ color: "hsl(var(--muted-foreground))" }}>{icon}</span>
         <span
           className="truncate font-mono text-[10px] leading-none"
-          style={{ color: "var(--neutral-12)" }}
+          style={{ color: "hsl(var(--foreground))" }}
         >
           {title}
         </span>
@@ -63,7 +63,7 @@ export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
       className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] p-3"
       style={{
         height: 160,
-        background: "var(--neutral-2)",
+        background: "hsl(var(--muted))",
       }}
     >
       <div className="flex items-start justify-end">
@@ -81,7 +81,7 @@ export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
           </div>
         </StageCard>
 
-        <div className="flex items-center" style={{ color: "var(--neutral-9)" }}>
+        <div className="flex items-center" style={{ color: "hsl(var(--muted-foreground))" }}>
           <ArrowRight size={12} />
         </div>
 
@@ -89,7 +89,7 @@ export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
           <div className="flex flex-col gap-1">
             <span
               className="font-mono text-[9.5px] leading-none"
-              style={{ color: "var(--neutral-11)" }}
+              style={{ color: "hsl(var(--muted-foreground))" }}
             >
               18k &rarr; 4k tris
             </span>
@@ -97,7 +97,7 @@ export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
           </div>
         </StageCard>
 
-        <div className="flex items-center" style={{ color: "var(--neutral-9)" }}>
+        <div className="flex items-center" style={{ color: "hsl(var(--muted-foreground))" }}>
           <ArrowRight size={12} />
         </div>
 
@@ -106,7 +106,7 @@ export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
             <Check size={11} style={{ color: "var(--status-success)" }} />
             <span
               className="font-mono text-[9.5px] leading-none"
-              style={{ color: "var(--neutral-11)" }}
+              style={{ color: "hsl(var(--muted-foreground))" }}
             >
               2.4 MB
             </span>
@@ -114,7 +114,10 @@ export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
         </StageCard>
       </div>
 
-      <div className="font-mono text-[10px] leading-none" style={{ color: "var(--neutral-10)" }}>
+      <div
+        className="font-mono text-[10px] leading-none"
+        style={{ color: "hsl(var(--muted-foreground))" }}
+      >
         cinema &middot; atelier-canvas pipeline
       </div>
     </div>

@@ -50,18 +50,16 @@ export function BlogMermaidDiagram({ chart }: BlogMermaidDiagramProps) {
 
   if (error) {
     return (
-      <figure className="my-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 shadow-sm">
-        <figcaption className="text-sm font-semibold text-[var(--neutral-12)]">
-          Diagram source
-        </figcaption>
-        <p className="mt-2 text-sm leading-6 text-[var(--neutral-10)]">
+      <figure className="my-8 rounded-[var(--radius-lg)] border border-border bg-background p-4 shadow-sm">
+        <figcaption className="text-sm font-semibold text-foreground">Diagram source</figcaption>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">
           The diagram renderer could not load, so the source is available below.
         </p>
         <details className="mt-3">
-          <summary className="cursor-pointer text-sm font-medium text-[var(--neutral-12)]">
+          <summary className="cursor-pointer text-sm font-medium text-foreground">
             Show Mermaid source
           </summary>
-          <pre className="mt-3 overflow-x-auto rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3 font-mono text-xs leading-6 text-[var(--neutral-11)]">
+          <pre className="mt-3 overflow-x-auto rounded-[var(--radius-md)] bg-muted p-3 font-mono text-xs leading-6 text-muted-foreground">
             {trimmedChart}
           </pre>
         </details>
@@ -71,7 +69,7 @@ export function BlogMermaidDiagram({ chart }: BlogMermaidDiagramProps) {
 
   if (svg) {
     return (
-      <figure className="my-8 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 shadow-sm">
+      <figure className="my-8 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background p-4 shadow-sm">
         <div
           className="overflow-x-auto [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full"
           dangerouslySetInnerHTML={{ __html: svg }}
@@ -81,8 +79,8 @@ export function BlogMermaidDiagram({ chart }: BlogMermaidDiagramProps) {
   }
 
   return (
-    <figure className="my-8 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 shadow-sm">
-      <div className="flex min-h-40 items-center justify-center text-sm text-[var(--neutral-10)]">
+    <figure className="my-8 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background p-4 shadow-sm">
+      <div className="flex min-h-40 items-center justify-center text-sm text-muted-foreground">
         Rendering diagram...
       </div>
     </figure>

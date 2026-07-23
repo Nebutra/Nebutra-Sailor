@@ -32,12 +32,12 @@ const ROWS: ReadonlyArray<ConfigRow> = [
 export function ConfigGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1 font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
           <SettingsGear className="h-3 w-3" />
           config.schema.ts
         </span>
@@ -51,19 +51,19 @@ export function ConfigGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row) => (
           <li
             key={row.key}
-            className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-2 rounded-[var(--radius-md)] bg-background px-2 py-1"
           >
-            <span className="shrink-0 truncate font-mono text-[10px] text-[var(--neutral-12)]">
+            <span className="shrink-0 truncate font-mono text-[10px] text-foreground">
               {row.key}
             </span>
             <Badge
               variant="secondary"
               size="sm"
-              className="ml-auto shrink-0 bg-[var(--blue-3)] font-mono text-[9px] text-[var(--blue-11)]"
+              className="ml-auto shrink-0 bg-[var(--blue-3)] font-mono text-[9px] text-primary"
             >
               {row.type}
             </Badge>
-            <span className="shrink-0 truncate text-right font-mono text-[9px] text-[var(--neutral-11)]">
+            <span className="shrink-0 truncate text-right font-mono text-[9px] text-muted-foreground">
               &middot; {row.detail}
             </span>
           </li>
@@ -71,7 +71,7 @@ export function ConfigGlyph(_props: SubpackageGlyphProps) {
       </ul>
 
       {/* Footer */}
-      <p className="flex items-center justify-center gap-1 font-mono text-[9px] text-[var(--neutral-11)]">
+      <p className="flex items-center justify-center gap-1 font-mono text-[9px] text-muted-foreground">
         <Badge
           variant="secondary"
           size="sm"

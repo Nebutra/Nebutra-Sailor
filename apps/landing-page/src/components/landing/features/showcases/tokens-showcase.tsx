@@ -50,9 +50,9 @@ const COPY = {
 const NEUTRAL_STEPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 
 const BRAND_SWATCHES = [
-  { label: "--brand-primary", style: { background: "var(--brand-primary)" } },
+  { label: "--brand-primary", style: { background: "hsl(var(--primary))" } },
   { label: "--brand-accent", style: { background: "var(--brand-accent)" } },
-  { label: "--brand-gradient", style: { background: "var(--brand-gradient)" } },
+  { label: "--brand-gradient", style: { background: "hsl(var(--primary))" } },
   { label: "--status-danger", style: { background: "var(--status-danger)" } },
   { label: "--status-success", style: { background: "var(--status-success)" } },
   { label: "--status-warning", style: { background: "var(--status-warning)" } },
@@ -184,7 +184,7 @@ export function TokensShowcase(props: PackageShowcaseProps) {
               <div
                 aria-hidden="true"
                 className="h-10 w-10"
-                style={{ background: "var(--brand-gradient)", borderRadius: tile.value }}
+                style={{ background: "hsl(var(--primary))", borderRadius: tile.value }}
               />
               <Badge size="sm" variant="outline">
                 <span className="font-mono">{tile.label}</span>

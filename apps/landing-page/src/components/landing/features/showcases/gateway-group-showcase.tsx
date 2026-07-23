@@ -99,7 +99,7 @@ export function GatewayGroupShowcase({ entry, locale }: PackageShowcaseProps) {
       {/* Header: request envelope */}
       <Card className="shadow-sm">
         <CardHeader className="flex flex-row flex-wrap items-center gap-3 space-y-0 pb-4">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
             <Api className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
           <div className="flex min-w-0 flex-1 items-center gap-2">

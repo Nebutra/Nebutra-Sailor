@@ -149,10 +149,10 @@ describe("Startup OS project files", () => {
     // De-mock: the preview renders ONLY the real CompanyContext — no coming-soon
     // "sandbox runtime" placeholder badge (it advertised an unbuilt feature).
     expect(html).not.toContain("Live preview runs in the sandbox runtime");
-    // The sandbox iframe can't resolve packages, so the core @nebutra/tokens
-    // brand gradient is inlined verbatim so the preview LOOKS Nebutra-branded.
-    expect(html).toContain("--brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%)");
-    expect(html).toContain("background: var(--brand-gradient)");
+    // Sandbox iframe can't resolve packages — semantic product skin is inlined.
+    expect(html).toContain("--primary: 228 85% 56%");
+    expect(html).toContain("--brand-gradient: hsl(var(--primary))");
+    expect(html).toContain("background: hsl(var(--primary))");
     // It cannot SSR a TanStack Start app, so it must NOT reference app source/styles.
     expect(html).not.toContain('href="/src/App.css"');
     expect(html).not.toContain("src/styles/app.css");

@@ -113,7 +113,7 @@ function ConnectionBody({ slug }: { slug: string }) {
   return (
     <Card className="border-border/60 shadow-none">
       <CardContent className="flex items-center gap-4 p-4 md:p-5">
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <div className="flex min-w-0 flex-col gap-1">
@@ -215,7 +215,7 @@ export function OpsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
               <Terminal className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="text-sm font-semibold text-foreground">{entry.label}</span>

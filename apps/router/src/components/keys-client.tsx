@@ -63,7 +63,7 @@ export function KeysClient() {
       </Card>
 
       {once ? (
-        <Card className="border-[color-mix(in_srgb,var(--status-warning)_40%,var(--neutral-7))] bg-[color-mix(in_srgb,var(--status-warning)_8%,var(--neutral-1))] p-5">
+        <Card className="border-[color-mix(in_srgb,var(--status-warning)_40%,hsl(var(--border)))] bg-[color-mix(in_srgb,var(--status-warning)_8%,hsl(var(--background)))] p-5">
           <p className="font-semibold">请立即保存（仅显示一次）</p>
           <pre className="mt-3 overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background p-3 font-mono text-xs">
             {once}

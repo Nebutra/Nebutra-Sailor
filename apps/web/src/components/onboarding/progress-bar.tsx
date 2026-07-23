@@ -30,16 +30,15 @@ const CIRCLE_BASE =
   "flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-colors";
 
 const CIRCLE_BY_STATE: Record<StepState, string> = {
-  complete: "bg-[var(--brand-primary)] text-white",
-  current:
-    "border-2 border-[var(--brand-primary)] bg-[var(--neutral-1)] text-[var(--brand-primary)]",
-  upcoming: "border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-11)]",
+  complete: "bg-[hsl(var(--primary))] text-white",
+  current: "border-2 border-[hsl(var(--primary))] bg-background text-[hsl(var(--primary))]",
+  upcoming: "border border-border bg-background text-muted-foreground",
 };
 
 const LABEL_BY_STATE: Record<StepState, string> = {
-  complete: "text-[var(--neutral-12)] font-medium",
-  current: "text-[var(--neutral-12)] font-medium",
-  upcoming: "text-[var(--neutral-11)]",
+  complete: "text-foreground font-medium",
+  current: "text-foreground font-medium",
+  upcoming: "text-muted-foreground",
 };
 
 export function ProgressBar({ steps, currentStep, completedSteps, className }: ProgressBarProps) {
@@ -92,7 +91,7 @@ export function ProgressBar({ steps, currentStep, completedSteps, className }: P
                 aria-hidden="true"
                 className={cn(
                   "mt-4 h-px flex-1 transition-colors",
-                  connectorActive ? "bg-[var(--brand-primary)]" : "bg-[var(--neutral-7)]",
+                  connectorActive ? "bg-[hsl(var(--primary))]" : "bg-[hsl(var(--border))]",
                 )}
               />
             )}

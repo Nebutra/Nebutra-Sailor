@@ -48,13 +48,13 @@ const FEED_ROWS: readonly FeedRow[] = [
 export function NotificationsGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
-        <span className="inline-flex items-center gap-2 text-[var(--neutral-12)]">
-          <Bell aria-hidden="true" className="size-3.5 text-[var(--neutral-11)]" />
-          <span className="font-mono text-[10px] tracking-wide text-[var(--neutral-11)] uppercase">
+        <span className="inline-flex items-center gap-2 text-foreground">
+          <Bell aria-hidden="true" className="size-3.5 text-muted-foreground" />
+          <span className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
             Inbox · 3 new
           </span>
         </span>
@@ -71,7 +71,7 @@ export function NotificationsGlyph({ locale }: SubpackageGlyphProps) {
               rightLabel={row.title[locale]}
               status={row.badgeStatus}
             />
-            <span className="inline-flex shrink-0 items-center gap-1 font-mono text-[10px] text-[var(--neutral-10)]">
+            <span className="inline-flex shrink-0 items-center gap-1 font-mono text-[10px] text-muted-foreground">
               <Clock aria-hidden="true" className="size-3" />
               {row.time}
             </span>

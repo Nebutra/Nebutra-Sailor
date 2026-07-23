@@ -25,11 +25,11 @@ export default async function AgentRuntimeDemoPage() {
 
   if (!enabled) {
     return (
-      <main className="min-h-screen bg-[color:var(--neutral-2)] p-8 text-[color:var(--neutral-12)]">
+      <main className="min-h-screen bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
             <h1 className="font-semibold text-xl">Agent Runtime — disabled</h1>
-            <p className="mt-2 text-[color:var(--neutral-11)] text-sm">
+            <p className="mt-2 text-muted-foreground text-sm">
               The <code>agent-runtime</code> capability demo is behind a feature flag (
               <code>{FLAGS.AGENT_RUNTIME_DEMO}</code>) and is off by default. Enable it per tenant
               to view the runtime grammar.
@@ -67,11 +67,11 @@ export default async function AgentRuntimeDemoPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[color:var(--neutral-2)] p-8 text-[color:var(--neutral-12)]">
+    <main className="min-h-screen bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
           <h1 className="font-semibold text-2xl">Agent Runtime grammar</h1>
-          <p className="mt-1 text-[color:var(--neutral-11)] text-sm">
+          <p className="mt-1 text-muted-foreground text-sm">
             Faithful, multi-tenant re-expression. Defaults: approval{" "}
             <code>{DEFAULT_APPROVAL_POLICY.kind}</code>, capability{" "}
             <code>{DEFAULT_CAPABILITY_POLICY.kind}</code>.
@@ -80,10 +80,10 @@ export default async function AgentRuntimeDemoPage() {
 
         <Card className="p-6">
           <h2 className="font-medium">Tenant + thread serialization isolation</h2>
-          <p className="mt-2 text-[color:var(--neutral-11)] text-sm">
+          <p className="mt-2 text-muted-foreground text-sm">
             Same thread id, different tenants — never share a serial lane:
           </p>
-          <pre className="mt-2 overflow-x-auto rounded bg-[color:var(--neutral-3)] p-3 text-xs">
+          <pre className="mt-2 overflow-x-auto rounded bg-muted p-3 text-xs">
             org_a → {scopeKey(tenantA)}
             {"\n"}org_b → {scopeKey(tenantB)}
           </pre>
@@ -93,7 +93,7 @@ export default async function AgentRuntimeDemoPage() {
           <h2 className="font-medium">Rule decision × approval policy</h2>
           <table className="mt-3 w-full text-sm">
             <thead>
-              <tr className="text-left text-[color:var(--neutral-11)]">
+              <tr className="text-left text-muted-foreground">
                 <th className="py-1">rule</th>
                 <th className="py-1">on_request</th>
                 <th className="py-1">never</th>
@@ -101,7 +101,7 @@ export default async function AgentRuntimeDemoPage() {
             </thead>
             <tbody>
               {ruleRows.map((r) => (
-                <tr key={r.rule} className="border-[color:var(--neutral-6)] border-t">
+                <tr key={r.rule} className="border-border border-t">
                   <td className="py-1">
                     <code>{r.rule}</code>
                   </td>
@@ -115,7 +115,7 @@ export default async function AgentRuntimeDemoPage() {
 
         <Card className="p-6">
           <h2 className="font-medium">External-sandbox seam</h2>
-          <p className="mt-2 text-[color:var(--neutral-11)] text-sm">
+          <p className="mt-2 text-muted-foreground text-sm">
             Default executor outcome for an untrusted command:
           </p>
           <p className="mt-2 font-mono text-sm">{sandboxOutcome}</p>

@@ -25,7 +25,7 @@ export function InvoiceCard() {
           ? { duration: 0 }
           : { delay: 2.2, duration: 0.8, type: "spring", bounce: 0.4 }
       }
-      className="relative w-full max-w-sm mx-auto rounded-[var(--radius-card)] bg-white/90 dark:bg-[var(--neutral-2)]/90 border border-[var(--neutral-6)] p-5"
+      className="relative w-full max-w-sm mx-auto rounded-[var(--radius-card)] bg-white/90 dark:bg-muted/90 border border-border p-5"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       {/* Top Section */}

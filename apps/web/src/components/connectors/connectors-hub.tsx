@@ -85,7 +85,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
       <section className="flex flex-col items-center justify-center gap-4 rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-12 text-center/[0.02]">
         <div
           className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-2xl)] text-white"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         >
           <Cable className="h-4 w-4" />
         </div>
@@ -103,7 +103,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
             type="button"
             onClick={onAdd}
             className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             <Plus className="h-3.5 w-3.5" />
             Add a connector

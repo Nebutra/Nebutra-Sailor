@@ -98,7 +98,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
         <div className="flex items-start gap-3">
           <div
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             <Gift className="h-4 w-4" />
           </div>
@@ -121,7 +121,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
         <div
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 opacity-[0.16] blur-3xl"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         />
         <div className="relative">
           <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
                 <p
                   className="text-sm font-semibold tabular-nums"
                   style={{
-                    background: "var(--brand-gradient)",
+                    background: "hsl(var(--primary))",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",

@@ -42,16 +42,16 @@ export function CollabGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="relative flex w-full flex-col justify-between gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
+      className="relative flex w-full flex-col justify-between gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-muted px-3 py-3"
       aria-hidden="true"
     >
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <StatusDot state="READY" decorative titlePrefix="Live session" />
-          <span className="text-[11px] font-medium text-[var(--neutral-12)]">Live</span>
-          <span className="text-[11px] text-[var(--neutral-11)]">·</span>
-          <span className="flex items-center gap-1 text-[11px] text-[var(--neutral-11)]">
+          <span className="text-[11px] font-medium text-foreground">Live</span>
+          <span className="text-[11px] text-muted-foreground">·</span>
+          <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
             <Users />3 collaborators
           </span>
         </div>
@@ -62,12 +62,12 @@ export function CollabGlyph(_props: SubpackageGlyphProps) {
         {COLLABORATORS.map((c) => (
           <div
             key={c.initial}
-            className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-[var(--neutral-1)] text-[11px] font-semibold text-white ${c.bg}`}
+            className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-[hsl(var(--background))] text-[11px] font-semibold text-white ${c.bg}`}
           >
             {c.initial}
           </div>
         ))}
-        <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[var(--neutral-1)] bg-[var(--neutral-12)] text-[10px] font-semibold text-[var(--neutral-1)]">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[hsl(var(--background))] bg-[hsl(var(--foreground))] text-[10px] font-semibold text-[hsl(var(--background))]">
           +1
         </div>
       </div>

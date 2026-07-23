@@ -97,8 +97,8 @@ function ColorScale({
   mainStep?: string;
 }) {
   return (
-    <div className="mb-12 overflow-hidden rounded-xl border border-[var(--neutral-6)] shadow-sm">
-      <div className="bg-[var(--neutral-2)] px-4 py-3 border-b border-[var(--neutral-6)]">
+    <div className="mb-12 overflow-hidden rounded-xl border border-border shadow-sm">
+      <div className="bg-muted px-4 py-3 border-b border-border">
         <h3 className="font-mono text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           {name} Scale
         </h3>
@@ -131,8 +131,8 @@ export function ColorPalette() {
       <ColorScale name="Brand Cyan" scale={colors.accent} mainStep="500" />
       <ColorScale name="Neutral" scale={colors.neutral} mainStep="900" />
 
-      <div className="mb-12 overflow-hidden rounded-xl border border-[var(--neutral-6)] shadow-sm">
-        <div className="bg-[var(--neutral-2)] px-4 py-3 border-b border-[var(--neutral-6)]">
+      <div className="mb-12 overflow-hidden rounded-xl border border-border shadow-sm">
+        <div className="bg-muted px-4 py-3 border-b border-border">
           <h3 className="font-mono text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Semantic Colors
           </h3>

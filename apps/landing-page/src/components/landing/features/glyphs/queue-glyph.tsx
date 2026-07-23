@@ -32,26 +32,26 @@ const STATUS_COLOR: Readonly<Record<JobState, string>> = {
   BUILDING: "text-[color:var(--status-warning)]",
   READY: "text-[color:var(--status-success)]",
   ERROR: "text-[color:var(--status-danger)]",
-  QUEUED: "text-[var(--neutral-11)]",
+  QUEUED: "text-muted-foreground",
 };
 
 export function QueueGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-1 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
+      className="flex w-full flex-col justify-between gap-1 rounded-[var(--radius-lg)] bg-muted px-3 py-3"
       style={{ height: 160 }}
     >
       {JOB_ROWS.map((row) => (
         <div
           key={row.id}
-          className="flex h-7 items-center gap-2.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2.5"
+          className="flex h-7 items-center gap-2.5 rounded-[var(--radius-md)] bg-background px-2.5"
         >
           <StatusDot state={row.state} titlePrefix={row.id} decorative />
-          <span className="font-mono text-[11px] text-[var(--neutral-12)]">{row.id}</span>
+          <span className="font-mono text-[11px] text-foreground">{row.id}</span>
           <span className={`font-mono text-[11px] ${STATUS_COLOR[row.state]}`}>
             &middot; {row.status}
           </span>
-          <span className="ml-auto font-mono text-[11px] tabular-nums text-[var(--neutral-11)]">
+          <span className="ml-auto font-mono text-[11px] tabular-nums text-muted-foreground">
             {row.duration}
           </span>
         </div>

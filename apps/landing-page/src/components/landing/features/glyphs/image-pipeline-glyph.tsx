@@ -22,22 +22,22 @@ export function ImagePipelineGlyph(_props: SubpackageGlyphProps) {
           <span className="text-[9px] font-mono text-muted-foreground">4.8 MB</span>
         </div>
 
-        <ArrowRight className="h-4 w-4 shrink-0 text-[color:var(--brand-primary)]" aria-hidden />
+        <ArrowRight className="h-4 w-4 shrink-0 text-[color:hsl(var(--primary))]" aria-hidden />
 
         <div
-          className="flex flex-1 flex-col gap-1 rounded-[var(--radius-md)] border border-[color:var(--brand-primary)]/30 bg-[color:var(--brand-primary)]/10 px-2 py-1.5"
+          className="flex flex-1 flex-col gap-1 rounded-[var(--radius-md)] border border-[color:hsl(var(--primary))]/30 bg-[color:hsl(var(--primary))]/10 px-2 py-1.5"
           style={{ minHeight: 60 }}
         >
           <div className="flex items-center gap-1">
-            <Sparkles className="h-3 w-3 text-[color:var(--brand-primary)]" />
-            <span className="text-[10px] font-medium text-[color:var(--brand-primary)]">
+            <Sparkles className="h-3 w-3 text-[color:hsl(var(--primary))]" />
+            <span className="text-[10px] font-medium text-[color:hsl(var(--primary))]">
               Optimized
             </span>
           </div>
           <div className="flex h-6 items-center justify-center rounded-[var(--radius-sm)] bg-background/60">
             <span className="text-[9px] font-mono text-foreground">1024px WebP</span>
           </div>
-          <span className="text-[9px] font-mono text-[color:var(--brand-primary)]">240 KB</span>
+          <span className="text-[9px] font-mono text-[color:hsl(var(--primary))]">240 KB</span>
         </div>
       </div>
 

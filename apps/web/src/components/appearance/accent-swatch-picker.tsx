@@ -12,7 +12,7 @@ type Swatch = {
 };
 
 const SWATCHES: ReadonlyArray<Swatch> = [
-  { value: "default", color: "var(--neutral-12)", ring: true },
+  { value: "default", color: "hsl(var(--foreground))", ring: true },
   { value: "blue", color: "#3b82f6" },
   { value: "cyan", color: "#06b6d4" },
   { value: "violet", color: "#8b5cf6" },

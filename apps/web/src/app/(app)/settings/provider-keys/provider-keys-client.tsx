@@ -111,7 +111,7 @@ export function ProviderKeysClient() {
             type="button"
             onClick={() => setDialogOpen(true)}
             className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             Add provider key
           </button>
@@ -125,7 +125,7 @@ export function ProviderKeysClient() {
       ) : null}
 
       {keysQuery.isPending ? (
-        <p className="text-sm text-[var(--neutral-11)]">Loading…</p>
+        <p className="text-sm text-muted-foreground">Loading…</p>
       ) : (
         <ProviderKeysList
           keys={keys}

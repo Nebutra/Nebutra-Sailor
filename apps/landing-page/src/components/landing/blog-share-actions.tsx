@@ -118,15 +118,15 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
   const copyLabel = copied ? (isZh ? "已复制" : "Copied") : isZh ? "复制链接" : "Copy link";
 
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3">
+    <div className="rounded-[var(--radius-lg)] border border-border bg-background p-3">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase text-[var(--neutral-10)]">
+        <p className="text-xs font-semibold uppercase text-muted-foreground">
           {isZh ? "分发" : "Share"}
         </p>
         <button
           type="button"
           onClick={handleNativeShare}
-          className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+          className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-xs font-medium text-foreground transition-colors hover:bg-muted"
         >
           <Share className="size-3.5" aria-hidden />
           {isZh ? "系统分享" : "Native"}
@@ -135,7 +135,7 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
 
       <div className="mt-3 grid gap-3">
         <div>
-          <p className="mb-2 text-xs text-[var(--neutral-10)]">
+          <p className="mb-2 text-xs text-muted-foreground">
             {isZh ? "国际平台" : "International"}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -147,7 +147,7 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex size-9 items-center justify-center rounded-full border border-[var(--neutral-7)] text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+                  className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   aria-label={`${isZh ? "分享到" : "Share to"} ${item.label}`}
                   title={item.label}
                 >
@@ -158,7 +158,7 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
             <button
               type="button"
               onClick={() => handleCopy("link", url)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] px-3 py-2 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-muted"
             >
               <Copy className="size-3.5" aria-hidden />
               {copyLabel}
@@ -167,7 +167,7 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
         </div>
 
         <div>
-          <p className="mb-2 text-xs text-[var(--neutral-10)]">
+          <p className="mb-2 text-xs text-muted-foreground">
             {isZh ? "国内平台（复制后发布）" : "China platforms"}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -176,11 +176,11 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
                 key={item.label}
                 type="button"
                 onClick={() => handleCopy(item.label, item.value)}
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
                 aria-label={`${isZh ? "复制到" : "Copy for"} ${item.label}`}
                 title={copied === item.label ? (isZh ? "已复制" : "Copied") : item.label}
               >
-                <span className="relative inline-flex size-5 items-center justify-center overflow-hidden rounded-full bg-[var(--neutral-2)] text-[10px] font-semibold text-[var(--neutral-11)]">
+                <span className="relative inline-flex size-5 items-center justify-center overflow-hidden rounded-full bg-muted text-[10px] font-semibold text-muted-foreground">
                   <Image
                     src={item.iconUrl}
                     alt=""
@@ -197,7 +197,7 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
             <button
               type="button"
               onClick={() => handleCopy("rich", shareText)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
             >
               <LinkIcon className="size-3.5" aria-hidden />
               {copied === "rich"

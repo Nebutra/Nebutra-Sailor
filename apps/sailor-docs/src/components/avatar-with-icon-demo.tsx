@@ -14,23 +14,21 @@ export function AvatarWithIconDemo() {
         src="https://avatar.vercel.sh/user1"
         alt="user1"
         size="sm"
-        icon={
-          <ArrowDownCircle className="h-full w-full text-[var(--neutral-11)]" strokeWidth={2.5} />
-        }
+        icon={<ArrowDownCircle className="h-full w-full text-muted-foreground" strokeWidth={2.5} />}
         iconBackground="bg-background"
       />
       <AvatarWithIcon
         src="https://avatar.vercel.sh/user2"
         alt="user2"
         size="sm"
-        icon={<CheckCircle2 className="h-full w-full text-[var(--neutral-11)]" strokeWidth={2.5} />}
+        icon={<CheckCircle2 className="h-full w-full text-muted-foreground" strokeWidth={2.5} />}
         iconBackground="bg-background"
       />
       <AvatarWithIcon
         src="https://avatar.vercel.sh/user3"
         alt="user3"
         size="sm"
-        icon={<Clock className="h-full w-full text-[var(--neutral-11)]" strokeWidth={2.5} />}
+        icon={<Clock className="h-full w-full text-muted-foreground" strokeWidth={2.5} />}
         iconBackground="bg-background"
       />
     </div>

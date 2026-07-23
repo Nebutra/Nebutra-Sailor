@@ -331,15 +331,15 @@
 .landing-showcase-surface {
   position: relative;
   isolation: isolate;
-  border-color: color-mix(in oklab, var(--neutral-7) 72%, transparent);
+  border-color: color-mix(in oklab, hsl(var(--border)) 72%, transparent);
   background: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--neutral-1) 96%, white 4%) 0%,
-    color-mix(in oklab, var(--neutral-2) 98%, var(--brand-gradient-start) 2%) 100%
+    color-mix(in oklab, hsl(var(--background)) 96%, white 4%) 0%,
+    color-mix(in oklab, hsl(var(--muted)) 98%, var(--brand-gradient-start) 2%) 100%
   );
   box-shadow:
     var(--ring-hairline),
-    0 24px 72px -58px color-mix(in oklab, var(--neutral-12) 44%, transparent);
+    0 24px 72px -58px color-mix(in oklab, hsl(var(--foreground)) 44%, transparent);
 }
 
 .landing-showcase-surface::before {
@@ -366,12 +366,12 @@
   background-image:
     linear-gradient(
       90deg,
-      color-mix(in oklab, var(--neutral-6) 26%, transparent) 1px,
+      color-mix(in oklab, hsl(var(--border)) 26%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       180deg,
-      color-mix(in oklab, var(--neutral-6) 18%, transparent) 1px,
+      color-mix(in oklab, hsl(var(--border)) 18%, transparent) 1px,
       transparent 1px
     );
   background-size: 36px 36px;
@@ -381,17 +381,17 @@
 }
 
 .landing-showcase-surface > :where(.bg-background, .bg-card) {
-  border-color: color-mix(in oklab, var(--neutral-7) 58%, transparent);
-  background: color-mix(in oklab, var(--neutral-1) 88%, transparent);
+  border-color: color-mix(in oklab, hsl(var(--border)) 58%, transparent);
+  background: color-mix(in oklab, hsl(var(--background)) 88%, transparent);
   box-shadow: none;
 }
 
 .dark .landing-showcase-surface {
-  border-color: color-mix(in oklab, var(--neutral-5) 72%, transparent);
+  border-color: color-mix(in oklab, hsl(var(--border)) 72%, transparent);
   background: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--neutral-2) 92%, var(--brand-gradient-start) 4%) 0%,
-    color-mix(in oklab, var(--neutral-1) 94%, black 6%) 100%
+    color-mix(in oklab, hsl(var(--muted)) 92%, var(--brand-gradient-start) 4%) 0%,
+    color-mix(in oklab, hsl(var(--background)) 94%, black 6%) 100%
   );
   box-shadow:
     var(--ring-hairline),
@@ -403,8 +403,8 @@
 }
 
 .dark .landing-showcase-surface > :where(.bg-background, .bg-card) {
-  border-color: color-mix(in oklab, var(--neutral-5) 58%, transparent);
-  background: color-mix(in oklab, var(--neutral-2) 72%, black 28%);
+  border-color: color-mix(in oklab, hsl(var(--border)) 58%, transparent);
+  background: color-mix(in oklab, hsl(var(--muted)) 72%, black 28%);
 }
 
 .landing-cta-rule {

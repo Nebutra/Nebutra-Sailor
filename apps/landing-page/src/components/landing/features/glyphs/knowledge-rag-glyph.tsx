@@ -54,7 +54,7 @@ export function KnowledgeRagGlyph(_props: SubpackageGlyphProps) {
                 size="sm"
                 className="flex w-full items-center justify-center gap-1 px-1 py-0.5 font-mono text-[10px] tabular-nums"
               >
-                <Icon className="h-2.5 w-2.5 text-[color:var(--brand-primary)]" />
+                <Icon className="h-2.5 w-2.5 text-[color:hsl(var(--primary))]" />
                 <span className="truncate">{stage.label}</span>
                 <span className="text-muted-foreground">·</span>
                 <span>{stage.ms}</span>

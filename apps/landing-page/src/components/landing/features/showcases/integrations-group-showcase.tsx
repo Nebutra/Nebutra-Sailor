@@ -104,7 +104,7 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
               <Connection className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>
@@ -164,7 +164,7 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
                     key={label}
                     className={`flex flex-col items-center justify-center gap-1.5 rounded-[var(--radius-md)] border px-2 py-2 ${
                       accent
-                        ? "border-transparent bg-[image:var(--brand-gradient)] text-white"
+                        ? "border-transparent bg-primary text-white"
                         : "border-border bg-background text-foreground"
                     }`}
                   >

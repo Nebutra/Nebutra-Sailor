@@ -200,7 +200,7 @@ function ThemeLayout() {
             <div
               className="h-8 w-8"
               aria-hidden="true"
-              style={{ background: "var(--brand-gradient)", borderRadius: `var(--radius-${r})` }}
+              style={{ background: "hsl(var(--primary))", borderRadius: `var(--radius-${r})` }}
             />
             <Badge size="sm" variant="outline">
               <span className="font-mono">radius-{r}</span>
@@ -247,7 +247,7 @@ function GalleryLayout() {
         {swatches.map((l) => (
           <Swatch key={l} label={l} bg={`var(--${l})`} />
         ))}
-        <Swatch label="brand-gradient" bg="var(--brand-gradient)" />
+        <Swatch label="brand-gradient" bg="hsl(var(--primary))" />
       </div>
       <div className="flex flex-col gap-1.5 rounded-[var(--radius-md)] border border-border bg-muted/30 p-4">
         <Heading level={2}>Aa Heading</Heading>
@@ -284,7 +284,7 @@ export function DesignGroupShowcase(props: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
               <Droplet className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>

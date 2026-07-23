@@ -38,13 +38,13 @@ export function MeteringGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Top: tenant + plan */}
         <div className="flex items-center justify-between">
-          <span className="truncate font-mono text-[10px] uppercase tracking-wide text-[var(--neutral-10)]">
+          <span className="truncate font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
             {copy.tenant}
           </span>
-          <ChartActivity className="h-3 w-3 text-[var(--neutral-10)]" />
+          <ChartActivity className="h-3 w-3 text-muted-foreground" />
         </div>
 
         {/* Usage rows */}
@@ -53,8 +53,8 @@ export function MeteringGlyph({ locale }: SubpackageGlyphProps) {
             const RowIcon = row.Icon;
             return (
               <div key={row.name} className="flex items-center gap-2">
-                <RowIcon className="h-3 w-3 shrink-0 text-[var(--neutral-10)]" />
-                <span className="w-[60px] shrink-0 truncate font-mono text-[9px] text-[var(--neutral-11)]">
+                <RowIcon className="h-3 w-3 shrink-0 text-muted-foreground" />
+                <span className="w-[60px] shrink-0 truncate font-mono text-[9px] text-muted-foreground">
                   {row.name}
                 </span>
                 <div className="flex-1">
@@ -66,7 +66,7 @@ export function MeteringGlyph({ locale }: SubpackageGlyphProps) {
                     animated={false}
                   />
                 </div>
-                <span className="shrink-0 text-right font-mono text-[9px] tabular-nums text-[var(--neutral-11)]">
+                <span className="shrink-0 text-right font-mono text-[9px] tabular-nums text-muted-foreground">
                   {fmt(row.used)} / {fmt(row.cap)}
                 </span>
               </div>
@@ -76,7 +76,7 @@ export function MeteringGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Footer */}
         <div className="mt-0.5 flex items-center justify-between">
-          <span className="font-mono text-[9px] text-[var(--neutral-10)]">{copy.footer}</span>
+          <span className="font-mono text-[9px] text-muted-foreground">{copy.footer}</span>
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-9)]" />
         </div>
       </div>

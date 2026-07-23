@@ -18,17 +18,17 @@ export function FAQSection() {
   return (
     <section
       id="faq"
-      className="relative w-full bg-[var(--neutral-1)] py-24 md:py-32"
+      className="relative w-full bg-background py-24 md:py-32"
       aria-labelledby="landing-faq-title"
     >
       <div className="mx-auto max-w-4xl px-4 md:px-6">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand-primary)]">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(var(--primary))]">
             {t("badge")}
           </p>
           <h2
             id="landing-faq-title"
-            className="text-balance text-3xl md:text-4xl lg:text-5xl font-semibold text-[var(--neutral-12)]"
+            className="text-balance text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",
@@ -36,11 +36,11 @@ export function FAQSection() {
           >
             {t("title")}
           </h2>
-          <p className="mt-4 text-lg text-[var(--neutral-11)]">{t("subtitle")}</p>
+          <p className="mt-4 text-lg text-muted-foreground">{t("subtitle")}</p>
         </div>
 
         <div
-          className="mx-auto mt-12 max-w-4xl divide-y divide-[var(--neutral-6)] rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40"
+          className="mx-auto mt-12 max-w-4xl divide-y divide-border rounded-[var(--radius-card)] border border-border bg-muted/40"
           style={{ boxShadow: "var(--ring-hairline)" }}
         >
           {FAQS.map((entry) => {
@@ -57,7 +57,7 @@ export function FAQSection() {
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     onClick={() => setOpenId((prev) => (prev === entry.id ? null : entry.id))}
-                    className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-base font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-1 md:px-8 md:py-6 md:text-lg"
+                    className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-base font-semibold text-foreground transition-colors hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))] focus-visible:ring-offset-1 md:px-8 md:py-6 md:text-lg"
                   >
                     <span>
                       {/* next-intl's strict key typing cannot prove the
@@ -70,7 +70,7 @@ export function FAQSection() {
                     </span>
                     <span
                       aria-hidden="true"
-                      className={`text-[var(--brand-primary)] transition-transform ${
+                      className={`text-[hsl(var(--primary))] transition-transform ${
                         isOpen ? "rotate-45" : ""
                       }`}
                     >
@@ -82,7 +82,7 @@ export function FAQSection() {
                   id={panelId}
                   aria-labelledby={triggerId}
                   hidden={!isOpen}
-                  className="px-6 pb-6 text-base leading-relaxed text-[var(--neutral-11)] md:px-8"
+                  className="px-6 pb-6 text-base leading-relaxed text-muted-foreground md:px-8"
                 >
                   {t(
                     // biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in lib/landing/faqs

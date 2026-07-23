@@ -216,25 +216,25 @@ export function DocumentTaskUploader({
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "grid gap-3 rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-4",
+        "grid gap-3 rounded-[var(--radius-lg)] border border-dashed border-border bg-muted p-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-4",
         className,
       )}
     >
       <div className="min-w-0">
         <div className="flex min-w-0 items-start gap-3">
-          <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-1)] text-[var(--neutral-11)] ring-1 ring-[var(--neutral-6)]">
+          <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-background text-muted-foreground ring-1 ring-[hsl(var(--border))]">
             <FileText className="size-4" aria-hidden={true} />
           </span>
           <div className="min-w-0">
-            <p className="text-sm font-medium text-[var(--neutral-12)]">{text.intakeTitle}</p>
+            <p className="text-sm font-medium text-foreground">{text.intakeTitle}</p>
             {file ? (
-              <p className="mt-0.5 truncate text-xs text-[var(--neutral-11)]">
-                <span className="font-medium text-[var(--neutral-12)]">{file.name}</span>
-                <span className="mx-1 text-[var(--neutral-8)]">/</span>
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">{file.name}</span>
+                <span className="mx-1 text-muted-foreground">/</span>
                 {formatBytes(file.size)}
               </p>
             ) : (
-              <p className="mt-0.5 text-xs text-[var(--neutral-11)]">{text.intakeDescription}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{text.intakeDescription}</p>
             )}
           </div>
         </div>
@@ -386,7 +386,7 @@ function TaskStatusPanel({
         showValue
       />
 
-      <div className="grid gap-1 text-[var(--neutral-11)]">
+      <div className="grid gap-1 text-muted-foreground">
         <code className="block truncate font-mono">{uploadKey}</code>
         <span className="text-[11px]">
           {labels.updatedAt}: {formatTimestamp(task.updated_at)}
@@ -394,8 +394,8 @@ function TaskStatusPanel({
       </div>
 
       {payload ? (
-        <div className="grid gap-1 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-2 py-1.5 text-[var(--neutral-11)]">
-          <span className="font-medium text-[var(--neutral-12)]">
+        <div className="grid gap-1 rounded-[var(--radius-sm)] bg-background px-2 py-1.5 text-muted-foreground">
+          <span className="font-medium text-foreground">
             {task.error ? labels.taskError : labels.resultReady}
           </span>
           <pre className="max-h-28 overflow-auto whitespace-pre-wrap break-words font-mono text-[11px]">
@@ -486,7 +486,7 @@ function getTaskPanelTone(status: TaskRecord["status"]) {
     case "failed":
       return "border-[var(--red-6)] bg-[var(--red-2)] text-[var(--red-12)]";
     case "cancelled":
-      return "border-[var(--neutral-6)] bg-[var(--neutral-2)] text-[var(--neutral-12)]";
+      return "border-border bg-muted text-foreground";
     case "queued":
     case "running":
       return "border-[var(--blue-6)] bg-[var(--blue-2)] text-[var(--blue-12)]";

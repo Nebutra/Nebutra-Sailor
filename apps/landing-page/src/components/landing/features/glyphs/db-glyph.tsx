@@ -35,18 +35,18 @@ export function DbGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Code line */}
-        <div className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]">
+        <div className="rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
           <code className="font-mono text-[10px] leading-none">
-            <span className="text-[var(--neutral-10)]">prisma</span>
-            <span className="text-[var(--neutral-11)]">.</span>
-            <span className="text-[var(--neutral-12)]">post</span>
-            <span className="text-[var(--neutral-11)]">.</span>
-            <span className="text-[var(--blue-11)]">findMany</span>
-            <span className="text-[var(--neutral-11)]">{"({ "}</span>
+            <span className="text-muted-foreground">prisma</span>
+            <span className="text-muted-foreground">.</span>
+            <span className="text-foreground">post</span>
+            <span className="text-muted-foreground">.</span>
+            <span className="text-primary">findMany</span>
+            <span className="text-muted-foreground">{"({ "}</span>
             <span className="text-[var(--cyan-11)]">tenantId</span>
-            <span className="text-[var(--neutral-11)]">{" })"}</span>
+            <span className="text-muted-foreground">{" })"}</span>
           </code>
         </div>
 
@@ -57,23 +57,23 @@ export function DbGlyph({ locale }: SubpackageGlyphProps) {
             return (
               <div
                 key={row.id}
-                className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2 py-1 ring-1 ring-[var(--neutral-5)]"
+                className="flex items-center gap-2 rounded-[var(--radius-md)] bg-muted px-2 py-1 ring-1 ring-[hsl(var(--border))]"
               >
                 {blocked ? (
-                  <Cross className="h-3 w-3 shrink-0 text-[var(--neutral-10)]" aria-hidden="true" />
+                  <Cross className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
                 ) : (
                   <Check className="h-3 w-3 shrink-0 text-[var(--green-9)]" aria-hidden="true" />
                 )}
                 <span
                   className={`truncate font-mono text-[10px] ${
-                    blocked ? "text-[var(--neutral-9)] line-through" : "text-[var(--neutral-12)]"
+                    blocked ? "text-muted-foreground line-through" : "text-foreground"
                   }`}
                 >
                   {row.id}
                 </span>
                 <span
                   className={`ml-auto shrink-0 font-mono text-[10px] uppercase tracking-wide ${
-                    blocked ? "text-[var(--neutral-9)] line-through" : "text-[var(--neutral-10)]"
+                    blocked ? "text-muted-foreground line-through" : "text-muted-foreground"
                   }`}
                 >
                   {row.label}

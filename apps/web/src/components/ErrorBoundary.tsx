@@ -55,7 +55,7 @@ export class ErrorBoundary extends Component<Props, State> {
           className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
           style={{
             backgroundImage: `
-              radial-gradient(at 27% 37%, var(--blue-9) 0px, transparent 50%),
+              radial-gradient(at 27% 37%, hsl(var(--primary)) 0px, transparent 50%),
               radial-gradient(at 73% 63%, var(--cyan-9) 0px, transparent 50%)
             `,
             filter: "blur(80px) saturate(1.2)",
@@ -65,16 +65,16 @@ export class ErrorBoundary extends Component<Props, State> {
 
         <main role="alert" className="relative w-full max-w-md">
           <div
-            className="rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]/85 p-8 backdrop-blur-xl"
+            className="rounded-[var(--radius-panel)] border border-border bg-background/85 p-8 backdrop-blur-xl"
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
-            <div className="mb-4 font-mono text-xs font-medium uppercase tracking-[0.08em] text-[var(--neutral-11)]">
+            <div className="mb-4 font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
               Error 500
               {digest ? ` · ${digest.slice(0, 8)}` : ""}
             </div>
 
             <h1
-              className="mb-3 text-2xl font-semibold text-[var(--neutral-12)]"
+              className="mb-3 text-2xl font-semibold text-foreground"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
@@ -83,7 +83,7 @@ export class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h1>
 
-            <p className="mb-7 text-sm leading-relaxed text-[var(--neutral-11)]">
+            <p className="mb-7 text-sm leading-relaxed text-muted-foreground">
               An unexpected error occurred. You can try again — if the problem persists, check the
               status page or contact support.
             </p>
@@ -97,7 +97,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </Button>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--neutral-6)] pt-4 font-mono text-xs text-[var(--neutral-11)]">
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 font-mono text-xs text-muted-foreground">
               <a
                 href="https://status.nebutra.com"
                 className="inline-flex items-center gap-1 transition-opacity hover:opacity-80"

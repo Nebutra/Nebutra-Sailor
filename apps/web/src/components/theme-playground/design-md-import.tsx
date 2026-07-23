@@ -84,7 +84,7 @@ export function DesignMdImport({ onImported }: DesignMdImportProps) {
       <Textarea
         value={content}
         onValueChange={setContent}
-        placeholder={`---\nname: My Brand\ncolors:\n  primary: "#0033FE"\n  accent: "#0BF1C3"\n---`}
+        placeholder={`---\nname: My Brand\ncolors:\n  primary: "hsl(var(--primary))"\n  accent: "#0BF1C3"\n---`}
         rows={8}
         className="font-mono text-xs"
         aria-label="DESIGN.md content"

@@ -200,20 +200,20 @@ export function TwoFactorBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
-            <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-            <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+            <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
           </div>
-          <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+          <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {capability.requiresPasswordAccount ? "Needs password account" : "Not wired"}
           </span>
         </div>
 
-        <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
-          <p className="text-sm font-medium text-[var(--neutral-12)]">Authenticator app setup</p>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">{capability.reason}</p>
+        <div className="rounded-[var(--radius-lg)] border border-dashed border-border bg-muted p-4">
+          <p className="text-sm font-medium text-foreground">Authenticator app setup</p>
+          <p className="mt-1 text-sm text-muted-foreground">{capability.reason}</p>
         </div>
       </section>
     );
@@ -292,7 +292,7 @@ export function TwoFactorBlock({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <TwoFactorHeader
         title={t("title")}
         description={t("description")}
@@ -409,11 +409,11 @@ function TwoFactorHeader({
   return (
     <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
       <div>
-        <h3 className="text-sm font-medium text-[var(--neutral-12)]">{title}</h3>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{description}</p>
-        <p className="mt-2 text-xs leading-5 text-[var(--neutral-10)]">{help}</p>
+        <h3 className="text-sm font-medium text-foreground">{title}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+        <p className="mt-2 text-xs leading-5 text-muted-foreground">{help}</p>
       </div>
-      <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+      <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
         {status}
       </span>
     </div>
@@ -478,7 +478,7 @@ function PasswordStepForm({
   return (
     <form className="space-y-4" onSubmit={onSubmit} noValidate>
       <div className="space-y-1.5">
-        <label className="block text-sm font-medium text-[var(--neutral-12)]" htmlFor={inputId}>
+        <label className="block text-sm font-medium text-foreground" htmlFor={inputId}>
           {promptLabel}
         </label>
         <Input
@@ -537,9 +537,9 @@ function VerifyTotpForm({
 }: VerifyTotpFormProps): React.ReactElement {
   return (
     <form className="space-y-4" onSubmit={onSubmit} noValidate>
-      <p className="text-sm text-[var(--neutral-11)]">{scanLabel}</p>
+      <p className="text-sm text-muted-foreground">{scanLabel}</p>
 
-      <div className="flex flex-col items-start gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col items-start gap-3 rounded-[var(--radius-lg)] border border-border bg-muted p-4 sm:flex-row sm:items-center">
         <NextImage
           alt="Two-factor QR code"
           className="size-[200px] rounded bg-white p-2"
@@ -550,20 +550,17 @@ function VerifyTotpForm({
         />
 
         <div className="min-w-0 flex-1 space-y-1.5">
-          <p className="text-xs font-medium text-[var(--neutral-10)] uppercase tracking-wide">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
             {secretLabel}
           </p>
-          <code className="block break-all rounded bg-[var(--neutral-3)] px-2 py-1.5 font-mono text-[var(--neutral-12)] text-xs">
+          <code className="block break-all rounded bg-muted px-2 py-1.5 font-mono text-foreground text-xs">
             {setupData.secret}
           </code>
         </div>
       </div>
 
       <div className="space-y-1.5">
-        <label
-          className="block text-sm font-medium text-[var(--neutral-12)]"
-          htmlFor="two-factor-code"
-        >
+        <label className="block text-sm font-medium text-foreground" htmlFor="two-factor-code">
           {verificationCodeLabel}
         </label>
         <Input
@@ -623,14 +620,14 @@ function BackupCodesPanel({
   return (
     <div className="space-y-4">
       <div>
-        <h4 className="text-sm font-medium text-[var(--neutral-12)]">{title}</h4>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{description}</p>
+        <h4 className="text-sm font-medium text-foreground">{title}</h4>
+        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       </div>
 
-      <ul className="grid grid-cols-2 gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+      <ul className="grid grid-cols-2 gap-2 rounded-[var(--radius-lg)] border border-border bg-muted p-4">
         {codes.map((backupCode) => (
           <li
-            className="rounded bg-[var(--neutral-1)] px-2 py-1.5 text-center font-mono text-[var(--neutral-12)] text-xs"
+            className="rounded bg-background px-2 py-1.5 text-center font-mono text-foreground text-xs"
             key={backupCode}
           >
             {backupCode}
@@ -646,7 +643,7 @@ function BackupCodesPanel({
           {finishLabel}
         </Button>
         {copied && (
-          <span className="text-xs text-[var(--neutral-11)]" role="status">
+          <span className="text-xs text-muted-foreground" role="status">
             Copied
           </span>
         )}

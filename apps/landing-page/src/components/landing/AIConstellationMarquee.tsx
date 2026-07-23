@@ -73,7 +73,7 @@ function IconChip({ icon, name }: AiIcon) {
   return (
     <div
       style={{ boxShadow: "var(--ring-hairline)" }}
-      className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-[var(--neutral-6)] bg-background/80 hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px transition-[background-color,border-color,transform] duration-150 motion-reduce:hover:translate-y-0 group select-none"
+      className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-border bg-background/80 hover:border-border hover:bg-muted hover:-translate-y-px transition-[background-color,border-color,transform] duration-150 motion-reduce:hover:translate-y-0 group select-none"
     >
       <Component size={20} className="size-5 shrink-0" />
       <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors whitespace-nowrap">

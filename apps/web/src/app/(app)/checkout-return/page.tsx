@@ -27,10 +27,8 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
   return (
     <section className="mx-auto w-full max-w-2xl px-4 py-12 md:px-6">
       <header className="mb-6 text-center">
-        <h1 className="font-bold text-2xl text-[color:var(--neutral-12)] lg:text-3xl">
-          Almost there
-        </h1>
-        <p className="mt-2 text-[color:var(--neutral-11)] text-sm">
+        <h1 className="font-bold text-2xl text-foreground lg:text-3xl">Almost there</h1>
+        <p className="mt-2 text-muted-foreground text-sm">
           We are confirming your subscription with the payment provider.
         </p>
       </header>

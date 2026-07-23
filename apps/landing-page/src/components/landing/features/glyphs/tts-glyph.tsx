@@ -25,18 +25,18 @@ const BAR_HEIGHTS: readonly number[] = Array.from({ length: TOTAL_BARS }, (_, i)
 export function TtsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-4 py-3"
+      className="flex w-full flex-col justify-between gap-2.5 rounded-[var(--radius-lg)] bg-muted px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Script line */}
       <div className="flex items-start gap-2">
         <span
           aria-hidden="true"
-          className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-3)] text-[var(--neutral-11)]"
+          className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-muted text-muted-foreground"
         >
           <Sparkles className="h-3 w-3" />
         </span>
-        <p className="font-mono text-[11px] leading-snug text-[var(--neutral-12)]">
+        <p className="font-mono text-[11px] leading-snug text-foreground">
           &ldquo;Welcome to Nebutra. Let me show you around.&rdquo;
         </p>
       </div>
@@ -62,18 +62,18 @@ export function TtsGlyph(_props: SubpackageGlyphProps) {
           <button
             type="button"
             aria-label="Play voice preview"
-            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--neutral-12)] text-[var(--neutral-1)]"
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))]"
           >
             <Play className="h-3 w-3" />
           </button>
           <button
             type="button"
             aria-label="Pause voice preview"
-            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--neutral-3)] text-[var(--neutral-11)]"
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground"
           >
             <Pause className="h-3 w-3" />
           </button>
-          <span className="font-mono text-[10px] text-[var(--neutral-11)]">0:08 / 0:14</span>
+          <span className="font-mono text-[10px] text-muted-foreground">0:08 / 0:14</span>
         </div>
         <Badge variant="outline" size="sm" className="font-mono text-[10px]">
           Aria &middot; ElevenLabs

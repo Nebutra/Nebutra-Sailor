@@ -101,13 +101,13 @@ export function ApiKeysList({
 
   if (keys.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] py-10 text-center">
-        <p className="mb-3 text-sm text-[var(--neutral-11)]">{resolvedEmptyTitle}</p>
+      <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-border bg-muted py-10 text-center">
+        <p className="mb-3 text-sm text-muted-foreground">{resolvedEmptyTitle}</p>
         <button
           type="button"
           onClick={onCreate}
           className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         >
           {resolvedEmptyCta}
         </button>
@@ -116,9 +116,9 @@ export function ApiKeysList({
   }
 
   return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)]">
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-border">
       <table className="w-full text-sm">
-        <thead className="bg-[var(--neutral-2)] text-left text-xs font-medium text-[var(--neutral-11)]">
+        <thead className="bg-muted text-left text-xs font-medium text-muted-foreground">
           <tr>
             <th scope="col" className="px-4 py-2.5">
               {labels.name}
@@ -140,20 +140,18 @@ export function ApiKeysList({
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[var(--neutral-6)] bg-[var(--neutral-1)]">
+        <tbody className="divide-y divide-border bg-background">
           {keys.map((k) => (
             <tr key={k.id}>
-              <td className="px-4 py-3 font-medium text-[var(--neutral-12)]">{k.name}</td>
-              <td className="px-4 py-3 font-mono text-xs text-[var(--neutral-11)]">
-                {k.keyPrefix}…
-              </td>
-              <td className="px-4 py-3 text-xs text-[var(--neutral-11)]">
+              <td className="px-4 py-3 font-medium text-foreground">{k.name}</td>
+              <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{k.keyPrefix}…</td>
+              <td className="px-4 py-3 text-xs text-muted-foreground">
                 {formatDate(k.lastUsedAt, labels.never)}
               </td>
-              <td className="px-4 py-3 text-xs text-[var(--neutral-11)]">
+              <td className="px-4 py-3 text-xs text-muted-foreground">
                 {k.scopes.length > 0 ? k.scopes.join(", ") : "—"}
               </td>
-              <td className="px-4 py-3 text-xs text-[var(--neutral-11)]">
+              <td className="px-4 py-3 text-xs text-muted-foreground">
                 {formatDate(k.createdAt, labels.never)}
               </td>
               <td className="px-4 py-3 text-right">

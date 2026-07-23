@@ -35,7 +35,7 @@ type ViewMode = "grid" | "list";
 
 function PostMeta({ post }: { post: BlogIndexPost }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--neutral-10)]">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
       {post.dateLabel && (
         <span className="inline-flex items-center gap-1">
           <Calendar className="size-3.5" aria-hidden />
@@ -49,7 +49,7 @@ function PostMeta({ post }: { post: BlogIndexPost }) {
 
 function TagPill({ tag }: { tag: string }) {
   return (
-    <span className="rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-0.5 text-[11px] font-medium text-[var(--neutral-11)]">
+    <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
       {tag}
     </span>
   );
@@ -77,10 +77,10 @@ function GridCard({ post }: { post: BlogIndexPost }) {
   return (
     <Link
       href={post.href}
-      className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]"
+      className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-border bg-background transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-border hover:bg-muted"
     >
       <div
-        className="relative h-52 overflow-hidden bg-[var(--neutral-3)]"
+        className="relative h-52 overflow-hidden bg-muted"
         style={
           post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
         }
@@ -99,11 +99,11 @@ function GridCard({ post }: { post: BlogIndexPost }) {
 
       <div className="flex flex-1 flex-col p-5">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-lg font-semibold leading-snug text-[var(--neutral-12)] transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[var(--blue-9)]">
+        <h2 className="mt-3 text-lg font-semibold leading-snug text-foreground transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[hsl(var(--primary))]">
           {post.title}
         </h2>
         {post.excerpt && (
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--neutral-11)]">
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted-foreground">
             {post.excerpt}
           </p>
         )}
@@ -112,7 +112,7 @@ function GridCard({ post }: { post: BlogIndexPost }) {
           <div className="flex min-w-0 items-center gap-2">
             <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} />
             {post.authorName && (
-              <span className="truncate text-xs font-medium text-[var(--neutral-11)]">
+              <span className="truncate text-xs font-medium text-muted-foreground">
                 {post.authorName}
               </span>
             )}
@@ -128,10 +128,10 @@ function ListCard({ post }: { post: BlogIndexPost }) {
   return (
     <Link
       href={post.href}
-      className="group grid gap-5 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] sm:grid-cols-[220px_1fr]"
+      className="group grid gap-5 rounded-[var(--radius-md)] border border-border bg-background p-3 transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-border hover:bg-muted sm:grid-cols-[220px_1fr]"
     >
       <div
-        className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-[var(--neutral-3)]"
+        className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-muted"
         style={
           post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
         }
@@ -150,11 +150,11 @@ function ListCard({ post }: { post: BlogIndexPost }) {
 
       <div className="flex min-w-0 flex-col py-1 pr-2">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-xl font-semibold leading-snug text-[var(--neutral-12)] transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[var(--blue-9)]">
+        <h2 className="mt-3 text-xl font-semibold leading-snug text-foreground transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[hsl(var(--primary))]">
           {post.title}
         </h2>
         {post.excerpt && (
-          <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--neutral-11)]">
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
             {post.excerpt}
           </p>
         )}
@@ -162,7 +162,7 @@ function ListCard({ post }: { post: BlogIndexPost }) {
           <div className="flex min-w-0 items-center gap-2">
             <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} size="md" />
             {post.authorName && (
-              <span className="truncate text-sm font-medium text-[var(--neutral-11)]">
+              <span className="truncate text-sm font-medium text-muted-foreground">
                 {post.authorName}
               </span>
             )}
@@ -210,19 +210,19 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
 
   return (
     <section className="mt-16">
-      <div className="flex flex-col gap-4 border-t border-[var(--neutral-6)] pt-8 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-10)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             {copy.archive}
           </p>
-          <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.count}</p>
+          <p className="mt-2 text-sm text-muted-foreground">{copy.count}</p>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="relative block sm:w-80">
             <span className="sr-only">{copy.search}</span>
             <Search
-              className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--neutral-10)]"
+              className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
               aria-hidden
             />
             <Input
@@ -234,7 +234,7 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
             />
           </label>
 
-          <fieldset className="inline-flex h-11 w-fit rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-1">
+          <fieldset className="inline-flex h-11 w-fit rounded-[var(--radius-md)] border border-border bg-muted p-1">
             <legend className="sr-only">{copy.view}</legend>
             {(["grid", "list"] as const).map((mode) => {
               const active = viewMode === mode;
@@ -248,8 +248,8 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
                   onClick={() => setViewMode(mode)}
                   className={`inline-flex h-9 w-10 items-center justify-center rounded-[calc(var(--radius-md)-4px)] transition-colors ${
                     active
-                      ? "bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-sm"
-                      : "text-[var(--neutral-10)] hover:bg-[var(--neutral-1)] hover:text-[var(--neutral-12)]"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:bg-background hover:text-foreground"
                   }`}
                 >
                   <Icon className="size-4" aria-hidden />
@@ -261,9 +261,9 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
       </div>
 
       {filteredPosts.length === 0 ? (
-        <div className="mt-8 rounded-[var(--radius-md)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] px-6 py-12 text-center">
-          <p className="text-base font-semibold text-[var(--neutral-12)]">{copy.emptyTitle}</p>
-          <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.emptyBody}</p>
+        <div className="mt-8 rounded-[var(--radius-md)] border border-dashed border-border bg-background px-6 py-12 text-center">
+          <p className="text-base font-semibold text-foreground">{copy.emptyTitle}</p>
+          <p className="mt-2 text-sm text-muted-foreground">{copy.emptyBody}</p>
         </div>
       ) : (
         <div

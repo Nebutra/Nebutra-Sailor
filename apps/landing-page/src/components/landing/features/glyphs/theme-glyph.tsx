@@ -71,10 +71,10 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 shadow-sm ring-1 ring-[var(--neutral-6)]">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 shadow-sm ring-1 ring-[hsl(var(--border))]">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-12)]">
+          <div className="flex items-center gap-1.5 font-mono text-[10px] text-foreground">
             <BlendMode className="h-3 w-3" aria-hidden="true" />
             <span>{t.heading}</span>
           </div>
@@ -90,11 +90,11 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
             return (
               <div
                 key={theme.id}
-                className="relative flex flex-1 flex-col items-center gap-1 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-1"
+                className="relative flex flex-1 flex-col items-center gap-1 rounded-[var(--radius-md)] bg-muted p-1"
                 style={{
                   boxShadow: isActive
-                    ? "0 0 0 1.5px var(--brand-primary)"
-                    : "inset 0 0 0 1px var(--neutral-6)",
+                    ? "0 0 0 1.5px hsl(var(--primary))"
+                    : "inset 0 0 0 1px hsl(var(--border))",
                 }}
               >
                 <div className="h-6 w-full rounded" style={{ background: theme.swatch }} />
@@ -107,7 +107,7 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
                 {isActive ? (
                   <div
                     className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full text-white shadow-sm"
-                    style={{ background: "var(--brand-primary)" }}
+                    style={{ background: "hsl(var(--primary))" }}
                   >
                     <Check className="h-2 w-2" aria-hidden="true" />
                   </div>
@@ -118,7 +118,7 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
         </div>
 
         {/* Footer */}
-        <div className="font-mono text-[9px] text-[var(--neutral-10)]">{t.footer}</div>
+        <div className="font-mono text-[9px] text-muted-foreground">{t.footer}</div>
       </div>
     </div>
   );

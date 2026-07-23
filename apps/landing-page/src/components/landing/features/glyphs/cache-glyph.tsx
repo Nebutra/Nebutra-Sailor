@@ -36,12 +36,12 @@ export function CacheGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
-      <header className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--neutral-11)]">
-        <Lightning className="h-3 w-3 text-[var(--brand-primary)]" />
-        <span className="tabular-nums text-[var(--neutral-12)]">{HIT_RATE_VALUE.toFixed(1)}%</span>
+      <header className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+        <Lightning className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <span className="tabular-nums text-foreground">{HIT_RATE_VALUE.toFixed(1)}%</span>
         <span>{copy.headerLabel}</span>
       </header>
 
@@ -51,14 +51,14 @@ export function CacheGlyph({ locale }: SubpackageGlyphProps) {
             value={HIT_RATE_VALUE}
             size={88}
             arcPriority="equal"
-            colors={{ primary: "var(--brand-primary)", secondary: "var(--neutral-4)" }}
+            colors={{ primary: "hsl(var(--primary))", secondary: "hsl(var(--muted))" }}
             aria-label={`${HIT_RATE_VALUE} percent ${copy.headerLabel}`}
           >
             <span className="flex flex-col items-center justify-center leading-tight">
-              <span className="text-sm font-semibold tabular-nums text-[var(--neutral-12)]">
+              <span className="text-sm font-semibold tabular-nums text-foreground">
                 {Math.round(HIT_RATE_VALUE)}%
               </span>
-              <span className="text-[9px] uppercase tracking-wide text-[var(--neutral-10)]">
+              <span className="text-[9px] uppercase tracking-wide text-muted-foreground">
                 {copy.headerLabel}
               </span>
             </span>
@@ -73,8 +73,8 @@ export function CacheGlyph({ locale }: SubpackageGlyphProps) {
                 key={event.key}
                 className={
                   isMiss
-                    ? "flex items-center gap-1.5 text-[var(--neutral-9)]"
-                    : "flex items-center gap-1.5 text-[var(--neutral-12)]"
+                    ? "flex items-center gap-1.5 text-muted-foreground"
+                    : "flex items-center gap-1.5 text-foreground"
                 }
               >
                 <span className="min-w-0 flex-1 truncate">{event.key}</span>
@@ -85,7 +85,7 @@ export function CacheGlyph({ locale }: SubpackageGlyphProps) {
                 >
                   {event.outcome}
                 </Badge>
-                <span className="w-10 shrink-0 text-right tabular-nums text-[var(--neutral-10)]">
+                <span className="w-10 shrink-0 text-right tabular-nums text-muted-foreground">
                   {event.latency}
                 </span>
               </li>
@@ -94,7 +94,7 @@ export function CacheGlyph({ locale }: SubpackageGlyphProps) {
         </ul>
       </div>
 
-      <footer className="flex items-center gap-1.5 text-[10px] text-[var(--neutral-10)]">
+      <footer className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
         <Database className="h-3 w-3" />
         <span className="truncate">{copy.footerLabel}</span>
       </footer>

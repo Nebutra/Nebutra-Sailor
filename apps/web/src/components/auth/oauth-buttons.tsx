@@ -133,7 +133,7 @@ export function OAuthButtons({ mode, providers = OAUTH_PROVIDERS, returnUrl }: O
             key={provider}
             type="button"
             variant="outline"
-            className="h-10 w-full justify-center gap-2.5 border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
+            className="h-10 w-full justify-center gap-2.5 border-border bg-background px-3 text-foreground shadow-none hover:bg-muted"
             disabled={loadingProvider !== null}
             aria-label={`${t("continueWith")} ${label}`}
             onClick={() => handleOAuth(provider)}

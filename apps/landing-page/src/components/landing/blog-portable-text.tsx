@@ -50,7 +50,7 @@ function renderTableCellMark(
       <a
         key={key}
         href={href}
-        className="font-medium text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4 transition-colors hover:decoration-[var(--blue-9)]"
+        className="font-medium text-foreground underline decoration-[hsl(var(--border))] underline-offset-4 transition-colors hover:decoration-[hsl(var(--primary))]"
         rel={isExternal ? "noopener noreferrer" : undefined}
         target={isExternal ? "_blank" : undefined}
       >
@@ -66,7 +66,7 @@ function renderTableCellMark(
         [
         <a
           href={href}
-          className="text-[var(--blue-11)] no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
+          className="text-primary no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
         >
           {children}
         </a>
@@ -77,7 +77,7 @@ function renderTableCellMark(
 
   if (mark === "strong") {
     return (
-      <strong key={key} className="font-semibold text-[var(--neutral-12)]">
+      <strong key={key} className="font-semibold text-foreground">
         {children}
       </strong>
     );
@@ -85,7 +85,7 @@ function renderTableCellMark(
 
   if (mark === "em") {
     return (
-      <em key={key} className="italic text-[var(--neutral-12)]">
+      <em key={key} className="italic text-foreground">
         {children}
       </em>
     );
@@ -95,7 +95,7 @@ function renderTableCellMark(
     return (
       <code
         key={key}
-        className="rounded-[var(--radius-sm)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.9em] text-[var(--neutral-12)]"
+        className="rounded-[var(--radius-sm)] border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground"
       >
         {children}
       </code>
@@ -110,7 +110,7 @@ function renderTableCellMark(
     return (
       <mark
         key={key}
-        className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-[var(--neutral-12)]"
+        className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-foreground"
       >
         {children}
       </mark>
@@ -121,7 +121,7 @@ function renderTableCellMark(
     return (
       <kbd
         key={key}
-        className="rounded-[var(--radius-sm)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.82em] text-[var(--neutral-12)]"
+        className="rounded-[var(--radius-sm)] border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.82em] text-foreground"
       >
         {children}
       </kbd>
@@ -148,7 +148,7 @@ function renderTableCellMark(
     return (
       <span
         key={key}
-        className="mx-0.5 inline-flex rounded-[var(--radius-sm)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.88em] font-medium text-[var(--neutral-12)]"
+        className="mx-0.5 inline-flex rounded-[var(--radius-sm)] border border-dashed border-border bg-muted px-1.5 py-0.5 font-mono text-[0.88em] font-medium text-foreground"
       >
         {children}
       </span>
@@ -243,14 +243,14 @@ function BlogTable({ value }: { value: PortableTextBlock }) {
   if (!header?.cells.length) return null;
 
   return (
-    <div className="my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] shadow-sm">
-      <table className="w-full min-w-[680px] border-collapse text-left text-sm text-[var(--neutral-11)]">
-        <thead className="bg-[var(--neutral-2)] text-[var(--neutral-12)]">
+    <div className="my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background shadow-sm">
+      <table className="w-full min-w-[680px] border-collapse text-left text-sm text-muted-foreground">
+        <thead className="bg-muted text-foreground">
           <tr>
             {header.cells.map((cell, index) => (
               <th
                 key={`${value._key ?? "table"}-head-${index}`}
-                className="border-b border-[var(--neutral-6)] px-4 py-3 font-semibold"
+                className="border-b border-border px-4 py-3 font-semibold"
                 scope="col"
               >
                 <BlogTableCellContent cell={cell} />
@@ -260,7 +260,7 @@ function BlogTable({ value }: { value: PortableTextBlock }) {
         </thead>
         <tbody>
           {bodyRows.map((row) => (
-            <tr key={row.key} className="border-b border-[var(--neutral-5)] last:border-b-0">
+            <tr key={row.key} className="border-b border-border last:border-b-0">
               {row.cells.map((cell, cellIndex) => (
                 <td key={`${row.key}-cell-${cellIndex}`} className="px-4 py-3 align-top leading-6">
                   <BlogTableCellContent cell={cell} />
@@ -289,7 +289,7 @@ function HeadingAnchor({ id }: { id: string | undefined }) {
     <a
       href={`#${id}`}
       aria-label="Link to section"
-      className="ml-2 inline-flex translate-y-0.5 text-[var(--neutral-8)] opacity-0 transition-opacity hover:text-[var(--neutral-12)] group-hover:opacity-100 focus-visible:opacity-100"
+      className="ml-2 inline-flex translate-y-0.5 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100 focus-visible:opacity-100"
     >
       <Hash className="size-[0.8em]" aria-hidden />
     </a>
@@ -328,7 +328,7 @@ function BlogMathBlock({ value }: { value: PortableTextBlock }) {
   if (!math) return null;
 
   return (
-    <figure className="blog-math-block my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 py-5 shadow-sm">
+    <figure className="blog-math-block my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background px-4 py-5 shadow-sm">
       <div dangerouslySetInnerHTML={{ __html: renderMath(math, true) }} />
     </figure>
   );
@@ -341,7 +341,7 @@ function BlogCalloutBlock({ value }: { value: PortableTextBlock }) {
       : "note";
   const toneClass = {
     insight: "border-[var(--blue-7)] bg-[var(--blue-2)] text-[var(--blue-12)]",
-    note: "border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-12)]",
+    note: "border-border bg-muted text-foreground",
     success: "border-[var(--green-7)] bg-[var(--green-2)] text-[var(--green-12)]",
     warning: "border-[var(--amber-7)] bg-[var(--amber-2)] text-[var(--amber-12)]",
   }[tone];
@@ -364,9 +364,7 @@ function BlogCalloutBlock({ value }: { value: PortableTextBlock }) {
             {label}
           </div>
           {value.body && (
-            <p className="mt-2 text-lg font-medium leading-8 text-[var(--neutral-12)]">
-              {value.body}
-            </p>
+            <p className="mt-2 text-lg font-medium leading-8 text-foreground">{value.body}</p>
           )}
         </div>
       </div>
@@ -379,7 +377,7 @@ function BlogQuoteBlock({ value }: { value: PortableTextBlock }) {
   const attribution = value.sourceHref ? (
     <a
       href={value.sourceHref}
-      className="underline decoration-[var(--neutral-7)] underline-offset-4"
+      className="underline decoration-[hsl(var(--border))] underline-offset-4"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -390,7 +388,7 @@ function BlogQuoteBlock({ value }: { value: PortableTextBlock }) {
   );
 
   return (
-    <figure className="lg:-mx-10 my-10 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-6 py-6 shadow-sm">
+    <figure className="lg:-mx-10 my-10 rounded-[var(--radius-lg)] border border-border bg-background px-6 py-6 shadow-sm">
       <div className="flex gap-4">
         <div
           className="mt-1 font-serif text-5xl leading-none text-[var(--blue-8)]"
@@ -399,11 +397,11 @@ function BlogQuoteBlock({ value }: { value: PortableTextBlock }) {
           "
         </div>
         <div>
-          <blockquote className="text-xl font-semibold leading-10 text-[var(--neutral-12)]">
+          <blockquote className="text-xl font-semibold leading-10 text-foreground">
             {value.quote}
           </blockquote>
           {value.attribution && (
-            <figcaption className="mt-4 text-sm font-medium text-[var(--neutral-10)]">
+            <figcaption className="mt-4 text-sm font-medium text-muted-foreground">
               {attribution}
             </figcaption>
           )}
@@ -418,22 +416,20 @@ function BlogStatGrid({ value }: { value: PortableTextBlock }) {
   if (!items.length) return null;
 
   return (
-    <section className="my-9 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
+    <section className="my-9 rounded-[var(--radius-lg)] border border-border bg-background p-5">
       {value.title && (
-        <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+        <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
       )}
       <div className="grid gap-3 sm:grid-cols-2">
         {items.map((item, index) => (
           <div
             key={item._key ?? `${value._key ?? "stat"}-${index}`}
-            className="rounded-[var(--radius-md)] border border-[var(--neutral-5)] bg-[var(--neutral-2)] p-4"
+            className="rounded-[var(--radius-md)] border border-border bg-muted p-4"
           >
-            <div className="font-mono text-2xl font-semibold text-[var(--neutral-12)]">
-              {item.value}
-            </div>
-            <div className="mt-2 text-sm font-medium text-[var(--neutral-12)]">{item.label}</div>
+            <div className="font-mono text-2xl font-semibold text-foreground">{item.value}</div>
+            <div className="mt-2 text-sm font-medium text-foreground">{item.label}</div>
             {item.caption && (
-              <p className="mt-1 text-sm leading-6 text-[var(--neutral-10)]">{item.caption}</p>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.caption}</p>
             )}
           </div>
         ))}
@@ -450,15 +446,15 @@ function BlogComparisonTable({ value }: { value: PortableTextBlock }) {
   return (
     <section className="my-9">
       {value.title && (
-        <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+        <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
       )}
-      <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+      <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background">
         <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-          <thead className="bg-[var(--neutral-2)] text-[var(--neutral-12)]">
+          <thead className="bg-muted text-foreground">
             <tr>
-              <th className="border-b border-[var(--neutral-6)] px-4 py-3">Dimension</th>
+              <th className="border-b border-border px-4 py-3">Dimension</th>
               {columns.map((column) => (
-                <th key={column} className="border-b border-[var(--neutral-6)] px-4 py-3">
+                <th key={column} className="border-b border-border px-4 py-3">
                   {column}
                 </th>
               ))}
@@ -468,12 +464,9 @@ function BlogComparisonTable({ value }: { value: PortableTextBlock }) {
             {rows.map((row, rowIndex) => (
               <tr
                 key={row._key ?? `${value._key ?? "comparison"}-${rowIndex}`}
-                className="border-b border-[var(--neutral-5)] last:border-b-0"
+                className="border-b border-border last:border-b-0"
               >
-                <th
-                  className="px-4 py-3 align-top font-semibold text-[var(--neutral-12)]"
-                  scope="row"
-                >
+                <th className="px-4 py-3 align-top font-semibold text-foreground" scope="row">
                   {row.label}
                 </th>
                 {columns.map((column, cellIndex) => (
@@ -494,25 +487,25 @@ function BlogSourceCard({ value }: { value: PortableTextBlock }) {
   if (!value.title || !value.url) return null;
 
   return (
-    <aside className="my-7 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5 shadow-sm">
-      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-9)]">
+    <aside className="my-7 rounded-[var(--radius-md)] border border-border bg-background p-5 shadow-sm">
+      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
         Source
       </div>
       <a
         href={value.url}
-        className="mt-2 block text-base font-semibold text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4"
+        className="mt-2 block text-base font-semibold text-foreground underline decoration-[hsl(var(--border))] underline-offset-4"
         rel="noopener noreferrer"
         target="_blank"
       >
         {value.title}
       </a>
       {(value.publisher || value.author || value.accessedAt) && (
-        <div className="mt-2 text-sm text-[var(--neutral-10)]">
+        <div className="mt-2 text-sm text-muted-foreground">
           {[value.publisher, value.author, value.accessedAt].filter(Boolean).join(" · ")}
         </div>
       )}
       {value.summary && (
-        <p className="mt-3 text-sm leading-7 text-[var(--neutral-11)]">{value.summary}</p>
+        <p className="mt-3 text-sm leading-7 text-muted-foreground">{value.summary}</p>
       )}
     </aside>
   );
@@ -530,12 +523,12 @@ function BlogSourceCardGroup({
 
   return (
     <section className="lg:-mx-16 my-9" data-blog-source-grid>
-      <div className="mb-4 flex items-end justify-between gap-4 border-b border-[var(--neutral-6)] pb-3">
+      <div className="mb-4 flex items-end justify-between gap-4 border-b border-border pb-3">
         <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-9)]">
+          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
             {language === "zh" ? "资料索引" : "Source index"}
           </div>
-          <p className="mt-1 text-sm leading-6 text-[var(--neutral-10)]">
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
             {language === "zh"
               ? `${sources.length} 个来源支撑这篇 Frontier 笔记。`
               : `${sources.length} sources behind this Frontier note.`}
@@ -547,24 +540,24 @@ function BlogSourceCardGroup({
           <a
             key={source._key ?? `${value._key ?? "source-group"}-${index}`}
             href={source.url ?? "#"}
-            className="group flex min-h-32 flex-col rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 transition-colors hover:border-[var(--blue-7)] hover:bg-[var(--neutral-2)]"
+            className="group flex min-h-32 flex-col rounded-[var(--radius-md)] border border-border bg-background p-4 transition-colors hover:border-[var(--blue-7)] hover:bg-muted"
             rel="noopener noreferrer"
             target="_blank"
           >
             <div className="flex items-start justify-between gap-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-9)]">
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 {source.publisher ?? (language === "zh" ? "来源" : "Source")}
               </div>
               <ArrowUpRight
-                className="size-4 shrink-0 text-[var(--neutral-8)] transition-colors group-hover:text-[var(--blue-9)]"
+                className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"
                 aria-hidden
               />
             </div>
-            <h3 className="mt-3 text-base font-semibold leading-6 text-[var(--neutral-12)]">
+            <h3 className="mt-3 text-base font-semibold leading-6 text-foreground">
               {source.title}
             </h3>
             {source.summary && (
-              <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--neutral-10)]">
+              <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
                 {source.summary}
               </p>
             )}
@@ -584,11 +577,11 @@ function BlogImageFigure({ image }: { image: PortableTextImage }) {
 
   return (
     <figure>
-      <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-3)]">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-lg)] bg-muted">
         <Image src={imageUrl} alt={alt} fill className="object-cover" sizes="720px" />
       </div>
       {image.caption && (
-        <figcaption className="mt-2 text-center text-sm text-[var(--neutral-10)]">
+        <figcaption className="mt-2 text-center text-sm text-muted-foreground">
           {image.caption}
         </figcaption>
       )}
@@ -603,7 +596,7 @@ function BlogImageSet({ value }: { value: PortableTextBlock }) {
   return (
     <section className="my-9">
       {value.title && (
-        <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+        <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
       )}
       <div className={images.length === 1 ? "" : "grid gap-4 md:grid-cols-2"}>
         {images.map((image, index) => (
@@ -621,20 +614,20 @@ function BlogEmbedBlock({ value }: { value: PortableTextBlock }) {
   if (!value.url || !value.title) return null;
 
   return (
-    <aside className="my-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
-      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-9)]">
+    <aside className="my-8 rounded-[var(--radius-lg)] border border-border bg-background p-5">
+      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
         {value.provider ?? "Embed"}
       </div>
       <a
         href={value.url}
-        className="mt-2 block text-lg font-semibold text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4"
+        className="mt-2 block text-lg font-semibold text-foreground underline decoration-[hsl(var(--border))] underline-offset-4"
         rel="noopener noreferrer"
         target="_blank"
       >
         {value.title}
       </a>
       {value.caption && (
-        <p className="mt-2 text-sm leading-6 text-[var(--neutral-10)]">{value.caption}</p>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{value.caption}</p>
       )}
     </aside>
   );
@@ -645,13 +638,13 @@ function BlogDiagramBlock({ value }: { value: PortableTextBlock }) {
     return (
       <figure className="my-9">
         {value.title && (
-          <figcaption className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
+          <figcaption className="mb-3 text-sm font-semibold text-foreground">
             {value.title}
           </figcaption>
         )}
         <BlogMermaidDiagram chart={value.mermaidCode} />
         {value.caption && (
-          <p className="mt-2 text-center text-sm text-[var(--neutral-10)]">{value.caption}</p>
+          <p className="mt-2 text-center text-sm text-muted-foreground">{value.caption}</p>
         )}
       </figure>
     );
@@ -662,7 +655,7 @@ function BlogDiagramBlock({ value }: { value: PortableTextBlock }) {
     return (
       <section className="my-9">
         {value.title && (
-          <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+          <h3 className="mb-4 text-base font-semibold text-foreground">{value.title}</h3>
         )}
         <BlogImageFigure image={{ ...image, caption: image.caption ?? value.caption }} />
       </section>
@@ -670,7 +663,7 @@ function BlogDiagramBlock({ value }: { value: PortableTextBlock }) {
   }
 
   return (
-    <aside className="my-8 rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5 text-sm text-[var(--neutral-10)]">
+    <aside className="my-8 rounded-[var(--radius-lg)] border border-dashed border-border bg-background p-5 text-sm text-muted-foreground">
       {value.title || "Diagram"} is recorded as a structured diagram block and needs a supported
       renderer.
     </aside>
@@ -681,9 +674,9 @@ function BlogComponentBlock({ value }: { value: PortableTextBlock }) {
   if (value.componentKey === "articleDivider") {
     return (
       <div className="my-14 flex items-center gap-4" aria-hidden>
-        <div className="h-px flex-1 bg-[var(--neutral-6)]" />
+        <div className="h-px flex-1 bg-[hsl(var(--border))]" />
         <div className="size-2 rounded-full bg-[var(--blue-8)]" />
-        <div className="h-px flex-1 bg-[var(--neutral-6)]" />
+        <div className="h-px flex-1 bg-[hsl(var(--border))]" />
       </div>
     );
   }
@@ -691,16 +684,16 @@ function BlogComponentBlock({ value }: { value: PortableTextBlock }) {
   const props = value.props?.filter((prop) => prop.name && prop.value) ?? [];
 
   return (
-    <aside className="my-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
-      <div className="text-sm font-semibold text-[var(--neutral-12)]">
+    <aside className="my-8 rounded-[var(--radius-lg)] border border-border bg-background p-5">
+      <div className="text-sm font-semibold text-foreground">
         {value.componentKey ?? "Component"}
       </div>
       {props.length > 0 && (
-        <dl className="mt-3 space-y-2 text-sm text-[var(--neutral-10)]">
+        <dl className="mt-3 space-y-2 text-sm text-muted-foreground">
           {props.map((prop, index) => (
             <div key={prop._key ?? `${value._key ?? "component"}-${index}`}>
               <dt className="font-mono text-xs uppercase tracking-[0.12em]">{prop.name}</dt>
-              <dd className="mt-1 text-[var(--neutral-11)]">{prop.value}</dd>
+              <dd className="mt-1 text-muted-foreground">{prop.value}</dd>
             </div>
           ))}
         </dl>
@@ -765,16 +758,13 @@ function createPortableTextComponents(
     block: {
       normal: ({ children }) => {
         return (
-          <p className="mt-5 text-[1.03rem] leading-[1.95] text-[var(--neutral-11)]">{children}</p>
+          <p className="mt-5 text-[1.03rem] leading-[1.95] text-muted-foreground">{children}</p>
         );
       },
       h2: ({ children, value }) => {
         const id = getHeadingId(value, headingIds);
         return (
-          <h2
-            id={id}
-            className="group mt-16 scroll-mt-28 text-2xl font-semibold text-[var(--neutral-12)]"
-          >
+          <h2 id={id} className="group mt-16 scroll-mt-28 text-2xl font-semibold text-foreground">
             {children}
             <HeadingAnchor id={id} />
           </h2>
@@ -783,10 +773,7 @@ function createPortableTextComponents(
       h3: ({ children, value }) => {
         const id = getHeadingId(value, headingIds);
         return (
-          <h3
-            id={id}
-            className="group mt-11 scroll-mt-28 text-xl font-semibold text-[var(--neutral-12)]"
-          >
+          <h3 id={id} className="group mt-11 scroll-mt-28 text-xl font-semibold text-foreground">
             {children}
             <HeadingAnchor id={id} />
           </h3>
@@ -795,10 +782,7 @@ function createPortableTextComponents(
       h4: ({ children, value }) => {
         const id = getHeadingId(value, headingIds);
         return (
-          <h4
-            id={id}
-            className="group mt-8 scroll-mt-28 text-base font-semibold text-[var(--neutral-12)]"
-          >
+          <h4 id={id} className="group mt-8 scroll-mt-28 text-base font-semibold text-foreground">
             {children}
             <HeadingAnchor id={id} />
           </h4>
@@ -810,14 +794,14 @@ function createPortableTextComponents(
 
         if (!isTemplate) {
           return (
-            <blockquote className="my-8 border-l border-[var(--neutral-7)] pl-5 text-lg font-semibold leading-9 text-[var(--neutral-12)]">
+            <blockquote className="my-8 border-l border-border pl-5 text-lg font-semibold leading-9 text-foreground">
               {children}
             </blockquote>
           );
         }
 
         return (
-          <blockquote className="group relative my-7 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-5 py-4 text-base font-medium leading-8 text-[var(--neutral-12)]">
+          <blockquote className="group relative my-7 rounded-[var(--radius-lg)] border border-border bg-background px-5 py-4 text-base font-medium leading-8 text-foreground">
             <div className="pr-10">{children}</div>
             <div className="absolute right-3 top-3">
               <BlogCopyButton
@@ -833,12 +817,12 @@ function createPortableTextComponents(
     },
     list: {
       bullet: ({ children }) => (
-        <ul className="mt-5 list-disc space-y-2.5 pl-6 text-[var(--neutral-11)] marker:text-[var(--neutral-8)]">
+        <ul className="mt-5 list-disc space-y-2.5 pl-6 text-muted-foreground marker:text-muted-foreground">
           {children}
         </ul>
       ),
       number: ({ children }) => (
-        <ol className="mt-5 list-decimal space-y-2.5 pl-6 text-[var(--neutral-11)] marker:text-[var(--neutral-9)]">
+        <ol className="mt-5 list-decimal space-y-2.5 pl-6 text-muted-foreground marker:text-muted-foreground">
           {children}
         </ol>
       ),
@@ -871,7 +855,7 @@ function createPortableTextComponents(
           <a
             href={href}
             aria-label={typeof value?.label === "string" ? value.label : undefined}
-            className="font-medium text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4 transition-colors hover:decoration-[var(--blue-9)]"
+            className="font-medium text-foreground underline decoration-[hsl(var(--border))] underline-offset-4 transition-colors hover:decoration-[hsl(var(--primary))]"
             rel={openInNewTab ? "noopener noreferrer" : undefined}
             target={openInNewTab ? "_blank" : undefined}
           >
@@ -880,7 +864,7 @@ function createPortableTextComponents(
         );
       },
       code: ({ children }) => (
-        <code className="rounded-[var(--radius-sm)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.9em] text-[var(--neutral-12)]">
+        <code className="rounded-[var(--radius-sm)] border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
           {children}
         </code>
       ),
@@ -893,7 +877,7 @@ function createPortableTextComponents(
             [
             <a
               href={href}
-              className="text-[var(--blue-11)] no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
+              className="text-primary no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
             >
               {children}
             </a>
@@ -902,16 +886,16 @@ function createPortableTextComponents(
         );
       },
       strong: ({ children }) => (
-        <strong className="font-semibold text-[var(--neutral-12)]">{children}</strong>
+        <strong className="font-semibold text-foreground">{children}</strong>
       ),
-      em: ({ children }) => <em className="italic text-[var(--neutral-12)]">{children}</em>,
+      em: ({ children }) => <em className="italic text-foreground">{children}</em>,
       highlight: ({ children }) => (
-        <mark className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-[var(--neutral-12)]">
+        <mark className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-foreground">
           {children}
         </mark>
       ),
       kbd: ({ children }) => (
-        <kbd className="rounded-[var(--radius-sm)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.82em] text-[var(--neutral-12)]">
+        <kbd className="rounded-[var(--radius-sm)] border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.82em] text-foreground">
           {children}
         </kbd>
       ),
@@ -923,7 +907,7 @@ function createPortableTextComponents(
           <span className="group/footnote relative inline-flex">
             <span className="underline decoration-dotted underline-offset-4">{children}</span>
             {note && (
-              <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden w-64 -translate-x-1/2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 text-xs leading-5 text-[var(--neutral-11)] shadow-lg group-hover/footnote:block">
+              <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden w-64 -translate-x-1/2 rounded-[var(--radius-md)] border border-border bg-background p-3 text-xs leading-5 text-muted-foreground shadow-lg group-hover/footnote:block">
                 {note}
               </span>
             )}
@@ -935,7 +919,7 @@ function createPortableTextComponents(
         return id ? <span id={id}>{children}</span> : children;
       },
       [TEMPLATE_PLACEHOLDER_MARK]: ({ children }) => (
-        <span className="mx-0.5 inline-flex rounded-[var(--radius-sm)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.88em] font-medium text-[var(--neutral-12)]">
+        <span className="mx-0.5 inline-flex rounded-[var(--radius-sm)] border border-dashed border-border bg-muted px-1.5 py-0.5 font-mono text-[0.88em] font-medium text-foreground">
           {children}
         </span>
       ),
@@ -984,7 +968,7 @@ function createPortableTextComponents(
         if (!label) return null;
 
         return (
-          <span className="mx-1 inline-flex rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-2 py-0.5 align-middle text-xs font-semibold uppercase tracking-[0.12em] text-[var(--neutral-11)]">
+          <span className="mx-1 inline-flex rounded-full border border-border bg-muted px-2 py-0.5 align-middle text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
             {label}
           </span>
         );
@@ -1000,11 +984,11 @@ function createPortableTextComponents(
 
         return (
           <figure className="mt-8">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-[var(--neutral-3)]">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-muted">
               <Image src={imageUrl} alt={alt} fill className="object-cover" sizes="720px" />
             </div>
             {caption && (
-              <figcaption className="mt-2 text-center text-sm text-[var(--neutral-10)]">
+              <figcaption className="mt-2 text-center text-sm text-muted-foreground">
                 {caption}
               </figcaption>
             )}
@@ -1041,7 +1025,7 @@ export async function BlogPortableText({
   if (!visibleBody.length) return null;
 
   return (
-    <div className="max-w-none text-[var(--neutral-11)]">
+    <div className="max-w-none text-muted-foreground">
       <style>{`
         .blog-code-html .shiki {
           margin: 0;
@@ -1064,7 +1048,7 @@ export async function BlogPortableText({
           display: inline-block;
           width: 2.25rem;
           margin-right: 1rem;
-          color: var(--neutral-9);
+          color: hsl(var(--muted-foreground));
           text-align: right;
           user-select: none;
         }

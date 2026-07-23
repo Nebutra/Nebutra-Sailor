@@ -16,13 +16,13 @@ const ROWS: ContentRow[] = [
 export function ContentStoreGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-3"
+      className="flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-md)] bg-background p-3"
       style={{ height: 160 }}
     >
-      <div className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">
+      <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
         <Database className="h-3 w-3" />
         <span>content_store</span>
-        <span className="text-[var(--neutral-9)]">·</span>
+        <span className="text-muted-foreground">·</span>
         <span>12,401 chunks</span>
       </div>
 
@@ -30,13 +30,11 @@ export function ContentStoreGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row) => (
           <div
             key={row.name}
-            className="flex items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1"
+            className="flex items-center gap-2 rounded-[var(--radius-sm)] border border-border bg-muted px-2 py-1"
           >
-            <FileText className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" />
-            <span className="truncate font-mono text-[10px] text-[var(--neutral-12)]">
-              {row.name}
-            </span>
-            <span className="font-mono text-[9px] text-[var(--neutral-10)]">{row.chunks}</span>
+            <FileText className="h-3 w-3 shrink-0 text-muted-foreground" />
+            <span className="truncate font-mono text-[10px] text-foreground">{row.name}</span>
+            <span className="font-mono text-[9px] text-muted-foreground">{row.chunks}</span>
             <div className="ml-auto">
               <Badge
                 variant="outline"
@@ -51,10 +49,10 @@ export function ContentStoreGlyph(_props: SubpackageGlyphProps) {
         ))}
       </div>
 
-      <div className="flex items-center gap-1.5 font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground">
         <BookClosed className="h-3 w-3" />
         <span>1,536-dim embeddings</span>
-        <span className="text-[var(--neutral-9)]">·</span>
+        <span className="text-muted-foreground">·</span>
         <span>tenant-scoped</span>
       </div>
     </div>

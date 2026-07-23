@@ -174,24 +174,24 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
         {featured ? (
           <>
             <AnimateIn preset="fadeUp" inView>
-              <div className="mt-14 border-t border-[var(--neutral-6)] pt-14">
+              <div className="mt-14 border-t border-border pt-14">
                 <NewsFeatured featured={featured} rail={rail} />
               </div>
             </AnimateIn>
 
             <AnimateIn preset="fadeUp" inView>
-              <div className="mt-20 border-t border-[var(--neutral-6)] pb-24 pt-14">
+              <div className="mt-20 border-t border-border pb-24 pt-14">
                 <NewsArchive items={archive} railSlides={railSlides} isZh={isZh} />
               </div>
             </AnimateIn>
           </>
         ) : (
           <AnimateIn preset="fadeUp" inView>
-            <div className="mt-16 flex flex-col items-center gap-3 border-t border-[var(--neutral-6)] py-24 text-center">
-              <p className="text-lg font-medium text-[var(--neutral-12)]">
+            <div className="mt-16 flex flex-col items-center gap-3 border-t border-border py-24 text-center">
+              <p className="text-lg font-medium text-foreground">
                 {isZh ? "暂时还没有新闻。" : "No news yet — announcements are on the way."}
               </p>
-              <p className="text-sm text-[var(--neutral-11)]">
+              <p className="text-sm text-muted-foreground">
                 {isZh ? "敬请关注后续更新。" : "Check back soon for updates."}
               </p>
             </div>
@@ -208,20 +208,20 @@ function NewsPageSkeleton() {
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950" aria-busy="true">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
         </div>
       </div>
       <div className="mx-auto max-w-[1400px] px-4 pt-16 sm:px-6 lg:px-8">
-        <div className="h-14 w-72 animate-pulse rounded bg-[var(--neutral-3)]" />
-        <div className="mt-14 grid gap-12 border-t border-[var(--neutral-6)] pt-14 lg:grid-cols-[1.65fr_1fr]">
-          <div className="h-[26rem] animate-pulse rounded-[var(--radius-xl)] bg-[var(--neutral-2)]" />
+        <div className="h-14 w-72 animate-pulse rounded bg-muted" />
+        <div className="mt-14 grid gap-12 border-t border-border pt-14 lg:grid-cols-[1.65fr_1fr]">
+          <div className="h-[26rem] animate-pulse rounded-[var(--radius-xl)] bg-muted" />
           <div className="flex flex-col gap-6">
-            <div className="h-24 animate-pulse rounded bg-[var(--neutral-2)]" />
-            <div className="h-24 animate-pulse rounded bg-[var(--neutral-2)]" />
-            <div className="h-24 animate-pulse rounded bg-[var(--neutral-2)]" />
+            <div className="h-24 animate-pulse rounded bg-muted" />
+            <div className="h-24 animate-pulse rounded bg-muted" />
+            <div className="h-24 animate-pulse rounded bg-muted" />
           </div>
         </div>
       </div>

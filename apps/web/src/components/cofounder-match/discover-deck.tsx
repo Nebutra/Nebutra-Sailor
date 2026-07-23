@@ -157,7 +157,7 @@ export function DiscoverDeck() {
             onClick={joinPool}
             disabled={busy}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             {busy ? "Joining…" : "Join the pool"}
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -336,7 +336,7 @@ export function DiscoverDeck() {
               disabled={busy || pitch.trim().length === 0}
               onClick={() => void act("PITCH", pitch.trim())}
               className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
-              style={{ background: "var(--brand-gradient)" }}
+              style={{ background: "hsl(var(--primary))" }}
             >
               <PaperAirplane className="size-3.5" aria-hidden="true" />
               Send pitch

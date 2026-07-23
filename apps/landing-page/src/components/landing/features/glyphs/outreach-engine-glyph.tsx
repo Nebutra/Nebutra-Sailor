@@ -38,12 +38,12 @@ export function OutreachEngineGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2.5 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">
-          <Envelope className="h-3.5 w-3.5 shrink-0 text-[var(--brand-primary)]" />
+          <Envelope className="h-3.5 w-3.5 shrink-0 text-[hsl(var(--primary))]" />
           <span className="truncate font-mono text-[11px] text-neutral-12">{campaignName}</span>
         </div>
         <Badge

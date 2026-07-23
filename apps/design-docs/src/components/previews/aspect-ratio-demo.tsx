@@ -8,7 +8,7 @@ export function AspectRatioDemo() {
       <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md ring-1 ring-border">
         <div
           className="flex h-full w-full items-center justify-center text-xs font-medium tracking-wider text-white/90"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         >
           16 / 9
         </div>

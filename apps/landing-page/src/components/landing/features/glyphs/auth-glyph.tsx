@@ -50,10 +50,10 @@ export function AuthGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[11px] text-[var(--neutral-11)]">{copy.header}</span>
+          <span className="font-mono text-[11px] text-muted-foreground">{copy.header}</span>
           <Badge variant="gray-subtle" size="sm" icon={<Shield />}>
             SSO
           </Badge>
@@ -64,20 +64,20 @@ export function AuthGlyph({ locale }: SubpackageGlyphProps) {
           {rows.map((row) => (
             <div
               key={row.key}
-              className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]"
+              className="flex items-center gap-2 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]"
             >
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--neutral-1)] text-[var(--neutral-12)] ring-1 ring-[var(--neutral-6)]">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-background text-foreground ring-1 ring-[hsl(var(--border))]">
                 {row.icon}
               </span>
-              <span className="truncate text-[11px] text-[var(--neutral-12)]">{row.label}</span>
-              <ChevronRight className="ml-auto h-3 w-3 shrink-0 text-[var(--neutral-10)]" />
+              <span className="truncate text-[11px] text-foreground">{row.label}</span>
+              <ChevronRight className="ml-auto h-3 w-3 shrink-0 text-muted-foreground" />
             </div>
           ))}
         </div>
 
         {/* Divider + footer */}
         <Separator className="my-0.5" />
-        <p className="text-center font-mono text-[10px] text-[var(--neutral-10)]">{copy.footer}</p>
+        <p className="text-center font-mono text-[10px] text-muted-foreground">{copy.footer}</p>
       </div>
     </div>
   );

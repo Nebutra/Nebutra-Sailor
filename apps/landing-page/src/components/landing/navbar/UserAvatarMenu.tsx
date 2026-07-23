@@ -167,7 +167,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
       >
         <span
           aria-hidden
-          className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-[image:var(--brand-gradient)] text-[10px] font-semibold text-white shadow-inner"
+          className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary text-[10px] font-semibold text-white shadow-inner"
         >
           {me?.avatarUrl ? (
             // biome-ignore lint/performance/noImgElement: external user avatars are not in next/image's remotePatterns allowlist; defaults to native <img> with no optimization.
@@ -198,7 +198,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
           <div className="flex items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2.5">
             <span
               aria-hidden
-              className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[image:var(--brand-gradient)] text-sm font-semibold text-white shadow-inner"
+              className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-white shadow-inner"
             >
               {me?.avatarUrl ? (
                 // biome-ignore lint/performance/noImgElement: external user avatar; see comment on trigger img.

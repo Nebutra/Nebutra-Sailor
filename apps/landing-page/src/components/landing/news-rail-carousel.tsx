@@ -65,7 +65,7 @@ export function NewsRailCarousel({ slides, isZh }: { slides: NewsRailSlide[]; is
         <Link
           href={current.href}
           aria-label={current.title}
-          className="group relative block aspect-[3/4] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-3)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
+          className="group relative block aspect-[3/4] overflow-hidden rounded-[var(--radius-xl)] border border-border bg-muted outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
         >
           {slides.map((slide, index) => (
             <div
@@ -114,8 +114,8 @@ export function NewsRailCarousel({ slides, isZh }: { slides: NewsRailSlide[]; is
                   onClick={() => setActive(index)}
                   className={`h-1.5 rounded-full [transition-property:width,background-color] [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none ${
                     isActive
-                      ? "w-5 bg-[var(--blue-9)]"
-                      : "w-1.5 bg-[var(--neutral-7)] hover:bg-[var(--neutral-9)]"
+                      ? "w-5 bg-[hsl(var(--primary))]"
+                      : "w-1.5 bg-[hsl(var(--border))] hover:bg-[hsl(var(--muted-foreground))]"
                   }`}
                 />
               );

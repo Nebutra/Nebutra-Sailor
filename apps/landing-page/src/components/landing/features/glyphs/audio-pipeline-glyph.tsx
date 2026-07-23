@@ -18,11 +18,11 @@ export function AudioPipelineGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="relative flex w-full flex-col justify-between overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-4 py-3"
+      className="relative flex w-full flex-col justify-between overflow-hidden rounded-[var(--radius-md)] bg-muted px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Header sparkle hint */}
-      <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-[var(--neutral-11)]">
+      <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">
         <Sparkles className="h-3 w-3" />
         <span>audio pipeline</span>
       </div>
@@ -35,7 +35,7 @@ export function AudioPipelineGlyph({ locale }: SubpackageGlyphProps) {
             className="w-[3px] flex-1 rounded-full"
             style={{
               height: `${height}px`,
-              background: i % 2 === 0 ? "var(--brand-primary)" : "var(--neutral-7)",
+              background: i % 2 === 0 ? "hsl(var(--primary))" : "hsl(var(--border))",
               opacity: i % 2 === 0 ? 0.9 : 0.55,
             }}
           />
@@ -48,20 +48,18 @@ export function AudioPipelineGlyph({ locale }: SubpackageGlyphProps) {
           <div key={step} className="flex items-center gap-1">
             <Badge
               variant="outline"
-              className="gap-1 border-[var(--neutral-7)] bg-[var(--neutral-1)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--neutral-12)]"
+              className="gap-1 border-border bg-background px-1.5 py-0.5 text-[10px] font-medium text-foreground"
             >
               <Check className="h-2.5 w-2.5 text-[var(--brand-accent)]" />
               {step}
             </Badge>
-            {i < steps.length - 1 ? (
-              <ArrowRight className="h-3 w-3 text-[var(--neutral-9)]" />
-            ) : null}
+            {i < steps.length - 1 ? <ArrowRight className="h-3 w-3 text-muted-foreground" /> : null}
           </div>
         ))}
       </div>
 
       {/* Footer mono toolchain */}
-      <div className="font-mono text-[9px] tracking-tight text-[var(--neutral-10)]">
+      <div className="font-mono text-[9px] tracking-tight text-muted-foreground">
         Whisper · RNNoise · FFmpeg
       </div>
     </div>

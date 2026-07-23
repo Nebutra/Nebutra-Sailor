@@ -60,7 +60,7 @@ function TreeNodes({
         parentPath={parentPath}
       >
         <TreeNodeTrigger
-          className={`group/trigger flex min-h-8 min-w-max w-full items-center rounded-[var(--radius-md)] py-1 pr-4 transition-colors hover:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)] ${
+          className={`group/trigger flex min-h-8 min-w-max w-full items-center rounded-[var(--radius-md)] py-1 pr-4 transition-colors hover:bg-muted dark:hover:bg-muted ${
             isTopLevel ? "px-1 font-semibold" : "px-1"
           }`}
           title={node.path}
@@ -92,7 +92,7 @@ function TreeNodes({
             {node.label}
           </TreeLabel>
           {node.tag && (
-            <span className="ml-2 rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground/80">
+            <span className="ml-2 rounded-full border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground/80">
               {node.tag}
             </span>
           )}
@@ -104,7 +104,7 @@ function TreeNodes({
           {featureHref && (
             <Link
               aria-label={`${node.label} feature detail`}
-              className="ml-2 flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--neutral-6)] bg-background/70 text-muted-foreground opacity-0 transition-[opacity,color,border-color] group-hover/trigger:opacity-100 hover:border-primary/50 hover:text-primary focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="ml-2 flex size-6 shrink-0 items-center justify-center rounded-full border border-border bg-background/70 text-muted-foreground opacity-0 transition-[opacity,color,border-color] group-hover/trigger:opacity-100 hover:border-primary/50 hover:text-primary focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
               href={featureHref}
               onClick={(event) => event.stopPropagation()}
             >
@@ -177,7 +177,7 @@ export function MonorepoFileTree() {
 
   return (
     <article
-      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--color-glass-panel,rgba(255,255,255,0.72))] p-6 transition-[border-color,box-shadow,background-color] duration-300 hover:border-primary/40 dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.72))] md:p-8"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-border bg-[var(--color-glass-panel,rgba(255,255,255,0.72))] p-6 transition-[border-color,box-shadow,background-color] duration-300 hover:border-primary/40 dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.72))] md:p-8"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100" />
@@ -205,7 +205,7 @@ export function MonorepoFileTree() {
             {TREE_METRICS.map((metric) => (
               <div
                 key={metric.labelKey}
-                className="rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-background/65 px-3 py-2 shadow-sm dark:bg-[var(--neutral-2)]/70"
+                className="rounded-[var(--radius-sm)] border border-border bg-background/65 px-3 py-2 shadow-sm dark:bg-muted/70"
               >
                 <p className="font-mono text-lg font-semibold leading-none text-foreground tabular-nums">
                   {metric.value}
@@ -218,7 +218,7 @@ export function MonorepoFileTree() {
           </div>
         </AnimateIn>
 
-        <div className="relative flex min-h-[360px] flex-1 flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/55 shadow-inner dark:bg-[var(--neutral-2)]/80">
+        <div className="relative flex min-h-[360px] flex-1 flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-background/55 shadow-inner dark:bg-muted/80">
           <div className="z-20 flex h-[42px] flex-none items-center border-black/5 border-b bg-white/55 px-4 dark:bg-zinc-900/55">
             <div className="flex gap-1.5 items-center">
               <div className="size-2.5 rounded-full bg-[#ff5f56] shadow-sm" />
@@ -234,9 +234,9 @@ export function MonorepoFileTree() {
               </span>
             </div>
           </div>
-          <div className="z-10 flex flex-none items-center gap-2 border-[var(--neutral-6)] border-b bg-[var(--neutral-1)]/70 px-4 py-2 text-[11px] text-muted-foreground">
+          <div className="z-10 flex flex-none items-center gap-2 border-border border-b bg-background/70 px-4 py-2 text-[11px] text-muted-foreground">
             <span
-              className="rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1 font-mono text-foreground/80"
+              className="rounded-full border border-border bg-muted px-2 py-1 font-mono text-foreground/80"
               translate="no"
             >
               main

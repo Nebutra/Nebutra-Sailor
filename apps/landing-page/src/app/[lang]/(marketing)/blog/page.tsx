@@ -211,10 +211,10 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
           <AnimateIn preset="fadeUp" inView>
             <div className="flex flex-col items-center gap-6 py-24 text-center">
               <div>
-                <p className="text-lg font-medium text-[var(--neutral-12)]">
+                <p className="text-lg font-medium text-foreground">
                   {isZh ? "暂时还没有文章。" : "No posts yet — our first articles are on the way."}
                 </p>
-                <p className="mt-2 text-sm text-[var(--neutral-11)]">
+                <p className="mt-2 text-sm text-muted-foreground">
                   {isZh
                     ? "你可以先通过下面这些入口了解我们正在交付的内容。"
                     : "In the meantime, here are three ways to follow what we're shipping."}
@@ -223,14 +223,14 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   href={`/${lang}/changelog`}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                 >
                   {isZh ? "阅读更新日志" : "Read our changelog"}
                 </Link>
                 <Link
                   href="/api/changelog/rss"
                   prefetch={false}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                 >
                   {isZh ? "订阅 RSS" : "Subscribe via RSS"}
                 </Link>
@@ -238,7 +238,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
                   href="https://x.com/nebutra_ai"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                 >
                   {isZh ? "关注 @nebutra_ai" : "Follow @nebutra_ai"}
                 </a>
@@ -272,28 +272,28 @@ function BlogPageSkeleton() {
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
         </div>
       </div>
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="border-y border-[var(--neutral-6)] py-10 sm:py-14">
-          <div className="h-6 w-40 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="mt-6 h-12 w-3/4 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="mt-5 h-5 w-1/2 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="border-y border-border py-10 sm:py-14">
+          <div className="h-6 w-40 animate-pulse rounded bg-muted" />
+          <div className="mt-6 h-12 w-3/4 animate-pulse rounded bg-muted" />
+          <div className="mt-5 h-5 w-1/2 animate-pulse rounded bg-muted" />
         </div>
-        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-[var(--neutral-2)]" />
+        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-muted" />
       </section>
-      <div className="mx-auto max-w-6xl border-t border-[var(--neutral-6)] px-4 py-12 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+      <div className="mx-auto max-w-6xl border-t border-border px-4 py-12 sm:px-6 lg:px-8">
+        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="mt-5 grid gap-3 sm:grid-cols-4">
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
         </div>
       </div>
     </main>

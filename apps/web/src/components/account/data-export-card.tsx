@@ -85,20 +85,20 @@ export function DataExportCard({
   return (
     <section
       aria-labelledby="data-export-heading"
-      className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+      className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
     >
-      <h2 id="data-export-heading" className="text-base font-semibold text-[var(--neutral-12)]">
+      <h2 id="data-export-heading" className="text-base font-semibold text-foreground">
         {t("title")}
       </h2>
-      <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("description")}</p>
-      <p className="mt-2 text-xs text-[var(--neutral-11)]">{t("compliance")}</p>
+      <p className="mt-2 text-sm text-muted-foreground">{t("description")}</p>
+      <p className="mt-2 text-xs text-muted-foreground">{t("compliance")}</p>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <button
           type="button"
           onClick={handleClick}
           disabled={phase === "pending"}
-          className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {phase === "pending" ? t("pending") : t("export")}
         </button>
@@ -107,7 +107,7 @@ export function DataExportCard({
           <a
             href={downloadHref}
             download="nebutra-account-export.json"
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]"
+            className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
           >
             {t("download")}
           </a>

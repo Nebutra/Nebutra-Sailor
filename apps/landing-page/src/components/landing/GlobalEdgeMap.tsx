@@ -30,7 +30,7 @@ export function GlobalEdgeMap() {
 
   return (
     <article
-      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-colors hover:border-primary/40 overflow-hidden"
+      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-border bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-colors hover:border-primary/40 overflow-hidden"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
@@ -58,7 +58,7 @@ export function GlobalEdgeMap() {
         </AnimateIn>
 
         {/* Map container */}
-        <div className="flex-1 relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/40 dark:bg-[var(--neutral-2)]/80 min-h-[250px] shadow-inner mb-6">
+        <div className="flex-1 relative overflow-hidden rounded-[var(--radius-card)] border border-border bg-background/40 dark:bg-muted/80 min-h-[250px] shadow-inner mb-6">
           {/* Faux Terminal Header */}
           <div className="absolute top-0 inset-x-0 flex items-center px-4 h-10 border-b border-border/60 bg-muted/50 dark:bg-zinc-950/80 z-20">
             <div className="flex gap-1.5">

@@ -12,7 +12,7 @@ function UsageRow({
   description: string;
 }) {
   return (
-    <div className="flex items-center gap-4 py-2.5 text-sm border-b border-[var(--neutral-6)] last:border-0">
+    <div className="flex items-center gap-4 py-2.5 text-sm border-b border-border last:border-0">
       <div className="flex items-center gap-4 w-48 font-mono">
         <div
           className="h-4 w-4 rounded-full border border-black/10 shadow-sm dark:border-white/10"
@@ -36,7 +36,7 @@ export function ColorUsageDemos() {
           default for surfaces. Background 2 is used sparingly for subtle differentiation when
           elements need to stand out from the canvas.
         </p>
-        <div className="mb-8 border border-[var(--neutral-6)] rounded-xl px-4 bg-card">
+        <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow
             colorName="Background 1"
             hex="var(--background)"
@@ -48,11 +48,11 @@ export function ColorUsageDemos() {
             description="Secondary background for subtle contrast"
           />
         </div>
-        <ComponentPreview className="bg-[var(--neutral-2)] gap-10 py-16">
+        <ComponentPreview className="bg-muted gap-10 py-16">
           <div className="h-40 w-40 rounded-2xl bg-background shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] flex items-center justify-center text-sm font-medium text-muted-foreground font-mono">
             1 (Default)
           </div>
-          <div className="h-40 w-40 rounded-2xl bg-muted border border-[var(--neutral-6)] flex items-center justify-center text-sm font-medium text-muted-foreground font-mono">
+          <div className="h-40 w-40 rounded-2xl bg-muted border border-border flex items-center justify-center text-sm font-medium text-muted-foreground font-mono">
             2 (Subtle)
           </div>
         </ComponentPreview>
@@ -68,7 +68,7 @@ export function ColorUsageDemos() {
           and soft semantic alerts. They provide color context without overwhelming the foreground
           content.
         </p>
-        <div className="mb-8 border border-[var(--neutral-6)] rounded-xl px-4 bg-card">
+        <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow colorName="blue-50" hex="#f0f4ff" description="Default soft background" />
           <UsageRow colorName="blue-100" hex="#dbe4ff" description="Hover soft background" />
           <UsageRow colorName="blue-200" hex="#bac8ff" description="Active soft background" />
@@ -95,7 +95,7 @@ export function ColorUsageDemos() {
           These mid-tone colors are specifically tuned for UI component borders, dividers, and focus
           rings. They provide crisp definition against both dark and light backgrounds.
         </p>
-        <div className="mb-8 border border-[var(--neutral-6)] rounded-xl px-4 bg-card">
+        <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow colorName="blue-300" hex="#91a7ff" description="Default UI border" />
           <UsageRow colorName="blue-400" hex="#5c7cfa" description="Hover UI border / Focus ring" />
         </div>
@@ -120,10 +120,10 @@ export function ColorUsageDemos() {
           These are the brand's primary action colors. They are designed for solid, high-contrast
           backgrounds like primary buttons, accent banners, and progress bars.
         </p>
-        <div className="mb-8 border border-[var(--neutral-6)] rounded-xl px-4 bg-card">
+        <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow
             colorName="blue-500"
-            hex="#0033FE"
+            hex="hsl(var(--primary))"
             description="High contrast background (Brand Primary)"
           />
           <UsageRow
@@ -136,7 +136,7 @@ export function ColorUsageDemos() {
           <div className="flex gap-6">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none bg-[#0033FE] text-white hover:bg-[#002ad4] h-10 py-2 px-6"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none bg-[hsl(var(--primary))] text-white hover:bg-[#002ad4] h-10 py-2 px-6"
             >
               Primary Button
             </button>
@@ -153,7 +153,7 @@ export function ColorUsageDemos() {
           The darkest colors in the scale are reserved for typography and icons to ensure maximum
           WCAG accessibility and legibility against light backgrounds.
         </p>
-        <div className="mb-8 border border-[var(--neutral-6)] rounded-xl px-4 bg-card">
+        <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow
             colorName="blue-700"
             hex="#0021ab"
@@ -168,7 +168,7 @@ export function ColorUsageDemos() {
               Connect and manage all your external data sources seamlessly with Nebutra's
               enterprise-grade integration engine.
             </p>
-            <div className="mt-4 flex gap-3 text-[#0033FE]">
+            <div className="mt-4 flex gap-3 text-[hsl(var(--primary))]">
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"

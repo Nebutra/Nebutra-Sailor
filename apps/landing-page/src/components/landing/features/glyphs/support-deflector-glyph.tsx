@@ -29,7 +29,7 @@ export function SupportDeflectorGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* KPI tiles row */}
         <div className="grid grid-cols-3 gap-2">
           <MetricCard size="sm" label={copy.deflected} value="84%" icon={<Check />} />
@@ -42,10 +42,10 @@ export function SupportDeflectorGlyph({ locale }: SubpackageGlyphProps) {
           {TICKETS.map((ticket) => (
             <li
               key={ticket.question}
-              className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-[var(--neutral-2)] px-1.5 py-1"
+              className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-muted px-1.5 py-1"
             >
               <Check className="h-2.5 w-2.5 shrink-0 text-[var(--green-9)]" />
-              <code className="truncate font-mono text-[9px] text-[var(--neutral-12)]">
+              <code className="truncate font-mono text-[9px] text-foreground">
                 {ticket.question}
               </code>
               <Badge
@@ -61,8 +61,8 @@ export function SupportDeflectorGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Footer */}
         <div className="flex items-center gap-1">
-          <Sparkles className="h-2.5 w-2.5 text-[var(--brand-primary)]" />
-          <span className="font-mono text-[9px] text-[var(--neutral-10)]">{copy.footer}</span>
+          <Sparkles className="h-2.5 w-2.5 text-[hsl(var(--primary))]" />
+          <span className="font-mono text-[9px] text-muted-foreground">{copy.footer}</span>
         </div>
       </div>
     </div>

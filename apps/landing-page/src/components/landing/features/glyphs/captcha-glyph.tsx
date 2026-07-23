@@ -14,12 +14,12 @@ const CELLS = [
 export function CaptchaGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full items-stretch gap-4 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4"
+      className="relative flex w-full items-stretch gap-4 overflow-hidden rounded-[var(--radius-lg)] bg-muted p-4"
       style={{ height: 160 }}
     >
       {/* Left: 3x2 challenge grid */}
       <div className="flex flex-col gap-1.5">
-        <div className="flex items-center gap-1 text-[9px] font-medium uppercase tracking-wide text-[var(--neutral-11)]">
+        <div className="flex items-center gap-1 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
           <Bot className="h-3 w-3" />
           <span>Select traffic lights</span>
         </div>
@@ -30,16 +30,16 @@ export function CaptchaGlyph(_props: SubpackageGlyphProps) {
               className="relative h-7 w-7 overflow-hidden rounded-[var(--radius-sm)] border"
               style={{
                 background: cell.selected
-                  ? "color-mix(in srgb, var(--brand-primary) 14%, var(--neutral-1))"
-                  : "var(--neutral-3)",
+                  ? "color-mix(in srgb, hsl(var(--primary)) 14%, hsl(var(--background)))"
+                  : "hsl(var(--muted))",
                 borderColor: cell.selected
-                  ? "color-mix(in srgb, var(--brand-primary) 40%, transparent)"
-                  : "var(--neutral-7)",
+                  ? "color-mix(in srgb, hsl(var(--primary)) 40%, transparent)"
+                  : "hsl(var(--border))",
               }}
             >
               {cell.selected ? (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Check className="h-3.5 w-3.5" style={{ color: "var(--brand-primary)" }} />
+                  <Check className="h-3.5 w-3.5" style={{ color: "hsl(var(--primary))" }} />
                 </div>
               ) : null}
             </div>
@@ -51,10 +51,10 @@ export function CaptchaGlyph(_props: SubpackageGlyphProps) {
       <div className="flex flex-1 flex-col justify-between">
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col gap-1">
-            <div className="font-mono text-[10px] leading-tight text-[var(--neutral-12)]">
+            <div className="font-mono text-[10px] leading-tight text-foreground">
               Verify you&apos;re human
             </div>
-            <div className="font-mono text-[9px] leading-tight text-[var(--neutral-10)]">
+            <div className="font-mono text-[9px] leading-tight text-muted-foreground">
               challenge · 6 tiles
             </div>
           </div>
@@ -73,10 +73,10 @@ export function CaptchaGlyph(_props: SubpackageGlyphProps) {
           Verified
         </Badge>
 
-        <div className="flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-10)]">
+        <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
           <span>Cloudflare Turnstile</span>
           <span aria-hidden>·</span>
-          <span style={{ color: "var(--neutral-11)" }}>1.2s solve</span>
+          <span style={{ color: "hsl(var(--muted-foreground))" }}>1.2s solve</span>
         </div>
       </div>
     </div>

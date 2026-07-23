@@ -91,14 +91,11 @@ export function CreateProviderKeyDialog({
       aria-modal="true"
       aria-labelledby="create-provider-key-title"
     >
-      <div className="w-full max-w-lg rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-xl">
-        <h2
-          id="create-provider-key-title"
-          className="mb-1 text-base font-semibold text-[var(--neutral-12)]"
-        >
+      <div className="w-full max-w-lg rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-xl">
+        <h2 id="create-provider-key-title" className="mb-1 text-base font-semibold text-foreground">
           Add provider key
         </h2>
-        <p className="mb-4 text-sm text-[var(--neutral-11)]">
+        <p className="mb-4 text-sm text-muted-foreground">
           Bring your own AI provider key. It is encrypted at rest and used in preference to the
           platform key for matching models.
         </p>
@@ -110,7 +107,7 @@ export function CreateProviderKeyDialog({
               name="provider"
               render={({ field }) => (
                 <FormItem className="space-y-0">
-                  <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
+                  <FormLabel className="mb-1 block text-sm font-medium text-foreground">
                     Provider
                   </FormLabel>
                   <FormControl>
@@ -118,7 +115,7 @@ export function CreateProviderKeyDialog({
                         primitive Select adds no value here and complicates RHF. */}
                     <select
                       data-allow-native
-                      className="h-9 w-full rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-sm text-[var(--neutral-12)] focus:border-[hsl(var(--ring))] focus:outline-none"
+                      className="h-9 w-full rounded-[var(--radius-md)] border border-border bg-background px-3 text-sm text-foreground focus:border-[hsl(var(--ring))] focus:outline-none"
                       disabled={submitting}
                       {...field}
                     >
@@ -139,7 +136,7 @@ export function CreateProviderKeyDialog({
               name="apiKey"
               render={({ field }) => (
                 <FormItem className="space-y-0">
-                  <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
+                  <FormLabel className="mb-1 block text-sm font-medium text-foreground">
                     API key
                   </FormLabel>
                   <FormControl>
@@ -162,9 +159,9 @@ export function CreateProviderKeyDialog({
               name="baseUrl"
               render={({ field }) => (
                 <FormItem className="space-y-0">
-                  <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
+                  <FormLabel className="mb-1 block text-sm font-medium text-foreground">
                     Base URL{" "}
-                    <span className="font-normal text-[var(--neutral-11)]">
+                    <span className="font-normal text-muted-foreground">
                       {provider === "CUSTOM" ? "(required)" : "(optional)"}
                     </span>
                   </FormLabel>
@@ -186,8 +183,8 @@ export function CreateProviderKeyDialog({
               name="label"
               render={({ field }) => (
                 <FormItem className="space-y-0">
-                  <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
-                    Label <span className="font-normal text-[var(--neutral-11)]">(optional)</span>
+                  <FormLabel className="mb-1 block text-sm font-medium text-foreground">
+                    Label <span className="font-normal text-muted-foreground">(optional)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -208,18 +205,18 @@ export function CreateProviderKeyDialog({
               name="alwaysUse"
               render={({ field }) => (
                 <FormItem className="space-y-0">
-                  <label className="flex items-start gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-2 text-sm text-[var(--neutral-12)]">
+                  <label className="flex items-start gap-2 rounded-[var(--radius-md)] border border-border px-3 py-2 text-sm text-foreground">
                     <input
                       data-allow-native
                       type="checkbox"
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
                       disabled={submitting}
-                      className="mt-0.5 h-4 w-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
+                      className="mt-0.5 h-4 w-4 rounded border-border text-[hsl(var(--primary))]"
                     />
                     <span>
                       Always use this key
-                      <span className="mt-0.5 block text-xs text-[var(--neutral-11)]">
+                      <span className="mt-0.5 block text-xs text-muted-foreground">
                         Never fall back to the platform key for this provider. Requests fail if your
                         key is exhausted.
                       </span>
@@ -237,7 +234,7 @@ export function CreateProviderKeyDialog({
                 type="button"
                 onClick={() => onOpenChange(false)}
                 disabled={submitting}
-                className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:opacity-50"
+                className="rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -245,7 +242,7 @@ export function CreateProviderKeyDialog({
                 type="submit"
                 disabled={submitting}
                 className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 {submitting ? "Saving…" : "Save key"}
               </button>

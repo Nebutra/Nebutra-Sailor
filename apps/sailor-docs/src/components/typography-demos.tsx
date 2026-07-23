@@ -15,10 +15,10 @@ export function FontFaceDemo({
 }) {
   return (
     <div
-      className={`overflow-hidden rounded-xl border border-[var(--neutral-6)] bg-card shadow-sm ${fontClass}`}
+      className={`overflow-hidden rounded-xl border border-border bg-card shadow-sm ${fontClass}`}
     >
       <div className="flex flex-col md:flex-row">
-        <div className="flex items-center justify-center border-b border-[var(--neutral-6)] bg-[var(--neutral-2)] p-12 md:w-1/3 md:border-b-0 md:border-r">
+        <div className="flex items-center justify-center border-b border-border bg-muted p-12 md:w-1/3 md:border-b-0 md:border-r">
           <span className="text-7xl font-semibold tracking-tighter text-foreground">{letters}</span>
         </div>
         <div className="flex flex-1 flex-col justify-center p-8">
@@ -214,7 +214,7 @@ export function TypeScaleDemo({ scaleType }: { scaleType: "heading" | "copy" | "
     <div className="w-full overflow-x-auto my-6">
       <div className="min-w-[700px] flex flex-col">
         {/* Header */}
-        <div className="grid grid-cols-[8fr_3fr_4fr] gap-6 text-[12px] font-semibold text-muted-foreground pb-3 border-b border-[var(--neutral-6)]">
+        <div className="grid grid-cols-[8fr_3fr_4fr] gap-6 text-[12px] font-semibold text-muted-foreground pb-3 border-b border-border">
           <div className="flex items-center gap-1.5 pl-2">
             <span className="font-serif italic font-bold text-[13px] text-foreground">Aa</span>
             <span className="tracking-wide uppercase">Example</span>
@@ -234,7 +234,7 @@ export function TypeScaleDemo({ scaleType }: { scaleType: "heading" | "copy" | "
           {items.map((item, i) => (
             <div
               key={i}
-              className="grid grid-cols-[8fr_3fr_4fr] gap-6 items-center py-6 border-b border-[var(--neutral-6)] last:border-0 hover:bg-[var(--neutral-2)] transition-colors px-2"
+              className="grid grid-cols-[8fr_3fr_4fr] gap-6 items-center py-6 border-b border-border last:border-0 hover:bg-muted transition-colors px-2"
             >
               <div
                 className={`${item.fontClass} text-foreground truncate w-full flex items-center h-full`}
@@ -243,7 +243,7 @@ export function TypeScaleDemo({ scaleType }: { scaleType: "heading" | "copy" | "
                 {item.name}
               </div>
               <div className="flex items-center h-full">
-                <code className="text-[13px] bg-muted px-2 py-0.5 rounded border border-[var(--neutral-6)] font-mono text-muted-foreground truncate max-w-full">
+                <code className="text-[13px] bg-muted px-2 py-0.5 rounded border border-border font-mono text-muted-foreground truncate max-w-full">
                   {item.token}
                 </code>
               </div>
@@ -295,11 +295,11 @@ export function CJKWeightDemo() {
     { label: "Bold · 700", weight: 700, sample: "云端聚合，引领未来" },
   ];
   return (
-    <div className="mt-6 flex flex-col divide-y divide-[var(--neutral-6)] rounded-xl border border-[var(--neutral-6)] overflow-hidden">
+    <div className="mt-6 flex flex-col divide-y divide-border rounded-xl border border-border overflow-hidden">
       {weights.map(({ label, weight, sample }) => (
         <div
           key={weight}
-          className="flex items-center justify-between px-6 py-4 hover:bg-[var(--neutral-2)] transition-colors"
+          className="flex items-center justify-between px-6 py-4 hover:bg-muted transition-colors"
         >
           <span className="font-cn text-xl text-foreground" style={{ fontWeight: weight }}>
             {sample}

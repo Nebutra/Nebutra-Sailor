@@ -32,12 +32,12 @@ const TAGLINES: ReadonlyArray<string> = ["Make work flow", "Calm power"];
 export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1 font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
           <Droplet className="h-3 w-3" />
           brand-genesis &middot; ai
         </span>
@@ -65,12 +65,10 @@ export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
       </ul>
 
       {/* Typography pairing */}
-      <div className="flex items-center justify-between rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1">
-        <span className="text-[13px] font-bold tracking-tight text-[var(--neutral-12)]">
-          Aria Display
-        </span>
-        <span className="font-mono text-[9px] text-[var(--neutral-11)]">+</span>
-        <span className="text-[12px] font-normal text-[var(--neutral-12)]">Inter Sans</span>
+      <div className="flex items-center justify-between rounded-[var(--radius-md)] bg-background px-2 py-1">
+        <span className="text-[13px] font-bold tracking-tight text-foreground">Aria Display</span>
+        <span className="font-mono text-[9px] text-muted-foreground">+</span>
+        <span className="text-[12px] font-normal text-foreground">Inter Sans</span>
       </div>
 
       {/* Taglines */}
@@ -78,19 +76,16 @@ export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
         {TAGLINES.map((tagline) => (
           <li
             key={tagline}
-            className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-0.5"
+            className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-background px-2 py-0.5"
           >
-            <span
-              className="h-1 w-1 rounded-full"
-              style={{ background: "var(--brand-gradient)" }}
-            />
-            <span className="text-[10px] italic text-[var(--neutral-12)]">{tagline}</span>
+            <span className="h-1 w-1 rounded-full" style={{ background: "hsl(var(--primary))" }} />
+            <span className="text-[10px] italic text-foreground">{tagline}</span>
           </li>
         ))}
       </ul>
 
       {/* Footer */}
-      <p className="flex items-center justify-center gap-1 font-mono text-[9px] text-[var(--neutral-11)]">
+      <p className="flex items-center justify-center gap-1 font-mono text-[9px] text-muted-foreground">
         <Sparkles className="h-3 w-3" />
         AI brand kit &middot; 5 variations
         <BlendMode className="ml-1 h-3 w-3" />

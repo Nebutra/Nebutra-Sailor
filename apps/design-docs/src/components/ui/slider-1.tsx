@@ -74,7 +74,7 @@ export const Slider = ({ onValueChange, value }: SliderProps) => {
           onChange={(event) => onValueChange(parseInt(event.target.value, 10))}
           className="slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           style={{
-            background: `linear-gradient(to right, var(--brand-primary) ${value - 0.5}%, ${isDarkMode ? "var(--neutral-7)" : "var(--neutral-4)"} ${value - 0.5}%)`,
+            background: `linear-gradient(to right, hsl(var(--primary)) ${value - 0.5}%, ${isDarkMode ? "hsl(var(--border))" : "hsl(var(--muted))"} ${value - 0.5}%)`,
           }}
         />
       </div>

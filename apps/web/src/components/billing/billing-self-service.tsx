@@ -317,7 +317,7 @@ export function BillingProviderNotice({ model }: { model: BillingSelfServiceMode
 
 export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
   return (
-    <div className="rounded-[var(--radius-3xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-5 shadow-sm dark:bg-black/40">
+    <div className="rounded-[var(--radius-3xl)] border border-border bg-background p-5 shadow-sm dark:bg-black/40">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-10">
@@ -361,7 +361,7 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
           <button
             type="button"
             disabled
-            className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70"
+            className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-border px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70"
             title={model.portal.reason}
           >
             <CreditCard className="size-4" aria-hidden="true" />
@@ -384,7 +384,7 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
             className={`flex min-h-full flex-col rounded-[var(--radius-3xl)] border p-5 shadow-sm ${
               plan.active
                 ? "border-blue-500/40 bg-blue-500/10"
-                : "border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] dark:bg-black/40"
+                : "border-border bg-background dark:bg-black/40"
             }`}
           >
             <div className="flex items-start justify-between gap-3">
@@ -428,7 +428,7 @@ function PlanAction({ action }: { action: BillingPlanAction }) {
     return (
       <a
         href={action.href}
-        className="mt-6 inline-flex items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-12 transition hover:bg-neutral-3"
+        className="mt-6 inline-flex items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-border px-4 py-2.5 text-sm font-medium text-neutral-12 transition hover:bg-neutral-3"
       >
         {action.label}
         <ExternalLink className="size-4" aria-hidden="true" />
@@ -454,7 +454,7 @@ function PlanAction({ action }: { action: BillingPlanAction }) {
     <button
       type="button"
       disabled
-      className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70"
+      className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center rounded-[var(--radius-xl)] border border-border px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70"
       title={action.reason}
     >
       {action.label}

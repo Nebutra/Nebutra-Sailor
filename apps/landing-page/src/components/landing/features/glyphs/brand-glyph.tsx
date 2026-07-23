@@ -20,11 +20,11 @@ type Swatch = {
 };
 
 const SWATCHES: ReadonlyArray<Swatch> = [
-  { name: "blue", background: "var(--brand-primary)" },
-  { name: "cyan", background: "var(--brand-accent)", textColor: "var(--neutral-12)" },
-  { name: "grad", background: "var(--brand-gradient)" },
+  { name: "blue", background: "hsl(var(--primary))" },
+  { name: "cyan", background: "var(--brand-accent)", textColor: "hsl(var(--foreground))" },
+  { name: "grad", background: "hsl(var(--primary))" },
   { name: "ok", background: "var(--status-success)" },
-  { name: "warn", background: "var(--status-warning)", textColor: "var(--neutral-12)" },
+  { name: "warn", background: "var(--status-warning)", textColor: "hsl(var(--foreground))" },
   { name: "err", background: "var(--status-danger)" },
 ];
 
@@ -42,12 +42,12 @@ const TYPE_SAMPLES: ReadonlyArray<TypeSample> = [
 export function BrandGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1 font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
           <Droplet className="h-3 w-3" />
           brand &middot; tokens
         </span>
@@ -75,15 +75,15 @@ export function BrandGlyph(_props: SubpackageGlyphProps) {
       </ul>
 
       {/* Typography samples */}
-      <div className="flex flex-1 items-center justify-around rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2">
+      <div className="flex flex-1 items-center justify-around rounded-[var(--radius-md)] bg-background px-2">
         {TYPE_SAMPLES.map((sample, idx) => (
           <span
             key={sample.className}
-            className={`${sample.className} text-[var(--neutral-12)]`}
+            className={`${sample.className} text-foreground`}
             style={
               idx === 0
                 ? {
-                    background: "var(--brand-gradient)",
+                    background: "hsl(var(--primary))",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -97,7 +97,7 @@ export function BrandGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <p className="flex items-center justify-center gap-1 font-mono text-[9px] text-[var(--neutral-11)]">
+      <p className="flex items-center justify-center gap-1 font-mono text-[9px] text-muted-foreground">
         <BlendMode className="h-3 w-3" />
         oklch &middot; DTCG &middot; Style Dictionary
       </p>

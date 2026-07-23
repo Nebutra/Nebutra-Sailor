@@ -12,7 +12,7 @@ export function TerminalMockup() {
         <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700/80" />
         <span className="ml-2 text-[10px] font-mono text-muted-foreground/60">arch.test.ts</span>
       </div>
-      <div className="p-5 bg-[var(--neutral-2)] dark:bg-[var(--neutral-1)]">
+      <div className="p-5 bg-muted dark:bg-background">
         <pre className="font-mono text-[12px] sm:text-[13px] leading-relaxed">
           {HARNESS_CODE_LINES.map((line, i) => (
             <span

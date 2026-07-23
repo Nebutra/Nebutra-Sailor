@@ -48,7 +48,7 @@ export const FEATURE_GROUP_TOKENS: Record<string, FeatureGroupTokens> = {
     docsPath: "database/overview",
   },
   design: {
-    auroraColors: ["#0BF1C3", "#0033FE", "#06b6d4", "#38bdf8"],
+    auroraColors: ["#0BF1C3", "hsl(var(--primary))", "#06b6d4", "#38bdf8"],
     ambient: "subtle",
     icon: Droplet,
     docsPath: "design/tokens",

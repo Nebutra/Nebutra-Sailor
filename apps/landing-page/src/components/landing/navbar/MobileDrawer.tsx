@@ -45,7 +45,7 @@ export function MobileDrawer() {
                   ? { duration: 0 }
                   : { type: "spring", damping: 25, stiffness: 300 }
               }
-              className="fixed inset-x-0 top-[64px] z-50 h-[calc(100vh-64px)] overflow-y-auto border-t border-[var(--neutral-6)] bg-white/95 backdrop-blur-xl dark:border-border dark:bg-background/95"
+              className="fixed inset-x-0 top-[64px] z-50 h-[calc(100vh-64px)] overflow-y-auto border-t border-border bg-white/95 backdrop-blur-xl dark:border-border dark:bg-background/95"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <div className="flex h-full flex-col gap-4 p-6 pb-24">
@@ -180,7 +180,7 @@ export function MobileDrawer() {
                   <a
                     href={`${APP_URL}/sign-up`}
                     onClick={() => setOpen(false)}
-                    className="w-full rounded-[var(--radius-lg)] bg-[color:var(--neutral-12)] px-4 py-3 text-center text-sm font-medium text-[color:var(--neutral-1)]"
+                    className="w-full rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-4 py-3 text-center text-sm font-medium text-[color:hsl(var(--background))]"
                   >
                     {t("getStarted")}
                   </a>

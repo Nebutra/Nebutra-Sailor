@@ -53,7 +53,7 @@ export function GraphModelGlyph({ locale }: SubpackageGlyphProps) {
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
-            "linear-gradient(to right, var(--neutral-4) 1px, transparent 1px), linear-gradient(to bottom, var(--neutral-4) 1px, transparent 1px)",
+            "linear-gradient(to right, hsl(var(--muted)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--muted)) 1px, transparent 1px)",
           backgroundSize: "16px 16px",
         }}
       />

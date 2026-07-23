@@ -47,14 +47,14 @@ export function PasskeyPanel({ returnUrl }: PasskeyPanelProps) {
       <div className="mb-8 flex flex-col items-center text-center">
         <span
           aria-hidden
-          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)]"
+          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-muted"
         >
-          <Key className="h-5 w-5 text-[var(--blue-11)]" />
+          <Key className="h-5 w-5 text-primary" />
         </span>
-        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
           {t("passkeyTitle")}
         </h1>
-        <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--neutral-10)]">
+        <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">
           {t("passkeyDescription")}
         </p>
       </div>
@@ -75,7 +75,7 @@ export function PasskeyPanel({ returnUrl }: PasskeyPanelProps) {
             id="passkey-email"
             type="email"
             size="lg"
-            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={t("emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -95,7 +95,7 @@ export function PasskeyPanel({ returnUrl }: PasskeyPanelProps) {
 
         <Button
           type="button"
-          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
           onClick={handleSignIn}
           disabled={loading || !supported}
         >

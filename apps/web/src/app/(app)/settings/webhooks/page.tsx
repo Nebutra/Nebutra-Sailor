@@ -36,20 +36,20 @@ export default function WebhooksSettingsPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-xl font-semibold text-[var(--neutral-12)]">Webhooks</h1>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">
+        <h1 className="text-xl font-semibold text-foreground">Webhooks</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Subscribe to events emitted by your workspace. We sign every payload with your
           endpoint&apos;s secret so you can verify authenticity.
         </p>
       </header>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-        <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">New endpoint</h2>
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+        <h2 className="mb-4 text-base font-semibold text-foreground">New endpoint</h2>
         <CreateWebhookDialog onCreated={handleCreated} />
       </section>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-        <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">Active endpoints</h2>
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+        <h2 className="mb-4 text-base font-semibold text-foreground">Active endpoints</h2>
         <WebhooksList
           key={refreshKey}
           onToggleActive={(id, next) => patchEndpoint(id, { isActive: next })}
@@ -63,7 +63,7 @@ export default function WebhooksSettingsPage() {
       </section>
 
       {activeDeliveries && (
-        <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
+        <section className="rounded-[var(--radius-lg)] border border-border bg-background">
           <WebhookDeliveriesPanel
             endpointId={activeDeliveries}
             onClose={() => setActiveDeliveries(null)}

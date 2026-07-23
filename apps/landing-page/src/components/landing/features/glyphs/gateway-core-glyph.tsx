@@ -44,7 +44,7 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-3"
       style={{ height: 160 }}
     >
       {/* Pipeline row */}
@@ -55,15 +55,15 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
 
         {STAGES.map((stage) => (
           <div key={stage.key} className="flex items-center gap-1.5">
-            <ArrowRight className="h-3 w-3 shrink-0 text-[var(--neutral-10)]" />
-            <div className="flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-1.5 py-1 ring-1 ring-[var(--neutral-6)]">
+            <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" />
+            <div className="flex items-center gap-1 rounded-[var(--radius-md)] bg-background px-1.5 py-1 ring-1 ring-[hsl(var(--border))]">
               <Check className="h-3 w-3 text-[color:var(--status-success)]" />
-              <span className="font-mono text-[10px] text-[var(--neutral-12)]">{stage.label}</span>
+              <span className="font-mono text-[10px] text-foreground">{stage.label}</span>
             </div>
           </div>
         ))}
 
-        <ArrowRight className="h-3 w-3 shrink-0 text-[var(--neutral-10)]" />
+        <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" />
         <Badge variant="green-subtle" size="sm" icon={<Lightning />}>
           RES 200
         </Badge>
@@ -74,16 +74,14 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
         {METRICS.map((metric) => (
           <div
             key={metric.key}
-            className="flex flex-1 flex-col gap-0.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]"
+            className="flex flex-1 flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-[hsl(var(--border))]"
           >
-            <span className="font-mono text-[9px] uppercase tracking-wide text-[var(--neutral-10)]">
+            <span className="font-mono text-[9px] uppercase tracking-wide text-muted-foreground">
               {metric.label}
             </span>
             <span
               className={`font-mono text-[12px] tabular-nums ${
-                metric.tone === "success"
-                  ? "text-[color:var(--status-success)]"
-                  : "text-[var(--neutral-12)]"
+                metric.tone === "success" ? "text-[color:var(--status-success)]" : "text-foreground"
               }`}
             >
               {metric.value}
@@ -93,7 +91,7 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <p className="text-center font-mono text-[10px] text-[var(--neutral-10)]">{FOOTER}</p>
+      <p className="text-center font-mono text-[10px] text-muted-foreground">{FOOTER}</p>
     </div>
   );
 }

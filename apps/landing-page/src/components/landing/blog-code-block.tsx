@@ -51,16 +51,16 @@ export function BlogCodeBlock({
   const shikiHtml = { __html: html };
 
   return (
-    <figure className="my-8 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-sm">
-      <figcaption className="flex min-h-11 items-center justify-between gap-3 border-b border-[var(--neutral-6)] bg-[var(--neutral-2)] px-3 py-2">
+    <figure className="my-8 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background shadow-sm">
+      <figcaption className="flex min-h-11 items-center justify-between gap-3 border-b border-border bg-muted px-3 py-2">
         <div className="flex min-w-0 items-center gap-2">
           <CodeBlockLanguageIcon className="size-4" language={language || filename || null} />
           <div className="min-w-0">
-            <p className="truncate font-mono text-xs font-medium text-[var(--neutral-12)]">
+            <p className="truncate font-mono text-xs font-medium text-foreground">
               {filename || language || "code"}
             </p>
             {filename && language && (
-              <p className="mt-0.5 font-mono text-[10px] uppercase text-[var(--neutral-10)]">
+              <p className="mt-0.5 font-mono text-[10px] uppercase text-muted-foreground">
                 {language}
               </p>
             )}
@@ -71,7 +71,7 @@ export function BlogCodeBlock({
           onClick={() => {
             void copyCode(code).then(() => setCopied(true));
           }}
-          className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+          className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label={label}
           title={label}
         >
@@ -79,7 +79,7 @@ export function BlogCodeBlock({
         </button>
       </figcaption>
       <div
-        className="blog-code-html overflow-x-auto bg-[var(--neutral-1)] text-sm"
+        className="blog-code-html overflow-x-auto bg-background text-sm"
         dangerouslySetInnerHTML={shikiHtml}
       />
     </figure>

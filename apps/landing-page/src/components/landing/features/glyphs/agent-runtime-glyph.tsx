@@ -35,14 +35,14 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <span className="flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-11)]">
+          <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
             <Brain className="h-2.5 w-2.5" />
             {copy.header}
           </span>
-          <Sparkles className="h-2.5 w-2.5 text-[var(--blue-9)]" />
+          <Sparkles className="h-2.5 w-2.5 text-[hsl(var(--primary))]" />
         </div>
 
         {/* Trace steps */}
@@ -58,7 +58,7 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
                     style={{
                       background:
                         step.tone === "blue-subtle"
-                          ? "var(--blue-9)"
+                          ? "hsl(var(--primary))"
                           : step.tone === "amber-subtle"
                             ? "var(--amber-9)"
                             : "var(--green-9)",
@@ -67,9 +67,9 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
                 )}
                 <span className="font-mono text-[9px]">{step.label}</span>
               </Badge>
-              <span className="flex-1 border-t border-dashed border-[var(--neutral-6)]" />
+              <span className="flex-1 border-t border-dashed border-border" />
               <span
-                className="flex-shrink-0 font-mono text-[9px] text-[var(--neutral-10)]"
+                className="flex-shrink-0 font-mono text-[9px] text-muted-foreground"
                 style={{ width: 40, textAlign: "right" }}
               >
                 {step.ms}
@@ -80,7 +80,7 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Footer */}
         <div className="flex items-center justify-between">
-          <span className="flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-10)]">
+          <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
             <Lightning className="h-2.5 w-2.5" />
             {copy.footer}
           </span>

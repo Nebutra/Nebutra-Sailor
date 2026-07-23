@@ -26,14 +26,14 @@ export async function LegalDocumentContent({ slug, lang }: { slug: string; lang:
   return (
     <article className="prose prose-gray dark:prose-invert max-w-none">
       <h1>{doc.title}</h1>
-      <p className="text-sm text-[var(--neutral-10)]">
+      <p className="text-sm text-muted-foreground">
         Version {doc.version} · Effective {effectiveDate}
       </p>
       {doc.summary ? <p className="lead">{doc.summary}</p> : null}
       <hr />
       {/* MVP: render body as preformatted text. Swap for markdown renderer
           once a dependency choice (react-markdown / shiki / etc.) is made. */}
-      <pre className="whitespace-pre-wrap break-words rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-4 text-sm font-sans text-[var(--neutral-12)]">
+      <pre className="whitespace-pre-wrap break-words rounded-[var(--radius-md)] bg-muted p-4 text-sm font-sans text-foreground">
         {doc.content}
       </pre>
     </article>
@@ -43,15 +43,15 @@ export async function LegalDocumentContent({ slug, lang }: { slug: string; lang:
 export function LegalDocumentSkeleton() {
   return (
     <article className="prose prose-gray dark:prose-invert max-w-none" aria-busy="true">
-      <div className="h-9 w-2/3 animate-pulse rounded bg-[var(--neutral-3)]" />
-      <div className="mt-3 h-4 w-1/3 animate-pulse rounded bg-[var(--neutral-3)]" />
-      <div className="mt-2 h-4 w-1/2 animate-pulse rounded bg-[var(--neutral-3)]" />
+      <div className="h-9 w-2/3 animate-pulse rounded bg-muted" />
+      <div className="mt-3 h-4 w-1/3 animate-pulse rounded bg-muted" />
+      <div className="mt-2 h-4 w-1/2 animate-pulse rounded bg-muted" />
       <hr />
       <div className="space-y-2">
-        <div className="h-3 w-full animate-pulse rounded bg-[var(--neutral-3)]" />
-        <div className="h-3 w-11/12 animate-pulse rounded bg-[var(--neutral-3)]" />
-        <div className="h-3 w-10/12 animate-pulse rounded bg-[var(--neutral-3)]" />
-        <div className="h-3 w-9/12 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="h-3 w-full animate-pulse rounded bg-muted" />
+        <div className="h-3 w-11/12 animate-pulse rounded bg-muted" />
+        <div className="h-3 w-10/12 animate-pulse rounded bg-muted" />
+        <div className="h-3 w-9/12 animate-pulse rounded bg-muted" />
       </div>
     </article>
   );

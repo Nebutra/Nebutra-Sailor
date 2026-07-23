@@ -38,35 +38,35 @@ export function RepositoriesGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-2.5 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-2.5 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Interface header */}
         <div className="flex items-center gap-1.5">
-          <Code className="h-3 w-3 shrink-0 text-[var(--blue-9)]" aria-hidden="true" />
+          <Code className="h-3 w-3 shrink-0 text-[hsl(var(--primary))]" aria-hidden="true" />
           <code className="font-mono text-[10px] leading-none">
-            <span className="text-[var(--blue-11)]">interface</span>
-            <span className="text-[var(--neutral-11)]"> </span>
-            <span className="text-[var(--neutral-12)]">PostRepository</span>
+            <span className="text-primary">interface</span>
+            <span className="text-muted-foreground"> </span>
+            <span className="text-foreground">PostRepository</span>
           </code>
         </div>
 
         {/* Method rows */}
-        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
           {METHODS.map((m) => (
             <code
               key={m.name}
               className="flex items-center gap-1 font-mono text-[9px] leading-tight"
             >
               <span className="text-[var(--cyan-11)]">{m.name}</span>
-              <span className="text-[var(--neutral-11)]">(</span>
-              <span className="text-[var(--neutral-10)]">{m.args}</span>
-              <span className="text-[var(--neutral-11)]">)</span>
+              <span className="text-muted-foreground">(</span>
+              <span className="text-muted-foreground">{m.args}</span>
+              <span className="text-muted-foreground">)</span>
               <ArrowRight
-                className="h-2.5 w-2.5 shrink-0 text-[var(--neutral-9)]"
+                className="h-2.5 w-2.5 shrink-0 text-muted-foreground"
                 aria-hidden="true"
               />
-              <span className="text-[var(--neutral-10)]">Promise{"<"}</span>
-              <span className="text-[var(--neutral-12)]">{m.returns}</span>
-              <span className="text-[var(--neutral-10)]">{">"}</span>
+              <span className="text-muted-foreground">Promise{"<"}</span>
+              <span className="text-foreground">{m.returns}</span>
+              <span className="text-muted-foreground">{">"}</span>
             </code>
           ))}
         </div>
@@ -82,7 +82,7 @@ export function RepositoriesGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Footer */}
         <div className="flex items-center justify-center">
-          <code className="font-mono text-[9px] text-[var(--neutral-10)]">
+          <code className="font-mono text-[9px] text-muted-foreground">
             {"// "}
             {t.footer}
           </code>

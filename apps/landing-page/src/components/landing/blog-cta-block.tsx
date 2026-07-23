@@ -31,26 +31,22 @@ export function BlogCtaBlock({
 
   return (
     <aside
-      className={cn("my-14 border-y border-[var(--neutral-6)] py-7", className)}
+      className={cn("my-14 border-y border-border py-7", className)}
       aria-label={title ?? ctaLabel ?? undefined}
     >
       <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
-        <div className="relative pl-5 before:absolute before:left-0 before:top-1 before:h-[calc(100%-0.25rem)] before:w-px before:bg-[linear-gradient(180deg,var(--blue-9),var(--neutral-6))]">
+        <div className="relative pl-5 before:absolute before:left-0 before:top-1 before:h-[calc(100%-0.25rem)] before:w-px before:bg-[linear-gradient(180deg,hsl(var(--primary)),hsl(var(--border)))]">
           {title && (
-            <h2 className="text-xl font-semibold leading-tight text-[var(--neutral-12)]">
-              {title}
-            </h2>
+            <h2 className="text-xl font-semibold leading-tight text-foreground">{title}</h2>
           )}
           {body && (
-            <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-[var(--neutral-11)]">
-              {body}
-            </p>
+            <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-muted-foreground">{body}</p>
           )}
         </div>
         {hasCta && (
           <a
             href={ctaHref}
-            className="group inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 text-sm font-semibold text-[var(--neutral-1)] transition-colors hover:bg-[var(--blue-9)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-8)] sm:w-auto"
+            className="group inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 text-sm font-semibold text-[hsl(var(--background))] transition-colors hover:bg-[hsl(var(--primary))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-8)] sm:w-auto"
           >
             {ctaLabel}
             <ArrowRight
@@ -65,7 +61,7 @@ export function BlogCtaBlock({
           {visibleItems.map((item, index) => (
             <div key={item.key ?? `${title ?? "cta"}-${index}`} className="min-w-0">
               {item.title && (
-                <dt className="flex items-baseline gap-2 text-sm font-semibold text-[var(--neutral-12)]">
+                <dt className="flex items-baseline gap-2 text-sm font-semibold text-foreground">
                   <span className="font-mono text-[11px] text-[var(--blue-10)]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -73,7 +69,7 @@ export function BlogCtaBlock({
                 </dt>
               )}
               {item.body && (
-                <dd className="mt-1.5 text-sm leading-6 text-[var(--neutral-11)]">{item.body}</dd>
+                <dd className="mt-1.5 text-sm leading-6 text-muted-foreground">{item.body}</dd>
               )}
             </div>
           ))}

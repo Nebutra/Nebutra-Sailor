@@ -39,13 +39,13 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
 
   return (
     <section
-      className="relative w-full border-y border-[var(--neutral-6)] bg-[var(--neutral-1)] py-16 md:py-20"
+      className="relative w-full border-y border-border bg-background py-16 md:py-20"
       aria-labelledby="social-proof-title"
     >
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <h2
           id="social-proof-title"
-          className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-[var(--neutral-11)]"
+          className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground"
         >
           {t("title")}
         </h2>
@@ -80,13 +80,13 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
           ))}
         </ul>
 
-        <div className="mt-12 grid grid-cols-1 gap-8 border-t border-[var(--neutral-6)] pt-12 sm:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-8 border-t border-border pt-12 sm:grid-cols-3">
           {METRIC_KEYS.map((key) => (
             <div key={key} className="flex flex-col items-center text-center">
               <span
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold"
                 style={{
-                  background: "var(--brand-gradient)",
+                  background: "hsl(var(--primary))",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -96,7 +96,7 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
               >
                 {t(`metrics.${key}.value`)}
               </span>
-              <span className="mt-2 text-sm font-medium text-[var(--neutral-11)]">
+              <span className="mt-2 text-sm font-medium text-muted-foreground">
                 {t(`metrics.${key}.label`)}
               </span>
             </div>

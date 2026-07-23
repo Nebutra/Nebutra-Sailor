@@ -120,7 +120,7 @@ export function FooterMinimal({
 function LegalFooter() {
   const t = useTranslations("footer");
   return (
-    <footer className="border-t border-[var(--neutral-7)] bg-[var(--neutral-1)]/[0.08] dark:bg-[var(--neutral-1)]">
+    <footer className="border-t border-border bg-background/[0.08] dark:bg-background">
       <div className="mx-auto max-w-[1400px] px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <nav
@@ -129,30 +129,30 @@ function LegalFooter() {
           >
             <Link
               href="/privacy"
-              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+              className="text-muted-foreground transition-colors hover:text-foreground"
             >
               {t("links.privacy")}
             </Link>
             <Link
               href="/terms"
-              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+              className="text-muted-foreground transition-colors hover:text-foreground"
             >
               {t("links.terms")}
             </Link>
             <Link
               href="/cookies"
-              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+              className="text-muted-foreground transition-colors hover:text-foreground"
             >
               {t("links.cookies")}
             </Link>
             <Link
               href="/refund"
-              className="text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+              className="text-muted-foreground transition-colors hover:text-foreground"
             >
               {t("links.refund")}
             </Link>
           </nav>
-          <p className="text-[13px] text-[var(--neutral-10)]">{t("copyright")}</p>
+          <p className="text-[13px] text-muted-foreground">{t("copyright")}</p>
         </div>
       </div>
     </footer>
@@ -170,32 +170,32 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
   const isDark = !isMounted || resolvedTheme !== "light";
 
   const linkClassName = cn(
-    "text-[13px] text-[color:var(--neutral-10)] transition-colors duration-200",
-    "hover:text-[color:var(--neutral-12)]",
+    "text-[13px] text-muted-foreground transition-colors duration-200",
+    "hover:text-foreground",
     "",
   );
 
   return (
     <footer
       data-testid="footer-minimal"
-      className="relative w-full overflow-hidden bg-[color:var(--neutral-1)] dark:bg-[var(--neutral-1)]"
+      className="relative w-full overflow-hidden bg-background dark:bg-background"
     >
       <div
         aria-hidden="true"
         data-testid="footer-gradient-line"
         className="h-px w-full"
-        style={{ background: "var(--brand-gradient)" }}
+        style={{ background: "hsl(var(--primary))" }}
       />
       {/* Final CTA — opt-in via `showFinalCta`; default off to avoid polluting
           non-conversion pages (careers, legal, blog) with a product pitch. */}
       {showFinalCta && (
         <section
           data-testid="footer-final-cta"
-          className="relative overflow-hidden border-b border-[color:var(--neutral-4)]/[0.06]"
+          className="relative overflow-hidden border-b border-[color:hsl(var(--muted))]/[0.06]"
         >
           <AuroraBackground variant="vivid" position="bottom" intensity={0.5} />
           <div className="relative mx-auto max-w-[1400px] px-6 py-24 text-center">
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--neutral-11)]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
               {tCta("eyebrow")}
             </p>
             <h2
@@ -236,7 +236,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
           {/* Brand block — spans 2 cols on large */}
           <div className="flex flex-col gap-5">
             <Logo variant="en" size={120} inverted={isDark} />
-            <p className="max-w-xs text-[13px] leading-relaxed text-[color:var(--neutral-10)]">
+            <p className="max-w-xs text-[13px] leading-relaxed text-muted-foreground">
               {t("brandDescription")}
             </p>
 
@@ -251,8 +251,8 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
-                      "rounded-[var(--radius-md)] p-2.5 text-[color:var(--neutral-9)] transition-colors duration-200",
-                      "hover:bg-[color:var(--neutral-3)] hover:text-[color:var(--neutral-12)]",
+                      "rounded-[var(--radius-md)] p-2.5 text-[color:hsl(var(--muted-foreground))] transition-colors duration-200",
+                      "hover:bg-muted hover:text-foreground",
                       "/[0.06]",
                     )}
                     aria-label={SOCIAL_LABELS[item.platform] ?? item.platform}
@@ -271,7 +271,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
           >
             {FOOTER_COLUMNS.map((column) => (
               <div key={column.titleKey} className="flex flex-col gap-3">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--neutral-11)]">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                   {t(`columns.${column.titleKey}` as FooterTranslationKey)}
                 </h3>
                 <ul className="flex flex-col gap-2.5">
@@ -302,24 +302,22 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-12 flex flex-col items-center gap-3 border-t border-[color:var(--neutral-4)] pt-8 sm:flex-row sm:justify-between">
-          <p className="text-sm font-medium text-[color:var(--neutral-12)]">
-            {t("newsletterTitle")}
-          </p>
+        <div className="mt-12 flex flex-col items-center gap-3 border-t border-[color:hsl(var(--muted))] pt-8 sm:flex-row sm:justify-between">
+          <p className="text-sm font-medium text-foreground">{t("newsletterTitle")}</p>
           <NewsletterForm />
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[color:var(--neutral-4)] pt-6 md:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[color:hsl(var(--muted))] pt-6 md:flex-row">
           <div className="flex flex-col items-center gap-1 md:items-start">
-            <p className="text-xs text-[color:var(--neutral-9)]">{t("copyright")}</p>
+            <p className="text-xs text-[color:hsl(var(--muted-foreground))]">{t("copyright")}</p>
             {/* ICP 备案 — required for websites operated in mainland China */}
             {process.env.NEXT_PUBLIC_ICP_NUMBER && (
               <a
                 href="https://beian.miit.gov.cn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-[color:var(--neutral-8)] transition-colors hover:text-[color:var(--neutral-11)]"
+                className="text-xs text-[color:hsl(var(--border))] transition-colors hover:text-muted-foreground"
               >
                 {process.env.NEXT_PUBLIC_ICP_NUMBER}
               </a>
@@ -331,7 +329,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
             href={status.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] transition-colors hover:text-[color:var(--neutral-12)]"
+            className="flex items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             <span
               data-testid="status-dot"

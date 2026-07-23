@@ -60,7 +60,7 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
           <div
             // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholders
             key={i}
-            className="h-12 animate-pulse rounded-[var(--radius-md)] bg-[var(--neutral-3)]"
+            className="h-12 animate-pulse rounded-[var(--radius-md)] bg-muted"
           />
         ))}
       </div>
@@ -71,7 +71,7 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
     return (
       <div
         data-testid="audit-empty"
-        className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] p-12 text-center text-sm text-[var(--neutral-11)]"
+        className="rounded-[var(--radius-lg)] border border-dashed border-border p-12 text-center text-sm text-muted-foreground"
       >
         {t("empty")}
       </div>
@@ -79,9 +79,9 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
   }
 
   return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)]">
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-border">
       <table className="w-full text-sm">
-        <thead className="border-b border-[var(--neutral-7)] bg-[var(--neutral-2)] text-left text-xs uppercase tracking-wide text-[var(--neutral-11)]">
+        <thead className="border-b border-border bg-muted text-left text-xs uppercase tracking-wide text-muted-foreground">
           <tr>
             <th className="px-4 py-3 font-medium">{t("columns.when")}</th>
             <th className="px-4 py-3 font-medium">{t("columns.actor")}</th>
@@ -91,7 +91,7 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
             <th className="px-4 py-3 font-medium">{t("columns.ip")}</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[var(--neutral-6)]">
+        <tbody className="divide-y divide-border">
           {logs.map((log) => {
             const expanded = expandedId === log.id;
             return (
@@ -99,20 +99,18 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
                 <tr
                   data-testid={`audit-row-${log.id}`}
                   onClick={() => setExpandedId(expanded ? null : log.id)}
-                  className="cursor-pointer hover:bg-[var(--neutral-2)]"
+                  className="cursor-pointer hover:bg-muted"
                 >
-                  <td className="px-4 py-3 text-[var(--neutral-12)]" title={log.createdAt}>
+                  <td className="px-4 py-3 text-foreground" title={log.createdAt}>
                     {Number.isNaN(new Date(log.createdAt).getTime())
                       ? log.createdAt
                       : format.relativeTime(new Date(log.createdAt))}
                   </td>
-                  <td className="px-4 py-3 text-[var(--neutral-11)]">
+                  <td className="px-4 py-3 text-muted-foreground">
                     {log.userId ?? log.actorType ?? "—"}
                   </td>
-                  <td className="px-4 py-3 font-mono text-xs text-[var(--neutral-12)]">
-                    {log.action}
-                  </td>
-                  <td className="px-4 py-3 text-[var(--neutral-11)]">{log.entityType}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-foreground">{log.action}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{log.entityType}</td>
                   <td className="px-4 py-3">
                     <span
                       data-testid={`outcome-pill-${log.id}`}
@@ -121,30 +119,30 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
                       {log.outcome ?? "—"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 font-mono text-xs text-[var(--neutral-11)]">
+                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
                     {log.ipAddress ?? "—"}
                   </td>
                 </tr>
                 {expanded ? (
-                  <tr className="bg-[var(--neutral-2)]">
+                  <tr className="bg-muted">
                     <td colSpan={6} className="px-4 py-4">
                       <div
                         data-testid={`audit-diff-${log.id}`}
                         className="grid grid-cols-1 gap-4 md:grid-cols-2"
                       >
                         <div>
-                          <h4 className="mb-1 text-xs font-semibold uppercase text-[var(--neutral-11)]">
+                          <h4 className="mb-1 text-xs font-semibold uppercase text-muted-foreground">
                             {t("diff.oldValue")}
                           </h4>
-                          <pre className="overflow-x-auto rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 text-xs">
+                          <pre className="overflow-x-auto rounded border border-border bg-background p-2 text-xs">
                             {safeStringify(log.oldValue)}
                           </pre>
                         </div>
                         <div>
-                          <h4 className="mb-1 text-xs font-semibold uppercase text-[var(--neutral-11)]">
+                          <h4 className="mb-1 text-xs font-semibold uppercase text-muted-foreground">
                             {t("diff.newValue")}
                           </h4>
-                          <pre className="overflow-x-auto rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 text-xs">
+                          <pre className="overflow-x-auto rounded border border-border bg-background p-2 text-xs">
                             {safeStringify(log.newValue)}
                           </pre>
                         </div>

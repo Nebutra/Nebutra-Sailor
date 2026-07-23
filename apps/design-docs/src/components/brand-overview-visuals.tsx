@@ -25,9 +25,9 @@ type LogoComponentCardProps = {
 };
 
 const logoPreviewTone = {
-  light: "bg-[var(--neutral-1)]",
+  light: "bg-background",
   dark: "bg-[#0a0a0a]",
-  muted: "bg-[var(--neutral-2)]",
+  muted: "bg-muted",
 } as const;
 
 function LogoAssetCard({
@@ -41,7 +41,7 @@ function LogoAssetCard({
   imageClassName,
 }: LogoAssetCardProps) {
   return (
-    <figure className="m-0 flex min-w-0 flex-col overflow-hidden rounded border border-[var(--neutral-5)] bg-[var(--neutral-1)]">
+    <figure className="m-0 flex min-w-0 flex-col overflow-hidden rounded border border-border bg-background">
       <div
         className={cn(
           "flex min-h-44 w-full items-center justify-center overflow-hidden p-8",
@@ -65,7 +65,7 @@ function LogoAssetCard({
           "flex min-h-14 min-w-0 flex-col gap-1 border-t px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between",
           tone === "dark"
             ? "border-zinc-800 bg-zinc-950 text-white"
-            : "border-[var(--neutral-5)] bg-card text-foreground",
+            : "border-border bg-card text-foreground",
         )}
       >
         <span className="min-w-0 text-sm font-medium leading-5">{title}</span>
@@ -75,7 +75,7 @@ function LogoAssetCard({
               "w-fit max-w-full truncate rounded border px-1.5 py-1 font-mono text-[10px] leading-none",
               tone === "dark"
                 ? "border-white/10 bg-white/5 text-zinc-400"
-                : "border-[var(--neutral-5)] bg-[var(--neutral-2)] text-muted-foreground",
+                : "border-border bg-muted text-muted-foreground",
             )}
           >
             {filename}
@@ -88,11 +88,11 @@ function LogoAssetCard({
 
 function LogoComponentCard({ title, code, children }: LogoComponentCardProps) {
   return (
-    <figure className="m-0 flex min-w-0 flex-col overflow-hidden rounded border border-[var(--neutral-5)] bg-[var(--neutral-1)]">
+    <figure className="m-0 flex min-w-0 flex-col overflow-hidden rounded border border-border bg-background">
       <div className="flex min-h-44 items-center justify-center bg-card p-6">{children}</div>
-      <figcaption className="flex min-h-14 min-w-0 flex-col gap-1 border-t border-[var(--neutral-5)] bg-[var(--neutral-2)] px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between">
+      <figcaption className="flex min-h-14 min-w-0 flex-col gap-1 border-t border-border bg-muted px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between">
         <span className="min-w-0 text-sm font-medium leading-5">{title}</span>
-        <code className="w-fit max-w-full truncate rounded border border-[var(--neutral-5)] bg-card px-1.5 py-1 font-mono text-[10px] leading-none text-muted-foreground">
+        <code className="w-fit max-w-full truncate rounded border border-border bg-card px-1.5 py-1 font-mono text-[10px] leading-none text-muted-foreground">
           {code}
         </code>
       </figcaption>
@@ -104,7 +104,7 @@ export function LogoShowcase() {
   return (
     <div className="flex flex-col gap-10 my-8">
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Primary Logos
         </h4>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -139,7 +139,7 @@ export function LogoShowcase() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Localized Logos (Logomark + Wordmark)
         </h4>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
@@ -171,7 +171,7 @@ export function LogoShowcase() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Layout Variants
         </h4>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -207,7 +207,7 @@ export function LogoShowcase() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Interactive SVG Components
         </h4>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -216,7 +216,7 @@ export function LogoShowcase() {
               <LogomarkSVG
                 width={48}
                 height={48}
-                className="text-[#0033FE] dark:text-[#0BF1C3]"
+                className="text-[hsl(var(--primary))] dark:text-[#0BF1C3]"
                 aria-label="Nebutra logomark"
               />
               <div className="flex items-center gap-4 opacity-60">
@@ -235,7 +235,7 @@ export function LogoShowcase() {
                 <LogomarkSVG
                   width={16}
                   height={16}
-                  className="text-[#0033FE]"
+                  className="text-[hsl(var(--primary))]"
                   aria-label="Blue Nebutra logomark"
                 />
                 <LogomarkSVG
@@ -266,7 +266,7 @@ export function BrandPhilosophyVisual() {
     <div className="my-16 flex flex-col gap-8">
       {/* Header section */}
       <div className="flex flex-col gap-4">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[var(--neutral-6)] bg-background/50 backdrop-blur-md px-3 py-1 text-sm font-medium text-muted-foreground w-fit shadow-sm">
+        <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/50 backdrop-blur-md px-3 py-1 text-sm font-medium text-muted-foreground w-fit shadow-sm">
           <LogomarkSVG
             width={14}
             height={14}
@@ -289,10 +289,10 @@ export function BrandPhilosophyVisual() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Dark-first */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--neutral-5)] bg-card shadow-sm mb-2">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-card shadow-sm mb-2">
             <Moon className="h-6 w-6 text-foreground" />
           </div>
           <h4 className="text-xl font-semibold text-foreground">Dark-first</h4>
@@ -304,14 +304,14 @@ export function BrandPhilosophyVisual() {
 
         {/* Gradient Sign */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden relative"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden relative"
+          gradientColor="hsl(var(--muted))"
         >
           {/* Subtle gradient orb */}
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[linear-gradient(135deg,#0033FE_0%,#0BF1C3_100%)] opacity-10 dark:opacity-20 blur-[50px] rounded-full pointer-events-none" />
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[linear-gradient(135deg,hsl(var(--primary))_0%,#0BF1C3_100%)] opacity-10 dark:opacity-20 blur-[50px] rounded-full pointer-events-none" />
 
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[#0033FE]/20 bg-[#0033FE]/5 shadow-sm mb-2 relative z-10">
-            <Sparkles className="h-6 w-6 text-[#0033FE] dark:text-[#0BF1C3]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[hsl(var(--primary))]/20 bg-[hsl(var(--primary))]/5 shadow-sm mb-2 relative z-10">
+            <Sparkles className="h-6 w-6 text-[hsl(var(--primary))] dark:text-[#0BF1C3]" />
           </div>
           <h4 className="text-xl font-semibold text-foreground relative z-10">Gradient Sign</h4>
           <p className="text-muted-foreground leading-relaxed text-base relative z-10">
@@ -322,10 +322,10 @@ export function BrandPhilosophyVisual() {
 
         {/* Intentional Motion */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--neutral-5)] bg-card shadow-sm mb-2">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-card shadow-sm mb-2">
             <Lightning className="h-6 w-6 text-foreground" />
           </div>
           <h4 className="text-xl font-semibold text-foreground">Intentional Motion</h4>
@@ -337,10 +337,10 @@ export function BrandPhilosophyVisual() {
 
         {/* Precision */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--neutral-5)] bg-card shadow-sm mb-2">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-card shadow-sm mb-2">
             <Code className="h-6 w-6 text-foreground" />
           </div>
           <h4 className="text-xl font-semibold text-foreground">Precision</h4>

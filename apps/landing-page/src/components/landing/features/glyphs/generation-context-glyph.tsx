@@ -20,8 +20,8 @@ const SEGMENTS: ReadonlyArray<Segment> = [
 ] as const;
 
 const TONE_BG: Record<Segment["tone"], string> = {
-  system: "var(--neutral-9)",
-  history: "var(--blue-9)",
+  system: "hsl(var(--muted-foreground))",
+  history: "hsl(var(--primary))",
   rag: "var(--status-warning)",
   prompt: "var(--status-success)",
   buffer: "var(--status-danger)",
@@ -33,7 +33,7 @@ export function GenerationContextGlyph(_props: SubpackageGlyphProps) {
       {/* Header: usage counter + model tag */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
-          <Brain className="h-3.5 w-3.5" style={{ color: "var(--brand-primary)" }} />
+          <Brain className="h-3.5 w-3.5" style={{ color: "hsl(var(--primary))" }} />
           <span className="font-mono text-[11px] text-neutral-12 tabular-nums">
             247,401 / 1,000,000 tokens
           </span>

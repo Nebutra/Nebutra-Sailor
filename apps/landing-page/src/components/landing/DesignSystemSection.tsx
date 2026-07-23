@@ -50,21 +50,21 @@ export function DesignSystemSection() {
             {/* Top Row: 3-5-4 Split */}
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 xl:col-span-3 h-[400px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 xl:col-span-3 h-[400px] rounded-[var(--radius-panel)] border border-border bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-border hover:bg-muted hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <ColorScaleCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-8 xl:col-span-4 h-[400px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
+              className="md:col-span-12 lg:col-span-8 xl:col-span-4 h-[400px] rounded-[var(--radius-panel)] border border-border bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-border hover:bg-muted hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <PipelineCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-12 xl:col-span-5 h-[400px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
+              className="md:col-span-12 lg:col-span-12 xl:col-span-5 h-[400px] rounded-[var(--radius-panel)] border border-border bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-border hover:bg-muted hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <InteractiveDocsCard />
             </AnimateIn>
@@ -72,21 +72,21 @@ export function DesignSystemSection() {
             {/* Bottom Row: 4-4-4 Split */}
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-border bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-border hover:bg-muted hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <VrtCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-border bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-border hover:bg-muted hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <TokenGovernanceCard />
             </AnimateIn>
 
             <AnimateIn
               preset="fadeUp"
-              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
+              className="md:col-span-12 lg:col-span-4 h-[320px] rounded-[var(--radius-panel)] border border-border bg-background/50 dark:bg-zinc-950/40 backdrop-blur-xl hover:border-border hover:bg-muted hover:-translate-y-px group transition-transform duration-150 overflow-hidden"
             >
               <ThemeSelectorCard />
             </AnimateIn>

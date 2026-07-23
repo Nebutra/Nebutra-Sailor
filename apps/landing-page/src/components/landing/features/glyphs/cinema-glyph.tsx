@@ -14,11 +14,11 @@ const FRAMES: ReadonlyArray<{ tint: string; label: string }> = [
 export function CinemaGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-3"
+      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-background p-3"
       style={{ height: 160 }}
     >
       {/* Clip-name row */}
-      <div className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">
+      <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
         <Image className="h-3 w-3 shrink-0" aria-hidden />
         <div className="flex flex-1 items-center gap-1 overflow-hidden">
           {FRAMES.map((f, i) => (
@@ -31,11 +31,11 @@ export function CinemaGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Film strip — 6 frame cells */}
-      <div className="flex items-center gap-0.5 rounded-[var(--radius-sm)] bg-[var(--neutral-12)] p-1">
+      <div className="flex items-center gap-0.5 rounded-[var(--radius-sm)] bg-[hsl(var(--foreground))] p-1">
         {/* Left sprocket column */}
         <div className="flex h-10 flex-col justify-between py-0.5">
           {[0, 1, 2].map((i) => (
-            <span key={`l-${i}`} className="block h-1 w-1 rounded-[1px] bg-[var(--neutral-1)]" />
+            <span key={`l-${i}`} className="block h-1 w-1 rounded-[1px] bg-background" />
           ))}
         </div>
         {FRAMES.map((f) => (
@@ -48,21 +48,21 @@ export function CinemaGlyph(_props: SubpackageGlyphProps) {
         {/* Right sprocket column */}
         <div className="flex h-10 flex-col justify-between py-0.5">
           {[0, 1, 2].map((i) => (
-            <span key={`r-${i}`} className="block h-1 w-1 rounded-[1px] bg-[var(--neutral-1)]" />
+            <span key={`r-${i}`} className="block h-1 w-1 rounded-[1px] bg-background" />
           ))}
         </div>
       </div>
 
       {/* Playback bar */}
       <div className="flex items-center gap-2">
-        <Play className="h-3 w-3 shrink-0 text-[var(--neutral-12)]" aria-hidden />
-        <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-[var(--neutral-4)]">
+        <Play className="h-3 w-3 shrink-0 text-foreground" aria-hidden />
+        <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-muted">
           <div
             className="absolute inset-y-0 left-0 rounded-full"
-            style={{ width: "49%", background: "var(--brand-gradient)" }}
+            style={{ width: "49%", background: "hsl(var(--primary))" }}
           />
         </div>
-        <span className="font-mono text-[10px] text-[var(--neutral-11)]">2:14 / 4:32</span>
+        <span className="font-mono text-[10px] text-muted-foreground">2:14 / 4:32</span>
       </div>
 
       {/* Badge */}
@@ -74,7 +74,7 @@ export function CinemaGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="mt-auto font-mono text-[10px] text-[var(--neutral-10)]">
+      <div className="mt-auto font-mono text-[10px] text-muted-foreground">
         48 transitions · grading LUT
       </div>
     </div>

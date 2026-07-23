@@ -53,7 +53,7 @@ export async function HeroSection() {
                   highlight: (chunks) => (
                     <span
                       style={{
-                        background: "var(--brand-gradient)",
+                        background: "hsl(var(--primary))",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                       }}

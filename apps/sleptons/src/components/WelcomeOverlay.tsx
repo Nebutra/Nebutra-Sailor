@@ -24,25 +24,25 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="relative mx-4 w-full max-w-md rounded-2xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-8 text-center shadow-2xl">
+      <div className="relative mx-4 w-full max-w-md rounded-2xl border border-border bg-background p-8 text-center shadow-2xl">
         <button
           type="button"
           onClick={handleClose}
           aria-label="Close welcome"
-          className="absolute right-4 top-4 rounded-md p-1 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)]"
+          className="absolute right-4 top-4 rounded-md p-1 text-muted-foreground hover:bg-muted"
         >
           <X className="h-4 w-4" />
         </button>
 
         <div className="mb-4 text-4xl">🎉</div>
 
-        <h2 className="mb-2 text-2xl font-bold text-[var(--neutral-12)]">Welcome to Sleptons!</h2>
+        <h2 className="mb-2 text-2xl font-bold text-foreground">Welcome to Sleptons!</h2>
 
-        <p className="mb-1 text-[var(--neutral-11)]">You are</p>
+        <p className="mb-1 text-muted-foreground">You are</p>
         <p
           className="mb-6 text-3xl font-bold"
           style={{
-            background: "var(--brand-gradient)",
+            background: "hsl(var(--primary))",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -51,7 +51,7 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
           Sleptons Member #{memberNumber}
         </p>
 
-        <p className="mb-6 text-sm text-[var(--neutral-11)]">
+        <p className="mb-6 text-sm text-muted-foreground">
           Your profile is now live. AI-native founders around the world can discover you.
         </p>
 
@@ -60,7 +60,7 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
           onClick={handleClose}
           aria-label="Explore the community"
           className="rounded-lg px-6 py-3 font-semibold text-white"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         >
           Explore the Community →
         </button>

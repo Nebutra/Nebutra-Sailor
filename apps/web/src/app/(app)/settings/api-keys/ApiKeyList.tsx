@@ -44,18 +44,18 @@ export function ApiKeyList({ orgId, keys = [] }: Props) {
 
   if (keys.length === 0) {
     return (
-      <p className="py-4 text-sm text-center text-[var(--neutral-11)]">{t("emptyState.apiKeys")}</p>
+      <p className="py-4 text-sm text-center text-muted-foreground">{t("emptyState.apiKeys")}</p>
     );
   }
 
   return (
-    <ul className="divide-y divide-[var(--neutral-6)]">
+    <ul className="divide-y divide-border">
       {keys.map((k) => (
         <li key={k.id} className="py-3 flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-[var(--neutral-12)]">{k.name}</p>
-            <p className="mt-0.5 text-xs font-mono text-[var(--neutral-11)]">{k.keyPrefix}…</p>
-            <p className="mt-0.5 text-xs text-[var(--neutral-10)]">
+            <p className="text-sm font-medium text-foreground">{k.name}</p>
+            <p className="mt-0.5 text-xs font-mono text-muted-foreground">{k.keyPrefix}…</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
               Created {new Date(k.createdAt).toLocaleDateString()}
               {k.lastUsedAt && ` · Last used ${new Date(k.lastUsedAt).toLocaleDateString()}`}
             </p>

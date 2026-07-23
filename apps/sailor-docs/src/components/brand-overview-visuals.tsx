@@ -9,14 +9,14 @@ export function LogoShowcase() {
     <div className="flex flex-col gap-10 my-8">
       {/* Primary Full Logos */}
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Primary Logos
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Color Logo */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)]"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-40 w-full flex items-center justify-center p-8 bg-zinc-50 dark:bg-black relative">
               <Image
@@ -27,7 +27,7 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-card">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-card">
               <span className="text-sm font-medium text-foreground">Color (Default)</span>
               <code className="text-[10px] text-muted-foreground font-mono">/logo-color.svg</code>
             </div>
@@ -37,7 +37,7 @@ export function LogoShowcase() {
           <MagicCard
             className="p-0 rounded border-zinc-800 flex flex-col overflow-hidden"
             gradientColor="#1a1a1a"
-            gradientFrom="#0033FE"
+            gradientFrom="hsl(var(--primary))"
             gradientTo="#0BF1C3"
           >
             <div className="h-40 w-full flex items-center justify-center p-8 bg-[#0a0a0a] relative">
@@ -57,10 +57,10 @@ export function LogoShowcase() {
 
           {/* Mono Logo */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)]"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
+            gradientColor="hsl(var(--muted))"
           >
-            <div className="h-40 w-full flex items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-900 border-b border-[var(--neutral-5)]">
+            <div className="h-40 w-full flex items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-900 border-b border-border">
               <Image
                 src="/logo/logo-mono.svg"
                 alt="Nebutra Mono Logo"
@@ -69,7 +69,7 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 bg-card border-t border-[var(--neutral-5)] flex justify-between items-center">
+            <div className="p-3 bg-card border-t border-border flex justify-between items-center">
               <span className="text-sm font-medium text-foreground">Monochrome</span>
               <code className="text-[10px] text-muted-foreground font-mono">/logo-mono.svg</code>
             </div>
@@ -79,14 +79,14 @@ export function LogoShowcase() {
 
       {/* Localized Full Logos */}
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Localized Logos (Logomark + Wordmark)
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* EN */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)]"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-32 w-full flex items-center justify-center p-6 bg-card">
               <Image
@@ -97,7 +97,7 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-[var(--neutral-2)]">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-muted">
               <span className="text-sm font-medium">English (Default)</span>
               <code className="text-[10px] text-muted-foreground font-mono">/logo-en.svg</code>
             </div>
@@ -105,8 +105,8 @@ export function LogoShowcase() {
 
           {/* ZH */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)]"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-32 w-full flex items-center justify-center p-6 bg-card">
               <Image
@@ -117,7 +117,7 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-[var(--neutral-2)]">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-muted">
               <span className="text-sm font-medium">Chinese</span>
               <code className="text-[10px] text-muted-foreground font-mono">/logo-zh.svg</code>
             </div>
@@ -125,8 +125,8 @@ export function LogoShowcase() {
 
           {/* ZH-EN */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)]"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-32 w-full flex items-center justify-center p-6 bg-card">
               <Image
@@ -137,7 +137,7 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-[var(--neutral-2)]">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-muted">
               <span className="text-sm font-medium">Bilingual</span>
               <code className="text-[10px] text-muted-foreground font-mono">/logo-zh-en.svg</code>
             </div>
@@ -147,14 +147,14 @@ export function LogoShowcase() {
 
       {/* Layout Variants */}
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Layout Variants
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Horizontal EN */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-white dark:bg-black"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-24 w-full flex items-center justify-center p-4">
               <Image
@@ -165,15 +165,15 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-[var(--neutral-1)]">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-background">
               <span className="text-xs font-medium text-foreground">Horizontal (EN)</span>
             </div>
           </MagicCard>
 
           {/* Horizontal ZH */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-white dark:bg-black"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-24 w-full flex items-center justify-center p-4">
               <Image
@@ -184,17 +184,17 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-[var(--neutral-1)]">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-background">
               <span className="text-xs font-medium text-foreground">Horizontal (ZH)</span>
             </div>
           </MagicCard>
 
           {/* Vertical EN */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-white dark:bg-black"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            gradientColor="hsl(var(--muted))"
           >
-            <div className="h-32 w-full flex items-center justify-center p-4 border-b border-[var(--neutral-5)]">
+            <div className="h-32 w-full flex items-center justify-center p-4 border-b border-border">
               <Image
                 src="/logo/logo-vertical-en.svg"
                 alt="Vertical EN Logo"
@@ -203,17 +203,17 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 flex justify-between items-center bg-[var(--neutral-1)]">
+            <div className="p-3 flex justify-between items-center bg-background">
               <span className="text-xs font-medium text-foreground">Vertical (EN)</span>
             </div>
           </MagicCard>
 
           {/* Vertical ZH */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-white dark:bg-black"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            gradientColor="hsl(var(--muted))"
           >
-            <div className="h-32 w-full flex items-center justify-center p-4 border-b border-[var(--neutral-5)]">
+            <div className="h-32 w-full flex items-center justify-center p-4 border-b border-border">
               <Image
                 src="/logo/logo-vertical-zh.svg"
                 alt="Vertical ZH Logo"
@@ -222,7 +222,7 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 flex justify-between items-center bg-[var(--neutral-1)]">
+            <div className="p-3 flex justify-between items-center bg-background">
               <span className="text-xs font-medium text-foreground">Vertical (ZH)</span>
             </div>
           </MagicCard>
@@ -231,20 +231,20 @@ export function LogoShowcase() {
 
       {/* Components */}
       <div className="flex flex-col gap-4">
-        <h4 className="text-lg font-semibold text-foreground border-b border-[var(--neutral-5)] pb-2">
+        <h4 className="text-lg font-semibold text-foreground border-b border-border pb-2">
           Interactive SVG Components
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Logomark Only */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)]"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-40 flex flex-col items-center justify-center p-6 bg-card gap-6">
               <LogomarkSVG
                 width={48}
                 height={48}
-                className="text-[#0033FE] dark:text-[#0BF1C3]"
+                className="text-[hsl(var(--primary))] dark:text-[#0BF1C3]"
                 aria-label="Nebutra logomark"
               />
               <div className="flex items-center gap-4 opacity-60">
@@ -263,7 +263,7 @@ export function LogoShowcase() {
                 <LogomarkSVG
                   width={16}
                   height={16}
-                  className="text-[#0033FE]"
+                  className="text-[hsl(var(--primary))]"
                   aria-label="Blue Nebutra logomark"
                 />
                 <LogomarkSVG
@@ -274,7 +274,7 @@ export function LogoShowcase() {
                 />
               </div>
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-[var(--neutral-2)]">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-muted">
               <span className="text-sm font-medium">Logomark (JSX Component)</span>
               <code className="text-[10px] text-muted-foreground font-mono">
                 &lt;LogomarkSVG /&gt;
@@ -284,8 +284,8 @@ export function LogoShowcase() {
 
           {/* Wordmark Only */}
           <MagicCard
-            className="p-0 rounded border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)]"
-            gradientColor="var(--neutral-3)"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
+            gradientColor="hsl(var(--muted))"
           >
             <div className="h-40 flex items-center justify-center bg-card">
               <WordmarkEnSVG
@@ -295,7 +295,7 @@ export function LogoShowcase() {
                 aria-label="Nebutra wordmark"
               />
             </div>
-            <div className="p-3 border-t border-[var(--neutral-5)] flex justify-between items-center bg-[var(--neutral-2)]">
+            <div className="p-3 border-t border-border flex justify-between items-center bg-muted">
               <span className="text-sm font-medium">Wordmark (JSX Component)</span>
               <code className="text-[10px] text-muted-foreground font-mono">
                 &lt;WordmarkEnSVG /&gt;
@@ -315,7 +315,7 @@ export function BrandPhilosophyVisual() {
     <div className="my-16 flex flex-col gap-8">
       {/* Header section */}
       <div className="flex flex-col gap-4">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[var(--neutral-6)] bg-background/50 backdrop-blur-md px-3 py-1 text-sm font-medium text-muted-foreground w-fit shadow-sm">
+        <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/50 backdrop-blur-md px-3 py-1 text-sm font-medium text-muted-foreground w-fit shadow-sm">
           <LogomarkSVG
             width={14}
             height={14}
@@ -338,10 +338,10 @@ export function BrandPhilosophyVisual() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Dark-first */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--neutral-5)] bg-card shadow-sm mb-2">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-card shadow-sm mb-2">
             <Moon className="h-6 w-6 text-foreground" />
           </div>
           <h4 className="text-xl font-semibold text-foreground">Dark-first</h4>
@@ -353,14 +353,14 @@ export function BrandPhilosophyVisual() {
 
         {/* Gradient Sign */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden relative"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden relative"
+          gradientColor="hsl(var(--muted))"
         >
           {/* Subtle gradient orb */}
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[linear-gradient(135deg,#0033FE_0%,#0BF1C3_100%)] opacity-10 dark:opacity-20 blur-[50px] rounded-full pointer-events-none" />
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[linear-gradient(135deg,hsl(var(--primary))_0%,#0BF1C3_100%)] opacity-10 dark:opacity-20 blur-[50px] rounded-full pointer-events-none" />
 
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[#0033FE]/20 bg-[#0033FE]/5 shadow-sm mb-2 relative z-10">
-            <Sparkles className="h-6 w-6 text-[#0033FE] dark:text-[#0BF1C3]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[hsl(var(--primary))]/20 bg-[hsl(var(--primary))]/5 shadow-sm mb-2 relative z-10">
+            <Sparkles className="h-6 w-6 text-[hsl(var(--primary))] dark:text-[#0BF1C3]" />
           </div>
           <h4 className="text-xl font-semibold text-foreground relative z-10">Gradient Sign</h4>
           <p className="text-muted-foreground leading-relaxed text-base relative z-10">
@@ -371,10 +371,10 @@ export function BrandPhilosophyVisual() {
 
         {/* Intentional Motion */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--neutral-5)] bg-card shadow-sm mb-2">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-card shadow-sm mb-2">
             <Lightning className="h-6 w-6 text-foreground" />
           </div>
           <h4 className="text-xl font-semibold text-foreground">Intentional Motion</h4>
@@ -386,10 +386,10 @@ export function BrandPhilosophyVisual() {
 
         {/* Precision */}
         <MagicCard
-          className="p-8 md:p-10 rounded-2xl border-[var(--neutral-5)] bg-[var(--neutral-1)] flex flex-col gap-4 overflow-hidden"
-          gradientColor="var(--neutral-3)"
+          className="p-8 md:p-10 rounded-2xl border-border bg-background flex flex-col gap-4 overflow-hidden"
+          gradientColor="hsl(var(--muted))"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--neutral-5)] bg-card shadow-sm mb-2">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-card shadow-sm mb-2">
             <Code className="h-6 w-6 text-foreground" />
           </div>
           <h4 className="text-xl font-semibold text-foreground">Precision</h4>

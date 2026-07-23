@@ -20,7 +20,7 @@ export default async function LegalLayout({ children, params }: LegalLayoutProps
   setRequestLocale(lang as Locale);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--neutral-1)] dark:bg-black">
+    <div className="flex min-h-screen flex-col bg-background dark:bg-black">
       <Navbar />
       {/* pt-24 clears the fixed Navbar (h-16) plus a reading-lede gap.
           flex-1 turns this into a sticky-footer layout — on short legal

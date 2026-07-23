@@ -21,11 +21,11 @@ export function DesktopAuthCompleteHandoff({
   return (
     <section
       aria-live="polite"
-      className="relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
+      className="relative overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-sm"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--blue-9),transparent)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--primary)),transparent)]"
       />
 
       <div className="flex items-start gap-4">
@@ -38,13 +38,13 @@ export function DesktopAuthCompleteHandoff({
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-medium uppercase tracking-normal text-[var(--neutral-10)]">
+          <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
             Desktop sign-in
           </p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-normal text-[var(--neutral-12)]">
+          <h1 className="mt-2 text-2xl font-semibold tracking-normal text-foreground">
             Opening Nebutra Foundry
           </h1>
-          <p className="mt-3 text-sm leading-6 text-[var(--neutral-10)]">
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
             Your browser created a short-lived desktop handoff. Continue in the app to finish
             sign-in.
           </p>
@@ -58,7 +58,7 @@ export function DesktopAuthCompleteHandoff({
           state="Verified"
         />
         <StatusRow
-          icon={<Clock className="h-4 w-4 text-[var(--neutral-9)]" />}
+          icon={<Clock className="h-4 w-4 text-muted-foreground" />}
           label="Handoff expiry"
           state={new Date(expiresAt).toLocaleTimeString([], {
             hour: "2-digit",
@@ -87,14 +87,14 @@ function StatusRow({
   state: string;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-3 py-2.5">
-      <span className="inline-flex min-w-0 items-center gap-2 text-sm font-medium text-[var(--neutral-11)]">
+    <div className="flex items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border bg-muted px-3 py-2.5">
+      <span className="inline-flex min-w-0 items-center gap-2 text-sm font-medium text-muted-foreground">
         <span className="shrink-0" aria-hidden>
           {icon}
         </span>
         <span className="truncate">{label}</span>
       </span>
-      <span className="shrink-0 text-xs font-medium text-[var(--neutral-10)]">{state}</span>
+      <span className="shrink-0 text-xs font-medium text-muted-foreground">{state}</span>
     </div>
   );
 }

@@ -31,20 +31,20 @@ export function IcpFooter({ locale, icpNumber, publicSecurityRecord }: IcpFooter
   return (
     <div
       data-testid="icp-footer"
-      className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-3 text-center text-xs text-[var(--neutral-11)]"
+      className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-3 text-center text-xs text-muted-foreground"
     >
       <a
         href="https://beian.miit.gov.cn"
         target="_blank"
         rel="noopener noreferrer"
         aria-label={t("recordNumber")}
-        className="hover:text-[var(--neutral-12)] hover:underline"
+        className="hover:text-foreground hover:underline"
       >
         {trimmedIcp}
       </a>
       {trimmedPsr ? (
         <>
-          <span aria-hidden className="select-none text-[var(--neutral-9)]">
+          <span aria-hidden className="select-none text-muted-foreground">
             ·
           </span>
           <a
@@ -52,7 +52,7 @@ export function IcpFooter({ locale, icpNumber, publicSecurityRecord }: IcpFooter
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t("publicSecurity")}
-            className="hover:text-[var(--neutral-12)] hover:underline"
+            className="hover:text-foreground hover:underline"
           >
             {t("publicSecurity")} {trimmedPsr}
           </a>

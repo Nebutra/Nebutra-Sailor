@@ -17,15 +17,15 @@ const IDEAS: ReadonlyArray<Idea> = [
 export function IdeaPlazaGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-muted p-3"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">
-          <Sparkles className="h-3 w-3 text-[var(--brand-primary)]" />
+        <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
+          <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
           <span>idea-plaza</span>
-          <span className="text-[var(--neutral-9)]">·</span>
+          <span className="text-muted-foreground">·</span>
           <span>1,247 ideas</span>
         </div>
         <Badge variant="outline" className="h-4 px-1.5 text-[9px] font-mono">
@@ -38,13 +38,11 @@ export function IdeaPlazaGlyph(_props: SubpackageGlyphProps) {
         {IDEAS.map((idea) => (
           <div
             key={idea.title}
-            className="flex items-center justify-between gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
+            className="flex items-center justify-between gap-2 rounded-[var(--radius-md)] border border-border bg-background px-2 py-1.5"
           >
-            <span className="truncate font-mono text-[10px] text-[var(--neutral-12)]">
-              {idea.title}
-            </span>
-            <div className="flex shrink-0 items-center gap-2 font-mono text-[9px] text-[var(--neutral-11)]">
-              <span className="flex items-center gap-0.5 text-[var(--brand-primary)]">
+            <span className="truncate font-mono text-[10px] text-foreground">{idea.title}</span>
+            <div className="flex shrink-0 items-center gap-2 font-mono text-[9px] text-muted-foreground">
+              <span className="flex items-center gap-0.5 text-[hsl(var(--primary))]">
                 <ChartTrendingUp className="h-2.5 w-2.5" />
                 {idea.votes}
               </span>
@@ -58,9 +56,9 @@ export function IdeaPlazaGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="mt-auto flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="mt-auto flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
         <span>public</span>
-        <span className="text-[var(--neutral-8)]">·</span>
+        <span className="text-muted-foreground">·</span>
         <span>double-opt-in collab</span>
       </div>
     </div>

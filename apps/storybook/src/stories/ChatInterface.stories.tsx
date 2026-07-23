@@ -36,7 +36,7 @@ function MessageBubble({ message }: { message: StaticMessage }) {
       </div>
       <div
         className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
-          isUser ? "bg-blue-9 text-[color:var(--neutral-1)]" : "bg-neutral-3 text-neutral-12"
+          isUser ? "bg-blue-9 text-[color:hsl(var(--background))]" : "bg-neutral-3 text-neutral-12"
         }`}
       >
         <div className="whitespace-pre-wrap leading-relaxed">{message.text}</div>
@@ -93,7 +93,7 @@ function ChatShell({
             type="button"
             disabled={!inputValue || inputDisabled}
             aria-label="Send message"
-            className="rounded-lg bg-blue-9 px-3 py-2 text-[color:var(--neutral-1)] transition-colors hover:bg-blue-10 disabled:opacity-50"
+            className="rounded-lg bg-blue-9 px-3 py-2 text-[color:hsl(var(--background))] transition-colors hover:bg-blue-10 disabled:opacity-50"
           >
             <Send className="size-4" />
           </button>

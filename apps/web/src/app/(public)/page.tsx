@@ -199,7 +199,7 @@ export default async function PublicDashboardPage() {
           <div className="flex flex-wrap gap-2">
             <Link
               href={localizedHref("/workspace")}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] px-3.5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-primary px-3.5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
               {copy.primaryAction}
               <ArrowRight className="size-3.5" aria-hidden="true" />

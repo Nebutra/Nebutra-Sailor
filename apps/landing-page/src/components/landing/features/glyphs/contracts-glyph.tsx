@@ -27,12 +27,12 @@ const EVENTS: ReadonlyArray<EventRow> = [
 export function ContractsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1 font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
           <Code className="h-3 w-3" />
           contracts.events.ts
         </span>
@@ -46,19 +46,19 @@ export function ContractsGlyph(_props: SubpackageGlyphProps) {
         {EVENTS.map((row) => (
           <li
             key={row.name}
-            className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-2 rounded-[var(--radius-md)] bg-background px-2 py-1"
           >
             <Badge
               variant="secondary"
               size="sm"
-              className="shrink-0 bg-[var(--blue-3)] font-mono text-[9px] text-[var(--blue-11)]"
+              className="shrink-0 bg-[var(--blue-3)] font-mono text-[9px] text-primary"
             >
               event
             </Badge>
-            <span className="shrink-0 truncate font-mono text-[10px] text-[var(--neutral-12)]">
+            <span className="shrink-0 truncate font-mono text-[10px] text-foreground">
               {row.name}
             </span>
-            <span className="ml-auto min-w-0 truncate text-right font-mono text-[10px] text-[var(--neutral-11)]">
+            <span className="ml-auto min-w-0 truncate text-right font-mono text-[10px] text-muted-foreground">
               {row.payload}
             </span>
           </li>
@@ -66,7 +66,7 @@ export function ContractsGlyph(_props: SubpackageGlyphProps) {
       </ul>
 
       {/* Footer */}
-      <p className="text-center font-mono text-[9px] text-[var(--neutral-11)]">
+      <p className="text-center font-mono text-[9px] text-muted-foreground">
         TypeScript-validated &middot; zero-runtime contracts
       </p>
     </div>

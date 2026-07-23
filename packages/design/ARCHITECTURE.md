@@ -92,3 +92,20 @@ If a surface still looks “stuck”, it is a **hard-coupling bug** (file still 
 | Copy `@source` monorepo paths into every app | Import `@nebutra/ui/styles/*` |
 | CI lint of globals as the main safety net | Package-owned CSS entry (this doc) |
 | Using `--brand-primary` for form controls | Semantic `--primary` |
+
+
+## 7. Full-site product chrome pass (status)
+
+All product apps under `apps/*` consume:
+
+1. Package CSS entry (`preset.css` or `sources.css`) for Tailwind scan
+2. Semantic classes / `hsl(var(--primary|background|foreground|border|muted-…))` for product chrome
+
+**Intentionally not converted** (identity / docs / demos):
+
+- Token playgrounds & scale swatches that *display* `--neutral-N` names
+- Generated export HTML fixtures (startup-os files)
+- Storybook foundation stories that document VI hexes by name
+- Hidden form inputs / test mocks using native HTML
+
+**Swap confidence:** changing semantic values in design-tokens theme JSON recolors product CTAs, surfaces, and text across web, landing, auth, idp, forge, router, docs shells without per-callsite edits.

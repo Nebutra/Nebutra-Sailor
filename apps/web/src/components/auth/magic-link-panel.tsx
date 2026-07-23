@@ -43,10 +43,8 @@ export function MagicLinkPanel({ returnUrl, turnstileSiteKey }: MagicLinkPanelPr
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {t("title")}
-        </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
       {turnstileSiteKey && (
         <div className="mb-4">

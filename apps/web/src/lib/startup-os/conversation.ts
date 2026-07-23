@@ -138,7 +138,7 @@ src/routes/index.tsx; to change the document head or shell patch src/routes/__ro
 for styling patch src/styles/app.css.
 You MUST keep building UI with @nebutra/ui components (e.g. Button, Card, Badge from
 "@nebutra/ui/primitives") and @nebutra/icons glyphs, plus the brand CSS variables from
-@nebutra/tokens (var(--brand-gradient), var(--neutral-12), etc.) — NEVER revert the
+@nebutra/tokens (hsl(var(--primary)), var(--neutral-12), etc.) — NEVER revert the
 founder surface to bare/unstyled HTML or hardcoded hex colors.
 First, write a short founder-facing PLAN in prose (1-5 sentences, no markdown
 headers, no code fences). Then emit EXACTLY this sentinel on its own line:

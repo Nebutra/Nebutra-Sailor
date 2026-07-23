@@ -41,7 +41,7 @@ const PUBLISHER_LOGOS: PublisherLogo[] = [
     avatar: true,
     Icon: (Claude as ProviderAvatarIcon).Avatar ?? (Claude as LogoComponent),
     match: /\bclaude(\s+(blog|code|ai))?\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
   {
     avatar: true,
@@ -53,37 +53,37 @@ const PUBLISHER_LOGOS: PublisherLogo[] = [
     avatar: true,
     Icon: (OpenAI as ProviderAvatarIcon).Avatar ?? (OpenAI as LogoComponent),
     match: /\b(openai|open ai|chatgpt)\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
   {
     Icon: LogoYCombinator,
     match: /\b(y combinator|yc)\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
   {
     Icon: LogoVercel,
     match: /\bvercel\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
   {
     Icon: LogoLinear,
     match: /\blinear\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
   {
     Icon: LogoSanity,
     match: /\bsanity\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
   {
     Icon: LogoCloudflare,
     match: /\bcloudflare\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
   {
     Icon: LogoGithub,
     match: /\b(github|git hub)\b/i,
-    tone: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)]",
+    tone: "border-border bg-background text-foreground",
   },
 ];
 
@@ -144,7 +144,7 @@ export function BlogAuthorAvatar({ name, src, size = "sm" }: BlogAuthorAvatarPro
         alt={name ? `${name} avatar` : ""}
         width={size === "md" ? 32 : 24}
         height={size === "md" ? 32 : 24}
-        className={`${className} bg-[var(--neutral-2)] object-cover`}
+        className={`${className} bg-muted object-cover`}
         onError={() => setImageFailed(true)}
       />
     );
@@ -152,7 +152,7 @@ export function BlogAuthorAvatar({ name, src, size = "sm" }: BlogAuthorAvatarPro
 
   return (
     <span
-      className={`${className} inline-flex items-center justify-center bg-[var(--neutral-2)] text-[10px] font-semibold text-[var(--neutral-11)]`}
+      className={`${className} inline-flex items-center justify-center bg-muted text-[10px] font-semibold text-muted-foreground`}
       aria-hidden
     >
       {name ? getInitials(name) : <User className="size-3.5" />}

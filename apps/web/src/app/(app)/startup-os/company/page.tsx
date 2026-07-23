@@ -246,7 +246,7 @@ export default function CompanyContextPage() {
                 onClick={() => void saveField()}
                 disabled={saving}
                 className="border-0 text-white"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 {saving ? t("company.action.saving") : t("company.action.save")}
               </Button>

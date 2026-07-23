@@ -39,18 +39,18 @@ function getModeClasses(runtime: NotificationRuntimeStatus): string {
 
 export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSource }: Props) {
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-2xl">
           <div className="flex items-center gap-3">
-            <div className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
+            <div className="rounded-[var(--radius-md)] bg-muted p-2 text-muted-foreground">
               <BellRing className="h-4 w-4" aria-hidden />
             </div>
             <div>
-              <h3 className="text-base font-semibold text-[var(--neutral-12)]">
+              <h3 className="text-base font-semibold text-foreground">
                 {runtime.providerLabel} notification runtime
               </h3>
-              <p className="mt-1 text-sm text-[var(--neutral-11)]">{runtime.summary}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{runtime.summary}</p>
             </div>
           </div>
         </div>
@@ -63,33 +63,33 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
       </div>
 
       <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
-          <div className="flex items-center gap-2 text-sm font-medium text-[var(--neutral-12)]">
-            <DatabaseZap className="h-4 w-4 text-[var(--neutral-11)]" aria-hidden />
+        <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-4">
+          <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <DatabaseZap className="h-4 w-4 text-muted-foreground" aria-hidden />
             Preferences
           </div>
-          <p className="mt-2 text-sm text-[var(--neutral-11)]">
+          <p className="mt-2 text-sm text-muted-foreground">
             {preferenceSource === "provider"
               ? "Loaded from the connected notification backend."
               : "Showing Nebutra default policy because persistent preference storage is not connected."}
           </p>
         </div>
 
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
-          <div className="flex items-center gap-2 text-sm font-medium text-[var(--neutral-12)]">
-            <RadioTower className="h-4 w-4 text-[var(--neutral-11)]" aria-hidden />
+        <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-4">
+          <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <RadioTower className="h-4 w-4 text-muted-foreground" aria-hidden />
             Inbox
           </div>
-          <p className="mt-2 text-sm text-[var(--neutral-11)]">
+          <p className="mt-2 text-sm text-muted-foreground">
             {inboxSource === "provider"
               ? "Recent in-app messages are loaded from the notification inbox backend."
               : "Inbox preview will become live once persistent in-app storage is connected."}
           </p>
         </div>
 
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
-          <div className="text-sm font-medium text-[var(--neutral-12)]">Missing integration</div>
-          <p className="mt-2 text-sm text-[var(--neutral-11)]">
+        <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-4">
+          <div className="text-sm font-medium text-foreground">Missing integration</div>
+          <p className="mt-2 text-sm text-muted-foreground">
             {runtime.missing.length > 0
               ? runtime.missing.join(" · ")
               : "No known gaps for this runtime."}
@@ -98,7 +98,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
       </div>
 
       {runtime.reason ? (
-        <p className="mt-4 text-sm text-[var(--neutral-11)]">{runtime.reason}</p>
+        <p className="mt-4 text-sm text-muted-foreground">{runtime.reason}</p>
       ) : null}
     </section>
   );

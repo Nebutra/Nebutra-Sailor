@@ -1,10 +1,11 @@
 const TIER_CONFIG = {
-  V0: { label: "v0", className: "bg-[var(--neutral-3)] text-[var(--neutral-11)]" },
-  V1: { label: "v1 ⚡", className: "bg-[var(--blue-3)] text-[var(--blue-9)]" },
-  V2: { label: "v2 🚀", className: "bg-[var(--blue-3)] text-[var(--blue-9)]" },
+  V0: { label: "v0", className: "bg-muted text-muted-foreground" },
+  V1: { label: "v1 ⚡", className: "bg-[var(--blue-3)] text-[hsl(var(--primary))]" },
+  V2: { label: "v2 🚀", className: "bg-[var(--blue-3)] text-[hsl(var(--primary))]" },
   V_INFINITY: {
     label: "v∞",
-    className: "bg-gradient-to-r from-[var(--blue-3)] to-[var(--cyan-3)] text-[var(--blue-9)]",
+    className:
+      "bg-gradient-to-r from-[var(--blue-3)] to-[var(--cyan-3)] text-[hsl(var(--primary))]",
   },
 } as const;
 

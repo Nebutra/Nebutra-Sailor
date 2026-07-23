@@ -82,8 +82,8 @@ export function DeleteOrganizationForm({
 
   if (success) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-        <p role="status" className="text-sm text-[var(--neutral-12)]">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+        <p role="status" className="text-sm text-foreground">
           {t("success")}
         </p>
       </section>
@@ -94,7 +94,7 @@ export function DeleteOrganizationForm({
     <section className="rounded-[var(--radius-lg)] border border-red-6 bg-red-2 p-6">
       <div className="mb-4">
         <h3 className="text-sm font-semibold text-red-11">{t("title")}</h3>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
       </div>
 
       {stage === "idle" ? (
@@ -109,7 +109,7 @@ export function DeleteOrganizationForm({
               name="confirmation"
               render={({ field }) => (
                 <FormItem className="space-y-0">
-                  <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                  <FormLabel className="block text-sm font-medium text-foreground">
                     {t("confirmLabel")}
                   </FormLabel>
                   <FormControl>
@@ -122,7 +122,7 @@ export function DeleteOrganizationForm({
                       disabled={pending}
                     />
                   </FormControl>
-                  <p className="mt-1 text-xs text-[var(--neutral-11)]">
+                  <p className="mt-1 text-xs text-muted-foreground">
                     <span className="font-mono">{organizationName}</span>
                   </p>
                 </FormItem>

@@ -116,7 +116,7 @@ export async function GettingStarted() {
           <div className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-3" aria-hidden="true">
             <div
               className="h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none"
-              style={{ width: `${percent}%`, background: "var(--brand-gradient)" }}
+              style={{ width: `${percent}%`, background: "hsl(var(--primary))" }}
             />
           </div>
           <span className="text-xs font-medium tabular-nums text-neutral-11">{percent}%</span>

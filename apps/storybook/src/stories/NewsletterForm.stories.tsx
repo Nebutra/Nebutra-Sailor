@@ -11,10 +11,10 @@ import type { Meta, StoryObj } from "@storybook/react";
  * -------------------------------------------------------------------------- */
 
 const inputClassName =
-  "w-48 rounded-lg border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] px-3 py-1.5 text-sm text-[color:var(--neutral-12)] placeholder:text-[color:var(--neutral-10)]";
+  "w-48 rounded-lg border border-[color:hsl(var(--border))] bg-[color:hsl(var(--muted))] px-3 py-1.5 text-sm text-[color:hsl(var(--foreground))] placeholder:text-[color:hsl(var(--muted-foreground))]";
 
 const primaryButtonClassName =
-  "rounded-lg bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-[color:var(--neutral-1)] transition-opacity";
+  "rounded-lg bg-[image:hsl(var(--primary))] px-3 py-1.5 text-sm font-medium text-[color:hsl(var(--background))] transition-opacity";
 
 function NewsletterFormIdle() {
   return (
@@ -104,10 +104,12 @@ export const ErrorState: Story = {
 export const InFooterContext: Story = {
   name: "In Footer Context",
   render: () => (
-    <div className="rounded-xl bg-[color:var(--neutral-12)] p-8">
+    <div className="rounded-xl bg-[color:hsl(var(--foreground))] p-8">
       <div className="max-w-xs">
-        <h4 className="mb-1 text-sm font-semibold text-[color:var(--neutral-1)]">Stay updated</h4>
-        <p className="mb-3 text-xs text-[color:var(--neutral-5)]">
+        <h4 className="mb-1 text-sm font-semibold text-[color:hsl(var(--background))]">
+          Stay updated
+        </h4>
+        <p className="mb-3 text-xs text-[color:hsl(var(--border))]">
           Get the latest product updates and engineering insights.
         </p>
         <form className="flex gap-2">
@@ -115,7 +117,7 @@ export const InFooterContext: Story = {
             type="email"
             readOnly
             placeholder="you@example.com"
-            className="w-48 rounded-lg border border-[color:var(--neutral-7)] bg-[color:var(--neutral-11)] px-3 py-1.5 text-sm text-[color:var(--neutral-1)] placeholder:text-[color:var(--neutral-5)]"
+            className="w-48 rounded-lg border border-[color:hsl(var(--border))] bg-[color:hsl(var(--muted-foreground))] px-3 py-1.5 text-sm text-[color:hsl(var(--background))] placeholder:text-[color:hsl(var(--border))]"
           />
           <button type="button" className={primaryButtonClassName}>
             Subscribe
@@ -152,13 +154,13 @@ export const AllVariants: Story = {
 
       <div>
         <h3 className="mb-2 text-sm font-semibold text-neutral-12">In Footer Context (dark)</h3>
-        <div className="rounded-xl bg-[color:var(--neutral-12)] p-6">
+        <div className="rounded-xl bg-[color:hsl(var(--foreground))] p-6">
           <form className="flex gap-2">
             <input
               type="email"
               readOnly
               placeholder="you@example.com"
-              className="w-48 rounded-lg border border-[color:var(--neutral-7)] bg-[color:var(--neutral-11)] px-3 py-1.5 text-sm text-[color:var(--neutral-1)] placeholder:text-[color:var(--neutral-5)]"
+              className="w-48 rounded-lg border border-[color:hsl(var(--border))] bg-[color:hsl(var(--muted-foreground))] px-3 py-1.5 text-sm text-[color:hsl(var(--background))] placeholder:text-[color:hsl(var(--border))]"
             />
             <button type="button" className={primaryButtonClassName}>
               Subscribe

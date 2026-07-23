@@ -27,12 +27,10 @@ export default async function ResetPasswordPage({
         <ResetPasswordForm token={token} />
       ) : (
         <div className="w-full">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
             {t("invalidTitle")}
           </h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-            {t("invalidDescription")}
-          </p>
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("invalidDescription")}</p>
         </div>
       )}
     </AuthSplitLayout>

@@ -37,13 +37,13 @@ export function DashboardHintCard({ cookieName }: Props) {
         <div
           aria-hidden
           className="pointer-events-none absolute -right-12 -top-12 size-40 opacity-[0.18] blur-3xl"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         />
 
         <div className="relative flex items-start gap-3">
           <div
             className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             <Sparkles className="size-4" />
           </div>
@@ -67,7 +67,7 @@ export function DashboardHintCard({ cookieName }: Props) {
                 type="button"
                 onClick={startTour}
                 className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 <Compass className="size-3" />
                 Take the 4-step tour

@@ -22,7 +22,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
   return (
     <div
       className={cn(
-        "grid min-h-screen bg-[var(--neutral-1)] lg:grid-cols-[minmax(360px,36vw)_1fr]",
+        "grid min-h-screen bg-background lg:grid-cols-[minmax(360px,36vw)_1fr]",
         className,
       )}
     >
@@ -33,7 +33,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
       >
         <a
           href={homeHref}
-          className="absolute left-5 top-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--blue-9)] sm:left-8 lg:left-12 lg:top-10"
+          className="absolute left-5 top-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[hsl(var(--primary))] sm:left-8 lg:left-12 lg:top-10"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden />
           {t("homeLink")}
@@ -43,7 +43,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
         </div>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--neutral-2)_80%,transparent),transparent)] lg:hidden"
+          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,hsl(var(--muted))_80%,transparent),transparent)] lg:hidden"
         />
         <div className="relative w-full max-w-[440px]">{children}</div>
       </main>

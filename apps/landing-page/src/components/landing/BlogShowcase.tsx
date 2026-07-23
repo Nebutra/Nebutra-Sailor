@@ -39,12 +39,12 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
             <AnimateIn key={post.slug} preset="fadeUp">
               <a
                 href={`/blog/${post.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/50 transition-colors hover:bg-muted/40 hover:border-primary/20"
+                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-background/50 transition-colors hover:bg-muted/40 hover:border-primary/20"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 {/* Thumbnail */}
                 {post.imageUrl ? (
-                  <div className="relative h-48 w-full overflow-hidden bg-[var(--neutral-3)]">
+                  <div className="relative h-48 w-full overflow-hidden bg-muted">
                     <Image
                       src={post.imageUrl}
                       alt={post.title}
@@ -55,7 +55,7 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
                 ) : (
                   <div
                     className="h-48 w-full transition-opacity group-hover:opacity-90"
-                    style={{ background: "var(--brand-gradient)" }}
+                    style={{ background: "hsl(var(--primary))" }}
                     aria-hidden="true"
                   />
                 )}

@@ -332,7 +332,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             type="button"
             onClick={onUpgrade}
             className="group flex items-center justify-between rounded-[var(--radius-xl)] px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             <span>{t("subscription.upgradeCta")}</span>
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />

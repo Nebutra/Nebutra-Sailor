@@ -444,7 +444,7 @@ function NotificationsToolbar({
   onMarkAllRead,
 }: NotificationsToolbarProps): React.ReactElement {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--neutral-7)] pb-3">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
       <div role="tablist" aria-label="Notification filter" className="flex gap-1">
         <FilterTabButton
           active={filter === "all"}
@@ -464,7 +464,7 @@ function NotificationsToolbar({
         type="button"
         onClick={() => void onMarkAllRead()}
         disabled={loading || !hasUnread}
-        className="text-xs font-medium text-[var(--blue-9)] hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+        className="text-xs font-medium text-[hsl(var(--primary))] hover:underline disabled:cursor-not-allowed disabled:opacity-50"
       >
         {markAllReadLabel}
       </button>
@@ -490,21 +490,21 @@ function BulkActions({
   return (
     <div
       data-testid="bulk-actions"
-      className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2"
+      className="flex items-center justify-between rounded-[var(--radius-md)] border border-border bg-muted px-4 py-2"
     >
-      <span className="text-sm text-[var(--neutral-11)]">{selectedLabel}</span>
+      <span className="text-sm text-muted-foreground">{selectedLabel}</span>
       <div className="flex gap-2">
         <button
           type="button"
           onClick={() => void onMarkRead()}
-          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
+          className="rounded-[var(--radius-md)] border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted"
         >
           {markReadLabel}
         </button>
         <button
           type="button"
           onClick={() => void onArchive()}
-          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
+          className="rounded-[var(--radius-md)] border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted"
         >
           {archiveLabel}
         </button>
@@ -544,7 +544,7 @@ function NotificationsListPanel({
   onToggleSelect,
 }: NotificationsListPanelProps): React.ReactElement {
   return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background">
       <InboxList
         notifications={notifications}
         loading={loading}
@@ -579,7 +579,7 @@ function LoadMoreButton({
         type="button"
         onClick={() => void onLoadMore()}
         disabled={loading}
-        className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loading ? loadingLabel : label}
       </button>
@@ -616,13 +616,13 @@ function FilterTabButton({
       className={cn(
         "rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         active
-          ? "bg-[var(--neutral-3)] text-[var(--neutral-12)]"
-          : "text-[var(--neutral-11)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]",
+          ? "bg-muted text-foreground"
+          : "text-muted-foreground hover:bg-muted hover:text-foreground",
       )}
     >
       {label}
       {typeof count === "number" && count > 0 ? (
-        <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-[var(--blue-9)] px-1.5 text-[10px] font-semibold text-[var(--neutral-1)]">
+        <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-[hsl(var(--primary))] px-1.5 text-[10px] font-semibold text-[hsl(var(--background))]">
           {count > 99 ? "99+" : count}
         </span>
       ) : null}

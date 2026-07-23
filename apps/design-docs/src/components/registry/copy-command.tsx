@@ -34,7 +34,7 @@ export function CopyCommand({ command, className = "" }: CopyCommandProps) {
       type="button"
       onClick={handleCopy}
       aria-label={copied ? "Command copied" : "Copy install command"}
-      className={`group flex w-full items-center justify-between gap-3 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-2 font-mono text-xs text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] ${className}`}
+      className={`group flex w-full items-center justify-between gap-3 rounded-md border border-border bg-muted px-3 py-2 font-mono text-xs text-foreground transition-colors hover:bg-muted ${className}`}
     >
       <span className="truncate">{command}</span>
       {copied ? (

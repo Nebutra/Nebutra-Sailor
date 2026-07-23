@@ -41,30 +41,25 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
     <div className="space-y-12">
       {/* Header */}
       <section className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)]">
-          {t("faq.heading")}
-        </h1>
-        <p className="mt-4 text-lg text-[var(--neutral-10)]">{t("faq.subheading")}</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">{t("faq.heading")}</h1>
+        <p className="mt-4 text-lg text-muted-foreground">{t("faq.subheading")}</p>
       </section>
 
       {/* FAQ Categories */}
       {faqStructure.map(({ cat, questions }) => (
         <section key={cat}>
-          <h2 className="text-2xl font-bold text-[var(--neutral-12)] mb-6">
+          <h2 className="text-2xl font-bold text-foreground mb-6">
             {t(`faq.categories.${cat}.name`)}
           </h2>
           <div className="space-y-4">
             {questions.map((qIdx) => (
-              <details
-                key={qIdx}
-                className="group rounded-[var(--radius-lg)] border border-[var(--neutral-6)]"
-              >
-                <summary className="flex cursor-pointer items-center justify-between p-4 font-medium text-[var(--neutral-12)]">
+              <details key={qIdx} className="group rounded-[var(--radius-lg)] border border-border">
+                <summary className="flex cursor-pointer items-center justify-between p-4 font-medium text-foreground">
                   {t(`faq.categories.${cat}.questions.${qIdx}.q` as Parameters<typeof t>[0])}
                   <span className="ml-4 shrink-0 transition group-open:rotate-180">
                     <svg
                       aria-hidden="true"
-                      className="h-5 w-5 text-[var(--neutral-9)]"
+                      className="h-5 w-5 text-muted-foreground"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -78,8 +73,8 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
                     </svg>
                   </span>
                 </summary>
-                <div className="border-t border-[var(--neutral-6)] p-4">
-                  <p className="text-[var(--neutral-10)]">
+                <div className="border-t border-border p-4">
+                  <p className="text-muted-foreground">
                     {t(`faq.categories.${cat}.questions.${qIdx}.a` as Parameters<typeof t>[0])}
                   </p>
                 </div>
@@ -90,16 +85,16 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
       ))}
 
       {/* Contact CTA */}
-      <section className="rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] p-8 text-center">
-        <h2 className="text-xl font-bold text-[var(--neutral-12)]">{t("faq.ctaHeading")}</h2>
-        <p className="mt-2 text-[var(--neutral-10)]">{t("faq.ctaDescription")}</p>
+      <section className="rounded-[var(--radius-2xl)] bg-muted p-8 text-center">
+        <h2 className="text-xl font-bold text-foreground">{t("faq.ctaHeading")}</h2>
+        <p className="mt-2 text-muted-foreground">{t("faq.ctaDescription")}</p>
         <div className="mt-6 flex justify-center gap-4">
           <Button asChild size="lg">
             <Link href="/contact">{t("faq.ctaButton")}</Link>
           </Button>
           <a
             href="mailto:support@nebutra.com"
-            className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-11)] transition hover:bg-[var(--neutral-3)]"
+            className="rounded-[var(--radius-lg)] border border-border px-6 py-3 font-semibold text-muted-foreground transition hover:bg-muted"
           >
             {t("faq.ctaEmail")}
           </a>

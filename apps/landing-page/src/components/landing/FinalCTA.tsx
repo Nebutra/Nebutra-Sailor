@@ -14,7 +14,7 @@ export function FinalCTA() {
   const t = useTranslations("cta");
 
   return (
-    <section className="relative w-full overflow-hidden border-t border-[var(--neutral-6)] bg-[var(--neutral-1)] py-28 md:py-36 dark:border-[var(--neutral-4)] dark:bg-[var(--neutral-1)]">
+    <section className="relative w-full overflow-hidden border-t border-border bg-background py-28 md:py-36 dark:border-[hsl(var(--muted))] dark:bg-background">
       <div
         className="landing-cta-rule pointer-events-none absolute inset-x-0 top-0 h-px"
         aria-hidden="true"

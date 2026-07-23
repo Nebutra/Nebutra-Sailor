@@ -95,7 +95,7 @@ export function PreviewPane({ template }: PreviewPaneProps) {
   }, [propsText, template.id]);
 
   return (
-    <section className="flex h-full flex-1 flex-col bg-[var(--neutral-1)]">
+    <section className="flex h-full flex-1 flex-col bg-background">
       <Header template={template} subject={rendered?.subject ?? "—"} isRendering={isRendering} />
 
       <Tabs current={tab} onChange={setTab} />
@@ -129,18 +129,18 @@ function Header({
   isRendering: boolean;
 }) {
   return (
-    <header className="flex items-start justify-between gap-4 border-b border-[var(--neutral-6)] px-6 py-4">
+    <header className="flex items-start justify-between gap-4 border-b border-border px-6 py-4">
       <div className="min-w-0">
-        <h2 className="text-base font-semibold text-[var(--neutral-12)]">{template.label}</h2>
-        <p className="mt-0.5 truncate text-xs text-[var(--neutral-10)]">{template.description}</p>
-        <p className="mt-2 text-sm text-[var(--neutral-11)]">
-          <span className="text-[var(--neutral-10)]">Subject: </span>
-          <span className="font-medium text-[var(--neutral-12)]">{subject}</span>
+        <h2 className="text-base font-semibold text-foreground">{template.label}</h2>
+        <p className="mt-0.5 truncate text-xs text-muted-foreground">{template.description}</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          <span className="text-muted-foreground">Subject: </span>
+          <span className="font-medium text-foreground">{subject}</span>
         </p>
       </div>
       <div className="flex items-center gap-2">
         {isRendering ? (
-          <span className="inline-flex items-center gap-1.5 text-xs text-[var(--neutral-10)]">
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
             <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
             Rendering…
           </span>
@@ -153,7 +153,7 @@ function Header({
 function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => void }) {
   return (
     <div
-      className="flex gap-1 border-b border-[var(--neutral-6)] px-4 pt-2"
+      className="flex gap-1 border-b border-border px-4 pt-2"
       role="tablist"
       aria-label="Preview view"
     >
@@ -170,8 +170,8 @@ function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
               "rounded-t-md px-3 py-2 text-sm transition-colors",
               "focus:outline-none focus:ring-2 focus:ring-offset-1",
               active
-                ? "border-b-2 border-[var(--blue-9)] font-medium text-[var(--neutral-12)]"
-                : "border-b-2 border-transparent text-[var(--neutral-11)] hover:text-[var(--neutral-12)]",
+                ? "border-b-2 border-[hsl(var(--primary))] font-medium text-foreground"
+                : "border-b-2 border-transparent text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
             {t.label}
@@ -184,7 +184,7 @@ function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
 
 function ErrorBanner({ message }: { message: string }) {
   return (
-    <div className="border-b border-[var(--neutral-6)] bg-[color:var(--status-danger)]/10 px-6 py-2 text-sm text-[color:var(--status-danger)]">
+    <div className="border-b border-border bg-[color:var(--status-danger)]/10 px-6 py-2 text-sm text-[color:var(--status-danger)]">
       <span className="inline-flex items-center gap-2">
         <AlertCircle className="h-4 w-4" aria-hidden="true" />
         {message}
@@ -197,13 +197,13 @@ function IframePreview({ html }: { html: string }) {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   // Use srcDoc to fully isolate template styles from the host document.
   return (
-    <div className="h-full overflow-auto bg-[var(--neutral-3)] p-6">
+    <div className="h-full overflow-auto bg-muted p-6">
       <iframe
         ref={iframeRef}
         title="Email preview"
         sandbox="allow-same-origin"
         srcDoc={html}
-        className="mx-auto block h-[80vh] w-full max-w-3xl rounded-lg border border-[var(--neutral-6)] bg-white shadow-sm"
+        className="mx-auto block h-[80vh] w-full max-w-3xl rounded-lg border border-border bg-white shadow-sm"
       />
     </div>
   );
@@ -211,7 +211,7 @@ function IframePreview({ html }: { html: string }) {
 
 function PlainTextView({ text }: { text: string }) {
   return (
-    <pre className="h-full overflow-auto whitespace-pre-wrap break-words bg-[var(--neutral-2)] p-6 text-sm leading-relaxed text-[var(--neutral-12)]">
+    <pre className="h-full overflow-auto whitespace-pre-wrap break-words bg-muted p-6 text-sm leading-relaxed text-foreground">
       {text || "(empty)"}
     </pre>
   );
@@ -219,7 +219,7 @@ function PlainTextView({ text }: { text: string }) {
 
 function HtmlSourceView({ html }: { html: string }) {
   return (
-    <pre className="h-full overflow-auto bg-[var(--neutral-12)] p-6 text-xs leading-relaxed text-[var(--neutral-2)]">
+    <pre className="h-full overflow-auto bg-[hsl(var(--foreground))] p-6 text-xs leading-relaxed text-[hsl(var(--muted))]">
       <code>{html || "(no html yet)"}</code>
     </pre>
   );
@@ -241,7 +241,7 @@ function PropsEditor({
       <div className="flex-1 overflow-auto p-6">
         <label
           htmlFor="props-editor"
-          className="mb-2 block text-xs font-medium uppercase tracking-wider text-[var(--neutral-10)]"
+          className="mb-2 block text-xs font-medium uppercase tracking-wider text-muted-foreground"
         >
           Props (JSON)
         </label>
@@ -256,7 +256,7 @@ function PropsEditor({
             JSON parse error: {parseError}
           </p>
         ) : (
-          <p className="mt-2 text-xs text-[var(--neutral-10)]">
+          <p className="mt-2 text-xs text-muted-foreground">
             Edits apply automatically (debounced 250ms).
           </p>
         )}
@@ -312,8 +312,8 @@ function SendTestPanel({
   }
 
   return (
-    <div className="border-t border-[var(--neutral-6)] bg-[var(--neutral-2)] px-6 py-4">
-      <p className="mb-2 text-xs font-medium uppercase tracking-wider text-[var(--neutral-10)]">
+    <div className="border-t border-border bg-muted px-6 py-4">
+      <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
         Send test email (dev only)
       </p>
       <div className="flex flex-wrap items-center gap-2">
@@ -329,7 +329,7 @@ function SendTestPanel({
           onClick={() => void send()}
           disabled={disabled || pending || !to}
           className="inline-flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         >
           {pending ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

@@ -102,7 +102,7 @@ function Chip({
       className={cn(
         "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
         active
-          ? "border-transparent bg-[color:var(--neutral-12)] text-[color:var(--neutral-1)]"
+          ? "border-transparent bg-[color:hsl(var(--foreground))] text-[color:hsl(var(--background))]"
           : "border-border/60 text-neutral-11 hover:border-foreground/40 hover:text-neutral-12",
       )}
     >

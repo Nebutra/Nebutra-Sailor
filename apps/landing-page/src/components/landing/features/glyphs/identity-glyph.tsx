@@ -30,20 +30,18 @@ export function IdentityGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Top: avatar + name + handle */}
         <div className="flex items-center gap-2.5">
           <span
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold text-white"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             MK
           </span>
           <div className="flex min-w-0 flex-col">
-            <span className="truncate text-[13px] font-semibold text-[var(--neutral-12)]">
-              {copy.name}
-            </span>
-            <span className="truncate font-mono text-[11px] text-[var(--neutral-10)]">
+            <span className="truncate text-[13px] font-semibold text-foreground">{copy.name}</span>
+            <span className="truncate font-mono text-[11px] text-muted-foreground">
               {copy.handle}
             </span>
           </div>
@@ -63,11 +61,11 @@ export function IdentityGlyph({ locale }: SubpackageGlyphProps) {
         </div>
 
         {/* Footer: actor id + shield */}
-        <div className="flex items-center justify-between border-t border-[var(--neutral-5)] pt-1.5">
-          <span className="truncate font-mono text-[10px] text-[var(--neutral-10)]">
+        <div className="flex items-center justify-between border-t border-border pt-1.5">
+          <span className="truncate font-mono text-[10px] text-muted-foreground">
             {copy.actorLabel} · {copy.actorId}
           </span>
-          <Shield className="h-3 w-3 text-[var(--neutral-10)]" />
+          <Shield className="h-3 w-3 text-muted-foreground" />
         </div>
       </div>
     </div>

@@ -51,11 +51,11 @@ const STATUS_TONE: Record<RuleRow["status"], { bg: string; border: string; text:
 export function AlertingGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-[var(--radius-md)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
-      <div className="flex items-center justify-between text-[10px] text-[var(--neutral-11)]">
-        <span className="flex items-center gap-1 font-medium text-[var(--neutral-12)]">
+      <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+        <span className="flex items-center gap-1 font-medium text-foreground">
           <Bell className="h-3 w-3" aria-hidden />
           Active rules
         </span>
@@ -68,11 +68,11 @@ export function AlertingGlyph(_props: SubpackageGlyphProps) {
           return (
             <div
               key={rule.expression}
-              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
+              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-border bg-background px-2 py-1.5"
             >
               <div className="flex min-w-0 items-center gap-2">
                 <Lightning className="h-3 w-3 shrink-0" style={{ color: tone.text }} aria-hidden />
-                <code className="truncate font-mono text-[10px] text-[var(--neutral-12)]">
+                <code className="truncate font-mono text-[10px] text-foreground">
                   {rule.expression}
                 </code>
               </div>
@@ -88,16 +88,14 @@ export function AlertingGlyph(_props: SubpackageGlyphProps) {
                 >
                   {rule.label}
                 </Badge>
-                <span className="font-mono text-[9px] text-[var(--neutral-11)]">
-                  {rule.channel}
-                </span>
+                <span className="font-mono text-[9px] text-muted-foreground">{rule.channel}</span>
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="flex items-center justify-between text-[9px] text-[var(--neutral-10)]">
+      <div className="flex items-center justify-between text-[9px] text-muted-foreground">
         <span className="flex items-center gap-1">
           <Clock className="h-2.5 w-2.5" aria-hidden />
           evaluated every 30s

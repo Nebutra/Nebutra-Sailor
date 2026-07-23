@@ -112,7 +112,7 @@ export function VcProfile({
               href={org.website}
               target="_blank"
               rel="noreferrer nofollow"
-              className="inline-flex w-fit items-center gap-2 rounded-[var(--radius-lg)] bg-[color:var(--neutral-12)] px-5 py-2.5 font-semibold text-[color:var(--neutral-1)] text-sm transition-opacity hover:opacity-90"
+              className="inline-flex w-fit items-center gap-2 rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-5 py-2.5 font-semibold text-[color:hsl(var(--background))] text-sm transition-opacity hover:opacity-90"
             >
               {t("visit")}
               <ArrowUpRight className="h-4 w-4" />

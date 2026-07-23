@@ -183,12 +183,12 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
     return (
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
             Check your email
           </h1>
-          <p className="mt-1 text-sm text-[var(--neutral-9)]">
+          <p className="mt-1 text-sm text-muted-foreground">
             We sent a 6-digit code to{" "}
-            <span className="font-medium text-[var(--neutral-11)]">{email}</span>
+            <span className="font-medium text-muted-foreground">{email}</span>
           </p>
         </div>
 
@@ -218,7 +218,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
           </Button>
         </form>
 
-        <p className="text-center text-sm text-[var(--neutral-9)]">
+        <p className="text-center text-sm text-muted-foreground">
           Didn&apos;t receive it?{" "}
           <button
             type="button"
@@ -236,14 +236,14 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
           Create your account
         </h1>
-        <p className="mt-1 text-sm text-[var(--neutral-9)]">Start building today</p>
+        <p className="mt-1 text-sm text-muted-foreground">Start building today</p>
       </div>
 
       {accessGateEnabled ? (
-        <p className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-2 text-sm text-[var(--neutral-10)]">
+        <p className="rounded-[var(--radius-lg)] border border-border bg-muted px-3 py-2 text-sm text-muted-foreground">
           Social sign-up is disabled while invite-only access is enabled. Use email sign-up with
           your invite code.
         </p>
@@ -253,7 +253,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
 
           <div className="relative">
             <Separator />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs text-[var(--neutral-9)]">
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs text-muted-foreground">
               Or continue with
             </span>
           </div>
@@ -331,7 +331,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
                   <FormControl>
                     <Input {...field} required autoComplete="off" placeholder="neb_..." />
                   </FormControl>
-                  <p className="text-xs text-[var(--neutral-9)]">
+                  <p className="text-xs text-muted-foreground">
                     Nebutra is invite-only while the cold-start gate is enabled.
                   </p>
                 </FormItem>
@@ -351,7 +351,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
         </form>
       </Form>
 
-      <p className="text-center text-sm text-[var(--neutral-9)]">
+      <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
         <Link
           href={

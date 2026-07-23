@@ -36,7 +36,7 @@ export function CofounderCard({
       {/* Brand-tinted header band */}
       <div
         className="flex items-center justify-between px-5 py-3"
-        style={{ background: "var(--brand-gradient)" }}
+        style={{ background: "hsl(var(--primary))" }}
       >
         <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-neutral-11 backdrop-blur">
           <Compass className="size-3.5 text-blue-9" aria-hidden="true" />

@@ -141,9 +141,9 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
       <Navbar />
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
-          <div className="border-y border-[var(--neutral-6)] py-10 sm:py-14">
+          <div className="border-y border-border py-10 sm:py-14">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-7)]/60 bg-[var(--neutral-2)] text-[var(--neutral-10)]">
+              <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border/60 bg-muted text-muted-foreground">
                 {avatarUrl ? (
                   <Image
                     src={avatarUrl}
@@ -157,13 +157,13 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
                 )}
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase text-[var(--neutral-10)]">
+                <p className="text-xs font-semibold uppercase text-muted-foreground">
                   {isZh ? "作者" : "Author"}
                 </p>
-                <h1 className="mt-2 text-4xl font-semibold text-[var(--neutral-12)] sm:text-5xl">
+                <h1 className="mt-2 text-4xl font-semibold text-foreground sm:text-5xl">
                   {authorName}
                 </h1>
-                <p className="mt-3 text-sm leading-6 text-[var(--neutral-11)]">
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
                   {bio || (isZh ? `${posts.length} 篇文章` : `${posts.length} posts`)}
                 </p>
               </div>
@@ -186,25 +186,25 @@ function BlogAuthorPageSkeleton() {
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
         </div>
       </div>
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="border-y border-[var(--neutral-6)] py-10 sm:py-14">
+        <div className="border-y border-border py-10 sm:py-14">
           <div className="flex items-center gap-5">
-            <div className="size-20 animate-pulse rounded-full bg-[var(--neutral-3)]" />
+            <div className="size-20 animate-pulse rounded-full bg-muted" />
             <div className="flex-1">
-              <div className="h-4 w-20 animate-pulse rounded bg-[var(--neutral-3)]" />
-              <div className="mt-4 h-11 w-64 animate-pulse rounded bg-[var(--neutral-3)]" />
-              <div className="mt-4 h-4 w-48 animate-pulse rounded bg-[var(--neutral-3)]" />
+              <div className="h-4 w-20 animate-pulse rounded bg-muted" />
+              <div className="mt-4 h-11 w-64 animate-pulse rounded bg-muted" />
+              <div className="mt-4 h-4 w-48 animate-pulse rounded bg-muted" />
             </div>
           </div>
         </div>
-        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-[var(--neutral-2)]" />
+        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-muted" />
       </section>
     </main>
   );

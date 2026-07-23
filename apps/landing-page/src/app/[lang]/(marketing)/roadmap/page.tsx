@@ -132,21 +132,21 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
   setRequestLocale(lang as Locale);
 
   return (
-    <main id="main-content" className="min-h-screen bg-[var(--neutral-1)] relative overflow-hidden">
+    <main id="main-content" className="min-h-screen bg-background relative overflow-hidden">
       <Navbar />
 
       {/* Hero */}
       <section className="relative mx-auto max-w-[1400px] px-4 pt-20 pb-16 md:px-6 text-center">
         <AuroraBackground variant="vivid" position="top" intensity={0.5} />
         <AnimateIn preset="fade">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--blue-6)] bg-[color:var(--blue-9)]/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[color:var(--blue-9)]">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--blue-6)] bg-[color:hsl(var(--primary))]/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[color:hsl(var(--primary))]">
             Ecosystem Rollout
           </span>
         </AnimateIn>
 
         <AnimateIn preset="emerge">
           <h1
-            className="mt-4 text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-semibold text-[var(--neutral-12)] text-balance"
+            className="mt-4 text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-semibold text-foreground text-balance"
             style={{
               letterSpacing: "var(--tracking-display)",
               lineHeight: "var(--leading-display)",
@@ -155,7 +155,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
             Where we&apos;re{" "}
             <span
               style={{
-                background: "var(--brand-gradient)",
+                background: "hsl(var(--primary))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -167,7 +167,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
         </AnimateIn>
 
         <AnimateIn preset="fade">
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-[var(--neutral-11)]">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             The capability roadmap behind Nebutra&apos;s governed AI platform, from baseline
             scaffolding to registry-driven upgrades and harness runtime primitives.
           </p>
@@ -180,11 +180,11 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
 
         {/* Footer CTA */}
         <AnimateIn preset="fade" inView>
-          <div className="mx-auto mt-12 max-w-[1100px] rounded-[var(--radius-card)] bg-[var(--neutral-2)] p-8 text-center">
-            <p className="mb-2 text-sm font-semibold text-[var(--neutral-12)]">
+          <div className="mx-auto mt-12 max-w-[1100px] rounded-[var(--radius-card)] bg-muted p-8 text-center">
+            <p className="mb-2 text-sm font-semibold text-foreground">
               Build on the current baseline
             </p>
-            <p className="mb-6 text-sm text-[var(--neutral-11)]">
+            <p className="mb-6 text-sm text-muted-foreground">
               Start with the governed platform today, then adopt new capabilities through verified
               upgrades instead of one-off rewrites.
             </p>

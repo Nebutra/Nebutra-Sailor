@@ -96,7 +96,7 @@ body {
   font-size: clamp(2.75rem, 6.8vw, 6.2rem);
   letter-spacing: -0.045em;
   line-height: 0.92;
-  background: var(--brand-gradient);
+  background: hsl(var(--primary));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -469,17 +469,17 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
     <title>${escapeHtml(name)}</title>
     <style>
       :root {
-        /* Inlined from @nebutra/tokens/styles.css (light theme). */
-        --neutral-1: #ffffff;
-        --neutral-2: #f8fafc;
-        --neutral-7: #cbd5e1;
-        --neutral-11: #334155;
-        --neutral-12: #0f172a;
-        --blue-9: #0033fe;
-        --cyan-9: #0bf1c3;
-        --brand-primary: #0033fe;
+        /* Semantic product skin (sandbox has no package CSS — inline only). */
+        --background: 0 0% 100%;
+        --foreground: 222 47% 11%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 215 25% 45%;
+        --border: 240 5.9% 90%;
+        --primary: 228 85% 56%;
+        --primary-foreground: 0 0% 100%;
         --brand-accent: #0bf1c3;
-        --brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%);
+        /* Legacy alias — product CTAs follow --primary */
+        --brand-gradient: hsl(var(--primary));
       }
       * {
         box-sizing: border-box;
@@ -489,8 +489,8 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         min-height: 100vh;
         display: grid;
         place-items: center;
-        background: var(--neutral-2);
-        color: var(--neutral-12);
+        background: hsl(var(--muted));
+        color: hsl(var(--foreground));
         font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .preview-card {
@@ -508,7 +508,7 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
       .preview-card .eyebrow {
         border: 1px solid transparent;
         border-radius: 999px;
-        background: var(--brand-gradient);
+        background: hsl(var(--primary));
         padding: 0.5rem 0.85rem;
         color: var(--neutral-1);
         font-size: 0.78rem;
@@ -521,7 +521,7 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         font-size: clamp(2rem, 5vw, 3.25rem);
         letter-spacing: -0.04em;
         line-height: 1;
-        background: var(--brand-gradient);
+        background: hsl(var(--primary));
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;

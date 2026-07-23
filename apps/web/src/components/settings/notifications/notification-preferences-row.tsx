@@ -25,12 +25,12 @@ export interface NotificationPreferencesRowProps {
 
 function cellClasses(enabled: boolean, busy: boolean): string {
   if (busy) {
-    return "border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-9)] cursor-progress";
+    return "border-border bg-muted text-muted-foreground cursor-progress";
   }
   if (enabled) {
     return "border-green-6 bg-green-2 text-green-11 hover:bg-green-3";
   }
-  return "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]";
+  return "border-border bg-background text-muted-foreground hover:bg-muted";
 }
 
 export function NotificationPreferencesRow({
@@ -48,12 +48,12 @@ export function NotificationPreferencesRow({
   return (
     <div
       data-testid={`notification-row-${eventTypeId}`}
-      className="grid grid-cols-1 gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4 md:grid-cols-[2fr_repeat(var(--channel-count),minmax(0,1fr))] md:items-center"
+      className="grid grid-cols-1 gap-3 rounded-[var(--radius-lg)] border border-border bg-background p-4 md:grid-cols-[2fr_repeat(var(--channel-count),minmax(0,1fr))] md:items-center"
       style={{ ["--channel-count" as string]: visibleChannelIds.length }}
     >
       <div className="md:pr-4">
-        <p className="text-sm font-medium text-[var(--neutral-12)]">{label}</p>
-        <p className="mt-1 text-xs text-[var(--neutral-11)]">{description}</p>
+        <p className="text-sm font-medium text-foreground">{label}</p>
+        <p className="mt-1 text-xs text-muted-foreground">{description}</p>
       </div>
 
       {visibleChannelIds.map((channelId) => {
@@ -62,7 +62,7 @@ export function NotificationPreferencesRow({
           return (
             <div
               key={channelId}
-              className="text-xs text-[var(--neutral-9)] md:text-center"
+              className="text-xs text-muted-foreground md:text-center"
               aria-hidden="true"
             >
               —
@@ -77,7 +77,7 @@ export function NotificationPreferencesRow({
 
         return (
           <div key={channelId} className="flex items-center md:justify-center">
-            <span className="text-xs font-medium text-[var(--neutral-11)] md:hidden">
+            <span className="text-xs font-medium text-muted-foreground md:hidden">
               {channelLabel}
             </span>
             <button

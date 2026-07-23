@@ -166,21 +166,21 @@ function BlogArticleFooter({
   posts: BlogPostWithSource[];
 }) {
   return (
-    <section className="mx-auto mt-16 max-w-5xl border-y border-[var(--neutral-6)] py-10">
+    <section className="mx-auto mt-16 max-w-5xl border-y border-border py-10">
       <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
         <div>
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase text-[var(--neutral-10)]">
+              <p className="text-xs font-semibold uppercase text-muted-foreground">
                 {isZh ? "继续阅读" : "Continue reading"}
               </p>
-              <h2 className="mt-2 text-2xl font-semibold text-[var(--neutral-12)]">
+              <h2 className="mt-2 text-2xl font-semibold text-foreground">
                 {isZh ? "同主题文章" : "Related notes"}
               </h2>
             </div>
             <Link
               href={localizedPostHref(lang)}
-              className="hidden items-center gap-1.5 text-sm font-medium text-[var(--blue-9)] sm:inline-flex"
+              className="hidden items-center gap-1.5 text-sm font-medium text-[hsl(var(--primary))] sm:inline-flex"
             >
               {isZh ? "全部文章" : "All posts"}
               <ArrowRight className="size-4" aria-hidden />
@@ -193,9 +193,9 @@ function BlogArticleFooter({
                 <Link
                   key={relatedPost.id}
                   href={localizedPostHref(lang, relatedPost.slug)}
-                  className="group overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] transition-colors hover:bg-[var(--neutral-3)]"
+                  className="group overflow-hidden rounded-[var(--radius-md)] bg-muted transition-colors hover:bg-muted"
                 >
-                  <div className="relative h-36 overflow-hidden bg-[var(--neutral-3)]">
+                  <div className="relative h-36 overflow-hidden bg-muted">
                     <BlogImage
                       src={cover.src}
                       alt={cover.alt}
@@ -209,11 +209,11 @@ function BlogArticleFooter({
                   </div>
                   <div className="p-4">
                     {relatedPost.tags[0] && (
-                      <p className="text-xs font-medium text-[var(--neutral-10)]">
+                      <p className="text-xs font-medium text-muted-foreground">
                         {relatedPost.tags[0]}
                       </p>
                     )}
-                    <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug text-[var(--neutral-12)]">
+                    <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug text-foreground">
                       {relatedPost.title}
                     </h3>
                   </div>
@@ -222,11 +222,11 @@ function BlogArticleFooter({
             })}
           </div>
         </div>
-        <aside className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-5">
-          <p className="text-sm font-semibold text-[var(--neutral-12)]">
+        <aside className="rounded-[var(--radius-lg)] bg-muted p-5">
+          <p className="text-sm font-semibold text-foreground">
             {isZh ? "订阅 Nebutra Originals" : "Subscribe to Nebutra Originals"}
           </p>
-          <p className="mt-2 text-sm leading-6 text-[var(--neutral-11)]">
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {isZh
               ? "低频、认真，只发产品工程和 AI SaaS 交付笔记。"
               : "Low-frequency notes on product engineering and AI SaaS delivery."}
@@ -237,14 +237,14 @@ function BlogArticleFooter({
           <div className="mt-5 flex flex-wrap gap-2">
             <a
               href="#comments"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
             >
               <Message className="size-4" aria-hidden />
               {isZh ? "去评论" : "Discuss"}
             </a>
             <a
               href="#article-share"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
             >
               {isZh ? "分享" : "Share"}
             </a>
@@ -328,14 +328,14 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
           <AnimateIn preset="fade" inView>
             <Link
               href={localizedPostHref(lang)}
-              className="mb-8 inline-flex items-center gap-1.5 rounded text-sm text-[var(--neutral-11)] transition-colors hover:text-[var(--blue-9)]"
+              className="mb-8 inline-flex items-center gap-1.5 rounded text-sm text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
             >
               <ArrowLeft className="size-4" aria-hidden />
               {isZh ? "全部文章" : "All posts"}
             </Link>
           </AnimateIn>
 
-          <header className="border-b border-[var(--neutral-6)] pb-10 sm:pb-12">
+          <header className="border-b border-border pb-10 sm:pb-12">
             {post.tags.length > 0 && (
               <AnimateIn preset="fadeUp" inView>
                 <div className="mb-5 flex flex-wrap gap-1.5">
@@ -343,7 +343,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     <Link
                       key={cat}
                       href={`${localizedPostHref(lang)}/tag/${getBlogUrlSegment(cat)}`}
-                      className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+                      className="rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                     >
                       {cat}
                     </Link>
@@ -355,26 +355,26 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
             <AnimateIn preset="emerge" inView>
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
                 <div>
-                  <div className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--neutral-10)]">
+                  <div className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     <BookOpen className="size-3.5" aria-hidden />
                     {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
                   </div>
-                  <h1 className="max-w-4xl text-4xl font-semibold text-[var(--neutral-12)] sm:text-5xl lg:text-6xl">
+                  <h1 className="max-w-4xl text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl">
                     {post.title}
                   </h1>
                   {post.excerpt && (
-                    <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--neutral-11)] sm:text-xl sm:leading-9">
+                    <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl sm:leading-9">
                       {post.excerpt}
                     </p>
                   )}
                 </div>
 
-                <div className="space-y-5 border-t border-[var(--neutral-6)] pt-5 text-sm text-[var(--neutral-11)] lg:border-t-0 lg:pt-0">
+                <div className="space-y-5 border-t border-border pt-5 text-sm text-muted-foreground lg:border-t-0 lg:pt-0">
                   <div className="grid gap-2">
                     {authorName && (
                       <Link
                         href={`${localizedPostHref(lang)}/author/${getBlogUrlSegment(authorName)}`}
-                        className="inline-flex items-center gap-2 font-medium text-[var(--neutral-12)] hover:text-[var(--blue-9)]"
+                        className="inline-flex items-center gap-2 font-medium text-foreground hover:text-[hsl(var(--primary))]"
                       >
                         <BlogAuthorAvatar name={authorName} src={authorAvatarUrl} size="md" />
                         <span>{authorName}</span>
@@ -401,7 +401,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                       <a
                         href={languageSwitchPostHref(translationLocale, translation.slug)}
                         hrefLang={targetLanguage === "zh" ? "zh-Hans-CN" : "en-US"}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                       >
                         <Globe className="size-4" aria-hidden />
                         {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
@@ -426,7 +426,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
         <AnimateIn preset="fadeUp" inView>
           <div className="mx-auto max-w-5xl">
             <div
-              className="relative mt-8 aspect-[16/7] min-h-60 w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-3)] sm:min-h-80"
+              className="relative mt-8 aspect-[16/7] min-h-60 w-full overflow-hidden rounded-[var(--radius-lg)] bg-muted sm:min-h-80"
               style={{ viewTransitionName: getBlogViewTransitionName(post.id) }}
             >
               <BlogImage
@@ -520,31 +520,31 @@ function BlogPostSkeleton() {
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-16 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
         </div>
       </div>
       <article className="mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8">
-        <div className="mb-8 h-5 w-28 animate-pulse rounded bg-[var(--neutral-3)]" />
-        <div className="h-10 w-3/4 animate-pulse rounded bg-[var(--neutral-3)]" />
-        <div className="mt-4 h-5 w-1/2 animate-pulse rounded bg-[var(--neutral-3)]" />
-        <div className="mt-8 h-32 w-full animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="mb-8 h-5 w-28 animate-pulse rounded bg-muted" />
+        <div className="h-10 w-3/4 animate-pulse rounded bg-muted" />
+        <div className="mt-4 h-5 w-1/2 animate-pulse rounded bg-muted" />
+        <div className="mt-8 h-32 w-full animate-pulse rounded bg-muted" />
         <div className="mt-8 space-y-3">
-          <div className="h-4 w-full animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-11/12 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 w-10/12 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 w-full animate-pulse rounded bg-muted" />
+          <div className="h-4 w-11/12 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-10/12 animate-pulse rounded bg-muted" />
         </div>
       </article>
-      <div className="mx-auto max-w-6xl border-t border-[var(--neutral-6)] px-4 py-12 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />
+      <div className="mx-auto max-w-6xl border-t border-border px-4 py-12 sm:px-6 lg:px-8">
+        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="mt-5 grid gap-3 sm:grid-cols-4">
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
-          <div className="h-4 animate-pulse rounded bg-[var(--neutral-3)]" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
+          <div className="h-4 animate-pulse rounded bg-muted" />
         </div>
       </div>
     </main>

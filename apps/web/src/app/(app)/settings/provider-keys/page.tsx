@@ -11,8 +11,8 @@ export default async function ProviderKeysPage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-xl font-semibold text-[var(--neutral-12)]">Provider Keys</h1>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">
+        <h1 className="text-xl font-semibold text-foreground">Provider Keys</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Bring your own AI provider keys. {brand.name} prefers your key for matching models and
           falls back to the platform key unless you pin it.
         </p>
@@ -21,7 +21,7 @@ export default async function ProviderKeysPage() {
       <PermissionGate
         require={["provider_key:read"]}
         fallback={
-          <p className="text-sm text-[var(--neutral-11)]">
+          <p className="text-sm text-muted-foreground">
             You do not have permission to view provider keys.
           </p>
         }

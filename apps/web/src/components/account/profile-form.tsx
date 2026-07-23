@@ -175,9 +175,9 @@ export function ProfileForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-      <h2 className="text-base font-semibold text-[var(--neutral-12)]">{t("title")}</h2>
-      <p className="mt-1 mb-4 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+      <h2 className="text-base font-semibold text-foreground">{t("title")}</h2>
+      <p className="mt-1 mb-4 text-sm text-muted-foreground">{t("description")}</p>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
@@ -186,7 +186,7 @@ export function ProfileForm({
             name="name"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("nameLabel")}
                 </FormLabel>
                 <FormControl>
@@ -206,7 +206,7 @@ export function ProfileForm({
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("emailLabel")}
                 </FormLabel>
                 <div className="flex items-center gap-2">
@@ -219,21 +219,18 @@ export function ProfileForm({
                       void handleVerifyEmail();
                     }}
                     disabled={!emailDirty || verifying}
-                    className="shrink-0 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="shrink-0 rounded-[var(--radius-md)] border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {verifying ? t("verifying") : t("verifyEmail")}
                   </button>
                 </div>
-                <p className="text-xs text-[var(--neutral-11)]">{t("emailHint")}</p>
+                <p className="text-xs text-muted-foreground">{t("emailHint")}</p>
               </FormItem>
             )}
           />
 
           <div className="space-y-1">
-            <label
-              htmlFor="profile-language"
-              className="block text-sm font-medium text-[var(--neutral-12)]"
-            >
+            <label htmlFor="profile-language" className="block text-sm font-medium text-foreground">
               {t("languageLabel")}
             </label>
             <Select
@@ -259,7 +256,7 @@ export function ProfileForm({
             <button
               type="submit"
               disabled={!profileDirty || pending}
-              className="rounded-[var(--radius-md)] bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--blue-10)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-[var(--radius-md)] bg-[hsl(var(--primary))] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--blue-10)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {pending ? t("saving") : t("submit")}
             </button>

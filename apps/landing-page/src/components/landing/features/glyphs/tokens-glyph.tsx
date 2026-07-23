@@ -20,7 +20,7 @@ const COLOR_SCALE_STEPS = [
   "var(--blue-6)",
   "var(--blue-7)",
   "var(--blue-8)",
-  "var(--blue-9)",
+  "hsl(var(--primary))",
   "var(--blue-10)",
   "var(--blue-11)",
   "var(--blue-12)",
@@ -33,9 +33,9 @@ type ColorChip = {
 };
 
 const COLOR_CHIPS: ReadonlyArray<ColorChip> = [
-  { name: "--brand-primary", swatch: "var(--brand-primary)" },
+  { name: "--brand-primary", swatch: "hsl(var(--primary))" },
   { name: "--brand-accent", swatch: "var(--brand-accent)" },
-  { name: "--brand-gradient", swatch: "var(--brand-gradient)", isGradient: true },
+  { name: "--brand-gradient", swatch: "hsl(var(--primary))", isGradient: true },
 ];
 
 type RadiusChip = {
@@ -52,7 +52,7 @@ const RADIUS_CHIPS: ReadonlyArray<RadiusChip> = [
 export function TokensGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2 flex items-center gap-1">
@@ -62,12 +62,12 @@ export function TokensGlyph(_props: SubpackageGlyphProps) {
         </Badge>
       </div>
 
-      <div className="flex items-center gap-1 text-[10px] font-mono text-[var(--neutral-11)]">
+      <div className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground">
         <BlendMode className="h-3 w-3" />
         <span>--blue-1 → --blue-12</span>
       </div>
 
-      <div className="flex h-4 w-full overflow-hidden rounded-[var(--radius-sm)] border border-[var(--neutral-6)]">
+      <div className="flex h-4 w-full overflow-hidden rounded-[var(--radius-sm)] border border-border">
         {COLOR_SCALE_STEPS.map((color, idx) => (
           <div
             key={`step-${idx}`}
@@ -83,13 +83,13 @@ export function TokensGlyph(_props: SubpackageGlyphProps) {
         {COLOR_CHIPS.map((chip) => (
           <div
             key={chip.name}
-            className="inline-flex items-center gap-1 rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-1.5 py-0.5"
+            className="inline-flex items-center gap-1 rounded border border-border bg-background px-1.5 py-0.5"
           >
             <span
-              className="h-2.5 w-2.5 rounded-[var(--radius-sm)] border border-[var(--neutral-7)]"
+              className="h-2.5 w-2.5 rounded-[var(--radius-sm)] border border-border"
               style={{ background: chip.swatch }}
             />
-            <span className="text-[9px] font-mono text-[var(--neutral-11)]">{chip.name}</span>
+            <span className="text-[9px] font-mono text-muted-foreground">{chip.name}</span>
           </div>
         ))}
       </div>
@@ -98,18 +98,18 @@ export function TokensGlyph(_props: SubpackageGlyphProps) {
         {RADIUS_CHIPS.map((chip) => (
           <div
             key={chip.name}
-            className="inline-flex items-center gap-1 rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-1.5 py-0.5"
+            className="inline-flex items-center gap-1 rounded border border-border bg-background px-1.5 py-0.5"
           >
             <span
-              className="h-2.5 w-2.5 border border-[var(--neutral-9)] bg-[var(--neutral-4)]"
+              className="h-2.5 w-2.5 border border-border bg-muted"
               style={{ borderRadius: chip.radius }}
             />
-            <span className="text-[9px] font-mono text-[var(--neutral-11)]">{chip.name}</span>
+            <span className="text-[9px] font-mono text-muted-foreground">{chip.name}</span>
           </div>
         ))}
       </div>
 
-      <div className="mt-auto text-[9px] font-mono text-[var(--neutral-10)]">
+      <div className="mt-auto text-[9px] font-mono text-muted-foreground">
         runtime CSS vars · @import &quot;@nebutra/tokens/styles.css&quot;
       </div>
     </div>

@@ -152,10 +152,10 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
   const errorId = "magic-link-error";
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="mb-5">
-        <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+        <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
       </div>
 
       {errorMessage && (
@@ -176,7 +176,7 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
               name="email"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                  <FormLabel className="block text-sm font-medium text-foreground">
                     {t("emailLabel")}
                   </FormLabel>
                   <FormControl>
@@ -203,13 +203,10 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
 
       {stage === "code" && (
         <div className="space-y-4">
-          <p className="text-sm text-[var(--neutral-11)]">{t("sentTo", { email })}</p>
+          <p className="text-sm text-muted-foreground">{t("sentTo", { email })}</p>
 
           <div className="space-y-1.5">
-            <label
-              className="block text-sm font-medium text-[var(--neutral-12)]"
-              htmlFor="magic-link-code"
-            >
+            <label className="block text-sm font-medium text-foreground" htmlFor="magic-link-code">
               {t("codeLabel")}
             </label>
             <Input

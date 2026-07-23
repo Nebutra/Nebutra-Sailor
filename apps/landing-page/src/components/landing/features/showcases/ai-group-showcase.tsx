@@ -151,7 +151,7 @@ function CapabilityNode({
       className={cn(
         "flex min-w-0 items-center gap-2 rounded-[var(--radius-md)] border px-3 py-2",
         active
-          ? "border-transparent bg-[image:var(--brand-gradient)] text-white shadow-[0_10px_30px_-18px_hsl(var(--primary))]"
+          ? "border-transparent bg-primary text-white shadow-[0_10px_30px_-18px_hsl(var(--primary))]"
           : "border-border/60 bg-background/80 text-foreground",
       )}
     >
@@ -194,7 +194,7 @@ export function AiGroupShowcase({ entry, locale }: PackageShowcaseProps) {
         <div className="relative flex flex-col gap-5 p-4 md:p-5">
           <div className="flex flex-col gap-3 border-border/60 border-b pb-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex min-w-0 items-center gap-2">
-              <span className="inline-flex size-7 items-center justify-center rounded-[var(--radius-sm)] bg-[image:var(--brand-gradient)] text-white">
+              <span className="inline-flex size-7 items-center justify-center rounded-[var(--radius-sm)] bg-primary text-white">
                 <Icon className="size-4" aria-hidden="true" />
               </span>
               <div className="min-w-0">

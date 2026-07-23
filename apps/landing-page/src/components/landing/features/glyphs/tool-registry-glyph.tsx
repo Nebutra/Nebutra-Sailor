@@ -19,27 +19,25 @@ const TOOL_ROWS: readonly ToolRow[] = [
 export function ToolRegistryGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-2.5"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-md)] bg-background p-2.5"
       style={{ height: 160 }}
     >
-      <div className="flex items-center gap-1.5 font-mono text-[9px] text-[var(--neutral-10)]">
-        <Box className="h-3 w-3 text-[var(--neutral-11)]" />
+      <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground">
+        <Box className="h-3 w-3 text-muted-foreground" />
         <span>tool-registry</span>
-        <span className="text-[var(--neutral-8)]">·</span>
+        <span className="text-muted-foreground">·</span>
         <span>247 tools</span>
-        <span className="text-[var(--neutral-8)]">·</span>
+        <span className="text-muted-foreground">·</span>
         <span>12 categories</span>
       </div>
       <div className="flex flex-1 flex-col gap-1 overflow-hidden">
         {TOOL_ROWS.map(({ name, version, category, Icon }) => (
           <div
             key={name}
-            className="flex items-center gap-1.5 rounded border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-1.5 py-1"
+            className="flex items-center gap-1.5 rounded border border-border bg-muted px-1.5 py-1"
           >
-            <Icon className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" />
-            <span className="flex-1 truncate font-mono text-[10px] text-[var(--neutral-12)]">
-              {name}
-            </span>
+            <Icon className="h-3 w-3 shrink-0 text-muted-foreground" />
+            <span className="flex-1 truncate font-mono text-[10px] text-foreground">{name}</span>
             <Badge variant="outline" className="h-4 px-1 font-mono text-[9px] leading-none">
               {version}
             </Badge>
@@ -49,7 +47,7 @@ export function ToolRegistryGlyph(_props: SubpackageGlyphProps) {
           </div>
         ))}
       </div>
-      <div className="font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="font-mono text-[9px] text-muted-foreground">
         versioned · audited · per-tenant ACL
       </div>
     </div>

@@ -183,10 +183,10 @@ async function sendReleaseEmail({
       body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; }
       .container { max-width: 600px; margin: 0 auto; padding: 20px; }
       .header { margin-bottom: 20px; }
-      .version { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: #0033fe; }
+      .version { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: hsl(var(--primary)); }
       .tag { display: inline-block; background: #f3f4f6; color: #374151; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
       .summary { font-size: 16px; color: #555; margin-bottom: 20px; }
-      .cta { display: inline-block; background: linear-gradient(135deg, #0033fe, #0bf1c3); color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; }
+      .cta { display: inline-block; background: linear-gradient(135deg, hsl(var(--primary)), #0bf1c3); color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; }
       .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #9ca3af; }
     </style>
   </head>

@@ -72,14 +72,14 @@ export function ProviderKeysList({
 }: ProviderKeysListProps) {
   if (keys.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] py-10 text-center">
-        <p className="mb-3 text-sm text-[var(--neutral-11)]">No provider keys configured</p>
+      <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-border bg-muted py-10 text-center">
+        <p className="mb-3 text-sm text-muted-foreground">No provider keys configured</p>
         {canCreate ? (
           <button
             type="button"
             onClick={onAdd}
             className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             Add your first provider key
           </button>
@@ -89,9 +89,9 @@ export function ProviderKeysList({
   }
 
   return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)]">
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-border">
       <table className="w-full text-sm">
-        <thead className="bg-[var(--neutral-2)] text-left text-xs font-medium text-[var(--neutral-11)]">
+        <thead className="bg-muted text-left text-xs font-medium text-muted-foreground">
           <tr>
             <th scope="col" className="px-4 py-2.5">
               Provider
@@ -107,23 +107,21 @@ export function ProviderKeysList({
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[var(--neutral-6)] bg-[var(--neutral-1)]">
+        <tbody className="divide-y divide-border bg-background">
           {keys.map((k) => (
             <tr key={k.id}>
-              <td className="px-4 py-3 font-medium text-[var(--neutral-12)]">
+              <td className="px-4 py-3 font-medium text-foreground">
                 {PROVIDER_LABELS[k.provider]}
                 {k.label ? (
-                  <span className="ml-2 text-xs font-normal text-[var(--neutral-11)]">
-                    {k.label}
-                  </span>
+                  <span className="ml-2 text-xs font-normal text-muted-foreground">{k.label}</span>
                 ) : null}
               </td>
-              <td className="px-4 py-3 font-mono text-xs text-[var(--neutral-11)]">
+              <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
                 {k.maskedKey ?? "—"}
               </td>
-              <td className="px-4 py-3 text-xs text-[var(--neutral-11)]">
+              <td className="px-4 py-3 text-xs text-muted-foreground">
                 {k.alwaysUse ? (
-                  <span className="rounded-[var(--radius-sm)] bg-[var(--blue-3)] px-1.5 py-0.5 text-[var(--blue-11)]">
+                  <span className="rounded-[var(--radius-sm)] bg-[var(--blue-3)] px-1.5 py-0.5 text-primary">
                     Always use this key
                   </span>
                 ) : (
@@ -134,7 +132,7 @@ export function ProviderKeysList({
                 {canDelete ? (
                   <DeleteButton provider={k.provider} onDelete={onDelete} />
                 ) : (
-                  <span className="text-xs text-[var(--neutral-9)]">—</span>
+                  <span className="text-xs text-muted-foreground">—</span>
                 )}
               </td>
             </tr>

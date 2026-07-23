@@ -7,7 +7,7 @@ const WAVEFORM_HEIGHTS = [30, 55, 18, 68, 42, 80, 25, 60, 38, 72, 22, 50, 65, 32
 export function VoiceRealtimeGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-3 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-1)] px-4 py-3"
+      className="relative flex w-full flex-col gap-3 overflow-hidden rounded-[var(--radius-lg)] bg-background px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Top row: live indicator + timer + status */}
@@ -17,12 +17,12 @@ export function VoiceRealtimeGlyph(_props: SubpackageGlyphProps) {
           <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--status-danger)]" />
         </span>
         <Bell className="h-3.5 w-3.5 text-[var(--status-danger)]" aria-hidden />
-        <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--neutral-12)]">
+        <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-foreground">
           LIVE · 0:42
         </span>
         <div className="ml-auto flex items-center gap-1.5">
           <StatusDot state="READY" />
-          <span className="text-[10px] text-[var(--neutral-11)]">connected</span>
+          <span className="text-[10px] text-muted-foreground">connected</span>
         </div>
       </div>
 
@@ -34,7 +34,7 @@ export function VoiceRealtimeGlyph(_props: SubpackageGlyphProps) {
             className="w-[3px] rounded-full"
             style={{
               height: `${h}%`,
-              background: i % 2 === 0 ? "var(--brand-primary)" : "var(--brand-accent)",
+              background: i % 2 === 0 ? "hsl(var(--primary))" : "var(--brand-accent)",
               opacity: 0.85,
             }}
           />
@@ -54,7 +54,7 @@ export function VoiceRealtimeGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="font-mono text-[9px] uppercase tracking-wider text-[var(--neutral-10)]">
+      <div className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
         OpenAI Realtime · WebRTC · push-to-talk
       </div>
     </div>

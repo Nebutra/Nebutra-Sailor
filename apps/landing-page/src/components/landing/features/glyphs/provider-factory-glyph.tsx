@@ -18,11 +18,11 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
   return (
     <div className="flex w-full flex-col justify-between gap-3 px-4 py-3" style={{ height: 160 }}>
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">
+        <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
           <Connection className="h-3 w-3" />
           <span>provider.billing</span>
         </div>
-        <SettingsGear className="h-3 w-3 text-[var(--neutral-10)]" />
+        <SettingsGear className="h-3 w-3 text-muted-foreground" />
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5">
@@ -32,7 +32,7 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
               <div
                 key={provider.name}
                 className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium text-white"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 <Check className="h-3 w-3" />
                 <span>{provider.name}</span>
@@ -43,7 +43,7 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
             <Badge
               key={provider.name}
               variant="outline"
-              className="rounded-full border-[var(--neutral-7)] bg-transparent px-2.5 py-1 text-[11px] font-normal text-[var(--neutral-10)]"
+              className="rounded-full border-border bg-transparent px-2.5 py-1 text-[11px] font-normal text-muted-foreground"
             >
               {provider.name}
             </Badge>
@@ -51,14 +51,14 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2.5 py-1.5">
-        <div className="font-mono text-[10px] leading-snug text-[var(--neutral-11)]">
-          <span className="text-[var(--neutral-10)]">Detected via</span>{" "}
-          <span className="text-[var(--neutral-12)]">BILLING_PROVIDER</span>
-          <span className="text-[var(--neutral-10)]"> env</span>
+      <div className="rounded-[var(--radius-md)] border border-border bg-muted px-2.5 py-1.5">
+        <div className="font-mono text-[10px] leading-snug text-muted-foreground">
+          <span className="text-muted-foreground">Detected via</span>{" "}
+          <span className="text-foreground">BILLING_PROVIDER</span>
+          <span className="text-muted-foreground"> env</span>
         </div>
-        <div className="font-mono text-[10px] leading-snug text-[var(--neutral-10)]">
-          falls back to <span className="text-[var(--neutral-12)]">Stripe</span>
+        <div className="font-mono text-[10px] leading-snug text-muted-foreground">
+          falls back to <span className="text-foreground">Stripe</span>
         </div>
       </div>
     </div>

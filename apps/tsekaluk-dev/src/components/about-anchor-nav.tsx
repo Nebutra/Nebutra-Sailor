@@ -36,7 +36,7 @@ export function AboutAnchorNav({ sections }: { sections: Section[] }) {
   return (
     <nav
       aria-label="Page sections"
-      className="sticky top-16 z-20 mb-16 -mx-8 px-8 py-3 bg-[var(--neutral-1)]/90 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800/50"
+      className="sticky top-16 z-20 mb-16 -mx-8 px-8 py-3 bg-background/90 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800/50"
     >
       <ul className="flex gap-6 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {sections.map((section) => (

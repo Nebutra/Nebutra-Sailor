@@ -57,7 +57,7 @@ const TAG_COLORS: Record<string, string> = {
   security: "var(--cyan-9)",
   platform: "var(--status-warning)",
   infrastructure: "var(--brand-tertiary)",
-  major: "var(--blue-9)",
+  major: "hsl(var(--primary))",
   foundation: "var(--status-success)",
 };
 
@@ -100,7 +100,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-[var(--neutral-1)]">
+    <section className="relative w-full overflow-hidden bg-background">
       {/* Hero — collapsed from 6 decoration layers to 2: subtle grid (faded
           to edges via mask) + single brand-color radial. Brand colors via
           tokens, not hardcoded RGB. */}
@@ -109,7 +109,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
           {/* Subtle faded-edge grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.04)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,#000_30%,transparent_90%)]" />
           {/* Single brand radial — blue→cyan halo via tokens */}
-          <div className="absolute inset-x-0 -top-32 h-[42rem] bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--blue-9),transparent_70%)_0%,color-mix(in_oklab,var(--cyan-9),transparent_88%)_40%,transparent_75%)]" />
+          <div className="absolute inset-x-0 -top-32 h-[42rem] bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,hsl(var(--primary)),transparent_70%)_0%,color-mix(in_oklab,var(--cyan-9),transparent_88%)_40%,transparent_75%)]" />
         </div>
 
         <div className="relative container mx-auto px-4 text-left">
@@ -134,7 +134,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
 
       {/* Filter and search bar — sticky, soft alpha border so it doesn't read
           as a hard rail when content scrolls beneath. */}
-      <div className="sticky top-0 z-40 w-full border-b border-[var(--edge-soft)] bg-[var(--neutral-1)]/90">
+      <div className="sticky top-0 z-40 w-full border-b border-[var(--edge-soft)] bg-background/90">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             {/* Search input */}
@@ -150,14 +150,14 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
 
             {/* Filter pills */}
             <div className="flex items-center gap-2 overflow-x-auto pb-1">
-              <Filter className="size-4 text-[var(--neutral-11)] flex-shrink-0" />
+              <Filter className="size-4 text-muted-foreground flex-shrink-0" />
               <button
                 type="button"
                 onClick={() => setActiveFilter(null)}
                 className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                   activeFilter === null
-                    ? "bg-[var(--blue-9)] text-white"
-                    : "bg-[var(--neutral-2)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] dark:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)]"
+                    ? "bg-[hsl(var(--primary))] text-white"
+                    : "bg-muted text-foreground hover:bg-muted dark:bg-muted dark:hover:bg-muted"
                 }`}
               >
                 All
@@ -170,9 +170,9 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                   className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                     activeFilter === tag
                       ? "text-white"
-                      : "bg-[var(--neutral-2)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] dark:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)]"
+                      : "bg-muted text-foreground hover:bg-muted dark:bg-muted dark:hover:bg-muted"
                   }`}
-                  style={activeFilter === tag ? { background: "var(--brand-gradient)" } : undefined}
+                  style={activeFilter === tag ? { background: "hsl(var(--primary))" } : undefined}
                 >
                   {tag}
                 </button>
@@ -202,11 +202,11 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         {/* Timeline dot — simple solid + thin halo, no 4px
                             white ring + no animate-pulse (loud per-item glow). */}
                         <div className="absolute left-0 top-24 hidden lg:block">
-                          <div className="h-2.5 w-2.5 rounded-full bg-[var(--blue-9)] shadow-[0_0_0_4px_color-mix(in_oklab,var(--blue-9),transparent_85%)]" />
+                          <div className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--primary))] shadow-[0_0_0_4px_color-mix(in_oklab,hsl(var(--primary)),transparent_85%)]" />
                         </div>
 
                         <div className="h-fit lg:sticky lg:top-8">
-                          <time className="w-36 text-sm font-medium text-[var(--neutral-11)] lg:absolute pl-8 lg:pl-0">
+                          <time className="w-36 text-sm font-medium text-muted-foreground lg:absolute pl-8 lg:pl-0">
                             {item.date}
                           </time>
                         </div>
@@ -215,18 +215,16 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           {/* Title + version + tag. Tag now sits inline next to
                               version on its own row, no magic mt-11 baseline align. */}
                           <div className="flex flex-col gap-2 lg:pt-10">
-                            <h3 className="text-3xl font-medium text-[var(--neutral-12)]">
-                              {item.title}
-                            </h3>
+                            <h3 className="text-3xl font-medium text-foreground">{item.title}</h3>
                             <div className="flex items-center gap-2">
-                              <span className="font-mono text-xs font-semibold tracking-wide text-[var(--neutral-11)]">
+                              <span className="font-mono text-xs font-semibold tracking-wide text-muted-foreground">
                                 {item.version}
                               </span>
                               {item.tag && (
                                 <span
                                   className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
                                   style={{
-                                    backgroundColor: TAG_COLORS[item.tag] || "var(--blue-9)",
+                                    backgroundColor: TAG_COLORS[item.tag] || "hsl(var(--primary))",
                                   }}
                                 >
                                   {item.tag}
@@ -242,14 +240,14 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                 alt={item.title}
                                 width={1200}
                                 height={700}
-                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)]/60 dark:border-[var(--neutral-2)]/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
+                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 dark:border-[hsl(var(--muted))]/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
                                 unoptimized={item.image?.endsWith(".svg")}
                               />
                               <div className="absolute inset-0 rounded-[var(--radius-lg)] bg-gradient-to-b from-transparent to-black/50 opacity-100" />
                             </div>
                           </DialogTrigger>
 
-                          <p className="text-[var(--neutral-11)] text-sm font-medium">
+                          <p className="text-muted-foreground text-sm font-medium">
                             {item.excerpt}
                           </p>
 
@@ -265,13 +263,13 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                       alt="Contributor"
                                       width={96}
                                       height={96}
-                                      className="size-6 rounded-full border border-[var(--neutral-7)]/60 dark:border-[var(--neutral-2)]/60 object-cover"
+                                      className="size-6 rounded-full border border-border/60 dark:border-[hsl(var(--muted))]/60 object-cover"
                                     />
                                   ))}
                                 </div>
                               )}
                               {item.contributors && item.contributors.length > 3 && (
-                                <span className="ml-1 text-sm font-medium text-[var(--neutral-11)]">
+                                <span className="ml-1 text-sm font-medium text-muted-foreground">
                                   +{item.contributors.length - 3} contributors
                                 </span>
                               )}
@@ -348,7 +346,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           {/* View details link */}
                           <Link
                             href={`/changelog/${item.version}`}
-                            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--blue-9)] hover:text-[var(--blue-8)] transition-colors rounded px-1"
+                            className="inline-flex items-center gap-1 text-sm font-medium text-[hsl(var(--primary))] hover:text-[var(--blue-8)] transition-colors rounded px-1"
                           >
                             View details
                             <ChevronDown className="size-4 -rotate-90" />
@@ -361,12 +359,12 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                       </article>
                     </AnimateIn>
 
-                    <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-prose bg-[var(--neutral-1)] dark:bg-[var(--neutral-2)]">
+                    <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-prose bg-background dark:bg-muted">
                       <DialogHeader>
-                        <DialogTitle className="text-left text-[var(--neutral-12)]">
+                        <DialogTitle className="text-left text-foreground">
                           {item.title}
                         </DialogTitle>
-                        <DialogDescription className="text-left text-[var(--neutral-11)]">
+                        <DialogDescription className="text-left text-muted-foreground">
                           {item.excerpt}
                         </DialogDescription>
                       </DialogHeader>
@@ -375,7 +373,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         alt={item.title}
                         width={1200}
                         height={700}
-                        className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)]/60 dark:border-[var(--neutral-3)]/60 object-cover"
+                        className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 dark:border-[hsl(var(--muted))]/60 object-cover"
                         unoptimized={item.image?.endsWith(".svg")}
                       />
                       {item.content}
@@ -387,12 +385,10 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
           </ol>
         ) : (
           <div className="flex flex-col items-center justify-center py-24 gap-4">
-            <Search className="size-12 text-[var(--neutral-7)] dark:text-[var(--neutral-3)]" />
+            <Search className="size-12 text-[hsl(var(--border))] dark:text-[hsl(var(--muted))]" />
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-[var(--neutral-12)] mb-1">
-                No releases found
-              </h3>
-              <p className="text-sm text-[var(--neutral-11)]">
+              <h3 className="text-lg font-semibold text-foreground mb-1">No releases found</h3>
+              <p className="text-sm text-muted-foreground">
                 Try adjusting your filters or search query
               </p>
             </div>

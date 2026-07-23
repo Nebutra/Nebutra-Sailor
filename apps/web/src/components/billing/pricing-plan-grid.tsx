@@ -148,7 +148,7 @@ async function defaultOnSelectPlan(
  * redirectUrl }` to `/api/billing/checkout` and redirects to the returned URL.
  *
  * Tokens follow the project palette: rounded-[var(--radius-3xl)] cards, `var(--neutral-*)`,
- * `var(--brand-primary)` highlights for the recommended plan and CTA.
+ * `hsl(var(--primary))` highlights for the recommended plan and CTA.
  */
 export function PricingPlanGrid({
   plans,
@@ -209,7 +209,7 @@ export function PricingPlanGrid({
         <div
           role="tablist"
           aria-label="Billing interval"
-          className="mb-6 flex justify-center gap-1 rounded-full border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] p-1"
+          className="mb-6 flex justify-center gap-1 rounded-full border border-border bg-muted p-1"
         >
           <IntervalTab
             value="month"
@@ -272,8 +272,8 @@ function IntervalTab({
       onClick={onSelect}
       className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
         active
-          ? "bg-[color:var(--neutral-1)] text-[color:var(--neutral-12)] shadow-sm"
-          : "text-[color:var(--neutral-11)] hover:text-[color:var(--neutral-12)]"
+          ? "bg-background text-foreground shadow-sm"
+          : "text-muted-foreground hover:text-foreground"
       }`}
     >
       {label}
@@ -325,31 +325,31 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
       data-testid={`pricing-plan-${plan.id}`}
       className={`relative flex flex-col rounded-[var(--radius-3xl)] border p-6 shadow-sm transition ${
         recommended
-          ? "border-[color:var(--brand-primary)] bg-[color:var(--neutral-1)]"
-          : "border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)]"
+          ? "border-[color:hsl(var(--primary))] bg-background"
+          : "border-border bg-background"
       }`}
     >
       {recommended && (
-        <span className="-top-3 -translate-x-1/2 absolute left-1/2 inline-flex items-center gap-1 rounded-full bg-[color:var(--brand-primary)] px-3 py-1 font-medium text-[color:var(--neutral-1)] text-xs">
+        <span className="-top-3 -translate-x-1/2 absolute left-1/2 inline-flex items-center gap-1 rounded-full bg-[color:hsl(var(--primary))] px-3 py-1 font-medium text-[color:hsl(var(--background))] text-xs">
           <Sparkles className="size-3" aria-hidden="true" />
           Recommended
         </span>
       )}
 
       <div>
-        <h3 className="font-semibold text-[color:var(--neutral-12)] text-xl">{plan.name}</h3>
+        <h3 className="font-semibold text-foreground text-xl">{plan.name}</h3>
         {plan.description && (
-          <p className="mt-2 text-[color:var(--neutral-11)] text-sm">{plan.description}</p>
+          <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
         )}
       </div>
 
       <div className="mt-6">
-        <span className="font-semibold text-3xl text-[color:var(--neutral-12)]">{priceLabel}</span>
-        <span className="ml-2 text-[color:var(--neutral-10)] text-sm">{cadenceLabel}</span>
+        <span className="font-semibold text-3xl text-foreground">{priceLabel}</span>
+        <span className="ml-2 text-muted-foreground text-sm">{cadenceLabel}</span>
         {perSeat && (
           <span
             data-testid={`pricing-plan-${plan.id}-per-seat`}
-            className="ml-1 text-[color:var(--neutral-10)] text-sm"
+            className="ml-1 text-muted-foreground text-sm"
           >
             / seat
           </span>
@@ -359,12 +359,9 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
       {plan.features.length > 0 && (
         <ul className="mt-6 flex-1 space-y-2">
           {plan.features.map((feature) => (
-            <li
-              key={feature}
-              className="flex items-start gap-2 text-[color:var(--neutral-11)] text-sm"
-            >
+            <li key={feature} className="flex items-start gap-2 text-muted-foreground text-sm">
               <Check
-                className="mt-0.5 size-4 shrink-0 text-[color:var(--brand-primary)]"
+                className="mt-0.5 size-4 shrink-0 text-[color:hsl(var(--primary))]"
                 aria-hidden="true"
               />
               <span>{feature}</span>
@@ -376,7 +373,7 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
       {trialDays !== null && !isFree && (
         <p
           data-testid={`pricing-plan-${plan.id}-trial`}
-          className="mt-4 inline-flex w-fit items-center rounded-full bg-[color:var(--brand-primary)]/10 px-3 py-1 font-medium text-[color:var(--brand-primary)] text-xs"
+          className="mt-4 inline-flex w-fit items-center rounded-full bg-[color:hsl(var(--primary))]/10 px-3 py-1 font-medium text-[color:hsl(var(--primary))] text-xs"
         >
           {`Free ${trialDays}-day trial`}
         </p>
@@ -389,8 +386,8 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
         aria-label={isFree ? `${plan.name} included` : `Choose ${plan.name}`}
         className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] px-4 py-2.5 font-medium text-sm transition ${
           recommended
-            ? "bg-[color:var(--brand-primary)] text-[color:var(--neutral-1)] hover:opacity-90"
-            : "border border-[color:var(--neutral-7)] text-[color:var(--neutral-12)] hover:bg-[color:var(--neutral-3)]"
+            ? "bg-[color:hsl(var(--primary))] text-[color:hsl(var(--background))] hover:opacity-90"
+            : "border border-border text-foreground hover:bg-muted"
         } ${loading || disabled || isFree ? "cursor-not-allowed opacity-70" : ""}`}
       >
         {ctaLabel}

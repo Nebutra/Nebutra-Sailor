@@ -38,7 +38,7 @@ export function RevenueBarChart({ series }: Props) {
   const t = useTranslations("startupOs");
   if (series.length === 0) {
     return (
-      <div className="flex h-48 items-center justify-center text-sm text-[var(--neutral-11)]">
+      <div className="flex h-48 items-center justify-center text-sm text-muted-foreground">
         {t("emptyState.revenueChart")}
       </div>
     );
@@ -54,16 +54,16 @@ export function RevenueBarChart({ series }: Props) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--neutral-6)" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
         <XAxis
           dataKey="day"
-          tick={{ fontSize: 11, fill: "var(--neutral-11)" }}
+          tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
           tickLine={false}
           axisLine={false}
           interval="preserveStartEnd"
         />
         <YAxis
-          tick={{ fontSize: 11, fill: "var(--neutral-11)" }}
+          tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={formatUSD}
@@ -71,17 +71,17 @@ export function RevenueBarChart({ series }: Props) {
         />
         <Tooltip
           contentStyle={{
-            background: "var(--neutral-1)",
-            border: "1px solid var(--neutral-7)",
+            background: "hsl(var(--background))",
+            border: "1px solid hsl(var(--border))",
             borderRadius: "8px",
             fontSize: 12,
           }}
-          labelStyle={{ color: "var(--neutral-12)", fontWeight: 600 }}
+          labelStyle={{ color: "hsl(var(--foreground))", fontWeight: 600 }}
           formatter={(value: number) => [formatUSD(value), "Revenue"]}
         />
         <Bar dataKey="Revenue" radius={[3, 3, 0, 0]}>
           {data.map((_, i) => (
-            <Cell key={i} fill={i === maxIdx ? "var(--brand-primary)" : "var(--neutral-5)"} />
+            <Cell key={i} fill={i === maxIdx ? "hsl(var(--primary))" : "hsl(var(--border))"} />
           ))}
         </Bar>
       </BarChart>

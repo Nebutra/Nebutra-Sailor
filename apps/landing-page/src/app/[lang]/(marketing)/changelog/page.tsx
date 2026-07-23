@@ -251,25 +251,25 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
       });
 
   return (
-    <main id="main-content" className="min-h-screen bg-[var(--neutral-1)]">
+    <main id="main-content" className="min-h-screen bg-background">
       <Navbar forceDarkTheme />
 
       <InteractiveChangelog releases={mappedReleases} />
 
       <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <AnimateIn preset="fade" inView>
-          <p className="text-center text-sm text-[var(--neutral-11)]">
+          <p className="text-center text-sm text-muted-foreground">
             Subscribe to release notes via{" "}
             <Link
               href="/api/changelog/rss"
-              className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
+              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
             >
               RSS
             </Link>{" "}
             or{" "}
             <Link
               href="/api/changelog/atom"
-              className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
+              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
             >
               Atom
             </Link>{" "}
@@ -278,7 +278,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
               href="https://x.com/nebutra_ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[var(--blue-9)] underline-offset-4 hover:underline"
+              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
             >
               @nebutra_ai
             </a>

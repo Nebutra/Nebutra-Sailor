@@ -113,7 +113,7 @@ export function ValuesStatement({
             <div className="flex items-center justify-between">
               <div
                 className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] text-white"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 <Icon className="h-4 w-4" />
               </div>
@@ -121,7 +121,7 @@ export function ValuesStatement({
                 <span
                   className="text-sm font-semibold tabular-nums"
                   style={{
-                    background: "var(--brand-gradient)",
+                    background: "hsl(var(--primary))",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",

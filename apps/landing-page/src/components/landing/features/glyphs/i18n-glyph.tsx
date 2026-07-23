@@ -17,29 +17,29 @@ const ROWS: ReadonlyArray<LocaleRow> = [
 export function I18nGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-3"
+      className="flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-md)] bg-background p-3"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
-          <Globe className="h-3.5 w-3.5 text-[var(--brand-primary)]" />
-          <span className="font-mono text-[10px] text-[var(--neutral-12)]">i18n</span>
-          <span className="font-mono text-[10px] text-[var(--neutral-10)]">·</span>
+          <Globe className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+          <span className="font-mono text-[10px] text-foreground">i18n</span>
+          <span className="font-mono text-[10px] text-muted-foreground">·</span>
           <Badge
             variant="outline"
-            className="h-4 rounded-[var(--radius-sm)] border-[var(--neutral-6)] px-1 font-mono text-[9px] text-[var(--neutral-11)]"
+            className="h-4 rounded-[var(--radius-sm)] border-border px-1 font-mono text-[9px] text-muted-foreground"
           >
             7 locales
           </Badge>
           <Badge
             variant="outline"
-            className="h-4 rounded-[var(--radius-sm)] border-[var(--neutral-6)] px-1 font-mono text-[9px] text-[var(--neutral-11)]"
+            className="h-4 rounded-[var(--radius-sm)] border-border px-1 font-mono text-[9px] text-muted-foreground"
           >
             2,401 keys
           </Badge>
         </div>
-        <span className="font-mono text-[9px] text-[var(--neutral-10)]">auth.welcome</span>
+        <span className="font-mono text-[9px] text-muted-foreground">auth.welcome</span>
       </div>
 
       {/* Locale grid */}
@@ -47,13 +47,13 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row) => (
           <div
             key={row.code}
-            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--neutral-5)] bg-[var(--neutral-2)] px-1.5 py-1"
+            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-border bg-muted px-1.5 py-1"
           >
-            <span className="w-5 shrink-0 font-mono text-[9px] uppercase text-[var(--brand-primary)]">
+            <span className="w-5 shrink-0 font-mono text-[9px] uppercase text-[hsl(var(--primary))]">
               {row.code}
             </span>
-            <span className="font-mono text-[9px] text-[var(--neutral-10)]">·</span>
-            <span className="flex-1 truncate font-mono text-[10px] text-[var(--neutral-12)]">
+            <span className="font-mono text-[9px] text-muted-foreground">·</span>
+            <span className="flex-1 truncate font-mono text-[10px] text-foreground">
               {row.text}
             </span>
             <Check className="h-2.5 w-2.5 shrink-0 text-[var(--status-success)]" />
@@ -62,7 +62,7 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="mt-auto flex items-center justify-between font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="mt-auto flex items-center justify-between font-mono text-[9px] text-muted-foreground">
         <span>next-intl · ICU MessageFormat</span>
         <span className="text-[var(--status-success)]">99.2% coverage</span>
       </div>

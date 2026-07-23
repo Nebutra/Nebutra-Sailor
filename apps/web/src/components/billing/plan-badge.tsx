@@ -117,7 +117,7 @@ export async function PlanBadge() {
         <ViewTransitionLink
           href="/billing"
           className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         >
           <Sparkles className="size-3" />
           Upgrade

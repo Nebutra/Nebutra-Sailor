@@ -72,8 +72,8 @@ export function UseCasesSection() {
                       onClick={() => setActiveTab(i)}
                       className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-transform duration-150 overflow-hidden hover:-translate-y-px motion-reduce:transform-none motion-reduce:transition-none ${
                         isActive
-                          ? "bg-background border border-[var(--neutral-6)]"
-                          : "hover:bg-[var(--neutral-3)] border border-transparent"
+                          ? "bg-background border border-border"
+                          : "hover:bg-muted border border-transparent"
                       }`}
                       style={isActive ? { boxShadow: "var(--ring-hairline)" } : undefined}
                     >
@@ -164,11 +164,11 @@ export function UseCasesSection() {
               {/* Right Column: Sticky Mockup Viewport */}
               <div className="hidden w-full lg:w-8/12 relative lg:order-2 lg:block">
                 <div
-                  className="sticky top-32 w-full aspect-[4/5] sm:aspect-square lg:aspect-auto lg:h-[700px] rounded-[var(--radius-panel)] bg-background/88 border border-[var(--neutral-6)] overflow-hidden flex items-center justify-center p-3 sm:p-6 lg:p-8 group"
+                  className="sticky top-32 w-full aspect-[4/5] sm:aspect-square lg:aspect-auto lg:h-[700px] rounded-[var(--radius-panel)] bg-background/88 border border-border overflow-hidden flex items-center justify-center p-3 sm:p-6 lg:p-8 group"
                   style={{ boxShadow: "var(--ring-hairline)" }}
                 >
                   {/* Internal Glass glare reflection */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_2px_at_center,var(--neutral-5)_1px,transparent_1px)] bg-[length:24px_24px] opacity-30 dark:opacity-20 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_2px_at_center,hsl(var(--border))_1px,transparent_1px)] bg-[length:24px_24px] opacity-30 dark:opacity-20 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
                   <div className="absolute inset-x-0 -top-px h-px w-full bg-gradient-to-r from-transparent via-foreground/10 to-transparent opacity-50" />
 
                   <AnimatePresence mode={shouldReduceMotion ? "sync" : "popLayout"} initial={false}>

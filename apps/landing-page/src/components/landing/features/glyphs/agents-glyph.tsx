@@ -16,26 +16,24 @@ const PROVIDERS: ReadonlyArray<string> = ["OpenAI", "Anthropic", "Google", "Deep
 export function AgentsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="font-mono text-[10px] text-muted-foreground">
           @nebutra/agents · unified surface
         </span>
-        <Sparkles className="h-3 w-3 text-[var(--brand-primary)]" />
+        <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
       </div>
 
       <ul className="flex flex-col gap-1">
         {METHODS.map(({ signature, icon: Icon }) => (
           <li
             key={signature}
-            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-background px-2 py-1"
           >
-            <Icon className="h-2.5 w-2.5 shrink-0 text-[var(--brand-primary)]" />
-            <code className="truncate font-mono text-[10px] text-[var(--neutral-12)]">
-              {signature}
-            </code>
+            <Icon className="h-2.5 w-2.5 shrink-0 text-[hsl(var(--primary))]" />
+            <code className="truncate font-mono text-[10px] text-foreground">{signature}</code>
           </li>
         ))}
       </ul>
@@ -45,14 +43,14 @@ export function AgentsGlyph(_props: SubpackageGlyphProps) {
           <Badge
             key={provider}
             variant="outline"
-            className="border-[var(--blue-6)] bg-[var(--blue-3)] px-1.5 py-0 font-mono text-[9px] text-[var(--blue-11)]"
+            className="border-[var(--blue-6)] bg-[var(--blue-3)] px-1.5 py-0 font-mono text-[9px] text-primary"
           >
             {provider}
           </Badge>
         ))}
       </div>
 
-      <div className="font-mono text-[9px] text-[var(--neutral-10)]">provider-agnostic</div>
+      <div className="font-mono text-[9px] text-muted-foreground">provider-agnostic</div>
     </div>
   );
 }

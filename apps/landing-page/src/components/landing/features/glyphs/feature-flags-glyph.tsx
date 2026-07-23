@@ -49,12 +49,12 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 shadow-sm ring-1 ring-[var(--neutral-6)]">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 shadow-sm ring-1 ring-[hsl(var(--border))]">
         {ROWS.map((row) => (
           <div key={row.name} className="flex flex-col gap-0.5">
             {/* Top row: name · toggle · rollout % */}
             <div className="flex items-center gap-2">
-              <span className="flex-1 truncate font-mono text-[10px] text-[var(--neutral-12)]">
+              <span className="flex-1 truncate font-mono text-[10px] text-foreground">
                 {row.name}
               </span>
 
@@ -62,7 +62,7 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
               <div
                 className="relative h-3 w-6 shrink-0 rounded-full transition-colors"
                 style={{
-                  background: row.on ? "var(--brand-primary)" : "var(--neutral-5)",
+                  background: row.on ? "hsl(var(--primary))" : "hsl(var(--border))",
                 }}
               >
                 <span
@@ -71,7 +71,7 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
                 />
               </div>
 
-              <span className="w-9 shrink-0 text-right font-mono text-[10px] tabular-nums text-[var(--neutral-11)]">
+              <span className="w-9 shrink-0 text-right font-mono text-[10px] tabular-nums text-muted-foreground">
                 {row.rollout}%
               </span>
             </div>
@@ -96,7 +96,7 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
         ))}
 
         {/* Footer */}
-        <div className="mt-0.5 flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-10)]">
+        <div className="mt-0.5 flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
           <Lightning className="h-2.5 w-2.5" aria-hidden="true" />
           <span className="truncate">{t.footer}</span>
         </div>

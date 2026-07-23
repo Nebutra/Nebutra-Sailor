@@ -50,16 +50,14 @@ export function StorageGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2.5 rounded-[var(--radius-md)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header — Box icon + bucket name + region pill */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">
-          <Box className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" />
-          <span className="truncate font-mono text-[11px] text-[var(--neutral-12)]">
-            nebutra-exports
-          </span>
+          <Box className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+          <span className="truncate font-mono text-[11px] text-foreground">nebutra-exports</span>
         </div>
         <Badge variant="outline" className="h-5 gap-1 px-1.5 py-0 text-[10px] font-normal">
           <Globe className="h-2.5 w-2.5" />
@@ -71,8 +69,8 @@ export function StorageGlyph({ locale }: SubpackageGlyphProps) {
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] text-[var(--neutral-11)]">{t.reports}</span>
-            <span className="font-mono text-[10px] tabular-nums text-[var(--neutral-12)]">
+            <span className="font-mono text-[10px] text-muted-foreground">{t.reports}</span>
+            <span className="font-mono text-[10px] tabular-nums text-foreground">
               {t.reportsSize}
             </span>
           </div>
@@ -81,8 +79,8 @@ export function StorageGlyph({ locale }: SubpackageGlyphProps) {
 
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] text-[var(--neutral-11)]">{t.backups}</span>
-            <span className="font-mono text-[10px] tabular-nums text-[var(--neutral-12)]">
+            <span className="font-mono text-[10px] text-muted-foreground">{t.backups}</span>
+            <span className="font-mono text-[10px] tabular-nums text-foreground">
               {t.backupsSize}
             </span>
           </div>
@@ -97,12 +95,12 @@ export function StorageGlyph({ locale }: SubpackageGlyphProps) {
       </div>
 
       {/* Footer — provider tag + encryption shield */}
-      <div className="mt-auto flex items-center justify-between border-t border-[var(--neutral-6)] pt-1.5">
+      <div className="mt-auto flex items-center justify-between border-t border-border pt-1.5">
         <div className="flex items-center gap-1">
-          <Database className="h-2.5 w-2.5 text-[var(--neutral-10)]" />
-          <span className="font-mono text-[10px] text-[var(--neutral-11)]">{t.provider}</span>
+          <Database className="h-2.5 w-2.5 text-muted-foreground" />
+          <span className="font-mono text-[10px] text-muted-foreground">{t.provider}</span>
         </div>
-        <Shield className="h-3 w-3 text-[var(--neutral-10)]" aria-label={t.encryptedSr} />
+        <Shield className="h-3 w-3 text-muted-foreground" aria-label={t.encryptedSr} />
       </div>
     </div>
   );

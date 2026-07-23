@@ -5,16 +5,14 @@ import type { SubpackageGlyphProps } from "./types";
 export function TenantGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       {/* Active tenant row */}
-      <div className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2.5 py-2">
+      <div className="flex items-center justify-between rounded-[var(--radius-md)] border border-border bg-background px-2.5 py-2">
         <div className="flex min-w-0 items-center gap-2">
-          <Buildings className="h-4 w-4 shrink-0 text-[var(--neutral-12)]" />
-          <span className="truncate text-xs font-medium text-[var(--neutral-12)]">
-            Acme Robotics
-          </span>
+          <Buildings className="h-4 w-4 shrink-0 text-foreground" />
+          <span className="truncate text-xs font-medium text-foreground">Acme Robotics</span>
           <StatusDot state="READY" />
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
@@ -28,8 +26,8 @@ export function TenantGlyph(_props: SubpackageGlyphProps) {
       {/* Inactive tenant rows */}
       <div className="flex items-center justify-between rounded-[var(--radius-md)] px-2.5 py-1.5 opacity-60">
         <div className="flex min-w-0 items-center gap-2">
-          <Buildings className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" />
-          <span className="truncate text-xs text-[var(--neutral-11)]">Globex Corp</span>
+          <Buildings className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+          <span className="truncate text-xs text-muted-foreground">Globex Corp</span>
         </div>
         <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
           Member
@@ -38,8 +36,8 @@ export function TenantGlyph(_props: SubpackageGlyphProps) {
 
       <div className="flex items-center justify-between rounded-[var(--radius-md)] px-2.5 py-1.5 opacity-60">
         <div className="flex min-w-0 items-center gap-2">
-          <Buildings className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" />
-          <span className="truncate text-xs text-[var(--neutral-11)]">Initech Labs</span>
+          <Buildings className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+          <span className="truncate text-xs text-muted-foreground">Initech Labs</span>
         </div>
         <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
           Member
@@ -47,11 +45,11 @@ export function TenantGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="mt-auto flex items-center justify-between border-t border-[var(--neutral-6)] pt-1.5">
-        <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--neutral-10)]">
+      <div className="mt-auto flex items-center justify-between border-t border-border pt-1.5">
+        <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
           RLS · tenantId scope · AsyncLocalStorage
         </span>
-        <ChevronDown className="h-3 w-3 text-[var(--neutral-10)]" />
+        <ChevronDown className="h-3 w-3 text-muted-foreground" />
       </div>
     </div>
   );

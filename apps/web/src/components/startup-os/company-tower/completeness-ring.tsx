@@ -32,7 +32,7 @@ export interface CompletenessRingProps {
  * calm. This keeps the "monochrome + one accent" rule: blue == done.
  */
 function arcColor(status: ManifestLayerStatus | undefined): string {
-  return status === "ready" ? "hsl(var(--blue-9))" : "hsl(var(--neutral-8))";
+  return status === "ready" ? "hsl(var(--primary))" : "hsl(var(--border))";
 }
 
 export function CompletenessRing({
@@ -51,7 +51,7 @@ export function CompletenessRing({
         value={percent}
         size={size}
         arcPriority="default"
-        colors={{ primary: arcColor(status), secondary: "hsl(var(--neutral-4))" }}
+        colors={{ primary: arcColor(status), secondary: "hsl(var(--muted))" }}
         aria-label={label}
       />
       {showLabel ? (

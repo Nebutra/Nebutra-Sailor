@@ -164,10 +164,10 @@ function ReactionButton({
       disabled={disabled}
       aria-pressed={active}
       aria-label={label}
-      className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-wait disabled:opacity-60"
+      className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:cursor-wait disabled:opacity-60"
     >
       <Icon
-        className={active ? "size-4 text-[var(--accent-11)]" : "size-4 text-[var(--neutral-11)]"}
+        className={active ? "size-4 text-[var(--accent-11)]" : "size-4 text-muted-foreground"}
         aria-hidden
       />
       <span>{count}</span>
@@ -322,22 +322,22 @@ export function BlogComments({
 
   return (
     <section
-      className="mx-auto mt-16 max-w-3xl border-t border-[var(--neutral-6)] pt-10"
+      className="mx-auto mt-16 max-w-3xl border-t border-border pt-10"
       aria-labelledby="blog-comments-title"
     >
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="mb-2 inline-flex items-center gap-2 text-sm font-medium text-[var(--neutral-11)]">
+          <p className="mb-2 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <Message className="size-4" aria-hidden />
             {comments.length}
           </p>
           <h2
             id="blog-comments-title"
-            className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]"
+            className="text-2xl font-semibold tracking-tight text-foreground"
           >
             {labels.title}
           </h2>
-          <p className="mt-2 text-sm leading-6 text-[var(--neutral-11)]">{labels.subtitle}</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">{labels.subtitle}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <ReactionButton
@@ -365,11 +365,11 @@ export function BlogComments({
 
       <div className="mt-8 space-y-5">
         {commentsQuery.isPending ? (
-          <div className="h-20 animate-pulse rounded-[var(--radius-xl)] bg-[var(--neutral-3)]" />
+          <div className="h-20 animate-pulse rounded-[var(--radius-xl)] bg-muted" />
         ) : comments.length > 0 ? (
           comments.map((comment) => (
             <article key={comment.id} className="flex gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[var(--neutral-3)] text-xs font-semibold text-[var(--neutral-11)]">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-xs font-semibold text-muted-foreground">
                 {comment.authorImageUrl ? (
                   // biome-ignore lint/performance/noImgElement: comment avatars are remote user assets outside next/image remotePatterns.
                   <img
@@ -383,28 +383,28 @@ export function BlogComments({
                   initialsFor(comment.authorName)
                 )}
               </div>
-              <div className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 py-3">
+              <div className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-border bg-background px-4 py-3">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
-                  <span className="font-medium text-[var(--neutral-12)]">{comment.authorName}</span>
+                  <span className="font-medium text-foreground">{comment.authorName}</span>
                   {formatDate(comment.createdAt, language) && (
-                    <time className="text-xs text-[var(--neutral-10)]">
+                    <time className="text-xs text-muted-foreground">
                       {formatDate(comment.createdAt, language)}
                     </time>
                   )}
                   {comment.status === "pending" && (
-                    <span className="rounded-full bg-[var(--neutral-3)] px-2 py-0.5 text-[11px] font-medium text-[var(--neutral-11)]">
+                    <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
                       {labels.pending}
                     </span>
                   )}
                 </div>
-                <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[var(--neutral-11)]">
+                <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-muted-foreground">
                   {comment.body}
                 </p>
               </div>
             </article>
           ))
         ) : (
-          <p className="rounded-[var(--radius-xl)] border border-dashed border-[var(--neutral-7)] px-4 py-6 text-sm text-[var(--neutral-11)]">
+          <p className="rounded-[var(--radius-xl)] border border-dashed border-border px-4 py-6 text-sm text-muted-foreground">
             {labels.empty}
           </p>
         )}
@@ -414,7 +414,7 @@ export function BlogComments({
         {viewer?.isSignedIn ? (
           <form
             onSubmit={handleSubmit}
-            className="rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] p-3"
+            className="rounded-[var(--radius-2xl)] border border-border p-3"
           >
             <Textarea
               value={body}
@@ -425,12 +425,12 @@ export function BlogComments({
               placeholder={labels.placeholder}
               className="min-h-28 w-full resize-y border-0 bg-transparent px-1 py-1 text-sm leading-6 shadow-none focus-visible:ring-0"
             />
-            <div className="flex items-center justify-between gap-4 border-t border-[var(--neutral-6)] pt-3">
-              <span className="text-xs text-[var(--neutral-10)]">{body.trim().length}/1200</span>
+            <div className="flex items-center justify-between gap-4 border-t border-border pt-3">
+              <span className="text-xs text-muted-foreground">{body.trim().length}/1200</span>
               <button
                 type="submit"
                 disabled={body.trim().length < 2 || submitMutation.isPending}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <PaperAirplane className="size-4" aria-hidden />
                 {submitMutation.isPending ? labels.submitting : labels.submit}
@@ -440,7 +440,7 @@ export function BlogComments({
         ) : (
           <a
             href={`${appUrl}/sign-in`}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+            className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
           >
             {labels.signIn}
           </a>

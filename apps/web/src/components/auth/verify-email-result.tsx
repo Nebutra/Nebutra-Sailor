@@ -19,7 +19,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
     return (
       <section
         aria-live="polite"
-        className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center"
+        className="rounded-[var(--radius-lg)] border border-border bg-background p-6 text-center"
       >
         <div
           aria-hidden
@@ -27,14 +27,12 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
         >
           ✓
         </div>
-        <h3 className="mt-4 text-base font-semibold text-[var(--neutral-12)]">
-          {t("successTitle")}
-        </h3>
-        <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("successDescription")}</p>
+        <h3 className="mt-4 text-base font-semibold text-foreground">{t("successTitle")}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{t("successDescription")}</p>
         <div className="mt-5">
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
           >
             {t("continueCta")}
           </Link>
@@ -46,7 +44,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
   return (
     <section
       aria-live="polite"
-      className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center"
+      className="rounded-[var(--radius-lg)] border border-border bg-background p-6 text-center"
     >
       <div
         aria-hidden
@@ -54,15 +52,15 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
       >
         ⚠
       </div>
-      <h3 className="mt-4 text-base font-semibold text-[var(--neutral-12)]">{t("failureTitle")}</h3>
-      <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("failureDescription")}</p>
+      <h3 className="mt-4 text-base font-semibold text-foreground">{t("failureTitle")}</h3>
+      <p className="mt-2 text-sm text-muted-foreground">{t("failureDescription")}</p>
       <p className="mt-1 text-sm text-[hsl(var(--destructive))]" role="alert">
         {tErrors(errorKey)}
       </p>
       <div className="mt-5">
         <Link
           href="/sign-in"
-          className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]"
+          className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
         >
           {t("signInCta")}
         </Link>

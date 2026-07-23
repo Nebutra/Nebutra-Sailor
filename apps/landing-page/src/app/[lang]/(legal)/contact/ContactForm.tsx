@@ -94,11 +94,11 @@ export function ContactForm() {
         </Button>
       </div>
 
-      <p className="text-sm text-[var(--neutral-9)]">
+      <p className="text-sm text-muted-foreground">
         {t("contact.form.privacyNotice")}{" "}
         <Link
           href="/privacy"
-          className="text-[color:var(--blue-11)] hover:underline dark:text-[color:var(--blue-9)]"
+          className="text-[color:var(--blue-11)] hover:underline dark:text-[color:hsl(var(--primary))]"
         >
           {t("contact.form.privacyLink")}
         </Link>

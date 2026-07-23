@@ -40,15 +40,13 @@ export function LegalGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center gap-1.5">
-        <BookClosed className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" aria-hidden="true" />
-        <span className="truncate font-mono text-[10px] text-[var(--neutral-11)]">
-          {copy.header}
-        </span>
+        <BookClosed className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+        <span className="truncate font-mono text-[10px] text-muted-foreground">{copy.header}</span>
         <Shield className="ml-auto h-3 w-3 shrink-0 text-emerald-500" aria-hidden="true" />
         <Check className="h-3 w-3 shrink-0 text-emerald-500" aria-hidden="true" />
       </div>
@@ -67,7 +65,7 @@ export function LegalGlyph({ locale }: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="font-mono text-[10px] text-[var(--neutral-10)]">→ {copy.footer}</div>
+      <div className="font-mono text-[10px] text-muted-foreground">→ {copy.footer}</div>
     </div>
   );
 }
@@ -86,8 +84,8 @@ interface DocRowProps {
 function DocRow({ title, version, updated, tag }: DocRowProps) {
   return (
     <div className="flex items-center gap-2">
-      <FileText className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-10)]" aria-hidden="true" />
-      <span className="truncate text-[11px] text-[var(--neutral-12)]">{title}</span>
+      <FileText className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+      <span className="truncate text-[11px] text-foreground">{title}</span>
       <Badge variant="gray-subtle" size="sm" className="font-mono text-[10px]">
         {version}
       </Badge>
@@ -96,7 +94,7 @@ function DocRow({ title, version, updated, tag }: DocRowProps) {
           {tag}
         </Badge>
       ) : null}
-      <span className="ml-auto shrink-0 text-[10px] text-[var(--neutral-10)]">{updated}</span>
+      <span className="ml-auto shrink-0 text-[10px] text-muted-foreground">{updated}</span>
     </div>
   );
 }

@@ -31,7 +31,7 @@ function Cell({ allow }: { allow: Allow }) {
 export function PermissionsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
@@ -39,16 +39,16 @@ export function PermissionsGlyph(_props: SubpackageGlyphProps) {
           <Shield className="h-3 w-3" />
           RBAC / ABAC
         </Badge>
-        <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--neutral-10)]">
+        <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
           policy.matrix
         </span>
       </div>
 
-      <div className="flex-1 overflow-hidden rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
-        <div className="grid grid-cols-[64px_1fr_1fr_1fr] border-b border-[var(--neutral-6)] bg-[var(--neutral-2)] font-mono text-[9px] uppercase tracking-wider text-[var(--neutral-11)]">
+      <div className="flex-1 overflow-hidden rounded border border-border bg-background">
+        <div className="grid grid-cols-[64px_1fr_1fr_1fr] border-b border-border bg-muted font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
           <div className="px-2 py-1.5"> </div>
           {ROLES.map((role) => (
-            <div key={role} className="border-l border-[var(--neutral-6)] px-2 py-1.5 text-center">
+            <div key={role} className="border-l border-border px-2 py-1.5 text-center">
               {role}
             </div>
           ))}
@@ -58,26 +58,24 @@ export function PermissionsGlyph(_props: SubpackageGlyphProps) {
           <div
             key={row.action}
             className={`grid grid-cols-[64px_1fr_1fr_1fr] ${
-              i < ROWS.length - 1 ? "border-b border-[var(--neutral-6)]" : ""
+              i < ROWS.length - 1 ? "border-b border-border" : ""
             }`}
           >
-            <div className="px-2 py-1.5 font-mono text-[10px] text-[var(--neutral-12)]">
-              {row.action}
-            </div>
-            <div className="flex items-center justify-center border-l border-[var(--neutral-6)] py-1.5">
+            <div className="px-2 py-1.5 font-mono text-[10px] text-foreground">{row.action}</div>
+            <div className="flex items-center justify-center border-l border-border py-1.5">
               <Cell allow={row.admin} />
             </div>
-            <div className="flex items-center justify-center border-l border-[var(--neutral-6)] py-1.5">
+            <div className="flex items-center justify-center border-l border-border py-1.5">
               <Cell allow={row.member} />
             </div>
-            <div className="flex items-center justify-center border-l border-[var(--neutral-6)] py-1.5">
+            <div className="flex items-center justify-center border-l border-border py-1.5">
               <Cell allow={row.viewer} />
             </div>
           </div>
         ))}
       </div>
 
-      <div className="font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="font-mono text-[9px] text-muted-foreground">
         defineAbility() &middot; CASL
       </div>
     </div>

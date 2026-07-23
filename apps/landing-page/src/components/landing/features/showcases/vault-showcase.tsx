@@ -152,7 +152,7 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
     <ShowcaseFrame>
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
             <LockClosed className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
           <span className="text-sm font-semibold text-foreground">{copy.headerTitle}</span>

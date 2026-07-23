@@ -33,13 +33,11 @@ export function LicenseGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Top: key icon + license key */}
-        <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]">
-          <Key className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" aria-hidden="true" />
-          <span className="truncate font-mono text-[11px] text-[var(--neutral-12)]">
-            {LICENSE_KEY}
-          </span>
+        <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
+          <Key className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
+          <span className="truncate font-mono text-[11px] text-foreground">{LICENSE_KEY}</span>
         </div>
 
         {/* Status + expiry */}
@@ -48,8 +46,8 @@ export function LicenseGlyph({ locale }: SubpackageGlyphProps) {
             {t.active}
           </Badge>
           <div className="flex items-center gap-1">
-            <Calendar className="h-3 w-3 text-[var(--neutral-10)]" aria-hidden="true" />
-            <span className="font-mono text-[10px] text-[var(--neutral-10)]">{t.expires}</span>
+            <Calendar className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
+            <span className="font-mono text-[10px] text-muted-foreground">{t.expires}</span>
           </div>
         </div>
 
@@ -63,7 +61,7 @@ export function LicenseGlyph({ locale }: SubpackageGlyphProps) {
         </div>
 
         {/* Footer */}
-        <p className="text-center font-mono text-[10px] text-[var(--neutral-10)]">{t.footer}</p>
+        <p className="text-center font-mono text-[10px] text-muted-foreground">{t.footer}</p>
       </div>
     </div>
   );

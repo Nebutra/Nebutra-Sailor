@@ -15,13 +15,13 @@ import type { SubpackageGlyphProps } from "./types";
 export function AuditGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center gap-1.5">
         <Shield className="h-3.5 w-3.5 shrink-0 text-emerald-500" aria-hidden="true" />
-        <span className="truncate font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="truncate font-mono text-[10px] text-muted-foreground">
           audit log · 12,847 entries · hash-verified
         </span>
         <Check className="h-3 w-3 shrink-0 text-emerald-500" aria-hidden="true" />
@@ -50,7 +50,7 @@ export function AuditGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="font-mono text-[10px] text-[var(--neutral-10)]">→ hash-chained · SHA-256</div>
+      <div className="font-mono text-[10px] text-muted-foreground">→ hash-chained · SHA-256</div>
     </div>
   );
 }
@@ -69,17 +69,14 @@ interface EntryRowProps {
 function EntryRow({ time, initials, color, action }: EntryRowProps) {
   return (
     <div className="flex items-center gap-2">
-      <span className="w-7 shrink-0 font-mono text-[10px] tabular-nums text-[var(--neutral-10)]">
+      <span className="w-7 shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground">
         {time}
       </span>
       <Avatar size="xs" letter={initials} title={initials} className={color} />
       <Badge variant="gray-subtle" size="sm" className="font-mono text-[10px]">
         {action}
       </Badge>
-      <ChevronRight
-        className="ml-auto h-3 w-3 shrink-0 text-[var(--neutral-9)]"
-        aria-hidden="true"
-      />
+      <ChevronRight className="ml-auto h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
     </div>
   );
 }

@@ -124,38 +124,38 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
   return (
     <main
       id="main-content"
-      className="min-h-screen overflow-x-hidden bg-[color:var(--neutral-1)] text-[color:var(--neutral-12)]"
+      className="min-h-screen overflow-x-hidden bg-background text-foreground"
     >
       <Navbar />
 
-      <section className="relative isolate overflow-hidden border-b border-[color:var(--neutral-6)] px-6 pb-12 pt-24 md:pb-20 md:pt-36">
+      <section className="relative isolate overflow-hidden border-b border-border px-6 pb-12 pt-24 md:pb-20 md:pt-36">
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--neutral-6)_42%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--neutral-6)_42%,transparent)_1px,transparent_1px)] bg-[size:56px_56px] opacity-35"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,color-mix(in_srgb,hsl(var(--border))_42%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,hsl(var(--border))_42%,transparent)_1px,transparent_1px)] bg-[size:56px_56px] opacity-35"
         />
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-center">
           <AnimateIn preset="emerge" inView>
             <div>
-              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--neutral-6)] bg-[color:var(--neutral-2)] px-3 py-1 text-xs font-semibold uppercase text-[color:var(--neutral-10)]">
+              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold uppercase text-muted-foreground">
                 <Sparkles aria-hidden="true" className="h-3.5 w-3.5 text-[color:var(--cyan-10)]" />
                 {t("eyebrow")}
               </p>
-              <h1 className="max-w-3xl text-balance text-3xl font-semibold leading-[1.05] text-[color:var(--neutral-12)] sm:text-5xl md:text-6xl">
+              <h1 className="max-w-3xl text-balance text-3xl font-semibold leading-[1.05] text-foreground sm:text-5xl md:text-6xl">
                 {t("title")}
               </h1>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-[color:var(--neutral-10)] md:text-lg md:leading-8">
+              <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
                 {t("description")}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full border border-[color:var(--neutral-6)] bg-[color:var(--neutral-2)] px-3 py-1 text-sm text-[color:var(--neutral-11)]">
+                <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground">
                   <CheckCircle
                     aria-hidden="true"
                     className="h-4 w-4 text-[color:var(--green-10)]"
                   />
                   {t("signal.waitlist")}
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-[color:var(--neutral-6)] bg-[color:var(--neutral-2)] px-3 py-1 text-sm text-[color:var(--neutral-11)]">
+                <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground">
                   <ArrowRight aria-hidden="true" className="h-4 w-4 text-[color:var(--amber-10)]" />
                   {initialCode
                     ? t("signal.codeDetected", { code: initialCode })
@@ -171,10 +171,10 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
         </div>
       </section>
 
-      <section className="border-b border-[color:var(--neutral-6)] bg-[color:var(--neutral-2)] px-6 py-12">
+      <section className="border-b border-border bg-muted px-6 py-12">
         <AnimateInGroup
           stagger="normal"
-          className="mx-auto grid max-w-6xl divide-y divide-[color:var(--neutral-6)] overflow-hidden rounded-[var(--radius-lg)] border border-[color:var(--neutral-6)] bg-[color:var(--neutral-1)] md:grid-cols-3 md:divide-x md:divide-y-0"
+          className="mx-auto grid max-w-6xl divide-y divide-[color:hsl(var(--border))] overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background md:grid-cols-3 md:divide-x md:divide-y-0"
         >
           {proofItems.map((item) => {
             const Icon = item.icon;
@@ -182,12 +182,8 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
               <AnimateIn key={item.title} preset="fadeUp">
                 <article className="min-h-44 p-6">
                   <Icon aria-hidden="true" className={proofIconClassName} />
-                  <h2 className="mt-4 text-base font-semibold text-[color:var(--neutral-12)]">
-                    {item.title}
-                  </h2>
-                  <p className="mt-2 text-sm leading-6 text-[color:var(--neutral-10)]">
-                    {item.description}
-                  </p>
+                  <h2 className="mt-4 text-base font-semibold text-foreground">{item.title}</h2>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
                 </article>
               </AnimateIn>
             );
@@ -200,13 +196,13 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
             <AnimateIn preset="emerge" inView>
               <div>
-                <p className="text-xs font-semibold uppercase text-[color:var(--neutral-9)]">
+                <p className="text-xs font-semibold uppercase text-[color:hsl(var(--muted-foreground))]">
                   {t("infrastructure.eyebrow")}
                 </p>
-                <h2 className="mt-3 text-3xl font-semibold leading-tight text-[color:var(--neutral-12)] md:text-4xl">
+                <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground md:text-4xl">
                   {t("infrastructure.title")}
                 </h2>
-                <p className="mt-4 text-base leading-7 text-[color:var(--neutral-10)]">
+                <p className="mt-4 text-base leading-7 text-muted-foreground">
                   {t("infrastructure.description")}
                 </p>
               </div>
@@ -214,19 +210,17 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
 
             <AnimateInGroup
               stagger="normal"
-              className="grid divide-y divide-[color:var(--neutral-6)] overflow-hidden rounded-[var(--radius-lg)] border border-[color:var(--neutral-6)] bg-[color:var(--neutral-1)]"
+              className="grid divide-y divide-[color:hsl(var(--border))] overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background"
             >
               {infrastructureItems.map((item) => (
                 <AnimateIn key={item.title} preset="fadeUp">
                   <article className="grid gap-3 p-5 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6">
-                    <p className="text-xs font-semibold uppercase text-[color:var(--neutral-9)]">
+                    <p className="text-xs font-semibold uppercase text-[color:hsl(var(--muted-foreground))]">
                       {item.eyebrow}
                     </p>
                     <div>
-                      <h3 className="text-base font-semibold text-[color:var(--neutral-12)]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-[color:var(--neutral-10)]">
+                      <h3 className="text-base font-semibold text-foreground">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
                         {item.description}
                       </p>
                     </div>

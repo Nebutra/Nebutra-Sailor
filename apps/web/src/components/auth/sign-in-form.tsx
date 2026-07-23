@@ -196,10 +196,8 @@ export function SignInForm({
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {t("title")}
-        </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("subtitle")}</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("subtitle")}</p>
       </div>
 
       {shouldRenderOAuth && (
@@ -207,7 +205,7 @@ export function SignInForm({
           <OAuthButtons mode="signIn" providers={enabledOAuthProviders} returnUrl={returnUrl} />
           <div className="relative my-6">
             <Separator />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs font-medium text-[var(--neutral-9)]">
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs font-medium text-muted-foreground">
               {t("dividerOr")}
             </span>
           </div>
@@ -232,7 +230,7 @@ export function SignInForm({
                     {...field}
                     type="email"
                     size="lg"
-                    className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+                    className="h-12 border-border bg-background text-foreground shadow-none"
                     placeholder={t("emailPlaceholder")}
                     onChange={(e) => {
                       field.onChange(e);
@@ -256,7 +254,7 @@ export function SignInForm({
             <Button
               type="button"
               variant="outline"
-              className="h-11 w-full justify-center border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
+              className="h-11 w-full justify-center border-border bg-background text-foreground shadow-none hover:bg-muted"
               onClick={() => {
                 window.location.href = ssoProvider.loginUrl;
               }}
@@ -285,7 +283,7 @@ export function SignInForm({
                       {...field}
                       type={showPassword ? "text" : "password"}
                       size="lg"
-                      className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
+                      className="h-12 border-border bg-background pr-12 text-foreground shadow-none"
                       placeholder={t("passwordPlaceholder")}
                       onKeyDown={onKeyEvent}
                       onKeyUp={onKeyEvent}
@@ -299,7 +297,7 @@ export function SignInForm({
                     onClick={() => setShowPassword((prev) => !prev)}
                     aria-label={showPassword ? t("hidePassword") : t("showPassword")}
                     aria-pressed={showPassword}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--primary))]"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -309,7 +307,7 @@ export function SignInForm({
                     id="caps-lock-warning"
                     role="status"
                     aria-live="polite"
-                    className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
+                    className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,hsl(var(--muted-foreground)))]"
                   >
                     <AlertTriangle aria-hidden className="h-3.5 w-3.5" />
                     {t("capsLockOn")}
@@ -346,7 +344,7 @@ export function SignInForm({
 
           <Button
             type="submit"
-            className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+            className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
             disabled={loading}
           >
             {loading ? t("submitLoading") : t("submit")}
@@ -379,7 +377,7 @@ export function SignInForm({
         </div>
       )}
 
-      <p className="mt-6 text-sm text-[var(--neutral-9)]">
+      <p className="mt-6 text-sm text-muted-foreground">
         {t("newToProduct")}{" "}
         <Link
           href={buildAltLink("/sign-up")}

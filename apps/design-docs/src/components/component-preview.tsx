@@ -54,7 +54,7 @@ Key integration notes:
 - Import UI primitives from the documented \`@nebutra/ui\` subpath for the component
 - Import icons from \`@nebutra/icons\` (Geist) or \`lucide-react\` (generic)
 - Use \`cn()\` from \`@nebutra/ui/utils\` for class merging
-- Use CSS variable tokens for colors: \`var(--neutral-1)\`, \`hsl(var(--primary))\`, \`var(--brand-gradient)\`
+- Use CSS variable tokens for colors: \`hsl(var(--background))\`, \`hsl(var(--primary))\`, \`hsl(var(--primary))\`
 - Add \`"use client"\` directive for interactive components
 - Wrap with \`<ThemeProvider>\` from \`@nebutra/tokens\` at your app root if not already present
 
@@ -235,10 +235,8 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
           <div
             className={cn(
               "not-prose p-10 relative flex min-h-[350px] w-full flex-wrap items-center justify-center",
-              "bg-[radial-gradient(var(--neutral-6)_1px,transparent_1px)] [background-size:16px_16px]",
-              previewTheme === "dark"
-                ? "dark bg-[var(--nebutra-neutral-950)]"
-                : "bg-[var(--neutral-1)]",
+              "bg-[radial-gradient(hsl(var(--border))_1px,transparent_1px)] [background-size:16px_16px]",
+              previewTheme === "dark" ? "dark bg-[var(--nebutra-neutral-950)]" : "bg-background",
               className,
             )}
           >
@@ -285,10 +283,8 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
         <div
           className={cn(
             "not-prose p-10 relative flex min-h-[350px] w-full flex-wrap items-center justify-center",
-            "bg-[radial-gradient(var(--neutral-6)_1px,transparent_1px)] [background-size:16px_16px]",
-            previewTheme === "dark"
-              ? "dark bg-[var(--nebutra-neutral-950)]"
-              : "bg-[var(--neutral-1)]",
+            "bg-[radial-gradient(hsl(var(--border))_1px,transparent_1px)] [background-size:16px_16px]",
+            previewTheme === "dark" ? "dark bg-[var(--nebutra-neutral-950)]" : "bg-background",
             className,
           )}
         >

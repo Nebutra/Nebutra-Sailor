@@ -60,7 +60,7 @@ export function MultiTenantCard() {
       {/* High-Fidelity Code Editor with tabs, line numbers, and terminal */}
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="w-full max-w-[420px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
+        className="w-full max-w-[420px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-border bg-background dark:bg-muted transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
       >
         {/* Window Chrome */}
         <div className="flex items-center gap-1.5 px-5 py-3 border-b border-border/60 bg-muted/30">
@@ -71,7 +71,7 @@ export function MultiTenantCard() {
 
         {/* File Tabs */}
         <div className="flex border-b border-border/60 bg-muted/10/[0.02]">
-          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground bg-background dark:bg-[var(--neutral-2)] border-b-2 border-primary dark:border-[var(--cyan-9)]">
+          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground bg-background dark:bg-muted border-b-2 border-primary dark:border-[var(--cyan-9)]">
             <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-blue-500/60" />
             query.ts
           </div>

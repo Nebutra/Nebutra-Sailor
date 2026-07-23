@@ -50,14 +50,16 @@ const typeScale = [
 export const TypeScale: StoryObj = {
   name: "Type Scale",
   render: () => (
-    <div className="space-y-6 bg-[var(--neutral-1)] p-8">
+    <div className="space-y-6 bg-[hsl(var(--background))] p-8">
       {typeScale.map(({ name, classes, sample }) => (
-        <div key={name} className="border-b border-[var(--neutral-6)] pb-4">
+        <div key={name} className="border-b border-[hsl(var(--border))] pb-4">
           <div className="mb-1 flex items-baseline gap-3">
-            <span className="font-mono text-xs text-[var(--neutral-10)]">{name}</span>
-            <span className="font-mono text-[10px] text-[var(--neutral-9)]">{classes}</span>
+            <span className="font-mono text-xs text-[hsl(var(--muted-foreground))]">{name}</span>
+            <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+              {classes}
+            </span>
           </div>
-          <p className={`${classes} text-[var(--neutral-12)]`}>{sample}</p>
+          <p className={`${classes} text-[hsl(var(--foreground))]`}>{sample}</p>
         </div>
       ))}
     </div>
@@ -67,27 +69,31 @@ export const TypeScale: StoryObj = {
 export const FontFamilies: StoryObj = {
   name: "Font Families",
   render: () => (
-    <div className="space-y-6 bg-[var(--neutral-1)] p-8">
+    <div className="space-y-6 bg-[hsl(var(--background))] p-8">
       <div>
-        <p className="mb-1 font-mono text-xs text-[var(--neutral-10)]">
+        <p className="mb-1 font-mono text-xs text-[hsl(var(--muted-foreground))]">
           --font-sans / var(--font-sans)
         </p>
         <p
-          className="text-3xl text-[var(--neutral-12)]"
+          className="text-3xl text-[hsl(var(--foreground))]"
           style={{ fontFamily: "var(--font-sans, sans-serif)" }}
         >
           The quick brown fox jumps over the lazy dog
         </p>
-        <p className="mt-1 text-sm text-[var(--neutral-10)]">
+        <p className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">
           Geist Sans → Noto Sans SC → system-ui
         </p>
       </div>
       <div>
-        <p className="mb-1 font-mono text-xs text-[var(--neutral-10)]">--font-mono / font-mono</p>
-        <p className="font-mono text-2xl text-[var(--neutral-12)]">
+        <p className="mb-1 font-mono text-xs text-[hsl(var(--muted-foreground))]">
+          --font-mono / font-mono
+        </p>
+        <p className="font-mono text-2xl text-[hsl(var(--foreground))]">
           const deploy = () =&gt; ship()
         </p>
-        <p className="mt-1 text-sm text-[var(--neutral-10)]">Geist Mono → Fira Code → monospace</p>
+        <p className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">
+          Geist Mono → Fira Code → monospace
+        </p>
       </div>
     </div>
   ),
@@ -96,10 +102,10 @@ export const FontFamilies: StoryObj = {
 export const BrandEmphasisText: StoryObj = {
   name: "Brand Emphasis Text",
   render: () => (
-    <div className="space-y-4 bg-[var(--neutral-1)] p-8">
-      <p className="text-5xl font-bold text-[var(--brand-primary)]">云毓智能</p>
+    <div className="space-y-4 bg-[hsl(var(--background))] p-8">
+      <p className="text-5xl font-bold text-[hsl(var(--primary))]">云毓智能</p>
       <p className="text-3xl font-semibold text-[var(--brand-accent)]">Nebutra AI Platform</p>
-      <pre className="rounded bg-[var(--neutral-3)] p-3 text-xs text-[var(--neutral-11)]">{`className="text-[var(--brand-primary)]"`}</pre>
+      <pre className="rounded bg-[hsl(var(--muted))] p-3 text-xs text-[hsl(var(--muted-foreground))]">{`className="text-[hsl(var(--primary))]"`}</pre>
     </div>
   ),
 };

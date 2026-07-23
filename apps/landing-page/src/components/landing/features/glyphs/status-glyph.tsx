@@ -10,13 +10,13 @@ export function StatusGlyph(_props: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-3 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-3 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
-          <ChartActivity className="h-3.5 w-3.5 text-[var(--neutral-11)]" />
-          <span className="text-xs font-medium text-[var(--neutral-12)]">Nebutra Status</span>
+          <ChartActivity className="h-3.5 w-3.5 text-muted-foreground" />
+          <span className="text-xs font-medium text-foreground">Nebutra Status</span>
         </div>
         <Badge
           variant="outline"
@@ -42,7 +42,7 @@ export function StatusGlyph(_props: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="flex items-center justify-between gap-2 font-mono text-[10px] text-[var(--neutral-11)]">
+      <div className="flex items-center justify-between gap-2 font-mono text-[10px] text-muted-foreground">
         <span>99.97% uptime · 90 days</span>
         <Bell className="h-3 w-3" />
       </div>

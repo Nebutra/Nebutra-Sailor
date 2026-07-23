@@ -49,13 +49,13 @@ function getIconForType(type: string): typeof Bell {
 
 export function InboxListSkeleton({ count = 3 }: { count?: number }): React.ReactElement {
   return (
-    <ul className="divide-y divide-[var(--neutral-7)]" aria-label="Loading notifications">
+    <ul className="divide-y divide-border" aria-label="Loading notifications">
       {Array.from({ length: count }).map((_, i) => (
         <li key={`notification-skeleton-${i}`} className="flex animate-pulse gap-3 px-4 py-3">
-          <div className="size-8 rounded-full bg-[var(--neutral-3)]" />
+          <div className="size-8 rounded-full bg-muted" />
           <div className="flex-1 space-y-2">
-            <div className="h-3 w-1/3 rounded bg-[var(--neutral-3)]" />
-            <div className="h-3 w-2/3 rounded bg-[var(--neutral-3)]" />
+            <div className="h-3 w-1/3 rounded bg-muted" />
+            <div className="h-3 w-2/3 rounded bg-muted" />
           </div>
         </li>
       ))}
@@ -73,10 +73,10 @@ export function InboxEmptyState({
       className="flex flex-col items-center justify-center gap-2 px-4 py-10 text-center"
       data-testid="inbox-empty"
     >
-      <div className="flex size-12 items-center justify-center rounded-full bg-[var(--neutral-2)]">
-        <Bell className="size-5 text-[var(--neutral-11)]" aria-hidden="true" />
+      <div className="flex size-12 items-center justify-center rounded-full bg-muted">
+        <Bell className="size-5 text-muted-foreground" aria-hidden="true" />
       </div>
-      <p className="text-sm text-[var(--neutral-11)]">{message}</p>
+      <p className="text-sm text-muted-foreground">{message}</p>
     </div>
   );
 }
@@ -103,11 +103,7 @@ export function InboxList({
   }
 
   return (
-    <ul
-      className="divide-y divide-[var(--neutral-7)]"
-      data-testid="inbox-list"
-      aria-label="Notifications"
-    >
+    <ul className="divide-y divide-border" data-testid="inbox-list" aria-label="Notifications">
       {notifications.map((item) => {
         const Icon = getIconForType(item.type);
         const href = typeof item.data?.href === "string" ? (item.data.href as string) : undefined;
@@ -116,8 +112,8 @@ export function InboxList({
         const itemContent = (
           <div
             className={`flex gap-3 px-4 py-3 transition-colors ${
-              item.read ? "bg-[var(--neutral-1)]" : "bg-blue-50/40 dark:bg-blue-950/20"
-            } hover:bg-[var(--neutral-2)]`}
+              item.read ? "bg-background" : "bg-blue-50/40 dark:bg-blue-950/20"
+            } hover:bg-muted`}
           >
             {selectable ? (
               <input
@@ -126,30 +122,25 @@ export function InboxList({
                 aria-label={`Select notification ${item.title}`}
                 checked={checked}
                 onChange={() => onToggleSelect?.(item.id)}
-                className="mt-1 size-4 cursor-pointer accent-[var(--blue-9)]"
+                className="mt-1 size-4 cursor-pointer accent-[hsl(var(--primary))]"
                 onClick={(e) => e.stopPropagation()}
               />
             ) : null}
 
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[var(--neutral-2)]">
-              <Icon className="size-4 text-[var(--neutral-11)]" aria-hidden="true" />
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
+              <Icon className="size-4 text-muted-foreground" aria-hidden="true" />
             </div>
 
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2">
                 <p
                   className={`truncate text-sm ${
-                    item.read
-                      ? "font-medium text-[var(--neutral-12)]"
-                      : "font-semibold text-[var(--neutral-12)]"
+                    item.read ? "font-medium text-foreground" : "font-semibold text-foreground"
                   }`}
                 >
                   {item.title}
                 </p>
-                <time
-                  className="shrink-0 text-xs text-[var(--neutral-11)]"
-                  dateTime={item.createdAt}
-                >
+                <time className="shrink-0 text-xs text-muted-foreground" dateTime={item.createdAt}>
                   {Number.isNaN(new Date(item.createdAt).getTime())
                     ? ""
                     : format.relativeTime(new Date(item.createdAt))}
@@ -157,7 +148,7 @@ export function InboxList({
               </div>
               {item.body ? (
                 <p
-                  className={`mt-0.5 text-xs text-[var(--neutral-11)] ${
+                  className={`mt-0.5 text-xs text-muted-foreground ${
                     variant === "compact" ? "line-clamp-2" : ""
                   }`}
                 >
@@ -170,7 +161,7 @@ export function InboxList({
               <span
                 role="status"
                 aria-label="Unread"
-                className="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--blue-9)]"
+                className="mt-1.5 size-2 shrink-0 rounded-full bg-[hsl(var(--primary))]"
               />
             ) : null}
 
@@ -183,7 +174,7 @@ export function InboxList({
                   e.stopPropagation();
                   void onArchive(item.id);
                 }}
-                className="rounded-[var(--radius-md)] p-1 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)]"
+                className="rounded-[var(--radius-md)] p-1 text-muted-foreground hover:bg-muted"
               >
                 <Trash2 className="size-4" aria-hidden="true" />
               </button>

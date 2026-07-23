@@ -37,30 +37,30 @@ const TOOLS: ReadonlyArray<{
 export function McpGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="font-mono text-[10px] text-muted-foreground">
           mcp.tool_catalog · 47 tools
         </span>
-        <Connection className="h-3 w-3 text-[var(--brand-primary)]" />
+        <Connection className="h-3 w-3 text-[hsl(var(--primary))]" />
       </div>
 
       <ul className="flex flex-col gap-1">
         {TOOLS.map(({ name, desc, latency, icon: Icon }) => (
           <li
             key={name}
-            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-background px-2 py-1"
           >
-            <Icon className="h-2.5 w-2.5 shrink-0 text-[var(--brand-primary)]" />
-            <code className="truncate font-mono text-[10px] text-[var(--neutral-12)]">
-              <span className="text-[var(--brand-primary)]">{name}</span>
-              <span className="text-[var(--neutral-10)]"> · {desc}</span>
+            <Icon className="h-2.5 w-2.5 shrink-0 text-[hsl(var(--primary))]" />
+            <code className="truncate font-mono text-[10px] text-foreground">
+              <span className="text-[hsl(var(--primary))]">{name}</span>
+              <span className="text-muted-foreground"> · {desc}</span>
             </code>
             <Badge
               variant="outline"
-              className="ml-auto shrink-0 border-[var(--neutral-6)] bg-transparent px-1 py-0 font-mono text-[9px] text-[var(--neutral-11)]"
+              className="ml-auto shrink-0 border-border bg-transparent px-1 py-0 font-mono text-[9px] text-muted-foreground"
             >
               {latency}
             </Badge>
@@ -68,9 +68,7 @@ export function McpGlyph(_props: SubpackageGlyphProps) {
         ))}
       </ul>
 
-      <div className="font-mono text-[9px] text-[var(--neutral-10)]">
-        MCP 1.0 · stdio · streamable
-      </div>
+      <div className="font-mono text-[9px] text-muted-foreground">MCP 1.0 · stdio · streamable</div>
     </div>
   );
 }

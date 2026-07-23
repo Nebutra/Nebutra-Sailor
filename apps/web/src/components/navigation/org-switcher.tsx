@@ -148,7 +148,7 @@ export function OrgSwitcher() {
                 <p className="mb-2 text-neutral-11">{t("empty")}</p>
                 <Link
                   href="/onboarding"
-                  className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-3 py-1.5 text-xs font-medium text-white hover:opacity-90"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-[hsl(var(--primary))] px-3 py-1.5 text-xs font-medium text-white hover:opacity-90"
                   onClick={() => setOpen(false)}
                 >
                   <Plus className="h-3.5 w-3.5" aria-hidden />
@@ -184,7 +184,7 @@ export function OrgSwitcher() {
                         {isPending ? (
                           <span className="text-xs text-neutral-11">{t("switching")}</span>
                         ) : isActive ? (
-                          <Check className="h-4 w-4 text-[var(--brand-primary)]" aria-hidden />
+                          <Check className="h-4 w-4 text-[hsl(var(--primary))]" aria-hidden />
                         ) : null}
                       </button>
                     </li>

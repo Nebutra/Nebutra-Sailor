@@ -34,13 +34,13 @@ export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       {/* Header: feature title + lock */}
       <div className="flex items-center justify-between">
         <div className="flex min-w-0 items-center gap-1.5">
-          <Sparkles className="h-3 w-3 shrink-0 text-[var(--brand-primary)]" aria-hidden="true" />
+          <Sparkles className="h-3 w-3 shrink-0 text-[hsl(var(--primary))]" aria-hidden="true" />
           <span className="truncate text-[11px] font-semibold text-foreground">{t.feature}</span>
         </div>
         <LockClosed className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
@@ -48,14 +48,14 @@ export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
 
       {/* Blurred content placeholder bars */}
       <div
-        className="flex flex-1 flex-col justify-center gap-1.5 rounded-[var(--radius-sm)] border border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2.5 py-2"
+        className="flex flex-1 flex-col justify-center gap-1.5 rounded-[var(--radius-sm)] border border-dashed border-border bg-background px-2.5 py-2"
         role="img"
         aria-label="Locked content"
       >
         {BAR_WIDTHS.map((width, i) => (
           <div
             key={width}
-            className="h-1.5 rounded-full bg-[var(--neutral-5)]"
+            className="h-1.5 rounded-full bg-muted"
             style={{
               width,
               filter: "blur(1.5px)",

@@ -43,19 +43,15 @@ const COPY = {
 export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
-      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
-          <Shield className="h-3.5 w-3.5 text-[var(--brand-primary)]" />
-          <span className="font-mono text-[10px] text-[var(--neutral-12)]">
-            {COPY.title[locale]}
-          </span>
+          <Shield className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+          <span className="font-mono text-[10px] text-foreground">{COPY.title[locale]}</span>
         </div>
-        <span className="font-mono text-[10px] text-[var(--neutral-11)]">
-          {COPY.layers[locale]}
-        </span>
+        <span className="font-mono text-[10px] text-muted-foreground">{COPY.layers[locale]}</span>
       </div>
 
       <div className="flex flex-1 flex-col gap-1">
@@ -64,16 +60,14 @@ export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
           return (
             <div
               key={layer.label.en}
-              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-1.5 py-1"
+              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] bg-background px-1.5 py-1"
             >
               <div className="flex min-w-0 items-center gap-1.5">
-                <LayerIcon className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" />
-                <span className="truncate text-[10px] text-[var(--neutral-12)]">
-                  {layer.label[locale]}
-                </span>
+                <LayerIcon className="h-3 w-3 shrink-0 text-muted-foreground" />
+                <span className="truncate text-[10px] text-foreground">{layer.label[locale]}</span>
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
-                <span className="font-mono text-[9px] text-[var(--neutral-11)]">
+                <span className="font-mono text-[9px] text-muted-foreground">
                   {layer.stat[locale]}
                 </span>
                 <Badge
@@ -88,7 +82,7 @@ export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="font-mono text-[9px] text-[var(--neutral-11)]">{COPY.footer[locale]}</div>
+      <div className="font-mono text-[9px] text-muted-foreground">{COPY.footer[locale]}</div>
     </div>
   );
 }

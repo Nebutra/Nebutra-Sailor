@@ -82,14 +82,12 @@ export function ClerkEnterpriseSsoHandoff({
       <div className="mb-8 flex flex-col items-center text-center">
         <span
           aria-hidden
-          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)]"
+          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-muted"
         >
-          <Key className="h-5 w-5 text-[var(--blue-11)]" />
+          <Key className="h-5 w-5 text-primary" />
         </span>
-        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {t("ssoTitle")}
-        </h1>
-        <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--neutral-10)]">
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("ssoTitle")}</h1>
+        <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">
           {t("ssoDescription", { provider: providerName, email: identifier })}
         </p>
       </div>
@@ -105,14 +103,14 @@ export function ClerkEnterpriseSsoHandoff({
           </p>
           <Button
             type="button"
-            className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+            className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
             onClick={retry}
           >
             {t("ssoRetry")}
           </Button>
         </div>
       ) : (
-        <p className="text-center text-sm text-[var(--neutral-10)]" role="status">
+        <p className="text-center text-sm text-muted-foreground" role="status">
           {t("providerLoading")}
         </p>
       )}

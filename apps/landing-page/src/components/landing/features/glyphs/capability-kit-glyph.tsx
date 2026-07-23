@@ -41,12 +41,12 @@ const MODULES: ReadonlyArray<ModulePill> = [
 export function CapabilityKitGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1 font-mono text-[10px] text-[var(--neutral-11)]">
+        <span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
           <Box className="h-3 w-3" />
           SDK &middot; 8 modules
         </span>
@@ -60,16 +60,16 @@ export function CapabilityKitGlyph(_props: SubpackageGlyphProps) {
         {MODULES.map(({ icon: Icon, name }) => (
           <li
             key={name}
-            className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2"
+            className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-background px-2"
           >
-            <Icon className="h-3 w-3 text-[var(--neutral-11)]" />
-            <span className="font-mono text-[10px] text-[var(--neutral-12)]">{name}</span>
+            <Icon className="h-3 w-3 text-muted-foreground" />
+            <span className="font-mono text-[10px] text-foreground">{name}</span>
           </li>
         ))}
       </ul>
 
       {/* Footer */}
-      <p className="text-center font-mono text-[9px] text-[var(--neutral-11)]">
+      <p className="text-center font-mono text-[9px] text-muted-foreground">
         pnpm nebutra capability scaffold
       </p>
     </div>

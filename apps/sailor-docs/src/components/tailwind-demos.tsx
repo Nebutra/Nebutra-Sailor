@@ -90,8 +90,8 @@ export function TailwindColorsDemo({
 }) {
   if (colorName === "semantic") {
     return (
-      <div className="mb-8 overflow-hidden rounded-xl border border-[var(--neutral-6)] shadow-sm">
-        <div className="bg-[var(--neutral-2)] px-4 py-3 border-b border-[var(--neutral-6)]">
+      <div className="mb-8 overflow-hidden rounded-xl border border-border shadow-sm">
+        <div className="bg-muted px-4 py-3 border-b border-border">
           <h3 className="font-mono text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Semantic Colors
           </h3>
@@ -110,8 +110,8 @@ export function TailwindColorsDemo({
   const entries = Object.entries(scale).filter(([k]) => k !== "DEFAULT" && k !== "foreground");
 
   return (
-    <div className="mb-8 overflow-hidden rounded-xl border border-[var(--neutral-6)] shadow-sm">
-      <div className="bg-[var(--neutral-2)] px-4 py-3 border-b border-[var(--neutral-6)]">
+    <div className="mb-8 overflow-hidden rounded-xl border border-border shadow-sm">
+      <div className="bg-muted px-4 py-3 border-b border-border">
         <h3 className="font-mono text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           {colorName} Scale
         </h3>
@@ -143,8 +143,8 @@ export function TailwindSpacingDemo() {
   });
 
   return (
-    <div className="w-full overflow-hidden rounded-xl border border-[var(--neutral-6)] bg-card shadow-sm mb-8">
-      <div className="grid grid-cols-[100px_80px_1fr] gap-4 p-4 border-b border-[var(--neutral-6)] bg-[var(--neutral-2)] text-xs font-semibold text-muted-foreground">
+    <div className="w-full overflow-hidden rounded-xl border border-border bg-card shadow-sm mb-8">
+      <div className="grid grid-cols-[100px_80px_1fr] gap-4 p-4 border-b border-border bg-muted text-xs font-semibold text-muted-foreground">
         <div>Token</div>
         <div>Value</div>
         <div>Preview</div>
@@ -153,7 +153,7 @@ export function TailwindSpacingDemo() {
         {spacings.map(([key, value]) => (
           <div
             key={key}
-            className="grid grid-cols-[100px_80px_1fr] gap-4 p-4 items-center border-b border-[var(--neutral-6)] last:border-0 hover:bg-[var(--neutral-2)]/50 transition-colors"
+            className="grid grid-cols-[100px_80px_1fr] gap-4 p-4 items-center border-b border-border last:border-0 hover:bg-muted/50 transition-colors"
           >
             <code className="text-xs font-mono text-primary font-semibold">space-{key}</code>
             <code className="text-xs font-mono text-muted-foreground">{String(value)}</code>
@@ -180,7 +180,7 @@ export function TailwindRadiusDemo() {
       {radii.map(([key, value]) => (
         <div
           key={key}
-          className="flex flex-col items-center justify-center p-6 border border-[var(--neutral-6)] bg-card rounded-xl shadow-sm hover:border-primary/50 transition-colors group"
+          className="flex flex-col items-center justify-center p-6 border border-border bg-card rounded-xl shadow-sm hover:border-primary/50 transition-colors group"
         >
           <div
             className="h-16 w-16 bg-primary/10 border-2 border-primary/30 group-hover:bg-primary/20 transition-colors mb-4"
@@ -200,7 +200,7 @@ export function TailwindShadowsDemo() {
   const shadows = Object.entries(nebutraShadows);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 p-6 bg-[var(--neutral-2)] rounded-xl border border-[var(--neutral-6)]">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 p-6 bg-muted rounded-xl border border-border">
       {shadows.map(([key, value]) => (
         <div
           key={key}
@@ -223,8 +223,8 @@ export function TailwindTypographyDemo() {
   });
 
   return (
-    <div className="w-full overflow-hidden rounded-xl border border-[var(--neutral-6)] bg-card shadow-sm mb-8">
-      <div className="grid grid-cols-[80px_80px_1fr] gap-4 p-4 border-b border-[var(--neutral-6)] bg-[var(--neutral-2)] text-xs font-semibold text-muted-foreground">
+    <div className="w-full overflow-hidden rounded-xl border border-border bg-card shadow-sm mb-8">
+      <div className="grid grid-cols-[80px_80px_1fr] gap-4 p-4 border-b border-border bg-muted text-xs font-semibold text-muted-foreground">
         <div>Token</div>
         <div>Rem</div>
         <div>Preview (Inter)</div>
@@ -233,7 +233,7 @@ export function TailwindTypographyDemo() {
         {fontSizes.map(([key, value]) => (
           <div
             key={key}
-            className="grid grid-cols-[80px_80px_1fr] gap-4 px-4 py-6 items-center border-b border-[var(--neutral-6)] last:border-0 hover:bg-[var(--neutral-2)]/50 transition-colors"
+            className="grid grid-cols-[80px_80px_1fr] gap-4 px-4 py-6 items-center border-b border-border last:border-0 hover:bg-muted/50 transition-colors"
           >
             <code className="text-xs font-mono text-primary font-semibold">text-{key}</code>
             <code className="text-xs font-mono text-muted-foreground">{String(value)}</code>
@@ -269,7 +269,7 @@ export function TailwindAnimationsDemo() {
           type="button"
           key={key}
           onClick={() => handlePlay(key)}
-          className="flex flex-col items-center justify-center p-6 border border-[var(--neutral-6)] bg-card rounded-xl shadow-sm hover:border-primary/50 transition-colors group relative h-32"
+          className="flex flex-col items-center justify-center p-6 border border-border bg-card rounded-xl shadow-sm hover:border-primary/50 transition-colors group relative h-32"
         >
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Play className="w-4 h-4 text-muted-foreground" />

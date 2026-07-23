@@ -33,7 +33,7 @@ export function RouterNav() {
         >
           <BrandLogo variant="mark" className="h-8 w-8 md:hidden" />
           <BrandLogo variant="horizontal" className="hidden h-7 w-auto md:block" />
-          <span className="hidden h-4 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
+          <span className="hidden h-4 w-px bg-[hsl(var(--border))] sm:block" aria-hidden />
           <span className="text-sm font-medium tracking-tight text-muted-foreground">Router</span>
         </Link>
 

@@ -89,16 +89,14 @@ export function AdminDirectoryPanel({
   const hasNext = currentPage < totalPages;
 
   return (
-    <section className="mt-6 rounded-[var(--radius-3xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4 shadow-sm sm:p-6">
+    <section className="mt-6 rounded-[var(--radius-3xl)] border border-border bg-background p-4 shadow-sm sm:p-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="font-medium text-sm text-[var(--neutral-10)] uppercase tracking-[0.18em]">
+          <p className="font-medium text-sm text-muted-foreground uppercase tracking-[0.18em]">
             Directory
           </p>
-          <h2 className="mt-2 font-semibold text-2xl text-[var(--neutral-12)]">
-            Users and organizations
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm text-[var(--neutral-11)]">
+          <h2 className="mt-2 font-semibold text-2xl text-foreground">Users and organizations</h2>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
             URL-backed admin lookup for support triage. Search by name, email, organization, or
             slug, then edit the record in place.
           </p>
@@ -118,7 +116,7 @@ export function AdminDirectoryPanel({
           <input
             data-allow-native
             aria-label="Search users and organizations"
-            className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] outline-none transition focus:border-[color:var(--brand-primary)] focus:ring-2 focus:ring-[color:var(--brand-primary)]/20"
+            className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-[color:hsl(var(--primary))] focus:ring-2 focus:ring-[color:hsl(var(--primary))]/20"
             name="q"
             type="search"
             defaultValue={query}
@@ -126,7 +124,7 @@ export function AdminDirectoryPanel({
           />
           <button
             type="submit"
-            className="rounded-[var(--radius-xl)] bg-[color:var(--brand-primary)] px-4 py-2 font-medium text-[var(--neutral-1)] text-sm transition hover:opacity-90"
+            className="rounded-[var(--radius-xl)] bg-[color:hsl(var(--primary))] px-4 py-2 font-medium text-[hsl(var(--background))] text-sm transition hover:opacity-90"
           >
             Search
           </button>
@@ -164,7 +162,7 @@ export function AdminDirectoryPanel({
       </div>
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm">
-        <p className="text-[var(--neutral-10)]">
+        <p className="text-muted-foreground">
           Page {currentPage} of {totalPages} · {totalUsers} users · {totalOrganizations}{" "}
           organizations
         </p>
@@ -172,7 +170,7 @@ export function AdminDirectoryPanel({
           {hasPrevious ? (
             <Link
               href={buildAdminHref(query, currentPage - 1, normalizedPageSize)}
-              className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
+              className="rounded-[var(--radius-lg)] border border-border px-3 py-1.5 font-medium text-foreground transition hover:bg-muted"
             >
               Previous page
             </Link>
@@ -180,7 +178,7 @@ export function AdminDirectoryPanel({
           {hasNext ? (
             <Link
               href={buildAdminHref(query, currentPage + 1, normalizedPageSize)}
-              className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-3 py-1.5 font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
+              className="rounded-[var(--radius-lg)] border border-border px-3 py-1.5 font-medium text-foreground transition hover:bg-muted"
             >
               Next page
             </Link>
@@ -201,12 +199,12 @@ function DirectoryTable({
   empty: string;
 }) {
   return (
-    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--neutral-7)]">
-      <div className="border-[var(--neutral-7)] border-b bg-[var(--neutral-2)] px-4 py-3">
-        <h3 className="font-semibold text-[var(--neutral-12)] text-sm">{title}</h3>
+    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-border">
+      <div className="border-border border-b bg-muted px-4 py-3">
+        <h3 className="font-semibold text-foreground text-sm">{title}</h3>
       </div>
       {rows.length === 0 ? (
-        <p className="px-4 py-8 text-center text-[var(--neutral-10)] text-sm">{empty}</p>
+        <p className="px-4 py-8 text-center text-muted-foreground text-sm">{empty}</p>
       ) : (
         <table className="w-full border-collapse">
           <tbody>
@@ -291,12 +289,12 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
 
   return (
     <>
-      <tr aria-label={row.label} className="border-[var(--neutral-7)] border-b">
+      <tr aria-label={row.label} className="border-border border-b">
         <td className="px-4 py-3">
-          <p className="font-medium text-[var(--neutral-12)] text-sm">{row.label}</p>
-          <p className="mt-0.5 text-[var(--neutral-10)] text-xs">{row.meta}</p>
+          <p className="font-medium text-foreground text-sm">{row.label}</p>
+          <p className="mt-0.5 text-muted-foreground text-xs">{row.meta}</p>
         </td>
-        <td className="hidden px-4 py-3 text-[var(--neutral-11)] text-sm sm:table-cell">
+        <td className="hidden px-4 py-3 text-muted-foreground text-sm sm:table-cell">
           {row.detail}
         </td>
         <td className="px-4 py-3">
@@ -306,7 +304,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                 type="button"
                 onClick={handleImpersonate}
                 disabled={impersonating}
-                className="rounded-[var(--radius-lg)] border border-[color:var(--brand-primary)]/40 px-2.5 py-1.5 font-medium text-[color:var(--brand-primary)] text-xs transition hover:bg-[color:var(--brand-primary)]/10 disabled:opacity-50"
+                className="rounded-[var(--radius-lg)] border border-[color:hsl(var(--primary))]/40 px-2.5 py-1.5 font-medium text-[color:hsl(var(--primary))] text-xs transition hover:bg-[color:hsl(var(--primary))]/10 disabled:opacity-50"
               >
                 {impersonating ? "Starting…" : `Impersonate ${row.label}`}
               </button>
@@ -314,7 +312,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
             <button
               type="button"
               onClick={() => setOpen((value) => !value)}
-              className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-2.5 py-1.5 font-medium text-[var(--neutral-12)] text-xs transition hover:bg-[var(--neutral-2)]"
+              className="rounded-[var(--radius-lg)] border border-border px-2.5 py-1.5 font-medium text-foreground text-xs transition hover:bg-muted"
             >
               Edit {row.label}
             </button>
@@ -325,31 +323,31 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
         </td>
       </tr>
       {open ? (
-        <tr className="border-[var(--neutral-7)] border-b bg-[var(--neutral-2)]/60">
+        <tr className="border-border border-b bg-muted/60">
           <td colSpan={3} className="px-4 py-4">
             <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-3">
-              <label className="text-xs font-medium text-[var(--neutral-11)]">
+              <label className="text-xs font-medium text-muted-foreground">
                 {row.kind === "user" ? "User name" : "Organization name"}
                 <input
                   data-allow-native
                   name="name"
                   defaultValue={row.label}
-                  className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                  className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
                 />
               </label>
               {row.kind === "user" ? (
                 <>
-                  <label className="text-xs font-medium text-[var(--neutral-11)]">
+                  <label className="text-xs font-medium text-muted-foreground">
                     User email
                     <input
                       data-allow-native
                       name="email"
                       type="email"
                       defaultValue={row.meta}
-                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
                     />
                   </label>
-                  <label className="flex items-end gap-2 pb-2 text-xs font-medium text-[var(--neutral-11)]">
+                  <label className="flex items-end gap-2 pb-2 text-xs font-medium text-muted-foreground">
                     <input
                       data-allow-native
                       name="emailVerified"
@@ -361,22 +359,22 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                 </>
               ) : (
                 <>
-                  <label className="text-xs font-medium text-[var(--neutral-11)]">
+                  <label className="text-xs font-medium text-muted-foreground">
                     Organization slug
                     <input
                       data-allow-native
                       name="slug"
                       defaultValue={row.slug}
-                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
                     />
                   </label>
-                  <label className="text-xs font-medium text-[var(--neutral-11)]">
+                  <label className="text-xs font-medium text-muted-foreground">
                     Plan
                     <input
                       data-allow-native
                       name="plan"
                       defaultValue={row.planName}
-                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
                     />
                   </label>
                 </>
@@ -385,12 +383,12 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                 <button
                   type="submit"
                   disabled={pending}
-                  className="rounded-[var(--radius-lg)] bg-[color:var(--brand-primary)] px-3 py-2 font-medium text-[var(--neutral-1)] text-sm disabled:opacity-50"
+                  className="rounded-[var(--radius-lg)] bg-[color:hsl(var(--primary))] px-3 py-2 font-medium text-[hsl(var(--background))] text-sm disabled:opacity-50"
                 >
                   {pending ? "Saving…" : row.kind === "user" ? "Save user" : "Save organization"}
                 </button>
                 {message ? (
-                  <p role="status" className="text-sm text-[var(--neutral-11)]">
+                  <p role="status" className="text-sm text-muted-foreground">
                     {message}
                   </p>
                 ) : null}

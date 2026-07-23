@@ -45,7 +45,7 @@ export function OauthServerGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       {/* Header — third-party app identity */}
@@ -72,7 +72,7 @@ export function OauthServerGlyph({ locale }: SubpackageGlyphProps) {
       </div>
 
       {/* Footer — Approve action + token annotation */}
-      <div className="flex items-center justify-between gap-2 border-t border-[var(--neutral-6)] pt-2">
+      <div className="flex items-center justify-between gap-2 border-t border-border pt-2">
         <Button type="button" size="tiny" variant="default" prefix={<Check aria-hidden="true" />}>
           {t.approve}
         </Button>

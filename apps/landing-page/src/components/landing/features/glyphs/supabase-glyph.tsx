@@ -36,12 +36,12 @@ const SERVICE_ROWS: ReadonlyArray<ServiceRow> = [
 export function SupabaseGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center gap-1.5">
-        <span className="truncate font-mono text-[11px] text-[var(--neutral-12)]">
+        <span className="truncate font-mono text-[11px] text-foreground">
           Supabase project &middot; acme-saas
         </span>
         <StatusDot state="READY" titlePrefix="supabase" decorative className="ml-auto" />
@@ -55,7 +55,7 @@ export function SupabaseGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="font-mono text-[10px] text-[var(--neutral-10)]">
+      <div className="font-mono text-[10px] text-muted-foreground">
         eu-west-1 &middot; vendor-lock-in opt-in
       </div>
     </div>
@@ -76,9 +76,9 @@ function ServiceCell({ row }: ServiceCellProps) {
   const badgeVariant = isOk ? "green-subtle" : "amber-subtle";
 
   return (
-    <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1 ring-1 ring-[var(--neutral-5)]">
-      <row.Icon className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" aria-hidden="true" />
-      <span className="truncate font-mono text-[10px] text-[var(--neutral-12)]">{row.label}</span>
+    <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-background px-2 py-1 ring-1 ring-[hsl(var(--border))]">
+      <row.Icon className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
+      <span className="truncate font-mono text-[10px] text-foreground">{row.label}</span>
       <Badge variant={badgeVariant} size="sm" className="ml-auto gap-1 font-mono text-[9px]">
         <StatusIcon className="h-2.5 w-2.5 shrink-0" aria-hidden="true" />
         <span className="tabular-nums">{row.metric}</span>

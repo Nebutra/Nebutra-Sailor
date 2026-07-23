@@ -7,7 +7,7 @@ export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
 // Satori does NOT resolve CSS var() — use explicit hex from brand metadata.
-const PRIMARY = colors.primary["500"]; // "#0033FE"
+const PRIMARY = colors.primary["500"]; // "hsl(var(--primary))"
 const ACCENT = colors.accent["500"]; // "#0BF1C3"
 // First letter of brand name used as logomark text fallback.
 const INITIAL = brand.name.charAt(0).toUpperCase();

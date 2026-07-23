@@ -18,10 +18,10 @@ const CATEGORIES: Category[] = [
 export function ProviderRegistryGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-md)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
-      <div className="font-mono text-[9px] tracking-tight text-[var(--neutral-10)]">
+      <div className="font-mono text-[9px] tracking-tight text-muted-foreground">
         registry · 24 providers · 8 categories
       </div>
 
@@ -30,8 +30,8 @@ export function ProviderRegistryGlyph(_props: SubpackageGlyphProps) {
           const Icon = cat.icon;
           return (
             <div key={cat.label} className="flex items-center gap-1.5">
-              <Icon className="h-2.5 w-2.5 shrink-0 text-[var(--neutral-11)]" />
-              <span className="w-[58px] shrink-0 font-mono text-[9px] text-[var(--neutral-11)]">
+              <Icon className="h-2.5 w-2.5 shrink-0 text-muted-foreground" />
+              <span className="w-[58px] shrink-0 font-mono text-[9px] text-muted-foreground">
                 {cat.label}:
               </span>
               <div className="flex flex-wrap items-center gap-0.5">
@@ -39,7 +39,7 @@ export function ProviderRegistryGlyph(_props: SubpackageGlyphProps) {
                   <Badge
                     key={p}
                     variant="outline"
-                    className="h-4 rounded-[var(--radius-sm)] border-[var(--neutral-6)] px-1 font-mono text-[8px] font-normal text-[var(--neutral-12)]"
+                    className="h-4 rounded-[var(--radius-sm)] border-border px-1 font-mono text-[8px] font-normal text-foreground"
                   >
                     {p}
                   </Badge>
@@ -50,7 +50,7 @@ export function ProviderRegistryGlyph(_props: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="font-mono text-[9px] tracking-tight text-[var(--neutral-10)]">
+      <div className="font-mono text-[9px] tracking-tight text-muted-foreground">
         typed metadata · zero runtime
       </div>
     </div>

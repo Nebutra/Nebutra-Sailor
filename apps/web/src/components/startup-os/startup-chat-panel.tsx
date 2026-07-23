@@ -146,7 +146,7 @@ export function StartupChatPanel({
           <header className="flex items-center gap-3 px-5 py-4">
             <span
               className="grid size-9 shrink-0 place-items-center rounded-2xl text-white"
-              style={{ background: "var(--brand-gradient)" }}
+              style={{ background: "hsl(var(--primary))" }}
               aria-hidden="true"
             >
               <Sparkles className="size-4.5" />
@@ -326,7 +326,7 @@ function FileEventList({
                 ) : (
                   <FileText
                     className="size-4 shrink-0"
-                    style={{ color: "var(--brand-primary)" }}
+                    style={{ color: "hsl(var(--primary))" }}
                     aria-hidden="true"
                   />
                 )}
@@ -698,7 +698,7 @@ function StatusRow({
                   ? "var(--status-success)"
                   : isStreaming
                     ? "var(--brand-accent)"
-                    : "var(--neutral-8)",
+                    : "hsl(var(--border))",
           }}
           aria-hidden="true"
         />

@@ -87,7 +87,7 @@ const posts = await prisma.post.findMany({
     code: `@import "@nebutra/tokens/styles.css";
 
 .cta {
-  background: var(--brand-gradient);
+  background: hsl(var(--primary));
   color: var(--neutral-1);
   border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-5);

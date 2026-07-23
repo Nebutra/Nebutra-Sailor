@@ -491,11 +491,11 @@ export default app;`,
 :root {
   --brand-primary: oklch(0.55 0.24 256);
   --brand-accent: oklch(0.85 0.18 175);
-  --brand-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+  --brand-gradient: linear-gradient(135deg, hsl(var(--primary)), var(--brand-accent));
 }
 
 .cta {
-  background: var(--brand-gradient);
+  background: hsl(var(--primary));
   color: var(--neutral-1);
   border-radius: var(--radius-md);
 }`,

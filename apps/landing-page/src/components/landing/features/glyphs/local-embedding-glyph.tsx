@@ -10,9 +10,9 @@ const BAR_HEIGHTS = [
 // Alternating accent pattern: primary vs muted neutral.
 function barColor(i: number): string {
   // Roughly every 3rd bar is primary; rest are muted neutrals.
-  if (i % 3 === 0) return "var(--brand-primary)";
-  if (i % 2 === 0) return "var(--neutral-9)";
-  return "var(--neutral-7)";
+  if (i % 3 === 0) return "hsl(var(--primary))";
+  if (i % 2 === 0) return "hsl(var(--muted-foreground))";
+  return "hsl(var(--border))";
 }
 
 export function LocalEmbeddingGlyph(_props: SubpackageGlyphProps) {

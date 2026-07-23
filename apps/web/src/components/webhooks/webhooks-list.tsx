@@ -106,7 +106,7 @@ export function WebhooksList({
 
   if (endpointsQuery.isPending) {
     return (
-      <p className="py-4 text-sm text-center text-[var(--neutral-11)]" role="status">
+      <p className="py-4 text-sm text-center text-muted-foreground" role="status">
         Loading…
       </p>
     );
@@ -122,7 +122,7 @@ export function WebhooksList({
 
   if (endpoints.length === 0) {
     return (
-      <p className="py-4 text-sm text-center text-[var(--neutral-11)]">
+      <p className="py-4 text-sm text-center text-muted-foreground">
         {t("emptyState.webhookEndpoints")}
       </p>
     );
@@ -141,7 +141,7 @@ export function WebhooksList({
   return (
     <table className="w-full text-sm" aria-label="Webhook endpoints">
       <thead>
-        <tr className="border-b border-[var(--neutral-7)] text-left text-xs uppercase text-[var(--neutral-11)]">
+        <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
           <th className="py-2 pr-4 font-medium">URL</th>
           <th className="py-2 pr-4 font-medium">Events</th>
           <th className="py-2 pr-4 font-medium">Status</th>
@@ -151,26 +151,26 @@ export function WebhooksList({
       </thead>
       <tbody>
         {endpoints.map((endpoint) => (
-          <tr key={endpoint.id} className="border-b border-[var(--neutral-6)]">
+          <tr key={endpoint.id} className="border-b border-border">
             <td className="py-3 pr-4">
-              <span className="font-mono text-xs text-[var(--neutral-12)]">{endpoint.url}</span>
-              <p className="mt-0.5 font-mono text-[10px] text-[var(--neutral-10)]">
+              <span className="font-mono text-xs text-foreground">{endpoint.url}</span>
+              <p className="mt-0.5 font-mono text-[10px] text-muted-foreground">
                 {endpoint.signingSecretMasked}
               </p>
             </td>
-            <td className="py-3 pr-4 text-[var(--neutral-11)]">{endpoint.events.length}</td>
+            <td className="py-3 pr-4 text-muted-foreground">{endpoint.events.length}</td>
             <td className="py-3 pr-4">
               {endpoint.isActive ? (
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
                   Active
                 </span>
               ) : (
-                <span className="rounded-full bg-[var(--neutral-4)] px-2 py-0.5 text-xs font-medium text-[var(--neutral-11)]">
+                <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
                   Disabled
                 </span>
               )}
             </td>
-            <td className="py-3 pr-4 text-xs text-[var(--neutral-11)]">
+            <td className="py-3 pr-4 text-xs text-muted-foreground">
               {endpoint.lastDeliveredAt ? new Date(endpoint.lastDeliveredAt).toLocaleString() : "—"}
             </td>
             <td className="py-3">
@@ -179,7 +179,7 @@ export function WebhooksList({
                   <button
                     type="button"
                     onClick={() => onEdit(endpoint)}
-                    className="text-[var(--blue-9)] hover:underline"
+                    className="text-[hsl(var(--primary))] hover:underline"
                   >
                     Edit
                   </button>
@@ -188,7 +188,7 @@ export function WebhooksList({
                   <button
                     type="button"
                     onClick={() => handleToggle(endpoint)}
-                    className="text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
+                    className="text-muted-foreground hover:text-foreground"
                   >
                     {endpoint.isActive ? "Disable" : "Enable"}
                   </button>
@@ -197,7 +197,7 @@ export function WebhooksList({
                   <button
                     type="button"
                     onClick={() => onViewDeliveries(endpoint.id)}
-                    className="text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
+                    className="text-muted-foreground hover:text-foreground"
                   >
                     View deliveries
                   </button>

@@ -93,11 +93,11 @@ export function ChangeOrganizationNameForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-      <h3 className="text-sm font-medium text-[var(--neutral-12)]">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+      <h3 className="text-sm font-medium text-foreground">
         {t("organizations.settings.name.title")}
       </h3>
-      <p className="mt-1 mb-4 text-sm text-[var(--neutral-11)]">
+      <p className="mt-1 mb-4 text-sm text-muted-foreground">
         {t("organizations.settings.name.description")}
       </p>
 
@@ -110,7 +110,7 @@ export function ChangeOrganizationNameForm({
               <FormItem className="space-y-1.5">
                 <FormLabel
                   htmlFor="organization-name"
-                  className="text-sm font-medium text-[var(--neutral-12)]"
+                  className="text-sm font-medium text-foreground"
                 >
                   {t("organizations.settings.name.label")}
                 </FormLabel>
@@ -146,7 +146,7 @@ export function ChangeOrganizationNameForm({
               type="submit"
               disabled={!canSubmit}
               className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
-              style={{ background: "var(--brand-gradient)" }}
+              style={{ background: "hsl(var(--primary))" }}
             >
               {pending
                 ? t("organizations.settings.name.saving")

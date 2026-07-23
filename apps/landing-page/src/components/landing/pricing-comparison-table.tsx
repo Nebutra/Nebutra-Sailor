@@ -15,17 +15,17 @@ export function PricingComparisonTable() {
 
   return (
     <section
-      className="relative w-full bg-[var(--neutral-1)] py-24 md:py-32"
+      className="relative w-full bg-background py-24 md:py-32"
       aria-labelledby="landing-comparison-title"
     >
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[var(--brand-primary)]">
+          <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[hsl(var(--primary))]">
             {t("badge")}
           </p>
           <h2
             id="landing-comparison-title"
-            className="text-balance text-3xl md:text-4xl lg:text-5xl font-semibold text-[var(--neutral-12)]"
+            className="text-balance text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",
@@ -33,19 +33,19 @@ export function PricingComparisonTable() {
           >
             {t("title")}
           </h2>
-          <p className="mt-4 text-base text-[var(--neutral-11)]">{t("subtitle")}</p>
+          <p className="mt-4 text-base text-muted-foreground">{t("subtitle")}</p>
         </div>
 
-        <div className="mt-16 overflow-x-auto rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+        <div className="mt-16 overflow-x-auto rounded-[var(--radius-2xl)] border border-border bg-background">
           <table
             aria-label={t("ariaTable")}
             className="w-full min-w-[640px] border-collapse text-left text-sm"
           >
-            <thead className="sticky top-0 z-10 bg-[var(--neutral-2)]">
+            <thead className="sticky top-0 z-10 bg-muted">
               <tr>
                 <th
                   scope="col"
-                  className="w-1/3 px-6 py-4 text-xs font-bold uppercase tracking-wider text-[var(--neutral-11)]"
+                  className="w-1/3 px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground"
                 >
                   &nbsp;
                 </th>
@@ -53,7 +53,7 @@ export function PricingComparisonTable() {
                   <th
                     key={plan}
                     scope="col"
-                    className="px-6 py-4 text-center text-sm font-bold text-[var(--neutral-12)]"
+                    className="px-6 py-4 text-center text-sm font-bold text-foreground"
                   >
                     {t(`plan.${plan}`)}
                   </th>
@@ -83,30 +83,24 @@ interface GroupBlockProps {
 function GroupBlock({ group, plans, t }: GroupBlockProps) {
   return (
     <>
-      <tr className="bg-[var(--neutral-2)]/60">
+      <tr className="bg-muted/60">
         <th
           scope="colgroup"
           colSpan={plans.length + 1}
-          className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-[var(--brand-primary)]"
+          className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]"
         >
           {/* biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in COMPARISON_GROUPS; next-intl union is TS2590-complex */}
           {t(`feature.${group.id}.label` as any)}
         </th>
       </tr>
       {group.rows.map((row) => (
-        <tr
-          key={row.id}
-          className="border-t border-[var(--neutral-6)] hover:bg-[var(--neutral-2)]/40"
-        >
-          <th
-            scope="row"
-            className="px-6 py-4 text-left text-sm font-medium text-[var(--neutral-12)]"
-          >
+        <tr key={row.id} className="border-t border-border hover:bg-muted/40">
+          <th scope="row" className="px-6 py-4 text-left text-sm font-medium text-foreground">
             {/* biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in COMPARISON_GROUPS; next-intl union is TS2590-complex */}
             {t(`feature.${group.id}.${row.id}` as any)}
           </th>
           {plans.map((plan) => (
-            <td key={plan} className="px-6 py-4 text-center text-sm text-[var(--neutral-11)]">
+            <td key={plan} className="px-6 py-4 text-center text-sm text-muted-foreground">
               <CellValue value={row.values[plan]} />
             </td>
           ))}
@@ -124,7 +118,7 @@ function CellValue({ value }: { value: ComparisonCell }) {
         role="img"
         aria-label="Included"
         className="inline-flex h-6 w-6 items-center justify-center rounded-full font-semibold text-white"
-        style={{ background: "var(--brand-gradient)" }}
+        style={{ background: "hsl(var(--primary))" }}
       >
         ✓
       </span>
@@ -132,18 +126,13 @@ function CellValue({ value }: { value: ComparisonCell }) {
   }
   if (value === false) {
     return (
-      <span
-        data-cell="dash"
-        role="img"
-        aria-label="Not included"
-        className="text-[var(--neutral-9)]"
-      >
+      <span data-cell="dash" role="img" aria-label="Not included" className="text-muted-foreground">
         —
       </span>
     );
   }
   return (
-    <span data-cell="text" className="font-medium text-[var(--neutral-12)]">
+    <span data-cell="text" className="font-medium text-foreground">
       {value}
     </span>
   );

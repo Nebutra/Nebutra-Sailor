@@ -19,14 +19,14 @@ function FlowNode({
   return (
     <div
       ref={ref}
-      className="relative z-10 flex min-w-28 flex-col items-center gap-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-3 text-center shadow-sm dark:border-white/10 dark:bg-[var(--neutral-2)]"
+      className="relative z-10 flex min-w-28 flex-col items-center gap-2 rounded-lg border border-border bg-background px-3 py-3 text-center shadow-sm dark:border-white/10 dark:bg-muted"
     >
-      <div className="flex size-9 items-center justify-center rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-2)] text-[var(--neutral-12)]">
+      <div className="flex size-9 items-center justify-center rounded-md border border-border bg-muted text-foreground">
         {icon}
       </div>
       <div className="space-y-0.5">
-        <p className="text-xs font-medium text-[var(--neutral-12)]">{label}</p>
-        <p className="text-[11px] text-[var(--neutral-11)]">{detail}</p>
+        <p className="text-xs font-medium text-foreground">{label}</p>
+        <p className="text-[11px] text-muted-foreground">{detail}</p>
       </div>
     </div>
   );
@@ -41,9 +41,9 @@ export function AnimatedBeamDemo() {
   return (
     <div
       ref={containerRef}
-      className="relative flex min-h-[260px] w-full max-w-2xl items-center justify-between overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%),var(--neutral-1)] p-8"
+      className="relative flex min-h-[260px] w-full max-w-2xl items-center justify-between overflow-hidden rounded-lg border border-border bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%),hsl(var(--background))] p-8"
     >
-      <div className="pointer-events-none absolute inset-x-8 top-1/2 h-px bg-[linear-gradient(90deg,transparent,var(--neutral-6),transparent)]" />
+      <div className="pointer-events-none absolute inset-x-8 top-1/2 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--border)),transparent)]" />
       <FlowNode
         ref={fromRef}
         icon={<LogoGithub className="size-4" />}
@@ -52,7 +52,7 @@ export function AnimatedBeamDemo() {
       />
       <FlowNode
         ref={centerRef}
-        icon={<Workflow className="size-4 text-[var(--brand-primary)]" />}
+        icon={<Workflow className="size-4 text-[hsl(var(--primary))]" />}
         label="Nebutra"
         detail="Policy run"
       />

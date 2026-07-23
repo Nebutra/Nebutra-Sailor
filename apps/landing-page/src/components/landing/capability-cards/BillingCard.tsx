@@ -48,7 +48,7 @@ export function BillingCard() {
       {/* Mini Billing Dashboard */}
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="w-full max-w-[400px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
+        className="w-full max-w-[400px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-border bg-background dark:bg-muted transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
       >
         {/* MRR Sparkline Area */}
         <div className="px-5 pt-5 pb-3">
@@ -134,7 +134,7 @@ export function BillingCard() {
           {BILLING_METRICS.map((metric) => (
             <div
               key={metric.label}
-              className="flex flex-col items-center py-4 px-2 bg-background dark:bg-[var(--neutral-2)]"
+              className="flex flex-col items-center py-4 px-2 bg-background dark:bg-muted"
             >
               <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500 mb-1">
                 {metric.label}

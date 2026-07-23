@@ -18,9 +18,9 @@ export default async function SettingsPage() {
         fallbackName={user?.name ?? user?.email ?? ""}
       />
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-        <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">Danger Zone</h2>
-        <p className="mb-4 text-sm text-[var(--neutral-11)]">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+        <h2 className="mb-4 text-base font-semibold text-foreground">Danger Zone</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
           These actions are permanent and cannot be undone.
         </p>
         <button

@@ -18,11 +18,11 @@ export default async function CinemaDemoPage() {
 
   if (!enabled) {
     return (
-      <main className="min-h-screen bg-[color:var(--neutral-2)] p-8 text-[color:var(--neutral-12)]">
+      <main className="min-h-screen bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
             <h1 className="font-semibold text-xl">Cinema — disabled</h1>
-            <p className="mt-2 text-[color:var(--neutral-11)] text-sm">
+            <p className="mt-2 text-muted-foreground text-sm">
               The <code>cinema</code> capability demo is behind a feature flag (
               <code>{FLAGS.CINEMA_DEMO}</code>) and is off by default. Enable it per tenant to run
               the film-director pipeline.
@@ -55,11 +55,11 @@ export default async function CinemaDemoPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[color:var(--neutral-2)] p-8 text-[color:var(--neutral-12)]">
+    <main className="min-h-screen bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
           <h1 className="font-semibold text-2xl">Cinema — film-director pipeline</h1>
-          <p className="mt-1 text-[color:var(--neutral-11)] text-sm">
+          <p className="mt-1 text-muted-foreground text-sm">
             <code>runFilmPipeline</code> with deterministic injected steps — no model, no network.
             Camera tree is acyclic + root-anchored (guarded via <code>@nebutra/graph-model</code>).
           </p>
@@ -67,7 +67,7 @@ export default async function CinemaDemoPage() {
 
         <Card className="p-6">
           <h2 className="font-medium">Script</h2>
-          <p className="mt-2 text-[color:var(--neutral-11)] text-sm">{film.script}</p>
+          <p className="mt-2 text-muted-foreground text-sm">{film.script}</p>
         </Card>
 
         <Card className="p-6">
@@ -75,7 +75,7 @@ export default async function CinemaDemoPage() {
           <ul className="mt-2 space-y-1 text-sm">
             {film.clips.map((c) => (
               <li key={c.uri} className="flex justify-between">
-                <span className="text-[color:var(--neutral-11)]">{c.shot}</span>
+                <span className="text-muted-foreground">{c.shot}</span>
                 <code>{c.uri}</code>
               </li>
             ))}
@@ -84,7 +84,7 @@ export default async function CinemaDemoPage() {
 
         <Card className="p-6">
           <h2 className="font-medium">Camera-continuity tree</h2>
-          <p className="mt-2 text-[color:var(--neutral-11)] text-sm">
+          <p className="mt-2 text-muted-foreground text-sm">
             root: <code>{film.cameraTree.rootId}</code> · cameras:{" "}
             <code>{film.cameraTree.cameras.length}</code>
           </p>

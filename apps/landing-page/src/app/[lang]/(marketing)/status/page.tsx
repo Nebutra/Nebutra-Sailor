@@ -32,15 +32,14 @@ const stateClassName: Record<ServiceState, string> = {
   operational: "bg-[color:var(--green-3)] text-[color:var(--green-11)] ring-[color:var(--green-7)]",
   degraded: "bg-[color:var(--amber-3)] text-[color:var(--amber-11)] ring-[color:var(--amber-7)]",
   outage: "bg-[color:var(--red-3)] text-[color:var(--red-11)] ring-[color:var(--red-7)]",
-  unknown:
-    "bg-[color:var(--neutral-3)] text-[color:var(--neutral-11)] ring-[color:var(--neutral-7)]",
+  unknown: "bg-muted text-muted-foreground ring-[color:hsl(var(--border))]",
 };
 
 const dotClassName: Record<ServiceState, string> = {
   operational: "bg-[color:var(--green-9)]",
   degraded: "bg-[color:var(--amber-9)]",
   outage: "bg-[color:var(--red-9)]",
-  unknown: "bg-[color:var(--neutral-9)]",
+  unknown: "bg-[color:hsl(var(--muted-foreground))]",
 };
 
 const formatter = new Intl.DateTimeFormat("en", {
@@ -74,7 +73,7 @@ export default async function StatusPage({ params }: { params: Promise<{ lang: s
   return (
     <main
       id="main-content"
-      className="min-h-screen overflow-hidden bg-[color:var(--neutral-1)] text-[color:var(--neutral-12)] dark:bg-black"
+      className="min-h-screen overflow-hidden bg-background text-foreground dark:bg-black"
     >
       <Navbar />
 
@@ -100,7 +99,7 @@ async function StatusPageContent() {
       />
       <div
         aria-hidden="true"
-        className="absolute left-1/2 top-28 -z-10 h-[620px] w-[620px] -translate-x-1/2 rounded-full border border-[color:var(--neutral-5)]/40 opacity-50"
+        className="absolute left-1/2 top-28 -z-10 h-[620px] w-[620px] -translate-x-1/2 rounded-full border border-[color:hsl(var(--border))]/40 opacity-50"
       />
 
       <div className="mx-auto max-w-[1120px]">
@@ -116,7 +115,7 @@ async function StatusPageContent() {
               {overall.label}
             </div>
 
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-[color:var(--neutral-9)]">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-[color:hsl(var(--muted-foreground))]">
               Nebutra status
             </p>
             <h1
@@ -128,24 +127,24 @@ async function StatusPageContent() {
             >
               {overall.title}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[color:var(--neutral-10)]">
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
               {overall.description}
             </p>
           </div>
 
-          <div className="rounded-[2rem] border border-[color:var(--neutral-5)] bg-white/75 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
+          <div className="rounded-[2rem] border border-[color:hsl(var(--border))] bg-white/75 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--neutral-9)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:hsl(var(--muted-foreground))]">
                   Last checked
                 </p>
-                <p className="mt-2 text-sm font-medium text-[color:var(--neutral-12)]">
+                <p className="mt-2 text-sm font-medium text-foreground">
                   {formatCheckedAt(snapshot.checkedAt)}
                 </p>
               </div>
               <a
                 href="/status.json"
-                className="rounded-full border border-[color:var(--neutral-5)] px-4 py-2 text-sm font-semibold text-[color:var(--neutral-11)] transition hover:border-[color:var(--neutral-8)] hover:text-[color:var(--neutral-12)]"
+                className="rounded-full border border-[color:hsl(var(--border))] px-4 py-2 text-sm font-semibold text-muted-foreground transition hover:border-border hover:text-foreground"
               >
                 JSON
               </a>
@@ -168,12 +167,12 @@ async function StatusPageContent() {
           {snapshot.services.map((service) => (
             <article
               key={service.id}
-              className="rounded-[1.5rem] border border-[color:var(--neutral-5)] bg-white/70 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.06)]"
+              className="rounded-[1.5rem] border border-[color:hsl(var(--border))] bg-white/70 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.06)]"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="text-xl font-bold tracking-[-0.03em]">{service.name}</h2>
-                  <p className="mt-2 text-sm leading-6 text-[color:var(--neutral-10)]">
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
                     {service.description}
                   </p>
                 </div>
@@ -192,20 +191,20 @@ async function StatusPageContent() {
                 <StatusDatum label="Latency" value={`${service.latencyMs ?? 0} ms`} />
                 <StatusDatum label="Checked" value="live" />
               </dl>
-              <p className="mt-4 text-sm text-[color:var(--neutral-10)]">{service.note}</p>
+              <p className="mt-4 text-sm text-muted-foreground">{service.note}</p>
             </article>
           ))}
         </div>
 
-        <section className="mt-12 rounded-[2rem] border border-[color:var(--neutral-5)] bg-[color:var(--neutral-2)] p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--neutral-9)]">
+        <section className="mt-12 rounded-[2rem] border border-[color:hsl(var(--border))] bg-muted p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[color:hsl(var(--muted-foreground))]">
             Incident history
           </p>
           <div className="mt-5 flex items-start gap-4">
             <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[color:var(--green-9)]" />
             <div>
               <h2 className="text-lg font-bold tracking-[-0.03em]">No active incident record.</h2>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-[color:var(--neutral-10)]">
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
                 This page reports live checks from the public edge. Formal incident posts can be
                 added here when maintenance windows or degraded events need customer-facing notes.
               </p>
@@ -221,7 +220,7 @@ function StatusPageSkeleton() {
   return (
     <section className="px-6 pb-20 pt-32 md:pb-28 md:pt-40">
       <div className="mx-auto max-w-[1120px]">
-        <div className="h-[420px] animate-pulse rounded-[2rem] border border-[color:var(--neutral-5)] bg-[color:var(--neutral-2)]/[0.04]" />
+        <div className="h-[420px] animate-pulse rounded-[2rem] border border-[color:hsl(var(--border))] bg-muted/[0.04]" />
       </div>
     </section>
   );
@@ -229,8 +228,8 @@ function StatusPageSkeleton() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[var(--radius-2xl)] border border-[color:var(--neutral-4)] bg-[color:var(--neutral-1)] p-4 dark:bg-black/30">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--neutral-9)]">
+    <div className="rounded-[var(--radius-2xl)] border border-[color:hsl(var(--muted))] bg-background p-4 dark:bg-black/30">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:hsl(var(--muted-foreground))]">
         {label}
       </p>
       <p className="mt-2 text-2xl font-semibold" style={{ letterSpacing: "var(--tracking-tight)" }}>
@@ -242,11 +241,11 @@ function Metric({ label, value }: { label: string; value: string }) {
 
 function StatusDatum({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[var(--radius-2xl)] bg-[color:var(--neutral-2)] p-3">
-      <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--neutral-9)]">
+    <div className="rounded-[var(--radius-2xl)] bg-muted p-3">
+      <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:hsl(var(--muted-foreground))]">
         {label}
       </dt>
-      <dd className="mt-1 font-semibold text-[color:var(--neutral-12)]">{value}</dd>
+      <dd className="mt-1 font-semibold text-foreground">{value}</dd>
     </div>
   );
 }

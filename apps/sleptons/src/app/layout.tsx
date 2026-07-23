@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-        <body className="bg-[var(--neutral-1)] text-[var(--neutral-12)]">{children}</body>
+        <body className="bg-background text-foreground">{children}</body>
       </html>
     </ClerkProvider>
   );

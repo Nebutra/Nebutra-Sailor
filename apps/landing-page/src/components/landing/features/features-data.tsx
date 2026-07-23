@@ -37,7 +37,7 @@ export const LARGE_FEATURES = [
     categoryKey: "billing_category",
     href: createPublicDocsUrl("payments/overview"),
     icon: CreditCard,
-    color: "var(--blue-9)",
+    color: "hsl(var(--primary))",
     mockup: BillingMockup,
     features: [
       { titleKey: "billing_f1_title", descKey: "billing_f1_desc" },
@@ -85,7 +85,7 @@ export const LARGE_FEATURES = [
     categoryKey: "data_category",
     href: createPublicDocsUrl("database/overview"),
     icon: Database,
-    color: "var(--blue-9)",
+    color: "hsl(var(--primary))",
     mockup: DataMockup,
     features: [
       { titleKey: "data_f1_title", descKey: "data_f1_desc" },

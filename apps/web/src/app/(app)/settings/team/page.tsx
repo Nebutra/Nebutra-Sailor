@@ -24,11 +24,9 @@ export default async function TeamPage() {
     <div className="space-y-8">
       {/* Organization profile — admins only */}
       <PermissionGate require="team:manage">
-        <section className="p-6 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
-          <h2 className="mb-1 text-base font-semibold text-[var(--neutral-12)]">
-            Organization profile
-          </h2>
-          <p className="mb-4 text-sm text-[var(--neutral-11)]">
+        <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
+          <h2 className="mb-1 text-base font-semibold text-foreground">Organization profile</h2>
+          <p className="mb-4 text-sm text-muted-foreground">
             Update your organization's branding and display name.
           </p>
           <div className="space-y-6">
@@ -44,11 +42,9 @@ export default async function TeamPage() {
 
       {/* Invite section — admins only */}
       <PermissionGate require="team:invite">
-        <section className="p-6 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
-          <h2 className="mb-1 text-base font-semibold text-[var(--neutral-12)]">
-            Invite a team member
-          </h2>
-          <p className="mb-4 text-sm text-[var(--neutral-11)]">
+        <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
+          <h2 className="mb-1 text-base font-semibold text-foreground">Invite a team member</h2>
+          <p className="mb-4 text-sm text-muted-foreground">
             Send an invitation to add someone to your organization.
           </p>
           <InviteMemberForm orgId={orgId} />
@@ -56,8 +52,8 @@ export default async function TeamPage() {
       </PermissionGate>
 
       {/* Members list */}
-      <section className="p-6 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
-        <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">Members</h2>
+      <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
+        <h2 className="mb-4 text-base font-semibold text-foreground">Members</h2>
         <TeamMemberList orgId={orgId} />
       </section>
 

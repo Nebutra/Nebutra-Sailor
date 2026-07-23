@@ -35,7 +35,7 @@ export function GrowthAreaChart({ series }: Props) {
   const t = useTranslations("startupOs");
   if (series.length === 0) {
     return (
-      <div className="flex h-48 items-center justify-center text-sm text-[var(--neutral-11)]">
+      <div className="flex h-48 items-center justify-center text-sm text-muted-foreground">
         {t("emptyState.growthChart")}
       </div>
     );
@@ -53,8 +53,8 @@ export function GrowthAreaChart({ series }: Props) {
       <AreaChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
         <defs>
           <linearGradient id="gradSignups" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="var(--brand-primary)" stopOpacity={0.25} />
-            <stop offset="95%" stopColor="var(--brand-primary)" stopOpacity={0} />
+            <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
+            <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="gradActivations" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="var(--brand-accent)" stopOpacity={0.2} />
@@ -65,16 +65,16 @@ export function GrowthAreaChart({ series }: Props) {
             <stop offset="95%" stopColor="var(--brand-tertiary)" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--neutral-6)" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
         <XAxis
           dataKey="day"
-          tick={{ fontSize: 11, fill: "var(--neutral-11)" }}
+          tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
           tickLine={false}
           axisLine={false}
           interval="preserveStartEnd"
         />
         <YAxis
-          tick={{ fontSize: 11, fill: "var(--neutral-11)" }}
+          tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={formatNumber}
@@ -82,23 +82,23 @@ export function GrowthAreaChart({ series }: Props) {
         />
         <Tooltip
           contentStyle={{
-            background: "var(--neutral-1)",
-            border: "1px solid var(--neutral-7)",
+            background: "hsl(var(--background))",
+            border: "1px solid hsl(var(--border))",
             borderRadius: "8px",
             fontSize: 12,
           }}
-          labelStyle={{ color: "var(--neutral-12)", fontWeight: 600 }}
+          labelStyle={{ color: "hsl(var(--foreground))", fontWeight: 600 }}
           formatter={(value: number) => [formatNumber(value), ""]}
         />
         <Legend
-          wrapperStyle={{ fontSize: 12, color: "var(--neutral-11)" }}
+          wrapperStyle={{ fontSize: 12, color: "hsl(var(--muted-foreground))" }}
           iconType="circle"
           iconSize={8}
         />
         <Area
           type="monotone"
           dataKey="Signups"
-          stroke="var(--brand-primary)"
+          stroke="hsl(var(--primary))"
           strokeWidth={2}
           fill="url(#gradSignups)"
           dot={false}

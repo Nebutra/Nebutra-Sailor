@@ -35,12 +35,12 @@ const SCHEMA_ROWS: readonly SchemaRow[] = [
 export function SanityGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[11px] text-[var(--neutral-12)]">Sanity Studio v5</span>
+        <span className="font-mono text-[11px] text-foreground">Sanity Studio v5</span>
         <div className="flex items-center gap-1.5">
           <Badge variant="outline" size="sm">
             Connected
@@ -56,23 +56,23 @@ export function SanityGlyph(_props: SubpackageGlyphProps) {
           return (
             <div
               key={row.name}
-              className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1"
+              className="flex items-center justify-between rounded-[var(--radius-md)] border border-border bg-muted px-2 py-1"
             >
               <div className="flex items-center gap-1.5">
-                <Icon className="h-3 w-3 text-[var(--neutral-11)]" />
-                <span className="font-mono text-[10px] text-[var(--neutral-12)]">{row.name}</span>
-                <span className="text-[10px] text-[var(--neutral-10)]">·</span>
-                <span className="font-mono text-[10px] text-[var(--neutral-11)]">{row.count}</span>
+                <Icon className="h-3 w-3 text-muted-foreground" />
+                <span className="font-mono text-[10px] text-foreground">{row.name}</span>
+                <span className="text-[10px] text-muted-foreground">·</span>
+                <span className="font-mono text-[10px] text-muted-foreground">{row.count}</span>
               </div>
-              <span className="text-[10px] text-[var(--neutral-10)]">{row.meta}</span>
+              <span className="text-[10px] text-muted-foreground">{row.meta}</span>
             </div>
           );
         })}
       </div>
 
       {/* Footer */}
-      <div className="border-t border-[var(--neutral-6)] pt-1.5">
-        <span className="font-mono text-[10px] text-[var(--neutral-10)]">
+      <div className="border-t border-border pt-1.5">
+        <span className="font-mono text-[10px] text-muted-foreground">
           GROQ · webhook ingestion
         </span>
       </div>

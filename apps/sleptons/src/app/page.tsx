@@ -31,22 +31,20 @@ export default async function CommunityPage({ searchParams }: PageProps) {
 
       <main className="mx-auto max-w-[1400px] px-4 py-12 md:px-6">
         <div className="mb-12 text-center">
-          <h1 className="mb-3 text-5xl font-bold tracking-tight text-[var(--neutral-12)]">
-            SLEPTONS
-          </h1>
-          <p className="mb-6 text-lg text-[var(--neutral-11)]">
+          <h1 className="mb-3 text-5xl font-bold tracking-tight text-foreground">SLEPTONS</h1>
+          <p className="mb-6 text-lg text-muted-foreground">
             AI-native founders. One person. Infinite potential.
           </p>
-          <div className="flex justify-center gap-8 text-sm text-[var(--neutral-11)]">
+          <div className="flex justify-center gap-8 text-sm text-muted-foreground">
             <span>
-              <strong className="text-[var(--neutral-12)]">{total}</strong> founders
+              <strong className="text-foreground">{total}</strong> founders
             </span>
           </div>
         </div>
 
-        <Suspense fallback={<div className="text-center text-[var(--neutral-11)]">Loading...</div>}>
+        <Suspense fallback={<div className="text-center text-muted-foreground">Loading...</div>}>
           {members.length === 0 ? (
-            <div className="py-24 text-center text-[var(--neutral-11)]">
+            <div className="py-24 text-center text-muted-foreground">
               No members found. Be the first →
             </div>
           ) : (

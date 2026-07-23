@@ -145,15 +145,15 @@ export function AccessInviteIssuer() {
   }
 
   return (
-    <section className="mt-6 rounded-[var(--radius-3xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4 shadow-sm sm:p-6">
+    <section className="mt-6 rounded-[var(--radius-3xl)] border border-border bg-background p-4 shadow-sm sm:p-6">
       <div>
-        <p className="font-medium text-sm text-[var(--neutral-10)] uppercase tracking-[0.18em]">
+        <p className="font-medium text-sm text-muted-foreground uppercase tracking-[0.18em]">
           Access gate
         </p>
-        <h2 className="mt-2 font-semibold text-2xl text-[var(--neutral-12)]">
+        <h2 className="mt-2 font-semibold text-2xl text-foreground">
           Issue cold-start invite codes
         </h2>
-        <p className="mt-1 max-w-2xl text-sm text-[var(--neutral-11)]">
+        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
           Generate bounded invite codes for invite-only signup. Codes are returned once, then only
           their hashes are stored.
         </p>
@@ -166,16 +166,14 @@ export function AccessInviteIssuer() {
             name="count"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
-                  Count
-                </FormLabel>
+                <FormLabel className="text-xs font-medium text-muted-foreground">Count</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     type="number"
                     min={1}
                     max={25}
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
                   />
                 </FormControl>
                 <FormMessage />
@@ -187,12 +185,10 @@ export function AccessInviteIssuer() {
             name="scope"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
-                  Scope
-                </FormLabel>
+                <FormLabel className="text-xs font-medium text-muted-foreground">Scope</FormLabel>
                 <Select name="scope" value={field.value} onValueChange={field.onChange}>
                   <FormControl>
-                    <SelectTrigger className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]">
+                    <SelectTrigger className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground">
                       <SelectValue />
                     </SelectTrigger>
                   </FormControl>
@@ -210,7 +206,7 @@ export function AccessInviteIssuer() {
             name="tenantId"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                <FormLabel className="text-xs font-medium text-muted-foreground">
                   Tenant ID
                 </FormLabel>
                 <FormControl>
@@ -218,7 +214,7 @@ export function AccessInviteIssuer() {
                     {...field}
                     disabled={scope !== "tenant"}
                     placeholder="org_..."
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] disabled:opacity-50"
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground disabled:opacity-50"
                   />
                 </FormControl>
                 <FormMessage />
@@ -230,7 +226,7 @@ export function AccessInviteIssuer() {
             name="issuedToEmail"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                <FormLabel className="text-xs font-medium text-muted-foreground">
                   Email lock
                 </FormLabel>
                 <FormControl>
@@ -238,7 +234,7 @@ export function AccessInviteIssuer() {
                     {...field}
                     type="email"
                     placeholder="optional"
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
                   />
                 </FormControl>
                 <FormMessage />
@@ -250,14 +246,14 @@ export function AccessInviteIssuer() {
             name="expiresAt"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                <FormLabel className="text-xs font-medium text-muted-foreground">
                   Expires at
                 </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     type="datetime-local"
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
                   />
                 </FormControl>
                 <FormMessage />
@@ -269,12 +265,12 @@ export function AccessInviteIssuer() {
             <button
               type="submit"
               disabled={pending}
-              className="rounded-[var(--radius-lg)] bg-[color:var(--brand-primary)] px-3 py-2 font-medium text-[var(--neutral-1)] text-sm disabled:opacity-50"
+              className="rounded-[var(--radius-lg)] bg-[color:hsl(var(--primary))] px-3 py-2 font-medium text-[hsl(var(--background))] text-sm disabled:opacity-50"
             >
               {pending ? "Issuing..." : "Issue invite codes"}
             </button>
             {message ? (
-              <p role="status" className="text-sm text-[var(--neutral-11)]">
+              <p role="status" className="text-sm text-muted-foreground">
                 {message}
               </p>
             ) : null}
@@ -283,20 +279,20 @@ export function AccessInviteIssuer() {
       </Form>
 
       {issued.length > 0 ? (
-        <div className="mt-4 rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3">
+        <div className="mt-4 rounded-[var(--radius-2xl)] border border-border bg-muted p-3">
           <ul className="space-y-2">
             {issued.map((invite) => (
               <li
                 key={invite.id}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] px-3 py-2"
+                className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-lg)] bg-background px-3 py-2"
               >
                 <div className="min-w-0">
-                  <code className="font-mono text-[var(--neutral-12)] text-sm">{invite.code}</code>
-                  <p className="mt-1 truncate font-mono text-[var(--neutral-10)] text-xs">
+                  <code className="font-mono text-foreground text-sm">{invite.code}</code>
+                  <p className="mt-1 truncate font-mono text-muted-foreground text-xs">
                     {invite.inviteUrl}
                   </p>
                 </div>
-                <span className="shrink-0 text-[var(--neutral-10)] text-xs">
+                <span className="shrink-0 text-muted-foreground text-xs">
                   {invite.scope}
                   {invite.attributionStatus === "dub" ? " · tracked link" : ""}
                   {invite.attributionStatus === "failed" ? " · link tracking failed" : ""}
@@ -310,43 +306,41 @@ export function AccessInviteIssuer() {
         </div>
       ) : null}
 
-      <div className="mt-4 rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3">
+      <div className="mt-4 rounded-[var(--radius-2xl)] border border-border bg-muted p-3">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <h3 className="font-medium text-[var(--neutral-12)] text-sm">Recent access invites</h3>
+          <h3 className="font-medium text-foreground text-sm">Recent access invites</h3>
           <button
             type="button"
             onClick={() => void loadManagedInvites()}
-            className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-2 py-1 text-[var(--neutral-11)] text-xs"
+            className="rounded-[var(--radius-md)] border border-border px-2 py-1 text-muted-foreground text-xs"
           >
             Refresh
           </button>
         </div>
         {managedInvites.length === 0 ? (
-          <p className="text-[var(--neutral-10)] text-sm">{t("emptyState.accessInvites")}</p>
+          <p className="text-muted-foreground text-sm">{t("emptyState.accessInvites")}</p>
         ) : (
           <ul className="space-y-2">
             {managedInvites.map((invite) => (
               <li
                 key={invite.id}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] px-3 py-2"
+                className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-lg)] bg-background px-3 py-2"
               >
                 <div className="min-w-0">
-                  <code className="font-mono text-[var(--neutral-12)] text-sm">
-                    {invite.prefix}
-                  </code>
-                  <p className="mt-1 truncate text-[var(--neutral-10)] text-xs">
+                  <code className="font-mono text-foreground text-sm">{invite.prefix}</code>
+                  <p className="mt-1 truncate text-muted-foreground text-xs">
                     {invite.issuedToEmail ?? "unbound"} · {invite.scope}
                     {invite.tenantId ? ` · ${invite.tenantId}` : ""} · redeemed{" "}
                     {invite.redemptionCount}/{invite.maxRedemptions}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[var(--neutral-10)] text-xs">{invite.status}</span>
+                  <span className="text-muted-foreground text-xs">{invite.status}</span>
                   {invite.status === "active" ? (
                     <button
                       type="button"
                       onClick={() => void revokeInvite(invite.id)}
-                      className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-2 py-1 text-[var(--neutral-11)] text-xs"
+                      className="rounded-[var(--radius-md)] border border-border px-2 py-1 text-muted-foreground text-xs"
                     >
                       Revoke
                     </button>

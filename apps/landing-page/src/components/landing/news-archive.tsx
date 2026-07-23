@@ -54,13 +54,13 @@ export function NewsArchive({
   return (
     <section>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)] sm:text-4xl">
+        <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           {copy.heading}
         </h2>
         <label htmlFor="news-search" className="relative block sm:w-80">
           <span className="sr-only">{copy.search}</span>
           <Search
-            className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--neutral-10)]"
+            className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
             aria-hidden
           />
           <Input
@@ -77,15 +77,15 @@ export function NewsArchive({
       <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,18rem)]">
         <div className="min-w-0">
           {shown.length === 0 ? (
-            <div className="rounded-[var(--radius-md)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] px-6 py-12 text-center">
-              <p className="text-base font-semibold text-[var(--neutral-12)]">{copy.empty}</p>
-              <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.emptyBody}</p>
+            <div className="rounded-[var(--radius-md)] border border-dashed border-border bg-background px-6 py-12 text-center">
+              <p className="text-base font-semibold text-foreground">{copy.empty}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{copy.emptyBody}</p>
             </div>
           ) : (
             <>
               <div
                 aria-hidden
-                className="hidden grid-cols-[7.5rem_minmax(7rem,10rem)_minmax(0,1fr)] gap-6 border-b border-[var(--neutral-7)] pb-3 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--neutral-10)] sm:grid"
+                className="hidden grid-cols-[7.5rem_minmax(7rem,10rem)_minmax(0,1fr)] gap-6 border-b border-border pb-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:grid"
               >
                 <span>{copy.date}</span>
                 <span>{copy.category}</span>
@@ -97,15 +97,11 @@ export function NewsArchive({
                   <li key={item.id}>
                     <Link
                       href={item.href}
-                      className="group grid gap-x-6 gap-y-1 border-b border-[var(--neutral-6)] py-5 [transition-duration:var(--motion-duration-flow)] [transition-property:background-color] [transition-timing-function:var(--ease-out)] hover:bg-[var(--neutral-2)] motion-reduce:transition-none sm:grid-cols-[7.5rem_minmax(7rem,10rem)_minmax(0,1fr)] sm:items-baseline"
+                      className="group grid gap-x-6 gap-y-1 border-b border-border py-5 [transition-duration:var(--motion-duration-flow)] [transition-property:background-color] [transition-timing-function:var(--ease-out)] hover:bg-muted motion-reduce:transition-none sm:grid-cols-[7.5rem_minmax(7rem,10rem)_minmax(0,1fr)] sm:items-baseline"
                     >
-                      <span className="text-sm text-[var(--neutral-10)]">
-                        {item.dateLabel ?? "—"}
-                      </span>
-                      <span className="text-sm text-[var(--neutral-11)]">
-                        {item.category ?? "—"}
-                      </span>
-                      <span className="text-base font-medium leading-snug text-[var(--neutral-12)] [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-[var(--blue-9)] motion-reduce:transition-none">
+                      <span className="text-sm text-muted-foreground">{item.dateLabel ?? "—"}</span>
+                      <span className="text-sm text-muted-foreground">{item.category ?? "—"}</span>
+                      <span className="text-base font-medium leading-snug text-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-[hsl(var(--primary))] motion-reduce:transition-none">
                         {item.title}
                       </span>
                     </Link>
@@ -117,7 +113,7 @@ export function NewsArchive({
                 <button
                   type="button"
                   onClick={() => setVisible((value) => value + PAGE_SIZE)}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-5 py-3.5 text-sm font-medium text-[var(--neutral-11)] [transition-duration:var(--motion-duration-flow)] [transition-property:background-color,color] [transition-timing-function:var(--ease-out)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)] motion-reduce:transition-none"
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-md)] border border-border bg-background px-5 py-3.5 text-sm font-medium text-muted-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:background-color,color] [transition-timing-function:var(--ease-out)] hover:bg-muted hover:text-foreground motion-reduce:transition-none"
                 >
                   {copy.more}
                   <ArrowRight className="size-4 rotate-90" aria-hidden />

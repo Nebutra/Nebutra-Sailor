@@ -129,10 +129,10 @@
      * DO NOT map these to the vibrant Nebutra Cyan (var(--secondary)).
      * Map them to the 12-step Neutral scale for a sleek, Vercel/Linear-like UI.
      */
-  --color-fd-secondary: var(--neutral-3);
-  --color-fd-secondary-foreground: var(--neutral-12);
-  --color-fd-accent: var(--neutral-4);
-  --color-fd-accent-foreground: var(--neutral-12);
+  --color-fd-secondary: hsl(var(--muted));
+  --color-fd-secondary-foreground: hsl(var(--foreground));
+  --color-fd-accent: hsl(var(--muted));
+  --color-fd-accent-foreground: hsl(var(--foreground));
 
   --color-fd-ring: hsl(var(--ring));
 
@@ -186,10 +186,10 @@
   --color-fd-primary-foreground: hsl(var(--primary-foreground));
 
   /* In dark mode, var(--neutral-X) automatically resolves to dark mode inverted values */
-  --color-fd-secondary: var(--neutral-3);
-  --color-fd-secondary-foreground: var(--neutral-12);
-  --color-fd-accent: var(--neutral-4);
-  --color-fd-accent-foreground: var(--neutral-12);
+  --color-fd-secondary: hsl(var(--muted));
+  --color-fd-secondary-foreground: hsl(var(--foreground));
+  --color-fd-accent: hsl(var(--muted));
+  --color-fd-accent-foreground: hsl(var(--foreground));
 
   --color-fd-ring: hsl(var(--ring));
 

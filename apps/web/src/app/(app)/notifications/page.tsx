@@ -22,8 +22,8 @@ export default async function NotificationsPage(): Promise<React.ReactElement> {
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 px-4 py-6 md:px-6 md:py-8">
       <header>
-        <h1 className="text-2xl font-semibold text-[var(--neutral-12)]">{t("title")}</h1>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+        <h1 className="text-2xl font-semibold text-foreground">{t("title")}</h1>
+        <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
       </header>
 
       <NotificationsPageClient />

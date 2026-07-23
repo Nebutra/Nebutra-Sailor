@@ -172,35 +172,31 @@ export function NotificationPreferencesMatrix({
     return (
       <div
         data-testid="notification-preferences-loading"
-        className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+        className="space-y-3 rounded-[var(--radius-lg)] border border-border bg-background p-6"
         aria-busy="true"
         aria-live="polite"
       >
-        <div className="h-5 w-40 animate-pulse rounded bg-[var(--neutral-3)]" />
+        <div className="h-5 w-40 animate-pulse rounded bg-muted" />
         {Array.from({ length: 4 }).map((_, index) => (
-          <div key={index} className="h-12 w-full animate-pulse rounded bg-[var(--neutral-2)]" />
+          <div key={index} className="h-12 w-full animate-pulse rounded bg-muted" />
         ))}
       </div>
     );
   }
 
   return (
-    <section className="space-y-4 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="space-y-4 rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <header className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-base font-semibold text-[var(--neutral-12)]">
+          <h3 className="text-base font-semibold text-foreground">
             {t("settings.notifications.title")}
           </h3>
-          <p className="mt-1 max-w-2xl text-sm text-[var(--neutral-11)]">
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
             {t("settings.notifications.description")}
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <span
-            aria-live="polite"
-            className="text-xs text-[var(--neutral-11)]"
-            data-status={status}
-          >
+          <span aria-live="polite" className="text-xs text-muted-foreground" data-status={status}>
             {status === "saving" ? t("settings.notifications.status.saving") : null}
             {status === "saved" ? t("settings.notifications.status.saved") : null}
             {status === "error" ? t("settings.notifications.status.error") : null}
@@ -208,7 +204,7 @@ export function NotificationPreferencesMatrix({
           <button
             type="button"
             onClick={handleResetAll}
-            className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
+            className="rounded-[var(--radius-md)] border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-muted"
           >
             {t("settings.notifications.actions.resetAll")}
           </button>
@@ -229,13 +225,13 @@ export function NotificationPreferencesMatrix({
         className="hidden gap-3 px-4 md:grid md:grid-cols-[2fr_repeat(var(--channel-count),minmax(0,1fr))]"
         style={{ ["--channel-count" as string]: visibleChannelIds.length }}
       >
-        <span className="text-xs font-semibold uppercase tracking-wide text-[var(--neutral-10)]">
+        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {/* spacer for event-type column */}
         </span>
         {visibleChannelIds.map((channelId) => (
           <span
             key={channelId}
-            className="text-center text-xs font-semibold uppercase tracking-wide text-[var(--neutral-10)]"
+            className="text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground"
           >
             {channelLabels[channelId]}
           </span>

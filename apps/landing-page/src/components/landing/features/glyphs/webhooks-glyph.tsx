@@ -16,13 +16,13 @@ import type { SubpackageGlyphProps } from "./types";
 export function WebhooksGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Endpoint URL */}
       <div className="flex items-center gap-2">
-        <Connection className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" aria-hidden="true" />
-        <span className="truncate font-mono text-[11px] text-[var(--neutral-12)]">
+        <Connection className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+        <span className="truncate font-mono text-[11px] text-foreground">
           https://hooks.app.com/v1/billing
         </span>
       </div>
@@ -94,7 +94,7 @@ function DeliveryRow({
       <Badge variant={codeVariant} size="sm" className="font-mono text-[10px] tabular-nums">
         {code}
       </Badge>
-      <span className="truncate font-mono text-[11px] text-[var(--neutral-12)]">{event}</span>
+      <span className="truncate font-mono text-[11px] text-foreground">{event}</span>
       <div className="ml-auto flex shrink-0 items-center gap-1.5">
         {retrying && <StatusDot state="BUILDING" decorative />}
         <StatusBadge

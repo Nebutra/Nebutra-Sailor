@@ -89,15 +89,15 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
     return (
       <section
         aria-live="polite"
-        className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+        className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
       >
-        <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("successTitle")}</h3>
-        <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("successDescription")}</p>
+        <h3 className="text-sm font-medium text-foreground">{t("successTitle")}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{t("successDescription")}</p>
         <div className="mt-5">
           <Link
             href="/sign-in"
             onClick={() => router.push("/sign-in")}
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
           >
             {t("signInCta")}
           </Link>
@@ -107,10 +107,10 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="mb-5">
-        <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+        <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
       </div>
 
       {errorMessage && (
@@ -130,7 +130,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
             name="newPassword"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("newPasswordLabel")}
                 </FormLabel>
                 <FormControl>
@@ -151,7 +151,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("confirmPasswordLabel")}
                 </FormLabel>
                 <FormControl>

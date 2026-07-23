@@ -36,11 +36,11 @@ export function LoginSuccessHandoff({ redirectTo = "/" }: LoginSuccessHandoffPro
   return (
     <section
       aria-live="polite"
-      className="relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
+      className="relative overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-sm"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--blue-9),transparent)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--primary)),transparent)]"
       />
 
       <div className="flex items-start gap-4">
@@ -53,13 +53,13 @@ export function LoginSuccessHandoff({ redirectTo = "/" }: LoginSuccessHandoffPro
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-medium uppercase tracking-normal text-[var(--neutral-10)]">
+          <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
             {t("eyebrow")}
           </p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-normal text-[var(--neutral-12)]">
+          <h1 className="mt-2 text-2xl font-semibold tracking-normal text-foreground">
             {t("title")}
           </h1>
-          <p className="mt-3 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">{t("description")}</p>
         </div>
       </div>
 
@@ -68,16 +68,16 @@ export function LoginSuccessHandoff({ redirectTo = "/" }: LoginSuccessHandoffPro
         <StatusRow icon={Key} label={t("workspace")} state={t("preparing")} muted />
       </div>
 
-      <div className="mt-6 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-3">
+      <div className="mt-6 rounded-[var(--radius-md)] border border-border bg-muted p-3">
         <div className="mb-2 flex items-center justify-between gap-3 text-xs">
-          <span className="inline-flex items-center gap-1.5 font-medium text-[var(--neutral-11)]">
+          <span className="inline-flex items-center gap-1.5 font-medium text-muted-foreground">
             <Clock className="h-3.5 w-3.5" aria-hidden />
             {t("redirecting", { seconds: secondsRemaining })}
           </span>
-          <span className="text-[var(--neutral-9)]">{t("secureHandoff")}</span>
+          <span className="text-muted-foreground">{t("secureHandoff")}</span>
         </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-[var(--neutral-5)]">
-          <div className="h-full w-full origin-left animate-[login-success-progress_4s_linear_forwards] rounded-full bg-[var(--neutral-12)]" />
+        <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+          <div className="h-full w-full origin-left animate-[login-success-progress_4s_linear_forwards] rounded-full bg-[hsl(var(--foreground))]" />
         </div>
       </div>
 
@@ -105,18 +105,18 @@ interface StatusRowProps {
 
 function StatusRow({ icon: Icon, label, state, muted = false }: StatusRowProps) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-3 py-2.5">
-      <span className="inline-flex min-w-0 items-center gap-2 text-sm font-medium text-[var(--neutral-11)]">
+    <div className="flex items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border bg-muted px-3 py-2.5">
+      <span className="inline-flex min-w-0 items-center gap-2 text-sm font-medium text-muted-foreground">
         <Icon
           className={cn(
             "h-4 w-4 shrink-0",
-            muted ? "text-[var(--neutral-9)]" : "text-[color:var(--status-success)]",
+            muted ? "text-muted-foreground" : "text-[color:var(--status-success)]",
           )}
           aria-hidden
         />
         <span className="truncate">{label}</span>
       </span>
-      <span className="shrink-0 text-xs font-medium text-[var(--neutral-10)]">{state}</span>
+      <span className="shrink-0 text-xs font-medium text-muted-foreground">{state}</span>
     </div>
   );
 }

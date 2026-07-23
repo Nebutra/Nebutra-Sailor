@@ -9,7 +9,7 @@ export function SidebarDemo() {
       {/* Mock Sidebar */}
       <div className="w-64 flex h-full flex-col border-r bg-muted/30">
         <div className="p-4 gap-2 flex items-center border-b">
-          <LogomarkSVG width={24} height={24} className="text-[var(--brand-primary)]" />
+          <LogomarkSVG width={24} height={24} className="text-[hsl(var(--primary))]" />
           <span className="font-semibold text-sm">Nebutra App</span>
         </div>
 

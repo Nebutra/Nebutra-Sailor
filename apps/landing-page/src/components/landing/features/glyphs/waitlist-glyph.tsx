@@ -39,22 +39,20 @@ export function WaitlistGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Position + progress header */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-baseline gap-1.5">
-            <Users className="h-3 w-3 self-center text-[var(--neutral-10)]" />
-            <span className="text-3xl font-semibold tabular-nums leading-none text-[var(--neutral-12)]">
+            <Users className="h-3 w-3 self-center text-muted-foreground" />
+            <span className="text-3xl font-semibold tabular-nums leading-none text-foreground">
               #{POSITION}
             </span>
-            <span className="font-mono text-[10px] text-[var(--neutral-10)]">
-              {copy.yourPosition}
-            </span>
+            <span className="font-mono text-[10px] text-muted-foreground">{copy.yourPosition}</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="shrink-0 font-mono text-[10px] tabular-nums text-[var(--neutral-11)]">
+          <span className="shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground">
             {POSITION} {copy.of} {TOTAL.toLocaleString()}
           </span>
           <div className="flex-1">
@@ -72,10 +70,10 @@ export function WaitlistGlyph({ locale }: SubpackageGlyphProps) {
           {copy.rows.map((row) => (
             <div
               key={row.email}
-              className="flex items-center justify-between font-mono text-[10px] text-[var(--neutral-11)]"
+              className="flex items-center justify-between font-mono text-[10px] text-muted-foreground"
             >
-              <span className="truncate text-[var(--neutral-12)]">{row.email}</span>
-              <span className="flex shrink-0 items-center gap-1 text-[var(--neutral-10)]">
+              <span className="truncate text-foreground">{row.email}</span>
+              <span className="flex shrink-0 items-center gap-1 text-muted-foreground">
                 <Clock className="h-2.5 w-2.5" />
                 {row.ago}
               </span>

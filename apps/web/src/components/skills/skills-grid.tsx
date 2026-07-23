@@ -131,7 +131,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
           <div className="flex items-center gap-3">
             <div
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
-              style={{ background: "var(--brand-gradient)" }}
+              style={{ background: "hsl(var(--primary))" }}
             >
               <Plus className="h-4 w-4" />
             </div>

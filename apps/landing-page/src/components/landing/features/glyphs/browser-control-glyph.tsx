@@ -31,17 +31,17 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-2.5 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-2.5 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Browser chrome */}
-        <div className="flex items-center gap-2 border-b border-[var(--neutral-5)] pb-1.5">
+        <div className="flex items-center gap-2 border-b border-border pb-1.5">
           <div className="flex items-center gap-1">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--red-9)]" />
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--amber-9)]" />
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-9)]" />
           </div>
-          <div className="flex flex-1 items-center gap-1 rounded-[var(--radius-sm)] bg-[var(--neutral-2)] px-1.5 py-0.5">
-            <Globe className="h-2.5 w-2.5 text-[var(--neutral-10)]" />
-            <span className="font-mono text-[9px] text-[var(--neutral-11)]">{copy.url}</span>
+          <div className="flex flex-1 items-center gap-1 rounded-[var(--radius-sm)] bg-muted px-1.5 py-0.5">
+            <Globe className="h-2.5 w-2.5 text-muted-foreground" />
+            <span className="font-mono text-[9px] text-muted-foreground">{copy.url}</span>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
                   <Clock className="h-2.5 w-2.5 animate-pulse" />
                 )}
               </Badge>
-              <span className="flex-1 truncate font-mono text-[9px] text-[var(--neutral-12)]">
+              <span className="flex-1 truncate font-mono text-[9px] text-foreground">
                 {action.label}
               </span>
             </div>
@@ -68,8 +68,8 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-[var(--neutral-5)] pt-1">
-          <span className="flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-10)]">
+        <div className="flex items-center justify-between border-t border-border pt-1">
+          <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
             <ArrowRight className="h-2.5 w-2.5" />
             {copy.footer}
           </span>

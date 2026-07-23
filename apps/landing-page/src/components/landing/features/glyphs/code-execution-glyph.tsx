@@ -20,12 +20,12 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
 
   return (
     <div
-      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-muted p-3"
       style={{ height: 160 }}
     >
       {/* Top-right runtime badge */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-[10px] font-medium text-[var(--neutral-11)]">
+        <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
           <Code className="h-3 w-3" />
           <span className="font-mono">sandbox.runCommand</span>
         </div>
@@ -38,22 +38,22 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
       {/* Main row: code → arrow → result */}
       <div className="flex flex-1 items-center gap-2">
         {/* Code snippet */}
-        <div className="flex-1 self-stretch rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2">
-          <pre className="font-mono text-[9px] leading-[1.45] text-[var(--neutral-12)]">
+        <div className="flex-1 self-stretch rounded-[var(--radius-md)] border border-border bg-background p-2">
+          <pre className="font-mono text-[9px] leading-[1.45] text-foreground">
             <code>
-              <span className="text-[var(--neutral-10)]">const</span>
+              <span className="text-muted-foreground">const</span>
               {" total = orders\n"}
               {"  ."}
-              <span className="text-[color:var(--blue-9)]">filter</span>
+              <span className="text-[color:hsl(var(--primary))]">filter</span>
               {"(o "}
-              <span className="text-[var(--neutral-10)]">{"=>"}</span>
+              <span className="text-muted-foreground">{"=>"}</span>
               {" o.status === "}
               <span className="text-[color:var(--cyan-11)]">{"'paid'"}</span>
               {")\n"}
               {"  ."}
-              <span className="text-[color:var(--blue-9)]">reduce</span>
+              <span className="text-[color:hsl(var(--primary))]">reduce</span>
               {"((s, o) "}
-              <span className="text-[var(--neutral-10)]">{"=>"}</span>
+              <span className="text-muted-foreground">{"=>"}</span>
               {" s + o.amount, "}
               <span className="text-[color:var(--cyan-11)]">0</span>
               {")"}
@@ -62,22 +62,22 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
         </div>
 
         {/* Arrow */}
-        <ArrowRight className="h-4 w-4 shrink-0 text-[var(--neutral-10)]" />
+        <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
 
         {/* Result panel */}
-        <div className="flex w-[110px] shrink-0 flex-col justify-center gap-1 self-stretch rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2">
+        <div className="flex w-[110px] shrink-0 flex-col justify-center gap-1 self-stretch rounded-[var(--radius-md)] border border-border bg-background p-2">
           <div className="flex items-center gap-1">
             <Check className="h-3 w-3 text-emerald-500" />
             <span className="font-mono text-[10px] font-semibold text-emerald-500">
               {"→ 12,840"}
             </span>
           </div>
-          <span className="font-mono text-[8.5px] text-[var(--neutral-10)]">{executedLabel}</span>
+          <span className="font-mono text-[8.5px] text-muted-foreground">{executedLabel}</span>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="font-mono text-[9px] text-[var(--neutral-10)]">{footerLabel}</div>
+      <div className="font-mono text-[9px] text-muted-foreground">{footerLabel}</div>
     </div>
   );
 };

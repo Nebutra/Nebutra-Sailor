@@ -22,9 +22,7 @@ function ThemeOption({
       type="button"
       className={cn(
         "relative flex size-11 cursor-pointer items-center justify-center rounded-full transition-[background-color,color,box-shadow,transform] [&_svg]:size-4",
-        isActive
-          ? "text-[var(--neutral-12)]"
-          : "text-[var(--neutral-9)] hover:text-[var(--neutral-12)]",
+        isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
       )}
       role="radio"
       aria-checked={isActive}
@@ -32,9 +30,7 @@ function ThemeOption({
       onClick={() => onClick(value)}
     >
       {icon}
-      {isActive && (
-        <span className="absolute inset-0 rounded-full border border-[var(--neutral-6)]" />
-      )}
+      {isActive && <span className="absolute inset-0 rounded-full border border-border" />}
     </button>
   );
 }
@@ -52,7 +48,7 @@ function ThemeSwitcher() {
   }
   return (
     <div
-      className="inline-flex items-center overflow-hidden rounded-full bg-[var(--neutral-1)] ring-1 ring-[var(--neutral-6)] ring-inset"
+      className="inline-flex items-center overflow-hidden rounded-full bg-background ring-1 ring-[hsl(var(--border))] ring-inset"
       role="radiogroup"
       aria-label="Select color theme"
     >

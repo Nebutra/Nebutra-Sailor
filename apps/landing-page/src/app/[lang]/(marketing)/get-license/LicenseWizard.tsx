@@ -99,7 +99,7 @@ const WIZARD_STEP_MARKERS = [
 ] as const;
 
 const focusVisibleClass =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)] focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 interface LicenseWizardProps {
   redirectToCheckout?: (url: string) => void;
@@ -136,12 +136,12 @@ const RoleCard = ({
     onClick={onClick}
     className={`flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border-2 p-4 transition-colors duration-200 ${focusVisibleClass} ${
       selected
-        ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
-        : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
+        ? "border-[hsl(var(--primary))] bg-[var(--blue-3)]"
+        : "border-border hover:border-[hsl(var(--muted-foreground))]"
     }`}
   >
-    <Icon className="h-6 w-6 text-[var(--neutral-12)]" />
-    <span className="text-center text-sm font-medium text-[var(--neutral-12)]">{label}</span>
+    <Icon className="h-6 w-6 text-foreground" />
+    <span className="text-center text-sm font-medium text-foreground">{label}</span>
   </button>
 );
 
@@ -163,12 +163,12 @@ const UseCaseCard = ({
     onClick={onClick}
     className={`flex flex-col gap-2 rounded-[var(--radius-xl)] border-2 p-5 text-left transition-colors duration-200 ${focusVisibleClass} ${
       selected
-        ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
-        : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
+        ? "border-[hsl(var(--primary))] bg-[var(--blue-3)]"
+        : "border-border hover:border-[hsl(var(--muted-foreground))]"
     }`}
   >
-    <p className="font-semibold text-[var(--neutral-12)]">{label}</p>
-    <p className="text-sm text-[var(--neutral-11)]">{description}</p>
+    <p className="font-semibold text-foreground">{label}</p>
+    <p className="text-sm text-muted-foreground">{description}</p>
   </button>
 );
 
@@ -197,29 +197,29 @@ const LicenseTierCard = ({
     aria-pressed={selected}
     onClick={onClick}
     className={`flex flex-col gap-4 rounded-[var(--radius-xl)] border-2 p-6 text-left transition-colors duration-200 ${focusVisibleClass} ${
-      highlighted ? "ring-2 ring-[var(--brand-primary)] ring-offset-2" : ""
+      highlighted ? "ring-2 ring-[hsl(var(--primary))] ring-offset-2" : ""
     } ${
       selected
-        ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
-        : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
+        ? "border-[hsl(var(--primary))] bg-[var(--blue-3)]"
+        : "border-border hover:border-[hsl(var(--muted-foreground))]"
     }`}
   >
     <div>
-      <p className="font-semibold text-[var(--neutral-12)]">{title}</p>
-      {price && <p className="text-lg font-bold text-[var(--blue-9)]">{price}</p>}
+      <p className="font-semibold text-foreground">{title}</p>
+      {price && <p className="text-lg font-bold text-[hsl(var(--primary))]">{price}</p>}
     </div>
-    <p className="text-sm text-[var(--neutral-11)]">{description}</p>
+    <p className="text-sm text-muted-foreground">{description}</p>
     {features.length > 0 && (
-      <ul className="space-y-2 text-sm text-[var(--neutral-11)]">
+      <ul className="space-y-2 text-sm text-muted-foreground">
         {features.map((feature) => (
           <li key={feature} className="flex items-start gap-2">
-            <span className="mt-1 text-[var(--blue-9)]">•</span>
+            <span className="mt-1 text-[hsl(var(--primary))]">•</span>
             <span>{feature}</span>
           </li>
         ))}
       </ul>
     )}
-    {cta && <p className="text-xs font-medium text-[var(--blue-9)]">{cta}</p>}
+    {cta && <p className="text-xs font-medium text-[hsl(var(--primary))]">{cta}</p>}
   </button>
 );
 
@@ -237,7 +237,7 @@ const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSt
         <div
           key={step.id}
           className={`h-2 flex-1 rounded-[var(--radius-full)] transition-colors duration-300 ${
-            step.value <= currentStep ? "bg-[var(--blue-9)]" : "bg-[var(--neutral-7)]"
+            step.value <= currentStep ? "bg-[hsl(var(--primary))]" : "bg-[hsl(var(--border))]"
           }`}
         />
       ))}
@@ -440,17 +440,15 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl font-bold text-[var(--neutral-12)]">
-                  Tell us about yourself
-                </h1>
-                <p className="text-[var(--neutral-11)]">
+                <h1 className="mb-2 text-3xl font-bold text-foreground">Tell us about yourself</h1>
+                <p className="text-muted-foreground">
                   Help us understand your role and team size to find the perfect license for you.
                 </p>
               </div>
 
               {/* Role field */}
               <fieldset>
-                <legend className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
+                <legend className="mb-4 block text-sm font-semibold text-foreground">
                   What's your role?
                 </legend>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -489,7 +487,7 @@ export function LicenseWizard({
 
               {/* Team size field */}
               <fieldset>
-                <legend className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
+                <legend className="mb-4 block text-sm font-semibold text-foreground">
                   How big is your team?
                 </legend>
                 <div className="space-y-3">
@@ -504,7 +502,7 @@ export function LicenseWizard({
                         onChange={() => setStep1((prev) => ({ ...prev, teamSize: size }))}
                         className="h-4 w-4"
                       />
-                      <span className="text-[var(--neutral-12)]">
+                      <span className="text-foreground">
                         {size === "1"
                           ? "Just me (1)"
                           : size === "50+"
@@ -525,7 +523,7 @@ export function LicenseWizard({
                   className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${focusVisibleClass} ${
                     isStep1Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
-                  style={{ background: isStep1Valid ? "var(--brand-gradient)" : undefined }}
+                  style={{ background: isStep1Valid ? "hsl(var(--primary))" : undefined }}
                 >
                   Next
                   <ChevronRight className="h-4 w-4" />
@@ -540,15 +538,13 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl font-bold text-[var(--neutral-12)]">
-                  What are you building?
-                </h1>
-                <p className="text-[var(--neutral-11)]">Tell us about your project and industry.</p>
+                <h1 className="mb-2 text-3xl font-bold text-foreground">What are you building?</h1>
+                <p className="text-muted-foreground">Tell us about your project and industry.</p>
               </div>
 
               {/* Use case field */}
               <fieldset>
-                <legend className="mb-4 block text-sm font-semibold text-[var(--neutral-12)]">
+                <legend className="mb-4 block text-sm font-semibold text-foreground">
                   What's your primary use case?
                 </legend>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -595,7 +591,7 @@ export function LicenseWizard({
               <div>
                 <label
                   htmlFor="license-building-what"
-                  className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                  className="mb-2 block text-sm font-semibold text-foreground"
                 >
                   Describe what you're building (optional)
                 </label>
@@ -613,7 +609,7 @@ export function LicenseWizard({
                   placeholder="e.g. A financial management platform for freelancers…"
                   rows={4}
                 />
-                <p className="mt-1 text-xs text-[var(--neutral-11)]">
+                <p className="mt-1 text-xs text-muted-foreground">
                   {step2.buildingWhat.length}/500 characters
                 </p>
               </div>
@@ -622,7 +618,7 @@ export function LicenseWizard({
               <div>
                 <label
                   htmlFor="license-industry"
-                  className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                  className="mb-2 block text-sm font-semibold text-foreground"
                 >
                   Industry (optional)
                 </label>
@@ -642,7 +638,7 @@ export function LicenseWizard({
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] ${focusVisibleClass}`}
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-border px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted ${focusVisibleClass}`}
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Back
@@ -654,7 +650,7 @@ export function LicenseWizard({
                   className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${focusVisibleClass} ${
                     isStep2Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
-                  style={{ background: isStep2Valid ? "var(--brand-gradient)" : undefined }}
+                  style={{ background: isStep2Valid ? "hsl(var(--primary))" : undefined }}
                 >
                   Next
                   <ChevronRight className="h-4 w-4" />
@@ -669,10 +665,8 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl font-bold text-[var(--neutral-12)]">
-                  Choose your license
-                </h1>
-                <p className="text-[var(--neutral-11)]">
+                <h1 className="mb-2 text-3xl font-bold text-foreground">Choose your license</h1>
+                <p className="text-muted-foreground">
                   Based on your team size, we recommend the license below.
                 </p>
               </div>
@@ -681,8 +675,8 @@ export function LicenseWizard({
               <div>
                 {step1.teamSize === "1" && (
                   <div className="space-y-4">
-                    <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4">
-                      <p className="text-sm text-[var(--neutral-11)]">
+                    <div className="rounded-[var(--radius-lg)] bg-muted p-4">
+                      <p className="text-sm text-muted-foreground">
                         If you operate as a single-seat business, you qualify for the Independent
                         Developer License below (≤ 1 FTE & &lt; $1M ARR, free).
                       </p>
@@ -723,7 +717,7 @@ export function LicenseWizard({
                   step1.teamSize === "21-50") && (
                   <div className="space-y-4">
                     <div className="rounded-[var(--radius-lg)] border border-[var(--status-warning)] bg-[color-mix(in_srgb,var(--status-warning)_12%,transparent)] p-4">
-                      <p className="text-sm text-[var(--neutral-12)] font-medium">
+                      <p className="text-sm text-foreground font-medium">
                         Your team is too large for a free license. Let's find the right commercial
                         plan.
                       </p>
@@ -748,7 +742,7 @@ export function LicenseWizard({
                 {step1.teamSize === "50+" && (
                   <div className="space-y-4">
                     <div className="rounded-[var(--radius-lg)] border border-[var(--status-info)] bg-[color-mix(in_srgb,var(--status-info)_10%,transparent)] p-4">
-                      <p className="text-sm text-[var(--neutral-12)] font-medium">
+                      <p className="text-sm text-foreground font-medium">
                         For enterprises with 50+ people, let's connect with our sales team to find
                         the perfect fit.
                       </p>
@@ -776,7 +770,7 @@ export function LicenseWizard({
                 <div className="space-y-4">
                   {/* Looking for — seeds community matching */}
                   <div>
-                    <p className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
+                    <p className="mb-3 text-sm font-semibold text-foreground">
                       What do you need most right now? (optional)
                     </p>
                     <div className="grid grid-cols-2 gap-2">
@@ -801,7 +795,7 @@ export function LicenseWizard({
                             }}
                             className="h-4 w-4 rounded-[var(--radius-sm)]"
                           />
-                          <span className="text-sm text-[var(--neutral-12)]">{opt.label}</span>
+                          <span className="text-sm text-foreground">{opt.label}</span>
                         </label>
                       ))}
                     </div>
@@ -810,7 +804,7 @@ export function LicenseWizard({
                   <div>
                     <label
                       htmlFor="license-github-handle"
-                      className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                      className="mb-2 block text-sm font-semibold text-foreground"
                     >
                       GitHub username (optional)
                     </label>
@@ -831,7 +825,7 @@ export function LicenseWizard({
                   <div>
                     <label
                       htmlFor="license-twitter-handle"
-                      className="mb-2 block text-sm font-semibold text-[var(--neutral-12)]"
+                      className="mb-2 block text-sm font-semibold text-foreground"
                     >
                       Twitter/X handle (optional)
                     </label>
@@ -852,7 +846,7 @@ export function LicenseWizard({
                   <div>
                     <label
                       htmlFor="license-referral-source"
-                      className="mb-3 block text-sm font-semibold text-[var(--neutral-12)]"
+                      className="mb-3 block text-sm font-semibold text-foreground"
                     >
                       How did you hear about us? *
                     </label>
@@ -896,7 +890,7 @@ export function LicenseWizard({
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] ${focusVisibleClass}`}
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-border px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted ${focusVisibleClass}`}
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Back
@@ -911,7 +905,7 @@ export function LicenseWizard({
                       : "cursor-not-allowed opacity-50"
                   }`}
                   style={{
-                    background: isStep3Valid && !isSubmitting ? "var(--brand-gradient)" : undefined,
+                    background: isStep3Valid && !isSubmitting ? "hsl(var(--primary))" : undefined,
                   }}
                 >
                   {isSubmitting ? "Creating…" : "Get License"}
@@ -927,30 +921,26 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="flex flex-col items-center gap-8 py-12 text-center">
               <div className="flex h-20 w-20 items-center justify-center rounded-[var(--radius-full)] bg-[var(--blue-3)]">
-                <CheckCircle2 className="h-12 w-12 text-[var(--blue-9)]" />
+                <CheckCircle2 className="h-12 w-12 text-[hsl(var(--primary))]" />
               </div>
 
               <div>
-                <h1 className="mb-3 text-3xl font-bold text-[var(--neutral-12)]">
-                  License activated
-                </h1>
-                <p className="text-lg text-[var(--neutral-11)]">
+                <h1 className="mb-3 text-3xl font-bold text-foreground">License activated</h1>
+                <p className="text-lg text-muted-foreground">
                   {step3.tier === "INDIVIDUAL" || step3.tier === "OPC"
                     ? "Your free license is active."
                     : "Your commercial license is ready. Let's build something remarkable."}
                 </p>
-                <p className="mt-2 text-sm text-[var(--neutral-11)]">
+                <p className="mt-2 text-sm text-muted-foreground">
                   Redirecting you to the Nebutra community…
                 </p>
               </div>
 
               {/* License key */}
               <div className="w-full max-w-md">
-                <p className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
-                  Your License Key
-                </p>
-                <div className="relative flex items-center rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-4 py-3">
-                  <code className="flex-1 font-mono text-sm text-[var(--neutral-12)]">
+                <p className="mb-3 text-sm font-semibold text-foreground">Your License Key</p>
+                <div className="relative flex items-center rounded-[var(--radius-lg)] bg-muted px-4 py-3">
+                  <code className="flex-1 font-mono text-sm text-foreground">
                     {step4.licenseKey}
                   </code>
                   <button
@@ -958,7 +948,7 @@ export function LicenseWizard({
                     onClick={() => {
                       navigator.clipboard.writeText(step4.licenseKey);
                     }}
-                    className="ml-2 text-xs font-medium text-[var(--blue-9)] hover:underline"
+                    className="ml-2 text-xs font-medium text-[hsl(var(--primary))] hover:underline"
                   >
                     Copy
                   </button>
@@ -970,13 +960,13 @@ export function LicenseWizard({
                 <a
                   href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002"}?welcome=true`}
                   className="rounded-[var(--radius-lg)] px-6 py-3 text-center font-semibold text-white transition-opacity hover:opacity-90"
-                  style={{ background: "var(--brand-gradient)" }}
+                  style={{ background: "hsl(var(--primary))" }}
                 >
                   Explore Nebutra Community →
                 </a>
                 <a
                   href="https://app.nebutra.com/dashboard"
-                  className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 text-center font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="rounded-[var(--radius-lg)] border border-border px-6 py-3 text-center font-semibold text-foreground transition-colors hover:bg-muted"
                 >
                   Go to Console
                 </a>

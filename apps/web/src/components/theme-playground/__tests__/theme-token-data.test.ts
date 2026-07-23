@@ -71,11 +71,11 @@ describe("getPreviewStyleFromTokenSet", () => {
     it("sets --color-primary from token set", () => {
       const tokenSet: ThemeTokenSet = {
         color: {
-          primary: { $value: "#0033fe", $type: "color" },
+          primary: { $value: "hsl(var(--primary))", $type: "color" },
         },
       };
       const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--color-primary"]).toBe("#0033fe");
+      expect(style["--color-primary"]).toBe("hsl(var(--primary))");
     });
 
     it("sets --color-accent from token set", () => {

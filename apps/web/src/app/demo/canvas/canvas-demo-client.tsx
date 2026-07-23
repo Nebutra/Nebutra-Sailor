@@ -34,7 +34,7 @@ export function CanvasDemoClient() {
   return (
     <div className="flex flex-col gap-4">
       <ReelCanvas graph={graph} onChange={setGraph} />
-      <p className="text-[color:var(--neutral-11)] text-sm">
+      <p className="text-muted-foreground text-sm">
         Drag nodes, connect handles (cycles are rejected), delete to mutate. Live graph:{" "}
         <code>{graph.nodes.length}</code> nodes, <code>{graph.edges.length}</code> edges.
       </p>

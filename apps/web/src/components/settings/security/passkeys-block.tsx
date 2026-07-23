@@ -245,17 +245,17 @@ export function PasskeysBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
-            <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-            <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+            <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
           </div>
-          <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+          <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {t("unavailableBadge")}
           </span>
         </div>
-        <p className="text-sm text-[var(--neutral-11)]">{capability.reason}</p>
+        <p className="text-sm text-muted-foreground">{capability.reason}</p>
       </section>
     );
   }
@@ -301,13 +301,13 @@ export function PasskeysBlock({
   const errorMessage = errorKey ? tErrors(errorKey) : null;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+          <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+          <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
         </div>
-        <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+        <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
           Available
         </span>
       </div>
@@ -319,21 +319,21 @@ export function PasskeysBlock({
       )}
 
       {state.statusMessage && (
-        <p className="mb-4 text-sm text-[var(--neutral-11)]" role="status">
+        <p className="mb-4 text-sm text-muted-foreground" role="status">
           {state.statusMessage}
         </p>
       )}
 
       {listLoaded && passkeys.length === 0 ? (
-        <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
-          <p className="text-sm text-[var(--neutral-11)]">{t("empty")}</p>
+        <div className="rounded-[var(--radius-lg)] border border-dashed border-border bg-muted p-4">
+          <p className="text-sm text-muted-foreground">{t("empty")}</p>
         </div>
       ) : (
         <ul className="space-y-3">
           {passkeys.map((passkey) => (
             <li
               key={passkey.id}
-              className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-border p-4 md:flex-row md:items-center md:justify-between"
             >
               {state.renamingId === passkey.id ? (
                 <form
@@ -341,7 +341,7 @@ export function PasskeysBlock({
                   onSubmit={(event) => handleRename(event, passkey.id)}
                 >
                   <label
-                    className="text-sm font-medium text-[var(--neutral-12)]"
+                    className="text-sm font-medium text-foreground"
                     htmlFor={`passkey-name-${passkey.id}`}
                   >
                     {t("nameLabel")}
@@ -370,8 +370,8 @@ export function PasskeysBlock({
               ) : (
                 <>
                   <div>
-                    <p className="text-sm font-medium text-[var(--neutral-12)]">{passkey.name}</p>
-                    <p className="mt-1 text-xs text-[var(--neutral-10)]">
+                    <p className="text-sm font-medium text-foreground">{passkey.name}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {[
                         passkey.deviceType,
                         passkey.createdAt && !Number.isNaN(new Date(passkey.createdAt).getTime())
@@ -416,12 +416,12 @@ export function PasskeysBlock({
       <div className="mt-4">
         {state.adding ? (
           <form
-            className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4"
+            className="space-y-3 rounded-[var(--radius-lg)] border border-border bg-muted p-4"
             onSubmit={handleAdd}
           >
             <div className="space-y-1.5">
               <label
-                className="block text-sm font-medium text-[var(--neutral-12)]"
+                className="block text-sm font-medium text-foreground"
                 htmlFor="new-passkey-name"
               >
                 {t("nameLabel")}
@@ -431,7 +431,7 @@ export function PasskeysBlock({
                 onChange={(event) => dispatch({ type: "add.name", name: event.target.value })}
                 value={state.newPasskeyName}
               />
-              <p className="text-xs text-[var(--neutral-10)]">{t("nameHelp")}</p>
+              <p className="text-xs text-muted-foreground">{t("nameHelp")}</p>
             </div>
             <div className="flex gap-2">
               <Button disabled={pending} htmlType="submit" type="primary">

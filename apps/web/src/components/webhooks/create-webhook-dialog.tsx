@@ -148,7 +148,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
           name="url"
           render={({ field }) => (
             <FormItem className="space-y-0">
-              <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
+              <FormLabel className="mb-1 block text-sm font-medium text-foreground">
                 Endpoint URL
               </FormLabel>
               <FormControl>
@@ -170,16 +170,14 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
           render={({ field }) => (
             <FormItem className="space-y-0">
               <fieldset>
-                <legend className="mb-2 text-sm font-medium text-[var(--neutral-12)]">
-                  Events
-                </legend>
+                <legend className="mb-2 text-sm font-medium text-foreground">Events</legend>
                 <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                   {STANDARD_WEBHOOK_EVENTS.map((eventDef) => {
                     const checked = field.value.includes(eventDef.id);
                     return (
                       <label
                         key={eventDef.id}
-                        className="flex items-center gap-2 text-sm text-[var(--neutral-12)]"
+                        className="flex items-center gap-2 text-sm text-foreground"
                       >
                         <input
                           data-allow-native
@@ -188,13 +186,13 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
                           value={eventDef.id}
                           checked={checked}
                           onChange={() => toggleEvent(eventDef.id, field.value)}
-                          className="h-4 w-4 rounded border-[var(--neutral-7)]"
+                          className="h-4 w-4 rounded border-border"
                         />
                         <span>
-                          <span className="font-mono text-xs text-[var(--neutral-11)]">
+                          <span className="font-mono text-xs text-muted-foreground">
                             {eventDef.id}
                           </span>
-                          <span className="ml-2 text-[var(--neutral-12)]">{eventDef.label}</span>
+                          <span className="ml-2 text-foreground">{eventDef.label}</span>
                         </span>
                       </label>
                     );
@@ -217,7 +215,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
             type="submit"
             disabled={form.formState.isSubmitting || !url || events.length === 0}
             className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             {form.formState.isSubmitting ? "Creating…" : "Create endpoint"}
           </button>

@@ -47,7 +47,7 @@ export function SagaGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="relative flex w-full flex-col justify-center gap-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
+      className="relative flex w-full flex-col justify-center gap-3 rounded-[var(--radius-lg)] bg-muted px-3 py-3"
       style={{ height: 160 }}
     >
       {/* Top-right timeout badge */}
@@ -63,16 +63,16 @@ export function SagaGlyph({ locale }: SubpackageGlyphProps) {
           <div key={step.label} className="flex items-center gap-1">
             <StepPill step={step} />
             {i < steps.length - 1 ? (
-              <ArrowRight className="h-3 w-3 shrink-0 text-[var(--neutral-9)]" />
+              <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" />
             ) : null}
           </div>
         ))}
       </div>
 
       {/* Rollback path */}
-      <div className="flex items-center gap-1.5 border-t border-dashed border-[var(--neutral-7)] pt-2">
+      <div className="flex items-center gap-1.5 border-t border-dashed border-border pt-2">
         <RefreshCounterClockwise className="h-3 w-3 text-[color:var(--status-danger)]" />
-        <span className="font-mono text-[10px] text-[var(--neutral-10)]">{copy.compensate}</span>
+        <span className="font-mono text-[10px] text-muted-foreground">{copy.compensate}</span>
       </div>
     </div>
   );
@@ -94,7 +94,7 @@ function StepPill({ step }: { step: SagaStep }) {
     );
   }
   return (
-    <span className="inline-flex h-5 items-center gap-1 rounded-full border border-dashed border-[var(--neutral-7)] px-1.5 font-mono text-[11px] text-[var(--neutral-10)]">
+    <span className="inline-flex h-5 items-center gap-1 rounded-full border border-dashed border-border px-1.5 font-mono text-[11px] text-muted-foreground">
       {step.index}. {step.label}
     </span>
   );

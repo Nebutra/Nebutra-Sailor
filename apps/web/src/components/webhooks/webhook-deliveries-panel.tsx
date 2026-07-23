@@ -115,16 +115,16 @@ export function WebhookDeliveriesPanel({
   return (
     <aside
       aria-label="Webhook delivery history"
-      className="flex h-full flex-col gap-4 border-l border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+      className="flex h-full flex-col gap-4 border-l border-border bg-background p-6"
     >
       <header className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-[var(--neutral-12)]">Recent deliveries</h3>
+        <h3 className="text-base font-semibold text-foreground">Recent deliveries</h3>
         {onClose && (
           <button
             type="button"
             onClick={onClose}
             aria-label="Close deliveries panel"
-            className="text-sm text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
+            className="text-sm text-muted-foreground hover:text-foreground"
           >
             Close
           </button>
@@ -132,7 +132,7 @@ export function WebhookDeliveriesPanel({
       </header>
 
       {isLoading && (
-        <p role="status" className="text-sm text-[var(--neutral-11)]">
+        <p role="status" className="text-sm text-muted-foreground">
           Loading…
         </p>
       )}
@@ -143,7 +143,7 @@ export function WebhookDeliveriesPanel({
       )}
 
       {!isLoading && !error && deliveries.length === 0 && (
-        <p className="text-sm text-[var(--neutral-11)]">{t("emptyState.webhookDeliveries")}</p>
+        <p className="text-sm text-muted-foreground">{t("emptyState.webhookDeliveries")}</p>
       )}
 
       <ul className="space-y-2">
@@ -152,12 +152,12 @@ export function WebhookDeliveriesPanel({
           return (
             <li
               key={delivery.id}
-              className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3"
+              className="rounded-[var(--radius-md)] border border-border bg-background p-3"
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="font-mono text-xs text-[var(--neutral-12)]">{delivery.eventType}</p>
-                  <p className="mt-0.5 text-[10px] text-[var(--neutral-10)]">
+                  <p className="font-mono text-xs text-foreground">{delivery.eventType}</p>
+                  <p className="mt-0.5 text-[10px] text-muted-foreground">
                     {new Date(delivery.createdAt).toLocaleString()}
                     {delivery.responseTimeMs !== null && ` · ${delivery.responseTimeMs}ms`}
                     {delivery.retryCount > 0 && ` · retries ${delivery.retryCount}`}
@@ -166,7 +166,7 @@ export function WebhookDeliveriesPanel({
                 <div className="flex items-center gap-2">
                   <StatusPill status={delivery.status} />
                   {delivery.statusCode !== null && (
-                    <span className="font-mono text-[10px] text-[var(--neutral-11)]">
+                    <span className="font-mono text-[10px] text-muted-foreground">
                       HTTP {delivery.statusCode}
                     </span>
                   )}
@@ -178,7 +178,7 @@ export function WebhookDeliveriesPanel({
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setExpandedId(isOpen ? null : delivery.id)}
-                  className="text-[var(--blue-9)] hover:underline"
+                  className="text-[hsl(var(--primary))] hover:underline"
                 >
                   {isOpen ? "Hide payload" : "View payload"}
                 </button>
@@ -186,14 +186,14 @@ export function WebhookDeliveriesPanel({
                   type="button"
                   disabled={replayingId === delivery.id}
                   onClick={() => handleReplay(delivery.id)}
-                  className="text-[var(--neutral-11)] hover:text-[var(--neutral-12)] disabled:opacity-50"
+                  className="text-muted-foreground hover:text-foreground disabled:opacity-50"
                 >
                   {replayingId === delivery.id ? "Replaying…" : "Replay"}
                 </button>
               </div>
 
               {isOpen && (
-                <pre className="mt-2 max-h-48 overflow-auto rounded bg-[var(--neutral-2)] p-2 text-[10px] text-[var(--neutral-12)]">
+                <pre className="mt-2 max-h-48 overflow-auto rounded bg-muted p-2 text-[10px] text-foreground">
                   {JSON.stringify(delivery.payload, null, 2)}
                   {delivery.errorMessage && `\n\nError: ${delivery.errorMessage}`}
                 </pre>

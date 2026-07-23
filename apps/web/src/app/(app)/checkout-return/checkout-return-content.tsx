@@ -129,9 +129,7 @@ export function CheckoutReturnContent({ organizationId }: CheckoutReturnContentP
   return (
     <div className="flex min-h-[40vh] flex-col items-center justify-center gap-4 py-12">
       <Spinner aria-label="Processing payment" size={32} />
-      <p className="text-center text-[color:var(--neutral-11)] text-sm">
-        Confirming your subscription...
-      </p>
+      <p className="text-center text-muted-foreground text-sm">Confirming your subscription...</p>
     </div>
   );
 }

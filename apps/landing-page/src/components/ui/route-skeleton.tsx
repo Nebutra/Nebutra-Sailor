@@ -18,13 +18,13 @@ export default function RouteSkeleton() {
       aria-busy="true"
     >
       <span className="sr-only">Loading…</span>
-      <div className="h-10 w-2/3 rounded-md bg-[var(--neutral-3)]" />
-      <div className="mt-4 h-5 w-1/2 rounded-md bg-[var(--neutral-3)]" />
+      <div className="h-10 w-2/3 rounded-md bg-muted" />
+      <div className="mt-4 h-5 w-1/2 rounded-md bg-muted" />
       <div className="mt-10 grid gap-4">
-        <div className="h-4 w-full rounded bg-[var(--neutral-2)]" />
-        <div className="h-4 w-11/12 rounded bg-[var(--neutral-2)]" />
-        <div className="h-4 w-10/12 rounded bg-[var(--neutral-2)]" />
-        <div className="h-4 w-9/12 rounded bg-[var(--neutral-2)]" />
+        <div className="h-4 w-full rounded bg-muted" />
+        <div className="h-4 w-11/12 rounded bg-muted" />
+        <div className="h-4 w-10/12 rounded bg-muted" />
+        <div className="h-4 w-9/12 rounded bg-muted" />
       </div>
     </div>
   );

@@ -105,38 +105,38 @@ export function ChangePasswordForm({
 
   if (loading) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
-            <h3 className="text-sm font-medium text-[var(--neutral-12)]">Password</h3>
-            <p className="mt-1 text-sm text-[var(--neutral-11)]">
+            <h3 className="text-sm font-medium text-foreground">Password</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
               Check whether this account has a credential sign-in method and explain the safest
               supported password path.
             </p>
           </div>
         </div>
-        <p className="text-sm text-[var(--neutral-11)]">Loading password capabilities…</p>
+        <p className="text-sm text-muted-foreground">Loading password capabilities…</p>
       </section>
     );
   }
 
   if (!capability.hasPasswordAccount) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
-            <h3 className="text-sm font-medium text-[var(--neutral-12)]">Password</h3>
-            <p className="mt-1 text-sm text-[var(--neutral-11)]">
+            <h3 className="text-sm font-medium text-foreground">Password</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
               Check whether this account has a credential sign-in method and explain the safest
               supported password path.
             </p>
           </div>
-          <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+          <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
             OAuth only
           </span>
         </div>
 
-        <p className="text-sm text-[var(--neutral-11)]">{capability.reason}</p>
+        <p className="text-sm text-muted-foreground">{capability.reason}</p>
       </section>
     );
   }
@@ -170,13 +170,13 @@ export function ChangePasswordForm({
   const errorMessage = errorKey ? tErrors(errorKey) : null;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+          <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+          <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
         </div>
-        <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+        <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
           Credential attached
         </span>
       </div>
@@ -192,7 +192,7 @@ export function ChangePasswordForm({
             name="currentPassword"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("currentPasswordLabel")}
                 </FormLabel>
                 <FormControl>
@@ -215,7 +215,7 @@ export function ChangePasswordForm({
             name="newPassword"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("newPasswordLabel")}
                 </FormLabel>
                 <FormControl>
@@ -239,7 +239,7 @@ export function ChangePasswordForm({
             name="confirmPassword"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                <FormLabel className="block text-sm font-medium text-foreground">
                   {t("confirmPasswordLabel")}
                 </FormLabel>
                 <FormControl>
@@ -259,12 +259,12 @@ export function ChangePasswordForm({
           />
 
           <label
-            className="flex items-center gap-2 text-sm text-[var(--neutral-11)]"
+            className="flex items-center gap-2 text-sm text-muted-foreground"
             htmlFor="change-password-revoke"
           >
             <input
               data-allow-native
-              className="size-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
+              className="size-4 rounded border-border text-[hsl(var(--primary))]"
               id="change-password-revoke"
               type="checkbox"
               {...form.register("revokeOtherSessions")}
@@ -289,7 +289,7 @@ export function ChangePasswordForm({
           )}
 
           {pending && (
-            <p className="text-sm text-[var(--neutral-11)]" role="status">
+            <p className="text-sm text-muted-foreground" role="status">
               {t("pending")}
             </p>
           )}

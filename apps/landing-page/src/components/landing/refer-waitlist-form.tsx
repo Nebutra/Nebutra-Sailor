@@ -123,41 +123,36 @@ export function ReferWaitlistForm({
     return (
       <section
         aria-labelledby="refer-success-title"
-        className="w-full rounded-[var(--radius-lg)] border border-[color:var(--neutral-6)] bg-[color:var(--neutral-1)] p-4 shadow-sm md:p-6"
+        className="w-full rounded-[var(--radius-lg)] border border-border bg-background p-4 shadow-sm md:p-6"
       >
         <div role="status" className="flex items-start gap-3">
           <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--green-3)] text-[color:var(--green-11)] ring-1 ring-[color:var(--green-6)]">
             <Check aria-hidden="true" className="h-4 w-4" />
           </span>
           <div>
-            <h2
-              id="refer-success-title"
-              className="text-lg font-semibold text-[color:var(--neutral-12)]"
-            >
+            <h2 id="refer-success-title" className="text-lg font-semibold text-foreground">
               {copy.successTitle}
             </h2>
-            <p className="mt-1 text-sm leading-6 text-[color:var(--neutral-10)]">
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
               {copy.successDescription}
             </p>
           </div>
         </div>
 
-        <dl className="mt-6 divide-y divide-[color:var(--neutral-6)] border-y border-[color:var(--neutral-6)]">
+        <dl className="mt-6 divide-y divide-[color:hsl(var(--border))] border-y border-border">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-4 py-4">
-            <dt className="text-sm text-[color:var(--neutral-10)]">{copy.positionLabel}</dt>
-            <dd className="text-sm font-semibold text-[color:var(--neutral-12)]">
-              {result.position}
-            </dd>
+            <dt className="text-sm text-muted-foreground">{copy.positionLabel}</dt>
+            <dd className="text-sm font-semibold text-foreground">{result.position}</dd>
           </div>
           <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-4 py-4">
-            <dt className="text-sm text-[color:var(--neutral-10)]">{copy.referralCodeLabel}</dt>
-            <dd className="font-mono text-sm font-semibold text-[color:var(--neutral-12)]">
+            <dt className="text-sm text-muted-foreground">{copy.referralCodeLabel}</dt>
+            <dd className="font-mono text-sm font-semibold text-foreground">
               {result.referralCode}
             </dd>
           </div>
           <div className="py-4">
-            <dt className="text-sm text-[color:var(--neutral-10)]">{copy.referralUrlLabel}</dt>
-            <dd className="mt-2 break-all rounded-[var(--radius-md)] bg-[color:var(--neutral-3)] px-3 py-2 font-mono text-xs text-[color:var(--neutral-11)]">
+            <dt className="text-sm text-muted-foreground">{copy.referralUrlLabel}</dt>
+            <dd className="mt-2 break-all rounded-[var(--radius-md)] bg-muted px-3 py-2 font-mono text-xs text-muted-foreground">
               {result.referralUrl}
             </dd>
           </div>
@@ -181,10 +176,10 @@ export function ReferWaitlistForm({
     <form
       data-status={status}
       onSubmit={handleSubmit}
-      className="w-full rounded-[var(--radius-lg)] border border-[color:var(--neutral-6)] bg-[color:var(--neutral-1)] p-4 shadow-sm md:p-6"
+      className="w-full rounded-[var(--radius-lg)] border border-border bg-background p-4 shadow-sm md:p-6"
     >
-      <div className="flex items-center justify-between gap-3 border-b border-[color:var(--neutral-6)] pb-3 md:pb-4">
-        <p className="text-sm font-medium text-[color:var(--neutral-12)]">
+      <div className="flex items-center justify-between gap-3 border-b border-border pb-3 md:pb-4">
+        <p className="text-sm font-medium text-foreground">
           {code ? copy.codeMode : copy.directMode}
         </p>
         <span className="h-2 w-2 rounded-full bg-[color:var(--green-9)]" aria-hidden="true" />
@@ -192,9 +187,7 @@ export function ReferWaitlistForm({
 
       <div className="mt-4 grid gap-4 md:mt-5">
         <label className="grid gap-2" htmlFor={emailId}>
-          <span className="text-sm font-medium text-[color:var(--neutral-11)]">
-            {copy.emailLabel}
-          </span>
+          <span className="text-sm font-medium text-muted-foreground">{copy.emailLabel}</span>
           <Input
             id={emailId}
             type="email"
@@ -209,9 +202,7 @@ export function ReferWaitlistForm({
         </label>
 
         <label className="grid gap-2" htmlFor={codeId}>
-          <span className="text-sm font-medium text-[color:var(--neutral-11)]">
-            {copy.codeLabel}
-          </span>
+          <span className="text-sm font-medium text-muted-foreground">{copy.codeLabel}</span>
           <Input
             id={codeId}
             type="text"

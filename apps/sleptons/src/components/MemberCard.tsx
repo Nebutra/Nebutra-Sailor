@@ -32,7 +32,7 @@ export function MemberCard({ member }: MemberCardProps) {
   return (
     <Link
       href={`/members/${member.slug}`}
-      className="group flex flex-col gap-3 rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5 transition-[border-color,box-shadow] hover:border-[var(--blue-9)] hover:shadow-md"
+      className="group flex flex-col gap-3 rounded-xl border border-border bg-background p-5 transition-[border-color,box-shadow] hover:border-[hsl(var(--primary))] hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-3">
@@ -43,20 +43,20 @@ export function MemberCard({ member }: MemberCardProps) {
               className="h-10 w-10 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--blue-3)] text-sm font-bold text-[var(--blue-9)]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--blue-3)] text-sm font-bold text-[hsl(var(--primary))]">
               {initials}
             </div>
           )}
           <div>
-            <p className="font-semibold text-[var(--neutral-12)]">{member.display_name}</p>
-            <p className="text-xs text-[var(--neutral-11)]">#{member.member_number}</p>
+            <p className="font-semibold text-foreground">{member.display_name}</p>
+            <p className="text-xs text-muted-foreground">#{member.member_number}</p>
           </div>
         </div>
         <TierBadge tier={member.tier} />
       </div>
 
       {member.product_tagline && (
-        <p className="text-sm text-[var(--neutral-11)]">{member.product_tagline}</p>
+        <p className="text-sm text-muted-foreground">{member.product_tagline}</p>
       )}
 
       {member.looking_for.length > 0 && (
@@ -64,7 +64,7 @@ export function MemberCard({ member }: MemberCardProps) {
           {member.looking_for.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-[var(--neutral-3)] px-2 py-0.5 text-xs text-[var(--neutral-11)]"
+              className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground"
             >
               {tag}
             </span>

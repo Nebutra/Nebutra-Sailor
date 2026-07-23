@@ -79,7 +79,7 @@ export const ReadOnly: Story = {
 export const CreateDialog: StoryObj<typeof CreateWebhookDialog> = {
   name: "Dialog/Default",
   render: () => (
-    <div className="mx-auto max-w-xl rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <div className="mx-auto max-w-xl rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-6">
       <CreateWebhookDialog
         onSubmit={async ({ url, events }) => {
           await new Promise((resolve) => setTimeout(resolve, 400));

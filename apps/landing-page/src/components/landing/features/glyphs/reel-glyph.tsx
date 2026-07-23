@@ -33,22 +33,22 @@ const LAYERS: ReadonlyArray<LayerRow> = [
 export function ReelGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="flex flex-1 gap-3 overflow-hidden">
         {/* Left: phone-frame preview (9:16) */}
         <div
-          className="relative flex shrink-0 items-center justify-center rounded-[10px] border border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-sm"
+          className="relative flex shrink-0 items-center justify-center rounded-[10px] border border-border bg-background shadow-sm"
           style={{ width: 60, height: 100 }}
         >
           <div
             className="absolute inset-1 rounded-[7px]"
-            style={{ background: "var(--brand-gradient)", opacity: 0.85 }}
+            style={{ background: "hsl(var(--primary))", opacity: 0.85 }}
             aria-hidden
           />
           <div className="absolute inset-x-2 top-2 h-1 rounded-full bg-white/40" aria-hidden />
-          <div className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full bg-white/95 text-[var(--neutral-12)] shadow">
+          <div className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full bg-white/95 text-foreground shadow">
             <Play className="h-2.5 w-2.5" />
           </div>
           <div className="absolute inset-x-2 bottom-2 h-1 rounded-full bg-white/30" aria-hidden />
@@ -65,7 +65,7 @@ export function ReelGlyph(_props: SubpackageGlyphProps) {
             return (
               <div
                 key={layer.tag}
-                className="flex min-w-0 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
+                className="flex min-w-0 items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background px-2 py-1.5"
               >
                 <Badge
                   variant="outline"
@@ -74,10 +74,8 @@ export function ReelGlyph(_props: SubpackageGlyphProps) {
                   <Icon className="h-2.5 w-2.5" />
                   {layer.tag}
                 </Badge>
-                <span className="min-w-0 truncate text-[10px] text-[var(--neutral-12)]">
-                  {layer.body}
-                </span>
-                <span className="ml-auto shrink-0 font-mono text-[9px] text-[var(--neutral-10)]">
+                <span className="min-w-0 truncate text-[10px] text-foreground">{layer.body}</span>
+                <span className="ml-auto shrink-0 font-mono text-[9px] text-muted-foreground">
                   {layer.meta}
                 </span>
               </div>
@@ -87,7 +85,7 @@ export function ReelGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-wide text-[var(--neutral-10)]">
+      <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-wide text-muted-foreground">
         <span>Remotion</span>
         <span aria-hidden>·</span>
         <span>9:16</span>

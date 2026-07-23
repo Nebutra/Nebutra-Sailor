@@ -29,20 +29,18 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Header: MRR label + sparkle accent */}
         <div className="flex items-center gap-1.5">
-          <Sparkles className="h-3 w-3 text-[var(--neutral-10)]" />
-          <span className="truncate font-mono text-[10px] uppercase tracking-wide text-[var(--neutral-10)]">
+          <Sparkles className="h-3 w-3 text-muted-foreground" />
+          <span className="truncate font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
             {copy.label}
           </span>
         </div>
 
         {/* Big number + trend chip */}
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-semibold tabular-nums text-[var(--neutral-12)]">
-            {copy.amount}
-          </span>
+          <span className="text-2xl font-semibold tabular-nums text-foreground">{copy.amount}</span>
           <Badge variant="green-subtle" size="sm" icon={<ChartTrendingUp />}>
             {copy.trend}
           </Badge>
@@ -53,7 +51,7 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
           {BAR_HEIGHTS.map((height, i) => (
             <span
               key={i}
-              className="flex-1 rounded-[var(--radius-sm)] bg-[var(--blue-9)]"
+              className="flex-1 rounded-[var(--radius-sm)] bg-[hsl(var(--primary))]"
               style={{ height: `${height}%`, opacity: 0.35 + (i / BAR_HEIGHTS.length) * 0.6 }}
             />
           ))}
@@ -61,7 +59,7 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Footer: provider chip with credit card icon */}
         <div className="mt-0.5 flex items-center justify-between">
-          <span className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">
+          <span className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
             <CreditCard className="h-3 w-3" />
             {copy.provider} · {copy.status}
           </span>

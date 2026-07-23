@@ -40,12 +40,12 @@ export function VaultGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <Key className="h-3 w-3 text-[var(--neutral-11)]" aria-hidden="true" />
-            <span className="font-mono text-[11px] text-[var(--neutral-11)]">{t.title}</span>
+            <Key className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
+            <span className="font-mono text-[11px] text-muted-foreground">{t.title}</span>
           </div>
           <Badge variant="green-subtle" size="sm" icon={<Shield />}>
             {t.badge}
@@ -57,27 +57,22 @@ export function VaultGlyph({ locale }: SubpackageGlyphProps) {
           {SECRETS.map((row) => (
             <div
               key={row.name}
-              className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]"
+              className="flex items-center gap-2 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]"
             >
-              <LockClosed
-                className="h-3 w-3 shrink-0 text-[var(--neutral-10)]"
-                aria-hidden="true"
-              />
+              <LockClosed className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
               <div className="flex min-w-0 flex-1 items-center gap-2">
-                <span className="truncate font-mono text-[10px] text-[var(--neutral-12)]">
-                  {row.name}
-                </span>
-                <span className="ml-auto shrink-0 font-mono text-[10px] text-[var(--neutral-10)]">
+                <span className="truncate font-mono text-[10px] text-foreground">{row.name}</span>
+                <span className="ml-auto shrink-0 font-mono text-[10px] text-muted-foreground">
                   {row.masked}
                 </span>
               </div>
-              <Eye className="h-3 w-3 shrink-0 text-[var(--neutral-10)]" aria-hidden="true" />
+              <Eye className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
             </div>
           ))}
         </div>
 
         {/* Footer */}
-        <p className="text-center font-mono text-[10px] text-[var(--neutral-10)]">{t.footer}</p>
+        <p className="text-center font-mono text-[10px] text-muted-foreground">{t.footer}</p>
       </div>
     </div>
   );

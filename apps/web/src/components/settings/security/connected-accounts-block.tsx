@@ -68,17 +68,17 @@ export function ConnectedAccountsBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
-            <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-            <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
+            <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
           </div>
-          <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+          <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
             Provider managed
           </span>
         </div>
-        <p className="text-sm text-[var(--neutral-11)]">{capability.reason}</p>
+        <p className="text-sm text-muted-foreground">{capability.reason}</p>
       </section>
     );
   }
@@ -115,12 +115,12 @@ export function ConnectedAccountsBlock({
   const linkedSet = new Set(capability.linkedProviders);
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>
-          <p className="mt-2 text-xs leading-5 text-[var(--neutral-10)]">{t("help")}</p>
+          <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
+          <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">{t("help")}</p>
         </div>
       </div>
 
@@ -139,7 +139,7 @@ export function ConnectedAccountsBlock({
           {PROVIDERS.map((providerId) => (
             <div
               key={providerId}
-              className="h-14 animate-pulse rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]"
+              className="h-14 animate-pulse rounded-[var(--radius-lg)] border border-border bg-muted"
             />
           ))}
         </div>
@@ -151,13 +151,13 @@ export function ConnectedAccountsBlock({
             return (
               <div
                 key={providerId}
-                className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-center md:justify-between"
+                className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-border p-4 md:flex-row md:items-center md:justify-between"
               >
                 <div>
-                  <p className="text-sm font-medium text-[var(--neutral-12)]">
+                  <p className="text-sm font-medium text-foreground">
                     {PROVIDER_LABELS[providerId]}
                   </p>
-                  <p className="mt-1 text-xs text-[var(--neutral-10)]">
+                  <p className="mt-1 text-xs text-muted-foreground">
                     {isLinked ? t("connected") : t("notLinked")}
                   </p>
                 </div>
@@ -186,7 +186,7 @@ export function ConnectedAccountsBlock({
         </div>
       )}
 
-      <p className="mt-4 text-xs leading-5 text-[var(--neutral-10)]">{capability.reason}</p>
+      <p className="mt-4 text-xs leading-5 text-muted-foreground">{capability.reason}</p>
     </section>
   );
 }

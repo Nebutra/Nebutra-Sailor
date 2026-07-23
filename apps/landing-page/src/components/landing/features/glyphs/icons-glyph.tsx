@@ -55,7 +55,7 @@ const ICON_GRID: ReadonlyArray<ReadonlyArray<{ Icon: GeistIcon; label: string }>
 export function IconsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2">
@@ -72,7 +72,7 @@ export function IconsGlyph(_props: SubpackageGlyphProps) {
                 key={label}
                 role="img"
                 aria-label={label}
-                className="flex h-6 w-full items-center justify-center rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)] text-[var(--neutral-11)]"
+                className="flex h-6 w-full items-center justify-center rounded border border-border bg-background text-muted-foreground"
               >
                 <Icon className="h-3.5 w-3.5" />
               </div>
@@ -81,7 +81,7 @@ export function IconsGlyph(_props: SubpackageGlyphProps) {
         ))}
       </div>
 
-      <div className="mt-auto text-[10px] font-mono text-[var(--neutral-10)]">
+      <div className="mt-auto text-[10px] font-mono text-muted-foreground">
         @nebutra/icons · Geist source
       </div>
     </div>

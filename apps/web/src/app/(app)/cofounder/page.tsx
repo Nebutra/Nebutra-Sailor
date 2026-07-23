@@ -88,7 +88,7 @@ export default function CofounderPage() {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[320px] w-full max-w-2xl opacity-[0.12] blur-3xl"
-        style={{ background: "var(--brand-gradient)" }}
+        style={{ background: "hsl(var(--primary))" }}
       />
 
       <div className="relative mx-auto w-full max-w-3xl px-5 py-14 sm:px-8">
@@ -102,7 +102,7 @@ export default function CofounderPage() {
             <h1
               className="mt-5 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl"
               style={{
-                background: "var(--brand-gradient)",
+                background: "hsl(var(--primary))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -118,7 +118,7 @@ export default function CofounderPage() {
               <Link
                 href={`/${locale}/cofounder/discover`}
                 className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 Enter Discover
                 <ArrowRight className="size-4" aria-hidden="true" />

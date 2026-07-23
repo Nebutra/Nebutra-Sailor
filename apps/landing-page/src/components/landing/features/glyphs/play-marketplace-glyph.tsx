@@ -16,43 +16,41 @@ const PLAYBOOKS: ReadonlyArray<{
 export function PlayMarketplaceGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
         <Badge
           variant="outline"
-          className="border-[var(--neutral-7)] bg-[var(--neutral-1)] px-1.5 py-0 font-mono text-[9px] text-[var(--neutral-11)]"
+          className="border-border bg-background px-1.5 py-0 font-mono text-[9px] text-muted-foreground"
         >
           marketplace · 1,247 playbooks
         </Badge>
-        <Sparkles className="h-3 w-3 text-[var(--brand-primary)]" />
+        <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
       </div>
 
       <ul className="grid grid-cols-2 gap-1.5">
         {PLAYBOOKS.map(({ name, installs, rating }) => (
           <li
             key={name}
-            className="flex flex-col gap-0.5 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-1.5 py-1"
+            className="flex flex-col gap-0.5 rounded-[var(--radius-sm)] bg-background px-1.5 py-1"
           >
             <div className="flex items-center gap-1">
-              <Box className="h-2.5 w-2.5 shrink-0 text-[var(--brand-primary)]" />
-              <span className="truncate text-[10px] font-medium text-[var(--neutral-12)]">
-                {name}
-              </span>
+              <Box className="h-2.5 w-2.5 shrink-0 text-[hsl(var(--primary))]" />
+              <span className="truncate text-[10px] font-medium text-foreground">{name}</span>
             </div>
-            <div className="flex items-center justify-between font-mono text-[9px] text-[var(--neutral-10)]">
+            <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground">
               <span className="flex items-center gap-0.5">
                 <Users className="h-2 w-2" />
                 {installs}
               </span>
-              <span className="text-[var(--brand-primary)]">★ {rating}</span>
+              <span className="text-[hsl(var(--primary))]">★ {rating}</span>
             </div>
           </li>
         ))}
       </ul>
 
-      <div className="font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="font-mono text-[9px] text-muted-foreground">
         community-curated · MIT licensed
       </div>
     </div>

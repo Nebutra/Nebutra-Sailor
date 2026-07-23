@@ -90,7 +90,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               type="button"
               onClick={reset}
               style={{
-                background: "linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)",
+                background: "linear-gradient(135deg, hsl(var(--primary)) 0%, #0BF1C3 100%)",
                 color: "#ffffff",
                 border: 0,
                 padding: "10px 20px",

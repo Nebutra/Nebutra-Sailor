@@ -32,14 +32,14 @@ const PROBE_ROWS: ReadonlyArray<ProbeRow> = [
 export function HealthGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center gap-1.5">
-        <span className="font-mono text-[11px] text-[var(--neutral-12)]">GET /healthz</span>
+        <span className="font-mono text-[11px] text-foreground">GET /healthz</span>
         <StatusDot state="READY" titlePrefix="healthz" decorative />
-        <span className="ml-auto font-mono text-[10px] tabular-nums text-[var(--neutral-11)]">
+        <span className="ml-auto font-mono text-[10px] tabular-nums text-muted-foreground">
           200 OK · 4ms
         </span>
       </div>
@@ -52,7 +52,7 @@ export function HealthGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="font-mono text-[10px] text-[var(--neutral-10)]">
+      <div className="font-mono text-[10px] text-muted-foreground">
         composed via @nebutra/health
       </div>
     </div>
@@ -74,7 +74,7 @@ function ProbeRowItem({ row }: ProbeRowItemProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="font-mono text-[11px] text-[var(--neutral-12)]">&middot; {row.name}</span>
+      <span className="font-mono text-[11px] text-foreground">&middot; {row.name}</span>
       <Badge variant={badgeVariant} size="sm" className="ml-auto gap-1 font-mono text-[10px]">
         <Icon className="h-3 w-3 shrink-0" aria-hidden="true" />
         {row.latency}

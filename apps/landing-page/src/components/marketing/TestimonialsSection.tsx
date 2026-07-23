@@ -43,9 +43,9 @@ export function TestimonialsSection({
       <div className="mx-auto max-w-[1400px] px-4 py-16">
         {/* Header */}
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-3xl font-bold text-[var(--neutral-12)] sm:text-4xl">{title}</h2>
+          <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">{title}</h2>
           {subtitle && (
-            <p className="mx-auto max-w-2xl text-lg text-[var(--neutral-10)]">{subtitle}</p>
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{subtitle}</p>
           )}
         </div>
 

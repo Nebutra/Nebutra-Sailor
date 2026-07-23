@@ -70,14 +70,14 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
     return (
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
             {t("successTitle")}
           </h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("success")}</p>
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("success")}</p>
         </div>
         <Link
           href={signInHref}
-          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
         >
           {tSignIn("submit")}
         </Link>
@@ -88,10 +88,8 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {t("title")}
-        </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
 
       {turnstileSiteKey ? (
@@ -110,7 +108,7 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
 
       <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="forgot-email" className="text-sm font-medium text-[var(--neutral-12)]">
+          <label htmlFor="forgot-email" className="text-sm font-medium text-foreground">
             {t("emailLabel")}
           </label>
           <Input
@@ -121,7 +119,7 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             size="lg"
-            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={tSignIn("emailPlaceholder")}
           />
         </div>
@@ -138,13 +136,13 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
         <Button
           type="submit"
           disabled={loading}
-          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {loading ? tSignIn("providerLoading") : t("submit")}
         </Button>
       </form>
 
-      <p className="mt-6 text-sm text-[var(--neutral-9)]">
+      <p className="mt-6 text-sm text-muted-foreground">
         <Link
           href={signInHref}
           className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"

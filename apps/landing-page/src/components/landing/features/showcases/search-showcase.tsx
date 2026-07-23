@@ -68,7 +68,7 @@ function HighlightedText({ text }: { text: string }) {
       {parts.map((part, i) =>
         TOKEN_SET.has(part.toLowerCase()) ? (
           // biome-ignore lint/suspicious/noArrayIndexKey: positional in split output
-          <mark key={i} className="rounded-[2px] bg-[var(--blue-3)] px-0.5 text-[var(--blue-11)]">
+          <mark key={i} className="rounded-[2px] bg-[var(--blue-3)] px-0.5 text-primary">
             {part}
           </mark>
         ) : (

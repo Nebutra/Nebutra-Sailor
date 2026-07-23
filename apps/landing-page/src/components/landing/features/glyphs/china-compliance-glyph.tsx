@@ -46,15 +46,13 @@ export function ChinaComplianceGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header */}
       <div className="flex items-center gap-1.5">
-        <Shield className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" aria-hidden="true" />
-        <span className="truncate text-[11px] font-medium text-[var(--neutral-12)]">
-          {copy.title}
-        </span>
+        <Shield className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+        <span className="truncate text-[11px] font-medium text-foreground">{copy.title}</span>
         <Badge variant="green-subtle" size="sm" className="ml-auto font-mono text-[10px]">
           {copy.ready}
         </Badge>
@@ -68,7 +66,7 @@ export function ChinaComplianceGlyph({ locale }: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center gap-1 font-mono text-[10px] text-[var(--neutral-10)]">
+      <div className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
         <Globe className="h-3 w-3 shrink-0" aria-hidden="true" />
         <span className="truncate">{copy.footer}</span>
       </div>
@@ -95,7 +93,7 @@ function ChecklistRow({ row }: ChecklistRowProps) {
       ) : (
         <Clock className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-hidden="true" />
       )}
-      <span className="truncate text-[11px] text-[var(--neutral-12)]">{row.label}</span>
+      <span className="truncate text-[11px] text-foreground">{row.label}</span>
       {mono ? (
         <Badge variant="gray-subtle" size="sm" className="ml-auto font-mono text-[10px]">
           {mono}

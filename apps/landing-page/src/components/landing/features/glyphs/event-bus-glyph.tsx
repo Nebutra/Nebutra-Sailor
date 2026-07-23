@@ -39,7 +39,7 @@ const PULSES: ReadonlyArray<Pulse> = [
 export function EventBusGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full items-stretch gap-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
+      className="flex w-full items-stretch gap-3 rounded-[var(--radius-lg)] bg-muted px-3 py-3"
       style={{ height: 160 }}
     >
       {/* Topic list */}
@@ -47,7 +47,7 @@ export function EventBusGlyph(_props: SubpackageGlyphProps) {
         {TOPICS.map((topic) => (
           <li
             key={topic.name}
-            className="flex items-center justify-between gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5"
+            className="flex items-center justify-between gap-2 rounded-[var(--radius-md)] bg-background px-2 py-1.5"
           >
             <Badge
               variant="outline"
@@ -56,7 +56,7 @@ export function EventBusGlyph(_props: SubpackageGlyphProps) {
             >
               <span className="truncate">{topic.name}</span>
             </Badge>
-            <span className="shrink-0 font-mono text-[10px] text-[var(--neutral-11)]">
+            <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
               {topic.subs} subs
             </span>
           </li>
@@ -66,7 +66,7 @@ export function EventBusGlyph(_props: SubpackageGlyphProps) {
       {/* Pulse rail */}
       <div
         aria-hidden="true"
-        className="flex w-7 shrink-0 flex-col items-center justify-between rounded-[var(--radius-md)] bg-[var(--neutral-1)] py-2"
+        className="flex w-7 shrink-0 flex-col items-center justify-between rounded-[var(--radius-md)] bg-background py-2"
       >
         {PULSES.map((pulse, i) => {
           const Icon = pulse.Icon;

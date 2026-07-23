@@ -182,8 +182,8 @@ describe("landing UI governance", () => {
 
   it("keeps the marketing header visible until desktop navigation takes over", () => {
     expect(desktopNavSource).toContain("hidden lg:flex");
-    expect(navbarSource).toContain("max-lg:bg-[var(--neutral-1)]/90");
-    expect(navbarSource).toContain("max-lg:border-[var(--neutral-6)]");
+    expect(navbarSource).toContain("max-lg:bg-background/90");
+    expect(navbarSource).toContain("max-lg:border-border");
     expect(navbarSource).toContain('className="flex items-center gap-1 lg:hidden"');
     expect(mobileDrawerSource).toContain('className="lg:hidden flex items-center"');
     expect(navbarSource).not.toContain('className="flex items-center gap-1 md:hidden"');

@@ -69,7 +69,7 @@ export function PresetGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-muted px-3 py-2"
       style={{ height: 160 }}
     >
       {/* 2x2 preset grid */}
@@ -79,12 +79,12 @@ export function PresetGlyph({ locale }: SubpackageGlyphProps) {
           return (
             <li
               key={id}
-              className="flex flex-col justify-between rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5"
-              style={active ? { boxShadow: "inset 0 0 0 1px var(--brand-primary)" } : undefined}
+              className="flex flex-col justify-between rounded-[var(--radius-md)] bg-background px-2 py-1.5"
+              style={active ? { boxShadow: "inset 0 0 0 1px hsl(var(--primary))" } : undefined}
             >
               <div className="flex items-center justify-between gap-1">
-                <span className="flex items-center gap-1 truncate font-mono text-[10px] text-[var(--neutral-12)]">
-                  <Icon className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" />
+                <span className="flex items-center gap-1 truncate font-mono text-[10px] text-foreground">
+                  <Icon className="h-3 w-3 shrink-0 text-muted-foreground" />
                   {t.labels[id]}
                 </span>
                 {active ? (
@@ -106,7 +106,7 @@ export function PresetGlyph({ locale }: SubpackageGlyphProps) {
       </ul>
 
       {/* Footer */}
-      <p className="text-center font-mono text-[9px] text-[var(--neutral-11)]">{t.footer}</p>
+      <p className="text-center font-mono text-[9px] text-muted-foreground">{t.footer}</p>
     </div>
   );
 }

@@ -133,10 +133,8 @@ export function WizardShell() {
     <div className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-xl">
         <header className="mb-8 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
-            {t("title")}
-          </h1>
-          <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("subtitle")}</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{t("subtitle")}</p>
         </header>
 
         <div className="mb-8">
@@ -147,12 +145,12 @@ export function WizardShell() {
           />
         </div>
 
-        <div className="rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-8 shadow-sm">
+        <div className="rounded-[var(--radius-2xl)] border border-border bg-background p-8 shadow-sm">
           {currentStep > 1 && (
             <button
               type="button"
               onClick={handleBack}
-              className="mb-4 inline-flex items-center gap-1.5 text-sm text-[var(--neutral-11)] transition-colors hover:text-[var(--neutral-12)]"
+              className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               {t("progress.back")}
@@ -173,7 +171,7 @@ export function WizardShell() {
           )}
         </div>
 
-        <p className="mt-4 text-center text-xs text-[var(--neutral-11)]">
+        <p className="mt-4 text-center text-xs text-muted-foreground">
           {t("progress.stepCounter", {
             current: String(currentStep),
             total: String(STEP_IDS.length),
@@ -195,10 +193,8 @@ function ChoosePlanStep({ onChoose, onSkip }: ChoosePlanStepProps) {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {t("plan.title")}
-        </h2>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("plan.description")}</p>
+        <h2 className="text-2xl font-semibold tracking-tight text-foreground">{t("plan.title")}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{t("plan.description")}</p>
       </div>
 
       <Button onClick={onChoose} className="w-full">
@@ -209,7 +205,7 @@ function ChoosePlanStep({ onChoose, onSkip }: ChoosePlanStepProps) {
         htmlType="button"
         variant="text"
         onClick={onSkip}
-        className="w-full text-[var(--neutral-11)]"
+        className="w-full text-muted-foreground"
       >
         {t("plan.skip")}
       </Button>

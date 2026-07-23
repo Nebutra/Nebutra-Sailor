@@ -27,7 +27,7 @@ import { countFilledFields } from "./types";
  *
  * Collapsed-row summaries come from the value-free `buildManifest`; field VALUES
  * appear only inside expanded content (progressive disclosure). Every wheel is
- * composed, never hand-rolled. The ONE permitted `var(--brand-gradient)` use is
+ * composed, never hand-rolled. The ONE permitted `hsl(var(--primary))` use is
  * the overall-completeness ring in the header; the L9 floor's live edge is a
  * solid blue hairline.
  */
@@ -134,7 +134,7 @@ export function CompanyTower({
                 aria-label="Compile the company tower"
                 onClick={() => onCompile?.()}
                 className="border-0 text-white disabled:opacity-50"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 Compile
               </Button>
@@ -185,7 +185,7 @@ type TowerFloorBodyRenderer = NonNullable<React.ComponentProps<typeof TowerFloor
 
 /**
  * OverallRing — a thin gradient-masked ring carrying the single permitted
- * `var(--brand-gradient)`. The arc is a conic-gradient progress mask (a quiet
+ * `hsl(var(--primary))`. The arc is a conic-gradient progress mask (a quiet
  * geometric primitive, not an icon), with the mono % at center. This is the one
  * place the brand gradient appears in the whole tower.
  */
@@ -197,7 +197,7 @@ function OverallRing({ percent }: { percent: number }) {
       role="img"
       aria-label={`${clamped}% overall complete`}
       style={{
-        background: `conic-gradient(var(--brand-gradient) ${clamped}%, hsl(var(--neutral-4)) ${clamped}% 100%)`,
+        background: `conic-gradient(hsl(var(--primary)) ${clamped}%, hsl(var(--muted)) ${clamped}% 100%)`,
       }}
     >
       <div className="grid size-9 place-items-center rounded-full bg-neutral-1">

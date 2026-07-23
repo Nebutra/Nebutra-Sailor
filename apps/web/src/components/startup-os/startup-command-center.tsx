@@ -920,7 +920,7 @@ function StartupBuilderHome({
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-10 blur-3xl"
-          style={{ background: "var(--brand-gradient)" }}
+          style={{ background: "hsl(var(--primary))" }}
         />
         <div className="relative mx-auto flex w-full max-w-5xl flex-col px-5 py-16 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
@@ -931,7 +931,7 @@ function StartupBuilderHome({
             <h2
               className="mt-6 text-4xl font-semibold tracking-tight sm:text-6xl"
               style={{
-                background: "var(--brand-gradient)",
+                background: "hsl(var(--primary))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -1706,7 +1706,7 @@ function StartupCanvasPanel({
                       refX="7"
                       refY="4"
                     >
-                      <path d="M 0 0 L 8 4 L 0 8 z" fill="var(--neutral-8)" />
+                      <path d="M 0 0 L 8 4 L 0 8 z" fill="hsl(var(--border))" />
                     </marker>
                   </defs>
                   {model.edges.map((edge) => (
@@ -1715,7 +1715,7 @@ function StartupCanvasPanel({
                       d={pathFor(edge)}
                       fill="none"
                       markerEnd="url(#startup-canvas-arrow)"
-                      stroke={edge.kind === "run_artifact" ? "var(--blue-8)" : "var(--neutral-7)"}
+                      stroke={edge.kind === "run_artifact" ? "var(--blue-8)" : "hsl(var(--border))"}
                       strokeDasharray={edge.kind === "run_artifact" ? "0" : "5 6"}
                       strokeLinecap="round"
                       strokeWidth={edge.kind === "run_artifact" ? 1.8 : 1.2}

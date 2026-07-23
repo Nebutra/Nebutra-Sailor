@@ -72,7 +72,7 @@ export function MatchesList() {
           <Link
             href={`/${locale}/cofounder/discover`}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             {t("emptyState.cofoundersAction")}
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -91,7 +91,7 @@ export function MatchesList() {
             <Link
               href={`/${locale}/cofounder/room/${match.profileId}`}
               className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white"
-              style={{ background: "var(--brand-gradient)" }}
+              style={{ background: "hsl(var(--primary))" }}
             >
               <Sparkles className="size-4" aria-hidden="true" />
               Open Cofounder Room

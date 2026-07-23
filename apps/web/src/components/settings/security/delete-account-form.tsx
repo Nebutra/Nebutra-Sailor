@@ -94,27 +94,25 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--status-danger)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--status-danger)] bg-background p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-sm font-medium text-[var(--status-danger)]">
             {t("auth.security.deleteAccount.title")}
           </h3>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">
+          <p className="mt-1 text-sm text-muted-foreground">
             {t("auth.security.deleteAccount.description")}
           </p>
         </div>
-        <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+        <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
           {available ? t("auth.security.deleteAccount.title") : "Provider managed"}
         </span>
       </div>
 
       {!available ? (
-        <p className="text-sm text-[var(--neutral-11)]">{t("auth.security.managedByProvider")}</p>
+        <p className="text-sm text-muted-foreground">{t("auth.security.managedByProvider")}</p>
       ) : success ? (
-        <p className="text-sm text-[var(--neutral-11)]">
-          {t("auth.security.deleteAccount.success")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("auth.security.deleteAccount.success")}</p>
       ) : stage === 1 ? (
         <div className="flex justify-end">
           <Button htmlType="button" onClick={() => setStage(2)} variant="outlined">
@@ -129,7 +127,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
               name="password"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormLabel className="text-sm font-medium text-[var(--neutral-12)]">
+                  <FormLabel className="text-sm font-medium text-foreground">
                     {t("auth.security.deleteAccount.passwordPrompt")}
                   </FormLabel>
                   <FormControl>
@@ -149,7 +147,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
               name="confirm"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormLabel className="text-sm font-medium text-[var(--neutral-12)]">
+                  <FormLabel className="text-sm font-medium text-foreground">
                     {t("auth.security.deleteAccount.confirmTextLabel")}
                   </FormLabel>
                   <FormControl>

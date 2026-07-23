@@ -43,7 +43,7 @@ export default async function DemoEmbedPage({
   const summary = await getGrowthSummary(process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org");
 
   return (
-    <main className="min-h-screen bg-[color:var(--neutral-2)] p-4 text-[color:var(--neutral-12)] dark:bg-[color:var(--neutral-1)]">
+    <main className="min-h-screen bg-muted p-4 text-foreground dark:bg-background">
       <div className="mx-auto max-w-5xl">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -62,8 +62,8 @@ export default async function DemoEmbedPage({
                 href={`/demo/embed?view=${tab.id}`}
                 className={`rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium transition-colors ${
                   activeTab === tab.id
-                    ? "bg-[color:var(--blue-9)] text-white"
-                    : "bg-[color:var(--neutral-1)] text-[color:var(--neutral-11)] hover:text-[color:var(--neutral-12)]"
+                    ? "bg-[color:hsl(var(--primary))] text-white"
+                    : "bg-background text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {tab.label}
@@ -75,28 +75,28 @@ export default async function DemoEmbedPage({
         {activeTab === "analytics" && (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
+              <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Database className="size-3.5" />
                 Total Events
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.totalEvents.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
+              <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Users className="size-3.5" />
                 Active Users
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.activeUsers.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
+              <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <BarChart3 className="size-3.5" />
                 Signups
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.signups.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
+              <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Coins className="size-3.5" />
                 Revenue
               </p>
@@ -109,25 +109,25 @@ export default async function DemoEmbedPage({
           <div className="grid gap-3 md:grid-cols-2">
             <Card className="p-4">
               <h2 className="text-sm font-semibold">Plan overview</h2>
-              <p className="mt-2 text-sm text-[color:var(--neutral-11)]">
+              <p className="mt-2 text-sm text-muted-foreground">
                 Starter · Usage overage enabled · Monthly billing
               </p>
               <p className="mt-3 text-xl font-semibold">{toCurrency(summary.revenue * 30)}</p>
-              <p className="text-xs text-[color:var(--neutral-10)]">30-day projected revenue</p>
+              <p className="text-xs text-muted-foreground">30-day projected revenue</p>
             </Card>
             <Card className="p-4">
               <h2 className="text-sm font-semibold">Today snapshot</h2>
               <dl className="mt-3 space-y-2 text-sm">
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-[color:var(--neutral-10)]">Revenue</dt>
+                  <dt className="text-muted-foreground">Revenue</dt>
                   <dd className="font-medium">{toCurrency(summary.revenue)}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-[color:var(--neutral-10)]">Conversions</dt>
+                  <dt className="text-muted-foreground">Conversions</dt>
                   <dd className="font-medium">{summary.conversions.toLocaleString()}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-[color:var(--neutral-10)]">Day</dt>
+                  <dt className="text-muted-foreground">Day</dt>
                   <dd className="font-medium">{summary.day ?? "N/A"}</dd>
                 </div>
               </dl>
@@ -138,20 +138,20 @@ export default async function DemoEmbedPage({
         {activeTab === "tenants" && (
           <Card className="p-0">
             <div className="space-y-3 p-4 md:hidden">
-              <div className="rounded-[var(--radius-lg)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] p-3">
+              <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-3">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-semibold">{summary.tenantId}</p>
                   <span className="inline-flex rounded-full bg-[color:var(--cyan-3)] px-2.5 py-1 text-xs font-medium text-[color:var(--cyan-11)] dark:bg-[color:var(--cyan-9)]/20 dark:text-[color:var(--cyan-9)]">
                     Healthy
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-[color:var(--neutral-10)]">
+                <p className="mt-1 text-xs text-muted-foreground">
                   Snapshot: {summary.day ?? "N/A"}
                 </p>
               </div>
             </div>
             <div className="hidden md:block">
-              <div className="grid grid-cols-12 border-b border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] px-4 py-3 text-xs font-medium uppercase tracking-wide text-[color:var(--neutral-11)]">
+              <div className="grid grid-cols-12 border-b border-border bg-muted px-4 py-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 <div className="col-span-4">Tenant</div>
                 <div className="col-span-2">Status</div>
                 <div className="col-span-2">Events</div>

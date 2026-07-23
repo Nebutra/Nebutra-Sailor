@@ -145,14 +145,11 @@ export function CreateApiKeyDialog({
       aria-modal="true"
       aria-labelledby="create-api-key-title"
     >
-      <div className="w-full max-w-lg rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-xl">
-        <h2
-          id="create-api-key-title"
-          className="mb-1 text-base font-semibold text-[var(--neutral-12)]"
-        >
+      <div className="w-full max-w-lg rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-xl">
+        <h2 id="create-api-key-title" className="mb-1 text-base font-semibold text-foreground">
           {text.title}
         </h2>
-        <p className="mb-4 text-sm text-[var(--neutral-11)]">{text.description}</p>
+        <p className="mb-4 text-sm text-muted-foreground">{text.description}</p>
 
         {created ? (
           <div className="space-y-4">
@@ -161,7 +158,7 @@ export function CreateApiKeyDialog({
                 {text.successWarning}
               </p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 break-all rounded bg-[var(--neutral-1)] px-3 py-2 font-mono text-[var(--amber-12)] text-xs shadow-inner">
+                <code className="flex-1 break-all rounded bg-background px-3 py-2 font-mono text-[var(--amber-12)] text-xs shadow-inner">
                   {created.key}
                 </code>
                 <button
@@ -177,7 +174,7 @@ export function CreateApiKeyDialog({
               <button
                 type="button"
                 onClick={attemptClose}
-                className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                className="rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
               >
                 {text.close}
               </button>
@@ -191,7 +188,7 @@ export function CreateApiKeyDialog({
                 name="name"
                 render={({ field }) => (
                   <FormItem className="space-y-0">
-                    <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
+                    <FormLabel className="mb-1 block text-sm font-medium text-foreground">
                       {text.nameLabel}
                     </FormLabel>
                     <FormControl>
@@ -215,14 +212,14 @@ export function CreateApiKeyDialog({
                 render={({ field }) => (
                   <FormItem className="space-y-0">
                     <fieldset>
-                      <legend className="mb-2 block text-sm font-medium text-[var(--neutral-12)]">
+                      <legend className="mb-2 block text-sm font-medium text-foreground">
                         {text.scopesLabel}
                       </legend>
                       <div className="grid grid-cols-2 gap-2">
                         {availableScopes.map((scope) => (
                           <label
                             key={scope}
-                            className="flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-2 text-sm text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                            className="flex items-center gap-2 rounded-[var(--radius-md)] border border-border px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
                           >
                             <input
                               data-allow-native
@@ -232,7 +229,7 @@ export function CreateApiKeyDialog({
                               checked={field.value.includes(scope)}
                               onChange={() => toggleScope(scope, field.value)}
                               disabled={submitting}
-                              className="h-4 w-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
+                              className="h-4 w-4 rounded border-border text-[hsl(var(--primary))]"
                             />
                             <span>{scope}</span>
                           </label>
@@ -251,7 +248,7 @@ export function CreateApiKeyDialog({
                   type="button"
                   onClick={attemptClose}
                   disabled={submitting}
-                  className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:opacity-50"
+                  className="rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50"
                 >
                   {text.close}
                 </button>
@@ -259,7 +256,7 @@ export function CreateApiKeyDialog({
                   type="submit"
                   disabled={submitting}
                   className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-                  style={{ background: "var(--brand-gradient)" }}
+                  style={{ background: "hsl(var(--primary))" }}
                 >
                   {submitting ? text.submitting : text.submit}
                 </button>

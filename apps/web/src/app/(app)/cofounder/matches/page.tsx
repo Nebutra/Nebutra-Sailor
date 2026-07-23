@@ -7,7 +7,7 @@ export default function CofounderMatchesPage() {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[280px] w-full max-w-2xl opacity-[0.10] blur-3xl"
-        style={{ background: "var(--brand-gradient)" }}
+        style={{ background: "hsl(var(--primary))" }}
       />
 
       <div className="relative mx-auto w-full max-w-3xl px-5 py-14 sm:px-8">
@@ -16,7 +16,7 @@ export default function CofounderMatchesPage() {
             <h1
               className="text-2xl font-semibold tracking-[-0.04em] sm:text-3xl"
               style={{
-                background: "var(--brand-gradient)",
+                background: "hsl(var(--primary))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",

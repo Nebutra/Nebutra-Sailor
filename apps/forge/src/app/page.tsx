@@ -45,7 +45,7 @@ export default function ForgeHomePage() {
               <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
                 <span className="tabular-nums">{hub.tools.length} 个工具</span>
                 <span
-                  className="hidden h-1 w-1 rounded-full bg-[var(--neutral-7)] sm:inline-block"
+                  className="hidden h-1 w-1 rounded-full bg-[hsl(var(--border))] sm:inline-block"
                   aria-hidden
                 />
                 <span>人机同一接口</span>

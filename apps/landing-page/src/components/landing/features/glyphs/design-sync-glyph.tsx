@@ -12,20 +12,20 @@ const NODE_TONE_STYLES: Record<
   purple: {
     bg: "color-mix(in oklab, #8b5cf6 12%, transparent)",
     border: "color-mix(in oklab, #8b5cf6 35%, transparent)",
-    text: "var(--neutral-12)",
+    text: "hsl(var(--foreground))",
     iconColor: "#8b5cf6",
   },
   gray: {
-    bg: "var(--neutral-3)",
-    border: "var(--neutral-7)",
-    text: "var(--neutral-12)",
-    iconColor: "var(--neutral-11)",
+    bg: "hsl(var(--muted))",
+    border: "hsl(var(--border))",
+    text: "hsl(var(--foreground))",
+    iconColor: "hsl(var(--muted-foreground))",
   },
   primary: {
-    bg: "color-mix(in oklab, var(--brand-primary) 14%, transparent)",
-    border: "color-mix(in oklab, var(--brand-primary) 38%, transparent)",
-    text: "var(--neutral-12)",
-    iconColor: "var(--brand-primary)",
+    bg: "color-mix(in oklab, hsl(var(--primary)) 14%, transparent)",
+    border: "color-mix(in oklab, hsl(var(--primary)) 38%, transparent)",
+    text: "hsl(var(--foreground))",
+    iconColor: "hsl(var(--primary))",
   },
 };
 
@@ -58,11 +58,11 @@ function LogRow({ verb, meta, time }: { verb: string; meta: string; time: string
         >
           {verb}
         </Badge>
-        <span className="truncate" style={{ color: "var(--neutral-11)" }}>
+        <span className="truncate" style={{ color: "hsl(var(--muted-foreground))" }}>
           {meta}
         </span>
       </div>
-      <span style={{ color: "var(--neutral-10)" }}>{time}</span>
+      <span style={{ color: "hsl(var(--muted-foreground))" }}>{time}</span>
     </div>
   );
 }
@@ -73,22 +73,22 @@ export function DesignSyncGlyph(_props: SubpackageGlyphProps) {
       className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] p-3"
       style={{
         height: 160,
-        background: "var(--neutral-2)",
+        background: "hsl(var(--muted))",
       }}
     >
       <div className="flex items-center justify-between gap-1.5">
         <FlowNode label="Figma" tone="purple" />
-        <ArrowRight size={12} style={{ color: "var(--neutral-9)" }} />
+        <ArrowRight size={12} style={{ color: "hsl(var(--muted-foreground))" }} />
         <FlowNode label="git" tone="gray" />
-        <ArrowRight size={12} style={{ color: "var(--neutral-9)" }} />
+        <ArrowRight size={12} style={{ color: "hsl(var(--muted-foreground))" }} />
         <FlowNode label="@nebutra/tokens" tone="primary" />
       </div>
 
       <div
         className="flex flex-col gap-1.5 rounded-[6px] px-2 py-2"
         style={{
-          background: "var(--neutral-1)",
-          border: "1px solid var(--neutral-6)",
+          background: "hsl(var(--background))",
+          border: "1px solid hsl(var(--border))",
         }}
       >
         <LogRow verb="pull" meta="1.2s · 47 tokens updated" time="12m ago" />
@@ -97,15 +97,15 @@ export function DesignSyncGlyph(_props: SubpackageGlyphProps) {
 
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
-          <Refresh size={11} style={{ color: "var(--neutral-10)" }} />
+          <Refresh size={11} style={{ color: "hsl(var(--muted-foreground))" }} />
           <span
             className="font-mono text-[10px] leading-none"
-            style={{ color: "var(--neutral-10)" }}
+            style={{ color: "hsl(var(--muted-foreground))" }}
           >
             provider-agnostic · CI workflow
           </span>
         </div>
-        <GitBranch size={11} style={{ color: "var(--neutral-9)" }} />
+        <GitBranch size={11} style={{ color: "hsl(var(--muted-foreground))" }} />
       </div>
     </div>
   );

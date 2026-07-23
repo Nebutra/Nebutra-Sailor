@@ -2,7 +2,7 @@ import { Droplet } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 
 const syntaxClassNames = {
-  keyword: "text-[var(--brand-primary)]",
+  keyword: "text-[hsl(var(--primary))]",
   string: "text-[var(--green-11)]",
   symbol: "text-[var(--brand-tertiary)]",
 } as const;
@@ -10,7 +10,7 @@ const syntaxClassNames = {
 const swatches = [
   "bg-[var(--green-9)] shadow-[0_0_8px_color-mix(in_oklch,var(--green-9)_45%,transparent)] ring-[var(--green-8)]/30 scale-110",
   "bg-[var(--brand-tertiary)] opacity-40 hover:opacity-100",
-  "bg-[var(--brand-primary)] opacity-40 hover:opacity-100",
+  "bg-[hsl(var(--primary))] opacity-40 hover:opacity-100",
   "bg-[var(--red-9)] opacity-40 hover:opacity-100",
 ] as const;
 

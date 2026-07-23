@@ -14,13 +14,13 @@ import {
 export function HexGridDemo() {
   return (
     <MagicCard
-      className="w-full h-[400px] p-0 rounded-3xl border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)] shadow-sm relative"
-      gradientColor="var(--neutral-3)"
+      className="w-full h-[400px] p-0 rounded-3xl border-border flex flex-col overflow-hidden bg-background shadow-sm relative"
+      gradientColor="hsl(var(--muted))"
     >
       {/* The HexGrid - faint, masked to the center */}
       <HexGrid
         size={40}
-        color="var(--neutral-8)"
+        color="hsl(var(--border))"
         opacity={0.3}
         glow={true}
         className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white_10%,transparent_70%)] pointer-events-none"
@@ -60,8 +60,8 @@ export function HexGridDemo() {
 export function DotPatternCardDemo() {
   return (
     <MagicCard
-      className="w-full h-[300px] p-0 rounded-3xl border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)] shadow-sm relative"
-      gradientColor="var(--neutral-3)"
+      className="w-full h-[300px] p-0 rounded-3xl border-border flex flex-col overflow-hidden bg-background shadow-sm relative"
+      gradientColor="hsl(var(--muted))"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,51,254,0.15)_1px,transparent_1px)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(circle_at_center,white_40%,transparent_100%)] pointer-events-none" />
 
@@ -83,12 +83,12 @@ export function DotPatternCardDemo() {
 export function FlickeringGridCardDemo() {
   return (
     <MagicCard
-      className="w-full h-[400px] p-0 rounded-3xl border-[var(--neutral-5)] flex flex-col overflow-hidden bg-[var(--neutral-1)] shadow-sm relative"
-      gradientColor="var(--neutral-3)"
+      className="w-full h-[400px] p-0 rounded-3xl border-border flex flex-col overflow-hidden bg-background shadow-sm relative"
+      gradientColor="hsl(var(--muted))"
     >
       <FlickeringGrid
         squareSize={16}
-        color="var(--neutral-11)"
+        color="hsl(var(--muted-foreground))"
         maxOpacity={0.15}
         flickerChance={0.3}
         className="absolute inset-0 [mask-image:radial-gradient(circle_at_center,white_0%,transparent_80%)] pointer-events-none"
@@ -208,7 +208,7 @@ export function GlassmorphismDemo({ lang = "en" }: { lang?: string }) {
       {/* Background elements to show off the glass blur */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:16px_16px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] pointer-events-none" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0033FE] rounded-full mix-blend-screen filter blur-[128px] opacity-20 animate-pulse" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[hsl(var(--primary))] rounded-full mix-blend-screen filter blur-[128px] opacity-20 animate-pulse" />
         <div
           className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#0BF1C3] rounded-full mix-blend-screen filter blur-[128px] opacity-20 animate-pulse"
           style={{ animationDelay: "2s" }}

@@ -32,8 +32,8 @@ export default async function NotificationSettingsPage({ params, searchParams }:
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Notifications</h2>
-        <p className="mt-1 max-w-2xl text-sm text-[var(--neutral-11)]">
+        <h2 className="text-lg font-semibold text-foreground">Notifications</h2>
+        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
           Tune how {brand.name} reaches you for workspace activity, billing risk, security events,
           and product operations. Managed providers can save these preferences immediately; preview
           mode shows the product defaults without pretending they are persisted.
@@ -81,18 +81,18 @@ export default async function NotificationSettingsPage({ params, searchParams }:
         ].map(({ icon: Icon, label, value, description }) => (
           <div
             key={label}
-            className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5"
+            className="rounded-[var(--radius-lg)] border border-border bg-background p-5"
           >
             <div className="flex items-start gap-3">
-              <div className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
+              <div className="rounded-[var(--radius-md)] bg-muted p-2 text-muted-foreground">
                 <Icon className="h-4 w-4" aria-hidden />
               </div>
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--neutral-10)]">
+                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   {label}
                 </p>
-                <p className="mt-1 text-sm font-semibold text-[var(--neutral-12)]">{value}</p>
-                <p className="mt-1 text-sm text-[var(--neutral-11)]">{description}</p>
+                <p className="mt-1 text-sm font-semibold text-foreground">{value}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{description}</p>
               </div>
             </div>
           </div>

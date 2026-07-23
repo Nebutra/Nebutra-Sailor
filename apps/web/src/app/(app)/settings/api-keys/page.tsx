@@ -11,8 +11,8 @@ export default async function ApiKeysPage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-xl font-semibold text-[var(--neutral-12)]">API Keys</h1>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">
+        <h1 className="text-xl font-semibold text-foreground">API Keys</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Generate and manage API keys for programmatic access to {brand.name}.
         </p>
       </header>
@@ -20,7 +20,7 @@ export default async function ApiKeysPage() {
       <PermissionGate
         require={["api_key:read"]}
         fallback={
-          <p className="text-sm text-[var(--neutral-11)]">
+          <p className="text-sm text-muted-foreground">
             You do not have permission to view API keys.
           </p>
         }

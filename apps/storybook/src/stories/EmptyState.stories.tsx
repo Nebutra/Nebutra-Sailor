@@ -42,8 +42,8 @@ export const WithAction: Story = {
     action: (
       <button
         type="button"
-        className="rounded-lg px-3 py-1.5 text-[color:var(--neutral-1)] text-sm font-medium"
-        style={{ background: "var(--brand-gradient)" }}
+        className="rounded-lg px-3 py-1.5 text-[color:hsl(var(--background))] text-sm font-medium"
+        style={{ background: "hsl(var(--primary))" }}
       >
         Create API key
       </button>
@@ -66,8 +66,8 @@ export const AllVariants: Story = {
         action={
           <button
             type="button"
-            className="rounded-lg px-3 py-1.5 text-[color:var(--neutral-1)] text-sm font-medium"
-            style={{ background: "var(--brand-gradient)" }}
+            className="rounded-lg px-3 py-1.5 text-[color:hsl(var(--background))] text-sm font-medium"
+            style={{ background: "hsl(var(--primary))" }}
           >
             Invite member
           </button>

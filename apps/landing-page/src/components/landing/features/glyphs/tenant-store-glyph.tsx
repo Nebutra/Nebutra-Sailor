@@ -12,28 +12,28 @@ const SQL_LINES: ReadonlyArray<{
 ];
 
 const TONE_CLASS: Record<"keyword" | "value" | "comment" | "result" | "plain", string> = {
-  keyword: "text-[var(--blue-11)]",
+  keyword: "text-primary",
   value: "text-[var(--cyan-11)]",
-  comment: "text-[var(--neutral-10)]",
+  comment: "text-muted-foreground",
   result: "text-[var(--green-11)]",
-  plain: "text-[var(--neutral-12)]",
+  plain: "text-foreground",
 };
 
 export function TenantStoreGlyph(_props: SubpackageGlyphProps) {
   return (
     <div className="flex w-full flex-col gap-2 overflow-hidden p-3" style={{ height: 160 }}>
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-[10px] font-medium text-[var(--neutral-11)]">
+        <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
           <Database className="h-3 w-3" />
           <span className="font-mono">postgres · RLS</span>
         </div>
-        <div className="flex items-center gap-1 text-[9px] text-[var(--neutral-10)]">
+        <div className="flex items-center gap-1 text-[9px] text-muted-foreground">
           <Buildings className="h-3 w-3" />
           <span className="font-mono">tenant scope</span>
         </div>
       </div>
 
-      <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2.5 py-2 font-mono text-[10px] leading-snug">
+      <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] border border-border bg-muted px-2.5 py-2 font-mono text-[10px] leading-snug">
         {SQL_LINES.map((line) => (
           <div key={line.text} className={`truncate ${TONE_CLASS[line.tone]}`}>
             {line.text}
@@ -58,7 +58,7 @@ export function TenantStoreGlyph(_props: SubpackageGlyphProps) {
         </Badge>
       </div>
 
-      <div className="mt-auto flex items-center justify-between font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="mt-auto flex items-center justify-between font-mono text-[9px] text-muted-foreground">
         <span>withTenant()</span>
         <span>AsyncLocalStorage scope</span>
       </div>

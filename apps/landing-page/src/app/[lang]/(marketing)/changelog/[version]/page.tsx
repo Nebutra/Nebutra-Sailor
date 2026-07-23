@@ -48,7 +48,7 @@ const STATIC_RELEASES = [
     version: "0.9.0",
     date: "2026-03-13",
     tag: "Major",
-    tagColor: "var(--blue-9)",
+    tagColor: "hsl(var(--primary))",
     title: "GitOps & SLO Observability",
     summary:
       "Enterprise-grade deployment automation and reliability — ArgoCD GitOps reconciliation, PgBouncer connection pooling, Google SRE burn-rate alerts, and Grafana platform dashboard.",
@@ -139,7 +139,7 @@ const TAG_COLORS: Record<string, string> = {
   security: "var(--cyan-9)",
   platform: "var(--status-warning)",
   infrastructure: "var(--brand-tertiary)",
-  major: "var(--blue-9)",
+  major: "hsl(var(--primary))",
   foundation: "var(--status-success)",
 };
 
@@ -403,10 +403,7 @@ export default async function ChangelogVersionPage({
         );
 
     return (
-      <main
-        id="main-content"
-        className="min-h-screen bg-[var(--neutral-1)] text-[var(--neutral-12)]"
-      >
+      <main id="main-content" className="min-h-screen bg-background text-foreground">
         <Navbar />
 
         <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
@@ -415,7 +412,7 @@ export default async function ChangelogVersionPage({
             <div className="mb-8">
               <Link
                 href="/changelog"
-                className="inline-flex items-center text-sm font-medium text-[var(--blue-9)] hover:underline"
+                className="inline-flex items-center text-sm font-medium text-[hsl(var(--primary))] hover:underline"
               >
                 ← All releases
               </Link>
@@ -432,7 +429,7 @@ export default async function ChangelogVersionPage({
                 >
                   {cmsEntry.type || "Feature"}
                 </span>
-                <time className="text-sm text-[var(--neutral-11)]">{formattedDate}</time>
+                <time className="text-sm text-muted-foreground">{formattedDate}</time>
               </div>
 
               <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
@@ -440,7 +437,7 @@ export default async function ChangelogVersionPage({
               </h1>
 
               {cmsEntry.summary && (
-                <p className="mt-4 text-lg text-[var(--neutral-11)]">{cmsEntry.summary}</p>
+                <p className="mt-4 text-lg text-muted-foreground">{cmsEntry.summary}</p>
               )}
             </header>
 
@@ -461,7 +458,7 @@ export default async function ChangelogVersionPage({
             ) : null}
 
             {/* Version navigation */}
-            <nav className="mt-12 flex justify-between border-t border-[var(--neutral-7)] pt-8">
+            <nav className="mt-12 flex justify-between border-t border-border pt-8">
               {/* Previous version */}
               {(() => {
                 const currentIdx = cmsEntries.findIndex((e) => e.version === version);
@@ -469,7 +466,7 @@ export default async function ChangelogVersionPage({
                 return prevEntry ? (
                   <Link
                     href={`/changelog/${prevEntry.version}`}
-                    className="text-sm font-medium text-[var(--blue-9)] hover:underline"
+                    className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
                   >
                     ← v{prevEntry.version}
                   </Link>
@@ -488,7 +485,7 @@ export default async function ChangelogVersionPage({
                 return nextEntry ? (
                   <Link
                     href={`/changelog/${nextEntry.version}`}
-                    className="text-sm font-medium text-[var(--blue-9)] hover:underline"
+                    className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
                   >
                     v{nextEntry.version} →
                   </Link>
@@ -531,7 +528,7 @@ export default async function ChangelogVersionPage({
       : null;
 
   return (
-    <main id="main-content" className="min-h-screen bg-[var(--neutral-1)] text-[var(--neutral-12)]">
+    <main id="main-content" className="min-h-screen bg-background text-foreground">
       <Navbar />
 
       <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
@@ -540,7 +537,7 @@ export default async function ChangelogVersionPage({
           <div className="mb-8">
             <Link
               href="/changelog"
-              className="inline-flex items-center text-sm font-medium text-[var(--blue-9)] hover:underline"
+              className="inline-flex items-center text-sm font-medium text-[hsl(var(--primary))] hover:underline"
             >
               ← All releases
             </Link>
@@ -555,7 +552,7 @@ export default async function ChangelogVersionPage({
               >
                 {staticRelease.tag}
               </span>
-              <time className="text-sm text-[var(--neutral-11)]">{formattedDate}</time>
+              <time className="text-sm text-muted-foreground">{formattedDate}</time>
             </div>
 
             <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
@@ -563,7 +560,7 @@ export default async function ChangelogVersionPage({
             </h1>
 
             {staticRelease.summary && (
-              <p className="mt-4 text-lg text-[var(--neutral-11)]">{staticRelease.summary}</p>
+              <p className="mt-4 text-lg text-muted-foreground">{staticRelease.summary}</p>
             )}
           </header>
 
@@ -577,11 +574,11 @@ export default async function ChangelogVersionPage({
           </div>
 
           {/* Version navigation */}
-          <nav className="mt-12 flex justify-between border-t border-[var(--neutral-7)] pt-8">
+          <nav className="mt-12 flex justify-between border-t border-border pt-8">
             {prevRelease ? (
               <Link
                 href={`/changelog/${prevRelease.version}`}
-                className="text-sm font-medium text-[var(--blue-9)] hover:underline"
+                className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
               >
                 ← v{prevRelease.version}
               </Link>
@@ -592,7 +589,7 @@ export default async function ChangelogVersionPage({
             {nextRelease ? (
               <Link
                 href={`/changelog/${nextRelease.version}`}
-                className="text-sm font-medium text-[var(--blue-9)] hover:underline"
+                className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
               >
                 v{nextRelease.version} →
               </Link>

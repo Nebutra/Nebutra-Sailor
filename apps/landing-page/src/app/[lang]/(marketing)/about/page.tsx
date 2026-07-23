@@ -138,7 +138,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           </div>
 
           <div
-            className="relative w-full aspect-video max-h-[700px] overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-5)]/60 group"
+            className="relative w-full aspect-video max-h-[700px] overflow-hidden rounded-[var(--radius-panel)] border border-border/60 group"
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
             <Image
@@ -411,7 +411,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             {/* Right: Landscape Image */}
             <div className="flex-1 w-full order-1 lg:order-2">
               <div
-                className="relative aspect-square md:aspect-[4/5] rounded-[var(--radius-panel)] overflow-hidden border border-[var(--neutral-5)]/60"
+                className="relative aspect-square md:aspect-[4/5] rounded-[var(--radius-panel)] overflow-hidden border border-border/60"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <Image

@@ -78,7 +78,7 @@ export function CodeIndexGlyph(_props: SubpackageGlyphProps) {
               </Badge>
             </div>
             <div className="flex items-center gap-1.5">
-              <code className="truncate font-mono text-[9px] text-neutral-12 [&_mark]:bg-[var(--brand-primary)]/15 [&_mark]:text-[color:var(--brand-primary)] [&_mark]:rounded-[1px] [&_mark]:px-[1px]">
+              <code className="truncate font-mono text-[9px] text-neutral-12 [&_mark]:bg-[hsl(var(--primary))]/15 [&_mark]:text-[color:hsl(var(--primary))] [&_mark]:rounded-[1px] [&_mark]:px-[1px]">
                 {row.snippet}
               </code>
             </div>

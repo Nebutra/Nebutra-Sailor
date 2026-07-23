@@ -83,7 +83,7 @@ export function RoomView({ profileId }: { profileId: string }) {
           <Link
             href={`/${locale}/cofounder/discover`}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-            style={{ background: "var(--brand-gradient)" }}
+            style={{ background: "hsl(var(--primary))" }}
           >
             Discover cofounders
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -133,7 +133,7 @@ export function RoomView({ profileId }: { profileId: string }) {
                 onClick={formTeam}
                 disabled={formState === "forming"}
                 className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-                style={{ background: "var(--brand-gradient)" }}
+                style={{ background: "hsl(var(--primary))" }}
               >
                 <Users className="size-4" aria-hidden="true" />
                 {formState === "forming" ? "Forming…" : "Form the team"}
@@ -163,7 +163,7 @@ export function RoomView({ profileId }: { profileId: string }) {
             <Link
               href={`/${locale}/choose-plan`}
               className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-              style={{ background: "var(--brand-gradient)" }}
+              style={{ background: "hsl(var(--primary))" }}
             >
               Upgrade to open the room
               <ArrowRight className="size-4" aria-hidden="true" />

@@ -8,7 +8,7 @@
   background:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--blue-9, #0033fe) 6%, transparent) 1px,
+      color-mix(in srgb, var(--blue-9, hsl(var(--primary))) 6%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(var(--neutral-1, #fff), var(--neutral-1, #fff));
@@ -189,7 +189,7 @@
 .announcement a:focus-visible,
 .footer a:focus-visible,
 .header a:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--blue-9, #0033fe) 28%, transparent);
+  outline: 3px solid color-mix(in srgb, var(--blue-9, hsl(var(--primary))) 28%, transparent);
   outline-offset: 4px;
 }
 

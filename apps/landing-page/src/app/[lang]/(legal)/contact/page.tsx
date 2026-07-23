@@ -73,10 +73,10 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     <div className="space-y-8 sm:space-y-12">
       {/* Header */}
       <section className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)]">
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">
           {t("contact.heading")}
         </h1>
-        <p className="mt-4 text-lg text-[var(--neutral-10)]">{t("contact.subheading")}</p>
+        <p className="mt-4 text-lg text-muted-foreground">{t("contact.subheading")}</p>
       </section>
 
       {/* Contact Cards */}
@@ -84,13 +84,13 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         {contacts.map((contact) => (
           <div
             key={contact.email}
-            className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] p-6 transition-colors hover:border-[color:var(--blue-8)] dark:hover:border-[color:var(--blue-7)]"
+            className="rounded-[var(--radius-lg)] border border-border p-6 transition-colors hover:border-[color:var(--blue-8)] dark:hover:border-[color:var(--blue-7)]"
           >
-            <h3 className="font-semibold text-[var(--neutral-12)]">{contact.title}</h3>
-            <p className="mt-1 text-sm text-[var(--neutral-10)]">{contact.description}</p>
+            <h3 className="font-semibold text-foreground">{contact.title}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{contact.description}</p>
             <a
               href={`mailto:${contact.email}`}
-              className="mt-4 inline-block text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] dark:text-[color:var(--blue-9)] dark:hover:text-[color:var(--blue-10)]"
+              className="mt-4 inline-block text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] dark:text-[color:hsl(var(--primary))] dark:hover:text-[color:var(--blue-10)]"
             >
               {contact.email}
             </a>
@@ -99,34 +99,28 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       </section>
 
       {/* Contact Form */}
-      <section className="rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] p-5 sm:p-8">
-        <h2 className="text-2xl font-bold text-[var(--neutral-12)] mb-6">
-          {t("contact.formTitle")}
-        </h2>
+      <section className="rounded-[var(--radius-2xl)] border border-border p-5 sm:p-8">
+        <h2 className="text-2xl font-bold text-foreground mb-6">{t("contact.formTitle")}</h2>
         <ContactForm />
       </section>
 
       {/* Office Info */}
-      <section className="rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] p-5 sm:p-8">
-        <h2 className="text-xl font-bold text-[var(--neutral-12)] mb-4">
-          {t("contact.companyInfoTitle")}
-        </h2>
-        <div className="space-y-4 text-[var(--neutral-10)]">
+      <section className="rounded-[var(--radius-2xl)] bg-muted p-5 sm:p-8">
+        <h2 className="text-xl font-bold text-foreground mb-4">{t("contact.companyInfoTitle")}</h2>
+        <div className="space-y-4 text-muted-foreground">
           <div>
-            <h3 className="font-semibold text-[var(--neutral-12)]">
-              {t("contact.companyNameChinese")}
-            </h3>
-            <p className="text-sm text-[var(--neutral-10)]">{t("contact.companyNameEnglish")}</p>
+            <h3 className="font-semibold text-foreground">{t("contact.companyNameChinese")}</h3>
+            <p className="text-sm text-muted-foreground">{t("contact.companyNameEnglish")}</p>
             <p>{t("contact.companyAddress")}</p>
           </div>
           <div>
-            <h3 className="font-semibold text-[var(--neutral-12)]">{t("contact.socialMedia")}</h3>
+            <h3 className="font-semibold text-foreground">{t("contact.socialMedia")}</h3>
             <div className="flex gap-4 mt-2">
               <a
                 href="https://twitter.com/nebutra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--neutral-9)] hover:text-[color:var(--blue-11)] dark:hover:text-[color:var(--blue-9)]"
+                className="text-muted-foreground hover:text-[color:var(--blue-11)] dark:hover:text-[color:hsl(var(--primary))]"
               >
                 Twitter
               </a>
@@ -134,7 +128,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 href="https://linkedin.com/company/nebutra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--neutral-9)] hover:text-[color:var(--blue-11)] dark:hover:text-[color:var(--blue-9)]"
+                className="text-muted-foreground hover:text-[color:var(--blue-11)] dark:hover:text-[color:hsl(var(--primary))]"
               >
                 LinkedIn
               </a>
@@ -142,7 +136,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 href="https://github.com/nebutra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--neutral-9)] hover:text-[color:var(--blue-11)] dark:hover:text-[color:var(--blue-9)]"
+                className="text-muted-foreground hover:text-[color:var(--blue-11)] dark:hover:text-[color:hsl(var(--primary))]"
               >
                 GitHub
               </a>

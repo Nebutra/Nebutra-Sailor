@@ -17,7 +17,7 @@ const LINES: ReadonlyArray<LogLine> = [
     level: "INFO",
     event: "user.signup",
     fields: "userId=usr_8c41   tenantId=org_abc",
-    dotColor: "var(--blue-9)",
+    dotColor: "hsl(var(--primary))",
     levelColor: "var(--blue-11)",
   },
   {
@@ -38,15 +38,15 @@ const LINES: ReadonlyArray<LogLine> = [
     level: "DEBUG",
     event: "tenant.resolve",
     fields: "tenantId=org_xyz   1ms",
-    dotColor: "var(--neutral-9)",
-    levelColor: "var(--neutral-10)",
+    dotColor: "hsl(var(--muted-foreground))",
+    levelColor: "hsl(var(--muted-foreground))",
   },
 ] as const;
 
 export function LoggerGlyph({ entry: _entry, locale: _locale }: SubpackageGlyphProps) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)]"
+      className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-muted"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2 z-10 flex items-center gap-1">
@@ -58,8 +58,8 @@ export function LoggerGlyph({ entry: _entry, locale: _locale }: SubpackageGlyphP
 
       <div className="flex h-full flex-col justify-between px-3 py-2.5">
         <div className="flex items-center gap-1.5">
-          <FileText className="h-3 w-3 text-[var(--neutral-10)]" />
-          <span className="font-mono text-[10px] uppercase tracking-wide text-[var(--neutral-10)]">
+          <FileText className="h-3 w-3 text-muted-foreground" />
+          <span className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
             logs.stream
           </span>
         </div>
@@ -70,7 +70,7 @@ export function LoggerGlyph({ entry: _entry, locale: _locale }: SubpackageGlyphP
           ))}
         </div>
 
-        <div className="flex items-center gap-1.5 font-mono text-[9px] text-[var(--neutral-10)]">
+        <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground">
           <Clock className="h-3 w-3" />
           <span>trace-id propagated &middot; 4 sinks</span>
         </div>
@@ -93,8 +93,8 @@ function LogRow({ line }: { line: LogLine }) {
       >
         [{line.level}]
       </span>
-      <span className="flex-shrink-0 text-[var(--neutral-12)]">{line.event}</span>
-      <span className="truncate text-[var(--neutral-10)]">{line.fields}</span>
+      <span className="flex-shrink-0 text-foreground">{line.event}</span>
+      <span className="truncate text-muted-foreground">{line.fields}</span>
     </div>
   );
 }

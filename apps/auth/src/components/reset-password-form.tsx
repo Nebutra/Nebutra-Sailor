@@ -64,16 +64,14 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     return (
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
             {t("successTitle")}
           </h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-            {t("successDescription")}
-          </p>
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("successDescription")}</p>
         </div>
         <Link
           href="/sign-in"
-          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
         >
           {t("signInCta")}
         </Link>
@@ -84,15 +82,13 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {t("title")}
-        </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
 
       <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="new-password" className="text-sm font-medium text-[var(--neutral-12)]">
+          <label htmlFor="new-password" className="text-sm font-medium text-foreground">
             {t("newPasswordLabel")}
           </label>
           <div className="relative">
@@ -107,7 +103,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               onKeyUp={onKeyEvent}
               autoComplete="new-password"
               size="lg"
-              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
+              className="h-12 border-border bg-background pr-12 text-foreground shadow-none"
               placeholder={tSignIn("passwordPlaceholder")}
               aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
             />
@@ -116,7 +112,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               onClick={() => setShowPassword((v) => !v)}
               aria-label={showPassword ? tSignIn("hidePassword") : tSignIn("showPassword")}
               aria-pressed={showPassword}
-              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" aria-hidden />
@@ -130,7 +126,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               id="caps-lock-warning"
               role="status"
               aria-live="polite"
-              className="mt-0.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
+              className="mt-0.5 text-xs font-medium text-[color:var(--amber-11,hsl(var(--muted-foreground)))]"
             >
               {tSignIn("capsLockOn")}
             </p>
@@ -138,10 +134,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label
-            htmlFor="confirm-password"
-            className="text-sm font-medium text-[var(--neutral-12)]"
-          >
+          <label htmlFor="confirm-password" className="text-sm font-medium text-foreground">
             {t("confirmPasswordLabel")}
           </label>
           <Input
@@ -153,7 +146,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             onChange={(e) => setConfirm(e.target.value)}
             autoComplete="new-password"
             size="lg"
-            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={tSignIn("passwordPlaceholder")}
           />
         </div>
@@ -170,7 +163,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         <Button
           type="submit"
           disabled={loading}
-          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {loading ? tSignIn("providerLoading") : t("submit")}
         </Button>

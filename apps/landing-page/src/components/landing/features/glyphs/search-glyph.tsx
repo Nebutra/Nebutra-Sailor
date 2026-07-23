@@ -60,7 +60,7 @@ export function SearchGlyph(_props: SubpackageGlyphProps) {
                   token.mark ? (
                     <mark
                       key={idx}
-                      className="rounded-[var(--radius-sm)] bg-[image:var(--brand-gradient)] px-0.5 text-white"
+                      className="rounded-[var(--radius-sm)] bg-primary px-0.5 text-white"
                     >
                       {token.text}
                     </mark>

@@ -22,7 +22,7 @@ const VISIBLE_CHANNELS = new Set(["in_app", "email", "push"]);
 // enabled / disabled visual state.
 function getCellButtonClasses(enabled: boolean, editable: boolean): string {
   if (!editable) {
-    return "cursor-not-allowed border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-9)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-9)]";
+    return "cursor-not-allowed border-border bg-muted text-muted-foreground hover:bg-muted hover:text-muted-foreground";
   }
 
   if (enabled) {
@@ -39,11 +39,11 @@ export function NotificationPreferenceMatrix({
   sections,
 }: Props) {
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-base font-semibold text-[var(--neutral-12)]">Delivery matrix</h3>
-          <p className="mt-1 max-w-2xl text-sm text-[var(--neutral-11)]">
+          <h3 className="text-base font-semibold text-foreground">Delivery matrix</h3>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
             Copy-first from the proven `supastarter` pattern, but adapted to Nebutra&apos;s
             operator-facing signals. Each cell controls whether a notification category is allowed
             to reach you through that channel.
@@ -75,37 +75,37 @@ export function NotificationPreferenceMatrix({
         {sections.map((section) => (
           <div key={section.id}>
             <div className="mb-3">
-              <h4 className="text-sm font-semibold text-[var(--neutral-12)]">{section.title}</h4>
-              <p className="mt-1 text-sm text-[var(--neutral-11)]">{section.description}</p>
+              <h4 className="text-sm font-semibold text-foreground">{section.title}</h4>
+              <p className="mt-1 text-sm text-muted-foreground">{section.description}</p>
             </div>
 
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-7)]">
+            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-border">
               <table className="min-w-[720px] w-full border-collapse">
-                <thead className="bg-[var(--neutral-2)] text-left">
-                  <tr className="border-b border-[var(--neutral-7)]">
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[var(--neutral-10)]">
+                <thead className="bg-muted text-left">
+                  <tr className="border-b border-border">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Signal
                     </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[var(--neutral-10)]">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Inbox
                     </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[var(--neutral-10)]">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Email
                     </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[var(--neutral-10)]">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Push
                     </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[var(--neutral-10)]">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Notes
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {section.rows.map((row) => (
-                    <tr key={row.id} className="border-b border-[var(--neutral-7)] last:border-b-0">
+                    <tr key={row.id} className="border-b border-border last:border-b-0">
                       <td className="p-4 align-top">
-                        <p className="text-sm font-medium text-[var(--neutral-12)]">{row.label}</p>
-                        <p className="mt-1 text-sm text-[var(--neutral-11)]">{row.description}</p>
+                        <p className="text-sm font-medium text-foreground">{row.label}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">{row.description}</p>
                       </td>
 
                       {row.cells.slice(0, 3).map((cell) => (
@@ -145,7 +145,7 @@ export function NotificationPreferenceMatrix({
                           ) : (
                             <span
                               title={cell.reason}
-                              className="inline-flex rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-10)]"
+                              className="inline-flex rounded-full border border-border bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground"
                             >
                               N/A
                             </span>
@@ -154,13 +154,13 @@ export function NotificationPreferenceMatrix({
                       ))}
 
                       <td className="p-4 align-top">
-                        <ul className="space-y-1 text-sm text-[var(--neutral-11)]">
+                        <ul className="space-y-1 text-sm text-muted-foreground">
                           {row.cells
                             .filter((cell) => VISIBLE_CHANNELS.has(cell.channel) && cell.reason)
                             .slice(0, 2)
                             .map((cell) => (
                               <li key={cell.channel}>
-                                <span className="font-medium text-[var(--neutral-12)]">
+                                <span className="font-medium text-foreground">
                                   {cell.channelLabel}:
                                 </span>{" "}
                                 {cell.reason}
@@ -168,8 +168,8 @@ export function NotificationPreferenceMatrix({
                             ))}
                           {row.cells.every((cell) => !cell.reason) ? (
                             <li>
-                              <span className="font-medium text-[var(--neutral-12)]">Default:</span>{" "}
-                              Routed only where this signal is meant to stay high-signal.
+                              <span className="font-medium text-foreground">Default:</span> Routed
+                              only where this signal is meant to stay high-signal.
                             </li>
                           ) : null}
                         </ul>

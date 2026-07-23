@@ -78,7 +78,7 @@ export function WeChatLoginButton({ appId, redirectUri, forceVisible }: WeChatLo
       onClick={handleClick}
       disabled={!isConfigured || isRedirecting}
       aria-label={t("signIn")}
-      className="flex h-10 w-full items-center justify-center gap-2.5 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-sm font-medium text-[var(--neutral-12)] shadow-none transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-60"
+      className="flex h-10 w-full items-center justify-center gap-2.5 rounded-[var(--radius-md)] border border-border bg-background px-3 text-sm font-medium text-foreground shadow-none transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
     >
       <WeChatIcon />
       <span>{isConfigured ? t("signIn") : t("notConfigured")}</span>

@@ -6,7 +6,7 @@ import type { SubpackageGlyphProps } from "./types";
 export function UiGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2">
@@ -27,7 +27,7 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
         </div>
 
         <div className="flex items-center gap-1">
-          <Badge className="h-4 bg-[var(--blue-9)] px-1.5 text-[9px] font-medium text-white">
+          <Badge className="h-4 bg-[hsl(var(--primary))] px-1.5 text-[9px] font-medium text-white">
             New
           </Badge>
           <Badge
@@ -44,18 +44,18 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
           </Badge>
         </div>
 
-        <Card className="border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 shadow-none">
-          <div className="flex items-center gap-1 text-[10px] font-semibold text-[var(--neutral-12)]">
-            <Sparkles className="h-3 w-3 text-[var(--brand-primary)]" />
+        <Card className="border-border bg-background p-2 shadow-none">
+          <div className="flex items-center gap-1 text-[10px] font-semibold text-foreground">
+            <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
             Composable Card
           </div>
-          <p className="mt-0.5 text-[9px] leading-tight text-[var(--neutral-11)]">
+          <p className="mt-0.5 text-[9px] leading-tight text-muted-foreground">
             Primitives + framer-motion, themed by tokens.
           </p>
         </Card>
       </div>
 
-      <div className="mt-auto text-[10px] font-mono text-[var(--neutral-10)]">
+      <div className="mt-auto text-[10px] font-mono text-muted-foreground">
         @nebutra/ui · Storybook covered
       </div>
     </div>

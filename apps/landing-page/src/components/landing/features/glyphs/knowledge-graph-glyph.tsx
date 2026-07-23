@@ -40,11 +40,11 @@ function nodeById(id: string): NodePos {
 export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-3 py-3"
+      className="relative w-full overflow-hidden rounded-[var(--radius-lg)] border border-border bg-muted px-3 py-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-[10px] font-medium text-[var(--neutral-11)]">
+        <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
           <Connection className="h-3 w-3" />
           <span>graph</span>
         </div>
@@ -64,7 +64,7 @@ export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
             markerHeight="5"
             orient="auto-start-reverse"
           >
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--neutral-9)" />
+            <path d="M0,0 L10,5 L0,10 z" fill="hsl(var(--muted-foreground))" />
           </marker>
         </defs>
         {EDGES.map((edge) => {
@@ -77,7 +77,7 @@ export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
               y1={a.top + 6}
               x2={`${b.left + 4}%`}
               y2={b.top + 6}
-              stroke="var(--neutral-8)"
+              stroke="hsl(var(--border))"
               strokeWidth="1"
               strokeDasharray="2 2"
               markerEnd="url(#kg-arrow)"
@@ -89,7 +89,7 @@ export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
       {NODES.map((node) => (
         <div
           key={node.id}
-          className="absolute rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-0.5 text-[10px] font-medium text-[var(--neutral-12)] shadow-sm"
+          className="absolute rounded-[var(--radius-md)] border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-foreground shadow-sm"
           style={{ top: node.top, left: `${node.left}%` }}
         >
           {node.label}
@@ -104,7 +104,7 @@ export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
         return (
           <div
             key={`label-${edge.from}-${edge.to}`}
-            className="absolute flex items-center gap-0.5 rounded bg-[var(--neutral-1)] px-1 text-[8px] font-mono text-[var(--neutral-10)]"
+            className="absolute flex items-center gap-0.5 rounded bg-background px-1 text-[8px] font-mono text-muted-foreground"
             style={{ top: midTop, left: `${midLeft}%` }}
           >
             <ArrowRight className="h-2 w-2" />
@@ -113,7 +113,7 @@ export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
         );
       })}
 
-      <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between font-mono text-[9px] text-[var(--neutral-10)]">
+      <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between font-mono text-[9px] text-muted-foreground">
         <span>Cypher-compatible · typed edges</span>
       </div>
     </div>

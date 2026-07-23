@@ -149,14 +149,14 @@ function RetoolBanner() {
     <div
       className="mb-6 rounded-[var(--radius-xl)] border p-4"
       style={{
-        background: "var(--brand-gradient)",
+        background: "hsl(var(--primary))",
       }}
     >
-      <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-4">
+      <div className="rounded-[var(--radius-lg)] bg-background p-4">
         <div className="flex items-start gap-3">
           <ExternalLink
             aria-hidden="true"
-            className="mt-0.5 size-4 shrink-0 text-[color:var(--brand-primary)]"
+            className="mt-0.5 size-4 shrink-0 text-[color:hsl(var(--primary))]"
           />
           <p className="text-sm text-neutral-12">
             This is a deliberately minimal admin. For user/org CRUD, customer support flows, and

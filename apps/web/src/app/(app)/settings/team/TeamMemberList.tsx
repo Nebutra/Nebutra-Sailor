@@ -242,29 +242,29 @@ export function TeamMemberList({ orgId }: Props) {
     <div className="space-y-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium text-[var(--neutral-12)]">{memberCountLabel}</p>
-          <p className="text-xs text-[var(--neutral-11)]">
+          <p className="text-sm font-medium text-foreground">{memberCountLabel}</p>
+          <p className="text-xs text-muted-foreground">
             {payload.canManageRoles
               ? "Admins can change roles, remove members, or leave their own organization."
               : "Role changes and member removal require an organization admin."}
           </p>
         </div>
         {!payload.canManageRoles && (
-          <span className="rounded-full border border-[var(--neutral-7)] px-3 py-1 text-xs text-[var(--neutral-11)]">
+          <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
             Admin actions disabled
           </span>
         )}
       </div>
 
       {notice && (
-        <p className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-2 text-sm text-[var(--neutral-12)]">
+        <p className="rounded-[var(--radius-md)] border border-border bg-muted px-3 py-2 text-sm text-foreground">
           {notice}
         </p>
       )}
 
-      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--neutral-7)]">
+      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-border">
         <table className="w-full border-collapse text-left text-sm">
-          <thead className="bg-[var(--neutral-2)] text-xs uppercase tracking-[0.16em] text-[var(--neutral-10)]">
+          <thead className="bg-muted text-xs uppercase tracking-[0.16em] text-muted-foreground">
             <tr>
               <th className="px-4 py-3 font-medium">Member</th>
               <th className="hidden px-4 py-3 font-medium md:table-cell">Joined</th>
@@ -272,7 +272,7 @@ export function TeamMemberList({ orgId }: Props) {
               <th className="px-4 py-3 text-right font-medium">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[var(--neutral-6)]">
+          <tbody className="divide-y divide-border">
             {payload.members.map((member) => {
               const isSelf = member.userId === payload.currentUserId;
               const isOwner = member.role === "owner";
@@ -281,7 +281,7 @@ export function TeamMemberList({ orgId }: Props) {
               const canRemove = (payload.canRemoveMembers || isSelf) && !isOwner && !isBusy;
 
               return (
-                <tr key={member.id} className="bg-[var(--neutral-1)]">
+                <tr key={member.id} className="bg-background">
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
                       {member.user.image ? (
@@ -302,21 +302,21 @@ export function TeamMemberList({ orgId }: Props) {
                         />
                       )}
                       <div className="min-w-0">
-                        <p className="truncate font-medium text-[var(--neutral-12)]">
+                        <p className="truncate font-medium text-foreground">
                           {memberDisplayName(member)}
                           {isSelf && (
-                            <span className="ml-2 rounded-full bg-[var(--neutral-3)] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--neutral-10)]">
+                            <span className="ml-2 rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
                               You
                             </span>
                           )}
                         </p>
-                        <p className="truncate text-xs text-[var(--neutral-11)]">
+                        <p className="truncate text-xs text-muted-foreground">
                           {member.user.email}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="hidden px-4 py-4 text-[var(--neutral-11)] md:table-cell">
+                  <td className="hidden px-4 py-4 text-muted-foreground md:table-cell">
                     {formatJoinedAt(member.joinedAt)}
                   </td>
                   <td className="px-4 py-4">
@@ -343,7 +343,7 @@ export function TeamMemberList({ orgId }: Props) {
                       type="button"
                       disabled={!canRemove}
                       onClick={() => handleRemoveMember(member)}
-                      className="rounded px-2 py-1 text-xs font-medium text-red-11 hover:text-red-12 focus:outline-none focus:ring-2 focus:ring-red-8 focus:ring-offset-1 disabled:cursor-not-allowed disabled:text-[var(--neutral-9)]"
+                      className="rounded px-2 py-1 text-xs font-medium text-red-11 hover:text-red-12 focus:outline-none focus:ring-2 focus:ring-red-8 focus:ring-offset-1 disabled:cursor-not-allowed disabled:text-muted-foreground"
                       aria-label={
                         isSelf
                           ? "Leave organization"
@@ -359,7 +359,7 @@ export function TeamMemberList({ orgId }: Props) {
 
             {payload.members.length === 0 && (
               <tr>
-                <td className="px-4 py-8 text-center text-[var(--neutral-11)]" colSpan={4}>
+                <td className="px-4 py-8 text-center text-muted-foreground" colSpan={4}>
                   {t("emptyState.teamMembers")}
                 </td>
               </tr>
