@@ -1,5 +1,16 @@
 # create-sailor
 
+## 1.8.2
+
+### Patch Changes
+
+- Maintain Sailor-Template CI profile and scaffold platform defaults:
+  - Template mirror CI runs `template-contract` only (no full monorepo security
+    audit on every sync push).
+  - Align with auth-center single-entry login (`auth.nebutra.com`) docs and
+    production URL defaults.
+  - Inherit Next.js `^16.2.11` floor for current App Router security patches.
+
 ## 1.8.1
 
 ### Patch Changes

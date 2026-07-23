@@ -20,7 +20,7 @@
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@simplewebauthn/browser": "^13.3.0",
-    "next": "^16.2.6",
+    "next": "^16.2.11",
     "next-intl": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

@@ -1,5 +1,14 @@
 # nebutra
 
+## 0.3.6
+
+### Patch Changes
+
+- Template / platform maintenance release:
+  - Document Sailor-Template CI contract (mirror-only checks vs source monorepo).
+  - Align doctor/scaffold messaging with auth-center multi-app RP topology.
+  - Keep CLI compatible with Next.js `^16.2.11` platform floor.
+
 ## 0.3.2
 
 ### Patch Changes
