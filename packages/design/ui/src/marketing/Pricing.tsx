@@ -36,12 +36,12 @@ const pricingVariants = cva("w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", {
 });
 
 const cardVariants = cva(
-  "relative flex flex-col p-8 rounded-[var(--radius-3xl)] border transition-[background-color,border-color,box-shadow,transform] h-full bg-[var(--neutral-1)]",
+  "relative flex flex-col p-8 rounded-[var(--radius-3xl)] border transition-[background-color,border-color,box-shadow,transform] h-full bg-background",
   {
     variants: {
       popular: {
         true: "border-[hsl(var(--primary))] shadow-xl shadow-[hsl(var(--primary))]/5 ring-1 ring-[hsl(var(--primary))] md:scale-105 z-10",
-        false: "border-[var(--neutral-6)] hover:border-[var(--neutral-7)]",
+        false: "border-border hover:border-border",
       },
     },
     defaultVariants: {
@@ -70,25 +70,25 @@ export function Pricing({
       <AnimateIn preset="fadeUp">
         <div className="mb-12 flex flex-col items-center gap-4 text-center">
           {title && (
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
               {title}
             </h2>
           )}
-          {subtitle && <p className="text-lg text-[var(--neutral-11)] max-w-2xl">{subtitle}</p>}
+          {subtitle && <p className="text-lg text-muted-foreground max-w-2xl">{subtitle}</p>}
         </div>
       </AnimateIn>
 
       {showBillingToggle && (
         <AnimateIn preset="fadeUp" delay={0.1}>
           <div className="flex justify-center mb-16">
-            <div className="relative flex items-center p-1 bg-[var(--neutral-3)] rounded-full border border-[var(--neutral-6)]">
+            <div className="relative flex items-center p-1 bg-muted rounded-full border border-border">
               <button
                 type="button"
                 className={cn(
-                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)] z-10",
+                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10",
                   billingCycle === "monthly"
-                    ? "text-[var(--neutral-12)] bg-[var(--neutral-1)] shadow-sm"
-                    : "text-[var(--neutral-11)] hover:text-[var(--neutral-12)]",
+                    ? "text-foreground bg-background shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
                 onClick={() => setBillingCycle("monthly")}
               >
@@ -97,10 +97,10 @@ export function Pricing({
               <button
                 type="button"
                 className={cn(
-                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)] z-10",
+                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10",
                   billingCycle === "yearly"
-                    ? "text-[var(--neutral-12)] bg-[var(--neutral-1)] shadow-sm"
-                    : "text-[var(--neutral-11)] hover:text-[var(--neutral-12)]",
+                    ? "text-foreground bg-background shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
                 onClick={() => setBillingCycle("yearly")}
               >
@@ -131,7 +131,7 @@ export function Pricing({
 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-[var(--neutral-12)]">{plan.name}</h3>
+                    <h3 className="text-xl font-semibold text-foreground">{plan.name}</h3>
                     {plan.badge && (
                       <span className="px-3 py-1 text-xs font-semibold text-[hsl(var(--primary))] bg-[var(--blue-3)] rounded-full">
                         {plan.badge}
@@ -139,23 +139,23 @@ export function Pricing({
                     )}
                   </div>
 
-                  <p className="text-sm text-[var(--neutral-11)] min-h-[40px] mb-6">
+                  <p className="text-sm text-muted-foreground min-h-[40px] mb-6">
                     {plan.description}
                   </p>
 
                   <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-4xl font-bold tracking-tight text-[var(--neutral-12)]">
+                    <span className="text-4xl font-bold tracking-tight text-foreground">
                       {formatPrice(
                         locale,
                         billingCycle === "monthly" ? plan.price.monthly : plan.price.yearly / 12,
                         plan.price.currency,
                       )}
                     </span>
-                    <span className="text-sm font-medium text-[var(--neutral-11)]">/month</span>
+                    <span className="text-sm font-medium text-muted-foreground">/month</span>
                   </div>
 
                   {billingCycle === "yearly" ? (
-                    <div className="text-sm text-[var(--neutral-10)] mb-8 h-5">
+                    <div className="text-sm text-muted-foreground mb-8 h-5">
                       Billed {formatPrice(locale, plan.price.yearly, plan.price.currency)}/year
                     </div>
                   ) : (
@@ -169,14 +169,14 @@ export function Pricing({
                       "w-full inline-flex justify-center items-center px-4 py-3 text-sm font-semibold rounded-[var(--radius-xl)] transition-[background-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] mb-8",
                       plan.popular
                         ? "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] shadow-md hover:shadow-lg"
-                        : "bg-[var(--neutral-3)] text-[var(--neutral-12)] hover:bg-[var(--neutral-4)] border border-[var(--neutral-6)]",
+                        : "bg-muted text-foreground hover:bg-muted border border-border",
                     )}
                   >
                     {plan.cta.text}
                   </a>
 
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-[var(--neutral-12)] mb-4">
+                    <p className="text-sm font-medium text-foreground mb-4">
                       {plan.features.some((f) => f.included)
                         ? "Features included:"
                         : "What's included"}
@@ -198,8 +198,8 @@ export function Pricing({
                             className={cn(
                               "text-sm leading-tight",
                               feature.included
-                                ? "text-[var(--neutral-11)]"
-                                : "text-[var(--neutral-9)] line-through",
+                                ? "text-muted-foreground"
+                                : "text-muted-foreground line-through",
                             )}
                           >
                             {feature.text}
@@ -227,13 +227,11 @@ export function Pricing({
         <div className="mt-24">
           <AnimateIn preset="fadeUp">
             <div className="text-center mb-12">
-              <h3 className="text-2xl font-bold tracking-tight text-[var(--neutral-12)]">
-                Compare plans
-              </h3>
+              <h3 className="text-2xl font-bold tracking-tight text-foreground">Compare plans</h3>
             </div>
           </AnimateIn>
           {/* Comparison table can be implemented as a separate component */}
-          <div className="max-w-5xl mx-auto border border-[var(--neutral-6)] rounded-[var(--radius-2xl)] p-8 bg-[var(--neutral-2)] flex items-center justify-center min-h-[200px] text-[var(--neutral-10)] text-sm">
+          <div className="max-w-5xl mx-auto border border-border rounded-[var(--radius-2xl)] p-8 bg-muted flex items-center justify-center min-h-[200px] text-muted-foreground text-sm">
             Detailed comparison matrix coming soon.
           </div>
         </div>

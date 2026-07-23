@@ -1,5 +1,7 @@
 "use client";
 
+import { Button, Textarea } from "@nebutra/ui/primitives";
+
 import { useState } from "react";
 
 const SAMPLE = `# Nebutra Forge
@@ -114,21 +116,16 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
         </label>
       </div>
 
-      <textarea
+      <Textarea
         value={markdown}
         onChange={(e) => setMarkdown(e.target.value)}
         rows={14}
         className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
       />
 
-      <button
-        type="button"
-        disabled={loading}
-        onClick={() => void run()}
-        className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
-      >
+      <Button type="button" disabled={loading} onClick={() => void run()}>
         {loading ? "生成中…" : "生成 PDF"}
-      </button>
+      </Button>
 
       <p className="text-xs text-muted-foreground">
         渲染路径：marked → HTML/CSS → Chromium print（Playwright）。中文依赖宿主系统字体（PingFang /

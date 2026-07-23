@@ -69,8 +69,8 @@ const VARIANT_COLORS: Record<
   NonNullable<AuroraBackgroundProps["variant"]>,
   readonly [string, string, string]
 > = {
-  subtle: ["hsl(var(--primary))", "var(--cyan-9)", "var(--blue-7)"],
-  vivid: ["hsl(var(--primary))", "var(--cyan-9)", "var(--brand-tertiary)"],
+  subtle: ["hsl(var(--primary))", "hsl(var(--primary))", "var(--blue-7)"],
+  vivid: ["hsl(var(--primary))", "hsl(var(--primary))", "var(--brand-tertiary)"],
   monochrome: ["var(--neutral-6)", "var(--neutral-7)", "var(--neutral-6)"],
 };
 

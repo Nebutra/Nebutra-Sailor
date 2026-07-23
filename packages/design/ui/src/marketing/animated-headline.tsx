@@ -84,7 +84,7 @@ export function AnimatedHeadline({
       <div className="px-2">
         <div
           className={cn(
-            "relative w-full border border-[var(--neutral-6)] p-8",
+            "relative w-full border border-border p-8",
             "[mask-image:radial-gradient(200rem_24rem_at_center,white,transparent)]",
           )}
         >

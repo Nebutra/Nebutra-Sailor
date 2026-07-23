@@ -1,5 +1,7 @@
 "use client";
 
+import { Button, Textarea } from "@nebutra/ui/primitives";
+
 import { useState } from "react";
 
 export function TextDiffRunner({ toolId }: { toolId: string }) {
@@ -42,7 +44,7 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
       <div className="grid gap-3 md:grid-cols-2">
         <label className="block text-sm">
           左侧
-          <textarea
+          <Textarea
             value={left}
             onChange={(e) => setLeft(e.target.value)}
             rows={12}
@@ -51,7 +53,7 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
         </label>
         <label className="block text-sm">
           右侧
-          <textarea
+          <Textarea
             value={right}
             onChange={(e) => setRight(e.target.value)}
             rows={12}
@@ -59,14 +61,9 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
           />
         </label>
       </div>
-      <button
-        type="button"
-        disabled={loading}
-        onClick={() => void run()}
-        className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
-      >
+      <Button type="button" disabled={loading} onClick={() => void run()}>
         {loading ? "对比中…" : "对比（jsdiff）"}
-      </button>
+      </Button>
       {meta ? <p className="text-sm text-muted-foreground">{meta}</p> : null}
       {error ? (
         <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">

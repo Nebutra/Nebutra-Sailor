@@ -3,7 +3,7 @@
 import { NeuroNoise, type NeuroNoiseProps } from "@paper-design/shaders-react";
 import type * as React from "react";
 import { useEffect, useState } from "react";
-import { BRAND_FALLBACK, getBrandAccent, getBrandPrimary } from "../utils/brand-colors";
+import { BRAND_FALLBACK, getProductPrimary } from "../utils/brand-colors";
 import { cn } from "../utils/cn";
 
 // =============================================================================
@@ -35,8 +35,8 @@ export interface NeuroNoiseBgProps
  * @example Custom colors
  * ```tsx
  * <NeuroNoiseBg
- *   colorFront="#0BF1C3"
- *   colorMid="#0033FE"
+ *   colorFront="hsl(var(--primary))"
+ *   colorMid="hsl(var(--primary))"
  *   colorBack="#000830"
  *   speed={0.4}
  * />
@@ -51,14 +51,15 @@ export function NeuroNoiseBg({
   ...props
 }: NeuroNoiseBgProps) {
   const [resolved, setResolved] = useState({
-    front: colorFront ?? BRAND_FALLBACK.accent,
-    mid: colorMid ?? BRAND_FALLBACK.primary,
+    front: colorFront ?? BRAND_FALLBACK.productPrimary,
+    mid: colorMid ?? BRAND_FALLBACK.productPrimary,
   });
 
   useEffect(() => {
+    const product = getProductPrimary();
     setResolved({
-      front: colorFront ?? getBrandAccent(),
-      mid: colorMid ?? getBrandPrimary(),
+      front: colorFront ?? product,
+      mid: colorMid ?? product,
     });
   }, [colorFront, colorMid]);
 

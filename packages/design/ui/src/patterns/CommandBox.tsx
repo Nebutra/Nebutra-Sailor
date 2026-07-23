@@ -49,16 +49,16 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
       }
     }, [command, onCopy]);
     const variantStyles = {
-      default: "bg-[var(--neutral-2)] border border-[var(--neutral-7)] rounded-[var(--radius-lg)]",
-      minimal: "bg-[var(--neutral-1)] border border-[var(--neutral-7)] rounded-[var(--radius-md)]",
-      pill: "bg-[var(--neutral-2)] border border-[var(--neutral-7)] rounded-full",
+      default: "bg-muted border border-border rounded-[var(--radius-lg)]",
+      minimal: "bg-background border border-border rounded-[var(--radius-md)]",
+      pill: "bg-muted border border-border rounded-full",
     };
     return (
       // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
       <div
         ref={ref}
         className={cn(
-          "group relative flex items-center gap-3 px-4 py-2.5 font-mono text-sm cursor-pointer transition-colors hover:bg-[var(--neutral-3)]",
+          "group relative flex items-center gap-3 px-4 py-2.5 font-mono text-sm cursor-pointer transition-colors hover:bg-muted",
           variantStyles[variant],
           className,
         )}
@@ -77,7 +77,7 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
         {/* Prefix */}
         <span className="text-emerald-400 shrink-0 select-none">{prefix}</span>
         {/* Command text */}
-        <span className="flex-1 text-[var(--neutral-11)] truncate">{command}</span>
+        <span className="flex-1 text-muted-foreground truncate">{command}</span>
         {/* Copy indicator */}
         {showCopyButton && (
           <span
@@ -85,7 +85,7 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
               "shrink-0 text-xs transition-colors",
               copied
                 ? "text-emerald-400"
-                : "text-[var(--neutral-9)] group-hover:text-[var(--neutral-11)]",
+                : "text-muted-foreground group-hover:text-muted-foreground",
             )}
           >
             {copied ? <CopiedIcon className="w-4 h-4" /> : <CopyIcon className="w-4 h-4" />}
@@ -94,7 +94,7 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
         {/* Copy tooltip */}
         <span
           className={cn(
-            "absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded bg-zinc-700 text-[var(--neutral-11)] opacity-0 transition-opacity pointer-events-none",
+            "absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded bg-zinc-700 text-muted-foreground opacity-0 transition-opacity pointer-events-none",
             "group-hover:opacity-100",
             copied && "opacity-100",
           )}

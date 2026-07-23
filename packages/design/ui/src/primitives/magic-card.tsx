@@ -49,7 +49,7 @@ export interface MagicCardProps {
  * <MagicCard
  *   gradientFrom="hsl(var(--primary))"
  *   gradientTo="var(--brand-accent)"
- *   gradientColor="color-mix(in oklab, var(--brand-primary) 16%, transparent)"
+ *   gradientColor="color-mix(in oklab, hsl(var(--primary)) 16%, transparent)"
  * >
  *   <div className="p-6">Custom gradient</div>
  * </MagicCard>
@@ -59,10 +59,10 @@ export function MagicCard({
   children,
   className,
   gradientSize = 200,
-  gradientColor = "color-mix(in oklab, var(--brand-primary) 16%, transparent)",
+  gradientColor = "color-mix(in oklab, hsl(var(--primary)) 16%, transparent)",
   gradientOpacity = 0.8,
   gradientFrom = "hsl(var(--primary))",
-  gradientTo = "var(--brand-accent)",
+  gradientTo = "hsl(var(--muted-foreground))",
 }: MagicCardProps) {
   const shouldReduceMotion = useReducedMotion();
   const mouseX = useMotionValue(-gradientSize);

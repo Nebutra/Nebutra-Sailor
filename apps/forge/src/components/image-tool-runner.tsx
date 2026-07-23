@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@nebutra/ui/primitives";
+
 import { useCallback, useState } from "react";
 
 /** Image tools: drag-drop upload, sharp server transform, before/after preview. */
@@ -80,8 +82,8 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
         setResultMeta({
           bytes: out.bytes ?? 0,
           contentType: out.contentType,
-          width: out.width,
-          height: out.height,
+          ...(out.width !== undefined ? { width: out.width } : {}),
+          ...(out.height !== undefined ? { height: out.height } : {}),
         });
       }
     } catch (err) {
@@ -167,14 +169,9 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => void run()}
-          className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
-        >
+        <Button type="button" disabled={loading} onClick={() => void run()}>
           {loading ? "处理中…" : "运行（sharp）"}
-        </button>
+        </Button>
         <button
           type="button"
           disabled={!previewOut}

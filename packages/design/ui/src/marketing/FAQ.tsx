@@ -77,11 +77,11 @@ export function FAQ({
       <AnimateIn preset="fadeUp">
         <div className="mb-10 flex flex-col items-center gap-4 text-center">
           {title && (
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
               {title}
             </h2>
           )}
-          {subtitle && <p className="text-lg text-[var(--neutral-11)] max-w-2xl">{subtitle}</p>}
+          {subtitle && <p className="text-lg text-muted-foreground max-w-2xl">{subtitle}</p>}
         </div>
       </AnimateIn>
 
@@ -92,10 +92,10 @@ export function FAQ({
               type="button"
               onClick={() => setActiveCategory(null)}
               className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)]",
+                "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 activeCategory === null
                   ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                  : "bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)] hover:text-[var(--neutral-12)]",
+                  : "bg-muted text-muted-foreground hover:bg-muted hover:text-foreground",
               )}
             >
               All
@@ -106,10 +106,10 @@ export function FAQ({
                 type="button"
                 onClick={() => setActiveCategory(category)}
                 className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)]",
+                  "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
                   activeCategory === category
                     ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                    : "bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)] hover:text-[var(--neutral-12)]",
+                    : "bg-muted text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 {category}
@@ -125,11 +125,11 @@ export function FAQ({
             <Accordion>
               {filteredItems.map((item) => (
                 <AnimateIn key={getFAQItemKey(item)} preset="fadeUp">
-                  <AccordionItem value={getFAQItemKey(item)} className="border-[var(--neutral-6)]">
-                    <AccordionTrigger className="text-[var(--neutral-12)] hover:text-[var(--neutral-11)] text-left">
+                  <AccordionItem value={getFAQItemKey(item)} className="border-border">
+                    <AccordionTrigger className="text-foreground hover:text-muted-foreground text-left">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-[var(--neutral-11)]">
+                    <AccordionContent className="text-muted-foreground">
                       <ReactMarkdown className="prose prose-neutral dark:prose-invert max-w-none text-sm leading-relaxed">
                         {item.answer}
                       </ReactMarkdown>
@@ -145,14 +145,12 @@ export function FAQ({
                   className={cn(
                     "flex h-full flex-col gap-3",
                     layout === "cards"
-                      ? "p-6 rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] border border-[var(--neutral-6)] transition-colors hover:border-[var(--neutral-7)]"
+                      ? "p-6 rounded-[var(--radius-2xl)] bg-muted border border-border transition-colors hover:border-border"
                       : "",
                   )}
                 >
-                  <h3 className="font-semibold text-base text-[var(--neutral-12)]">
-                    {item.question}
-                  </h3>
-                  <ReactMarkdown className="prose prose-neutral dark:prose-invert max-w-none text-sm text-[var(--neutral-11)]">
+                  <h3 className="font-semibold text-base text-foreground">{item.question}</h3>
+                  <ReactMarkdown className="prose prose-neutral dark:prose-invert max-w-none text-sm text-muted-foreground">
                     {item.answer}
                   </ReactMarkdown>
                 </div>

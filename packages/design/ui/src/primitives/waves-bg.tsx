@@ -3,7 +3,7 @@
 import { Waves, type WavesProps } from "@paper-design/shaders-react";
 import type * as React from "react";
 import { useEffect, useState } from "react";
-import { BRAND_FALLBACK, getBrandPrimary } from "../utils/brand-colors";
+import { BRAND_FALLBACK, getProductPrimary } from "../utils/brand-colors";
 import { cn } from "../utils/cn";
 
 // =============================================================================
@@ -35,8 +35,8 @@ export interface WavesBgProps
  * @example Custom wave settings
  * ```tsx
  * <WavesBg
- *   colorFront="#0BF1C3"
- *   colorBack="#0033FE"
+ *   colorFront="hsl(var(--primary))"
+ *   colorBack="hsl(var(--primary))"
  *   frequency={3}
  *   amplitude={0.5}
  * />
@@ -48,10 +48,13 @@ export function WavesBg({
   colorBack = BRAND_FALLBACK.backDark,
   ...props
 }: WavesBgProps) {
-  const [resolvedFront, setResolvedFront] = useState<string>(colorFront ?? BRAND_FALLBACK.primary);
+  const [resolvedFront, setResolvedFront] = useState<string>(
+    colorFront ?? BRAND_FALLBACK.productPrimary,
+  );
 
   useEffect(() => {
-    setResolvedFront(colorFront ?? getBrandPrimary());
+    // Product skin: follow semantic --primary (not VI lock)
+    setResolvedFront(colorFront ?? getProductPrimary());
   }, [colorFront]);
 
   return (

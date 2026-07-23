@@ -27,7 +27,7 @@ const cardVariants = cva(
   {
     variants: {
       cardStyle: {
-        solid: "bg-[var(--neutral-2)] border border-[var(--neutral-6)] shadow-sm",
+        solid: "bg-muted border border-border shadow-sm",
         glassmorphism: "bg-white/5 backdrop-blur-md border border-white/10 text-white",
         minimal: "bg-transparent border-none p-0",
       },
@@ -67,7 +67,7 @@ function TestimonialCard({ testimonial, cardStyle = "solid", className }: Testim
       <blockquote
         className={cn(
           "flex-1 text-base leading-relaxed font-medium",
-          cardStyle === "glassmorphism" ? "text-white/90" : "text-[var(--neutral-12)]",
+          cardStyle === "glassmorphism" ? "text-white/90" : "text-foreground",
         )}
       >
         "{testimonial.quote}"
@@ -81,11 +81,11 @@ function TestimonialCard({ testimonial, cardStyle = "solid", className }: Testim
             width={40}
             height={40}
             sizes="40px"
-            className="w-10 h-10 rounded-full object-cover bg-[var(--neutral-3)]"
+            className="w-10 h-10 rounded-full object-cover bg-muted"
             unoptimized
           />
         ) : (
-          <div className="w-10 h-10 rounded-full bg-[var(--neutral-4)] flex items-center justify-center font-semibold text-[var(--neutral-11)] text-xs">
+          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center font-semibold text-muted-foreground text-xs">
             {testimonial.author.name.charAt(0).toUpperCase()}
           </div>
         )}
@@ -93,14 +93,14 @@ function TestimonialCard({ testimonial, cardStyle = "solid", className }: Testim
           <span
             className={cn(
               "font-semibold",
-              cardStyle === "glassmorphism" ? "text-white" : "text-[var(--neutral-12)]",
+              cardStyle === "glassmorphism" ? "text-white" : "text-foreground",
             )}
           >
             {testimonial.author.name}
           </span>
           <span
             className={cn(
-              cardStyle === "glassmorphism" ? "text-white/70" : "text-[var(--neutral-11)]",
+              cardStyle === "glassmorphism" ? "text-white/70" : "text-muted-foreground",
             )}
           >
             {testimonial.author.title}, {testimonial.author.company}
@@ -127,11 +127,11 @@ export function Testimonials({
       <AnimateIn preset="fadeUp">
         <div className="mx-auto mb-12 flex max-w-2xl flex-col items-center gap-4 text-center">
           {title && (
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
               {title}
             </h2>
           )}
-          {subtitle && <p className="text-lg text-[var(--neutral-11)]">{subtitle}</p>}
+          {subtitle && <p className="text-lg text-muted-foreground">{subtitle}</p>}
         </div>
       </AnimateIn>
 

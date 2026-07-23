@@ -1,5 +1,7 @@
 "use client";
 
+import { Button, Textarea } from "@nebutra/ui/primitives";
+
 import { useCallback, useState } from "react";
 
 export function ToolRunner({
@@ -58,7 +60,7 @@ export function ToolRunner({
         <label htmlFor={`input-${slug}`} className="mb-1 block text-sm font-medium">
           输入（JSON 或纯文本）
         </label>
-        <textarea
+        <Textarea
           id={`input-${slug}`}
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -67,14 +69,9 @@ export function ToolRunner({
           spellCheck={false}
         />
       </div>
-      <button
-        type="button"
-        onClick={() => void run()}
-        disabled={loading}
-        className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
-      >
+      <Button type="button" onClick={() => void run()} disabled={loading}>
         {loading ? "运行中…" : "运行"}
-      </button>
+      </Button>
       {error ? (
         <pre className="overflow-x-auto rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-200">
           {error}

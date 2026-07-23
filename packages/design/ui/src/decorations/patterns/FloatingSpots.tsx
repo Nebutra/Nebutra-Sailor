@@ -52,7 +52,7 @@ interface Spot {
  *
  * @example
  * // Using custom hex colors (for decorative/artistic purposes)
- * <FloatingSpots color="#0BF1C3" />
+ * <FloatingSpots color="hsl(var(--primary))" />
  */
 export const FloatingSpots = React.forwardRef<HTMLDivElement, FloatingSpotsProps>(
   (

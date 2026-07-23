@@ -116,7 +116,7 @@ export const DEFAULT_TERMINAL_ITEMS: BulletItem[] = [
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium bg-[var(--neutral-1)]/70 text-[var(--neutral-12)] border-[var(--neutral-6)]">
+    <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium bg-background/70 text-foreground border-border">
       {children}
     </span>
   );
@@ -158,7 +158,7 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
       normal: "",
       added: "bg-emerald-500/10",
       removed: "bg-rose-500/10",
-      comment: "text-[var(--neutral-9)] italic",
+      comment: "text-muted-foreground italic",
       gap: "opacity-0 select-none h-3",
     }),
     [],
@@ -167,14 +167,14 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
   return (
     <div
       className={cn(
-        "rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] shadow-sm",
+        "rounded-[var(--radius-2xl)] border border-border bg-muted shadow-sm",
         className,
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between gap-3 border-b border-[var(--neutral-6)] px-4 py-2 text-sm">
-        <div className="truncate text-[var(--neutral-11)]">
-          <span className="mr-2 inline-block rounded bg-[var(--neutral-3)] px-2 py-0.5 font-mono text-[11px] text-black tracking-tight">
+      <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-2 text-sm">
+        <div className="truncate text-muted-foreground">
+          <span className="mr-2 inline-block rounded bg-muted px-2 py-0.5 font-mono text-[11px] text-black tracking-tight">
             {diff.fileTag}
           </span>
         </div>
@@ -186,7 +186,7 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
 
       {/* Body */}
       <motion.div
-        className="grid grid-cols-[auto_1fr] gap-x-0.5 px-1 py-1 font-mono text-[12px] leading-relaxed text-[var(--neutral-12)]"
+        className="grid grid-cols-[auto_1fr] gap-x-0.5 px-1 py-1 font-mono text-[12px] leading-relaxed text-foreground"
         role="group"
         aria-label="Code diff"
         variants={shouldReduceMotion ? reducedContainerVariants : containerVariants}
@@ -198,7 +198,7 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
           <React.Fragment key={i}>
             <motion.div
               variants={shouldReduceMotion ? reducedLineVariants : lineVariants}
-              className="select-none px-3 text-right text-[var(--neutral-9)]"
+              className="select-none px-3 text-right text-muted-foreground"
             >
               {l.ln ?? ""}
             </motion.div>
@@ -213,11 +213,9 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
       </motion.div>
 
       {/* Footer / hint bar */}
-      <div className="flex items-center justify-between border-t border-[var(--neutral-6)] px-4 py-2 text-xs text-[var(--neutral-9)]">
+      <div className="flex items-center justify-between border-t border-border px-4 py-2 text-xs text-muted-foreground">
         <div className="flex items-center gap-2">
-          <span className="rounded bg-[var(--neutral-3)] px-1.5 py-0.5 font-mono text-[10px]">
-            →
-          </span>
+          <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">→</span>
           <span>Add a follow-up</span>
         </div>
         <div>
@@ -287,7 +285,7 @@ export function TerminalControlSectionAnimated({
       </div>
 
       <div className="mb-8 flex items-center justify-between">
-        <h2 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)] sm:text-4xl">
+        <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           {title}
         </h2>
       </div>
@@ -314,8 +312,8 @@ export function TerminalControlSectionAnimated({
                     className={cn(
                       "group w-full rounded-[var(--radius-xl)] border px-4 py-3 text-left transition will-change-transform",
                       isActive
-                        ? "border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-12)] shadow-sm"
-                        : "border-[var(--neutral-6)] bg-[var(--neutral-1)] hover:bg-[var(--neutral-2)]",
+                        ? "border-border bg-muted text-foreground shadow-sm"
+                        : "border-border bg-background hover:bg-muted",
                     )}
                   >
                     {/* Animated active background (shared layout) */}
@@ -339,7 +337,7 @@ export function TerminalControlSectionAnimated({
                     <div
                       className={cn(
                         "text-sm mt-0.5",
-                        isActive ? "opacity-90" : "text-[var(--neutral-9)]",
+                        isActive ? "opacity-90" : "text-muted-foreground",
                       )}
                     >
                       {it.desc}
@@ -364,7 +362,7 @@ export function TerminalControlSectionAnimated({
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" }}
-            className="rounded-[var(--radius-3xl)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] text-[var(--neutral-12)] shadow-xl ring-1 ring-black/5"
+            className="rounded-[var(--radius-3xl)] border border-border bg-muted text-foreground shadow-xl ring-1 ring-black/5"
           >
             <div className="p-4 sm:p-6">
               <AnimatePresence mode="wait" initial={!shouldReduceMotion}>

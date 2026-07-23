@@ -167,7 +167,7 @@ export function Navbar({
           className={cn(
             "relative flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8 w-full backdrop-blur-md transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out border-b border-transparent",
             isScrolled
-              ? "bg-white/80 dark:bg-[var(--neutral-1)]/90 shadow-sm border-[var(--neutral-4)] dark:border-[var(--neutral-3)] py-3"
+              ? "bg-white/80 dark:bg-background/90 shadow-sm border-[var(--neutral-4)] dark:border-[var(--neutral-3)] py-3"
               : "bg-transparent py-5",
           )}
         >
@@ -181,9 +181,7 @@ export function Navbar({
               <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
                 <span className="text-white font-bold text-lg leading-none">N</span>
               </div>
-              <span className="font-semibold text-lg tracking-tight text-[var(--neutral-12)]">
-                Nebutra
-              </span>
+              <span className="font-semibold text-lg tracking-tight text-foreground">Nebutra</span>
             </Link>
 
             {/* Desktop Navigation Links */}
@@ -192,11 +190,11 @@ export function Navbar({
                 <div key={link.href} className="relative group">
                   <a
                     href={link.href}
-                    className="flex items-center gap-1 text-[var(--neutral-11)] hover:text-[var(--neutral-12)] text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)] rounded-[var(--radius-md)] px-2 py-1"
+                    className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)] rounded-[var(--radius-md)] px-2 py-1"
                   >
                     {link.label}
                     {link.children && (
-                      <ChevronDown className="h-3.5 w-3.5 text-[var(--neutral-9)] group-hover:text-[var(--neutral-11)] transition-colors" />
+                      <ChevronDown className="h-3.5 w-3.5 text-muted-foreground group-hover:text-muted-foreground transition-colors" />
                     )}
                     {link.badge && (
                       <span className="ml-1 inline-flex items-center rounded-full bg-[var(--brand-3)] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[var(--brand-11)] border border-[var(--brand-5)] uppercase">
@@ -215,7 +213,7 @@ export function Navbar({
             {showLocaleSwitcher && (
               <button
                 type="button"
-                className="flex items-center gap-1.5 text-xs font-medium text-[var(--neutral-10)] hover:text-[var(--neutral-12)] uppercase tracking-wider transition-colors px-2 py-1 rounded-[var(--radius-md)] hover:bg-[var(--neutral-3)]"
+                className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground uppercase tracking-wider transition-colors px-2 py-1 rounded-[var(--radius-md)] hover:bg-muted"
               >
                 {locale} <ChevronDown className="h-3 w-3" />
               </button>
@@ -228,7 +226,7 @@ export function Navbar({
                 className={cn(
                   "inline-flex h-9 items-center justify-center rounded-[var(--radius-md)] px-4 text-sm font-medium shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--brand-9)] focus:ring-offset-2",
                   cta.variant === "outline"
-                    ? "border border-[var(--neutral-5)] bg-transparent text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
+                    ? "border border-[var(--neutral-5)] bg-transparent text-foreground hover:bg-muted"
                     : "bg-[var(--brand-9)] text-white hover:bg-[var(--brand-10)]",
                 )}
               >
@@ -242,7 +240,7 @@ export function Navbar({
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-9)] transition-colors"
+              className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 text-muted-foreground hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--brand-9)] transition-colors"
               aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -266,7 +264,7 @@ export function Navbar({
                 exit={{ opacity: 0 }}
                 transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="fixed inset-0 z-40 bg-[var(--neutral-12)]/40 backdrop-blur-sm dark:bg-[var(--neutral-1)]/60 md:hidden"
+                className="fixed inset-0 z-40 bg-[var(--neutral-12)]/40 backdrop-blur-sm dark:bg-background/60 md:hidden"
               />
 
               {/* Drawer */}
@@ -279,7 +277,7 @@ export function Navbar({
                     ? { duration: 0 }
                     : { type: "spring", damping: 25, stiffness: 200 }
                 }
-                className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white dark:bg-[var(--neutral-1)] shadow-2xl ring-1 ring-black/10 overflow-y-auto p-6 md:hidden flex flex-col"
+                className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white dark:bg-background shadow-2xl ring-1 ring-black/10 overflow-y-auto p-6 md:hidden flex flex-col"
               >
                 <div className="flex items-center justify-between mb-8">
                   <Link
@@ -290,13 +288,13 @@ export function Navbar({
                     <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center">
                       <span className="text-white font-bold text-lg leading-none">N</span>
                     </div>
-                    <span className="font-semibold text-xl tracking-tight text-[var(--neutral-12)]">
+                    <span className="font-semibold text-xl tracking-tight text-foreground">
                       Nebutra
                     </span>
                   </Link>
                   <button
                     type="button"
-                    className="-m-2.5 rounded-[var(--radius-md)] p-2.5 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)]"
+                    className="-m-2.5 rounded-[var(--radius-md)] p-2.5 text-muted-foreground hover:bg-muted"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="sr-only">Close menu</span>
@@ -310,7 +308,7 @@ export function Navbar({
                       <a
                         key={link.href}
                         href={link.href}
-                        className="block rounded-[var(--radius-lg)] p-3 font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] transition-colors text-base"
+                        className="block rounded-[var(--radius-lg)] p-3 font-medium text-foreground hover:bg-muted transition-colors text-base"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {link.label}
@@ -326,12 +324,10 @@ export function Navbar({
                   <div className="mt-auto flex flex-col gap-4 border-t border-[var(--neutral-4)] pt-6">
                     {showLocaleSwitcher && (
                       <div className="flex items-center justify-between px-3">
-                        <span className="text-sm font-medium text-[var(--neutral-11)]">
-                          Language
-                        </span>
+                        <span className="text-sm font-medium text-muted-foreground">Language</span>
                         <button
                           type="button"
-                          className="flex items-center gap-1.5 text-sm font-medium uppercase text-[var(--neutral-12)] bg-[var(--neutral-3)] px-3 py-1.5 rounded-[var(--radius-md)]"
+                          className="flex items-center gap-1.5 text-sm font-medium uppercase text-foreground bg-muted px-3 py-1.5 rounded-[var(--radius-md)]"
                         >
                           {locale} <ChevronDown className="h-4 w-4" />
                         </button>
@@ -344,7 +340,7 @@ export function Navbar({
                         className={cn(
                           "flex w-full items-center justify-center rounded-[var(--radius-md)] px-4 py-3 text-base font-medium shadow-sm transition-colors",
                           cta.variant === "outline"
-                            ? "border border-[var(--neutral-5)] bg-transparent text-[var(--neutral-12)]"
+                            ? "border border-[var(--neutral-5)] bg-transparent text-foreground"
                             : "bg-[var(--brand-9)] text-white",
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}

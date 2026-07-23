@@ -37,18 +37,18 @@ export const animatedBeamTokens = {
     },
     brand: {
       pathColor: "var(--blue-7)",
-      startColor: "var(--brand-primary)",
+      startColor: "hsl(var(--primary))",
       stopColor: "var(--brand-accent)",
     },
     success: {
       pathColor: "var(--cyan-7)",
-      startColor: "var(--cyan-9)",
+      startColor: "hsl(var(--primary))",
       stopColor: "var(--brand-accent)",
     },
     warning: {
       pathColor: "var(--neutral-8)",
       startColor: "var(--brand-tertiary)",
-      stopColor: "var(--brand-primary)",
+      stopColor: "hsl(var(--primary))",
     },
   },
 } as const;

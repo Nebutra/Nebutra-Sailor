@@ -177,33 +177,33 @@ export function TeamChat({
   return (
     <div
       className={cn(
-        "w-full max-w-5xl mx-auto p-6 bg-white dark:bg-black rounded-[var(--radius-3xl)] shadow-lg flex flex-col h-[550px] border border-[var(--neutral-7)]",
+        "w-full max-w-5xl mx-auto p-6 bg-white dark:bg-black rounded-[var(--radius-3xl)] shadow-lg flex flex-col h-[550px] border border-border",
         className,
       )}
     >
       {/* Header */}
-      <header className="flex justify-between items-center border-b border-[var(--neutral-7)] pb-3 mb-6">
+      <header className="flex justify-between items-center border-b border-border pb-3 mb-6">
         <div className="flex items-center gap-3">
           <Users className="w-8 h-8 text-black" />
           <div>
             <h2 className="text-2xl font-semibold text-black">{chatName}</h2>
-            {tagline && <p className="italic text-sm text-[var(--neutral-10)]">{tagline}</p>}
+            {tagline && <p className="italic text-sm text-muted-foreground">{tagline}</p>}
           </div>
         </div>
         <button
           type="button"
           aria-label="More options"
           onClick={onMoreOptions}
-          className="p-2 rounded-[var(--radius-lg)] hover:bg-[var(--neutral-3)] transition"
+          className="p-2 rounded-[var(--radius-lg)] hover:bg-muted transition"
         >
-          <MoreHorizontal className="w-6 h-6 text-[var(--neutral-10)]" />
+          <MoreHorizontal className="w-6 h-6 text-muted-foreground" />
         </button>
       </header>
 
       {/* Body */}
-      <main className="flex flex-1 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--neutral-7)]">
+      <main className="flex flex-1 overflow-hidden rounded-[var(--radius-xl)] border border-border">
         {/* Participants List */}
-        <aside className="w-56 bg-[var(--neutral-2)] border-r border-[var(--neutral-7)] p-4 overflow-y-auto">
+        <aside className="w-56 bg-muted border-r border-border p-4 overflow-y-auto">
           {uniqueSenders.map((sender) => {
             const isSelected = selectedSender === sender.name;
             return (
@@ -215,7 +215,7 @@ export function TeamChat({
                   "flex items-center gap-3 w-full p-3 mb-3 rounded-[var(--radius-lg)] transition-colors",
                   isSelected
                     ? "bg-black text-white dark:text-black"
-                    : "hover:bg-[var(--neutral-4)] text-[var(--neutral-12)]",
+                    : "hover:bg-muted text-foreground",
                 )}
               >
                 <Avatar src={sender.avatar} alt={sender.name} isOnline={sender.isOnline} />
@@ -228,22 +228,19 @@ export function TeamChat({
         {/* Messages */}
         <section className="flex-1 p-6 overflow-y-auto bg-white dark:bg-black">
           {filteredMessages.length === 0 ? (
-            <p className="text-center text-[var(--neutral-9)]">No messages to display.</p>
+            <p className="text-center text-muted-foreground">No messages to display.</p>
           ) : (
             filteredMessages.map((message) => (
-              <div
-                key={message.id}
-                className="mb-6 last:mb-0 group border-b border-[var(--neutral-6)] pb-4"
-              >
+              <div key={message.id} className="mb-6 last:mb-0 group border-b border-border pb-4">
                 <div className="flex items-center gap-4 mb-2">
                   <Avatar src={message.sender.avatar} alt={message.sender.name} />
                   <div>
                     <p className="font-semibold text-black">{message.sender.name}</p>
-                    <span className="text-xs text-[var(--neutral-9)]">{message.timestamp}</span>
+                    <span className="text-xs text-muted-foreground">{message.timestamp}</span>
                   </div>
                 </div>
-                <p className="text-[var(--neutral-12)] text-lg mb-1">{message.content}</p>
-                <div className="flex items-center justify-between text-sm text-[var(--neutral-10)]">
+                <p className="text-foreground text-lg mb-1">{message.content}</p>
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     {message.status === "read" && <CheckCheck className="w-5 h-5 text-green-500" />}
                     {message.status === "delivered" && <Check className="w-5 h-5" />}
@@ -259,8 +256,8 @@ export function TeamChat({
                           "px-2 py-1 rounded-[var(--radius-md)] text-sm transition-colors",
                           reaction.reacted
                             ? "bg-[var(--neutral-5)] text-black"
-                            : "bg-[var(--neutral-3)] text-[var(--neutral-11)]",
-                          "hover:bg-[var(--neutral-4)]",
+                            : "bg-muted text-muted-foreground",
+                          "hover:bg-muted",
                         )}
                       >
                         {reaction.emoji} {reaction.count}
@@ -275,13 +272,13 @@ export function TeamChat({
       </main>
 
       {/* Footer */}
-      <footer className="mt-6 flex items-center gap-4 border-t border-[var(--neutral-7)] pt-4">
+      <footer className="mt-6 flex items-center gap-4 border-t border-border pt-4">
         <button
           type="button"
           aria-label="Add emoji"
-          className="p-3 rounded-full bg-[var(--neutral-3)] hover:bg-[var(--neutral-4)] transition"
+          className="p-3 rounded-full bg-muted hover:bg-muted transition"
         >
-          <SmilePlus className="w-6 h-6 text-[var(--neutral-10)]" />
+          <SmilePlus className="w-6 h-6 text-muted-foreground" />
         </button>
         <Input
           type="text"

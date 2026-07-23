@@ -1,28 +1,28 @@
 /**
- * Brand Color Utilities
+ * Runtime color resolution for APIs that cannot consume CSS variables
+ * (Canvas, WebGL, some animation libs).
  *
- * Resolves Nebutra brand CSS variables at runtime for components that
- * require raw hex values (e.g. WebGL shaders, Canvas APIs, animation libraries
- * that can't consume `var(--token)` strings directly).
+ * Product chrome: prefer getProductPrimary() → semantic --primary
+ * Brand identity: getBrandPrimary() → VI --brand-primary (logo / lockup only)
  *
- * Components that accept CSS color strings (inline styles, gradients, SVG)
- * should prefer `var(--brand-primary)` / `var(--brand-accent)` directly
- * instead of calling these helpers.
+ * Prefer CSS `hsl(var(--primary))` / Tailwind `bg-primary` in components.
+ * @see packages/design/ARCHITECTURE.md
  */
 
-/** SSR / no-DOM fallbacks — only used when `window` is unavailable. */
+/** SSR fallbacks when document is unavailable */
 export const BRAND_FALLBACK = {
-  primary: "#0033FE", // nebutra-blue-500
-  accent: "#0BF1C3", // nebutra-cyan-500
-  tertiary: "#5c7cfa", // nebutra-blue-400
-  primaryDark: "#002ad4", // nebutra-blue-600
-  backDark: "#000830", // nebutra-blue-950
+  /** VI 云毓蓝 — identity only */
+  primary: "#0033FE",
+  accent: "#0BF1C3",
+  tertiary: "#5c7cfa",
+  primaryDark: "#002ad4",
+  backDark: "#000830",
+  /** Soft product action (matches themes/light --primary ≈ #254bfa) */
+  productPrimary: "#254bfa",
 } as const;
 
 /**
  * Read a CSS variable from :root and return its trimmed value.
- * Falls back to `fallback` in SSR/no-DOM environments or when the var
- * is unresolved (empty string).
  */
 export function readCssVar(name: string, fallback: string): string {
   if (typeof window === "undefined" || typeof document === "undefined") {
@@ -32,17 +32,43 @@ export function readCssVar(name: string, fallback: string): string {
   return value || fallback;
 }
 
-/** Resolve `--brand-primary` to a hex/color string (with SSR fallback). */
+/** Turn HSL channel triple or full color into a CSS color string. */
+function asCssColor(value: string, fallback: string): string {
+  const v = value.trim() || fallback;
+  if (
+    v.startsWith("#") ||
+    v.startsWith("rgb") ||
+    v.startsWith("hsl") ||
+    v.startsWith("oklch") ||
+    v.startsWith("color(")
+  ) {
+    return v;
+  }
+  // shadcn-style "228 85% 56%"
+  return `hsl(${v})`;
+}
+
+/**
+ * Product action color — follows the active skin (`--primary`).
+ * Use for shaders/canvas that must match buttons/CTAs.
+ */
+export function getProductPrimary(): string {
+  return asCssColor(readCssVar("--primary", "228 85% 56%"), BRAND_FALLBACK.productPrimary);
+}
+
+/** VI lock color — logo / brand assets only. */
 export function getBrandPrimary(): string {
-  return readCssVar("--brand-primary", BRAND_FALLBACK.primary);
+  return asCssVarColor("--brand-primary", BRAND_FALLBACK.primary);
 }
 
-/** Resolve `--brand-accent` to a hex/color string (with SSR fallback). */
+function asCssVarColor(name: string, fallback: string): string {
+  return asCssColor(readCssVar(name, fallback), fallback);
+}
+
 export function getBrandAccent(): string {
-  return readCssVar("--brand-accent", BRAND_FALLBACK.accent);
+  return asCssVarColor("--brand-accent", BRAND_FALLBACK.accent);
 }
 
-/** Resolve `--brand-tertiary` to a hex/color string (with SSR fallback). */
 export function getBrandTertiary(): string {
-  return readCssVar("--brand-tertiary", BRAND_FALLBACK.tertiary);
+  return asCssVarColor("--brand-tertiary", BRAND_FALLBACK.tertiary);
 }

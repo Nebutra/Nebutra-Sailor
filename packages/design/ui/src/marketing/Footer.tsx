@@ -19,7 +19,7 @@ const EMPTY_FOOTER_SECTIONS: NonNullable<FooterProps["sections"]> = [];
 const EMPTY_SOCIAL_LINKS: NonNullable<FooterProps["social"]> = [];
 const DEFAULT_COPYRIGHT = `© ${new Date().getFullYear()} Nebutra. All rights reserved.`;
 
-const footerVariants = cva("w-full bg-[var(--neutral-1)] border-t border-[var(--neutral-6)]", {
+const footerVariants = cva("w-full bg-background border-t border-border", {
   variants: {
     density: {
       compact: "pt-12 pb-8",
@@ -80,12 +80,10 @@ export function Footer({
                 <div className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-lg)] bg-[hsl(var(--primary))] text-white font-bold">
                   N
                 </div>
-                <span className="text-xl font-bold tracking-tight text-[var(--neutral-12)]">
-                  Nebutra
-                </span>
+                <span className="text-xl font-bold tracking-tight text-foreground">Nebutra</span>
               </Link>
 
-              <p className="mt-4 text-sm leading-relaxed text-[var(--neutral-11)] max-w-sm">
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground max-w-sm">
                 Building the future of AI-native SaaS. A premium, high-fidelity monorepo
                 architecture engineered for 2026 SV Best Practices.
               </p>
@@ -98,7 +96,7 @@ export function Footer({
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[var(--neutral-10)] hover:text-[hsl(var(--primary))] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] rounded-[var(--radius-md)]"
+                      className="text-muted-foreground hover:text-[hsl(var(--primary))] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-md)]"
                       aria-label={link.platform}
                     >
                       <SocialIcon platform={link.platform} />
@@ -114,7 +112,7 @@ export function Footer({
             {sections.map((section, idx) => (
               <AnimateIn key={section.title} preset="fadeUp" delay={0.1 + idx * 0.05}>
                 <div className="flex flex-col gap-4">
-                  <h4 className="text-sm font-semibold tracking-wide text-[var(--neutral-12)]">
+                  <h4 className="text-sm font-semibold tracking-wide text-foreground">
                     {section.title}
                   </h4>
                   <ul className="flex flex-col gap-3">
@@ -125,7 +123,7 @@ export function Footer({
                             href={link.href}
                             target={link.external ? "_blank" : undefined}
                             rel={link.external ? "noopener noreferrer" : undefined}
-                            className="inline-flex items-center gap-2 text-sm text-[var(--neutral-11)] hover:text-[var(--neutral-12)] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] rounded-[var(--radius-sm)]"
+                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
                           >
                             {link.label}
                             {link.badge && (
@@ -137,7 +135,7 @@ export function Footer({
                         ) : (
                           <Link
                             href={link.href}
-                            className="inline-flex items-center gap-2 text-sm text-[var(--neutral-11)] hover:text-[var(--neutral-12)] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] rounded-[var(--radius-sm)]"
+                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
                           >
                             {link.label}
                             {link.badge && (
@@ -162,10 +160,8 @@ export function Footer({
                 className="col-span-2 md:col-span-4 lg:col-span-1 min-w-[240px]"
               >
                 <div className="flex flex-col gap-4">
-                  <h4 className="text-sm font-semibold tracking-wide text-[var(--neutral-12)]">
-                    Subscribe
-                  </h4>
-                  <p className="text-sm text-[var(--neutral-11)]">
+                  <h4 className="text-sm font-semibold tracking-wide text-foreground">Subscribe</h4>
+                  <p className="text-sm text-muted-foreground">
                     Get the latest updates and release notes straight to your inbox.
                   </p>
                   <div className="mt-2 flex flex-col gap-3">
@@ -178,7 +174,7 @@ export function Footer({
                       />
                       <button
                         type="button"
-                        className="absolute right-1 p-1.5 flex items-center justify-center text-[var(--neutral-11)] hover:text-[var(--neutral-12)] hover:bg-[var(--neutral-4)] rounded-[var(--radius-md)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--neutral-8)]"
+                        className="absolute right-1 p-1.5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--neutral-8)]"
                         aria-label="Submit newsletter subscription"
                       >
                         <ArrowRight className="w-4 h-4" />
@@ -193,29 +189,29 @@ export function Footer({
 
         {/* Bottom Bar: Legal & Locale */}
         <AnimateIn preset="fadeUp" delay={0.4}>
-          <div className="pt-8 border-t border-[var(--neutral-6)] flex flex-col md:flex-row items-center justify-between gap-6">
-            <p className="text-sm text-[var(--neutral-11)] order-2 md:order-1 text-center md:text-left">
+          <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
+            <p className="text-sm text-muted-foreground order-2 md:order-1 text-center md:text-left">
               {copyright || DEFAULT_COPYRIGHT}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 order-1 md:order-2">
-              <div className="flex items-center gap-6 text-sm text-[var(--neutral-11)]">
+              <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <Link
                   href={`/${locale}/privacy`}
-                  className="hover:text-[var(--neutral-12)] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] rounded-[var(--radius-sm)]"
+                  className="hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
                 >
                   Privacy Policy
                 </Link>
                 <Link
                   href={`/${locale}/terms`}
-                  className="hover:text-[var(--neutral-12)] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] rounded-[var(--radius-sm)]"
+                  className="hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
                 >
                   Terms of Service
                 </Link>
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-[var(--neutral-11)] border-l-0 sm:border-l border-[var(--neutral-6)] pl-0 sm:pl-8">
-                <span className="font-medium text-[var(--neutral-12)] uppercase tracking-wider text-xs bg-[var(--neutral-3)] px-2 py-1 rounded">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground border-l-0 sm:border-l border-border pl-0 sm:pl-8">
+                <span className="font-medium text-foreground uppercase tracking-wider text-xs bg-muted px-2 py-1 rounded">
                   {locale}
                 </span>
               </div>

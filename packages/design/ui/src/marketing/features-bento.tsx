@@ -135,7 +135,7 @@ export function FeaturesBentoSection({
                     <LeftIcon className="m-auto size-5" strokeWidth={1} />
                   </div>
                   <div className="space-y-2">
-                    <h2 className="text-lg font-medium text-[var(--neutral-12)] transition">
+                    <h2 className="text-lg font-medium text-foreground transition">
                       {leftFeatureCard.title}
                     </h2>
                     <p className="text-foreground">{leftFeatureCard.description}</p>
@@ -246,7 +246,7 @@ function SecurityDecorativeSvg() {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        className="text-[var(--neutral-9)]"
+        className="text-muted-foreground"
         d="M44.0209 55.3542C43.1945 54.7639 42.6916 54.0272 42.5121 53.1442C42.3327 52.2611 42.5995 51.345 43.3125 50.3958C50.632 40.3611 59.812 32.5694 70.8525 27.0208C81.8931 21.4722 93.668 18.6979 106.177 18.6979C118.691 18.6979 130.497 21.3849 141.594 26.7587C152.691 32.1326 161.958 39.8936 169.396 50.0417C170.222 51.1042 170.489 52.0486 170.196 52.875C169.904 53.7014 169.401 54.4097 168.688 55C167.979 55.5903 167.153 55.8571 166.208 55.8004C165.264 55.7437 164.438 55.2408 163.729 54.2917C157.236 45.0833 148.885 38.0307 138.675 33.1337C128.466 28.2368 117.633 25.786 106.177 25.7812C94.7257 25.7812 83.9827 28.2321 73.948 33.1337C63.9132 38.0354 55.5903 45.0881 48.9792 54.2917C48.2709 55.3542 47.4445 55.9444 46.5 56.0625C45.5556 56.1806 44.7292 55.9444 44.0209 55.3542Z"
         fill="currentColor"
       />

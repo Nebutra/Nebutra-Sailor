@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@nebutra/ui/primitives";
+
 import { useCallback, useEffect, useState } from "react";
 
 export function WalletPanel() {
@@ -62,14 +64,9 @@ export function WalletPanel() {
             className="mt-1 block w-32 rounded-lg border border-border bg-background px-3 py-2"
           />
         </label>
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => void topUp()}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
-        >
+        <Button type="button" disabled={loading} onClick={() => void topUp()}>
           {loading ? "处理中…" : "Mock 充值"}
-        </button>
+        </Button>
       </div>
       {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
     </div>

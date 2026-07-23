@@ -153,7 +153,7 @@ export const HighlightCard = React.forwardRef<HTMLDivElement, HighlightCardProps
         animate="visible"
       >
         {/* Bookmark shape */}
-        <div className="absolute right-6 top-0 h-16 w-12 bg-[var(--neutral-1)]/95 backdrop-blur-sm [clip-path:polygon(0%_0%,_100%_0%,_100%_100%,_50%_75%,_0%_100%)]">
+        <div className="absolute right-6 top-0 h-16 w-12 bg-background/95 backdrop-blur-sm [clip-path:polygon(0%_0%,_100%_0%,_100%_100%,_50%_75%,_0%_100%)]">
           <div
             className="absolute inset-0 flex items-center justify-center"
             style={{ color: "var(--card-from-color)" }}

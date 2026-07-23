@@ -1,5 +1,7 @@
 "use client";
 
+import { Button, Textarea } from "@nebutra/ui/primitives";
+
 import { useState } from "react";
 
 const ENCODINGS = [
@@ -61,21 +63,16 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
           </button>
         ))}
       </div>
-      <textarea
+      <Textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={8}
         className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
       />
       <div className="flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => void count()}
-          disabled={loading}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
-        >
+        <Button type="button" onClick={() => void count()} disabled={loading}>
           {loading ? "计数中…" : "精确计数"}
-        </button>
+        </Button>
         <span className="text-sm text-muted-foreground">字符 {text.length}</span>
       </div>
       {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}

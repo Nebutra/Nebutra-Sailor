@@ -1,5 +1,7 @@
 "use client";
 
+import { Button, Textarea } from "@nebutra/ui/primitives";
+
 import { useState } from "react";
 
 const SAMPLE =
@@ -42,7 +44,7 @@ export function JwtRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <textarea
+      <Textarea
         value={token}
         onChange={(e) => setToken(e.target.value)}
         rows={5}
@@ -50,20 +52,12 @@ export function JwtRunner({ toolId }: { toolId: string }) {
         placeholder="paste JWT"
       />
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => void decode()}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-        >
+        <Button type="button" onClick={() => void decode()}>
           解析 JWT
-        </button>
-        <button
-          type="button"
-          onClick={() => setToken(SAMPLE)}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
-        >
+        </Button>
+        <Button type="button" variant="outline" onClick={() => setToken(SAMPLE)}>
           填入示例
-        </button>
+        </Button>
       </div>
       {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
       {note ? <p className="text-xs text-muted-foreground">{note}</p> : null}

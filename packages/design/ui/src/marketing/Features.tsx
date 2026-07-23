@@ -55,11 +55,11 @@ export function Features({
         <AnimateIn preset="fadeUp">
           <div className="mb-12 flex flex-col items-center gap-4 text-center md:mb-16">
             {title && (
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
                 {title}
               </h2>
             )}
-            {subtitle && <p className="text-lg text-[var(--neutral-11)] max-w-2xl">{subtitle}</p>}
+            {subtitle && <p className="text-lg text-muted-foreground max-w-2xl">{subtitle}</p>}
           </div>
         </AnimateIn>
       )}
@@ -78,10 +78,10 @@ export function Features({
               <AnimateIn key={feature.id} preset="fadeUp">
                 <div
                   className={cn(
-                    "group relative flex flex-col justify-between overflow-hidden rounded-[var(--radius-3xl)] bg-[var(--neutral-2)] p-6 sm:p-8 border border-[var(--neutral-6)] transition-colors hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)]",
+                    "group relative flex flex-col justify-between overflow-hidden rounded-[var(--radius-3xl)] bg-muted p-6 sm:p-8 border border-border transition-colors hover:border-border hover:bg-muted",
                     layout === "alternating" ? "md:flex-row md:items-center md:gap-12" : "h-full",
                     layout === "alternating" && index % 2 === 1 ? "md:flex-row-reverse" : "",
-                    isBentoLarge ? "md:col-span-2 md:row-span-2 bg-[var(--neutral-3)]" : "",
+                    isBentoLarge ? "md:col-span-2 md:row-span-2 bg-muted" : "",
                   )}
                 >
                   <div
@@ -92,7 +92,7 @@ export function Features({
                   >
                     <div className="flex items-center gap-3 mb-4">
                       {showIcons && feature.icon && (
-                        <div className="flex items-center justify-center w-10 h-10 rounded-[var(--radius-xl)] bg-[var(--neutral-4)] text-[var(--neutral-12)] border border-[var(--neutral-6)]">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-[var(--radius-xl)] bg-muted text-foreground border border-border">
                           {/* Fallback to text if icon string, ideally mapped to icons component */}
                           <span className="text-sm font-semibold">
                             {feature.icon.charAt(0).toUpperCase()}
@@ -106,11 +106,11 @@ export function Features({
                       )}
                     </div>
 
-                    <h3 className="text-xl font-semibold text-[var(--neutral-12)] mb-2 group-hover:text-[var(--neutral-12)] transition-colors">
+                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-foreground transition-colors">
                       {feature.title}
                     </h3>
 
-                    <p className="text-[var(--neutral-11)] leading-relaxed mb-6">
+                    <p className="text-muted-foreground leading-relaxed mb-6">
                       {feature.description}
                     </p>
 
@@ -118,7 +118,7 @@ export function Features({
                       <div className="mt-auto pt-4">
                         <a
                           href={feature.href}
-                          className="inline-flex items-center text-sm font-medium text-[var(--neutral-12)] hover:text-[var(--neutral-11)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)] rounded-[var(--radius-md)]"
+                          className="inline-flex items-center text-sm font-medium text-foreground hover:text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-md)]"
                         >
                           Learn more
                           <span className="ml-1 transition-transform group-hover:translate-x-1">
@@ -132,7 +132,7 @@ export function Features({
                   {feature.image && (
                     <div
                       className={cn(
-                        "relative rounded-[var(--radius-2xl)] overflow-hidden bg-[var(--neutral-4)] border border-[var(--neutral-6)]",
+                        "relative rounded-[var(--radius-2xl)] overflow-hidden bg-muted border border-border",
                         layout === "alternating"
                           ? "md:w-1/2 mt-8 md:mt-0 aspect-video"
                           : "mt-8 aspect-[4/3]",

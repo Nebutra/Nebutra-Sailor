@@ -52,7 +52,7 @@ export interface MeshGradientBgProps
  * @example Custom colors and speed
  * ```tsx
  * <MeshGradientBg
- *   colors={["#0BF1C3", "#0033FE", "#000830"]}
+ *   colors={["hsl(var(--primary))", "hsl(var(--primary))", "#000830"]}
  *   speed={0.5}
  *   distortion={0.4}
  * />

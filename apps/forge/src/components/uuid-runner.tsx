@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@nebutra/ui/primitives";
+
 import { useState } from "react";
 
 export function UuidRunner({ toolId }: { toolId: string }) {
@@ -53,13 +55,9 @@ export function UuidRunner({ toolId }: { toolId: string }) {
         />
       </label>
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={local}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-        >
+        <Button type="button" onClick={local}>
           本地生成 (crypto.randomUUID)
-        </button>
+        </Button>
         <button
           type="button"
           disabled={loading}
@@ -68,13 +66,13 @@ export function UuidRunner({ toolId }: { toolId: string }) {
         >
           服务端生成
         </button>
-        <button
+        <Button
           type="button"
+          variant="outline"
           onClick={() => void navigator.clipboard.writeText(uuids.join("\n"))}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
         >
           复制全部
-        </button>
+        </Button>
       </div>
       {error ? (
         <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">

@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@nebutra/ui/primitives";
+
 import { useState } from "react";
 
 export function PasswordRunner({ toolId }: { toolId: string }) {
@@ -70,21 +72,17 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
         ))}
       </div>
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => void generate()}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-        >
+        <Button type="button" onClick={() => void generate()}>
           生成密码
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="outline"
           onClick={() => void navigator.clipboard.writeText(password)}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
           disabled={!password}
         >
           复制
-        </button>
+        </Button>
       </div>
       {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
       {password ? (

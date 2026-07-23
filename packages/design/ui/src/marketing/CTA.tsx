@@ -47,8 +47,8 @@ export function CTA({
 }: CTAProps) {
   // Determine if Text should be forced strictly white (e.g. for dark backdrops)
   const isDarkCanvas = backgroundType === "gradient" || backgroundType === "image";
-  const textColor = isDarkCanvas ? "text-white" : "text-[var(--neutral-12)]";
-  const subtextColor = isDarkCanvas ? "text-white/80" : "text-[var(--neutral-11)]";
+  const textColor = isDarkCanvas ? "text-white" : "text-foreground";
+  const subtextColor = isDarkCanvas ? "text-white/80" : "text-muted-foreground";
 
   return (
     <section
@@ -60,7 +60,7 @@ export function CTA({
         <div className={cn(ctaVariants({ variant, backgroundType, density }))}>
           {/* Optional Ambient Background Layer */}
           {backgroundType === "image" && (
-            <div className="absolute inset-0 z-0 bg-[var(--neutral-12)]/40 pointer-events-none dark:bg-[var(--neutral-1)]/60" />
+            <div className="absolute inset-0 z-0 bg-[var(--neutral-12)]/40 pointer-events-none dark:bg-background/60" />
           )}
           {variant === "gradient" && (
             <div className="absolute inset-0 bg-white/10 [mask-image:linear-gradient(to_bottom,white,transparent)] z-0 pointer-events-none" />
@@ -107,7 +107,7 @@ export function CTA({
                       className={cn(
                         "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium transition-[background-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                         isDarkCanvas
-                          ? "bg-[var(--neutral-1)] text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] focus-visible:ring-white"
+                          ? "bg-background text-foreground hover:bg-muted focus-visible:ring-white"
                           : "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] focus-visible:ring-[var(--neutral-12)]",
                       )}
                       data-analytics="footer-cta-primary"
@@ -122,7 +122,7 @@ export function CTA({
                         "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium border transition-[background-color,border-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                         isDarkCanvas
                           ? "border-white/20 text-white hover:bg-white/10 focus-visible:ring-white"
-                          : "border-[var(--neutral-6)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus-visible:ring-[var(--neutral-12)]",
+                          : "border-border text-foreground hover:bg-muted focus-visible:ring-[var(--neutral-12)]",
                       )}
                       data-analytics="footer-cta-secondary"
                     >

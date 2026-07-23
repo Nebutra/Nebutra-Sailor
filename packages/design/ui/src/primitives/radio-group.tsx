@@ -129,13 +129,13 @@ const itemStyle: RadioItemStyle = {
 };
 
 const radioControlClassName = cn(
-  "relative inline-flex shrink-0 items-center justify-center rounded-[var(--radius-full)] border-[length:var(--radio-border-width)] border-[var(--neutral-7)] bg-background text-[var(--neutral-12)]",
+  "relative inline-flex shrink-0 items-center justify-center rounded-[var(--radius-full)] border-[length:var(--radio-border-width)] border-border bg-background text-foreground",
   "size-[var(--radio-control-size)]",
   "transition-[background-color,border-color,box-shadow] duration-[var(--radio-motion-duration)] ease-[var(--radio-motion-easing)]",
   "after:size-[var(--radio-dot-size)] after:scale-0 after:rounded-[var(--radius-full)] after:bg-current after:opacity-0 after:transition-[opacity,transform] after:duration-[var(--radio-motion-duration)] after:ease-[var(--radio-motion-easing)] after:content-['']",
   "peer-checked:border-[var(--neutral-12)] peer-checked:after:scale-100 peer-checked:after:opacity-100",
   "peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2",
-  "peer-disabled:border-[var(--neutral-5)] peer-disabled:bg-[var(--neutral-2)] peer-disabled:text-[var(--neutral-8)]",
+  "peer-disabled:border-[var(--neutral-5)] peer-disabled:bg-muted peer-disabled:text-[var(--neutral-8)]",
 );
 
 function useRadioGroupContext() {
@@ -228,7 +228,7 @@ function RadioGroupItemRoot({
     <label
       htmlFor={inputId}
       className={cn(
-        "group inline-flex min-h-[var(--radio-item-min-height)] items-start gap-[var(--radio-item-gap)] text-[length:var(--radio-item-size)] text-[var(--neutral-12)] leading-5",
+        "group inline-flex min-h-[var(--radio-item-min-height)] items-start gap-[var(--radio-item-gap)] text-[length:var(--radio-item-size)] text-foreground leading-5",
         isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
         className,
       )}
@@ -242,7 +242,7 @@ function RadioGroupItemRoot({
         {description ? (
           <span
             id={descriptionId}
-            className="mt-[var(--radio-description-gap)] block text-[length:var(--radio-description-size)] text-[var(--neutral-10)] leading-4"
+            className="mt-[var(--radio-description-gap)] block text-[length:var(--radio-description-size)] text-muted-foreground leading-4"
           >
             {description}
           </span>
@@ -321,7 +321,7 @@ function RadioGroupRoot({
       {label ? (
         <legend
           id={legendId}
-          className="mb-[var(--radio-label-gap)] text-[length:var(--radio-label-size)] text-[var(--neutral-12)]"
+          className="mb-[var(--radio-label-gap)] text-[length:var(--radio-label-size)] text-foreground"
           style={{ fontWeight: "var(--radio-label-weight)" }}
         >
           {label}

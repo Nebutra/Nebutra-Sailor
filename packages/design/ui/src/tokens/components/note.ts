@@ -99,9 +99,9 @@ export const noteTokens = {
     warning: semanticTone("warning"),
     error: semanticTone("destructive"),
     cyan: {
-      background: "color-mix(in oklch, var(--cyan-9) 7%, transparent)",
-      filledBackground: "color-mix(in oklch, var(--cyan-9) 14%, transparent)",
-      border: "color-mix(in oklch, var(--cyan-9) 36%, transparent)",
+      background: "color-mix(in oklch, hsl(var(--primary)) 7%, transparent)",
+      filledBackground: "color-mix(in oklch, hsl(var(--primary)) 14%, transparent)",
+      border: "color-mix(in oklch, hsl(var(--primary)) 36%, transparent)",
       foreground: "var(--neutral-12)",
       label: "var(--neutral-12)",
       icon: "var(--cyan-10)",

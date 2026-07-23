@@ -100,9 +100,9 @@ export const toggleTokens = {
     default: semanticColor("success"),
     blue: semanticColor("primary"),
     cyan: {
-      trackOn: "var(--cyan-9)",
+      trackOn: "hsl(var(--primary))",
       trackOff: "var(--neutral-3)",
-      trackBorder: "color-mix(in oklch, var(--cyan-9) 34%, var(--neutral-7))",
+      trackBorder: "color-mix(in oklch, hsl(var(--primary)) 34%, var(--neutral-7))",
       thumb: "var(--neutral-1)",
       iconOn: "var(--cyan-11)",
       iconOff: "var(--neutral-10)",

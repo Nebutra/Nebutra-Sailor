@@ -1,9 +1,9 @@
 "use client";
 
+import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
 
 async function digestHex(algorithm: "SHA-1" | "SHA-256" | "MD5", text: string): Promise<string> {
-  // Web Crypto has SHA-1/SHA-256; MD5 is server-only (legacy).
   if (algorithm === "MD5") {
     throw new Error("MD5 仅支持服务端路径（Web Crypto 无 MD5）");
   }
@@ -70,43 +70,36 @@ export function HashRunner({
         算法：{algorithm.toUpperCase()}
         {algorithm === "md5" ? " · 仅校验/兼容，勿用于密码存储" : null}
       </p>
-      <textarea
+      <Textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={6}
-        className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
+        className="font-mono text-sm"
+        aria-label="哈希输入"
       />
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => void runLocal()}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-        >
+        <Button type="button" onClick={() => void runLocal()}>
           本地运行
-        </button>
-        <button
-          type="button"
-          onClick={() => void runServer()}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
-        >
+        </Button>
+        <Button type="button" variant="outline" onClick={() => void runServer()}>
           服务端运行
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="outline"
           onClick={() => void navigator.clipboard.writeText(hex)}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
           disabled={!hex}
         >
           复制
-        </button>
+        </Button>
       </div>
-      {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
-      {note ? <p className="text-xs text-muted-foreground">{note}</p> : null}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
       {hex ? (
         <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-sm break-all">
           {hex}
         </pre>
       ) : null}
+      {note ? <p className="text-xs text-muted-foreground">{note}</p> : null}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { cn } from "../utils";
 export interface HexGridProps extends React.SVGProps<SVGSVGElement> {
   /** Hex cell radius in pixels (default: 24) */
   size?: number;
-  /** Hex stroke/fill color (default: var(--brand-primary)) */
+  /** Hex stroke/fill color (default: hsl(var(--primary))) */
   color?: string;
   /** Hex opacity (default: 0.12) */
   opacity?: number;

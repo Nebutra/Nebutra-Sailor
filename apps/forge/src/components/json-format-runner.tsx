@@ -1,5 +1,7 @@
 "use client";
 
+import { Textarea } from "@nebutra/ui/primitives";
+
 import { useCallback, useState } from "react";
 
 const SAMPLE = `{
@@ -136,7 +138,7 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
         </button>
       </div>
 
-      <textarea
+      <Textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={16}

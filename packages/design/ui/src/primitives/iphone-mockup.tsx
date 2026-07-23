@@ -224,7 +224,7 @@ export function Phone(props: PhoneProps) {
           ) : (
             <div
               aria-hidden="true"
-              className="flex size-full items-center justify-center bg-[var(--phone-screen)] p-[var(--phone-fallback-padding)] text-[var(--neutral-10)] text-[length:var(--phone-fallback-size)]"
+              className="flex size-full items-center justify-center bg-[var(--phone-screen)] p-[var(--phone-fallback-padding)] text-muted-foreground text-[length:var(--phone-fallback-size)]"
               style={{ fontWeight: "var(--phone-fallback-weight)" }}
             >
               {address ? (

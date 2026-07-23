@@ -18,7 +18,7 @@ const socialProofVariants = cva("w-full overflow-hidden", {
     },
     variant: {
       "logos-only": "",
-      "stats-only": "bg-[var(--neutral-2)] border-y border-[var(--neutral-6)]",
+      "stats-only": "bg-muted border-y border-border",
       combined: "",
     },
   },
@@ -55,7 +55,7 @@ function LogoCloud({ logos }: { logos: Logo[] }) {
           ) : (
             <span
               key={`${logo.name}-text`}
-              className="text-xl md:text-2xl font-bold tracking-tight text-[var(--neutral-11)] group-hover:text-[var(--neutral-12)]"
+              className="text-xl md:text-2xl font-bold tracking-tight text-muted-foreground group-hover:text-foreground"
             >
               {logo.name}
             </span>
@@ -91,7 +91,7 @@ function AnimatedStatCounter({ stat }: { stat: Stat }) {
   // since scroll-triggered DOM modifications can be expensive. Let's render beautifully.
   return (
     <div className="flex flex-col items-center text-center p-6 lg:p-8">
-      <div className="flex items-baseline gap-1 text-[var(--neutral-12)] font-bold tracking-tight mb-2">
+      <div className="flex items-baseline gap-1 text-foreground font-bold tracking-tight mb-2">
         {stat.prefix && (
           <span className="text-2xl md:text-3xl lg:text-4xl text-[hsl(var(--primary))]">
             {stat.prefix}
@@ -104,7 +104,7 @@ function AnimatedStatCounter({ stat }: { stat: Stat }) {
           </span>
         )}
       </div>
-      <p className="text-sm md:text-base font-medium text-[var(--neutral-11)] max-w-[200px]">
+      <p className="text-sm md:text-base font-medium text-muted-foreground max-w-[200px]">
         {stat.label}
       </p>
     </div>
@@ -131,7 +131,7 @@ export function SocialProof({
         <AnimateIn preset="fadeUp">
           <div className="mb-12 flex flex-col items-center gap-4 text-center">
             {title && (
-              <p className="text-sm font-semibold tracking-widest uppercase text-[var(--neutral-11)]">
+              <p className="text-sm font-semibold tracking-widest uppercase text-muted-foreground">
                 {title}
               </p>
             )}
@@ -147,7 +147,7 @@ export function SocialProof({
 
           {showStats && (
             <AnimateInGroup stagger="normal">
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 divide-x divide-y md:divide-y-0 divide-[var(--neutral-6)] rounded-[var(--radius-3xl)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]/50 backdrop-blur-sm shadow-sm overflow-hidden">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 divide-x divide-y md:divide-y-0 divide-border rounded-[var(--radius-3xl)] border border-border bg-muted/50 backdrop-blur-sm shadow-sm overflow-hidden">
                 {stats.map((stat) => (
                   <AnimateIn key={getStatKey(stat)} preset="scale">
                     <AnimatedStatCounter stat={stat} />

@@ -65,7 +65,7 @@ function UseCaseCard({ item, className }: UseCaseCardProps) {
   return (
     <div
       className={cn(
-        "flex h-full flex-col rounded-[var(--radius-2xl)] border border-[var(--neutral-4)] bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:bg-[var(--neutral-2)]",
+        "flex h-full flex-col rounded-[var(--radius-2xl)] border border-[var(--neutral-4)] bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:bg-muted",
         className,
       )}
     >
@@ -74,9 +74,9 @@ function UseCaseCard({ item, className }: UseCaseCardProps) {
           <div className="size-5 rounded-full bg-current" />
         </div>
       )}
-      <h3 className="mb-2 text-xl font-semibold text-[var(--neutral-12)]">{item.title}</h3>
+      <h3 className="mb-2 text-xl font-semibold text-foreground">{item.title}</h3>
       <p className="mb-4 text-sm font-medium text-[var(--brand-11)]">{item.audience}</p>
-      <p className="mb-6 flex-1 text-base leading-relaxed text-[var(--neutral-11)]">
+      <p className="mb-6 flex-1 text-base leading-relaxed text-muted-foreground">
         {item.description}
       </p>
 
@@ -85,7 +85,7 @@ function UseCaseCard({ item, className }: UseCaseCardProps) {
           {item.benefits.map((benefit) => (
             <li
               key={getBenefitKey(item.id, benefit)}
-              className="flex items-start gap-3 text-sm text-[var(--neutral-11)]"
+              className="flex items-start gap-3 text-sm text-muted-foreground"
             >
               <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--brand-9)]" />
               <span>{benefit}</span>
@@ -121,13 +121,13 @@ function UseCaseTabsNav({ items, selectedTab, onSelect }: UseCaseTabsNavProps) {
               "relative flex flex-col items-start px-6 py-4 rounded-[var(--radius-xl)] text-left transition-colors whitespace-nowrap lg:whitespace-normal outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]",
               isActive
                 ? "text-[var(--brand-12)]"
-                : "text-[var(--neutral-11)] hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]",
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             {isActive && (
               <m.div
                 layoutId="activeTabBackground"
-                className="absolute inset-0 bg-white dark:bg-[var(--neutral-2)] rounded-[var(--radius-xl)] border border-[var(--neutral-4)] shadow-sm -z-10"
+                className="absolute inset-0 bg-white dark:bg-muted rounded-[var(--radius-xl)] border border-[var(--neutral-4)] shadow-sm -z-10"
                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
               />
             )}
@@ -150,7 +150,7 @@ function UseCaseBenefits({ item }: UseCaseBenefitsProps) {
       {item.benefits.map((benefit) => (
         <div key={getBenefitKey(item.id, benefit)} className="flex items-start gap-3">
           <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--brand-9)] mt-0.5" />
-          <span className="text-[var(--neutral-12)] font-medium leading-snug">{benefit}</span>
+          <span className="text-foreground font-medium leading-snug">{benefit}</span>
         </div>
       ))}
     </div>
@@ -224,11 +224,11 @@ export function UseCases(props: UseCasesProps) {
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
             {title && (
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--neutral-12)] mb-4">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-4">
                 {title}
               </h2>
             )}
-            {subtitle && <p className="text-lg text-[var(--neutral-11)]">{subtitle}</p>}
+            {subtitle && <p className="text-lg text-muted-foreground">{subtitle}</p>}
           </div>
 
           {/* Use Cases Layout: Tabs */}
@@ -252,7 +252,7 @@ export function UseCases(props: UseCasesProps) {
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
                     transition={{ duration: 0.3 }}
-                    className="flex h-full flex-col rounded-[var(--radius-2xl)] border border-[var(--neutral-4)] bg-[var(--neutral-1)] p-8 shadow-md dark:bg-[var(--neutral-2)] sm:p-12"
+                    className="flex h-full flex-col rounded-[var(--radius-2xl)] border border-[var(--neutral-4)] bg-background p-8 shadow-md dark:bg-muted sm:p-12"
                   >
                     <div className="flex items-center gap-4 mb-6">
                       {activeCase.icon && (
@@ -261,16 +261,14 @@ export function UseCases(props: UseCasesProps) {
                         </div>
                       )}
                       <div>
-                        <h3 className="text-2xl font-bold text-[var(--neutral-12)]">
-                          {activeCase.title}
-                        </h3>
+                        <h3 className="text-2xl font-bold text-foreground">{activeCase.title}</h3>
                         <p className="text-sm font-medium text-[var(--brand-11)]">
                           {activeCase.audience}
                         </p>
                       </div>
                     </div>
 
-                    <p className="text-lg text-[var(--neutral-11)] leading-relaxed mb-8">
+                    <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                       {activeCase.description}
                     </p>
 
@@ -313,7 +311,7 @@ export function UseCases(props: UseCasesProps) {
               <div className="flex justify-center gap-3 mt-4">
                 <button
                   type="button"
-                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:text-[var(--neutral-12)] hover:border-[var(--neutral-7)] transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
+                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-muted text-muted-foreground hover:text-foreground hover:border-border transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
                   onClick={() => scrollCarousel("previous")}
                   aria-label="Previous slide"
                 >
@@ -321,7 +319,7 @@ export function UseCases(props: UseCasesProps) {
                 </button>
                 <button
                   type="button"
-                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:text-[var(--neutral-12)] hover:border-[var(--neutral-7)] transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
+                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-muted text-muted-foreground hover:text-foreground hover:border-border transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
                   onClick={() => scrollCarousel("next")}
                   aria-label="Next slide"
                 >

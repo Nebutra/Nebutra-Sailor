@@ -139,18 +139,18 @@ export const ShowMore = ({
         />
       )}
 
-      <div className="shrink-0 bg-[var(--neutral-1)] px-[var(--show-more-gap)]">
+      <div className="shrink-0 bg-background px-[var(--show-more-gap)]">
         <button
           type="button"
           aria-controls={controls}
           aria-expanded={expanded}
           disabled={disabled}
           className={cn(
-            "inline-flex items-center justify-center gap-1 whitespace-nowrap border border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] font-medium text-sm",
+            "inline-flex items-center justify-center gap-1 whitespace-nowrap border border-border bg-background text-foreground font-medium text-sm",
             "h-[var(--show-more-trigger-height)] rounded-[var(--show-more-radius)] px-[var(--show-more-trigger-padding-x)]",
             "transition-[background-color,border-color,color] duration-[var(--show-more-duration)] ease-[var(--show-more-easing)]",
-            "hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]",
+            "hover:border-border hover:bg-muted",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
             "disabled:pointer-events-none disabled:opacity-50",
             "motion-reduce:transition-none",
             buttonClassName,
