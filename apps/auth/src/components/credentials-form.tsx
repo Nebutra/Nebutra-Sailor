@@ -308,7 +308,11 @@ export function CredentialsForm({
         {turnstileSiteKey ? (
           <Turnstile
             siteKey={turnstileSiteKey}
-            options={{ size: "invisible", appearance: "interaction-only" }}
+            options={{
+              size: "invisible",
+              appearance: "interaction-only",
+              action: "turnstile-spin-v2",
+            }}
             onSuccess={setTurnstileToken}
             onError={() => setTurnstileToken(null)}
             onExpire={() => setTurnstileToken(null)}

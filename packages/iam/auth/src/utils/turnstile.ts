@@ -8,7 +8,7 @@
  * yet onboarded Turnstile are not blocked.
  *
  * Env:
- *  - TURNSTILE_SECRET_KEY (server) — when present, verification is enforced.
+ *  - TURNSTILE_SECRET_KEY or TURNSTILE_SECRET (server) — when present, verification is enforced.
  *  - NEXT_PUBLIC_TURNSTILE_SITE_KEY (client, not used here) — surfaced to the
  *    widget on the browser; the form must include it to mint a token.
  */
@@ -67,7 +67,7 @@ export async function verifyTurnstileToken(
   token: string | null | undefined,
   options: VerifyTurnstileOptions = {},
 ): Promise<VerifyTurnstileResult> {
-  const secret = options.secret ?? process.env.TURNSTILE_SECRET_KEY;
+  const secret = options.secret ?? process.env.TURNSTILE_SECRET_KEY ?? process.env.TURNSTILE_SECRET;
 
   if (!secret) {
     return { ok: true, skipped: true };
@@ -152,7 +152,6 @@ export async function verifyTurnstileOrThrow(
  * or a public boolean prop).
  */
 export function isTurnstileConfigured(): boolean {
-  return (
-    typeof process.env.TURNSTILE_SECRET_KEY === "string" && process.env.TURNSTILE_SECRET_KEY !== ""
-  );
+  const secret = process.env.TURNSTILE_SECRET_KEY ?? process.env.TURNSTILE_SECRET;
+  return typeof secret === "string" && secret !== "";
 }

@@ -204,11 +204,12 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     }
 
     // Captcha — uses Better Auth's built-in `captcha` plugin with Cloudflare
-    // Turnstile when `TURNSTILE_SECRET_KEY` is set. The plugin intercepts
-    // sensitive endpoints (sign-in, sign-up, password reset) and rejects
-    // requests without a valid token. Header name: `x-captcha-response`.
+    // Turnstile when TURNSTILE_SECRET_KEY or TURNSTILE_SECRET is set. The plugin
+    // intercepts sensitive endpoints (sign-in, sign-up, password reset) and
+    // rejects requests without a valid token. Header name: `x-captcha-response`.
     let captchaPlugin: BetterAuthPlugin | undefined;
-    if (process.env.TURNSTILE_SECRET_KEY) {
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY ?? process.env.TURNSTILE_SECRET;
+    if (turnstileSecret) {
       try {
         const captchaModule = (await loadOptionalPlugin("captcha")) as {
           captcha: (opts: {
@@ -219,7 +220,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         };
         captchaPlugin = captchaModule.captcha({
           provider: "cloudflare-turnstile",
-          secretKey: process.env.TURNSTILE_SECRET_KEY,
+          secretKey: turnstileSecret,
         });
       } catch {
         logger.warn("Better Auth: captcha plugin not available — bot verification will not run.");
