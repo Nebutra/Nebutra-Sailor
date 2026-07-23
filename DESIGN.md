@@ -32,6 +32,27 @@ Sub-specs (per package):
 - [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) — multi-theme engine
 - [`packages/design/ui/DESIGN.md`](./packages/design/ui/DESIGN.md) — component library
 
+### App consumption contract (Tailwind v4 — non-negotiable)
+
+Headless-style libraries (Radix / Base UI) + CVA utility classes **do not ship a
+component stylesheet**. Apps must:
+
+```css
+/* apps/{app}/src/app/globals.css */
+@import "tailwindcss";
+@import "@nebutra/tokens/styles.css";           /* CSS variables + @theme */
+@source "../../../../packages/design/ui/src";  /* REQUIRED: generate CVA utilities */
+```
+
+| If you only… | Result |
+|--------------|--------|
+| Import tokens | Variables exist; `var(--primary)` works |
+| Import UI components without `@source` | **Native-looking UI** — no padding, square borders, missing focus |
+| Import tokens + `@source` ui | Full design-system surface |
+
+Canonical templates: `apps/web`, `apps/landing-page`, `apps/auth`.  
+Broken before fix: `apps/forge`, `apps/router`, `apps/sleptons` (missing `@source`).
+
 ---
 
 ## 1. Identity

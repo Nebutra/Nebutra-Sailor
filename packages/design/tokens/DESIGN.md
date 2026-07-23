@@ -15,13 +15,31 @@
 
 ## 1. Identity
 
-This package emits the **runtime CSS variables** consumed by every Nebutra app. Apps import via:
+This package emits the **runtime CSS variables** consumed by every Nebutra app.
+
+### App consumption contract (mandatory)
 
 ```css
-/* apps/{app}/src/app/globals.css */
+/* apps/{app}/src/app/globals.css — Tailwind v4 */
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
+
+/* REQUIRED: scan @nebutra/ui so CVA utility classes (px-*, border-input, …)
+ * are generated into this app’s CSS. Without @source, primitives render as
+ * unstyled native HTML (no padding, square borders). Tokens alone are not enough. */
+@source "../../../../packages/design/ui/src";
+@source "../../../../packages/design/icons/src"; /* if using @nebutra/icons in class strings */
+
+@custom-variant dark (&:is(.dark *));
 ```
+
+| Layer | Package | What it provides | What it does **not** do |
+|-------|---------|------------------|-------------------------|
+| Tokens | `@nebutra/tokens` | CSS variables (`--primary`, `--input`, …) + `@theme` | Does not emit component utility classes |
+| Components | `@nebutra/ui` | Headless/styled primitives via CVA class strings | Classes only appear in CSS if Tailwind **scans** the package |
+| App CSS | `globals.css` | Must `@import` tokens **and** `@source` ui | Omitting `@source` → “native unstyled” UI |
+
+Reference implementations: `apps/web`, `apps/landing-page`, `apps/auth`.
 
 Tokens are organized in three concentric rings:
 
