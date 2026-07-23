@@ -46,7 +46,40 @@ Landing 页会根据 `NEXT_PUBLIC_AUTH_PROVIDER` 选择正确的 One Tap 实现�
 | `AUTH_COOKIE_DOMAIN` | `.nebutra.com` |
 | `BETTER_AUTH_SECRET` | auth 与 web 相同 |
 
-仪表板未登录时会 307 到登录中心并带上 `returnTo`。各 RP 的 secret 必须一致。
+### 单一登录入口
+
+产品应用是 **RP**：会把认证相关路由 soft-redirect 到登录中心。Better Auth
+**只有一套 UI**，不要在 `app` 上再维护第二套登录页。
+
+| 表面 | 行为 |
+|------|------|
+| `app.nebutra.com/sign-in` | `307` → `auth.nebutra.com/sign-in?returnTo=…` |
+| `app.nebutra.com/sign-up` | `307` → `auth.nebutra.com/sign-up?returnTo=…` |
+| `auth.nebutra.com/*` | 规范登录 UI（账密、OAuth、可选魔法链接 / Passkey） |
+
+例外：当 `NEXT_PUBLIC_AUTH_PROVIDER=clerk` 时，web 可保留本地 Clerk UI。
+
+### OAuth 回调 URI
+
+在 IdP 中注册**登录中心**回调（不要写 `app`）：
+
+```
+https://auth.nebutra.com/api/auth/callback/google
+https://auth.nebutra.com/api/auth/callback/github
+```
+
+登录中心 `GET /health` 会返回当前启用的 `oauth.callbackUrls`。
+
+### 验证码 / 魔法链接 / Passkey
+
+| 开关 / 环境变量 | 作用 |
+|-----------------|------|
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` | 表单 Cloudflare Turnstile（`x-captcha-response`） |
+| `NEXT_PUBLIC_AUTH_MAGIC_LINK=1` | 登录页展示魔法链接入口 |
+| `NEXT_PUBLIC_AUTH_PASSKEYS=1` | Passkey 按钮与条件 UI |
+| `PASSKEY_RP_ID` / `PASSKEY_ORIGIN` | WebAuthn RP 覆盖（默认 auth 主机） |
+
+各 RP 的 `BETTER_AUTH_SECRET` 必须一致。
 
 ## Clerk 配置（可选提供商）
 
@@ -109,9 +142,15 @@ export default async function DashboardPage() {
 }
 ```
 
+## 网关令牌校验
+
+Hono API 网关在受保护请求上按当前 `AUTH_PROVIDER` 校验会话 / Bearer。
+Better Auth 使用共享密钥与数据库会话；服务间调用使用短时 **HS256**
+`x-service-token`（`SERVICE_SECRET`），旧版 hex-HMAC 会被拒绝。
+
 ## JWT 声明内容
 
-每个经过验证的令牌包含：
+经过验证的用户令牌通常包含：
 
 ```json
 {
@@ -123,9 +162,23 @@ export default async function DashboardPage() {
 }
 ```
 
+## 会话管理
+
+**Better Auth（生产默认）**：会话 Cookie 在 `auth.nebutra.com` 签发，
+`AUTH_COOKIE_DOMAIN=.nebutra.com`，RP 经 `returnTo` 回跳后共享同一 Cookie。
+
+**Clerk（可选）**：会话时长在 Clerk Dashboard 配置，SDK 负责刷新。
+
+## 登录 / 注册 UI
+
+生产（Better Auth）使用 `apps/auth` 登录中心页面；产品应用只做 307 跳转。
+仅在 `AUTH_PROVIDER=clerk` 时在 web 本地保留 Clerk `<SignIn />` 等组件。
+
 ## 组织创建流程
 
-注册后没有组织的用户会被重定向到组织创建流程：
+注册后没有组织的用户会被重定向到组织创建 / onboarding（按提供商不同）。
+
+Clerk 示例：
 
 ```typescript app/create-org/page.tsx
 import { CreateOrganization } from "@clerk/nextjs";
@@ -136,7 +189,7 @@ export default function CreateOrgPage() {
 ```
 
 <Warning>
-  没有此页面，注册的用户将在 `auth()` 返回 `{ orgId: null }` 时被无限重定向回登录页。请务必实现组织创建流程。
+  缺少组织创建路径时，用户可能长期处于 `orgId: null` 并在落地页与仪表板之间循环跳转。多租户应用务必实现该流程。
 </Warning>
 
 ## 相关文档

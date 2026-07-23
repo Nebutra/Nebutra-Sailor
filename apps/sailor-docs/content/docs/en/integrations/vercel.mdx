@@ -58,13 +58,24 @@ This uses your Vercel account as the remote cache backend — cache misses are e
 
 ## Environment variables
 
-Nebutra uses these environment variables on Vercel:
+Vercel-hosted **landing / docs** rarely need full auth secrets. If you host web
+or auth on Vercel as an optional cutover, mirror the same Better Auth contract
+used on ECS:
 
 ```bash
-# Auth
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
-CLERK_SECRET_KEY=sk_live_...
-CLERK_WEBHOOK_SECRET=whsec_...
+# Auth (production default = Better Auth auth-center)
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+
+# Optional: Clerk provider instead
+# AUTH_PROVIDER=clerk
+# NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
+# CLERK_SECRET_KEY=sk_live_...
+# CLERK_WEBHOOK_SECRET=whsec_...
 
 # Database
 DATABASE_URL=postgresql://...
@@ -83,8 +94,8 @@ UPSTASH_REDIS_REST_TOKEN=...
 # Error tracking
 SENTRY_DSN=https://...
 
-# Internal
-ADMIN_API_KEY=... # min 32 chars, generate: openssl rand -hex 32
+# Internal S2S
+SERVICE_SECRET=... # HS256 for x-service-token
 ```
 
 ## Preview deployments

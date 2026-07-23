@@ -5,10 +5,20 @@ description: 交互式脚手架向导——几秒钟内引导你完成 Nebutra-S
 
 `create-sailor` 是一次性脚手架工具，它会克隆 Nebutra-Sailor 模板，通过配置问题引导你完成设置，并写入 `.env.local`——让你在不到一分钟内就能开始编码。
 
+已发布 npm 包：**`create-sailor@1.8.2`**（可用 `npx create-sailor@latest` 拉取当前版）。
+
+<Note>
+  脚手架**默认**偏向快速上手（`--auth clerk`、`--deploy vercel`）。
+  第一方 **nebutra.com** 生产使用 **Better Auth** 登录中心 `auth.nebutra.com`（ECS），
+  app/API 亦在 ECS——若要对齐该拓扑，请选 `--auth betterauth` 与
+  `--deploy selfhost`（或自行对接 ECS）。
+</Note>
+
 ## 用法
 
 ```bash
 npx create-sailor [目录]
+# 固定版本：npx create-sailor@1.8.2 my-app
 ```
 
 若省略 `[目录]` 参数，向导会提示你输入目录名称。

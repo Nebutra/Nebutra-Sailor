@@ -35,8 +35,11 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 |------|----------|--------|------|
 | `AUTH_PROVIDER` | 否 | `better-auth` | 服务端认证提供商。可选：`better-auth`、`nextauth`、`clerk`、`supabase`、`dev`。 |
 | `NEXT_PUBLIC_AUTH_PROVIDER` | 否 | `better-auth` | 客户端可见的认证提供商。应与 `AUTH_PROVIDER` 保持一致。 |
-| `BETTER_AUTH_SECRET` | `AUTH_PROVIDER=better-auth` 时 | — | Better Auth 自托管签名密钥。可用 `openssl rand -base64 32` 生成。 |
-| `BETTER_AUTH_URL` | `AUTH_PROVIDER=better-auth` 时 | — | `/api/auth/*` 所在的基础 URL。 |
+| `BETTER_AUTH_SECRET` | `AUTH_PROVIDER=better-auth` 时 | — | Better Auth 自托管签名密钥。可用 `openssl rand -base64 32` 生成。**auth 与各 RP 必须一致**。 |
+| `BETTER_AUTH_URL` | `AUTH_PROVIDER=better-auth` 时 | — | 提供 `/api/auth/*` 的登录中心源站。生产：`https://auth.nebutra.com`。 |
+| `NEXT_PUBLIC_AUTH_URL` | 拆分登录中心时 | — | 客户端跳转 / SDK baseURL 使用的登录中心 URL，通常与 `BETTER_AUTH_URL` 相同。 |
+| `AUTH_COOKIE_DOMAIN` | 多子域生产 | — | 共享 Cookie 父域（如 `.nebutra.com`），使 `app` 与 `auth` 共享会话。 |
+| `SERVICE_SECRET` | 是（网关 / S2S） | — | 内部 `x-service-token` HS256 JWT 密钥。不是终端用户会话密钥。 |
 | `AUTH_SECRET` | `AUTH_PROVIDER=nextauth` 时 | — | Auth.js / NextAuth 签名密钥。可用 `openssl rand -base64 32` 生成。 |
 | `NEXTAUTH_URL` | `AUTH_PROVIDER=nextauth` 时 | — | Auth.js 回调使用的控制台源站。 |
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `AUTH_PROVIDER=clerk` 时 | — | Clerk 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
@@ -50,8 +53,16 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 | `FEISHU_REDIRECT_URI` | 否 | — | 可选覆盖。Better Auth 默认回调为 `/api/auth/oauth2/callback/feishu`。 |
 | `GOOGLE_CLIENT_ID` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client ID。 |
 | `GOOGLE_CLIENT_SECRET` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client Secret。 |
+| `GITHUB_CLIENT_ID` | 启用 GitHub OAuth 时 | — | Better Auth 使用的 GitHub OAuth App Client ID。 |
+| `GITHUB_CLIENT_SECRET` | 启用 GitHub OAuth 时 | — | GitHub OAuth App Client Secret。 |
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Better Auth 或 NextAuth 启用 Google One Tap 时 | — | Landing 页 One Tap 提示使用的公开 Google OAuth Web Client ID。 |
 | `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP` | 否 | `true` | 设置为 `false` 可关闭 Landing 页 One Tap 提示。 |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | 展示 Turnstile 时 | — | 登录中心表单使用的 Cloudflare Turnstile site key。 |
+| `TURNSTILE_SECRET_KEY` / `TURNSTILE_SECRET` | 强制 Turnstile 时 | — | `siteverify` 服务端密钥。未配置时跳过校验。 |
+| `NEXT_PUBLIC_AUTH_MAGIC_LINK` | 否 | 关闭 | 设为 `1` / `true` 时在登录中心展示魔法链接入口。 |
+| `NEXT_PUBLIC_AUTH_PASSKEYS` | 否 | 关闭 | 设为 `1` / `true` 时展示 Passkey 按钮与条件 UI。 |
+| `PASSKEY_RP_ID` | 否 | auth 主机名 | WebAuthn RP ID 覆盖（默认登录中心主机）。 |
+| `PASSKEY_ORIGIN` | 否 | auth 源站 | WebAuthn origin 覆盖（默认登录中心源站）。 |
 | `NEBUTRA_LANDING_ORIGIN` | NextAuth One Tap 启用时 | — | 允许 POST 到 `/api/auth/google-one-tap` 的 Landing 源站。 |
 | `NEBUTRA_SESSION_HINT_DOMAIN` | 否 | — | 可选的跨子域轻量会话提示 Cookie 域。 |
 
@@ -60,18 +71,39 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 AUTH_PROVIDER=better-auth
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 BETTER_AUTH_SECRET=local-dev-secret
-BETTER_AUTH_URL=http://localhost:3001
+BETTER_AUTH_URL=http://localhost:3101
+NEXT_PUBLIC_AUTH_URL=http://localhost:3101
 GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=xxx
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
 ```
-```bash .env（生产环境）
+```bash .env（生产 — Nebutra.com / Better Auth）
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...                 # apps/auth 与 apps/web 相同
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+DATABASE_URL=postgresql://...
+SERVICE_SECRET=...
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=xxx
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAA...
+TURNSTILE_SECRET_KEY=0x4AAAAA...
+# 可选 UX 开关：
+# NEXT_PUBLIC_AUTH_MAGIC_LINK=1
+# NEXT_PUBLIC_AUTH_PASSKEYS=1
+# PASSKEY_RP_ID=auth.nebutra.com
+# PASSKEY_ORIGIN=https://auth.nebutra.com
+```
+```bash .env（可选 Clerk 提供商）
 AUTH_PROVIDER=clerk
 NEXT_PUBLIC_AUTH_PROVIDER=clerk
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
 CLERK_SECRET_KEY=sk_live_xxx
 CLERK_WEBHOOK_SECRET=whsec_xxx
-AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"nebutra.com","id":"nebutra-entra","name":"Nebutra Entra ID","type":"oidc","provider":"clerk"}]'
 ```
 ```bash .env（飞书/Lark SSO）
 AUTH_PROVIDER=better-auth
@@ -86,6 +118,13 @@ FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
 AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","name":"Example Feishu","type":"oidc","provider":"feishu"}]'
 ```
 </CodeGroup>
+
+<Note>
+  OAuth 回调 URI 必须指向**登录中心**源站，例如
+  `https://auth.nebutra.com/api/auth/callback/google` 与
+  `https://auth.nebutra.com/api/auth/callback/github`。
+  `GET https://auth.nebutra.com/health` 会返回当前启用的 `oauth.callbackUrls`。
+</Note>
 
 ---
 

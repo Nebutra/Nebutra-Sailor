@@ -5,10 +5,20 @@ description: Interactive scaffolding wizard — bootstrap a production-ready Neb
 
 `create-sailor` is a one-time scaffolding tool that clones the Nebutra-Sailor template, walks you through configuration questions, and writes your `.env.local` — so you can start coding in under a minute.
 
+Published npm package: **`create-sailor@1.8.2`** (use `npx create-sailor@latest` to pick up the current release).
+
+<Note>
+  Scaffold **defaults** prefer fast setup (`--auth clerk`, `--deploy vercel`).
+  First-party **nebutra.com** production uses **Better Auth** on
+  `auth.nebutra.com` (ECS) with app/API on ECS — pick `--auth betterauth` and
+  `--deploy selfhost` (or wire ECS yourself) when matching that topology.
+</Note>
+
 ## Usage
 
 ```bash
 npx create-sailor [dir]
+# pin a release: npx create-sailor@1.8.2 my-app
 ```
 
 If you omit `[dir]`, the wizard prompts you for a directory name.

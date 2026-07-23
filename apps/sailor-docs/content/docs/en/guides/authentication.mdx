@@ -50,8 +50,40 @@ Production Nebutra uses a dedicated **auth center** (`apps/auth` →
 | `AUTH_COOKIE_DOMAIN` | `.nebutra.com` |
 | `BETTER_AUTH_SECRET` | shared across auth + web |
 
-App dashboard (`app.nebutra.com`) redirects unauthenticated users to the auth
-center with a `returnTo` URL. Keep secrets identical across RP apps.
+### Single login entry
+
+Product apps are **RPs**: they soft-redirect auth surfaces to the auth-center.
+There is **one** Better Auth UI — do not keep a second sign-in page on `app`.
+
+| Surface | Behavior |
+|---------|----------|
+| `app.nebutra.com/sign-in` | `307` → `auth.nebutra.com/sign-in?returnTo=…` |
+| `app.nebutra.com/sign-up` | `307` → `auth.nebutra.com/sign-up?returnTo=…` |
+| `auth.nebutra.com/*` | Canonical login UI (credentials, OAuth, optional magic link / passkeys) |
+
+Clerk is the only exception: when `NEXT_PUBLIC_AUTH_PROVIDER=clerk`, web may keep a local Clerk UI.
+
+### OAuth redirect URIs
+
+Register callbacks on the **auth-center** origin (not `app`):
+
+```
+https://auth.nebutra.com/api/auth/callback/google
+https://auth.nebutra.com/api/auth/callback/github
+```
+
+`GET /health` on the auth-center returns `oauth.callbackUrls` for currently enabled providers.
+
+### Captcha, magic link, passkeys
+
+| Flag / env | Effect |
+|------------|--------|
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile on forms (`x-captcha-response`) |
+| `NEXT_PUBLIC_AUTH_MAGIC_LINK=1` | Magic-link alternate on sign-in |
+| `NEXT_PUBLIC_AUTH_PASSKEYS=1` | Passkey button + conditional UI |
+| `PASSKEY_RP_ID` / `PASSKEY_ORIGIN` | WebAuthn RP overrides (default: auth host) |
+
+Keep `BETTER_AUTH_SECRET` identical across RP apps.
 
 ## Clerk setup (optional provider)
 
@@ -120,11 +152,15 @@ export default async function DashboardPage() {
 
 ## Token verification (API Gateway)
 
-The Hono API gateway verifies tokens on every protected request:
+The Hono API gateway verifies the active provider on every protected request
+(`@nebutra/auth` middleware). With Better Auth, session cookies / bearer JWTs are
+validated against the shared secret and database session store. Service-to-service
+calls use a short-lived **HS256** `x-service-token` (`SERVICE_SECRET`) — legacy
+hex-HMAC tokens are rejected.
 
 ```typescript
-// Handled automatically by Nebutra's auth middleware
-app.use("/api/*", clerkMiddleware());
+// Provider-agnostic: middleware resolves AUTH_PROVIDER
+app.use("/api/*", authMiddleware());
 
 app.get("/api/projects", async (c) => {
   const { userId, orgId } = c.get("auth");
@@ -134,7 +170,7 @@ app.get("/api/projects", async (c) => {
 
 ## JWT claims
 
-Every verified token includes:
+Verified user tokens typically include:
 
 ```json
 {
@@ -153,22 +189,30 @@ The `scopes` claim is set by Nebutra's RBAC layer at token issuance time.
 
 ## Session management
 
-- **Session duration**: 7 days by default (configurable in Clerk Dashboard)
-- **Token refresh**: Automatic client-side refresh via Clerk's SDK
-- **Revocation**: Revoking a session invalidates all active tokens for that session immediately
+**Better Auth (production default)**
+- Session cookie issued on `auth.nebutra.com` with `AUTH_COOKIE_DOMAIN=.nebutra.com`
+- Dashboard and other RPs read the same cookie after `returnTo` redirect
+- Revoke / sign-out via Better Auth session APIs on the auth-center
+
+**Clerk (optional)**
+- Session duration configurable in Clerk Dashboard
+- Client SDK handles refresh; revoking a session invalidates active tokens
 
 ## Multi-factor authentication
 
-MFA is enforced at the org level. Admins can require MFA for all members via **Settings → Security → Require MFA**.
+MFA can be enforced at the org level (product settings). Supported factors depend
+on the active provider:
 
-Supported factors:
-- TOTP (Authenticator apps: Authy, 1Password, Google Authenticator)
-- SMS OTP
-- Passkeys (WebAuthn)
+- TOTP (authenticator apps)
+- SMS OTP (when configured)
+- Passkeys (WebAuthn) — enable on auth-center with `NEXT_PUBLIC_AUTH_PASSKEYS=1`
 
 ## Sign-in / Sign-up UI
 
-Nebutra ships pre-built sign-in and sign-up pages:
+**Production (Better Auth):** use the auth-center pages under `apps/auth`
+(`/sign-in`, `/sign-up`, `/forgot-password`, …). Product apps only redirect.
+
+**Clerk (optional):** keep local catch-all pages:
 
 ```typescript app/sign-in/[[...sign-in]]/page.tsx
 import { SignIn } from "@clerk/nextjs";
@@ -184,7 +228,10 @@ export default function SignInPage() {
 
 ## Organization creation flow
 
-After sign-up, users without an organization are redirected to the org creation flow:
+After sign-up, users without an organization are redirected to the org creation
+flow (provider-specific UI or Nebutra dashboard onboarding).
+
+For **Clerk**, a typical page looks like:
 
 ```typescript app/create-org/page.tsx
 import { CreateOrganization } from "@clerk/nextjs";
@@ -195,7 +242,8 @@ export default function CreateOrgPage() {
 ```
 
 <Warning>
-  Without this page, users who sign up will have `orgId: null` in their auth token and will be redirected back to the landing page in an infinite loop. Always implement the org creation flow.
+  Without an org-creation path, users can end up with `orgId: null` and bounce
+  between landing and dashboard. Always implement this flow for multi-tenant apps.
 </Warning>
 
 ## Related
