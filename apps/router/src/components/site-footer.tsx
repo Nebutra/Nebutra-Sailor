@@ -6,16 +6,18 @@ const COLUMNS = [
   {
     title: "产品",
     links: [
-      { href: "/", label: "全部工具" },
-      { href: "/wallet", label: "钱包" },
-      { href: "/docs", label: "API 文档" },
+      { href: "/", label: "概览" },
+      { href: "/wallet", label: "充值" },
+      { href: "/keys", label: "API Keys" },
+      { href: "/models", label: "模型目录" },
+      { href: "/playground", label: "Playground" },
     ],
   },
   {
     title: "开发者",
     links: [
-      { href: "/docs", label: "OpenAPI / MCP" },
-      { href: "http://localhost:3106", label: "Router 控制台", external: true },
+      { href: "/docs", label: "接入文档" },
+      { href: "http://localhost:3105", label: "Forge 工具站", external: true },
       {
         href: brand.social.github,
         label: "GitHub",
@@ -34,8 +36,10 @@ const COLUMNS = [
 ] as const;
 
 /**
- * Product chrome footer — aligned with landing FooterMinimal defaults:
+ * Product chrome footer — landing FooterMinimal structure:
  * neutral top border · horizontal logo · link columns · copyright.
+ * (No brand-gradient hairline: --brand-gradient aliases --primary solid fill,
+ * which reads as a harsh blue rule on a full-width 1px stripe.)
  */
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -48,12 +52,13 @@ export function SiteFooter() {
             <Link
               href="/"
               className="inline-flex outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-12)] focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
-              aria-label={`${brand.name} Forge`}
+              aria-label={`${brand.name} Router`}
             >
               <BrandLogo variant="horizontal" className="h-7 w-auto" />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--neutral-11)]">
-              Forge 是 {brand.name} 的 Agent-native 工具站——同一能力服务人类界面与 API / MCP。
+              Router 是 {brand.name} 的模型聚合中转——OpenAI-compatible，数据面侧车 New-API /
+              Sub2API，客户只见 Nebutra。
             </p>
             <p className="mt-3 text-xs font-medium tracking-wide text-[var(--neutral-10)]">
               {brand.tagline}
@@ -97,7 +102,7 @@ export function SiteFooter() {
           <p className="text-[13px] text-[var(--neutral-10)]">
             © {year} {brand.name}. All rights reserved.
           </p>
-          <p className="text-[12px] text-[var(--neutral-10)]">{brand.nameCn} · Forge</p>
+          <p className="text-[12px] text-[var(--neutral-10)]">{brand.nameCn} · Router</p>
         </div>
       </div>
     </footer>
