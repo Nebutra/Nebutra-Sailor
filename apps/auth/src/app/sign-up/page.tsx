@@ -1,5 +1,6 @@
 import { AuthSplitLayout } from "@/components/auth-split-layout";
 import { CredentialsForm } from "@/components/credentials-form";
+import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
 import { resolvePostLoginReturnTo } from "@/lib/return-to";
 
 export const dynamic = "force-dynamic";
@@ -16,10 +17,15 @@ export default async function SignUpPage({
     null;
 
   const returnTo = resolvePostLoginReturnTo(raw);
+  const enabledOAuthProviders = detectEnabledOAuthProviders();
 
   return (
     <AuthSplitLayout>
-      <CredentialsForm mode="sign-up" returnTo={returnTo} />
+      <CredentialsForm
+        mode="sign-up"
+        returnTo={returnTo}
+        enabledOAuthProviders={enabledOAuthProviders}
+      />
     </AuthSplitLayout>
   );
 }

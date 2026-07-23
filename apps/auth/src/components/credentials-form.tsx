@@ -5,18 +5,26 @@ import { Eye, EyeOff } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useState } from "react";
+import type { OAuthProvider } from "@/lib/oauth-providers";
+import { OAuthButtons } from "./oauth-buttons";
 
 interface CredentialsFormProps {
   mode: "sign-in" | "sign-up";
   /** Already-sanitized absolute return URL (computed on the server). */
   returnTo: string;
+  /** Providers configured server-side (env secrets present). */
+  enabledOAuthProviders?: readonly OAuthProvider[];
 }
 
 /**
  * Better Auth email/password form styled like apps/web SignInForm
- * (neutral token surfaces + design-system Input/Button).
+ * (neutral token surfaces + design-system Input/Button + social OAuth).
  */
-export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
+export function CredentialsForm({
+  mode,
+  returnTo,
+  enabledOAuthProviders = [],
+}: CredentialsFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -80,6 +88,18 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
             : "One account for every Nebutra app."}
         </p>
       </div>
+
+      {enabledOAuthProviders.length > 0 ? (
+        <>
+          <OAuthButtons providers={enabledOAuthProviders} returnTo={returnTo} />
+          <div className="relative my-6">
+            <div className="h-px w-full bg-[var(--neutral-6)]" aria-hidden />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs font-medium text-[var(--neutral-9)]">
+              Or continue with email
+            </span>
+          </div>
+        </>
+      ) : null}
 
       <form
         onSubmit={onSubmit}
