@@ -1,23 +1,28 @@
-// @brand-exempt: mirrors packages/platform/i18n auth.forgotPassword until next-intl on auth-center
 "use client";
 
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface ForgotPasswordFormProps {
   returnTo: string;
+  turnstileSiteKey?: string;
 }
 
 /**
  * Better Auth `forget-password` (British spelling on the API path).
  * Visual shell matches apps/web forgot-password page (split layout + title).
  */
-export function ForgotPasswordForm({ returnTo }: ForgotPasswordFormProps) {
+export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswordFormProps) {
+  const t = useTranslations("auth.forgotPassword");
+  const tSignIn = useTranslations("auth.signIn");
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -25,9 +30,12 @@ export function ForgotPasswordForm({ returnTo }: ForgotPasswordFormProps) {
     setError(null);
     try {
       const origin = window.location.origin;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
+
       const res = await fetch("/api/auth/forget-password", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         credentials: "include",
         body: JSON.stringify({
           email,
@@ -38,13 +46,19 @@ export function ForgotPasswordForm({ returnTo }: ForgotPasswordFormProps) {
         const data = (await res.json().catch(() => null)) as {
           message?: string;
           error?: string;
+          code?: string;
         } | null;
-        setError(data?.message || data?.error || "Could not send reset email.");
+        const code = data?.code ?? data?.error;
+        if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
+          setError(tSignIn("captchaError"));
+        } else {
+          setError(data?.message || data?.error || "Could not send reset email.");
+        }
         return;
       }
       setSubmitted(true);
     } catch {
-      setError("An error occurred. Please try again.");
+      setError(tSignIn("genericError"));
     } finally {
       setLoading(false);
     }
@@ -57,17 +71,15 @@ export function ForgotPasswordForm({ returnTo }: ForgotPasswordFormProps) {
       <div className="w-full">
         <div className="mb-8">
           <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-            Check your email
+            {t("successTitle")}
           </h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-            If an account exists for that address, we sent a link to reset your password.
-          </p>
+          <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("success")}</p>
         </div>
         <Link
           href={signInHref}
           className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
         >
-          Back to log in
+          {tSignIn("submit")}
         </Link>
       </div>
     );
@@ -77,17 +89,25 @@ export function ForgotPasswordForm({ returnTo }: ForgotPasswordFormProps) {
     <div className="w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          Forgot password
+          {t("title")}
         </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-          Enter your email and we&apos;ll send a reset link.
-        </p>
+        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
       </div>
+
+      {turnstileSiteKey ? (
+        <Turnstile
+          siteKey={turnstileSiteKey}
+          options={{ size: "invisible", appearance: "interaction-only" }}
+          onSuccess={setTurnstileToken}
+          onError={() => setTurnstileToken(null)}
+          onExpire={() => setTurnstileToken(null)}
+        />
+      ) : null}
 
       <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="forgot-email" className="text-sm font-medium text-[var(--neutral-12)]">
-            Email
+            {t("emailLabel")}
           </label>
           <Input
             id="forgot-email"
@@ -98,7 +118,7 @@ export function ForgotPasswordForm({ returnTo }: ForgotPasswordFormProps) {
             autoComplete="email"
             size="lg"
             className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-            placeholder="you@example.com"
+            placeholder={tSignIn("emailPlaceholder")}
           />
         </div>
 
@@ -116,17 +136,16 @@ export function ForgotPasswordForm({ returnTo }: ForgotPasswordFormProps) {
           disabled={loading}
           className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {loading ? "Sending…" : "Send reset link"}
+          {loading ? tSignIn("providerLoading") : t("submit")}
         </Button>
       </form>
 
       <p className="mt-6 text-sm text-[var(--neutral-9)]">
-        Remembered it?{" "}
         <Link
           href={signInHref}
           className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
         >
-          Log in
+          {tSignIn("back")}
         </Link>
       </p>
     </div>

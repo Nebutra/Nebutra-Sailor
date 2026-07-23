@@ -1,4 +1,9 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+// next-intl v4 resolves this path via fs.existsSync (not Node module resolution).
+// Shared cookie-mode request config lives in @nebutra/i18n.
+const withNextIntl = createNextIntlPlugin("../../packages/platform/i18n/src/request.ts");
 
 // Standalone is for ECS/PM2 only. Vercel builds without output:"standalone".
 const useStandalone =
@@ -11,6 +16,7 @@ const nextConfig: NextConfig = {
     "@nebutra/auth",
     "@nebutra/brand",
     "@nebutra/db",
+    "@nebutra/i18n",
     "@nebutra/icons",
     "@nebutra/logger",
     "@nebutra/tokens",
@@ -22,4 +28,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

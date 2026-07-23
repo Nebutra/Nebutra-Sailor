@@ -20,6 +20,7 @@ export default async function SignInPage({
 
   const returnTo = resolvePostLoginReturnTo(raw);
   const enabledOAuthProviders = detectEnabledOAuthProviders();
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
   const [magicLinkEnabled, passkeyEnabled] = await Promise.all([
     isAuthFeatureEnabled("magicLink"),
     isAuthFeatureEnabled("passkeys"),
@@ -33,6 +34,7 @@ export default async function SignInPage({
         enabledOAuthProviders={enabledOAuthProviders}
         magicLinkEnabled={magicLinkEnabled}
         passkeyEnabled={passkeyEnabled}
+        turnstileSiteKey={turnstileSiteKey}
       />
     </AuthSplitLayout>
   );

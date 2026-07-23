@@ -1,10 +1,12 @@
-// @brand-exempt: Agent OS banner copy mirrors packages/platform/i18n auth.banner (EN) until next-intl lands
+import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/cn";
 
 /**
  * Sign-in left panel — Pattern A (editorial silence), same as apps/web AuthBanner.
  */
-export function AuthBanner({ className }: { className?: string }) {
+export async function AuthBanner({ className }: { className?: string }) {
+  const t = await getTranslations("auth.banner");
+
   return (
     <aside
       className={cn(
@@ -48,16 +50,16 @@ export function AuthBanner({ className }: { className?: string }) {
           {/* biome-ignore lint/performance/noImgElement: SVG brand mark in public/brand */}
           <img
             src="/brand/logo-color.svg"
-            alt="Nebutra"
+            alt={t("logoAlt")}
             width={72}
             height={72}
             className="mb-10 h-12 w-auto drop-shadow-[0_18px_44px_color-mix(in_srgb,var(--blue-9)_22%,transparent)]"
           />
           <h2 className="text-balance text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.15] tracking-[-0.02em] text-[var(--neutral-12)]">
-            Ship your Startup, governed from day one.
+            {t("slogan")}
           </h2>
           <p className="mt-4 max-w-[24rem] text-balance text-[15px] leading-[1.6] text-[var(--neutral-11)]">
-            Multi-region agents, multi-tenant by default. No platform team required.
+            {t("tagline")}
           </p>
         </div>
 

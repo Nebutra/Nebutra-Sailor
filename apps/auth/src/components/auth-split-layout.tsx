@@ -1,18 +1,22 @@
 // @brand-exempt: marketing home fallback URL until NEXT_PUBLIC_SITE_URL is always set
 import { ArrowLeft } from "@nebutra/icons";
+import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/cn";
 import { AuthBanner } from "./auth-banner";
+import { LocaleSwitcher } from "./locale-switcher";
 
 /**
- * Same split shell as apps/web AuthSplitLayout (Agent OS login).
+ * Same split shell as apps/web AuthSplitLayout (Agent OS login) —
+ * including top-right locale switcher.
  */
-export function AuthSplitLayout({
+export async function AuthSplitLayout({
   children,
   className,
 }: {
   children: React.ReactNode;
   className?: string;
 }) {
+  const t = await getTranslations("auth.signIn");
   const homeHref = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
 
   return (
@@ -32,8 +36,11 @@ export function AuthSplitLayout({
           className="absolute left-5 top-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--blue-9)] sm:left-8 lg:left-12 lg:top-10"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden />
-          Home
+          {t("homeLink")}
         </a>
+        <div className="absolute right-5 top-6 sm:right-8 lg:right-12 lg:top-10">
+          <LocaleSwitcher />
+        </div>
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--neutral-2)_80%,transparent),transparent)] lg:hidden"

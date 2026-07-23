@@ -1,9 +1,9 @@
-// @brand-exempt: mirrors packages/platform/i18n auth.resetPassword until next-intl on auth-center
 "use client";
 
 import { Eye, EyeOff } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useCapsLock } from "./use-caps-lock";
 
@@ -12,6 +12,8 @@ interface ResetPasswordFormProps {
 }
 
 export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
+  const t = useTranslations("auth.resetPassword");
+  const tSignIn = useTranslations("auth.signIn");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -51,7 +53,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       }
       setSuccess(true);
     } catch {
-      setError("An error occurred. Please try again.");
+      setError(tSignIn("genericError"));
     } finally {
       setLoading(false);
     }
@@ -62,17 +64,17 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       <div className="w-full">
         <div className="mb-8">
           <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-            Password updated
+            {t("successTitle")}
           </h1>
           <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-            You can now log in with your new password.
+            {t("successDescription")}
           </p>
         </div>
         <Link
           href="/sign-in"
           className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
         >
-          Log in
+          {t("signInCta")}
         </Link>
       </div>
     );
@@ -82,17 +84,15 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     <div className="w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          Set a new password
+          {t("title")}
         </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-          Choose a strong password you haven&apos;t used here before.
-        </p>
+        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
       </div>
 
       <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="new-password" className="text-sm font-medium text-[var(--neutral-12)]">
-            New password
+            {t("newPasswordLabel")}
           </label>
           <div className="relative">
             <Input
@@ -107,13 +107,13 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               autoComplete="new-password"
               size="lg"
               className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
-              placeholder="At least 8 characters"
+              placeholder={tSignIn("passwordPlaceholder")}
               aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
             />
             <button
               type="button"
               onClick={() => setShowPassword((v) => !v)}
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={showPassword ? tSignIn("hidePassword") : tSignIn("showPassword")}
               aria-pressed={showPassword}
               className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
             >
@@ -124,6 +124,16 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               )}
             </button>
           </div>
+          {capsLockOn ? (
+            <p
+              id="caps-lock-warning"
+              role="status"
+              aria-live="polite"
+              className="mt-0.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
+            >
+              {tSignIn("capsLockOn")}
+            </p>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -131,7 +141,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             htmlFor="confirm-password"
             className="text-sm font-medium text-[var(--neutral-12)]"
           >
-            Confirm password
+            {t("confirmPasswordLabel")}
           </label>
           <Input
             id="confirm-password"
@@ -143,7 +153,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             autoComplete="new-password"
             size="lg"
             className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-            placeholder="Re-enter password"
+            placeholder={tSignIn("passwordPlaceholder")}
           />
         </div>
 
@@ -161,7 +171,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           disabled={loading}
           className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {loading ? "Updating…" : "Update password"}
+          {loading ? tSignIn("providerLoading") : t("submit")}
         </Button>
       </form>
     </div>

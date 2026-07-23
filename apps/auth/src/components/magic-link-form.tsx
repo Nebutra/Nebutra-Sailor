@@ -1,28 +1,36 @@
-// @brand-exempt: mirrors packages/platform/i18n auth.magicLink until next-intl on auth-center
 "use client";
 
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface MagicLinkFormProps {
   returnTo: string;
+  turnstileSiteKey?: string;
 }
 
-export function MagicLinkForm({ returnTo }: MagicLinkFormProps) {
+export function MagicLinkForm({ returnTo, turnstileSiteKey }: MagicLinkFormProps) {
+  const t = useTranslations("auth.magicLink");
+  const tSignIn = useTranslations("auth.signIn");
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
     try {
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
+
       const res = await fetch("/api/auth/sign-in/magic-link", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         credentials: "include",
         body: JSON.stringify({ email, callbackURL: returnTo }),
       });
@@ -30,13 +38,19 @@ export function MagicLinkForm({ returnTo }: MagicLinkFormProps) {
         const data = (await res.json().catch(() => null)) as {
           message?: string;
           error?: string;
+          code?: string;
         } | null;
-        setError(data?.message || data?.error || "Could not send magic link.");
+        const code = data?.code ?? data?.error;
+        if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
+          setError(tSignIn("captchaError"));
+        } else {
+          setError(data?.message || data?.error || "Could not send magic link.");
+        }
         return;
       }
       setSent(true);
     } catch {
-      setError("An error occurred. Please try again.");
+      setError(tSignIn("genericError"));
     } finally {
       setLoading(false);
     }
@@ -49,18 +63,17 @@ export function MagicLinkForm({ returnTo }: MagicLinkFormProps) {
       <div className="w-full">
         <div className="mb-8">
           <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-            Check your email
+            {t("title")}
           </h1>
           <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-            We sent a sign-in link to{" "}
-            <span className="font-medium text-[var(--neutral-12)]">{email}</span>.
+            {t("sentTo", { email })}
           </p>
         </div>
         <Link
           href={signInHref}
           className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
         >
-          Back to log in
+          {tSignIn("submit")}
         </Link>
       </div>
     );
@@ -70,17 +83,27 @@ export function MagicLinkForm({ returnTo }: MagicLinkFormProps) {
     <div className="w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          Email magic link
+          {t("title")}
         </h1>
-        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-          We&apos;ll email you a one-time link — no password needed.
-        </p>
+        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">{t("description")}</p>
       </div>
+
+      {turnstileSiteKey ? (
+        <div className="mb-4">
+          <Turnstile
+            siteKey={turnstileSiteKey}
+            options={{ size: "invisible", appearance: "interaction-only" }}
+            onSuccess={setTurnstileToken}
+            onError={() => setTurnstileToken(null)}
+            onExpire={() => setTurnstileToken(null)}
+          />
+        </div>
+      ) : null}
 
       <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="magic-email" className="text-sm font-medium text-[var(--neutral-12)]">
-            Email
+            {t("emailLabel")}
           </label>
           <Input
             id="magic-email"
@@ -91,7 +114,7 @@ export function MagicLinkForm({ returnTo }: MagicLinkFormProps) {
             autoComplete="email"
             size="lg"
             className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-            placeholder="you@example.com"
+            placeholder={tSignIn("emailPlaceholder")}
           />
         </div>
 
@@ -109,17 +132,16 @@ export function MagicLinkForm({ returnTo }: MagicLinkFormProps) {
           disabled={loading}
           className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {loading ? "Sending…" : "Send magic link"}
+          {loading ? tSignIn("providerLoading") : t("send")}
         </Button>
       </form>
 
       <p className="mt-6 text-sm text-[var(--neutral-9)]">
-        Prefer a password?{" "}
         <Link
           href={signInHref}
           className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
         >
-          Log in
+          {tSignIn("back")}
         </Link>
       </p>
     </div>

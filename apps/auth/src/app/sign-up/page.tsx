@@ -18,6 +18,7 @@ export default async function SignUpPage({
 
   const returnTo = resolvePostLoginReturnTo(raw);
   const enabledOAuthProviders = detectEnabledOAuthProviders();
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
 
   return (
     <AuthSplitLayout>
@@ -25,6 +26,7 @@ export default async function SignUpPage({
         mode="sign-up"
         returnTo={returnTo}
         enabledOAuthProviders={enabledOAuthProviders}
+        turnstileSiteKey={turnstileSiteKey}
       />
     </AuthSplitLayout>
   );

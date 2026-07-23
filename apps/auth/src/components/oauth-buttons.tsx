@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
   buildOAuthStartPath,
@@ -105,6 +106,7 @@ interface OAuthButtonsProps {
  * Brand-colored provider icons are intentional (platform identity).
  */
 export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
+  const t = useTranslations("auth.signIn");
   const [loadingProvider, setLoadingProvider] = useState<OAuthProvider | null>(null);
 
   if (providers.length === 0) return null;
@@ -118,7 +120,8 @@ export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {providers.map((provider) => {
         const Icon = PROVIDER_ICON[provider];
-        const label = OAUTH_PROVIDER_LABEL[provider];
+        const label =
+          t(`providers.${provider}` as "providers.google") || OAUTH_PROVIDER_LABEL[provider];
         return (
           <Button
             key={provider}
@@ -126,11 +129,11 @@ export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
             variant="outline"
             className="h-10 w-full justify-center gap-2.5 border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
             disabled={loadingProvider !== null}
-            aria-label={`Continue with ${label}`}
+            aria-label={`${t("continueWith")} ${label}`}
             onClick={() => handleOAuth(provider)}
           >
             <Icon />
-            {loadingProvider === provider ? "Redirecting…" : label}
+            {loadingProvider === provider ? t("providerLoading") : label}
           </Button>
         );
       })}

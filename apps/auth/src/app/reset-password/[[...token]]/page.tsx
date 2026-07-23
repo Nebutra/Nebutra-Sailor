@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { AuthSplitLayout } from "@/components/auth-split-layout";
 import { ResetPasswordForm } from "@/components/reset-password-form";
 
@@ -18,6 +19,7 @@ export default async function ResetPasswordPage({
   const [{ token: slug }, query] = await Promise.all([params, searchParams]);
   const tokenFromQuery = typeof query.token === "string" ? query.token : null;
   const token = tokenFromQuery || slug?.[0] || "";
+  const t = await getTranslations("auth.resetPassword");
 
   return (
     <AuthSplitLayout>
@@ -26,10 +28,10 @@ export default async function ResetPasswordPage({
       ) : (
         <div className="w-full">
           <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-            Invalid reset link
+            {t("invalidTitle")}
           </h1>
           <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-            This password reset link is missing a token. Request a new one from the log-in page.
+            {t("invalidDescription")}
           </p>
         </div>
       )}

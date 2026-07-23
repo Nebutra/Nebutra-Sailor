@@ -15,10 +15,11 @@ export default async function ForgotPasswordPage({
     (typeof query.returnUrl === "string" && query.returnUrl) ||
     null;
   const returnTo = resolvePostLoginReturnTo(raw);
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
 
   return (
     <AuthSplitLayout>
-      <ForgotPasswordForm returnTo={returnTo} />
+      <ForgotPasswordForm returnTo={returnTo} turnstileSiteKey={turnstileSiteKey} />
     </AuthSplitLayout>
   );
 }

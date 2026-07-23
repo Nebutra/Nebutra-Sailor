@@ -18,6 +18,7 @@ export default async function MagicLinkPage({
     (typeof query.returnUrl === "string" && query.returnUrl) ||
     null;
   const returnTo = resolvePostLoginReturnTo(raw);
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
 
   if (!enabled) {
     redirect(`/sign-in?returnTo=${encodeURIComponent(returnTo)}`);
@@ -25,7 +26,7 @@ export default async function MagicLinkPage({
 
   return (
     <AuthSplitLayout>
-      <MagicLinkForm returnTo={returnTo} />
+      <MagicLinkForm returnTo={returnTo} turnstileSiteKey={turnstileSiteKey} />
     </AuthSplitLayout>
   );
 }
