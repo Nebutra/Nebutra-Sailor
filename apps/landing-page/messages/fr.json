@@ -1735,5 +1735,14 @@
   "icpFooter": {
     "recordNumber": "Enregistrement ICP",
     "publicSecurity": "Enregistrement de sécurité publique"
+  },
+  "MarketLocalePicker": {
+    "title": "Pays et langues",
+    "description": "Choisissez un pays et une langue pour le site marketing.",
+    "triggerAria": "Choisir le pays et la langue",
+    "searchPlaceholder": "Rechercher un pays…",
+    "plannedHint": "L'interface bascule en anglais tant que cette langue n'est pas disponible",
+    "noResults": "Aucun pays ne correspond",
+    "menuAria": "Pays et langues"
   }
 }

@@ -1735,5 +1735,14 @@
       "title": "Sailor로 출시한 후 창업자들이 말하는 것",
       "subtitle": "베타 코호트 고객 스토리가 곧 도착합니다 — 가장 먼저 만나보십시오."
     }
+  },
+  "MarketLocalePicker": {
+    "title": "국가 및 언어",
+    "description": "마케팅 사이트의 국가와 언어를 선택하세요.",
+    "triggerAria": "국가 및 언어 선택",
+    "searchPlaceholder": "국가 검색…",
+    "plannedHint": "이 언어는 아직 제공되지 않아 영어 UI로 표시됩니다",
+    "noResults": "일치하는 국가 없음",
+    "menuAria": "국가 및 언어"
   }
 }

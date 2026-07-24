@@ -4,7 +4,7 @@ import { Logo, Logomark } from "@nebutra/brand";
 import { useTheme } from "@nebutra/tokens";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { LocaleSwitcher } from "@/components/ui/locale-switcher";
+import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
@@ -57,7 +57,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
 
         {/* --- GLOBAL CONTROLS (Desktop) --- */}
         <div className="hidden lg:flex items-center gap-3 xl:gap-5">
-          <LocaleSwitcher />
+          <MarketLocalePicker />
           <ThemeSwitcher />
 
           {/*
@@ -90,7 +90,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
 
         {/* --- GLOBAL CONTROLS & DRAWER (Mobile) --- */}
         <div className="flex items-center gap-1 lg:hidden">
-          <LocaleSwitcher />
+          <MarketLocalePicker />
           <div className="hidden sm:block">
             <ThemeSwitcher />
           </div>

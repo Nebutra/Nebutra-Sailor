@@ -1735,5 +1735,14 @@
         }
       }
     }
+  },
+  "MarketLocalePicker": {
+    "title": "国と言語",
+    "description": "マーケティングサイトの国と言語を選択します。",
+    "triggerAria": "国と言語を選択",
+    "searchPlaceholder": "国を検索…",
+    "plannedHint": "この言語は未提供のため、当面は英語の UI になります",
+    "noResults": "一致する国がありません",
+    "menuAria": "国と言語"
   }
 }

@@ -1,0 +1,60 @@
+const CURRENCY_BY_COUNTRY: Record<string, string> = {
+  US: "USD",
+  CA: "CAD",
+  MX: "MXN",
+  BR: "BRL",
+  GB: "GBP",
+  IE: "EUR",
+  GI: "GIP",
+  PT: "EUR",
+  ES: "EUR",
+  FR: "EUR",
+  BE: "EUR",
+  NL: "EUR",
+  LU: "EUR",
+  DE: "EUR",
+  AT: "EUR",
+  CH: "CHF",
+  LI: "CHF",
+  IT: "EUR",
+  MT: "EUR",
+  GR: "EUR",
+  CY: "EUR",
+  SE: "SEK",
+  NO: "NOK",
+  DK: "DKK",
+  FI: "EUR",
+  EE: "EUR",
+  LV: "EUR",
+  LT: "EUR",
+  PL: "PLN",
+  CZ: "CZK",
+  SK: "EUR",
+  HU: "HUF",
+  RO: "RON",
+  BG: "BGN",
+  HR: "EUR",
+  SI: "EUR",
+  AE: "AED",
+  ZA: "ZAR",
+  IN: "INR",
+  SG: "SGD",
+  MY: "MYR",
+  TH: "THB",
+  HK: "HKD",
+  TW: "TWD",
+  CN: "CNY",
+  JP: "JPY",
+  KR: "KRW",
+  AU: "AUD",
+  NZ: "NZD",
+};
+
+export function getCurrencyForCountry(country: null | string | undefined): string {
+  if (!country) return "USD";
+  return CURRENCY_BY_COUNTRY[country.toUpperCase()] ?? "USD";
+}
+
+export function listMarketCurrencies(): Readonly<Record<string, string>> {
+  return CURRENCY_BY_COUNTRY;
+}

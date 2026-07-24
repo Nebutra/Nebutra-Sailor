@@ -1735,5 +1735,14 @@
   "icpFooter": {
     "publicSecurity": "公安备案",
     "recordNumber": "ICP 备案号"
+  },
+  "MarketLocalePicker": {
+    "title": "国家和语言",
+    "description": "为营销站点选择国家与语言。",
+    "triggerAria": "选择国家和语言",
+    "searchPlaceholder": "搜索国家…",
+    "plannedHint": "该语言尚未上线，界面暂以英文显示",
+    "noResults": "没有匹配的国家",
+    "menuAria": "国家和语言"
   }
 }

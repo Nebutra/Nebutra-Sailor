@@ -71,6 +71,10 @@ const localeSwitcherSource = readFileSync(
   path.join(process.cwd(), "src/components/ui/locale-switcher.tsx"),
   "utf8",
 );
+const marketLocalePickerSource = readFileSync(
+  path.join(process.cwd(), "src/components/ui/market-locale-picker.tsx"),
+  "utf8",
+);
 const themeSwitcherSource = readFileSync(
   path.join(process.cwd(), "src/components/ui/theme-switcher.tsx"),
   "utf8",
@@ -221,5 +225,13 @@ describe("landing UI governance", () => {
     expect(desktopDemoSource).toContain('"hidden min-h-[48rem] w-full lg:block"');
     expect(desktopDemoSource).toContain('"(min-width: 1024px)"');
     expect(desktopDemoSource).toContain("return null");
+  });
+});
+
+describe("market locale governance", () => {
+  it("uses Hirona-style market locale picker in Navbar", () => {
+    expect(navbarSource).toContain("MarketLocalePicker");
+    expect(navbarSource).not.toContain("<LocaleSwitcher");
+    expect(marketLocalePickerSource).toContain("createMarketLocalePicker");
   });
 });

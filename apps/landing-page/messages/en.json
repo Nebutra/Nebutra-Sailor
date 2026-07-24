@@ -1735,5 +1735,14 @@
   "icpFooter": {
     "recordNumber": "ICP record",
     "publicSecurity": "Public security record"
+  },
+  "MarketLocalePicker": {
+    "title": "Countries and languages",
+    "description": "Select a country and language for the marketing site.",
+    "triggerAria": "Select country and language",
+    "searchPlaceholder": "Search countries…",
+    "plannedHint": "Interface falls back to English until this language ships",
+    "noResults": "No countries match",
+    "menuAria": "Countries and languages"
   }
 }
