@@ -15,6 +15,11 @@ import type {
   BrandZoneTypography,
 } from "./types";
 
+/** Biome CSS formatter prefers double-quoted font families over single quotes. */
+function cssFontStack(stack: string): string {
+  return stack.replace(/'/g, '"');
+}
+
 function recipeVars(recipe: BrandRecipe): string[] {
   const radii = recipe.radii;
   const elev = recipe.elevationTokens;
@@ -200,7 +205,9 @@ function zoneConsumerBlock(
   const lines = [
     ``,
     `/* Zone: ${zone} — product never inherits marketing display */`,
-    `[data-zone="${zone}"], .zone-${zone} {`,
+    // Multi-line selector list matches Biome CSS formatter output (CI governance).
+    `[data-zone="${zone}"],`,
+    `.zone-${zone} {`,
   ];
   if (body?.fontSize) lines.push(`  font-size: var(--${p}-body-size, ${body.fontSize});`);
   if (body?.lineHeight != null) {
@@ -381,12 +388,15 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     ...emitFontFaces(t.faces),
   ];
 
+  // Biome CSS formatter prefers double-quoted font families.
+  const fontSans = cssFontStack(t.fontSans);
+  const fontDisplay = cssFontStack(t.fontDisplay ?? t.fontSans);
   const typeLines = [
-    `  --font-sans: ${t.fontSans};`,
-    `  --font-heading: ${t.fontDisplay ?? t.fontSans};`,
-    `  --font-display: ${t.fontDisplay ?? t.fontSans};`,
+    `  --font-sans: ${fontSans};`,
+    `  --font-heading: ${fontDisplay};`,
+    `  --font-display: ${fontDisplay};`,
   ];
-  if (t.fontMono) typeLines.push(`  --font-mono: ${t.fontMono};`);
+  if (t.fontMono) typeLines.push(`  --font-mono: ${cssFontStack(t.fontMono)};`);
   if (t.headingWeight != null) {
     typeLines.push(`  --font-weight-heading: ${t.headingWeight};`);
   }
