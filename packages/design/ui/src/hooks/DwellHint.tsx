@@ -9,6 +9,8 @@ import {
 } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
+export type DwellHintPosition = "top" | "bottom" | "center";
+
 export interface DwellHintProps
   extends Omit<
     HTMLMotionProps<"div">,
@@ -21,7 +23,7 @@ export interface DwellHintProps
   /** Optional icon to display before the message */
   icon?: React.ReactNode;
   /** Position of the hint relative to content (default: "bottom") */
-  position?: "top" | "bottom" | "center";
+  position?: DwellHintPosition;
 }
 
 /**
@@ -39,14 +41,18 @@ export interface DwellHintProps
  *   icon={<Lightbulb className="w-4 h-4" />}
  * />
  */
+const POSITION_CLASSES: Record<DwellHintPosition, string> = {
+  top: "top-0 -translate-y-full mb-2",
+  bottom: "bottom-0 translate-y-full mt-2",
+  center: "top-1/2 -translate-y-1/2",
+};
+
 export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
   ({ show, message, icon, position = "bottom", className, ...props }, ref) => {
     const shouldReduceMotion = useReducedMotion();
-    const positionClasses = {
-      top: "top-0 -translate-y-full mb-2",
-      bottom: "bottom-0 translate-y-full mt-2",
-      center: "top-1/2 -translate-y-1/2",
-    };
+    // Narrow after destructure: HTMLMotionProps intersections can widen
+    // `position` to `any` under tsup DTS emit, which then fails TS7053.
+    const resolvedPosition: DwellHintPosition = position ?? "bottom";
 
     return (
       <AnimatePresence initial={!shouldReduceMotion}>
@@ -55,7 +61,7 @@ export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
             ref={ref}
             className={cn(
               "absolute left-1/2 -translate-x-1/2 z-10",
-              positionClasses[position],
+              POSITION_CLASSES[resolvedPosition],
               className,
             )}
             initial={
@@ -63,7 +69,7 @@ export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
                 ? { opacity: 1 }
                 : {
                     opacity: 0,
-                    y: position === "top" ? -10 : 10,
+                    y: resolvedPosition === "top" ? -10 : 10,
                     scale: 0.95,
                   }
             }
@@ -71,7 +77,7 @@ export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
             exit={
               shouldReduceMotion
                 ? { opacity: 0 }
-                : { opacity: 0, y: position === "top" ? -5 : 5, scale: 0.98 }
+                : { opacity: 0, y: resolvedPosition === "top" ? -5 : 5, scale: 0.98 }
             }
             transition={
               shouldReduceMotion

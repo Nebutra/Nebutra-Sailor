@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import { motion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
@@ -17,6 +18,7 @@ export interface LineShadowTextProps
   as?: React.ElementType;
   /** Text content to display - must be a string */
   children: string;
+  className?: string;
 }
 
 /**

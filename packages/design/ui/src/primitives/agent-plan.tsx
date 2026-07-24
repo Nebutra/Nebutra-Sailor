@@ -337,7 +337,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                     >
                       <motion.div
                         className="mr-2 flex-shrink-0 cursor-pointer"
-                        onClick={(e) => {
+                        onClick={(e: React.MouseEvent) => {
                           e.stopPropagation();
                           cycleTaskStatus(task.id);
                         }}
@@ -418,7 +418,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                                   >
                                     <motion.div
                                       className="mr-2 flex-shrink-0 cursor-pointer"
-                                      onClick={(e) => {
+                                      onClick={(e: React.MouseEvent) => {
                                         e.stopPropagation();
                                         toggleSubtaskStatus(task.id, subtask.id);
                                       }}

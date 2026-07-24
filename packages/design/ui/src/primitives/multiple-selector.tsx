@@ -366,7 +366,7 @@ const MultipleSelector = ({
       <CommandItem
         value={inputValue}
         className="cursor-pointer mx-1 mb-1"
-        onMouseDown={(e) => {
+        onMouseDown={(e: React.MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
         }}
@@ -427,7 +427,7 @@ const MultipleSelector = ({
     <Command
       ref={dropdownRef}
       {...commandProps}
-      onKeyDown={(e) => {
+      onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
         handleKeyDown(e);
         commandProps?.onKeyDown?.(e);
       }}
@@ -489,15 +489,15 @@ const MultipleSelector = ({
             ref={inputRef}
             value={inputValue}
             disabled={disabled}
-            onValueChange={(value) => {
+            onValueChange={(value: string) => {
               setInputValue(value);
               inputProps?.onValueChange?.(value);
             }}
-            onBlur={(event) => {
+            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               if (!onScrollbar) setOpen(false);
               inputProps?.onBlur?.(event);
             }}
-            onFocus={(event) => {
+            onFocus={(event: React.FocusEvent<HTMLInputElement>) => {
               setOpen(true);
               if (triggerSearchOnFocus) onSearch?.(debouncedSearchTerm);
               inputProps?.onFocus?.(event);
@@ -563,7 +563,7 @@ const MultipleSelector = ({
                           key={option.value}
                           value={option.value}
                           {...(option.disable ? { disabled: option.disable } : {})}
-                          onMouseDown={(e) => {
+                          onMouseDown={(e: React.MouseEvent) => {
                             e.preventDefault();
                             e.stopPropagation();
                           }}

@@ -48,10 +48,12 @@ export interface CommandMenuRootProps {
   children?: React.ReactNode;
 }
 
-export interface CommandMenuItemProps extends CommandItemProps {
+export type CommandMenuItemProps = CommandItemProps & {
   /** Callback invoked when the item is selected. Prefer `onSelect` for new code. */
   callback?: () => void;
-}
+  className?: string;
+  onSelect?: (value: string) => void;
+};
 
 const commandMenuSurfaceClassName = overlayClassNames.commandSurface;
 

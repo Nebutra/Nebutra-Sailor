@@ -76,7 +76,9 @@ const InputOTPSlot = ({
   ref,
   ...props
 }: InputOTPSlotProps & { ref?: React.Ref<React.ElementRef<"div">> | undefined }) => {
-  const inputOTPContext = React.use(OTPInputContext);
+  const inputOTPContext = React.use(OTPInputContext) as {
+    slots: Array<{ char?: string; hasFakeCaret?: boolean; isActive?: boolean } | undefined>;
+  };
   const slot = inputOTPContext.slots[index];
   const char = slot?.char ?? "";
   const hasFakeCaret = slot?.hasFakeCaret ?? false;

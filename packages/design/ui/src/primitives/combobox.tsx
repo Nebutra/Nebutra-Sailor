@@ -135,6 +135,9 @@ export type ComboboxEmptyProps = React.ComponentPropsWithoutRef<typeof CommandEm
 export type ComboboxGroupProps = React.ComponentPropsWithoutRef<typeof CommandGroup>;
 
 export interface ComboboxListProps extends CommandListProps {
+  children?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
   emptyMessage?: React.ReactNode;
   // explicit `| undefined` to accept passthrough under `exactOptionalPropertyTypes`
   maxWidth?: ComboboxWidth | undefined;
