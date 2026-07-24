@@ -228,12 +228,12 @@ export interface BrandConfig {
     auth: string;
     sso: string;
     docs: string;
+    studio: string;
+    cdn: string;
     router: string;
     forge: string;
     design: string;
     status: string;
-    studio: string;
-    cdn: string;
   };
 
   social: {
@@ -339,12 +339,12 @@ export const DEFAULT_BRAND: BrandConfig = {
     auth: "auth.nebutra.com",
     sso: "sso.nebutra.com",
     docs: "docs.nebutra.com",
+    studio: "studio.nebutra.com",
+    cdn: "cdn.nebutra.com",
     router: "router.nebutra.com",
     forge: "forge.nebutra.com",
     design: "design.nebutra.com",
     status: "status.nebutra.com",
-    studio: "studio.nebutra.com",
-    cdn: "cdn.nebutra.com",
   },
   social: {
     twitter: "https://twitter.com/nebutra",

@@ -1,3 +1,4 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import {
   DEFAULT_PRODUCT_SCOPES,
   type IssuedApiKey,
@@ -86,5 +87,5 @@ export function getModelRoutes(): ModelRouteRow[] {
 }
 
 export function getBaseUrlHint() {
-  return process.env.NEXT_PUBLIC_ROUTER_API_BASE ?? "https://router.nebutra.com/v1";
+  return process.env.NEXT_PUBLIC_ROUTER_API_BASE?.trim() || `${getBrandOrigin("router")}/v1`;
 }

@@ -47,12 +47,18 @@ export async function injectEnv(targetDir: string, envConfig: EnvConfig) {
 
   const envTemplate = `# Automatically injected by create-sailor\n${missingLines.join("\n")}\n`;
 
-  if (!fs.existsSync(rootEnvPath) && !fs.existsSync(localEnvPath)) {
-    fs.writeFileSync(localEnvPath, envTemplate);
-  } else {
-    // Append only missing defaults so provider-specific env written earlier
-    // by applyDatabaseHostSelection remains the effective value.
-    const prefix = localEnv ? ensureTrailingNewline(localEnv) : "";
+  // Race-safe: always open/write without TOCTOU existsSync.
+  try {
+    const existing = fs.readFileSync(localEnvPath, "utf8");
+    const prefix = ensureTrailingNewline(existing);
     fs.writeFileSync(localEnvPath, `${prefix}\n${envTemplate}`);
+  } catch {
+    try {
+      // Prefer local when root also missing; ignore root existence race.
+      fs.writeFileSync(localEnvPath, envTemplate, { flag: "wx" });
+    } catch {
+      const existing = fs.readFileSync(localEnvPath, "utf8");
+      fs.writeFileSync(localEnvPath, `${ensureTrailingNewline(existing)}\n${envTemplate}`);
+    }
   }
 }

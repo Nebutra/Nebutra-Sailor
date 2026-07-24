@@ -23,24 +23,54 @@ import type { Metadata, MetadataRoute } from "next";
 import { brand, colors } from "./metadata";
 
 /** Services that have a canonical domain in brand.domains */
-export type BrandService = "landing" | "app" | "api" | "studio" | "cdn";
+export type BrandService = keyof typeof brand.domains;
+
+/** Absolute origin from brand.domains only (no env hijack). */
+export function getBrandOrigin(service: BrandService): string {
+  const host = brand.domains[service];
+  if (!host?.trim()) {
+    throw new Error(`brand.domains.${String(service)} is empty — run brand:apply`);
+  }
+  return `https://${host.replace(/^https?:\/\//, "").replace(/\/+$/, "")}`;
+}
+
+/** Cookie parent domain from landing apex (e.g. `.example.com`). */
+export function getBrandCookieDomain(): string {
+  const apex = brand.domains.landing.replace(/^https?:\/\//, "").replace(/\/+$/, "");
+  if (!apex) return "";
+  return apex.startsWith(".") ? apex : `.${apex}`;
+}
 
 /**
- * Returns the canonical base URL for the given service.
- *
- * Priority:
- *   1. NEXT_PUBLIC_SITE_URL env var (trailing slash stripped)
- *   2. https://brand.domains[service]
- *
- * NOTE: hex casing deliberate — this module does NOT touch core.json (which
- * uses lowercase). brand.domains are always .com per RESOLVED Decision 2.
+ * Canonical base URL. NEXT_PUBLIC_SITE_URL only overrides landing.
  */
 export function getSiteUrl(service: BrandService = "landing"): string {
-  const envUrl = process.env["NEXT_PUBLIC_SITE_URL"];
-  if (envUrl && envUrl.trim() !== "") {
-    return envUrl.trim().replace(/\/+$/, "");
+  if (service === "landing") {
+    const envUrl = process.env["NEXT_PUBLIC_SITE_URL"];
+    if (envUrl && envUrl.trim() !== "") {
+      return envUrl.trim().replace(/\/+$/, "");
+    }
   }
-  return `https://${brand.domains[service]}`;
+  return getBrandOrigin(service);
+}
+
+/** Production multi-app public URL map (dogfood brand.domains). */
+export function getBrandPublicUrls() {
+  return {
+    siteUrl: getBrandOrigin("landing"),
+    appUrl: getBrandOrigin("app"),
+    apiUrl: getBrandOrigin("api"),
+    authUrl: getBrandOrigin("auth"),
+    ssoUrl: getBrandOrigin("sso"),
+    docsUrl: getBrandOrigin("docs"),
+    routerUrl: getBrandOrigin("router"),
+    forgeUrl: getBrandOrigin("forge"),
+    designUrl: getBrandOrigin("design"),
+    statusUrl: getBrandOrigin("status"),
+    studioUrl: getBrandOrigin("studio"),
+    cdnUrl: getBrandOrigin("cdn"),
+    cookieDomain: getBrandCookieDomain(),
+  } as const;
 }
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
@@ -176,15 +206,15 @@ export function buildWebSiteJsonLd(): WebSiteJsonLd {
 }
 
 export function buildSoftwareApplicationJsonLd(): SoftwareApplicationJsonLd {
-  const siteUrl = getSiteUrl("landing");
   const org = buildOrganizationJsonLd();
+  const githubPath = brand.social.github.replace("https://github.com/", "");
 
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: `${brand.name} Sailor`,
     applicationCategory: "DeveloperApplication",
-    url: `https://${brand.social.github.replace("https://github.com/", "github.com/")}`,
+    url: `https://github.com/${githubPath}`,
     author: { "@id": org["@id"] },
   };
 }

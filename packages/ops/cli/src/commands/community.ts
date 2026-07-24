@@ -41,11 +41,6 @@ function asMetrics(value: unknown): Record<string, number> {
   return out;
 }
 
-function str(value: unknown, fallback = ""): string {
-  if (value === undefined || value === null) return fallback;
-  return String(value);
-}
-
 /**
  * Helper to make authenticated requests to the API gateway
  */
@@ -450,10 +445,11 @@ async function handleCommunityHealth(options: CommunityOptions) {
 
     const { score, breakdown } = computeHealthScore(asMetrics(data.metrics));
 
-    logger.info(`\nCommunity Health Report (${period})\n`);
+    logger.info(`\nCommunity Health Report (${period}) — score ${score}\n`);
     for (const [key, value] of Object.entries(breakdown)) {
-      const _label = key.replace(/_/g, " ").toLowerCase();
-      const _bar = "█".repeat(Math.round(value / 5)) + "░".repeat(20 - Math.round(value / 5));
+      const label = key.replace(/_/g, " ").toLowerCase();
+      const bar = "█".repeat(Math.round(value / 5)) + "░".repeat(20 - Math.round(value / 5));
+      logger.info(`  ${label.padEnd(24)} ${String(value).padStart(3)} ${bar}`);
     }
 
     if (options.format === "json") {

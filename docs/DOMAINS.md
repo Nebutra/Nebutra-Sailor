@@ -61,6 +61,9 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 
 ## DNS records (reference)
 
+Hostnames dogfood `brand.domains` (`pnpm brand:apply`). Zone files: `pnpm dns:render` → `infra/ops/dns/`. See [brand-hardcode-governance.md](./architecture/brand-hardcode-governance.md).
+
+
 ```
 Type    Name      Value                    Proxy        Notes
 ----    ----      -----                    -----        -----

@@ -59,18 +59,23 @@ export function colorToHslChannels(color: string): string {
     return `${Math.round(Number(channels[1]))} ${Math.round(Number(channels[2]))}% ${Math.round(Number(channels[3]))}%`;
   }
 
-  const hslFn = t.match(/^hsla?\(\s*([\d.]+)\s*(?:deg)?\s*[, ]\s*([\d.]+)%\s*[, ]\s*([\d.]+)%/i);
-  if (hslFn) {
-    return `${Math.round(Number(hslFn[1]))} ${Math.round(Number(hslFn[2]))}% ${Math.round(Number(hslFn[3]))}%`;
+  // Parse hsl()/rgb() without open-ended \s* quantifiers (ReDoS-safe).
+  const hslPrefix = t.match(/^hsla?\(/i);
+  if (hslPrefix) {
+    const inner = t.slice(hslPrefix[0].length).split(")")[0] ?? "";
+    const nums = inner.match(/[\d.]+/g) ?? [];
+    if (nums.length >= 3) {
+      return `${Math.round(Number(nums[0]))} ${Math.round(Number(nums[1]))}% ${Math.round(Number(nums[2]))}%`;
+    }
   }
 
-  const rgbFn = t.match(/^rgba?\(\s*([\d.]+)\s*[, ]\s*([\d.]+)\s*[, ]\s*([\d.]+)/i);
-  if (rgbFn) {
-    return srgbToHslChannels(
-      Number(rgbFn[1]) / 255,
-      Number(rgbFn[2]) / 255,
-      Number(rgbFn[3]) / 255,
-    );
+  const rgbPrefix = t.match(/^rgba?\(/i);
+  if (rgbPrefix) {
+    const inner = t.slice(rgbPrefix[0].length).split(")")[0] ?? "";
+    const nums = inner.match(/[\d.]+/g) ?? [];
+    if (nums.length >= 3) {
+      return srgbToHslChannels(Number(nums[0]) / 255, Number(nums[1]) / 255, Number(nums[2]) / 255);
+    }
   }
 
   if (t.startsWith("#") || /^[0-9a-fA-F]{3,8}$/.test(t)) {

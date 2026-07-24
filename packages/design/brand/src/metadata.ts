@@ -43,12 +43,12 @@ export const brand = {
     auth: "auth.nebutra.com",
     sso: "sso.nebutra.com",
     docs: "docs.nebutra.com",
+    studio: "studio.nebutra.com",
+    cdn: "cdn.nebutra.com",
     router: "router.nebutra.com",
     forge: "forge.nebutra.com",
     design: "design.nebutra.com",
     status: "status.nebutra.com",
-    studio: "studio.nebutra.com",
-    cdn: "cdn.nebutra.com",
   },
 
   social: {

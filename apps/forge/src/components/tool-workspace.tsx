@@ -231,7 +231,25 @@ export function ToolWorkspace({
           toolId={toolId}
           sample={"<p>Hello <b>Nebutra</b></p>"}
           pickOutput={pickResult}
-          localRun={(text) => text.replace(/<[^>]*>/g, "")}
+          localRun={(text) => {
+            let acc = "";
+            let i = 0;
+            while (i < text.length) {
+              const lt = text.indexOf("<", i);
+              if (lt < 0) {
+                acc += text.slice(i);
+                break;
+              }
+              acc += text.slice(i, lt);
+              const gt = text.indexOf(">", lt + 1);
+              if (gt < 0) {
+                acc += text.slice(lt);
+                break;
+              }
+              i = gt + 1;
+            }
+            return acc;
+          }}
         />
       );
 

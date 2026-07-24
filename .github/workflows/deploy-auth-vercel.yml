@@ -51,7 +51,7 @@ jobs:
             echo "::error::Set VERCEL_AUTH_PROJECT_ID (prj_…) for the auth Vercel project"
             exit 1
           fi
-          npm i -g vercel@latest
+          npm i -g vercel@56.5.0
           mkdir -p apps/auth/.vercel
           cat > apps/auth/.vercel/project.json <<EOF
           {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}

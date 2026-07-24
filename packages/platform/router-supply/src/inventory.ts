@@ -30,7 +30,9 @@ let cache: SupplyInventory | null = null;
 let inflight: Promise<SupplyInventory> | null = null;
 
 function stripTrailingSlash(url: string): string {
-  return url.replace(/\/+$/, "");
+  let end = url.length;
+  while (end > 0 && url.charCodeAt(end - 1) === 47 /* / */) end -= 1;
+  return end === url.length ? url : url.slice(0, end);
 }
 
 /** Build OpenAI-compatible models URL from engine base. */
