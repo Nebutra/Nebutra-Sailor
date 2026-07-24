@@ -163,7 +163,7 @@ export function inferProviderFromModelId(publicModel: string): ListingProvider {
   if (/\byi-|^yi_|01-ai/.test(s)) return "yi";
   if (/doubao|seed-/.test(s)) return "doubao";
   if (/hunyuan/.test(s)) return "hunyuan";
-  if (/nvidia|nemotron|nv-/.test(s)) return "nvidia";
+  if (/nvidia|nemotron|\bnv-/.test(s)) return "nvidia";
   return "other";
 }
 
@@ -216,7 +216,7 @@ function mapProvider(raw: string): ListingProvider {
   if (r === "01-ai" || r === "01ai" || r === "yi") return "yi";
   if (r === "bytedance" || r === "doubao" || r === "byteplus") return "doubao";
   if (r === "tencent" || r === "hunyuan") return "hunyuan";
-  if (r === "nvidia" || r.includes("nvidia") || r === "nim") return "nvidia";
+  if (r === "nvidia" || r.includes("nvidia")) return "nvidia";
   if (r === "amazon-bedrock" || r === "bedrock" || r === "amazon") {
     // Bedrock hosts multi-vendor SKUs; leave as other unless id maps later
     return "other";
@@ -228,21 +228,15 @@ function classifyCategory(
   id: string,
   name: string,
   caps: { reasoning: boolean; vision: boolean },
-  modality?: "text" | "image" | "video" | "audio" | "embedding",
 ): ListingCategory {
   const s = `${id} ${name}`.toLowerCase();
-  // catalog modality wins for 302 shelf buckets
-  if (modality === "video") return "video";
-  if (modality === "image") return "image";
-  if (modality === "audio") return "audio";
-  // name heuristics as fallback / sub-bucket
+  // modality-first (302 taxonomy)
   if (/video|veo|sora|runway|kling|luma|genmo|pika/.test(s)) return "video";
   if (/tts|whisper|transcribe|speech|audio|suno|music|voice|asr/.test(s)) return "audio";
   if (
     /dall-e|dalle|imagen|flux|midjourney|stable-diffusion|sdxl|image-gen|gpt-image|seedream/.test(s)
-  ) {
+  )
     return "image";
-  }
   if (/embed|rerank|retrieval|rag|vector|search1|firecrawl|jina/.test(s)) return "rag";
   if (/tool|function-call|computer-use|code-interpreter|agent-tool/.test(s)) return "tools";
   if (/ocr|parse|extract|document|pdf|layout/.test(s)) return "data";
@@ -286,9 +280,11 @@ function pickOffering(m: CatalogModel): ModelOffering | null {
 
 function isShelfCandidate(publicModel: string, name: string): boolean {
   const s = `${publicModel} ${name}`.toLowerCase();
-  // Keep modality SKUs (image/video/audio) for 302 taxonomy shelf.
-  // Still drop pure infra / embedding / moderation noise.
-  if (/embedding|moderation|rerank-only|text-embedding/.test(s)) {
+  if (
+    /embedding|whisper|tts|transcribe|moderation|realtime|dall-e|imagen|veo|sora|codex|computer-use/.test(
+      s,
+    )
+  ) {
     return false;
   }
   if (/[:@]/.test(publicModel)) return false;
@@ -309,7 +305,6 @@ function toListing(
   routes: ModelRouteRow["routes"],
   source: ListingModel["source"],
   sellable: boolean,
-  modality?: "text" | "image" | "video" | "audio" | "embedding",
 ): ListingModel {
   const raw = offering?.rawProvider ?? "other";
   let provider = mapProvider(raw);
@@ -320,7 +315,7 @@ function toListing(
     publicModel,
     name,
     description: name,
-    category: classifyCategory(publicModel, name, caps, modality),
+    category: classifyCategory(publicModel, name, caps),
     provider,
     context: formatContext(offering?.contextWindow),
     inputPerMTok: offering?.pricing?.inputPerMTok ?? 0,
@@ -381,14 +376,7 @@ export async function getListingCatalog(): Promise<{
   const useInventory = mode === "inventory" || (mode === "auto" && inv.ok && inv.ids.size > 0);
 
   try {
-    // 302 multi-modality shelf: text + image + video + audio (not embedding)
-    const [textModels, imageModels, videoModels, audioModels] = await Promise.all([
-      listModelsByModality("text"),
-      listModelsByModality("image"),
-      listModelsByModality("video"),
-      listModelsByModality("audio"),
-    ]);
-    const logical = [...textModels, ...imageModels, ...videoModels, ...audioModels];
+    const logical = await listModelsByModality("text");
     const byPublic = new Map<string, ListingModel>();
 
     for (const m of logical) {
@@ -418,7 +406,6 @@ export async function getListingCatalog(): Promise<{
         routes.get(publicModel) ?? [],
         "models.dev",
         sellable || aliasIds.has(publicModel),
-        m.modality,
       );
 
       const prev = byPublic.get(publicModel);
