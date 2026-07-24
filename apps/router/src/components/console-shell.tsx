@@ -246,7 +246,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
       {/* brand + search — 更宽搜索、更高控件，提升「大气」比例 */}
       <div className="router-market-shell flex flex-col gap-4 pt-7 pb-4 md:flex-row md:items-center md:gap-6">
         <Link href="/" className="flex shrink-0 items-center" aria-label={brand.name}>
-          {/* 自形 wordmark：logo-horizontal-en（mark + 自形字标），不用系统字体拼 Nebutra */}
+          {/* 自形 wordmark：logo-horizontal-en（mark + 自形字标），不用系统字体拼品牌字 */}
           <BrandLogo variant="horizontal" className="h-8 w-auto md:h-9" />
         </Link>
         <form onSubmit={onSearch} className="flex min-w-0 flex-1 gap-2.5">

@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Tabs, TabsList, TabsTrigger, Textarea } from "@nebutra/ui/primitives";
 import { useState } from "react";
@@ -19,7 +20,7 @@ function base64ToUtf8(b64: string): string {
 }
 
 export function Base64Runner({ toolId }: { toolId: string }) {
-  const [text, setText] = useState("Hello Nebutra 你好");
+  const [text, setText] = useState(`Hello ${brand.name} 你好`);
   const [mode, setMode] = useState<"encode" | "decode">("encode");
   const [result, setResult] = useState("");
   const [error, setError] = useState("");

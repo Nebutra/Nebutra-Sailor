@@ -1,10 +1,11 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
-const SAMPLE = `# Nebutra Forge
+const SAMPLE = `# ${brand.name} Forge
 
 **Markdown → PDF**（Playwright 打印）
 

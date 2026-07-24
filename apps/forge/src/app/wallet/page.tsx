@@ -1,10 +1,11 @@
+import { brand } from "@nebutra/brand/metadata";
 import { PageHeader } from "@nebutra/ui/layout";
 import { PageFrame } from "@/components/page-frame";
 import { WalletPanel } from "@/components/wallet-panel";
 
 export const metadata = {
   title: "钱包充值",
-  description: "Nebutra Forge 预充钱包（演示 mock 充值）",
+  description: `${brand.name} Forge 预充钱包（演示 mock 充值）`,
 };
 
 export default function WalletPage() {

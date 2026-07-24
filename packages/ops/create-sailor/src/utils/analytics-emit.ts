@@ -1,3 +1,5 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+
 /**
  * Phase 0 analytics emission helper for create-sailor.
  *
@@ -10,7 +12,7 @@
  * not available on the user's machine.
  */
 
-const POSTHOG_DEFAULT_HOST = "https://analytics.nebutra.com";
+const POSTHOG_DEFAULT_HOST = getBrandOrigin("analytics");
 
 export interface ScaffoldCompletionProps {
   template_version: string;

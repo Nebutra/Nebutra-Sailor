@@ -1,4 +1,4 @@
-// Cloudflare Workers env bindings for OpenNext (docs.nebutra.com).
+// Cloudflare Workers env bindings for OpenNext (public docs host (brand.domains.docs)).
 // Types are intentionally minimal so we do not depend on @cloudflare/workers-types
 // (which publishes daily and trips the monorepo minimumReleaseAge gate).
 

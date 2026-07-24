@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
+import { brand } from "@nebutra/brand/metadata";
 
 export const metadata: Metadata = {
-  title: "Nebutra Auth",
-  description: "Nebutra login center — shared authentication for all first-party apps",
+  title: `${brand.name} Auth`,
+  description: `${brand.name} login center — shared authentication for all first-party apps`,
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

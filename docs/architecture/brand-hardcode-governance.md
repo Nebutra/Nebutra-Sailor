@@ -2,24 +2,31 @@
 
 ## SSOT
 
-| Concern | Source | Command / helper |
-|---------|--------|------------------|
-| Name, legal | brand-types → @nebutra/brand | brand:apply |
-| Hosts | brand.domains | getBrandOrigin, getBrandPublicUrls |
-| Cookie domain | landing apex | getBrandCookieDomain |
-| DNS | domains + topology.defaults.yaml | dns:render |
-| Vercel env | domains | brand:apply → vercel.json |
-| Colors | tokens | var(--brand-*) |
+| Concern | Source | Helper |
+|---------|--------|--------|
+| Name | `@nebutra/brand` | `brand.name` |
+| Hosts | `brand.domains` | `getBrandOrigin`, `getBrandPublicUrls` |
+| Cookie | landing apex | `getBrandCookieDomain` |
+| Email | landing apex | `getBrandEmail`, `getBrandMailFrom` |
+| Analytics | `brand.domains.analytics` | `getBrandOrigin("analytics")` |
+| Colors | tokens / `colors` | `var(--brand-*)` or `colors.primary["500"]` |
+| DNS | domains + topology | `pnpm dns:render` |
+| Vercel | domains | `pnpm brand:apply` |
 
 ## Runtime rule
 
-Never hardcode product hosts, brand names, cookie domains, or brand hex in apps/packages/backends.
-Use @nebutra/brand helpers.
+Never hardcode product hosts, brand names, mailboxes, cookie domains, or brand hex in apps/packages/gateway.
+Route through `@nebutra/brand` helpers.
 
-## Allowed
+## Lint (shrink-only)
 
-DEFAULT_BRAND, brand package, docs/CHANGELOG, tests/stories, live nginx/CI dogfood URLs.
+- Engine: `scripts/governance/lint-brand-literals.mjs`
+- Paths: apps, packages/{commerce,integrations,platform,ops,iam}, backends/gateway
+- Escape: `// @brand-exempt: <reason>`
+- Allowlist may only shrink
 
 ## Rebrand
 
+```bash
 pnpm brand:apply && pnpm dns:render
+```

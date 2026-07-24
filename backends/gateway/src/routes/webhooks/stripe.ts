@@ -1,5 +1,6 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { type CreditPurchaseWebhookInput, handleCreditPurchaseWebhook } from "@nebutra/billing";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getSystemDb, Prisma } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
@@ -47,7 +48,7 @@ function emitCheckoutCompleted(props: Record<string, unknown>): void {
             process.env.POSTHOG_HOST ??
             process.env.NEXT_PUBLIC_POSTHOG_HOST ??
             process.env.NEBUTRA_POSTHOG_HOST ??
-            "https://analytics.nebutra.com",
+            getBrandOrigin("analytics"),
         },
         onError: () => {
           log.warn("Stripe checkout telemetry sink reported an internal error");

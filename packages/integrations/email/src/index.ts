@@ -13,11 +13,13 @@
  *
  * Environment variables:
  *   EMAIL_PROVIDER  — explicit provider override (optional)
- *   EMAIL_FROM      — verified sender (e.g. "Nebutra <noreply@nebutra.com>")
+ *   EMAIL_FROM      — verified sender (e.g. getBrandMailFrom() example)
  *   RESEND_API_KEY  — for Resend provider
  *   SMTP_HOST       — for Nodemailer provider (+ SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE)
  */
 
+import { brand, colors } from "@nebutra/brand/metadata";
+import { getBrandMailFrom, getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getEmailProvider, type SendResult } from "./provider";
 
 export type { EmailProvider, EmailProviderType, SendOptions, SendResult } from "./provider";
@@ -26,7 +28,7 @@ export { ConsoleEmailProvider } from "./providers/console";
 export { NodemailerEmailProvider } from "./providers/nodemailer";
 export { ResendEmailProvider } from "./providers/resend";
 
-const FROM = process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.com>";
+const FROM = process.env.EMAIL_FROM ?? getBrandMailFrom();
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -136,7 +138,7 @@ function baseLayout(content: string, previewText = ""): string {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="x-apple-disable-message-reformatting" />
-  <title>Nebutra</title>
+  <title>${brand.name}</title>
   <!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
 </head>
 <body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
@@ -145,8 +147,8 @@ function baseLayout(content: string, previewText = ""): string {
     <tr><td align="center" style="padding:40px 16px;">
       <table width="600" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;max-width:600px;width:100%;">
         <!-- Header -->
-        <tr><td style="background:#0033FE;padding:32px 40px;">
-          <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.5px;">Nebutra</h1>
+        <tr><td style="background:${colors.primary["500"]};padding:32px 40px;">
+          <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.5px;">${brand.name}</h1>
         </td></tr>
         <!-- Body -->
         <tr><td style="padding:40px;">
@@ -155,9 +157,9 @@ function baseLayout(content: string, previewText = ""): string {
         <!-- Footer -->
         <tr><td style="padding:24px 40px;border-top:1px solid #e2e8f0;background:#f8fafc;">
           <p style="margin:0;font-size:12px;color:#94a3b8;text-align:center;">
-            © ${new Date().getFullYear()} Nebutra Intelligence Inc. ·
-            <a href="https://nebutra.ai/privacy" style="color:#94a3b8;">Privacy</a> ·
-            <a href="https://nebutra.ai/unsubscribe" style="color:#94a3b8;">Unsubscribe</a>
+            © ${new Date().getFullYear()} ${brand.nameFullEn} ·
+            <a href="${getBrandOrigin("landing")}/privacy" style="color:#94a3b8;">Privacy</a> ·
+            <a href="${getBrandOrigin("landing")}/unsubscribe" style="color:#94a3b8;">Unsubscribe</a>
           </p>
         </td></tr>
       </table>
@@ -178,28 +180,28 @@ export async function sendWelcomeEmail(opts: {
   orgName: string;
   dashboardUrl?: string;
 }): Promise<SendResult> {
-  const dashboardUrl = opts.dashboardUrl ?? "https://app.nebutra.ai";
+  const dashboardUrl = opts.dashboardUrl ?? getBrandOrigin("app");
 
   const html = baseLayout(
     `
-    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Welcome to Nebutra, ${opts.firstName}!</h2>
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Welcome to ${brand.name}, ${opts.firstName}!</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
       Your workspace <strong>${opts.orgName}</strong> is ready. You can now invite team members,
-      create API keys, and start building with the Nebutra platform.
+      create API keys, and start building with the ${brand.name} platform.
     </p>
-    <a href="${dashboardUrl}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+    <a href="${dashboardUrl}" style="display:inline-block;background:${colors.primary["500"]};color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
       Open Dashboard →
     </a>
     <p style="margin:0;font-size:13px;color:#94a3b8;">
-      If you have questions, reply to this email or visit our <a href="https://docs.nebutra.ai" style="color:#0033FE;">documentation</a>.
+      If you have questions, reply to this email or visit our <a href="${getBrandOrigin("docs")}" style="color:${colors.primary["500"]};">documentation</a>.
     </p>
     `,
-    `Welcome to Nebutra — ${opts.orgName} is ready`,
+    `Welcome to ${brand.name} — ${opts.orgName} is ready`,
   );
 
   return send({
     to: opts.to,
-    subject: `Welcome to Nebutra — ${opts.orgName} is ready`,
+    subject: `Welcome to ${brand.name} — ${opts.orgName} is ready`,
     html,
     tags: [{ name: "type", value: "welcome" }],
   });
@@ -244,7 +246,7 @@ export async function sendOrderConfirmationEmail(opts: {
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;border-collapse:collapse;">
       ${itemsHtml}
     </table>
-    <a href="https://app.nebutra.ai/orders/${opts.orderId}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+    <a href="${getBrandOrigin("app")}/orders/${opts.orderId}" style="display:inline-block;background:${colors.primary["500"]};color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
       View Order Details →
     </a>
     `,
@@ -268,11 +270,11 @@ export async function sendMagicLinkEmail(opts: {
 }): Promise<SendResult> {
   const html = baseLayout(
     `
-    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Sign in to Nebutra</h2>
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Sign in to ${brand.name}</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
       Click the button below to sign in securely. No password required.
     </p>
-    <a href="${opts.magicLinkUrl}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
+    <a href="${opts.magicLinkUrl}" style="display:inline-block;background:${colors.primary["500"]};color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
       ✨ Sign In Automatically
     </a>
     <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.4;">
@@ -280,12 +282,12 @@ export async function sendMagicLinkEmail(opts: {
       This link expires in 15 minutes.
     </p>
     `,
-    "Click here to sign in to your Nebutra account",
+    `Click here to sign in to your ${brand.name} account`,
   );
 
   return send({
     to: opts.to,
-    subject: "Sign in to Nebutra ✨",
+    subject: `Sign in to ${brand.name} ✨`,
     html,
     tags: [{ name: "type", value: "magic_link" }],
   });
@@ -306,10 +308,10 @@ export async function sendEmailChangeEmail(opts: {
     `
     <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Confirm your new email address</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
-      We received a request to change the email on your Nebutra account to
+      We received a request to change the email on your ${brand.name} account to
       <strong>${recipientEmail}</strong>. Click the button below to confirm. This link expires in 1 hour.
     </p>
-    <a href="${opts.confirmUrl}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
+    <a href="${opts.confirmUrl}" style="display:inline-block;background:${colors.primary["500"]};color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
       Confirm email change →
     </a>
     <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.4;">
@@ -346,7 +348,7 @@ export async function sendContactFormReceivedEmail(opts: {
       We've received your request and our team will get back to you within 1-2 business days.
     </p>
     <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">
-      Best regards,<br/>The Nebutra Team
+      Best regards,<br/>The ${brand.name} Team
     </p>
     `,
     "We have received your message",
@@ -354,7 +356,7 @@ export async function sendContactFormReceivedEmail(opts: {
 
   return send({
     to: opts.to,
-    subject: "We've received your message - Nebutra",
+    subject: `We've received your message - ${brand.name}`,
     html,
     tags: [{ name: "type", value: "contact_receipt" }],
   });
@@ -373,7 +375,7 @@ export async function sendLicenseCreatedEmail(opts: {
 }): Promise<SendResult> {
   const html = baseLayout(
     `
-    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Welcome to Nebutra-Sailor! 🚀</h2>
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Welcome to ${brand.name}-Sailor! 🚀</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
       Hi ${opts.firstName}, your <strong>${opts.tier}</strong> license has been successfully generated.
     </p>
@@ -381,24 +383,24 @@ export async function sendLicenseCreatedEmail(opts: {
       Your official License Key is:
     </p>
     <div style="background:#0f172a;border-radius:8px;padding:16px 20px;margin:0 0 24px;overflow-x:auto;">
-      <code style="color:#0BF1C3;font-family:'Courier New',monospace;font-size:13px;word-break:break-all;">${opts.licenseKey}</code>
+      <code style="color:${colors.accent["500"]};font-family:'Courier New',monospace;font-size:13px;word-break:break-all;">${opts.licenseKey}</code>
     </div>
     <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
-      To unlock the premium capabilities of the Nebutra CLI locally, run the following command in your terminal:
+      To unlock the premium capabilities of the ${brand.name} CLI locally, run the following command in your terminal:
     </p>
     <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin:0 0 24px;">
       <code style="color:#334155;font-family:'Courier New',monospace;font-size:13px;">nebutra license activate ${opts.licenseKey}</code>
     </div>
     <p style="margin:0;font-size:13px;color:#94a3b8;">
-      If you have questions, reply to this email or visit our <a href="https://docs.nebutra.ai" style="color:#0033FE;">documentation</a>.
+      If you have questions, reply to this email or visit our <a href="${getBrandOrigin("docs")}" style="color:${colors.primary["500"]};">documentation</a>.
     </p>
     `,
-    "Your Nebutra License Key is Ready",
+    `Your ${brand.name} License Key is Ready`,
   );
 
   return send({
     to: opts.to,
-    subject: `Your Nebutra License Key is Ready (${opts.tier})`,
+    subject: `Your ${brand.name} License Key is Ready (${opts.tier})`,
     html,
     tags: [{ name: "type", value: "license_created" }],
   });

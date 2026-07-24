@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Base64Runner } from "@/components/base64-runner";
 import { CodecModeRunner } from "@/components/codec-mode-runner";
 import {
@@ -134,7 +135,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample="Hello Nebutra 你好世界"
+          sample={`Hello ${brand.name} 你好世界`}
           modes={[
             { value: "upper", label: "大写" },
             { value: "lower", label: "小写" },
@@ -219,7 +220,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample="Hello Nebutra 你好"
+          sample={`Hello ${brand.name} 你好`}
           pickOutput={pickResult}
           localRun={(text) => [...text].reverse().join("")}
         />
@@ -229,7 +230,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={"<p>Hello <b>Nebutra</b></p>"}
+          sample={`<p>Hello <b>${brand.name}</b></p>`}
           pickOutput={pickResult}
           localRun={(text) => {
             let acc = "";
@@ -257,7 +258,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample="Hello Nebutra — Forge Tools!"
+          sample={`Hello ${brand.name} — Forge Tools!`}
           pickOutput={pickResult}
           localRun={(text) =>
             text
@@ -274,7 +275,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={"See https://nebutra.com and http://example.com/path?q=1 for more."}
+          sample={`See https://${brand.domains.landing} and http://example.com/path?q=1 for more.`}
           pickOutput={pickResult}
           localRun={(text) => (text.match(/https?:\/\/[^\s<>"{}|\\^`[\]]+/gi) ?? []).join("\n")}
         />
@@ -284,7 +285,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample="Contact a@nebutra.com or support@example.org today."
+          sample={`Contact a@${brand.domains.landing} or support@example.org today.`}
           pickOutput={pickResult}
           localRun={(text) =>
             (text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) ?? []).join("\n")
@@ -296,7 +297,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`{\n  "id": 1,\n  "name": "Nebutra",\n  "tags": ["forge", "tools"],\n  "active": true\n}`}
+          sample={`{\n  "id": 1,\n  "name": "${brand.name}",\n  "tags": ["forge", "tools"],\n  "active": true\n}`}
           extraFields={[
             {
               key: "name",

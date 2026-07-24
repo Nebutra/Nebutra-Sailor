@@ -32,7 +32,21 @@ describe("brand config facts (contract lock for app helpers + i18n)", () => {
   });
 
   it("brand.domains carries every service host", () => {
-    for (const key of ["landing","app","api","auth","sso","docs","studio","cdn","router","forge","design","status"] as const) {
+    for (const key of [
+      "landing",
+      "app",
+      "api",
+      "auth",
+      "sso",
+      "docs",
+      "studio",
+      "cdn",
+      "router",
+      "forge",
+      "design",
+      "status",
+      "analytics",
+    ] as const) {
       expect(typeof brand.domains[key], `brand.domains.${key}`).toBe("string");
       expect(brand.domains[key].length).toBeGreaterThan(0);
     }
