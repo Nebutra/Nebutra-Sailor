@@ -83,7 +83,8 @@ export const AUTH_PROVIDER_MATRIX: Readonly<Record<AuthProviderId, AuthProviderP
     id: "nextauth",
     tier: "migration",
     supports: { ...none },
-    notes: "Migration / scaffold only. Core session only; optional capabilities stay off.",
+    notes:
+      "Auth.js (formerly NextAuth.js; npm package `next-auth`). Migration/scaffold only — core session only; optional capabilities stay off.",
   },
   supabase: {
     id: "supabase",

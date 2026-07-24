@@ -2,12 +2,17 @@
  * @nebutra/auth — Unified auth type definitions
  *
  * These types define the provider-agnostic interface that all auth providers
- * (Clerk, Better Auth, NextAuth/Auth.js) must implement.
+ * (Clerk, Better Auth, Auth.js / NextAuth) must implement.
  */
 
 // ─── Provider ID ───
 
-/** Supported auth provider identifiers. */
+/**
+ * Supported auth provider identifiers.
+ *
+ * - `"nextauth"` — **Auth.js** (formerly NextAuth.js). npm package remains
+ *   `next-auth` (v5 = Auth.js v5). Id kept as `nextauth` for env/compat stability.
+ */
 export type AuthProviderId = "clerk" | "better-auth" | "nextauth" | "supabase" | "dev";
 
 // ─── Configuration ───

@@ -1,7 +1,7 @@
 # @nebutra/auth
 
 > Provider-agnostic authentication abstraction for **multi-provider parallel**
-> (Better Auth default, Clerk enterprise option, NextAuth/Supabase migration).
+> (Better Auth default, Clerk enterprise option, Auth.js / NextAuth + Supabase migration).
 >
 > Product apps import **only this package**. Adapters live inside
 > `src/providers/*`. Switch at scaffold (`create-sailor --auth=...`) or runtime
@@ -87,7 +87,7 @@ if (isCapabilityEffective(provider, "organizations", auth.capabilities)) {
 |----------|------|--------|
 | **better-auth** | first-class (default) | Self-hosted reference implementation |
 | **clerk** | optional-enterprise | Explicit `AUTH_PROVIDER=clerk` |
-| **nextauth** | migration | Scaffold / migrate only |
+| **nextauth** | migration | **Auth.js** (ex-NextAuth.js; package `next-auth`). Scaffold / migrate only |
 | **supabase** | migration | Scaffold / experimental |
 | **dev** | dev-only | Synthetic local sessions |
 

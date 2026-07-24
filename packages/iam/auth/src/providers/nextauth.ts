@@ -1,5 +1,8 @@
 /**
- * NextAuth (Auth.js v5) provider implementation.
+ * Auth.js provider implementation (id: `"nextauth"`).
+ *
+ * Auth.js is the current name for what was NextAuth.js. Env/provider id stays
+ * `nextauth` for stability; npm package is still `next-auth` (v5 = Auth.js v5).
  *
  * Wraps `next-auth` v5 to implement the unified AuthProvider interface.
  * Uses the JWT session strategy by default — no database adapter required.

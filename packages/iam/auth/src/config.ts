@@ -15,9 +15,11 @@
 
 import type { AuthProviderId } from "./types";
 
+/** Env values for AUTH_PROVIDER / NEXT_PUBLIC_AUTH_PROVIDER. */
 const SUPPORTED: readonly AuthProviderId[] = [
   "clerk",
   "better-auth",
+  /** Auth.js (ex-NextAuth.js); npm still `next-auth` */
   "nextauth",
   "supabase",
   "dev",

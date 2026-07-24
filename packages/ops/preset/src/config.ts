@@ -52,6 +52,7 @@ export const ThemeId = z.string().superRefine((value, ctx) => {
 
 export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
+/** `nextauth` = Auth.js (ex-NextAuth.js; npm package `next-auth`). */
 export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth", "supabase"]);
 
 const DeployTargetsSchema = z

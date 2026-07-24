@@ -21,7 +21,7 @@ Two capability layers must both pass before UI exposes a feature:
 AND them with `isCapabilityEffective(provider, feature, runtimeCaps)`.
 
 Tiers: `first-class` (better-auth default) · `optional-enterprise` (clerk) ·
-`migration` (nextauth, supabase) · `dev-only` (dev).
+`migration` (nextauth = Auth.js / ex-NextAuth, supabase) · `dev-only` (dev).
 
 Impersonation is **declared false** for all providers until an adapter
 implements it end-to-end — no half-cookie product path.
