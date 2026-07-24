@@ -6,8 +6,8 @@ import {
   createForgeMcpHandlers,
   ForgeRegistry,
   invokeTool,
-  markdownToSimplePdf,
 } from "./index";
+import { markdownToSimplePdf } from "./tools/md-to-pdf";
 
 describe("countText", () => {
   it("counts CJK and latin words", () => {
