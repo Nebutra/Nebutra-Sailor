@@ -11,16 +11,19 @@
  *
  * Usage: node scripts/sync-languages.mjs
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const repoRoot = resolve(packageRoot, "../../..");
 const tokensRoot = resolve(packageRoot, "..", "tokens");
 const brandsDir = join(tokensRoot, "brands");
 const metaPath = join(packageRoot, "src", "languages.meta.json");
 const languagesOut = join(packageRoot, "src", "languages.json");
 const builtInOut = join(packageRoot, "src", "built-in-packages.generated.ts");
+const biomeBin = join(repoRoot, "node_modules/.bin/biome");
 
 if (!existsSync(metaPath)) {
   throw new Error(`Missing ${metaPath}`);
@@ -159,6 +162,19 @@ export function hasBuiltInBrandPackage(id: string): boolean {
 `;
 
 writeFileSync(builtInOut, builtInTs);
+
+// Biome format so CI governance (full-tree biome check after typecheck/build)
+// does not fail on JSON.stringify / multi-line import formatting drift.
+if (existsSync(biomeBin)) {
+  const fmt = spawnSync(biomeBin, ["format", "--write", languagesOut, builtInOut], {
+    cwd: repoRoot,
+    encoding: "utf8",
+  });
+  if (fmt.status !== 0) {
+    process.stderr.write(fmt.stderr || fmt.stdout || "biome format failed on language artifacts\n");
+    process.exit(fmt.status ?? 1);
+  }
+}
 
 process.stdout.write(
   `sync-languages:\n` +

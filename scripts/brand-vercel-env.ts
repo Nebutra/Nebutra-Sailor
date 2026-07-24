@@ -1,10 +1,12 @@
 // Rewrite app vercel.json env from brand.domains (used by brand:apply).
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { BrandConfig } from "./brand-types";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const biomeBin = path.join(ROOT, "node_modules/.bin/biome");
 
 function toHttps(host: string): string {
   return `https://${host.replace(/^https?:\/\//, "").replace(/\/+$/, "")}`;
@@ -78,6 +80,7 @@ export function buildVercelEnvPatches(config: BrandConfig): Record<string, Recor
 }
 
 export function updateVercelEnvFromBrand(config: BrandConfig): void {
+  const written: string[] = [];
   for (const [rel, patch] of Object.entries(buildVercelEnvPatches(config))) {
     const full = path.join(ROOT, rel);
     if (!fs.existsSync(full)) continue;
@@ -96,7 +99,18 @@ export function updateVercelEnvFromBrand(config: BrandConfig): void {
           : r,
       );
     }
+    // JSON.stringify expands short arrays; Biome prefers compact ["iad1"].
     fs.writeFileSync(full, `${JSON.stringify(json, null, 2)}\n`);
+    written.push(full);
     console.log(`  vercel env from brand: ${rel}`);
+  }
+  if (written.length > 0 && fs.existsSync(biomeBin)) {
+    const fmt = spawnSync(biomeBin, ["format", "--write", ...written], {
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    if (fmt.status !== 0) {
+      throw new Error(fmt.stderr || fmt.stdout || "biome format failed on vercel.json");
+    }
   }
 }
