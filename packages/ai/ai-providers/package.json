@@ -56,8 +56,7 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "tsup": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
