@@ -8,7 +8,8 @@
 /* Brand font faces */
 @font-face {
   font-family: "NotionInter";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
+    format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -113,9 +114,9 @@ html[data-brand="notion"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 700;
 
   /* Zone type scales */
@@ -170,9 +171,9 @@ html[data-brand="notion"] {
   --brand-decorative-midnight: #02093a;
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 16px);
   line-height: var(--zone-product-body-leading, 1.5);
   font-weight: var(--zone-product-body-weight, 400);
@@ -200,14 +201,14 @@ html[data-brand="notion"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 16px);
   line-height: var(--zone-marketing-body-leading, 1.5);
   font-weight: var(--zone-marketing-body-weight, 400);
