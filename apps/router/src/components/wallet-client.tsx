@@ -1,7 +1,6 @@
 "use client";
 
-import { Card } from "@nebutra/ui/layout";
-import { Badge, Button, Input } from "@nebutra/ui/primitives";
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useCallback, useEffect, useState } from "react";
 
 const PRESETS = [5, 10, 25, 50, 100];
@@ -42,54 +41,61 @@ export function WalletClient() {
   };
 
   return (
-    <Card className="space-y-6 border-border/80 p-6">
-      <div>
-        <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-          当前余额
-        </p>
-        <p className="mt-2 text-4xl font-semibold tracking-tight tabular-nums">
+    <div className="grid gap-3 lg:grid-cols-[minmax(0,16rem)_1fr]">
+      <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
+        <p className="text-[11px] text-[var(--neutral-10)]">当前余额</p>
+        <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">
           {balance === null ? "…" : balance}
-          <span className="ml-2 text-base font-medium text-muted-foreground">{currency}</span>
+          <span className="ml-1.5 text-sm font-medium text-[var(--neutral-10)]">{currency}</span>
+        </p>
+        <p className="mt-2 text-[11px] leading-snug text-[var(--neutral-10)]">
+          Demo 内存账本 · 生产写入 prepaid-wallet
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {PRESETS.map((n) => (
-          <button
-            key={n}
-            type="button"
-            onClick={() => setAmount(String(n))}
-            className="inline-flex"
-          >
-            <Badge
-              variant={amount === String(n) ? "blue-subtle" : "outline"}
-              className="cursor-pointer px-3 py-1 text-xs"
+      <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
+        <p className="mb-2 text-[12px] font-semibold">Mock 充值</p>
+        <div className="mb-2 flex flex-wrap gap-1.5">
+          {PRESETS.map((n) => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => setAmount(String(n))}
+              className={[
+                "h-7 rounded-full border px-2.5 text-[11px] tabular-nums transition-colors",
+                amount === String(n)
+                  ? "border-[var(--neutral-8)] bg-[var(--neutral-3)] font-medium"
+                  : "border-[var(--neutral-6)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]",
+              ].join(" ")}
             >
               +{n}
-            </Badge>
-          </button>
-        ))}
-      </div>
-
-      <div className="flex flex-wrap items-end gap-3">
-        <div className="w-32">
-          <Input
-            label="金额"
-            id="topup-amount"
-            type="number"
-            min={1}
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
+            </button>
+          ))}
         </div>
-        <Button type="button" variant="ink" disabled={loading} onClick={() => void topUp()}>
-          Mock 充值
-        </Button>
+        <div className="flex flex-wrap items-end gap-2">
+          <div className="w-28">
+            <Input
+              label="金额"
+              id="topup-amount"
+              type="number"
+              min={1}
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </div>
+          <Button
+            type="button"
+            variant="ink"
+            size="sm"
+            className="h-9"
+            disabled={loading}
+            onClick={() => void topUp()}
+          >
+            {loading ? "处理中…" : "充值"}
+          </Button>
+        </div>
+        {msg ? <p className="mt-2 text-[12px] text-[var(--neutral-11)]">{msg}</p> : null}
       </div>
-      {msg ? <p className="text-sm text-muted-foreground">{msg}</p> : null}
-      <p className="text-xs text-muted-foreground">
-        Demo 账本内存态；生产写入 Nebutra prepaid wallet 同一真相源。
-      </p>
-    </Card>
+    </div>
   );
 }

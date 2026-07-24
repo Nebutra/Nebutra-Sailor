@@ -20,7 +20,9 @@
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@lobehub/icons": "^5.0.1",
+    "@nebutra/ai-providers": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",

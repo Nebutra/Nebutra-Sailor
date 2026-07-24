@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   transpilePackages: [
+    "@lobehub/icons",
+    "@nebutra/ai-providers",
     "@nebutra/brand",
     "@nebutra/ui",
     "@nebutra/tokens",

@@ -1,3 +1,4 @@
+import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { NextResponse } from "next/server";
 import { getWallet } from "@/lib/demo-store";
 
@@ -11,7 +12,7 @@ export async function POST(request: Request) {
     prompt?: string;
     apiKey?: string;
   };
-  const model = body.model ?? "gpt-5.4-mini";
+  const model = body.model ?? DEFAULT_PUBLIC_MODEL;
   const prompt = body.prompt ?? "";
   const gateway = process.env.ROUTER_GATEWAY_URL;
 

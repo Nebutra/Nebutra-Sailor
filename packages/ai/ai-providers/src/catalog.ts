@@ -84,11 +84,11 @@ function toModelInfo(rawProvider: string, model: ProviderModel): ModelInfo {
     provider: mapProvider(rawProvider),
     rawProvider,
     modality: classifyModality(model),
-    contextWindow: model.limit?.context,
-    maxOutput: model.limit?.output,
+    ...(model.limit?.context !== undefined ? { contextWindow: model.limit.context } : {}),
+    ...(model.limit?.output !== undefined ? { maxOutput: model.limit.output } : {}),
     pricing: {
-      inputPerMTok: model.cost?.input,
-      outputPerMTok: model.cost?.output,
+      ...(model.cost?.input !== undefined ? { inputPerMTok: model.cost.input } : {}),
+      ...(model.cost?.output !== undefined ? { outputPerMTok: model.cost.output } : {}),
     },
     capabilities: {
       reasoning: model.reasoning ?? false,
@@ -174,8 +174,11 @@ function buildLogical(catalog: ProvidersCatalog): CatalogModel[] {
         id: model.id,
         rawProvider: providerId,
         bucket,
-        pricing: { inputPerMTok: model.cost?.input, outputPerMTok: model.cost?.output },
-        contextWindow: model.limit?.context,
+        pricing: {
+          ...(model.cost?.input !== undefined ? { inputPerMTok: model.cost.input } : {}),
+          ...(model.cost?.output !== undefined ? { outputPerMTok: model.cost.output } : {}),
+        },
+        ...(model.limit?.context !== undefined ? { contextWindow: model.limit.context } : {}),
       };
       const existing = byKey.get(key);
       if (existing) {
@@ -392,10 +395,14 @@ async function fetchRoutableIds(): Promise<Set<string>> {
 
 /** Collapse separators so `claude-opus-4.8` (OpenRouter) matches `claude-opus-4-8` (models.dev). */
 const collapseId = (s: string): string => s.toLowerCase().replace(/[._-]/g, "");
-const bareId = (id: string): string => id.slice(id.indexOf("/") + 1);
+const bareId = (id: string): string => {
+  const slash = id.indexOf("/");
+  return slash >= 0 ? id.slice(slash + 1) : id;
+};
 const versionOf = (id: string): number => {
   const m = bareId(id).match(/(\d+(?:\.\d+)?)/);
-  return m ? Number.parseFloat(m[1]) : -1;
+  const raw = m?.[1];
+  return raw ? Number.parseFloat(raw) : -1;
 };
 
 /**
@@ -417,7 +424,7 @@ export async function resolveFrontierModel(tier: ModelTier): Promise<string> {
     if (candidates.length === 0) return rule.fallback;
 
     candidates.sort((a, b) => versionOf(b) - versionOf(a));
-    return candidates[0];
+    return candidates[0] ?? rule.fallback;
   } catch {
     return rule.fallback;
   }

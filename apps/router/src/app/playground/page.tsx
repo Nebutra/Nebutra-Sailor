@@ -1,21 +1,10 @@
-import { PageHeader } from "@nebutra/ui/layout";
-import { PageFrame } from "@/components/page-frame";
-import { PlaygroundClient } from "@/components/playground-client";
-import { getModels } from "@/lib/demo-store";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "Playground" };
+type Props = { searchParams: Promise<{ model?: string }> };
 
-export default function PlaygroundPage() {
-  const models = getModels();
-  return (
-    <PageFrame>
-      <div className="space-y-6">
-        <PageHeader
-          title="Playground"
-          description="Demo 模式可本地模拟回复；配置 GATEWAY_URL 后转发真实 chat completions。"
-        />
-        <PlaygroundClient models={models} />
-      </div>
-    </PageFrame>
-  );
+/** 旧路径兼容 → 快捷使用 */
+export default async function PlaygroundRedirect({ searchParams }: Props) {
+  const { model } = await searchParams;
+  const q = model ? `?model=${encodeURIComponent(model)}` : "";
+  redirect(`/use${q}`);
 }

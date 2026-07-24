@@ -1,3 +1,7 @@
+import {
+  DEFAULT_PUBLIC_MODEL as FRONTIER_DEFAULT_PUBLIC,
+  ROUTER_PUBLIC_MODEL_IDS,
+} from "@nebutra/ai-providers/frontier";
 import type { ModelAliasEntry } from "@nebutra/prepaid-wallet";
 
 export interface AliasTable {
@@ -47,54 +51,38 @@ export function listPublicModels(table: AliasTable): string[] {
 }
 
 /**
- * Lab defaults — public ids aligned with models.dev / OpenRouter frontier
- * (see @nebutra/ai-providers FRONTIER_FALLBACK). Do not list retired lines
- * (gpt-3.5, gpt-4, gpt-4o) as the customer-facing catalog defaults.
+ * Lab defaults — public ids from `@nebutra/ai-providers/frontier` SSOT.
+ * Do not hand-edit model strings here; update frontier.ts.
  */
-export const DEFAULT_ALIASES: readonly ModelAliasEntry[] = [
-  {
-    publicModel: "gpt-5.4-mini",
-    engineId: "newapi",
-    upstreamModel: "gpt-5.4-mini",
-    priority: 10,
-  },
-  {
-    publicModel: "gpt-5.5",
-    engineId: "newapi",
-    upstreamModel: "gpt-5.5",
-    priority: 10,
-  },
-  {
-    publicModel: "claude-sonnet-4.6",
-    engineId: "newapi",
-    upstreamModel: "claude-sonnet-4.6",
-    priority: 10,
-  },
-  {
-    publicModel: "claude-sonnet-4.6",
-    engineId: "sub2api",
-    upstreamModel: "claude-sonnet-4.6",
-    priority: 20,
-  },
-  {
-    publicModel: "claude-haiku-4.5",
-    engineId: "newapi",
-    upstreamModel: "claude-haiku-4.5",
-    priority: 10,
-  },
-  {
-    publicModel: "gemini-3.5-flash",
-    engineId: "newapi",
-    upstreamModel: "gemini-3.5-flash",
-    priority: 10,
-  },
-  {
+function buildDefaultAliases(): ModelAliasEntry[] {
+  const entries: ModelAliasEntry[] = [];
+  for (const bare of ROUTER_PUBLIC_MODEL_IDS) {
+    entries.push({
+      publicModel: bare,
+      engineId: "newapi",
+      upstreamModel: bare,
+      priority: 10,
+    });
+    // Sonnet-class gets Sub2API secondary path when present
+    if (bare.includes("claude-sonnet")) {
+      entries.push({
+        publicModel: bare,
+        engineId: "sub2api",
+        upstreamModel: bare,
+        priority: 20,
+      });
+    }
+  }
+  entries.push({
     publicModel: "*",
     engineId: "newapi",
     upstreamModel: "*",
     priority: 1000,
-  },
-];
+  });
+  return entries;
+}
 
-/** Default public model for demos / docs when the client omits `model`. */
-export const DEFAULT_PUBLIC_MODEL = "gpt-5.4-mini";
+export const DEFAULT_ALIASES: readonly ModelAliasEntry[] = buildDefaultAliases();
+
+/** Default public model — re-export of frontier SSOT. */
+export const DEFAULT_PUBLIC_MODEL: string = FRONTIER_DEFAULT_PUBLIC;
