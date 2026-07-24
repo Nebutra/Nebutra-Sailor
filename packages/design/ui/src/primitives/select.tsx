@@ -380,7 +380,9 @@ function OptionsListboxSelect({
     const resolved = next ?? "";
     if (!isControlled) setUncontrolled(resolved);
     onValueChange?.(next);
-    onChange?.({ target: { value: resolved, name } });
+    onChange?.({
+      target: name === undefined ? { value: resolved } : { value: resolved, name },
+    });
   };
 
   const fieldStyle = getNativeSelectStyle(size, style);
