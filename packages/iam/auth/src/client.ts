@@ -29,6 +29,12 @@ export { getConfiguredAuthProvider, isClerkProvider } from "./config";
 // middleware → @clerk/nextjs/server → 'server-only').
 export type { AuthFeature, AuthFeatureContext } from "./features";
 export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
+// Re-export context for advanced use cases
+export { type AuthContextValue, useAuthContext } from "./react/context";
+// Re-export auth hooks from react subpackage
+export { useAuth, useOrganization, useSession, useUser } from "./react/hooks";
+// Re-export sign-in method type for convenience
+export type { SignInMethod } from "./types";
 // Auth Center URL builders — pure string helpers; must not go through root
 // export (root re-exports createAuth → email/db → Node-only modules).
 export {
@@ -36,9 +42,3 @@ export {
   buildAuthCenterSignUpUrl,
   getAuthCenterOrigin,
 } from "./utils";
-// Re-export context for advanced use cases
-export { type AuthContextValue, useAuthContext } from "./react/context";
-// Re-export auth hooks from react subpackage
-export { useAuth, useOrganization, useSession, useUser } from "./react/hooks";
-// Re-export sign-in method type for convenience
-export type { SignInMethod } from "./types";

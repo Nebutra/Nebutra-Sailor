@@ -39,7 +39,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--tl-paper);
   color: var(--tl-ink);
-  font-feature-settings: "ss01" on, "kern" on;
+  font-feature-settings:
+    "ss01" on,
+    "kern" on;
   letter-spacing: -0.01em;
 }
 
@@ -141,11 +143,7 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgb(0 0 0 / 0%) 40%,
-    rgb(0 0 0 / 8%) 100%
-  );
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 40%, rgb(0 0 0 / 8%) 100%);
   opacity: 0;
   transition: opacity 0.45s ease;
 }
