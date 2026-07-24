@@ -64,6 +64,8 @@
     "brand:apply": "tsx scripts/brand-apply.ts",
     "brand:palette": "node scripts/generate-palette.mjs",
     "brand:verify-tokens": "tsx scripts/verify-brand-token-sync.ts",
+    "dns:render": "tsx scripts/dns-render.ts",
+    "dns:bootstrap": "tsx scripts/dns-render.ts",
     "theme:verify-quality": "tsx scripts/verify-theme-quality.mts packages/design/design-tokens/tokens/themes/*.json",
     "ui:validate-policy": "tsx scripts/validate-ui-governance-policy.ts",
     "ui:verify-governance": "pnpm ui:validate-policy && pnpm theme:verify-quality && tsx scripts/verify-ui-governance.ts",

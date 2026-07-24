@@ -1,0 +1,15 @@
+ecs_host: "106.15.4.31"
+apex_a: "216.198.79.1"
+www_cname: "cname.vercel-dns.com"
+docs_cname: "331816c5997d8344.vercel-dns-017.com"
+mail:
+  provider: aliyun
+  records:
+    mail: "qiye.aliyun.com"
+    imap: "imap.qiye.aliyun.com"
+    pop3: "pop.qiye.aliyun.com"
+    smtp: "smtp.qiye.aliyun.com"
+ecs_surfaces: [app, auth, api, sso, router, forge, design, status]
+proxy:
+  proxied: ["@", www, app, auth, api, sso, router, forge, design, status, mail, imap, pop3, smtp]
+  dns_only: [docs]

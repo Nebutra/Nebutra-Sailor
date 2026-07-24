@@ -1,3 +1,4 @@
+import { getBrandPublicUrls } from "@nebutra/brand/metadata-helpers";
 import { z } from "zod";
 
 // Auth provider discriminated union — validates that the appropriate secret is set for the selected provider
@@ -118,12 +119,19 @@ const baseSchema = z.object({
 
 const envSchema = z.intersection(baseSchema, authConfigUnion);
 
-// Production domain constants (overridable via environment variables)
+// Production domain constants — defaults dogfood brand.domains.
+const brandUrls = getBrandPublicUrls();
+
 export const DOMAINS = {
-  landing: process.env.DOMAIN_LANDING ?? "https://nebutra.com",
-  app: process.env.DOMAIN_APP ?? "https://app.nebutra.com",
-  api: process.env.DOMAIN_API ?? "https://api.nebutra.com",
-  studio: process.env.DOMAIN_STUDIO ?? "https://studio.nebutra.com",
+  landing: process.env.DOMAIN_LANDING ?? process.env.LANDING_URL ?? brandUrls.siteUrl,
+  app: process.env.DOMAIN_APP ?? process.env.WEB_URL ?? brandUrls.appUrl,
+  api: process.env.DOMAIN_API ?? brandUrls.apiUrl,
+  studio: process.env.DOMAIN_STUDIO ?? process.env.STUDIO_URL ?? brandUrls.studioUrl,
+  auth: process.env.DOMAIN_AUTH ?? process.env.NEXT_PUBLIC_AUTH_URL ?? brandUrls.authUrl,
+  sso: process.env.DOMAIN_SSO ?? process.env.OIDC_ISSUER ?? brandUrls.ssoUrl,
+  docs: process.env.DOMAIN_DOCS ?? process.env.NEXT_PUBLIC_DOCS_URL ?? brandUrls.docsUrl,
+  router: process.env.DOMAIN_ROUTER ?? process.env.NEXT_PUBLIC_ROUTER_URL ?? brandUrls.routerUrl,
+  forge: process.env.DOMAIN_FORGE ?? process.env.NEXT_PUBLIC_FORGE_URL ?? brandUrls.forgeUrl,
 } as const;
 
 export type Env = z.infer<typeof envSchema>;

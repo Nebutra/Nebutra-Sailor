@@ -21,6 +21,12 @@ storybook-static
 !*.template
 .wrangler-secrets.json
 
+# DNS inventory dumps
+infra/ops/dns/*
+!infra/ops/dns/README.md
+!infra/ops/dns/.gitignore
+!infra/ops/dns/topology.defaults.yaml
+
 # IDE
 .idea
 .vscode

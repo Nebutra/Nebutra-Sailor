@@ -11,6 +11,9 @@ import {
   buildPwaManifest,
   buildSoftwareApplicationJsonLd,
   buildWebSiteJsonLd,
+  getBrandCookieDomain,
+  getBrandOrigin,
+  getBrandPublicUrls,
   getSiteMetadata,
   getSiteUrl,
 } from "../metadata-helpers";
@@ -206,5 +209,25 @@ describe("buildSoftwareApplicationJsonLd", () => {
   it("name contains brand.name", () => {
     const jsonLd = buildSoftwareApplicationJsonLd();
     expect(jsonLd.name).toContain(brand.name);
+  });
+});
+
+describe("getBrandOrigin / getBrandPublicUrls", () => {
+  beforeEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("does not let NEXT_PUBLIC_SITE_URL hijack non-landing services", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://custom.com");
+    expect(getSiteUrl("app")).toBe(`https://${brand.domains.app}`);
+    expect(getBrandOrigin("router")).toBe(`https://${brand.domains.router}`);
+  });
+
+  it("maps public URLs and cookie domain from brand.domains", () => {
+    const u = getBrandPublicUrls();
+    expect(u.authUrl).toBe(`https://${brand.domains.auth}`);
+    expect(u.routerUrl).toBe(`https://${brand.domains.router}`);
+    expect(u.cookieDomain).toBe(`.${brand.domains.landing}`);
+    expect(getBrandCookieDomain()).toBe(`.${brand.domains.landing}`);
   });
 });
