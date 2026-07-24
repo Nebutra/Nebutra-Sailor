@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 TOKEN="${CLOUDFLARE_API_TOKEN:?}"
-ZONE=$(curl -sS -H "Authorization: Bearer $TOKEN" "https://api.cloudflare.com/client/v4/zones?name=nebutra.com" | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"][0]["id"])')
+ZONE=$(__cf_tmp="$(mktemp)"
+curl -sS -H "Authorization: Bearer $TOKEN" "https://api.cloudflare.com/client/v4/zones?name=nebutra.com" -o "$__cf_tmp"
+python3 -c 'import json,sys; print(json.load(sys.stdin)["result"][0]["id"])' <"$__cf_tmp"
+rm -f "$__cf_tmp")
 echo "ZONE=$ZONE"
 
 echo "=== DNS docs ==="

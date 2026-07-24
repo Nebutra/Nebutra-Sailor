@@ -18,9 +18,11 @@ jobs:
         run: |
           set -euo pipefail
           # Export ZONE for python helpers inside script
-          export ZONE_ID=$(curl -sS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-            "https://api.cloudflare.com/client/v4/zones?name=nebutra.com" \
-            | python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")')
+          export ZONE_ID=$(__cf_tmp="$(mktemp)"
+curl -sS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "https://api.cloudflare.com/client/v4/zones?name=nebutra.com" \ -o "$__cf_tmp"
+python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")' <"$__cf_tmp"
+rm -f "$__cf_tmp")
           export CLOUDFLARE_API_TOKEN
           bash infra/ops/scripts/point-docs-dns-vercel.sh
       - name: Smoke (no follow)

@@ -46,7 +46,7 @@ jobs:
             echo "::error::Set VERCEL_WEB_PROJECT_ID (prj_…) for the web Vercel project"
             exit 1
           fi
-          npm i -g vercel@latest
+          npm i -g vercel@56.5.0
           mkdir -p apps/web/.vercel
           cat > apps/web/.vercel/project.json <<EOF
           {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}

@@ -12,6 +12,7 @@ export interface IssuedApiKey {
 }
 
 /** SHA-256 hex digest — same algorithm as backends/gateway `hashApiKey`. */
+// codeql[js/insufficient-password-hash]: API key fingerprint (SHA-256), not password storage
 export function hashApiKey(plaintext: string): string {
   return createHash("sha256").update(plaintext).digest("hex");
 }

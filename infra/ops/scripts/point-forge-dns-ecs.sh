@@ -50,5 +50,8 @@ assert ok, d.get("errors") or d'
 
 echo "=== verify DoH ==="
 sleep 3
-curl -sS "https://cloudflare-dns.com/dns-query?name=${HOST}&type=A" -H "accept: application/dns-json" | python3 -m json.tool | head -30
+__cf_tmp="$(mktemp)"
+curl -sS "https://cloudflare-dns.com/dns-query?name=${HOST}&type=A" -H "accept: application/dns-json" -o "$__cf_tmp"
+python3 -m json.tool <"$__cf_tmp" | head -30
+rm -f "$__cf_tmp"
 echo "done"

@@ -176,15 +176,15 @@ export function buildWebSiteJsonLd(): WebSiteJsonLd {
 }
 
 export function buildSoftwareApplicationJsonLd(): SoftwareApplicationJsonLd {
-  const siteUrl = getSiteUrl("landing");
   const org = buildOrganizationJsonLd();
+  const githubPath = brand.social.github.replace("https://github.com/", "");
 
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: `${brand.name} Sailor`,
     applicationCategory: "DeveloperApplication",
-    url: `https://${brand.social.github.replace("https://github.com/", "github.com/")}`,
+    url: `https://github.com/${githubPath}`,
     author: { "@id": org["@id"] },
   };
 }

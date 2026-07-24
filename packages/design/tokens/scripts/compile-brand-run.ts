@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { compileReferoTokens } from "../src/brand-package/index";
 
@@ -32,10 +32,17 @@ let hintId = "custom";
 
 if (st.isDirectory()) {
   const tokensPath = join(args.input, "tokens.json");
-  if (!existsSync(tokensPath)) throw new Error(`No tokens.json in ${args.input}`);
-  tokens = JSON.parse(readFileSync(tokensPath, "utf8"));
+  try {
+    tokens = JSON.parse(readFileSync(tokensPath, "utf8"));
+  } catch {
+    throw new Error(`No tokens.json in ${args.input}`);
+  }
   const designPath = join(args.input, "DESIGN.md");
-  if (existsSync(designPath)) designMd = readFileSync(designPath, "utf8");
+  try {
+    designMd = readFileSync(designPath, "utf8");
+  } catch {
+    designMd = "";
+  }
   hintId = basename(args.input).toLowerCase();
 } else {
   tokens = JSON.parse(readFileSync(args.input, "utf8"));

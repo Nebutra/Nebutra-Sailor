@@ -147,11 +147,18 @@ export interface FailStartupRunInput {
 const DEFAULT_NOW = "2026-05-29T00:00:00.000Z";
 
 function slugify(value: string): string {
-  const slug = value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 52);
+  const lower = value.toLowerCase();
+  const parts: string[] = [];
+  let buf = "";
+  for (const ch of lower) {
+    if ((ch >= "a" && ch <= "z") || (ch >= "0" && ch <= "9")) buf += ch;
+    else if (buf) {
+      parts.push(buf);
+      buf = "";
+    }
+  }
+  if (buf) parts.push(buf);
+  const slug = parts.join("-").slice(0, 52);
   return slug || "startup-os-project";
 }
 

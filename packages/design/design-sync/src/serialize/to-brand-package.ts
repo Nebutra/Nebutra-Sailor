@@ -35,8 +35,14 @@ export function mergeTokenTrees(trees: DesignTokenTree[]): DesignTokenTree {
 
 function mergeInto(target: DesignTokenTree, source: DesignTokenTree): void {
   for (const [key, value] of Object.entries(source)) {
+    if (key === "__proto__" || key === "constructor" || key === "prototype") continue;
     if (isLeaf(value)) {
-      target[key] = value;
+      Object.defineProperty(target, key, {
+        value,
+        writable: true,
+        enumerable: true,
+        configurable: true,
+      });
       continue;
     }
     if (value && typeof value === "object") {
@@ -44,7 +50,12 @@ function mergeInto(target: DesignTokenTree, source: DesignTokenTree): void {
       if (existing && typeof existing === "object" && !isLeaf(existing)) {
         mergeInto(existing as DesignTokenTree, value as DesignTokenTree);
       } else {
-        target[key] = structuredClone(value);
+        Object.defineProperty(target, key, {
+          value: structuredClone(value),
+          writable: true,
+          enumerable: true,
+          configurable: true,
+        });
       }
     }
   }

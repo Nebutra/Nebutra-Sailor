@@ -120,9 +120,12 @@ describe("md-to-pdf + mcp", () => {
     expect(out.buf.subarray(0, 5).toString("utf8")).toBe("%PDF-");
   });
 
-  it("md-to-pdf tool invoke with simple engine uses real tool entry", async () => {
-    const registry = ForgeRegistry.openDefault();
-    const result = await invokeTool(registry, {
+  it("registers md-to-pdf via optional /pdf subpath host wiring", async () => {
+    const { mdToPdfTool } = await import("./tools/md-to-pdf.js");
+    const { F0_BATCH1_TOOLS } = await import("./tools/index.js");
+    expect(F0_BATCH1_TOOLS.some((t) => t.id === "doc/md-to-pdf")).toBe(false);
+    const withPdf = new ForgeRegistry([...F0_BATCH1_TOOLS, mdToPdfTool]);
+    const result = await invokeTool(withPdf, {
       toolId: "doc/md-to-pdf",
       input: {
         markdown: "# SOTA path\n\n- item",
@@ -135,7 +138,6 @@ describe("md-to-pdf + mcp", () => {
       const output = result.output as {
         renderEngine: string;
         base64: string;
-        engine: string;
       };
       expect(output.renderEngine).toBe("simple");
       expect(Buffer.from(output.base64, "base64").subarray(0, 5).toString("utf8")).toBe("%PDF-");

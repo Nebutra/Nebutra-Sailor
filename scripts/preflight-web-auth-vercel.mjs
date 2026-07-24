@@ -29,16 +29,17 @@ function must(cond, msg) {
 const webEnv = readJson("apps/web/vercel.json").env || {};
 const authEnv = readJson("apps/auth/vercel.json").env || {};
 
-must(webEnv.BETTER_AUTH_URL === "https://auth.nebutra.com", "web vercel.json BETTER_AUTH_URL");
-must(
-  webEnv.NEXT_PUBLIC_AUTH_URL === "https://auth.nebutra.com",
-  "web vercel.json NEXT_PUBLIC_AUTH_URL",
-);
-must(authEnv.BETTER_AUTH_URL === "https://auth.nebutra.com", "auth vercel.json BETTER_AUTH_URL");
-must(
-  authEnv.NEXT_PUBLIC_AUTH_URL === "https://auth.nebutra.com",
-  "auth vercel.json NEXT_PUBLIC_AUTH_URL",
-);
+function isAuthOrigin(url) {
+  try {
+    return new URL(url).origin === "https://auth.nebutra.com";
+  } catch {
+    return false;
+  }
+}
+must(isAuthOrigin(webEnv.BETTER_AUTH_URL), "web vercel.json BETTER_AUTH_URL");
+must(isAuthOrigin(webEnv.NEXT_PUBLIC_AUTH_URL), "web vercel.json NEXT_PUBLIC_AUTH_URL");
+must(isAuthOrigin(authEnv.BETTER_AUTH_URL), "auth vercel.json BETTER_AUTH_URL");
+must(isAuthOrigin(authEnv.NEXT_PUBLIC_AUTH_URL), "auth vercel.json NEXT_PUBLIC_AUTH_URL");
 must(authEnv.AUTH_COOKIE_DOMAIN === ".nebutra.com", "auth vercel.json AUTH_COOKIE_DOMAIN");
 must(
   webEnv.NEXT_PUBLIC_APP_URL === "https://app.nebutra.com",

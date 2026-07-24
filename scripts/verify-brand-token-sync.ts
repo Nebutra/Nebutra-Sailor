@@ -70,31 +70,12 @@ function cssVariableDefinitions(css: string, variable: string): string[] {
   );
 }
 
-function compactCssValue(value: string): string {
-  return value.toLowerCase().replace(/\s+/g, "");
-}
-
 function normalizeFontFamily(name: string): string {
   return name.replace(/['"]/g, "").trim().toLowerCase();
 }
 
 function primaryFontFamily(stack: string): string {
   return normalizeFontFamily(stack.split(",")[0] ?? "");
-}
-
-function registryFontPrefixFailures(
-  css: string,
-  variables: readonly string[],
-): Array<{ variable: string; expected: string; value: string }> {
-  const drifts: Array<{ variable: string; expected: string; value: string }> = [];
-  for (const variable of variables) {
-    for (const value of cssVariableDefinitions(css, variable)) {
-      if (value.includes("var(--font-")) continue;
-      const expected = FONT_REGISTRY[primaryFontFamily(value)];
-      if (expected) drifts.push({ variable, expected, value });
-    }
-  }
-  return drifts;
 }
 
 interface DtcgLeaf {
@@ -193,56 +174,6 @@ const runtimeFontSources = [
     content: read("apps/web/src/app/global-error.tsx"),
   },
 ] as const;
-
-function hexToRgb(hex: string): [number, number, number] {
-  const match = /^#?([0-9a-f]{6})$/iu.exec(hex.trim());
-  if (!match) throw new Error(`Expected 6-digit hex color, got "${hex}"`);
-  const value = match[1];
-  if (!value) throw new Error(`Expected 6-digit hex color, got "${hex}"`);
-  return [
-    Number.parseInt(value.slice(0, 2), 16),
-    Number.parseInt(value.slice(2, 4), 16),
-    Number.parseInt(value.slice(4, 6), 16),
-  ];
-}
-
-function srgbToLinear(channel: number): number {
-  const normalized = channel / 255;
-  return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
-}
-
-function relativeLuminance(hex: string): number {
-  const [r, g, b] = hexToRgb(hex).map(srgbToLinear);
-  return 0.2126 * (r ?? 0) + 0.7152 * (g ?? 0) + 0.0722 * (b ?? 0);
-}
-
-function contrastRatio(foreground: string, background: string): number {
-  const fg = relativeLuminance(foreground);
-  const bg = relativeLuminance(background);
-  const lighter = Math.max(fg, bg);
-  const darker = Math.min(fg, bg);
-  return (lighter + 0.05) / (darker + 0.05);
-}
-
-function rgbToHsl(hex: string): { hue: number; lightness: number } {
-  const [rRaw, gRaw, bRaw] = hexToRgb(hex);
-  const r = rRaw / 255;
-  const g = gRaw / 255;
-  const b = bRaw / 255;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const delta = max - min;
-  const lightness = ((max + min) / 2) * 100;
-
-  if (delta === 0) return { hue: 0, lightness };
-
-  let hue = 0;
-  if (max === r) hue = ((g - b) / delta) % 6;
-  else if (max === g) hue = (b - r) / delta + 2;
-  else hue = (r - g) / delta + 4;
-
-  return { hue: (hue * 60 + 360) % 360, lightness };
-}
 
 function extractHexStops(gradient: string): string[] {
   return [...gradient.matchAll(/#[0-9a-f]{6}\b/giu)].map((match) => match[0].toLowerCase());
