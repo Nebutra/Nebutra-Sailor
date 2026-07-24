@@ -18,13 +18,18 @@
     "./scroll-pin": "./src/scroll-pin.ts",
     "./request": "./src/request.ts",
     "./routing": "./src/routing.ts",
-    "./locale-switcher": "./src/locale-switcher.tsx"
+    "./locale-switcher": "./src/locale-switcher.tsx",
+    "./bcp47": "./src/bcp47.ts",
+    "./display": "./src/display.ts",
+    "./negotiate": "./src/negotiate.ts",
+    "./world": "./src/world.ts"
   },
   "scripts": {
     "lint": "biome check .",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "check:markets": "vitest run src/markets.test.ts"
+    "check:markets": "vitest run src/markets.test.ts",
+    "sync:product-locales": "node ./scripts/sync-product-locales.mjs"
   },
   "dependencies": {
     "next-intl": "^4.12.0"
