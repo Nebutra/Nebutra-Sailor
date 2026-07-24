@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
+import { ForgeMark } from "@/components/forge-mark";
 
 const NAV = [
   { href: "/", label: "工具" },
@@ -25,7 +26,8 @@ export function SiteHeader() {
           <BrandLogo variant="mark" className="h-8 w-8 sm:hidden" />
           <BrandLogo variant="horizontal" className="hidden h-[26px] w-auto sm:block" />
           <span className="hidden h-4 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
-          <span className="text-[13px] font-medium text-[var(--neutral-11)]">Forge</span>
+          <ForgeMark className="h-5 w-5 text-[var(--neutral-11)]" />
+          <span className="sr-only">Forge</span>
         </Link>
         <nav aria-label="主导航" className="flex min-w-0 flex-1 items-center gap-1">
           {NAV.map(({ href, label }) => {
