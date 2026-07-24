@@ -43,12 +43,16 @@ describe("Deploy substrate governance", () => {
     const yml = read("deploy-ecs.yml");
     expect(yml).toContain("workflow_dispatch:");
     // Forge-only auto-deploy on main is intentional (see deploy-ecs.yml on.push paths).
-    // Other fleet apps must not ride unscoped push → main.
-    expect(yml).toMatch(/\n\s+push:\n/);
-    expect(yml).toContain("branches: [main]");
-    expect(yml).toContain("apps/forge/**");
-    expect(yml).not.toMatch(/paths:\n(?:[^\n]*\n)*?\s+- ["']apps\/web\/\*\*/);
-    expect(yml).not.toMatch(/paths:\n(?:[^\n]*\n)*?\s+- ["']apps\/landing\/\*\*/);
+    // Other fleet apps stay workflow_dispatch-only so path-filter entries like
+    // apps/web/** (manual detect) must NOT appear under on.push.paths.
+    const pushPaths = yml.match(
+      /\n\s+push:\n\s+branches:\s*\[main\]\n\s+paths:\n((?:\s+- [^\n]+\n)+)/,
+    )?.[1];
+    expect(pushPaths, "deploy-ecs.yml must define on.push.paths for main").toBeTruthy();
+    expect(pushPaths).toContain("apps/forge/**");
+    expect(pushPaths).not.toContain("apps/web/**");
+    expect(pushPaths).not.toContain("apps/landing/**");
+    expect(pushPaths).not.toContain("apps/router/**");
   });
 
   it("legacy ECS PM2 workflow still detects gateway source changes for manual fallback deploys", () => {
