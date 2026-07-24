@@ -1,4 +1,4 @@
-import { brand, colors } from "@nebutra/brand/metadata";
+import { colors } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 /**
  * Shared HTML layout for the React Email-style template catalog.
