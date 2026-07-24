@@ -27,13 +27,15 @@ describe("catalog integrity", () => {
     expect(s.has("cjk-hans")).toBe(true);
   });
   it("works mixed media published", () => {
-    expect(WORKS.length).toBeGreaterThanOrEqual(6);
+    expect(WORKS.length).toBeGreaterThanOrEqual(12);
     const media = new Set(WORKS.map((w) => w.medium));
     expect(media.has("poster")).toBe(true);
     expect(media.has("website")).toBe(true);
+    const published = WORKS.filter((w) => w.status === "published");
+    expect(published.length).toBeGreaterThanOrEqual(6);
     for (const w of WORKS) {
       expect(() => WorkSchema.parse(w)).not.toThrow();
-      expect(w.status).toBe("published");
+      expect(["draft", "parsed", "human_reviewed", "published"]).toContain(w.status);
     }
   });
   it("specimen graph", () => {
@@ -45,6 +47,13 @@ describe("catalog integrity", () => {
       expect(workIds.has(s.workId)).toBe(true);
       for (const r of s.typefaces) expect(tfIds.has(r.typefaceId)).toBe(true);
     }
+  });
+  it("cold-start free commercial entries exist", () => {
+    expect(TYPEFACES.some((t) => t.id === "playfair-display")).toBe(true);
+    expect(WORKS.some((w) => w.slug.startsWith("fiu-") || w.slug.startsWith("free-"))).toBe(true);
+    expect(
+      SPECIMENS.some((s) => s.tags.includes("fiu-coldstart") || s.tags.includes("coldstart")),
+    ).toBe(true);
   });
 });
 describe("query", () => {

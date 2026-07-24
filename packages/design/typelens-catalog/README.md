@@ -22,4 +22,17 @@ Avoid: 档案 · 归档 · 字库仓库
 import { extractSpecimen, listWorks, searchSpecimens } from "@nebutra/typelens-catalog";
 ```
 
+## Cold-start from Fonts In Use (research)
+
+We **do not** republish FIU editorial text or images. A research crawler pulls public
+**metadata only** (use title, typeface co-occurrence, tags), keeps **free commercial**
+faces that map into our catalog, and writes a draft seed.
+
+```bash
+pnpm --filter @nebutra/typelens-catalog research:fiu
+pnpm --filter @nebutra/typelens-catalog research:fiu:quick
+```
+
+Outputs: `research/fiu-coldstart.json`, `research/fiu-seed-draft.json`.
+
 See `docs/plans/2026-07-24-typelens-product-voice.md`.

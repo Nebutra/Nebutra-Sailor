@@ -25,7 +25,9 @@
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "research:fiu": "node ./scripts/fiu-research-coldstart.mjs",
+    "research:fiu:quick": "node ./scripts/fiu-research-coldstart.mjs --max-uses-per-face=3 --delay-ms=3000 --max-pages=24"
   },
   "dependencies": {
     "zod": "catalog:"
