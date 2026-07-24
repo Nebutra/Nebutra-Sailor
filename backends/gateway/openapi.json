@@ -3213,7 +3213,7 @@
                   },
                   "model": {
                     "type": "string",
-                    "default": "gpt-5.5"
+                    "default": "gpt-5.6-luna"
                   },
                   "temperature": {
                     "type": "number",
@@ -7408,7 +7408,39 @@
         ],
         "responses": {
           "200": {
-            "description": "Organization list"
+            "description": "Organization list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "offset": {
+                          "type": "number"
+                        }
+                      },
+                      "required": ["total", "limit", "offset"]
+                    }
+                  },
+                  "required": ["data", "meta"]
+                }
+              }
+            }
           }
         }
       }
@@ -7430,7 +7462,15 @@
         ],
         "responses": {
           "200": {
-            "description": "Organization details"
+            "description": "Organization details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found"
@@ -7455,7 +7495,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Suspended"
+            "description": "Suspended",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organizationId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["suspended"]
+                    },
+                    "keysRevoked": {
+                      "type": "number"
+                    }
+                  },
+                  "required": ["organizationId", "status", "keysRevoked"]
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found"
@@ -7480,7 +7540,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Unsuspended"
+            "description": "Unsuspended",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organizationId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["active"]
+                    },
+                    "newKeyPrefix": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["organizationId", "status", "newKeyPrefix"]
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found"
@@ -7507,7 +7587,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Usage report"
+            "description": "Usage report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      }
+                    },
+                    "generatedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["data", "generatedAt"]
+                }
+              }
+            }
           }
         }
       }

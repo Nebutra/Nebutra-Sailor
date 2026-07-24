@@ -1,4 +1,4 @@
-import { decode } from "next-auth/jwt";
+import { decodeAuthJsSessionToken } from "@nebutra/auth";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildGoogleOneTapSessionCookie,
@@ -81,8 +81,8 @@ describe("buildGoogleOneTapSessionCookie", () => {
     const token = cookie.match(/__Secure-authjs\.session-token=([^;]+)/)?.[1];
     expect(token).toBeTruthy();
     await expect(
-      decode({
-        token,
+      decodeAuthJsSessionToken({
+        token: decodeURIComponent(token!),
         secret: "test-secret-test-secret-test-secret",
         salt: "__Secure-authjs.session-token",
       }),

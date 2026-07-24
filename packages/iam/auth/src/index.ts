@@ -28,6 +28,13 @@
 // Auditable context resolver (used by @nebutra/audit consumers)
 export type { AuditableActor, AuditableContext } from "./audit-context";
 export { getAuditableContext } from "./audit-context";
+// Auth.js session JWT (apps must not import next-auth/jwt directly)
+export type {
+  AuthJsSessionTokenClaims,
+  DecodeAuthJsSessionTokenInput,
+  EncodeAuthJsSessionTokenInput,
+} from "./authjs-session-token";
+export { decodeAuthJsSessionToken, encodeAuthJsSessionToken } from "./authjs-session-token";
 // Provider config helpers (single source of truth for env-driven selection)
 export { getConfiguredAuthProvider, isClerkProvider } from "./config";
 // Feature-flag layer (dual-source: env + @nebutra/feature-flags)

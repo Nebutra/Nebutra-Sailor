@@ -22,14 +22,47 @@ interface AdminCommandOptions {
  * Admin API fetch helper
  * Handles authentication, dry-run, and structured error responses
  */
+type JsonObject = Record<string, unknown>;
+type AdminFetchResult = {
+  ok: boolean;
+  status: number;
+  data?: unknown;
+  error?: string;
+};
+
+function asJsonObject(value: unknown): JsonObject {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    return value as JsonObject;
+  }
+  return {};
+}
+
+function asArray(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function readProp(value: unknown, key: string): unknown {
+  return asJsonObject(value)[key];
+}
+
+function readNumber(value: unknown, key: string, fallback = 0): number {
+  const v = readProp(value, key);
+  return typeof v === "number" ? v : fallback;
+}
+
+function str(value: unknown, fallback = ""): string {
+  if (value === undefined || value === null) return fallback;
+  return String(value);
+}
+
 async function adminFetch(
   path: string,
   options: {
     method?: string;
-    body?: Record<string, any>;
+    body?: JsonObject;
     dryRun?: boolean;
   } = {},
-): Promise<{ ok: boolean; status: number; data?: any; error?: string }> {
+): Promise<AdminFetchResult> {
   const apiUrl = process.env.NEBUTRA_API_URL || "http://localhost:3100";
   const adminKey = process.env.NEBUTRA_ADMIN_KEY;
 
@@ -73,13 +106,14 @@ async function adminFetch(
       ...(body && { body }),
     });
 
-    const data = await response.json().catch(() => null);
+    const data: unknown = await response.json().catch(() => null);
 
     if (!response.ok) {
+      const errMsg = readProp(data, "error");
       return {
         ok: false,
         status: response.status,
-        error: data?.error || `HTTP ${response.status}`,
+        error: typeof errMsg === "string" ? errMsg : `HTTP ${response.status}`,
       };
     }
 
@@ -96,7 +130,7 @@ async function adminFetch(
 /**
  * Format output based on requested format
  */
-function formatOutput(data: Record<string, any>, format?: string, label?: string) {
+function formatOutput(data: JsonObject, format?: string, label?: string) {
   if (format === "json") {
     const output = {
       command: label || "admin",
@@ -106,6 +140,10 @@ function formatOutput(data: Record<string, any>, format?: string, label?: string
   } else {
     console.log(JSON.stringify(data, null, 2));
   }
+}
+
+function formatUnknown(data: unknown, format?: string, label?: string) {
+  formatOutput(asJsonObject(data), format, label);
 }
 
 /**
@@ -129,15 +167,16 @@ async function handleAdminTenants(options: AdminCommandOptions) {
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:tenants");
+    formatUnknown(result.data, options.format, "admin:tenants");
     return;
   }
 
+  const payload = asJsonObject(result.data);
   const output = {
-    tenants: result.data?.tenants || [],
-    total: result.data?.total || 0,
-    limit: result.data?.limit,
-    offset: result.data?.offset,
+    tenants: asArray(payload.tenants ?? payload.data),
+    total: readNumber(payload, "total") || readNumber(payload.meta, "total"),
+    limit: payload.limit ?? readProp(payload.meta, "limit"),
+    offset: payload.offset ?? readProp(payload.meta, "offset"),
   };
 
   if (options.format === "json") {
@@ -146,10 +185,11 @@ async function handleAdminTenants(options: AdminCommandOptions) {
     logger.info(`Found ${output.total} tenant(s)`);
     if (output.tenants.length > 0) {
       console.log("\nTenants:");
-      output.tenants.forEach((tenant: any) => {
-        console.log(`  ${pc.blue(tenant.id)} — ${tenant.name || "(unnamed)"}`);
-        console.log(`    Status: ${tenant.status}`);
-        if (tenant.plan) console.log(`    Plan: ${tenant.plan}`);
+      output.tenants.forEach((tenant) => {
+        const row = asJsonObject(tenant);
+        console.log(`  ${pc.blue(str(row.id))} — ${str(row.name, "(unnamed)")}`);
+        console.log(`    Status: ${str(row.status)}`);
+        if (row.plan) console.log(`    Plan: ${str(row.plan)}`);
       });
     }
   }
@@ -172,20 +212,20 @@ async function handleAdminTenant(tenantId: string, options: AdminCommandOptions)
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:tenant");
+    formatUnknown(result.data, options.format, "admin:tenant");
     return;
   }
 
   if (options.format === "json") {
-    formatOutput({ tenant: result.data }, options.format, "admin:tenant");
+    formatOutput({ tenant: asJsonObject(result.data) }, options.format, "admin:tenant");
   } else {
-    const tenant = result.data;
-    logger.success(`Tenant ${pc.blue(tenant.id)}`);
-    console.log(`  Name: ${tenant.name}`);
-    console.log(`  Status: ${tenant.status}`);
-    console.log(`  Plan: ${tenant.plan}`);
-    console.log(`  Created: ${tenant.createdAt}`);
-    if (tenant.suspendedAt) console.log(`  Suspended: ${tenant.suspendedAt}`);
+    const tenant = asJsonObject(result.data);
+    logger.success(`Tenant ${pc.blue(str(tenant.id))}`);
+    console.log(`  Name: ${str(tenant.name)}`);
+    console.log(`  Status: ${str(tenant.status)}`);
+    console.log(`  Plan: ${str(tenant.plan)}`);
+    console.log(`  Created: ${str(tenant.createdAt)}`);
+    if (tenant.suspendedAt) console.log(`  Suspended: ${str(tenant.suspendedAt)}`);
   }
 }
 
@@ -213,7 +253,7 @@ async function handleAdminSuspend(tenantId: string, options: AdminCommandOptions
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:suspend");
+    formatUnknown(result.data, options.format, "admin:suspend");
     return;
   }
 
@@ -241,7 +281,7 @@ async function handleAdminUnsuspend(tenantId: string, options: AdminCommandOptio
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:unsuspend");
+    formatUnknown(result.data, options.format, "admin:unsuspend");
     return;
   }
 
@@ -271,25 +311,29 @@ async function handleAdminUsage(options: AdminCommandOptions) {
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:usage");
+    formatUnknown(result.data, options.format, "admin:usage");
     return;
   }
 
+  const payload = asJsonObject(result.data);
   const output = {
-    period: result.data?.period,
-    topTenants: result.data?.topTenants || [],
-    totalUsage: result.data?.totalUsage,
+    period: payload.period,
+    topTenants: asArray(payload.topTenants ?? payload.data),
+    totalUsage: payload.totalUsage,
   };
 
   if (options.format === "json") {
     formatOutput(output, options.format, "admin:usage");
   } else {
-    logger.info(`Usage report for period: ${output.period}`);
-    console.log(`Total usage: ${output.totalUsage}`);
+    logger.info(`Usage report for period: ${str(output.period)}`);
+    console.log(`Total usage: ${str(output.totalUsage)}`);
     if (output.topTenants.length > 0) {
       console.log("\nTop tenants:");
-      output.topTenants.forEach((t: any, idx: number) => {
-        console.log(`  ${idx + 1}. ${t.tenantName || t.tenantId} — ${t.usage}`);
+      output.topTenants.forEach((t, idx) => {
+        const row = asJsonObject(t);
+        console.log(
+          `  ${idx + 1}. ${str(row.tenantName || row.tenantId || row.name)} — ${str(row.usage)}`,
+        );
       });
     }
   }
@@ -310,13 +354,14 @@ async function handleAdminDlqList(options: AdminCommandOptions) {
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:dlq:list");
+    formatUnknown(result.data, options.format, "admin:dlq:list");
     return;
   }
 
+  const payload = asJsonObject(result.data);
   const output = {
-    messages: result.data?.messages || [],
-    count: result.data?.count || 0,
+    messages: asArray(payload.messages ?? payload.data),
+    count: readNumber(payload, "count") || readNumber(payload, "total"),
   };
 
   if (options.format === "json") {
@@ -325,11 +370,12 @@ async function handleAdminDlqList(options: AdminCommandOptions) {
     logger.info(`Found ${output.count} message(s) in DLQ`);
     if (output.messages.length > 0) {
       console.log("\nMessages:");
-      output.messages.forEach((msg: any) => {
-        console.log(`  ${pc.blue(msg.id)}`);
-        console.log(`    Type: ${msg.type}`);
-        console.log(`    Error: ${msg.error}`);
-        console.log(`    Created: ${msg.createdAt}`);
+      output.messages.forEach((msg) => {
+        const row = asJsonObject(msg);
+        console.log(`  ${pc.blue(str(row.id))}`);
+        console.log(`    Type: ${str(row.type)}`);
+        console.log(`    Error: ${str(row.error)}`);
+        console.log(`    Created: ${str(row.createdAt)}`);
       });
     }
   }
@@ -353,7 +399,7 @@ async function handleAdminDlqReplay(messageId: string, options: AdminCommandOpti
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:dlq:replay");
+    formatUnknown(result.data, options.format, "admin:dlq:replay");
     return;
   }
 
@@ -387,13 +433,17 @@ async function handleAdminDlqPurge(options: AdminCommandOptions) {
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:dlq:purge");
+    formatUnknown(result.data, options.format, "admin:dlq:purge");
     return;
   }
 
   logger.success("DLQ purged");
   if (options.format === "json") {
-    formatOutput({ purged: true, count: result.data?.count }, options.format, "admin:dlq:purge");
+    formatOutput(
+      { purged: true, count: readProp(result.data, "count") },
+      options.format,
+      "admin:dlq:purge",
+    );
   }
 }
 
@@ -414,13 +464,14 @@ async function handleAdminFlagsList(options: AdminCommandOptions) {
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:flags:list");
+    formatUnknown(result.data, options.format, "admin:flags:list");
     return;
   }
 
+  const payload = asJsonObject(result.data);
   const output = {
-    flags: result.data?.flags || [],
-    total: result.data?.total || 0,
+    flags: asArray(payload.flags ?? payload.data),
+    total: readNumber(payload, "total"),
   };
 
   if (options.format === "json") {
@@ -429,12 +480,13 @@ async function handleAdminFlagsList(options: AdminCommandOptions) {
     logger.info(`Found ${output.total} flag(s)`);
     if (output.flags.length > 0) {
       console.log("\nFlags:");
-      output.flags.forEach((flag: any) => {
+      output.flags.forEach((flag) => {
+        const row = asJsonObject(flag);
         const value =
-          flag.override !== undefined
-            ? pc.yellow(String(flag.override))
-            : pc.gray(String(flag.default));
-        console.log(`  ${pc.blue(flag.name)} = ${value}`);
+          row.override !== undefined
+            ? pc.yellow(String(row.override))
+            : pc.gray(String(row.default ?? ""));
+        console.log(`  ${pc.blue(str(row.name))} = ${value}`);
       });
     }
   }
@@ -448,7 +500,7 @@ async function handleAdminFlagsSet(flag: string, value: string, options: AdminCo
   logger.info(`Setting flag ${flag}...`);
 
   // Parse value as JSON if possible (true/false/number), otherwise as string
-  let parsedValue: any = value;
+  let parsedValue: unknown = value;
   if (value === "true") parsedValue = true;
   else if (value === "false") parsedValue = false;
   else if (!Number.isNaN(Number(value))) parsedValue = Number(value);
@@ -465,7 +517,7 @@ async function handleAdminFlagsSet(flag: string, value: string, options: AdminCo
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:flags:set");
+    formatUnknown(result.data, options.format, "admin:flags:set");
     return;
   }
 
@@ -493,7 +545,7 @@ async function handleAdminFlagsUnset(flag: string, options: AdminCommandOptions)
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:flags:unset");
+    formatUnknown(result.data, options.format, "admin:flags:unset");
     return;
   }
 
@@ -525,13 +577,14 @@ async function handleAdminAudit(options: AdminCommandOptions) {
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:audit");
+    formatUnknown(result.data, options.format, "admin:audit");
     return;
   }
 
+  const payload = asJsonObject(result.data);
   const output = {
-    entries: result.data?.entries || [],
-    total: result.data?.total || 0,
+    entries: asArray(payload.entries ?? payload.data),
+    total: readNumber(payload, "total"),
   };
 
   if (options.format === "json") {
@@ -540,9 +593,10 @@ async function handleAdminAudit(options: AdminCommandOptions) {
     logger.info(`Found ${output.total} audit log entries`);
     if (output.entries.length > 0) {
       console.log("\nAudit entries:");
-      output.entries.forEach((entry: any) => {
-        console.log(`  ${entry.timestamp} — ${pc.blue(entry.action)} by ${entry.actor}`);
-        if (entry.details) console.log(`    ${entry.details}`);
+      output.entries.forEach((entry) => {
+        const row = asJsonObject(entry);
+        console.log(`  ${str(row.timestamp)} — ${pc.blue(str(row.action))} by ${str(row.actor)}`);
+        if (row.details) console.log(`    ${str(row.details)}`);
       });
     }
   }
@@ -563,14 +617,15 @@ async function handleAdminHealth(options: AdminCommandOptions) {
   }
 
   if (options.dryRun) {
-    formatOutput(result.data, options.format, "admin:health");
+    formatUnknown(result.data, options.format, "admin:health");
     return;
   }
 
+  const payload = asJsonObject(result.data);
   const output = {
-    status: result.data?.status || "unknown",
-    services: result.data?.services || {},
-    timestamp: result.data?.timestamp,
+    status: str(payload.status, "unknown"),
+    services: asJsonObject(payload.services),
+    timestamp: payload.timestamp,
   };
 
   if (options.format === "json") {
@@ -580,13 +635,14 @@ async function handleAdminHealth(options: AdminCommandOptions) {
       output.status === "healthy" ? pc.green : output.status === "degraded" ? pc.yellow : pc.red;
     logger.info(`Platform status: ${statusColor(output.status)}`);
 
-    if (output.services && Object.keys(output.services).length > 0) {
+    if (Object.keys(output.services).length > 0) {
       console.log("\nServices:");
-      Object.entries(output.services).forEach(([service, health]: [string, any]) => {
-        const icon = health.status === "healthy" ? pc.green("✓") : pc.red("✗");
-        console.log(`  ${icon} ${service}: ${health.status}`);
-        if (health.latency) console.log(`    Latency: ${health.latency}ms`);
-        if (health.error) console.log(`    Error: ${health.error}`);
+      Object.entries(output.services).forEach(([service, health]) => {
+        const h = asJsonObject(health);
+        const icon = h.status === "healthy" ? pc.green("✓") : pc.red("✗");
+        console.log(`  ${icon} ${service}: ${str(h.status)}`);
+        if (h.latency) console.log(`    Latency: ${str(h.latency)}ms`);
+        if (h.error) console.log(`    Error: ${str(h.error)}`);
       });
     }
   }

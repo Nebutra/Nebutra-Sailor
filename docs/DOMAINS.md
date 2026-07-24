@@ -91,9 +91,17 @@ AUTH_COOKIE_DOMAIN=.nebutra.com
 BETTER_AUTH_SECRET=<same secret on auth and web>
 NEXT_PUBLIC_APP_URL=https://app.nebutra.com
 
-# idp
+# Enterprise SSO discovery (domain → IdP mapping; empty = disabled)
+# See docs/ops/enterprise-sso.md and apps/web/.env.example
+AUTH_SSO_DISCOVERY_PROVIDERS=""
+
+# idp (sso.nebutra.com) — OIDC issuer permanent; cookie encryption keys required in prod
 OIDC_ISSUER=https://sso.nebutra.com
+OIDC_COOKIE_KEYS=""
 ```
+
+Also document Feishu OAuth when China enterprise SSO is enabled: `FEISHU_APP_ID`,
+`FEISHU_APP_SECRET`, `FEISHU_REDIRECT_URI` (see `docs/ops/enterprise-sso.md`).
 
 Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.nebutra.com/…`
 

@@ -1,8 +1,17 @@
 import { logger } from "@nebutra/logger";
-import { getMetering, type PeriodType } from "@nebutra/metering";
+import {
+  AI_TOKENS,
+  API_CALLS,
+  BANDWIDTH,
+  COMPUTATION_TIME,
+  getMetering,
+  type PeriodType,
+  STORAGE_BYTES,
+} from "@nebutra/metering";
 import { format } from "date-fns";
 import type { Plan, RecordUsageInput, UsageType } from "../types";
 import { DEFAULT_USAGE_PRICING } from "../types";
+import { appendUsageLedgerEntry, buildUsageLedgerIdempotencyKey } from "./ledger";
 
 // ============================================
 // Types
@@ -85,19 +94,33 @@ export function recordUsage(input: RecordUsageInput): void {
   }
 }
 
+/** Map legacy billing UsageType → @nebutra/metering meter id. */
+function usageTypeToMeterId(type: UsageType): string {
+  switch (type) {
+    case "API_CALL":
+      return API_CALLS.id;
+    case "AI_TOKEN":
+      return AI_TOKENS.id;
+    case "STORAGE":
+      return STORAGE_BYTES.id;
+    case "COMPUTE":
+      return COMPUTATION_TIME.id;
+    case "BANDWIDTH":
+      return BANDWIDTH.id;
+    case "CUSTOM":
+    default:
+      return API_CALLS.id;
+  }
+}
+
 /**
- * Flush usage buffer.
+ * Flush usage buffer into the dual-write pipeline:
+ * 1. `appendUsageLedgerEntry` (Postgres billing ledger)
+ * 2. `metering.ingest` (analytics / ClickHouse or memory)
  *
- * NOTE (schema-orphan-cleanup): The `UsageRecord` Prisma model was deleted.
- * Usage is now written to the metering pipeline (`@nebutra/metering`) and,
- * for billing, to the `UsageLedgerEntry` table via
- * {@link import("./ledger").appendUsageLedgerEntry}.
- *
- * This function still drains the in-memory buffer so that in-flight callers
- * do not accumulate unbounded memory, but no longer persists to Prisma.
- * Migrate `recordUsage(...)` call sites to `metering.ingest(...)` +
- * `appendUsageLedgerEntry(...)`; once all callers are migrated this buffer
- * and its flush routine can be removed.
+ * Legacy `UsageRecord` Prisma model was removed; this closes TODO(#126).
+ * Prefer calling `metering.ingest` + `appendUsageLedgerEntry` directly at
+ * call sites; the buffer remains for batched `recordUsage(...)` callers.
  */
 export async function flushUsageBuffer(organizationId?: string): Promise<UsageRecord[]> {
   const flushed: UsageRecord[] = [];
@@ -113,12 +136,99 @@ export async function flushUsageBuffer(organizationId?: string): Promise<UsageRe
     }
   }
 
-  if (flushed.length > 0) {
-    // TODO(#126): migrate flushed entries to appendUsageLedgerEntry + metering.ingest.
-    logger.warn(
-      `[billing:flushUsageBuffer] Dropping ${flushed.length} buffered usage records — UsageRecord table removed; migrate callers to @nebutra/metering + UsageLedgerEntry.`,
-    );
+  if (flushed.length === 0) {
+    return flushed;
   }
+
+  let metering: Awaited<ReturnType<typeof getMetering>> | null = null;
+  try {
+    metering = await getMetering();
+  } catch (err) {
+    logger.warn("[billing:flushUsageBuffer] metering provider unavailable", { err });
+  }
+
+  let ledgerOk = 0;
+  let meterOk = 0;
+  let failed = 0;
+
+  for (const record of flushed) {
+    const quantity = Number(record.quantity);
+    if (!Number.isFinite(quantity) || quantity <= 0) {
+      failed += 1;
+      continue;
+    }
+
+    const idempotencyKey = buildUsageLedgerIdempotencyKey({
+      organizationId: record.organizationId,
+      eventId: record.id,
+      type: record.type,
+      resource: record.resource,
+      occurredAt: record.recordedAt,
+    });
+
+    try {
+      await appendUsageLedgerEntry({
+        organizationId: record.organizationId,
+        idempotencyKey,
+        eventId: record.id,
+        ...(record.userId ? { userId: record.userId } : {}),
+        source: "API",
+        type: record.type,
+        ...(record.resource ? { resource: record.resource } : {}),
+        quantity,
+        unit: "unit",
+        ...(record.unitCost !== undefined ? { unitCost: record.unitCost } : {}),
+        ...(record.totalCost !== undefined ? { totalCost: record.totalCost } : {}),
+        currency: "USD",
+        occurredAt: record.recordedAt,
+        ingestVersion: "v1",
+        metadata: {
+          ...(record.metadata ?? {}),
+          flushSource: "recordUsageBuffer",
+        },
+      });
+      ledgerOk += 1;
+    } catch (err) {
+      failed += 1;
+      logger.error("[billing:flushUsageBuffer] appendUsageLedgerEntry failed", {
+        err,
+        organizationId: record.organizationId,
+        type: record.type,
+        eventId: record.id,
+      });
+    }
+
+    if (metering) {
+      try {
+        await metering.ingest({
+          meterId: usageTypeToMeterId(record.type),
+          tenantId: record.organizationId,
+          value: quantity,
+          timestamp: record.recordedAt.toISOString(),
+          properties: {
+            usageType: record.type,
+            ...(record.resource ? { resource: record.resource } : {}),
+            ...(record.userId ? { userId: record.userId } : {}),
+            eventId: record.id,
+          },
+        });
+        meterOk += 1;
+      } catch (err) {
+        logger.warn("[billing:flushUsageBuffer] metering.ingest failed", {
+          err,
+          organizationId: record.organizationId,
+          type: record.type,
+        });
+      }
+    }
+  }
+
+  logger.info("[billing:flushUsageBuffer] flushed buffer to ledger + metering", {
+    total: flushed.length,
+    ledgerOk,
+    meterOk,
+    failed,
+  });
 
   return flushed;
 }

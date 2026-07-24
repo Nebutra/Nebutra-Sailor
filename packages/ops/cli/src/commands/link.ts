@@ -22,16 +22,22 @@ function findProjectRoot(start: string): string | null {
   }
 }
 
-function readConfig(configPath: string): Record<string, any> {
+type JsonObject = Record<string, unknown>;
+
+function readConfig(configPath: string): JsonObject {
   if (!existsSync(configPath)) return {};
   try {
-    return JSON.parse(readFileSync(configPath, "utf-8"));
+    const parsed: unknown = JSON.parse(readFileSync(configPath, "utf-8"));
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      return parsed as JsonObject;
+    }
+    return {};
   } catch {
     return {};
   }
 }
 
-function writeConfig(configPath: string, config: Record<string, any>) {
+function writeConfig(configPath: string, config: JsonObject) {
   writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n");
 }
 

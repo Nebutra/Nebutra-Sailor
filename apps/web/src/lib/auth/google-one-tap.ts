@@ -1,5 +1,5 @@
+import { type AuthJsSessionTokenClaims, encodeAuthJsSessionToken } from "@nebutra/auth";
 import { OAuth2Client } from "google-auth-library";
-import { encode, type JWT } from "next-auth/jwt";
 import { buildSessionHintCookie } from "@/lib/session-hint";
 
 const GOOGLE_CSRF_COOKIE = "g_csrf_token";
@@ -132,7 +132,7 @@ export async function verifyGoogleOneTapIdToken(credential: string): Promise<Goo
 export async function buildGoogleOneTapSessionCookie(input: SessionCookieInput): Promise<string> {
   const secure = isHttps(input.requestUrl);
   const cookieName = secure ? SECURE_NEXTAUTH_SESSION_COOKIE : NEXTAUTH_SESSION_COOKIE;
-  const token: JWT = {
+  const token: AuthJsSessionTokenClaims = {
     sub: input.user.sub,
     email: input.user.email,
     name: input.user.name ?? input.user.email,
@@ -140,7 +140,7 @@ export async function buildGoogleOneTapSessionCookie(input: SessionCookieInput):
     provider: "google",
     googleSub: input.user.sub,
   };
-  const value = await encode({
+  const value = await encodeAuthJsSessionToken({
     token,
     secret: input.secret,
     salt: cookieName,

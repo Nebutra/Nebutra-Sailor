@@ -96,21 +96,16 @@ describe("auth provider boundary", () => {
      * Allowlist known exceptions (tracked debt / standalone apps):
      *   - tsekaluk-dev: portfolio site with its own better-auth wiring
      *   - sleptons: legacy Clerk shell (migrate later)
-     *   - web google-one-tap: next-auth/jwt encode helper only
      *
      * Closed: clerk-enterprise-sso-handoff → @nebutra/auth useClerkEnterpriseSso
+     * Closed: google-one-tap → @nebutra/auth encodeAuthJsSessionToken
      */
-    const { readdir, readFile: rf, stat } = await import("node:fs/promises");
+    const { readdir, readFile: rf } = await import("node:fs/promises");
     const root = join(process.cwd(), "apps");
     const FORBIDDEN =
       /from\s+["'](@clerk\/|better-auth|better-auth\/|next-auth|next-auth\/|@supabase\/supabase-js)/;
 
-    const ALLOW_PATH_SNIPPETS = [
-      "/tsekaluk-dev/",
-      "/sleptons/",
-      "/web/src/lib/auth/google-one-tap.ts",
-      "/web/src/lib/auth/__tests__/google-one-tap.test.ts",
-    ];
+    const ALLOW_PATH_SNIPPETS = ["/tsekaluk-dev/", "/sleptons/"];
 
     async function* walk(dir: string): AsyncGenerator<string> {
       const entries = await readdir(dir, { withFileTypes: true });

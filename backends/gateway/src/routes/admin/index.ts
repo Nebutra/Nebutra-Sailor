@@ -103,6 +103,34 @@ function snapshotRuntimeOnlyFlagOverrides() {
 
 // ── Routes ─────────────────────────────────────────────────────────────────
 
+const AdminTenantsListSchema = z.object({
+  data: z.array(z.record(z.string(), z.unknown())),
+  meta: z.object({
+    total: z.number(),
+    limit: z.number(),
+    offset: z.number(),
+  }),
+});
+
+const AdminTenantDetailSchema = z.record(z.string(), z.unknown());
+
+const AdminSuspendSchema = z.object({
+  organizationId: z.string(),
+  status: z.literal("suspended"),
+  keysRevoked: z.number(),
+});
+
+const AdminUnsuspendSchema = z.object({
+  organizationId: z.string(),
+  status: z.literal("active"),
+  newKeyPrefix: z.string(),
+});
+
+const AdminUsageReportSchema = z.object({
+  data: z.array(z.record(z.string(), z.unknown())),
+  generatedAt: z.string(),
+});
+
 // GET /tenants
 adminRoutes.openapi(
   createRoute({
@@ -117,7 +145,12 @@ adminRoutes.openapi(
         plan: z.enum(["FREE", "PRO", "ENTERPRISE"]).optional(),
       }),
     },
-    responses: { 200: { description: "Organization list" } },
+    responses: {
+      200: {
+        description: "Organization list",
+        content: { "application/json": { schema: AdminTenantsListSchema } },
+      },
+    },
   }),
   async (c) => {
     const { limit, offset, plan } = c.req.valid("query");
@@ -157,7 +190,13 @@ adminRoutes.openapi(
     tags: ["Admin"],
     summary: "Get organization details with live usage",
     request: { params: OrgIdParam },
-    responses: { 200: { description: "Organization details" }, 404: { description: "Not found" } },
+    responses: {
+      200: {
+        description: "Organization details",
+        content: { "application/json": { schema: AdminTenantDetailSchema } },
+      },
+      404: { description: "Not found" },
+    },
   }),
   async (c) => {
     const { id } = c.req.valid("param");
@@ -195,7 +234,13 @@ adminRoutes.openapi(
     tags: ["Admin"],
     summary: "Suspend an organization (block API access)",
     request: { params: OrgIdParam },
-    responses: { 200: { description: "Suspended" }, 404: { description: "Not found" } },
+    responses: {
+      200: {
+        description: "Suspended",
+        content: { "application/json": { schema: AdminSuspendSchema } },
+      },
+      404: { description: "Not found" },
+    },
   }),
   async (c) => {
     const { id } = c.req.valid("param");
@@ -221,7 +266,13 @@ adminRoutes.openapi(
     tags: ["Admin"],
     summary: "Restore a suspended organization",
     request: { params: OrgIdParam },
-    responses: { 200: { description: "Unsuspended" }, 404: { description: "Not found" } },
+    responses: {
+      200: {
+        description: "Unsuspended",
+        content: { "application/json": { schema: AdminUnsuspendSchema } },
+      },
+      404: { description: "Not found" },
+    },
   }),
   async (c) => {
     const { id } = c.req.valid("param");
@@ -263,7 +314,12 @@ adminRoutes.openapi(
         limit: z.coerce.number().int().min(1).max(100).default(20),
       }),
     },
-    responses: { 200: { description: "Usage report" } },
+    responses: {
+      200: {
+        description: "Usage report",
+        content: { "application/json": { schema: AdminUsageReportSchema } },
+      },
+    },
   }),
   async (c) => {
     const { limit } = c.req.valid("query");
