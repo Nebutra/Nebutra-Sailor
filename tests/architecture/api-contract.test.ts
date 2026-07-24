@@ -155,8 +155,9 @@ describe("Property 5b: OpenAPI Spec File", () => {
   // delete its entry here. The test FAILS if any route NOT on this list regresses
   // to a content-less 2xx — so new drift can never be introduced.
   const KNOWN_JSON_CONTENT_DEBT = new Set<string>([
-    "GET /api/system/ping 200",
-    "GET /system/ping 200",
+    // ping now declares text/plain content (not JSON debt)
+    // "GET /api/system/ping 200",
+    // "GET /system/ping 200",
     "POST /api/v1/agent-runtime/turns 200",
     "POST /api/v1/ai/chat 200",
     "POST /api/v1/ai/embeddings 200",
@@ -170,16 +171,7 @@ describe("Property 5b: OpenAPI Spec File", () => {
     "GET /api/v1/integrations/:id 200",
     "PATCH /api/v1/integrations/:id 200",
     "DELETE /api/v1/integrations/:id 200",
-    // Closed 2026-07-24: admin tenants/suspend/unsuspend/usage report declare JSON schemas
-    // "GET /api/v1/admin/tenants 200",
-    // "GET /api/v1/admin/tenants/{id} 200",
-    // "POST /api/v1/admin/tenants/{id}/suspend 200",
-    // "POST /api/v1/admin/tenants/{id}/unsuspend 200",
-    // "GET /api/v1/admin/usage/report 200",
-    "GET /api/v1/admin/dlq 200",
-    "POST /api/v1/admin/dlq/{id}/ack 200",
-    "GET /api/v1/admin/feature-flags 200",
-    "POST /api/v1/admin/feature-flags 200",
+    // Closed 2026-07-24: admin tenants/usage + dlq + feature-flags declare response content
   ]);
 
   it("2xx JSON responses declare application/json content (no content?: never drift)", () => {

@@ -341,6 +341,30 @@ adminRoutes.openapi(
   },
 );
 
+const AdminDlqListSchema = z.object({
+  data: z.array(z.record(z.string(), z.unknown())),
+  total: z.number(),
+});
+
+const AdminDlqAckSchema = z.object({
+  id: z.string(),
+  status: z.literal("acknowledged"),
+});
+
+const AdminFeatureFlagsSnapshotSchema = z.object({
+  overrides: z.record(z.string(), z.record(z.string(), z.boolean())),
+  runtimeOnlyOverrides: z.record(z.string(), z.record(z.string(), z.unknown())),
+  metadata: z.record(z.string(), z.unknown()),
+});
+
+const AdminFeatureFlagSetSchema = z.object({
+  organizationId: z.string(),
+  flag: z.string(),
+  enabled: z.boolean(),
+  runtimeOnlyOverride: z.record(z.string(), z.unknown()),
+  metadata: z.record(z.string(), z.unknown()),
+});
+
 // GET /dlq
 adminRoutes.openapi(
   createRoute({
@@ -348,7 +372,12 @@ adminRoutes.openapi(
     path: "/dlq",
     tags: ["Admin"],
     summary: "List dead letter queue entries",
-    responses: { 200: { description: "DLQ entries" } },
+    responses: {
+      200: {
+        description: "DLQ entries",
+        content: { "application/json": { schema: AdminDlqListSchema } },
+      },
+    },
   }),
   async (c) => {
     const entries = getDeadLetterQueue();
@@ -364,12 +393,17 @@ adminRoutes.openapi(
     tags: ["Admin"],
     summary: "Acknowledge a DLQ entry (remove from queue)",
     request: { params: z.object({ id: z.string() }) },
-    responses: { 200: { description: "Acknowledged" } },
+    responses: {
+      200: {
+        description: "Acknowledged",
+        content: { "application/json": { schema: AdminDlqAckSchema } },
+      },
+    },
   }),
   async (c) => {
     const { id } = c.req.valid("param");
     ackDeadLetter(id);
-    return c.json({ id, status: "acknowledged" });
+    return c.json({ id, status: "acknowledged" as const });
   },
 );
 
@@ -380,7 +414,12 @@ adminRoutes.openapi(
     path: "/feature-flags",
     tags: ["Admin"],
     summary: "List runtime-only per-tenant feature flag override records",
-    responses: { 200: { description: "Runtime-only feature flag override records" } },
+    responses: {
+      200: {
+        description: "Runtime-only feature flag override records",
+        content: { "application/json": { schema: AdminFeatureFlagsSnapshotSchema } },
+      },
+    },
   }),
   async (c) => {
     return c.json(snapshotRuntimeOnlyFlagOverrides());
@@ -395,7 +434,12 @@ adminRoutes.openapi(
     tags: ["Admin"],
     summary: "Record a runtime-only per-tenant feature flag override",
     request: { body: { content: { "application/json": { schema: FeatureFlagSchema } } } },
-    responses: { 200: { description: "Runtime-only override record updated" } },
+    responses: {
+      200: {
+        description: "Runtime-only override record updated",
+        content: { "application/json": { schema: AdminFeatureFlagSetSchema } },
+      },
+    },
   }),
   async (c) => {
     const { organizationId, flag, enabled } = c.req.valid("json");

@@ -5,10 +5,51 @@ import { logger } from "../utils/logger";
 
 const API_BASE_URL = process.env.NEBUTRA_API_URL || "http://localhost:3001/api";
 
+/** Commander option bags for community subcommands (no any). */
+type CommunityOptions = {
+  status?: string;
+  category?: string;
+  type?: string;
+  action?: string;
+  role?: string;
+  sort?: string;
+  period?: string;
+  format?: string;
+  yes?: boolean;
+  reason?: string;
+  dryRun?: boolean;
+  threshold?: string | number;
+};
+
+type CommunityJson = Record<string, unknown>;
+
+function asList(value: unknown): Array<Record<string, unknown>> {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) =>
+    item && typeof item === "object" && !Array.isArray(item)
+      ? (item as Record<string, unknown>)
+      : {},
+  );
+}
+
+function asMetrics(value: unknown): Record<string, number> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const out: Record<string, number> = {};
+  for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+    if (typeof v === "number") out[k] = v;
+  }
+  return out;
+}
+
+function str(value: unknown, fallback = ""): string {
+  if (value === undefined || value === null) return fallback;
+  return String(value);
+}
+
 /**
  * Helper to make authenticated requests to the API gateway
  */
-async function adminFetch(endpoint: string, options: RequestInit = {}) {
+async function adminFetch(endpoint: string, options: RequestInit = {}): Promise<CommunityJson> {
   const url = `${API_BASE_URL}${endpoint}`;
   const response = await fetch(url, {
     ...options,
@@ -24,7 +65,11 @@ async function adminFetch(endpoint: string, options: RequestInit = {}) {
     throw new Error(`API Error (${response.status}): ${error}`);
   }
 
-  return response.json();
+  const body: unknown = await response.json();
+  if (body && typeof body === "object" && !Array.isArray(body)) {
+    return body as CommunityJson;
+  }
+  return { value: body };
 }
 
 /**
@@ -82,7 +127,7 @@ function _formatTypeBadge(type: string): string {
 /**
  * Showcase subcommands
  */
-async function handleShowcaseList(options: any) {
+async function handleShowcaseList(options: CommunityOptions) {
   try {
     logger.info("Fetching showcase submissions...");
     const params = new URLSearchParams();
@@ -91,13 +136,13 @@ async function handleShowcaseList(options: any) {
 
     const data = await adminFetch(`/community/showcase?${params.toString()}`);
 
-    if (!data.submissions || data.submissions.length === 0) {
+    if (asList(data.submissions).length === 0) {
       logger.warn("No showcase submissions found");
       return ExitCode.SUCCESS;
     }
 
-    logger.info(`\nShowcase Submissions (${data.submissions.length})\n`);
-    for (const _submission of data.submissions) {
+    logger.info(`\nShowcase Submissions (${asList(data.submissions).length})\n`);
+    for (const _submission of asList(data.submissions)) {
     }
 
     return ExitCode.SUCCESS;
@@ -107,7 +152,7 @@ async function handleShowcaseList(options: any) {
   }
 }
 
-async function handleShowcaseApprove(id: string, options: any) {
+async function handleShowcaseApprove(id: string, options: CommunityOptions) {
   try {
     if (!options.yes) {
       logger.warn(`Approve showcase submission ${id}? Use --yes to confirm`);
@@ -127,7 +172,7 @@ async function handleShowcaseApprove(id: string, options: any) {
   }
 }
 
-async function handleShowcaseReject(id: string, options: any) {
+async function handleShowcaseReject(id: string, options: CommunityOptions) {
   try {
     if (!options.yes) {
       logger.warn(`Reject showcase submission ${id}? Use --yes to confirm`);
@@ -150,7 +195,7 @@ async function handleShowcaseReject(id: string, options: any) {
   }
 }
 
-async function handleShowcaseFeature(id: string, options: any) {
+async function handleShowcaseFeature(id: string, options: CommunityOptions) {
   try {
     if (!options.yes) {
       logger.warn(`Mark showcase as featured: ${id}? Use --yes to confirm`);
@@ -170,7 +215,7 @@ async function handleShowcaseFeature(id: string, options: any) {
   }
 }
 
-async function handleShowcaseStats(_options: any) {
+async function handleShowcaseStats(_options: CommunityOptions) {
   try {
     logger.info("Fetching showcase statistics...");
     const _data = await adminFetch("/community/showcase/stats");
@@ -187,7 +232,7 @@ async function handleShowcaseStats(_options: any) {
 /**
  * Content subcommands
  */
-async function handleContentList(options: any) {
+async function handleContentList(options: CommunityOptions) {
   try {
     logger.info("Fetching community content...");
     const params = new URLSearchParams();
@@ -196,13 +241,13 @@ async function handleContentList(options: any) {
 
     const data = await adminFetch(`/community/content?${params.toString()}`);
 
-    if (!data.items || data.items.length === 0) {
+    if (asList(data.items).length === 0) {
       logger.warn("No content found");
       return ExitCode.SUCCESS;
     }
 
-    logger.info(`\nCommunity Content (${data.items.length})\n`);
-    for (const _item of data.items) {
+    logger.info(`\nCommunity Content (${asList(data.items).length})\n`);
+    for (const _item of asList(data.items)) {
     }
 
     return ExitCode.SUCCESS;
@@ -212,10 +257,10 @@ async function handleContentList(options: any) {
   }
 }
 
-async function handleContentModerate(id: string, options: any) {
+async function handleContentModerate(id: string, options: CommunityOptions) {
   try {
     const validActions = ["approve", "flag", "archive", "delete"];
-    if (!validActions.includes(options.action)) {
+    if (!options.action || !validActions.includes(options.action)) {
       logger.error(`Invalid action. Must be one of: ${validActions.join(", ")}`);
       return ExitCode.ERROR;
     }
@@ -239,7 +284,7 @@ async function handleContentModerate(id: string, options: any) {
   }
 }
 
-async function handleContentPublish(id: string, options: any) {
+async function handleContentPublish(id: string, options: CommunityOptions) {
   try {
     if (!options.yes) {
       logger.warn(`Publish content ${id}? Use --yes to confirm`);
@@ -259,14 +304,14 @@ async function handleContentPublish(id: string, options: any) {
   }
 }
 
-async function handleContentAnalytics(options: any) {
+async function handleContentAnalytics(options: CommunityOptions) {
   try {
     logger.info("Fetching content analytics...");
     const data = await adminFetch("/community/content/analytics");
 
     logger.info("\nContent Performance Metrics\n");
 
-    for (const _item of data.topContent.slice(0, 5)) {
+    for (const _item of asList(data.topContent).slice(0, 5)) {
     }
 
     if (options.format === "json") {
@@ -281,7 +326,7 @@ async function handleContentAnalytics(options: any) {
 /**
  * Members subcommands
  */
-async function handleMembersList(options: any) {
+async function handleMembersList(options: CommunityOptions) {
   try {
     logger.info("Fetching community members...");
     const params = new URLSearchParams();
@@ -290,13 +335,13 @@ async function handleMembersList(options: any) {
 
     const data = await adminFetch(`/community/members?${params.toString()}`);
 
-    if (!data.members || data.members.length === 0) {
+    if (asList(data.members).length === 0) {
       logger.warn("No members found");
       return ExitCode.SUCCESS;
     }
 
-    logger.info(`\nCommunity Members (${data.members.length})\n`);
-    for (const member of data.members) {
+    logger.info(`\nCommunity Members (${asList(data.members).length})\n`);
+    for (const member of asList(data.members)) {
       const roleColorMap: Record<string, (s: string) => string> = {
         owner: pc.red,
         admin: pc.yellow,
@@ -313,7 +358,7 @@ async function handleMembersList(options: any) {
   }
 }
 
-async function handleMemberProfile(userId: string, _options: any) {
+async function handleMemberProfile(userId: string, _options: CommunityOptions) {
   try {
     logger.info(`Fetching profile for ${userId}...`);
     const _data = await adminFetch(`/community/members/${userId}`);
@@ -327,7 +372,7 @@ async function handleMemberProfile(userId: string, _options: any) {
   }
 }
 
-async function handleMemberRole(userId: string, role: string, options: any) {
+async function handleMemberRole(userId: string, role: string, options: CommunityOptions) {
   try {
     const validRoles = ["member", "moderator", "admin", "owner"];
     if (!validRoles.includes(role)) {
@@ -354,7 +399,7 @@ async function handleMemberRole(userId: string, role: string, options: any) {
   }
 }
 
-async function handleMemberInvite(email: string, _options: any) {
+async function handleMemberInvite(email: string, _options: CommunityOptions) {
   try {
     logger.info(`Sending invite to ${email}...`);
     const _result = await adminFetch("/community/members/invite", {
@@ -370,7 +415,7 @@ async function handleMemberInvite(email: string, _options: any) {
   }
 }
 
-async function handleMemberBan(userId: string, options: any) {
+async function handleMemberBan(userId: string, options: CommunityOptions) {
   try {
     if (!options.yes) {
       logger.warn(`Ban member ${userId}? Use --yes to confirm`);
@@ -396,14 +441,14 @@ async function handleMemberBan(userId: string, options: any) {
 /**
  * Health subcommand
  */
-async function handleCommunityHealth(options: any) {
+async function handleCommunityHealth(options: CommunityOptions) {
   try {
     logger.info("Computing community health score...");
 
     const period = options.period || "30d";
     const data = await adminFetch(`/community/health?period=${period}`);
 
-    const { score, breakdown } = computeHealthScore(data.metrics);
+    const { score, breakdown } = computeHealthScore(asMetrics(data.metrics));
 
     logger.info(`\nCommunity Health Report (${period})\n`);
     for (const [key, value] of Object.entries(breakdown)) {
@@ -424,18 +469,18 @@ async function handleCommunityHealth(options: any) {
 /**
  * Moderation subcommands
  */
-async function handleModerationQueue(_options: any) {
+async function handleModerationQueue(_options: CommunityOptions) {
   try {
     logger.info("Fetching moderation queue...");
     const data = await adminFetch("/community/moderation/queue");
 
-    if (!data.items || data.items.length === 0) {
+    if (asList(data.items).length === 0) {
       logger.success("No pending moderation items");
       return ExitCode.SUCCESS;
     }
 
-    logger.info(`\nModeration Queue (${data.items.length} pending)\n`);
-    for (const item of data.items) {
+    logger.info(`\nModeration Queue (${asList(data.items).length} pending)\n`);
+    for (const item of asList(data.items)) {
       const severityMap: Record<string, string> = {
         low: pc.gray("●"),
         medium: pc.yellow("●"),
@@ -451,7 +496,7 @@ async function handleModerationQueue(_options: any) {
   }
 }
 
-async function handleModerationAuto(options: any) {
+async function handleModerationAuto(options: CommunityOptions) {
   try {
     logger.info("Running AI-assisted moderation sweep...");
 

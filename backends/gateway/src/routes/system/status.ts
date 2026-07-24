@@ -239,6 +239,11 @@ const pingRoute = createRoute({
   responses: {
     200: {
       description: "pong",
+      content: {
+        "text/plain": {
+          schema: z.string().openapi({ example: "pong" }),
+        },
+      },
     },
   },
 });

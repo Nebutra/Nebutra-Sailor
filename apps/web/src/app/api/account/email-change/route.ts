@@ -26,36 +26,6 @@ function identifierFor(userId: string): string {
   return `email-change:${userId}`;
 }
 
-function buildEmailChangeHtml(opts: { recipientEmail: string; confirmUrl: string }): string {
-  return `<!DOCTYPE html>
-<html lang="en">
-  <body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f8fafc;">
-      <tr><td align="center" style="padding:40px 16px;">
-        <table width="600" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;max-width:600px;width:100%;">
-          <tr><td style="background:hsl(var(--primary));padding:32px 40px;">
-            <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.5px;">Nebutra</h1>
-          </td></tr>
-          <tr><td style="padding:40px;">
-            <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Confirm your new email address</h2>
-            <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
-              We received a request to change the email on your Nebutra account to
-              <strong>${opts.recipientEmail}</strong>. Click the button below to confirm. This link expires in 1 hour.
-            </p>
-            <a href="${opts.confirmUrl}" style="display:inline-block;background:hsl(var(--primary));color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
-              Confirm email change →
-            </a>
-            <p style="margin:0;font-size:13px;color:#94a3b8;">
-              If you did not request this change you can safely ignore this email — your address will not be updated.
-            </p>
-          </td></tr>
-        </table>
-      </td></tr>
-    </table>
-  </body>
-</html>`;
-}
-
 export async function POST(request: Request) {
   try {
     const authState = await getAuth(request);
@@ -119,21 +89,15 @@ export async function POST(request: Request) {
       },
     });
 
-    // Compose and dispatch the confirmation email. We use the generic email
-    // provider instead of a typed helper because no `email-change` template
-    // exists in @nebutra/email yet — TODO(#126): add `sendEmailChangeEmail` helper
-    // there, and switch this call to use it.
+    // Typed helper in @nebutra/email (closes TODO #126 for this path).
     const origin = resolveServerRequestOrigin(new Headers(request.headers));
     const confirmUrl = `${origin}/email-change-confirm/${token}`;
     try {
-      const emailModule = await import("@nebutra/email");
-      const provider = emailModule.getEmailProvider();
-      await provider.send({
+      const { sendEmailChangeEmail } = await import("@nebutra/email");
+      await sendEmailChangeEmail({
         to: newEmail,
-        from: process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.com>",
-        subject: "Confirm your new Nebutra email address",
-        html: buildEmailChangeHtml({ recipientEmail: newEmail, confirmUrl }),
-        tags: [{ name: "type", value: "email_change_verification" }],
+        newEmail,
+        confirmUrl,
       });
     } catch (error) {
       logger.error("[account/email-change] Failed to send verification email", {

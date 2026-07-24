@@ -93,19 +93,20 @@ describe("auth provider boundary", () => {
      * Multi-provider parallel is allowed **inside** @nebutra/auth adapters.
      * Product apps must go through the package surface.
      *
-     * Allowlist known exceptions (tracked debt / standalone apps):
-     *   - tsekaluk-dev: portfolio site with its own better-auth wiring
-     *   - sleptons: legacy Clerk shell (migrate later)
+     * Intentional standalone apps (NOT product debt — permanent exception):
+     *   - tsekaluk-dev: personal portfolio with self-contained better-auth
+     *   - sleptons: demo shell with direct Clerk (not a Sailor product app)
      *
-     * Closed: clerk-enterprise-sso-handoff → @nebutra/auth useClerkEnterpriseSso
-     * Closed: google-one-tap → @nebutra/auth encodeAuthJsSessionToken
+     * Product apps (web/auth/etc.) must go through @nebutra/auth only.
+     * Closed product debt: clerk-enterprise-sso-handoff, google-one-tap.
      */
     const { readdir, readFile: rf } = await import("node:fs/promises");
     const root = join(process.cwd(), "apps");
     const FORBIDDEN =
       /from\s+["'](@clerk\/|better-auth|better-auth\/|next-auth|next-auth\/|@supabase\/supabase-js)/;
 
-    const ALLOW_PATH_SNIPPETS = ["/tsekaluk-dev/", "/sleptons/"];
+    /** Permanent standalone-app exceptions (not shrink-only product debt). */
+    const STANDALONE_APP_PATH_SNIPPETS = ["/tsekaluk-dev/", "/sleptons/"];
 
     async function* walk(dir: string): AsyncGenerator<string> {
       const entries = await readdir(dir, { withFileTypes: true });
@@ -129,7 +130,7 @@ describe("auth provider boundary", () => {
 
     const violations: string[] = [];
     for await (const file of walk(root)) {
-      if (ALLOW_PATH_SNIPPETS.some((s) => file.includes(s))) continue;
+      if (STANDALONE_APP_PATH_SNIPPETS.some((s) => file.includes(s))) continue;
       const text = await rf(file, "utf8");
       if (FORBIDDEN.test(text)) {
         violations.push(file.replace(process.cwd(), ""));

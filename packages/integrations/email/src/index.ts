@@ -61,6 +61,13 @@ export const EMAIL_TEMPLATE_CATALOG = [
     fileName: "magic-link-email.html",
   },
   {
+    id: "email-change",
+    label: "Email Change",
+    description: "Confirm a new account email address",
+    sendHelper: "sendEmailChangeEmail",
+    fileName: "email-change-email.html",
+  },
+  {
     id: "contact-form-received",
     label: "Contact Form Received",
     description: "Contact form acknowledgement",
@@ -281,6 +288,42 @@ export async function sendMagicLinkEmail(opts: {
     subject: "Sign in to Nebutra ✨",
     html,
     tags: [{ name: "type", value: "magic_link" }],
+  });
+}
+
+/**
+ * Email-change verification sent to the *new* address (TODO #126).
+ * Confirming the link flips the account email.
+ */
+export async function sendEmailChangeEmail(opts: {
+  to: string;
+  confirmUrl: string;
+  /** Optional display name for the new address (defaults to `to`). */
+  newEmail?: string;
+}): Promise<SendResult> {
+  const recipientEmail = opts.newEmail ?? opts.to;
+  const html = baseLayout(
+    `
+    <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Confirm your new email address</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
+      We received a request to change the email on your Nebutra account to
+      <strong>${recipientEmail}</strong>. Click the button below to confirm. This link expires in 1 hour.
+    </p>
+    <a href="${opts.confirmUrl}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
+      Confirm email change →
+    </a>
+    <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.4;">
+      If you did not request this change you can safely ignore this email — your address will not be updated.
+    </p>
+    `,
+    "Confirm your new Nebutra email address",
+  );
+
+  return send({
+    to: opts.to,
+    subject: "Confirm your new Nebutra email address",
+    html,
+    tags: [{ name: "type", value: "email_change_verification" }],
   });
 }
 

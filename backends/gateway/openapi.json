@@ -379,7 +379,15 @@
         "description": "Returns 'pong' for uptime monitoring services",
         "responses": {
           "200": {
-            "description": "pong"
+            "description": "pong",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "pong"
+                }
+              }
+            }
           }
         }
       }
@@ -747,7 +755,15 @@
         "description": "Returns 'pong' for uptime monitoring services",
         "responses": {
           "200": {
-            "description": "pong"
+            "description": "pong",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "pong"
+                }
+              }
+            }
           }
         }
       }
@@ -3213,7 +3229,7 @@
                   },
                   "model": {
                     "type": "string",
-                    "default": "gpt-5.6-luna"
+                    "default": "gpt-5.5"
                   },
                   "temperature": {
                     "type": "number",
@@ -7618,7 +7634,27 @@
         "summary": "List dead letter queue entries",
         "responses": {
           "200": {
-            "description": "DLQ entries"
+            "description": "DLQ entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      }
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": ["data", "total"]
+                }
+              }
+            }
           }
         }
       }
@@ -7639,7 +7675,24 @@
         ],
         "responses": {
           "200": {
-            "description": "Acknowledged"
+            "description": "Acknowledged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["acknowledged"]
+                    }
+                  },
+                  "required": ["id", "status"]
+                }
+              }
+            }
           }
         }
       }
@@ -7650,7 +7703,37 @@
         "summary": "List runtime-only per-tenant feature flag override records",
         "responses": {
           "200": {
-            "description": "Runtime-only feature flag override records"
+            "description": "Runtime-only feature flag override records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "overrides": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "runtimeOnlyOverrides": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": ["overrides", "runtimeOnlyOverrides", "metadata"]
+                }
+              }
+            }
           }
         }
       },
@@ -7681,7 +7764,40 @@
         },
         "responses": {
           "200": {
-            "description": "Runtime-only override record updated"
+            "description": "Runtime-only override record updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "organizationId": {
+                      "type": "string"
+                    },
+                    "flag": {
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "runtimeOnlyOverride": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "organizationId",
+                    "flag",
+                    "enabled",
+                    "runtimeOnlyOverride",
+                    "metadata"
+                  ]
+                }
+              }
+            }
           }
         }
       }
