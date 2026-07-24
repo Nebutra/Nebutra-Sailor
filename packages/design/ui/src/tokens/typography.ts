@@ -3,7 +3,7 @@
  *
  * Defines font sizes, weights, and semantic text styles.
  *
- * @see apps/landing-page/DESIGN.md Section 10.7
+ * @see apps/landing/DESIGN.md Section 10.7
  */
 
 export const fontSizes = {

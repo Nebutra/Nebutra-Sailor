@@ -10,7 +10,7 @@ function countKeys(obj) {
   return c;
 }
 
-const dir = path.join(__dirname, "../apps/landing-page/messages");
+const dir = path.join(__dirname, "../apps/landing/messages");
 const locales = ["en", "zh", "ja", "ko", "es", "fr", "de"];
 
 for (const loc of locales) {

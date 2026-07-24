@@ -581,7 +581,7 @@ pnpm db:generate && pnpm dev
 ```
 {{repo.name}}/
 ├── apps/
-│   ├── landing-page/      # マーケティングサイト
+│   ├── landing/      # マーケティングサイト
 │   ├── web/               # メイン SaaS ダッシュボード
 │   ├── studio/            # Sanity CMS
 │   ├── api-gateway/       # BFF レイヤー

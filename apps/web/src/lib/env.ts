@@ -36,7 +36,7 @@ export const env = createEnv({
     // Both are unset in dev/preview so cookies stay host-scoped (no traversal
     // between localhost:3000 ↔ localhost:3001) and CORS rejects cross-origin
     // probes by default. Production: set NEBUTRA_LANDING_ORIGIN to the
-    // configured landing-page URL and NEBUTRA_SESSION_HINT_DOMAIN to the shared
+    // configured landing URL and NEBUTRA_SESSION_HINT_DOMAIN to the shared
     // parent domain.
     NEBUTRA_LANDING_ORIGIN: z.string().url().optional(),
     NEBUTRA_SESSION_HINT_DOMAIN: z.string().optional(),

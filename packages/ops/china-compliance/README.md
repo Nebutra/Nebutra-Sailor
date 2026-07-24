@@ -18,7 +18,7 @@ This package keeps "going-to-market in China" concerns isolated from the rest of
 | Variable | Purpose |
 |---|---|
 | `NEBUTRA_REGION` / `NEXT_PUBLIC_REGION` | Force region: `cn-mainland`, `cn-hk-mo-tw`, `overseas` |
-| `NEXT_PUBLIC_ICP_NUMBER` | ICP record number rendered in landing-page footer |
+| `NEXT_PUBLIC_ICP_NUMBER` | ICP record number rendered in landing footer |
 | `NEXT_PUBLIC_PUBLIC_SECURITY_RECORD` | Optional 公安备案 number |
 | `NEXT_PUBLIC_WECHAT_APP_ID` | WeChat Open Platform AppID |
 | `WECHAT_APP_SECRET` | (Server-only) AppSecret for token exchange — not used yet |

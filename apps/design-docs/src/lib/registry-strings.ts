@@ -3,7 +3,7 @@
  *
  * Independent of Fumadocs `i18n.ts` (which only covers en/zh for MDX docs
  * chrome). The registry is a brand-facing component marketplace and matches
- * the 7-language coverage of apps/landing-page.
+ * the 7-language coverage of apps/landing.
  */
 
 export const REGISTRY_LANGS = ["en", "zh", "ja", "ko", "de", "es", "fr"] as const;

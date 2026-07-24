@@ -4,8 +4,8 @@
 
 | Subdomain | App | Purpose |
 |-----------|-----|---------|
-| `nebutra.com` | landing-page | Marketing site |
-| `www.nebutra.com` | landing-page | Redirect to apex |
+| `nebutra.com` | landing | Marketing site |
+| `www.nebutra.com` | landing | Redirect to apex |
 | `auth.nebutra.com` | auth-center | **Login center** (Better Auth UX + session authority for multi-app RPs) |
 | `app.nebutra.com` | web | Main SaaS dashboard (RP — redirects unauthenticated users to auth) |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
@@ -49,7 +49,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | Variable | Production value | Meaning |
 |----------|------------------|---------|
 | `HA_TOPOLOGY` | `cf-edge + vercel-marketing/docs + ecs-origin(app,auth,api,sso)` | Describe *actual* routing |
-| `DEPLOY_TARGET_LANDING_PAGE` | `vercel` | Primary deploy path |
+| `DEPLOY_TARGET_LANDING` | `vercel` | Primary deploy path |
 | `DEPLOY_TARGET_SAILOR_DOCS` | `vercel` | Primary deploy path |
 | `DEPLOY_TARGET_WEB` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
 | `DEPLOY_TARGET_AUTH` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
@@ -116,7 +116,7 @@ Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.n
 
 | Project | Root | Domain(s) |
 |---------|------|-----------|
-| landing-page | `apps/landing-page` | `nebutra.com`, `www` |
+| landing | `apps/landing` | `nebutra.com`, `www` |
 | docs | `apps/sailor-docs` | `docs.nebutra.com` |
 | nebutra-auth | `apps/auth` | `auth.nebutra.com` (ready; DNS may still be ECS) |
 | nebutra-web | `apps/web` | `app.nebutra.com` (ready; DNS may still be ECS) |

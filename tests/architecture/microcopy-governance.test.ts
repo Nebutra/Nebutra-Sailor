@@ -15,8 +15,8 @@ describe("microcopy governance", () => {
     const sources = [
       "packages/commerce/marketing/src/components/LaunchBanner.tsx",
       "packages/commerce/marketing/src/components/Waitlist.tsx",
-      "apps/landing-page/src/components/marketing/LaunchBannerWrapper.tsx",
-      "apps/landing-page/src/lib/landing-content.ts",
+      "apps/landing/src/components/marketing/LaunchBannerWrapper.tsx",
+      "apps/landing/src/lib/landing-content.ts",
     ].map(read);
 
     for (const source of sources) {
@@ -35,7 +35,7 @@ describe("microcopy governance", () => {
     expect(read("packages/commerce/marketing/src/components/Waitlist.tsx")).toContain(
       "You're on the list.",
     );
-    expect(read("apps/landing-page/src/lib/landing-content.ts")).toContain(
+    expect(read("apps/landing/src/lib/landing-content.ts")).toContain(
       'ctaPrimary: "Create your first workspace"',
     );
   });

@@ -5,7 +5,7 @@
  * a cookie banner appears on first visit, and Accept All dismisses it
  * persistently (i.e. it should not reappear after reload).
  *
- * Targets the landing-page app — public, no auth required.
+ * Targets the landing app — public, no auth required.
  */
 
 import { expect, type Page, test } from "@playwright/test";

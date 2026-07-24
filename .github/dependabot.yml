@@ -77,7 +77,7 @@ updates:
         update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "docker"
-    directory: "/apps/landing-page"
+    directory: "/apps/landing"
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 2

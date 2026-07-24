@@ -11,7 +11,7 @@
 //   • lucide-react — removed (deprecated).
 //
 // Allowed Phosphor zones:
-//   • apps/landing-page/**                — the public marketing site
+//   • apps/landing/**                — the public marketing site
 //   • packages/design/ui/src/marketing/** — marketing component library
 //   • *.stories.tsx, **/previews/**, tests — demos / docs, not shipped product
 //
@@ -23,7 +23,7 @@ import { readFileSync } from "node:fs";
 
 // Paths are relative to the repo root (where `pnpm lint` runs).
 const ALLOWED = [
-  /^apps\/landing-page\//,
+  /^apps\/landing\//,
   /^packages\/design\/ui\/src\/marketing\//,
   /\.stories\.tsx?$/,
   /\/previews\//,
@@ -82,7 +82,7 @@ process.stderr.write(
     "weight degrades at small/dense sizes — keep it to large marketing display only.\n" +
     "Fix:\n" +
     '  • Product/dashboard icons → import from "@nebutra/icons" (Geist).\n' +
-    "  • Phosphor is allowed only in: apps/landing-page/**, packages/design/ui/src/marketing/**,\n" +
+    "  • Phosphor is allowed only in: apps/landing/**, packages/design/ui/src/marketing/**,\n" +
     "    and *.stories.tsx / **/previews/** / test files.\n\n",
 );
 process.exit(1);

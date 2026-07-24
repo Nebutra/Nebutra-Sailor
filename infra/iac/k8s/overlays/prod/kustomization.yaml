@@ -29,7 +29,7 @@ patches:
 # images:
 #   - name: nebutra/web
 #     newTag: "$(IMAGE_TAG)"
-#   - name: nebutra/landing-page
+#   - name: nebutra/landing
 #     newTag: "$(IMAGE_TAG)"
 #   - name: nebutra/api-gateway
 #     newTag: "$(IMAGE_TAG)"

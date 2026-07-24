@@ -417,30 +417,27 @@ export function pruneWaveFeatures(targetDir: string, toggles: WaveFeatureToggles
 
   // 6. cookieConsent
   if (!toggles.cookieConsent) {
-    safeRm(path.join(targetDir, "apps/landing-page/src/components/cookie-consent-banner.tsx"));
+    safeRm(path.join(targetDir, "apps/landing/src/components/cookie-consent-banner.tsx"));
     safeRm(
-      path.join(
-        targetDir,
-        "apps/landing-page/src/components/__tests__/cookie-consent-banner.test.tsx",
-      ),
+      path.join(targetDir, "apps/landing/src/components/__tests__/cookie-consent-banner.test.tsx"),
     );
-    safeRm(path.join(targetDir, "apps/landing-page/src/lib/cookie-consent.ts"));
-    safeRm(path.join(targetDir, "apps/landing-page/src/lib/__tests__/cookie-consent.test.ts"));
+    safeRm(path.join(targetDir, "apps/landing/src/lib/cookie-consent.ts"));
+    safeRm(path.join(targetDir, "apps/landing/src/lib/__tests__/cookie-consent.test.ts"));
     safeRm(path.join(targetDir, "apps/web/src/app/api/cookie-consent"));
   }
 
   // 7. legalPages
   if (!toggles.legalPages) {
-    safeRm(path.join(targetDir, "apps/landing-page/src/app/[lang]/(legal)/legal"));
-    safeRm(path.join(targetDir, "apps/landing-page/src/lib/legal-documents.ts"));
-    safeRm(path.join(targetDir, "apps/landing-page/src/lib/__tests__/legal-documents.test.ts"));
+    safeRm(path.join(targetDir, "apps/landing/src/app/[lang]/(legal)/legal"));
+    safeRm(path.join(targetDir, "apps/landing/src/lib/legal-documents.ts"));
+    safeRm(path.join(targetDir, "apps/landing/src/lib/__tests__/legal-documents.test.ts"));
   }
 
   // 8. chinaCompliance — also removes the dep from apps/web/package.json
   if (!toggles.chinaCompliance) {
     safeRm(path.join(targetDir, "packages/ops/china-compliance"));
-    safeRm(path.join(targetDir, "apps/landing-page/src/components/icp-footer.tsx"));
-    safeRm(path.join(targetDir, "apps/landing-page/src/components/__tests__/icp-footer.test.tsx"));
+    safeRm(path.join(targetDir, "apps/landing/src/components/icp-footer.tsx"));
+    safeRm(path.join(targetDir, "apps/landing/src/components/__tests__/icp-footer.test.tsx"));
     safeRm(path.join(targetDir, "apps/web/src/components/auth/wechat-login-button.tsx"));
     safeRm(
       path.join(targetDir, "apps/web/src/components/auth/__tests__/wechat-login-button.test.tsx"),

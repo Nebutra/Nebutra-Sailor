@@ -63,7 +63,7 @@ function walk(directory, files = []) {
 
 function zoneFor(file) {
   if (
-    file.startsWith("apps/landing-page/") ||
+    file.startsWith("apps/landing/") ||
     file.startsWith("packages/commerce/marketing/") ||
     file.startsWith("packages/design/ui/src/marketing/")
   ) {
@@ -96,7 +96,7 @@ function zoneFor(file) {
 function isSharedMotionLayer(file) {
   return (
     file === "apps/web/src/shared/motion.ts" ||
-    file === "apps/landing-page/src/shared/motion.ts" ||
+    file === "apps/landing/src/shared/motion.ts" ||
     file === "apps/design-docs/src/shared/motion.ts" ||
     file === "apps/sailor-docs/src/shared/motion.ts" ||
     file.startsWith("packages/design/ui/src/shared/animation/motion/")
@@ -104,7 +104,7 @@ function isSharedMotionLayer(file) {
 }
 
 function isMarketingGsapLayer(file) {
-  return file.startsWith("apps/landing-page/src/shared/animation/gsap/");
+  return file.startsWith("apps/landing/src/shared/animation/gsap/");
 }
 
 function delegatesReducedMotion(source) {
@@ -178,7 +178,7 @@ for (const file of files) {
   if (hit.gsap && !isMarketingGsapLayer(file)) {
     violations.push({
       file,
-      rule: "GSAP must live behind apps/landing-page/src/shared/animation/gsap hooks",
+      rule: "GSAP must live behind apps/landing/src/shared/animation/gsap hooks",
     });
   }
 

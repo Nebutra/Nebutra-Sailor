@@ -19,13 +19,13 @@
 
 | # | 位置 | 文件 | Before | After |
 |---|---|---|---|---|
-| 1 | Hero H1 上半 | `apps/landing-page/messages/{en,zh,ja,de,fr}.json` → `hero.headline1` | "The Next.js AI SaaS framework" | **"Ship your Startup,"** |
+| 1 | Hero H1 上半 | `apps/landing/messages/{en,zh,ja,de,fr}.json` → `hero.headline1` | "The Next.js AI SaaS framework" | **"Ship your Startup,"** |
 | 2 | Hero H1 下半 | 同上 → `hero.headline2` | "for serious founders." | **"powered by Nebutra Agent OS."** |
 | 3 | Hero 副标 | 同上 → `hero.subheadline` | "Build on a production-ready foundation with governed architecture and skip weeks of platform work. Optimized for AI coding agents & developers." | **"Skip weeks of platform work on a `<highlight>production-ready</highlight>` foundation with `<highlight>governed architecture</highlight>`, built for `<highlight>AI coding agents & founders</highlight>` going global."** |
 | 4 | Hero 主 CTA | 同上 → `hero.ctaGetAccess` | "Get Your Free License" | **"Launch Your Startup"** |
 | 5 | SEO/tab title | 同上 → `metadata.title` | "Nebutra Intelligence \| AI Native & SaaS Architecture" | **"Nebutra Agent OS \| The Startup Agent OS"** |
 | 6 | SEO description | 同上 → `metadata.description` | "The next-generation engineering framework tailored for mainstream AI startups and enterprises..." | **"The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."** |
-| 7 | 硬编码 fallback | `apps/landing-page/src/app/[lang]/layout.tsx:74` | "Production-ready Next.js monorepo template for AI SaaS products" | **"The Startup Agent OS — ship global SaaS in days, not months"** |
+| 7 | 硬编码 fallback | `apps/landing/src/app/[lang]/layout.tsx:74` | "Production-ready Next.js monorepo template for AI SaaS products" | **"The Startup Agent OS — ship global SaaS in days, not months"** |
 | 8 | 死键清理 | 五份 JSON 的 `hero.badge` | "Nebutra Intelligence · Leading AI SaaS Foundation" | **删除**(顶层 `hero.badge` 全仓无 reader;features/page.tsx 用的是 `featuresPage.hero.badge`,独立) |
 
 **不动的东西:**
@@ -132,21 +132,21 @@
 3. 改 `messages/ja.json` 同步
 4. 改 `messages/de.json` 同步
 5. 改 `messages/fr.json` 同步
-6. 改 `apps/landing-page/src/app/[lang]/layout.tsx:74` 硬编码 fallback
-7. `pnpm --filter @nebutra/landing-page typecheck` — 确认 `next-intl` 类型对得上
+6. 改 `apps/landing/src/app/[lang]/layout.tsx:74` 硬编码 fallback
+7. `pnpm --filter @nebutra/landing typecheck` — 确认 `next-intl` 类型对得上
 8. 启动 dev server,过五个语言路由
 
 ---
 
 ## 5. 验证清单
 
-- [ ] `pnpm --filter @nebutra/landing-page dev` 起得来
+- [ ] `pnpm --filter @nebutra/landing dev` 起得来
 - [ ] `/en` H1 显示 "Ship your Startup, powered by Nebutra Agent OS."
 - [ ] `/zh` `/ja` `/de` `/fr` 同步落地各自翻译
 - [ ] 浏览器 tab 文本 = "Nebutra Agent OS | The Startup Agent OS"(en)
 - [ ] `<highlight>` 标签渲染为 `var(--brand-gradient)` 蓝→青渐变(沿用现有 `t.rich` 逻辑)
 - [ ] 主 CTA 显示 "Launch Your Startup" 且链接仍指 `/get-license`
-- [ ] `rg "AI SaaS framework|Get Your Free License|Nebutra Intelligence \| AI Native"` 在 `apps/landing-page` 内无残留
+- [ ] `rg "AI SaaS framework|Get Your Free License|Nebutra Intelligence \| AI Native"` 在 `apps/landing` 内无残留
 - [ ] `rg "hero\.badge"` 在仓库内无 reader(features 页的 `featuresPage.hero.badge` 不计)
 - [ ] LCP 不退化:H1 文本在 SSR HTML 首帧出现,不被 `AnimateIn` 包裹
 

@@ -6,7 +6,7 @@ Status: **WIP**
 company idea into a `BrandContext`, writes `company/BRAND.md`, then delegates
 asset generation to existing media capabilities.
 
-It intentionally does not own image, video, audio, voice, mesh, or landing-page
+It intentionally does not own image, video, audio, voice, mesh, or landing
 generation primitives.
 
 ```ts

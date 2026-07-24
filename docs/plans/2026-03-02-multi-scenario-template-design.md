@@ -26,15 +26,15 @@
 
 | ID  | Scenario                  | Key Apps                       | Key Packages                       |
 | --- | ------------------------- | ------------------------------ | ---------------------------------- |
-| S1  | AI SaaS                   | web, landing-page, api-gateway | ai-providers, billing, identity    |
-| S2  | Enterprise Marketing      | landing-page, blog, studio     | sanity, marketing, analytics       |
+| S1  | AI SaaS                   | web, landing, api-gateway | ai-providers, billing, identity    |
+| S2  | Enterprise Marketing      | landing, blog, studio     | sanity, marketing, analytics       |
 | S3  | B2B DevOps Dashboard      | web, admin, api-gateway        | billing, audit, health             |
-| S4  | Chinese AI Going Overseas | web, landing-page, api-gateway | billing (dual), ai-providers, i18n |
-| S5  | Product Hunt Growth       | landing-page, blog, web        | growth, marketing, analytics       |
-| S6  | Creative UIUX Showcase    | landing-page, storybook, blog  | theme, icons, brand                |
-| S7  | Personal Blog/Portfolio   | blog, landing-page             | sanity, theme, community           |
+| S4  | Chinese AI Going Overseas | web, landing, api-gateway | billing (dual), ai-providers, i18n |
+| S5  | Product Hunt Growth       | landing, blog, web        | growth, marketing, analytics       |
+| S6  | Creative UIUX Showcase    | landing, storybook, blog  | theme, icons, brand                |
+| S7  | Personal Blog/Portfolio   | blog, landing             | sanity, theme, community           |
 | S8  | Vertical Domain Community | web, blog, api-gateway         | community, search, growth          |
-| S9  | One-Person Company        | web, landing-page, admin, blog | preset, billing, analytics         |
+| S9  | One-Person Company        | web, landing, admin, blog | preset, billing, analytics         |
 
 ---
 
@@ -110,7 +110,7 @@ export const PresetId = z.enum([
 
 export const AppId = z.enum([
   "web",
-  "landing-page",
+  "landing",
   "blog",
   "admin",
   "api-gateway",
@@ -186,7 +186,7 @@ export const aiSaas: PresetDefinition = {
     "AI-powered SaaS with billing, multi-tenancy, and provider abstraction",
   apps: {
     web: true,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": true,
     studio: true,
     blog: false,
@@ -226,7 +226,7 @@ export function getTurboFilters(config: ResolvedConfig): string[] {
   // Map app names to package names
   const packageMap: Record<string, string> = {
     web: "@nebutra/web",
-    "landing-page": "@nebutra/landing-page",
+    "landing": "@nebutra/landing",
     blog: "@nebutra/blog",
     admin: "@nebutra/admin",
     "api-gateway": "@nebutra/api-gateway",
@@ -2136,7 +2136,7 @@ custom/discourse/
     nebutra-theme/            # Brand-aligned Discourse theme
       about.json
       common/
-        header.html           # Custom header matching landing-page nav
+        header.html           # Custom header matching landing nav
         body_tag.html
       scss/
         common.scss           # CSS variables from @nebutra/theme tokens
@@ -2599,7 +2599,7 @@ Discourse handles **dedicated forum** scenarios:
 
 1. `packages/preset` — Scenario Preset System
 2. `packages/theme` — Theme Engine
-3. Wire into existing apps (landing-page, web)
+3. Wire into existing apps (landing, web)
 
 ### Phase 2 — Core Apps (P1)
 

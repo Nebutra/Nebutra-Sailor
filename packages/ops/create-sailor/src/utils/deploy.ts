@@ -9,7 +9,7 @@ export type ScaffoldDeployTarget = "vercel" | "railway" | "cloudflare" | "selfho
 
 export type ScaffoldDeployTargetMap = {
   web: "vercel" | "standalone" | "cloudflare-pages" | "railway";
-  "landing-page": "vercel" | "standalone" | "cloudflare-pages" | "railway";
+  landing: "vercel" | "standalone" | "cloudflare-pages" | "railway";
   "design-docs": "vercel" | "standalone" | "cloudflare-pages" | "railway";
   "sailor-docs": "vercel" | "standalone" | "cloudflare-pages" | "railway";
   gateway:
@@ -25,7 +25,7 @@ export type ScaffoldDeployTargetMap = {
 
 const DEFAULT_DEPLOY_TARGETS = {
   web: "vercel",
-  "landing-page": "vercel",
+  landing: "vercel",
   "design-docs": "vercel",
   "sailor-docs": "vercel",
   gateway: "cloudflare-workers",
@@ -57,7 +57,7 @@ export function resolveScaffoldDeployTargets(
     case "cloudflare":
       return {
         web: "cloudflare-pages",
-        "landing-page": "cloudflare-pages",
+        landing: "cloudflare-pages",
         "design-docs": "cloudflare-pages",
         "sailor-docs": "cloudflare-pages",
         gateway: "cloudflare-workers",
@@ -66,7 +66,7 @@ export function resolveScaffoldDeployTargets(
     case "selfhost":
       return {
         web: "standalone",
-        "landing-page": "standalone",
+        landing: "standalone",
         "design-docs": "standalone",
         "sailor-docs": "standalone",
         gateway: "ecs-docker",
@@ -75,7 +75,7 @@ export function resolveScaffoldDeployTargets(
     case "railway":
       return {
         web: "railway",
-        "landing-page": "railway",
+        landing: "railway",
         "design-docs": "railway",
         "sailor-docs": "railway",
         gateway: "railway",

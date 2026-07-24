@@ -87,7 +87,7 @@ const nextConfig: NextConfig = {
   // Rewrite barrel imports of the heavy internal UI/icon/brand packages into
   // direct per-module imports so the build-time module graph stays small (80+
   // files import the ~1MB @nebutra/ui/primitives barrel). Mirrors the
-  // landing-page config; keeps the dashboard build off the compile-phase OOM
+  // landing config; keeps the dashboard build off the compile-phase OOM
   // pattern. Non-breaking: Next falls back to the barrel for any package it
   // cannot statically analyse.
   experimental: {

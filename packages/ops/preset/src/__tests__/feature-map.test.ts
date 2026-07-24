@@ -5,7 +5,7 @@ import { getActiveApps, getActivePackages, getFeatureEnvVars } from "../feature-
 const mockConfig: ResolvedConfig = {
   apps: {
     web: true,
-    "landing-page": true,
+    landing: true,
     "api-gateway": true,
     studio: false,
     blog: false,
@@ -36,7 +36,7 @@ const mockConfig: ResolvedConfig = {
   authProvider: "clerk",
   deployTargets: {
     web: "vercel",
-    "landing-page": "vercel",
+    landing: "vercel",
     "design-docs": "vercel",
     "sailor-docs": "vercel",
     gateway: "cloudflare-workers",
@@ -65,7 +65,7 @@ describe("getFeatureEnvVars", () => {
   it("includes deployment target vars for provider-switchable DX", () => {
     const vars = getFeatureEnvVars(mockConfig);
     expect(vars.DEPLOY_TARGET_WEB).toBe("vercel");
-    expect(vars.DEPLOY_TARGET_LANDING_PAGE).toBe("vercel");
+    expect(vars.DEPLOY_TARGET_LANDING).toBe("vercel");
     expect(vars.DEPLOY_TARGET_GATEWAY).toBe("cloudflare-workers");
     expect(vars.DEPLOY_TARGET_PYTHON_AI).toBe("ecs-docker");
   });
@@ -88,7 +88,7 @@ describe("getFeatureEnvVars", () => {
 describe("getActiveApps", () => {
   it("returns only enabled app IDs", () => {
     const apps = getActiveApps(mockConfig);
-    expect(apps).toEqual(["web", "landing-page", "api-gateway", "admin"]);
+    expect(apps).toEqual(["web", "landing", "api-gateway", "admin"]);
   });
 });
 
@@ -96,7 +96,7 @@ describe("getActivePackages", () => {
   it("maps app IDs to package names", () => {
     const packages = getActivePackages(mockConfig);
     expect(packages).toContain("@nebutra/web");
-    expect(packages).toContain("@nebutra/landing-page");
+    expect(packages).toContain("@nebutra/landing");
     expect(packages).toContain("@nebutra/gateway");
     expect(packages).toContain("@nebutra/admin");
     expect(packages).not.toContain("@nebutra/blog");

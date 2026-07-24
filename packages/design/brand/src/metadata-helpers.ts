@@ -15,8 +15,8 @@
  * server-only boundaries if needed.
  *
  * NOTE: getSiteUrl(service) in this module is DISTINCT from the zero-param
- * getSiteUrl() in apps/landing-page/src/lib/seo/site-routes.ts — different
- * modules, no collision. The local one remains the landing-page URL util.
+ * getSiteUrl() in apps/landing/src/lib/seo/site-routes.ts — different
+ * modules, no collision. The local one remains the landing URL util.
  */
 
 import type { Metadata, MetadataRoute } from "next";

@@ -147,7 +147,7 @@ describe("deploy-target selector", () => {
 ### Task 2.3: Remove frontends from ECS/k8s matrices (Vercel becomes active)
 
 **Files:**
-- Modify: `.github/workflows/deploy-ecs.yml` (drop landing/web/design-docs/sailor-docs from build-next + filter + cleanup), `.github/workflows/deploy.yml` (drop web/landing-page from k8s image-set).
+- Modify: `.github/workflows/deploy-ecs.yml` (drop landing/web/design-docs/sailor-docs from build-next + filter + cleanup), `.github/workflows/deploy.yml` (drop web/landing from k8s image-set).
 
 - [ ] Remove the frontend entries from the ECS `build-next` matrix and path filters; keep the `standalone` build invocable manually (dormant self-host adapter) but not auto-triggered.
 - [ ] Remove frontend deployments from the k8s `kubectl set image` loops.

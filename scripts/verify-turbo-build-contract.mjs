@@ -129,7 +129,7 @@ function taskById(plan, taskId) {
   return plan.tasks.find((task) => task.taskId === taskId);
 }
 
-const landingPlan = dryRun("@nebutra/landing-page");
+const landingPlan = dryRun("@nebutra/landing");
 const landingRegistryTasks = landingPlan.tasks
   .map((task) => task.taskId)
   .filter((taskId) => taskId.endsWith("#build:registry"));

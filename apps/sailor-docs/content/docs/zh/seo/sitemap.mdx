@@ -9,14 +9,14 @@ description: Nebutra-Sailor 中 XML 网站地图的生成方式、如何包含�
 
 **文件位置：**
 ```
-apps/landing-page/src/app/sitemap.ts
+apps/landing/src/app/sitemap.ts
 ```
 
 ## 静态网站地图
 
 对于只有静态页面的站点，导出一个 URL 对象数组：
 
-```typescript apps/landing-page/src/app/sitemap.ts
+```typescript apps/landing/src/app/sitemap.ts
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://nebutra.com";
@@ -53,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 当 `FEATURE_BLOG=true` 时，从 Sanity 获取博客文章 slug 并添加到网站地图：
 
-```typescript apps/landing-page/src/app/sitemap.ts
+```typescript apps/landing/src/app/sitemap.ts
 import type { MetadataRoute } from "next";
 import { getAllPostSlugs } from "@/lib/sanity";
 
@@ -93,7 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 `robots.ts` 文件控制爬虫可以访问哪些路径。它独立于网站地图，但通常会引用它：
 
-```typescript apps/landing-page/src/app/robots.ts
+```typescript apps/landing/src/app/robots.ts
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
@@ -117,7 +117,7 @@ export default function robots(): MetadataRoute.Robots {
 ## 在本地验证网站地图
 
 ```bash
-pnpm --filter @nebutra/landing-page dev
+pnpm --filter @nebutra/landing dev
 # 访问：http://localhost:3002/sitemap.xml
 # 访问：http://localhost:3002/robots.txt
 ```

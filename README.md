@@ -524,7 +524,7 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 ```
 Nebutra-Sailor/
 ├── apps/                      # User-facing apps (Next.js)
-│   ├── landing-page/      # Marketing site (nebutra.com)
+│   ├── landing/      # Marketing site (nebutra.com)
 │   ├── web/               # Main SaaS dashboard (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
 │   ├── design-docs/       # Component documentation (Fumadocs)

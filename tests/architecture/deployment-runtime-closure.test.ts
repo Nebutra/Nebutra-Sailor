@@ -46,7 +46,7 @@ describe("production runtime closure", () => {
   it("defaults to the recommended Worker Gateway + ECS Origin topology without locking providers", () => {
     expect(getDefaultDeployTargets()).toMatchObject({
       web: "vercel",
-      "landing-page": "vercel",
+      landing: "vercel",
       gateway: "cloudflare-workers",
       "python-ai": "ecs-docker",
     });
@@ -226,7 +226,7 @@ describe("production runtime closure", () => {
     expect(compose).toContain("--prefetch-multiplier=$${CELERY_PREFETCH_MULTIPLIER:-1}");
     expect(compose).toContain("8000:8000");
     expect(compose).not.toContain("api-gateway");
-    expect(compose).not.toContain("landing-page");
+    expect(compose).not.toContain("landing");
   });
 
   it("documents the Celery origin runtime in the Python AI env example", () => {

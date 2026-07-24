@@ -19,7 +19,7 @@ alwaysApply: true
 
 ```
 apps/                            # User-facing apps
-  landing-page/ web/ storybook/ design-docs/ studio/ docs/
+  landing/ web/ storybook/ design-docs/ studio/ docs/
   sleptons/ idp/ mail-preview/ sailor-docs/ tsekaluk-dev/
 
 backends/                        # No-UI backends, split by language
@@ -270,7 +270,7 @@ import { Can } from "@nebutra/permissions/react";
 ```bash
 pnpm dev                                          # all apps
 pnpm dev:dashboard                                # web + backends/gateway
-pnpm dev:marketing                                # landing-page + studio
+pnpm dev:marketing                                # landing + studio
 pnpm typecheck                                    # TypeScript across workspace
 pnpm lint / pnpm lint:fix                         # Biome
 pnpm test / pnpm e2e                              # Vitest / Playwright

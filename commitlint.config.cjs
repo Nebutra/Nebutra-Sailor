@@ -28,7 +28,7 @@ const config = {
       [
         // Apps
         "web",
-        "landing-page",
+        "landing",
         "api-gateway",
         "storybook",
         "design-docs",

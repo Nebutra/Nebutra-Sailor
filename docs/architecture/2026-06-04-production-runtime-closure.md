@@ -15,7 +15,7 @@
 Nebutra's production runtime defaults to:
 
 ```text
-apps/web + apps/landing-page
+apps/web + apps/landing
   -> Vercel frontend
   -> api.nebutra.com
   -> Cloudflare Workers gateway
@@ -33,7 +33,7 @@ provider-switchable through per-service selector keys:
 | Service | Default | Allowed targets |
 | --- | --- | --- |
 | `web` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `landing-page` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
+| `landing` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` |
@@ -43,7 +43,7 @@ Selector env keys are service-specific:
 
 ```env
 DEPLOY_TARGET_WEB=vercel
-DEPLOY_TARGET_LANDING_PAGE=vercel
+DEPLOY_TARGET_LANDING=vercel
 DEPLOY_TARGET_SAILOR_DOCS=vercel
 DEPLOY_TARGET_GATEWAY=cloudflare-workers
 DEPLOY_TARGET_PYTHON_AI=ecs-docker
@@ -65,7 +65,7 @@ does not fork application code or make two substrates deploy the same service.
 
 ### Frontends
 
-`apps/web` and `apps/landing-page` default to Vercel. They call
+`apps/web` and `apps/landing` default to Vercel. They call
 `NEXT_PUBLIC_API_BASE_URL=https://api.nebutra.com` and must not call the VM
 origin directly.
 

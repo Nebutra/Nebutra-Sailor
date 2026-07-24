@@ -15,7 +15,7 @@
   - `pnpm install --frozen-lockfile --strict-peer-dependencies` passed.
   - `pnpm ls -r --depth 0 --json` => `peerLikeIssues: 0`
 - Build/syntax status: **current build passes**, but there are deprecation warnings.
-  - `pnpm turbo build --filter=@nebutra/landing-page` passed.
+  - `pnpm turbo build --filter=@nebutra/landing` passed.
   - Next.js warning: `middleware` convention deprecated, should migrate to `proxy`.
 
 ## 2) Reproduction Commands
@@ -24,7 +24,7 @@
 pnpm outdated -r --format json
 pnpm install --frozen-lockfile --strict-peer-dependencies
 pnpm ls -r --depth 0 --json
-pnpm turbo build --filter=@nebutra/landing-page
+pnpm turbo build --filter=@nebutra/landing
 ```
 
 ## 3) Critical Findings (Priority Order)
@@ -63,7 +63,7 @@ Implication:
 
 - Apps currently use class-based dark mode via `@nebutra/tokens`:
   - `attribute="class"` in:
-    - `apps/landing-page/src/app/providers.tsx`
+    - `apps/landing/src/app/providers.tsx`
     - `apps/web/src/app/providers/theme-provider.tsx`
 - But `packages/commerce/marketing/src/styles/tokens.css` still defines both:
   - `.dark`
@@ -89,7 +89,7 @@ Implication:
 
 Deprecated `middleware` file convention found:
 
-- `apps/landing-page/src/middleware.ts`
+- `apps/landing/src/middleware.ts`
 - `apps/web/src/middleware.ts`
 
 Should migrate to Next 16 `proxy` convention.
@@ -97,7 +97,7 @@ Should migrate to Next 16 `proxy` convention.
 ### P2 - Legacy/consistency debt in docs and package surface
 
 - Legacy `ui` paths still appear in docs (not code imports):
-  - `apps/landing-page/DESIGN.md`
+  - `apps/landing/DESIGN.md`
 - `packages/theme` still exists and documents `data-theme` model, while apps use `@nebutra/tokens` + `.dark`.
 - `packages/design/ui/README.md` still references old exports like `@nebutra/ui/theme` and icons paths that no longer match current package surface.
 
@@ -124,7 +124,7 @@ These constraints should be treated as hard requirements in migration:
 
 - Freeze baseline with reproducible logs:
   - `pnpm install --frozen-lockfile --strict-peer-dependencies`
-  - `pnpm turbo build --filter=@nebutra/landing-page --filter=@nebutra/web --filter=@nebutra/design-docs`
+  - `pnpm turbo build --filter=@nebutra/landing --filter=@nebutra/web --filter=@nebutra/design-docs`
 
 ### Wave 1 - Facade hardening (no risky majors)
 
@@ -162,7 +162,7 @@ Run with Context7 docs verification before touching code:
 - `pnpm install --frozen-lockfile --strict-peer-dependencies` passes.
 - No `@nebutra/ui/src/*` imports in apps.
 - No mixed runtime theme switching mechanism in active app paths.
-- `pnpm turbo build --filter=@nebutra/landing-page --filter=@nebutra/web --filter=@nebutra/design-docs` passes.
+- `pnpm turbo build --filter=@nebutra/landing --filter=@nebutra/web --filter=@nebutra/design-docs` passes.
 - No Next deprecation warning for `middleware` convention.
 
 ## 7) Copy-Paste Prompt for Claude Code
@@ -186,10 +186,10 @@ Tasks:
      a) @lobehub/ui + @lobehub/icons + antd + antd-style + motion
      b) @clerk/nextjs
      c) Storybook 8->10 and ESLint 9->10
-4) Migrate Next middleware convention to proxy for apps/web and apps/landing-page.
+4) Migrate Next middleware convention to proxy for apps/web and apps/landing.
 
 Validation gates:
 - pnpm install --frozen-lockfile --strict-peer-dependencies
-- pnpm turbo build --filter=@nebutra/landing-page --filter=@nebutra/web --filter=@nebutra/design-docs
+- pnpm turbo build --filter=@nebutra/landing --filter=@nebutra/web --filter=@nebutra/design-docs
 - Ensure no @nebutra/ui/src/* imports remain.
 ```

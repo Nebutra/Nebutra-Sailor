@@ -3,9 +3,9 @@
 
 # ── Apps ──────────────────────────────────────────────────────────────────────
 
-"app: landing-page":
+"app: landing":
   - changed-files:
-      - any-glob-to-any-file: "apps/landing-page/**"
+      - any-glob-to-any-file: "apps/landing/**"
 
 "app: web":
   - changed-files:

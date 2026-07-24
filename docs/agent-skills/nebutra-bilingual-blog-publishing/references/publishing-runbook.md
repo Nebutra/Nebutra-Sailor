@@ -135,7 +135,7 @@ Run only what is relevant unless the user explicitly asks for a build:
 pnpm --filter @nebutra/blog test
 pnpm --filter @nebutra/blog typecheck
 pnpm --filter @nebutra/studio test -- publish-blog-post
-pnpm --filter @nebutra/landing-page typecheck
+pnpm --filter @nebutra/landing typecheck
 ```
 
 For a renderer-only CSS/TSX change, add a browser check on the actual article URL or local dev URL. Do not claim visual proof without seeing the page.

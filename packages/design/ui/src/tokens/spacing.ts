@@ -3,7 +3,7 @@
  *
  * Based on 4px base unit. All values are in pixels for consistency.
  *
- * @see apps/landing-page/DESIGN.md Section 10.5
+ * @see apps/landing/DESIGN.md Section 10.5
  */
 
 export const spacing = {

@@ -20,7 +20,7 @@ Dimensions: B2 设计系统/UI 组件成熟度, B6 测试盲区分析, B7 开发
 - `packages/design/ui/src/components/animate-in.tsx` 明确尊重 reduced motion，并把动画 preset 收敛到品牌 motion token。
 - `apps/design-docs/scripts/prepare-runtime-deps.mjs` 在 `predev/prebuild/pretypecheck` 前构建 `@nebutra/brand`、`@nebutra/icons`、`@nebutra/design-tokens` 运行时产物。
 - `.github/workflows/visual-acceptance.yml` 将 design-docs 与 landing 拆成独立 job，并继续基于路径过滤触发；`apps/web` 产品视觉验收仍未纳入。
-- `apps/landing-page/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx` 等商业关键路径仍存在 app-local card、button、emoji/icon 和 inline gradient 组合，质量主要靠局部测试而非 design-system primitive contract。
+- `apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx` 等商业关键路径仍存在 app-local card、button、emoji/icon 和 inline gradient 组合，质量主要靠局部测试而非 design-system primitive contract。
 
 ## Architectural Tradeoffs
 

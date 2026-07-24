@@ -97,7 +97,7 @@ subjects:
     name: web
     namespace: nebutra
   - kind: ServiceAccount
-    name: landing-page
+    name: landing
     namespace: nebutra
   - kind: ServiceAccount
     name: ai-service

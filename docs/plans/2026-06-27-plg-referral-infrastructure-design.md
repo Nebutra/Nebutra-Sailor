@@ -32,7 +32,7 @@ enhanced client flow can show inline progress and copy/share controls.
 - `@nebutra/waitlist` owns join, idempotency, referral counting, share URL
   creation, analytics summaries, and storage interfaces.
 - `@nebutra/db` owns the durable `WaitlistEntry` schema and migration.
-- `apps/landing-page` owns the localized `/refer` route, request validation, and
+- `apps/landing` owns the localized `/refer` route, request validation, and
   public API adapter.
 - CI owns public URL smoke tests for canonical domains, aliases, and the referral
   route.

@@ -80,13 +80,13 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: landing-page-hpa
+  name: landing-hpa
   namespace: nebutra
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: landing-page
+    name: landing
   minReplicas: 2
   maxReplicas: 6
   metrics:

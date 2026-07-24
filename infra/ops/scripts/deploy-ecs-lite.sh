@@ -10,7 +10,7 @@
 #
 # 部署架构:
 #   Docker: PostgreSQL + Redis（基础设施）
-#   PM2:    landing-page + web + api-gateway（Node.js 应用）
+#   PM2:    landing + web + api-gateway（Node.js 应用）
 #   Nginx:  反向代理（8080/8081/8082 端口）
 #
 # 服务地址（部署完成后）:
@@ -212,7 +212,7 @@ log "安装 pnpm 依赖..."
 pnpm install --frozen-lockfile 2>&1 | tail -3
 
 log "构建 Landing Page..."
-pnpm turbo build --filter=@nebutra/landing-page 2>&1 | tail -5
+pnpm turbo build --filter=@nebutra/landing 2>&1 | tail -5
 
 # @nebutra/web default `build` is Vite (dist/). ECS PM2 runs Next standalone —
 # same contract as .github/workflows/deploy-ecs.yml (build_command: build:next).
@@ -237,8 +237,8 @@ cat > "$PROJECT_DIR/ecosystem.config.cjs" << 'PM2EOF'
 module.exports = {
   apps: [
     {
-      name: "landing-page",
-      cwd: "./apps/landing-page",
+      name: "landing",
+      cwd: "./apps/landing",
       script: "node_modules/.bin/next",
       args: "start -p 3001",
       env: {

@@ -4,7 +4,7 @@
 
 **Goal:** Create `apps/docs-hub` as a Mintlify documentation site, migrate `packages/design-system` into it as a co-located sub-package, and scaffold all MDX pages for the full Design System — Foundations, UI Patterns, Fragment Components, and Atom Components.
 
-**Architecture:** `apps/docs-hub/` is the Mintlify app root (mint.json + MDX pages). `apps/docs-hub/design-system/` is the migrated `@nebutra/ui` package. `pnpm-workspace.yaml` gains `"apps/docs-hub/*"` so the nested package is still discoverable as a workspace package — consumers (`apps/web`, `apps/landing-page`, `packages/ui`) require zero changes.
+**Architecture:** `apps/docs-hub/` is the Mintlify app root (mint.json + MDX pages). `apps/docs-hub/design-system/` is the migrated `@nebutra/ui` package. `pnpm-workspace.yaml` gains `"apps/docs-hub/*"` so the nested package is still discoverable as a workspace package — consumers (`apps/web`, `apps/landing`, `packages/ui`) require zero changes.
 
 **Tech Stack:** Mintlify (docs platform), pnpm workspaces, TypeScript, MDX
 
@@ -283,7 +283,7 @@ Expected: pnpm resolves `@nebutra/ui` from `apps/docs-hub/design-system`. No err
 **Step 3: Verify consumers still typecheck**
 
 ```bash
-pnpm --filter @nebutra/landing-page typecheck
+pnpm --filter @nebutra/landing typecheck
 pnpm --filter @nebutra/web typecheck
 pnpm --filter @nebutra/ui typecheck
 ```
@@ -811,7 +811,7 @@ description: "[One line description]"
 
 ## When to Use
 
-<!-- TODO: Extract from app usage patterns in apps/web/src/ and apps/landing-page/src/ -->
+<!-- TODO: Extract from app usage patterns in apps/web/src/ and apps/landing/src/ -->
 
 ## Structure
 
@@ -1076,7 +1076,7 @@ git commit -m "chore: include docs-hub in turbo pipeline"
 After all tasks complete:
 
 - [ ] `pnpm install` runs clean from repo root
-- [ ] `pnpm --filter @nebutra/landing-page typecheck` passes
+- [ ] `pnpm --filter @nebutra/landing typecheck` passes
 - [ ] `pnpm --filter @nebutra/web typecheck` passes
 - [ ] `pnpm --filter @nebutra/ui typecheck` passes
 - [ ] `cd apps/docs-hub && pnpm dev` starts without errors
@@ -1375,7 +1375,7 @@ design-system → (no @nebutra/* deps)
 ui     → design-system
 ui            → (external only)
 web           → design-system, ui, ui
-landing-page  → design-system, ui, ui
+landing  → design-system, ui, ui
 docs-hub      → design-system (via nested package)
 ```
 

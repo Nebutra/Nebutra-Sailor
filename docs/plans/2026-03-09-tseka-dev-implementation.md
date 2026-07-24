@@ -4,7 +4,7 @@
 
 **Goal:** Build `apps/tseka-dev` — a personal brand platform for Tseka Luk, styled as an AI-SaaS product showroom with automated daily content via OpenClaw Cron.
 
-**Architecture:** New Next.js 16 app in Nebutra-Sailor monorepo (`apps/tseka-dev`), scaffolded from `apps/landing-page`. Shares `@nebutra/ui`, `@nebutra/tokens`, `@nebutra/analytics`, `@nebutra/marketing`. Custom lime accent (`#a3e635`) overrides brand tokens locally. Content via MDX (no CMS). `/now` page auto-fed by daily OpenClaw Cron job.
+**Architecture:** New Next.js 16 app in Nebutra-Sailor monorepo (`apps/tseka-dev`), scaffolded from `apps/landing`. Shares `@nebutra/ui`, `@nebutra/tokens`, `@nebutra/analytics`, `@nebutra/marketing`. Custom lime accent (`#a3e635`) overrides brand tokens locally. Content via MDX (no CMS). `/now` page auto-fed by daily OpenClaw Cron job.
 
 **Tech Stack:** Next.js 16, React 19, Tailwind CSS v4, Framer Motion 12, `@next/mdx`, Inter + Playfair Display, pnpm workspaces, Vercel
 
@@ -89,7 +89,7 @@ const config: NextConfig = {
 export default withMDX(config);
 ```
 
-**Step 3: Create tsconfig.json** (copy from `apps/landing-page/tsconfig.json`, change `name` to `tseka-dev`)
+**Step 3: Create tsconfig.json** (copy from `apps/landing/tsconfig.json`, change `name` to `tseka-dev`)
 
 **Step 4: Create postcss.config.mjs**
 

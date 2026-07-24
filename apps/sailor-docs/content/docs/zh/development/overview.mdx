@@ -16,7 +16,7 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
 | `apps/web` | 3000 / 3001 | 已认证 SaaS 控制台 | Next.js 16（生产）+ 可选 Vite |
 | `apps/auth` | 3101 | 登录中心 `auth.nebutra.com` | Next.js 16 + Better Auth |
 | `backends/gateway` | 3002 | REST API — 认证、RBAC、计费、AI 代理 | Hono（`@nebutra/gateway`） |
-| `apps/landing-page` | — | 公开营销网站 | Next.js 16 + next-intl |
+| `apps/landing` | — | 公开营销网站 | Next.js 16 + next-intl |
 | `apps/sailor-docs` | — | 公开产品文档（本站） | Next.js 16 + Fumadocs |
 | `apps/design-docs` | — | 内部设计系统文档 | Next.js 16 + Fumadocs |
 | `apps/storybook` | 6006 | 组件库演示平台 | Storybook |
@@ -63,7 +63,7 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
     cp apps/web/.env.example apps/web/.env.local
     cp apps/auth/.env.example apps/auth/.env.local   # 若存在
     cp backends/gateway/.env.example backends/gateway/.env.local
-    cp apps/landing-page/.env.example apps/landing-page/.env.local
+    cp apps/landing/.env.example apps/landing/.env.local
     # 本地建议 AUTH_PROVIDER=better-auth，与生产一致
     ```
   </Step>
@@ -81,7 +81,7 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
     或者仅启动您需要的部分：
     ```bash
     pnpm dev:dashboard   # web + gateway（见根 package.json scripts）
-    pnpm dev:marketing   # landing-page + studio
+    pnpm dev:marketing   # landing + studio
     ```
   </Step>
 </Steps>

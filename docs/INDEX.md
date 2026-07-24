@@ -6,7 +6,7 @@ Complete navigation to all project documentation.
 
 | Name                                           | Description                 |
 | ---------------------------------------------- | --------------------------- |
-| [landing-page](../apps/landing-page/README.md) | Marketing site with AI i18n |
+| [landing](../apps/landing/README.md) | Marketing site with AI i18n |
 | [web](../apps/web/README.md)                   | Main SaaS dashboard         |
 
 ## Services

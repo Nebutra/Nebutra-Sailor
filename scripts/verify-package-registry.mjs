@@ -23,7 +23,7 @@ const legacyContainerPackages = new Set([
 const allowedContainerPackages = new Set([
   "nebutra-ai",
   "nebutra-api-gateway",
-  "nebutra-landing-page",
+  "nebutra-landing",
   "nebutra-web",
 ]);
 

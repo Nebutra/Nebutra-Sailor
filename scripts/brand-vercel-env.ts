@@ -35,7 +35,7 @@ export function buildVercelEnvPatches(config: BrandConfig): Record<string, Recor
     NEBUTRA_SESSION_HINT_DOMAIN: c,
   };
   return {
-    "apps/landing-page/vercel.json": {
+    "apps/landing/vercel.json": {
       NEXT_PUBLIC_SITE_URL: landing,
       NEXT_PUBLIC_APP_URL: app,
       NEXT_PUBLIC_API_URL: api,
@@ -91,10 +91,7 @@ export function updateVercelEnvFromBrand(config: BrandConfig): void {
         r.destination?.startsWith("http")
           ? {
               ...r,
-              destination: r.destination.replace(
-                /^https?:\/\/[^/]+/,
-                toHttps(config.domains.api),
-              ),
+              destination: r.destination.replace(/^https?:\/\/[^/]+/, toHttps(config.domains.api)),
             }
           : r,
       );

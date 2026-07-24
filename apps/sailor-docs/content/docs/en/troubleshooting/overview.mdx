@@ -31,7 +31,7 @@ Before diving into specific errors, run through this checklist. Most issues are 
   </Step>
   <Step title="Clear the Next.js cache">
     ```bash
-    rm -rf apps/web/.next apps/landing-page/.next
+    rm -rf apps/web/.next apps/landing/.next
     pnpm dev
     ```
     Turbopack and Webpack both maintain on-disk caches. Stale cache entries can cause module resolution errors that disappear after a clean restart.

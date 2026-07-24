@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - "apps/design-docs/**"
-      - "apps/landing-page/**"
+      - "apps/landing/**"
       - "e2e/visual/**"
       - "e2e/playwright.visual.config.ts"
       - "packages/design/**"
@@ -16,7 +16,7 @@ on:
       - main
     paths:
       - "apps/design-docs/**"
-      - "apps/landing-page/**"
+      - "apps/landing/**"
       - "e2e/visual/**"
       - "e2e/playwright.visual.config.ts"
       - "packages/design/**"
@@ -57,7 +57,7 @@ jobs:
               - "pnpm-lock.yaml"
               - ".github/workflows/visual-acceptance.yml"
             landing:
-              - "apps/landing-page/**"
+              - "apps/landing/**"
               - "e2e/visual/landing-feature-showcase.visual.spec.ts"
               - "e2e/visual/helpers/**"
               - "e2e/playwright.visual.config.ts"

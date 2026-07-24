@@ -24,7 +24,7 @@ This document is always included in Kiro's context window. It provides the found
 
 | App | Port | Purpose |
 |-----|------|---------|
-| `apps/landing-page` | 3002 | Public marketing site (next-intl, 7 locales) |
+| `apps/landing` | 3002 | Public marketing site (next-intl, 7 locales) |
 | `apps/web` | 3000 | Authenticated SaaS dashboard |
 | `apps/storybook` | 6006 | Component documentation |
 | `apps/studio` | 3333 | Sanity CMS |
@@ -197,7 +197,7 @@ if (!hasPermission(role, "billing:manage")) throw new ForbiddenError("...");
 ```bash
 pnpm dev                  # start all apps
 pnpm dev:dashboard        # web + api-gateway
-pnpm dev:marketing        # landing-page + studio
+pnpm dev:marketing        # landing + studio
 pnpm typecheck            # TypeScript check
 pnpm lint                 # Biome lint
 pnpm lint:fix             # auto-fix lint

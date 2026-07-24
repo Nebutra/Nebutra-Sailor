@@ -106,9 +106,9 @@ packages/design/ui
 packages/design/design-tokens
 EOF
       ;;
-    apps/landing-page)
+    apps/landing)
       cat <<'EOF'
-apps/landing-page
+apps/landing
 packages/ai/ai-providers
 packages/iam/auth
 packages/commerce/billing

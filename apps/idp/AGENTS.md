@@ -42,7 +42,7 @@ Do not treat `.next/` output as implementation truth.
 ## Out Of Scope (Complexity Cap)
 
 This app and `@nebutra/oauth-server` exist to serve the **internal needs** of
-`apps/sleptons`, `apps/web`, and `apps/landing-page` — not to compete with
+`apps/sleptons`, `apps/web`, and `apps/landing` — not to compete with
 Auth0 / Ory Hydra / Authentik. Building an OIDC-Certified server is an
 explicit non-goal: it's a 6+ engineer-year effort with no product return at
 the current stage.

@@ -6,7 +6,7 @@
  * with automatic light / dark mode switching.
  *
  * @see packages/design/tokens/styles.css  @theme inline
- * @see apps/landing-page/DESIGN.md Section 10.10
+ * @see apps/landing/DESIGN.md Section 10.10
  */
 
 /**

@@ -153,13 +153,13 @@ npx create-sailor@latest my-app --ai=openai,deepseek,siliconflow
 ### 2.3 产品页面骨架模块化
 
 **现状**
-- `.templateignore` 已剥离 Nebutra 自己的 landing-page 业务内容
-- 但**被剥离后 `apps/landing-page` 几乎是空的**，用户 clone 下来看不到任何最佳实践
+- `.templateignore` 已剥离 Nebutra 自己的 landing 业务内容
+- 但**被剥离后 `apps/landing` 几乎是空的**，用户 clone 下来看不到任何最佳实践
 - 用户曾提供一份 2026 产品页面模块全览（landing + dashboard 几十个模块，带🔵必选 / ⚪可选 / 🔴高阶 / 🟡特定场景 标记）
 
 **目标（骨架 = 必选模块代码 + 可选模块通过 `sailor add` 增量）**
 
-#### Landing Page 必选骨架（生成到 `apps/landing-page/src/`）
+#### Landing Page 必选骨架（生成到 `apps/landing/src/`）
 | 模块 | 文件位置 | 说明 |
 |------|---------|------|
 | Header + Nav + Language switcher | `components/landing/Header.tsx` | sticky，Logo + 5 nav items + CTA |
@@ -207,7 +207,7 @@ npx create-sailor@latest my-app --ai=openai,deepseek,siliconflow
 - [ ] 可选模块不生成，但留 `sailor add <module>` 路径（见 P1.1）
 
 **重要原则**
-- **这些骨架是 Nebutra 自己 landing-page / web 的骨架吗？不是！** 必须写在**模板专用目录**（如 `apps/landing-page/src/components/landing/` 是 template skeleton）
+- **这些骨架是 Nebutra 自己 landing / web 的骨架吗？不是！** 必须写在**模板专用目录**（如 `apps/landing/src/components/landing/` 是 template skeleton）
 - Nebutra 自己的业务内容通过 `.templateignore` 剥离掉，只留骨架
 - 但 Nebutra 自己**也在用**这套骨架（因为骨架就是最佳实践示范）
 - 等价关系：**骨架 = 最佳实践样板 = Nebutra 自己产品的基础**

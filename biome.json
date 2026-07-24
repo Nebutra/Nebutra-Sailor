@@ -21,7 +21,7 @@
       "!**/*.html",
       "!**/generated",
       "!**/.source",
-      "!apps/landing-page/src/lib/constants/china-vc-data.json"
+      "!apps/landing/src/lib/constants/china-vc-data.json"
     ]
   },
   "formatter": {

@@ -188,7 +188,7 @@ If a surface stays stuck → hard-coupling (`bg-blue-9` / hex); fix call site to
 ## 5. Motion note (GSAP-level craft, not CI theatre)
 
 - **Product Motion:** `@nebutra/ui` shared motion primitives.
-- **Landing storytelling GSAP:** only `apps/landing-page/src/shared/animation/gsap/*` (see animation governance).
+- **Landing storytelling GSAP:** only `apps/landing/src/shared/animation/gsap/*` (see animation governance).
 - Same idea as tokens: **one ownership zone**, apps consume, they don’t re-implement the clock.
 
 ## 6. Anti-patterns

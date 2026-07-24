@@ -2,7 +2,7 @@
  * GET /api/me/public — minimal cross-origin user info for marketing surfaces.
  *
  * Returns a tightly-scoped subset of the current user's profile that the
- * landing-page navbar uses to render an avatar dropdown for signed-in
+ * landing navbar uses to render an avatar dropdown for signed-in
  * visitors. CORS-allows `NEXT_PUBLIC_SITE_URL` only.
  *
  * Privacy contract: this endpoint NEVER returns sensitive data — no user

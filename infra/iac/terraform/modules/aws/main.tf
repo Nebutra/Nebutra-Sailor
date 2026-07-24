@@ -89,7 +89,7 @@ variable "services" {
   type        = map(string)
   default = {
     "web"          = "latest"
-    "landing-page" = "latest"
+    "landing" = "latest"
     "api-gateway"  = "latest"
     "ai-service"   = "latest"
   }

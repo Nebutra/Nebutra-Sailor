@@ -15,7 +15,7 @@ Dimensions: B3 可观测性成熟度, B6 测试盲区分析
 - `docs/analytics/paid-wall-validation.md` 将 STARTUP 团队商业线定义为 `license.wizard` submitted、Stripe checkout started/completed 和 `deployment.verified` 的 30 天证据链。
 - SQL dashboard 使用 `analytics_events` 计算 `startup_team_sample_n`、`startup_paid_n`、`startup_paid_pct`，并要求样本数至少 20。
 - `packages/platform/analytics/src/events.ts` 新增/强化了 Zod 事件契约：`license.wizard`、`checkout`、`deployment.verified` 等。
-- `apps/landing-page/src/lib/analytics/emit.ts` 仍是 Phase 0 browser helper，直接调用 PostHog `/capture/`，fire-and-forget，并在错误时静默失败。
+- `apps/landing/src/lib/analytics/emit.ts` 仍是 Phase 0 browser helper，直接调用 PostHog `/capture/`，fire-and-forget，并在错误时静默失败。
 - Stripe webhook 侧通过动态 import `@nebutra/analytics` 发出 `checkout` completed，失败只 warn，不影响 webhook 处理。
 - `deploy-ecs.yml` 在 public smoke test 之后发出 `deployment.verified`，但缺少 team/user attribution 时只能证明部署路径，不一定能关联到团队级商业转化。
 - 当前文档明确“不要在付费转化信号已知前调 copy”，但还没有把数据质量、重复事件、匿名身份合并和告警噪声定义为阻断条件。

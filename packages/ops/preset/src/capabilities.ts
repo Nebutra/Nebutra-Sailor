@@ -56,7 +56,7 @@ function resolveOnboardingFlow(
     return "none";
   }
 
-  return config.apps["landing-page"] ? "marketing_to_app" : "workspace";
+  return config.apps["landing"] ? "marketing_to_app" : "workspace";
 }
 
 function resolveBillingCapabilities(
@@ -120,14 +120,14 @@ export function resolveProductCapabilities(config: ResolvedConfig): ProductCapab
       requireOrganization: workspaceMode === "organization",
       onboardingFlow: resolveOnboardingFlow(config, workspaceMode),
       adminConsole: config.apps.admin && config.features.admin,
-      publicSite: config.apps["landing-page"] || config.apps.blog,
+      publicSite: config.apps["landing"] || config.apps.blog,
     },
     auth: {
       provider: config.authProvider,
       organizationSwitching: workspaceMode === "organization",
       supportsSso: config.features.sso,
       supportsSocialLogin: config.authProvider === "clerk",
-      signupSurface: config.apps.web || config.apps["landing-page"],
+      signupSurface: config.apps.web || config.apps["landing"],
     },
     billing: resolveBillingCapabilities(config, workspaceMode),
     notifications: resolveNotificationCapabilities(config),

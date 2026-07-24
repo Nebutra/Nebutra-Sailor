@@ -11,7 +11,7 @@ import {
 describe("deploy-target selector", () => {
   it("defaults the production MVP topology to Vercel, Cloudflare Workers, and ECS origin", () => {
     expect(resolveDeployTarget("web", {})).toBe("vercel");
-    expect(resolveDeployTarget("landing-page", {})).toBe("vercel");
+    expect(resolveDeployTarget("landing", {})).toBe("vercel");
     expect(resolveDeployTarget("gateway", {})).toBe("cloudflare-workers");
     expect(resolveDeployTarget("python-ai", {})).toBe("ecs-docker");
   });
@@ -48,7 +48,7 @@ describe("deploy-target selector", () => {
   it("exposes canonical service, target, and env-key contracts", () => {
     expect(DEPLOYABLE_SERVICES).toEqual([
       "web",
-      "landing-page",
+      "landing",
       "design-docs",
       "sailor-docs",
       "gateway",
@@ -76,7 +76,7 @@ describe("deploy-target selector", () => {
       "gcp",
       "railway",
     ]);
-    expect(deployTargetEnvKey("landing-page")).toBe("DEPLOY_TARGET_LANDING_PAGE");
+    expect(deployTargetEnvKey("landing")).toBe("DEPLOY_TARGET_LANDING");
     expect(deployTargetEnvKey("python-ai")).toBe("DEPLOY_TARGET_PYTHON_AI");
   });
 

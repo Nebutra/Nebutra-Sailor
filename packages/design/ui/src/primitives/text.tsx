@@ -9,7 +9,7 @@ import { cn } from "../utils/cn";
  *
  * Renders text with semantic styling based on the typography token system.
  *
- * @see apps/landing-page/DESIGN.md Section 10.7
+ * @see apps/landing/DESIGN.md Section 10.7
  */
 
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {

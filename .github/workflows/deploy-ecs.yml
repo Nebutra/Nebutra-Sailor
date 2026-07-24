@@ -100,7 +100,7 @@ jobs:
           # That bit us during the May 12 /sign-in outage — see commit history.
           filters: |
             landing:
-              - 'apps/landing-page/**'
+              - 'apps/landing/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
@@ -274,8 +274,8 @@ jobs:
       matrix:
         include:
           - app: landing
-            package: "@nebutra/landing-page"
-            workspace: apps/landing-page
+            package: "@nebutra/landing"
+            workspace: apps/landing
             kind: "next-standalone"
             build_command: "build"
             condition: ${{ needs.detect-changes.outputs.landing }}
@@ -412,7 +412,7 @@ jobs:
           OIDC_ISSUER: "https://sso.nebutra.com"
           OIDC_COOKIE_KEYS: "build-placeholder-cookie-key-one-000000,build-placeholder-cookie-key-two-000000"
           OIDC_ENABLE_CLIENT_CREDENTIALS: "false"
-          # Force standalone output for VM — landing-page's next.config gates
+          # Force standalone output for VM — landing's next.config gates
           # `output: "standalone"` on this env so Vercel builds skip the trace
           # cost. This workflow needs the standalone bundle for assembly below.
           NEXT_OUTPUT: standalone

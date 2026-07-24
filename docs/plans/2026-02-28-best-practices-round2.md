@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Close all remaining best-practice gaps identified in the audit: TypeScript strictness, Dependabot, Vitest coverage fix, Turbo optimization, Dockerfile, env validation in web/landing-page, Error Boundary in web, bundle analyzer, a11y linting, CI security scanning, web utility tests, and Playwright E2E.
+**Goal:** Close all remaining best-practice gaps identified in the audit: TypeScript strictness, Dependabot, Vitest coverage fix, Turbo optimization, Dockerfile, env validation in web/landing, Error Boundary in web, bundle analyzer, a11y linting, CI security scanning, web utility tests, and Playwright E2E.
 
 **Architecture:** 13 independent tasks ordered by complexity (easy → hard). Each task is self-contained with its own commit. No inter-task dependencies except Task 12 (web tests) depends on Task 7 (web Zod env) being done first.
 
@@ -360,17 +360,17 @@ git commit -m "feat: add multi-stage Dockerfile for api-gateway"
 
 **Files:**
 
-- Modify: `apps/landing-page/package.json` (add zod)
-- Create: `apps/landing-page/src/lib/env.ts`
+- Modify: `apps/landing/package.json` (add zod)
+- Create: `apps/landing/src/lib/env.ts`
 
 **Step 1: Add zod**
 
 ```bash
 cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor
-pnpm add zod --filter @nebutra/landing-page
+pnpm add zod --filter @nebutra/landing
 ```
 
-**Step 2: Create `apps/landing-page/src/lib/env.ts`**
+**Step 2: Create `apps/landing/src/lib/env.ts`**
 
 ```typescript
 import { z } from "zod";
@@ -403,7 +403,7 @@ function validateEnv(): LandingEnv {
 
   if (!result.success) {
     // Use console.error — allowed by ESLint config, and this is startup critical path
-    console.error("❌ Invalid landing-page environment variables:");
+    console.error("❌ Invalid landing environment variables:");
     console.error(result.error.format());
     throw new Error("Invalid environment variables");
   }
@@ -422,7 +422,7 @@ export const env =
 
 ```bash
 cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor
-pnpm --filter @nebutra/landing-page typecheck 2>&1
+pnpm --filter @nebutra/landing typecheck 2>&1
 ```
 
 Expected: no errors.
@@ -430,8 +430,8 @@ Expected: no errors.
 **Step 4: Commit**
 
 ```bash
-git add apps/landing-page/src/lib/env.ts apps/landing-page/package.json pnpm-lock.yaml
-git commit -m "feat: add Zod env validation to landing-page"
+git add apps/landing/src/lib/env.ts apps/landing/package.json pnpm-lock.yaml
+git commit -m "feat: add Zod env validation to landing"
 ```
 
 ---
@@ -723,21 +723,21 @@ git commit -m "feat: add bundle analyzer to apps/web (ANALYZE=true next build)"
 
 - Modify: `apps/web/package.json` (add eslint-plugin-jsx-a11y)
 - Modify: `apps/web/eslint.config.mjs` (add a11y rules)
-- Modify: `apps/landing-page/package.json` (add eslint-plugin-jsx-a11y)
-- Modify: `apps/landing-page/eslint.config.mjs` (add a11y rules)
+- Modify: `apps/landing/package.json` (add eslint-plugin-jsx-a11y)
+- Modify: `apps/landing/eslint.config.mjs` (add a11y rules)
 
 **Step 1: Install a11y plugin in both apps**
 
 ```bash
 pnpm add -D eslint-plugin-jsx-a11y --filter @nebutra/web
-pnpm add -D eslint-plugin-jsx-a11y --filter @nebutra/landing-page
+pnpm add -D eslint-plugin-jsx-a11y --filter @nebutra/landing
 ```
 
 **Step 2: Read both eslint.config.mjs files**
 
 ```bash
 cat apps/web/eslint.config.mjs
-cat apps/landing-page/eslint.config.mjs
+cat apps/landing/eslint.config.mjs
 ```
 
 **Step 3: Add a11y rules to apps/web/eslint.config.mjs**
@@ -766,7 +766,7 @@ Add to the config array (before globalIgnores):
 },
 ```
 
-**Step 4: Add same a11y rules to apps/landing-page/eslint.config.mjs**
+**Step 4: Add same a11y rules to apps/landing/eslint.config.mjs**
 
 Same pattern as Step 3.
 
@@ -774,7 +774,7 @@ Same pattern as Step 3.
 
 ```bash
 pnpm --filter @nebutra/web lint 2>&1 | grep "a11y" | head -20
-pnpm --filter @nebutra/landing-page lint 2>&1 | grep "a11y" | head -20
+pnpm --filter @nebutra/landing lint 2>&1 | grep "a11y" | head -20
 ```
 
 Fix any `error`-level violations (not warn). Common fixes:
@@ -785,8 +785,8 @@ Fix any `error`-level violations (not warn). Common fixes:
 **Step 6: Commit**
 
 ```bash
-git add apps/web/eslint.config.mjs apps/web/package.json apps/landing-page/eslint.config.mjs apps/landing-page/package.json pnpm-lock.yaml
-git commit -m "feat: add eslint-plugin-jsx-a11y to web and landing-page for accessibility linting"
+git add apps/web/eslint.config.mjs apps/web/package.json apps/landing/eslint.config.mjs apps/landing/package.json pnpm-lock.yaml
+git commit -m "feat: add eslint-plugin-jsx-a11y to web and landing for accessibility linting"
 ```
 
 ---
@@ -1067,7 +1067,7 @@ export default defineConfig({
   ],
   // Auto-start the landing page dev server when running tests locally
   webServer: {
-    command: "pnpm --filter @nebutra/landing-page dev",
+    command: "pnpm --filter @nebutra/landing dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
@@ -1217,7 +1217,7 @@ Expected: tests run (may require the landing page server to be up). If tests fai
 If the server isn't running automatically, start it first:
 
 ```bash
-pnpm --filter @nebutra/landing-page dev &
+pnpm --filter @nebutra/landing dev &
 sleep 5
 pnpm e2e 2>&1 | tail -30
 ```
@@ -1249,11 +1249,11 @@ git commit -m "feat: add Playwright E2E setup with landing page smoke tests and 
 - [ ] `backends/gateway/vitest.config.ts` coverage exclude fixed
 - [ ] `turbo.json` has optimized inputs for lint/typecheck/test
 - [ ] `backends/gateway/Dockerfile` created
-- [ ] `apps/landing-page/src/lib/env.ts` created with Zod
+- [ ] `apps/landing/src/lib/env.ts` created with Zod
 - [ ] `apps/web/src/lib/env.ts` migrated to Zod
 - [ ] `apps/web/src/components/ErrorBoundary.tsx` created + wired
 - [ ] `apps/web` bundle analyzer added (ANALYZE=true next build)
-- [ ] `eslint-plugin-jsx-a11y` added to web + landing-page, 0 lint errors
+- [ ] `eslint-plugin-jsx-a11y` added to web + landing, 0 lint errors
 - [ ] CI has security job (pnpm audit + Gitleaks)
 - [ ] `apps/web` vitest + 8 env schema tests passing
 - [ ] Playwright config + 8 E2E tests (landing + auth)

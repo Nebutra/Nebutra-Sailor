@@ -166,8 +166,8 @@ const runtimeFontSources = [
   { relativePath: "packages/design/ui/src/tailwind.preset.ts", content: tailwindPresetTs },
   { relativePath: "packages/design/ui/src/theme/tokens.ts", content: uiThemeTokensTs },
   {
-    relativePath: "apps/landing-page/src/components/ui/mockups/MatrixLogOcean.tsx",
-    content: read("apps/landing-page/src/components/ui/mockups/MatrixLogOcean.tsx"),
+    relativePath: "apps/landing/src/components/ui/mockups/MatrixLogOcean.tsx",
+    content: read("apps/landing/src/components/ui/mockups/MatrixLogOcean.tsx"),
   },
   {
     relativePath: "apps/web/src/app/global-error.tsx",

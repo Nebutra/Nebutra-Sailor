@@ -41,8 +41,8 @@ const MUST_PRESERVE = [
   "apps/web/package.json",
   "apps/web/src/app/layout.tsx",
   "apps/web/src/app/globals.css",
-  "apps/landing-page/package.json",
-  "apps/landing-page/src/app/[lang]/layout.tsx",
+  "apps/landing/package.json",
+  "apps/landing/src/app/[lang]/layout.tsx",
   "backends/gateway/package.json",
 ];
 
@@ -68,16 +68,16 @@ const MUST_STRIP = [
   "e2e/changelog.spec.ts",
   ".templateignore",
   "TEMPLATE.md",
-  "apps/landing-page/src/components/landing/HeroSection.tsx",
-  "apps/landing-page/src/app/[lang]/(marketing)/pricing",
-  "apps/landing-page/src/app/[lang]/(legal)/privacy",
+  "apps/landing/src/components/landing/HeroSection.tsx",
+  "apps/landing/src/app/[lang]/(marketing)/pricing",
+  "apps/landing/src/app/[lang]/(legal)/privacy",
   "apps/web/src/app/[locale]/(app)/admin",
   "apps/web/src/app/[locale]/(app)/billing",
   "apps/web/src/app/[locale]/(app)/audit",
   "apps/web/src/app/[locale]/(app)/chat",
   "apps/web/src/app/[locale]/(app)/feature-flags",
-  "apps/landing-page/public/brand/logo.svg",
-  "apps/landing-page/public/og",
+  "apps/landing/public/brand/logo.svg",
+  "apps/landing/public/og",
 ];
 
 type Matcher = ReturnType<typeof ignore>;

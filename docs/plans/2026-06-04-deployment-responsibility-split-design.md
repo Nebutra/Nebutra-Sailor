@@ -34,7 +34,7 @@
 
 | App / Service | Type | API routes | Vercel | Aliyun ECS (PM2) | k8s | Docker image |
 |---|---|---|---|---|---|---|
-| `landing-page` | Next.js | 13 | ✅ (linked) | ✅ | ✅ | ghcr nebutra-landing-page |
+| `landing` | Next.js | 13 | ✅ (linked) | ✅ | ✅ | ghcr nebutra-landing |
 | `web` | Next.js (full-stack) | **64** | configured, not live | ✅ | ✅ | ghcr nebutra-web |
 | `design-docs` | Next.js (Fumadocs) | 0 | ❌ | ✅ | ❌ | shared |
 | `sailor-docs` | Next.js (Fumadocs) | 0 | ❌ | ✅ | ❌ | shared |
@@ -46,7 +46,7 @@
 
 **Key facts**
 - 4 deployment pipelines exist: `deploy.yml` (k8s), `deploy-ecs.yml` (Aliyun PM2), `docker-build-push.yml` (images → ghcr + conditional AWS ECR / Aliyun ACR / Tencent TCR), plus Vercel git-integration.
-- `vercel.json` exists for `landing-page`, `web`, `gateway`; `.vercel/project.json` links landing.
+- `vercel.json` exists for `landing`, `web`, `gateway`; `.vercel/project.json` links landing.
 - Cache (`@nebutra/cache`) already auto-detects `UPSTASH_REDIS_REST_URL` > `REDIS_URL`. Queue (`@nebutra/queue`) already QStash-primary. **`idp` uses raw `ioredis`** (bypasses the abstraction).
 - DB on Supabase: Prisma 7 + `@prisma/adapter-pg`, pooled `DATABASE_URL` + `DIRECT_URL`.
 - Aliyun ECS is **mainland China**, 2C4G "Lite" — documented cross-border SSH flakiness, disk-full incidents (#141), scp keepalive hacks.

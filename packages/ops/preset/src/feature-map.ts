@@ -4,7 +4,7 @@ import { DEPLOYABLE_SERVICES, deployTargetEnvKey } from "./deploy-target";
 
 const APP_PACKAGE_MAP: Record<string, string> = {
   web: "@nebutra/web",
-  "landing-page": "@nebutra/landing-page",
+  landing: "@nebutra/landing",
   blog: "@nebutra/blog",
   admin: "@nebutra/admin",
   "api-gateway": "@nebutra/gateway",

@@ -31,8 +31,8 @@ Five non-negotiable positioning constraints:
 
 **License management stack**
 - `packages/commerce/license/` — `issueLicense` + `validateLicense` + `license.issued` event handler
-- `apps/landing-page/api/license/` — web REST colon POST issue + GET validate
-- `apps/landing-page/.../get-license/LicenseWizard.tsx` — 4-step web wizard (Clerk-gated)
+- `apps/landing/api/license/` — web REST colon POST issue + GET validate
+- `apps/landing/.../get-license/LicenseWizard.tsx` — 4-step web wizard (Clerk-gated)
 - `packages/ops/cli/commands/license.ts` — `sailor license activate <key>` + `sailor license status`
 - DB: `License` + `CommunityProfile` models
 
@@ -233,7 +233,7 @@ Migration naming: `20260418200000_cli_device_auth`.
 | License issuance + validation | `packages/license` | Existing — unchanged |
 | Event publication on issuance | `packages/event-bus` | Already the pattern |
 | CLI `sailor login` | `packages/ops/cli/commands/login.ts` | New command |
-| Web `/connect-cli` page | `apps/landing-page/src/app/[lang]/(marketing)/connect-cli/` | Lives next to existing `get-license` |
+| Web `/connect-cli` page | `apps/landing/src/app/[lang]/(marketing)/connect-cli/` | Lives next to existing `get-license` |
 | Sleptons Showcase page | `apps/sleptons/src/app/showcase/` | Nebutra-specific |
 | Generic "Showcase" pattern for template users | `packages/design/ui/patterns/showcase/` (future) | Extractable to template |
 
@@ -261,7 +261,7 @@ Threat model:
 - [ ] Add `packages/platform/analytics/umami-proxy.ts` — server-side proxy so Umami works in CN and evades adblock
 - [ ] `infra/docker-compose.analytics.yml` — PostHog CE + Umami + Metabase + shared Postgres
 - [ ] `apps/sleptons/src/app/layout.tsx` — inject PostHog + Umami tracking pixels
-- [ ] `apps/landing-page/src/app/[lang]/(marketing)/layout.tsx` — same
+- [ ] `apps/landing/src/app/[lang]/(marketing)/layout.tsx` — same
 
 **Event contracts** (defined in `packages/platform/analytics/events.ts` with Zod schemas):
 - [ ] `scaffold.completed` — emitted from `create-sailor` done hook (fire-and-forget HTTPS post)
@@ -304,7 +304,7 @@ Threat model:
   - `POST /api/cli/device-auth/start` — returns `{ device_code, user_code, verification_url, expires_in, interval }`
   - `POST /api/cli/device-auth/poll` — returns `{ status: "pending" | "approved" | "denied" }` and `access_token + license_key` when approved
   - `POST /api/cli/device-auth/approve` — called from web `/connect-cli` after Clerk auth + wizard completion
-- [ ] `apps/landing-page/src/app/[lang]/(marketing)/connect-cli/page.tsx` — reads `?user_code=`, guides through Clerk login + 2-step wizard + approve
+- [ ] `apps/landing/src/app/[lang]/(marketing)/connect-cli/page.tsx` — reads `?user_code=`, guides through Clerk login + 2-step wizard + approve
 - [ ] `packages/ops/cli/commands/login.ts` — new `sailor login` command implementing RFC 8628 client side
 - [ ] Migrate `sailor license activate` → deprecated but still works (copy-paste fallback)
 - [ ] E2E test: headless Playwright approves device code, CLI receives token

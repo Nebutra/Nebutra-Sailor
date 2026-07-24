@@ -168,7 +168,7 @@ service names:
 ```nginx
 # Docker Compose networking variant
 upstream nebutra_web     { server web:3000;        keepalive 32; }
-upstream nebutra_landing { server landing-page:3001; keepalive 32; }
+upstream nebutra_landing { server landing:3001; keepalive 32; }
 upstream nebutra_api     { server api-gateway:3002; keepalive 32; }
 upstream nebutra_docs    { server sailor-docs:3004; keepalive 16; }
 # Python services use internal container port 8000
@@ -179,7 +179,7 @@ A helper script can patch the addresses automatically:
 
 ```bash
 sed -i 's/127.0.0.1:3000/web:3000/g; \
-        s/127.0.0.1:3001/landing-page:3001/g; \
+        s/127.0.0.1:3001/landing:3001/g; \
         s/127.0.0.1:3002/api-gateway:3002/g; \
         s/127.0.0.1:8001/ai-service:8000/g; \
         s/127.0.0.1:8002/content-service:8000/g; \

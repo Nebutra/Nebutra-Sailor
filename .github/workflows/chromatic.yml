@@ -8,8 +8,8 @@ on:
       - "packages/design/ui/src/**"
       - "apps/storybook/**"
       - "apps/design-docs/content/docs/**"
-      - "apps/landing-page/src/components/**"
-      - "apps/landing-page/src/app/**/page.tsx"
+      - "apps/landing/src/components/**"
+      - "apps/landing/src/app/**/page.tsx"
       - ".github/workflows/chromatic.yml"
       - ".github/actions/setup-node-pnpm/action.yml"
   pull_request:
@@ -17,8 +17,8 @@ on:
       - "packages/design/ui/src/**"
       - "apps/storybook/**"
       - "apps/design-docs/content/docs/**"
-      - "apps/landing-page/src/components/**"
-      - "apps/landing-page/src/app/**/page.tsx"
+      - "apps/landing/src/components/**"
+      - "apps/landing/src/app/**/page.tsx"
       - ".github/workflows/chromatic.yml"
       - ".github/actions/setup-node-pnpm/action.yml"
 

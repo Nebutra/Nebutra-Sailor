@@ -42,7 +42,7 @@ Local proof (2026-07-22): `pnpm --filter @nebutra/web run build:next` emits
 - Plan: **Hobby** — `api-deployments-free-per-day` **100**,
   `concurrentBuilds: 1`.
 - On 2026-07-22 the daily quota was exhausted mainly by
-  `nebutra-sailor-landing-page` + `tsekaluk-dev` auto-deploys on every main
+  `nebutra-sailor-landing` + `tsekaluk-dev` auto-deploys on every main
   push (ignore step still creates a deployment slot).
 - Mitigations applied: dashboard buildCommand → `build:next`; deploy hooks
   `manual-main` on web/auth; **auto-deploy disabled** on non-cutover

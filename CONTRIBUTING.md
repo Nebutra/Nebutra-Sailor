@@ -253,7 +253,7 @@ All CI checks must pass before we can merge. (Don't worry—we can help fix issu
 pnpm --filter @nebutra/storybook dev
 
 # Start the landing page locally
-pnpm --filter @nebutra/landing-page dev
+pnpm --filter @nebutra/landing dev
 
 # Start the web dashboard
 pnpm --filter @nebutra/web dev

@@ -57,7 +57,7 @@ describe("lighthouse dashboard ci harness", () => {
 
   it("keeps the empty blog placeholder out of Sanity metadata fetches", async () => {
     const blogPostPage = await readFile(
-      join(process.cwd(), "apps/landing-page/src/app/[lang]/(marketing)/blog/[slug]/page.tsx"),
+      join(process.cwd(), "apps/landing/src/app/[lang]/(marketing)/blog/[slug]/page.tsx"),
       "utf8",
     );
     // The architectural invariant: the placeholder slug is declared, cached,
@@ -78,8 +78,8 @@ describe("lighthouse dashboard ci harness", () => {
 
   it("keeps Next prerender feed fetch cancellations out of CI error logs", async () => {
     const feedRoutes = [
-      "apps/landing-page/src/app/api/changelog/rss/route.ts",
-      "apps/landing-page/src/app/api/changelog/atom/route.ts",
+      "apps/landing/src/app/api/changelog/rss/route.ts",
+      "apps/landing/src/app/api/changelog/atom/route.ts",
     ];
 
     for (const route of feedRoutes) {

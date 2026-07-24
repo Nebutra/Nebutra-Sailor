@@ -9,18 +9,18 @@ function readFromRepo(relativePath: string) {
 
 describe("UI/UX audit remediation invariants", () => {
   it("removes raw indigo Tailwind accents from key landing components", () => {
-    const hero = readFromRepo("apps/landing-page/src/components/landing/HeroSection.tsx");
-    const cta = readFromRepo("apps/landing-page/src/components/landing/FinalCTA.tsx");
-    const navbar = readFromRepo("apps/landing-page/src/components/landing/Navbar.tsx");
-    const features = readFromRepo("apps/landing-page/src/components/landing/FeatureCards.tsx");
+    const hero = readFromRepo("apps/landing/src/components/landing/HeroSection.tsx");
+    const cta = readFromRepo("apps/landing/src/components/landing/FinalCTA.tsx");
+    const navbar = readFromRepo("apps/landing/src/components/landing/Navbar.tsx");
+    const features = readFromRepo("apps/landing/src/components/landing/FeatureCards.tsx");
 
     const critical = [hero, cta, navbar, features].join("\n");
     expect(critical).not.toMatch(/indigo-\d+/);
   });
 
   it("uses AnimateIn APIs instead of raw framer-motion primitives in hero surfaces", () => {
-    const hero = readFromRepo("apps/landing-page/src/components/landing/HeroSection.tsx");
-    const cta = readFromRepo("apps/landing-page/src/components/landing/FinalCTA.tsx");
+    const hero = readFromRepo("apps/landing/src/components/landing/HeroSection.tsx");
+    const cta = readFromRepo("apps/landing/src/components/landing/FinalCTA.tsx");
 
     expect(hero).not.toMatch(/motion\./);
     expect(cta).not.toMatch(/motion\./);
@@ -29,15 +29,15 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("avoids raw framer-motion usage in shared landing controls", () => {
-    const navbar = readFromRepo("apps/landing-page/src/components/landing/Navbar.tsx");
-    const themeSwitcher = readFromRepo("apps/landing-page/src/components/ui/theme-switcher.tsx");
+    const navbar = readFromRepo("apps/landing/src/components/landing/Navbar.tsx");
+    const themeSwitcher = readFromRepo("apps/landing/src/components/ui/theme-switcher.tsx");
 
     expect(navbar).not.toMatch(/motion\./);
     expect(themeSwitcher).not.toMatch(/motion\./);
   });
 
   it("aligns PWA theme color with Nebutra brand blue", () => {
-    const manifest = readFromRepo("apps/landing-page/src/app/manifest.ts");
+    const manifest = readFromRepo("apps/landing/src/app/manifest.ts");
     const helper = readFromRepo("packages/design/brand/src/metadata-helpers.ts");
     expect(manifest).toContain("buildPwaManifest");
     expect(helper).toContain('theme_color: colors.primary["500"]');
@@ -61,7 +61,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps app icons aligned with Nebutra blue-cyan gradient", () => {
-    const appleIcon = readFromRepo("apps/landing-page/src/app/apple-icon.tsx");
+    const appleIcon = readFromRepo("apps/landing/src/app/apple-icon.tsx");
 
     expect(appleIcon).toContain("hsl(var(--primary))");
     expect(appleIcon).toContain("#0BF1C3");
@@ -70,29 +70,27 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps Twitter OG dimensions and branding consistent with OpenGraph", () => {
-    const twitterImage = readFromRepo("apps/landing-page/src/app/twitter-image.tsx");
+    const twitterImage = readFromRepo("apps/landing/src/app/twitter-image.tsx");
     expect(twitterImage).toContain("width: 1200");
     expect(twitterImage).toContain("height: 630");
     expect(twitterImage).toMatch(/Nebutra Sailor|Sailor/);
   });
 
   it("enables lazy-loaded sections on the localized marketing page", () => {
-    const marketingPage = readFromRepo("apps/landing-page/src/app/[lang]/(marketing)/page.tsx");
+    const marketingPage = readFromRepo("apps/landing/src/app/[lang]/(marketing)/page.tsx");
     expect(marketingPage).toMatch(/dynamic\(/);
   });
 
   it("defines page-level marketing metadata on localized home route", () => {
-    const marketingPage = readFromRepo("apps/landing-page/src/app/[lang]/(marketing)/page.tsx");
+    const marketingPage = readFromRepo("apps/landing/src/app/[lang]/(marketing)/page.tsx");
 
     expect(marketingPage).toContain("export async function generateMetadata");
     expect(marketingPage).toContain('namespace: "metadata"');
   });
 
   it("uses fluid hero typography and responsive product grids", () => {
-    const hero = readFromRepo("apps/landing-page/src/components/landing/HeroSection.tsx");
-    const productDemo = readFromRepo(
-      "apps/landing-page/src/components/landing/ProductDemoSection.tsx",
-    );
+    const hero = readFromRepo("apps/landing/src/components/landing/HeroSection.tsx");
+    const productDemo = readFromRepo("apps/landing/src/components/landing/ProductDemoSection.tsx");
 
     // The 2026 landing sweep (commit a6a32240) replaced clamp() with a
     // Tailwind responsive scale anchored to design-token tracking/leading
@@ -298,8 +296,8 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("adds container-query based responsive behavior for key landing sections", () => {
-    const globals = readFromRepo("apps/landing-page/src/app/globals.css");
-    const featureCards = readFromRepo("apps/landing-page/src/components/landing/FeatureCards.tsx");
+    const globals = readFromRepo("apps/landing/src/app/globals.css");
+    const featureCards = readFromRepo("apps/landing/src/components/landing/FeatureCards.tsx");
 
     expect(globals).toContain("@container product-demo");
     expect(globals).toContain("@container feature-cards");
@@ -372,7 +370,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("includes skip-to-content links in both app layouts", () => {
-    const landingLayout = readFromRepo("apps/landing-page/src/app/[lang]/layout.tsx");
+    const landingLayout = readFromRepo("apps/landing/src/app/[lang]/layout.tsx");
     const webLayout = readFromRepo("apps/web/src/app/layout.tsx");
 
     expect(landingLayout).toMatch(/main-content|skip/i);
@@ -380,7 +378,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("uses safe JSON-LD script injection without dangerouslySetInnerHTML", () => {
-    const landingLayout = readFromRepo("apps/landing-page/src/app/[lang]/layout.tsx");
+    const landingLayout = readFromRepo("apps/landing/src/app/[lang]/layout.tsx");
 
     expect(landingLayout).toContain("toSafeJsonLd");
     expect(landingLayout).toContain('type="application/ld+json"');
@@ -388,7 +386,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("about page exists in marketing route group", () => {
-    const aboutPage = readFromRepo("apps/landing-page/src/app/[lang]/(marketing)/about/page.tsx");
+    const aboutPage = readFromRepo("apps/landing/src/app/[lang]/(marketing)/about/page.tsx");
 
     // Page moved from (legal) to (marketing) route group
     expect(aboutPage).toBeTruthy();

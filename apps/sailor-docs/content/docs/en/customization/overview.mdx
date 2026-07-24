@@ -32,7 +32,7 @@ Customization follows a strictly unidirectional token flow. Changes at a lower l
 @nebutra/ui       ← Components consume tokens; add new components here
       ↓
 apps/web          ← Dashboard pages compose components
-apps/landing-page ← Marketing site composes components
+apps/landing ← Marketing site composes components
 ```
 
 Because every color and spacing value in `@nebutra/ui` is a CSS variable reference (never a hardcoded hex), updating `packages/design/tokens/styles.css` — or running the palette script — cascades through the entire product.

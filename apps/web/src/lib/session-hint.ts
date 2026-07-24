@@ -13,7 +13,7 @@
  *  - `apps/web/src/app/api/auth/[...all]/route.ts` calls `applySessionHint`
  *    on every response; success paths under /sign-in, /sign-up, /callback
  *    set it, /sign-out clears it.
- *  - `apps/landing-page/src/proxy.ts` reads `nebutra_session_hint` and
+ *  - `apps/landing/src/proxy.ts` reads `nebutra_session_hint` and
  *    redirects root + bare-locale roots to `${NEXT_PUBLIC_APP_URL}/dashboard`
  *    when the value is `"1"`.
  *

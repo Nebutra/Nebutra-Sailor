@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Minimal Playwright config for Sleptons community E2E tests.
- * Only starts the two servers needed: landing-page + community.
+ * Only starts the two servers needed: landing + community.
  *
  * Sister configs in this directory: playwright.config.ts (smoke, all 4
  * servers) and playwright.golden.config.ts (post-deploy, no webServer).
@@ -27,7 +27,7 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: "pnpm --filter @nebutra/landing-page dev",
+      command: "pnpm --filter @nebutra/landing dev",
       url: "http://localhost:3000",
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,

@@ -188,7 +188,7 @@ describe("AppId", () => {
   it("accepts all 8 app IDs", () => {
     const ids = [
       "web",
-      "landing-page",
+      "landing",
       "blog",
       "admin",
       "api-gateway",
@@ -290,7 +290,7 @@ export const PresetId = z.enum([
 
 export const AppId = z.enum([
   "web",
-  "landing-page",
+  "landing",
   "blog",
   "admin",
   "api-gateway",
@@ -465,18 +465,18 @@ describe("presets", () => {
 
   // Scenario-specific spot checks from the mapping table
   describe("scenario mapping", () => {
-    it("ai-saas enables web, landing-page, api-gateway; disables blog", () => {
+    it("ai-saas enables web, landing, api-gateway; disables blog", () => {
       const p = presets["ai-saas"];
       expect(p.apps.web).toBe(true);
-      expect(p.apps["landing-page"]).toBe(true);
+      expect(p.apps["landing"]).toBe(true);
       expect(p.apps["api-gateway"]).toBe(true);
       expect(p.apps.blog).toBe(false);
       expect(p.theme).toBe("neon");
     });
 
-    it("marketing enables landing-page, blog, studio; disables web", () => {
+    it("marketing enables landing, blog, studio; disables web", () => {
       const p = presets["marketing"];
-      expect(p.apps["landing-page"]).toBe(true);
+      expect(p.apps["landing"]).toBe(true);
       expect(p.apps.blog).toBe(true);
       expect(p.apps.studio).toBe(true);
       expect(p.apps.web).toBe(false);
@@ -515,7 +515,7 @@ export const aiSaas: PresetDefinition = {
     "AI-powered SaaS with billing, multi-tenancy, and provider abstraction",
   apps: {
     web: true,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": true,
     studio: true,
     blog: false,
@@ -553,7 +553,7 @@ export const marketing: PresetDefinition = {
   description: "Marketing-focused with blog, CMS, and analytics",
   apps: {
     web: false,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": false,
     studio: true,
     blog: true,
@@ -592,7 +592,7 @@ export const dashboard: PresetDefinition = {
     "Data-dense dashboard with billing, audit, SSO, and real-time updates",
   apps: {
     web: true,
-    "landing-page": false,
+    "landing": false,
     "api-gateway": true,
     studio: false,
     blog: false,
@@ -630,7 +630,7 @@ export const overseas: PresetDefinition = {
   description: "AI SaaS with dual billing, i18n, and overseas growth",
   apps: {
     web: true,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": true,
     studio: false,
     blog: true,
@@ -669,7 +669,7 @@ export const growth: PresetDefinition = {
     "Growth-focused with waitlist, referrals, A/B testing, and community",
   apps: {
     web: true,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": false,
     studio: false,
     blog: true,
@@ -707,7 +707,7 @@ export const creative: PresetDefinition = {
   description: "Visual-first portfolio with Storybook, blog, and bold theming",
   apps: {
     web: false,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": false,
     studio: false,
     blog: true,
@@ -745,7 +745,7 @@ export const blogPortfolio: PresetDefinition = {
   description: "Clean blog with CMS, search, newsletter, and community",
   apps: {
     web: false,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": false,
     studio: false,
     blog: true,
@@ -783,7 +783,7 @@ export const community: PresetDefinition = {
   description: "Community platform with search, real-time, blog, and growth",
   apps: {
     web: true,
-    "landing-page": false,
+    "landing": false,
     "api-gateway": true,
     studio: false,
     blog: true,
@@ -822,7 +822,7 @@ export const onePerson: PresetDefinition = {
     "Full-stack solo founder setup with billing, AI, blog, and admin",
   apps: {
     web: true,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": false,
     studio: false,
     blog: true,
@@ -860,7 +860,7 @@ export const full: PresetDefinition = {
   description: "Everything enabled — development default",
   apps: {
     web: true,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": true,
     studio: true,
     blog: true,
@@ -964,7 +964,7 @@ import type { ResolvedConfig } from "../config";
 const mockConfig: ResolvedConfig = {
   apps: {
     web: true,
-    "landing-page": true,
+    "landing": true,
     "api-gateway": true,
     studio: false,
     blog: false,
@@ -1014,7 +1014,7 @@ describe("getFeatureEnvVars", () => {
 describe("getActiveApps", () => {
   it("returns only enabled app IDs", () => {
     const apps = getActiveApps(mockConfig);
-    expect(apps).toEqual(["web", "landing-page", "api-gateway", "admin"]);
+    expect(apps).toEqual(["web", "landing", "api-gateway", "admin"]);
   });
 });
 
@@ -1022,7 +1022,7 @@ describe("getActivePackages", () => {
   it("maps app IDs to package names", () => {
     const packages = getActivePackages(mockConfig);
     expect(packages).toContain("@nebutra/web");
-    expect(packages).toContain("@nebutra/landing-page");
+    expect(packages).toContain("@nebutra/landing");
     expect(packages).toContain("@nebutra/gateway");
     expect(packages).toContain("@nebutra/admin");
     expect(packages).not.toContain("@nebutra/blog");
@@ -1044,7 +1044,7 @@ import { AppId } from "./config";
 
 const APP_PACKAGE_MAP: Record<string, string> = {
   web: "@nebutra/web",
-  "landing-page": "@nebutra/landing-page",
+  "landing": "@nebutra/landing",
   blog: "@nebutra/blog",
   admin: "@nebutra/admin",
   "api-gateway": "@nebutra/gateway",
@@ -1262,17 +1262,17 @@ Add these scripts to root `package.json` under `"scripts"`:
 
 ```json
 {
-  "dev:ai-saas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
-  "dev:marketing": "turbo run dev --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/studio",
+  "dev:ai-saas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing --filter=@nebutra/gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
+  "dev:marketing": "turbo run dev --filter=@nebutra/landing --filter=@nebutra/blog --filter=@nebutra/studio",
   "dev:dashboard": "turbo run dev --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/gateway",
-  "dev:overseas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/gateway --filter=@nebutra/blog",
-  "dev:growth": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/blog",
-  "dev:creative": "turbo run dev --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/storybook",
-  "dev:blog": "turbo run dev --filter=@nebutra/landing-page --filter=@nebutra/blog",
+  "dev:overseas": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing --filter=@nebutra/gateway --filter=@nebutra/blog",
+  "dev:growth": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing --filter=@nebutra/blog",
+  "dev:creative": "turbo run dev --filter=@nebutra/landing --filter=@nebutra/blog --filter=@nebutra/storybook",
+  "dev:blog": "turbo run dev --filter=@nebutra/landing --filter=@nebutra/blog",
   "dev:community": "turbo run dev --filter=@nebutra/web --filter=@nebutra/gateway --filter=@nebutra/blog",
-  "dev:solo": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/admin --filter=@nebutra/blog",
-  "build:ai-saas": "turbo run build --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
-  "build:marketing": "turbo run build --filter=@nebutra/landing-page --filter=@nebutra/blog --filter=@nebutra/studio",
+  "dev:solo": "turbo run dev --filter=@nebutra/web --filter=@nebutra/landing --filter=@nebutra/admin --filter=@nebutra/blog",
+  "build:ai-saas": "turbo run build --filter=@nebutra/web --filter=@nebutra/landing --filter=@nebutra/gateway --filter=@nebutra/studio --filter=@nebutra/admin --filter=@nebutra/docs-hub",
+  "build:marketing": "turbo run build --filter=@nebutra/landing --filter=@nebutra/blog --filter=@nebutra/studio",
   "build:dashboard": "turbo run build --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/gateway",
   "preset:env": "tsx packages/ops/preset/src/cli.ts"
 }
@@ -1762,8 +1762,8 @@ git commit -m "feat(theme): add CSS-only theme engine with 6 scenario presets"
 
 **Files:**
 
-- Modify: `apps/landing-page/src/app/globals.css` (add themes.css import)
-- Modify: `apps/landing-page/src/app/providers.tsx` (update next-themes config)
+- Modify: `apps/landing/src/app/globals.css` (add themes.css import)
+- Modify: `apps/landing/src/app/providers.tsx` (update next-themes config)
 - Modify: `apps/web/src/app/globals.css` (add themes.css import)
 - Check/Modify: `apps/web/src/app/providers.tsx` or equivalent (update next-themes config)
 
@@ -1771,12 +1771,12 @@ git commit -m "feat(theme): add CSS-only theme engine with 6 scenario presets"
 
 Read these files before editing:
 
-- `apps/landing-page/src/app/globals.css`
+- `apps/landing/src/app/globals.css`
 - `apps/web/src/app/globals.css`
-- `apps/landing-page/src/app/providers.tsx`
+- `apps/landing/src/app/providers.tsx`
 - `apps/web/src/app/providers.tsx` (may not exist — check `apps/web/src/app/layout.tsx`)
 
-**Step 2: Add themes.css import to landing-page globals.css**
+**Step 2: Add themes.css import to landing globals.css**
 
 Add this line near the top of the file, AFTER `@import "tailwindcss"` and BEFORE `@custom-variant`:
 
@@ -1784,7 +1784,7 @@ Add this line near the top of the file, AFTER `@import "tailwindcss"` and BEFORE
 @import "@nebutra/theme/themes.css";
 ```
 
-**Step 3: Update landing-page providers.tsx**
+**Step 3: Update landing providers.tsx**
 
 Change next-themes config from:
 
@@ -1819,7 +1819,7 @@ Same pattern — add after `@import "tailwindcss"` (or equivalent import):
 
 **Step 5: Wire next-themes in web app**
 
-Check if `apps/web` already has a providers component. If not, create one following the same pattern as landing-page. Configure:
+Check if `apps/web` already has a providers component. If not, create one following the same pattern as landing. Configure:
 
 ```typescript
 <NextThemesProvider
@@ -1835,20 +1835,20 @@ Check if `apps/web` already has a providers component. If not, create one follow
 Ensure apps have @nebutra/theme as a workspace dependency:
 
 ```bash
-pnpm --filter @nebutra/landing-page add @nebutra/theme@workspace:*
+pnpm --filter @nebutra/landing add @nebutra/theme@workspace:*
 pnpm --filter @nebutra/web add @nebutra/theme@workspace:*
 ```
 
 **Step 7: Verify dev server starts**
 
-Run: `pnpm --filter @nebutra/landing-page dev`
+Run: `pnpm --filter @nebutra/landing dev`
 Expected: Dev server starts without CSS errors. Page renders with neon theme colors.
 
 **Step 8: Commit**
 
 ```bash
-git add apps/landing-page/ apps/web/ packages/design/theme/
-git commit -m "feat(theme): wire themes.css into landing-page and web apps"
+git add apps/landing/ apps/web/ packages/design/theme/
+git commit -m "feat(theme): wire themes.css into landing and web apps"
 ```
 
 ---
@@ -1905,7 +1905,7 @@ describe("preset → theme integration", () => {
 
     // Apps
     expect(activeApps).toContain("web");
-    expect(activeApps).toContain("landing-page");
+    expect(activeApps).toContain("landing");
     expect(activeApps).not.toContain("blog");
 
     // Features
@@ -1926,8 +1926,8 @@ describe("preset → theme integration", () => {
     });
     const resolved = resolveConfig(config);
 
-    // From preset: landing-page=true
-    expect(resolved.apps["landing-page"]).toBe(true);
+    // From preset: landing=true
+    expect(resolved.apps["landing"]).toBe(true);
     // Override: web=true (was false in marketing)
     expect(resolved.apps.web).toBe(true);
     // Override: ai=true (was false in marketing)
@@ -1948,9 +1948,9 @@ Expected: ALL PASS
 Run: `pnpm --filter @nebutra/preset typecheck && pnpm --filter @nebutra/theme typecheck`
 Expected: SUCCESS
 
-**Step 4: Run full monorepo build (landing-page)**
+**Step 4: Run full monorepo build (landing)**
 
-Run: `pnpm --filter @nebutra/landing-page build`
+Run: `pnpm --filter @nebutra/landing build`
 Expected: Build succeeds — themes.css is bundled correctly
 
 **Step 5: Commit**
@@ -1993,14 +1993,14 @@ Expected: >80% coverage on config.ts, feature-map.ts, presets/index.ts
 Run: `pnpm preset:env`
 Expected: Clean env var output matching ai-saas preset
 
-**Step 6: Verify landing-page builds**
+**Step 6: Verify landing builds**
 
-Run: `pnpm --filter @nebutra/landing-page build`
+Run: `pnpm --filter @nebutra/landing build`
 Expected: Build succeeds
 
 **Step 7: Manual dev verification (if time permits)**
 
-Run: `pnpm --filter @nebutra/landing-page dev`
+Run: `pnpm --filter @nebutra/landing dev`
 Verify in browser:
 
 - `http://localhost:3000` → renders with neon theme colors
@@ -2021,7 +2021,7 @@ Verify in browser:
 | 6    | Root nebutra.config.ts + scripts    | root                        |
 | 7    | Scaffold packages/theme             | @nebutra/theme              |
 | 8    | themes.css with 6 presets           | @nebutra/theme              |
-| 9    | Wire themes into app layouts        | apps/landing-page, apps/web |
+| 9    | Wire themes into app layouts        | apps/landing, apps/web |
 | 10   | Integration tests                   | @nebutra/preset             |
 | 11   | Final cleanup + verification        | all                         |
 

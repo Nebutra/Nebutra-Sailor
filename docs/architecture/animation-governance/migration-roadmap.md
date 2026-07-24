@@ -5,7 +5,7 @@
 - Added the shared motion facade through `@nebutra/ui/components`.
 - Kept animation CSS internal to `@nebutra/ui`.
 - Added app facades for `@/shared/motion`.
-- Moved landing GSAP infrastructure to `apps/landing-page/src/shared/animation/gsap`.
+- Moved landing GSAP infrastructure to `apps/landing/src/shared/animation/gsap`.
 - Added `pnpm animation:governance`.
 - Added architecture reports.
 - Added the CI animation governance gate to `.github/workflows/ci.yml`.

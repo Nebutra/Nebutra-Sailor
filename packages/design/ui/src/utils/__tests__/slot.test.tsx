@@ -7,7 +7,7 @@ import { Slot } from "../slot";
  * pipelines can produce. The original implementation used `React.Children.only`,
  * which throws when `children` is a single-element array (e.g. `[<a/>]`) even
  * though `React.Children.count` reports 1 — a real failure mode hit during the
- * 2026-05-13 landing-page deploy. We resolve via `Children.toArray` instead.
+ * 2026-05-13 landing deploy. We resolve via `Children.toArray` instead.
  */
 describe("Slot — must not throw on any valid JSX shape", () => {
   it("clones a single element child", () => {

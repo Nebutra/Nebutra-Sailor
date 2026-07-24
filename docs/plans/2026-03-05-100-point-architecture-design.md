@@ -15,7 +15,7 @@ Status: Approved
 
 ### WS1: Token Codemod + ESLint Rule
 
-**Scope:** `packages/design/ui/src/`, `apps/web/src/`, `apps/landing-page/src/`, `eslint.config.mjs`
+**Scope:** `packages/design/ui/src/`, `apps/web/src/`, `apps/landing/src/`, `eslint.config.mjs`
 
 **Deliverables:**
 1. `scripts/codemod-tokens.ts` — regex-based transformer:

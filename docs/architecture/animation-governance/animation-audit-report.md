@@ -37,9 +37,9 @@ Product:
 
 Marketing:
 
-- `apps/landing-page/src/components/landing/*` consumes Motion through `@/shared/motion` for local controls.
+- `apps/landing/src/components/landing/*` consumes Motion through `@/shared/motion` for local controls.
 - `packages/design/ui/src/marketing/*` consumes Motion through the shared design-system layer.
-- `apps/landing-page/src/shared/animation/gsap/*` is the new approved GSAP layer.
+- `apps/landing/src/shared/animation/gsap/*` is the new approved GSAP layer.
 - `packages/design/ui/src/marketing/cosmic-spectrum.tsx` is now static UI; the old CDN/window GSAP dependency has been removed.
 
 Documentation:
@@ -53,9 +53,9 @@ Documentation:
 
 Approved:
 
-- `apps/landing-page/src/shared/animation/gsap/helpers/runtime.ts`
-- `apps/landing-page/src/shared/animation/gsap/hooks/*`
-- `apps/landing-page/src/shared/animation/gsap/timelines/*`
+- `apps/landing/src/shared/animation/gsap/helpers/runtime.ts`
+- `apps/landing/src/shared/animation/gsap/hooks/*`
+- `apps/landing/src/shared/animation/gsap/timelines/*`
 
 No legacy GSAP exceptions remain.
 

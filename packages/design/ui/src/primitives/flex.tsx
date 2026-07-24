@@ -9,7 +9,7 @@ import { cn } from "../utils/cn";
  *
  * Arranges children in a horizontal row with consistent spacing.
  *
- * @see apps/landing-page/DESIGN.md Section 10.1
+ * @see apps/landing/DESIGN.md Section 10.1
  */
 
 export interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {

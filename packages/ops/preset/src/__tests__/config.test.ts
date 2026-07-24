@@ -57,7 +57,7 @@ describe("AppId", () => {
   it("accepts all 8 app IDs", () => {
     const ids = [
       "web",
-      "landing-page",
+      "landing",
       "blog",
       "admin",
       "api-gateway",

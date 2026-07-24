@@ -10,7 +10,7 @@ import {
 
 export const AppId = z.enum([
   "web",
-  "landing-page",
+  "landing",
   "blog",
   "admin",
   "api-gateway",
@@ -74,7 +74,7 @@ const DeployTargetsSchema = z
 
 const DEFAULT_APPS: Record<z.infer<typeof AppId>, boolean> = {
   web: true,
-  "landing-page": true,
+  landing: true,
   blog: true,
   admin: true,
   "api-gateway": true,

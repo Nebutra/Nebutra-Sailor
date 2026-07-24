@@ -296,7 +296,7 @@ Reuse:
   `@nebutra/document-pipeline`
 - `@nebutra/queue`, `@nebutra/vault`, `@nebutra/audit`,
   `@nebutra/feature-flags`
-- landing-page, blog, docs, and admin patterns
+- landing, blog, docs, and admin patterns
 
 New build:
 
