@@ -55,7 +55,7 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: `pnpm --filter @nebutra/landing-page exec next dev --webpack --port ${e2ePorts.landing}`,
+      command: `pnpm --filter @nebutra/landing exec next dev --webpack --port ${e2ePorts.landing}`,
       url: `${landingBaseUrl}${e2eHealthPath}`,
       reuseExistingServer: !process.env.CI,
       timeout: webServerTimeout,

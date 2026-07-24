@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/cn";
 
@@ -64,7 +65,7 @@ export async function AuthBanner({ className }: { className?: string }) {
         </div>
 
         <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-          © {new Date().getFullYear()} Nebutra
+          © {new Date().getFullYear()} {brand.name}
         </div>
       </div>
     </aside>

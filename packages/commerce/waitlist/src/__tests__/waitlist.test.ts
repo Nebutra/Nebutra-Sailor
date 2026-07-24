@@ -83,9 +83,9 @@ describe("Waitlist", () => {
     it("stores optional metadata", async () => {
       const entry = await waitlist.join({
         email: "user@test.com",
-        metadata: { source: "landing-page", plan: "pro" },
+        metadata: { source: "landing", plan: "pro" },
       });
-      expect(entry.metadata).toEqual({ source: "landing-page", plan: "pro" });
+      expect(entry.metadata).toEqual({ source: "landing", plan: "pro" });
     });
   });
 

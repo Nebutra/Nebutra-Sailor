@@ -218,7 +218,7 @@ These vapor-or-incomplete options were flagged in the audit but NOT fixed in thi
 
 ### Minor Changes
 
-- Sync the CLI with the wave 3-5 features shipped across `apps/web`, `apps/landing-page`, and `packages/*`:
+- Sync the CLI with the wave 3-5 features shipped across `apps/web`, `apps/landing`, and `packages/*`:
   - **Mail** — Resend + React Email templates rendered through `@nebutra/email`, mail-preview app refresh.
   - **Cron jobs** — scheduled handlers wired through `@nebutra/queue` + `vercel.json` crons. Toggle with `--cron-jobs=<bool>`.
   - **Billing polish** — pricing-plan grid, checkout route, active-plan endpoint, plan-aware UI gates.

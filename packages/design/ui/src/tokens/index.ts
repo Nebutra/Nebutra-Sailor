@@ -8,7 +8,7 @@
  *
  * VI Reference: packages/design/brand/assets/vi/full.md
  *
- * @see apps/landing-page/DESIGN.md Section 10
+ * @see apps/landing/DESIGN.md Section 10
  */
 
 // ─── Layer 3: Component Tokens ────────────────────────────────────────────────

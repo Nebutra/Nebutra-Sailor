@@ -89,7 +89,7 @@ variable "services" {
   type        = set(string)
   default = [
     "web",
-    "landing-page",
+    "landing",
     "api-gateway",
     "ai-service",
   ]

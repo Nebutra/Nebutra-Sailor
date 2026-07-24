@@ -1,3 +1,5 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { Project } from "./projects";
 
 const BASE_URL = "https://tsekaluk.dev";
@@ -13,8 +15,8 @@ export function personJsonLd() {
     jobTitle: "CEO & AI-Native Builder",
     worksFor: {
       "@type": "Organization",
-      name: "Nebutra Intelligence",
-      url: "https://nebutra.ai",
+      name: `${brand.name} Intelligence`,
+      url: getBrandOrigin("landing"),
     },
     knowsAbout: [
       "Artificial Intelligence",

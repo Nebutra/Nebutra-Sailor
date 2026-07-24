@@ -12,8 +12,8 @@ Nebutra-Sailor 开箱即提供完整的 SEO 基础设施。您无需安装第三
 | 静态元数据 | 内置 | 页面文件中的 `export const metadata` |
 | 动态元数据 | 内置 | 页面文件中的 `generateMetadata()` |
 | OG 图片生成 | 内置 | `@vercel/og`，通过 `opengraph-image.tsx` 约定 |
-| robots.txt | 内置 | `apps/landing-page/src/app/robots.ts` |
-| XML 网站地图 | 内置 | `apps/landing-page/src/app/sitemap.ts` |
+| robots.txt | 内置 | `apps/landing/src/app/robots.ts` |
+| XML 网站地图 | 内置 | `apps/landing/src/app/sitemap.ts` |
 | 规范 URL | 内置 | 通过 `metadata.alternates.canonical` 设置 |
 | 结构化数据（JSON-LD）| 内置 | 通过 layout 中的 `<script type="application/ld+json">` 注入 |
 | i18n hreflang | 内置 | `next-intl` + `metadata.alternates.languages` |
@@ -27,7 +27,7 @@ Next.js 16 提供了两种从 `page.tsx` 或 `layout.tsx` 文件导出元数据�
 
 对于标题和描述固定的页面，导出 `metadata` 对象：
 
-```typescript apps/landing-page/src/app/[lang]/page.tsx
+```typescript apps/landing/src/app/[lang]/page.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
 对于依赖路由参数的页面（如博客文章 slug），使用 `generateMetadata`：
 
-```typescript apps/landing-page/src/app/[lang]/blog/[slug]/page.tsx
+```typescript apps/landing/src/app/[lang]/blog/[slug]/page.tsx
 import type { Metadata } from "next";
 import { getPost } from "@/lib/sanity";
 
@@ -66,7 +66,7 @@ export async function generateMetadata({
 Nebutra 使用 Vercel 的 `@vercel/og` 库在边缘生成 Open Graph 图片。OG 图片通过 Next.js 文件系统约定定义：
 
 ```
-apps/landing-page/src/app/[lang]/blog/[slug]/opengraph-image.tsx
+apps/landing/src/app/[lang]/blog/[slug]/opengraph-image.tsx
 ```
 
 `opengraph-image.tsx` 文件导出一个 `ImageResponse`，使用 Satori 渲染器将 React 组件渲染为 PNG 图片。
@@ -100,7 +100,7 @@ export default async function OgImage({
 
 ## 结构化数据（JSON-LD）
 
-结构化数据通过 `<script>` 标签注入到 `apps/landing-page/src/app/[lang]/layout.tsx` 中。根 layout 包含 Organization 和 Website schema。各个页面（如博客文章）可以使用相同模式注入额外的 schema。
+结构化数据通过 `<script>` 标签注入到 `apps/landing/src/app/[lang]/layout.tsx` 中。根 layout 包含 Organization 和 Website schema。各个页面（如博客文章）可以使用相同模式注入额外的 schema。
 
 ```typescript layout.tsx（模式）
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -130,7 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 落地页通过 `next-intl` 支持 7 种语言。每个页面自动生成 `alternates.languages` 元数据，以便搜索引擎理解不同 URL 之间的语言关系。
 
-```typescript apps/landing-page/src/app/[lang]/page.tsx
+```typescript apps/landing/src/app/[lang]/page.tsx
 export async function generateMetadata({
   params,
 }: {

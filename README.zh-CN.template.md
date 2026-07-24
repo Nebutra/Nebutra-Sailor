@@ -531,7 +531,7 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
 ```
 {{repo.name}}/
 ├── apps/                      # 用户面应用 (Next.js)
-│   ├── landing-page/      # 营销官网 (nebutra.com)
+│   ├── landing/      # 营销官网 (nebutra.com)
 │   ├── web/               # SaaS 主控台 (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
 │   ├── design-docs/       # 组件文档站 (Fumadocs)

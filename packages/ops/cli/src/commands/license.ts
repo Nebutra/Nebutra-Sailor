@@ -14,7 +14,7 @@ import {
   verifyScaffoldMeta,
 } from "../utils/scaffold-meta-verify";
 
-// Configurable base URL: falls back to production landing-page origin.
+// Configurable base URL: falls back to production landing origin.
 // Override with NEBUTRA_LICENSE_API_URL for self-hosted / local dev.
 const LICENSE_API_BASE = process.env.NEBUTRA_LICENSE_API_URL ?? "https://nebutra.com";
 

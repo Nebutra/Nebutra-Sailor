@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { BookOpen, Copy } from "@nebutra/icons";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -48,7 +49,7 @@ export function ProductDetail({
   const intro = useMemo(() => {
     return [
       `${model.publicModel} 是 ${providerLabel} 在「${categoryLabel}」货架上的可售模型。`,
-      `通过 Nebutra Router 使用 OpenAI 兼容接口调用，无需分别对接多家上游。`,
+      `通过 ${brand.name} Router 使用 OpenAI 兼容接口调用，无需分别对接多家上游。`,
       model.sellable || model.routed
         ? "当前货架状态：可售 / 已配置路由。"
         : "当前为目录参考价，连通供给库存后即可按量调用。",
@@ -111,7 +112,7 @@ export function ProductDetail({
       `输入: ${formatPrice(model.inputPerMTok)}/1M`,
       `输出: ${formatPrice(model.outputPerMTok)}/1M`,
       `上下文: ${model.context || "—"}`,
-      `接入: Nebutra Router OpenAI-compatible /api/v1/chat/completions`,
+      `接入: ${brand.name} Router OpenAI-compatible /api/v1/chat/completions`,
     ].join("\n");
     try {
       await navigator.clipboard.writeText(text);

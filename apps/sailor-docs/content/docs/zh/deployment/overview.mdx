@@ -22,7 +22,7 @@ description: Nebutra 生产部署方式 — Cloudflare 边缘、营销/文档走
   ▼
 Cloudflare DNS + 代理
   │
-  ├─── apps/landing-page     nebutra.com           → Vercel
+  ├─── apps/landing     nebutra.com           → Vercel
   ├─── apps/sailor-docs      docs.nebutra.com      → Vercel
   │
   ├─── apps/web              app.nebutra.com       → ECS（PM2 Next standalone）
@@ -37,7 +37,7 @@ Cloudflare DNS + 代理
 
 | 主机名 | 应用 | 稳态源站 |
 |--------|------|----------|
-| `nebutra.com` | `apps/landing-page` | Vercel |
+| `nebutra.com` | `apps/landing` | Vercel |
 | `docs.nebutra.com` | `apps/sailor-docs` | Vercel |
 | `app.nebutra.com` | `apps/web` | **ECS**（Vercel `nebutra-web` 为可选 cutover） |
 | `auth.nebutra.com` | `apps/auth` | **ECS** |

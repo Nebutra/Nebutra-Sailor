@@ -19,7 +19,7 @@
 #     (see infra/runtime/nginx/README.md for initial certificate setup)
 #   - .env file with production secrets in the repo root
 #
-# NOTE: Services `web`, `landing-page`, and `api-gateway` are defined here as
+# NOTE: Services `web`, `landing`, and `api-gateway` are defined here as
 # overrides anticipating their addition to docker-compose.yml (they are Next.js
 # and Node.js apps currently in development). Once added to the base file this
 # override will apply restart policies and resource limits to them automatically.
@@ -63,7 +63,7 @@ services:
       - nginx_logs:/var/log/nginx
     depends_on:
       - web
-      - landing-page
+      - landing
       - api-gateway
       - idp
     healthcheck:
@@ -128,7 +128,7 @@ services:
   # ===========================================================================
   # Next.js landing / marketing page
   # ===========================================================================
-  landing-page:
+  landing:
     <<: *restart-policy
     ports: []   # No direct host port
     healthcheck:

@@ -1,3 +1,5 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 /**
  * Default props for each template in REACT_EMAIL_TEMPLATES. Mirrors the
  * fixtures used by `scripts/render-react-templates.ts` so the live preview app
@@ -9,22 +11,22 @@
 export const TEMPLATE_FIXTURES: Record<string, Record<string, unknown>> = {
   welcome: {
     userName: "Ada Lovelace",
-    loginUrl: "https://app.nebutra.ai/login",
-    brandName: "Nebutra",
+    loginUrl: `${getBrandOrigin("app")}/login`,
+    brandName: brand.name,
   },
   passwordReset: {
     userName: "Ada Lovelace",
-    resetUrl: "https://app.nebutra.ai/reset?token=preview",
+    resetUrl: `${getBrandOrigin("app")}/reset?token=preview`,
     expiresInMinutes: 30,
-    brandName: "Nebutra",
+    brandName: brand.name,
   },
   invitation: {
     inviterName: "Grace Hopper",
-    organizationName: "Nebutra Engineering",
+    organizationName: `${brand.name} Engineering`,
     role: "admin",
-    acceptUrl: "https://app.nebutra.ai/invites/preview",
+    acceptUrl: `${getBrandOrigin("app")}/invites/preview`,
     expiresAt: "2026-06-01",
-    brandName: "Nebutra",
+    brandName: brand.name,
   },
   receipt: {
     customerName: "Ada Lovelace",
@@ -33,7 +35,7 @@ export const TEMPLATE_FIXTURES: Record<string, Record<string, unknown>> = {
     currency: "USD",
     periodStart: "2026-04-01",
     periodEnd: "2026-04-30",
-    downloadUrl: "https://app.nebutra.ai/receipts/INV-002468.pdf",
-    brandName: "Nebutra",
+    downloadUrl: `${getBrandOrigin("app")}/receipts/INV-002468.pdf`,
+    brandName: brand.name,
   },
 };

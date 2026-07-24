@@ -54,7 +54,7 @@ function discoverFiles(): string[] {
   const dirs = [
     join(ROOT, "packages/design/ui/src"),
     join(ROOT, "apps/web/src"),
-    join(ROOT, "apps/landing-page/src"),
+    join(ROOT, "apps/landing/src"),
   ];
 
   const allFiles: string[] = [];

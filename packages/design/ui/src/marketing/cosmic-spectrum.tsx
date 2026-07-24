@@ -201,7 +201,7 @@ function SpectrumBars({ colors, blur }: SpectrumBarsProps) {
  * CosmicSpectrum - Spectrum storytelling visualization
  *
  * A full-page marketing visualization with colorful spectrum bars.
- * GSAP timelines for landing pages belong in `apps/landing-page/src/shared/animation/gsap`.
+ * GSAP timelines for landing pages belong in `apps/landing/src/shared/animation/gsap`.
  *
  * @example
  * ```tsx

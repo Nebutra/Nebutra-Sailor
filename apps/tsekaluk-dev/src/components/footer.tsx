@@ -1,5 +1,7 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { ArrowRight, ArrowUpRight, Check, Rss } from "@nebutra/icons";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
@@ -121,13 +123,13 @@ export function Footer() {
             <span className="tracking-tight flex items-center gap-1.5">
               {t("built_with")}{" "}
               <a
-                href="https://github.com/Nebutra/Nebutra-Sailor"
+                href={`${brand.social.github}/${brand.name}-Sailor`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-4 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
                 title="open-source portfolio kit"
               >
-                Nebutra Sailor
+                {`${brand.name} Sailor`}
               </a>
             </span>
           </div>

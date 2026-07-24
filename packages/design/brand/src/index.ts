@@ -71,6 +71,11 @@ export {
   buildPwaManifest,
   buildSoftwareApplicationJsonLd,
   buildWebSiteJsonLd,
+  getBrandCookieDomain,
+  getBrandEmail,
+  getBrandMailFrom,
+  getBrandOrigin,
+  getBrandPublicUrls,
   getSiteMetadata,
   getSiteUrl,
 } from "./metadata-helpers";

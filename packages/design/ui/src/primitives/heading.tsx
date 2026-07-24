@@ -9,7 +9,7 @@ import { cn } from "../utils/cn";
  *
  * Renders h1-h6 elements with appropriate typography styling.
  *
- * @see apps/landing-page/DESIGN.md Section 10.7
+ * @see apps/landing/DESIGN.md Section 10.7
  */
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;

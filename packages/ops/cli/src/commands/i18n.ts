@@ -116,9 +116,9 @@ function _formatOutput(data: any, format?: string) {
 async function handleI18nSync(options: I18nCommandOptions) {
   logger.info("Syncing language files across the project...");
 
-  // First try the landing-page translate script (if it exists)
+  // First try the landing translate script (if it exists)
   const result = await pnpmRun("translate", {
-    filter: "landing-page",
+    filter: "landing",
     dryRun: options.dryRun,
     interactive: options.interactive ?? true,
   });

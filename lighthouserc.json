@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "url": ["http://localhost:3000"],
-      "startServerCommand": "pnpm --filter @nebutra/landing-page start",
+      "startServerCommand": "pnpm --filter @nebutra/landing start",
       "startServerReadyPattern": "ready on",
       "startServerReadyTimeout": 30000,
       "numberOfRuns": 1

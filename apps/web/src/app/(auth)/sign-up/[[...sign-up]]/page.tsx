@@ -4,6 +4,7 @@ import {
   getConfiguredAuthProvider,
   sanitizeReturnUrl,
 } from "@nebutra/auth";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
@@ -22,7 +23,7 @@ function resolveAppOrigin(headerStore: Headers): string {
   if (xfHost && !xfHost.startsWith("0.0.0.0") && xfHost !== "127.0.0.1" && xfHost !== "localhost") {
     return `${xfProto}://${xfHost}`;
   }
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://app.nebutra.com";
+  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || getBrandOrigin("app");
 }
 
 async function SignUpPageContent({ searchParams }: { searchParams: Promise<SearchParams> }) {

@@ -17,8 +17,8 @@ No code or configuration was changed by this review. Any ECS right-sizing decisi
 
 ### Observability
 
-- `apps/landing-page/src/instrumentation.ts` intentionally keeps the marketing app OpenTelemetry hook as a no-op to avoid bundling the shared OTel stack.
-- `apps/landing-page/src/lib/blog.ts` treats selected CMS/network failures as recoverable and returns `[]` or `null`. That prevents hard crashes, but a CMS outage can become an empty blog index or post 404 without a domain-level signal.
+- `apps/landing/src/instrumentation.ts` intentionally keeps the marketing app OpenTelemetry hook as a no-op to avoid bundling the shared OTel stack.
+- `apps/landing/src/lib/blog.ts` treats selected CMS/network failures as recoverable and returns `[]` or `null`. That prevents hard crashes, but a CMS outage can become an empty blog index or post 404 without a domain-level signal.
 - `packages/platform/logger/src/otel.ts` only initializes when `OTEL_ENABLED=true` and currently creates generic HTTP request/error counters.
 - `packages/platform/alerting/AGENTS.md` explicitly scopes alerting to low-level dispatch and in-memory error-rate tracking, not durable incident policy.
 - `packages/platform/alerting/src/index.ts` provides channel fan-out and process-local `trackError`, but it is not a cross-instance SLO or alert policy engine.

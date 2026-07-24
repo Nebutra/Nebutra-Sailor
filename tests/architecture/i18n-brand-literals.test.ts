@@ -13,7 +13,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const REPO_ROOT = resolve(__dirname, "../..");
-const MESSAGES_DIR = join(REPO_ROOT, "apps/landing-page/messages");
+const MESSAGES_DIR = join(REPO_ROOT, "apps/landing/messages");
 
 /** Raw brand identity strings that must NOT appear in message JSON values. */
 const BANNED_LITERALS = ["Nebutra", "云毓智能", "无锡云毓", "Wuxi Nebutra"];

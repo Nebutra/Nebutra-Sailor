@@ -61,7 +61,7 @@ Make sure the following are installed before you begin:
     ```bash
     cp apps/web/.env.example           apps/web/.env.local
     cp backends/gateway/.env.example   backends/gateway/.env.local
-    cp apps/landing-page/.env.example  apps/landing-page/.env.local
+    cp apps/landing/.env.example  apps/landing/.env.local
     ```
     Then open each `.env.local` and fill in your secrets. See the [Environment variables](#environment-variables) section below for a full reference.
   </Step>
@@ -101,7 +101,7 @@ Make sure the following are installed before you begin:
         ```bash
         pnpm dev:marketing
         ```
-        Starts `apps/landing-page` (port 3002) and `apps/studio` (port 3333).
+        Starts `apps/landing` (port 3002) and `apps/studio` (port 3333).
       </Tab>
     </Tabs>
     All apps support **Hot Module Replacement (HMR)**. Changes to source files apply instantly without a full page reload.
@@ -157,7 +157,7 @@ Make sure the following are installed before you begin:
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Yes | Stripe publishable key for client-side billing |
 | `DATABASE_URL` | Yes | PostgreSQL connection string (for Server Actions) |
 
-### `apps/landing-page`
+### `apps/landing`
 
 | Variable | Required | Description |
 |----------|----------|-------------|

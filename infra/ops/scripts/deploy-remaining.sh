@@ -67,11 +67,11 @@ export NEXT_TELEMETRY_DISABLED=1
 
 # 逐个构建，显示进度
 echo ">>> 构建 Landing Page..."
-if pnpm turbo build --filter=@nebutra/landing-page 2>&1 | tail -10; then
+if pnpm turbo build --filter=@nebutra/landing 2>&1 | tail -10; then
   log "Landing Page 构建成功"
 else
   warn "Landing Page 构建失败，尝试跳过类型检查..."
-  cd apps/landing-page && npx next build 2>&1 | tail -10 && cd "$PROJECT_DIR"
+  cd apps/landing && npx next build 2>&1 | tail -10 && cd "$PROJECT_DIR"
 fi
 
 echo ">>> 构建 Web App (Next standalone — build:next, not Vite)..."
@@ -105,8 +105,8 @@ cat > "$PROJECT_DIR/ecosystem.config.cjs" << 'PM2EOF'
 module.exports = {
   apps: [
     {
-      name: "landing-page",
-      cwd: "./apps/landing-page",
+      name: "landing",
+      cwd: "./apps/landing",
       script: "node_modules/.bin/next",
       args: "start -p 3001",
       env: {

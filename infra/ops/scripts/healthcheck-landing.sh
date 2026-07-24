@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Probe landing-page on the ECS box. Designed to run as a systemd timer
+# Probe landing on the ECS box. Designed to run as a systemd timer
 # every minute. If the probe fails 3 times in a row, restart PM2; if that
 # doesn't fix it within 5 minutes, escalate (log + optionally webhook).
 #
@@ -51,8 +51,8 @@ if (( fails >= MAX_FAILURES_BEFORE_RESTART )); then
     exit 2
   fi
 
-  echo "$(date -Is) ACTION pm2 restart landing-page"
-  pm2 restart landing-page --update-env >&2 || pm2 start /opt/nebutra/ecosystem.config.cjs --only landing-page >&2
+  echo "$(date -Is) ACTION pm2 restart landing"
+  pm2 restart landing --update-env >&2 || pm2 start /opt/nebutra/ecosystem.config.cjs --only landing >&2
   echo 0 > "$FAIL_FILE"
   echo "$now" > "$RESTART_FILE"
 fi

@@ -31,7 +31,7 @@
 
 **消费方：**
 - `apps/web`: `@nebutra/ui/components` + `@nebutra/ui/primitives` + `@nebutra/ui/layout` + `@nebutra/ui/utils`
-- `apps/landing-page`: `@nebutra/ui/primitives` + `@nebutra/ui/layouts` + `@nebutra/ui/typography`
+- `apps/landing`: `@nebutra/ui/primitives` + `@nebutra/ui/layouts` + `@nebutra/ui/typography`
 - `apps/storybook`: 全部 subpath
 
 ### 1.2 外部依赖图谱 (primitives 层)

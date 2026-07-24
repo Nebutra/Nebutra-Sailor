@@ -63,7 +63,15 @@ const DEFAULTS = {
   brandLiterals: {
     // Directories scanned for raw brand literals (app code + commerce + email).
     // Standard scaffold uses apps/ only (no commerce/integrations sub-packages).
-    governedPaths: ["apps", "packages/commerce", "packages/integrations/email"],
+    governedPaths: [
+      "apps",
+      "packages/commerce",
+      "packages/integrations",
+      "packages/platform",
+      "packages/ops",
+      "packages/iam",
+      "backends/gateway",
+    ],
     // Raw brand literal patterns to detect (regex strings). Covers:
     //   - Product name: Nebutra
     //   - Chinese brand names: 云毓智能, 云毓

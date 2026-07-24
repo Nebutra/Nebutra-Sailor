@@ -61,7 +61,7 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
     ```bash
     cp apps/web/.env.example           apps/web/.env.local
     cp backends/gateway/.env.example   backends/gateway/.env.local
-    cp apps/landing-page/.env.example  apps/landing-page/.env.local
+    cp apps/landing/.env.example  apps/landing/.env.local
     ```
     然后打开每个 `.env.local` 文件并填写您的密钥。完整的变量参考请参阅下方的[环境变量](#环境变量)章节。
   </Step>
@@ -101,7 +101,7 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
         ```bash
         pnpm dev:marketing
         ```
-        启动 `apps/landing-page`（端口 3002）和 `apps/studio`（端口 3333）。
+        启动 `apps/landing`（端口 3002）和 `apps/studio`（端口 3333）。
       </Tab>
     </Tabs>
     所有应用均支持**热模块替换（HMR）**。对源文件的修改无需完整页面刷新即可立即生效。
@@ -157,7 +157,7 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 是 | 客户端计费所用的 Stripe 可发布密钥 |
 | `DATABASE_URL` | 是 | PostgreSQL 连接字符串（用于 Server Actions） |
 
-### `apps/landing-page`
+### `apps/landing`
 
 | 变量 | 是否必填 | 说明 |
 |------|---------|------|

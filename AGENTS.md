@@ -27,7 +27,7 @@ AI coding agent onboarding guide for Cursor, Claude Code, Codex, Windsurf, and G
 
 ```
 apps/                  # User-facing apps (Next.js / Storybook / Mintlify)
-  landing-page/        # Public marketing site (Next.js 16, next-intl, 7 locales)
+  landing/        # Public marketing site (Next.js 16, next-intl, 7 locales)
   web/                 # Authenticated SaaS dashboard (Next.js 16, Clerk auth)
   storybook/           # Component library documentation (Storybook 8.x)
   design-docs/         # Internal design docs (Next.js + Fumadocs)
@@ -87,7 +87,7 @@ pnpm infra:lite        # lightweight (PostgreSQL only)
 # Start development
 pnpm dev               # all apps
 pnpm dev:dashboard     # web + api-gateway only
-pnpm dev:marketing     # landing-page + studio only
+pnpm dev:marketing     # landing + studio only
 
 # Run tests
 pnpm test              # unit tests (Vitest)

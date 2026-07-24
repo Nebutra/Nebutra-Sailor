@@ -1,6 +1,8 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { homedir, platform } from "node:os";
 import { join } from "node:path";
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 
 function getConfigDir(): string {
   if (platform() === "win32") {
@@ -40,9 +42,9 @@ export function maybeShowFirstRunBanner(): void {
   }
 
   const lines = [
-    "[36mℹ[0m Nebutra collects anonymous usage analytics to improve the CLI.",
+    `[36mℹ[0m ${brand.name} collects anonymous usage analytics to improve the CLI.`,
     "  Opt out at any time:  export NEBUTRA_TELEMETRY=0",
-    "  Privacy policy:       https://nebutra.com/legal/cli-analytics",
+    `  Privacy policy:       ${getBrandOrigin("landing")}/legal/cli-analytics`,
     "",
   ];
   try {

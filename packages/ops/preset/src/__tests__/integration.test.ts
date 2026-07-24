@@ -34,7 +34,7 @@ describe("config → theme integration", () => {
 
     // Apps
     expect(activeApps).toContain("web");
-    expect(activeApps).toContain("landing-page");
+    expect(activeApps).toContain("landing");
     expect(activeApps).not.toContain("blog");
 
     // Features
@@ -59,8 +59,8 @@ describe("config → theme integration", () => {
     });
     const resolved = resolveConfig(config);
 
-    // Default (unchanged): landing-page=true
-    expect(resolved.apps["landing-page"]).toBe(true);
+    // Default (unchanged): landing=true
+    expect(resolved.apps["landing"]).toBe(true);
     // Override: web=false
     expect(resolved.apps.web).toBe(false);
     // Override: ai=false

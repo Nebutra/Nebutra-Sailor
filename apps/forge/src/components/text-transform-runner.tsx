@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useCallback, useState } from "react";
@@ -36,7 +37,7 @@ export type TextTransformRunnerProps = {
  */
 export function TextTransformRunner({
   toolId,
-  sample = "Hello Nebutra 你好世界",
+  sample = "Hello ${brand.name} 你好世界",
   modes,
   defaultMode,
   modeField = "mode",

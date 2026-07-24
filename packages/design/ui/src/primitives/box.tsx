@@ -10,7 +10,7 @@ import { cn } from "../utils/cn";
  * A polymorphic box component that serves as the foundation for all layouts.
  * Supports spacing props that map to the token system.
  *
- * @see apps/landing-page/DESIGN.md Section 10.1
+ * @see apps/landing/DESIGN.md Section 10.1
  */
 
 export interface BoxOwnProps {

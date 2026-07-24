@@ -6,7 +6,7 @@
 #
 # Legend for ports:
 #   3000 — web (Next.js)
-#   3000 — landing-page (Next.js)
+#   3000 — landing (Next.js)
 #   3002 — api-gateway (Hono)
 #   3003 — studio (Sanity)
 #   8001 — ai-service (FastAPI)

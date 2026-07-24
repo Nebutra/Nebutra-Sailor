@@ -12,7 +12,7 @@ Read it in full before writing any code.
 
 ```
 apps/                  # User-facing apps (Next.js / Hono)
-  landing-page/        # Public marketing site (Next.js 16 + Tailwind v4)
+  landing/        # Public marketing site (Next.js 16 + Tailwind v4)
   web/                 # Authenticated dashboard (Next.js 16 + Tailwind v4)
   storybook/           # Component library documentation (Storybook 8.x)
   design-docs/         # Internal design docs (Next.js + Fumadocs)
@@ -95,10 +95,10 @@ import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/la
 // Icons — three-tier hierarchy (2026 governance, see also MEMORY.md):
 //   1. @nebutra/icons (Geist 541) — DEFAULT for product/app/dashboard surfaces (Vercel/v0 same visual)
 //   2. @phosphor-icons/react/light — ONLY for AI-brand thin/duotone weight in marketing surfaces
-//      (apps/landing-page/** + packages/design/ui/src/marketing/**) — lint-enforced
+//      (apps/landing/** + packages/design/ui/src/marketing/**) — lint-enforced
 //   3. lucide-react — DEPRECATED, ZERO new imports allowed (lint-enforced)
 import { MagnifyingGlass, SettingsGear, ChevronRight, Sparkles } from "@nebutra/icons";
-// import { Brain } from "@phosphor-icons/react/dist/ssr"; // only in apps/landing-page/** or packages/design/ui/src/marketing/**
+// import { Brain } from "@phosphor-icons/react/dist/ssr"; // only in apps/landing/** or packages/design/ui/src/marketing/**
 // CI guard: scripts/lint-phosphor-marketing-only.mjs (wired into `pnpm lint`) — Phosphor outside marketing = fail
 
 // Theme switching (light/dark) — from @nebutra/tokens
@@ -880,7 +880,7 @@ The **Design Tokens** section in Storybook shows:
 pnpm --filter @nebutra/ui typecheck     # typecheck component library
 pnpm --filter @nebutra/storybook dev          # start Storybook
 pnpm --filter @nebutra/storybook typecheck    # typecheck stories
-pnpm --filter @nebutra/landing-page dev       # start landing page
+pnpm --filter @nebutra/landing dev       # start landing page
 pnpm --filter @nebutra/web dev                # start dashboard
 node scripts/generate-palette.mjs --primary=#HEX --secondary=#HEX  # rebrand
 ```
@@ -959,7 +959,7 @@ selectors from `@nebutra/preset/deploy-target`:
 | Service | Default | Selector |
 |---|---|---|
 | `web` | `vercel` | `DEPLOY_TARGET_WEB` |
-| `landing-page` | `vercel` | `DEPLOY_TARGET_LANDING_PAGE` |
+| `landing` | `vercel` | `DEPLOY_TARGET_LANDING` |
 | `gateway` | `cloudflare-workers` | `DEPLOY_TARGET_GATEWAY` |
 | `python-ai` | `ecs-docker` | `DEPLOY_TARGET_PYTHON_AI` |
 

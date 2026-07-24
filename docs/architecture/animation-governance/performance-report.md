@@ -25,7 +25,7 @@ High:
 
 Mitigation:
 
-- Use only `apps/landing-page/src/shared/animation/gsap/hooks/*`.
+- Use only `apps/landing/src/shared/animation/gsap/hooks/*`.
 - Use `revertOnUpdate` by default.
 - Keep GSAP registration centralized.
 

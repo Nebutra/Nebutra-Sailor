@@ -10,6 +10,8 @@
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { brand, colors } from "@nebutra/brand/metadata";
+import { getBrandEmail, getBrandMailFrom, getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { REACT_EMAIL_TEMPLATES } from "../../../packages/integrations/email/src/templates/index";
 
 const distDir = new URL("../dist/", import.meta.url);
@@ -17,22 +19,22 @@ const distDir = new URL("../dist/", import.meta.url);
 const fixtures = {
   welcome: {
     userName: "Ada Lovelace",
-    loginUrl: "https://app.nebutra.ai/login",
-    brandName: "Nebutra",
+    loginUrl: `${getBrandOrigin("app")}/login`,
+    brandName: `${brand.name}`,
   },
   passwordReset: {
     userName: "Ada Lovelace",
-    resetUrl: "https://app.nebutra.ai/reset?token=preview",
+    resetUrl: `${getBrandOrigin("app")}/reset?token=preview`,
     expiresInMinutes: 30,
-    brandName: "Nebutra",
+    brandName: `${brand.name}`,
   },
   invitation: {
     inviterName: "Grace Hopper",
-    organizationName: "Nebutra Engineering",
+    organizationName: `${brand.name} Engineering`,
     role: "admin",
-    acceptUrl: "https://app.nebutra.ai/invites/preview",
+    acceptUrl: `${getBrandOrigin("app")}/invites/preview`,
     expiresAt: "2026-06-01",
-    brandName: "Nebutra",
+    brandName: `${brand.name}`,
   },
   receipt: {
     customerName: "Ada Lovelace",
@@ -41,8 +43,8 @@ const fixtures = {
     currency: "USD",
     periodStart: "2026-04-01",
     periodEnd: "2026-04-30",
-    downloadUrl: "https://app.nebutra.ai/receipts/INV-002468.pdf",
-    brandName: "Nebutra",
+    downloadUrl: `${getBrandOrigin("app")}/receipts/INV-002468.pdf`,
+    brandName: `${brand.name}`,
   },
 } as const;
 

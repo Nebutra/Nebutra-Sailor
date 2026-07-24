@@ -38,6 +38,6 @@ describe("loadPresetConfig", () => {
     expect(result.config.deployTargets.web).toBe("cloudflare-pages");
     expect(result.config.deployTargets.gateway).toBe("cloudflare-workers");
     expect(result.config.deployTargets["python-ai"]).toBe("ecs-docker");
-    expect(result.config.deployTargets["landing-page"]).toBe("vercel");
+    expect(result.config.deployTargets["landing"]).toBe("vercel");
   });
 });

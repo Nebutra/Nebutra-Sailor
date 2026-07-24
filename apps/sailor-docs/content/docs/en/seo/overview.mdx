@@ -12,8 +12,8 @@ Nebutra-Sailor ships with a complete SEO foundation out of the box. You do not n
 | Static metadata | Built in | `export const metadata` in page files |
 | Dynamic metadata | Built in | `generateMetadata()` in page files |
 | OG image generation | Built in | `@vercel/og` via `opengraph-image.tsx` convention |
-| Robots.txt | Built in | `apps/landing-page/src/app/robots.ts` |
-| XML sitemap | Built in | `apps/landing-page/src/app/sitemap.ts` |
+| Robots.txt | Built in | `apps/landing/src/app/robots.ts` |
+| XML sitemap | Built in | `apps/landing/src/app/sitemap.ts` |
 | Canonical URLs | Built in | Set via `metadata.alternates.canonical` |
 | Structured data (JSON-LD) | Built in | Injected via `<script type="application/ld+json">` in layout |
 | i18n hreflang | Built in | `next-intl` + `metadata.alternates.languages` |
@@ -27,7 +27,7 @@ Next.js 16 provides two ways to export metadata from any `page.tsx` or `layout.t
 
 For pages with fixed titles and descriptions, export a `metadata` object:
 
-```typescript apps/landing-page/src/app/[lang]/page.tsx
+```typescript apps/landing/src/app/[lang]/page.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
 For pages that depend on route parameters (e.g., a blog post slug), use `generateMetadata`:
 
-```typescript apps/landing-page/src/app/[lang]/blog/[slug]/page.tsx
+```typescript apps/landing/src/app/[lang]/blog/[slug]/page.tsx
 import type { Metadata } from "next";
 import { getPost } from "@/lib/sanity";
 
@@ -66,7 +66,7 @@ export async function generateMetadata({
 Nebutra uses Vercel's `@vercel/og` library to generate Open Graph images at the edge. OG images are defined using the Next.js file-system convention:
 
 ```
-apps/landing-page/src/app/[lang]/blog/[slug]/opengraph-image.tsx
+apps/landing/src/app/[lang]/blog/[slug]/opengraph-image.tsx
 ```
 
 The `opengraph-image.tsx` file exports an `ImageResponse` that renders a React component to a PNG image at request time, using the Satori renderer.
@@ -100,7 +100,7 @@ export default async function OgImage({
 
 ## Structured data (JSON-LD)
 
-Structured data is injected in `apps/landing-page/src/app/[lang]/layout.tsx` as a `<script>` tag. The root layout includes Organization and Website schemas. Individual pages (e.g., blog posts) can inject additional schemas using the same pattern.
+Structured data is injected in `apps/landing/src/app/[lang]/layout.tsx` as a `<script>` tag. The root layout includes Organization and Website schemas. Individual pages (e.g., blog posts) can inject additional schemas using the same pattern.
 
 ```typescript layout.tsx (pattern)
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -130,7 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 The landing page supports 7 locales via `next-intl`. Each page automatically generates `alternates.languages` metadata so search engines understand the language relationship between URLs.
 
-```typescript apps/landing-page/src/app/[lang]/page.tsx
+```typescript apps/landing/src/app/[lang]/page.tsx
 export async function generateMetadata({
   params,
 }: {

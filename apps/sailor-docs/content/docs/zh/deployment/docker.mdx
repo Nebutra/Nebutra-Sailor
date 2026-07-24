@@ -24,7 +24,7 @@ Docker 部署将所有服务 — 应用、数据库和支撑服务 — 运行在
 |------|------|------|------|
 | `web` | `nebutra/web` | 3000 | SaaS 控制台（Next.js） |
 | `api-gateway` | `nebutra/api-gateway` | 3001 | REST API（Hono） |
-| `landing-page` | `nebutra/landing-page` | 3002 | 营销网站（Next.js） |
+| `landing` | `nebutra/landing` | 3002 | 营销网站（Next.js） |
 | `postgres` | `postgres:16-alpine` | 5432 | 主数据库 |
 | `redis` | `redis:7-alpine` | 6379 | 缓存和队列 |
 | `clickhouse` | `clickhouse/clickhouse-server:24` | 8123 | 使用量计量 |
@@ -52,7 +52,7 @@ Docker 部署将所有服务 — 应用、数据库和支撑服务 — 运行在
         ```bash
         docker build -f apps/web/Dockerfile -t nebutra/web .
         docker build -f backends/gateway/Dockerfile -t nebutra/api-gateway .
-        docker build -f apps/landing-page/Dockerfile -t nebutra/landing-page .
+        docker build -f apps/landing/Dockerfile -t nebutra/landing .
         ```
         构建上下文必须是仓库根目录（`.`），以便 Turborepo 能访问共享包。
       </Tab>
@@ -167,7 +167,7 @@ api.yourdomain.com {
   </Step>
   <Step title="重新构建受影响的镜像">
     ```bash
-    docker compose build web api-gateway landing-page
+    docker compose build web api-gateway landing
     ```
   </Step>
   <Step title="在发布前执行迁移">
@@ -177,7 +177,7 @@ api.yourdomain.com {
   </Step>
   <Step title="滚动重启">
     ```bash
-    docker compose up -d --no-deps web api-gateway landing-page
+    docker compose up -d --no-deps web api-gateway landing
     ```
     `--no-deps` 标志可防止 Docker Compose 重启数据库服务。
   </Step>

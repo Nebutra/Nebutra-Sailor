@@ -23,7 +23,7 @@ export type DeployTarget =
 
 export const DEPLOYABLE_SERVICES = [
   "web",
-  "landing-page",
+  "landing",
   "design-docs",
   "sailor-docs",
   "gateway",
@@ -34,7 +34,7 @@ export type DeployableService = (typeof DEPLOYABLE_SERVICES)[number];
 
 const SERVICE_SURFACES = {
   web: "frontend",
-  "landing-page": "frontend",
+  landing: "frontend",
   "design-docs": "frontend",
   "sailor-docs": "frontend",
   gateway: "edgeGateway",

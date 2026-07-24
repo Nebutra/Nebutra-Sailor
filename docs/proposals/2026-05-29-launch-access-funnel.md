@@ -35,7 +35,7 @@ A founder-facing launch mode that combines:
 
 Primary surfaces:
 
-- landing-page CTA blocks
+- landing CTA blocks
 - `/sign-up` invite-aware flow
 - lightweight founder launch dashboard
 - admin export for invite batches, activation, and paid conversion

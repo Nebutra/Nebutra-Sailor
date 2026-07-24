@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
@@ -20,7 +21,7 @@ export function HashRunner({
   toolId: string;
   algorithm: "md5" | "sha1" | "sha256";
 }) {
-  const [text, setText] = useState("Hello Nebutra");
+  const [text, setText] = useState(`Hello ${brand.name}`);
   const [hex, setHex] = useState("");
   const [error, setError] = useState("");
   const [note, setNote] = useState("");

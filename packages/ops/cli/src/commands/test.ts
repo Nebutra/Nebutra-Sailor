@@ -44,7 +44,7 @@ interface SizeOptions {
  * List of valid app filters for turbo test
  */
 const VALID_APPS = [
-  "landing-page",
+  "landing",
   "web",
   "storybook",
   "backends/gateway",

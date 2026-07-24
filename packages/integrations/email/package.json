@@ -25,6 +25,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "resend": "^4.0.1"
   },
   "peerDependencies": {

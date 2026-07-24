@@ -2,7 +2,7 @@
  * GET /api/me/public — minimal cross-origin user info for marketing surfaces.
  *
  * Returns a tightly-scoped subset of the current user's profile that the
- * landing-page navbar uses to render an avatar dropdown for signed-in
+ * landing navbar uses to render an avatar dropdown for signed-in
  * visitors. CORS-allows `NEXT_PUBLIC_SITE_URL` only.
  *
  * Privacy contract: this endpoint NEVER returns sensitive data — no user
@@ -28,11 +28,11 @@ import { getAuth } from "@/lib/auth";
 import { env } from "@/lib/env";
 
 const ALLOWED_ORIGIN = (() => {
-  // CORS allowlist is the LANDING origin (nebutra.com), NOT
+  // CORS allowlist is the LANDING origin (landing host), NOT
   // NEXT_PUBLIC_SITE_URL — that variable in apps/web means "this web app's
-  // own URL" (app.nebutra.com), which is same-origin and doesn't need CORS.
+  // own URL" (app.landing host), which is same-origin and doesn't need CORS.
   // Unset in dev/preview → no Origin echoed → browser blocks any cross-origin
-  // probe by default. Production: NEBUTRA_LANDING_ORIGIN=https://nebutra.com.
+  // probe by default. Production: NEBUTRA_LANDING_ORIGIN=https://landing host.
   const raw = env.NEBUTRA_LANDING_ORIGIN;
   return raw ? raw.replace(/\/+$/, "") : null;
 })();

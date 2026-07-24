@@ -121,7 +121,7 @@ describe("ci harness dependency closure", () => {
   it("builds app dependency closures before standalone app builds", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
-    expect(workflow).toContain('pnpm turbo build --filter="@nebutra/landing-page^..."');
+    expect(workflow).toContain('pnpm turbo build --filter="@nebutra/landing^..."');
     expect(workflow).toContain('pnpm turbo build --filter="@nebutra/web^..."');
     expect(workflow).toContain('pnpm turbo build --filter="@nebutra/gateway^..."');
   });
@@ -163,7 +163,7 @@ describe("ci harness dependency closure", () => {
       ".github/actions/setup-node-pnpm/action.yml",
       ".github/workflows/ui-governance.yml",
       "apps/design-docs/**",
-      "apps/landing-page/src/**",
+      "apps/landing/src/**",
       "apps/web/src/**",
       "packages/design/**",
       "scripts/lib/ui-governance-policy.ts",
@@ -403,7 +403,7 @@ describe("ci harness dependency closure", () => {
     expect(playwrightConfig).toContain("/api/e2e/health");
     await Promise.all(
       [
-        "apps/landing-page/src/app/api/e2e/health/route.ts",
+        "apps/landing/src/app/api/e2e/health/route.ts",
         "apps/web/src/app/api/e2e/health/route.ts",
         "apps/sleptons/src/app/api/e2e/health/route.ts",
       ].map((file) => readFile(join(process.cwd(), file), "utf8")),
@@ -464,7 +464,7 @@ describe("ci harness dependency closure", () => {
 
   it("backs footer design smoke assertions with a real component marker", async () => {
     const footer = await readFile(
-      join(process.cwd(), "apps/landing-page/src/components/landing/FooterMinimal.tsx"),
+      join(process.cwd(), "apps/landing/src/components/landing/FooterMinimal.tsx"),
       "utf8",
     );
 

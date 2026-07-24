@@ -39,7 +39,7 @@ export function countText(text: string): WordCountOutput {
     words = count;
     engine = "Intl.Segmenter";
   } else {
-    const latinWords = (text.match(/[A-Za-z0-9]+(?:['\u2019][A-Za-z0-9]+)*/g) ?? []).length;
+    const latinWords = (text.match(/[A-Za-z0-9]+(?:[''][A-Za-z0-9]+)*/g) ?? []).length;
     words = latinWords + cjkCharacters;
     engine = "latin+cjk-fallback";
   }

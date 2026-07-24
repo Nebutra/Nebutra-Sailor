@@ -11,7 +11,7 @@
 
 ## Context
 
-`@nebutra/auth` already ships a provider-agnostic abstraction with three concrete providers (Better Auth, Clerk, NextAuth) and 27 consumer files across `apps/web`, `apps/landing-page`, `backends/gateway`, plus a surprise consumer at `packages/integrations/saga/src/workflows/orderSaga.ts`. The abstraction is **functional but incomplete**:
+`@nebutra/auth` already ships a provider-agnostic abstraction with three concrete providers (Better Auth, Clerk, NextAuth) and 27 consumer files across `apps/web`, `apps/landing`, `backends/gateway`, plus a surprise consumer at `packages/integrations/saga/src/workflows/orderSaga.ts`. The abstraction is **functional but incomplete**:
 
 - `AuthProvider` interface omits `signIn`/`signOut` despite being foundational
 - Better Auth plugins (organizations, passkeys, twoFactor, magicLink) load dynamically but their methods are not exposed through the canonical interface
@@ -115,7 +115,7 @@ public.<existing business>  ← untouched
 
 | Package | Owns | Triggered by |
 |---|---|---|
-| `@nebutra/auth` | Runtime user authentication state in Sailor's own apps | User logs in to web/landing-page; API gateway verifies session cookie |
+| `@nebutra/auth` | Runtime user authentication state in Sailor's own apps | User logs in to web/landing; API gateway verifies session cookie |
 | `@nebutra/identity` | Translating any external identity claims into `CanonicalIdentity` | `@nebutra/oauth-server` issues JWT to a 3P app, that 3P app uses identity to parse it; S2S tokens; external OIDC userinfo |
 
 **Action**: `@nebutra/identity` currently has **zero consumers** in the repo. The hard-but-right call:

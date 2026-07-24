@@ -48,7 +48,7 @@ App facades:
 
 ```text
 apps/web/src/shared/motion.ts
-apps/landing-page/src/shared/motion.ts
+apps/landing/src/shared/motion.ts
 apps/design-docs/src/shared/motion.ts
 apps/sailor-docs/src/shared/motion.ts
 ```
@@ -82,7 +82,7 @@ Owner: marketing app.
 Path:
 
 ```text
-apps/landing-page/src/shared/animation/gsap
+apps/landing/src/shared/animation/gsap
 ```
 
 Public hooks:

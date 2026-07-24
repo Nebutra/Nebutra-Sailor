@@ -15,8 +15,8 @@
  * server-only boundaries if needed.
  *
  * NOTE: getSiteUrl(service) in this module is DISTINCT from the zero-param
- * getSiteUrl() in apps/landing-page/src/lib/seo/site-routes.ts — different
- * modules, no collision. The local one remains the landing-page URL util.
+ * getSiteUrl() in apps/landing/src/lib/seo/site-routes.ts — different
+ * modules, no collision. The local one remains the landing URL util.
  */
 
 import type { Metadata, MetadataRoute } from "next";
@@ -69,8 +69,33 @@ export function getBrandPublicUrls() {
     statusUrl: getBrandOrigin("status"),
     studioUrl: getBrandOrigin("studio"),
     cdnUrl: getBrandOrigin("cdn"),
+    analyticsUrl: getBrandOrigin("analytics"),
     cookieDomain: getBrandCookieDomain(),
   } as const;
+}
+
+/**
+ * Product mailbox derived from landing apex — rebrand-safe.
+ * e.g. getBrandEmail("contact") → contact@example.com
+ */
+export function getBrandEmail(localPart: string): string {
+  const apex = brand.domains.landing
+    .replace(/^https?:\/\//, "")
+    .replace(/\/+$/, "")
+    .replace(/^www\./, "");
+  if (!apex) {
+    throw new Error("brand.domains.landing is empty — run brand:apply");
+  }
+  const local = localPart.trim().replace(/@.*$/, "");
+  if (!local) {
+    throw new Error("getBrandEmail requires a non-empty local part");
+  }
+  return `${local}@${apex}`;
+}
+
+/** Default transactional From header: `Brand <noreply@apex>`. */
+export function getBrandMailFrom(): string {
+  return `${brand.name} <${getBrandEmail("noreply")}>`;
 }
 
 // ─── Metadata ────────────────────────────────────────────────────────────────

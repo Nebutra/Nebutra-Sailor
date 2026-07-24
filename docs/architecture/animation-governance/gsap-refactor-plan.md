@@ -5,17 +5,17 @@
 Implemented:
 
 ```text
-apps/landing-page/src/shared/animation/gsap/helpers/runtime.ts
-apps/landing-page/src/shared/animation/gsap/hooks/use-landing-gsap.ts
-apps/landing-page/src/shared/animation/gsap/hooks/use-hero-animation.ts
-apps/landing-page/src/shared/animation/gsap/hooks/use-scroll-reveal.ts
-apps/landing-page/src/shared/animation/gsap/hooks/use-feature-timeline.ts
-apps/landing-page/src/shared/animation/gsap/hooks/use-product-showcase-timeline.ts
-apps/landing-page/src/shared/animation/gsap/timelines/hero-timeline.ts
-apps/landing-page/src/shared/animation/gsap/timelines/scroll-timeline.ts
-apps/landing-page/src/shared/animation/gsap/timelines/feature-timeline.ts
-apps/landing-page/src/shared/animation/gsap/timelines/product-showcase-timeline.ts
-apps/landing-page/src/shared/animation/gsap/index.ts
+apps/landing/src/shared/animation/gsap/helpers/runtime.ts
+apps/landing/src/shared/animation/gsap/hooks/use-landing-gsap.ts
+apps/landing/src/shared/animation/gsap/hooks/use-hero-animation.ts
+apps/landing/src/shared/animation/gsap/hooks/use-scroll-reveal.ts
+apps/landing/src/shared/animation/gsap/hooks/use-feature-timeline.ts
+apps/landing/src/shared/animation/gsap/hooks/use-product-showcase-timeline.ts
+apps/landing/src/shared/animation/gsap/timelines/hero-timeline.ts
+apps/landing/src/shared/animation/gsap/timelines/scroll-timeline.ts
+apps/landing/src/shared/animation/gsap/timelines/feature-timeline.ts
+apps/landing/src/shared/animation/gsap/timelines/product-showcase-timeline.ts
+apps/landing/src/shared/animation/gsap/index.ts
 ```
 
 ## Usage Rule
@@ -59,4 +59,4 @@ inside page or section components.
 
 ## Current Status
 
-No GSAP exception remains outside `apps/landing-page/src/shared/animation/gsap`.
+No GSAP exception remains outside `apps/landing/src/shared/animation/gsap`.

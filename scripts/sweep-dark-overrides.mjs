@@ -19,7 +19,7 @@
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 
-const ROOTS = ["apps/web/src", "apps/landing-page/src", "packages/design"];
+const ROOTS = ["apps/web/src", "apps/landing/src", "packages/design"];
 
 const NEEDLES = [
   // dark:<chain>:<prop>-white(/N)?  — `\b` sits right after `white` (NOT after the

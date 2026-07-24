@@ -17,7 +17,7 @@ To protect users from confusion, we must control how our brand assets are used. 
 The following assets are protected under this policy:
 - The wordmarks "Nebutra" and "Nebutra Sailor".
 - The Nebutra logo and icon sets.
-- The visual style, illustrations, and specific brand assets found in the `packages/brand/assets/` and `apps/landing-page/public/` directories.
+- The visual style, illustrations, and specific brand assets found in the `packages/brand/assets/` and `apps/landing/public/` directories.
 - Domain names containing the word "Nebutra".
 
 ## Usage Rules

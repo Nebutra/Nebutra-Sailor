@@ -9,7 +9,7 @@ import { cn } from "../utils/cn";
  *
  * Arranges children in a vertical stack with consistent spacing.
  *
- * @see apps/landing-page/DESIGN.md Section 10.1
+ * @see apps/landing/DESIGN.md Section 10.1
  */
 
 export interface StackProps extends React.HTMLAttributes<HTMLDivElement> {

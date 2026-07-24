@@ -1,4 +1,4 @@
-// @brand-exempt: cookie domain fallback `.nebutra.com` when env unset
+import { getBrandCookieDomain } from "@nebutra/brand/metadata-helpers";
 /**
  * Cross-subdomain "session exists" hint for landing / other first-party sites.
  * Mirrors apps/web session-hint: non-sensitive presence cookie only.
@@ -9,7 +9,7 @@ export const SESSION_HINT_COOKIE = "nebutra_session_hint";
 function resolveHintDomain(): string | undefined {
   const explicit = process.env.NEBUTRA_SESSION_HINT_DOMAIN?.trim();
   if (explicit) return explicit;
-  if (process.env.NODE_ENV === "production") return ".nebutra.com";
+  if (process.env.NODE_ENV === "production") return getBrandCookieDomain();
   return undefined;
 }
 

@@ -8,7 +8,7 @@ describe("resolveConfig deploy target closure", () => {
     expect(resolved.deployTarget).toBe("cloudflare");
     expect(resolved.config.deployTargets).toMatchObject({
       web: "cloudflare-pages",
-      "landing-page": "cloudflare-pages",
+      landing: "cloudflare-pages",
       gateway: "cloudflare-workers",
       "python-ai": "ecs-docker",
     });

@@ -73,8 +73,8 @@ resource "vercel_project" "landing" {
     repo = "nebutra/nebutra-sailor"
   }
 
-  root_directory         = "apps/landing-page"
-  build_command          = "cd ../.. && pnpm turbo build --filter=@nebutra/landing-page"
+  root_directory         = "apps/landing"
+  build_command          = "cd ../.. && pnpm turbo build --filter=@nebutra/landing"
   output_directory       = ".next"
   install_command        = "pnpm install --frozen-lockfile"
 

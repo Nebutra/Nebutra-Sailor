@@ -17,7 +17,7 @@ const monorepoRoot = resolve(brandRoot, "../../..");
 
 // Apps to sync brand assets to
 const apps = [
-  "apps/landing-page",
+  "apps/landing",
   "apps/web",
   "apps/auth",
   "apps/studio",

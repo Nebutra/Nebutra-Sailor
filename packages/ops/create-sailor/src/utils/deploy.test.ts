@@ -22,7 +22,7 @@ describe("resolveScaffoldDeployTargets", () => {
       "cloudflare",
       {
         web: "cloudflare-pages",
-        "landing-page": "cloudflare-pages",
+        landing: "cloudflare-pages",
         "design-docs": "cloudflare-pages",
         "sailor-docs": "cloudflare-pages",
         gateway: "cloudflare-workers",
@@ -33,7 +33,7 @@ describe("resolveScaffoldDeployTargets", () => {
       "selfhost",
       {
         web: "standalone",
-        "landing-page": "standalone",
+        landing: "standalone",
         "design-docs": "standalone",
         "sailor-docs": "standalone",
         gateway: "ecs-docker",
@@ -44,7 +44,7 @@ describe("resolveScaffoldDeployTargets", () => {
       "railway",
       {
         web: "railway",
-        "landing-page": "railway",
+        landing: "railway",
         "design-docs": "railway",
         "sailor-docs": "railway",
         gateway: "railway",

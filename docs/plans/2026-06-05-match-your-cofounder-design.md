@@ -65,7 +65,7 @@ complete mine?".
 
 The highest-intent moment is the Match — that's where we charge.
 - **Free:** limited daily swipes; you can see *that* you have matches.
-- **Paid (= the landing-page price, same plan):** unlock **Match / Cofounder Room / Form-team**,
+- **Paid (= the landing price, same plan):** unlock **Match / Cofounder Room / Form-team**,
   unlimited swipes, "who's Interested in you", Pitch priority.
 - Anchored to the existing landing plan via `@nebutra/billing` (single price source — do not
   hardcode a number; read the plan).

@@ -30,12 +30,12 @@ patches:
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: landing-page
+        name: landing
       spec:
         replicas: 1
     target:
       kind: Deployment
-      name: landing-page
+      name: landing
 
   - patch: |-
       apiVersion: apps/v1

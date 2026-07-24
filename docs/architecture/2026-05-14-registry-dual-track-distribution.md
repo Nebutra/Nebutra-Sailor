@@ -11,7 +11,7 @@
 
 `@nebutra/ui` ships 283 primitives consumed two ways:
 
-1. **Internal monorepo apps** (`apps/web`, `apps/landing-page`, `apps/storybook`, etc.) — import directly via `import { X } from "@nebutra/ui/components"`. Single version, atomic upgrade via pnpm workspace.
+1. **Internal monorepo apps** (`apps/web`, `apps/landing`, `apps/storybook`, etc.) — import directly via `import { X } from "@nebutra/ui/components"`. Single version, atomic upgrade via pnpm workspace.
 2. **External customers** of the Nebutra SaaS template — clone or fork the template, then want to **own** the primitive code so they can iterate without waiting for an npm release. This is the shadcn/ui distribution model: `npx shadcn@latest add <url>` copies the component source into the customer's repo.
 
 On 2026-05-09 a partial migration began: 10 primitives (`animate-in`, `bento-grid`, `chart`, `command-menu`, `feature-card`, `globe`, `kpi-card`, `magic-card`, `metric-card`, `pricing-card`) were marked **`@deprecated`** with a removal target of 2026-11-09, accompanied by a `npx shadcn@latest add https://ui.nebutra.com/r/<name>.json` migration instruction.

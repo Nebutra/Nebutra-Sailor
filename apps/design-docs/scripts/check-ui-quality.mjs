@@ -22,16 +22,7 @@ const scanRoots = [
   path.join(REPO_ROOT, "packages", "design", "ui", "src", "primitives"),
   path.join(REPO_ROOT, "packages", "design", "ui", "src", "components"),
   path.join(REPO_ROOT, "packages", "design", "ui", "src", "layout"),
-  path.join(
-    REPO_ROOT,
-    "apps",
-    "landing-page",
-    "src",
-    "components",
-    "landing",
-    "features",
-    "showcases",
-  ),
+  path.join(REPO_ROOT, "apps", "landing", "src", "components", "landing", "features", "showcases"),
 ];
 
 const ignoredSegments = new Set([

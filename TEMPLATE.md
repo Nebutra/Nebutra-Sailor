@@ -31,9 +31,9 @@ my-app/ contains only the reusable skeleton
 
 ## What gets stripped
 
-- **Marketing pages** — `apps/landing-page/src/app/[lang]/(marketing)/*`
-- **Legal pages** — `apps/landing-page/src/app/[lang]/(legal)/*`
-- **Nebutra landing components** — `apps/landing-page/src/components/landing/`
+- **Marketing pages** — `apps/landing/src/app/[lang]/(marketing)/*`
+- **Legal pages** — `apps/landing/src/app/[lang]/(legal)/*`
+- **Nebutra landing components** — `apps/landing/src/components/landing/`
 - **Dashboard business pages** — admin, billing, tenants, chat, etc.
 - **Nebutra-owned apps** — `apps/sleptons`, `apps/tsekaluk-dev`, `apps/studio`,
   content from `apps/design-docs` and `apps/docs`
@@ -62,7 +62,7 @@ Example — adding a new landing section `ComparisonMatrix.tsx` is already
 covered by the existing rule:
 
 ```
-apps/landing-page/src/components/landing/
+apps/landing/src/components/landing/
 ```
 
 Adding a new top-level Nebutra-owned app? Add an explicit rule:

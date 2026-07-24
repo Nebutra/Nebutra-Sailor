@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductDetail } from "@/components/product-detail";
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const provider = PROVIDER_LABEL[resolveListingProvider(model)];
   return {
     title: `${model.publicModel} · API 价格与文档`,
-    description: `${provider} ${model.publicModel} — Nebutra Router 可售货架详情、价格与接入说明。`,
+    description: `${provider} ${model.publicModel} — ${brand.name} Router 可售货架详情、价格与接入说明。`,
   };
 }
 

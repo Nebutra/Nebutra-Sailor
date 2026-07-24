@@ -28,15 +28,15 @@ The Stripe reference is especially relevant: mature embedded/product UI platform
 
 ## Current State
 
-- `apps/landing-page/src/components/landing/blog-portable-text.tsx` renders KaTeX output through `dangerouslySetInnerHTML` with `strict: false` and `throwOnError: false`.
+- `apps/landing/src/components/landing/blog-portable-text.tsx` renders KaTeX output through `dangerouslySetInnerHTML` with `strict: false` and `throwOnError: false`.
 - The same renderer passes CMS link `href` values directly into anchors and only uses an `http(s)` test to decide `target`/`rel`; non-HTTP schemes are not blocked at this boundary.
 - CTA blocks pass `ctaHref` from CMS through `resolveCtaHref`, whose known caller only rewrites `#contact`.
 - Mermaid blocks pass CMS text into a client renderer.
-- `apps/landing-page/src/components/landing/blog-mermaid-diagram.tsx` initializes Mermaid with `securityLevel: "loose"` and inserts generated SVG through `dangerouslySetInnerHTML`.
+- `apps/landing/src/components/landing/blog-mermaid-diagram.tsx` initializes Mermaid with `securityLevel: "loose"` and inserts generated SVG through `dangerouslySetInnerHTML`.
 - `apps/studio/schemaTypes/post.ts` accepts required text for math and Mermaid blocks, but does not encode renderer policy such as allowed diagram types, max size, or HTML-label constraints.
 - `apps/studio/scripts/publish-blog-post.mjs` promotes a recognized section into a CTA block and carries through the source link URL. It also has an ad hoc `BLOG_DISABLE_CTA_PROMOTION` gate.
 - `apps/studio/scripts/publish-blog-post.test.mjs` verifies that math and Mermaid fences survive as structured blocks, but it does not cover hostile URLs, Mermaid security-sensitive syntax, oversized diagrams, or CTA promotion edge cases.
-- `apps/landing-page/src/__tests__/ui-governance.test.ts` asserts source-string markers such as `useAnimationFrame`, `aria-expanded`, and `copyPageAsMarkdown`; it is useful as a cheap guard but does not prove keyboard, focus, visual, or renderer safety.
+- `apps/landing/src/__tests__/ui-governance.test.ts` asserts source-string markers such as `useAnimationFrame`, `aria-expanded`, and `copyPageAsMarkdown`; it is useful as a cheap guard but does not prove keyboard, focus, visual, or renderer safety.
 
 ## Architectural Tradeoffs
 

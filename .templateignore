@@ -14,32 +14,32 @@
 # Validate: `pnpm template:check`
 
 # ---------------------------------------------------------------------------
-# Nebutra landing-page business content
+# Nebutra landing business content
 # Marketing, legal, blog, changelog — all Nebutra-owned pages & sections.
 # The shell (layout, globals, next.config, package.json) is preserved.
 # ---------------------------------------------------------------------------
-apps/landing-page/src/app/\[lang\]/(marketing)/
-apps/landing-page/src/app/\[lang\]/(legal)/
-apps/landing-page/src/components/landing/
-apps/landing-page/public/og/
-apps/landing-page/public/brand/
-apps/landing-page/public/brand-compliant/
-apps/landing-page/public/screenshots/
-apps/landing-page/public/images/
-apps/landing-page/public/animations/
-apps/landing-page/src/app/api/changelog/
-apps/landing-page/src/app/api/license/
-apps/landing-page/src/app/sitemap.ts
-apps/landing-page/src/lib/constants/landing-data.ts
+apps/landing/src/app/\[lang\]/(marketing)/
+apps/landing/src/app/\[lang\]/(legal)/
+apps/landing/src/components/landing/
+apps/landing/public/og/
+apps/landing/public/brand/
+apps/landing/public/brand-compliant/
+apps/landing/public/screenshots/
+apps/landing/public/images/
+apps/landing/public/animations/
+apps/landing/src/app/api/changelog/
+apps/landing/src/app/api/license/
+apps/landing/src/app/sitemap.ts
+apps/landing/src/lib/constants/landing-data.ts
 # Tests + not-found + mockups that import stripped marketing content.
-# A generic landing-page 404 is a known follow-up.
-apps/landing-page/src/__tests__/api/license.test.ts
-apps/landing-page/src/app/__tests__/sitemap.test.ts
-apps/landing-page/src/__tests__/ui-governance.test.ts
-apps/landing-page/src/lib/constants/landing-data.test.ts
-apps/landing-page/src/app/not-found.tsx
-apps/landing-page/src/app/\[lang\]/not-found.tsx
-apps/landing-page/src/components/ui/mockups/
+# A generic landing 404 is a known follow-up.
+apps/landing/src/__tests__/api/license.test.ts
+apps/landing/src/app/__tests__/sitemap.test.ts
+apps/landing/src/__tests__/ui-governance.test.ts
+apps/landing/src/lib/constants/landing-data.test.ts
+apps/landing/src/app/not-found.tsx
+apps/landing/src/app/\[lang\]/not-found.tsx
+apps/landing/src/components/ui/mockups/
 
 # ---------------------------------------------------------------------------
 # Nebutra dashboard (apps/web) business surfaces
@@ -57,7 +57,7 @@ apps/web/src/app/\[locale\]/(app)/feature-flags/
 apps/web/src/app/\[locale\]/demo/
 # Test that imports stripped billing journey-state.
 apps/web/src/lib/__tests__/saas-journey-state.test.ts
-# audit-remediation introspects landing-page source files that are partially
+# audit-remediation introspects landing source files that are partially
 # stripped — invariant only meaningful in the source repo.
 apps/web/src/lib/__tests__/audit-remediation.test.ts
 
@@ -114,7 +114,7 @@ packages/commerce/license/src/handlers/
 # ---------------------------------------------------------------------------
 # Architecture tests that assert source-repo invariants
 # These reference paths stripped from the template (apps/sailor-docs,
-# scripts/lighthouse, apps/landing-page/src/app/api/changelog) so they
+# scripts/lighthouse, apps/landing/src/app/api/changelog) so they
 # cannot run in the scaffolded skeleton. Generic invariants (no-inline-css,
 # dependency-flow, package-readiness, etc.) remain.
 # ---------------------------------------------------------------------------

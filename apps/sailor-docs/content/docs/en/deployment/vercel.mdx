@@ -10,7 +10,7 @@ domains, and deploy quotas.
 
 | Vercel project (examples) | App path | Domain (nebutra.com) | Steady state |
 |---------------------------|----------|----------------------|--------------|
-| `nebutra-sailor-landing-page` / landing | `apps/landing-page` | `nebutra.com` | **Production on Vercel** |
+| `nebutra-sailor-landing` / landing | `apps/landing` | `nebutra.com` | **Production on Vercel** |
 | `docs` | `apps/sailor-docs` | `docs.nebutra.com` | **Production on Vercel** |
 | `nebutra-web` | `apps/web` | `app.nebutra.com` | Optional; **ECS is production today** |
 | `nebutra-auth` | `apps/auth` | `auth.nebutra.com` | Optional; **ECS is production today** |
@@ -43,7 +43,7 @@ cd ../.. && pnpm turbo run build:next --filter=@nebutra/web
     From the monorepo root, or from each app directory:
 
     ```bash
-    cd apps/landing-page && vercel link
+    cd apps/landing && vercel link
     cd ../sailor-docs && vercel link
     # optional cutover targets:
     cd ../web && vercel link
@@ -66,7 +66,7 @@ cd ../.. && pnpm turbo run build:next --filter=@nebutra/web
   </Step>
   <Step title="Deploy">
     ```bash
-    cd apps/landing-page && vercel --prod
+    cd apps/landing && vercel --prod
     cd ../sailor-docs && vercel --prod
     ```
 

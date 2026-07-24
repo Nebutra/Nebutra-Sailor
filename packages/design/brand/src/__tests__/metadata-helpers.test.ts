@@ -12,6 +12,8 @@ import {
   buildSoftwareApplicationJsonLd,
   buildWebSiteJsonLd,
   getBrandCookieDomain,
+  getBrandEmail,
+  getBrandMailFrom,
   getBrandOrigin,
   getBrandPublicUrls,
   getSiteMetadata,
@@ -229,5 +231,12 @@ describe("getBrandOrigin / getBrandPublicUrls", () => {
     expect(u.routerUrl).toBe(`https://${brand.domains.router}`);
     expect(u.cookieDomain).toBe(`.${brand.domains.landing}`);
     expect(getBrandCookieDomain()).toBe(`.${brand.domains.landing}`);
+  });
+});
+
+describe("getBrandEmail / getBrandMailFrom", () => {
+  it("derives mailboxes from landing apex", () => {
+    expect(getBrandEmail("contact")).toBe(`contact@${brand.domains.landing}`);
+    expect(getBrandMailFrom()).toBe(`${brand.name} <noreply@${brand.domains.landing}>`);
   });
 });

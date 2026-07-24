@@ -64,7 +64,7 @@ function walk(directory, files = []) {
 
 function zoneFor(file) {
   if (
-    file.startsWith("apps/landing-page/") ||
+    file.startsWith("apps/landing/") ||
     file.startsWith("packages/commerce/marketing/") ||
     file.startsWith("packages/design/ui/src/marketing/")
   ) {
@@ -97,7 +97,7 @@ function zoneFor(file) {
 function isSharedMotionLayer(file) {
   return (
     file === "apps/web/src/shared/motion.ts" ||
-    file === "apps/landing-page/src/shared/motion.ts" ||
+    file === "apps/landing/src/shared/motion.ts" ||
     file === "apps/design-docs/src/shared/motion.ts" ||
     file === "apps/sailor-docs/src/shared/motion.ts" ||
     file.startsWith("packages/design/ui/src/shared/animation/motion/")
@@ -106,7 +106,7 @@ function isSharedMotionLayer(file) {
 
 function isAllowedGsapLayer(file) {
   return (
-    file.startsWith("apps/landing-page/src/shared/animation/gsap/") ||
+    file.startsWith("apps/landing/src/shared/animation/gsap/") ||
     // TypeLens product shell — dedicated motion runtime (not marketing landing hooks)
     file.startsWith("apps/typelens/src/lib/motion/") ||
     file === "apps/typelens/src/components/type-lens-motion.tsx" ||
@@ -185,7 +185,7 @@ for (const file of files) {
   if (hit.gsap && !isAllowedGsapLayer(file)) {
     violations.push({
       file,
-      rule: "GSAP must live behind landing-page gsap hooks or typelens motion runtime",
+      rule: "GSAP must live behind landing gsap hooks or typelens motion runtime",
     });
   }
 

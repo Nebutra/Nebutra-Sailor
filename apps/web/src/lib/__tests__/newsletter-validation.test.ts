@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 
-// Reproduce the same schema used in apps/landing-page/src/app/api/newsletter/route.ts
+// Reproduce the same schema used in apps/landing/src/app/api/newsletter/route.ts
 const schema = z.object({
   email: z.string().email(),
 });

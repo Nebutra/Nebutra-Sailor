@@ -1,3 +1,4 @@
+// @brand-exempt: legal entity name may differ from trade name (jurisdiction registration)
 /**
  * Legal Document Configuration
  *
@@ -6,6 +7,7 @@
  */
 
 import { brand } from "@nebutra/brand/metadata";
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import type {
   CompanyInfo,
   ContactConfig,
@@ -34,9 +36,9 @@ export const companyInfo: CompanyInfo = {
     postalCode: "94105",
     country: "United States",
   },
-  legalEmail: "legal@nebutra.com",
-  privacyEmail: "privacy@nebutra.com",
-  dpoEmail: "dpo@nebutra.com",
+  legalEmail: getBrandEmail("legal"),
+  privacyEmail: getBrandEmail("privacy"),
+  dpoEmail: getBrandEmail("dpo"),
 };
 
 // ============================================
@@ -54,7 +56,7 @@ export const cookieCategories: CookieCategory[] = [
     cookies: [
       {
         name: "__session",
-        provider: "Nebutra",
+        provider: brand.name,
         purpose: "User authentication session",
         expiry: "Session",
         type: "session",
@@ -68,7 +70,7 @@ export const cookieCategories: CookieCategory[] = [
       },
       {
         name: "cookie_consent",
-        provider: "Nebutra",
+        provider: brand.name,
         purpose: "Stores cookie consent preferences",
         expiry: "1 year",
         type: "persistent",
@@ -92,21 +94,21 @@ export const cookieCategories: CookieCategory[] = [
     cookies: [
       {
         name: "locale",
-        provider: "Nebutra",
+        provider: brand.name,
         purpose: "Stores language preference",
         expiry: "1 year",
         type: "persistent",
       },
       {
         name: "theme",
-        provider: "Nebutra",
+        provider: brand.name,
         purpose: "Stores theme preference (light/dark)",
         expiry: "1 year",
         type: "persistent",
       },
       {
         name: "sidebar_collapsed",
-        provider: "Nebutra",
+        provider: brand.name,
         purpose: "UI preference",
         expiry: "1 year",
         type: "persistent",
@@ -242,7 +244,7 @@ export const documentConfigs: Record<string, DocumentConfig> = {
       locale: "en",
       version: "1.0.0",
       title: "Terms of Service",
-      summary: "The agreement governing your use of Nebutra services",
+      summary: `The agreement governing your use of ${brand.name} services`,
       effectiveAt: baseDocumentDate,
       isRequired: true,
       changelog: [
@@ -385,11 +387,11 @@ export const cookieConfig: CookieConfig = {
 // ============================================
 
 export const contactConfig: ContactConfig = {
-  generalEmail: "contact@nebutra.com",
-  salesEmail: "sales@nebutra.com",
-  supportEmail: "support@nebutra.com",
-  legalEmail: "legal@nebutra.com",
-  privacyEmail: "privacy@nebutra.com",
+  generalEmail: getBrandEmail("contact"),
+  salesEmail: getBrandEmail("sales"),
+  supportEmail: getBrandEmail("support"),
+  legalEmail: getBrandEmail("legal"),
+  privacyEmail: getBrandEmail("privacy"),
   social: {
     twitter: brand.social.twitter,
     linkedin: brand.social.linkedin,

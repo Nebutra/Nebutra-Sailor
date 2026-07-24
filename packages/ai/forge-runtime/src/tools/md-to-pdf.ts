@@ -128,39 +128,19 @@ export function markdownToSimplePdf(markdown: string, title = "document"): Buffe
   return linesToPdf(plain, title);
 }
 
-function stripTags(html: string): string {
-  // Collapse tags without open-ended multi-char sanitization loops.
-  let out = "";
-  let i = 0;
-  while (i < html.length) {
-    const lt = html.indexOf("<", i);
-    if (lt < 0) {
-      out += html.slice(i);
-      break;
-    }
-    out += html.slice(i, lt);
-    const gt = html.indexOf(">", lt + 1);
-    if (gt < 0) {
-      out += html.slice(lt);
-      break;
-    }
-    const tag = html.slice(lt, gt + 1);
-    if (/^<\/(p|div|h[1-6]|li|tr)>$/i.test(tag) || /^<br\b/i.test(tag)) out += "\n";
-    i = gt + 1;
-  }
-  return out
-    .replaceAll("&nbsp;", " ")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#39;", "'")
-    .replaceAll("&amp;", "&");
-}
-
 function htmlToPlainLines(html: string): string[] {
-  const text = stripTags(html);
+  const text = html
+    .replace(/<\/(p|div|h[1-6]|li|tr)>/gi, "\n")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
   return text
-    .split("\n")
+    .split(/\n/)
     .map((l) => l.trimEnd())
     .filter((l, i, arr) => !(l === "" && arr[i - 1] === ""));
 }

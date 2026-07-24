@@ -24,6 +24,7 @@
   "dependencies": {
     "@clack/prompts": "^1.5.0",
     "@mrleebo/prisma-ast": "^0.16.0",
+    "@nebutra/brand": "workspace:*",
     "cfonts": "^3.3.0",
     "commander": "^15.0.0",
     "gradient-string": "^3.0.0",

@@ -32,7 +32,7 @@ jobs:
       template: ${{ steps.profile.outputs.template }}
       web: ${{ steps.filter.outputs.web }}
       api-gateway: ${{ steps.filter.outputs.api-gateway }}
-      landing-page: ${{ steps.filter.outputs.landing-page }}
+      landing: ${{ steps.filter.outputs.landing }}
       studio: ${{ steps.filter.outputs.studio }}
       docs-hub: ${{ steps.filter.outputs.docs-hub }}
       packages: ${{ steps.filter.outputs.packages }}
@@ -66,8 +66,8 @@ jobs:
             api-gateway:
               - 'backends/gateway/**'
               - 'packages/**'
-            landing-page:
-              - 'apps/landing-page/**'
+            landing:
+              - 'apps/landing/**'
               - 'packages/**'
             studio:
               - 'apps/studio/**'
@@ -93,7 +93,7 @@ jobs:
             e2e:
               - 'e2e/**'
               - 'backends/gateway/**'
-              - 'apps/landing-page/**'
+              - 'apps/landing/**'
               - 'apps/sleptons/**'
               - 'apps/web/**'
               - 'package.json'
@@ -241,11 +241,11 @@ jobs:
       - name: Typecheck (affected)
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
 
-      # ── i18n integrity (landing-page) ────────────────────────────────────
+      # ── i18n integrity (landing) ────────────────────────────────────
       # Key parity + ICU placeholder consistency + critical-namespace
       # untranslated detection across all 7 locales. Cheap; runs always.
-      - name: i18n integrity (landing-page locales)
-        run: pnpm --filter @nebutra/landing-page check:i18n
+      - name: i18n integrity (landing locales)
+        run: pnpm --filter @nebutra/landing check:i18n
 
       # ── Governance lint guards (full node-script chain) ──────────────────
       # Runs the complete pnpm lint chain: biome check + all 9 node scripts
@@ -657,11 +657,11 @@ jobs:
     name: Lighthouse CI (landing page)
     runs-on: ubuntu-latest
     needs: [detect-changes, build]
-    # Only run on PRs and only when landing-page or shared packages changed
+    # Only run on PRs and only when landing or shared packages changed
     if: |
       needs.detect-changes.outputs.template != 'true' &&
       github.event_name == 'pull_request' &&
-      (needs.detect-changes.outputs.landing-page == 'true' || needs.detect-changes.outputs.packages == 'true')
+      (needs.detect-changes.outputs.landing == 'true' || needs.detect-changes.outputs.packages == 'true')
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -670,12 +670,12 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Build landing page dependency closure
-        run: pnpm turbo build --filter="@nebutra/landing-page^..."
+        run: pnpm turbo build --filter="@nebutra/landing^..."
         env:
           SKIP_ENV_VALIDATION: true
 
       - name: Build landing page
-        run: pnpm --filter @nebutra/landing-page build
+        run: pnpm --filter @nebutra/landing build
         env:
           SKIP_ENV_VALIDATION: true
 
@@ -699,7 +699,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
-      - name: Build workspace packages (required by landing-page webServer)
+      - name: Build workspace packages (required by landing webServer)
         run: pnpm turbo build --filter="./packages/*/*"
         env:
           SKIP_ENV_VALIDATION: true

@@ -86,7 +86,7 @@ and missing functionality.
 | `@nebutra/cofounder-match` | (consumed directly) | Layer-7 ecosystem product; matching heuristics + persistence layer pending |
 | `@nebutra/founder-cemetery` | (consumed directly) | Layer-7 ecosystem product; postmortem ingestion + curation flow pending |
 | `@nebutra/idea-plaza` | (consumed directly)   | Layer-7 ecosystem product; idea marketplace primitives pending |
-| `@nebutra/landing-builder` | (consumed directly) | Layer-6 play product; landing-page generator + capability map pending |
+| `@nebutra/landing-builder` | (consumed directly) | Layer-6 play product; landing generator + capability map pending |
 | `@nebutra/outreach-engine` | (consumed directly) | Layer-6 play product; outreach campaign primitives + sidecars pending |
 | `@nebutra/play-marketplace` | (consumed directly) | Layer-7 ecosystem product; play discovery + install flow pending |
 | `@nebutra/support-deflector` | (consumed directly) | Layer-6 play product; deflection ranking + KB integration pending |

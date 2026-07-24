@@ -36,7 +36,7 @@ interface TypecheckOptions extends DevOptions {
  * List of valid app filters for turbo dev
  */
 const VALID_APPS = [
-  "landing-page",
+  "landing",
   "web",
   "storybook",
   "design-docs",

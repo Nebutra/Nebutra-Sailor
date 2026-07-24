@@ -1,7 +1,7 @@
 # Solutions Mega-Menu — Design
 
 > Date: 2026-06-01
-> Surface: `apps/landing-page` (public marketing site, next-intl, 7 locales)
+> Surface: `apps/landing` (public marketing site, next-intl, 7 locales)
 > Status: approved (brainstorming → implementation)
 
 ## One-liner
@@ -45,7 +45,7 @@ Slugs + grouping are data-driven; adding/removing a solution is a config-only ch
 
 ### Routes
 ```
-apps/landing-page/src/app/[lang]/(marketing)/solutions/
+apps/landing/src/app/[lang]/(marketing)/solutions/
   page.tsx              # index: 4 grouped card columns
   [slug]/page.tsx       # detail: Manus-mapped template
                         #   generateStaticParams ← taxonomy × locales

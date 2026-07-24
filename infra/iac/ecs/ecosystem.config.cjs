@@ -2,7 +2,7 @@
 // .github/workflows/deploy-ecs.yml.
 //
 // Layout assumption (set by infra/scripts/ecs-deploy-remote.sh):
-//   $DEPLOY_ROOT/landing/current/apps/landing-page/server.js     (Next standalone)
+//   $DEPLOY_ROOT/landing/current/apps/landing/server.js     (Next standalone)
 //   $DEPLOY_ROOT/web/current/apps/web/server.js                  (Next standalone)
 //   $DEPLOY_ROOT/api/current/dist/node.js                        (pnpm-deploy + tsc)
 //   $DEPLOY_ROOT/idp/current/apps/idp/server.js                  (Next standalone)
@@ -17,9 +17,9 @@
 module.exports = {
   apps: [
     {
-      name: "landing-page",
+      name: "landing",
       cwd: "/var/www/nebutra/landing/current",
-      script: "apps/landing-page/server.js",
+      script: "apps/landing/server.js",
       env: {
         NODE_ENV: "production",
         PORT: 3001,

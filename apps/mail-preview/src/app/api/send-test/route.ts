@@ -8,6 +8,7 @@
  * route is a 404 in prod builds.
  */
 
+import { getBrandMailFrom } from "@nebutra/brand/metadata-helpers";
 import { getEmailProvider } from "@nebutra/email";
 import { NextResponse } from "next/server";
 import { renderTemplate } from "@/lib/render";
@@ -55,7 +56,7 @@ export async function POST(request: Request) {
     const rendered = renderTemplate(body.templateId, body.props);
     const provider = getEmailProvider();
     const result = await provider.send({
-      from: process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.com>",
+      from: process.env.EMAIL_FROM ?? getBrandMailFrom(),
       to: body.to,
       subject: rendered.subject,
       html: rendered.html,

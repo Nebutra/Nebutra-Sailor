@@ -77,8 +77,8 @@ jobs:
         include:
           - app: web
             dockerfile: apps/web/Dockerfile
-          - app: landing-page
-            dockerfile: apps/landing-page/Dockerfile
+          - app: landing
+            dockerfile: apps/landing/Dockerfile
           - app: api-gateway
             dockerfile: backends/gateway/Dockerfile
           - app: idp

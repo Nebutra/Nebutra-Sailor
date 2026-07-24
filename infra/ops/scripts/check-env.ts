@@ -46,7 +46,7 @@ const REQUIRED_VARS = {
 // App-specific required vars
 const APP_REQUIREMENTS: Record<string, (keyof typeof REQUIRED_VARS)[]> = {
   web: ["core", "database", "auth", "redis"],
-  "landing-page": ["core", "auth"],
+  landing: ["core", "auth"],
   "api-gateway": ["core", "database", "auth", "redis", "ai"],
   gateway: ["core", "database", "auth", "redis", "ai"],
   studio: ["core"],
@@ -108,7 +108,7 @@ function loadEnvFile(envPath: string): void {
 
 function resolveEnvFileForApp(appName: string): string | null {
   const explicitPaths: Record<string, string> = {
-    "landing-page": resolve(REPO_ROOT, "apps/landing-page/.env.local"),
+    landing: resolve(REPO_ROOT, "apps/landing/.env.local"),
     web: resolve(REPO_ROOT, "apps/web/.env.local"),
     studio: resolve(REPO_ROOT, "apps/studio/.env.local"),
     gateway: resolve(REPO_ROOT, "backends/gateway/.env.local"),

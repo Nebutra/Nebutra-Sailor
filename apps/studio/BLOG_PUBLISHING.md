@@ -131,6 +131,6 @@ curl -sS -X POST https://nebutra.com/api/blog/webhook \
 ## CI/CD Rule
 
 Content-only publishing should mutate Sanity documents and call
-`/api/blog/webhook`. It should not change `apps/landing-page` code, shared
+`/api/blog/webhook`. It should not change `apps/landing` code, shared
 packages, or root workspace config, because those paths correctly trigger a full
 Vercel production build.

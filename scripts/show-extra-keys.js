@@ -14,7 +14,7 @@ function getLeafPaths(obj, prefix) {
   return paths;
 }
 
-const dir = path.join(__dirname, "../apps/landing-page/messages");
+const dir = path.join(__dirname, "../apps/landing/messages");
 const en = JSON.parse(fs.readFileSync(path.join(dir, "en.json"), "utf8"));
 const enPaths = new Set(getLeafPaths(en.legalPages, ""));
 

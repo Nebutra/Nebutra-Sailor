@@ -39,7 +39,7 @@ const FORM_CONTROL_FOCUS_VISIBLE_RE =
   /\bfocus-visible:(?:border-ring|ring-\[length:var\(--(?:input|textarea|select)-focus-ring-width\)\]|ring-ring\/30|border-destructive|ring-destructive\/20)\b/g;
 const FORM_CONTROL_INLINE_FOCUS_RE =
   /\b(?:focus:(?:border-ring|ring-\[length:var\(--(?:input|textarea|select)-focus-ring-width\)\]|ring-ring\/30)|aria-invalid:focus:(?:border-destructive|ring-destructive\/20))\b/g;
-const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing-page/src"] as const;
+const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing/src"] as const;
 const FORM_CONTROL_FOCUS_REQUIREMENTS = [
   {
     slot: "input",

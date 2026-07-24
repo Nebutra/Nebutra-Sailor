@@ -85,7 +85,7 @@ export function MarketFooter() {
             Need more information?
           </p>
           <p className="mt-1 text-[12px] text-[var(--neutral-9)]">
-            Nebutra · Router API 集市（lab）
+            {brand.name} · Router API 集市（lab）
           </p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">

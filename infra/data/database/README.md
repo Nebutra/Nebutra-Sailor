@@ -49,7 +49,7 @@ One rule: **`apps/tsekaluk-dev` → its own Neon Postgres; every other product a
 |---|---|---|
 | `apps/web` | **Supabase** (`packages/platform/db` schema) | `@nebutra/db` (Prisma, `getTenantDb`/`getSystemDb`) |
 | `apps/sleptons` | **Supabase** (shared platform schema) | `@nebutra/db` `getSystemDb`; tables `sleptons_*` live IN the platform schema — no own schema |
-| `apps/idp`, `apps/landing-page`, `backends/gateway`, `backends/python/ai` | **Supabase** | `@nebutra/db` / asyncpg; `DATABASE_URL` injected by the deploy env (Cloudflare/Vercel/ECS) |
+| `apps/idp`, `apps/landing`, `backends/gateway`, `backends/python/ai` | **Supabase** | `@nebutra/db` / asyncpg; `DATABASE_URL` injected by the deploy env (Cloudflare/Vercel/ECS) |
 | `apps/tsekaluk-dev` | **Neon** (own `prisma/` schema) | own `PrismaClient` (null-tolerant); Neon URL from the Vercel deploy env, `localhost/dummy` placeholder locally |
 
 Never point a platform app at Neon — `apps/sleptons` drifted that way once (it shared the Neon `apps/web` later migrated off) and was repointed to Supabase 2026-06-06. Each app's `.env.example` documents its intended provider.

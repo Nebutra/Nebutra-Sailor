@@ -1125,8 +1125,8 @@ for p in procs:
     api-gateway)
       wait_for_local_http "api-gateway" "$pm2_name" "http://127.0.0.1:3002/api/misc/health" "^200$"
       ;;
-    landing-page)
-      wait_for_local_http "landing-page" "$pm2_name" "http://127.0.0.1:3001/get-license"
+    landing)
+      wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/get-license"
       ;;
     web)
       wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/"
@@ -1176,7 +1176,7 @@ for p in procs:
 
 pm2_name_for_app() {
   case "$1" in
-    landing)      printf '%s\n' "landing-page" ;;
+    landing)      printf '%s\n' "landing" ;;
     web)          printf '%s\n' "web" ;;
     api)          printf '%s\n' "api-gateway" ;;
     idp)          printf '%s\n' "idp" ;;
@@ -1392,7 +1392,7 @@ for app in api landing web idp auth design-docs sailor-docs router forge; do
   esac
 
   case "$app" in
-    landing)      deploy_one landing     landing-page ;;
+    landing)      deploy_one landing     landing ;;
     web)          deploy_one web         web          ;;
     api)          deploy_one api         api-gateway  ;;
     idp)          deploy_one idp         idp          ;;

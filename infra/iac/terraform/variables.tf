@@ -43,7 +43,7 @@ variable "vercel_project_web" {
 }
 
 variable "vercel_project_landing" {
-  description = "Vercel project name for the landing page (apps/landing-page)."
+  description = "Vercel project name for the landing page (apps/landing)."
   type        = string
   default     = "nebutra-landing"
 }

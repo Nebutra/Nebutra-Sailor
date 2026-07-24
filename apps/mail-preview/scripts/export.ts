@@ -1,5 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { brand, colors } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { EMAIL_TEMPLATE_CATALOG } from "../../../packages/integrations/email/src/index";
 
 const distDir = new URL("../dist/", import.meta.url);
@@ -33,7 +35,7 @@ async function main() {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nebutra Email Preview</title>
+    <title>${brand.name} Email Preview</title>
     <style>
       :root { color-scheme: light; font-family: ui-sans-serif, system-ui, sans-serif; }
       body { margin: 0; background: #f8fafc; color: #0f172a; }
@@ -48,7 +50,7 @@ async function main() {
   </head>
   <body>
     <main>
-      <h1>Nebutra Email Preview</h1>
+      <h1>${brand.name} Email Preview</h1>
       <p>Generated from the package-owned email template catalog.</p>
       <ul>${links}</ul>
     </main>

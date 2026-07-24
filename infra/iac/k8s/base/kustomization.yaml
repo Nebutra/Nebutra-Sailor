@@ -14,7 +14,7 @@ resources:
 
   # Deployments — one per service
   - deployments/web.yaml
-  - deployments/landing-page.yaml
+  - deployments/landing.yaml
   - deployments/api-gateway.yaml
   - deployments/ai-service.yaml
   - deployments/ecommerce-service.yaml
@@ -24,7 +24,7 @@ resources:
 
   # Services — ClusterIP, one per deployment
   - services/web.yaml
-  - services/landing-page.yaml
+  - services/landing.yaml
   - services/api-gateway.yaml
   - services/ai-service.yaml
   - services/ecommerce-service.yaml

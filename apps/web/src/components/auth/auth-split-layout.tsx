@@ -12,11 +12,11 @@ interface AuthSplitLayoutProps {
 export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
   const t = useTranslations("auth.signIn");
 
-  // Home points at the marketing site (apps/landing-page) — `/` of the web
+  // Home points at the marketing site (apps/landing) — `/` of the web
   // app is the dashboard root which requires auth, so clicking it from
   // sign-in would loop the unauthenticated visitor back to this page.
   // Fall back to "/" only when NEXT_PUBLIC_SITE_URL is unset (e.g. local
-  // smoke tests where landing-page isn't running on a separate port).
+  // smoke tests where landing isn't running on a separate port).
   const homeHref = process.env.NEXT_PUBLIC_SITE_URL ?? "/";
 
   return (

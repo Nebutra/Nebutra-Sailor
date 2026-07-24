@@ -53,7 +53,7 @@ The moat is the **graph** — the relationship data between founders, products, 
 | **Nebutra-Sailor** | The AI-native product infrastructure brand. Appears in the badge: `Built by Nebutra-Sailor` |
 | **Sleptons** | The community and matching platform brand |
 | **v0 / v1 / v2 / v∞** | Sleptons member tier system |
-| **community_profiles** | Existing DB table (created by `/get-license` wizard in `apps/landing-page`). Contains: userId, role, teamSize, useCase, buildingWhat, githubHandle, twitterHandle, referralSource. This is the source of truth for auto-populating the Sleptons profile. |
+| **community_profiles** | Existing DB table (created by `/get-license` wizard in `apps/landing`). Contains: userId, role, teamSize, useCase, buildingWhat, githubHandle, twitterHandle, referralSource. This is the source of truth for auto-populating the Sleptons profile. |
 
 ---
 
@@ -88,7 +88,7 @@ Someone finds Sleptons via Google, Product Hunt, press, or social — without pr
 1. Land on apps/community (public, no auth required)
 2. Browse gallery, get inspired
 3. Click "Join Sleptons" CTA
-4. Redirected to /get-license on apps/landing-page
+4. Redirected to /get-license on apps/landing
 5. Follows Entry Path A from step 1
 ```
 
@@ -269,7 +269,7 @@ Triggered async via `@nebutra/queue` on every profile save.
 
 ```
 apps/
-  landing-page/     Lean marketing + /get-license wizard
+  landing/     Lean marketing + /get-license wizard
   community/        Sleptons — public-facing, Google-indexable
   web/              Nebutra-Sailor console (authenticated)
   api-gateway/      Hono — deployed on Alibaba Cloud ECS
@@ -279,7 +279,7 @@ apps/
 
 ```
 Vercel (edge / frontend)
-├── apps/landing-page
+├── apps/landing
 ├── apps/community      → future: sleptons.com
 └── apps/web
 

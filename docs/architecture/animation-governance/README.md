@@ -20,8 +20,8 @@ Animation Architecture
 
 - Product Motion: `packages/design/ui/src/shared/animation/motion`
 - CSS animation utilities: `packages/design/ui/src/shared/animation/css`
-- App import facade: `apps/{web,landing-page,design-docs,sailor-docs,tsekaluk-dev}/src/shared/motion.ts`
-- Marketing GSAP: `apps/landing-page/src/shared/animation/gsap`
+- App import facade: `apps/{web,landing,design-docs,sailor-docs,tsekaluk-dev}/src/shared/motion.ts`
+- Marketing GSAP: `apps/landing/src/shared/animation/gsap`
 - Governance script: `scripts/verify-animation-governance.mjs`
 - Command: `pnpm animation:governance`
 - Detail command: `node scripts/verify-animation-governance.mjs --details --limit=25`
@@ -57,7 +57,7 @@ When the report flags a violation:
 
 - Move app Motion imports to the nearest `src/shared/motion.ts` facade.
 - Keep shared Product primitives in `packages/design/ui/src/shared/animation/motion`.
-- Keep GSAP usage behind `apps/landing-page/src/shared/animation/gsap` hooks.
+- Keep GSAP usage behind `apps/landing/src/shared/animation/gsap` hooks.
 - Treat `transition-all`, missing reduced-motion handling, and layout animation
   counts as cleanup backlog unless the script lists them under violations.
 

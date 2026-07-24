@@ -32,8 +32,8 @@ The landing page has excellent engineering foundations (i18n 9.5/10, animation 9
 - `AnimateInGroup` stagger entrance
 
 **Files:**
-- `apps/landing-page/src/app/[lang]/(marketing)/page.tsx` — replace inline hero (lines ~50-180) with `<HeroSection />`
-- `apps/landing-page/src/components/landing/HeroSection.tsx` — verify i18n keys align with current translation structure
+- `apps/landing/src/app/[lang]/(marketing)/page.tsx` — replace inline hero (lines ~50-180) with `<HeroSection />`
+- `apps/landing/src/components/landing/HeroSection.tsx` — verify i18n keys align with current translation structure
 
 **Risk:** The inline hero's terminal animation demo is lost. Mitigate by moving the terminal into `ProductDemoSection` or adding it as a secondary element inside `HeroSection`.
 
@@ -51,13 +51,13 @@ The landing page has excellent engineering foundations (i18n 9.5/10, animation 9
 
 **Implementation:**
 1. Capture screenshots from `apps/web` at 1440x900 (use Playwright or manual)
-2. Store as optimized WebP in `apps/landing-page/public/screenshots/`
+2. Store as optimized WebP in `apps/landing/public/screenshots/`
 3. Create `ProductShowcase.tsx` component using the existing `Safari` mockup primitive
 4. Use `next/image` with `priority={false}` and `loading="lazy"`
 
 **Files:**
-- New: `apps/landing-page/src/components/landing/ProductShowcase.tsx`
-- Edit: `apps/landing-page/src/app/[lang]/(marketing)/page.tsx` — add section after hero
+- New: `apps/landing/src/components/landing/ProductShowcase.tsx`
+- Edit: `apps/landing/src/app/[lang]/(marketing)/page.tsx` — add section after hero
 
 ---
 
@@ -86,8 +86,8 @@ export async function getGitHubStars(): Promise<number> {
 **Graceful degradation:** If `GITHUB_TOKEN` is not set or API fails, fall back to the hardcoded value. This matches the "有啥用啥" principle — works with or without the token.
 
 **Files:**
-- New: `apps/landing-page/src/lib/github.ts`
-- Edit: `apps/landing-page/src/app/[lang]/(marketing)/page.tsx` — call `getGitHubStars()` and pass as prop
+- New: `apps/landing/src/lib/github.ts`
+- Edit: `apps/landing/src/app/[lang]/(marketing)/page.tsx` — call `getGitHubStars()` and pass as prop
 - Edit: `VelocitySignalStrip` and `DeploymentStats` — accept `stars` prop instead of hardcoded value
 
 ---
@@ -137,7 +137,7 @@ Three hardcoded hex values need tokenization:
 
 ### P1-4: Wire TestimonialsWall (already built)
 
-**Current:** `apps/landing-page/src/components/marketing/TestimonialsSection.tsx` wraps `TestimonialsWall` from `@nebutra/marketing` but is never imported by any route.
+**Current:** `apps/landing/src/components/marketing/TestimonialsSection.tsx` wraps `TestimonialsWall` from `@nebutra/marketing` but is never imported by any route.
 
 **Target:** Replace the current 3-card static testimonials with the `TestimonialsWall` component. Add real testimonial data structure:
 
@@ -173,7 +173,7 @@ interface Testimonial {
 - `"use cache"` + `cacheLife("hours")` for ISR
 
 **Files:**
-- New: `apps/landing-page/src/components/landing/BlogShowcase.tsx`
+- New: `apps/landing/src/components/landing/BlogShowcase.tsx`
 - Edit: `page.tsx` — add section, fetch posts server-side
 
 ---

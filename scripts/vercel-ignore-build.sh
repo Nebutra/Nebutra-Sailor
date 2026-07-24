@@ -106,9 +106,9 @@ packages/design/ui
 packages/design/design-tokens
 EOF
       ;;
-    apps/landing-page)
+    apps/landing)
       cat <<'EOF'
-apps/landing-page
+apps/landing
 packages/ai/ai-providers
 packages/iam/auth
 packages/commerce/billing
@@ -198,6 +198,17 @@ packages/design/ui
 packages/design/design-tokens
 packages/iam/auth
 packages/platform/prepaid-wallet
+EOF
+      ;;
+    apps/typelens)
+      cat <<'EOF'
+apps/typelens
+packages/design/typelens-catalog
+packages/design/brand
+packages/design/icons
+packages/design/tokens
+packages/design/ui
+packages/design/design-tokens
 EOF
       ;;
     apps/web)

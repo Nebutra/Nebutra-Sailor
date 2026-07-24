@@ -19,8 +19,8 @@
 |------|--------|
 | `packages/platform/db/prisma/schema.prisma` | Add 2 enums + 4 Sleptons models |
 | `packages/platform/db/src/index.ts` | Export new model types |
-| `apps/landing-page/src/app/api/license/route.ts` | Accept `lookingFor`, auto-create `sleptons_member_profiles`, return `communitySlug` |
-| `apps/landing-page/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx` | Add lookingFor checkboxes to Step 3; update Step 4 redirect to community |
+| `apps/landing/src/app/api/license/route.ts` | Accept `lookingFor`, auto-create `sleptons_member_profiles`, return `communitySlug` |
+| `apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx` | Add lookingFor checkboxes to Step 3; update Step 4 redirect to community |
 | `turbo.json` | Add `@nebutra/community` to build pipeline |
 
 ### Created — `apps/community`
@@ -44,7 +44,7 @@
 ### Tests
 | File | What it tests |
 |------|--------------|
-| `apps/landing-page/src/__tests__/api/license.test.ts` | License API: lookingFor field + sleptons profile creation |
+| `apps/landing/src/__tests__/api/license.test.ts` | License API: lookingFor field + sleptons profile creation |
 | `apps/community/src/__tests__/api/members.test.ts` | Members API: list, filter, single member |
 | `apps/community/src/__tests__/components/TierBadge.test.tsx` | Tier badge renders correct label/color |
 | `apps/community/src/__tests__/components/MemberCard.test.tsx` | Card renders all fields |
@@ -262,7 +262,7 @@ git commit -m "feat(db): run Sleptons community migration"
 
 **Files:**
 - Create: `apps/community/src/lib/constants.ts`
-- Modify: `apps/landing-page/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx`
+- Modify: `apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx`
 
 - [ ] **Step 1: Create constants.ts**
 
@@ -384,23 +384,23 @@ Also update Step 4 JSX button to show the pending redirect:
 </p>
 ```
 
-- [ ] **Step 7: Add NEXT_PUBLIC_COMMUNITY_URL to landing-page .env.local**
+- [ ] **Step 7: Add NEXT_PUBLIC_COMMUNITY_URL to landing .env.local**
 
 ```bash
-echo "NEXT_PUBLIC_COMMUNITY_URL=http://localhost:3002" >> apps/landing-page/.env.local
+echo "NEXT_PUBLIC_COMMUNITY_URL=http://localhost:3002" >> apps/landing/.env.local
 ```
 
 - [ ] **Step 8: Typecheck**
 
 ```bash
-pnpm --filter @nebutra/landing-page typecheck
+pnpm --filter @nebutra/landing typecheck
 # Expected: PASS
 ```
 
 - [ ] **Step 9: Commit**
 
 ```bash
-git add apps/landing-page/ apps/community/src/lib/constants.ts
+git add apps/landing/ apps/community/src/lib/constants.ts
 git commit -m "feat(license): add lookingFor field + Sleptons community redirect on license issue"
 ```
 
@@ -409,11 +409,11 @@ git commit -m "feat(license): add lookingFor field + Sleptons community redirect
 ## Task 5: License API — auto-create Sleptons profile
 
 **Files:**
-- Modify: `apps/landing-page/src/app/api/license/route.ts`
+- Modify: `apps/landing/src/app/api/license/route.ts`
 
 - [ ] **Step 1: Write the failing test first**
 
-Create `apps/landing-page/src/__tests__/api/license.test.ts`:
+Create `apps/landing/src/__tests__/api/license.test.ts`:
 
 ```typescript
 import { describe, it, expect, vi, beforeEach } from "vitest"
@@ -495,9 +495,9 @@ describe("POST /api/license", () => {
 })
 ```
 
-- [ ] **Step 2: Set up Vitest in landing-page**
+- [ ] **Step 2: Set up Vitest in landing**
 
-Add to `apps/landing-page/package.json` devDependencies:
+Add to `apps/landing/package.json` devDependencies:
 ```json
 "vitest": "^2.0.0",
 "@vitejs/plugin-react": "^4.0.0",
@@ -505,7 +505,7 @@ Add to `apps/landing-page/package.json` devDependencies:
 "@testing-library/jest-dom": "^6.0.0"
 ```
 
-Create `apps/landing-page/vitest.config.ts`:
+Create `apps/landing/vitest.config.ts`:
 ```typescript
 import { defineConfig } from "vitest/config"
 import react from "@vitejs/plugin-react"
@@ -534,7 +534,7 @@ Add test script to `package.json`:
 - [ ] **Step 3: Run test — verify it FAILS**
 
 ```bash
-pnpm --filter @nebutra/landing-page test
+pnpm --filter @nebutra/landing test
 # Expected: FAIL — sleptonsaMemberProfile.create not called
 ```
 
@@ -624,21 +624,21 @@ import { auth, clerkClient } from "@clerk/nextjs/server"
 - [ ] **Step 8: Run test — verify it PASSES**
 
 ```bash
-pnpm --filter @nebutra/landing-page test
+pnpm --filter @nebutra/landing test
 # Expected: PASS — 2 tests passing
 ```
 
 - [ ] **Step 9: Typecheck**
 
 ```bash
-pnpm --filter @nebutra/landing-page typecheck
+pnpm --filter @nebutra/landing typecheck
 # Expected: PASS
 ```
 
 - [ ] **Step 10: Commit**
 
 ```bash
-git add apps/landing-page/
+git add apps/landing/
 git commit -m "feat(license): auto-create Sleptons member profile on license issue"
 ```
 
@@ -694,7 +694,7 @@ Create `apps/community/package.json`:
 }
 ```
 
-- [ ] **Step 2: Create next.config.ts** (mirror landing-page pattern)
+- [ ] **Step 2: Create next.config.ts** (mirror landing pattern)
 
 ```typescript
 // apps/community/next.config.ts
@@ -1419,7 +1419,7 @@ pnpm --filter @nebutra/community typecheck
 - [ ] **Step 7: Commit**
 
 ```bash
-git add apps/community/ apps/landing-page/
+git add apps/community/ apps/landing/
 git commit -m "feat(community): add Gallery page and WelcomeOverlay with full flow"
 ```
 
@@ -1431,7 +1431,7 @@ git commit -m "feat(community): add Gallery page and WelcomeOverlay with full fl
 - Create: `e2e/sleptons-flow.spec.ts`
 - Modify: `playwright.config.ts` (add community app base URL)
 
-> **Prerequisites:** Both `apps/landing-page` (port 3000) and `apps/community` (port 3002) must be running locally.
+> **Prerequisites:** Both `apps/landing` (port 3000) and `apps/community` (port 3002) must be running locally.
 
 - [ ] **Step 1: Check Playwright is installed**
 
@@ -1519,7 +1519,7 @@ test.describe("Welcome Overlay", () => {
 })
 
 test.describe("License Flow → Community Redirect", () => {
-  // This test requires a running landing-page and a real (or test) Clerk account.
+  // This test requires a running landing and a real (or test) Clerk account.
   // Skip in CI unless CLERK_TEST_USER_ID is set.
   test.skip(
     !process.env.CLERK_TEST_USER_ID,
@@ -1591,7 +1591,7 @@ git commit -m "test(e2e): add Sleptons community flow Playwright tests"
 
 ```bash
 # Terminal 1
-pnpm --filter @nebutra/landing-page dev
+pnpm --filter @nebutra/landing dev
 
 # Terminal 2
 pnpm --filter @nebutra/community dev
@@ -1608,7 +1608,7 @@ pnpm --filter @nebutra/community dev
 - [ ] **Full test suite**
 
 ```bash
-pnpm --filter @nebutra/landing-page test
+pnpm --filter @nebutra/landing test
 pnpm --filter @nebutra/community test
 npx playwright test e2e/sleptons-flow.spec.ts
 # Expected: all unit/integration tests green; 5 E2E tests green (1 skipped)
@@ -1617,7 +1617,7 @@ npx playwright test e2e/sleptons-flow.spec.ts
 - [ ] **Typecheck all modified apps**
 
 ```bash
-pnpm --filter @nebutra/landing-page typecheck
+pnpm --filter @nebutra/landing typecheck
 pnpm --filter @nebutra/community typecheck
 pnpm --filter @nebutra/db typecheck
 # Expected: all PASS
@@ -1636,7 +1636,7 @@ git commit -m "feat: Sleptons Phase 1 complete — community flow end-to-end"
 
 Before starting, ensure these are set in the respective `.env.local` files:
 
-**`apps/landing-page/.env.local`**
+**`apps/landing/.env.local`**
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
 CLERK_SECRET_KEY=sk_...
@@ -1646,7 +1646,7 @@ NEXT_PUBLIC_COMMUNITY_URL=http://localhost:3002
 
 **`apps/community/.env.local`**
 ```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...    # Same key as landing-page
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...    # Same key as landing
 CLERK_SECRET_KEY=sk_...
-DATABASE_URL=postgresql://...               # Same DB as landing-page
+DATABASE_URL=postgresql://...               # Same DB as landing
 ```

@@ -12,7 +12,7 @@ const writeSkeleton = (filePath, moduleName, description, content) => {
 
 // Landing
 writeSkeleton(
-  "apps/landing-page/src/components/landing/Header.tsx",
+  "apps/landing/src/components/landing/Header.tsx",
   "LANDING-HEADER",
   "Sticky header with Logo, Nav, and CTA",
   `export function Header() {
@@ -35,7 +35,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/Hero.tsx",
+  "apps/landing/src/components/landing/Hero.tsx",
   "LANDING-HERO",
   "Hero Section",
   `export function Hero() {
@@ -58,7 +58,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/LogoBar.tsx",
+  "apps/landing/src/components/landing/LogoBar.tsx",
   "LANDING-LOGOBAR",
   "Customer Logo Wall",
   `export function LogoBar() {
@@ -76,7 +76,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/Features.tsx",
+  "apps/landing/src/components/landing/Features.tsx",
   "LANDING-FEATURES",
   "Bento Grid Features",
   `export function Features() {
@@ -94,7 +94,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/Comparison.tsx",
+  "apps/landing/src/components/landing/Comparison.tsx",
   "LANDING-COMPARISON",
   "Competitor Comparison Table",
   `export function Comparison() {
@@ -107,7 +107,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/Testimonials.tsx",
+  "apps/landing/src/components/landing/Testimonials.tsx",
   "LANDING-TESTIMONIALS",
   "User Testimonials",
   `export function Testimonials() {
@@ -120,7 +120,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/Pricing.tsx",
+  "apps/landing/src/components/landing/Pricing.tsx",
   "LANDING-PRICING",
   "3-Column Pricing",
   `export function Pricing() {
@@ -133,7 +133,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/FAQ.tsx",
+  "apps/landing/src/components/landing/FAQ.tsx",
   "LANDING-FAQ",
   "Frequently Asked Questions",
   `export function FAQ() {
@@ -146,7 +146,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/FinalCTA.tsx",
+  "apps/landing/src/components/landing/FinalCTA.tsx",
   "LANDING-FINAL-CTA",
   "Bottom Call to Action",
   `export function FinalCTA() {
@@ -160,7 +160,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/landing/Footer.tsx",
+  "apps/landing/src/components/landing/Footer.tsx",
   "LANDING-FOOTER",
   "Multi-column Footer with Legal",
   `export function Footer() {
@@ -177,7 +177,7 @@ writeSkeleton(
 );
 
 writeSkeleton(
-  "apps/landing-page/src/components/common/ICPBadge.tsx",
+  "apps/landing/src/components/common/ICPBadge.tsx",
   "LANDING-ICP",
   "China ICP Compliance Badge",
   `export function ICPBadge() {

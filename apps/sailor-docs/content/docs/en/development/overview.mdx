@@ -17,7 +17,7 @@ The monorepo is the source of truth for `nebutra.com`, `app.nebutra.com`,
 | `apps/web` | 3000 / 3001 | Authenticated SaaS dashboard | Next.js 16 (prod) + Vite optional |
 | `apps/auth` | 3101 | Login center (`auth.nebutra.com`) | Next.js 16 + Better Auth |
 | `backends/gateway` | 3002 | REST API — auth, RBAC, billing, AI proxy | Hono + OpenAPI (`@nebutra/gateway`) |
-| `apps/landing-page` | 3000-ish | Public marketing site (locales) | Next.js 16 + next-intl |
+| `apps/landing` | 3000-ish | Public marketing site (locales) | Next.js 16 + next-intl |
 | `apps/sailor-docs` | — | Public product documentation (this site) | Next.js 16 + Fumadocs |
 | `apps/design-docs` | — | Internal design system documentation | Next.js 16 + Fumadocs |
 | `apps/storybook` | 6006 | Component library playground | Storybook |
@@ -64,7 +64,7 @@ Before you can run the monorepo locally you need the following tools installed o
     cp apps/web/.env.example apps/web/.env.local
     cp apps/auth/.env.example apps/auth/.env.local   # if present
     cp backends/gateway/.env.example backends/gateway/.env.local
-    cp apps/landing-page/.env.example apps/landing-page/.env.local
+    cp apps/landing/.env.example apps/landing/.env.local
     # Prefer AUTH_PROVIDER=better-auth for local parity with production
     ```
   </Step>
@@ -82,7 +82,7 @@ Before you can run the monorepo locally you need the following tools installed o
     Or start only what you need:
     ```bash
     pnpm dev:dashboard   # web + gateway (see root package.json scripts)
-    pnpm dev:marketing   # landing-page + studio
+    pnpm dev:marketing   # landing + studio
     ```
   </Step>
 </Steps>

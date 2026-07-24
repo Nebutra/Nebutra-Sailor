@@ -18,7 +18,7 @@ This file provides project-wide context for GitHub Copilot Chat and inline compl
 ## Monorepo Structure
 
 ```
-apps/landing-page/  → public marketing site (next-intl, 7 locales)
+apps/landing/  → public marketing site (next-intl, 7 locales)
 apps/web/           → authenticated SaaS dashboard (Clerk auth, RBAC)
 backends/gateway/   → Hono + OpenAPI backend (Zod, 10-layer middleware)
 apps/storybook/     → Storybook 8.x component docs

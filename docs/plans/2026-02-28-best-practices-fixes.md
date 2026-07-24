@@ -242,17 +242,17 @@ git commit -m "fix: remove console statements from alerting package"
 
 **Files:**
 
-- Create: `apps/landing-page/src/hooks/useMount.ts`
-- Modify: `apps/landing-page/src/components/ThemeToggle.tsx`
-- Modify: `apps/landing-page/src/components/landing/Navbar.tsx`
-- Modify: `apps/landing-page/src/components/landing/FooterMinimal.tsx`
-- Modify: `apps/landing-page/src/components/landing/TrustRibbon.tsx`
+- Create: `apps/landing/src/hooks/useMount.ts`
+- Modify: `apps/landing/src/components/ThemeToggle.tsx`
+- Modify: `apps/landing/src/components/landing/Navbar.tsx`
+- Modify: `apps/landing/src/components/landing/FooterMinimal.tsx`
+- Modify: `apps/landing/src/components/landing/TrustRibbon.tsx`
 
 **目标：** 将 4 个组件中重复的 mounted state + useEffect 模式提取到 `useMount` hook。
 
 **Step 1: 创建 hooks 目录和 useMount hook**
 
-创建 `apps/landing-page/src/hooks/useMount.ts`：
+创建 `apps/landing/src/hooks/useMount.ts`：
 
 ```typescript
 import { useState, useEffect } from "react";
@@ -274,7 +274,7 @@ export function useMount(): boolean {
 
 **Step 2: 更新 ThemeToggle.tsx**
 
-将 `apps/landing-page/src/components/ThemeToggle.tsx` 中：
+将 `apps/landing/src/components/ThemeToggle.tsx` 中：
 
 ```typescript
 import { useTheme } from "next-themes";
@@ -310,7 +310,7 @@ const mounted = useMount();
 
 **Step 3: 更新 Navbar.tsx**
 
-将 `apps/landing-page/src/components/landing/Navbar.tsx` 中：
+将 `apps/landing/src/components/landing/Navbar.tsx` 中：
 
 ```typescript
 import { useState, useEffect } from "react";
@@ -345,7 +345,7 @@ const mounted = useMount();
 
 **Step 4: 更新 FooterMinimal.tsx**
 
-将 `apps/landing-page/src/components/landing/FooterMinimal.tsx` 中：
+将 `apps/landing/src/components/landing/FooterMinimal.tsx` 中：
 
 ```typescript
 import { useState, useEffect } from "react";
@@ -378,7 +378,7 @@ const mounted = useMount();
 
 **Step 5: 更新 TrustRibbon.tsx**
 
-将 `apps/landing-page/src/components/landing/TrustRibbon.tsx` 中：
+将 `apps/landing/src/components/landing/TrustRibbon.tsx` 中：
 
 ```typescript
 import { useState, useEffect } from "react";
@@ -412,18 +412,18 @@ const mounted = useMount();
 **Step 6: 验证 TypeScript 编译通过**
 
 ```bash
-cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing-page
+cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing
 pnpm tsc --noEmit 2>&1 | head -30
 ```
 
 **Step 7: Commit**
 
 ```bash
-git add apps/landing-page/src/hooks/useMount.ts \
-        apps/landing-page/src/components/ThemeToggle.tsx \
-        apps/landing-page/src/components/landing/Navbar.tsx \
-        apps/landing-page/src/components/landing/FooterMinimal.tsx \
-        apps/landing-page/src/components/landing/TrustRibbon.tsx
+git add apps/landing/src/hooks/useMount.ts \
+        apps/landing/src/components/ThemeToggle.tsx \
+        apps/landing/src/components/landing/Navbar.tsx \
+        apps/landing/src/components/landing/FooterMinimal.tsx \
+        apps/landing/src/components/landing/TrustRibbon.tsx
 git commit -m "refactor: extract useMount hook to eliminate hydration pattern duplication"
 ```
 
@@ -433,13 +433,13 @@ git commit -m "refactor: extract useMount hook to eliminate hydration pattern du
 
 **Files:**
 
-- Modify: `apps/landing-page/tsconfig.json`
+- Modify: `apps/landing/tsconfig.json`
 
-**目标：** 将 landing-page 的 `target` 从 `ES2017` 升级到 `ES2022`，与根配置 `tsconfig.base.json` 对齐。
+**目标：** 将 landing 的 `target` 从 `ES2017` 升级到 `ES2022`，与根配置 `tsconfig.base.json` 对齐。
 
 **Step 1: 修改 tsconfig.json**
 
-将 `apps/landing-page/tsconfig.json` 第 3 行：
+将 `apps/landing/tsconfig.json` 第 3 行：
 
 ```json
 "target": "ES2017",
@@ -454,7 +454,7 @@ git commit -m "refactor: extract useMount hook to eliminate hydration pattern du
 **Step 2: 验证编译**
 
 ```bash
-cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing-page
+cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing
 pnpm tsc --noEmit 2>&1 | head -20
 ```
 
@@ -463,8 +463,8 @@ pnpm tsc --noEmit 2>&1 | head -20
 **Step 3: Commit**
 
 ```bash
-git add apps/landing-page/tsconfig.json
-git commit -m "chore: align landing-page tsconfig target to ES2022"
+git add apps/landing/tsconfig.json
+git commit -m "chore: align landing tsconfig target to ES2022"
 ```
 
 ---
@@ -473,13 +473,13 @@ git commit -m "chore: align landing-page tsconfig target to ES2022"
 
 **Files:**
 
-- Modify: `apps/landing-page/next.config.ts`
+- Modify: `apps/landing/next.config.ts`
 
-**目标：** 为 landing-page 添加标准安全响应头（CSP、X-Frame-Options、X-Content-Type-Options 等）。
+**目标：** 为 landing 添加标准安全响应头（CSP、X-Frame-Options、X-Content-Type-Options 等）。
 
 **Step 1: 更新 next.config.ts**
 
-将 `apps/landing-page/next.config.ts` 完整替换为：
+将 `apps/landing/next.config.ts` 完整替换为：
 
 ```typescript
 import type { NextConfig } from "next";
@@ -524,7 +524,7 @@ export default nextConfig;
 **Step 2: 验证构建**
 
 ```bash
-cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing-page
+cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing
 pnpm build 2>&1 | tail -20
 ```
 
@@ -533,8 +533,8 @@ pnpm build 2>&1 | tail -20
 **Step 3: Commit**
 
 ```bash
-git add apps/landing-page/next.config.ts
-git commit -m "feat: add security headers to landing-page (X-Frame-Options, CSP, etc.)"
+git add apps/landing/next.config.ts
+git commit -m "feat: add security headers to landing (X-Frame-Options, CSP, etc.)"
 ```
 
 ---
@@ -543,18 +543,18 @@ git commit -m "feat: add security headers to landing-page (X-Frame-Options, CSP,
 
 **Files:**
 
-- Create: `apps/landing-page/src/components/ErrorBoundary.tsx`
-- Modify: `apps/landing-page/src/app/layout.tsx`
+- Create: `apps/landing/src/components/ErrorBoundary.tsx`
+- Modify: `apps/landing/src/app/layout.tsx`
 
-**目标：** 为 landing-page 添加 React Error Boundary，防止未捕获的运行时错误导致白屏。
+**目标：** 为 landing 添加 React Error Boundary，防止未捕获的运行时错误导致白屏。
 
 **Step 1: 先读取 layout.tsx 了解现有结构**
 
-在实施前，读取 `apps/landing-page/src/app/layout.tsx` 确认当前结构。
+在实施前，读取 `apps/landing/src/app/layout.tsx` 确认当前结构。
 
 **Step 2: 创建 ErrorBoundary 组件**
 
-创建 `apps/landing-page/src/components/ErrorBoundary.tsx`：
+创建 `apps/landing/src/components/ErrorBoundary.tsx`：
 
 ```typescript
 "use client";
@@ -605,20 +605,20 @@ export class ErrorBoundary extends Component<Props, State> {
 
 **Step 3: 在 layout.tsx 中使用 ErrorBoundary**
 
-读取 `apps/landing-page/src/app/layout.tsx` 后，在 `<body>` 内容外层包裹 ErrorBoundary。具体位置根据实际 layout 结构确定，通常是包裹 `{children}` 的父级。
+读取 `apps/landing/src/app/layout.tsx` 后，在 `<body>` 内容外层包裹 ErrorBoundary。具体位置根据实际 layout 结构确定，通常是包裹 `{children}` 的父级。
 
 **Step 4: 验证 TypeScript 编译**
 
 ```bash
-cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing-page
+cd /Users/tseka_luk/Documents/Nebutra-SaaS-Lab/Nebutra-Sailor/apps/landing
 pnpm tsc --noEmit 2>&1 | head -20
 ```
 
 **Step 5: Commit**
 
 ```bash
-git add apps/landing-page/src/components/ErrorBoundary.tsx \
-        apps/landing-page/src/app/layout.tsx
+git add apps/landing/src/components/ErrorBoundary.tsx \
+        apps/landing/src/app/layout.tsx
 git commit -m "feat: add ErrorBoundary component to prevent white screen on runtime errors"
 ```
 
@@ -629,7 +629,7 @@ git commit -m "feat: add ErrorBoundary component to prevent white screen on runt
 所有 Task 完成后，验证：
 
 - [ ] `pnpm lint` 无 error（Task 1-2 修复后）
-- [ ] `pnpm tsc --noEmit` 在 landing-page 中通过（Task 3-4 后）
+- [ ] `pnpm tsc --noEmit` 在 landing 中通过（Task 3-4 后）
 - [ ] 响应头中包含 `X-Frame-Options`（Task 5 后）
 - [ ] 每个 Task 都有独立 git commit
 

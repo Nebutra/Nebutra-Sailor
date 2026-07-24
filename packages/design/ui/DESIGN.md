@@ -96,7 +96,7 @@ The library exports ~250 components organized into 5 categories. Storybook is th
 
 ### 3.4 Marketing sections
 
-Self-contained landing-page blocks with prop-driven content. Examples:
+Self-contained landing blocks with prop-driven content. Examples:
 
 | Component | Purpose |
 |-----------|---------|

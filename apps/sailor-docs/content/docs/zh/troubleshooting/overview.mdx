@@ -31,7 +31,7 @@ description: 快速诊断清单、如何读取 Nebutra 错误信息、如何提�
   </Step>
   <Step title="清除 Next.js 缓存">
     ```bash
-    rm -rf apps/web/.next apps/landing-page/.next
+    rm -rf apps/web/.next apps/landing/.next
     pnpm dev
     ```
     Turbopack 和 Webpack 都维护磁盘缓存。过时的缓存条目可能导致模块解析错误，在干净重启后消失。

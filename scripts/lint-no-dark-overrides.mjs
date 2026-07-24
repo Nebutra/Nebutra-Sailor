@@ -16,7 +16,7 @@ import { readFileSync } from "node:fs";
 // Scope: the directories swept by scripts/sweep-dark-overrides.mjs.
 // Other apps (sailor-docs, design-docs, tsekaluk-dev, etc.) carry legacy drift
 // that predates this audit and is tracked separately.
-const ROOTS = ["apps/web/src", "apps/landing-page/src", "packages/design"];
+const ROOTS = ["apps/web/src", "apps/landing/src", "packages/design"];
 
 const PATTERNS = [
   /\bdark:(?:[a-z][a-z0-9-]*(?:\/[a-z0-9-]+)?:)*(?:bg|text|border|fill|stroke|divide|ring)-white(?:\/(?:\d+|\[[^\]\s"']+\]))?\b/,

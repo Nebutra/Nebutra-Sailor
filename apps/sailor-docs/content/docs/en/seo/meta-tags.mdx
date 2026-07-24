@@ -18,7 +18,7 @@ There are two export forms:
 
 Define a title template in your root or segment layout so that every page gets a consistent suffix:
 
-```typescript apps/landing-page/src/app/[lang]/layout.tsx
+```typescript apps/landing/src/app/[lang]/layout.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ Child pages export only `title: "Pricing"` and the rendered `<title>` becomes `P
 
 ## Static metadata example
 
-```typescript apps/landing-page/src/app/[lang]/pricing/page.tsx
+```typescript apps/landing/src/app/[lang]/pricing/page.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
 
 Use `generateMetadata` for pages that fetch content at request time, such as blog posts:
 
-```typescript apps/landing-page/src/app/[lang]/blog/[slug]/page.tsx
+```typescript apps/landing/src/app/[lang]/blog/[slug]/page.tsx
 import type { Metadata } from "next";
 import { getPost } from "@/lib/sanity";
 import { notFound } from "next/navigation";

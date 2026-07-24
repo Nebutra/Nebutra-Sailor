@@ -18,7 +18,7 @@ description: 如何在 Nebutra-Sailor 中设置静态和动态元数据——标
 
 在根 layout 或分段 layout 中定义标题模板，使每个页面获得统一的后缀：
 
-```typescript apps/landing-page/src/app/[lang]/layout.tsx
+```typescript apps/landing/src/app/[lang]/layout.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 
 ## 静态元数据示例
 
-```typescript apps/landing-page/src/app/[lang]/pricing/page.tsx
+```typescript apps/landing/src/app/[lang]/pricing/page.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
 
 对于在请求时获取内容的页面（如博客文章），使用 `generateMetadata`：
 
-```typescript apps/landing-page/src/app/[lang]/blog/[slug]/page.tsx
+```typescript apps/landing/src/app/[lang]/blog/[slug]/page.tsx
 import type { Metadata } from "next";
 import { getPost } from "@/lib/sanity";
 import { notFound } from "next/navigation";

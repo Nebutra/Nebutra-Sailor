@@ -98,4 +98,4 @@ pnpm sanity typegen generate
 
 ## Related
 
-- [Landing page](../../../apps/landing-page/)
+- [Landing page](../../../apps/landing/)

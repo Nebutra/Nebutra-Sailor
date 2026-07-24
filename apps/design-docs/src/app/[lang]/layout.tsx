@@ -8,7 +8,7 @@ import { htmlLangForLanguage, i18n } from "@/lib/i18n";
 import "../globals.css";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
-// Matches the Precision Stack used across apps/web and apps/landing-page
+// Matches the Precision Stack used across apps/web and apps/landing
 // CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
 
 export const metadata: Metadata = {

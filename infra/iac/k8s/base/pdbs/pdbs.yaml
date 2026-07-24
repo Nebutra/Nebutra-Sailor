@@ -29,13 +29,13 @@ spec:
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: landing-page-pdb
+  name: landing-pdb
   namespace: nebutra
 spec:
   minAvailable: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: landing-page
+      app.kubernetes.io/name: landing
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget

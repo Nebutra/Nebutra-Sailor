@@ -55,7 +55,7 @@ Preferred visual languages:
 - **Swiss editorial systems**: strong grid, asymmetric balance, restrained type-like rhythm, generous margins, deliberate negative space.
 - **Information architecture as image**: worktables, routed panes, dossiers, ledgers, split context windows, research rooms, control desks, orchestration boards, layered maps.
 - **Premium technical publishing**: off-white or paper-toned grounds, near-black structural linework, restrained Nebutra blue/cyan accent, quiet secondary colors, print grain, calibrated contrast.
-- **Institutional product taste**: calm, legible, rigorous, useful; closer to a serious research magazine or design-system case study than a startup landing-page hero.
+- **Institutional product taste**: calm, legible, rigorous, useful; closer to a serious research magazine or design-system case study than a startup landing hero.
 - **Specific metaphor over decoration**: every object should map to the article's thesis, tension, workflow, actor, or consequence.
 
 Use richer art direction when appropriate:

@@ -1,5 +1,5 @@
 /**
- * Nebutra OIDC Provider Singleton
+ * OIDC Provider Singleton
  *
  * Lazily creates and caches the oidc-provider instance.
  * This ensures only one Provider exists per Node.js process,

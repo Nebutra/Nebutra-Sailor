@@ -9,7 +9,7 @@ description: 在 Vercel 上部署 Nebutra 前端——营销站与文档为生�
 
 | 项目示例 | 应用路径 | 域名 | 稳态 |
 |----------|----------|------|------|
-| landing | `apps/landing-page` | `nebutra.com` | **Vercel 生产** |
+| landing | `apps/landing` | `nebutra.com` | **Vercel 生产** |
 | `docs` | `apps/sailor-docs` | `docs.nebutra.com` | **Vercel 生产** |
 | `nebutra-web` | `apps/web` | `app.nebutra.com` | 可选；**现为 ECS** |
 | `nebutra-auth` | `apps/auth` | `auth.nebutra.com` | 可选；**现为 ECS** |
@@ -25,7 +25,7 @@ cd ../.. && pnpm turbo run build:next --filter=@nebutra/web
 ## 链接项目
 
 ```bash
-cd apps/landing-page && vercel link
+cd apps/landing && vercel link
 cd ../sailor-docs && vercel link
 # 可选：
 cd ../web && vercel link

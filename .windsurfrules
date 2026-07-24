@@ -10,7 +10,7 @@ Stack: Next.js 16 (App Router, Turbopack) · Hono · Prisma v7 · Clerk · Tailw
 
 ```
 apps/
-  landing-page/     Next.js 16 public marketing site (7 locales, next-intl)
+  landing/     Next.js 16 public marketing site (7 locales, next-intl)
   web/              Next.js 16 authenticated SaaS dashboard (Clerk + RBAC)
   api-gateway/      Hono + OpenAPI backend (10-layer middleware stack)
   storybook/        Storybook 8.x component gallery
@@ -204,7 +204,7 @@ Every new React component **must** have a corresponding Storybook story.
 ```bash
 pnpm dev                     # all apps
 pnpm dev:dashboard           # web + api-gateway only
-pnpm dev:marketing           # landing-page + studio
+pnpm dev:marketing           # landing + studio
 pnpm typecheck               # TypeScript (turbo)
 pnpm lint && pnpm lint:fix   # Biome linting
 pnpm test                    # Vitest

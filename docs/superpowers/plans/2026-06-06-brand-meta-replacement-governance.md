@@ -20,7 +20,7 @@ A completed 3-agent audit established the broken multi-SSOT reality (treat as fa
 
 3. **Dead asset paths.** `copyCustomAssets` writes to a non-existent `packages/brand/assets` (post-2026-05 layout migration left it at `packages/design/brand/assets`); `faviconAssets` in `metadata.ts` declares 5 paths but only `favicon.ico` exists; `manifest.ts` declares `/icons/*.png` paths with no `public/icons/` directory.
 
-4. **i18n identity hardcoded.** 7 next-intl catalogs (`apps/landing-page/messages/*.json`) hardcode brand identity (en=54 lines, zh=56, de=56, es=56, fr=55, ja=57, ko=57). A pre-existing spelling drift exists: `brand.nameFullEn` = "Wuxi Nebutra **Intelligent** Technology Co., Ltd." vs catalog `companyNameEnglish` = "Wuxi Nebutra **Intelligence** Technology Co., Ltd."
+4. **i18n identity hardcoded.** 7 next-intl catalogs (`apps/landing/messages/*.json`) hardcode brand identity (en=54 lines, zh=56, de=56, es=56, fr=55, ja=57, ko=57). A pre-existing spelling drift exists: `brand.nameFullEn` = "Wuxi Nebutra **Intelligent** Technology Co., Ltd." vs catalog `companyNameEnglish` = "Wuxi Nebutra **Intelligence** Technology Co., Ltd."
 
 5. **Runtime per-tenant logo unwired.** `Organization.logo String?` exists (`schema.prisma:134`) and an upload route exists, but the sidebar `BrandLogo` never renders it; `logo/route.ts` still carries dead `as unknown` casts guarded by a stale `TODO(#126 schema)`.
 
@@ -180,13 +180,13 @@ packages/design/tokens/styles.css   ← one brand:apply run changes real colors 
 - `packages/design/brand/src/index.ts` — re-export public symbols from `metadata-helpers.ts`.
 - `apps/web/package.json` — add `"@nebutra/brand": "workspace:*"` (not currently a dep).
 - `apps/web/src/app/[locale]/layout.tsx` — spread `getSiteMetadata({ service: "app" })`; keep `metadataBase` localhost fallback (document with a comment).
-- `apps/landing-page/src/app/layout.tsx` — spread `getSiteMetadata({ service: "landing" })`; merge landing-specific fields.
-- `apps/landing-page/src/app/[lang]/layout.tsx` — replace the `jsonLd` block with `buildOrganizationJsonLd()` (spread-merge `foundingDate`/`address`/`contactPoint`/`sameAs` company-specific fields at call site), `buildWebSiteJsonLd()`, `buildSoftwareApplicationJsonLd()`; keep local `getSiteUrl` for `canonicalUrlForLocale`.
-- `apps/landing-page/src/app/manifest.ts` — `return buildPwaManifest()`.
-- `apps/landing-page/src/lib/seo/metadata.ts` — `?? brand.name` instead of `?? "Nebutra"`.
-- `apps/landing-page/src/lib/seo/site-routes.ts` — `DEFAULT_SITE_URL = \`https://${brand.domains.landing}\` as const`; local `getSiteUrl()` (zero-param) untouched.
-- `apps/landing-page/src/app/robots.ts` — `?? \`https://${brand.domains.landing}\``.
-- `apps/landing-page/src/app/api/changelog/rss/route.ts` + `atom/route.ts` — `const feedMeta = buildFeedChannelMeta()` at module top; substitute item/channel links + titles.
+- `apps/landing/src/app/layout.tsx` — spread `getSiteMetadata({ service: "landing" })`; merge landing-specific fields.
+- `apps/landing/src/app/[lang]/layout.tsx` — replace the `jsonLd` block with `buildOrganizationJsonLd()` (spread-merge `foundingDate`/`address`/`contactPoint`/`sameAs` company-specific fields at call site), `buildWebSiteJsonLd()`, `buildSoftwareApplicationJsonLd()`; keep local `getSiteUrl` for `canonicalUrlForLocale`.
+- `apps/landing/src/app/manifest.ts` — `return buildPwaManifest()`.
+- `apps/landing/src/lib/seo/metadata.ts` — `?? brand.name` instead of `?? "Nebutra"`.
+- `apps/landing/src/lib/seo/site-routes.ts` — `DEFAULT_SITE_URL = \`https://${brand.domains.landing}\` as const`; local `getSiteUrl()` (zero-param) untouched.
+- `apps/landing/src/app/robots.ts` — `?? \`https://${brand.domains.landing}\``.
+- `apps/landing/src/app/api/changelog/rss/route.ts` + `atom/route.ts` — `const feedMeta = buildFeedChannelMeta()` at module top; substitute item/channel links + titles.
 - `packages/commerce/legal/src/documents/config.ts` — add `@nebutra/brand` dep; `tradeName: brand.name`; `social` from `brand.social`; leave `legalName`/emails manual (comment).
 - `packages/commerce/marketing/src/config/index.ts` — add `@nebutra/brand` dep; `companyName: brand.name`; `website: \`https://${brand.domains.landing}\``; `social` from `brand.social`.
 - `tests/architecture/brand-metadata-drift.test.ts` — add a static source-text scan `it()` asserting `metadata-helpers.ts` has zero `/"Nebutra"|'Nebutra'|nebutra\.com/` matches.
@@ -227,7 +227,7 @@ Corrections baked in: the brand `getSiteUrl(service)` is DISTINCT from the local
 - [ ] **12-13. `buildFeedChannelMeta` (RED → GREEN).** Assert all URLs derive from `getSiteUrl("landing")`, `title === \`${brand.name} Changelog\``. Commit.
 - [ ] **14. Wire subpath export + rebuild.** `pnpm --filter @nebutra/brand build && ls packages/design/brand/dist/metadata-helpers.*` → both `.js` + `.d.ts` exist. Commit.
 - [ ] **15. Arch drift guard: zero literals in `metadata-helpers.ts`.** Add static scan `it()` to `brand-metadata-drift.test.ts`. `pnpm vitest run --config vitest.arch.config.ts tests/architecture/brand-metadata-drift.test.ts 2>&1 | tail -8` → passes. Commit.
-- [ ] **16. Refactor `manifest.ts` → `buildPwaManifest()`.** `pnpm --filter @nebutra/landing-page typecheck` → 0 errors.
+- [ ] **16. Refactor `manifest.ts` → `buildPwaManifest()`.** `pnpm --filter @nebutra/landing typecheck` → 0 errors.
 - [ ] **17. Refactor `metadata.ts` `?? brand.name`.** typecheck → 0.
 - [ ] **18. Refactor `site-routes.ts` `DEFAULT_SITE_URL`.** typecheck → 0. (Audit `grep "satisfies.*DEFAULT_SITE_URL"` first — type narrows from literal to `string`.)
 - [ ] **19. Refactor `robots.ts`.** typecheck → 0.
@@ -253,36 +253,36 @@ Corrections baked in: the brand `getSiteUrl(service)` is DISTINCT from the local
 brand (metadata.ts, generated by brand:apply)
   brand.name→{brandName}  brand.nameCn→{brandNameCn}  brand.nameFull→{companyLegal}
   brand.nameFullEn→{companyLegalEn}  brand.name+" Sailor"→{productName} (composed in request.ts)
-       ↓ apps/landing-page/src/i18n/request.ts → injectBrandVars(merged, brandVars)  (immutable recursive)
-       ↓ apps/landing-page/messages/*.json with {placeholder} strings
+       ↓ apps/landing/src/i18n/request.ts → injectBrandVars(merged, brandVars)  (immutable recursive)
+       ↓ apps/landing/messages/*.json with {placeholder} strings
        ↓ useTranslations("footer").copyright → fully-resolved string, ZERO callsite diff
 ```
 
 ### Files
 
 **Modify:**
-- `apps/landing-page/messages/{en,zh,de,es,fr,ja,ko}.json` — replace identity + copy literals with ICU placeholders (en=54 lines, zh=56, de=56, es=56, fr=55, ja=57, ko=57). Notable: `companyNameChinese` (line 231, present in en.json too), `companyNameEnglish` (line 232 → `{companyLegalEn}`, resolves the Intelligent/Intelligence drift), `refund.contactUs.company` (line 909, missed by prior drafts), `metadata.title` (line 1066).
-- `apps/landing-page/src/i18n/request.ts` — `import { brand } from "@nebutra/brand"` (already a landing-page dep); add `brandVars` const + immutable recursive `injectBrandVars()`; wrap `merged` with `injectBrandVars(merged, brandVars)` before return. `deepMerge` stays intact.
+- `apps/landing/messages/{en,zh,de,es,fr,ja,ko}.json` — replace identity + copy literals with ICU placeholders (en=54 lines, zh=56, de=56, es=56, fr=55, ja=57, ko=57). Notable: `companyNameChinese` (line 231, present in en.json too), `companyNameEnglish` (line 232 → `{companyLegalEn}`, resolves the Intelligent/Intelligence drift), `refund.contactUs.company` (line 909, missed by prior drafts), `metadata.title` (line 1066).
+- `apps/landing/src/i18n/request.ts` — `import { brand } from "@nebutra/brand"` (already a landing dep); add `brandVars` const + immutable recursive `injectBrandVars()`; wrap `merged` with `injectBrandVars(merged, brandVars)` before return. `deepMerge` stays intact.
 - `scripts/governance/_config.mjs` — add `i18nBrandLiterals` to `DEFAULTS` (after `repositorySeam` block, ~line 56-62) and to the `config` export (lines 90-93, alongside `rawInputs`/`repositorySeam`).
 - `governance.config.json` — add `i18nBrandLiterals` sibling section, empty allowlist.
 - `package.json` — append `&& node scripts/lint-i18n-brand-literals.mjs` to the `lint` script (line 16); add `lint:i18n-brand-literals` target.
 
 **Create:**
-- `scripts/lint-i18n-brand-literals.mjs` — standalone (NOT in `governance/`; landing-page-specific, mirrors `lint-phosphor-marketing-only.mjs`). Recursive key-walk of message JSON string VALUES; reads config via `loadGovernanceConfig("i18nBrandLiterals")`; `process.stdout.write`/`stderr.write` only.
+- `scripts/lint-i18n-brand-literals.mjs` — standalone (NOT in `governance/`; landing-specific, mirrors `lint-phosphor-marketing-only.mjs`). Recursive key-walk of message JSON string VALUES; reads config via `loadGovernanceConfig("i18nBrandLiterals")`; `process.stdout.write`/`stderr.write` only.
 - `tests/architecture/i18n-brand-literals.test.ts` — (a) no raw literals in any string value; (b) `i18nBrandLiterals.allowlist` is empty (shrink-only). Auto-discovered by `vitest.arch.config.ts`.
-- `apps/landing-page/src/i18n/__tests__/inject-brand-vars.test.ts` — 4 unit cases.
+- `apps/landing/src/i18n/__tests__/inject-brand-vars.test.ts` — 4 unit cases.
 
 `injectBrandVars` regex `/\{(\w+)\}/g` substitutes only `{placeholder}` tokens — next-intl rich-text tags (`<highlight>…</highlight>`) and numeric-keyed cookie objects (`{"0":{…}}`, `Array.isArray` false → recurses) are untouched.
 
 ### TDD tasks
 
 - [ ] **1. RED: failing arch test that detects literals.** Create `tests/architecture/i18n-brand-literals.test.ts` (recursive `collectViolations` walker + 2 `it()`s). `pnpm test:arch -- --reporter=verbose 2>&1 | grep -E 'i18n brand|FAIL|PASS'` → FAIL (54+ from en.json); allowlist test passes (empty).
-- [ ] **2. `injectBrandVars` unit test + helper.** Create `inject-brand-vars.test.ts` (string/nested/arrays-pass-through/unknown-placeholder-literal); add `injectBrandVars`+`brandVars` to `request.ts`. `pnpm --filter @nebutra/landing-page test -- src/i18n/__tests__/inject-brand-vars` → 4/4 PASS. Do NOT edit message files yet. Commit: `feat(i18n): brand var injection at request time`.
-- [ ] **3. Replace literals in `en.json`.** Pre-check: `grep -rn '{brandName}\|{brandNameCn}\|{companyLegal}\|{companyLegalEn}\|{productName}' apps/landing-page/messages/` (confirm zero pre-existing). Edit en.json per codemap. `pnpm test:arch -- --reporter=verbose 2>&1 | grep 'en.json'` → no en.json lines (overall still FAIL).
+- [ ] **2. `injectBrandVars` unit test + helper.** Create `inject-brand-vars.test.ts` (string/nested/arrays-pass-through/unknown-placeholder-literal); add `injectBrandVars`+`brandVars` to `request.ts`. `pnpm --filter @nebutra/landing test -- src/i18n/__tests__/inject-brand-vars` → 4/4 PASS. Do NOT edit message files yet. Commit: `feat(i18n): brand var injection at request time`.
+- [ ] **3. Replace literals in `en.json`.** Pre-check: `grep -rn '{brandName}\|{brandNameCn}\|{companyLegal}\|{companyLegalEn}\|{productName}' apps/landing/messages/` (confirm zero pre-existing). Edit en.json per codemap. `pnpm test:arch -- --reporter=verbose 2>&1 | grep 'en.json'` → no en.json lines (overall still FAIL).
 - [ ] **4. Replace literals in `zh.json`** (云毓智能→`{brandNameCn}`, 无锡云毓智能科技有限公司→`{companyLegal}`). → no zh.json lines.
 - [ ] **5. Replace de/es/fr/ja/ko.** `pnpm test:arch -- --reporter=verbose` → "i18n brand literals": 2 passed. Commit: `feat(i18n): variabilize brand identity across 7 locale catalogs`.
 - [ ] **6. Governance config + lint script.** Add `i18nBrandLiterals` to `_config.mjs` DEFAULTS+config; add section to `governance.config.json` (empty allowlist); create `scripts/lint-i18n-brand-literals.mjs`; wire into `lint`. `node scripts/lint-i18n-brand-literals.mjs && echo EXIT_0` → "clean.\nEXIT_0". Commit: `feat(governance): i18n brand-literal lint (shrink-only)`.
-- [ ] **7. Smoke-test build.** `pnpm --filter @nebutra/landing-page build 2>&1 | tail -10` → exit 0, no `MISSING_MESSAGE`, no raw `{brandName}` in output (resolved at SSG/RSC time). Commit if any fixes.
+- [ ] **7. Smoke-test build.** `pnpm --filter @nebutra/landing build 2>&1 | tail -10` → exit 0, no `MISSING_MESSAGE`, no raw `{brandName}` in output (resolved at SSG/RSC time). Commit if any fixes.
 
 **Decision dependency:** if the human chooses "Intelligence" (Decision 1), update `DEFAULT_BRAND.nameFullEn` and run `pnpm brand:apply` before task 3.
 
@@ -310,7 +310,7 @@ brand (metadata.ts, generated by brand:apply)
 
 **Create:** `packages/design/brand/scripts/generate-favicons.ts` (resvg-js → PNG, sharp rounded apple-touch, png-to-ico, monochrome favicon.svg; exports `generateFavicons(assetsDir)`); `packages/design/brand/src/og/og-template.tsx` (props-driven, hex props only — Satori does NOT resolve `var()`); `packages/design/brand/src/og/index.ts`; `packages/design/brand/vitest.config.ts` (if not created in Phase 3 — reuse it); `packages/design/brand/src/__tests__/generate-favicons.test.ts`, `Logo.test.tsx`, `og-template.test.tsx`; `tests/architecture/brand-favicon-completeness.test.ts`; `scripts/governance/lint-brand-literals.mjs` (NOTE: this is the OG/asset literal guard; in Phase 8 the same filename is the full ratchet engine — **build it in Phase 8 to avoid two engines**; in Phase 5, fold the OG-file hex/name scan into the Phase 8 `governedPaths`/`allowExpressions` instead of a separate script — see Convergence section).
 
-**Modify:** `scripts/brand-apply.ts` (fix dest path; call `generate-favicons.ts` after `copyCustomAssets`); `packages/design/brand/package.json` (test script + devDeps `@resvg/resvg-js`, `sharp`, `png-to-ico`, `vitest`, `@vitejs/plugin-react-swc`, `@testing-library/react`, `@testing-library/jest-dom`, `jsdom`; `./og` export); `Logo.tsx` (`alt={brand.name}` ×3); `apps/landing-page/src/app/opengraph-image.tsx`, `twitter-image.tsx`, `apple-icon.tsx`, `api/og/route.ts`, `[lang]/(marketing)/blog/[slug]/opengraph-image.tsx`, `manifest.ts` (brand+colors imports; keep `runtime="edge"`); `packages/design/brand/scripts/sync-assets.ts` (4 new favicon mappings + presence guard); `scripts/brand-types.ts` (JSDoc on `FaviconAssetConfig` + `cssVars`).
+**Modify:** `scripts/brand-apply.ts` (fix dest path; call `generate-favicons.ts` after `copyCustomAssets`); `packages/design/brand/package.json` (test script + devDeps `@resvg/resvg-js`, `sharp`, `png-to-ico`, `vitest`, `@vitejs/plugin-react-swc`, `@testing-library/react`, `@testing-library/jest-dom`, `jsdom`; `./og` export); `Logo.tsx` (`alt={brand.name}` ×3); `apps/landing/src/app/opengraph-image.tsx`, `twitter-image.tsx`, `apple-icon.tsx`, `api/og/route.ts`, `[lang]/(marketing)/blog/[slug]/opengraph-image.tsx`, `manifest.ts` (brand+colors imports; keep `runtime="edge"`); `packages/design/brand/scripts/sync-assets.ts` (4 new favicon mappings + presence guard); `scripts/brand-types.ts` (JSDoc on `FaviconAssetConfig` + `cssVars`).
 
 ### Favicon pipeline
 
@@ -453,7 +453,7 @@ End state: as files are touched over time, `brandLiterals.allowlist` drains towa
 - **H2 · Phase 1 core.json backup.** The existing byte-identity test's `finally` only restores `metadata.ts`. Since `brand:apply` now writes `core.json`, that test (and any that runs apply) must also back up + restore `core.json`.
 - **H3 · Phase 1 test deriveColorNodes via STATIC import**, not dynamic `import("../../scripts/brand-apply.ts")`. Put the unit test in a separate `tests/architecture/brand-apply-pipeline.test.ts` with `import { deriveColorNodes } from "../../scripts/brand-apply"` to avoid mixing tsx-subprocess and vitest ESM resolution in one file.
 - **H4 · Phase 3 build-before-refactor (dependency inversion).** Apps consume `@nebutra/brand` via `dist/`. The subpath-export + tsup-entry + `pnpm --filter @nebutra/brand build` step (currently task 14) must be a **hard gate BEFORE** any app refactor (tasks 16-25). Run `pnpm install` (so the new `"./metadata-helpers"` export resolves) then build; gate on `ls packages/design/brand/dist/metadata-helpers.{js,d.ts}`.
-- **H5 · Phase 3 DEFAULT_SITE_URL test breakage.** Changing `DEFAULT_SITE_URL` to `` `https://${brand.domains.landing}` `` drops the `as const` literal type and breaks `apps/landing-page/src/lib/seo/__tests__/metadata.test.ts` (L2/15/23 compare against the literal). Add a sub-task to update that test to compare against `brand.domains.landing` and remove the `as const`.
+- **H5 · Phase 3 DEFAULT_SITE_URL test breakage.** Changing `DEFAULT_SITE_URL` to `` `https://${brand.domains.landing}` `` drops the `as const` literal type and breaks `apps/landing/src/lib/seo/__tests__/metadata.test.ts` (L2/15/23 compare against the literal). Add a sub-task to update that test to compare against `brand.domains.landing` and remove the `as const`.
 - **H6 · Phase 4 lint script — pick Option A (standalone, phosphor-style).** The draft contradicts itself (standalone vs `loadGovernanceConfig`). **Decision: Option A** — `scripts/lint-i18n-brand-literals.mjs` is fully standalone with hardcoded message-glob + patterns (mirrors `lint-phosphor-marketing-only.mjs`), and **does NOT** add `i18nBrandLiterals` to `scripts/governance/_config.mjs` DEFAULTS. This also dissolves the Phase4↔Phase8 `_config.mjs` edit conflict (H8) and the dead-DEFAULTS-in-scaffold issue.
 - **H7 · Phase 8 create-sailor distribution.** The "create-sailor ships these" claim is false unless `packages/ops/create-sailor/src/utils/governance-lints.ts` is updated: add a `BRAND_LITERALS_CMD` + a `brandLiterals` section (empty allowlist DEFAULTS, always-on like `rawInputs`) to the emitted `governance.config.json`, and extend `MONOREPO_LINT_CMD_RE` to match `lint-brand-literals`. Add coverage to `governance-lints.test.ts`. (New Phase 8 task.)
 - **H8 · Phase 4/8 `_config.mjs` edit collision** — resolved by H6 (Option A means only Phase 8 touches `_config.mjs`; do not disturb the `rawInputs`/`repositorySeam` lines 91-92).
@@ -464,7 +464,7 @@ End state: as files are touched over time, `brandLiterals.allowlist` drains towa
 - **M1 · Phase 0 (new) — shared brand vitest bootstrap.** `packages/design/brand` is two levels deep; `vitest.workspace.ts` glob `packages/*/vitest.config.ts` won't discover it, so brand tests are **silently skipped in CI's turbo run**. Create `packages/design/brand/vitest.config.ts` once in a Phase 0 and add `packages/*/*/vitest.config.ts` to `vitest.workspace.ts` projects. Phases 3/5/6 then assume it exists (removes the "if not created" conditional and the implicit 3→5 ordering dep).
 - **M2 · Phase 5 fontAssets fiction — don't claim fixed by JSDoc.** Either add an arch assertion in `brand-favicon-completeness.test.ts` that `fontAssets` paths exist on disk (making the fiction a failing test → then fix/remove Poppins/vivoSans), or add an explicit deferral TODO. Do not pretend a JSDoc comment closes the audit finding.
 - **M3 · Phase 5 task 1 needs a RED step.** Fixing `copyCustomAssets` dest path (`scripts/brand-apply.ts:90` → `packages/design/brand/assets`) must first add a failing source-text assertion in `brand-metadata-drift.test.ts`, per the plan's own TDD mandate.
-- **M4 · Phase 4 check:i18n.** Before committing the first message-file edit, run `pnpm --filter @nebutra/landing-page check:i18n` with the new `{brandName}` placeholders present; if it flags undefined ICU placeholders, confirm `injectBrandVars` resolves them before next-intl sees them (or update the checker config). Also reorder Phase 4 so locale migrations resolve the RED i18n arch test before the unrelated `request.ts` commit (avoid committing mid-RED arch suite).
+- **M4 · Phase 4 check:i18n.** Before committing the first message-file edit, run `pnpm --filter @nebutra/landing check:i18n` with the new `{brandName}` placeholders present; if it flags undefined ICU placeholders, confirm `injectBrandVars` resolves them before next-intl sees them (or update the checker config). Also reorder Phase 4 so locale migrations resolve the RED i18n arch test before the unrelated `request.ts` commit (avoid committing mid-RED arch suite).
 - **M5 · Phase 1 hex casing is a deliberate asymmetry.** `deriveColorNodes()` lowercases hex for `core.json` (its existing convention); `updateBrandMetadata()` preserves uppercase from `DEFAULT_BRAND.colors` for `metadata.ts`. State this in a code comment so nobody "fixes" the serializer.
 - **M6 · Phase 1 neutral.0 exclusion.** `NeutralColorScale.0 = "#ffffff"` is intentionally excluded from the `core.json` scale (it maps to `color.white`). Add JSDoc on `deriveColorNodes` + a test asserting the derived neutral object has no `"0"` key.
 
