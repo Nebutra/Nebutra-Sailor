@@ -1,4 +1,5 @@
 import "./globals.css";
+// Server layout: root entry is fine (config + createAuth never hit the client graph here).
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";

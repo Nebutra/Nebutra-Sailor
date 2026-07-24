@@ -10,7 +10,10 @@ import {
 import { cn } from "../utils/cn";
 
 export interface DwellHintProps
-  extends Omit<HTMLMotionProps<"div">, "children" | "initial" | "animate" | "exit" | "transition"> {
+  extends Omit<
+    HTMLMotionProps<"div">,
+    "children" | "initial" | "animate" | "exit" | "transition" | "position"
+  > {
   /** Whether the hint is visible */
   show: boolean;
   /** The hint message to display */

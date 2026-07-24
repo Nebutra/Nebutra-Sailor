@@ -22,7 +22,7 @@
 set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
-APPS="${APPS:-landing web api idp auth design-docs sailor-docs}"
+APPS="${APPS:-landing web api idp auth design-docs sailor-docs router}"
 # Keep 2 releases per app for one-step rollback. Pre/post prune only touch
 # THAT app's releases/ dir (never other apps). Override with VM_KEEP_RELEASES
 # / ECS_KEEP_RELEASES on small disks if needed.
@@ -84,8 +84,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*sailor-docs*) : ;;
-  *) fail "APPS must contain at least one of: landing web api idp auth design-docs sailor-docs (got: $APPS)" ;;
+  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*sailor-docs*|*router*) : ;;
+  *) fail "APPS must contain at least one of: landing web api idp auth design-docs sailor-docs router (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"

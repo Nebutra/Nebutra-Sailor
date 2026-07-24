@@ -4,8 +4,8 @@ import {
   buildAuthCenterSignInUrl,
   buildAuthCenterSignUpUrl,
   getConfiguredAuthProvider,
-} from "@nebutra/auth";
-import { useAuth } from "@nebutra/auth/client";
+  useAuth,
+} from "@nebutra/auth/client";
 import { useEffect, useState } from "react";
 
 type Variant = "header" | "compact" | "cta";

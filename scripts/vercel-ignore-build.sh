@@ -173,6 +173,20 @@ packages/design/ui
 packages/design/design-tokens
 EOF
       ;;
+    apps/router)
+      cat <<'EOF'
+apps/router
+packages/ai/ai-providers
+packages/design/brand
+packages/design/icons
+packages/design/tokens
+packages/design/ui
+packages/design/design-tokens
+packages/iam/auth
+packages/platform/prepaid-wallet
+packages/platform/router-supply
+EOF
+      ;;
     apps/web)
       # Broad product app — still narrower than entire packages/
       cat <<'EOF'
