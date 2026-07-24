@@ -127,9 +127,9 @@ html[data-brand="gsap"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: 'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Mori", "Inter Tight", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 600;
 
   /* Zone type scales */
@@ -180,9 +180,9 @@ html[data-brand="gsap"] {
   --brand-category-other: #abff84;
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 19px);
   line-height: var(--zone-product-body-leading, 1.15);
   font-weight: var(--zone-product-body-weight, 400);
@@ -210,14 +210,14 @@ html[data-brand="gsap"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 19px);
   line-height: var(--zone-marketing-body-leading, 1.15);
   font-weight: var(--zone-marketing-body-weight, 400);
@@ -266,7 +266,8 @@ html[data-brand="gsap"] {
 /* Brand font faces */
 @font-face {
   font-family: "Inter Variable";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
+    format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -366,10 +367,10 @@ html[data-brand="linear"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
   --font-weight-heading: 510;
 
   /* Zone type scales */
@@ -461,9 +462,9 @@ html.dark[data-brand="linear"] {
   --brand-gradient-radial: hsl(var(--primary));
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 14px);
   line-height: var(--zone-product-body-leading, 1.5);
   font-weight: var(--zone-product-body-weight, 400);
@@ -491,14 +492,14 @@ html.dark[data-brand="linear"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 15px);
   line-height: var(--zone-marketing-body-leading, 1.6);
   font-weight: var(--zone-marketing-body-weight, 400);
@@ -547,7 +548,8 @@ html.dark[data-brand="linear"] {
 /* Brand font faces */
 @font-face {
   font-family: "NotionInter";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
+    format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -651,9 +653,9 @@ html[data-brand="notion"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 700;
 
   /* Zone type scales */
@@ -708,9 +710,9 @@ html[data-brand="notion"] {
   --brand-decorative-midnight: #02093a;
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 16px);
   line-height: var(--zone-product-body-leading, 1.5);
   font-weight: var(--zone-product-body-weight, 400);
@@ -738,14 +740,14 @@ html[data-brand="notion"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 16px);
   line-height: var(--zone-marketing-body-leading, 1.5);
   font-weight: var(--zone-marketing-body-weight, 400);
@@ -794,7 +796,8 @@ html[data-brand="notion"] {
 /* Brand font faces */
 @font-face {
   font-family: "Inter";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
+    format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -871,13 +874,43 @@ html[data-brand="raycast"] {
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
-  --elevation-card: rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  --elevation-card:
+    rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(
+      0,
+      0,
+      0,
+      0.2
+    ) 0px -1px 0px 0px inset;
   --elevation-control: 0 0 #0000;
-  --elevation-raised: rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  --elevation-raised:
+    rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(
+      0,
+      0,
+      0,
+      0.2
+    ) 0px -1px 0px 0px inset;
   --shadow-xs: 0 0 #0000;
-  --shadow-sm: rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
-  --shadow-md: rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
-  --shadow-lg: rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  --shadow-sm:
+    rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(
+      0,
+      0,
+      0,
+      0.2
+    ) 0px -1px 0px 0px inset;
+  --shadow-md:
+    rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(
+      0,
+      0,
+      0,
+      0.2
+    ) 0px -1px 0px 0px inset;
+  --shadow-lg:
+    rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(
+      0,
+      0,
+      0,
+      0.2
+    ) 0px -1px 0px 0px inset;
   --btn-default-shadow: 0 0 #0000;
   --btn-default-bg: hsl(var(--primary));
   --btn-default-fg: hsl(var(--primary-foreground));
@@ -898,10 +931,10 @@ html[data-brand="raycast"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-heading: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Geist Mono', 'GeistMono', ui-monospace, Menlo, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 400;
 
   /* Zone type scales */
@@ -948,9 +981,9 @@ html[data-brand="raycast"] {
   --brand-category-sky: #63a1ff;
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 16px);
   line-height: var(--zone-product-body-leading, 1.15);
   font-weight: var(--zone-product-body-weight, 400);
@@ -978,14 +1011,14 @@ html[data-brand="raycast"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 16px);
   line-height: var(--zone-marketing-body-leading, 1.15);
   font-weight: var(--zone-marketing-body-weight, 400);
@@ -1129,9 +1162,9 @@ html[data-brand="stripe"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: 'sohne-var', 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'sohne-var', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'sohne-var', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "sohne-var", "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 300;
 
   /* Zone type scales */
@@ -1194,9 +1227,9 @@ html[data-brand="stripe"] {
   --brand-decorative-frost: #e5edf5;
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 16px);
   line-height: var(--zone-product-body-leading, 1.2);
   font-weight: var(--zone-product-body-weight, 400);
@@ -1225,14 +1258,14 @@ html[data-brand="stripe"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 16px);
   line-height: var(--zone-marketing-body-leading, 1.4);
   font-weight: var(--zone-marketing-body-weight, 300);
@@ -1282,7 +1315,8 @@ html[data-brand="stripe"] {
 /* Brand font faces */
 @font-face {
   font-family: "Inter Variable";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2")
+    format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -1393,9 +1427,9 @@ html[data-brand="vanta"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Reckless', 'Source Serif 4', 'Lora', ui-serif, Georgia, serif;
-  --font-display: 'Reckless', 'Source Serif 4', 'Lora', ui-serif, Georgia, serif;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
+  --font-display: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
   --font-weight-heading: 500;
 
   /* Zone type scales */
@@ -1448,9 +1482,9 @@ html[data-brand="vanta"] {
   --brand-decorative-hero-wash: #ddd6ff;
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 16px);
   line-height: var(--zone-product-body-leading, 1.5);
   font-weight: var(--zone-product-body-weight, 400);
@@ -1479,14 +1513,14 @@ html[data-brand="vanta"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 16px);
   line-height: var(--zone-marketing-body-leading, 1.5);
   font-weight: var(--zone-marketing-body-weight, 400);
@@ -1536,7 +1570,8 @@ html[data-brand="vanta"] {
 /* Brand font faces */
 @font-face {
   font-family: "Geist Sans";
-  src: url("https://cdn.jsdelivr.net/fontsource/fonts/geist-sans:vf@latest/latin-wght-normal.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/geist-sans:vf@latest/latin-wght-normal.woff2")
+    format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -1636,10 +1671,10 @@ html[data-brand="vercel"] {
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
-  --font-sans: 'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+  --font-sans: "Geist Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Geist Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Geist Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 450;
 
   /* Zone type scales */
@@ -1732,9 +1767,9 @@ html.dark[data-brand="vercel"] {
   --brand-gradient-radial: hsl(var(--primary));
 }
 
-
 /* Zone: product — product never inherits marketing display */
-[data-zone="product"], .zone-product {
+[data-zone="product"],
+.zone-product {
   font-size: var(--zone-product-body-size, 16px);
   line-height: var(--zone-product-body-leading, 1.5);
   font-weight: var(--zone-product-body-weight, 400);
@@ -1762,14 +1797,14 @@ html.dark[data-brand="vercel"] {
   --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
   --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
   --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
 /* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"], .zone-marketing {
+[data-zone="marketing"],
+.zone-marketing {
   font-size: var(--zone-marketing-body-size, 16px);
   line-height: var(--zone-marketing-body-leading, 1.5);
   font-weight: var(--zone-marketing-body-weight, 400);
