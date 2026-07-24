@@ -7,7 +7,6 @@ import { cn } from "@nebutra/ui/utils";
 export function ForgeMark({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex shrink-0 items-center", className)}>
-      {/* biome-ignore lint/performance/noImgElement: product mark from public/product */}
       <img
         src="/product/forge-anvil.png"
         alt=""

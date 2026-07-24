@@ -61,7 +61,6 @@ export function HomeSearch({ tools }: { tools: readonly ForgeToolSummary[] }) {
           className="absolute z-20 mt-2 flex w-full flex-col items-center gap-2 rounded-[var(--radius-lg)] border border-border bg-background px-4 py-6 text-center shadow-lg"
           role="status"
         >
-          {/* biome-ignore lint/performance/noImgElement: transparent product empty glyph */}
           <img
             src="/product/forge-empty.png"
             alt=""
