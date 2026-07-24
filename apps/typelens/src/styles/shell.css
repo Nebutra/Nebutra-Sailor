@@ -1,0 +1,155 @@
+/**
+ * Type Lens shell — imported AFTER preset so Turbopack/Tailwind v4
+ * does not drop these rules (same pattern as router market-shell.css).
+ */
+
+:root {
+  --tl-ink: #0a0a0a;
+  --tl-ink-soft: #1c1c1c;
+  --tl-muted: #5c5c5c;
+  --tl-line: #0a0a0a;
+  --tl-line-soft: #e8e8e8;
+  --tl-paper: #faf9f7;
+  --tl-paper-deep: #f3f1ec;
+  --tl-max: 1480px;
+  /* Page gutter — never rely on this alone; also use Tailwind px-* on .tl-container */
+  --tl-pad: clamp(1.25rem, 4vw, 2.75rem);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--tl-paper);
+  color: var(--tl-ink);
+  font-feature-settings: "ss01" on, "kern" on;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--tl-ink) 16%, transparent);
+}
+
+/**
+ * Content column — explicit padding + max-width.
+ * Also mirrored as Tailwind classes on JSX for belt-and-suspenders.
+ */
+.tl-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--tl-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--tl-pad);
+  padding-right: var(--tl-pad);
+}
+
+.tl-display {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.tl-kicker {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tl-muted);
+}
+
+/**
+ * FOUC guard for GSAP (gsap-performance): paint-time hide, then
+ * useGSAP reveals via autoAlpha/transform. Reduced-motion stays visible.
+ */
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-mark],
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-kicker],
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-tagline],
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-nav] a,
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-search],
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-filter],
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-card],
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-section],
+[data-tl-motion-root]:not([data-tl-motion-ready]) [data-tl-footer] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tl-motion-root] [data-tl-mark],
+  [data-tl-motion-root] [data-tl-kicker],
+  [data-tl-motion-root] [data-tl-tagline],
+  [data-tl-motion-root] [data-tl-nav] a,
+  [data-tl-motion-root] [data-tl-search],
+  [data-tl-motion-root] [data-tl-filter],
+  [data-tl-motion-root] [data-tl-card],
+  [data-tl-motion-root] [data-tl-section],
+  [data-tl-motion-root] [data-tl-footer] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Hover lift (CSS) coexists with GSAP entrance (transform/autoAlpha). */
+.tl-card {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-card {
+    transition: none;
+  }
+
+  .tl-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.tl-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px -28px rgb(0 0 0 / 28%);
+}
+
+.tl-stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.tl-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 0%) 40%,
+    rgb(0 0 0 / 8%) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.tl-card:hover .tl-stage::after {
+  opacity: 1;
+}

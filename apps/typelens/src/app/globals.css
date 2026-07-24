@@ -1,9 +1,15 @@
+/**
+ * Type Lens CSS entry (Tailwind v4).
+ *
+ * Order matters:
+ * 1) preset = tailwind + tokens + UI @source
+ * 2) @source this app (so utilities in our components generate)
+ * 3) shell.css as a SEPARATE import (custom rules must not sit in the
+ *    same file as @import "tailwindcss" or Turbopack may drop them)
+ */
 @import "@nebutra/ui/styles/preset.css";
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  background: #fff;
-  color: #111;
-}
+
+/* Scan Type Lens app source for utility classes */
+@source "../**/*.{ts,tsx}";
+
+@import "../styles/shell.css";

@@ -14,7 +14,10 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
   const workById = new Map(listWorks().map((w) => [w.id, w]));
   const usedIn = listSpecimens().filter((s) => s.typefaces.some((r) => r.typefaceId === tf.id));
   return (
-    <article className="mx-auto max-w-[900px] px-4 py-10 md:px-8">
+    <article
+      data-tl-section
+      className="mx-auto w-full max-w-[900px] px-5 py-12 sm:px-6 md:px-8 md:py-16 will-change-transform"
+    >
       <p className="mb-2 text-sm text-neutral-500">
         <Link href="/typefaces" className="hover:underline">
           Typefaces

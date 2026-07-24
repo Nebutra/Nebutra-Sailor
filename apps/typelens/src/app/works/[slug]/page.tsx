@@ -7,6 +7,7 @@ import {
   getWork,
   mediumLabel,
 } from "@/lib/catalog";
+import { TL_CONTAINER } from "@/lib/layout";
 
 type Params = Promise<{ slug: string }>;
 
@@ -23,113 +24,168 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
   const extract = specimen ? extractSpecimen(specimen.id) : null;
 
   return (
-    <article className="mx-auto max-w-[900px] px-4 py-10 md:px-8">
-      <p className="mb-2 text-sm text-neutral-500">
-        <Link href="/works" className="hover:underline">
-          Works
-        </Link>
-        <span className="mx-2">/</span>
-        {mediumLabel(work.medium)}
-      </p>
-      <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{work.title}</h1>
-      {work.titleZh ? <p className="mt-2 text-xl text-neutral-600">{work.titleZh}</p> : null}
-      <div className="mt-4 flex flex-wrap gap-2">
-        {work.mood.map((m) => (
-          <Link
-            key={m}
-            href={`/works?mood=${m}`}
-            className="rounded-full border border-neutral-300 px-3 py-0.5 text-xs font-medium no-underline hover:border-neutral-900"
-          >
-            {m}
+    <article data-tl-section className={`${TL_CONTAINER} py-12 md:py-16 will-change-transform`}>
+      <div className="mx-auto max-w-[52rem]">
+        <p className="tl-kicker mb-4">
+          <Link href="/works" className="hover:text-[var(--tl-ink)]">
+            Works
           </Link>
-        ))}
+          <span className="mx-3 opacity-30">/</span>
+          {mediumLabel(work.medium)}
+        </p>
+
+        <h1 className="tl-display text-[clamp(2.5rem,5.5vw,4rem)] text-[var(--tl-ink)]">
+          {work.title}
+        </h1>
+        {work.titleZh ? (
+          <p className="mt-4 text-xl text-[var(--tl-muted)] md:text-2xl">{work.titleZh}</p>
+        ) : null}
+
+        <div className="mt-6 flex flex-wrap gap-2">
+          {work.mood.map((m) => (
+            <Link
+              key={m}
+              href={`/works?mood=${m}`}
+              className="border border-[var(--tl-ink)]/20 px-3.5 py-1.5 text-xs font-semibold tracking-[0.12em] uppercase no-underline transition-colors hover:border-[var(--tl-ink)] hover:bg-[var(--tl-ink)] hover:text-white"
+            >
+              {m}
+            </Link>
+          ))}
+          {work.scripts.map((s) => (
+            <span
+              key={s}
+              className="bg-[var(--tl-paper-deep)] px-3.5 py-1.5 text-xs tracking-wide text-[var(--tl-muted)]"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
       </div>
-      <div className="mt-8 aspect-[16/10] border border-neutral-200 bg-neutral-50 p-8">
-        <div className="flex h-full flex-col justify-center gap-4">
+
+      <div className="mx-auto mt-12 max-w-[56rem] border border-[var(--tl-ink)]/10 bg-[var(--tl-paper-deep)]">
+        <div className="flex min-h-[min(52vh,28rem)] flex-col justify-center gap-6 p-10 md:p-16">
           {extract
             ? Object.entries(extract.pairing).map(([role, p]) => (
                 <p
                   key={role}
-                  className="leading-tight"
+                  className="leading-[1.05] tracking-[-0.03em]"
                   style={{
                     fontFamily: p.cssStack,
-                    fontSize: role === "display" ? "2.5rem" : "1.125rem",
+                    fontSize:
+                      role === "display"
+                        ? "clamp(2.5rem, 6vw, 4rem)"
+                        : role === "body"
+                          ? "1.25rem"
+                          : "1.5rem",
                     fontWeight: p.weight ?? 400,
                   }}
                 >
-                  {role}: {p.family}
+                  <span className="mb-1 block text-[0.65rem] font-semibold tracking-[0.18em] text-[var(--tl-muted)] uppercase">
+                    {role}
+                  </span>
+                  {p.family}
                 </p>
               ))
             : null}
         </div>
       </div>
+
       {specimen ? (
-        <section className="mt-10 space-y-4">
-          <h2 className="text-2xl font-bold">Type system</h2>
-          <p className="text-neutral-700">{specimen.summary}</p>
-          {specimen.summaryZh ? <p className="text-neutral-600">{specimen.summaryZh}</p> : null}
-          <p className="text-sm text-neutral-500">Pairing: {specimen.pairing.strategy}</p>
-          <ul className="divide-y divide-neutral-200 border-y border-neutral-200">
-            {specimen.typefaces.map((ref) => {
-              const tf = getTypeface(ref.typefaceId);
-              if (!tf) return null;
-              return (
-                <li
-                  key={`${ref.typefaceId}-${ref.role}`}
-                  className="flex flex-wrap items-baseline justify-between gap-2 py-3"
-                >
-                  <Link
-                    href={`/typefaces/${tf.id}`}
-                    className="text-lg font-medium hover:underline"
-                    style={{ fontFamily: tf.cssStack }}
+        <div className="mx-auto mt-16 max-w-[52rem] space-y-12">
+          <section>
+            <p className="tl-kicker mb-3">Type system</p>
+            <p className="text-xl leading-relaxed text-[var(--tl-ink-soft)] md:text-2xl">
+              {specimen.summary}
+            </p>
+            {specimen.summaryZh ? (
+              <p className="mt-3 text-lg text-[var(--tl-muted)]">{specimen.summaryZh}</p>
+            ) : null}
+            <p className="mt-4 text-sm text-[var(--tl-muted)]">
+              Pairing: {specimen.pairing.strategy}
+              {specimen.pairing.contrast ? ` · contrast ${specimen.pairing.contrast}` : ""}
+            </p>
+          </section>
+
+          <section>
+            <h2 className="mb-4 text-2xl font-semibold tracking-tight">Typefaces</h2>
+            <ul className="divide-y divide-[var(--tl-line-soft)] border-y border-[var(--tl-ink)]">
+              {specimen.typefaces.map((ref) => {
+                const tf = getTypeface(ref.typefaceId);
+                if (!tf) return null;
+                return (
+                  <li
+                    key={`${ref.typefaceId}-${ref.role}`}
+                    className="flex flex-wrap items-baseline justify-between gap-3 py-5"
                   >
-                    {tf.family}
-                  </Link>
-                  <span className="text-sm text-neutral-500">
-                    {ref.role} · {tf.license.spdxOrLabel}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-          <h3 className="pt-4 text-lg font-semibold">Hierarchy</h3>
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-neutral-300 text-neutral-500">
-                <th className="py-2 pr-4">Role</th>
-                <th className="py-2 pr-4">Size</th>
-                <th className="py-2 pr-4">Weight</th>
-                <th className="py-2">Tracking</th>
-              </tr>
-            </thead>
-            <tbody>
-              {specimen.hierarchy.map((step) => (
-                <tr key={`${step.role}-${step.rem}`} className="border-b border-neutral-100">
-                  <td className="py-2 pr-4 font-medium">{step.role}</td>
-                  <td className="py-2 pr-4">{step.rem}rem</td>
-                  <td className="py-2 pr-4">{step.weight}</td>
-                  <td className="py-2">{step.tracking ?? "—"}</td>
+                    <Link
+                      href={`/typefaces/${tf.id}`}
+                      className="text-2xl font-medium tracking-tight no-underline hover:opacity-55"
+                      style={{ fontFamily: tf.cssStack }}
+                    >
+                      {tf.family}
+                    </Link>
+                    <span className="text-sm tracking-wide text-[var(--tl-muted)]">
+                      {ref.role}
+                      {ref.weight ? ` · ${ref.weight}` : ""} · {tf.license.spdxOrLabel}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="mb-4 text-2xl font-semibold tracking-tight">Hierarchy</h2>
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b-2 border-[var(--tl-ink)] text-[var(--tl-muted)]">
+                  <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Role</th>
+                  <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Size</th>
+                  <th className="py-3 pr-4 font-semibold tracking-wide uppercase">Weight</th>
+                  <th className="py-3 font-semibold tracking-wide uppercase">Tracking</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
+              </thead>
+              <tbody>
+                {specimen.hierarchy.map((step) => (
+                  <tr
+                    key={`${step.role}-${step.rem}`}
+                    className="border-b border-[var(--tl-line-soft)]"
+                  >
+                    <td className="py-3.5 pr-4 font-medium">{step.role}</td>
+                    <td className="py-3.5 pr-4">{step.rem}rem</td>
+                    <td className="py-3.5 pr-4">{step.weight}</td>
+                    <td className="py-3.5">{step.tracking ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        </div>
       ) : null}
+
       {extract ? (
-        <section className="mt-10 rounded border border-neutral-900 bg-neutral-50 p-6">
-          <h2 className="text-xl font-bold">Agent extract</h2>
-          <p className="mt-1 text-sm text-neutral-600">
-            schema v{extract.schemaVersion} · confidence {(extract.confidence * 100).toFixed(0)}%
+        <section className="mx-auto mt-16 max-w-[52rem] border-2 border-[var(--tl-ink)] bg-white p-8 md:p-10">
+          <p className="tl-kicker mb-2">For agents</p>
+          <h2 className="text-2xl font-semibold tracking-tight">Extract pack</h2>
+          <p className="mt-2 text-sm text-[var(--tl-muted)]">
+            schema v{extract.schemaVersion} · confidence {(extract.confidence * 100).toFixed(0)}% ·
+            licenses included
           </p>
-          <pre className="mt-4 max-h-80 overflow-auto rounded bg-neutral-900 p-4 text-xs text-neutral-100">
+          <pre className="mt-6 max-h-80 overflow-auto bg-[var(--tl-ink)] p-5 text-xs leading-relaxed text-neutral-200">
             {JSON.stringify(extract, null, 2)}
           </pre>
-          <p className="mt-3 text-sm">
-            <Link href="/docs/agents" className="underline">
+          <p className="mt-4 text-sm">
+            <Link href="/docs/agents" className="font-medium underline-offset-4 hover:underline">
               Agent docs →
             </Link>
           </p>
         </section>
+      ) : null}
+
+      {work.curatorNotes ? (
+        <p className="mx-auto mt-12 max-w-[52rem] text-sm text-[var(--tl-muted)]">
+          {work.curatorNotes}
+        </p>
       ) : null}
     </article>
   );

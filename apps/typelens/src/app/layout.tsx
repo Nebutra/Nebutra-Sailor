@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { TypeLensMotion } from "@/components/type-lens-motion";
 
 export const metadata: Metadata = {
   title: {
@@ -23,11 +24,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
-        <div className="flex min-h-screen flex-col">
+        <TypeLensMotion>
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
-        </div>
+        </TypeLensMotion>
       </body>
     </html>
   );

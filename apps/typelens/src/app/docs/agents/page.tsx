@@ -10,7 +10,10 @@ export default function AgentsDocsPage() {
     sample = { error: "sample unavailable" };
   }
   return (
-    <article className="mx-auto max-w-[800px] px-4 py-10 md:px-8">
+    <article
+      data-tl-section
+      className="mx-auto w-full max-w-[800px] px-5 py-12 sm:px-6 md:px-8 md:py-16 will-change-transform"
+    >
       <h1 className="text-4xl font-bold tracking-tight">For Agents</h1>
       <p className="mt-3 text-neutral-600">
         Structured pairings with commercial-use licenses for design agents.

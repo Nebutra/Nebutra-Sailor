@@ -8,7 +8,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const query = q.trim();
   const hits = query ? searchSpecimens({ query }) : [];
   return (
-    <div className="mx-auto max-w-[800px] px-4 py-10 md:px-8">
+    <div
+      data-tl-section
+      className="mx-auto w-full max-w-[800px] px-5 py-12 sm:px-6 md:px-8 md:py-16 will-change-transform"
+    >
       <h1 className="text-4xl font-bold tracking-tight">Search</h1>
       <form action="/search" method="get" className="mt-6 flex gap-2">
         <input
