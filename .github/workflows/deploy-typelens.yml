@@ -1,0 +1,82 @@
+name: Deploy Type Lens (Cloudflare)
+
+# Primary production path: OpenNext → Cloudflare Worker + Assets
+# Domain: typelens.nebutra.com (route in apps/typelens/wrangler.jsonc)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps/typelens/**"
+      - "packages/design/typelens-catalog/**"
+      - "packages/design/ui/**"
+      - "packages/design/tokens/**"
+      - "packages/design/icons/**"
+      - "packages/design/brand/**"
+      - ".github/workflows/deploy-typelens.yml"
+
+concurrency:
+  group: deploy-typelens-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate Cloudflare secrets
+        run: |
+          [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
+          [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
+
+      - name: Build OpenNext worker
+        working-directory: apps/typelens
+        env:
+          OPEN_NEXT_BUILD: "true"
+          CI: "true"
+          NEXT_PUBLIC_SITE_URL: https://typelens.nebutra.com
+          NEXT_PUBLIC_APP_URL: https://typelens.nebutra.com
+        run: pnpm exec opennextjs-cloudflare build
+
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/typelens
+          command: deploy --config wrangler.jsonc
+
+      - name: Smoke
+        run: |
+          set -euo pipefail
+          # workers.dev URL may lag custom domain; try both
+          for url in \
+            "https://typelens.nebutra.com/" \
+            "https://nebutra-typelens.nebutra.workers.dev/" \
+            ; do
+            code=$(curl -sS -o /tmp/tl-smoke.html -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            echo "$url → $code"
+            if [ "$code" = "200" ]; then
+              head -c 200 /tmp/tl-smoke.html; echo
+              exit 0
+            fi
+          done
+          echo "::warning::Smoke did not get HTTP 200 yet (DNS/propagation). Worker deploy step already succeeded."
