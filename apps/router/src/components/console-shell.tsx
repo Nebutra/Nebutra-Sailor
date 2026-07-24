@@ -16,6 +16,7 @@ import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketFooter } from "@/components/market-footer";
 import { MarketIcon } from "@/lib/market-icons";
@@ -215,20 +216,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
             <span className="text-[var(--neutral-7)]" aria-hidden>
               |
             </span>
-            <button
-              type="button"
-              className="font-medium text-[var(--neutral-12)] hover:opacity-80"
-              onClick={() => router.push("/dashboard")}
-            >
-              登录
-            </button>
-            <button
-              type="button"
-              className="hover:text-[var(--neutral-12)]"
-              onClick={() => router.push("/dashboard")}
-            >
-              注册
-            </button>
+            <AuthActions variant="header" />
           </div>
 
           <div className="flex items-center gap-3.5">

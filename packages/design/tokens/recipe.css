@@ -59,11 +59,7 @@
   --badge-default-fg: hsl(var(--brand-mark-foreground));
   --badge-default-border: transparent;
   --badge-default-radius: var(--radius-badge, 9999px);
-  --badge-default-hover-bg: color-mix(
-    in srgb,
-    hsl(var(--brand-mark)) 80%,
-    transparent
-  );
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--brand-mark)) 80%, transparent);
 }
 
 /* Tailwind v4: brand-mark as first-class color (Logo / BrandMark / badge) */
@@ -80,7 +76,10 @@
   border-radius: var(--btn-default-radius, var(--radius-md, 0.375rem));
   background-color: transparent;
   background-image:
-    linear-gradient(var(--btn-default-bg, hsl(var(--primary))), var(--btn-default-bg, hsl(var(--primary)))),
+    linear-gradient(
+      var(--btn-default-bg, hsl(var(--primary))),
+      var(--btn-default-bg, hsl(var(--primary)))
+    ),
     var(--btn-default-stroke-gradient, linear-gradient(transparent, transparent));
   background-origin: border-box;
   background-clip: padding-box, border-box;

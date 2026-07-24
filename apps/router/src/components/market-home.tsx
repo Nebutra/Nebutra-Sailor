@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { BrandMark } from "@/components/brand-marks";
 import { MarketBannerCarousel } from "@/components/market-banner-carousel";
@@ -498,12 +499,9 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
         让 AI 为每个需求找到答案
       </p>
 
-      <Link
-        href="/dashboard"
-        className="mt-3.5 flex h-10 items-center justify-center rounded-full bg-[var(--neutral-12)] text-[13px] font-medium text-[var(--neutral-1)] transition hover:bg-[var(--neutral-11)]"
-      >
-        登录 / 注册
-      </Link>
+      <div className="mt-3.5">
+        <AuthActions variant="cta" />
+      </div>
 
       <div className="mt-4 grid grid-cols-3 gap-x-1 gap-y-3">
         {MARKET_SHORTCUTS.map((s) => (

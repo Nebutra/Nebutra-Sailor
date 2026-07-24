@@ -41,7 +41,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api idp auth design-docs sailor-docs). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api idp auth design-docs sailor-docs router forge). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -81,6 +81,8 @@ jobs:
       auth:        ${{ steps.resolve.outputs.auth }}
       design-docs: ${{ steps.resolve.outputs['design-docs'] }}
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
+      router:      ${{ steps.resolve.outputs.router }}
+      forge:       ${{ steps.resolve.outputs.forge }}
       any:         ${{ steps.resolve.outputs.any }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -152,6 +154,29 @@ jobs:
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - '.github/workflows/deploy-ecs.yml'
+            router:
+              - 'apps/router/**'
+              - 'packages/platform/router-supply/**'
+              - 'packages/platform/prepaid-wallet/**'
+              - 'packages/ai/ai-providers/**'
+              - 'packages/iam/auth/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
+            forge:
+              - 'apps/forge/**'
+              - 'packages/ai/forge-runtime/**'
+              - 'packages/platform/prepaid-wallet/**'
+              - 'packages/iam/auth/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
 
       - name: Resolve target apps
         id: resolve
@@ -164,6 +189,8 @@ jobs:
           F_AUTH:         ${{ steps.filter.outputs.auth }}
           F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
+          F_ROUTER:       ${{ steps.filter.outputs.router }}
+          F_FORGE:        ${{ steps.filter.outputs.forge }}
         run: |
           normalize_apps() {
             printf '%s' "$1" | tr ',\n\t' '    ' | xargs
@@ -182,13 +209,13 @@ jobs:
             unknown_apps=""
             for app in $normalized_apps; do
               case "$app" in
-                landing|web|api|idp|auth|design-docs|sailor-docs) ;;
+                landing|web|api|idp|auth|design-docs|sailor-docs|router|forge) ;;
                 *) unknown_apps="$unknown_apps $app" ;;
               esac
             done
 
             if [ -n "$unknown_apps" ]; then
-              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design-docs sailor-docs"
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design-docs sailor-docs router forge"
               exit 1
             fi
           fi
@@ -202,6 +229,8 @@ jobs:
               echo "auth=$(contains_app "$normalized_apps" auth)"
               echo "design-docs=$(contains_app "$normalized_apps" design-docs)"
               echo "sailor-docs=$(contains_app "$normalized_apps" sailor-docs)"
+              echo "router=$(contains_app "$normalized_apps" router)"
+              echo "forge=$(contains_app "$normalized_apps" forge)"
               echo "any=true"
             else
               echo "landing=$F_LANDING"
@@ -211,7 +240,9 @@ jobs:
               echo "auth=$F_AUTH"
               echo "design-docs=$F_DESIGN_DOCS"
               echo "sailor-docs=$F_SAILOR_DOCS"
-              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" ]] && echo true || echo false)"
+              echo "router=$F_ROUTER"
+              echo "forge=$F_FORGE"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" ]] && echo true || echo false)"
             fi
           } >> "$GITHUB_OUTPUT"
 
@@ -233,7 +264,9 @@ jobs:
       needs.detect-changes.outputs.idp == 'true' ||
       needs.detect-changes.outputs.auth == 'true' ||
       needs.detect-changes.outputs['design-docs'] == 'true' ||
-      needs.detect-changes.outputs['sailor-docs'] == 'true'
+      needs.detect-changes.outputs['sailor-docs'] == 'true' ||
+      needs.detect-changes.outputs.router == 'true' ||
+      needs.detect-changes.outputs.forge == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
@@ -282,6 +315,20 @@ jobs:
             build_command: "build"
             condition: ${{ needs.detect-changes.outputs['sailor-docs'] }}
             site_url: "https://docs.nebutra.com"
+          - app: router
+            package: "@nebutra/router"
+            workspace: apps/router
+            kind: "next-standalone"
+            build_command: "build"
+            condition: ${{ needs.detect-changes.outputs.router }}
+            site_url: "https://router.nebutra.com"
+          - app: forge
+            package: "@nebutra/forge"
+            workspace: apps/forge
+            kind: "next-standalone"
+            build_command: "build"
+            condition: ${{ needs.detect-changes.outputs.forge }}
+            site_url: "https://forge.nebutra.com"
     steps:
       - name: Skip if not needed
         if: matrix.condition != 'true'
@@ -551,6 +598,20 @@ jobs:
           name: bundle-auth
           path: ${{ runner.temp }}/bundles
 
+      - name: Download router bundle
+        if: needs.detect-changes.outputs.router == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-router
+          path: ${{ runner.temp }}/bundles
+
+      - name: Download forge bundle
+        if: needs.detect-changes.outputs.forge == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-forge
+          path: ${{ runner.temp }}/bundles
+
       - name: Configure SSH
         env:
           SSH_KEY:     ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
@@ -600,7 +661,7 @@ jobs:
           mkdir -p "$incoming"
           find "$incoming" -mindepth 1 -maxdepth 1 -print -exec rm -rf {} + 2>/dev/null || true
           echo "--- pruning releases for upload headroom (keep latest $upload_keep per app) ---"
-          for app in landing web api idp design-docs sailor-docs; do
+          for app in landing web api idp design-docs sailor-docs auth router forge; do
             app_root="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app"
             dir="$app_root/releases"
             [ -d "$dir" ] || continue
@@ -832,6 +893,8 @@ jobs:
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
+          [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
+          [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && APPS="$APPS forge"
           APPS="$(echo "$APPS" | xargs)"
           echo "Deploying: $APPS"
           # SSH joins all remaining args into a single shell-evaluated string
@@ -917,6 +980,8 @@ jobs:
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && targets[auth]="https://auth.nebutra.com/health"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && targets[router]="https://router.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && targets[forge]="https://forge.nebutra.com"
           ok_codes='^(200|301|302|307)$'
           for name in "${!targets[@]}"; do
             url="${targets[$name]}"
@@ -1049,6 +1114,8 @@ jobs:
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
+          [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
+          [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && APPS="$APPS forge"
           APPS="$(echo "$APPS" | xargs)"
           [ -n "$APPS" ] || { echo "No deployed apps to roll back."; exit 0; }
 

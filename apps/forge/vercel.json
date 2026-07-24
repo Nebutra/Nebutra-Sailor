@@ -1,0 +1,58 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=@nebutra/forge",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/forge",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "outputDirectory": ".next",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "https://forge.nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://forge.nebutra.com",
+    "NEXT_PUBLIC_FORGE_URL": "https://forge.nebutra.com",
+    "NEXT_PUBLIC_ROUTER_URL": "https://router.nebutra.com",
+    "NEXT_PUBLIC_API_URL": "https://api.nebutra.com",
+    "NEXT_PUBLIC_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_AUTH_PROVIDER": "better-auth",
+    "AUTH_PROVIDER": "better-auth",
+    "BETTER_AUTH_URL": "https://auth.nebutra.com",
+    "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    "NEBUTRA_LANDING_ORIGIN": "https://nebutra.com",
+    "NEBUTRA_SESSION_HINT_DOMAIN": ".nebutra.com"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ]
+}

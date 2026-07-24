@@ -471,6 +471,9 @@ importers:
 
   apps/forge:
     dependencies:
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
@@ -835,6 +838,9 @@ importers:
       '@nebutra/ai-providers':
         specifier: workspace:*
         version: link:../../packages/ai/ai-providers
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
@@ -1357,6 +1363,61 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+
+  apps/typelens:
+    dependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../packages/design/brand
+      '@nebutra/icons':
+        specifier: workspace:*
+        version: link:../../packages/design/icons
+      '@nebutra/tokens':
+        specifier: workspace:*
+        version: link:../../packages/design/tokens
+      '@nebutra/typelens-catalog':
+        specifier: workspace:*
+        version: link:../../packages/design/typelens-catalog
+      '@nebutra/ui':
+        specifier: workspace:*
+        version: link:../../packages/design/ui
+      geist:
+        specifier: 'catalog:'
+        version: 1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+      next:
+        specifier: ^16.2.11
+        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react:
+        specifier: 19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: 19.2.4
+        version: 19.2.4(react@19.2.4)
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
+    devDependencies:
+      '@tailwindcss/postcss':
+        specifier: 'catalog:'
+        version: 4.2.1
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.9.1
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.14)
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 4.3.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))
 
   apps/web:
     dependencies:
@@ -4159,6 +4220,13 @@ importers:
       driver.js:
         specifier: ^1.3.6
         version: 1.4.0
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.14)
       react:
         specifier: 19.2.4
         version: 19.2.4

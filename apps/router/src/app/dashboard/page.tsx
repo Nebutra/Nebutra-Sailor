@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
+import { requireAuth } from "@/lib/auth";
 import { getBaseUrlHint, getModelRoutes, getWallet, listKeys } from "@/lib/demo-store";
 import { formatPrice, getListingCatalog, PROVIDER_LABEL } from "@/lib/listing-catalog";
 
@@ -25,6 +26,7 @@ function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: 
 
 /** 管理后台 · 数据汇总（原首页控制台） */
 export default async function DashboardPage() {
+  await requireAuth("/dashboard");
   const balance = await getWallet().getBalance("demo");
   const keys = listKeys();
   const baseUrl = getBaseUrlHint();

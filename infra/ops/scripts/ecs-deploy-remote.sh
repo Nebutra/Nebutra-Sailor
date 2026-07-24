@@ -22,7 +22,7 @@
 set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
-APPS="${APPS:-landing web api idp auth design-docs sailor-docs}"
+APPS="${APPS:-landing web api idp auth design-docs sailor-docs router forge}"
 # Keep 2 releases per app for one-step rollback. Pre/post prune only touch
 # THAT app's releases/ dir (never other apps). Override with VM_KEEP_RELEASES
 # / ECS_KEEP_RELEASES on small disks if needed.
@@ -84,8 +84,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*sailor-docs*) : ;;
-  *) fail "APPS must contain at least one of: landing web api idp auth design-docs sailor-docs (got: $APPS)" ;;
+  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*sailor-docs*|*router*|*forge*) : ;;
+  *) fail "APPS must contain at least one of: landing web api idp auth design-docs sailor-docs router forge (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -1143,6 +1143,12 @@ for p in procs:
     sailor-docs)
       wait_for_local_http "sailor-docs" "$pm2_name" "http://127.0.0.1:3005/"
       ;;
+    router)
+      wait_for_local_http "router" "$pm2_name" "http://127.0.0.1:3106/"
+      ;;
+    forge)
+      wait_for_local_http "forge" "$pm2_name" "http://127.0.0.1:3105/"
+      ;;
   esac
 
   # Retention — keep latest N, drop the rest. find sorts by mtime via -printf
@@ -1177,6 +1183,8 @@ pm2_name_for_app() {
     auth)         printf '%s\n' "auth-center" ;;
     design-docs)  printf '%s\n' "design-docs" ;;
     sailor-docs)  printf '%s\n' "sailor-docs" ;;
+    router)       printf '%s\n' "router" ;;
+    forge)        printf '%s\n' "forge" ;;
     *)            fail "unknown app: $1" ;;
   esac
 }
@@ -1359,7 +1367,7 @@ verify_nginx_web_origin() {
 
 run_selected_apps() {
   local action="$1" app pm2_name
-  for app in api landing web idp auth design-docs sailor-docs; do
+  for app in api landing web idp auth design-docs sailor-docs router forge; do
     case " $APPS " in
       *" $app "*) : ;;
       *) continue ;;
@@ -1377,7 +1385,7 @@ if [ "$MODE" = "rollback" ]; then
   exit 0
 fi
 
-for app in api landing web idp auth design-docs sailor-docs; do
+for app in api landing web idp auth design-docs sailor-docs router forge; do
   case " $APPS " in
     *" $app "*) : ;;
     *) continue ;;
@@ -1391,6 +1399,8 @@ for app in api landing web idp auth design-docs sailor-docs; do
     auth)         deploy_one auth        auth-center  ;;
     design-docs)  deploy_one design-docs design-docs  ;;
     sailor-docs)  deploy_one sailor-docs sailor-docs  ;;
+    router)       deploy_one router      router       ;;
+    forge)        deploy_one forge       forge        ;;
     *)            fail "unknown app: $app"            ;;
   esac
 done

@@ -3,6 +3,7 @@
 import { BookOpen, Copy } from "@nebutra/icons";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { AuthActions } from "@/components/auth-actions";
 import { BrandMark, BrandPill, PROVIDER_COVER } from "@/components/brand-marks";
 import { ProductCard } from "@/components/product-card";
 import {
@@ -315,13 +316,7 @@ export function ProductDetail({
             <div className="flex flex-col items-center justify-center px-6 py-14 text-center md:py-16">
               <PlaygroundEmptyArt />
               <p className="mt-6 text-[14px] text-[var(--neutral-10)]">
-                登录后探索更多功能！
-                <Link
-                  href="/keys"
-                  className="ml-1 font-medium text-[var(--blue-11)] underline-offset-2 hover:underline"
-                >
-                  点击登录
-                </Link>
+                登录后探索更多功能！ <AuthActions variant="compact" className="inline" />
               </p>
               <Link
                 href={`/use?model=${encodeURIComponent(model.publicModel)}`}

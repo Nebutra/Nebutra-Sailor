@@ -224,13 +224,15 @@ function zoneConsumerBlock(
     "display",
   ] as const;
   for (const role of roles) {
-    lines.push(`  --text-${role}: var(--${p}-${role}-size, inherit);`);
+    // Product zone hard-cap: display falls back to heading if product display is unset.
+    // Emit once — a second --text-display trips biome noDuplicateCustomProperties.
+    if (zone === "product" && role === "display") {
+      lines.push(`  --text-display: var(--${p}-display-size, var(--${p}-heading-size, inherit));`);
+    } else {
+      lines.push(`  --text-${role}: var(--${p}-${role}-size, inherit);`);
+    }
     lines.push(`  --leading-${role}: var(--${p}-${role}-leading, inherit);`);
     lines.push(`  --tracking-${role}: var(--${p}-${role}-tracking, inherit);`);
-  }
-  // Product zone hard-cap: display falls back to heading if not set for product
-  if (zone === "product") {
-    lines.push(`  --text-display: var(--${p}-display-size, var(--${p}-heading-size, inherit));`);
   }
   lines.push(`}`);
   return lines;
