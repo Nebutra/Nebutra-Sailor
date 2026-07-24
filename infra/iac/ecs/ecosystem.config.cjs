@@ -10,6 +10,7 @@
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/router/current/apps/router/server.js            (Next standalone)
+//   $DEPLOY_ROOT/forge/current/apps/forge/server.js              (Next standalone)
 //
 // The workflow renders this file on the VM with DEPLOY_ROOT substituted in
 // via envsubst at apply time (see ecs-deploy-remote.sh).
@@ -159,6 +160,26 @@ module.exports = {
         PORT: 3106,
         HOSTNAME: "127.0.0.1",
         ENV_FILE: "/var/www/nebutra/router/.env",
+      },
+      max_memory_restart: "450M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
+      name: "forge",
+      cwd: "/var/www/nebutra/forge/current",
+      script: "/var/www/nebutra/node-with-env.sh",
+      interpreter: "bash",
+      args: "apps/forge/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3105,
+        HOSTNAME: "127.0.0.1",
+        ENV_FILE: "/var/www/nebutra/forge/.env",
       },
       max_memory_restart: "450M",
       instances: 1,

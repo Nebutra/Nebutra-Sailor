@@ -15,7 +15,7 @@
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias |
 | `router.nebutra.com` | router | **Nebutra Router** — model fabric / OpenAI-compatible product edge (ECS PM2) |
-| `forge.nebutra.com` | forge (planned) | **Nebutra Forge** — tool station + Agent tool API |
+| `forge.nebutra.com` | forge | **Nebutra Forge** — tool station + Agent tool API (Vercel; ECS PM2 fallback :3105) |
 
 > Router/Forge: product hosts; supply engines (New-API, Sub2API) stay **internal** — see `infra/nebutra-router/`.
 
@@ -32,6 +32,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
 | `sso.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `idp` | **Permanent OIDC issuer** — do not move lightly |
 | `router.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `router` | Product edge :3106; Vercel project `nebutra-router` exists for future cutover |
+| `forge.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `forge` | Product edge :3105; Vercel project `nebutra-forge` exists (Hobby deploy cap) |
 
 ### Topology layers
 
@@ -70,6 +71,7 @@ A       auth      106.15.4.31              ✅           ECS (interim)
 A       api       106.15.4.31              ✅           ECS
 A       sso       106.15.4.31              ✅           ECS permanent issuer
 A       router    106.15.4.31              ✅           ECS PM2 @nebutra/router
+A       forge     106.15.4.31              ✅           ECS PM2 @nebutra/forge
 CNAME   docs      331816c5997d8344.vercel-dns-017.com  DNS only  # project-specific     Vercel (grey cloud)
 ```
 

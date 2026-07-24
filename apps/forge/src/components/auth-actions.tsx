@@ -4,8 +4,8 @@ import {
   buildAuthCenterSignInUrl,
   buildAuthCenterSignUpUrl,
   getConfiguredAuthProvider,
-} from "@nebutra/auth";
-import { useAuth } from "@nebutra/auth/client";
+  useAuth,
+} from "@nebutra/auth/client";
 import { Button } from "@nebutra/ui/primitives";
 import { useEffect, useState } from "react";
 

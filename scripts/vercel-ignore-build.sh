@@ -187,6 +187,19 @@ packages/platform/prepaid-wallet
 packages/platform/router-supply
 EOF
       ;;
+    apps/forge)
+      cat <<'EOF'
+apps/forge
+packages/ai/forge-runtime
+packages/design/brand
+packages/design/icons
+packages/design/tokens
+packages/design/ui
+packages/design/design-tokens
+packages/iam/auth
+packages/platform/prepaid-wallet
+EOF
+      ;;
     apps/web)
       # Broad product app — still narrower than entire packages/
       cat <<'EOF'
