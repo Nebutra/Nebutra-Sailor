@@ -200,6 +200,17 @@ packages/iam/auth
 packages/platform/prepaid-wallet
 EOF
       ;;
+    apps/typelens)
+      cat <<'EOF'
+apps/typelens
+packages/design/typelens-catalog
+packages/design/brand
+packages/design/icons
+packages/design/tokens
+packages/design/ui
+packages/design/design-tokens
+EOF
+      ;;
     apps/web)
       # Broad product app — still narrower than entire packages/
       cat <<'EOF'
