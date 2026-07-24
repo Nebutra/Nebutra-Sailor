@@ -23,7 +23,6 @@ export {
   jsonFormatTool,
   jwtDecodeTool,
   md5Tool,
-  mdToPdfTool,
   numberBaseTool,
   passwordGenerateTool,
   removeBlankLinesTool,
@@ -35,14 +34,8 @@ export {
   uuidTool,
   wordCountTool,
 } from "./tools/index";
-export {
-  markdownToHtml,
-  markdownToPlaywrightPdf,
-  markdownToPrintableHtml,
-  markdownToSimplePdf,
-  renderMarkdownPdf,
-} from "./tools/md-to-pdf";
 export { countText } from "./tools/word-count";
+// PDF / Playwright helpers are behind optional peer — use `@nebutra/forge-runtime/pdf`
 export type {
   AnyForgeToolDefinition,
   ForgeToolDefinition,

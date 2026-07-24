@@ -5,7 +5,6 @@ import { htmlEntitiesTool } from "./html-entities";
 import { imageTools } from "./image-ops";
 import { jsonFormatTool } from "./json-format";
 import { jwtDecodeTool } from "./jwt-decode";
-import { mdToPdfTool } from "./md-to-pdf";
 import { md5Tool } from "./md5";
 import { numberBaseTool } from "./number-base";
 import { passwordGenerateTool } from "./password-generate";
@@ -19,7 +18,10 @@ import { urlCodecTool } from "./url-codec";
 import { uuidTool } from "./uuid";
 import { wordCountTool } from "./word-count";
 
-/** Default registry tools (F0 pure + F1 image/pdf + SOTA-engine labs). */
+/**
+ * Default registry tools without optional-peer surfaces (playwright PDF is
+ * registered separately via `@nebutra/forge-runtime/pdf` consumers).
+ */
 export const F0_BATCH1_TOOLS: readonly AnyForgeToolDefinition[] = [
   wordCountTool,
   caseConvertTool,
@@ -38,7 +40,6 @@ export const F0_BATCH1_TOOLS: readonly AnyForgeToolDefinition[] = [
   unixTimestampTool,
   tokenCountTool,
   ...pureBatchTools,
-  mdToPdfTool,
   ...imageTools,
 ];
 
@@ -50,7 +51,6 @@ export {
   jsonFormatTool,
   jwtDecodeTool,
   md5Tool,
-  mdToPdfTool,
   numberBaseTool,
   passwordGenerateTool,
   removeBlankLinesTool,

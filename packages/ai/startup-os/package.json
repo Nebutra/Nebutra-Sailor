@@ -92,7 +92,8 @@
     "@nebutra/preset": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "ai": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@nebutra/tokens": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",
