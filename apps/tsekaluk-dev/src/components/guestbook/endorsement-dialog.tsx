@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Image, LoaderCircle, Message } from "@nebutra/icons";
+import { Select } from "@nebutra/ui/primitives";
 import { useEffect, useId, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -247,20 +248,17 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
                 </div>
                 <div className="flex-1 space-y-1.5">
                   <Label htmlFor={`${id}-relationship`}>Relationship</Label>
-                  <select
-                    data-allow-native
+                  <Select
                     id={`${id}-relationship`}
-                    value={relationship}
-                    onChange={(e) => setRelationship(e.target.value)}
-                    className="flex h-9 w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-1.5 text-sm text-gray-900 dark:text-white shadow-sm focus-visible:border-gray-400 dark:focus-visible:border-gray-500 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-gray-200/50 dark:focus-visible:ring-gray-700/50"
-                  >
-                    <option value="">Select...</option>
-                    {RELATIONSHIPS.map((r) => (
-                      <option key={r.value} value={r.value}>
-                        {r.label} / {r.labelZh}
-                      </option>
-                    ))}
-                  </select>
+                    size="small"
+                    placeholder="Select..."
+                    value={relationship || undefined}
+                    onValueChange={(v) => setRelationship(v ?? "")}
+                    options={RELATIONSHIPS.map((r) => ({
+                      value: r.value,
+                      label: `${r.label} / ${r.labelZh}`,
+                    }))}
+                  />
                 </div>
               </div>
 

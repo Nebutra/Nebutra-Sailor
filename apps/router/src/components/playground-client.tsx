@@ -2,7 +2,7 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, Input, Select, Textarea } from "@nebutra/ui/primitives";
 import { useEffect, useMemo, useState } from "react";
 
 /**
@@ -67,21 +67,17 @@ export function PlaygroundClient({
     >
       <div className="flex min-h-0 flex-col space-y-3 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] p-3 md:p-4">
         <div className="grid gap-2 sm:grid-cols-2">
-          <label className="block space-y-1 text-[12px]">
-            <span className="text-[11px] font-medium text-[var(--neutral-10)]">模型</span>
-            <select
-              data-allow-native
-              value={model}
-              onChange={(e) => setModel(e.target.value)}
-              className="flex h-9 w-full rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 font-mono text-[12px]"
-            >
-              {options.map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
-          </label>
+          <Select
+            label="模型"
+            id="router-model"
+            size="small"
+            className="font-mono text-[12px]"
+            value={model}
+            onValueChange={(v) => {
+              if (v) setModel(v);
+            }}
+            options={options.map((m) => ({ value: m, label: m }))}
+          />
           <Input
             label="API Key（可选）"
             id="router-api-key"

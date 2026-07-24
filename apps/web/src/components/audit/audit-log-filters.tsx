@@ -1,9 +1,11 @@
 "use client";
 
-import { Input } from "@nebutra/ui/primitives";
+import { Input, Select } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
+
+const ALL = "__all__";
 
 export interface AuditLogFilterValues {
   action?: string;
@@ -108,21 +110,18 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         >
           {t("entityType")}
         </label>
-        <select
+        <Select
           id="audit-filter-entity"
           data-testid="audit-filter-entity"
-          data-allow-native
-          value={filters.entityType ?? ""}
-          onChange={(e) => setField("entityType", e.target.value || undefined)}
-          className="rounded-[var(--radius-md)] border border-border bg-background px-3 py-1.5 text-sm"
-        >
-          <option value="">{t("all")}</option>
-          {ENTITY_TYPES.map((entity) => (
-            <option key={entity} value={entity}>
-              {entity}
-            </option>
-          ))}
-        </select>
+          size="small"
+          className="min-w-[9rem]"
+          value={filters.entityType ?? ALL}
+          onValueChange={(v) => setField("entityType", !v || v === ALL ? undefined : v)}
+          options={[
+            { value: ALL, label: t("all") },
+            ...ENTITY_TYPES.map((entity) => ({ value: entity, label: entity })),
+          ]}
+        />
       </div>
 
       <div className="flex flex-col">
@@ -132,21 +131,25 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
         >
           {t("outcome")}
         </label>
-        <select
+        <Select
           id="audit-filter-outcome"
           data-testid="audit-filter-outcome"
-          data-allow-native
-          value={filters.outcome ?? ""}
-          onChange={(e) =>
-            setField("outcome", (e.target.value || undefined) as AuditLogFilterValues["outcome"])
+          size="small"
+          className="min-w-[9rem]"
+          value={filters.outcome ?? ALL}
+          onValueChange={(v) =>
+            setField(
+              "outcome",
+              !v || v === ALL ? undefined : (v as AuditLogFilterValues["outcome"]),
+            )
           }
-          className="rounded-[var(--radius-md)] border border-border bg-background px-3 py-1.5 text-sm"
-        >
-          <option value="">{t("all")}</option>
-          <option value="success">{t("outcomeSuccess")}</option>
-          <option value="failure">{t("outcomeFailure")}</option>
-          <option value="pending">{t("outcomePending")}</option>
-        </select>
+          options={[
+            { value: ALL, label: t("all") },
+            { value: "success", label: t("outcomeSuccess") },
+            { value: "failure", label: t("outcomeFailure") },
+            { value: "pending", label: t("outcomePending") },
+          ]}
+        />
       </div>
 
       <div className="flex flex-col">
