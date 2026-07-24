@@ -30,4 +30,3 @@ body {
 ::selection {
   background: color-mix(in srgb, hsl(var(--primary)) 28%, transparent);
 }
-
