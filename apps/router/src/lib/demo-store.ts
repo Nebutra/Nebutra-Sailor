@@ -4,6 +4,7 @@ import {
   issueApiKey,
   MemoryPrepaidWallet,
 } from "@nebutra/prepaid-wallet";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { listPublicModels, parseAliasTableJson } from "@nebutra/router-supply";
 
 export interface StoredKey {
@@ -86,5 +87,5 @@ export function getModelRoutes(): ModelRouteRow[] {
 }
 
 export function getBaseUrlHint() {
-  return process.env.NEXT_PUBLIC_ROUTER_API_BASE ?? "https://router.nebutra.com/v1";
+  return process.env.NEXT_PUBLIC_ROUTER_API_BASE?.trim() || `${getBrandOrigin("router")}/v1`;
 }

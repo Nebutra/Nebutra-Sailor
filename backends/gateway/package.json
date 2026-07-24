@@ -67,7 +67,8 @@
     "stripe": "^20.4.0",
     "svix": "^1.86.0",
     "tsx": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@nebutra/brand": "workspace:*"
   },
   "devDependencies": {
     "@prisma/client": "^7.4.2",

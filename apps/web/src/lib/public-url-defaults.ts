@@ -1,3 +1,5 @@
+import { getBrandPublicUrls } from "@nebutra/brand/metadata-helpers";
+
 const DEVELOPMENT_PUBLIC_URLS = {
   siteUrl: "http://localhost:3001",
   appUrl: "http://localhost:3001",
@@ -5,13 +7,16 @@ const DEVELOPMENT_PUBLIC_URLS = {
   authUrl: "http://localhost:3101",
 } as const;
 
-const PRODUCTION_PUBLIC_URLS = {
-  siteUrl: "https://nebutra.com",
-  appUrl: "https://app.nebutra.com",
-  apiUrl: "https://api.nebutra.com",
-  authUrl: "https://auth.nebutra.com",
-} as const;
-
+/** Production defaults dogfood brand.domains — never hardcode product hosts. */
 export function getDefaultPublicUrls(nodeEnv: string | undefined) {
-  return nodeEnv === "production" ? PRODUCTION_PUBLIC_URLS : DEVELOPMENT_PUBLIC_URLS;
+  if (nodeEnv === "production") {
+    const b = getBrandPublicUrls();
+    return {
+      siteUrl: b.appUrl,
+      appUrl: b.appUrl,
+      apiUrl: b.apiUrl,
+      authUrl: b.authUrl,
+    } as const;
+  }
+  return DEVELOPMENT_PUBLIC_URLS;
 }

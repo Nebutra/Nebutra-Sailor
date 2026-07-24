@@ -95,8 +95,15 @@ async function main() {
       landing: baseDomain,
       app: `app.${baseDomain}`,
       api: `api.${baseDomain}`,
+      auth: `auth.${baseDomain}`,
+      sso: `sso.${baseDomain}`,
+      docs: `docs.${baseDomain}`,
       studio: `studio.${baseDomain}`,
       cdn: `cdn.${baseDomain}`,
+      router: `router.${baseDomain}`,
+      forge: `forge.${baseDomain}`,
+      design: `design.${baseDomain}`,
+      status: `status.${baseDomain}`,
     };
     logInfo(`Will use: ${baseDomain}, app.${baseDomain}, api.${baseDomain}, ...`);
 
