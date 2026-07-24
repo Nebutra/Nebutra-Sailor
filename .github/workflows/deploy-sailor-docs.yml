@@ -57,7 +57,7 @@ jobs:
             echo "::error::Set VERCEL_DOCS_PROJECT_ID (prj_…) for the docs Vercel project"
             exit 1
           fi
-          npm i -g vercel@latest
+          npm i -g vercel@56.5.0
           # Link the Vercel project at the monorepo root. The dashboard Root
           # Directory is already `apps/sailor-docs` — do NOT pass --cwd into
           # that folder or Vercel doubles the path

@@ -32,9 +32,9 @@ export async function fetchWithTimeout(
   }
 
   const controller = new AbortController();
-  let timedOut = false;
+  const state = { timedOut: false };
   const timer = setTimeout(() => {
-    timedOut = true;
+    state.timedOut = true;
     controller.abort();
   }, timeoutMs);
 
@@ -51,7 +51,7 @@ export async function fetchWithTimeout(
   try {
     return await fetch(input, { ...rest, signal: controller.signal });
   } catch (error) {
-    if (timedOut || (error instanceof DOMException && error.name === "AbortError" && timedOut)) {
+    if (state.timedOut) {
       throw new FetchTimeoutError(`Request timed out after ${timeoutMs}ms`, timeoutMs);
     }
     throw error;

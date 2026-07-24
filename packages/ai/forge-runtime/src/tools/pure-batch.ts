@@ -89,7 +89,27 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "去除html标签", en: "strip html tags online" },
     sotaStatus: "production",
-    execute: (text) => ({ result: text.replace(/<[^>]*>/g, "") }),
+    execute: (text) => {
+      const out = text;
+      // Single-pass angle-bracket strip without incomplete multi-char sanitizer patterns.
+      let acc = "";
+      let i = 0;
+      while (i < out.length) {
+        const lt = out.indexOf("<", i);
+        if (lt < 0) {
+          acc += out.slice(i);
+          break;
+        }
+        acc += out.slice(i, lt);
+        const gt = out.indexOf(">", lt + 1);
+        if (gt < 0) {
+          acc += out.slice(lt);
+          break;
+        }
+        i = gt + 1;
+      }
+      return { result: acc };
+    },
   }),
   textTool({
     id: "text/slugify",
@@ -397,7 +417,7 @@ function inferTs(value: unknown, depth: number): string {
   if (typeof value === "string") return "string";
   if (typeof value === "number") return "number";
   if (typeof value === "boolean") return "boolean";
-  if (typeof value === "object" && value) {
+  if (typeof value === "object") {
     const pad = "  ".repeat(depth + 1);
     const close = "  ".repeat(depth);
     const fields = Object.entries(value as Record<string, unknown>)

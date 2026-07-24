@@ -129,10 +129,12 @@ export function parseGeneratedRunResult(text: string): {
     readonly content: string;
   }[];
 } {
-  const cleaned = text
-    .trim()
-    .replace(/^```(?:json)?\s*/i, "")
-    .replace(/\s*```$/i, "");
+  let cleaned = text.trim();
+  if (cleaned.startsWith("```")) {
+    const firstNl = cleaned.indexOf("\n");
+    cleaned = firstNl >= 0 ? cleaned.slice(firstNl + 1) : cleaned.slice(3);
+  }
+  if (cleaned.endsWith("```")) cleaned = cleaned.slice(0, -3).trimEnd();
 
   try {
     const parsed = GeneratedRunResultSchema.parse(JSON.parse(cleaned));

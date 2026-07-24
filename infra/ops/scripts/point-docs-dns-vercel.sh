@@ -7,9 +7,11 @@ ACC="${CLOUDFLARE_ACCOUNT_ID:-}"
 # Generic cname.vercel-dns.com can attach the hostname to the wrong project.
 TARGET="${DOCS_DNS_TARGET:-331816c5997d8344.vercel-dns-017.com}"
 
-ZONE_ID=$(curl -sS -H "Authorization: Bearer $TOKEN" \
-  "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}" \
-  | python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")')
+ZONE_ID=$(__cf_tmp="$(mktemp)"
+curl -sS -H "Authorization: Bearer $TOKEN" \
+  "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}" \ -o "$__cf_tmp"
+python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")' <"$__cf_tmp"
+rm -f "$__cf_tmp")
 [ -n "$ZONE_ID" ] || { echo "zone missing"; exit 1; }
 echo "ZONE_ID=$ZONE_ID"
 
@@ -76,11 +78,17 @@ BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'docs','
 EXIST=$(auth_get "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?name=docs.${ZONE_NAME}")
 RID=$(python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")' <<<"$EXIST")
 if [ -n "$RID" ]; then
-  curl -sS -X PUT -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
-    --data "$BODY" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RID}" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("dns put", d.get("success"), d.get("errors"))'
+  __cf_tmp="$(mktemp)"
+curl -sS -X PUT -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+    --data "$BODY" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RID}" -o "$__cf_tmp"
+python3 -c 'import json,sys; d=json.load(sys.stdin); print("dns put", d.get("success"), d.get("errors"))' <"$__cf_tmp"
+rm -f "$__cf_tmp"
 else
-  curl -sS -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
-    --data "$BODY" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("dns post", d.get("success"), d.get("errors"))'
+  __cf_tmp="$(mktemp)"
+curl -sS -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+    --data "$BODY" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" -o "$__cf_tmp"
+python3 -c 'import json,sys; d=json.load(sys.stdin); print("dns post", d.get("success"), d.get("errors"))' <"$__cf_tmp"
+rm -f "$__cf_tmp"
 fi
 
 echo "done"

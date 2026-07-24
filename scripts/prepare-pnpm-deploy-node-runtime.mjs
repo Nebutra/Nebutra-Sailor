@@ -115,7 +115,6 @@ function resolveCompileJobs(pkgDir, declaredValue) {
     // Glob: prefer src/ when declared under dist/
     const star = value.indexOf("*");
     const before = value.slice(0, star);
-    const after = value.slice(star + 1); // e.g. ".js" or ".ts"
     const srcDir = before.startsWith("dist/")
       ? before.replace(/^dist\//, "src/")
       : before.startsWith("src/")
@@ -175,37 +174,7 @@ function resolveCompileJobs(pkgDir, declaredValue) {
 }
 
 function rewritePackageJson(pkg) {
-  const mapToDist = (value) => {
-    if (typeof value !== "string") return value;
-    if (value.includes("*")) {
-      // ./src/foo/*.ts -> ./dist/foo/*.js  |  ./dist/foo/*.js stays
-      let v = value;
-      if (v.includes("/src/") || v.startsWith("./src/")) {
-        v = v.replace("./src/", "./dist/").replace("/src/", "/dist/");
-      }
-      v = v.replace(/\.tsx?\*/g, ".*").replace(/\*\.tsx?/g, "*.js");
-      // fix accidental .* from above
-      v = v.replace(/\.\*/g, ".*");
-      if (/\.tsx?\*$/.test(value) || /\*\.tsx?$/.test(value)) {
-        v = value
-          .replace(/^\.\/src\//, "./dist/")
-          .replace(/\.\/src\//g, "./dist/")
-          .replace(/\.tsx?(?=\*|$)/g, ".js")
-          .replace(/\*\.tsx?/g, "*.js");
-      }
-      if (isTsSource(value.replace("*", "file"))) {
-        return value
-          .replace(/^\.\/src\//, "./dist/")
-          .replace(/\.tsx?(?=\*|$)/, ".js")
-          .replace(/\*\.tsx?/, "*.js");
-      }
-      return value.replace(/^\.\/src\//, "./dist/").replace(/\*\.tsx?/, "*.js");
-    }
-    if (!isTsSource(value)) return value;
-    return `./${distRelForSource(stripDot(value))}`;
-  };
-
-  // Simpler, reliable glob rewrite
+  // Glob rewrite without identity replacements or single-occurrence star rewrites.
   const mapExport = (value) => {
     if (typeof value !== "string") return value;
     if (value.includes("*")) {
@@ -214,7 +183,7 @@ function rewritePackageJson(pkg) {
         .replace(/\.tsx?(?=\*|$)/g, ".js")
         .replace(/\*\.tsx?/g, "*.js");
     }
-    return mapToDist(value);
+    return mapExport(value);
   };
 
   if (typeof pkg.main === "string") pkg.main = mapExport(pkg.main);

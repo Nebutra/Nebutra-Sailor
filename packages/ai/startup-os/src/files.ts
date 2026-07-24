@@ -32,11 +32,18 @@ function escapeHtml(value: string) {
 }
 
 function slugClass(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 48);
+  const lower = value.toLowerCase();
+  const parts: string[] = [];
+  let buf = "";
+  for (const ch of lower) {
+    if ((ch >= "a" && ch <= "z") || (ch >= "0" && ch <= "9")) buf += ch;
+    else if (buf) {
+      parts.push(buf);
+      buf = "";
+    }
+  }
+  if (buf) parts.push(buf);
+  return parts.join("-").slice(0, 48);
 }
 
 function file(

@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("next/image", () => ({
@@ -39,7 +39,7 @@ describe("BrandLogo", () => {
     // All images should be static brand assets (not tenant CDN URLs)
     for (const img of Array.from(imgs)) {
       const src = img.getAttribute("src") ?? "";
-      expect(src.startsWith("https://cdn.example.com")).toBe(false);
+      expect(src.includes("cdn.example.com")).toBe(false);
     }
   });
 });

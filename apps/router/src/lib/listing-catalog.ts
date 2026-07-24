@@ -292,7 +292,8 @@ function isShelfCandidate(publicModel: string, name: string): boolean {
   if (/^(anthropic|google|meta|mistral|cohere)\./i.test(publicModel)) return false;
   if (/\d{8}/.test(publicModel)) return false;
   if (/-20\d{2}-\d{2}-\d{2}/.test(publicModel)) return false;
-  if (/customtools|maas$/i.test(publicModel)) return false;
+  if (/(?:^|[-_])customtools(?:$|[-_])/i.test(publicModel) || /maas$/i.test(publicModel))
+    return false;
   if (publicModel.length > 64) return false;
   return true;
 }
