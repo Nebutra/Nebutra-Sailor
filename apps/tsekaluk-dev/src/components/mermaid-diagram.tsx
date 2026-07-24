@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "next-themes";
+import { useTheme } from "@nebutra/tokens";
 import { useEffect, useRef, useState } from "react";
 
 export function MermaidDiagram({ chart }: { chart: string }) {

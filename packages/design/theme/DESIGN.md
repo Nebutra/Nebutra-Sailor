@@ -51,7 +51,7 @@ typography.faces → @font-face
 | id | Proves |
 |----|--------|
 | factory | No override — tokens SSOT |
-| linear | Chromatic solid CTA, dark |
+| linear | Chromatic solid CTA + **dual-mode** dark/light |
 | gsap | Non-solid CTA recipe + zones |
 | raycast | action ≠ brand-mark + elev=key |
 | vercel | Light mono + elev=hairline + **dual-mode** light/dark palettes |

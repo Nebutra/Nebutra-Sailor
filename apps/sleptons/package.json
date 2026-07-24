@@ -19,7 +19,6 @@
     "@nebutra/ui": "workspace:*",
     "geist": "catalog:",
     "next": "catalog:",
-    "next-themes": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "zod": "catalog:"

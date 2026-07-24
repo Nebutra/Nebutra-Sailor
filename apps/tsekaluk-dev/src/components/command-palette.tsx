@@ -16,9 +16,9 @@ import {
   Sun,
   User,
 } from "@nebutra/icons";
+import { useTheme } from "@nebutra/tokens";
 import { Command } from "cmdk";
 import { useLocale } from "next-intl";
-import { useTheme } from "next-themes";
 import * as React from "react";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { usePathname, useRouter } from "@/i18n/navigation";

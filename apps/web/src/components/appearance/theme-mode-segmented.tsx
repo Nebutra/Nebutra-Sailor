@@ -1,9 +1,9 @@
 "use client";
 
 import { Display, Moon, Sun } from "@nebutra/icons";
+import { useTheme } from "@nebutra/tokens";
 import { Switch } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
 
 type ThemeMode = "light" | "dark" | "system";
 
@@ -22,7 +22,11 @@ export function ThemeModeSegmented() {
     <Switch
       size="small"
       value={current}
-      onValueChange={(value) => setTheme(value)}
+      onValueChange={(value) => {
+        if (value === "light" || value === "dark" || value === "system") {
+          setTheme(value);
+        }
+      }}
       aria-label={t("label")}
     >
       {OPTIONS.map(({ value, icon: Icon }) => (

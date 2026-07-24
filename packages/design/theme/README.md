@@ -61,7 +61,7 @@ pnpm --filter @nebutra/theme sync:skins
 | id | Proves |
 |----|--------|
 | factory | Default tokens SSOT |
-| linear | Chromatic solid CTA (dark) |
+| linear | Chromatic solid CTA + dual-mode dark/light |
 | gsap | gradient-stroke / outline + zones |
 | raycast | action ≠ brand-mark + elev=key |
 | vercel | Light mono + elev=hairline + dual-mode palettes |

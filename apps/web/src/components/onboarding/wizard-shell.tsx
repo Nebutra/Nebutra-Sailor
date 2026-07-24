@@ -1,5 +1,6 @@
 "use client";
 
+import { safeGetJson, safeRemoveItem, safeSetJson } from "@nebutra/browser-utils";
 import { ArrowLeft } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/components";
 import { useRouter } from "next/navigation";
@@ -25,38 +26,20 @@ function isStepNumber(value: unknown): value is StepNumber {
 }
 
 function readPersistedState(): PersistedState | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(ONBOARDING_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed: unknown = JSON.parse(raw);
-    if (!parsed || typeof parsed !== "object") return null;
-    const candidate = parsed as Partial<PersistedState>;
-    if (!isStepNumber(candidate.currentStep)) return null;
-    if (!Array.isArray(candidate.completedSteps)) return null;
-    const completedSteps = candidate.completedSteps.filter(isStepNumber);
-    return { currentStep: candidate.currentStep, completedSteps };
-  } catch {
-    return null;
-  }
+  const candidate = safeGetJson<Partial<PersistedState>>(ONBOARDING_STORAGE_KEY);
+  if (!candidate || typeof candidate !== "object") return null;
+  if (!isStepNumber(candidate.currentStep)) return null;
+  if (!Array.isArray(candidate.completedSteps)) return null;
+  const completedSteps = candidate.completedSteps.filter(isStepNumber);
+  return { currentStep: candidate.currentStep, completedSteps };
 }
 
 function writePersistedState(state: PersistedState): void {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    // localStorage unavailable (quota / privacy mode) — silently degrade.
-  }
+  safeSetJson(ONBOARDING_STORAGE_KEY, state);
 }
 
 function clearPersistedState(): void {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.removeItem(ONBOARDING_STORAGE_KEY);
-  } catch {
-    // ignore
-  }
+  safeRemoveItem(ONBOARDING_STORAGE_KEY);
 }
 
 export function WizardShell() {

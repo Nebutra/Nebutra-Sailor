@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@nebutra/tokens";
 import type { ReactNode } from "react";
 
 export function Providers({ children }: { children: ReactNode }) {

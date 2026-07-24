@@ -99,7 +99,7 @@ export function ThemePresetDropdown() {
           <ThemeOption
             active={isFactory}
             label={t("default")}
-            mood={t("defaultMood")}
+            description={t("defaultMood")}
             swatches={getThemeSwatches(DEFAULT_LANGUAGE)}
             onSelect={() => select(APPEARANCE_FACTORY_LANGUAGE)}
           />
@@ -110,7 +110,7 @@ export function ThemePresetDropdown() {
                 key={lang.id}
                 active={!hasImported && state.theme === lang.id}
                 label={lang.name}
-                mood={lang.description}
+                description={lang.description}
                 swatches={getThemeSwatches(lang.id)}
                 onSelect={() => select(lang.id)}
               />
@@ -131,13 +131,13 @@ function languageSearchBlob(lang: DesignLanguageEntry): string {
 function ThemeOption({
   active,
   label,
-  mood,
+  description,
   swatches,
   onSelect,
 }: {
   active: boolean;
   label: string;
-  mood: string;
+  description: string;
   swatches: string[];
   onSelect: () => void;
 }) {
@@ -154,7 +154,7 @@ function ThemeOption({
       <MiniSwatches colors={swatches} />
       <span className="min-w-0 flex-1">
         <span className="block truncate font-medium text-foreground text-sm">{label}</span>
-        <span className="block truncate text-muted-foreground text-xs">{mood}</span>
+        <span className="block truncate text-muted-foreground text-xs">{description}</span>
       </span>
       {active && <Check className="size-4 shrink-0 text-foreground" />}
     </button>

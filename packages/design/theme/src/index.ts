@@ -2,20 +2,19 @@
  * @nebutra/theme — Design-language switch surface (client-safe root)
  *
  * Root exports are intentionally lean for app bundles:
- *   applyLanguage / LANGUAGE_REGISTRY / built-in packages / ThemeProvider
+ *   applyLanguage / LANGUAGE_REGISTRY / built-in packages
+ *
+ * Light/dark ThemeProvider: import from `@nebutra/tokens` only (not here).
  *
  * Compile & Create Center tooling:
  *   @nebutra/tokens/brand-package  (preferred)
  *   @nebutra/theme/brand-package   (re-export alias)
  *
  * Layers:
- *   @nebutra/tokens  product chrome SSOT (styles.css + recipe.css)
+ *   @nebutra/tokens  product chrome SSOT (styles.css + recipe.css + ThemeProvider)
  *   @nebutra/theme   LANGUAGE_REGISTRY + applyLanguage + skins.css
- *
- * Light/dark: ThemeProvider re-exported from @nebutra/tokens only (not next-themes).
  */
 
-export { ThemeProvider, type ThemeProviderProps, useTheme } from "@nebutra/tokens";
 // Re-export apply helpers used with applyLanguage({ package })
 export {
   type ApplyBrandOptions,

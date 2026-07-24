@@ -1,9 +1,10 @@
 /**
  * Explicit client entry — same lean surface as package root.
  * Use: `import { applyLanguage } from "@nebutra/theme/client"`
+ *
+ * Light/dark: `import { ThemeProvider, useTheme } from "@nebutra/tokens"`
  */
 
-export { ThemeProvider, type ThemeProviderProps, useTheme } from "@nebutra/tokens";
 export {
   applyBrandPackage,
   type BrandPackage,

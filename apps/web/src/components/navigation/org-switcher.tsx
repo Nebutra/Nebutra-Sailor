@@ -66,7 +66,8 @@ export function OrgSwitcher() {
     let cancelled = false;
     async function load() {
       try {
-        const response = await fetch("/api/organizations");
+        const { fetchWithTimeout } = await import("@nebutra/browser-utils");
+        const response = await fetchWithTimeout("/api/organizations", { timeoutMs: 12_000 });
         if (!response.ok) return;
         const data = (await response.json()) as { organizations?: OrgSummary[] };
         if (cancelled) return;

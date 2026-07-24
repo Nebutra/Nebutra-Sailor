@@ -1,7 +1,7 @@
 "use client";
 
 import { Moon, Sun } from "@nebutra/icons";
-import { useTheme } from "next-themes";
+import { useTheme } from "@nebutra/tokens";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
 

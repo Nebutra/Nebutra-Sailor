@@ -32,7 +32,7 @@ function SwatchRow({ colors }: { colors: string[] }) {
 function PresetCard({
   active,
   name,
-  mood,
+  description,
   swatches,
   tags,
   onSelect,
@@ -40,7 +40,7 @@ function PresetCard({
 }: {
   active: boolean;
   name: string;
-  mood: string;
+  description: string;
   swatches: string[];
   tags: string[];
   onSelect: () => void;
@@ -62,7 +62,7 @@ function PresetCard({
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="truncate font-medium text-foreground text-sm">{name}</p>
-          <p className="truncate text-muted-foreground text-xs">{mood}</p>
+          <p className="truncate text-muted-foreground text-xs">{description}</p>
         </div>
         {active && (
           <Badge variant="outline" className="shrink-0 text-[11px]">
@@ -117,7 +117,7 @@ export function ThemePresetPicker() {
         <PresetCard
           active={factoryActive}
           name={t("default")}
-          mood={t("defaultMood")}
+          description={t("defaultMood")}
           swatches={getThemeSwatches(DEFAULT_LANGUAGE)}
           tags={[]}
           onSelect={() => update({ theme: APPEARANCE_FACTORY_LANGUAGE, importedTheme: null })}
@@ -129,7 +129,7 @@ export function ThemePresetPicker() {
             key={lang.id}
             active={!hasImported && state.theme === lang.id}
             name={lang.name}
-            mood={lang.description}
+            description={lang.description}
             swatches={getThemeSwatches(lang.id)}
             tags={[lang.kind, ...lang.proves.slice(0, 2)]}
             onSelect={() => update({ theme: lang.id, importedTheme: null })}

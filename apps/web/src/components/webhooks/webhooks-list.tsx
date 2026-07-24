@@ -27,7 +27,12 @@ export interface WebhooksListProps {
 }
 
 async function defaultLoad(signal?: AbortSignal): Promise<WebhookEndpointView[]> {
-  const response = await fetch("/api/webhooks", { cache: "no-store", signal });
+  const { fetchWithTimeout } = await import("@nebutra/browser-utils");
+  const response = await fetchWithTimeout("/api/webhooks", {
+    cache: "no-store",
+    signal,
+    timeoutMs: 12_000,
+  });
   if (!response.ok) throw new Error("Failed to load webhooks");
   const json = (await response.json()) as { endpoints: WebhookEndpointView[] };
   return json.endpoints;

@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@nebutra/tokens";
 import { CommandPaletteProvider } from "@/components/providers/command-palette-provider";
 import { PostHogProvider } from "@/components/providers/posthog-provider";
 

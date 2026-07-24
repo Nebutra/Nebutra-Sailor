@@ -11,8 +11,8 @@
   },
   "languages": {
     "linear": {
-      "description": "Dark void canvas, solid acid-lime filled CTA, compact density.",
-      "proves": ["chromatic solid action", "dark product chrome"]
+      "description": "Dual-mode: dark void default + light paper; solid acid-lime CTA, compact density.",
+      "proves": ["chromatic solid action", "dark product chrome", "dual-mode light/dark palettes"]
     },
     "gsap": {
       "description": "Dark cream-on-void; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",

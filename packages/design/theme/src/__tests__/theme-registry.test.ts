@@ -1,26 +1,27 @@
 /**
- * Frozen empty mood registry — internal module only (package export removed).
+ * Mood catalog is deleted — only design languages remain.
+ * Empty registry shim was removed; assert LANGUAGE_REGISTRY is the sole catalog.
  */
 import { describe, expect, it } from "vitest";
-import { LANGUAGE_IDS } from "../languages";
-import { DEFAULT_THEME, isThemeId, THEME_IDS, THEME_REGISTRY } from "../registry";
+import { DEFAULT_LANGUAGE, isLanguageId, LANGUAGE_IDS, LANGUAGE_REGISTRY } from "../languages";
 
-describe("@nebutra/theme registry (frozen empty mood list)", () => {
-  it("ships an empty oklch mood list and must stay empty", () => {
-    expect(THEME_REGISTRY.themes).toEqual([]);
-    expect(THEME_IDS).toEqual([]);
+describe("@nebutra/theme — no mood registry", () => {
+  it("ships design languages only (factory + skins)", () => {
+    expect(DEFAULT_LANGUAGE).toBe("factory");
+    expect(LANGUAGE_IDS).toContain("factory");
+    expect(LANGUAGE_IDS.length).toBeGreaterThan(1);
+    expect(LANGUAGE_REGISTRY.languages.length).toBe(LANGUAGE_IDS.length);
   });
 
-  it("defaults to factory design language", () => {
-    expect(DEFAULT_THEME).toBe("factory");
+  it("rejects legacy oklch mood ids", () => {
+    expect(isLanguageId("crimson-light-vivid")).toBe(false);
+    expect(isLanguageId("vibrant")).toBe(false);
+    expect(isLanguageId("azure-dark-muted")).toBe(false);
   });
 
-  it("bridges isThemeId to design language ids only", () => {
+  it("accepts design language ids", () => {
     for (const id of LANGUAGE_IDS) {
-      expect(isThemeId(id)).toBe(true);
+      expect(isLanguageId(id)).toBe(true);
     }
-    expect(isThemeId("custom")).toBe(true);
-    expect(isThemeId("crimson-light-vivid")).toBe(false);
-    expect(isThemeId("vibrant")).toBe(false);
   });
 });

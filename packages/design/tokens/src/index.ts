@@ -20,7 +20,7 @@
  *
  * Related packages:
  *   @nebutra/brand  → brand primitives (color definitions, motion language)
- *   @nebutra/theme  → design-language catalog (Brand Package global swap; moods secondary)
+ *   @nebutra/theme  → design-language catalog (Brand Package global swap)
  *   @nebutra/ui     → component library (consumes tokens via CSS variables)
  */
 

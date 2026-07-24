@@ -120,7 +120,7 @@
   },
   "extensions": {
     "sourceUrl": "https://linear.app",
-    "notes": ["Solid acid-lime CTA; product chrome only."]
+    "notes": ["Dual-mode: dark void default + light paper; acid-lime solid CTA in both modes."]
   },
   "roles": {
     "canvas": "210 11% 4%",
@@ -142,5 +142,61 @@
     "successForeground": "0 0% 100%",
     "info": "186 98% 40%",
     "infoForeground": "0 0% 100%"
+  },
+  "modes": {
+    "dark": {
+      "semantic": {
+        "background": "210 11% 4%",
+        "foreground": "0 0% 100%",
+        "card": "210 6% 6%",
+        "cardForeground": "0 0% 100%",
+        "popover": "210 6% 6%",
+        "popoverForeground": "0 0% 100%",
+        "primary": "64 89% 54%",
+        "primaryForeground": "210 11% 4%",
+        "secondary": "223 9% 15%",
+        "secondaryForeground": "218 21% 85%",
+        "muted": "210 4% 9%",
+        "mutedForeground": "218 5% 41%",
+        "accent": "223 9% 15%",
+        "accentForeground": "218 21% 85%",
+        "destructive": "0 79% 63%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "223 9% 15%",
+        "input": "223 9% 15%",
+        "ring": "64 89% 54%",
+        "success": "134 62% 40%",
+        "successForeground": "0 0% 100%",
+        "info": "186 98% 40%",
+        "infoForeground": "0 0% 100%"
+      }
+    },
+    "light": {
+      "semantic": {
+        "background": "0 0% 100%",
+        "foreground": "210 11% 4%",
+        "card": "0 0% 98%",
+        "cardForeground": "210 11% 4%",
+        "popover": "0 0% 100%",
+        "popoverForeground": "210 11% 4%",
+        "primary": "64 89% 54%",
+        "primaryForeground": "210 11% 4%",
+        "secondary": "220 14% 96%",
+        "secondaryForeground": "210 11% 4%",
+        "muted": "220 14% 96%",
+        "mutedForeground": "218 5% 41%",
+        "accent": "220 14% 96%",
+        "accentForeground": "210 11% 4%",
+        "destructive": "0 79% 63%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "220 13% 91%",
+        "input": "0 0% 100%",
+        "ring": "64 89% 54%",
+        "success": "134 62% 40%",
+        "successForeground": "0 0% 100%",
+        "info": "186 98% 40%",
+        "infoForeground": "0 0% 100%"
+      }
+    }
   }
 }

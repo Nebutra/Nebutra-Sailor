@@ -71,6 +71,13 @@ describe("compileReferoTokens — Linear", () => {
     // Canonical free radii/elev
     assert.equal(result.brand.recipe.radii?.button, "6px");
     assert.ok(result.brand.recipe.elevationTokens?.card);
+    // Dual-mode dark default + light paper
+    assert.equal(result.brand.darkDefault, true);
+    assert.ok(result.brand.modes?.dark?.semantic);
+    assert.ok(result.brand.modes?.light?.semantic);
+    assert.match(result.brand.modes?.light?.semantic?.background ?? "", /^0 0% 100%$/);
+    assert.match(result.css, /dualMode=true/);
+    assert.match(result.css, /\.dark,\nhtml\.dark\[data-brand="linear"\]/);
   });
 });
 

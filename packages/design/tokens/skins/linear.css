@@ -1,6 +1,6 @@
 /**
  * Brand carrier skin: Linear (linear) v1.0.0
- * darkDefault=true dualMode=false button=solid
+ * darkDefault=true dualMode=true button=solid
  * fonts=1 zones=yes mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
@@ -14,54 +14,53 @@
 }
 
 :root,
-.dark,
 html[data-brand="linear"] {
   /* ── Color roles (carrier) ── */
-  --role-canvas: 210 11% 4%;
-  --role-canvas-fg: 0 0% 100%;
-  --role-surface: 210 6% 6%;
-  --role-surface-fg: 0 0% 100%;
+  --role-canvas: 0 0% 100%;
+  --role-canvas-fg: 210 11% 4%;
+  --role-surface: 0 0% 98%;
+  --role-surface-fg: 210 11% 4%;
   --role-action: 64 89% 54%;
   --role-action-fg: 210 11% 4%;
-  --role-quiet: 223 9% 15%;
-  --role-quiet-fg: 218 21% 85%;
-  --role-muted: 210 4% 9%;
+  --role-quiet: 220 14% 96%;
+  --role-quiet-fg: 210 11% 4%;
+  --role-muted: 220 14% 96%;
   --role-muted-fg: 218 5% 41%;
-  --role-border: 223 9% 15%;
-  --role-input: 223 9% 15%;
+  --role-border: 220 13% 91%;
+  --role-input: 0 0% 100%;
   --role-ring: 64 89% 54%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
-  --background: 210 11% 4%;
-  --foreground: 0 0% 100%;
-  --card: 210 6% 6%;
-  --card-foreground: 0 0% 100%;
-  --popover: 210 6% 6%;
-  --popover-foreground: 0 0% 100%;
+  --background: 0 0% 100%;
+  --foreground: 210 11% 4%;
+  --card: 0 0% 98%;
+  --card-foreground: 210 11% 4%;
+  --popover: 0 0% 98%;
+  --popover-foreground: 210 11% 4%;
   --primary: 64 89% 54%;
   --primary-foreground: 210 11% 4%;
-  --secondary: 223 9% 15%;
-  --secondary-foreground: 218 21% 85%;
-  --muted: 210 4% 9%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 210 11% 4%;
+  --muted: 220 14% 96%;
   --muted-foreground: 218 5% 41%;
-  --accent: 223 9% 15%;
-  --accent-foreground: 218 21% 85%;
+  --accent: 220 14% 96%;
+  --accent-foreground: 210 11% 4%;
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
-  --border: 223 9% 15%;
-  --input: 223 9% 15%;
+  --border: 220 13% 91%;
+  --input: 0 0% 100%;
   --ring: 64 89% 54%;
   --success: 134 62% 40%;
   --success-foreground: 0 0% 100%;
   --info: 186 98% 40%;
   --info-foreground: 0 0% 100%;
-  --sidebar: 210 6% 6%;
-  --sidebar-foreground: 0 0% 100%;
+  --sidebar: 0 0% 98%;
+  --sidebar-foreground: 210 11% 4%;
   --sidebar-primary: 64 89% 54%;
   --sidebar-primary-foreground: 210 11% 4%;
-  --sidebar-accent: 223 9% 15%;
-  --sidebar-accent-foreground: 218 21% 85%;
-  --sidebar-border: 223 9% 15%;
+  --sidebar-accent: 220 14% 96%;
+  --sidebar-accent-foreground: 210 11% 4%;
+  --sidebar-border: 220 13% 91%;
   --sidebar-ring: 64 89% 54%;
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
@@ -148,6 +147,61 @@ html[data-brand="linear"] {
   --zone-marketing-display-leading: 1;
   --zone-marketing-display-tracking: -0.022em;
   --zone-marketing-display-weight: 510;
+}
+
+.dark,
+html.dark[data-brand="linear"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 210 11% 4%;
+  --role-canvas-fg: 0 0% 100%;
+  --role-surface: 210 6% 6%;
+  --role-surface-fg: 0 0% 100%;
+  --role-action: 64 89% 54%;
+  --role-action-fg: 210 11% 4%;
+  --role-quiet: 223 9% 15%;
+  --role-quiet-fg: 218 21% 85%;
+  --role-muted: 210 4% 9%;
+  --role-muted-fg: 218 5% 41%;
+  --role-border: 223 9% 15%;
+  --role-input: 223 9% 15%;
+  --role-ring: 64 89% 54%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 210 11% 4%;
+  --foreground: 0 0% 100%;
+  --card: 210 6% 6%;
+  --card-foreground: 0 0% 100%;
+  --popover: 210 6% 6%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 64 89% 54%;
+  --primary-foreground: 210 11% 4%;
+  --secondary: 223 9% 15%;
+  --secondary-foreground: 218 21% 85%;
+  --muted: 210 4% 9%;
+  --muted-foreground: 218 5% 41%;
+  --accent: 223 9% 15%;
+  --accent-foreground: 218 21% 85%;
+  --destructive: 0 79% 63%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 223 9% 15%;
+  --input: 223 9% 15%;
+  --ring: 64 89% 54%;
+  --success: 134 62% 40%;
+  --success-foreground: 0 0% 100%;
+  --info: 186 98% 40%;
+  --info-foreground: 0 0% 100%;
+  --sidebar: 210 6% 6%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 64 89% 54%;
+  --sidebar-primary-foreground: 210 11% 4%;
+  --sidebar-accent: 223 9% 15%;
+  --sidebar-accent-foreground: 218 21% 85%;
+  --sidebar-border: 223 9% 15%;
+  --sidebar-ring: 64 89% 54%;
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
 }
 
 

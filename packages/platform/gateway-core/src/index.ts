@@ -167,6 +167,8 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
         Authorization: `Bearer ${channel.apiKey}`,
       },
       body: JSON.stringify({ model, messages, stream }),
+      // Hard deadline so hung upstreams cannot pin gateway workers indefinitely.
+      signal: AbortSignal.timeout(30_000),
     };
 
     const upstreamResponse = await fetch(upstreamUrl, upstreamOptions);
