@@ -1,0 +1,41 @@
+{
+  "name": "@nebutra/typelens-catalog",
+  "version": "0.1.0",
+  "description": "Type Lens — works, pairings, and agent extract packs for designers and design agents",
+  "private": false,
+  "license": "AGPL-3.0",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "featureId": "typelens-catalog",
+    "category": "design",
+    "summary": "AI-native type pairing library — works · pairings · extract packs"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/design/typelens-catalog"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
