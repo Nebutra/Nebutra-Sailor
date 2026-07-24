@@ -39,11 +39,16 @@ describe("Deploy substrate governance", () => {
     ).toBe(true);
   });
 
-  it("legacy ECS PM2 workflow is manual-only so it cannot auto-deploy frontends or gateway", () => {
+  it("legacy ECS PM2 workflow stays path-gated: forge auto-push, rest manual", () => {
     const yml = read("deploy-ecs.yml");
     expect(yml).toContain("workflow_dispatch:");
-    expect(yml).not.toMatch(/\n\s+push:\n/);
-    expect(yml).not.toContain("branches: [main]");
+    // Forge-only auto-deploy on main is intentional (see deploy-ecs.yml on.push paths).
+    // Other fleet apps must not ride unscoped push → main.
+    expect(yml).toMatch(/\n\s+push:\n/);
+    expect(yml).toContain("branches: [main]");
+    expect(yml).toContain("apps/forge/**");
+    expect(yml).not.toMatch(/paths:\n(?:[^\n]*\n)*?\s+- ["']apps\/web\/\*\*/);
+    expect(yml).not.toMatch(/paths:\n(?:[^\n]*\n)*?\s+- ["']apps\/landing\/\*\*/);
   });
 
   it("legacy ECS PM2 workflow still detects gateway source changes for manual fallback deploys", () => {
