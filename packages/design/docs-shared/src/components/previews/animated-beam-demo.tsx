@@ -19,7 +19,7 @@ function FlowNode({
   return (
     <div
       ref={ref}
-      className="relative z-10 flex min-w-28 flex-col items-center gap-2 rounded-lg border border-border bg-background px-3 py-3 text-center shadow-sm dark:border-white/10 dark:bg-muted"
+      className="relative z-10 flex min-w-28 flex-col items-center gap-2 rounded-lg border border-border bg-background px-3 py-3 text-center shadow-sm"
     >
       <div className="flex size-9 items-center justify-center rounded-md border border-border bg-muted text-foreground">
         {icon}
