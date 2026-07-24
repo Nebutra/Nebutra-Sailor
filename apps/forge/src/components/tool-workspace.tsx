@@ -1,6 +1,7 @@
 "use client";
 
 import { Base64Runner } from "@/components/base64-runner";
+import { resolveCatalogRunner } from "@/components/catalog-runners";
 import { CodecModeRunner } from "@/components/codec-mode-runner";
 import {
   BmiRunner,
@@ -293,11 +294,13 @@ export function ToolWorkspace({
         />
       );
 
-    default:
+    default: {
+      const catalog = resolveCatalogRunner(slug, toolId);
+      if (catalog) return catalog;
       if (category === "image") {
         return <ImageToolRunner toolId={toolId} />;
       }
-      // Absolute last resort — should not hit for registered catalog tools
       return <p className="text-sm text-[var(--status-danger)]">未配置工作台：{slug}</p>;
+    }
   }
 }

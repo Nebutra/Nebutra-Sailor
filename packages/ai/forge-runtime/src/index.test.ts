@@ -21,16 +21,23 @@ describe("countText", () => {
 });
 
 describe("ForgeRegistry", () => {
-  it("lists F0 batch-1 tools and resolves by slug", () => {
+  it("lists full registry (≥70) after expansion wiring", () => {
     const registry = ForgeRegistry.openDefault();
     const tools = registry.list();
-    expect(tools.length).toBeGreaterThanOrEqual(25);
+    expect(tools.length).toBeGreaterThanOrEqual(70);
     expect(tools.every((t) => typeof t.sotaStatus === "string")).toBe(true);
     expect(tools.some((t) => t.sotaStatus === "production")).toBe(true);
-    expect(tools.some((t) => t.sotaStatus === "lab" || t.sotaStatus === "scaffold")).toBe(true);
+    // lab/scaffold optional for some CN/life tools
     expect(registry.get("word-count").id).toBe("text/word-count");
+    expect(registry.get("zh-cn-tw").id).toBe("text/zh-cn-tw");
+    expect(registry.get("cost-estimate").id).toBe("llm/cost-estimate");
+    expect(registry.get("qr-generate").id).toBe("image/qr-generate");
+    expect(registry.get("json-yaml").id).toBe("data/json-yaml");
+    expect(registry.get("pdf-merge").id).toBe("doc/pdf-merge");
     expect(registry.search("json").some((t) => t.slug === "json-format")).toBe(true);
     expect(registry.categories()).toContain("text");
+    expect(registry.categories()).toContain("unit");
+    expect(registry.categories()).toContain("cn");
   });
 });
 

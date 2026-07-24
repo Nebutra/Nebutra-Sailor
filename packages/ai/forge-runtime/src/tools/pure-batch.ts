@@ -386,6 +386,146 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     },
     unitCost: 0,
   } as AnyForgeToolDefinition,
+  textTool({
+    id: "text/trim-whitespace",
+    slug: "trim-whitespace",
+    category: "text",
+    title: { zh: "去空白", en: "Trim Whitespace" },
+    description: {
+      zh: "去首尾 / 压缩空格 / 去全部空白",
+      en: "Trim, collapse, or strip whitespace",
+    },
+    tier: "catalog",
+    sideEffect: "pure",
+    meterId: "forge.text.trim_whitespace",
+    engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
+    seoKeywords: { zh: "去除空格,多余空格删除", en: "trim whitespace online" },
+    sotaStatus: "production",
+    execute: (text) => ({
+      trim: text.trim(),
+      collapse: text
+        .replace(/[ \t]+/g, " ")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim(),
+      stripAll: text.replace(/\s+/g, ""),
+      result: text.trim(),
+    }),
+  }),
+  {
+    id: "text/replace",
+    slug: "text-replace",
+    category: "text",
+    title: { zh: "文本替换", en: "Text Replace" },
+    description: { zh: "查找替换（可选正则）", en: "Find and replace, optional regex" },
+    tier: "catalog",
+    sideEffect: "pure",
+    runtime: ["client", "server"],
+    meterId: "forge.text.replace",
+    engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
+    seoKeywords: { zh: "文本替换,批量替换在线", en: "text find replace online" },
+    sotaStatus: "production",
+    inputSchema: z.object({
+      text: z.string(),
+      find: z.string(),
+      replace: z.string().default(""),
+      regex: z.boolean().default(false),
+      flags: z.string().default("g"),
+    }),
+    execute: (input: {
+      text: string;
+      find: string;
+      replace?: string;
+      regex?: boolean;
+      flags?: string;
+    }) => {
+      const replacement = input.replace ?? "";
+      if (input.regex) {
+        return {
+          result: input.text.replace(new RegExp(input.find, input.flags ?? "g"), replacement),
+        };
+      }
+      if (!input.find) return { result: input.text };
+      return { result: input.text.split(input.find).join(replacement) };
+    },
+    unitCost: 0,
+  } as AnyForgeToolDefinition,
+  {
+    id: "text/line-prefix-suffix",
+    slug: "line-prefix-suffix",
+    category: "text",
+    title: { zh: "行首行尾添加", en: "Line Prefix/Suffix" },
+    description: { zh: "每行批量加前缀/后缀", en: "Add prefix/suffix to each line" },
+    tier: "catalog",
+    sideEffect: "pure",
+    runtime: ["client", "server"],
+    meterId: "forge.text.line_prefix_suffix",
+    engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
+    seoKeywords: { zh: "行首添加,批量加前缀", en: "add prefix to each line" },
+    sotaStatus: "production",
+    inputSchema: z.object({
+      text: z.string(),
+      prefix: z.string().default(""),
+      suffix: z.string().default(""),
+      skipEmpty: z.boolean().default(true),
+    }),
+    execute: (input: { text: string; prefix?: string; suffix?: string; skipEmpty?: boolean }) => {
+      const prefix = input.prefix ?? "";
+      const suffix = input.suffix ?? "";
+      const skipEmpty = input.skipEmpty !== false;
+      const result = input.text
+        .split(/\r\n|\r|\n/)
+        .map((line) => (skipEmpty && line.trim() === "" ? line : `${prefix}${line}${suffix}`))
+        .join("\n");
+      return { result };
+    },
+    unitCost: 0,
+  } as AnyForgeToolDefinition,
+  {
+    id: "text/fullwidth-halfwidth",
+    slug: "fullwidth-halfwidth",
+    category: "text",
+    title: { zh: "全角半角转换", en: "Fullwidth ↔ Halfwidth" },
+    description: { zh: "全角/半角字符互转", en: "Convert fullwidth and halfwidth characters" },
+    tier: "catalog",
+    sideEffect: "pure",
+    runtime: ["client", "server"],
+    meterId: "forge.text.fullwidth_halfwidth",
+    engine: { name: "text-utils", upstream: "Unicode FF00 mapping", version: "0.1.0" },
+    seoKeywords: { zh: "全角半角转换", en: "fullwidth halfwidth converter" },
+    sotaStatus: "production",
+    inputSchema: z.object({
+      text: z.string(),
+      mode: z.enum(["to_half", "to_full"]).default("to_half"),
+    }),
+    execute: (input: { text: string; mode?: "to_half" | "to_full" }) => {
+      const mode = input.mode ?? "to_half";
+      if (mode === "to_half") {
+        return {
+          result: [...input.text]
+            .map((ch) => {
+              const code = ch.codePointAt(0) ?? 0;
+              if (code === 0x3000) return " ";
+              if (code >= 0xff01 && code <= 0xff5e) return String.fromCodePoint(code - 0xfee0);
+              return ch;
+            })
+            .join(""),
+          mode,
+        };
+      }
+      return {
+        result: [...input.text]
+          .map((ch) => {
+            const code = ch.codePointAt(0) ?? 0;
+            if (code === 0x20) return "\u3000";
+            if (code >= 0x21 && code <= 0x7e) return String.fromCodePoint(code + 0xfee0);
+            return ch;
+          })
+          .join(""),
+        mode,
+      };
+    },
+    unitCost: 0,
+  } as AnyForgeToolDefinition,
 ];
 
 function inferTs(value: unknown, depth: number): string {
