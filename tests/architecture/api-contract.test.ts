@@ -154,25 +154,10 @@ describe("Property 5b: OpenAPI Spec File", () => {
   // of these routes (see the integrations/admin/overview fix as the template),
   // delete its entry here. The test FAILS if any route NOT on this list regresses
   // to a content-less 2xx — so new drift can never be introduced.
-  const KNOWN_JSON_CONTENT_DEBT = new Set<string>([
-    // ping now declares text/plain content (not JSON debt)
-    // "GET /api/system/ping 200",
-    // "GET /system/ping 200",
-    "POST /api/v1/agent-runtime/turns 200",
-    "POST /api/v1/ai/chat 200",
-    "POST /api/v1/ai/embeddings 200",
-    "GET /api/v1/ai/models 200",
-    "POST /api/v1/ai/gateway/chat/completions 200",
-    "GET /api/v1/billing/subscription 200",
-    "POST /api/v1/search 200",
-    "POST /api/v1/search/sync 200",
-    "GET /api/v1/integrations 200",
-    "POST /api/v1/integrations 201",
-    "GET /api/v1/integrations/:id 200",
-    "PATCH /api/v1/integrations/:id 200",
-    "DELETE /api/v1/integrations/:id 200",
-    // Closed 2026-07-24: admin tenants/usage + dlq + feature-flags declare response content
-  ]);
+  // Closed 2026-07-24 (#228): AI / billing / search / integrations / agent-runtime
+  // 2xx responses now declare content schemas. Allowlist stays shrink-only —
+  // leave empty; do not re-add fixed routes.
+  const KNOWN_JSON_CONTENT_DEBT = new Set<string>([]);
 
   it("2xx JSON responses declare application/json content (no content?: never drift)", () => {
     if (!existsSync(OPENAPI_SPEC_PATH)) return;

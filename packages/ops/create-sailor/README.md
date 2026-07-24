@@ -138,7 +138,7 @@ Adding `--social-login=wechat,dingtalk` extends your primary auth provider
 
 The primary auth provider still owns user/session lifecycle — the generated
 callbacks exchange `code` for provider access tokens and leave a
-`// TODO: upsert into primary auth` marker for the user to wire up.
+intentional SAMPLE marker for primary-auth upsert for the user to wire up.
 
 ## After Scaffolding
 

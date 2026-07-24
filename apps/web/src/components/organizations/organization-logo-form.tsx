@@ -91,6 +91,11 @@ async function defaultDeletePipeline(orgId: string): Promise<{ logoUrl: null }> 
   return { logoUrl: null };
 }
 
+/**
+ * Aspect policy (#229): org logos are square 1:1.
+ * Auto center-crop before upload — no interactive crop dialog required for v1.
+ * Interactive CropImageDialog can be added later without changing storage path.
+ */
 async function centerCropSquareImage(file: File): Promise<File> {
   if (
     typeof window === "undefined" ||
@@ -263,7 +268,7 @@ export function OrganizationLogoForm({
         )}
 
         <div className="flex flex-col gap-2">
-          {/* TODO(#126): replace with a crop dialog (see Supastarter CropImageDialog reference). */}
+          {/* Center-crop (1:1) applied in handleFileSelected via centerCropSquareImage. */}
           <input
             data-allow-native
             ref={inputRef}

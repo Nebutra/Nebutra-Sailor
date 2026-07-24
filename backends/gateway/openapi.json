@@ -2221,7 +2221,15 @@
         },
         "responses": {
           "200": {
-            "description": "SSE stream of thread events"
+            "description": "SSE stream of thread events",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "Server-Sent Events payload (thread event frames)"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthenticated"
@@ -3254,7 +3262,15 @@
         },
         "responses": {
           "200": {
-            "description": "Chat completion response"
+            "description": "Chat completion response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
           },
           "402": {
             "description": "Quota exceeded"
@@ -3300,7 +3316,15 @@
         },
         "responses": {
           "200": {
-            "description": "Embeddings response"
+            "description": "Embeddings response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
           },
           "503": {
             "description": "AI service unavailable"
@@ -3314,7 +3338,60 @@
         "summary": "List available AI models",
         "responses": {
           "200": {
-            "description": "Available models list"
+            "description": "Available models list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "models": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "provider": {
+                            "type": "string"
+                          },
+                          "contextWindow": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "maxOutput": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "pricing": {},
+                          "capabilities": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "provider",
+                          "contextWindow",
+                          "maxOutput",
+                          "capabilities"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["models", "total"]
+                }
+              }
+            }
           }
         }
       }
@@ -4368,7 +4445,15 @@
         },
         "responses": {
           "200": {
-            "description": "Chat completion response"
+            "description": "Chat completion response (JSON or SSE stream)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
           },
           "401": {
             "description": "Invalid or missing API key",
@@ -5713,7 +5798,31 @@
         "summary": "Get current subscription",
         "responses": {
           "200": {
-            "description": "Subscription details"
+            "description": "Subscription details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "customer": {},
+                    "items": {},
+                    "current_period_end": {
+                      "type": "number"
+                    },
+                    "cancel_at_period_end": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": {}
+                }
+              }
+            }
           },
           "404": {
             "description": "No active subscription"
@@ -7201,7 +7310,70 @@
         },
         "responses": {
           "200": {
-            "description": "Search results"
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hits": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "doc": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "score": {
+                            "type": "number"
+                          },
+                          "highlights": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": ["doc", "score"]
+                      }
+                    },
+                    "totalHits": {
+                      "type": "integer"
+                    },
+                    "processingTimeMs": {
+                      "type": "number"
+                    },
+                    "facetDistribution": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "hitsPerPage": {
+                      "type": "integer"
+                    },
+                    "totalPages": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "hits",
+                    "totalHits",
+                    "processingTimeMs",
+                    "page",
+                    "hitsPerPage",
+                    "totalPages"
+                  ]
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid request"
@@ -7218,7 +7390,42 @@
         "summary": "Synchronize database with search index",
         "responses": {
           "200": {
-            "description": "Sync triggered"
+            "description": "Sync triggered (also accepted as 202)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "queued": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["queued", "message"]
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Sync job accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "queued": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["queued", "message"]
+                }
+              }
+            }
           },
           "403": {
             "description": "Forbidden"
@@ -7232,7 +7439,60 @@
         "summary": "List all integrations for the current organization",
         "responses": {
           "200": {
-            "description": "List of integrations"
+            "description": "List of integrations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integrations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "isActive": {
+                            "type": "boolean"
+                          },
+                          "lastSyncAt": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "date-time"
+                          },
+                          "settings": {
+                            "type": "object",
+                            "nullable": true,
+                            "additionalProperties": {}
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": ["id", "type", "name", "isActive"]
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["integrations", "total"]
+                }
+              }
+            }
           }
         }
       },
@@ -7270,7 +7530,34 @@
         },
         "responses": {
           "201": {
-            "description": "Integration created"
+            "description": "Integration created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "isActive": {
+                      "type": "boolean"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": ["id", "type", "name", "isActive"]
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid request"
@@ -7287,7 +7574,53 @@
         "summary": "Get integration by ID (returns decrypted credentials and settings)",
         "responses": {
           "200": {
-            "description": "Integration details"
+            "description": "Integration details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "isActive": {
+                      "type": "boolean"
+                    },
+                    "lastSyncAt": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    },
+                    "settings": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "credentials": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": ["id", "type", "name", "isActive"]
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found"
@@ -7326,7 +7659,39 @@
         },
         "responses": {
           "200": {
-            "description": "Updated integration"
+            "description": "Updated integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "isActive": {
+                      "type": "boolean"
+                    },
+                    "settings": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": ["id", "type", "name", "isActive"]
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found"
@@ -7338,7 +7703,23 @@
         "summary": "Delete an integration",
         "responses": {
           "200": {
-            "description": "Integration deleted"
+            "description": "Integration deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["id", "deleted"]
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found"

@@ -38,16 +38,19 @@ describe("applyLanguage", () => {
     expect(style?.textContent).not.toMatch(/:root,\n\.dark,/);
   });
 
-  it("applies dual-mode language with separate light/dark CSS blocks", () => {
-    applyLanguage("linear");
+  it.each([
+    "linear",
+    "vercel",
+  ] as const)("applies dual-mode language %s with separate light/dark CSS blocks", (id) => {
+    applyLanguage(id);
     const style = document.getElementById("nebutra-brand-skin");
     const css = style?.textContent ?? "";
     expect(css).toMatch(/dualMode=true/);
     // dual-mode: light under :root / html[data-brand]; dark under .dark / html.dark[data-brand]
-    expect(css).toMatch(/:root,\nhtml\[data-brand="linear"\]/);
-    expect(css).toMatch(/\.dark,\nhtml\.dark\[data-brand="linear"\]/);
+    expect(css).toMatch(new RegExp(`:root,\\nhtml\\[data-brand="${id}"\\]`));
+    expect(css).toMatch(new RegExp(`\\.dark,\\nhtml\\.dark\\[data-brand="${id}"\\]`));
     // must not glue light palette onto bare .dark (single-mode darkDefault hack)
-    expect(css).not.toMatch(/:root,\n\.dark,\nhtml\[data-brand="linear"\]/);
+    expect(css).not.toMatch(new RegExp(`:root,\\n\\.dark,\\nhtml\\[data-brand="${id}"\\]`));
   });
 
   it("clears to factory", () => {

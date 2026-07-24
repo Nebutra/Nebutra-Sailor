@@ -156,8 +156,12 @@ async function handleUpgrade(options: UpgradeOptions) {
   process.exit(ExitCode.ERROR);
 }
 
+interface CommanderActionContext {
+  optsWithGlobals?: () => { yes?: boolean; format?: string };
+}
+
 export function registerUpgradeCommand(program: Command) {
-  const action = (options: UpgradeOptions, cmd: any) => {
+  const action = (options: UpgradeOptions, cmd: CommanderActionContext) => {
     const globalOptions = cmd?.optsWithGlobals?.() || options;
     return handleUpgrade({
       yes: options.yes || globalOptions.yes || false,
@@ -173,5 +177,5 @@ export function registerUpgradeCommand(program: Command) {
     .option("--yes", "Execute the upgrade command without confirmation")
     .option("--dry-run", "Show the upgrade command without executing (exit 10)")
     .option("--format <type>", "Output format: json or plain")
-    .action(action as any);
+    .action(action);
 }

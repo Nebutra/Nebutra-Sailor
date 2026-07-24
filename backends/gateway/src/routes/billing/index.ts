@@ -233,13 +233,27 @@ billingRoutes.openapi(portalRoute, async (c) => {
   }
 });
 
+const SubscriptionResponseSchema = z
+  .object({
+    id: z.string().optional(),
+    status: z.string().optional(),
+    customer: z.unknown().optional(),
+    items: z.unknown().optional(),
+    current_period_end: z.number().optional(),
+    cancel_at_period_end: z.boolean().optional(),
+  })
+  .passthrough();
+
 const subscriptionRoute = createRoute({
   method: "get",
   path: "/subscription",
   tags: ["Billing"],
   summary: "Get current subscription",
   responses: {
-    200: { description: "Subscription details" },
+    200: {
+      description: "Subscription details",
+      content: { "application/json": { schema: SubscriptionResponseSchema } },
+    },
     404: { description: "No active subscription" },
   },
 });

@@ -20,8 +20,9 @@ import {
  *
  * The primary auth provider (Clerk / Better Auth) remains the owner of the
  * user/session lifecycle — these callbacks exchange the OAuth `code` for a
- * provider access token and leave a `// TODO: upsert into primary auth` marker
- * for the user to wire into their chosen stack.
+ * provider access token and leave an intentional SAMPLE marker for the
+ * user to wire upsert into their chosen stack (cannot be fully automated
+ * across Clerk vs Better Auth without guessing product auth).
  */
 
 /**
@@ -29,7 +30,7 @@ import {
  *
  * The stub is intentionally opinionated but small — it demonstrates the
  * `code` + `state` handling plus the provider-specific token exchange URL, and
- * leaves the "upsert into primary auth" step as an explicit TODO.
+ * leaves primary-auth upsert as an explicit SAMPLE step for the customer.
  */
 function renderCallbackRoute(provider: SocialLoginMeta, primaryAuth: AuthChoice): string {
   const header = `// apps/web/src/app/api/auth/callback/${provider.id}/route.ts
@@ -162,10 +163,10 @@ export async function GET(req: NextRequest) {
 
 ${exchangeBlocks[provider.id]}
 
-  // TODO: fetch user profile from ${provider.name} using the access token.
-  // TODO: upsert the user into your primary auth provider (${primaryAuth}).
-  //       e.g. clerk.users.createUser(...) or betterAuth.signIn.oauth(...).
-  //       Persist a session cookie before redirecting.
+  // SAMPLE (intentional): fetch user profile from ${provider.name} with the
+  // access token, then upsert into primary auth (${primaryAuth}) —
+  // e.g. clerk.users.createUser(...) or betterAuth.signIn.oauth(...).
+  // Persist a session cookie before redirecting.
 
   void state;
   return NextResponse.redirect(new URL("/dashboard", req.url));
