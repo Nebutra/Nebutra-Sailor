@@ -46,6 +46,18 @@
     }
   ],
   "tokens": [
+    "--btn-default-padding-x",
+    "--btn-default-padding-y",
+    "--btn-default-radius",
+    "--control-font-size-lg",
+    "--control-font-size-md",
+    "--control-font-size-sm",
+    "--control-font-size-tiny",
+    "--control-height-lg",
+    "--control-height-md",
+    "--control-height-sm",
+    "--control-height-tiny",
+    "--font-weight-medium",
     "--neutral-1",
     "--neutral-11",
     "--neutral-12",

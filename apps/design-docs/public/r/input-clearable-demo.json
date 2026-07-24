@@ -3,15 +3,12 @@
   "name": "input-clearable-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/input-clearable-demo.tsx",
-      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function InputClearableDemo() {\n  const [value, setValue] = useState(\"contact@nebutra.com\");\n\n  return (\n    <Input\n      aria-label=\"Contact email\"\n      clearable\n      value={value}\n      onValueChange={setValue}\n      placeholder=\"Type to see the clear button\"\n    />\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/input-clearable-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/input-clearable-demo\";\n",
       "type": "registry:example"
     }
   ]

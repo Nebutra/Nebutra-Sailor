@@ -46,11 +46,8 @@
     }
   ],
   "tokens": [
-    "--neutral-10",
     "--neutral-12",
-    "--neutral-2",
     "--neutral-5",
-    "--neutral-7",
     "--neutral-8",
     "--radio-border-width",
     "--radio-control-size",

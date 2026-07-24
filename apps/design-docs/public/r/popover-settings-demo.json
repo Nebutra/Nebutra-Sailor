@@ -3,16 +3,12 @@
   "name": "popover-settings-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/icons",
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/popover-settings-demo.tsx",
-      "content": "\"use client\";\n\nimport { SettingsGear as Settings } from \"@nebutra/icons\";\nimport {\n  Button,\n  Label,\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n  Toggle,\n} from \"@nebutra/ui/primitives\";\n\nexport function PopoverSettingsDemo() {\n  return (\n    <Popover>\n      <PopoverTrigger asChild>\n        <Button variant=\"ghost\" size=\"icon\">\n          <Settings className=\"h-4 w-4\" />\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent side=\"right\" align=\"start\" className=\"w-64\">\n        <div className=\"space-y-3\">\n          <div className=\"flex items-center justify-between\">\n            <Label id=\"notifications-label\">Notifications</Label>\n            <Toggle aria-labelledby=\"notifications-label\" />\n          </div>\n          <div className=\"flex items-center justify-between\">\n            <Label id=\"marketing-emails-label\">Marketing Emails</Label>\n            <Toggle aria-labelledby=\"marketing-emails-label\" />\n          </div>\n        </div>\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/popover-settings-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/popover-settings-demo\";\n",
       "type": "registry:example"
     }
   ]

@@ -3,15 +3,12 @@
   "name": "loader-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/loader-demo.tsx",
-      "content": "import { Loader } from \"@nebutra/ui/primitives\";\n\nexport function LoaderDemo() {\n  return (\n    <div className=\"max-w-sm px-4 py-8 space-x-4 flex w-full items-center justify-center\">\n      <Loader />\n      <Loader variant=\"dots\" size=\"lg\" />\n      <Loader variant=\"loading-dots\" text=\"Processing\" />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/loader-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/loader-demo\";\n",
       "type": "registry:example"
     }
   ]

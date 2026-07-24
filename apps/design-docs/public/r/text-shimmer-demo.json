@@ -3,15 +3,12 @@
   "name": "text-shimmer-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/text-shimmer-demo.tsx",
-      "content": "import { TextShimmer } from \"@nebutra/ui/primitives\";\n\nexport default function TextShimmerDemo() {\n  return (\n    <div className=\"gap-8 bg-zinc-950 flex h-[300px] flex-col items-center justify-center\">\n      <div className=\"gap-4 flex flex-col items-center justify-center\">\n        <TextShimmer className=\"text-xl\" duration={2}>\n          Generating code...\n        </TextShimmer>\n\n        <TextShimmer\n          as=\"h1\"\n          className=\"text-4xl font-bold [--base-color:theme(colors.blue.600)] [--base-gradient-color:theme(colors.blue.200)]\"\n          duration={3}\n        >\n          Premium Feature\n        </TextShimmer>\n      </div>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/text-shimmer-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/text-shimmer-demo\";\nexport { default } from \"@nebutra/docs-shared/components/previews/text-shimmer-demo\";\n",
       "type": "registry:example"
     }
   ]

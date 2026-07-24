@@ -3,15 +3,12 @@
   "name": "progress-basic-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/progress-basic-demo.tsx",
-      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\nimport * as React from \"react\";\n\nexport function ProgressBasicDemo() {\n  const [progress, setProgress] = React.useState(13);\n\n  React.useEffect(() => {\n    const timer = setTimeout(() => setProgress(65), 500);\n    return () => clearTimeout(timer);\n  }, []);\n\n  return (\n    <div className=\"w-full\">\n      <Progress value={progress} className=\"w-full\" />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/progress-basic-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/progress-basic-demo\";\n",
       "type": "registry:example"
     }
   ]

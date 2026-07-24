@@ -3,15 +3,12 @@
   "name": "toggle-3-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/toggle-3-demo.tsx",
-      "content": "\"use client\";\n\nimport { Toggle } from \"@nebutra/ui/primitives\";\n\nexport function Toggle3Demo() {\n  return <Toggle defaultChecked size=\"large\" aria-label=\"Toggle on\" />;\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/toggle-3-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/toggle-3-demo\";\n",
       "type": "registry:example"
     }
   ]

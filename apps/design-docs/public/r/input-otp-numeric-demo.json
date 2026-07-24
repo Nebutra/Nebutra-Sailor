@@ -3,16 +3,12 @@
   "name": "input-otp-numeric-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui",
-    "input-otp"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/input-otp-numeric-demo.tsx",
-      "content": "\"use client\";\n\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from \"@nebutra/ui/primitives\";\nimport { REGEXP_ONLY_DIGITS } from \"input-otp\";\n\nexport function InputOTPNumericDemo() {\n  return (\n    <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n        <InputOTPSlot index={3} />\n      </InputOTPGroup>\n    </InputOTP>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/input-otp-numeric-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/input-otp-numeric-demo\";\n",
       "type": "registry:example"
     }
   ]

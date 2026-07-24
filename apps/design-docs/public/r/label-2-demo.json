@@ -3,15 +3,12 @@
   "name": "label-2-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/label-2-demo.tsx",
-      "content": "\"use client\";\n\nimport { Input, Label } from \"@nebutra/ui/primitives\";\nexport function Label2Demo() {\n  return (\n    <div className=\"space-y-2 max-w-sm w-full\">\n      <Label htmlFor=\"name\">\n        Full name\n        <span className=\"ml-1 text-destructive\" aria-hidden=\"true\">\n          *\n        </span>\n      </Label>\n      <Input id=\"name\" required aria-required=\"true\" />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/label-2-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/label-2-demo\";\n",
       "type": "registry:example"
     }
   ]

@@ -3,15 +3,12 @@
   "name": "dialog-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/dialog-demo.tsx",
-      "content": "\"use client\";\nimport {\n  Button,\n  Dialog,\n  DialogContent,\n  DialogDescription,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from \"@nebutra/ui/primitives\";\nexport function DialogDemo() {\n  return (\n    <Dialog>\n      <DialogTrigger asChild>\n        <Button variant=\"outline\">Open Dialog</Button>\n      </DialogTrigger>\n      <DialogContent>\n        <DialogHeader>\n          <DialogTitle>Example Dialog</DialogTitle>\n          <DialogDescription>\n            This is an example dialog. You can put any content here.\n          </DialogDescription>\n        </DialogHeader>\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/dialog-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/dialog-demo\";\n",
       "type": "registry:example"
     }
   ]

@@ -3,15 +3,12 @@
   "name": "feedback-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/feedback-demo.tsx",
-      "content": "\"use client\";\n\nimport { Feedback } from \"@nebutra/ui/primitives\";\n\nexport function FeedbackDemo() {\n  return (\n    <div className=\"h-40 px-4 py-8 flex w-full items-center justify-center\">\n      <Feedback dryRun label=\"Feedback\" />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/feedback-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/feedback-demo\";\n",
       "type": "registry:example"
     }
   ]

@@ -165,7 +165,7 @@ export const BadgeVariantsDemo = dynamic(() =>
   })),
 );
 export const BasePopoverDemo = dynamic(() =>
-  import("@/components/previews/base-popover-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/base-popover-demo").then((m) => ({ default: m.BasePopoverDemo })),
 );
 export const BentoGridDemo = dynamic(() =>
   import("@/components/previews/bento-grid-demo").then((m) => ({ default: m.BentoGridDemo })),
@@ -348,9 +348,8 @@ export const CommandDialogSimpleDemo = dynamic(() =>
 export const CommandMenuDemo = dynamic(() =>
   import("@/components/previews/command-menu-demo").then((m) => ({ default: m.CommandMenuDemo })),
 );
-export const ConfettiDemo = dynamic(
-  () => import("@/components/previews/confetti-demo").then((m) => ({ default: m.ConfettiDemo })),
-  { ssr: false },
+export const ConfettiDemo = dynamic(() =>
+  import("@/components/previews/confetti-demo").then((m) => ({ default: m.ConfettiDemo })),
 );
 export const ContextCardDemo = dynamic(() =>
   import("@/components/previews/context-card-demo").then((m) => ({ default: m.ContextCardDemo })),
@@ -527,7 +526,9 @@ export const GlobeDemo = dynamic(() =>
   import("@/components/previews/globe-demo").then((m) => ({ default: m.GlobeDemo })),
 );
 export const GradientAnimatedTextDemo = dynamic(() =>
-  import("@/components/previews/gradient-animated-text-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/gradient-animated-text-demo").then((m) => ({
+    default: m.GradientAnimatedTextDemo,
+  })),
 );
 export const GrainGradientBackgroundDemo = dynamic(() =>
   import("@/components/previews/grain-gradient-background-demo").then((m) => ({
@@ -652,7 +653,9 @@ export const LightRaysDemo = dynamic(() =>
   import("@/components/previews/light-rays-demo").then((m) => ({ default: m.LightRaysDemo })),
 );
 export const LineShadowTextDemo = dynamic(() =>
-  import("@/components/previews/line-shadow-text-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/line-shadow-text-demo").then((m) => ({
+    default: m.LineShadowTextDemo,
+  })),
 );
 export const LoaderDemo = dynamic(() =>
   import("@/components/previews/loader-demo").then((m) => ({ default: m.LoaderDemo })),
@@ -694,7 +697,9 @@ export const MermaidDemo = dynamic(() =>
   import("@/components/previews/mermaid-demo").then((m) => ({ default: m.MermaidDemo })),
 );
 export const MessageWithReactionsDemo = dynamic(() =>
-  import("@/components/previews/message-with-reactions-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/message-with-reactions-demo").then((m) => ({
+    default: m.MessageWithReactionsDemo,
+  })),
 );
 export const MetricCardDemo = dynamic(() =>
   import("@/components/previews/metric-card-demo").then((m) => ({ default: m.MetricCardDemo })),
@@ -988,13 +993,13 @@ export const TextDemo = dynamic(() =>
   import("@/components/previews/text-demo").then((m) => ({ default: m.TextDemo })),
 );
 export const TextLoopDemo = dynamic(() =>
-  import("@/components/previews/text-loop-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/text-loop-demo").then((m) => ({ default: m.TextLoopDemo })),
 );
 export const TextScrambleDemo = dynamic(() =>
-  import("@/components/previews/text-scramble-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/text-scramble-demo").then((m) => ({ default: m.TextScrambleDemo })),
 );
 export const TextShimmerDemo = dynamic(() =>
-  import("@/components/previews/text-shimmer-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/text-shimmer-demo").then((m) => ({ default: m.TextShimmerDemo })),
 );
 export const TextareaDemo = dynamic(() =>
   import("@/components/previews/textarea-demo").then((m) => ({ default: m.TextareaDemo })),
@@ -1014,12 +1019,8 @@ export const ThemeSwitcherDemo = dynamic(() =>
     default: m.ThemeSwitcherDemo,
   })),
 );
-export const ThemeToggleDemo = dynamic(
-  () =>
-    import("@/components/previews/theme-toggle-demo").then((m) => ({
-      default: m.ThemeToggleDemo,
-    })),
-  { ssr: false },
+export const ThemeToggleDemo = dynamic(() =>
+  import("@/components/previews/theme-toggle-demo").then((m) => ({ default: m.ThemeToggleDemo })),
 );
 export const ToastDemo = dynamic(() =>
   import("@/components/previews/toast-demo").then((m) => ({ default: m.ToastDemo })),
@@ -1106,7 +1107,7 @@ export const WaveAnimationDemo = dynamic(() =>
   })),
 );
 export const WordFadeInDemo = dynamic(() =>
-  import("@/components/previews/word-fade-in-demo").then((m) => ({ default: m.default })),
+  import("@/components/previews/word-fade-in-demo").then((m) => ({ default: m.WordFadeInDemo })),
 );
 export const XPostCardDemo = dynamic(() =>
   import("@/components/previews/x-post-card-demo").then((m) => ({ default: m.XPostCardDemo })),

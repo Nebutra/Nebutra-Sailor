@@ -123,8 +123,32 @@ function toKebab(name) {
     .replace(/(^|-)i-18n(?=-|$)/g, "$1i18n");
 }
 
-/** Extract exported component names from a file's source */
-function extractExports(source, _filename) {
+/**
+ * Resolve `@nebutra/docs-shared/...` re-exports to source files.
+ * Most design-docs previews are thin barrels into the docs-shared SSOT.
+ */
+const DOCS_SHARED_ROOT = path.resolve(ROOT, "..", "..", "packages", "design", "docs-shared");
+
+function resolveDocsSharedSpecifier(specifier) {
+  if (!specifier.startsWith("@nebutra/docs-shared/")) return null;
+  const subpath = specifier.slice("@nebutra/docs-shared/".length);
+  const base = path.join(DOCS_SHARED_ROOT, "src", subpath);
+  for (const candidate of [
+    `${base}.tsx`,
+    `${base}.ts`,
+    path.join(base, "index.tsx"),
+    path.join(base, "index.ts"),
+  ]) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+/**
+ * Extract exported component names from a file's source.
+ * Follows `export * from "@nebutra/docs-shared/..."` re-exports (value exports only).
+ */
+function extractExports(source, filename, seen = new Set()) {
   const names = [];
 
   // Strip out template literals to avoid matching code examples
@@ -145,6 +169,36 @@ function extractExports(source, _filename) {
     // Skip type aliases, interfaces, non-component constants
     if (m[1].endsWith("Props") || m[1].endsWith("Context")) continue;
     names.push(m[1]);
+  }
+
+  // export { FooDemo, BarDemo as BazDemo } from "..."
+  for (const m of safeSource.matchAll(/^export\s*\{([^}]+)\}\s*from\s*["']([^"']+)["']/gm)) {
+    for (const part of m[1].split(",")) {
+      const id = part
+        .trim()
+        .split(/\s+as\s+/)
+        .pop()
+        ?.trim();
+      if (id && /^[A-Z]/.test(id) && !id.endsWith("Props") && !id.endsWith("Context")) {
+        names.push(id);
+      }
+    }
+  }
+
+  // export * from "@nebutra/docs-shared/..." — resolve and recurse (not export type *)
+  for (const m of safeSource.matchAll(/^export\s+\*\s+from\s*["']([^"']+)["']/gm)) {
+    const specifier = m[1];
+    const resolved = resolveDocsSharedSpecifier(specifier);
+    if (!resolved) {
+      process.stderr.write(
+        `[registry] WARN: cannot resolve re-export ${specifier} from ${filename}\n`,
+      );
+      continue;
+    }
+    if (seen.has(resolved)) continue;
+    seen.add(resolved);
+    const nested = fs.readFileSync(resolved, "utf-8");
+    names.push(...extractExports(nested, path.basename(resolved), seen));
   }
 
   // Deduplicate

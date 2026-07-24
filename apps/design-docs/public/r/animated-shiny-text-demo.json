@@ -3,15 +3,12 @@
   "name": "animated-shiny-text-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/animated-shiny-text-demo.tsx",
-      "content": "\"use client\";\n\nimport { AnimatedShinyText } from \"@nebutra/ui/primitives\";\n\nexport function AnimatedShinyTextDemo() {\n  return (\n    <div className=\"p-8 flex w-full items-center justify-center\">\n      <div className=\"px-4 py-1.5 text-sm rounded-full border border-border bg-muted/50\">\n        <AnimatedShinyText>✨ Introducing new features</AnimatedShinyText>\n      </div>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/animated-shiny-text-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/animated-shiny-text-demo\";\n",
       "type": "registry:example"
     }
   ]

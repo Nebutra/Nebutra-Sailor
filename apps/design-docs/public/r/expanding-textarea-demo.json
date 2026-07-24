@@ -3,15 +3,12 @@
   "name": "expanding-textarea-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/expanding-textarea-demo.tsx",
-      "content": "import { ExpandingTextarea } from \"@nebutra/ui/primitives\";\n\nexport function ExpandingTextareaDemo() {\n  return (\n    <div className=\"max-w-md px-4 py-12 flex w-full items-center justify-center\">\n      <ExpandingTextarea\n        placeholder=\"Start typing... the textarea will expand automatically.\"\n        className=\"w-full\"\n      />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/expanding-textarea-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/expanding-textarea-demo\";\n",
       "type": "registry:example"
     }
   ]

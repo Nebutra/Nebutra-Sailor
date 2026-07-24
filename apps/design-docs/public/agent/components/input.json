@@ -74,7 +74,6 @@
     "--input-radius",
     "--radius-sm",
     "--select-focus-ring-width",
-    "--shadow-xs",
     "--textarea-focus-ring-width"
   ],
   "evidence": {

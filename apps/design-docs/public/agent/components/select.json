@@ -91,7 +91,6 @@
     "--select-message-gap",
     "--select-padding-x",
     "--select-radius",
-    "--shadow-xs",
     "--textarea-focus-ring-width"
   ],
   "evidence": {

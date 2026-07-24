@@ -40,11 +40,7 @@
     }
   ],
   "tokens": [
-    "--neutral-1",
-    "--neutral-12",
-    "--neutral-2",
     "--neutral-7",
-    "--neutral-8",
     "--show-more-divider-inset",
     "--show-more-duration",
     "--show-more-easing",
