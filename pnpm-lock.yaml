@@ -2320,9 +2320,6 @@ importers:
 
   packages/ai/forge-runtime:
     dependencies:
-      '@nebutra/ai-providers':
-        specifier: workspace:*
-        version: link:../ai-providers
       '@zxcvbn-ts/core':
         specifier: ^4.1.2
         version: 4.1.2
@@ -2405,6 +2402,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@nebutra/ai-providers':
+        specifier: workspace:*
+        version: link:../ai-providers
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9

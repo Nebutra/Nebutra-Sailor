@@ -127,9 +127,24 @@ describe("md-to-pdf + mcp", () => {
     expect(out.buf.subarray(0, 5).toString("utf8")).toBe("%PDF-");
   });
 
-  it("md-to-pdf tool invoke with simple engine uses real tool entry", async () => {
+  it("keeps md-to-pdf off the default registry (host registers via /pdf subpath)", async () => {
     const registry = ForgeRegistry.openDefault();
-    const result = await invokeTool(registry, {
+    expect(registry.list().some((t) => t.id === "doc/md-to-pdf")).toBe(false);
+    const missing = await invokeTool(registry, {
+      toolId: "doc/md-to-pdf",
+      input: { markdown: "# x", title: "Doc", engine: "simple" },
+    });
+    expect(missing.ok).toBe(false);
+    if (!missing.ok) {
+      expect(missing.code).toBe("tool_not_found");
+    }
+
+    // Hosts that need Playwright PDF import the tool from the optional subpath
+    // and register it explicitly — see tools/index.ts F0_BATCH1_TOOLS comment.
+    const { mdToPdfTool } = await import("./tools/md-to-pdf.js");
+    const { F0_BATCH1_TOOLS } = await import("./tools/index.js");
+    const withPdf = new ForgeRegistry([...F0_BATCH1_TOOLS, mdToPdfTool]);
+    const result = await invokeTool(withPdf, {
       toolId: "doc/md-to-pdf",
       input: {
         markdown: "# SOTA path\n\n- item",
@@ -142,7 +157,6 @@ describe("md-to-pdf + mcp", () => {
       const output = result.output as {
         renderEngine: string;
         base64: string;
-        engine: string;
       };
       expect(output.renderEngine).toBe("simple");
       expect(Buffer.from(output.base64, "base64").subarray(0, 5).toString("utf8")).toBe("%PDF-");
