@@ -54,6 +54,9 @@ export function getAuthReturnAllowedHosts(
   hosts.add("localhost:3000");
   hosts.add("localhost:3001");
   hosts.add("localhost:3101");
+  hosts.add("localhost:3100");
+  hosts.add("localhost:3106");
+  hosts.add("localhost:3105");
   hosts.add("app.nebutra.com");
   hosts.add("auth.nebutra.com");
   hosts.add("nebutra.com");

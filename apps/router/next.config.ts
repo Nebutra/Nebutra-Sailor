@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     "@nebutra/icons",
     "@nebutra/prepaid-wallet",
     "@nebutra/router-supply",
+    "@nebutra/auth",
   ],
 };
 
