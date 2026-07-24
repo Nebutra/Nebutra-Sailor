@@ -234,6 +234,8 @@ export interface BrandConfig {
     forge: string;
     design: string;
     status: string;
+    /** Product analytics / PostHog host. */
+    analytics: string;
   };
 
   social: {
@@ -345,6 +347,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     forge: "forge.nebutra.com",
     design: "design.nebutra.com",
     status: "status.nebutra.com",
+    analytics: "analytics.nebutra.com",
   },
   social: {
     twitter: "https://twitter.com/nebutra",

@@ -1,13 +1,13 @@
-// @brand-exempt: fallback production app origin when env is unset (server helper)
 import "server-only";
 
 import { getAuthReturnAllowedHosts, sanitizeReturnUrl } from "@nebutra/auth";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 
 export function resolveAppOrigin(): string {
   return (
     process.env.NEXT_PUBLIC_APP_URL ||
     process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://app.nebutra.com"
+    getBrandOrigin("app")
   ).replace(/\/$/, "");
 }
 

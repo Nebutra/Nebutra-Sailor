@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import Link from "next/link";
 import { TL_CONTAINER } from "@/lib/layout";
 
@@ -45,9 +46,9 @@ export function SiteFooter() {
         </ul>
 
         <p className="text-sm text-[var(--tl-muted)] md:text-right">
-          © {new Date().getFullYear()} Nebutra
+          © {new Date().getFullYear()} {brand.name}
           <br />
-          typelens.nebutra.com
+          TypeLens
         </p>
       </div>
     </footer>

@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Card } from "@nebutra/ui/layout";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
@@ -36,7 +37,7 @@ function countClient(text: string) {
   };
 }
 
-const SAMPLE = `Nebutra Forge 字数统计
+const SAMPLE = `${brand.name} Forge 字数统计
 
 中英混排：Hello world，你好世界。
 用于作文、公众号、产品文案与 token 前置估算。`;

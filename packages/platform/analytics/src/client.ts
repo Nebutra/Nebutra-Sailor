@@ -1,3 +1,4 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Dub } from "dub";
 import pLimit from "p-limit";
 
@@ -306,7 +307,8 @@ export class AnalyticsClient {
      */
     createLink: async (input: CreateReferralLinkInput): Promise<Link> => {
       const destinationUrl =
-        input.destinationUrl || `${this.config.domains?.default || "https://nebutra.com"}/signup`;
+        input.destinationUrl ||
+        `${this.config.domains?.default || getBrandOrigin("landing")}/signup`;
 
       return this.links.create({
         url: `${destinationUrl}?ref=${input.userId}`,

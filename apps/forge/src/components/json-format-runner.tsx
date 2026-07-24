@@ -1,11 +1,12 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useCallback, useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 const SAMPLE = `{
-  "name": "Nebutra Forge",
+  "name": "${brand.name} Forge",
   "features": ["format", "minify", "validate"],
   "ok": true
 }`;

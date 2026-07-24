@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Tabs, TabsList, TabsTrigger, Textarea } from "@nebutra/ui/primitives";
 import { useState } from "react";
@@ -44,9 +45,9 @@ function runLocal(kind: CodecKind, text: string, mode: "encode" | "decode"): str
 }
 
 const SAMPLES: Record<CodecKind, string> = {
-  url: "https://nebutra.com/path?q=你好",
-  html: `<p class="x">Hello & "Nebutra"</p>`,
-  hex: "Hello Nebutra 你好",
+  url: `https://${brand.domains.landing}/path?q=你好`,
+  html: `<p class="x">Hello & "${brand.name}"</p>`,
+  hex: "Hello ${brand.name} 你好",
 };
 
 const NOTES: Record<CodecKind, string> = {

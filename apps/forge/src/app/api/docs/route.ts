@@ -1,10 +1,12 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { NextResponse } from "next/server";
 
 /** Lightweight discoverability for Agent/SDK authors. */
 export async function GET() {
   return NextResponse.json({
-    product: "Nebutra Forge",
-    baseUrl: "https://forge.nebutra.com",
+    product: `${brand.name} Forge`,
+    baseUrl: getBrandOrigin("forge"),
     endpoints: {
       listTools: { method: "GET", path: "/api/v1/tools" },
       invoke: {
@@ -14,6 +16,6 @@ export async function GET() {
       },
     },
     auth: "Bearer sk-sailor-* (scopes tools:*) — optional for free unitCost tools in demo",
-    wallet: "Prepaid Nebutra credits; customer ledger is source of truth",
+    wallet: `Prepaid ${brand.name} credits; customer ledger is source of truth`,
   });
 }

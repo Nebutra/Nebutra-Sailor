@@ -1,9 +1,9 @@
 /**
  * Cross-subdomain session-hint cookie.
  *
- * Non-sensitive flag the landing page (`nebutra.com`) reads to redirect
- * signed-in users into the app (`app.nebutra.com`). Encodes only the
- * boolean "session exists somewhere on .nebutra.com"; the real HttpOnly
+ * Non-sensitive flag the landing page (landing host) reads to redirect
+ * signed-in users into the app (app host). Encodes only the
+ * boolean "session exists somewhere on brand apex"; the real HttpOnly
  * session cookie stays host-scoped on the web app for defense-in-depth.
  *
  * Pattern: a wide non-sensitive flag cookie pairs with a narrow sensitive

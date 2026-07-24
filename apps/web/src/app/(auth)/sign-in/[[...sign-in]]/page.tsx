@@ -5,6 +5,7 @@ import {
   isAuthFeatureEnabled,
   sanitizeReturnUrl,
 } from "@nebutra/auth";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
@@ -19,7 +20,7 @@ import { extractEmailDomain } from "@/lib/auth/sso-discovery";
 
 /**
  * Better Auth multi-app RP: this route only renders a local UI for Clerk.
- * Default (better-auth) always soft-redirects to auth.nebutra.com so there
+ * Default (better-auth) always soft-redirects to brand auth origin so there
  * is a single login entry. Proxy already 307s; this is a belt-and-suspenders
  * fallback if middleware is bypassed.
  */
@@ -40,7 +41,7 @@ function resolveAppOrigin(headerStore: Headers): string {
   if (xfHost && !xfHost.startsWith("0.0.0.0") && xfHost !== "127.0.0.1" && xfHost !== "localhost") {
     return `${xfProto}://${xfHost}`;
   }
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://app.nebutra.com";
+  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || getBrandOrigin("app");
 }
 
 async function SignInPageContent({

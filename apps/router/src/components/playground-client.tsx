@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useEffect, useMemo, useState } from "react";
@@ -17,7 +18,7 @@ export function PlaygroundClient({
 }) {
   const options = useMemo(() => (models.length > 0 ? models : [DEFAULT_PUBLIC_MODEL]), [models]);
   const [model, setModel] = useState(options[0] ?? DEFAULT_PUBLIC_MODEL);
-  const [prompt, setPrompt] = useState("用一句话介绍 Nebutra Router");
+  const [prompt, setPrompt] = useState(`用一句话介绍 ${brand.name} Router`);
   const [apiKey, setApiKey] = useState("");
   const [out, setOut] = useState("");
   const [mode, setMode] = useState("");
