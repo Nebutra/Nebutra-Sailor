@@ -29,6 +29,18 @@ import {
   TimezoneRunner,
   XmlFormatRunner,
 } from "@/components/p0-runners";
+import {
+  CostEstimateRunner,
+  FileChecksumRunner,
+  HmacRunner,
+  JsonSchemaValidateRunner,
+  MarkdownPreviewRunner,
+  PasswordStrengthRunner,
+  PdfMergeRunner,
+  PdfSplitRunner,
+  PinyinRunner,
+  ZhCnTwRunner,
+} from "@/components/p1-runners";
 import { PasswordRunner } from "@/components/password-runner";
 import { TextDiffRunner } from "@/components/text-diff-runner";
 import { pickResult, TextTransformRunner } from "@/components/text-transform-runner";
@@ -367,6 +379,30 @@ export function ToolWorkspace({
       return <CronExplainRunner toolId={toolId} />;
     case "timezone":
       return <TimezoneRunner toolId={toolId} />;
+
+    // ── P1 specialized workspaces (#255) ────────────────────────────────
+    case "markdown-preview":
+      return <MarkdownPreviewRunner toolId={toolId} mode="preview" />;
+    case "md-to-html":
+      return <MarkdownPreviewRunner toolId={toolId} mode="html" />;
+    case "pdf-merge":
+      return <PdfMergeRunner toolId={toolId} />;
+    case "pdf-split":
+      return <PdfSplitRunner toolId={toolId} />;
+    case "password-strength":
+      return <PasswordStrengthRunner toolId={toolId} />;
+    case "hmac":
+      return <HmacRunner toolId={toolId} />;
+    case "file-checksum":
+      return <FileChecksumRunner toolId={toolId} />;
+    case "cost-estimate":
+      return <CostEstimateRunner toolId={toolId} />;
+    case "json-schema-validate":
+      return <JsonSchemaValidateRunner toolId={toolId} />;
+    case "zh-cn-tw":
+      return <ZhCnTwRunner toolId={toolId} />;
+    case "pinyin":
+      return <PinyinRunner toolId={toolId} />;
 
     default: {
       const catalog = resolveCatalogRunner(slug, toolId);

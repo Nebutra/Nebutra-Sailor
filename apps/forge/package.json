@@ -10,6 +10,8 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@nebutra/ai-providers": "workspace:*",
+    "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/forge-runtime": "workspace:*",
     "@nebutra/icons": "workspace:*",
@@ -21,8 +23,7 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "sharp": "^0.35.0",
-    "zod": "catalog:",
-    "@nebutra/auth": "workspace:*"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",
