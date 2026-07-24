@@ -21,7 +21,8 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "sharp": "^0.35.0",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@nebutra/auth": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",
