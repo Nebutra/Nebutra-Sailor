@@ -1,0 +1,62 @@
+/** Market layout SSOT — width:min(100%-2*gutter,max). */
+
+/* —— Market surface tokens (local to router market shell) —— */
+.router-market {
+  /*
+   * 版心策略：内容宽 max，左右永远留 gutter（外留白，不贴视口边）
+   * width = min(100% - 2*gutter, max) — 比「max-width + 内 padding」更稳
+   */
+  --rm-max: 1480px;
+  /* 随视口变宽：窄屏 ≥24px，常见桌面 ~48–64px，超宽封顶 80px */
+  --rm-gutter: clamp(1.5rem, 4.2vw, 5rem);
+  --rm-canvas: color-mix(in srgb, var(--blue-2) 38%, #f5f6fa 62%);
+  --rm-panel: #ffffff;
+  --rm-panel-border: color-mix(in srgb, var(--neutral-6) 72%, transparent);
+  --rm-panel-shadow: 0 1px 2px rgb(15 23 42 / 0.035), 0 12px 36px rgb(15 23 42 / 0.045);
+  --rm-panel-shadow-hover: 0 8px 20px rgb(15 23 42 / 0.06), 0 24px 56px rgb(15 23 42 / 0.07);
+  --rm-radius: 20px;
+  --rm-radius-sm: 14px;
+  --rm-ink: var(--neutral-12);
+  --rm-muted: var(--neutral-10);
+  --rm-line: color-mix(in srgb, var(--neutral-6) 90%, transparent);
+  background:
+    radial-gradient(
+      1400px 520px at 50% -100px,
+      color-mix(in srgb, var(--blue-4) 32%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      900px 360px at 88% 12%,
+      color-mix(in srgb, var(--cyan-4) 18%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(180deg, var(--rm-canvas) 0%, #f7f8fb 320px, #f7f8fb 100%);
+  color: var(--rm-ink);
+  min-height: 100vh;
+}
+
+.router-market-shell {
+  box-sizing: border-box;
+  /* 外留白：视口两侧至少 --rm-gutter，内容不超过 --rm-max */
+  width: min(100% - 2 * var(--rm-gutter), var(--rm-max));
+  max-width: 100%;
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
+.router-market-panel {
+  background: var(--rm-panel);
+  border: 1px solid var(--rm-panel-border);
+  border-radius: var(--rm-radius);
+  box-shadow: var(--rm-panel-shadow);
+}
+
+.router-market-dock {
+  background: color-mix(in srgb, #fff 94%, transparent);
+  border: 1px solid var(--rm-panel-border);
+  border-radius: 999px;
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.03),
+    0 12px 36px rgb(15 23 42 / 0.06);
+  backdrop-filter: blur(12px);
+}
