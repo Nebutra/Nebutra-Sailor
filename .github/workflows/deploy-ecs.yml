@@ -5,8 +5,11 @@ name: Deploy to Cloud VM (PM2 Manual Fallback)
 # with AWS EC2, Alibaba Cloud ECS, Tencent Cloud CVM, GCP Compute Engine, or
 # any equivalent VM with SSH + Node.js + PM2.
 #
-# The production default is now Vercel frontends + Cloudflare Workers gateway
-# + VM/FastAPI origin; this workflow must not auto-deploy on main push.
+# The production default is still Vercel frontends + Cloudflare Workers gateway
+# + VM/FastAPI origin for most surfaces. Forge is the exception: it lives on
+# this VM and auto-deploys from main when forge paths change (see `on.push`).
+# All other apps stay manual via workflow_dispatch to protect the small disk
+# and avoid cross-region SSH blast radius.
 #
 # REQUIRED REPOSITORY SECRETS (Settings → Secrets and variables → Actions):
 #   VM_SSH_PRIVATE_KEY   — OpenSSH private key (Ed25519 recommended) whose
@@ -48,6 +51,18 @@ on:
         description: "Reason (shown in run summary)"
         required: false
         default: ""
+  # Forge-only auto CI/CD: main push of forge product paths → deploy forge only.
+  # Other ECS apps remain workflow_dispatch to avoid filling the VM disk and
+  # re-shipping the whole fleet on every monorepo commit.
+  push:
+    branches: [main]
+    paths:
+      - "apps/forge/**"
+      - "packages/ai/forge-runtime/**"
+      - "infra/runtime/nginx/conf.d/forge.nebutra.com.conf"
+      - "infra/runtime/nginx/nginx.conf"
+      - "infra/ops/scripts/ecs-deploy-remote.sh"
+      - ".github/workflows/deploy-ecs.yml"
 
 permissions:
   contents: read
@@ -181,6 +196,7 @@ jobs:
       - name: Resolve target apps
         id: resolve
         env:
+          EVENT_NAME:     ${{ github.event_name }}
           INPUT_APPS:     ${{ github.event.inputs.apps }}
           F_LANDING:      ${{ steps.filter.outputs.landing }}
           F_WEB:          ${{ steps.filter.outputs.web }}
@@ -202,6 +218,25 @@ jobs:
               *) echo false ;;
             esac
           }
+
+          # main push auto-CI is forge-only (see on.push.paths). Do not trust
+          # broad path filters (e.g. packages/** on other apps) for that path.
+          if [ "${EVENT_NAME:-}" = "push" ]; then
+            {
+              echo "landing=false"
+              echo "web=false"
+              echo "api=false"
+              echo "idp=false"
+              echo "auth=false"
+              echo "design-docs=false"
+              echo "sailor-docs=false"
+              echo "router=false"
+              echo "forge=true"
+              echo "any=true"
+            } >> "$GITHUB_OUTPUT"
+            echo "Auto-CI push: deploying forge only"
+            exit 0
+          fi
 
           normalized_apps=""
           if [ -n "${INPUT_APPS:-}" ]; then
@@ -565,6 +600,7 @@ jobs:
             infra/runtime/nginx/nginx.conf
             infra/runtime/nginx/conf.d/proxy_params.conf
             infra/runtime/nginx/conf.d/security.conf
+            infra/runtime/nginx/conf.d/forge.nebutra.com.conf
 
       - name: Download landing bundle
         if: needs.detect-changes.outputs.landing == 'true'
@@ -751,6 +787,8 @@ jobs:
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-proxy_params.conf"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/security.conf \
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-security.conf"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/forge.nebutra.com.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-forge.conf"
 
       - name: Run remote deploy
         env:
