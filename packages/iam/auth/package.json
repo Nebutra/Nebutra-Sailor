@@ -75,6 +75,7 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
