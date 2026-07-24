@@ -34,7 +34,8 @@
   "tokens": [
     "--border",
     "--brand-accent",
-    "--brand-primary"
+    "--muted-foreground",
+    "--primary"
   ],
   "evidence": {
     "source": true,

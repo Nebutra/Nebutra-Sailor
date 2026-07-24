@@ -53,7 +53,6 @@
   "tokens": [
     "--input-focus-ring-width",
     "--select-focus-ring-width",
-    "--shadow-xs",
     "--textarea-field-gap",
     "--textarea-focus-ring-width",
     "--textarea-font-size",

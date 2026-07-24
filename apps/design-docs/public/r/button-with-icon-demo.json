@@ -3,15 +3,12 @@
   "name": "button-with-icon-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/button-with-icon-demo.tsx",
-      "content": "\"use client\";\n\nimport { Button } from \"@nebutra/ui/primitives\";\n\nexport function ButtonWithIconDemo() {\n  return (\n    <div className=\"gap-4 flex flex-wrap items-center\">\n      <Button>\n        <span className=\"mr-2\">✉️</span> Login with Email\n      </Button>\n      <Button>\n        Continue <span className=\"ml-2\">➔</span>\n      </Button>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/button-with-icon-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/button-with-icon-demo\";\n",
       "type": "registry:example"
     }
   ]

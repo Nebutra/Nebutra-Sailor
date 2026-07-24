@@ -3,15 +3,12 @@
   "name": "kbd-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/kbd-demo.tsx",
-      "content": "import { Kbd } from \"@nebutra/ui/primitives\";\n\nexport function KbdDemo() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <Kbd meta />\n      <Kbd shift />\n      <Kbd alt />\n      <Kbd ctrl />\n      <Kbd meta shift />\n      <Kbd small>/</Kbd>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/kbd-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/kbd-demo\";\n",
       "type": "registry:example"
     }
   ]

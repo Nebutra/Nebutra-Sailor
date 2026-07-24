@@ -123,32 +123,116 @@ function toKebab(name) {
     .replace(/(^|-)i-18n(?=-|$)/g, "$1i18n");
 }
 
-/** Extract exported component names from a file's source */
-function extractExports(source, _filename) {
-  const names = [];
+/**
+ * Resolve `@nebutra/docs-shared/...` re-exports to source files.
+ * Most design-docs previews are thin barrels into the docs-shared SSOT.
+ */
+const DOCS_SHARED_ROOT = path.resolve(ROOT, "..", "..", "packages", "design", "docs-shared");
+
+function resolveDocsSharedSpecifier(specifier) {
+  if (!specifier.startsWith("@nebutra/docs-shared/")) return null;
+  const subpath = specifier.slice("@nebutra/docs-shared/".length);
+  const base = path.join(DOCS_SHARED_ROOT, "src", subpath);
+  for (const candidate of [
+    `${base}.tsx`,
+    `${base}.ts`,
+    path.join(base, "index.tsx"),
+    path.join(base, "index.ts"),
+  ]) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+/**
+ * Extract exported component names from a file's source.
+ * Follows docs-shared re-exports. Tracks default vs named so dynamic imports
+ * use `m.default` vs `m.Foo` correctly (export * does NOT re-export default).
+ *
+ * @returns {{ name: string, isDefault: boolean }[]}
+ */
+function extractExports(source, filename, seen = new Set()) {
+  /** @type {{ name: string, isDefault: boolean }[]} */
+  const found = [];
 
   // Strip out template literals to avoid matching code examples
   const safeSource = source.replace(/`[\s\S]*?`/g, '""');
 
   // export function FooDemo(
   for (const m of safeSource.matchAll(/^export\s+function\s+([A-Z]\w*)\s*\(/gm)) {
-    names.push(m[1]);
+    found.push({ name: m[1], isDefault: false });
   }
 
   // export default function FooDemo(
   for (const m of safeSource.matchAll(/^export\s+default\s+function\s+([A-Z]\w*)\s*\(/gm)) {
-    names.push(m[1]);
+    found.push({ name: m[1], isDefault: true });
   }
 
   // export const FooDemo =
   for (const m of safeSource.matchAll(/^export\s+const\s+([A-Z]\w*)\s*[=:]/gm)) {
     // Skip type aliases, interfaces, non-component constants
     if (m[1].endsWith("Props") || m[1].endsWith("Context")) continue;
-    names.push(m[1]);
+    found.push({ name: m[1], isDefault: false });
   }
 
-  // Deduplicate
-  return [...new Set(names)];
+  // export { FooDemo, default as Bar, default } from "..."
+  for (const m of safeSource.matchAll(/^export\s*\{([^}]+)\}\s*from\s*["']([^"']+)["']/gm)) {
+    const specifier = m[2];
+    const resolved = resolveDocsSharedSpecifier(specifier);
+    for (const part of m[1].split(",")) {
+      const raw = part.trim();
+      if (!raw) continue;
+      // export { default } from "..."  or  export { default as Foo }
+      if (/^default(\s+as\s+[A-Z]\w*)?$/.test(raw)) {
+        const asName = raw.match(/^default\s+as\s+([A-Z]\w*)$/)?.[1];
+        if (resolved) {
+          const nested = fs.readFileSync(resolved, "utf-8");
+          const nestedExports = extractExports(nested, path.basename(resolved), new Set(seen));
+          const def = nestedExports.find((e) => e.isDefault);
+          if (def) {
+            found.push({ name: asName ?? def.name, isDefault: asName ? false : true });
+          } else if (asName) {
+            found.push({ name: asName, isDefault: false });
+          }
+        }
+        continue;
+      }
+      const id = raw
+        .split(/\s+as\s+/)
+        .pop()
+        ?.trim();
+      if (id && /^[A-Z]/.test(id) && !id.endsWith("Props") && !id.endsWith("Context")) {
+        found.push({ name: id, isDefault: false });
+      }
+    }
+  }
+
+  // export * from "@nebutra/docs-shared/..." — named only (not default; not export type *)
+  for (const m of safeSource.matchAll(/^export\s+\*\s+from\s*["']([^"']+)["']/gm)) {
+    const specifier = m[1];
+    const resolved = resolveDocsSharedSpecifier(specifier);
+    if (!resolved) {
+      process.stderr.write(
+        `[registry] WARN: cannot resolve re-export ${specifier} from ${filename}\n`,
+      );
+      continue;
+    }
+    if (seen.has(resolved)) continue;
+    seen.add(resolved);
+    const nested = fs.readFileSync(resolved, "utf-8");
+    // export * never re-exports default — only take named
+    for (const exp of extractExports(nested, path.basename(resolved), seen)) {
+      if (!exp.isDefault) found.push(exp);
+    }
+  }
+
+  // Deduplicate by name (prefer isDefault: true if both seen)
+  const byName = new Map();
+  for (const exp of found) {
+    const prev = byName.get(exp.name);
+    if (!prev || exp.isDefault) byName.set(exp.name, exp);
+  }
+  return [...byName.values()];
 }
 
 // ---------------------------------------------------------------------------
@@ -171,23 +255,22 @@ for (const file of files) {
     continue;
   }
 
-  // Detect which exports are default
-  const defaultExportPattern = /^export\s+default\s+function\s+([A-Z]\w*)/gm;
-  const defaultNames = new Set();
-  for (const m of source.matchAll(defaultExportPattern)) {
-    defaultNames.add(m[1]);
+  // Prefer shared implementation for ssr detection when local file is a thin barrel.
+  let ssrSource = source;
+  const reExport = source.match(/^export\s+\*\s+from\s*["']([^"']+)["']/m);
+  if (reExport) {
+    const resolved = resolveDocsSharedSpecifier(reExport[1]);
+    if (resolved) ssrSource = fs.readFileSync(resolved, "utf-8");
   }
+  const needsClientOnly = hasUnresolvedRefs(ssrSource);
 
-  // Auto-detect files with unresolved JSX refs → ssr: false
-  const needsClientOnly = hasUnresolvedRefs(source);
-
-  for (const exportName of exports) {
+  for (const { name: exportName, isDefault } of exports) {
     const key = toKebab(exportName);
     entries.push({
       key,
       exportName,
       file: basename,
-      isDefault: defaultNames.has(exportName),
+      isDefault,
       ssrOff: needsClientOnly,
     });
   }
@@ -450,3 +533,6 @@ if (!fs.existsSync(REGISTRY_INDEX_PATH)) {
 process.stdout.write(
   `[registry] Previews: ${uniqueFileBasenames.length} files → public/r/*.json + public/previews-index.json\n`,
 );
+
+// ci-trigger 20260724081902
+// governance-green-recheck

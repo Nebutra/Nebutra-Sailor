@@ -3,15 +3,12 @@
   "name": "textarea-with-limit-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/textarea-with-limit-demo.tsx",
-      "content": "\"use client\";\n\nimport { Textarea } from \"@nebutra/ui/primitives\";\nimport { useState } from \"react\";\n\nexport function TextareaWithLimitDemo() {\n  const [value, setValue] = useState(\"\");\n  const maxLength = 500;\n\n  return (\n    <div className=\"gap-1 flex w-full flex-col\">\n      <Textarea\n        id=\"limited-notes\"\n        label=\"Notes\"\n        value={value}\n        onValueChange={setValue}\n        placeholder=\"Type here...\"\n        maxLength={maxLength}\n      />\n      <span className=\"w-full text-right text-muted-foreground text-xs\">\n        {value.length}/{maxLength}\n      </span>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/textarea-with-limit-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/textarea-with-limit-demo\";\n",
       "type": "registry:example"
     }
   ]

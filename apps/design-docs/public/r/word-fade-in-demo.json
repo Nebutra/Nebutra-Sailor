@@ -3,15 +3,12 @@
   "name": "word-fade-in-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/word-fade-in-demo.tsx",
-      "content": "import { WordFadeIn } from \"@nebutra/ui/primitives\";\n\nexport default function WordFadeInDemo() {\n  return (\n    <div className=\"flex h-[300px] items-center justify-center\">\n      <WordFadeIn\n        words=\"Take your time focusing on each word\"\n        delay={0.15}\n        className=\"text-4xl font-bold text-center\"\n      />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/word-fade-in-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/word-fade-in-demo\";\nexport { default } from \"@nebutra/docs-shared/components/previews/word-fade-in-demo\";\n",
       "type": "registry:example"
     }
   ]

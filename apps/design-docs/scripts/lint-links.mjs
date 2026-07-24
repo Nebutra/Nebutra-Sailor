@@ -1,6 +1,20 @@
 import fs from "node:fs/promises";
+import { createRequire } from "node:module";
 import path from "node:path";
-import { scanURLs, validateFiles } from "next-validate-link";
+
+// gray-matter@4 still expects js-yaml@3 `safeLoad`/`safeDump`. Root pnpm
+// overrides pin js-yaml>=4.3, which drops those aliases — patch the shared
+// CJS export before next-validate-link pulls gray-matter in.
+const require = createRequire(import.meta.url);
+const yaml = require("js-yaml");
+if (typeof yaml.safeLoad !== "function" && typeof yaml.load === "function") {
+  yaml.safeLoad = yaml.load.bind(yaml);
+}
+if (typeof yaml.safeDump !== "function" && typeof yaml.dump === "function") {
+  yaml.safeDump = yaml.dump.bind(yaml);
+}
+
+const { scanURLs, validateFiles } = await import("next-validate-link");
 
 const cwd = path.resolve(import.meta.dirname, "..");
 const supportedLanguages = ["en", "zh"];

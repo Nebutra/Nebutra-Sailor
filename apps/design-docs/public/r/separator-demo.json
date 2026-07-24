@@ -3,15 +3,12 @@
   "name": "separator-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/separator-demo.tsx",
-      "content": "import { Separator } from \"@nebutra/ui/primitives\";\n\nexport function SeparatorDemo() {\n  return (\n    <div className=\"w-80 space-y-4\">\n      <div>\n        <h4 className=\"text-sm font-medium\">Nebutra Design System</h4>\n        <p className=\"text-sm text-muted-foreground\">Composable UI for modern apps.</p>\n      </div>\n      <Separator />\n      <div className=\"h-5 space-x-4 text-sm flex flex-row items-center\">\n        <span>Blog</span>\n        <Separator orientation=\"vertical\" />\n        <span>Docs</span>\n        <Separator orientation=\"vertical\" />\n        <span>Source</span>\n      </div>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/separator-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/separator-demo\";\n",
       "type": "registry:example"
     }
   ]

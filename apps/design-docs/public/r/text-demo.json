@@ -3,15 +3,12 @@
   "name": "text-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/text-demo.tsx",
-      "content": "import { Text } from \"@nebutra/ui/primitives\";\n\nexport function TextDemo() {\n  return (\n    <div className=\"gap-4 flex flex-col\">\n      <Text variant=\"body\">Body text — default paragraph style</Text>\n      <Text variant=\"body-sm\">Small body — captions and secondary content</Text>\n      <Text variant=\"label\" color=\"muted\">\n        Label — form labels and metadata\n      </Text>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/text-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/text-demo\";\n",
       "type": "registry:example"
     }
   ]

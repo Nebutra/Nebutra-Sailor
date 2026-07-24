@@ -60,7 +60,6 @@
     "--active-tab-left",
     "--active-tab-top",
     "--active-tab-width",
-    "--shadow-xs",
     "--tabs-badge-font-size",
     "--tabs-badge-height",
     "--tabs-badge-padding-x",

@@ -3,15 +3,12 @@
   "name": "breadcrumb-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/breadcrumb-demo.tsx",
-      "content": "\"use client\";\n\nimport {\n  Breadcrumb,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbList,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n} from \"@nebutra/ui/primitives\";\n\nexport function BreadcrumbDemo() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#\">Home</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"#docs\">Documentation</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/breadcrumb-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/breadcrumb-demo\";\n",
       "type": "registry:example"
     }
   ]

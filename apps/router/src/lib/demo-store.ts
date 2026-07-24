@@ -1,10 +1,10 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import {
   DEFAULT_PRODUCT_SCOPES,
   type IssuedApiKey,
   issueApiKey,
   MemoryPrepaidWallet,
 } from "@nebutra/prepaid-wallet";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { listPublicModels, parseAliasTableJson } from "@nebutra/router-supply";
 
 export interface StoredKey {

@@ -109,3 +109,4 @@ export {
 export type { Positioning, ProductPillar, UseCase } from "./positioning";
 // Product Positioning DNA (产品定位)
 export { positioning } from "./positioning";
+// governance-green-recheck

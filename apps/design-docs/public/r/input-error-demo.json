@@ -3,15 +3,12 @@
   "name": "input-error-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/input-error-demo.tsx",
-      "content": "\"use client\";\n\nimport { Input } from \"@nebutra/ui/primitives\";\n\nexport function InputErrorDemo() {\n  return (\n    <Input\n      id=\"email-error\"\n      type=\"email\"\n      label=\"Email Address\"\n      defaultValue=\"not-an-email\"\n      error=\"Email address must be valid.\"\n    />\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/input-error-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/input-error-demo\";\n",
       "type": "registry:example"
     }
   ]

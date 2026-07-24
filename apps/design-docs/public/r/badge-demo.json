@@ -3,15 +3,12 @@
   "name": "badge-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/badge-demo.tsx",
-      "content": "\"use client\";\nimport { Badge } from \"@nebutra/ui/primitives\";\nexport function BadgeDemo() {\n  return (\n    <div className=\"gap-2 flex flex-wrap\">\n      <Badge>Default</Badge>\n      <Badge variant=\"secondary\">Secondary</Badge>\n      <Badge variant=\"destructive\">Destructive</Badge>\n      <Badge variant=\"outline\">Outline</Badge>\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/badge-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/badge-demo\";\n",
       "type": "registry:example"
     }
   ]

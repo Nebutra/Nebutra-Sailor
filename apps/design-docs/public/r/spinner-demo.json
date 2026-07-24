@@ -3,15 +3,12 @@
   "name": "spinner-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/spinner-demo.tsx",
-      "content": "import { Spinner } from \"@nebutra/ui/primitives\";\n\nexport function SpinnerDemo() {\n  return (\n    <div className=\"flex w-full max-w-sm items-center justify-center gap-8 px-4 py-8\">\n      <Spinner />\n      <Spinner size=\"sm\" />\n      <Spinner size=\"lg\" tone=\"foreground\" />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/spinner-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/spinner-demo\";\n",
       "type": "registry:example"
     }
   ]

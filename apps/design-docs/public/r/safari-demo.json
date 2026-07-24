@@ -3,15 +3,12 @@
   "name": "safari-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/safari-demo.tsx",
-      "content": "import { Safari } from \"@nebutra/ui/primitives\";\n\nexport function SafariDemo() {\n  return (\n    <div className=\"max-w-4xl px-4 py-8 w-full\">\n      <Safari\n        url=\"nebutra.com\"\n        className=\"h-[400px] w-full\"\n        imageSrc=\"https://nebutra.com/og-image.png\"\n      />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/safari-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/safari-demo\";\n",
       "type": "registry:example"
     }
   ]

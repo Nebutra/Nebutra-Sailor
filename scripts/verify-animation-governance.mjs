@@ -7,6 +7,7 @@ const includeRoots = ["apps", "packages", "backends"];
 const skipDirs = new Set([
   ".git",
   ".next",
+  ".open-next",
   ".source",
   ".turbo",
   ".venv",
@@ -103,8 +104,14 @@ function isSharedMotionLayer(file) {
   );
 }
 
-function isMarketingGsapLayer(file) {
-  return file.startsWith("apps/landing/src/shared/animation/gsap/");
+function isAllowedGsapLayer(file) {
+  return (
+    file.startsWith("apps/landing/src/shared/animation/gsap/") ||
+    // TypeLens product shell — dedicated motion runtime (not marketing landing hooks)
+    file.startsWith("apps/typelens/src/lib/motion/") ||
+    file === "apps/typelens/src/components/type-lens-motion.tsx" ||
+    file === "apps/typelens/src/styles/shell.css"
+  );
 }
 
 function delegatesReducedMotion(source) {
@@ -175,10 +182,10 @@ for (const file of files) {
     findings.push({ file, zone, risks, ...hit });
   }
 
-  if (hit.gsap && !isMarketingGsapLayer(file)) {
+  if (hit.gsap && !isAllowedGsapLayer(file)) {
     violations.push({
       file,
-      rule: "GSAP must live behind apps/landing/src/shared/animation/gsap hooks",
+      rule: "GSAP must live behind landing gsap hooks or typelens motion runtime",
     });
   }
 

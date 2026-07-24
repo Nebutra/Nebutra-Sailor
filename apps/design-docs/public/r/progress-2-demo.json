@@ -3,15 +3,12 @@
   "name": "progress-2-demo",
   "type": "registry:example",
   "dependencies": [
-    "@nebutra/ui"
-  ],
-  "registryDependencies": [
-    "@nebutra/ui"
+    "@nebutra/docs-shared"
   ],
   "files": [
     {
       "path": "registry/examples/progress-2-demo.tsx",
-      "content": "\"use client\";\n\nimport { Progress } from \"@nebutra/ui/primitives\";\nexport function Progress2Demo() {\n  return (\n    <div className=\"space-y-1 w-full\">\n      <div className=\"text-sm flex justify-between\">\n        <span>Uploading...</span>\n        <span>65%</span>\n      </div>\n      <Progress value={65} />\n    </div>\n  );\n}\n",
+      "content": "export type * from \"@nebutra/docs-shared/components/previews/progress-2-demo\";\nexport * from \"@nebutra/docs-shared/components/previews/progress-2-demo\";\n",
       "type": "registry:example"
     }
   ]
