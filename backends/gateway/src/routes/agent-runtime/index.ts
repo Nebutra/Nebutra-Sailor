@@ -113,7 +113,16 @@ const turnRoute = createRoute({
     },
   },
   responses: {
-    200: { description: "SSE stream of thread events" },
+    200: {
+      description: "SSE stream of thread events",
+      content: {
+        "text/event-stream": {
+          schema: z.string().openapi({
+            description: "Server-Sent Events payload (thread event frames)",
+          }),
+        },
+      },
+    },
     401: { description: "Unauthenticated" },
     403: { description: "Feature disabled" },
     503: { description: "Model stack unavailable" },

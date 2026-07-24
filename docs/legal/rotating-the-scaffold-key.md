@@ -1,5 +1,13 @@
 # Rotating the scaffold-marker signing key
 
+> **Status: DRAFT — operational + legal adjacency.**
+>
+> | Field | Value |
+> |-------|-------|
+> | **Owner** | Nebutra Legal (interim: engineering @nebutra.com) |
+> | **As of** | 2026-07-24 |
+> | **Counsel review** | Pending for invalidate/notification text |
+
 The `.nebutra/scaffold-meta.json` file emitted by `create-sailor` carries
 an HMAC signature over `cliVersion|scaffoldedAt|projectName|nonce`. The
 key used for that HMAC is stored in:
@@ -104,11 +112,11 @@ The intended lifecycle is:
 introduced → current → retired → (stays in registry forever)
 ```
 
-> **TODO LEGAL:** if we ever need to *invalidate* old markers (e.g. for
-> a security event or to force a tier upgrade), the legal mechanism is
-> a license-update notification to scaffolded users, not a registry
-> deletion. Counsel to advise on the user-notification text if/when
-> this comes up.
+> **Draft note (Owner: Nebutra Legal · as of 2026-07-24):** if we ever
+> need to *invalidate* old markers (security event or forced tier
+> upgrade), the legal mechanism is a license-update notification to
+> scaffolded users — not a registry deletion. Counsel to advise on
+> user-notification text if/when this comes up.
 
 ---
 

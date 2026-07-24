@@ -1,10 +1,17 @@
 # Retroactive CLA outreach to historical contributors
 
-> **TODO LEGAL:** the email template below has **not** been reviewed by
-> counsel. Before sending to a real contributor, ask a qualified IP
-> lawyer to review (a) the relicensing-permission language, (b) the
-> "remove your commits" fallback path (is that the right phrasing under
-> AGPL §13?), (c) the jurisdiction reference in `CLA.md`.
+> **Status: DRAFT — not legal advice.**
+>
+> | Field | Value |
+> |-------|-------|
+> | **Owner** | Nebutra Legal (interim: engineering @nebutra.com) |
+> | **As of** | 2026-07-24 |
+> | **Counsel review** | Pending |
+>
+> Email template below is **not** counsel-reviewed. Before sending to a
+> real contributor, have IP counsel review (a) relicensing-permission
+> language, (b) the "remove your commits" fallback (AGPL §13 phrasing),
+> (c) jurisdiction reference in `CLA.md`.
 
 ---
 
@@ -57,8 +64,9 @@ have used during license-model migrations.
 Copy-paste, replace `{{NAME}}`, `{{COMMIT_COUNT}}`, `{{FIRST_COMMIT_DATE}}`,
 and send from `legal@nebutra.com`.
 
-> **TODO LEGAL:** counsel to review wording — especially the "removal"
-> sentence (we want to be careful not to imply we're already in breach).
+> **Draft note (Owner: Nebutra Legal · as of 2026-07-24):** counsel to
+> review wording — especially the "removal" sentence (avoid implying
+> we are already in breach).
 
 ```
 Subject: Quick licensing question about your Nebutra-Sailor contribution

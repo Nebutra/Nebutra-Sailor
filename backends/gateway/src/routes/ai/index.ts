@@ -40,6 +40,24 @@ const EmbedRequestSchema = z.object({
   model: z.string().default("text-embedding-3-small"),
 });
 
+/** Upstream-proxied JSON bodies stay intentionally open (provider-shaped). */
+const ProxyJsonSchema = z.record(z.string(), z.unknown());
+
+const ModelsResponseSchema = z.object({
+  models: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      provider: z.string(),
+      contextWindow: z.number().nullable(),
+      maxOutput: z.number().nullable(),
+      pricing: z.unknown().nullable(),
+      capabilities: z.array(z.string()),
+    }),
+  ),
+  total: z.number().int(),
+});
+
 async function proxyToAiService(
   path: string,
   method: string,
@@ -70,7 +88,10 @@ const chatRoute = createRoute({
   summary: "Chat completion",
   request: { body: { content: { "application/json": { schema: ChatRequestSchema } } } },
   responses: {
-    200: { description: "Chat completion response" },
+    200: {
+      description: "Chat completion response",
+      content: { "application/json": { schema: ProxyJsonSchema } },
+    },
     402: { description: "Quota exceeded" },
     503: { description: "AI service unavailable" },
   },
@@ -119,7 +140,10 @@ const embedRoute = createRoute({
   summary: "Generate text embeddings",
   request: { body: { content: { "application/json": { schema: EmbedRequestSchema } } } },
   responses: {
-    200: { description: "Embeddings response" },
+    200: {
+      description: "Embeddings response",
+      content: { "application/json": { schema: ProxyJsonSchema } },
+    },
     503: { description: "AI service unavailable" },
   },
 });
@@ -165,7 +189,10 @@ const modelsRoute = createRoute({
   tags: ["AI"],
   summary: "List available AI models",
   responses: {
-    200: { description: "Available models list" },
+    200: {
+      description: "Available models list",
+      content: { "application/json": { schema: ModelsResponseSchema } },
+    },
   },
 });
 

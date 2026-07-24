@@ -26,6 +26,27 @@ const SearchRequestSchema = z.object({
   minScore: z.number().min(0).max(1).optional(),
 });
 
+const SearchResultSchema = z.object({
+  hits: z.array(
+    z.object({
+      doc: z.record(z.string(), z.unknown()),
+      score: z.number(),
+      highlights: z.record(z.string(), z.string()).optional(),
+    }),
+  ),
+  totalHits: z.number().int(),
+  processingTimeMs: z.number(),
+  facetDistribution: z.record(z.string(), z.record(z.string(), z.number())).optional(),
+  page: z.number().int(),
+  hitsPerPage: z.number().int(),
+  totalPages: z.number().int(),
+});
+
+const SearchSyncResponseSchema = z.object({
+  queued: z.boolean(),
+  message: z.string(),
+});
+
 const searchRoute = createRoute({
   method: "post",
   path: "/",
@@ -33,7 +54,10 @@ const searchRoute = createRoute({
   summary: "Perform a full-text search",
   request: { body: { content: { "application/json": { schema: SearchRequestSchema } } } },
   responses: {
-    200: { description: "Search results" },
+    200: {
+      description: "Search results",
+      content: { "application/json": { schema: SearchResultSchema } },
+    },
     400: { description: "Invalid request" },
     500: { description: "Search provider error" },
   },
@@ -72,7 +96,14 @@ const syncRoute = createRoute({
   tags: ["Search"],
   summary: "Synchronize database with search index",
   responses: {
-    200: { description: "Sync triggered" },
+    200: {
+      description: "Sync triggered (also accepted as 202)",
+      content: { "application/json": { schema: SearchSyncResponseSchema } },
+    },
+    202: {
+      description: "Sync job accepted",
+      content: { "application/json": { schema: SearchSyncResponseSchema } },
+    },
     403: { description: "Forbidden" },
   },
 });

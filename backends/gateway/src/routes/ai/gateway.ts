@@ -76,7 +76,12 @@ const chatCompletionsRoute = createRoute({
     },
   },
   responses: {
-    200: { description: "Chat completion response" },
+    200: {
+      description: "Chat completion response (JSON or SSE stream)",
+      content: {
+        "application/json": { schema: z.record(z.string(), z.unknown()) },
+      },
+    },
     401: {
       description: "Invalid or missing API key",
       content: { "application/json": { schema: ErrorResponseSchema } },

@@ -69,6 +69,18 @@ pnpm --filter @nebutra/theme sync:skins
 | stripe | Indigo action ≠ midnight brand + elev=none + 4px |
 | notion | Blue action ≠ ink brand + paper canvas + 8/12 radii |
 
+## Dual-mode stress fixtures
+
+Brand packages with `modes.light` + `modes.dark` (today: **linear**, **vercel**)
+emit separate selector blocks so light paint never lands under bare `.dark`:
+
+- light → `:root, html[data-brand="…"]`
+- dark → `.dark, html.dark[data-brand="…"]`
+
+Coverage: `src/__tests__/apply-language.test.ts` (runtime apply) and
+`@nebutra/tokens` `emit-css.test.ts` (compiler). When adding a dual-mode
+language, extend both fixtures.
+
 ## `keyframes.css`
 
 Shared keyframe animations only. Prefer:

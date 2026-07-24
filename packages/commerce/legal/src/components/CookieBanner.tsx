@@ -111,9 +111,8 @@ export function CookieBanner({
     if (persistToServer) {
       try {
         await recordCookieConsent(prefs);
-      } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: silent client-side debug log; cookie prefs already persisted to localStorage
-        console.debug("Failed to persist cookie consent to server", { error });
+      } catch {
+        // Server persist is best-effort; localStorage already holds consent.
       }
     }
 

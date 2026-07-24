@@ -1,25 +1,24 @@
 # Nebutra-Sailor Contributor License Agreement
 
-> **TODO LEGAL:** This document is a **draft** adapted from the Apache
-> Software Foundation Individual Contributor License Agreement (V2.2) and
-> the Google CLA template. It has **not** been reviewed by counsel. Before
-> the CLA bot is switched on for external contributions, a qualified
-> intellectual-property lawyer must review:
+> **Status: DRAFT — not legal advice.**
 >
-> 1. The dual-license grant clause (§4) — does the language cleanly grant
->    Nebutra Technologies the right to relicense contributions under (a) the
->    project's AGPL-3.0 grant, (b) the Independent Developer License, and
->    (c) any future Commercial License, simultaneously?
-> 2. Jurisdiction and governing-law fit for our actual entity location
->    (placeholder: `[JURISDICTION]` below).
-> 3. Whether we need a separate Corporate CLA (CCLA) for organisational
->    contributors, or whether the "I have authority to bind my employer"
->    representation in §8 is sufficient.
-> 4. The "moral rights" waiver language — required by some EU/PRC
->    contributors but unenforceable in others.
+> | Field | Value |
+> |-------|-------|
+> | **Owner** | Nebutra Legal (interim: engineering @nebutra.com) |
+> | **As of** | 2026-07-24 |
+> | **Counsel review** | Pending |
 >
-> Ship the bot in **observe-only** mode (workflow comments only, no
-> required-status-check enforcement) until legal sign-off lands.
+> Adapted from the Apache Software Foundation Individual CLA (V2.2) and the
+> Google CLA template. **Not** counsel-reviewed. Before enabling the CLA bot
+> for external contributions, a qualified IP lawyer must review:
+>
+> 1. Dual-license grant (§4) — AGPL-3.0 + Independent Developer License + any
+>    future Commercial License simultaneously.
+> 2. Jurisdiction / governing law (`[JURISDICTION]` placeholder below).
+> 3. Corporate CLA (CCLA) need vs employer-binding representation in §8.
+> 4. Moral-rights waiver language (EU/PRC fit).
+>
+> Ship the bot in **observe-only** mode until legal sign-off lands.
 
 ---
 
@@ -144,8 +143,9 @@ inaccurate in any respect.
 This Agreement is governed by the laws of `[JURISDICTION]` without
 regard to its conflict-of-laws provisions.
 
-`TODO LEGAL: choose jurisdiction — likely Delaware (US Inc.) or Hong Kong
-SAR. Counsel to confirm based on Nebutra Technologies' incorporation.`
+> **Draft note (Owner: Nebutra Legal · as of 2026-07-24):** choose
+> jurisdiction — likely Delaware (US Inc.) or Hong Kong SAR. Counsel to
+> confirm based on Nebutra Technologies' incorporation.
 
 ---
 

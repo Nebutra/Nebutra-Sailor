@@ -1,5 +1,15 @@
 # Contributing with the CLA
 
+> **Status: DRAFT — not legal advice.**
+>
+> | Field | Value |
+> |-------|-------|
+> | **Owner** | Nebutra Legal (interim: engineering @nebutra.com) |
+> | **As of** | 2026-07-24 |
+> | **Counsel review** | Pending |
+>
+> Process guide for contributors. Binding terms live in [`CLA.md`](./CLA.md).
+
 Nebutra-Sailor uses a Contributor License Agreement (CLA) to enable our
 dual-license model — AGPL-3.0 for the upstream repo + the Independent
 Developer License for `create-sailor`-scaffolded projects + future
@@ -54,8 +64,9 @@ contracts have this clause), please either:
 - Have your employer sign a Corporate CLA. Contact us at
   `legal@nebutra.com` for the corporate form.
 
-> **TODO LEGAL:** the corporate-CLA template is not yet drafted. Counsel
-> to produce one if/when we have a corporate contributor.
+> **Draft note (Owner: Nebutra Legal · as of 2026-07-24):** the
+> corporate-CLA template is not yet drafted. Counsel to produce one
+> if/when we have a corporate contributor.
 
 ### I'm a bot / automated dependency-update PR
 

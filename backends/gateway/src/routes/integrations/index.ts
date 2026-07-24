@@ -52,6 +52,48 @@ const UpdateIntegrationSchema = z.object({
   isActive: z.boolean().optional(),
 });
 
+const IntegrationListItemSchema = z.object({
+  id: z.string(),
+  type: IntegrationTypeEnum,
+  name: z.string(),
+  isActive: z.boolean(),
+  lastSyncAt: z.string().datetime().nullable().optional(),
+  settings: JsonObjectSchema.nullable().optional(),
+  createdAt: z.string().datetime().optional(),
+  updatedAt: z.string().datetime().optional(),
+});
+
+const IntegrationDetailSchema = IntegrationListItemSchema.extend({
+  credentials: JsonObjectSchema.nullable().optional(),
+});
+
+const IntegrationListResponseSchema = z.object({
+  integrations: z.array(IntegrationListItemSchema),
+  total: z.number().int(),
+});
+
+const IntegrationCreatedSchema = z.object({
+  id: z.string(),
+  type: IntegrationTypeEnum,
+  name: z.string(),
+  isActive: z.boolean(),
+  createdAt: z.string().datetime().optional(),
+});
+
+const IntegrationUpdatedSchema = z.object({
+  id: z.string(),
+  type: IntegrationTypeEnum,
+  name: z.string(),
+  isActive: z.boolean(),
+  settings: JsonObjectSchema.nullable().optional(),
+  updatedAt: z.string().datetime().optional(),
+});
+
+const IntegrationDeletedSchema = z.object({
+  id: z.string(),
+  deleted: z.boolean(),
+});
+
 /**
  * Narrow a validated JSON-object input to Prisma's InputJsonValue. This is the
  * single safe cast site: the Zod schema above has already guaranteed that the
@@ -70,7 +112,10 @@ const listRoute = createRoute({
   tags: ["Integrations"],
   summary: "List all integrations for the current organization",
   responses: {
-    200: { description: "List of integrations" },
+    200: {
+      description: "List of integrations",
+      content: { "application/json": { schema: IntegrationListResponseSchema } },
+    },
   },
 });
 
@@ -113,7 +158,10 @@ const getRoute = createRoute({
   tags: ["Integrations"],
   summary: "Get integration by ID (returns decrypted credentials and settings)",
   responses: {
-    200: { description: "Integration details" },
+    200: {
+      description: "Integration details",
+      content: { "application/json": { schema: IntegrationDetailSchema } },
+    },
     404: { description: "Not found" },
   },
 });
@@ -162,7 +210,10 @@ const createRoute_ = createRoute({
     body: { content: { "application/json": { schema: CreateIntegrationSchema } } },
   },
   responses: {
-    201: { description: "Integration created" },
+    201: {
+      description: "Integration created",
+      content: { "application/json": { schema: IntegrationCreatedSchema } },
+    },
     400: { description: "Invalid request" },
     409: { description: "Integration already exists" },
   },
@@ -224,7 +275,10 @@ const updateRoute = createRoute({
     body: { content: { "application/json": { schema: UpdateIntegrationSchema } } },
   },
   responses: {
-    200: { description: "Updated integration" },
+    200: {
+      description: "Updated integration",
+      content: { "application/json": { schema: IntegrationUpdatedSchema } },
+    },
     404: { description: "Not found" },
   },
 });
@@ -281,7 +335,10 @@ const deleteRoute = createRoute({
   tags: ["Integrations"],
   summary: "Delete an integration",
   responses: {
-    200: { description: "Integration deleted" },
+    200: {
+      description: "Integration deleted",
+      content: { "application/json": { schema: IntegrationDeletedSchema } },
+    },
     404: { description: "Not found" },
   },
 });

@@ -178,7 +178,10 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
     payment: paymentChoice,
     "billing-mode": billingMode,
     idp,
-    template: "saas", // TODO: wire up once --template flag returns
+    // Only scaffold product shape today is SaaS monorepo. Multi-template
+    // (`--template`) was intentionally not reintroduced — keep the flag
+    // surface honest rather than a stub.
+    template: "saas",
     "access-gate": accessGate,
     // community: intentionally not a template flag — Sleptons is Nebutra's own
     // product, stripped from Sailor-Template at mirror-sync time.

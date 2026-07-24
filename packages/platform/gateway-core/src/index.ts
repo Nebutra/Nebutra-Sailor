@@ -4,6 +4,9 @@ import type { MiddlewareHandler } from "hono";
 import { streamSSE } from "hono/streaming";
 import { resolveApiKey } from "./auth/api-key-resolver";
 import { checkBalance } from "./auth/balance-guard";
+import { estimateUsage } from "./metering/tiktoken-fallback";
+import { createStreamingUsageExtractor, extractUsageFromJson } from "./metering/usage-extractor";
+import { type EnqueueDeps, enqueueCompletion } from "./worker/completion-event";
 
 export { resolveApiKey } from "./auth/api-key-resolver";
 export { checkBalance, invalidateBalanceCache } from "./auth/balance-guard";
@@ -32,6 +35,7 @@ export { CompletionEventSchema } from "./types";
 export {
   COMPLETION_QUEUE,
   COMPLETION_TYPE,
+  type EnqueueDeps,
   enqueueCompletion,
 } from "./worker/completion-event";
 export {
@@ -40,7 +44,13 @@ export {
   type WorkerDeps,
 } from "./worker/completion-worker";
 
-// TODO(#126): move these to @nebutra/provider-adapters later.
+/**
+ * Minimal upstream channel config for the legacy AI intercept middleware.
+ * Production multi-upstream selection lives in backends/gateway
+ * `createAiGatewayRoutes` (AI_GATEWAY_UPSTREAMS). This package does not
+ * depend on a separate `@nebutra/key-pool` package — channel pick is
+ * env-driven and optional-injectable for tests.
+ */
 interface UpstreamProviderConfig {
   baseUrl: string;
   apiKey: string;
@@ -51,6 +61,28 @@ interface UpstreamProviderConfig {
 interface LegacyContextVars {
   userId: string;
   organizationId: string;
+}
+
+export interface AiGatewayMiddlewareOptions {
+  /**
+   * Resolve the upstream channel. Default: env
+   * `OPENAI_BASE_URL` / `OPENAI_API_KEY` (feature-flag style — no hard-coded secrets).
+   */
+  resolveChannel?: () => UpstreamProviderConfig | Promise<UpstreamProviderConfig>;
+  /**
+   * When provided, successful completions enqueue a billing-closure event
+   * via `enqueueCompletion`. When omitted, metering is a documented no-op
+   * (metric: log line only).
+   */
+  queue?: EnqueueDeps["queue"];
+}
+
+function defaultEnvChannel(): UpstreamProviderConfig {
+  return {
+    baseUrl: process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1",
+    apiKey: process.env.OPENAI_API_KEY || "sk-dummy",
+    provider: process.env.AI_CUSTOM_PROVIDER ?? "openai",
+  };
 }
 
 /**
@@ -129,14 +161,24 @@ export function createGatewayAuthMiddleware(deps: GatewayAuthDeps): MiddlewareHa
 /**
  * AI Gateway Middleware Factory
  * Extracted from Hono router so it can be independently tested and versioned.
+ *
+ * Production path: prefer `createAiGatewayRoutes` in backends/gateway (multi-upstream,
+ * key auth, usage extractor). This middleware remains the unit-testable intercept
+ * surface for simple OpenAI-compatible proxying + optional metering enqueue.
  */
-export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyContextVars }> => {
+export const aiGatewayMiddleware = (
+  options: AiGatewayMiddlewareOptions = {},
+): MiddlewareHandler<{ Variables: LegacyContextVars }> => {
+  const resolveChannel = options.resolveChannel ?? defaultEnvChannel;
+  const queue = options.queue;
+
   return async (c, next) => {
     // 1. Only intercept /chat/completions (You can adjust the mount path on the router)
     if (!c.req.path.endsWith("/chat/completions")) {
       return next();
     }
 
+    const startedAt = Date.now();
     const { model, messages, stream } = await c.req.json().catch(() => ({}));
 
     if (!model || !messages) {
@@ -148,18 +190,11 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
 
     logger.info("Gateway intercept triggered", { model, stream });
 
-    // 2. Fetch healthy upstream channel & credentials from DB layer
-    // TODO(#126): connect this to @nebutra/key-pool.
-    // Mocking the channel selection for now (Step 1 requirement)
-    const channel: UpstreamProviderConfig = {
-      baseUrl: "https://api.openai.com/v1", // Replace with realistic base URL
-      apiKey: process.env.OPENAI_API_KEY || "sk-dummy",
-      provider: "openai",
-    };
+    // 2. Channel selection — injectable or env-backed (no hard-coded secrets).
+    const channel = await resolveChannel();
 
-    // 3. Construct the upstream request
-    // TODO(#126): connect this to @nebutra/provider-adapters if formatting differs.
-    const upstreamUrl = `${channel.baseUrl}/chat/completions`;
+    // 3. Construct the upstream request (OpenAI-compatible wire format).
+    const upstreamUrl = `${channel.baseUrl.replace(/\/$/, "")}/chat/completions`;
     const upstreamOptions: RequestInit = {
       method: "POST",
       headers: {
@@ -176,16 +211,69 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
     if (!upstreamResponse.ok) {
       const errorText = await upstreamResponse.text();
       logger.error("Upstream API Error", { status: upstreamResponse.status, errorText });
-      return c.json({ error: "Upstream API Error" }, upstreamResponse.status as any);
+      const status = upstreamResponse.status;
+      const safeStatus =
+        status === 400 ||
+        status === 401 ||
+        status === 402 ||
+        status === 403 ||
+        status === 404 ||
+        status === 429 ||
+        status === 500 ||
+        status === 502 ||
+        status === 503
+          ? status
+          : 502;
+      return c.json({ error: "Upstream API Error" }, safeStatus);
     }
+
+    const organizationId = c.get("organizationId") ?? "unknown";
+    const requestId =
+      (c.get("gatewayRequestId" as never) as string | undefined) ?? crypto.randomUUID();
+
+    async function maybeEnqueueMetering(usage: {
+      promptTokens: number;
+      completionTokens: number;
+      totalTokens: number;
+    }) {
+      if (!queue) {
+        logger.info("Metering no-op: queue not configured on aiGatewayMiddleware", {
+          requestId,
+          organizationId,
+          model,
+          ...usage,
+        });
+        return;
+      }
+      await enqueueCompletion(
+        {
+          requestId,
+          apiKeyId: null,
+          organizationId,
+          userId: c.get("userId") ?? null,
+          model: String(model),
+          promptTokens: usage.promptTokens,
+          completionTokens: usage.completionTokens,
+          totalTokens: usage.totalTokens,
+          latencyMs: Date.now() - startedAt,
+          status: "success",
+        },
+        { queue },
+      );
+    }
+
+    const modelId = String(model);
+    const messageList = Array.isArray(messages)
+      ? (messages as Array<{ role: string; content: string }>)
+      : [];
 
     // 4. Handle non-streaming responses
     if (!stream) {
-      const rawJson = await upstreamResponse.json();
-
-      // TODO(#126): async trigger to @nebutra/metering (BullMQ) -> token deduction.
-      // e.g. sendBillingEvent(c.get('organizationId'), rawJson.usage)
-
+      const rawJson: unknown = await upstreamResponse.json();
+      const usage =
+        extractUsageFromJson(rawJson, modelId) ??
+        estimateUsage(messageList, JSON.stringify(rawJson), modelId);
+      void maybeEnqueueMetering(usage);
       return c.json(rawJson);
     }
 
@@ -193,7 +281,7 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
     return streamSSE(c, async (sse) => {
       const reader = upstreamResponse.body?.getReader();
       const decoder = new TextDecoder();
-      let fullResponseContent = ""; // Accumulator for billing
+      const extractor = createStreamingUsageExtractor(modelId);
 
       if (!reader) {
         throw new AppError({
@@ -212,34 +300,30 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
           }
 
           const chunkText = decoder.decode(value, { stream: true });
+          extractor.processChunk(chunkText);
 
           // Relay chunk array (OpenAI occasionally groups multiple SSE events into one chunk)
           const lines = chunkText.split("\n").filter((line) => line.trim() !== "");
           for (const line of lines) {
             if (line.startsWith("data: ") && line !== "data: [DONE]") {
               const dataStr = line.replace("data: ", "");
-              try {
-                const data = JSON.parse(dataStr);
-                const token = data.choices?.[0]?.delta?.content || "";
-                fullResponseContent += token;
-
-                // Write each SSE frame directly to the Client stream
-                await sse.writeSSE({ data: dataStr });
-              } catch (_e) {
-                logger.warn("Failed to parse SSE data chunk", { raw: line });
-              }
+              await sse.writeSSE({ data: dataStr });
             }
           }
         }
       } finally {
         reader.releaseLock();
 
-        // 6. Streaming has finished! Now we calculate tokens and trigger the billing queue
-        // TODO(#126): dispatch BullMQ job via @nebutra/metering.
-        logger.info("Stream completed. Ready for token metering.", {
+        const fullResponseContent = extractor.getAccumulatedContent();
+        const usage =
+          extractor.getUsage() ?? estimateUsage(messageList, fullResponseContent, modelId);
+
+        logger.info("Stream completed; enqueueing token metering.", {
           responseLength: fullResponseContent.length,
-          organizationId: c.get("organizationId"),
+          organizationId,
+          requestId,
         });
+        void maybeEnqueueMetering(usage);
       }
     });
   };

@@ -1,11 +1,18 @@
 # Licensing FAQ — Nebutra-Sailor
 
-> **Status: TODO LEGAL.** This FAQ is the engineering team's best-effort
-> interpretation of the tier thresholds. It must be reviewed by counsel before
-> being treated as authoritative guidance. For binding answers, contact
+> **Status: DRAFT — not legal advice.**
+>
+> | Field | Value |
+> |-------|-------|
+> | **Owner** | Nebutra Legal (interim: engineering @nebutra.com) |
+> | **As of** | 2026-07-24 |
+> | **Counsel review** | Pending |
+>
+> Engineering's best-effort interpretation of tier thresholds. Not
+> authoritative until counsel-reviewed. Binding answers:
 > [licensing@nebutra.com](mailto:licensing@nebutra.com).
 
-Last updated: 2026-05-15.
+Last updated: 2026-07-24.
 
 This document covers edge cases for the three Nebutra-Sailor commercial tiers:
 
