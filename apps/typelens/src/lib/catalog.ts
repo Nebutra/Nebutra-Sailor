@@ -6,6 +6,7 @@ export {
   getSpecimenForWork,
   getTypeface,
   getWork,
+  type ListWorksOptions,
   listSpecimens,
   listTypefaces,
   listWorks,

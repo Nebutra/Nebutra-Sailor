@@ -20,14 +20,14 @@ export function WorkGrid({
         </p>
       </div>
       <div className="grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {works.map((work) => (
-          <WorkCard
-            key={work.id}
-            work={work}
-            specimen={byWork.get(work.id)}
-            typefaces={typefaces}
-          />
-        ))}
+        {works.map((work) => {
+          const specimen = byWork.get(work.id);
+          return specimen ? (
+            <WorkCard key={work.id} work={work} specimen={specimen} typefaces={typefaces} />
+          ) : (
+            <WorkCard key={work.id} work={work} typefaces={typefaces} />
+          );
+        })}
       </div>
       {works.length === 0 ? (
         <p className="py-16 text-center text-neutral-500">No works match these filters.</p>

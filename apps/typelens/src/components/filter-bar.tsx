@@ -15,18 +15,25 @@ const moods = [
   { value: "cultural", label: "Cultural" },
 ] as const;
 
-export function FilterBar({ medium, mood }: { medium?: string; mood?: string }) {
+export function FilterBar(props: { medium?: string; mood?: string } = {}) {
+  const medium = props.medium ?? "";
+  const mood = props.mood ?? "";
+
   return (
     <div className="border-b-2 border-neutral-900 bg-white">
       <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-8 gap-y-2 px-4 py-2 text-sm font-semibold md:px-8">
         <details className="relative">
-          <summary className="cursor-pointer list-none">Medium ▾</summary>
+          <summary className="cursor-pointer list-none">
+            Medium{medium ? `: ${medium}` : ""} ▾
+          </summary>
           <div className="absolute z-20 mt-1 min-w-[10rem] border border-neutral-200 bg-white py-1 shadow-sm">
             {media.map((m) => (
               <Link
                 key={m.value || "all"}
                 href={m.value ? `/works?medium=${m.value}` : "/works"}
-                className="block px-3 py-1.5 no-underline hover:bg-neutral-50"
+                className={`block px-3 py-1.5 no-underline hover:bg-neutral-50 ${
+                  medium === m.value ? "bg-neutral-100" : ""
+                }`}
               >
                 {m.label}
               </Link>
@@ -34,13 +41,15 @@ export function FilterBar({ medium, mood }: { medium?: string; mood?: string }) 
           </div>
         </details>
         <details className="relative">
-          <summary className="cursor-pointer list-none">Mood ▾</summary>
+          <summary className="cursor-pointer list-none">Mood{mood ? `: ${mood}` : ""} ▾</summary>
           <div className="absolute z-20 mt-1 min-w-[10rem] border border-neutral-200 bg-white py-1 shadow-sm">
             {moods.map((m) => (
               <Link
                 key={m.value || "all"}
                 href={m.value ? `/works?mood=${m.value}` : "/works"}
-                className="block px-3 py-1.5 no-underline hover:bg-neutral-50"
+                className={`block px-3 py-1.5 no-underline hover:bg-neutral-50 ${
+                  mood === m.value ? "bg-neutral-100" : ""
+                }`}
               >
                 {m.label}
               </Link>

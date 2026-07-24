@@ -1,17 +1,43 @@
 import { FilterBar } from "@/components/filter-bar";
 import { WorkGrid } from "@/components/work-grid";
-import { listSpecimens, listTypefaces, listWorks, type Medium } from "@/lib/catalog";
+import {
+  type ListWorksOptions,
+  listSpecimens,
+  listTypefaces,
+  listWorks,
+  type Medium,
+} from "@/lib/catalog";
 
 type SearchParams = Promise<{ medium?: string; mood?: string }>;
 
+const MEDIA = new Set([
+  "poster",
+  "website",
+  "app-ui",
+  "brand-identity",
+  "editorial",
+  "packaging",
+  "other",
+]);
+
 export default async function WorksPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
-  const medium = (sp.medium || undefined) as Medium | undefined;
-  const mood = sp.mood || undefined;
-  const works = listWorks({ status: "published", medium, mood });
+  const opts: ListWorksOptions = { status: "published" };
+  if (sp.medium && MEDIA.has(sp.medium)) {
+    opts.medium = sp.medium as Medium;
+  }
+  if (sp.mood) {
+    opts.mood = sp.mood;
+  }
+
+  const works = listWorks(opts);
+  const filterProps: { medium?: string; mood?: string } = {};
+  if (sp.medium) filterProps.medium = sp.medium;
+  if (sp.mood) filterProps.mood = sp.mood;
+
   return (
     <>
-      <FilterBar medium={sp.medium} mood={sp.mood} />
+      <FilterBar {...filterProps} />
       <WorkGrid works={works} specimens={listSpecimens()} typefaces={listTypefaces()} />
     </>
   );
