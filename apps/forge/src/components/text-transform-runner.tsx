@@ -37,7 +37,7 @@ export type TextTransformRunnerProps = {
  */
 export function TextTransformRunner({
   toolId,
-  sample = "Hello ${brand.name} 你好世界",
+  sample = `Hello ${brand.name} 你好世界`,
   modes,
   defaultMode,
   modeField = "mode",
