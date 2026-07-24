@@ -100,7 +100,7 @@ jobs:
       forge:       ${{ steps.resolve.outputs.forge }}
       any:         ${{ steps.resolve.outputs.any }}
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 2
 
@@ -369,7 +369,7 @@ jobs:
         if: matrix.condition != 'true'
         run: echo "Skipping ${{ matrix.app }} — not selected / no relevant changes."
 
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         if: matrix.condition == 'true'
 
       - uses: ./.github/actions/setup-node-pnpm
@@ -515,7 +515,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: ./.github/actions/setup-node-pnpm
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -592,7 +592,7 @@ jobs:
           [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST, CLOUD_VM_HOST, or legacy ECS_HOST repository variable is not set"; exit 1; }
           [ -n "${ECS_USER:-}" ] || { echo "::error::VM_USER, CLOUD_VM_USER, or legacy ECS_USER repository variable is not set"; exit 1; }
 
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           sparse-checkout: |
             infra/iac/ecs/ecosystem.config.cjs

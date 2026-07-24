@@ -67,7 +67,7 @@ jobs:
       provider: ${{ steps.detect.outputs.provider }}
       tokens-present: ${{ steps.detect.outputs.tokens-present }}
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm turbo build --filter="@nebutra/design-sync^..."
@@ -101,7 +101,7 @@ jobs:
     if: needs.detect.outputs.tokens-present == 'true'
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm turbo build --filter="@nebutra/design-sync^..."
@@ -136,7 +136,7 @@ jobs:
     if: needs.detect.outputs.tokens-present == 'true'
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm --filter @nebutra/design-tokens build
@@ -162,7 +162,7 @@ jobs:
     if: needs.detect.outputs.tokens-present == 'true'
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - uses: ./.github/actions/setup-node-pnpm
 
@@ -181,7 +181,7 @@ jobs:
     if: github.event_name == 'pull_request' && needs.detect.outputs.tokens-present == 'true'
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
 
@@ -200,7 +200,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Comment on PR
-        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         with:
           header: design-sync
           message: |
@@ -231,7 +231,7 @@ jobs:
     environment: design-sync-push
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm turbo build --filter="@nebutra/design-sync^..."
