@@ -5,7 +5,10 @@ import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
-async function digestHex(algorithm: "SHA-1" | "SHA-256" | "MD5", text: string): Promise<string> {
+async function digestHex(
+  algorithm: "SHA-1" | "SHA-256" | "SHA-512" | "MD5",
+  text: string,
+): Promise<string> {
   if (algorithm === "MD5") {
     throw new Error("MD5 仅支持服务端路径（Web Crypto 无 MD5）");
   }
@@ -19,7 +22,7 @@ export function HashRunner({
   algorithm,
 }: {
   toolId: string;
-  algorithm: "md5" | "sha1" | "sha256";
+  algorithm: "md5" | "sha1" | "sha256" | "sha512";
 }) {
   const [text, setText] = useState(`Hello ${brand.name}`);
   const [hex, setHex] = useState("");
@@ -29,6 +32,7 @@ export function HashRunner({
   const webAlgo = useMemo(() => {
     if (algorithm === "sha1") return "SHA-1" as const;
     if (algorithm === "sha256") return "SHA-256" as const;
+    if (algorithm === "sha512") return "SHA-512" as const;
     return null;
   }, [algorithm]);
 

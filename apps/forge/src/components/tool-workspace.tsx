@@ -41,6 +41,22 @@ import {
   PinyinRunner,
   ZhCnTwRunner,
 } from "@/components/p1-runners";
+import {
+  FullwidthHalfwidthRunner,
+  IdCardRunner,
+  ImageBase64Runner,
+  KinshipRunner,
+  LinePrefixSuffixRunner,
+  LunarRunner,
+  MortgageRunner,
+  NanoidRunner,
+  PhoneLookupRunner,
+  QueryStringRunner,
+  TextReplaceRunner,
+  TrimWhitespaceRunner,
+  UnicodeRunner,
+  UnitConvertRunner,
+} from "@/components/p2-runners";
 import { PasswordRunner } from "@/components/password-runner";
 import { TextDiffRunner } from "@/components/text-diff-runner";
 import { pickResult, TextTransformRunner } from "@/components/text-transform-runner";
@@ -403,6 +419,49 @@ export function ToolWorkspace({
       return <ZhCnTwRunner toolId={toolId} />;
     case "pinyin":
       return <PinyinRunner toolId={toolId} />;
+
+    // ── P2 specialized workspaces (#256) ────────────────────────────────
+    case "length":
+    case "weight":
+    case "temperature":
+    case "area":
+    case "speed":
+    case "volume":
+      return <UnitConvertRunner toolId={toolId} family={slug} />;
+    case "unicode":
+      return <UnicodeRunner toolId={toolId} />;
+    case "query-string":
+      return <QueryStringRunner toolId={toolId} />;
+    case "image-base64":
+      return <ImageBase64Runner toolId={toolId} />;
+    case "fullwidth-halfwidth":
+      return <FullwidthHalfwidthRunner toolId={toolId} />;
+    case "trim-whitespace":
+      return <TrimWhitespaceRunner toolId={toolId} />;
+    case "text-replace":
+      return <TextReplaceRunner toolId={toolId} />;
+    case "line-prefix-suffix":
+      return <LinePrefixSuffixRunner toolId={toolId} />;
+    case "nanoid":
+      return <NanoidRunner toolId={toolId} />;
+    case "sha512":
+      return <HashRunner toolId={toolId} algorithm="sha512" />;
+    case "id-card":
+      return <IdCardRunner toolId={toolId} />;
+    case "mortgage":
+      return <MortgageRunner toolId={toolId} />;
+    case "lunar":
+      return <LunarRunner toolId={toolId} />;
+    case "phone-lookup":
+      return <PhoneLookupRunner toolId={toolId} />;
+    case "kinship":
+      return <KinshipRunner toolId={toolId} />;
+    case "image-compress":
+      return <ImageToolRunner toolId={toolId} mode="compress" />;
+    case "image-resize":
+      return <ImageToolRunner toolId={toolId} mode="resize" />;
+    case "image-convert":
+      return <ImageToolRunner toolId={toolId} mode="convert" />;
 
     default: {
       const catalog = resolveCatalogRunner(slug, toolId);

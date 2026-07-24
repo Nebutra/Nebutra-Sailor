@@ -5,12 +5,22 @@ import { useCallback, useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 /** Image tools: drag-drop upload, sharp server transform, before/after preview. */
-export function ImageToolRunner({ toolId }: { toolId: string }) {
+export function ImageToolRunner({
+  toolId,
+  mode = "compress",
+}: {
+  toolId: string;
+  /** Hint for defaults / labels — all three tools share BufferInput. */
+  mode?: "compress" | "resize" | "convert";
+}) {
   const [fileName, setFileName] = useState("");
   const [base64, setBase64] = useState("");
-  const [format, setFormat] = useState<"webp" | "jpeg" | "png">("webp");
-  const [quality, setQuality] = useState(80);
-  const [width, setWidth] = useState("");
+  const [format, setFormat] = useState<"webp" | "jpeg" | "png">(
+    mode === "convert" ? "png" : "webp",
+  );
+  const [quality, setQuality] = useState(mode === "compress" ? 75 : 80);
+  const [width, setWidth] = useState(mode === "resize" ? "1280" : "");
+  const [height, setHeight] = useState("");
   const [inputBytes, setInputBytes] = useState(0);
   const [resultMeta, setResultMeta] = useState<{
     bytes: number;
@@ -54,6 +64,7 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
         quality,
       };
       if (width) input.width = Number(width);
+      if (height) input.height = Number(height);
       const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -130,9 +141,9 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <RunnerSelect
-          label="格式"
+          label="输出格式"
           id="image-format"
           value={format}
           onChange={(v) => setFormat(v as typeof format)}
@@ -157,15 +168,29 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
           label="最大宽"
           id="image-width"
           type="number"
-          placeholder="可选"
+          placeholder={mode === "resize" ? "如 1280" : "可选"}
           value={width}
           onChange={(e) => setWidth(e.target.value)}
+        />
+        <Input
+          label="最大高"
+          id="image-height"
+          type="number"
+          placeholder="可选"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
         />
       </div>
 
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading ? "处理中…" : "运行（sharp）"}
+          {loading
+            ? "处理中…"
+            : mode === "resize"
+              ? "缩放"
+              : mode === "convert"
+                ? "转换格式"
+                : "压缩"}
         </Button>
         <Button type="button" variant="outline" disabled={!previewOut} onClick={download}>
           下载结果
