@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3105",
-    "build": "next build",
+    "build": "pnpm --filter @nebutra/brand sync && next build",
     "start": "next start",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "test": "vitest run"

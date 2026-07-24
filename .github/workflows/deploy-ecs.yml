@@ -441,6 +441,23 @@ jobs:
           if [ -d "$WS/public" ]; then
             cp -r "$WS/public" "$STAGE/$WS/public"
           fi
+
+          # public/brand is gitignored and produced by `pnpm brand:sync` during
+          # app build (landing/web/auth/forge/router). Fail closed if the app
+          # chrome expects logos but the bundle is missing them — otherwise
+          # forge/router ship with broken header images in production.
+          if [ -f "$WS/src/components/brand-logo.tsx" ] || [ -f "$WS/src/components/brand-logo.ts" ]; then
+            for logo in logo-color.svg logo-horizontal-en.svg; do
+              if [ ! -f "$STAGE/$WS/public/brand/$logo" ]; then
+                echo "::error::Missing $WS/public/brand/$logo in VM bundle (run brand:sync in build)"
+                ls -la "$STAGE/$WS/public" || true
+                ls -la "$STAGE/$WS/public/brand" || true
+                exit 1
+              fi
+            done
+            echo "brand assets ok: $STAGE/$WS/public/brand/{logo-color,logo-horizontal-en}.svg"
+          fi
+
           ls -la "$STAGE/$WS"
           tar -czf "$RUNNER_TEMP/nebutra-${{ matrix.app }}-${{ github.sha }}.tar.gz" -C "$STAGE" .
 
