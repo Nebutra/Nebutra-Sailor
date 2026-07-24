@@ -6,8 +6,14 @@
     "dev": "next dev --port 3107",
     "build": "next build --webpack",
     "start": "next start",
+    "build:worker": "OPEN_NEXT_BUILD=true opennextjs-cloudflare build",
+    "preview:worker": "opennextjs-cloudflare preview",
+    "preview": "pnpm build:worker && pnpm preview:worker",
+    "deploy:worker": "OPEN_NEXT_BUILD=true opennextjs-cloudflare build && wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "clean": "rm -rf .next .open-next .wrangler"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -24,13 +30,15 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.1",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "wrangler": "4.112.0"
   },
   "license": "AGPL-3.0-only"
 }
