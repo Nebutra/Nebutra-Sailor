@@ -533,3 +533,5 @@ if (!fs.existsSync(REGISTRY_INDEX_PATH)) {
 process.stdout.write(
   `[registry] Previews: ${uniqueFileBasenames.length} files → public/r/*.json + public/previews-index.json\n`,
 );
+
+// ci-trigger 20260724081902
