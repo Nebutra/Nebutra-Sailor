@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Globe, MagnifyingGlass, X } from "@nebutra/icons";
+import { Check, Cross, Globe, MagnifyingGlass } from "@nebutra/icons";
 import { useLocale } from "next-intl";
 import {
   type CSSProperties,
@@ -223,7 +223,7 @@ export function createMarketLocalePicker(
                   onClick={() => setOpen(false)}
                   className="rounded-[var(--radius-sm)] p-1 text-neutral-11 hover:bg-neutral-3"
                 >
-                  <X className="h-4 w-4" aria-hidden />
+                  <Cross className="h-4 w-4" aria-hidden />
                 </button>
               </div>
               <label className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 px-2.5 py-1.5">
