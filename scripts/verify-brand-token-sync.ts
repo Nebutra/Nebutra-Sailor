@@ -121,6 +121,10 @@ interface DtcgSemantic {
       start: DtcgLeaf;
       end: DtcgLeaf;
       primary: DtcgLeaf;
+      reverse: DtcgLeaf;
+      vertical: DtcgLeaf;
+      radial: DtcgLeaf;
+      logo: DtcgLeaf;
     };
   };
 }
@@ -532,81 +536,53 @@ if (!tokensCss.includes("--gradient-brand:")) {
   ok("tokens/styles.css: --gradient-brand alias exists (backward compat)");
 }
 
-// ─── 8. Brand action gradient — contrast-safe and visually clean ────────────
+// ─── 8. Brand action gradient — solid primary alias (not multi-stop CTA) ────
+// Product decision (fix:tokens): CTAs use Button / bg-primary. brand.gradient
+// start/end/primary/reverse/vertical/radial are legacy aliases of --primary.
+// Only logo gradients remain multi-stop VI blue→cyan.
 {
-  const actionGradient = semantic.brand.gradient.primary.$value.toLowerCase();
-  const stops = extractHexStops(actionGradient);
-  if (stops.length < 2) {
-    fail(
-      "semantic.brand.gradient.primary",
-      `Expected at least two explicit hex stops, got: ${semantic.brand.gradient.primary.$value}`,
-    );
-  }
-
-  const start = semantic.brand.gradient.start.$value.toLowerCase();
-  const end = semantic.brand.gradient.end.$value.toLowerCase();
-  const firstStop = stops[0];
-  const finalStop = stops.at(-1);
-
-  if (firstStop !== start || finalStop !== end) {
-    fail(
-      "semantic.brand.gradient start/end",
-      `primary gradient stops ${firstStop ?? "missing"} → ${finalStop ?? "missing"} must match start/end tokens ${start} → ${end}`,
-    );
-  } else {
-    ok(`semantic.brand.gradient start/end === ${start} → ${end}`);
-  }
-
-  for (const stop of stops) {
-    const ratio = contrastRatio(stop, "#ffffff");
-    if (ratio < 4.5) {
+  const primaryAlias = "hsl(var(--primary))";
+  const actionSlots = ["start", "end", "primary", "reverse", "vertical", "radial"] as const;
+  for (const slot of actionSlots) {
+    const value = semantic.brand.gradient[slot].$value.trim().toLowerCase();
+    if (value !== primaryAlias) {
       fail(
-        `semantic.brand.gradient stop ${stop}`,
-        `White text contrast is ${ratio.toFixed(2)}:1; compact CTA stops must stay ≥ 4.5:1`,
+        `semantic.brand.gradient.${slot}`,
+        `Expected solid primary alias "${primaryAlias}", got: ${semantic.brand.gradient[slot].$value}`,
       );
     }
   }
-  if (stops.length > 0) {
-    ok("semantic.brand.gradient: every stop preserves white-text contrast ≥ 4.5:1");
-  }
+  ok("semantic.brand.gradient action slots alias hsl(var(--primary))");
 
-  const endTone = rgbToHsl(end);
-  if (endTone.hue < 185 || endTone.hue > 205) {
+  const logo = semantic.brand.gradient.logo.$value.toLowerCase();
+  const logoStops = extractHexStops(logo);
+  if (logoStops.length < 2) {
     fail(
-      "semantic.brand.gradient.end hue",
-      `Expected a cyan-blue end stop (185–205deg), got ${endTone.hue.toFixed(1)}deg for ${end}`,
+      "semantic.brand.gradient.logo",
+      `Logo gradient must keep multi-stop VI hex stops, got: ${semantic.brand.gradient.logo.$value}`,
+    );
+  } else if (logoStops[0] !== "#0033fe" || logoStops.at(-1) !== "#0bf1c3") {
+    fail(
+      "semantic.brand.gradient.logo",
+      `Expected #0033fe → #0bf1c3, got ${logoStops[0]} → ${logoStops.at(-1)}`,
     );
   } else {
-    ok(`semantic.brand.gradient.end hue is cyan-blue (${endTone.hue.toFixed(1)}deg)`);
+    ok("semantic.brand.gradient.logo is 云毓蓝→云毓青 (#0033fe → #0bf1c3)");
   }
 
-  if (endTone.lightness < 30) {
-    fail(
-      "semantic.brand.gradient.end lightness",
-      `End stop ${end} is too dark (${endTone.lightness.toFixed(1)}%); action gradients must not collapse into muddy emerald.`,
-    );
-  } else {
-    ok(`semantic.brand.gradient.end lightness is usable (${endTone.lightness.toFixed(1)}%)`);
-  }
-
-  const runtimeActionGradientValues = extractCssCustomPropertyValues(
-    tokensCss,
-    "--brand-gradient",
-  ).filter((value) => value.toLowerCase().includes("linear-gradient"));
-  const runtimeActionGradientStops = runtimeActionGradientValues.map((value) =>
-    extractHexStops(value),
+  const runtimeBrandGradient = extractCssCustomPropertyValues(tokensCss, "--brand-gradient");
+  const aliasesPrimary = runtimeBrandGradient.some(
+    (value) =>
+      value.toLowerCase().includes("var(--primary)") ||
+      value.toLowerCase().includes("hsl(var(--primary))"),
   );
-  const mirrorsDtcgActionGradient = runtimeActionGradientStops.some(
-    (runtimeStops) => runtimeStops[0] === start && runtimeStops.at(-1) === end,
-  );
-
-  if (!mirrorsDtcgActionGradient) {
+  if (!aliasesPrimary) {
     fail(
       "tokens/styles.css --brand-gradient",
-      `runtime CSS must contain DTCG action gradient stops ${start} → ${end}`,
+      "runtime --brand-gradient must alias product --primary (solid CTA), not invent a second palette",
     );
   } else {
-    ok("tokens/styles.css: --brand-gradient mirrors DTCG action gradient");
+    ok("tokens/styles.css: --brand-gradient aliases --primary");
   }
 
   if (tokensCss.toLowerCase().includes("linear-gradient(135deg, #254bfa 0%, #057963 100%)")) {

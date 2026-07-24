@@ -11,7 +11,12 @@
     "surface": "execution-capability",
     "featureId": "forge-runtime",
     "category": "ai",
-    "summary": "Tool-station capability registry + dual-surface invoke for forge.nebutra.com"
+    "summary": "Tool-station capability registry + dual-surface invoke for forge.nebutra.com",
+    "gaps": [
+      "Forge web product surface (forge.nebutra.com) not yet wired to this registry",
+      "Metering + prepaid envelope dual-write still host-injected, not defaulted",
+      "Expanded tool set (LLM/image/PDF) needs host-side provider bindings before production"
+    ]
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

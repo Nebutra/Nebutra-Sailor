@@ -54,7 +54,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (34)
+## WIP packages (38)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -97,6 +97,10 @@ and missing functionality.
 | `@nebutra/local-embedding` | (consumed directly) | Local embedding provider for code-index and retrieval; model adapters and persistence are interface-only |
 | `@nebutra/knowledge-base` | (consumed directly) | Product cognition layer over existing retrieval and ingestion; production wiring + persistence pending |
 | `@nebutra/ai-primitives` | (consumed directly) | Shared low-level utilities for the AI package family (scopedKey, sha256, cosineSimilarity, clamp, estimateTokens); interfaces still settling |
+| `@nebutra/forge-runtime` | (consumed directly) | Tool-station registry + invoke pipeline; forge.nebutra.com surface, metering defaults, and host provider bindings pending |
+| `@nebutra/prepaid-wallet` | (consumed directly) | Prepaid + API key contracts; Prisma/CreditBalance adapter and billing UI are host-owned |
+| `@nebutra/router-supply` | (consumed directly) | Router supply alias/engine resolution; production sidecar health and multi-tenant credentials pending |
+| `@nebutra/typelens-catalog` | (consumed directly) | Type Lens catalog data model; product surface and seed licensing incomplete |
 
 ## Contributing
 

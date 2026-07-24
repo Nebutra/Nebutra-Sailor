@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Type Lens — works, pairings, and agent extract packs for designers and design agents",
   "private": false,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",
@@ -11,7 +11,12 @@
     "surface": "support-contract",
     "featureId": "typelens-catalog",
     "category": "design",
-    "summary": "AI-native type pairing library — works · pairings · extract packs"
+    "summary": "AI-native type pairing library — works · pairings · extract packs",
+    "gaps": [
+      "typelens.nebutra.com product surface not yet shipped",
+      "Catalog seed content and licensing review incomplete",
+      "Agent extract pack generation pipeline is scaffold only"
+    ]
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

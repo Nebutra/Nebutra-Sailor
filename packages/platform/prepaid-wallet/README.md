@@ -1,5 +1,7 @@
 # @nebutra/prepaid-wallet
 
+Status: WIP — contracts and in-memory adapters exist; Prisma/gateway production wiring is host-owned.
+
 Product control-plane contracts for **Nebutra Router** and **Nebutra Forge**:
 
 - Prepaid wallet port (`PrepaidWallet`) + in-memory implementation for tests

@@ -30,6 +30,11 @@ minimumReleaseAgeExclude:
   - dompurify
   - body-parser
 trustPolicy: no-downgrade
+# next-auth@5.0.0-beta.32 patches critical Auth.js CVEs but ships without the
+# provenance attestation present on beta.31 (upstream CI change, not takeover).
+trustPolicyExclude:
+  - "next-auth@5.0.0-beta.32"
+  - "@auth/core@0.41.3"
 strictDepBuilds: true
 ignorePnpmfile: true
 

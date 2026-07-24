@@ -424,10 +424,13 @@ describe("ci harness dependency closure", () => {
 
     expect(workflow).toContain('E2E_AUTH_SMOKE: "0"');
     expect(playwrightConfig).toContain('process.env.E2E_AUTH_SMOKE ??= "0"');
-    expect(authSpec).toContain('process.env.E2E_AUTH_SMOKE === "1"');
-    expect(dashboardSpec).toContain('process.env.E2E_AUTH_SMOKE === "1"');
-    expect(authSpec).toContain("test.describe.skip");
-    expect(dashboardSpec).toContain("test.describe.skip");
+    // Specs gate via getAuthCapabilityStatus("auth-smoke"), which requires E2E_AUTH_SMOKE=1.
+    expect(authSpec).toContain('getAuthCapabilityStatus("auth-smoke")');
+    expect(dashboardSpec).toContain('getAuthCapabilityStatus("auth-smoke")');
+    expect(authSpec).toContain("test.skip");
+    expect(dashboardSpec).toContain("test.skip");
+    const authFixture = await readFile(join(process.cwd(), "e2e/fixtures/auth.ts"), "utf8");
+    expect(authFixture).toContain("E2E_AUTH_SMOKE");
   });
 
   it("keeps marketing smoke navigation on bounded domcontentloaded waits", async () => {

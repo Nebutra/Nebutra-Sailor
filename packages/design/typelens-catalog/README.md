@@ -1,5 +1,7 @@
 # `@nebutra/typelens-catalog`
 
+Status: WIP — catalog data model exists; product surface and seed content are not production-integrated.
+
 Data layer for **Type Lens** (`typelens.nebutra.com`).
 
 > The Typography Lens — works · pairings · extract packs for designers and design agents.

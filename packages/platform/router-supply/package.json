@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Nebutra Router supply orchestration: model aliases, engine endpoints, upstream resolution for New-API/Sub2API sidecars",
   "private": false,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "type": "module",
   "nebutra": {
     "status": "wip",
@@ -11,7 +11,12 @@
     "surface": "support-contract",
     "featureId": "router-supply",
     "category": "platform",
-    "summary": "Supply fabric for router.nebutra.com — alias map + engine upstream resolution"
+    "summary": "Supply fabric for router.nebutra.com — alias map + engine upstream resolution",
+    "gaps": [
+      "New-API / Sub2API production health probes not wired in CI",
+      "Alias table defaults need product review against frontier SSOT",
+      "Multi-tenant engine credentials store is host-injected only"
+    ]
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

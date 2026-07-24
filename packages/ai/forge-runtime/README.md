@@ -1,5 +1,7 @@
 # @nebutra/forge-runtime
 
+Status: WIP — capability registry and pure tools exist; product surface, metering defaults, and host provider bindings are not production-integrated yet.
+
 Capability registry and invoke pipeline for **Nebutra Forge** (`forge.nebutra.com`).
 
 - **F0 batch-1 tools** (word count, base64, URL codec, JSON format, SHA-256, UUID, unix timestamp, case convert)

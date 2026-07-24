@@ -184,7 +184,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         aria-hidden="true"
         data-testid="footer-gradient-line"
         className="h-px w-full"
-        style={{ background: "hsl(var(--primary))" }}
+        style={{ background: "var(--neutral-7)" }}
       />
       {/* Final CTA — opt-in via `showFinalCta`; default off to avoid polluting
           non-conversion pages (careers, legal, blog) with a product pitch. */}

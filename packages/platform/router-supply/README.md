@@ -1,5 +1,7 @@
 # @nebutra/router-supply
 
+Status: WIP — alias/engine resolution works in process; production sidecar health and multi-tenant credentials remain host-owned.
+
 Supply orchestration for **Nebutra Router**:
 
 - Model alias table (`NEBUTRA_MODEL_ALIASES` JSON or defaults)
