@@ -7,6 +7,7 @@ const includeRoots = ["apps", "packages", "backends"];
 const skipDirs = new Set([
   ".git",
   ".next",
+  ".open-next",
   ".source",
   ".turbo",
   ".venv",
