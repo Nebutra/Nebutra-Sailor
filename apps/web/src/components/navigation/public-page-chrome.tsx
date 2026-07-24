@@ -1,22 +1,24 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandEmail, getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import Link from "next/link";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
 import styles from "./public-page-chrome.module.css";
 
-const MARKETING_ORIGIN = "https://nebutra.com";
+const MARKETING_ORIGIN = getBrandOrigin("landing");
 
 const publicLinks = [
   { href: `${MARKETING_ORIGIN}/features`, label: "Product" },
   { href: `${MARKETING_ORIGIN}/pricing`, label: "Pricing" },
-  { href: "https://docs.nebutra.com", label: "Docs" },
-  { href: "https://github.com/Nebutra/Nebutra-Sailor", label: "GitHub" },
+  { href: getBrandOrigin("docs"), label: "Docs" },
+  { href: `${brand.social.github}/${brand.name}-Sailor`, label: "GitHub" },
 ];
 
 export function PublicPageAnnouncement() {
   return (
     <div className={styles.announcement}>
       <span className={styles.status} aria-hidden="true" />
-      Nebutra Console recovery surface
-      <a href="https://status.nebutra.com">System status</a>
+      {`${brand.name} Console recovery surface`}
+      <a href={getBrandOrigin("status")}>System status</a>
     </div>
   );
 }
@@ -67,15 +69,15 @@ export function PublicPageFooter() {
         </div>
         <div>
           <h2>Resources</h2>
-          <a href="https://docs.nebutra.com">Docs</a>
+          <a href={getBrandOrigin("docs")}>Docs</a>
           <a href={`${MARKETING_ORIGIN}/roadmap`}>Roadmap</a>
-          <a href="mailto:support@nebutra.com">Contact</a>
+          <a href={`mailto:${getBrandEmail("support")}`}>Contact</a>
         </div>
         <div>
           <h2>Governance</h2>
           <a href={`${MARKETING_ORIGIN}/privacy`}>Privacy</a>
           <a href={`${MARKETING_ORIGIN}/terms`}>Terms</a>
-          <a href="https://github.com/Nebutra/Nebutra-Sailor">Open source</a>
+          <a href={`${brand.social.github}/${brand.name}-Sailor`}>Open source</a>
         </div>
       </div>
     </footer>

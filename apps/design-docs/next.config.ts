@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
 
@@ -33,7 +34,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "github.com" },
       { protocol: "https", hostname: "gitlab.com" },
       { protocol: "https", hostname: "bitbucket.org" },
-      { protocol: "https", hostname: "nebutra.com" },
+      { protocol: "https", hostname: "brand domain" },
       { protocol: "https", hostname: "www.w3schools.com" },
     ],
   },

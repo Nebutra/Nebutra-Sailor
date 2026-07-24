@@ -1,3 +1,5 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { MARKET_COOKIE } from "@nebutra/i18n/cookies";
 import { CANONICAL_LOCALES, toRouteLocale } from "@nebutra/i18n/locales";
 import {
@@ -11,14 +13,14 @@ import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
 import { createDocsRedirectUrl } from "./lib/docs-routing";
 
 const intlMiddleware = createMiddleware(routing);
-const STATUS_HOST = "status.nebutra.com";
+const STATUS_HOST = brand.domains.status;
 
 /**
  * Cross-subdomain "user is signed in somewhere" hint.
  *
- * The real HttpOnly session cookie lives on `app.nebutra.com` (host-scoped
+ * The real HttpOnly session cookie lives on app host (host-scoped
  * for defense-in-depth). This non-sensitive flag cookie is set/cleared by
- * apps/web's auth catchall on the wider `.nebutra.com` domain so this
+ * apps/web's auth catchall on the wider brand cookie apex so this
  * landing proxy can read it and redirect signed-in users to the app
  * without leaking real session material.
  *
@@ -26,7 +28,7 @@ const STATUS_HOST = "status.nebutra.com";
  * exists somewhere", never the session itself.
  */
 const SESSION_HINT_COOKIE = "nebutra_session_hint";
-const APP_REDIRECT_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.nebutra.com";
+const APP_REDIRECT_URL = process.env.NEXT_PUBLIC_APP_URL ?? getBrandOrigin("app");
 
 /**
  * Does the request live on a path that should redirect signed-in users
@@ -93,7 +95,7 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.next());
   }
 
-  // Status-aware root: if the user has a session hint cookie from app.nebutra.com,
+  // Status-aware root: if the user has a session hint cookie from app host,
   // root + bare-locale roots redirect into the product. Marketing sub-pages always
   // render (signed-in users still want to read /pricing, /changelog, etc.).
   //

@@ -1,5 +1,6 @@
+import { brand } from "@nebutra/brand/metadata";
 /**
- * Registry-surface translations for ui.nebutra.com.
+ * Registry-surface translations for brand design host.
  *
  * Independent of Fumadocs `i18n.ts` (which only covers en/zh for MDX docs
  * chrome). The registry is a brand-facing component marketplace and matches
@@ -43,8 +44,8 @@ export interface RegistryStrings {
 
 const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
   en: {
-    title: "Nebutra UI Registry",
-    subtitle: "Copy-paste components, wired to the Nebutra design system.",
+    title: `${brand.name} UI Registry`,
+    subtitle: `Copy-paste components, wired to the ${brand.name} design system.`,
     intro:
       "Every component below ships as a shadcn registry manifest with its source, dependencies, and the CSS variables it consumes. Run the install command in any Next.js project that has shadcn-cli configured.",
     empty:
@@ -78,8 +79,8 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     viewRawJson: "View raw JSON",
   },
   zh: {
-    title: "Nebutra UI 组件市集",
-    subtitle: "复制即用的组件，原生绑定 Nebutra 设计系统。",
+    title: `${brand.name} UI 组件市集`,
+    subtitle: `复制即用的组件，原生绑定 ${brand.name} 设计系统。`,
     intro:
       "每个组件都以 shadcn registry 清单的形式发布，附带源码、依赖和 CSS 变量。在配置好 shadcn-cli 的 Next.js 项目中运行下方安装命令即可使用。",
     empty:
@@ -109,8 +110,8 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     viewRawJson: "查看原始 JSON",
   },
   ja: {
-    title: "Nebutra UI レジストリ",
-    subtitle: "コピー＆ペーストで使えるコンポーネント、Nebutra デザインシステムと連動。",
+    title: `${brand.name} UI レジストリ`,
+    subtitle: `コピー＆ペーストで使えるコンポーネント、${brand.name} デザインシステムと連動。`,
     intro:
       "下記の各コンポーネントは shadcn registry マニフェストとして配信され、ソース・依存関係・CSS 変数を含みます。shadcn-cli が設定済みの Next.js プロジェクトで以下のインストールコマンドを実行してください。",
     empty:
@@ -142,8 +143,8 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     viewRawJson: "JSON を表示",
   },
   ko: {
-    title: "Nebutra UI 레지스트리",
-    subtitle: "복사 붙여넣기로 바로 쓰는 컴포넌트, Nebutra 디자인 시스템과 연동.",
+    title: `${brand.name} UI 레지스트리`,
+    subtitle: `복사 붙여넣기로 바로 쓰는 컴포넌트, ${brand.name} 디자인 시스템과 연동.`,
     intro:
       "아래 모든 컴포넌트는 shadcn registry 매니페스트로 제공되며, 소스 코드와 의존성, CSS 변수를 포함합니다. shadcn-cli가 설정된 Next.js 프로젝트에서 아래 설치 명령을 실행하세요.",
     empty:
@@ -176,8 +177,8 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     viewRawJson: "원본 JSON 보기",
   },
   de: {
-    title: "Nebutra UI Registry",
-    subtitle: "Copy-paste-Komponenten, nahtlos mit dem Nebutra Design-System verbunden.",
+    title: `${brand.name} UI Registry`,
+    subtitle: `Copy-paste-Komponenten, nahtlos mit dem ${brand.name} Design-System verbunden.`,
     intro:
       "Jede Komponente unten wird als shadcn-Registry-Manifest mit Quellcode, Abhängigkeiten und genutzten CSS-Variablen ausgeliefert. Führe den Install-Befehl in einem Next.js-Projekt mit konfiguriertem shadcn-CLI aus.",
     empty:
@@ -211,8 +212,8 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     viewRawJson: "JSON anzeigen",
   },
   es: {
-    title: "Registro de componentes Nebutra UI",
-    subtitle: "Componentes copy-paste, integrados con el sistema de diseño Nebutra.",
+    title: `Registro de componentes ${brand.name} UI`,
+    subtitle: `Componentes copy-paste, integrados con el sistema de diseño ${brand.name}.`,
     intro:
       "Cada componente se publica como un manifiesto de shadcn registry con su código fuente, dependencias y variables CSS. Ejecuta el comando de instalación en cualquier proyecto Next.js que tenga shadcn-cli configurado.",
     empty:
@@ -246,8 +247,8 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     viewRawJson: "Ver JSON sin procesar",
   },
   fr: {
-    title: "Registre des composants Nebutra UI",
-    subtitle: "Composants copy-paste, connectés au design system Nebutra.",
+    title: `Registre des composants ${brand.name} UI`,
+    subtitle: `Composants copy-paste, connectés au design system ${brand.name}.`,
     intro:
       "Chaque composant ci-dessous est publié sous forme de manifeste shadcn registry avec son code source, ses dépendances et ses variables CSS. Exécutez la commande d'installation dans tout projet Next.js configuré avec shadcn-cli.",
     empty:

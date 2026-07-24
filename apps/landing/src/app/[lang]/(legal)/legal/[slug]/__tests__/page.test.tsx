@@ -1,5 +1,7 @@
 /// <reference types="@testing-library/jest-dom" />
 // @vitest-environment jsdom
+
+import { brand } from "@nebutra/brand/metadata";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -43,7 +45,7 @@ const sample: LegalDocument = {
   locale: "en",
   version: "v1.0.0",
   title: "Privacy Policy",
-  summary: "How Nebutra handles your data.",
+  summary: `How ${brand.name} handles your data.`,
   content: "# Privacy\n\nWe respect your privacy.",
   effectiveAt: "2025-01-01T00:00:00.000Z",
   expiresAt: null,
@@ -67,7 +69,7 @@ describe("/legal/[slug] page", () => {
     render(ui as React.ReactElement);
 
     expect(screen.getByRole("heading", { level: 1, name: "Privacy Policy" })).toBeInTheDocument();
-    expect(screen.getByText("How Nebutra handles your data.")).toBeInTheDocument();
+    expect(screen.getByText(`How ${brand.name} handles your data.`)).toBeInTheDocument();
     expect(screen.getByText(/We respect your privacy/i)).toBeInTheDocument();
   });
 
@@ -86,7 +88,7 @@ describe("/legal/[slug] page", () => {
       params: Promise.resolve({ lang: "en", slug: "privacy-policy" }),
     });
     expect(meta.title).toBe("Privacy Policy");
-    expect(meta.description).toBe("How Nebutra handles your data.");
+    expect(meta.description).toBe(`How ${brand.name} handles your data.`);
   });
 
   it("returns empty metadata when document missing (graceful)", async () => {

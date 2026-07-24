@@ -7,6 +7,9 @@
  * the Solutions menu — so this needs no edits to the next-intl catalogs (only
  * the `nav.resources` trigger label lives there).
  */
+
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import {
   BlendMode,
   BookOpen,
@@ -71,7 +74,7 @@ export const RESOURCES: ResourceLink[] = [
     groupId: "developers",
     icon: GitPullRequest,
     label: { en: "Changelog", zh: "更新日志" },
-    tagline: { en: "What's new in Nebutra", zh: "Nebutra 的最新更新" },
+    tagline: { en: `What's new in ${brand.name}`, zh: `${brand.name} 的最新更新` },
     href: "/changelog",
   },
   {
@@ -129,7 +132,7 @@ export const RESOURCES: ResourceLink[] = [
     groupId: "company",
     icon: Eye,
     label: { en: "Showcase", zh: "案例展示" },
-    tagline: { en: "Built with Nebutra", zh: "用 Nebutra 构建的作品" },
+    tagline: { en: `Built with ${brand.name}`, zh: `用 ${brand.name} 构建的作品` },
     href: "/showcase",
   },
   {

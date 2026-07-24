@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import Script from "next/script";
 import { type ComponentType, type ReactNode, useEffect, useState } from "react";
 
@@ -45,8 +46,10 @@ interface BetterAuthPluginsModule {
 function getParentDomain(appUrl: string): string | undefined {
   try {
     const hostname = new URL(appUrl).hostname;
-    if (hostname === "app.nebutra.com" || hostname.endsWith(".nebutra.com")) {
-      return "nebutra.com";
+    const appHost = brand.domains.app;
+    const apex = brand.domains.landing;
+    if (hostname === appHost || hostname.endsWith(`.${apex}`) || hostname === apex) {
+      return apex;
     }
     return undefined;
   } catch {

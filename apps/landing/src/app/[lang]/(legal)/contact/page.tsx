@@ -1,3 +1,4 @@
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -34,37 +35,37 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const contacts = [
     {
       title: t("contact.contacts.general.title"),
-      email: "contact@nebutra.com",
+      email: getBrandEmail("contact"),
       description: t("contact.contacts.general.description"),
     },
     {
       title: t("contact.contacts.founder.title"),
-      email: "founders@nebutra.com",
+      email: getBrandEmail("founders"),
       description: t("contact.contacts.founder.description"),
     },
     {
       title: t("contact.contacts.sales.title"),
-      email: "sales@nebutra.com",
+      email: getBrandEmail("sales"),
       description: t("contact.contacts.sales.description"),
     },
     {
       title: t("contact.contacts.support.title"),
-      email: "support@nebutra.com",
+      email: getBrandEmail("support"),
       description: t("contact.contacts.support.description"),
     },
     {
       title: t("contact.contacts.legal.title"),
-      email: "legal@nebutra.com",
+      email: getBrandEmail("legal"),
       description: t("contact.contacts.legal.description"),
     },
     {
       title: t("contact.contacts.privacy.title"),
-      email: "privacy@nebutra.com",
+      email: getBrandEmail("privacy"),
       description: t("contact.contacts.privacy.description"),
     },
     {
       title: t("contact.contacts.security.title"),
-      email: "security@nebutra.com",
+      email: getBrandEmail("security"),
       description: t("contact.contacts.security.description"),
     },
   ];

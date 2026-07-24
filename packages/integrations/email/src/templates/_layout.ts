@@ -1,3 +1,5 @@
+import { brand, colors } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 /**
  * Shared HTML layout for the React Email-style template catalog.
  *
@@ -17,10 +19,10 @@ export interface RenderedEmail {
 
 /**
  * Email clients do not load app CSS variables. These are identity-locked hex
- * snapshots (VI 云毓蓝 header), not product-chrome skins. Keep in sync with
+ * snapshots (VI brand-primary header), not product-chrome skins. Keep in sync with
  * brand assets — do not invent per-template blues.
  */
-const BRAND_HEADER = "#0033FE";
+const BRAND_HEADER = colors.primary["500"];
 const COLOR_BG = "#f8fafc";
 const COLOR_BORDER = "#e2e8f0";
 const COLOR_HEADING = "#0f172a";
@@ -34,7 +36,7 @@ export interface BaseLayoutOptions {
 }
 
 /**
- * Wrap a body fragment with the standard Nebutra-style transactional shell.
+ * Wrap a body fragment with the standard brand-style transactional shell.
  */
 export function baseLayout({ brandName, preview, body }: BaseLayoutOptions): string {
   return `<!DOCTYPE html>
@@ -59,8 +61,8 @@ export function baseLayout({ brandName, preview, body }: BaseLayoutOptions): str
         <tr><td style="padding:24px 40px;border-top:1px solid ${COLOR_BORDER};background:${COLOR_BG};">
           <p style="margin:0;font-size:12px;color:${COLOR_MUTED};text-align:center;">
             &copy; ${new Date().getFullYear()} ${escapeHtml(brandName)} &middot;
-            <a href="https://nebutra.ai/privacy" style="color:${COLOR_MUTED};">Privacy</a> &middot;
-            <a href="https://nebutra.ai/unsubscribe" style="color:${COLOR_MUTED};">Unsubscribe</a>
+            <a href="${getBrandOrigin("landing")}/privacy" style="color:${COLOR_MUTED};">Privacy</a> &middot;
+            <a href="${getBrandOrigin("landing")}/unsubscribe" style="color:${COLOR_MUTED};">Unsubscribe</a>
           </p>
         </td></tr>
       </table>

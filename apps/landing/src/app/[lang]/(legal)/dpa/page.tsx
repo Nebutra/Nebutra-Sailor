@@ -1,3 +1,5 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -16,9 +18,8 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   return {
-    title: "Data Processing Addendum (DPA) — Nebutra",
-    description:
-      "Nebutra's Data Processing Addendum is available on request for customers handling personal data.",
+    title: `Data Processing Addendum (DPA) — ${brand.name}`,
+    description: `${brand.name}'s Data Processing Addendum is available on request for customers handling personal data.`,
     alternates: { canonical: `/${lang}/dpa` },
   };
 }
@@ -39,7 +40,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
       <section className="space-y-4">
         <h2 className="text-xl font-bold text-foreground">Availability</h2>
         <p className="leading-relaxed text-muted-foreground">
-          Nebutra Intelligence (&quot;Nebutra&quot;) provides a Data Processing Addendum to
+          {brand.name} Intelligence (“{brand.name}”) provides a Data Processing Addendum to
           customers whose use of our services involves processing personal data of EU, UK, Swiss, or
           California residents, or any other jurisdiction with comparable data protection laws.
         </p>
@@ -54,10 +55,10 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
         <p className="leading-relaxed text-muted-foreground">
           Email{" "}
           <a
-            href="mailto:legal@nebutra.com?subject=DPA%20Request"
+            href={`mailto:${getBrandEmail("legal")}?subject=DPA%20Request`}
             className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
           >
-            legal@nebutra.com
+            {getBrandEmail("legal")}
           </a>{" "}
           with:
         </p>

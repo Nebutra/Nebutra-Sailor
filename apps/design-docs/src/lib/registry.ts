@@ -68,7 +68,7 @@ export interface RegistryDocsMetadata {
 
 /**
  * Read the top-level registry index. Missing registry output is a build error:
- * this app publicly serves ui.nebutra.com, so an empty registry would be silent
+ * this app publicly serves brand design host, so an empty registry would be silent
  * distribution drift rather than a useful fallback.
  */
 export function loadRegistryIndex(): RegistryIndex {

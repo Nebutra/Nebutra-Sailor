@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { Component, type ErrorInfo, type ReactNode } from "react";
@@ -99,11 +100,11 @@ export class ErrorBoundary extends Component<Props, State> {
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 font-mono text-xs text-muted-foreground">
               <a
-                href="https://status.nebutra.com"
+                href={`https://${brand.domains.status}`}
                 className="inline-flex items-center gap-1 transition-opacity hover:opacity-80"
                 rel="noreferrer"
               >
-                status.nebutra.com
+                {brand.domains.status}
                 <span aria-hidden="true">→</span>
               </a>
               {digest ? (

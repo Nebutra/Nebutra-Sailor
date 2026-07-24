@@ -1,7 +1,9 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 /**
  * Landing Page Content Constants
  *
- * All copywriting for the Nebutra Sailor landing page.
+ * All copywriting for the Sailor landing page.
  * Reference: DESIGN.md
  *
  * @see apps/landing/DESIGN.md
@@ -182,7 +184,7 @@ export const footerContent = {
   ],
   status: {
     label: "Online",
-    href: "https://status.nebutra.com",
+    href: getBrandOrigin("status"),
   },
 } as const;
 
@@ -191,7 +193,7 @@ export const footerContent = {
 // =============================================================================
 
 export const seoContent = {
-  title: "Nebutra Agent OS | The Startup Agent OS",
+  title: `${brand.name} Agent OS | The Startup Agent OS`,
   description:
     "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, i18n, and SEO-ready public pages.",
   keywords: [

@@ -4,7 +4,7 @@
  * UserAvatarMenu — closed-loop signed-in indicator for marketing pages.
  *
  * 2026 SaaS pattern (Vercel / Linear / Stripe Dashboard style):
- *   - Reads `nebutra_session_hint=1` set on `.nebutra.com` by the web app's
+ *   - Reads `session hint cookie` on brand apex by the web app's
  *     auth catchall (apps/web/src/lib/session-hint.ts) when sign-in succeeds.
  *   - When the hint is present, fetches `${APP_URL}/api/me/public` with
  *     credentials to hydrate avatar + name + active-org.
@@ -134,7 +134,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
 
   async function handleSignOut() {
     // Drive sign-out through the canonical web-app route — that flow
-    // also clears the .nebutra.com session-hint cookie via session-hint.ts.
+    // also clears the brand apex session-hint cookie via session-hint.ts.
     try {
       await fetch(`${APP_URL}/api/auth/sign-out`, {
         method: "POST",

@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
@@ -41,7 +42,7 @@ const nextConfig: NextConfig = {
     "@fumadocs/story",
   ],
   reactStrictMode: true,
-  // Clean-subdomain URL scheme (docs.nebutra.com/<lang>/<slug>). Old
+  // Clean-subdomain URL scheme (docs.brand domain/<lang>/<slug>). Old
   // `/docs/...` and `/<lang>/docs/...` URLs are 301'd to the new paths so
   // external links keep working. Host root `/` is redirected to default lang.
   async redirects() {

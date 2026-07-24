@@ -7,7 +7,7 @@ import {
   pageFeedback,
 } from "@/components/feedback/schema";
 
-export const repo = "Nebutra-Sailor";
+export const repo = "product-Sailor";
 export const owner = "TsekaLuk";
 export const DocsCategory = "Docs Feedback";
 

@@ -1,3 +1,4 @@
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -181,11 +182,14 @@ export default async function RefundPolicyPage({ params }: { params: Promise<{ l
       <p>
         <strong>{t("contactUs.company")}</strong>
         <br />
-        {t("contactUs.billingLabel")}: <a href="mailto:billing@nebutra.com">billing@nebutra.com</a>
+        {t("contactUs.billingLabel")}:{" "}
+        <a href={`mailto:${getBrandEmail("billing")}`}>{getBrandEmail("billing")}</a>
         <br />
-        {t("contactUs.supportLabel")}: <a href="mailto:support@nebutra.com">support@nebutra.com</a>
+        {t("contactUs.supportLabel")}:{" "}
+        <a href={`mailto:${getBrandEmail("support")}`}>{getBrandEmail("support")}</a>
         <br />
-        {t("contactUs.legalLabel")}: <a href="mailto:legal@nebutra.com">legal@nebutra.com</a>
+        {t("contactUs.legalLabel")}:{" "}
+        <a href={`mailto:${getBrandEmail("legal")}`}>{getBrandEmail("legal")}</a>
       </p>
       <p>{t("contactUs.responseNote")}</p>
 

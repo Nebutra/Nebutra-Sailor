@@ -1,6 +1,6 @@
 /**
- * API Client for Nebutra Web App
- * Communicates with api.nebutra.com (api-gateway)
+ * API Client for the web app
+ * Communicates with brand.domains.api (api-gateway)
  */
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";

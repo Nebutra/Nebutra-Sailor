@@ -1,3 +1,4 @@
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -179,11 +180,11 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
       <p>
         <strong>{t("contactUs.company")}</strong>
         <br />
-        Email: <a href="mailto:privacy@nebutra.com">privacy@nebutra.com</a>
+        Email: <a href={`mailto:${getBrandEmail("privacy")}`}>{getBrandEmail("privacy")}</a>
         <br />
-        Legal: <a href="mailto:legal@nebutra.com">legal@nebutra.com</a>
+        Legal: <a href={`mailto:${getBrandEmail("legal")}`}>{getBrandEmail("legal")}</a>
         <br />
-        DPO: <a href="mailto:dpo@nebutra.com">dpo@nebutra.com</a>
+        DPO: <a href={`mailto:${getBrandEmail("dpo")}`}>{getBrandEmail("dpo")}</a>
       </p>
     </article>
   );

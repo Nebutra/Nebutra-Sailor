@@ -10,6 +10,8 @@
  * so demos that live on the authenticated dashboard open on the app domain.
  */
 
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Box, Brain, Code, Command, Droplet, Eye, Layers, Play, Sparkles } from "@nebutra/icons";
 import type { ComponentType } from "react";
 import { env } from "@/lib/env";

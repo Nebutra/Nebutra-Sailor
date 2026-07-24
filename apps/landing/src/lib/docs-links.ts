@@ -1,6 +1,6 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 
-// docs.nebutra.com (sailor-docs Fumadocs app) is the canonical public docs host
+// brand.domains.docs (sailor-docs Fumadocs app) is the canonical public docs host
 // since 2026-05-15 when it was deployed to ECS. Both constants now resolve to
 // the same origin — PUBLIC_* kept for callers that semantically mean "the URL
 // a user would share", DOCS_ORIGIN_URL for callers that mean "host the bundle

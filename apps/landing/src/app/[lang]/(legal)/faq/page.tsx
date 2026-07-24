@@ -1,3 +1,4 @@
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -93,7 +94,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
             <Link href="/contact">{t("faq.ctaButton")}</Link>
           </Button>
           <a
-            href="mailto:support@nebutra.com"
+            href={`mailto:${getBrandEmail("support")}`}
             className="rounded-[var(--radius-lg)] border border-border px-6 py-3 font-semibold text-muted-foreground transition hover:bg-muted"
           >
             {t("faq.ctaEmail")}

@@ -1,3 +1,4 @@
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -206,9 +207,9 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
       <p>
         <strong>{t("contactUs.company")}</strong>
         <br />
-        Email: <a href="mailto:privacy@nebutra.com">privacy@nebutra.com</a>
+        Email: <a href={`mailto:${getBrandEmail("privacy")}`}>{getBrandEmail("privacy")}</a>
         <br />
-        Legal: <a href="mailto:legal@nebutra.com">legal@nebutra.com</a>
+        Legal: <a href={`mailto:${getBrandEmail("legal")}`}>{getBrandEmail("legal")}</a>
       </p>
 
       <hr />

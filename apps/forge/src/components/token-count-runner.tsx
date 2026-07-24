@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel } from "@/components/runner-ui";
@@ -34,7 +35,7 @@ const ENCODINGS = [
 ] as const;
 
 export function TokenCountRunner({ toolId }: { toolId: string }) {
-  const [text, setText] = useState("Hello Nebutra, count my tokens. 你好，数一下 token。");
+  const [text, setText] = useState("Hello ${brand.name}, count my tokens. 你好，数一下 token。");
   const [encoding, setEncoding] = useState<(typeof ENCODINGS)[number]["id"]>("o200k_base");
   const [tokens, setTokens] = useState<number | null>(null);
   const [error, setError] = useState("");

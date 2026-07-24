@@ -14,6 +14,9 @@
  * (see `@/lib/solutions/content-source`), so wiring Sanity in later needs no
  * change here.
  */
+
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import {
   Analytics,
   Brain,

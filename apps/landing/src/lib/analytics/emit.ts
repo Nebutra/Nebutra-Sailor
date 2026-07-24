@@ -1,3 +1,5 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+
 /**
  * Phase 0 browser-side analytics emission helper.
  *
@@ -10,7 +12,7 @@
  * this once its contract is finalised.
  */
 
-const DEFAULT_POSTHOG_HOST = "https://analytics.nebutra.com";
+const DEFAULT_POSTHOG_HOST = getBrandOrigin("analytics");
 
 export interface EmitOptions {
   /** Pass `true` from a caller that has already opted the user out. */

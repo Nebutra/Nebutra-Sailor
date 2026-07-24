@@ -49,7 +49,7 @@ const authProvider = getConfiguredAuthProvider();
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 if (authProvider === "clerk" && !hasClerkKey && process.env.NODE_ENV === "production") {
   throw new Error(
-    "[Nebutra] NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required when using Clerk auth provider. " +
+    "[auth] NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required when using Clerk auth provider. " +
       "Set this env var or change NEXT_PUBLIC_AUTH_PROVIDER.",
   );
 }
@@ -177,7 +177,7 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
   })();
 
   // Auth-center owns the full login surface (sign-in/up, forgot/reset password).
-  // Keep web APIs + desktop remotes local; UI always funnels to auth.nebutra.com.
+  // Keep web APIs + desktop remotes local; UI always funnels to brand auth origin.
   if (
     !isAuthCenterHost &&
     authProvider !== "clerk" &&

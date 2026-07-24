@@ -1,3 +1,5 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandEmail, getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -63,9 +65,9 @@ export default async function TermsOfServicePage({
           conflicts arise. */}
       <h2>Scope of These Terms</h2>
       <p>
-        These Terms govern your use of the <strong>Nebutra hosted SaaS services</strong> (the
-        marketing site, dashboard at <code>app.nebutra.com</code>, and related APIs). They do{" "}
-        <strong>not</strong> govern your use of the open-source Nebutra-Sailor codebase.
+        These Terms govern your use of the <strong>{brand.name} hosted SaaS services</strong> (the
+        marketing site, dashboard at <code>{brand.domains.app}</code>, and related APIs). They do{" "}
+        <strong>not</strong> govern your use of the open-source {brand.name}-Sailor codebase.
       </p>
       <p>Source-code use is governed by a separate license, whichever applies to you:</p>
       <ul>
@@ -79,7 +81,10 @@ export default async function TermsOfServicePage({
           </strong>{" "}
           — the Independent Developer License or a paid Startup / Enterprise commercial tier (see{" "}
           <code>LICENSE-COMMERCIAL.md</code> and{" "}
-          <a href="https://nebutra.com/get-license">nebutra.com/get-license</a>).
+          <a
+            href={`${getBrandOrigin("landing")}/get-license`}
+          >{`${brand.domains.landing}/get-license`}</a>
+          ).
         </li>
       </ul>
       <p>
@@ -203,9 +208,11 @@ export default async function TermsOfServicePage({
       <p>
         <strong>{t("contactUs.company")}</strong>
         <br />
-        {t("contactUs.emailLabel")}: <a href="mailto:legal@nebutra.com">legal@nebutra.com</a>
+        {t("contactUs.emailLabel")}:{" "}
+        <a href={`mailto:${getBrandEmail("legal")}`}>{getBrandEmail("legal")}</a>
         <br />
-        {t("contactUs.supportLabel")}: <a href="mailto:support@nebutra.com">support@nebutra.com</a>
+        {t("contactUs.supportLabel")}:{" "}
+        <a href={`mailto:${getBrandEmail("support")}`}>{getBrandEmail("support")}</a>
       </p>
 
       <hr />

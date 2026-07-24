@@ -1,5 +1,7 @@
 "use server";
 
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import { logger } from "@nebutra/logger";
 import pRetry, { AbortError } from "p-retry";
 import { z } from "zod";
@@ -39,7 +41,7 @@ export async function submitContactForm(
   const { name, email, company, category, subject, message } = parsed.data;
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_FORM_TO ?? "contact@nebutra.com";
+  const to = process.env.CONTACT_FORM_TO ?? getBrandEmail("contact");
 
   if (!apiKey) {
     // In development without Resend, log and return success so the form is testable.
@@ -60,7 +62,7 @@ export async function submitContactForm(
   }
 
   const payload = JSON.stringify({
-    from: "Nebutra Contact Form <noreply@nebutra.com>",
+    from: `${brand.name} Contact Form <${getBrandEmail("noreply")}>`,
     to,
     reply_to: email,
     subject: `[${category}] ${subject}`,

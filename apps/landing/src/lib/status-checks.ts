@@ -1,3 +1,5 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import pLimit from "p-limit";
 import { env } from "@/lib/env";
 
@@ -41,7 +43,7 @@ function withPath(base: string, path: string): string {
 }
 
 function getServiceTargets(): ServiceTarget[] {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? getBrandOrigin("landing");
 
   return [
     {
@@ -99,7 +101,7 @@ async function probeService(target: ServiceTarget): Promise<ServiceProbe> {
       cache: "no-store",
       headers: {
         accept: "application/json,text/plain,text/html;q=0.8,*/*;q=0.5",
-        "user-agent": "Nebutra-Status/1.0",
+        "user-agent": `${brand.name}-Status/1.0`,
       },
       redirect: "follow",
       signal: AbortSignal.timeout(TIMEOUT_MS),

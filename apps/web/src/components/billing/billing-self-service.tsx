@@ -1,3 +1,5 @@
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import {
   CheckCircle as CheckCircle2,
   CreditCard,
@@ -78,7 +80,7 @@ const PLAN_DEFINITIONS: Omit<BillingPlanOption, "active" | "action">[] = [
     id: "pro_monthly",
     name: "Pro",
     badge: "Most practical",
-    description: "For teams running Nebutra as an active SaaS operating surface.",
+    description: `For teams running ${brand.name} as an active SaaS operating surface.`,
     priceLabel: "$29",
     cadence: "per month",
     features: ["10 projects", "10 team members", "Advanced analytics", "Priority support"],
@@ -172,8 +174,7 @@ function getProviderState(env: BillingSelfServiceEnv, capabilities: BillingCapab
       name: provider,
       status: "degraded" as const,
       title: "Subscription self-service needs Stripe",
-      description:
-        "A non-Stripe or manual provider is detected. Nebutra is not exposing subscription checkout until a supported provider route is configured.",
+      description: `A non-Stripe or manual provider is detected. ${brand.name} is not exposing subscription checkout until a supported provider route is configured.`,
     };
   }
 
@@ -252,7 +253,7 @@ export function buildBillingSelfServiceModel({
       action = {
         label: "Contact sales",
         enabled: true,
-        href: "mailto:sales@nebutra.com?subject=Nebutra%20Enterprise%20plan",
+        href: `mailto:${getBrandEmail("sales")}?subject=${encodeURIComponent(`${brand.name} Enterprise plan`)}`,
       };
     } else if (!isPaidSelfServicePlan) {
       action = { label: "Included", enabled: false, reason: "No checkout required." };

@@ -1,3 +1,4 @@
+// @brand-exempt: renders outside root layout; CSS vars unavailable
 "use client";
 
 /**

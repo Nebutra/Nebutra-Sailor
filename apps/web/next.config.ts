@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import bundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
@@ -113,8 +114,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "avatars.githubusercontent.com" },
       { protocol: "https", hostname: "**.gravatar.com" },
       { protocol: "https", hostname: "ui-avatars.com" },
-      // Nebutra CDN
-      { protocol: "https", hostname: "cdn.nebutra.com" },
+      // Brand CDN
+      { protocol: "https", hostname: brand.domains.cdn },
     ],
   },
 

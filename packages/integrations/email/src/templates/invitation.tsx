@@ -6,6 +6,7 @@
  * catalog can be migrated to React Email later without changing call sites.
  */
 
+import { colors } from "@nebutra/brand/metadata";
 import { baseLayout, escapeHtml, palette } from "./_layout";
 
 export interface InvitationEmailProps {
@@ -41,7 +42,7 @@ export function render(props: InvitationEmailProps): string {
     </p>
     <p style="margin:0 0 24px;font-size:14px;color:${palette.body};">
       Role:
-      <span style="display:inline-block;background:#e0f2fe;color:#0033FE;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:600;margin-left:6px;">
+      <span style="display:inline-block;background:#e0f2fe;color:${colors.primary["500"]};padding:4px 10px;border-radius:999px;font-size:13px;font-weight:600;margin-left:6px;">
         ${role}
       </span>
     </p>
