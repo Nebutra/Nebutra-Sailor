@@ -20,7 +20,10 @@ export async function POST(request: Request) {
   if (typeof body.amount !== "number" || !(body.amount > 0)) {
     return NextResponse.json({ error: "amount must be a positive number" }, { status: 400 });
   }
-  const tenantId = resolveTenantId({ explicit: body.tenantId, session });
+  const tenantId = resolveTenantId({
+    ...(body.tenantId !== undefined ? { explicit: body.tenantId } : {}),
+    session,
+  });
   const wallet = getDemoWallet();
   try {
     const result = await wallet.topUp({
@@ -34,9 +37,9 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       provider: "mock",
-      tenantId,
       message: "Top-up succeeded (demo).",
       ...result,
+      tenantId,
     });
   } catch (err) {
     if (err instanceof PrepaidWalletError) {

@@ -1,15 +1,13 @@
 import Link from "next/link";
 import type { Specimen, Typeface, Work } from "@/lib/catalog";
 
-export function WorkCard({
-  work,
-  specimen,
-  typefaces,
-}: {
+export type WorkCardProps = {
   work: Work;
-  specimen?: Specimen;
   typefaces: readonly Typeface[];
-}) {
+  specimen?: Specimen;
+};
+
+export function WorkCard({ work, typefaces, specimen }: WorkCardProps) {
   const byId = new Map(typefaces.map((t) => [t.id, t]));
   const faces =
     specimen?.typefaces.map((ref) => ({

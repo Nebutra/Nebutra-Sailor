@@ -20,7 +20,10 @@ export async function POST(request: Request, context: RouteContext) {
     );
   }
   const session = await getSessionFromRequest(request);
-  const tenantId = resolveTenantId({ explicit: body.tenantId, session });
+  const tenantId = resolveTenantId({
+    ...(body.tenantId !== undefined ? { explicit: body.tenantId } : {}),
+    session,
+  });
   const registry = getForgeRegistry();
   const result = await invokeTool(registry, {
     toolId,
