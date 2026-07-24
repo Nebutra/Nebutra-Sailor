@@ -1,0 +1,7 @@
+; Nebutra Forge — product edge on ECS (PM2 :3105)
+; Import in Cloudflare: DNS → Records → Import
+; Check "Proxy imported DNS records" so orange-cloud matches router/app.
+$ORIGIN nebutra.com.
+$TTL 300
+
+forge    IN  A  106.15.4.31
