@@ -1,19 +1,15 @@
-import { PageHeader } from "@nebutra/ui/layout";
 import { PageFrame } from "@/components/page-frame";
 import { WalletClient } from "@/components/wallet-client";
 
-export const metadata = { title: "充值" };
+export const metadata = { title: "钱包" };
 
 export default function WalletPage() {
   return (
-    <PageFrame>
-      <div className="space-y-6">
-        <PageHeader
-          title="预充钱包"
-          description="先充值、后按量。当前为 mock 充值；生产接微信/支付宝/国际卡后写入同一账本。"
-        />
-        <WalletClient />
-      </div>
+    <PageFrame
+      title="钱包"
+      description="预充后按量扣费。Demo 为 mock 充值；生产接支付渠道写入同一账本。"
+    >
+      <WalletClient />
     </PageFrame>
   );
 }

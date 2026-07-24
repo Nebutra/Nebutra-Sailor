@@ -12,6 +12,13 @@ export {
   loadEnginesFromEnv,
   type ResolvedEngine,
 } from "./engines";
+export {
+  bareModelId,
+  getSupplyInventory,
+  inventoryHas,
+  modelsListUrl,
+  type SupplyInventory,
+} from "./inventory";
 export { type ProxyChatInput, type ProxyChatResult, proxyChatCompletions } from "./proxy";
 export {
   resolveUpstreamChain,

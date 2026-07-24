@@ -52,6 +52,7 @@ export function createKey(name: string): StoredKey & { fullKey: string } {
   return { ...row, fullKey: issued.fullKey };
 }
 
+/** @deprecated Prefer getListedModelIds() — alias-only list is not the shelf. */
 export function getModels() {
   const aliases = parseAliasTableJson(process.env.NEBUTRA_MODEL_ALIASES);
   return listPublicModels(aliases);

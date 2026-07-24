@@ -4,27 +4,30 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { RouterNav } from "@/components/router-nav";
-import { SiteFooter } from "@/components/site-footer";
+import { Suspense } from "react";
+import { ConsoleShell } from "@/components/console-shell";
 
 export const metadata: Metadata = {
   title: {
-    default: `${brand.name} Router — 模型聚合中转`,
+    default: `${brand.name} Router — API 集市`,
     template: `%s | ${brand.name} Router`,
   },
-  description: "302 风格旅程：充值 → API Key → base_url 调用。Agent 可依赖的 Model Fabric。",
+  description: "全模型 API 集市 · 按量付费 · 管理后台配置 Key/钱包 · 快捷使用试用。",
 };
 
-/** Full-bleed chrome; page sections own max-width. */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-CN" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
-        <RouterNav />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
+    // suppressHydrationWarning: browser extensions (e.g. MPA) inject attrs on <html>/<body>
+    // before React hydrates — not an app bug. See https://react.dev/link/hydration-mismatch
+    <html
+      lang="zh-CN"
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
+        <Suspense fallback={<div className="min-h-screen bg-[var(--neutral-1)]" />}>
+          <ConsoleShell>{children}</ConsoleShell>
+        </Suspense>
       </body>
     </html>
   );
