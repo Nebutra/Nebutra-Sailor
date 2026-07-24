@@ -1,14 +1,2 @@
-import { Kbd } from "@nebutra/ui/primitives";
-
-export function KbdDemo() {
-  return (
-    <div className="flex items-center gap-2">
-      <Kbd meta />
-      <Kbd shift />
-      <Kbd alt />
-      <Kbd ctrl />
-      <Kbd meta shift />
-      <Kbd small>/</Kbd>
-    </div>
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/kbd-demo";
+export * from "@nebutra/docs-shared/components/previews/kbd-demo";

@@ -1,0 +1,34 @@
+{
+  "name": "@nebutra/docs-shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared UI/docs components for design-docs and sailor-docs (byte-identical SSOT)",
+  "license": "MIT",
+  "exports": {
+    "./components/*": "./src/components/*",
+    "./*": "./src/*"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "react-dom": "^19",
+    "next": ">=15",
+    "fumadocs-ui": "*",
+    "fumadocs-openapi": "*",
+    "class-variance-authority": "*",
+    "input-otp": "*",
+    "react-resizable-panels": "*",
+    "zod": "*"
+  },
+  "dependencies": {
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "types": "./src/components"
+}

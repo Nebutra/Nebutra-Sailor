@@ -1,11 +1,2 @@
-"use client";
-
-import { Textarea } from "@nebutra/ui/primitives";
-
-export function TextareaDisabledDemo() {
-  return (
-    <div className="w-full">
-      <Textarea aria-label="Disabled message" disabled readOnly value="This field is read-only" />
-    </div>
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/textarea-disabled-demo";
+export * from "@nebutra/docs-shared/components/previews/textarea-disabled-demo";

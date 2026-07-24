@@ -58,7 +58,8 @@
     "shiki": "^4.0.2",
     "tailwind-merge": "^3.5.0",
     "unist-util-visit": "^5.1.0",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@nebutra/docs-shared": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",

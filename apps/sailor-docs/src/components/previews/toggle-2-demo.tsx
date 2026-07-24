@@ -1,7 +1,2 @@
-"use client";
-
-import { Toggle } from "@nebutra/ui/primitives";
-
-export function Toggle2Demo() {
-  return <Toggle size="large" aria-label="Toggle large" />;
-}
+export type * from "@nebutra/docs-shared/components/previews/toggle-2-demo";
+export * from "@nebutra/docs-shared/components/previews/toggle-2-demo";

@@ -27,10 +27,13 @@ export function getFeatureEnvVars(config: ResolvedConfig): Record<string, string
   vars.NEBUTRA_LOCALES = config.locales.join(",");
   vars.NEBUTRA_DEFAULT_LOCALE = config.defaultLocale;
 
-  // API protocol flags
-  vars.NEBUTRA_API_PROTOCOLS = config.apiProtocols.join(",");
-  vars.ENABLE_ORPC = String(config.apiProtocols.includes("orpc"));
-  vars.ENABLE_TRPC = String(config.apiProtocols.includes("trpc"));
+  // API protocol flags — single canonical env (gateway also accepts this name).
+  // Do not emit ENABLE_TRPC/ENABLE_ORPC (deprecated; sunset 2026-10-01).
+  const protocols = config.apiProtocols.includes("rest")
+    ? config.apiProtocols
+    : (["rest", ...config.apiProtocols] as typeof config.apiProtocols);
+  vars.API_PROTOCOLS = protocols.join(",");
+  vars.NEBUTRA_API_PROTOCOLS = vars.API_PROTOCOLS;
   vars.NEBUTRA_WORKSPACE_MODE = capabilities.workspace.mode;
   vars.NEBUTRA_REQUIRE_ORGANIZATION = String(capabilities.workspace.requireOrganization);
   vars.NEBUTRA_ONBOARDING_FLOW = capabilities.workspace.onboardingFlow;

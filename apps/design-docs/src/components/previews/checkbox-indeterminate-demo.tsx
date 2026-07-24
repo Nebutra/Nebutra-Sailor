@@ -1,12 +1,2 @@
-"use client";
-
-import { Checkbox, Label } from "@nebutra/ui/primitives";
-
-export function CheckboxIndeterminateDemo() {
-  return (
-    <div className="gap-2 flex items-center">
-      <Checkbox indeterminate id="i1" />
-      <Label htmlFor="i1">选项 1 (Option 1)</Label>
-    </div>
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/checkbox-indeterminate-demo";
+export * from "@nebutra/docs-shared/components/previews/checkbox-indeterminate-demo";

@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Command } from "commander";
 import pc from "picocolors";
+import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
 import { delegate, findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
@@ -65,16 +67,16 @@ export async function e2eCommand(suite: string, options: E2EOptions = {}): Promi
   process.exit(result.exitCode);
 }
 
-export function registerE2eCommand(program: any) {
+export const registerE2eCommand: RegisterCommand = (program) => {
   program
     .command("e2e <suite>")
     .description(`Run a Playwright suite (${VALID_SUITES.join(" | ")})`)
     .option("--dry-run", "Preview the command that would run (exit code 10)")
-    .action(async (suite: string, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (suite: string, options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await e2eCommand(suite, {
-        dryRun: options.dryRun || false,
-        quiet: globalOptions.quiet || false,
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
       });
     });
-}
+};

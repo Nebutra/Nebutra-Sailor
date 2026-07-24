@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Command } from "commander";
 import pc from "picocolors";
+import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
 import { findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
@@ -159,7 +161,7 @@ export async function workflowInitCommand(
   process.exit(ExitCode.SUCCESS);
 }
 
-export function registerWorkflowCommand(program: any) {
+export const registerWorkflowCommand: RegisterCommand = (program) => {
   const cmd = program
     .command("workflow")
     .description("Manage workflow provider scaffolding (inngest | n8n | pusher)");
@@ -168,11 +170,11 @@ export function registerWorkflowCommand(program: any) {
     .command("init <provider>")
     .description(`Scaffold a starter workflow file for a provider (${VALID_PROVIDERS.join(" | ")})`)
     .option("--dry-run", "Preview files that would be created (exit code 10)")
-    .action(async (provider: string, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (provider: string, options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await workflowInitCommand(provider, {
-        dryRun: options.dryRun || false,
-        quiet: globalOptions.quiet || false,
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
       });
     });
-}
+};

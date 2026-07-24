@@ -1,7 +1,9 @@
 import { promises as fs } from "node:fs";
 import { join } from "node:path";
 import * as p from "@clack/prompts";
+import type { Command } from "commander";
 import pc from "picocolors";
+import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
 import { findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
@@ -699,7 +701,7 @@ export async function generateComponentCommand(
 /**
  * Register generate command with Commander
  */
-export function registerGenerateCommand(program: any) {
+export const registerGenerateCommand: RegisterCommand = (program) => {
   const generate = program
     .command("generate")
     .description("Scaffold a new app, package, route, or component")
@@ -712,13 +714,14 @@ export function registerGenerateCommand(program: any) {
     .option("--yes", "Skip all prompts")
     .option("--template <type>", "App template (default: nextjs)", "nextjs")
     .option("--port <number>", "Dev server port", "3000")
-    .action(async (name: string, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (name: string, options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await generateAppCommand(name, {
-        ...options,
-        dryRun: options.dryRun || false,
-        yes: globalOptions.yes || false,
-        interactive: process.stdin.isTTY,
+        dryRun: Boolean(options.dryRun),
+        yes: Boolean(globalOptions.yes),
+        interactive: Boolean(process.stdin.isTTY),
+        template: options.template === "nextjs" ? "nextjs" : "nextjs",
+        port: typeof options.port === "string" ? Number(options.port) : undefined,
       });
     });
 
@@ -730,13 +733,12 @@ export function registerGenerateCommand(program: any) {
     .requiredOption("--category <category>", `Package category: ${PACKAGE_CATEGORIES.join(" | ")}`)
     .option("--dry-run", "Preview changes without writing files")
     .option("--yes", "Skip all prompts")
-    .action(async (name: string, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (name: string, options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await generatePackageCommand(name, {
-        ...options,
-        category: options.category,
-        dryRun: options.dryRun || false,
-        yes: globalOptions.yes || false,
+        category: String(options.category ?? ""),
+        dryRun: Boolean(options.dryRun),
+        yes: Boolean(globalOptions.yes),
       });
     });
 
@@ -745,12 +747,11 @@ export function registerGenerateCommand(program: any) {
     .description("Scaffold a Hono API route in backends/gateway")
     .option("--dry-run", "Preview changes without writing files")
     .option("--yes", "Skip all prompts")
-    .action(async (path: string, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (path: string, options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await generateRouteCommand(path, {
-        ...options,
-        dryRun: options.dryRun || false,
-        yes: globalOptions.yes || false,
+        dryRun: Boolean(options.dryRun),
+        yes: Boolean(globalOptions.yes),
       });
     });
 
@@ -761,14 +762,13 @@ export function registerGenerateCommand(program: any) {
     .option("--yes", "Skip all prompts")
     .option("--variants <list>", "Comma-separated variant names (e.g., 'primary,secondary')")
     .option("--sizes <list>", "Comma-separated size names (e.g., 'sm,md,lg')")
-    .action(async (name: string, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (name: string, options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await generateComponentCommand(name, {
-        ...options,
-        dryRun: options.dryRun || false,
-        yes: globalOptions.yes || false,
-        variants: options.variants,
-        sizes: options.sizes,
+        dryRun: Boolean(options.dryRun),
+        yes: Boolean(globalOptions.yes),
+        variants: typeof options.variants === "string" ? options.variants : undefined,
+        sizes: typeof options.sizes === "string" ? options.sizes : undefined,
       });
     });
-}
+};

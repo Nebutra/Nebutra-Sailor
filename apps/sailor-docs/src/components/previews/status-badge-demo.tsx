@@ -1,16 +1,2 @@
-"use client";
-
-import { ShieldCheck, CrossCircle as XCircle } from "@nebutra/icons";
-import { StatusBadge } from "@nebutra/ui/primitives";
-
-export function StatusBadgeDemo() {
-  return (
-    <StatusBadge
-      leftIcon={ShieldCheck}
-      rightIcon={XCircle}
-      leftLabel="Protection"
-      rightLabel="SSO disabled"
-      status="success"
-    />
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/status-badge-demo";
+export * from "@nebutra/docs-shared/components/previews/status-badge-demo";

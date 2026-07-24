@@ -23,8 +23,10 @@
       "@/.source": ["./.source"],
       "@/.source/*": ["./.source/*"],
       "@nebutra/ui": ["../../packages/design/ui/src/index.ts"],
-      "@nebutra/ui/*": ["../../packages/design/ui/src/*"]
-    }
+      "@nebutra/ui/*": ["../../packages/design/ui/src/*"],
+      "@nebutra/docs-shared/*": ["../../packages/design/docs-shared/src/*"]
+    },
+    "baseUrl": "."
   },
   "include": [
     "next-env.d.ts",

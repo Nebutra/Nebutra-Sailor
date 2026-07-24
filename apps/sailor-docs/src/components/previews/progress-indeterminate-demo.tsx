@@ -1,11 +1,2 @@
-"use client";
-
-import { Progress } from "@nebutra/ui/primitives";
-
-export function ProgressIndeterminateDemo() {
-  return (
-    <div className="w-full">
-      <Progress value={undefined} className="w-full" />
-    </div>
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/progress-indeterminate-demo";
+export * from "@nebutra/docs-shared/components/previews/progress-indeterminate-demo";

@@ -109,6 +109,25 @@ describe("resolveEnabledProtocols", () => {
     expect(enabled.has("orpc")).toBe(true);
   });
 
+  it("accepts NEBUTRA_API_PROTOCOLS as alias when API_PROTOCOLS is unset", () => {
+    const enabled = resolveEnabledProtocols({
+      NEBUTRA_API_PROTOCOLS: "rest,orpc",
+    });
+
+    expect(enabled.has("rest")).toBe(true);
+    expect(enabled.has("orpc")).toBe(true);
+    expect(enabled.has("trpc")).toBe(false);
+  });
+
+  it("prefers API_PROTOCOLS over NEBUTRA_API_PROTOCOLS", () => {
+    const enabled = resolveEnabledProtocols({
+      API_PROTOCOLS: "rest",
+      NEBUTRA_API_PROTOCOLS: "rest,trpc",
+    });
+
+    expect(enabled.has("trpc")).toBe(false);
+  });
+
   it("ignores unknown protocol values in the API_PROTOCOLS list", () => {
     const enabled = resolveEnabledProtocols({
       API_PROTOCOLS: "rest,foo",

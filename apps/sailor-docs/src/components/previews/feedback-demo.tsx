@@ -1,11 +1,2 @@
-"use client";
-
-import { Feedback } from "@nebutra/ui/primitives";
-
-export function FeedbackDemo() {
-  return (
-    <div className="h-40 px-4 py-8 flex w-full items-center justify-center">
-      <Feedback dryRun label="Feedback" />
-    </div>
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/feedback-demo";
+export * from "@nebutra/docs-shared/components/previews/feedback-demo";

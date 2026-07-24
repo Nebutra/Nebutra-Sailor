@@ -336,10 +336,19 @@ export function registerStatsCommand(program: Command) {
     .command("*", { isDefault: true })
     .description("Show monorepo overview")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options: Record<string, unknown>) => {
+      const globalOptions =
+        typeof (options as { optsWithGlobals?: () => Record<string, unknown> }).optsWithGlobals ===
+        "function"
+          ? (options as { optsWithGlobals: () => Record<string, unknown> }).optsWithGlobals()
+          : options;
       await handleStatsOverview({
-        format: options.format || globalOptions.format,
+        format:
+          typeof options.format === "string"
+            ? options.format
+            : typeof globalOptions.format === "string"
+              ? globalOptions.format
+              : undefined,
       });
     });
 

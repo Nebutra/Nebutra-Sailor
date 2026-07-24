@@ -151,7 +151,7 @@ async function handleAuthStatus(options: AuthCommandOptions) {
     }
   }
 
-  formatOutput(status, options.format, "auth:status");
+  formatOutput({ ...status } as Record<string, unknown>, options.format, "auth:status");
 }
 
 /**

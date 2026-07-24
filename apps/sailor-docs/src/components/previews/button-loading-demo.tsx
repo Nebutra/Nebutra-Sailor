@@ -1,7 +1,2 @@
-"use client";
-
-import { Button } from "@nebutra/ui/primitives";
-
-export function ButtonLoadingDemo() {
-  return <Button loading>Saving…</Button>;
-}
+export type * from "@nebutra/docs-shared/components/previews/button-loading-demo";
+export * from "@nebutra/docs-shared/components/previews/button-loading-demo";

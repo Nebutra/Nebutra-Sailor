@@ -1,3 +1,12 @@
+import type { Command } from "commander";
+import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
+
+type OutputFormat = "json" | "plain" | "table";
+function asOutputFormat(value: unknown): OutputFormat | undefined {
+  if (value === "json" || value === "plain" || value === "table") return value;
+  return undefined;
+}
+
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { pnpmRun, turboRun } from "../utils/delegate";
@@ -92,7 +101,7 @@ export async function testCommand(options: TestOptions) {
             ? "pnpm test:watch"
             : "pnpm test",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -157,7 +166,7 @@ export async function testE2eCommand(options: E2EOptions) {
         },
         task: options.ci ? "pnpm e2e:ci" : options.ui ? "pnpm e2e:ui" : "pnpm e2e",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -209,7 +218,7 @@ export async function testSizeCommand(options: SizeOptions) {
         },
         task: options.why ? "pnpm size:why" : "pnpm size",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -248,7 +257,7 @@ export async function testArchCommand(options: Omit<TestOptions, "watch" | "cove
         command: "test arch",
         task: "pnpm test:arch",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -273,8 +282,7 @@ export async function testArchCommand(options: Omit<TestOptions, "watch" | "cove
 /**
  * Register test and test subcommands
  */
-export function registerTestCommand(program: any) {
-  // ─── test command ─────────────────────────────────────────
+export const registerTestCommand: RegisterCommand = (program) => {
   const testCmd = program
     .command("test [subcommand]")
     .description("Run tests (Vitest, Playwright, bundle size, architecture)")
@@ -282,90 +290,82 @@ export function registerTestCommand(program: any) {
     .option("--coverage", "Generate coverage report (unit tests only)")
     .option("--app <name>", `Run tests for specific app: ${VALID_APPS.join(", ")}`)
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (subcommand: any, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(
+      async (
+        subcommand: string | undefined,
+        options: Record<string, unknown>,
+        command: Command,
+      ) => {
+        const globalOptions = mergeGlobalOptions(options, command);
+        const base = {
+          dryRun: Boolean(options.dryRun),
+          quiet: Boolean(globalOptions.quiet),
+          verbose: Boolean(globalOptions.verbose),
+          format: asOutputFormat(globalOptions.format),
+        };
 
-      // Handle subcommands
-      if (subcommand === "e2e") {
-        await testE2eCommand({
-          ui: options.ui || false,
-          ci: options.ci || false,
-          dryRun: options.dryRun || false,
-          quiet: globalOptions.quiet || false,
-          verbose: globalOptions.verbose || false,
-          format: globalOptions.format,
-        });
-      } else if (subcommand === "size") {
-        await testSizeCommand({
-          why: options.why || false,
-          dryRun: options.dryRun || false,
-          quiet: globalOptions.quiet || false,
-          verbose: globalOptions.verbose || false,
-          format: globalOptions.format,
-        });
-      } else if (subcommand === "arch") {
-        await testArchCommand({
-          dryRun: options.dryRun || false,
-          quiet: globalOptions.quiet || false,
-          verbose: globalOptions.verbose || false,
-          format: globalOptions.format,
-        });
-      } else {
-        // Default: unit tests
-        await testCommand({
-          ...options,
-          quiet: globalOptions.quiet || false,
-          verbose: globalOptions.verbose || false,
-          format: globalOptions.format,
-        });
-      }
-    });
+        if (subcommand === "e2e") {
+          await testE2eCommand({ ...base, ui: Boolean(options.ui), ci: Boolean(options.ci) });
+        } else if (subcommand === "size") {
+          await testSizeCommand({ ...base, why: Boolean(options.why) });
+        } else if (subcommand === "arch") {
+          await testArchCommand(base);
+        } else {
+          await testCommand({
+            ...base,
+            watch: Boolean(options.watch),
+            coverage: Boolean(options.coverage),
+            app: typeof options.app === "string" ? options.app : undefined,
+          });
+        }
+      },
+    );
 
-  // ─── test e2e subcommand ──────────────────────────────────
   testCmd
     .command("e2e")
     .description("Run end-to-end tests (Playwright)")
     .option("--ui", "Open interactive UI mode")
     .option("--ci", "Run in CI mode with strict options")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await testE2eCommand({
-        ...options,
-        quiet: globalOptions.quiet || false,
-        verbose: globalOptions.verbose || false,
-        format: globalOptions.format,
+        ui: Boolean(options.ui),
+        ci: Boolean(options.ci),
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
       });
     });
 
-  // ─── test size subcommand ─────────────────────────────────
   testCmd
     .command("size")
     .description("Check bundle size (analyze largest assets)")
     .option("--why", "Show breakdown of largest bundle assets")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await testSizeCommand({
-        ...options,
-        quiet: globalOptions.quiet || false,
-        verbose: globalOptions.verbose || false,
-        format: globalOptions.format,
+        why: Boolean(options.why),
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
       });
     });
 
-  // ─── test arch subcommand ────────────────────────────────
   testCmd
     .command("arch")
     .description("Run architecture tests (verify design layer isolation)")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await testArchCommand({
-        dryRun: options.dryRun || false,
-        quiet: globalOptions.quiet || false,
-        verbose: globalOptions.verbose || false,
-        format: globalOptions.format,
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
       });
     });
-}
+};

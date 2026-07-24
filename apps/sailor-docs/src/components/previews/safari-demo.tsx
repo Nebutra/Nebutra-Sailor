@@ -1,13 +1,2 @@
-import { Safari } from "@nebutra/ui/primitives";
-
-export function SafariDemo() {
-  return (
-    <div className="max-w-4xl px-4 py-8 w-full">
-      <Safari
-        url="nebutra.com"
-        className="h-[400px] w-full"
-        imageSrc="https://nebutra.com/og-image.png"
-      />
-    </div>
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/safari-demo";
+export * from "@nebutra/docs-shared/components/previews/safari-demo";

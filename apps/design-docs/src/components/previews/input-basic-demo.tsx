@@ -1,7 +1,2 @@
-"use client";
-
-import { Input } from "@nebutra/ui/primitives";
-
-export function InputBasicDemo() {
-  return <Input aria-label="Project name" placeholder="my-awesome-project" />;
-}
+export type * from "@nebutra/docs-shared/components/previews/input-basic-demo";
+export * from "@nebutra/docs-shared/components/previews/input-basic-demo";

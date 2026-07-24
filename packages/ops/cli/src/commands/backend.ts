@@ -1,7 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import * as p from "@clack/prompts";
+import type { Command } from "commander";
 import pc from "picocolors";
+import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
 import { findMonorepoRoot } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
@@ -243,7 +245,7 @@ export async function backendInitCommand(
   }
 }
 
-export function registerBackendCommand(program: any) {
+export const registerBackendCommand: RegisterCommand = (program) => {
   const cmd = program.command("backend").description("Scaffold backend services (ts | py)");
 
   cmd
@@ -251,13 +253,13 @@ export function registerBackendCommand(program: any) {
     .description("Scaffold a backend service (runtime: ts | py)")
     .option("--name <name>", "Service name (Python only; prompted if omitted)")
     .option("--dry-run", "Preview files that would be created (exit code 10)")
-    .action(async (runtime: string, options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (runtime: string, options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await backendInitCommand(runtime, {
-        name: options.name,
-        dryRun: options.dryRun || false,
-        yes: globalOptions.yes || false,
-        quiet: globalOptions.quiet || false,
+        name: typeof options.name === "string" ? options.name : undefined,
+        dryRun: Boolean(options.dryRun),
+        yes: Boolean(globalOptions.yes),
+        quiet: Boolean(globalOptions.quiet),
       });
     });
-}
+};

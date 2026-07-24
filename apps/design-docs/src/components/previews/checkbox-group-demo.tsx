@@ -1,11 +1,2 @@
-import { Checkbox, CheckboxGroup } from "@nebutra/ui/primitives";
-
-export function CheckboxGroupDemo() {
-  return (
-    <CheckboxGroup label="Select features">
-      <Checkbox>Analytics</Checkbox>
-      <Checkbox>API Access</Checkbox>
-      <Checkbox>SSO</Checkbox>
-    </CheckboxGroup>
-  );
-}
+export type * from "@nebutra/docs-shared/components/previews/checkbox-group-demo";
+export * from "@nebutra/docs-shared/components/previews/checkbox-group-demo";

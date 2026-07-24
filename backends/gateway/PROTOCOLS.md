@@ -39,28 +39,36 @@ Protocol enablement is resolved by
 `resolveEnabledProtocols(envSource)`, which returns a
 `Set<"rest" | "trpc" | "orpc">`. **REST is always in the set.**
 
+**Production default: REST only.** tRPC / oRPC are optional internal adapters.
+
 Resolution precedence (first that applies wins):
 
 1. **`API_PROTOCOLS`** — canonical comma list, e.g. `"rest,trpc,orpc"`.
    - Values are trimmed, lowercased, and validated against the `rest|trpc|orpc`
      vocabulary (same word-list as `@nebutra/preset`'s `apiProtocols`).
    - Unknown tokens are ignored (`"rest,foo"` → just `rest`).
-   - **When `API_PROTOCOLS` is set, the legacy booleans below are NOT consulted.**
+   - **When `API_PROTOCOLS` is set, legacy booleans are NOT consulted.**
      `API_PROTOCOLS="rest"` + `ENABLE_TRPC="true"` → tRPC stays **off**.
-2. **Legacy `ENABLE_TRPC` / `ENABLE_ORPC`** (`"true"`) — back-compat only, used
-   only when `API_PROTOCOLS` is absent/empty.
-3. **Default** — REST only.
+2. **`NEBUTRA_API_PROTOCOLS`** — alias written by `@nebutra/preset` scaffolds
+   (same format as #1). Used only when `API_PROTOCOLS` is absent.
+3. **Legacy `ENABLE_TRPC` / `ENABLE_ORPC`** (`"true"`) — **deprecated**, remove
+   by **2026-10-01**. Used only when neither list env is set.
+4. **Default** — REST only.
 
 ```bash
-# Canonical
+# Canonical (preferred)
+API_PROTOCOLS="rest"             # production default (explicit)
+API_PROTOCOLS="rest,trpc"        # REST + tRPC for first-party TS apps
 API_PROTOCOLS="rest,trpc,orpc"   # all three
-API_PROTOCOLS="rest,trpc"        # REST + tRPC; oRPC off
-API_PROTOCOLS="rest"             # REST only (explicit)
 
-# Legacy (back-compat, only when API_PROTOCOLS is unset)
+# Preset alias (same semantics)
+NEBUTRA_API_PROTOCOLS="rest,trpc"
+
+# Legacy (deprecated — do not use in new deploys; sunset 2026-10-01)
 ENABLE_TRPC="true"
 ENABLE_ORPC="true"
 ```
+
 
 ### Mount points
 

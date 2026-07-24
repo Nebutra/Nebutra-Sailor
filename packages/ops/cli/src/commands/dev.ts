@@ -1,8 +1,16 @@
 import * as p from "@clack/prompts";
+import type { Command } from "commander";
 import pc from "picocolors";
+import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
 import { delegate, pnpmRun, turboRun } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { dryRunOutput } from "../utils/output";
+
+type OutputFormat = "json" | "plain" | "table";
+function asOutputFormat(value: unknown): OutputFormat | undefined {
+  if (value === "json" || value === "plain" || value === "table") return value;
+  return undefined;
+}
 
 interface DevOptions {
   app?: string;
@@ -67,7 +75,7 @@ export async function devCommand(options: DevOptions) {
         },
         task: options.app ? "turbo dev" : "turbo dev (all apps)",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -115,7 +123,7 @@ export async function buildCommand(options: BuildOptions) {
         },
         task: options.strict ? "pnpm build:strict" : "pnpm build",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -171,7 +179,7 @@ export async function lintCommand(options: LintOptions) {
         },
         task: options.fix ? "pnpm lint:fix" : "pnpm lint",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -230,7 +238,7 @@ export async function typecheckCommand(options: TypecheckOptions) {
         },
         task: "turbo typecheck",
       },
-      { format: options.format as any },
+      { format: asOutputFormat(options.format) },
     );
     process.exit(ExitCode.DRY_RUN_OK);
   }
@@ -264,20 +272,21 @@ export async function typecheckCommand(options: TypecheckOptions) {
 /**
  * Register dev, build, lint, and typecheck as top-level commands
  */
-export function registerDevCommand(program: any) {
+export const registerDevCommand: RegisterCommand = (program) => {
   // ─── dev command ──────────────────────────────────────────
   program
     .command("dev")
     .description("Start development servers (turbo dev)")
     .option("--app <name>", `App to run: ${VALID_APPS.join(", ")}`)
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await devCommand({
-        ...options,
-        quiet: globalOptions.quiet || false,
-        verbose: globalOptions.verbose || false,
-        format: globalOptions.format,
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
       });
     });
 
@@ -288,13 +297,15 @@ export function registerDevCommand(program: any) {
     .option("--app <name>", `App to build: ${VALID_APPS.join(", ")}`)
     .option("--strict", "Run strict build with UI governance verification (pnpm build:strict)")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await buildCommand({
-        ...options,
-        quiet: globalOptions.quiet || false,
-        verbose: globalOptions.verbose || false,
-        format: globalOptions.format,
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        strict: Boolean(options.strict),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
       });
     });
 
@@ -305,13 +316,15 @@ export function registerDevCommand(program: any) {
     .option("--app <name>", `App to lint: ${VALID_APPS.join(", ")}`)
     .option("--fix", "Fix linting issues automatically")
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await lintCommand({
-        ...options,
-        quiet: globalOptions.quiet || false,
-        verbose: globalOptions.verbose || false,
-        format: globalOptions.format,
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        fix: Boolean(options.fix),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
       });
     });
 
@@ -321,13 +334,14 @@ export function registerDevCommand(program: any) {
     .description("Type-check with TypeScript (turbo typecheck)")
     .option("--app <name>", `App to typecheck: ${VALID_APPS.join(", ")}`)
     .option("--dry-run", "Preview what would run (exit code 10)")
-    .action(async (options: any) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
+    .action(async (options: Record<string, unknown>, command: Command) => {
+      const globalOptions = mergeGlobalOptions(options, command);
       await typecheckCommand({
-        ...options,
-        quiet: globalOptions.quiet || false,
-        verbose: globalOptions.verbose || false,
-        format: globalOptions.format,
+        app: typeof options.app === "string" ? options.app : undefined,
+        dryRun: Boolean(options.dryRun),
+        quiet: Boolean(globalOptions.quiet),
+        verbose: Boolean(globalOptions.verbose),
+        format: asOutputFormat(globalOptions.format),
       });
     });
-}
+};

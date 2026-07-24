@@ -1,7 +1,2 @@
-"use client";
-
-import { Toggle } from "@nebutra/ui/primitives";
-
-export function Toggle4Demo() {
-  return <Toggle size="normal">Password Protection</Toggle>;
-}
+export type * from "@nebutra/docs-shared/components/previews/toggle-4-demo";
+export * from "@nebutra/docs-shared/components/previews/toggle-4-demo";
