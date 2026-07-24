@@ -4445,12 +4445,14 @@
         },
         "responses": {
           "200": {
-            "description": "Chat completion response (JSON or SSE stream)",
+            "description": "Chat completion response (JSON body or SSE stream)",
             "content": {
               "application/json": {
+                "schema": {}
+              },
+              "text/event-stream": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": {}
+                  "type": "string"
                 }
               }
             }
@@ -7444,52 +7446,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "integrations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string",
-                            "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "isActive": {
-                            "type": "boolean"
-                          },
-                          "lastSyncAt": {
-                            "type": "string",
-                            "nullable": true,
-                            "format": "date-time"
-                          },
-                          "settings": {
-                            "type": "object",
-                            "nullable": true,
-                            "additionalProperties": {}
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updatedAt": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": ["id", "type", "name", "isActive"]
-                      }
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": ["integrations", "total"]
+                  "description": "Integration JSON payload"
                 }
               }
             }
@@ -7535,26 +7492,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string",
-                      "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "isActive": {
-                      "type": "boolean"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  },
-                  "required": ["id", "type", "name", "isActive"]
+                  "description": "Integration JSON payload"
                 }
               }
             }
@@ -7579,45 +7517,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string",
-                      "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "isActive": {
-                      "type": "boolean"
-                    },
-                    "lastSyncAt": {
-                      "type": "string",
-                      "nullable": true,
-                      "format": "date-time"
-                    },
-                    "settings": {
-                      "type": "object",
-                      "nullable": true,
-                      "additionalProperties": {}
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "credentials": {
-                      "type": "object",
-                      "nullable": true,
-                      "additionalProperties": {}
-                    }
-                  },
-                  "required": ["id", "type", "name", "isActive"]
+                  "description": "Integration JSON payload"
                 }
               }
             }
@@ -7664,31 +7564,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string",
-                      "enum": ["SHOPIFY", "SHOPLINE", "STRIPE", "CUSTOM"]
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "isActive": {
-                      "type": "boolean"
-                    },
-                    "settings": {
-                      "type": "object",
-                      "nullable": true,
-                      "additionalProperties": {}
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  },
-                  "required": ["id", "type", "name", "isActive"]
+                  "description": "Integration JSON payload"
                 }
               }
             }
@@ -7708,15 +7584,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "deleted": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["id", "deleted"]
+                  "description": "Integration JSON payload"
                 }
               }
             }

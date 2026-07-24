@@ -77,9 +77,11 @@ const chatCompletionsRoute = createRoute({
   },
   responses: {
     200: {
-      description: "Chat completion response (JSON or SSE stream)",
+      description: "Chat completion response (JSON body or SSE stream)",
       content: {
-        "application/json": { schema: z.record(z.string(), z.unknown()) },
+        // z.any(): dual JSON/SSE cannot be expressed as a single TypedResponse.
+        "application/json": { schema: z.any() },
+        "text/event-stream": { schema: z.string() },
       },
     },
     401: {
