@@ -47,6 +47,11 @@
       "import": "./dist/react/index.js",
       "default": "./dist/react/index.js"
     },
+    "./react/clerk-enterprise-sso": {
+      "types": "./dist/react/use-clerk-enterprise-sso.d.ts",
+      "import": "./dist/react/use-clerk-enterprise-sso.js",
+      "default": "./dist/react/use-clerk-enterprise-sso.js"
+    },
     "./components": {
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js",

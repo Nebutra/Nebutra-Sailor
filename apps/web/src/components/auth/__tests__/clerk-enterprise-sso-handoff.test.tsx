@@ -5,14 +5,37 @@ import userEvent from "@testing-library/user-event";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const ssoMock = vi.hoisted(() => vi.fn());
+const startMock = vi.hoisted(() => vi.fn());
+const retryMock = vi.hoisted(() => vi.fn());
+const ssoState = vi.hoisted(() => ({
+  error: null as unknown | null,
+  isReady: true,
+  isStarting: false,
+}));
 
-vi.mock("@clerk/nextjs", () => ({
-  useSignIn: () => ({
-    isLoaded: true,
-    signIn: {
-      sso: ssoMock,
-    },
+vi.mock("@nebutra/auth/react/clerk-enterprise-sso", () => ({
+  getClerkSsoErrorMessage: (error: unknown) => {
+    if (!error || typeof error !== "object") return null;
+    if ("message" in error && typeof error.message === "string") return error.message;
+    if ("errors" in error && Array.isArray(error.errors)) {
+      const first = error.errors.find(
+        (entry: unknown): entry is { message: string } =>
+          Boolean(entry) &&
+          typeof entry === "object" &&
+          entry !== null &&
+          "message" in entry &&
+          typeof (entry as { message: unknown }).message === "string",
+      );
+      return first?.message ?? null;
+    }
+    return null;
+  },
+  useClerkEnterpriseSso: () => ({
+    isReady: ssoState.isReady,
+    isStarting: ssoState.isStarting,
+    error: ssoState.error,
+    start: startMock,
+    retry: retryMock,
   }),
 }));
 
@@ -54,15 +77,18 @@ import { ClerkEnterpriseSsoHandoff } from "../clerk-enterprise-sso-handoff";
 
 describe("ClerkEnterpriseSsoHandoff", () => {
   beforeEach(() => {
-    ssoMock.mockResolvedValue({});
+    ssoState.error = null;
+    ssoState.isReady = true;
+    ssoState.isStarting = false;
+    startMock.mockReset();
+    retryMock.mockReset();
   });
 
   afterEach(() => {
     cleanup();
-    ssoMock.mockReset();
   });
 
-  it("starts the Clerk Enterprise SSO flow with the discovered identifier", async () => {
+  it("shows loading status while the package hook handles SSO kickoff", () => {
     render(
       <ClerkEnterpriseSsoHandoff
         identifier="owner@nebutra.com"
@@ -71,20 +97,15 @@ describe("ClerkEnterpriseSsoHandoff", () => {
       />,
     );
 
-    await waitFor(() => {
-      expect(ssoMock).toHaveBeenCalledWith({
-        identifier: "owner@nebutra.com",
-        strategy: "enterprise_sso",
-        redirectUrl: "/dashboard",
-        redirectCallbackUrl: "/sign-in",
-      });
-    });
     expect(screen.getByRole("status")).toHaveTextContent("Redirecting...");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Continue with Enterprise SSO",
+    );
   });
 
-  it("lets the user retry if Clerk rejects the SSO start", async () => {
+  it("surfaces package-hook errors and wires retry", async () => {
     const user = userEvent.setup();
-    ssoMock.mockResolvedValueOnce({ error: { errors: [{ message: "Connection disabled" }] } });
+    ssoState.error = { errors: [{ message: "Connection disabled" }] };
 
     render(
       <ClerkEnterpriseSsoHandoff identifier="owner@nebutra.com" providerName="Nebutra Entra ID" />,
@@ -94,7 +115,7 @@ describe("ClerkEnterpriseSsoHandoff", () => {
     await user.click(screen.getByRole("button", { name: "Try again" }));
 
     await waitFor(() => {
-      expect(ssoMock).toHaveBeenCalledTimes(2);
+      expect(retryMock).toHaveBeenCalledTimes(1);
     });
   });
 });

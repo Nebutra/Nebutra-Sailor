@@ -1,10 +1,12 @@
 "use client";
 
-import { useSignIn } from "@clerk/nextjs";
+import {
+  getClerkSsoErrorMessage,
+  useClerkEnterpriseSso,
+} from "@nebutra/auth/react/clerk-enterprise-sso";
 import { Key } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ClerkEnterpriseSsoHandoffProps {
   identifier: string;
@@ -12,70 +14,24 @@ interface ClerkEnterpriseSsoHandoffProps {
   returnUrl?: string;
 }
 
-function getErrorMessage(error: unknown): string | null {
-  if (!error || typeof error !== "object") return null;
-
-  if ("message" in error && typeof error.message === "string") {
-    return error.message;
-  }
-
-  if ("errors" in error && Array.isArray(error.errors)) {
-    const first = error.errors.find(
-      (entry): entry is { message: string } =>
-        Boolean(entry) &&
-        typeof entry === "object" &&
-        "message" in entry &&
-        typeof entry.message === "string",
-    );
-    return first?.message ?? null;
-  }
-
-  return null;
-}
-
+/**
+ * App-shell UI for Clerk Enterprise SSO.
+ *
+ * SSO kickoff lives in `@nebutra/auth` (`useClerkEnterpriseSso`) so this file
+ * never imports the Clerk SDK directly.
+ */
 export function ClerkEnterpriseSsoHandoff({
   identifier,
   providerName,
   returnUrl,
 }: ClerkEnterpriseSsoHandoffProps) {
   const t = useTranslations("auth.signIn");
-  const { signIn } = useSignIn();
-  const startedRef = useRef(false);
-  const [error, setError] = useState("");
-  const redirectUrl = returnUrl ?? "/";
+  const { error, retry } = useClerkEnterpriseSso({
+    identifier,
+    redirectUrl: returnUrl ?? "/",
+  });
 
-  const startSso = useCallback(() => {
-    if (!signIn || startedRef.current) return;
-
-    startedRef.current = true;
-    setError("");
-
-    void signIn
-      .sso({
-        identifier,
-        strategy: "enterprise_sso",
-        redirectUrl,
-        redirectCallbackUrl: "/sign-in",
-      })
-      .then((result) => {
-        if (result?.error) {
-          setError(getErrorMessage(result.error) ?? t("ssoError"));
-        }
-      })
-      .catch((err: unknown) => {
-        setError(getErrorMessage(err) ?? t("ssoError"));
-      });
-  }, [identifier, redirectUrl, signIn, t]);
-
-  useEffect(() => {
-    startSso();
-  }, [startSso]);
-
-  function retry() {
-    startedRef.current = false;
-    setError("");
-    startSso();
-  }
+  const errorMessage = error ? (getClerkSsoErrorMessage(error) ?? t("ssoError")) : "";
 
   return (
     <div className="w-full">
@@ -92,14 +48,14 @@ export function ClerkEnterpriseSsoHandoff({
         </p>
       </div>
 
-      {error ? (
+      {errorMessage ? (
         <div className="flex flex-col gap-4">
           <p
             className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
             role="alert"
             aria-live="polite"
           >
-            {error}
+            {errorMessage}
           </p>
           <Button
             type="button"

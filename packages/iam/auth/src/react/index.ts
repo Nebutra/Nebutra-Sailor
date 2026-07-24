@@ -40,3 +40,6 @@ export { useAuth, useOrganization, useSession, useUser } from "./hooks";
 // Provider-specific wrappers (for manual composition if needed)
 export { BetterAuthProvider } from "./providers/better-auth-provider";
 export { ClerkProvider } from "./providers/clerk-provider";
+// Clerk Enterprise SSO lives on a dedicated subpath so the main react barrel
+// does not statically pull `@clerk/nextjs` into non-Clerk apps:
+//   import { useClerkEnterpriseSso } from "@nebutra/auth/react/clerk-enterprise-sso"

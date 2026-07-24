@@ -97,7 +97,8 @@ describe("auth provider boundary", () => {
      *   - tsekaluk-dev: portfolio site with its own better-auth wiring
      *   - sleptons: legacy Clerk shell (migrate later)
      *   - web google-one-tap: next-auth/jwt encode helper only
-     *   - web clerk-enterprise-sso-handoff: temporary Clerk client bridge
+     *
+     * Closed: clerk-enterprise-sso-handoff → @nebutra/auth useClerkEnterpriseSso
      */
     const { readdir, readFile: rf, stat } = await import("node:fs/promises");
     const root = join(process.cwd(), "apps");
@@ -109,7 +110,6 @@ describe("auth provider boundary", () => {
       "/sleptons/",
       "/web/src/lib/auth/google-one-tap.ts",
       "/web/src/lib/auth/__tests__/google-one-tap.test.ts",
-      "/web/src/components/auth/clerk-enterprise-sso-handoff.tsx",
     ];
 
     async function* walk(dir: string): AsyncGenerator<string> {
