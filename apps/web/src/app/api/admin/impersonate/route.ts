@@ -1,4 +1,9 @@
 import { auditLogger } from "@nebutra/audit";
+import {
+  getConfiguredAuthProvider,
+  isCapabilityDeclared,
+  isCapabilityEffective,
+} from "@nebutra/auth";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
@@ -7,45 +12,40 @@ import { hasPermission, resolveRole } from "@/lib/permissions";
 /**
  * Admin impersonation endpoint.
  *
- * POST { userId } → returns 501 until the auth layer consumes impersonation state
- * DELETE         → clears the cookie
+ * Multi-provider contract (option A):
+ *   - Declared matrix + runtime probe both must support `impersonation`.
+ *   - Today every provider has declared `impersonation: false` → **501**.
+ *   - No half-wired cookie path until an adapter implements end-to-end support.
  *
- * TODO(#126 auth-layer-integration): The cookie set here is NOT yet consumed by the
- * server-side auth layer. To complete the impersonation flow, `apps/web/src/lib/auth.ts`
- * (specifically the `getAuth()` resolver) must be wired to:
- *   1. Read `nebutra-impersonate` from the cookie store on each request.
- *   2. Verify its HMAC signature with `BETTER_AUTH_SECRET`.
- *   3. If valid AND the original session belongs to an admin, swap the resolved
- *      `userId` to the impersonated target while preserving an audit trail
- *      (e.g. `impersonatedBy` field).
- *   4. Refuse to elevate privilege — impersonation must drop admin scopes
- *      so the admin sees the target user's exact permission set.
- *
- * This separation keeps the surface area small and avoids merge conflicts with
- * concurrent auth-layer work in flight from parallel subagents. See:
- *   docs/plans/admin-impersonation-rollout.md
+ * DELETE clears any leftover cookie from earlier experiments (safe no-op).
  */
 
 const IMPERSONATE_COOKIE = "nebutra-impersonate";
-const IMPERSONATION_DISABLED_ERROR =
-  "Admin impersonation is disabled until auth-layer integration is complete.";
 
 function isProduction() {
   return process.env.NODE_ENV === "production";
 }
 
-function buildSetCookie(value: string, maxAgeSeconds: number) {
-  const attrs = [
-    `${IMPERSONATE_COOKIE}=${value}`,
-    "Path=/",
-    "HttpOnly",
-    "SameSite=Lax",
-    `Max-Age=${maxAgeSeconds}`,
-  ];
+function buildClearCookie() {
+  const attrs = [`${IMPERSONATE_COOKIE}=`, "Path=/", "HttpOnly", "SameSite=Lax", "Max-Age=0"];
   if (isProduction()) {
     attrs.push("Secure");
   }
   return attrs.join("; ");
+}
+
+function impersonationUnsupportedResponse() {
+  const provider = getConfiguredAuthProvider();
+  return NextResponse.json(
+    {
+      error: "Impersonation is not available for this auth provider.",
+      code: "AUTH_CAPABILITY_UNSUPPORTED",
+      capability: "impersonation",
+      provider,
+      declared: isCapabilityDeclared(provider, "impersonation"),
+    },
+    { status: 501 },
+  );
 }
 
 export async function POST(_request: Request) {
@@ -60,7 +60,31 @@ export async function POST(_request: Request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  return NextResponse.json({ error: IMPERSONATION_DISABLED_ERROR }, { status: 501 });
+  const provider = getConfiguredAuthProvider();
+  // Prefer live provider capabilities when present on the auth bag.
+  const runtimeCaps =
+    auth && typeof auth === "object" && "capabilities" in auth
+      ? (auth as { capabilities?: Parameters<typeof isCapabilityEffective>[2] }).capabilities
+      : undefined;
+
+  if (!isCapabilityEffective(provider, "impersonation", runtimeCaps ?? null)) {
+    // Even when declared true in the future, refuse until effective is true.
+    if (!isCapabilityDeclared(provider, "impersonation")) {
+      return impersonationUnsupportedResponse();
+    }
+    return NextResponse.json(
+      {
+        error: "Impersonation is declared but not mounted on the live auth adapter.",
+        code: "AUTH_CAPABILITY_UNAVAILABLE",
+        capability: "impersonation",
+        provider,
+      },
+      { status: 501 },
+    );
+  }
+
+  // Future: adapter-backed impersonation start goes here.
+  return impersonationUnsupportedResponse();
 }
 
 export async function DELETE(request: Request) {
@@ -78,12 +102,10 @@ export async function DELETE(request: Request) {
   }).log({
     action: "admin.impersonate.ended",
     outcome: "success",
-    resource: { type: "user", id: auth.userId },
-    severity: "warning",
-    metadata: { adminUserId: auth.userId },
+    resource: { type: "session", id: auth.userId },
   });
 
   const response = NextResponse.json({ ok: true });
-  response.headers.append("set-cookie", buildSetCookie("", 0));
+  response.headers.set("Set-Cookie", buildClearCookie());
   return response;
 }

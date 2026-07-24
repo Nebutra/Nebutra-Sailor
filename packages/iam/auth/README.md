@@ -1,8 +1,11 @@
 # @nebutra/auth
 
-> Provider-agnostic authentication abstraction layer supporting Clerk, Better Auth, and NextAuth (Auth.js v5).
+> Provider-agnostic authentication abstraction for **multi-provider parallel**
+> (Better Auth default, Clerk enterprise option, NextAuth/Supabase migration).
 >
-> Three switchable providers — pick at scaffold time (`create-sailor --auth=...`) or at runtime via the `AUTH_PROVIDER` env var. The server / React / middleware surfaces stay identical regardless of provider.
+> Product apps import **only this package**. Adapters live inside
+> `src/providers/*`. Switch at scaffold (`create-sailor --auth=...`) or runtime
+> via `AUTH_PROVIDER` / `NEXT_PUBLIC_AUTH_PROVIDER`.
 
 ## Installation
 
@@ -59,7 +62,37 @@ const middleware = createAuthMiddleware({ provider: "clerk" });
 
 ### Types
 
-`User`, `Session`, `Organization`, `AuthConfig`, `AuthProviderId`, `SignInMethod`, `CreateUserInput`, `CreateOrgInput`
+`User`, `Session`, `Organization`, `AuthConfig`, `AuthProviderId`, `AuthCapabilities`,
+`SignInMethod`, `CreateUserInput`, `CreateOrgInput`
+
+### Multi-provider matrix
+
+```ts
+import {
+  AUTH_PROVIDER_MATRIX,
+  getConfiguredAuthProvider,
+  isCapabilityDeclared,
+  isCapabilityEffective,
+} from "@nebutra/auth";
+
+const provider = getConfiguredAuthProvider();
+const profile = AUTH_PROVIDER_MATRIX[provider];
+// UI gate: declared AND runtime probe
+if (isCapabilityEffective(provider, "organizations", auth.capabilities)) {
+  // show org switcher
+}
+```
+
+| Provider | Tier | Notes |
+|----------|------|--------|
+| **better-auth** | first-class (default) | Self-hosted reference implementation |
+| **clerk** | optional-enterprise | Explicit `AUTH_PROVIDER=clerk` |
+| **nextauth** | migration | Scaffold / migrate only |
+| **supabase** | migration | Scaffold / experimental |
+| **dev** | dev-only | Synthetic local sessions |
+
+**Impersonation** is declared `false` for all providers until an adapter ships
+end-to-end support (product returns `501 AUTH_CAPABILITY_UNSUPPORTED`).
 
 ## Configuration
 

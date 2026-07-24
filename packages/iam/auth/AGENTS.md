@@ -6,10 +6,31 @@ Execution contract for Nebutra's provider-agnostic auth package.
 
 Applies to everything under `packages/iam/auth/`.
 
+## Multi-provider parallel (product model)
+
+Parallel providers are **intentional** (platform / create-sailor). Product code
+still has **one import surface**: `@nebutra/auth` (and `/react`, `/client`,
+`/middleware`). Apps must not import `@clerk/*`, `better-auth`, or `next-auth`
+directly (architecture test + allowlist for known exceptions).
+
+Two capability layers must both pass before UI exposes a feature:
+
+1. **Declared matrix** — `src/provider-matrix.ts` (`AUTH_PROVIDER_MATRIX`, tiers)
+2. **Runtime probe** — `AuthProvider.capabilities` (plugins actually mounted)
+
+AND them with `isCapabilityEffective(provider, feature, runtimeCaps)`.
+
+Tiers: `first-class` (better-auth default) · `optional-enterprise` (clerk) ·
+`migration` (nextauth, supabase) · `dev-only` (dev).
+
+Impersonation is **declared false** for all providers until an adapter
+implements it end-to-end — no half-cookie product path.
+
 ## Source Of Truth
 
 - Public package surface and subpath exports: `package.json`, `src/index.ts`
 - Canonical auth contracts and normalized domain types: `src/types.ts`
+- Static multi-provider matrix: `src/provider-matrix.ts`
 - Server-side provider selection and lazy loading: `src/server.ts`
 - Middleware factory and framework boundary: `src/middleware.ts`
 - Client-facing hooks and React provider surface: `src/client.ts`,

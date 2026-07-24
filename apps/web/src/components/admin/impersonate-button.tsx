@@ -10,9 +10,12 @@ interface ImpersonateButtonProps {
 }
 
 /**
- * Triggers admin impersonation. Asks for confirm() before posting to
- * /api/admin/impersonate. On success, refreshes the current route so the
- * (future) auth-layer cookie consumer can re-resolve the session.
+ * Triggers admin impersonation via POST /api/admin/impersonate.
+ *
+ * Multi-provider matrix currently declares `impersonation: false` for all
+ * providers — the API returns 501 with AUTH_CAPABILITY_UNSUPPORTED until an
+ * adapter implements end-to-end support. This button surfaces that error
+ * rather than faking a session swap.
  */
 export function ImpersonateButton({ userId, userLabel, className }: ImpersonateButtonProps) {
   const router = useRouter();

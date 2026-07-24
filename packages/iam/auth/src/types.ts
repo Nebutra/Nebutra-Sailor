@@ -42,6 +42,18 @@ export interface Session {
 
   /** When the session expires. */
   expiresAt: Date;
+
+  /**
+   * Which adapter produced this session.
+   * Optional for backward compatibility; new adapters should set it.
+   */
+  provider?: AuthProviderId;
+
+  /**
+   * When set, the session is an admin-impersonation view of `userId`.
+   * Only valid if the provider matrix + runtime probe both support impersonation.
+   */
+  impersonatedBy?: string;
 }
 
 /** Canonical user record. */

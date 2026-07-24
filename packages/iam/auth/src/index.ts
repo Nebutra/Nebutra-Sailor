@@ -35,6 +35,15 @@ export type { AuthFeature, AuthFeatureContext } from "./features";
 export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
 // Middleware factory
 export { createAuthMiddleware } from "./middleware";
+// Static multi-provider matrix (declared support + product tier)
+export type { AuthProviderProfile, AuthProviderTier } from "./provider-matrix";
+export {
+  AUTH_PROVIDER_MATRIX,
+  getAuthProviderProfile,
+  isCapabilityDeclared,
+  isCapabilityEffective,
+  listFirstClassAuthProviders,
+} from "./provider-matrix";
 // Service-to-service HMAC helpers
 export type { ServiceTokenContext } from "./s2s";
 export { signServiceToken, verifyServiceToken } from "./s2s";

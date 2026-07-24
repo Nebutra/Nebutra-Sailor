@@ -198,7 +198,7 @@ export default async function AdminPage({ searchParams }: { searchParams: AdminS
             <li>
               <code className="font-mono text-xs">POST /api/admin/impersonate</code>
               {": "}
-              start a session as another user (signed cookie, audited)
+              capability-gated (matrix currently unsupported → 501 until an adapter ships it)
             </li>
           </ul>
         </Card>
