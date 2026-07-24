@@ -266,16 +266,28 @@ import { Input, Textarea, Select, SelectContent, SelectItem, SelectTrigger, Sele
 </Field>
 ```
 
-**Native opt-out** — add `data-allow-native` for legitimate cases:
+**Native opt-out** — add `data-allow-native` for legitimate **input/textarea** cases:
 
 ```tsx
 <input data-allow-native type="hidden" name="orgId" value={orgId} />  {/* form data */}
 <input data-allow-native type="file" ref={inputRef} className="sr-only" />  {/* trigger via button */}
-<select data-allow-native value={filters.outcome ?? ""} onChange={...}>  {/* needs empty-string "all" semantics */}
-  <option value="">All</option>
-  ...
-</select>
 ```
+
+**Never use raw `<select>` in product apps** — OS option menus cannot be themed (dark UI → white system popup). Use DS Select (compound or `options={…}` listbox). Empty “All” uses a sentinel value, not `value=""`:
+
+```tsx
+const ALL = "__all__";
+<Select
+  value={filters.outcome ?? ALL}
+  onValueChange={(v) => setOutcome(!v || v === ALL ? undefined : v)}
+  options={[
+    { value: ALL, label: "All" },
+    { value: "success", label: "Success" },
+  ]}
+/>
+```
+
+Escape hatch only with `// allow-os-select: <reason>` on the preceding line (lint still documents it; avoid).
 
 CI guard: `scripts/lint-no-raw-inputs.mjs` (wired into `pnpm lint`). Whitelist: storybook stories, design-docs/sailor-docs previews, tsekaluk-dev's own `ui/`, test files, all `packages/**/primitives/**`.
 

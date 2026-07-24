@@ -20,7 +20,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Short fixed-list native select with a compatible compound listbox API for advanced grouped menus.",
+          "Default options API is a themed listbox. Pass native for OS <select> only when required. Compound Trigger/Content for grouped menus.",
       },
     },
   },

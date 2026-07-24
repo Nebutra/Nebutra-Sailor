@@ -79,9 +79,16 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-export interface NativeSelectProps
-  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "children" | "size" | "prefix"> {
-  native?: true;
+export interface OptionsSelectProps
+  extends Omit<
+    React.SelectHTMLAttributes<HTMLSelectElement>,
+    "children" | "size" | "prefix" | "onChange"
+  > {
+  /**
+   * Explicit OS-native `<select>`. Prefer the default listbox.
+   * Only use when a true native control is required (rare).
+   */
+  native?: boolean;
   variant?: SelectVariant;
   options?: readonly SelectOption[];
   label?: string;
@@ -92,13 +99,20 @@ export interface NativeSelectProps
   error?: string;
   children?: React.ReactNode;
   wrapperClassName?: string;
+  /** HTML-select-compatible change handler (value on event.target.value). */
+  onChange?: (event: { target: { value: string; name?: string } }) => void;
+  /** Listbox value change (preferred). */
+  onValueChange?: (value: string | null) => void;
 }
+
+/** @deprecated Use OptionsSelectProps — native is opt-in only. */
+export type NativeSelectProps = OptionsSelectProps & { native?: true };
 
 export type CompoundSelectProps = SelectRoot.Props<string, false> & {
   native?: false;
 };
 
-export type SelectProps = NativeSelectProps | CompoundSelectProps;
+export type SelectProps = OptionsSelectProps | CompoundSelectProps;
 
 function getNativeSelectStyle(
   size: SelectSize,
@@ -145,6 +159,34 @@ function getSelectContentStyle(style: React.CSSProperties | undefined): SelectCo
   };
 }
 
+function textOf(node: React.ReactNode): string {
+  if (node == null || typeof node === "boolean") return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (React.isValidElement(node)) {
+    const props = node.props as { children?: React.ReactNode };
+    return textOf(props.children);
+  }
+  return "";
+}
+
+function optionsFromChildren(children: React.ReactNode): SelectOption[] {
+  const options: SelectOption[] = [];
+  React.Children.forEach(children, (child) => {
+    if (!React.isValidElement(child)) return;
+    if (child.type !== "option") return;
+    const props = child.props as {
+      value?: string | number;
+      disabled?: boolean;
+      children?: React.ReactNode;
+    };
+    const value = String(props.value ?? "");
+    const label = textOf(props.children) || value;
+    options.push(props.disabled === true ? { value, label, disabled: true } : { value, label });
+  });
+  return options;
+}
+
 function hasNativeOptionChildren(children: React.ReactNode) {
   let hasNativeChildren = false;
   React.Children.forEach(children, (child) => {
@@ -156,21 +198,23 @@ function hasNativeOptionChildren(children: React.ReactNode) {
   return hasNativeChildren;
 }
 
-function shouldRenderNativeSelect(props: SelectProps) {
-  if (props.native === true) return true;
-  if ("options" in props || "label" in props || "placeholder" in props || "error" in props) {
+/** Convenience surface (options / label / HTML onChange) — not compound Trigger children. */
+function isOptionsSelectApi(props: SelectProps): props is OptionsSelectProps {
+  if (props.native === true) return false;
+  if ("options" in props && props.options !== undefined) return true;
+  if ("label" in props && props.label !== undefined) return true;
+  if ("placeholder" in props && props.placeholder !== undefined) return true;
+  if ("error" in props && props.error !== undefined) return true;
+  if ("prefix" in props && props.prefix !== undefined) return true;
+  if ("suffix" in props && props.suffix !== undefined) return true;
+  if ("onChange" in props && typeof (props as OptionsSelectProps).onChange === "function") {
     return true;
   }
-  if ("prefix" in props || "suffix" in props || "size" in props || "onChange" in props) {
-    return true;
-  }
-  if ("children" in props && hasNativeOptionChildren(props.children)) {
-    return true;
-  }
-
+  if ("children" in props && hasNativeOptionChildren(props.children)) return true;
   return false;
 }
 
+/** OS-native path — opt-in only via native={true}. */
 function NativeSelect({
   id,
   variant = "default",
@@ -188,9 +232,10 @@ function NativeSelect({
   style,
   value,
   defaultValue,
+  onChange,
   "aria-describedby": ariaDescribedBy,
   ...props
-}: NativeSelectProps) {
+}: OptionsSelectProps) {
   const generatedId = React.useId();
   const selectId = id ?? generatedId;
   const errorId = error ? `${selectId}-error` : undefined;
@@ -243,6 +288,7 @@ function NativeSelect({
               : "pr-[var(--select-padding-x)]",
             className,
           )}
+          onChange={(event) => onChange?.(event)}
           {...props}
         >
           {placeholder && (
@@ -275,9 +321,148 @@ function NativeSelect({
   );
 }
 
-function Select(props: SelectProps) {
-  if (shouldRenderNativeSelect(props)) {
-    return <NativeSelect {...(props as NativeSelectProps)} />;
+/**
+ * Default convenience Select: DS listbox (styled popup), not OS chrome.
+ * Accepts options / label / placeholder / HTML-compatible onChange.
+ */
+function OptionsListboxSelect({
+  id,
+  variant = "default",
+  options: optionsProp,
+  label,
+  placeholder,
+  size = "medium",
+  prefix,
+  suffix,
+  disabled = false,
+  error,
+  className,
+  wrapperClassName,
+  children,
+  style,
+  value,
+  defaultValue,
+  name,
+  onChange,
+  onValueChange,
+  "aria-describedby": ariaDescribedBy,
+  "data-testid": dataTestId,
+}: OptionsSelectProps & { "data-testid"?: string }) {
+  const generatedId = React.useId();
+  const selectId = id ?? generatedId;
+  const errorId = error ? `${selectId}-error` : undefined;
+  const describedBy = [ariaDescribedBy, errorId].filter(Boolean).join(" ") || undefined;
+  const labelId = label ? `${selectId}-label` : undefined;
+
+  const options = React.useMemo(() => {
+    const fromProp = optionsProp?.map((o) => ({
+      value: String(o.value),
+      label: o.label,
+      ...(o.disabled === true ? { disabled: true as const } : {}),
+    }));
+    if (fromProp?.length) return fromProp;
+    return optionsFromChildren(children);
+  }, [optionsProp, children]);
+
+  const items = React.useMemo(
+    () => Object.fromEntries(options.map((o) => [o.value, o.label])),
+    [options],
+  );
+
+  const isControlled = value !== undefined;
+  const [uncontrolled, setUncontrolled] = React.useState(() =>
+    defaultValue !== undefined ? String(defaultValue) : "",
+  );
+  const current = isControlled ? String(value ?? "") : uncontrolled;
+  const selectedLabel = (current && items[current]) || current || "";
+
+  const handleValueChange = (next: string | null) => {
+    const resolved = next ?? "";
+    if (!isControlled) setUncontrolled(resolved);
+    onValueChange?.(next);
+    onChange?.({ target: { value: resolved, name } });
+  };
+
+  const fieldStyle = getNativeSelectStyle(size, style);
+
+  return (
+    <div className={cn("grid gap-[var(--select-field-gap)]", wrapperClassName)} style={fieldStyle}>
+      {label && (
+        <Label
+          id={labelId}
+          htmlFor={selectId}
+          className="text-[length:var(--select-label-size)] font-medium text-foreground capitalize"
+        >
+          {label}
+        </Label>
+      )}
+      {name ? <input type="hidden" name={name} value={current} data-allow-native /> : null}
+      <div
+        className={cn(
+          "relative flex items-center text-muted-foreground",
+          !disabled && "hover:text-foreground",
+        )}
+      >
+        {prefix && (
+          <span className="pointer-events-none absolute left-[var(--select-icon-inset)] z-10 inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+            {prefix}
+          </span>
+        )}
+        <BaseSelect.Root
+          value={current || null}
+          onValueChange={handleValueChange}
+          disabled={disabled}
+          items={items}
+        >
+          <SelectTrigger
+            id={selectId}
+            size={size}
+            data-testid={dataTestId}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={describedBy}
+            aria-labelledby={labelId}
+            className={cn(
+              variant === "ghost" && "border-transparent bg-transparent shadow-none",
+              prefix && "pl-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]",
+              className,
+            )}
+          >
+            <SelectValue placeholder={placeholder ?? "Select…"}>
+              {() => selectedLabel || placeholder || "Select…"}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value} disabled={option.disabled}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </BaseSelect.Root>
+        {suffix && (
+          <span className="pointer-events-none absolute right-[var(--select-icon-inset)] z-10 inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+            {suffix}
+          </span>
+        )}
+      </div>
+      {error && (
+        <span id={errorId} className="mt-[var(--select-message-gap)]">
+          <ErrorMessage size={size === "large" ? "medium" : "small"}>{error}</ErrorMessage>
+        </span>
+      )}
+    </div>
+  );
+}
+
+function Select(props: OptionsSelectProps): React.JSX.Element;
+function Select(props: CompoundSelectProps): React.JSX.Element;
+function Select(props: SelectProps): React.JSX.Element {
+  if (props.native === true) {
+    return <NativeSelect {...(props as OptionsSelectProps)} />;
+  }
+
+  if (isOptionsSelectApi(props)) {
+    return <OptionsListboxSelect {...(props as OptionsSelectProps)} />;
   }
 
   const { native: _native, ...rootProps } = props as CompoundSelectProps;
@@ -348,8 +533,6 @@ const SelectTrigger = ({
 );
 SelectTrigger.displayName = "SelectTrigger";
 
-// Mocking ScrollUp/Down since Base UI usually handles scrolling natively with CSS or uses different abstractions.
-// Returning null prevents API breakages for downstream consumers.
 const SelectScrollUpButton = ({
   ref: _ref,
 }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.Ref<HTMLDivElement> | undefined }) => null;

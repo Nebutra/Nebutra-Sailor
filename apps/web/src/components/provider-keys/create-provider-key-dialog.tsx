@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  Select,
 } from "@nebutra/ui/primitives";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -111,20 +112,18 @@ export function CreateProviderKeyDialog({
                     Provider
                   </FormLabel>
                   <FormControl>
-                    {/* data-allow-native: native select drives a typed enum; the
-                        primitive Select adds no value here and complicates RHF. */}
-                    <select
-                      data-allow-native
-                      className="h-9 w-full rounded-[var(--radius-md)] border border-border bg-background px-3 text-sm text-foreground focus:border-[hsl(var(--ring))] focus:outline-none"
+                    <Select
+                      size="small"
                       disabled={submitting}
-                      {...field}
-                    >
-                      {PROVIDERS.map((p) => (
-                        <option key={p} value={p}>
-                          {PROVIDER_LABELS[p]}
-                        </option>
-                      ))}
-                    </select>
+                      value={field.value}
+                      onValueChange={(v) => {
+                        if (v) field.onChange(v);
+                      }}
+                      options={PROVIDERS.map((p) => ({
+                        value: p,
+                        label: PROVIDER_LABELS[p],
+                      }))}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
