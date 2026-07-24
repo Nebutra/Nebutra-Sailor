@@ -1,5 +1,4 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { LogoGithub as Github, LogoTwitterX as Twitter } from "@nebutra/icons";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
@@ -24,9 +23,9 @@ const COLUMNS = [
   {
     title: "公司",
     links: [
-      { href: getBrandOrigin("landing"), label: "官网", external: true },
-      { href: getBrandOrigin("docs"), label: "Docs", external: true },
-      { href: `${getBrandOrigin("landing")}/privacy`, label: "隐私", external: true },
+      { href: "https://nebutra.com", label: "官网", external: true },
+      { href: "https://docs.nebutra.com", label: "Docs", external: true },
+      { href: "https://nebutra.com/privacy", label: "隐私", external: true },
     ],
   },
 ] as const;

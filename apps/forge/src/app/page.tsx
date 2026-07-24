@@ -1,5 +1,4 @@
 import { buildCategoryHub } from "@nebutra/forge-runtime";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Section } from "@nebutra/ui/layout";
 import { AuroraBackground } from "@nebutra/ui/primitives";
 import { CategoryNav } from "@/components/category-nav";
@@ -14,6 +13,9 @@ import { getForgeRegistry } from "@/lib/registry";
  * 1. Full-bleed hero (no nested card inside padded main)
  * 2. Sticky category rail inside wide frame
  * 3. Category sections with consistent vertical rhythm
+ *
+ * Hero copy is static (no AnimateIn). Motion entrance left opacity:0 in the
+ * SSR HTML when client animation failed to hydrate on production ECS.
  */
 export default function ForgeHomePage() {
   const registry = getForgeRegistry();
@@ -25,49 +27,36 @@ export default function ForgeHomePage() {
       <section className="relative w-full overflow-hidden border-b border-[var(--neutral-6)]">
         <AuroraBackground variant="subtle" position="top" intensity={0.28} />
         <PageFrame className="relative z-10 py-16 text-center md:py-24 lg:py-28">
-          <AnimateInGroup
-            stagger="normal"
-            className="mx-auto flex max-w-2xl flex-col items-center gap-6"
-          >
-            <AnimateIn preset="fadeUp">
-              <p className="text-xs font-medium tracking-[0.12em] text-[var(--neutral-11)] uppercase">
-                所见即可调用
-              </p>
-            </AnimateIn>
-            <AnimateIn preset="fadeUp">
-              {/* Product H1: near-black, not full-line brand blue (VI: gradient is logo-only) */}
-              <h1
-                className="text-4xl font-semibold text-balance text-[var(--neutral-12)] md:text-5xl lg:text-6xl"
-                style={{
-                  letterSpacing: "var(--tracking-display, -0.02em)",
-                  lineHeight: "var(--leading-display, 1.1)",
-                }}
-              >
-                在线工具瑞士军刀
-              </h1>
-            </AnimateIn>
-            <AnimateIn preset="fadeUp">
-              <p className="max-w-xl text-base leading-relaxed text-[var(--neutral-11)] md:text-[17px] md:leading-relaxed">
-                编解码、文本、哈希、文档与图片处理。页面上手动完成，或经 API / MCP
-                接入自动化——能力只实现一次。
-              </p>
-            </AnimateIn>
-            <AnimateIn preset="fadeUp">
-              <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-[var(--neutral-10)]">
-                <span className="tabular-nums">{hub.tools.length} 个工具</span>
-                <span
-                  className="hidden h-1 w-1 rounded-full bg-[var(--neutral-7)] sm:inline-block"
-                  aria-hidden
-                />
-                <span>API / MCP</span>
-              </p>
-            </AnimateIn>
-            <AnimateIn preset="fadeUp">
-              <div className="w-full max-w-xl pt-2">
-                <HomeSearch tools={hub.tools} />
-              </div>
-            </AnimateIn>
-          </AnimateInGroup>
+          <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
+            <p className="text-xs font-medium tracking-[0.12em] text-[var(--neutral-11)] uppercase">
+              所见即可调用
+            </p>
+            {/* Product H1: near-black, not full-line brand blue (VI: gradient is logo-only) */}
+            <h1
+              className="text-4xl font-semibold text-balance text-[var(--neutral-12)] md:text-5xl lg:text-6xl"
+              style={{
+                letterSpacing: "var(--tracking-display, -0.02em)",
+                lineHeight: "var(--leading-display, 1.1)",
+              }}
+            >
+              在线工具瑞士军刀
+            </h1>
+            <p className="max-w-xl text-base leading-relaxed text-[var(--neutral-11)] md:text-[17px] md:leading-relaxed">
+              编解码、文本、哈希、文档与图片处理。页面上手动完成，或经 API / MCP
+              接入自动化——能力只实现一次。
+            </p>
+            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-[var(--neutral-10)]">
+              <span className="tabular-nums">{hub.tools.length} 个工具</span>
+              <span
+                className="hidden h-1 w-1 rounded-full bg-[var(--neutral-7)] sm:inline-block"
+                aria-hidden
+              />
+              <span>API / MCP</span>
+            </p>
+            <div className="w-full max-w-xl pt-2">
+              <HomeSearch tools={hub.tools} />
+            </div>
+          </div>
         </PageFrame>
       </section>
 

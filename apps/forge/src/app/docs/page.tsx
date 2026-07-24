@@ -1,11 +1,10 @@
-import { brand } from "@nebutra/brand/metadata";
 import { Card, PageHeader } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { PageFrame } from "@/components/page-frame";
 
 export const metadata = {
   title: "API 文档",
-  description: `${brand.name} Forge OpenAPI-style discoverability for Agents`,
+  description: "Nebutra Forge OpenAPI-style discoverability for Agents",
 };
 
 const ENDPOINTS = [

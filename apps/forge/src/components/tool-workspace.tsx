@@ -1,7 +1,7 @@
 "use client";
 
-import { brand } from "@nebutra/brand/metadata";
 import { Base64Runner } from "@/components/base64-runner";
+import { resolveCatalogRunner } from "@/components/catalog-runners";
 import { CodecModeRunner } from "@/components/codec-mode-runner";
 import {
   BmiRunner,
@@ -16,6 +16,19 @@ import { JsonFormatRunner } from "@/components/json-format-runner";
 import { JwtRunner } from "@/components/jwt-runner";
 import { MdToPdfRunner } from "@/components/md-to-pdf-runner";
 import { NumberBaseRunner } from "@/components/number-base-runner";
+import {
+  ColorConvertRunner,
+  ConvertModeRunner,
+  CronExplainRunner,
+  CsvPreviewRunner,
+  JsonPathRunner,
+  QrDecodeRunner,
+  QrGenerateRunner,
+  RegexTesterRunner,
+  SqlFormatRunner,
+  TimezoneRunner,
+  XmlFormatRunner,
+} from "@/components/p0-runners";
 import { PasswordRunner } from "@/components/password-runner";
 import { TextDiffRunner } from "@/components/text-diff-runner";
 import { pickResult, TextTransformRunner } from "@/components/text-transform-runner";
@@ -135,7 +148,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`Hello ${brand.name} 你好世界`}
+          sample="Hello Nebutra 你好世界"
           modes={[
             { value: "upper", label: "大写" },
             { value: "lower", label: "小写" },
@@ -220,7 +233,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`Hello ${brand.name} 你好`}
+          sample="Hello Nebutra 你好"
           pickOutput={pickResult}
           localRun={(text) => [...text].reverse().join("")}
         />
@@ -230,27 +243,9 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`<p>Hello <b>${brand.name}</b></p>`}
+          sample={"<p>Hello <b>Nebutra</b></p>"}
           pickOutput={pickResult}
-          localRun={(text) => {
-            let acc = "";
-            let i = 0;
-            while (i < text.length) {
-              const lt = text.indexOf("<", i);
-              if (lt < 0) {
-                acc += text.slice(i);
-                break;
-              }
-              acc += text.slice(i, lt);
-              const gt = text.indexOf(">", lt + 1);
-              if (gt < 0) {
-                acc += text.slice(lt);
-                break;
-              }
-              i = gt + 1;
-            }
-            return acc;
-          }}
+          localRun={(text) => text.replace(/<[^>]*>/g, "")}
         />
       );
 
@@ -258,7 +253,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`Hello ${brand.name} — Forge Tools!`}
+          sample="Hello Nebutra — Forge Tools!"
           pickOutput={pickResult}
           localRun={(text) =>
             text
@@ -275,7 +270,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`See https://${brand.domains.landing} and http://example.com/path?q=1 for more.`}
+          sample={"See https://nebutra.com and http://example.com/path?q=1 for more."}
           pickOutput={pickResult}
           localRun={(text) => (text.match(/https?:\/\/[^\s<>"{}|\\^`[\]]+/gi) ?? []).join("\n")}
         />
@@ -285,7 +280,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`Contact a@${brand.domains.landing} or support@example.org today.`}
+          sample="Contact a@nebutra.com or support@example.org today."
           pickOutput={pickResult}
           localRun={(text) =>
             (text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) ?? []).join("\n")
@@ -297,7 +292,7 @@ export function ToolWorkspace({
       return (
         <TextTransformRunner
           toolId={toolId}
-          sample={`{\n  "id": 1,\n  "name": "${brand.name}",\n  "tags": ["forge", "tools"],\n  "active": true\n}`}
+          sample={`{\n  "id": 1,\n  "name": "Nebutra",\n  "tags": ["forge", "tools"],\n  "active": true\n}`}
           extraFields={[
             {
               key: "name",
@@ -312,11 +307,74 @@ export function ToolWorkspace({
         />
       );
 
-    default:
+    // ── P0 specialized workspaces (override generic catalog forms) ─────
+    case "json-yaml":
+      return (
+        <ConvertModeRunner
+          toolId={toolId}
+          defaultMode="json_to_yaml"
+          modes={[
+            { value: "json_to_yaml", label: "JSON → YAML" },
+            { value: "yaml_to_json", label: "YAML → JSON" },
+          ]}
+          sample={`{\n  "name": "Nebutra Forge",\n  "tools": 79,\n  "ready": true\n}`}
+          note="js-yaml · 与 API 同一路径"
+        />
+      );
+    case "json-toml":
+      return (
+        <ConvertModeRunner
+          toolId={toolId}
+          defaultMode="json_to_toml"
+          modes={[
+            { value: "json_to_toml", label: "JSON → TOML" },
+            { value: "toml_to_json", label: "TOML → JSON" },
+          ]}
+          sample={`{\n  "title": "Forge",\n  "port": 3105\n}`}
+          note="smol-toml · 与 API 同一路径"
+        />
+      );
+    case "json-csv":
+      return (
+        <ConvertModeRunner
+          toolId={toolId}
+          defaultMode="json_to_csv"
+          modes={[
+            { value: "json_to_csv", label: "JSON → CSV" },
+            { value: "csv_to_json", label: "CSV → JSON" },
+          ]}
+          sample={`[\n  {"id": 1, "name": "Ada"},\n  {"id": 2, "name": "Lin"}\n]`}
+          note="papaparse · 与 API 同一路径"
+        />
+      );
+    case "json-path":
+      return <JsonPathRunner toolId={toolId} />;
+    case "xml-format":
+      return <XmlFormatRunner toolId={toolId} />;
+    case "csv-preview":
+      return <CsvPreviewRunner toolId={toolId} />;
+    case "regex-tester":
+      return <RegexTesterRunner toolId={toolId} />;
+    case "sql-format":
+      return <SqlFormatRunner toolId={toolId} />;
+    case "color-convert":
+      return <ColorConvertRunner toolId={toolId} />;
+    case "qr-generate":
+      return <QrGenerateRunner toolId={toolId} />;
+    case "qr-decode":
+      return <QrDecodeRunner toolId={toolId} />;
+    case "cron-explain":
+      return <CronExplainRunner toolId={toolId} />;
+    case "timezone":
+      return <TimezoneRunner toolId={toolId} />;
+
+    default: {
+      const catalog = resolveCatalogRunner(slug, toolId);
+      if (catalog) return catalog;
       if (category === "image") {
         return <ImageToolRunner toolId={toolId} />;
       }
-      // Absolute last resort — should not hit for registered catalog tools
       return <p className="text-sm text-[var(--status-danger)]">未配置工作台：{slug}</p>;
+    }
   }
 }

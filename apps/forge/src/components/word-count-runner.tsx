@@ -1,6 +1,5 @@
 "use client";
 
-import { brand } from "@nebutra/brand/metadata";
 import { Card } from "@nebutra/ui/layout";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
@@ -23,7 +22,7 @@ function countClient(text: string) {
     }
     engine = "Intl.Segmenter";
   } else {
-    const latinWords = (text.match(/[A-Za-z0-9]+(?:['\u2019][A-Za-z0-9]+)*/g) ?? []).length;
+    const latinWords = (text.match(/[A-Za-z0-9]+(?:[''][A-Za-z0-9]+)*/g) ?? []).length;
     words = latinWords + cjkCharacters;
   }
   return {
@@ -37,7 +36,7 @@ function countClient(text: string) {
   };
 }
 
-const SAMPLE = `${brand.name} Forge 字数统计
+const SAMPLE = `Nebutra Forge 字数统计
 
 中英混排：Hello world，你好世界。
 用于作文、公众号、产品文案与 token 前置估算。`;

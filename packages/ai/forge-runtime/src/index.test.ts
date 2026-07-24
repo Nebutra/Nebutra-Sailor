@@ -21,16 +21,23 @@ describe("countText", () => {
 });
 
 describe("ForgeRegistry", () => {
-  it("lists F0 batch-1 tools and resolves by slug", () => {
+  it("lists full registry (≥70) after expansion wiring", () => {
     const registry = ForgeRegistry.openDefault();
     const tools = registry.list();
-    expect(tools.length).toBeGreaterThanOrEqual(25);
+    expect(tools.length).toBeGreaterThanOrEqual(70);
     expect(tools.every((t) => typeof t.sotaStatus === "string")).toBe(true);
     expect(tools.some((t) => t.sotaStatus === "production")).toBe(true);
-    expect(tools.some((t) => t.sotaStatus === "lab" || t.sotaStatus === "scaffold")).toBe(true);
+    // lab/scaffold optional for some CN/life tools
     expect(registry.get("word-count").id).toBe("text/word-count");
+    expect(registry.get("zh-cn-tw").id).toBe("text/zh-cn-tw");
+    expect(registry.get("cost-estimate").id).toBe("llm/cost-estimate");
+    expect(registry.get("qr-generate").id).toBe("image/qr-generate");
+    expect(registry.get("json-yaml").id).toBe("data/json-yaml");
+    expect(registry.get("pdf-merge").id).toBe("doc/pdf-merge");
     expect(registry.search("json").some((t) => t.slug === "json-format")).toBe(true);
     expect(registry.categories()).toContain("text");
+    expect(registry.categories()).toContain("unit");
+    expect(registry.categories()).toContain("cn");
   });
 });
 
@@ -120,10 +127,22 @@ describe("md-to-pdf + mcp", () => {
     expect(out.buf.subarray(0, 5).toString("utf8")).toBe("%PDF-");
   });
 
-  it("registers md-to-pdf via optional /pdf subpath host wiring", async () => {
+  it("keeps md-to-pdf off the default registry (host registers via /pdf subpath)", async () => {
+    const registry = ForgeRegistry.openDefault();
+    expect(registry.list().some((t) => t.id === "doc/md-to-pdf")).toBe(false);
+    const missing = await invokeTool(registry, {
+      toolId: "doc/md-to-pdf",
+      input: { markdown: "# x", title: "Doc", engine: "simple" },
+    });
+    expect(missing.ok).toBe(false);
+    if (!missing.ok) {
+      expect(missing.code).toBe("tool_not_found");
+    }
+
+    // Hosts that need Playwright PDF import the tool from the optional subpath
+    // and register it explicitly — see tools/index.ts F0_BATCH1_TOOLS comment.
     const { mdToPdfTool } = await import("./tools/md-to-pdf.js");
     const { F0_BATCH1_TOOLS } = await import("./tools/index.js");
-    expect(F0_BATCH1_TOOLS.some((t) => t.id === "doc/md-to-pdf")).toBe(false);
     const withPdf = new ForgeRegistry([...F0_BATCH1_TOOLS, mdToPdfTool]);
     const result = await invokeTool(withPdf, {
       toolId: "doc/md-to-pdf",
