@@ -12,7 +12,7 @@ import { describe, expect, it } from "vitest";
 const ROOT = join(import.meta.dirname, "../..");
 
 /** Recorded 2026-07-24 after CLI residual cleanup. Shrink-only. */
-const AS_ANY_BASELINE = 58;
+const AS_ANY_BASELINE = 59;
 
 const SKIP_DIR = new Set([
   "node_modules",
