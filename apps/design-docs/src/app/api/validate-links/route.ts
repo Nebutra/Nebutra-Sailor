@@ -1,8 +1,27 @@
+import { createRequire } from "node:module";
 import type { InferPageType } from "fumadocs-core/source";
 import type { DocData, DocMethods } from "fumadocs-mdx/runtime/types";
 import { NextResponse } from "next/server";
-import { type FileObject, scanURLs, validateFiles } from "next-validate-link";
+import type { FileObject } from "next-validate-link";
 import { source } from "@/lib/source";
+
+// gray-matter@4 expects js-yaml@3 safeLoad; root overrides pin js-yaml>=4.
+// Patch before next-validate-link loads gray-matter during next build.
+const require = createRequire(import.meta.url);
+const yaml = require("js-yaml") as {
+  load?: (...args: unknown[]) => unknown;
+  dump?: (...args: unknown[]) => unknown;
+  safeLoad?: (...args: unknown[]) => unknown;
+  safeDump?: (...args: unknown[]) => unknown;
+};
+if (typeof yaml.safeLoad !== "function" && typeof yaml.load === "function") {
+  yaml.safeLoad = yaml.load.bind(yaml);
+}
+if (typeof yaml.safeDump !== "function" && typeof yaml.dump === "function") {
+  yaml.safeDump = yaml.dump.bind(yaml);
+}
+
+const { scanURLs, validateFiles } = await import("next-validate-link");
 
 // fumadocs-core's `InferPageType` returns the bare PageData (frontmatter +
 // title/description). The MDX runtime adds `toc` (DocData) and `getText`
