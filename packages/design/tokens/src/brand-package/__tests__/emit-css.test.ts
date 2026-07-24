@@ -97,4 +97,34 @@ describe("emitBrandCss darkDefault binding", () => {
     // light block must not list bare .dark in the same selector
     assert.doesNotMatch(css, /:root,\n\.dark,\nhtml\[data-brand="dual"\]/);
   });
+
+  it("product zone emits --text-display once with heading fallback", () => {
+    const css = emitBrandCss(
+      minimalBrand({
+        id: "zoney",
+        darkDefault: false,
+        zones: {
+          product: {
+            body: { fontSize: "16px", lineHeight: 1.5 },
+            heading: { fontSize: "24px" },
+            display: { fontSize: "32px" },
+          },
+          marketing: {
+            body: { fontSize: "18px", lineHeight: 1.5 },
+            display: { fontSize: "48px" },
+          },
+        },
+      }),
+    );
+    const productBlock = css.match(
+      /\[data-zone="product"\][\s\S]*?(?=\[data-zone="marketing"\]|$)/,
+    )?.[0];
+    assert.ok(productBlock, "expected product zone block");
+    const displayDecls = productBlock.match(/--text-display:/g) ?? [];
+    assert.equal(displayDecls.length, 1, "no duplicate --text-display in product zone");
+    assert.match(
+      productBlock,
+      /--text-display:\s*var\(--zone-product-display-size,\s*var\(--zone-product-heading-size,\s*inherit\)\)/,
+    );
+  });
 });

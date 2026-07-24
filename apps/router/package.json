@@ -22,7 +22,8 @@
     "react-dom": "catalog:",
     "zod": "catalog:",
     "@lobehub/icons": "^5.0.1",
-    "@nebutra/ai-providers": "workspace:*"
+    "@nebutra/ai-providers": "workspace:*",
+    "@nebutra/auth": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",

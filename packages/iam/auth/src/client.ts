@@ -35,3 +35,10 @@ export { type AuthContextValue, useAuthContext } from "./react/context";
 export { useAuth, useOrganization, useSession, useUser } from "./react/hooks";
 // Re-export sign-in method type for convenience
 export type { SignInMethod } from "./types";
+// Auth Center URL builders — pure string helpers; must not go through root
+// export (root re-exports createAuth → email/db → Node-only modules).
+export {
+  buildAuthCenterSignInUrl,
+  buildAuthCenterSignUpUrl,
+  getAuthCenterOrigin,
+} from "./utils";
