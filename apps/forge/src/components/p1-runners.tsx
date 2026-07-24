@@ -1,5 +1,6 @@
 "use client";
 
+// @brand-exempt: sample password/markdown fixtures for forge runners only
 /**
  * P1 specialized runners for high-traffic tools that previously used only
  * generic catalog forms — markdown, PDF, security, LLM cost/schema, CN text.

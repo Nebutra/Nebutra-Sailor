@@ -1,5 +1,6 @@
 "use client";
 
+// @brand-exempt: issue links reference monorepo name; fixture-only surface
 /**
  * P2 specialized runners — unit convert, codec/text leftovers, CN/life, image helpers.
  * @see https://github.com/Nebutra/Nebutra-Sailor/issues/256
