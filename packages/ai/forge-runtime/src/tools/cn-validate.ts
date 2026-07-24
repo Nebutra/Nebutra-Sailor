@@ -135,8 +135,8 @@ export const phoneLookupTool = tool({
   category: "cn",
   title: { zh: "手机号归属粗查", en: "CN Mobile Prefix Lookup" },
   description: {
-    zh: "号段校验 + 运营商粗分（非完整归属地库）",
-    en: "Validate CN mobile format and coarse carrier from prefix",
+    zh: "号段校验 + 运营商粗分（实验：非完整归属地库）",
+    en: "Validate CN mobile format and coarse carrier (lab: not a full geo DB)",
   },
   tier: "catalog",
   sideEffect: "pure",

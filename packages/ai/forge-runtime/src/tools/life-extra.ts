@@ -119,8 +119,8 @@ export const kinshipTool = tool({
   category: "life",
   title: { zh: "亲戚称呼", en: "Chinese Kinship Title" },
   description: {
-    zh: "常见中文亲戚称呼查询（轻量词典，可后续换专用引擎）",
-    en: "Common Chinese kinship titles (dictionary; swappable engine)",
+    zh: "常见中文亲戚称呼查询（实验：轻量词典，非完整引擎）",
+    en: "Common Chinese kinship titles (lab: dictionary only, not full engine)",
   },
   tier: "catalog",
   sideEffect: "pure",

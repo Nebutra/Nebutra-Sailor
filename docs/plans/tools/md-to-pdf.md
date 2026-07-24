@@ -36,9 +36,19 @@
 **sota_status now:** `production`（Playwright 主路径 + 拖拽上传 UX + SKILL；CJK 依赖宿主字体）  
 **Rejected:** 仅手写 PDF 字符串冒充 production  
 
+## Host registration policy (2026-07-24)
+
+| Consumer | md-to-pdf registered? |
+|----------|----------------------|
+| `ForgeRegistry.openDefault()` / `F0_BATCH1_TOOLS` | **No** — Playwright stays optional peer |
+| `apps/forge` (`src/lib/registry.ts`) | **Yes** — product host imports `@nebutra/forge-runtime/pdf` |
+
+Full operator notes: `apps/forge/README.md` § md-to-pdf registry policy.
+
 ## Gaps
 
 - [x] Playwright HTML print as primary path  
 - [x] 人用拖拽 .md 上传（MdToPdfRunner）  
+- [x] Host-only registration + documented policy  
 - [ ] 系统 CJK 字体保证（依赖宿主 OS 字体栈）  
 - [ ] 嵌入式 CJK webfont 子集（可选增强）

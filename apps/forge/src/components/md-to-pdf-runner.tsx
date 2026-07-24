@@ -134,7 +134,9 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
       </div>
 
       <RunnerNote>
-        渲染：marked → HTML/CSS → Chromium print。中文依赖系统字体；无浏览器时 auto 回退 simple。
+        marked → HTML → Playwright Chromium 打印（SOTA）。宿主未装 Chromium 时 auto 回退 simple
+        结构化 PDF——结果区会标明 renderEngine，不得把 simple 当成打印级排版。 策略见 apps/forge
+        README § md-to-pdf。
       </RunnerNote>
       <RunnerError>{error}</RunnerError>
       <RunnerNote>{meta}</RunnerNote>

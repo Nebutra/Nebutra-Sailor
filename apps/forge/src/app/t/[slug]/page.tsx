@@ -3,6 +3,7 @@ import { Card, PageHeader } from "@nebutra/ui/layout";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { LabBadge } from "@/components/lab-badge";
 import { PageFrame } from "@/components/page-frame";
 import { ToolWorkspace } from "@/components/tool-workspace";
 import { categoryMeta } from "@/lib/category-meta";
@@ -23,9 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "Tool not found" };
   }
   const page = buildToolPageModel(registry, slug);
+  const isLab = page.sotaStatus === "lab";
   return {
-    title: page.seo.title.zh,
-    description: page.description.zh,
+    title: isLab ? `${page.title.zh}（实验）- 在线工具 | Nebutra Forge` : page.seo.title.zh,
+    description: isLab
+      ? `${page.description.zh}（实验能力，数据范围有限，仅供参考）`
+      : page.description.zh,
     keywords: page.seo.keywords.zh.split(","),
   };
 }
@@ -42,6 +46,7 @@ export default async function ToolPage({ params }: Props) {
   }
   const page = buildToolPageModel(registry, slug);
   const cat = categoryMeta(page.category);
+  const isLab = page.sotaStatus === "lab";
 
   return (
     <PageFrame width="text" className="py-10 md:py-12" as="article">
@@ -66,9 +71,16 @@ export default async function ToolPage({ params }: Props) {
             >
               {cat.label}
             </Link>
+            {isLab ? <LabBadge className="ml-1" /> : null}
           </nav>
 
           <PageHeader title={page.title.zh} description={page.description.zh} />
+
+          {isLab ? (
+            <p className="rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--status-warning)_30%,transparent)] bg-[color-mix(in_srgb,var(--status-warning)_8%,transparent)] px-3 py-2 text-sm text-[var(--neutral-11)]">
+              实验能力：数据范围或词典有限，结果仅供参考，不承诺完整生产精度。
+            </p>
+          ) : null}
 
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-[var(--neutral-10)]">
             <span>{page.engine.name}</span>

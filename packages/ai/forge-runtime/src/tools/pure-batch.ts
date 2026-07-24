@@ -221,6 +221,7 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.dev.json_to_ts",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "json转typescript", en: "json to typescript interface" },
+    sotaStatus: "production",
     inputSchema: z.object({
       text: z.string(),
       name: z.string().default("Root"),
