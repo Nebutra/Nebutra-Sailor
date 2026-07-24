@@ -232,7 +232,7 @@ export const TreeNodeTrigger = ({
         isSelected && "bg-accent/80",
         className,
       )}
-      onClick={(e: MouseEvent) => {
+      onClick={(e: MouseEvent<HTMLDivElement>) => {
         toggleExpanded(nodeId);
         handleSelection(nodeId, e.ctrlKey || e.metaKey);
         onClick?.(e);
@@ -368,7 +368,7 @@ export const TreeExpander = ({
     <motion.div
       animate={{ rotate: isExpanded ? 90 : 0 }}
       className={cn("mr-1 flex h-4 w-4 cursor-pointer items-center justify-center", className)}
-      onClick={(e: MouseEvent) => {
+      onClick={(e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
         toggleExpanded(nodeId);
         onClick?.(e);
