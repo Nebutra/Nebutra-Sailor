@@ -31,7 +31,7 @@
     ],
     "maxHexLiterals": 40,
     "maxHslLiterals": 1,
-    "minOklchLiterals": 120,
+    "minOklchLiterals": 0,
     "allowedHexFiles": ["packages/design/ui/src/theme/tokens.ts"],
     "allowedHslFiles": []
   },
@@ -104,6 +104,9 @@
       "./theme",
       "./typography",
       "./typography/fonts.css",
+      "./styles/sources.css",
+      "./styles/preset.css",
+      "./styles.css",
       "./utils"
     ]
   },

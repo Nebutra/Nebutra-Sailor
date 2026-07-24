@@ -6,7 +6,7 @@
  * What this verifies:
  * 1) App surfaces do not exceed per-surface raw-color budgets.
  * 2) App surfaces do not bypass approved motion entry points.
- * 3) Token authoring does not drift away from current oklch-first policy.
+ * 3) Token authoring stays within hex/hsl budgets (oklch multi-mood catalog retired).
  * 4) Tier-1 primitives maintain 100% story coverage.
  * 5) Dependency boundaries stay within declared allowlists.
  */
