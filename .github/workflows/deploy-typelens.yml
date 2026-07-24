@@ -47,6 +47,11 @@ jobs:
           [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
           [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
 
+      # Workspace packages export dist/ (gitignored). Build transitive deps so
+      # Next can resolve @nebutra/brand, @nebutra/ui, icons, tokens, etc.
+      - name: Build workspace dependencies
+        run: pnpm turbo build --filter="@nebutra/typelens^..."
+
       - name: Build OpenNext worker
         working-directory: apps/typelens
         env:
