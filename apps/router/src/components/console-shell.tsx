@@ -19,6 +19,7 @@ import { type FormEvent, type ReactNode, useEffect, useId, useRef, useState } fr
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketFooter } from "@/components/market-footer";
+import { RouterMark } from "@/components/router-mark";
 import { MarketIcon } from "@/lib/market-icons";
 import { MARKET_CHANNELS } from "@/lib/market-taxonomy";
 
@@ -245,9 +246,16 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
 
       {/* brand + search — 更宽搜索、更高控件，提升「大气」比例 */}
       <div className="router-market-shell flex flex-col gap-4 pt-7 pb-4 md:flex-row md:items-center md:gap-6">
-        <Link href="/" className="flex shrink-0 items-center" aria-label={brand.name}>
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-2.5"
+          aria-label={`${brand.name} Router`}
+        >
           {/* 自形 wordmark：logo-horizontal-en（mark + 自形字标），不用系统字体拼品牌字 */}
           <BrandLogo variant="horizontal" className="h-8 w-auto md:h-9" />
+          <span className="hidden h-5 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
+          <RouterMark className="h-7 w-7 md:h-8 md:w-8" />
+          <span className="sr-only">Router</span>
         </Link>
         <form onSubmit={onSearch} className="flex min-w-0 flex-1 gap-2.5">
           {/* 搜索：输入框内嵌主按钮，避免独立蓝胶囊抢戏 */}

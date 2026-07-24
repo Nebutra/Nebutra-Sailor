@@ -26,7 +26,7 @@ export function SiteHeader() {
           <BrandLogo variant="mark" className="h-8 w-8 sm:hidden" />
           <BrandLogo variant="horizontal" className="hidden h-[26px] w-auto sm:block" />
           <span className="hidden h-4 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
-          <ForgeMark className="h-5 w-5 text-[var(--neutral-11)]" />
+          <ForgeMark className="h-6 w-6 sm:h-7 sm:w-7" />
           <span className="sr-only">Forge</span>
         </Link>
         <nav aria-label="主导航" className="flex min-w-0 flex-1 items-center gap-1">
