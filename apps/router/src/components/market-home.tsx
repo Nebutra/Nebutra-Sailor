@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { BrandMark } from "@/components/brand-marks";
+import { ForgeMark } from "@/components/forge-mark";
 import { MarketBannerCarousel } from "@/components/market-banner-carousel";
 import { ProductCard } from "@/components/product-card";
 import { type ListingModel, type ListingProvider, PROVIDER_LABEL } from "@/lib/listing-catalog";
@@ -204,7 +205,10 @@ export function MarketHome({
 
           <section className="flex min-h-[220px] flex-col justify-between overflow-hidden rounded-2xl bg-[var(--neutral-12)] p-6 text-[var(--neutral-1)]">
             <div>
-              <p className="text-[12px] text-[var(--neutral-8)]">新品发布</p>
+              <div className="flex items-center gap-2">
+                <ForgeMark className="h-8 w-8" />
+                <p className="text-[12px] text-[var(--neutral-8)]">新品发布</p>
+              </div>
               <h1 className="mt-2 text-[26px] font-semibold tracking-tight md:text-[30px]">
                 Forge 工具工作台
               </h1>
@@ -213,9 +217,10 @@ export function MarketHome({
               </p>
             </div>
             <a
-              href="http://localhost:3105"
-              className="inline-flex w-fit rounded-full bg-[var(--neutral-1)] px-3.5 py-1.5 text-[12px] font-medium text-[var(--neutral-12)]"
+              href={process.env.NEXT_PUBLIC_FORGE_URL ?? "http://localhost:3105"}
+              className="inline-flex w-fit items-center gap-1.5 rounded-full bg-[var(--neutral-1)] px-3.5 py-1.5 text-[12px] font-medium text-[var(--neutral-12)]"
             >
+              <ForgeMark className="h-4 w-4" />
               打开 Forge →
             </a>
           </section>

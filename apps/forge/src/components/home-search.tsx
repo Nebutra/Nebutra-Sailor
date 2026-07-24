@@ -56,6 +56,23 @@ export function HomeSearch({ tools }: { tools: readonly ForgeToolSummary[] }) {
             </li>
           ))}
         </ul>
+      ) : q.trim() ? (
+        <div
+          className="absolute z-20 mt-2 flex w-full flex-col items-center gap-2 rounded-[var(--radius-lg)] border border-border bg-background px-4 py-6 text-center shadow-lg"
+          role="status"
+        >
+          {/* biome-ignore lint/performance/noImgElement: transparent product empty glyph */}
+          <img
+            src="/product/forge-empty.png"
+            alt=""
+            width={64}
+            height={64}
+            draggable={false}
+            className="h-14 w-14 object-contain opacity-80"
+          />
+          <p className="text-sm text-muted-foreground">没有匹配「{q.trim()}」的工具</p>
+          <p className="text-xs text-muted-foreground">试试别的关键词，或从分类里挑一把锤子。</p>
+        </div>
       ) : null}
     </div>
   );

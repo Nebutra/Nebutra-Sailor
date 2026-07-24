@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { ForgeMark } from "@/components/forge-mark";
+import { RouterMark } from "@/components/router-mark";
 
 const NAV = [
   { href: "/", label: "工具" },
@@ -51,7 +52,13 @@ export function SiteHeader() {
         </nav>
         <div className="flex shrink-0 items-center gap-2">
           <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
-            <a href={process.env.NEXT_PUBLIC_ROUTER_URL ?? "http://localhost:3106"}>Router</a>
+            <a
+              href={process.env.NEXT_PUBLIC_ROUTER_URL ?? "http://localhost:3106"}
+              className="inline-flex items-center gap-1.5"
+            >
+              <RouterMark className="h-4 w-4" />
+              Router
+            </a>
           </Button>
           <AuthActions />
         </div>

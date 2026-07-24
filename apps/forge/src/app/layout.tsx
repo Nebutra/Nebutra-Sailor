@@ -12,6 +12,15 @@ import { SiteHeader } from "@/components/site-header";
 export const metadata: Metadata = {
   title: { default: `${brand.name} Forge — 在线工具站`, template: `%s | ${brand.name} Forge` },
   description: "编解码、文本、哈希、文档与图片等在线工具。",
+  // Product sub-brand favicon — transparent PNG anvil (not parent brand SVG).
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/product/forge-favicon.png", type: "image/png", sizes: "256x256" },
+      { url: "/favicon.ico", sizes: "48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

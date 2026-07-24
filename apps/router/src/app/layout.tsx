@@ -16,6 +16,15 @@ export const metadata: Metadata = {
     template: `%s | ${brand.name} Router`,
   },
   description: "全模型 API 集市 · 按量付费 · 管理后台配置 Key/钱包 · 快捷使用试用。",
+  // Product sub-brand favicon — transparent PNG redstone repeater (not parent brand SVG).
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/product/router-favicon.png", type: "image/png", sizes: "256x256" },
+      { url: "/favicon.ico", sizes: "48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 /**
