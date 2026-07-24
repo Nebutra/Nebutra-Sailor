@@ -535,3 +535,4 @@ process.stdout.write(
 );
 
 // ci-trigger 20260724081902
+// governance-green-recheck
