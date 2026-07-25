@@ -23,6 +23,13 @@ const bailian = createOpenAICompatible({
   apiKey: process.env.DASHSCOPE_API_KEY!,
 });
 
+// @sailor:cn-instance:sensetime
+const sensetime = createOpenAICompatible({
+  name: 'sensetime',
+  baseURL: process.env.SENSENOVA_BASE_URL ?? 'https://api.sensenova.cn/compatible-mode/v1',
+  apiKey: process.env.SENSENOVA_API_KEY!,
+});
+
 // @sailor:custom-endpoint
 const custom = createOpenAICompatible({
   name: process.env.CUSTOM_AI_NAME ?? 'custom',
@@ -37,6 +44,7 @@ export const registry = createProviderRegistry({
   google,
   siliconflow,
   bailian,
+  sensetime,
   custom,
 });
 

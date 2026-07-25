@@ -11,6 +11,7 @@ import { resolveModel } from "./models";
  * - "openrouter"   → @openrouter/ai-sdk-provider (300+ models, failover)
  * - "openai"       → @ai-sdk/openai (direct OpenAI API)
  * - "siliconflow"  → @ai-sdk/openai with SiliconFlow baseURL (OpenAI-compatible)
+ * - "sensenova"    → @ai-sdk/openai with SenseNova compatible-mode baseURL
  * - "gateway"      → Vercel AI Gateway via plain model string (OIDC auth)
  */
 export function createModel(modelOrPreset: string, config: ResolvedNebutraAIConfig): LanguageModel {
@@ -37,7 +38,18 @@ export function createModel(modelOrPreset: string, config: ResolvedNebutraAIConf
       // Models use "Vendor/Model" format, e.g. "Qwen/Qwen2.5-72B-Instruct"
       const provider = createOpenAI({
         apiKey,
-        baseURL: "https://api.siliconflow.cn/v1",
+        baseURL: process.env.SILICONFLOW_BASE_URL ?? "https://api.siliconflow.cn/v1",
+      });
+      return provider(modelId);
+    }
+
+    case "sensenova": {
+      // 商汤 SenseNova OpenAI-compatible API
+      // Docs: https://platform.sensenova.cn/docs
+      // Models: SenseChat-5, SenseChat-Turbo, SenseNova-V6-5, …
+      const provider = createOpenAI({
+        apiKey,
+        baseURL: process.env.SENSENOVA_BASE_URL ?? "https://api.sensenova.cn/compatible-mode/v1",
       });
       return provider(modelId);
     }

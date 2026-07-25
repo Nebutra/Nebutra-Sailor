@@ -1,5 +1,7 @@
 # @nebutra/fonts
 
+Status: WIP — Not yet integrated into any production app.
+
 Self-hosted OSS font registry for Nebutra themes and imported DESIGN.md font
 families.
 

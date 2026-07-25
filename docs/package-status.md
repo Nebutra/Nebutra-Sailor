@@ -54,7 +54,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (38)
+## WIP packages (39)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -63,6 +63,7 @@ and missing functionality.
 
 | Package                  | CLI flag(s)             | Why WIP                                                          |
 | ------------------------ | ----------------------- | ---------------------------------------------------------------- |
+| `@nebutra/fonts`         | (consumed directly)     | Self-hosted font registry present; first intentional public publish and app-wide adoption pending |
 | `@nebutra/audit`         | (consumed directly)     | Event schema not finalized; retention/export workflow pending    |
 | `@nebutra/captcha`       | `--captcha`             | hCaptcha & Aliyun adapters scaffolded only                       |
 | `@nebutra/event-bus`     | (consumed by saga)      | Cross-service pub/sub guarantees not verified                    |

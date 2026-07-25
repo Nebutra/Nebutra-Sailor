@@ -25,7 +25,13 @@ export interface ProviderSelection {
 }
 
 /** CN-compatible providers that require `createOpenAICompatible`. */
-const CN_COMPATIBLE_IDS = new Set(["siliconflow", "volcengine-ark", "bailian", "moonshot"]);
+const CN_COMPATIBLE_IDS = new Set([
+  "siliconflow",
+  "volcengine-ark",
+  "bailian",
+  "moonshot",
+  "sensetime",
+]);
 
 const MARKER_RE = /@sailor:([^\s*]+)/;
 

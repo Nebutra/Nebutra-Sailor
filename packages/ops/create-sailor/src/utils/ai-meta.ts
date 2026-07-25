@@ -210,8 +210,9 @@ export const PROVIDERS: ProviderMeta[] = [
     name: "商汤 SenseNova",
     category: "国内平台",
     status: "cn-compatible",
-    docs: "https://platform.sensetime.com",
-    baseURL: "https://api.sensenova.cn/v1",
+    docs: "https://platform.sensenova.cn/docs",
+    // OpenAI-compatible surface — not the legacy /v1 native path
+    baseURL: "https://api.sensenova.cn/compatible-mode/v1",
     envVarPrefix: "SENSENOVA",
     requiredEnvVars: ["SENSENOVA_API_KEY"],
   },

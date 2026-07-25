@@ -15,9 +15,10 @@ import { z } from "zod";
  * - openrouter:   300+ models, automatic failover, pay-as-you-go (default)
  * - openai:       Direct OpenAI API access
  * - siliconflow:  SiliconFlow cloud — Qwen, DeepSeek, etc. (OpenAI-compatible, China-optimized)
+ * - sensenova:    商汤 SenseNova — OpenAI-compatible (`compatible-mode/v1`)
  * - gateway:      Vercel AI Gateway with OIDC auth (for Vercel-deployed apps)
  */
-export const ProviderType = z.enum(["openrouter", "openai", "siliconflow", "gateway"]);
+export const ProviderType = z.enum(["openrouter", "openai", "siliconflow", "sensenova", "gateway"]);
 export type ProviderType = z.infer<typeof ProviderType>;
 
 export const NebutraAIConfigSchema = z.object({
@@ -56,6 +57,7 @@ export function resolveApiKey(config: ResolvedNebutraAIConfig): string {
     openrouter: "OPENROUTER_API_KEY",
     openai: "OPENAI_API_KEY",
     siliconflow: "SILICONFLOW_API_KEY",
+    sensenova: "SENSENOVA_API_KEY",
     gateway: "VERCEL_OIDC_TOKEN",
   };
 
