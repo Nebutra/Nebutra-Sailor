@@ -1042,19 +1042,35 @@ jobs:
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && targets[router]="https://router.nebutra.com"
           [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && targets[forge]="https://forge.nebutra.com"
+          # Origin fallback when public DNS is missing/broken (Host header on ECS IP).
+          # Prevents rolling back a healthy PM2+nginx deploy solely because CF DNS is NXDOMAIN.
+          declare -A origin_hosts=()
+          [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && origin_hosts[router]="router.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.forge }}"  = "true" ] && origin_hosts[forge]="forge.nebutra.com"
+          ECS_ORIGIN_IP="${ECS_HOST:-${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}}"
           ok_codes='^(200|301|302|307)$'
           for name in "${!targets[@]}"; do
             url="${targets[$name]}"
+            code=000
             for i in 1 2 3 4 5; do
               code=$(curl -sf -o /dev/null -w "%{http_code}" --max-time 15 "$url" 2>/dev/null || echo 000)
               if [[ "$code" =~ $ok_codes ]]; then
                 echo "✅ $name $url -> $code"; break
               fi
-              if [ "$i" -eq 5 ]; then
-                echo "::error::Smoke test failed for $name at $url (last code: $code)"; exit 1
-              fi
               sleep 8
             done
+            if [[ ! "$code" =~ $ok_codes ]]; then
+              host="${origin_hosts[$name]:-}"
+              if [ -n "$host" ]; then
+                ocode=$(curl -skf -o /dev/null -w "%{http_code}" --max-time 15 \
+                  --resolve "${host}:443:${ECS_ORIGIN_IP}" "https://${host}/" 2>/dev/null || echo 000)
+                if [[ "$ocode" =~ $ok_codes ]]; then
+                  echo "::warning::$name public $url failed ($code) but origin https://${host}/ via ${ECS_ORIGIN_IP} -> $ocode (DNS/edge issue, not app rollback)"
+                  continue
+                fi
+              fi
+              echo "::error::Smoke test failed for $name at $url (last code: $code)"; exit 1
+            fi
           done
 
           if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then
