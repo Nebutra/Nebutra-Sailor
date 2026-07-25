@@ -1,29 +1,34 @@
 name: i18n Translate (SenseNova)
 
-# Auto-localize apps/landing message catalogs when English source changes.
-# High-concurrency translator → SenseNova Token Plan small model.
+# Global concurrent localization for ALL product message catalogs:
+#   - apps/landing/messages                 (marketing)
+#   - packages/platform/i18n/locales        (dashboard / web)
+#   - apps/tsekaluk-dev/messages            (portfolio)
 #
-# Docs:
-#   https://platform.sensenova.cn/docs
-#   https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
-#   Base: https://token.sensenova.cn/v1
-#   Model: sensenova-6.7-flash-lite (+ thinking disabled)
+# Target locales (product SSOT = ROUTE_LOCALES):
+#   en (source) → zh, ja, ko, es, fr, de
 #
-# Secrets:
-#   SENSENOVA_API_KEY — Token Plan API key
+# Provider: SenseNova Token Plan small model
+#   Base:  https://token.sensenova.cn/v1
+#   Model: sensenova-6.7-flash-lite (+ thinking.disabled)
+#   Docs:  https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
 #
-# Concurrency env (defaults tuned for Token Plan free tier + GH runner):
-#   CONCURRENCY=24          parallel batches per locale
-#   LOCALE_CONCURRENCY=6    locales in parallel
-#   BATCH_SIZE=20           strings per API call
+# Secrets: SENSENOVA_API_KEY
+#
+# Concurrency knobs (workflow_dispatch overridable):
+#   CATALOG_CONCURRENCY=3  LOCALE_CONCURRENCY=6  CONCURRENCY=24  BATCH_SIZE=20
 
 on:
   workflow_dispatch:
     inputs:
       force:
-        description: "Re-translate all strings (ignore lock / existing)"
+        description: "Re-translate all strings"
         required: false
         default: "false"
+      catalog:
+        description: "Catalog filter (landing|web|tsekaluk-dev|all)"
+        required: false
+        default: "all"
       concurrency:
         description: "Per-locale batch concurrency"
         required: false
@@ -36,7 +41,9 @@ on:
     branches: [main]
     paths:
       - "apps/landing/messages/en.json"
-      - "apps/landing/scripts/translate-sensenova.mjs"
+      - "packages/platform/i18n/locales/en.json"
+      - "apps/tsekaluk-dev/messages/en.json"
+      - "scripts/i18n-translate-sensenova.mjs"
       - ".github/workflows/i18n-translate.yml"
 
 permissions:
@@ -44,31 +51,24 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: i18n-translate-landing
+  group: i18n-translate-global
   cancel-in-progress: true
 
 jobs:
   translate:
-    name: Translate landing locales
+    name: Translate all product catalogs
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node + pnpm
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-      - name: Enable corepack pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@10.32.1 --activate
-
-      - name: Install workspace (landing only)
-        run: pnpm install --frozen-lockfile --filter @nebutra/landing...
 
       - name: Require SENSENOVA_API_KEY
         env:
@@ -99,43 +99,56 @@ jobs:
           print("smoke content:", c.strip()[:80])
           PY
 
-      - name: Concurrent translate (SenseNova flash-lite)
-        working-directory: apps/landing
+      - name: Concurrent global translate
         env:
           SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
           SENSENOVA_BASE_URL: https://token.sensenova.cn/v1
           SENSENOVA_TRANSLATE_MODEL: sensenova-6.7-flash-lite
-          CONCURRENCY: ${{ github.event.inputs.concurrency || '24' }}
+          CATALOG_CONCURRENCY: "3"
           LOCALE_CONCURRENCY: "6"
+          CONCURRENCY: ${{ github.event.inputs.concurrency || '24' }}
           BATCH_SIZE: ${{ github.event.inputs.batch_size || '20' }}
           MAX_RETRIES: "4"
         run: |
-          EXTRA=""
+          EXTRA=()
           if [ "${{ github.event.inputs.force }}" = "true" ]; then
-            EXTRA="--force"
+            EXTRA+=(--force)
           fi
-          node scripts/translate-sensenova.mjs $EXTRA
+          CAT="${{ github.event.inputs.catalog || 'all' }}"
+          if [ -n "$CAT" ] && [ "$CAT" != "all" ]; then
+            EXTRA+=(--catalog "$CAT")
+          fi
+          node scripts/i18n-translate-sensenova.mjs "${EXTRA[@]}"
 
-      - name: Verify i18n key integrity
+      - name: Enable pnpm + install for i18n verify
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.32.1 --activate
+          pnpm install --frozen-lockfile --filter @nebutra/landing...
+
+      - name: Verify landing i18n integrity
         run: pnpm --filter @nebutra/landing check:i18n
 
       - name: Open PR with locale updates
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore(i18n): auto-translate landing locales via SenseNova flash-lite"
+          commit-message: "chore(i18n): global auto-translate via SenseNova flash-lite"
           branch: chore/i18n-auto-translate
           delete-branch: true
-          title: "chore(i18n): auto-translate landing locales (SenseNova flash-lite)"
+          title: "chore(i18n): global auto-translate (landing + web + tsekaluk-dev)"
           body: |
-            Automated localization for `apps/landing/messages/*`.
+            Automated **global** localization across product message catalogs.
 
-            - Provider: SenseNova **Token Plan** (`https://token.sensenova.cn/v1`)
-            - Model: `sensenova-6.7-flash-lite` (small, `thinking.disabled`)
-            - Runner: concurrent `scripts/translate-sensenova.mjs`
-              (`CONCURRENCY` batches × `LOCALE_CONCURRENCY` locales × `BATCH_SIZE` strings)
-            - Source: `en.json` → zh / ja / ko / es / fr / de
+            | Catalog | Path | Locales |
+            |---|---|---|
+            | landing | `apps/landing/messages` | en → zh/ja/ko/es/fr/de |
+            | web | `packages/platform/i18n/locales` | en → zh/ja/ko/es/fr/de |
+            | tsekaluk-dev | `apps/tsekaluk-dev/messages` | en → zh/ja/ko/es/fr/de |
+
+            - Provider: SenseNova Token Plan (`https://token.sensenova.cn/v1`)
+            - Model: `sensenova-6.7-flash-lite` (`thinking.disabled`)
+            - Runner: concurrent `scripts/i18n-translate-sensenova.mjs`
+              (`CATALOG_CONCURRENCY` × `LOCALE_CONCURRENCY` × `CONCURRENCY` × `BATCH_SIZE`)
             - Docs: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
-
-            Triggered by English source changes or manual `workflow_dispatch`.
           labels: i18n, automated
