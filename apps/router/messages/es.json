@@ -1,8 +1,8 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Router — API marketplace",
+    "titleDefault": "{brandName} Router — Marketplace de APIs",
     "titleTemplate": "%s | {brandName} Router",
-    "description": "All-model API marketplace · pay as you go · manage keys & wallet · quick try."
+    "description": "Marketplace de APIs para todos los modelos · paga solo lo que uses · gestiona claves y billetera · prueba rápido."
   },
   "admin": {
     "dashboard": "Overview",
@@ -10,22 +10,22 @@
     "wallet": "Wallet",
     "docs": "Docs",
     "title": "Admin",
-    "backToMarket": "Back to market",
+    "backToMarket": "Volver al marketplace",
     "quickUse": "Quick use"
   },
   "chrome": {
-    "searchPlaceholder": "What do you want to do with AI?",
+    "searchPlaceholder": "¿Qué quieres hacer con IA?",
     "search": "Search",
     "locale": "Language",
     "currency": "Currency",
-    "collapseSidebar": "Collapse sidebar",
-    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Contraer barra lateral",
+    "expandSidebar": "Expandir barra lateral",
     "home": "Home",
     "adminConsole": "Admin",
     "quickUse": "Quick use",
     "support": "Support",
     "apiDocs": "API docs",
-    "integrationHelp": "Integration guide",
+    "integrationHelp": "Guía de integración",
     "aiRecommend": "AI picks",
     "market": "Market",
     "usageTitle": "Quick use"
@@ -33,7 +33,7 @@
   "channels": {
     "app": "App market",
     "api": "API market",
-    "models": "Model catalog",
+    "models": "Catálogo de modelos",
     "client": "Client"
   },
   "market": {

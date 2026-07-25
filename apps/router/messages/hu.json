@@ -1,8 +1,8 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Router — API marketplace",
+    "titleDefault": "{brandName} Router — API piactér",
     "titleTemplate": "%s | {brandName} Router",
-    "description": "All-model API marketplace · pay as you go · manage keys & wallet · quick try."
+    "description": "Minden modell API piactere · fizess használat után · kezelj kulcsokat és tárcát · gyors kipróbálás."
   },
   "admin": {
     "dashboard": "Overview",
@@ -10,22 +10,22 @@
     "wallet": "Wallet",
     "docs": "Docs",
     "title": "Admin",
-    "backToMarket": "Back to market",
+    "backToMarket": "Vissza a piactérre",
     "quickUse": "Quick use"
   },
   "chrome": {
-    "searchPlaceholder": "What do you want to do with AI?",
+    "searchPlaceholder": "Mit szeretnél az AI-val csinálni?",
     "search": "Search",
     "locale": "Language",
     "currency": "Currency",
-    "collapseSidebar": "Collapse sidebar",
-    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Oldalsáv összecsukása",
+    "expandSidebar": "Oldalsáv kibontása",
     "home": "Home",
     "adminConsole": "Admin",
     "quickUse": "Quick use",
     "support": "Support",
     "apiDocs": "API docs",
-    "integrationHelp": "Integration guide",
+    "integrationHelp": "Integrációs útmutató",
     "aiRecommend": "AI picks",
     "market": "Market",
     "usageTitle": "Quick use"
@@ -33,7 +33,7 @@
   "channels": {
     "app": "App market",
     "api": "API market",
-    "models": "Model catalog",
+    "models": "Modellkatalógus",
     "client": "Client"
   },
   "market": {

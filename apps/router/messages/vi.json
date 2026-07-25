@@ -1,8 +1,8 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Router — API marketplace",
+    "titleDefault": "{brandName} Router — Sàn giao dịch API",
     "titleTemplate": "%s | {brandName} Router",
-    "description": "All-model API marketplace · pay as you go · manage keys & wallet · quick try."
+    "description": "Sàn giao dịch API đa mô hình · thanh toán theo nhu cầu · quản lý khóa & ví · thử nghiệm nhanh."
   },
   "admin": {
     "dashboard": "Overview",
@@ -10,22 +10,22 @@
     "wallet": "Wallet",
     "docs": "Docs",
     "title": "Admin",
-    "backToMarket": "Back to market",
+    "backToMarket": "Quay lại sàn giao dịch",
     "quickUse": "Quick use"
   },
   "chrome": {
-    "searchPlaceholder": "What do you want to do with AI?",
+    "searchPlaceholder": "Bạn muốn làm gì với AI?",
     "search": "Search",
     "locale": "Language",
     "currency": "Currency",
-    "collapseSidebar": "Collapse sidebar",
-    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Thu gọn thanh bên",
+    "expandSidebar": "Mở rộng thanh bên",
     "home": "Home",
     "adminConsole": "Admin",
     "quickUse": "Quick use",
     "support": "Support",
     "apiDocs": "API docs",
-    "integrationHelp": "Integration guide",
+    "integrationHelp": "Hướng dẫn tích hợp",
     "aiRecommend": "AI picks",
     "market": "Market",
     "usageTitle": "Quick use"
@@ -33,7 +33,7 @@
   "channels": {
     "app": "App market",
     "api": "API market",
-    "models": "Model catalog",
+    "models": "Danh mục mô hình",
     "client": "Client"
   },
   "market": {

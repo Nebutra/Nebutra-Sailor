@@ -1,8 +1,8 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Router — API marketplace",
+    "titleDefault": "{brandName} Router — שוק API",
     "titleTemplate": "%s | {brandName} Router",
-    "description": "All-model API marketplace · pay as you go · manage keys & wallet · quick try."
+    "description": "שוק API לכל המודלים · תשלום לפי שימוש · ניהול מפתחות וארנק · ניסוי מהיר."
   },
   "admin": {
     "dashboard": "Overview",
@@ -10,22 +10,22 @@
     "wallet": "Wallet",
     "docs": "Docs",
     "title": "Admin",
-    "backToMarket": "Back to market",
+    "backToMarket": "חזרה לשוק",
     "quickUse": "Quick use"
   },
   "chrome": {
-    "searchPlaceholder": "What do you want to do with AI?",
+    "searchPlaceholder": "מה תרצה לעשות עם AI?",
     "search": "Search",
     "locale": "Language",
     "currency": "Currency",
-    "collapseSidebar": "Collapse sidebar",
-    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "כיווץ סרגל צד",
+    "expandSidebar": "הרחבת סרגל צד",
     "home": "Home",
     "adminConsole": "Admin",
     "quickUse": "Quick use",
     "support": "Support",
     "apiDocs": "API docs",
-    "integrationHelp": "Integration guide",
+    "integrationHelp": "מדריך אינטגרציה",
     "aiRecommend": "AI picks",
     "market": "Market",
     "usageTitle": "Quick use"
@@ -33,7 +33,7 @@
   "channels": {
     "app": "App market",
     "api": "API market",
-    "models": "Model catalog",
+    "models": "קטלוג מודלים",
     "client": "Client"
   },
   "market": {
