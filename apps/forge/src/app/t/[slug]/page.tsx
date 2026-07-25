@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { buildToolPageModel } from "@nebutra/forge-runtime";
 import { Card, PageHeader } from "@nebutra/ui/layout";
 import type { Metadata } from "next";
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = buildToolPageModel(registry, slug);
   const isLab = page.sotaStatus === "lab";
   return {
-    title: isLab ? `${page.title.zh}（实验）- 在线工具 | Nebutra Forge` : page.seo.title.zh,
+    title: isLab ? `${page.title.zh}（实验）- 在线工具 | ${brand.name} Forge` : page.seo.title.zh,
     description: isLab
       ? `${page.description.zh}（实验能力，数据范围有限，仅供参考）`
       : page.description.zh,
