@@ -490,6 +490,9 @@ importers:
       '@nebutra/forge-runtime':
         specifier: workspace:*
         version: link:../../packages/ai/forge-runtime
+      '@nebutra/i18n':
+        specifier: workspace:*
+        version: link:../../packages/platform/i18n
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -508,6 +511,9 @@ importers:
       next:
         specifier: ^16.2.11
         version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next-intl:
+        specifier: ^4.12.0
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react:
         specifier: 19.2.4
         version: 19.2.4
@@ -854,6 +860,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/i18n':
+        specifier: workspace:*
+        version: link:../../packages/platform/i18n
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -875,6 +884,9 @@ importers:
       next:
         specifier: ^16.2.11
         version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next-intl:
+        specifier: ^4.12.0
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react:
         specifier: 19.2.4
         version: 19.2.4

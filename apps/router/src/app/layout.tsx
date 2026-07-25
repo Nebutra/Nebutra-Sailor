@@ -3,35 +3,41 @@ import "./globals.css";
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
+import { toHtmlLang } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
 import { ConsoleShell } from "@/components/console-shell";
 
-export const metadata: Metadata = {
-  title: {
-    default: `${brand.name} Router — API 集市`,
-    template: `%s | ${brand.name} Router`,
-  },
-  description: "全模型 API 集市 · 按量付费 · 管理后台配置 Key/钱包 · 快捷使用试用。",
-  // Product sub-brand favicon — transparent PNG redstone repeater (not parent brand SVG).
-  icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
-      { url: "/product/router-favicon.png", type: "image/png", sizes: "256x256" },
-      { url: "/favicon.ico", sizes: "48x48" },
-    ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("meta");
+  return {
+    title: {
+      default: t("titleDefault", { brandName: brand.name }),
+      template: t("titleTemplate", { brandName: brand.name }),
+    },
+    description: t("description"),
+    // Product sub-brand favicon — transparent PNG redstone repeater (not parent brand SVG).
+    icons: {
+      icon: [
+        { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+        { url: "/product/router-favicon.png", type: "image/png", sizes: "256x256" },
+        { url: "/favicon.ico", sizes: "48x48" },
+      ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    },
+  };
+}
 
 /**
  * Shell + @nebutra/auth (default better-auth via Auth Center).
- * Do not import better-auth / clerk SDKs from the app layer.
+ * Locale: cookie NEXT_LOCALE → PRODUCT_LANGUAGES wheel (@nebutra/i18n).
  */
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   const authProvider = getConfiguredAuthProvider();
   const authProviderConfig: Record<string, unknown> = {};
   if (authProvider === "clerk") {
@@ -47,18 +53,23 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   }
 
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <html
-      lang="zh-CN"
+      lang={toHtmlLang(locale)}
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
-        <AuthProvider provider={authProvider} config={authProviderConfig}>
-          <Suspense fallback={<div className="min-h-screen bg-[var(--neutral-1)]" />}>
-            <ConsoleShell>{children}</ConsoleShell>
-          </Suspense>
-        </AuthProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AuthProvider provider={authProvider} config={authProviderConfig}>
+            <Suspense fallback={<div className="min-h-screen bg-[var(--neutral-1)]" />}>
+              <ConsoleShell>{children}</ConsoleShell>
+            </Suspense>
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

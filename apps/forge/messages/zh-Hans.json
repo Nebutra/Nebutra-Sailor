@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Forge — 在线工具站",
+    "titleTemplate": "%s | {brandName} Forge",
+    "description": "编解码、文本、哈希、文档与图片等在线工具。"
+  },
+  "nav": {
+    "main": "主导航",
+    "homeAria": "{brandName} Forge 首页",
+    "tools": "工具",
+    "wallet": "钱包",
+    "api": "API",
+    "routerAria": "{brandName} Router",
+    "categoriesAria": "工具分类"
+  },
+  "tool": {
+    "breadcrumbAria": "面包屑",
+    "labNotice": "实验能力：数据范围或词典有限，结果仅供参考，不承诺完整生产精度。",
+    "workspace": "工作台",
+    "workspaceHint": "本地或服务端 · 与 API 同一路径",
+    "api": "API",
+    "apiHint": "与页面同一调用契约。生产环境请走认证 Key。",
+    "related": "相关工具"
+  },
+  "footer": {
+    "navAria": "页脚",
+    "blurb": "在线工具站。页面上手动完成，或经 API / MCP 接入自动化。",
+    "product": "产品",
+    "developers": "开发",
+    "company": "公司",
+    "docs": "接入文档",
+    "website": "官网",
+    "privacy": "隐私"
+  },
+  "home": {
+    "eyebrow": "所见即可调用",
+    "title": "在线工具瑞士军刀",
+    "subtitle": "编解码、文本、哈希、文档与图片处理。页面上手动完成，或经 API / MCP 接入自动化——能力只实现一次。",
+    "toolCount": "{count} 个工具",
+    "apiMcp": "API / MCP"
+  },
+  "search": {
+    "placeholder": "搜索：字数、base64、json、时间戳…",
+    "aria": "搜索工具",
+    "emptyTitle": "没有匹配「{query}」的工具",
+    "emptyHint": "试试别的关键词，或从分类里挑一把锤子。"
+  },
+  "categories": {
+    "codec": { "label": "编解码", "hint": "Base64 · URL · JWT · Unicode" },
+    "cn": { "label": "国内校验", "hint": "身份证 · 手机号" },
+    "data": { "label": "数据", "hint": "JSON · YAML · CSV · XML" },
+    "dev": { "label": "开发", "hint": "正则 · SQL · 颜色 · UUID" },
+    "doc": { "label": "文档", "hint": "Markdown · PDF 合并拆分" },
+    "finance": { "label": "财务", "hint": "金额大写" },
+    "hash": { "label": "哈希与安全", "hint": "MD5 · SHA · HMAC · 密码" },
+    "image": { "label": "图像", "hint": "压缩 · 二维码 · 转换" },
+    "life": { "label": "生活计算", "hint": "房贷 · BMI · 亲戚称呼" },
+    "llm": { "label": "LLM", "hint": "Token · 费用 · Schema" },
+    "security": { "label": "安全", "hint": "密码生成" },
+    "text": { "label": "文本", "hint": "字数 · 简繁 · 拼音 · Diff" },
+    "time": { "label": "时间", "hint": "时间戳 · 时区 · Cron · 农历" },
+    "unit": { "label": "单位", "hint": "长度 · 重量 · 温度 · 数据量" }
+  }
+}

@@ -77,10 +77,11 @@ function meta(
 ): ProductLanguageMeta {
   const language =
     opts?.language ?? (messageKey.includes("-") ? messageKey.split("-")[0]! : messageKey);
+  // exactOptionalPropertyTypes: omit optional keys when unset
   return {
     messageKey,
     language,
-    script: opts?.script,
+    ...(opts?.script ? { script: opts.script } : {}),
     defaultRegion,
     endonym,
     catalog: opts?.catalog ?? "shipped",

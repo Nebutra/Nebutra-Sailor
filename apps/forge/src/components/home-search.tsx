@@ -1,20 +1,30 @@
 "use client";
 
 import type { ForgeToolSummary } from "@nebutra/forge-runtime";
+import { isChineseLocale } from "@nebutra/i18n/locales";
 import { MagnifyingGlass } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+
+function pickBilingual(locale: string, fields: { zh: string; en: string }): string {
+  return isChineseLocale(locale) ? fields.zh : fields.en;
+}
 
 export function HomeSearch({ tools }: { tools: readonly ForgeToolSummary[] }) {
   const [q, setQ] = useState("");
+  const t = useTranslations("search");
+  const tCat = useTranslations("categories");
+  const locale = useLocale();
+
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     if (!needle) return [];
     return tools
-      .filter((t) => {
+      .filter((tool) => {
         const hay =
-          `${t.title.zh} ${t.title.en} ${t.slug} ${t.category} ${t.description.zh}`.toLowerCase();
+          `${tool.title.zh} ${tool.title.en} ${tool.slug} ${tool.category} ${tool.description.zh} ${tool.description.en}`.toLowerCase();
         return hay.includes(needle);
       })
       .slice(0, 10);
@@ -29,28 +39,32 @@ export function HomeSearch({ tools }: { tools: readonly ForgeToolSummary[] }) {
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="搜索：字数、base64、json、时间戳…"
+          placeholder={t("placeholder")}
           className="h-12 pl-10 shadow-sm"
           autoComplete="off"
-          aria-label="搜索工具"
+          aria-label={t("aria")}
         />
       </div>
       {filtered.length > 0 ? (
         <ul className="absolute z-20 mt-2 max-h-80 w-full overflow-auto rounded-[var(--radius-lg)] border border-border bg-background py-2 shadow-lg">
-          {filtered.map((t) => (
-            <li key={t.id}>
+          {filtered.map((tool) => (
+            <li key={tool.id}>
               <Link
-                href={t.path}
+                href={tool.path}
                 className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm transition hover:bg-accent"
               >
                 <span>
-                  <span className="font-medium text-foreground">{t.title.zh}</span>
+                  <span className="font-medium text-foreground">
+                    {pickBilingual(locale, tool.title)}
+                  </span>
                   <span className="mt-0.5 block text-xs text-muted-foreground">
-                    {t.description.zh}
+                    {pickBilingual(locale, tool.description)}
                   </span>
                 </span>
                 <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-                  {t.category}
+                  {tCat.has(`${tool.category}.label` as never)
+                    ? tCat(`${tool.category}.label` as never)
+                    : tool.category}
                 </span>
               </Link>
             </li>
@@ -69,8 +83,8 @@ export function HomeSearch({ tools }: { tools: readonly ForgeToolSummary[] }) {
             draggable={false}
             className="h-14 w-14 object-contain opacity-80"
           />
-          <p className="text-sm text-muted-foreground">没有匹配「{q.trim()}」的工具</p>
-          <p className="text-xs text-muted-foreground">试试别的关键词，或从分类里挑一把锤子。</p>
+          <p className="text-sm text-muted-foreground">{t("emptyTitle", { query: q.trim() })}</p>
+          <p className="text-xs text-muted-foreground">{t("emptyHint")}</p>
         </div>
       ) : null}
     </div>

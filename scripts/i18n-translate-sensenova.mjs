@@ -3,9 +3,11 @@
  * Monorepo-wide concurrent i18n translator (SenseNova Token Plan).
  *
  * Covers every product message catalog that ships UI strings for global locales:
- *   - apps/landing/messages              (marketing, 7 locales)
- *   - packages/platform/i18n/locales     (dashboard/web shared, 7 locales)
- *   - apps/tsekaluk-dev/messages         (portfolio, expanded to 7 locales)
+ *   - apps/landing/messages              (marketing — PRODUCT_LANGUAGES wheel)
+ *   - packages/platform/i18n/locales     (dashboard/web shared — full wheel)
+ *   - apps/tsekaluk-dev/messages         (portfolio — full wheel)
+ *   - apps/forge/messages                (online tools — full wheel)
+ *   - apps/router/messages               (API marketplace — full wheel)
  *
  * Official API:
  *   POST https://token.sensenova.cn/v1/chat/completions
@@ -96,6 +98,20 @@ const CATALOGS = [
     source: "en",
     targets: GLOBAL_TARGETS,
     description: "Portfolio / personal site",
+  },
+  {
+    id: "forge",
+    messagesDir: "apps/forge/messages",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Forge online tool station",
+  },
+  {
+    id: "router",
+    messagesDir: "apps/router/messages",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Router API marketplace",
   },
 ];
 
@@ -267,12 +283,16 @@ async function translateBatch(targetLocale, entries) {
       {
         role: "system",
         content: [
-          `You are a professional product UI translator.`,
+          `You are a professional product UI translator for a global SaaS (Nebutra).`,
           `Translate each JSON string value from English to ${targetName} (${targetLocale}).`,
           `Rules:`,
-          `- Keep brand names untranslated: Nebutra, Stripe, Clerk, Vercel, OpenAI, GitHub, etc.`,
-          `- Preserve ICU placeholders exactly: {name}, {count}, {{var}}, etc.`,
-          `- Preserve HTML/Markdown/code spans and punctuation structure.`,
+          `- Natural product UI tone — concise, native, not literal machine-translationese.`,
+          `- Keep brand / product names untranslated: Nebutra, Forge, Router, Stripe, Clerk, Vercel, OpenAI, GitHub, MCP, API, UUID, JWT, PDF, JSON, YAML, CSV, XML, Cron, LLM, RAG.`,
+          `- Preserve ICU placeholders exactly: {name}, {count}, {brandName}, {{var}}, etc.`,
+          `- Preserve HTML/Markdown/code spans, file paths, and punctuation structure.`,
+          `- For zh-Hant use Traditional Chinese characters (繁體), never Simplified.`,
+          `- For zh-Hans use Simplified Chinese characters (简体), never Traditional.`,
+          `- For RTL locales (ar/he/fa/ur) return plain translated text only (no bidi marks).`,
           `- Return ONLY a valid JSON object with the SAME keys and translated string values.`,
           `- No markdown fences, no commentary.`,
         ].join("\n"),

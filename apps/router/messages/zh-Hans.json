@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "titleDefault": "{brandName} Router — API 集市",
+    "titleTemplate": "%s | {brandName} Router",
+    "description": "全模型 API 集市 · 按量付费 · 管理后台配置 Key/钱包 · 快捷使用试用。"
+  },
+  "admin": {
+    "dashboard": "数据汇总",
+    "keys": "API Keys",
+    "wallet": "钱包",
+    "docs": "接入文档",
+    "title": "管理后台",
+    "backToMarket": "返回集市",
+    "quickUse": "快捷使用"
+  },
+  "chrome": {
+    "searchPlaceholder": "请问你想用 AI 做什么呢？",
+    "search": "搜索",
+    "locale": "语言",
+    "currency": "货币",
+    "collapseSidebar": "收起侧栏",
+    "expandSidebar": "展开侧栏",
+    "home": "首页",
+    "adminConsole": "管理后台",
+    "quickUse": "快捷使用",
+    "support": "技术支持",
+    "apiDocs": "API 文档",
+    "integrationHelp": "接入说明",
+    "aiRecommend": "AI 推荐",
+    "market": "集市",
+    "usageTitle": "快捷使用"
+  },
+  "channels": {
+    "app": "应用集市",
+    "api": "API 集市",
+    "models": "模型目录",
+    "client": "客户端"
+  },
+  "market": {
+    "new": "最新",
+    "hot": "热门",
+    "forYou": "为你推荐",
+    "grid": "网格",
+    "list": "列表",
+    "apiShelf": "API 货架",
+    "toolShelf": "工具货架"
+  }
+}

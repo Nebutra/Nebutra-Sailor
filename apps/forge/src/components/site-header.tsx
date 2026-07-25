@@ -4,28 +4,31 @@ import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { ForgeMark } from "@/components/forge-mark";
 import { RouterMark } from "@/components/router-mark";
 
-const NAV = [
-  { href: "/", label: "工具" },
-  { href: "/wallet", label: "钱包" },
-  { href: "/docs", label: "API" },
+const NAV_KEYS = [
+  { href: "/", key: "tools" as const },
+  { href: "/wallet", key: "wallet" as const },
+  { href: "/docs", key: "api" as const },
 ] as const;
 
 const ROUTER_URL = process.env.NEXT_PUBLIC_ROUTER_URL?.trim() || getBrandOrigin("router");
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[var(--neutral-6)] bg-[color-mix(in_srgb,var(--neutral-1)_92%,transparent)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-8 px-6">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2.5"
-          aria-label={`${brand.name} Forge 首页`}
+          aria-label={t("homeAria", { brandName: brand.name })}
         >
           <BrandLogo variant="mark" className="h-8 w-8 sm:hidden" />
           <BrandLogo variant="horizontal" className="hidden h-[26px] w-auto sm:block" />
@@ -33,8 +36,8 @@ export function SiteHeader() {
           <ForgeMark className="h-6 w-6 sm:h-7 sm:w-7" />
           <span className="sr-only">Forge</span>
         </Link>
-        <nav aria-label="主导航" className="flex min-w-0 flex-1 items-center gap-1">
-          {NAV.map(({ href, label }) => {
+        <nav aria-label={t("main")} className="flex min-w-0 flex-1 items-center gap-1">
+          {NAV_KEYS.map(({ href, key }) => {
             const active =
               href === "/"
                 ? pathname === "/" || pathname.startsWith("/t/")
@@ -48,7 +51,7 @@ export function SiteHeader() {
                   active ? "font-medium text-[var(--neutral-12)]" : "text-[var(--neutral-11)]",
                 )}
               >
-                {label}
+                {t(key)}
               </Link>
             );
           })}
@@ -56,7 +59,7 @@ export function SiteHeader() {
         <div className="flex shrink-0 items-center gap-2">
           <a
             href={ROUTER_URL}
-            aria-label={`${brand.name} Router`}
+            aria-label={t("routerAria", { brandName: brand.name })}
             title="Router"
             className="hidden h-9 w-9 items-center justify-center rounded-[var(--radius-md)] transition hover:bg-[var(--neutral-3)] sm:inline-flex"
           >

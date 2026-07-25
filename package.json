@@ -40,6 +40,8 @@
     "i18n:translate:landing": "node scripts/i18n-translate-sensenova.mjs --catalog landing",
     "i18n:translate:web": "node scripts/i18n-translate-sensenova.mjs --catalog web",
     "i18n:translate:tsekaluk": "node scripts/i18n-translate-sensenova.mjs --catalog tsekaluk-dev",
+    "i18n:translate:forge": "node scripts/i18n-translate-sensenova.mjs --catalog forge",
+    "i18n:translate:router": "node scripts/i18n-translate-sensenova.mjs --catalog router",
     "mail:export": "pnpm --filter mail-preview export",
     "setup": "tsx scripts/setup.ts",
     "check-env": "npx tsx infra/ops/scripts/check-env.ts",

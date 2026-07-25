@@ -35,6 +35,8 @@ trustPolicy: no-downgrade
 trustPolicyExclude:
   - "next-auth@5.0.0-beta.32"
   - "@auth/core@0.41.3"
+  # chokidar@4.0.3 (via tsup) lost provenance attestation vs earlier 4.x — not a takeover.
+  - "chokidar@4.0.3"
 strictDepBuilds: true
 ignorePnpmfile: true
 

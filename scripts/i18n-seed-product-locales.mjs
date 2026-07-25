@@ -52,6 +52,8 @@ const CATALOGS = [
   "packages/platform/i18n/locales",
   "apps/landing/messages",
   "apps/tsekaluk-dev/messages",
+  "apps/forge/messages",
+  "apps/router/messages",
 ];
 
 let seeded = 0;
@@ -77,12 +79,10 @@ for (const rel of CATALOGS) {
   for (const loc of TARGETS) {
     const dest = join(dir, `${loc}.json`);
     if (existsSync(dest)) continue;
-    const src =
-      loc === "zh-Hant" && existsSync(hans)
-        ? hans
-        : loc === "zh-Hans" && existsSync(legacyZh)
-          ? legacyZh
-          : en;
+    // Always seed from English so SenseNova translates every leaf.
+    // (Copying zh-Hans → zh-Hant skips Hant conversion because strings ≠ en.)
+    // Only legacy bare-zh migration uses a Chinese source.
+    const src = loc === "zh-Hans" && existsSync(legacyZh) && !existsSync(hans) ? legacyZh : en;
     copyFileSync(src, dest);
     console.log(`seed ${rel}/${loc}.json`);
     seeded++;

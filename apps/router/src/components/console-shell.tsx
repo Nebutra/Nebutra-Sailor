@@ -2,6 +2,9 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { safeGetItem, safeSetItem } from "@nebutra/browser-utils";
+import { setLocaleCookie } from "@nebutra/i18n/cookies";
+import { PRODUCT_LANGUAGE_META, PRODUCT_LANGUAGES } from "@nebutra/i18n/languages";
+import { toMessageLocale } from "@nebutra/i18n/locales";
 import {
   BookOpen,
   ChevronDown,
@@ -15,7 +18,8 @@ import {
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { type FormEvent, type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { type FormEvent, type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { MarketFooter } from "@/components/market-footer";
@@ -26,16 +30,18 @@ import { MARKET_CHANNELS } from "@/lib/market-taxonomy";
 /**
  * 302 journey shells (see docs/plans/2026-07-23-router-302-full-route-interaction-study.md):
  *
- * Market  / · /models          公开货架 chrome
- * Admin   /dashboard|keys|…    管理后台
- * Use     /use                 快捷使用
+ * Market  / · /models          public chrome
+ * Admin   /dashboard|keys|…    admin
+ * Use     /use                 quick use
+ *
+ * Locales: full PRODUCT_LANGUAGES wheel via NEXT_LOCALE cookie (never 7-locale stopgap).
  */
 
 const ADMIN_NAV = [
-  { href: "/dashboard", label: "数据汇总", icon: Home },
-  { href: "/keys", label: "API Keys", icon: Key },
-  { href: "/wallet", label: "钱包", icon: CreditCard },
-  { href: "/docs", label: "接入文档", icon: BookOpen },
+  { href: "/dashboard", key: "dashboard" as const, icon: Home },
+  { href: "/keys", key: "keys" as const, icon: Key },
+  { href: "/wallet", key: "wallet" as const, icon: CreditCard },
+  { href: "/docs", key: "docs" as const, icon: BookOpen },
 ] as const;
 
 const STORAGE_KEY = "nebutra-router-sidebar-collapsed";
@@ -47,12 +53,11 @@ const CURRENCIES = [
   { id: "RUB", label: "RUB ₽" },
 ] as const;
 
-const LOCALES = [
-  { id: "zh-CN", label: "简体中文" },
-  { id: "en", label: "English" },
-  { id: "ja", label: "日本語" },
-  { id: "ru", label: "Русский" },
-] as const;
+/** Global language wheel — endonyms from PRODUCT_LANGUAGE_META. */
+const WHEEL_LOCALES = PRODUCT_LANGUAGES.map((id) => ({
+  id,
+  label: PRODUCT_LANGUAGE_META[id].endonym,
+}));
 
 type Surface = "market" | "admin" | "use";
 
@@ -132,7 +137,7 @@ function HeaderMenu({
           id={menuId}
           role="menu"
           className={cn(
-            "absolute top-full z-50 mt-1 min-w-[120px] rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] py-1 shadow-md",
+            "absolute top-full z-50 mt-1 max-h-72 min-w-[140px] overflow-y-auto rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] py-1 shadow-md",
             align === "right" ? "right-0" : "left-0",
           )}
         >
@@ -172,9 +177,11 @@ function HeaderMenu({
 function MarketShell({ pathname, children }: { pathname: string; children: ReactNode }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations("chrome");
+  const tCh = useTranslations("channels");
+  const activeLocale = toMessageLocale(useLocale());
   const [q, setQ] = useState("");
   const [currency, setCurrency] = useState<(typeof CURRENCIES)[number]["id"]>("USD");
-  const [locale, setLocale] = useState<(typeof LOCALES)[number]["id"]>("zh-CN");
 
   const productType = searchParams.get("product_type") === "tool" ? "tool" : "api";
   const isHome = pathname === "/";
@@ -189,8 +196,19 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
     router.push(query ? `/models?q=${encodeURIComponent(query)}` : "/models");
   };
 
+  const onLocaleSelect = (messageKey: string) => {
+    setLocaleCookie(messageKey);
+    router.refresh();
+  };
+
   const currencyLabel = CURRENCIES.find((c) => c.id === currency)?.label ?? "USD $";
-  const localeLabel = LOCALES.find((l) => l.id === locale)?.label ?? "简体中文";
+  const localeLabel = useMemo(
+    () =>
+      WHEEL_LOCALES.find((l) => l.id === activeLocale)?.label ??
+      PRODUCT_LANGUAGE_META[activeLocale]?.endonym ??
+      activeLocale,
+    [activeLocale],
+  );
 
   return (
     <div className="router-market text-[var(--neutral-12)]">
@@ -208,10 +226,10 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
             />
             <HeaderMenu
               label={localeLabel}
-              items={LOCALES.map((l) => ({
+              items={WHEEL_LOCALES.map((l) => ({
                 id: l.id,
                 label: l.label,
-                onSelect: () => setLocale(l.id),
+                onSelect: () => onLocaleSelect(l.id),
               }))}
             />
             <span className="text-[var(--neutral-7)]" aria-hidden>
@@ -223,42 +241,39 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
           <div className="flex items-center gap-3.5">
             {!isHome ? (
               <Link href="/" className="hover:text-[var(--neutral-12)]">
-                首页
+                {t("home")}
               </Link>
             ) : null}
             <Link href="/dashboard" className="hover:text-[var(--neutral-12)]">
-              管理后台
+              {t("adminConsole")}
             </Link>
             <Link href="/use" className="hover:text-[var(--neutral-12)]">
-              快捷使用
+              {t("quickUse")}
             </Link>
             <HeaderMenu
-              label="技术支持"
+              label={t("support")}
               align="right"
               items={[
-                { id: "docs", label: "API 文档", href: "/docs" },
-                { id: "help", label: "接入说明", href: "/docs" },
+                { id: "docs", label: t("apiDocs"), href: "/docs" },
+                { id: "help", label: t("integrationHelp"), href: "/docs" },
               ]}
             />
           </div>
         </div>
       </div>
 
-      {/* brand + search — 更宽搜索、更高控件，提升「大气」比例 */}
       <div className="router-market-shell flex flex-col gap-4 pt-7 pb-4 md:flex-row md:items-center md:gap-6">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2.5"
           aria-label={`${brand.name} Router`}
         >
-          {/* 自形 wordmark：logo-horizontal-en（mark + 自形字标），不用系统字体拼品牌字 */}
           <BrandLogo variant="horizontal" className="h-8 w-auto md:h-9" />
           <span className="hidden h-5 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
           <RouterMark className="h-7 w-7 md:h-8 md:w-8" />
           <span className="sr-only">Router</span>
         </Link>
         <form onSubmit={onSearch} className="flex min-w-0 flex-1 gap-2.5">
-          {/* 搜索：输入框内嵌主按钮，避免独立蓝胶囊抢戏 */}
           <div className="relative min-w-0 flex-1">
             <MagnifyingGlass
               className="pointer-events-none absolute top-1/2 left-4 h-[18px] w-[18px] -translate-y-1/2 text-[var(--neutral-9)]"
@@ -268,26 +283,25 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
               data-allow-native
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="请问你想用 AI 做什么呢？"
+              placeholder={t("searchPlaceholder")}
               className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-white pr-[6rem] pl-11 text-[15px] shadow-[0_1px_2px_rgb(15_23_42/0.03)] outline-none transition placeholder:text-[var(--neutral-9)] focus:border-[var(--neutral-8)] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
             />
             <button
               type="submit"
               className="absolute top-1/2 right-1.5 h-9 -translate-y-1/2 rounded-full bg-[var(--neutral-12)] px-4 text-[13px] font-medium text-[var(--neutral-1)] transition hover:bg-[var(--neutral-11)]"
             >
-              搜索
+              {t("search")}
             </button>
           </div>
           <Link
             href="/models"
             className="hidden h-12 shrink-0 items-center rounded-full border border-[var(--rm-panel-border)] bg-white px-5 text-[14px] font-medium text-[var(--neutral-11)] shadow-[0_1px_2px_rgb(15_23_42/0.03)] transition hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)] sm:inline-flex"
           >
-            AI 推荐
+            {t("aiRecommend")}
           </Link>
         </form>
       </div>
 
-      {/* channel dock — floating pill bar like 302 */}
       <div className="router-market-shell pb-5">
         <nav className="router-market-dock mx-auto flex max-w-4xl items-center justify-center gap-1 p-1.5">
           {MARKET_CHANNELS.map((ch) => {
@@ -301,13 +315,14 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
                 ? "bg-[var(--neutral-12)] font-medium text-[var(--neutral-1)] shadow-sm"
                 : "text-[var(--neutral-11)] hover:bg-black/[0.03] hover:text-[var(--neutral-12)]",
             );
+            const label = tCh.has(ch.id as never) ? tCh(ch.id as never) : ch.label;
             const body = (
               <>
                 <MarketIcon
                   name={ch.icon}
                   className={cn("h-4 w-4", active ? "opacity-90" : "opacity-70")}
                 />
-                {ch.label}
+                {label}
               </>
             );
             if (ch.external) {
@@ -335,6 +350,8 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
 }
 
 function AdminShell({ pathname, children }: { pathname: string; children: ReactNode }) {
+  const t = useTranslations("admin");
+  const tChrome = useTranslations("chrome");
   const [collapsed, setCollapsed] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -351,14 +368,14 @@ function AdminShell({ pathname, children }: { pathname: string; children: ReactN
         <div className="mx-auto flex h-11 max-w-[1280px] items-center gap-3 px-4 md:px-6">
           <Link href="/dashboard" className="flex items-center gap-2">
             <BrandLogo variant="mark" className="h-6 w-6" />
-            <span className="text-[13px] font-semibold">管理后台</span>
+            <span className="text-[13px] font-semibold">{t("title")}</span>
           </Link>
           <div className="ml-auto flex gap-3 text-[12px] text-[var(--neutral-11)]">
             <Link href="/" className="hover:text-[var(--neutral-12)]">
-              返回集市
+              {t("backToMarket")}
             </Link>
             <Link href="/use" className="hover:text-[var(--neutral-12)]">
-              快捷使用
+              {t("quickUse")}
             </Link>
           </div>
         </div>
@@ -371,7 +388,8 @@ function AdminShell({ pathname, children }: { pathname: string; children: ReactN
           )}
         >
           <nav className="flex flex-1 flex-col gap-0.5 p-2">
-            {ADMIN_NAV.map(({ href, label, icon: Icon }) => {
+            {ADMIN_NAV.map(({ href, key, icon: Icon }) => {
+              const label = t(key);
               const active = pathname === href || pathname.startsWith(`${href}/`);
               return (
                 <Link
@@ -402,7 +420,7 @@ function AdminShell({ pathname, children }: { pathname: string; children: ReactN
                 return n;
               });
             }}
-            aria-label="折叠"
+            aria-label={isCollapsed ? tChrome("expandSidebar") : tChrome("collapseSidebar")}
           >
             {isCollapsed ? (
               <ChevronRight className="h-3.5 w-3.5" />
@@ -420,20 +438,21 @@ function AdminShell({ pathname, children }: { pathname: string; children: ReactN
 }
 
 function UsageShell({ children }: { children: ReactNode }) {
+  const t = useTranslations("chrome");
   return (
     <div className="flex min-h-screen flex-col bg-[var(--neutral-1)] text-[var(--neutral-12)]">
       <div className="border-b border-[var(--neutral-6)]">
         <div className="mx-auto flex h-11 max-w-[1280px] items-center gap-3 px-4 md:px-6">
           <Link href="/use" className="flex items-center gap-2">
             <BrandLogo variant="mark" className="h-6 w-6" />
-            <span className="text-[13px] font-semibold">快捷使用</span>
+            <span className="text-[13px] font-semibold">{t("usageTitle")}</span>
           </Link>
           <div className="ml-auto flex gap-3 text-[12px] text-[var(--neutral-11)]">
             <Link href="/" className="hover:text-[var(--neutral-12)]">
-              集市
+              {t("market")}
             </Link>
             <Link href="/dashboard" className="hover:text-[var(--neutral-12)]">
-              管理后台
+              {t("adminConsole")}
             </Link>
           </div>
         </div>
