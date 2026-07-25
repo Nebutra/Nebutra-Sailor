@@ -9,11 +9,19 @@ import type { SecurityCapabilities } from "./security-capabilities";
 
 export interface ActiveSession {
   id: string;
+  kind: "web" | "desktop";
+  label: string;
+  browser?: string | null;
+  platform?: string | null;
+  deviceType?: "desktop" | "mobile" | "tablet" | "unknown";
   createdAt: string;
   updatedAt: string;
+  lastActiveAt: string;
   expiresAt: string;
   ipAddress?: string | null;
   userAgent?: string | null;
+  isCurrent: boolean;
+  canRevoke: boolean;
 }
 
 interface ActiveSessionsBlockProps {
@@ -23,9 +31,9 @@ interface ActiveSessionsBlockProps {
   currentSessionId?: string;
   loading?: boolean;
   onRefresh: () => Promise<void>;
-  /** Override for testing — default fetch POST /api/auth/revoke-session. */
-  onRevoke?: (sessionId: string) => Promise<void>;
-  /** Override for testing — default fetch POST /api/auth/revoke-other-sessions. */
+  /** Override for testing — default fetch POST /api/auth/device-sessions/revoke. */
+  onRevoke?: (sessionId: string, kind: ActiveSession["kind"]) => Promise<void>;
+  /** Override for testing — default fetch POST /api/auth/device-sessions/revoke-others. */
   onRevokeAllOthers?: () => Promise<void>;
 }
 
@@ -52,6 +60,8 @@ const SESSION_STRINGS = {
   confirm: "Confirm",
   cancel: "Cancel",
   revoking: "Signing out…",
+  webKind: "Web",
+  desktopKind: "Desktop",
 } as const;
 
 // Error catalog mirrors packages/platform/i18n/locales/en.json → auth.errors.*.
@@ -173,11 +183,11 @@ export function ActiveSessionsBlock({
     return () => clearTimeout(timer);
   }, [state.successMessage]);
 
-  async function defaultRevoke(sessionId: string) {
-    const response = await fetch("/api/auth/revoke-session", {
+  async function defaultRevoke(sessionId: string, kind: ActiveSession["kind"]) {
+    const response = await fetch("/api/auth/device-sessions/revoke", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId }),
+      body: JSON.stringify({ sessionId, kind }),
     });
 
     if (!response.ok) {
@@ -191,7 +201,7 @@ export function ActiveSessionsBlock({
   }
 
   async function defaultRevokeAllOthers() {
-    const response = await fetch("/api/auth/revoke-other-sessions", {
+    const response = await fetch("/api/auth/device-sessions/revoke-others", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
@@ -206,11 +216,11 @@ export function ActiveSessionsBlock({
     }
   }
 
-  async function handleRevoke(sessionId: string) {
-    dispatch({ type: "revokeOne.start", sessionId });
+  async function handleRevoke(session: ActiveSession) {
+    dispatch({ type: "revokeOne.start", sessionId: session.id });
 
     try {
-      await (onRevoke ?? defaultRevoke)(sessionId);
+      await (onRevoke ?? defaultRevoke)(session.id, session.kind);
       await onRefresh();
       dispatch({ type: "revokeOne.success", message: SESSION_STRINGS.successRevoked });
     } catch (err) {
@@ -230,18 +240,23 @@ export function ActiveSessionsBlock({
     }
   }
 
-  const otherSessionsCount = sessions.filter((s) => s.id !== currentSessionId).length;
-  const showRevokeAll = sessions.length >= 2;
+  const isCurrentSession = (session: ActiveSession) =>
+    session.isCurrent || currentSessionId === session.id;
+  const canRevokeSession = (session: ActiveSession) =>
+    session.canRevoke && !isCurrentSession(session);
+  const otherSessionsCount = sessions.filter((session) => !isCurrentSession(session)).length;
+  const canRevokeOtherSessions = sessions.some(canRevokeSession);
+  const showRevokeAll = sessions.some(isCurrentSession) && canRevokeOtherSessions;
   const showEmpty = sessions.length === 0 || otherSessionsCount === 0;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-sm font-medium text-foreground">{SESSION_STRINGS.title}</h3>
-          <p className="mt-1 text-sm text-muted-foreground">{SESSION_STRINGS.description}</p>
+          <h3 className="text-sm font-medium text-[var(--neutral-12)]">{SESSION_STRINGS.title}</h3>
+          <p className="mt-1 text-sm text-[var(--neutral-11)]">{SESSION_STRINGS.description}</p>
         </div>
-        <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
+        <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
           {capability.available ? SESSION_STRINGS.revokeEnabled : SESSION_STRINGS.providerManaged}
         </span>
       </div>
@@ -257,14 +272,14 @@ export function ActiveSessionsBlock({
         <div className="mb-4">
           {state.confirmingAll ? (
             <div
-              className="flex flex-col gap-2 rounded-[var(--radius-md)] border border-border bg-muted p-3 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3 md:flex-row md:items-center md:justify-between"
               role="alertdialog"
             >
               <div>
-                <p className="text-sm font-medium text-foreground">
+                <p className="text-sm font-medium text-[var(--neutral-12)]">
                   {SESSION_STRINGS.confirmPrompt}
                 </p>
-                <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                <p className="mt-1 text-xs leading-5 text-[var(--neutral-10)]">
                   {SESSION_STRINGS.confirmHelp}
                 </p>
               </div>
@@ -305,42 +320,52 @@ export function ActiveSessionsBlock({
           {[1, 2].map((item) => (
             <div
               key={item}
-              className="h-20 animate-pulse rounded-[var(--radius-lg)] border border-border bg-muted"
+              className="h-20 animate-pulse rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]"
             />
           ))}
         </div>
       ) : showEmpty ? (
-        <p className="text-sm text-muted-foreground">{SESSION_STRINGS.empty}</p>
+        <p className="text-sm text-[var(--neutral-11)]">{SESSION_STRINGS.empty}</p>
       ) : (
         <div className="space-y-3">
           {sessions.map((session) => {
-            const isCurrent = currentSessionId === session.id;
+            const isCurrent = isCurrentSession(session);
+            const lastActiveAt = session.lastActiveAt || session.updatedAt;
             return (
               <div
                 key={session.id}
-                className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-border p-4 md:flex-row md:items-start md:justify-between"
+                className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-start md:justify-between"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-foreground">
-                    {session.ipAddress || SESSION_STRINGS.unknownIp}
+                  <p className="text-sm font-medium text-[var(--neutral-12)]">
+                    {session.label || session.ipAddress || SESSION_STRINGS.unknownIp}
                     {isCurrent && (
-                      <span className="ml-2 text-xs font-normal text-muted-foreground">
+                      <span className="ml-2 text-xs font-normal text-[var(--neutral-10)]">
                         {SESSION_STRINGS.currentSession}
                       </span>
                     )}
                   </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[var(--neutral-10)]">
+                    <span className="rounded-full border border-[var(--neutral-7)] px-2 py-0.5">
+                      {session.kind === "desktop"
+                        ? SESSION_STRINGS.desktopKind
+                        : SESSION_STRINGS.webKind}
+                    </span>
+                    {session.ipAddress && <span>{session.ipAddress}</span>}
+                    {session.platform && <span>{session.platform}</span>}
+                  </div>
+                  <p className="mt-1 text-xs text-[var(--neutral-10)]">
                     {SESSION_STRINGS.lastActiveLabel}:{" "}
-                    {parseSessionDate(session.updatedAt)
-                      ? format.relativeTime(parseSessionDate(session.updatedAt) as Date)
+                    {parseSessionDate(lastActiveAt)
+                      ? format.relativeTime(parseSessionDate(lastActiveAt) as Date)
                       : "Unknown time"}
                   </p>
                   {session.userAgent && (
-                    <p className="mt-2 break-words text-xs text-muted-foreground">
+                    <p className="mt-2 break-words text-xs text-[var(--neutral-11)]">
                       {session.userAgent}
                     </p>
                   )}
-                  <p className="mt-2 text-xs text-muted-foreground">
+                  <p className="mt-2 text-xs text-[var(--neutral-10)]">
                     {SESSION_STRINGS.expiresLabel}:{" "}
                     {parseSessionDate(session.expiresAt)
                       ? format.dateTime(parseSessionDate(session.expiresAt) as Date, {
@@ -353,10 +378,12 @@ export function ActiveSessionsBlock({
 
                 <Button
                   disabled={
-                    !capability.available || isCurrent || state.pendingSessionId === session.id
+                    !capability.available ||
+                    !canRevokeSession(session) ||
+                    state.pendingSessionId === session.id
                   }
                   htmlType="button"
-                  onClick={() => handleRevoke(session.id)}
+                  onClick={() => handleRevoke(session)}
                   variant="outlined"
                 >
                   {state.pendingSessionId === session.id
@@ -369,7 +396,7 @@ export function ActiveSessionsBlock({
         </div>
       )}
 
-      <p className="mt-4 text-xs leading-5 text-muted-foreground">{capability.reason}</p>
+      <p className="mt-4 text-xs leading-5 text-[var(--neutral-10)]">{capability.reason}</p>
     </section>
   );
 }

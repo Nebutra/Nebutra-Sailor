@@ -32,7 +32,6 @@ export function SecuritySettingsClient() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
-  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
   const authProvider = getConfiguredAuthProvider();
   const isBetterAuth = authProvider === "better-auth";
@@ -47,18 +46,15 @@ export function SecuritySettingsClient() {
     setError("");
 
     try {
-      const [accountsResponse, sessionsResponse, twoFactorResponse, currentSessionResponse] =
-        await Promise.all([
-          fetch("/api/auth/list-accounts", { credentials: "include" }),
-          fetch("/api/auth/list-sessions", { credentials: "include" }),
-          fetch("/api/auth/two-factor-status", { credentials: "include" }),
-          fetch("/api/auth/current-session", { credentials: "include" }),
-        ]);
+      const [accountsResponse, sessionsResponse, twoFactorResponse] = await Promise.all([
+        fetch("/api/auth/list-accounts", { credentials: "include" }),
+        fetch("/api/auth/device-sessions", { credentials: "include" }),
+        fetch("/api/auth/two-factor-status", { credentials: "include" }),
+      ]);
 
       const accountsPayload = await accountsResponse.json().catch(() => null);
       const sessionsPayload = await sessionsResponse.json().catch(() => null);
       const twoFactorPayload = await twoFactorResponse.json().catch(() => null);
-      const currentSessionPayload = await currentSessionResponse.json().catch(() => null);
 
       if (!accountsResponse.ok) {
         throw new Error(
@@ -75,24 +71,13 @@ export function SecuritySettingsClient() {
       );
       setSessions(Array.isArray(sessionsPayload) ? (sessionsPayload as ActiveSession[]) : []);
 
-      // 2FA + current session are non-blocking: if either endpoint errors, we
-      // fall back to the safe defaults so the rest of the page still renders.
+      // 2FA is non-blocking: if the endpoint errors, we fall back to the safe
+      // default so the rest of the page still renders.
       if (twoFactorResponse.ok && twoFactorPayload && typeof twoFactorPayload === "object") {
         const enabled = (twoFactorPayload as { enabled?: unknown }).enabled;
         setTwoFactorEnabled(typeof enabled === "boolean" ? enabled : false);
       } else {
         setTwoFactorEnabled(false);
-      }
-
-      if (
-        currentSessionResponse.ok &&
-        currentSessionPayload &&
-        typeof currentSessionPayload === "object"
-      ) {
-        const sessionId = (currentSessionPayload as { sessionId?: unknown }).sessionId;
-        setCurrentSessionId(typeof sessionId === "string" ? sessionId : null);
-      } else {
-        setCurrentSessionId(null);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load security settings.");
@@ -123,19 +108,19 @@ export function SecuritySettingsClient() {
   );
 
   if (!isLoaded) {
-    return <div className="text-sm text-muted-foreground">Loading security settings…</div>;
+    return <div className="text-sm text-[var(--neutral-11)]">Loading security settings…</div>;
   }
 
   if (!isBetterAuth) {
     return (
       <div className="space-y-6">
-        <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-          <h2 className="text-lg font-semibold text-foreground">Security</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+        <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+          <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Security</h2>
+          <p className="mt-2 text-sm text-[var(--neutral-11)]">
             This workspace is using {authProvider}. Advanced security controls are still being
             migrated into the shared Nebutra auth layer.
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-3 text-sm text-[var(--neutral-11)]">
             For now, manage password resets, MFA, and session policies from your auth provider
             dashboard.
           </p>
@@ -146,12 +131,13 @@ export function SecuritySettingsClient() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <h2 className="text-lg font-semibold text-foreground">Security</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Signed in as <span className="font-medium text-foreground">{user?.email || "—"}</span>
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+        <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Security</h2>
+        <p className="mt-1 text-sm text-[var(--neutral-11)]">
+          Signed in as{" "}
+          <span className="font-medium text-[var(--neutral-12)]">{user?.email || "—"}</span>
         </p>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-sm text-[var(--neutral-11)]">
           Nebutra shows every security capability in one place, only enabling controls that the
           current auth layer can execute safely.
         </p>
@@ -180,7 +166,6 @@ export function SecuritySettingsClient() {
         sessions={sessions}
         loading={loading}
         onRefresh={refreshSecurityState}
-        currentSessionId={currentSessionId ?? undefined}
       />
 
       <DeleteAccountForm

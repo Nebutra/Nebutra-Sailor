@@ -49,11 +49,16 @@ const capability: SecurityCapabilities["activeSessions"] = {
 
 const baseSession: ActiveSession = {
   id: "sess_1",
+  kind: "web",
+  label: "Chrome on macOS",
   createdAt: "2026-05-09T10:00:00.000Z",
   updatedAt: "2026-05-09T10:00:00.000Z",
+  lastActiveAt: "2026-05-09T10:00:00.000Z",
   expiresAt: "2026-05-16T10:00:00.000Z",
   ipAddress: "10.0.0.1",
   userAgent: "Mozilla/5.0 (Macintosh)",
+  isCurrent: false,
+  canRevoke: true,
 };
 
 function makeSession(overrides: Partial<ActiveSession>): ActiveSession {
@@ -64,14 +69,14 @@ describe("parseSessionDate", () => {
   it("returns a Date for a valid ISO 8601 string", () => {
     const result = parseSessionDate("2026-05-09T10:00:00.000Z");
     expect(result).toBeInstanceOf(Date);
-    expect(result!.toISOString()).toBe("2026-05-09T10:00:00.000Z");
+    expect(result?.toISOString()).toBe("2026-05-09T10:00:00.000Z");
   });
 
   it("returns a Date for any parseable timestamp", () => {
     const ts = new Date("2026-03-05T14:32:00.000Z").toISOString();
     const result = parseSessionDate(ts);
     expect(result).toBeInstanceOf(Date);
-    expect(result!.getFullYear()).toBe(2026);
+    expect(result?.getFullYear()).toBe(2026);
   });
 
   it("returns null for an empty string", () => {
@@ -90,7 +95,7 @@ describe("parseSessionDate", () => {
     const ts = new Date(Date.now() - 5 * 60 * 1000).toISOString();
     const result = parseSessionDate(ts);
     expect(result).toBeInstanceOf(Date);
-    expect(Number.isNaN(result!.getTime())).toBe(false);
+    expect(Number.isNaN(result?.getTime())).toBe(false);
   });
 });
 
@@ -101,23 +106,35 @@ describe("ActiveSessionsBlock", () => {
 
   afterEach(() => {
     vi.useRealTimers();
+    vi.unstubAllGlobals();
   });
 
-  it("renders sessions with ip, user-agent, and last-active text", () => {
+  it("renders sessions with device label, kind, ip, user-agent, and last-active text", () => {
     render(
       <ActiveSessionsBlock
         capability={capability}
         sessions={[
           makeSession({ id: "sess_1", ipAddress: "203.0.113.5" }),
-          makeSession({ id: "sess_2", ipAddress: "203.0.113.9", userAgent: "iPhone Safari" }),
+          makeSession({
+            id: "sess_2",
+            kind: "desktop",
+            label: "Nebutra Foundry desktop",
+            ipAddress: "203.0.113.9",
+            platform: "Desktop app",
+            userAgent: "Nebutra Foundry/1.0 macOS",
+          }),
         ]}
         onRefresh={vi.fn(async () => {})}
       />,
     );
 
+    expect(screen.getByText("Chrome on macOS")).toBeDefined();
+    expect(screen.getByText("Nebutra Foundry desktop")).toBeDefined();
+    expect(screen.getByText("Web")).toBeDefined();
+    expect(screen.getByText("Desktop")).toBeDefined();
     expect(screen.getByText("203.0.113.5")).toBeDefined();
     expect(screen.getByText("203.0.113.9")).toBeDefined();
-    expect(screen.getByText("iPhone Safari")).toBeDefined();
+    expect(screen.getByText("Nebutra Foundry/1.0 macOS")).toBeDefined();
     expect(screen.getAllByText(/Last active:/i).length).toBeGreaterThanOrEqual(2);
   });
 
@@ -126,10 +143,9 @@ describe("ActiveSessionsBlock", () => {
       <ActiveSessionsBlock
         capability={capability}
         sessions={[
-          makeSession({ id: "sess_current", ipAddress: "1.1.1.1" }),
+          makeSession({ id: "sess_current", ipAddress: "1.1.1.1", isCurrent: true }),
           makeSession({ id: "sess_other", ipAddress: "2.2.2.2" }),
         ]}
-        currentSessionId="sess_current"
         onRefresh={vi.fn(async () => {})}
       />,
     );
@@ -157,8 +173,7 @@ describe("ActiveSessionsBlock", () => {
     render(
       <ActiveSessionsBlock
         capability={capability}
-        sessions={[makeSession({ id: "sess_current" })]}
-        currentSessionId="sess_current"
+        sessions={[makeSession({ id: "sess_current", isCurrent: true, canRevoke: false })]}
         onRefresh={vi.fn(async () => {})}
       />,
     );
@@ -182,7 +197,10 @@ describe("ActiveSessionsBlock", () => {
     render(
       <ActiveSessionsBlock
         capability={capability}
-        sessions={[makeSession({ id: "sess_1" }), makeSession({ id: "sess_2" })]}
+        sessions={[
+          makeSession({ id: "sess_1", isCurrent: true, canRevoke: false }),
+          makeSession({ id: "sess_2" }),
+        ]}
         onRefresh={vi.fn(async () => {})}
       />,
     );
@@ -194,8 +212,10 @@ describe("ActiveSessionsBlock", () => {
     render(
       <ActiveSessionsBlock
         capability={capability}
-        sessions={[makeSession({ id: "sess_current" }), makeSession({ id: "sess_other" })]}
-        currentSessionId="sess_current"
+        sessions={[
+          makeSession({ id: "sess_current", isCurrent: true, canRevoke: false }),
+          makeSession({ id: "sess_other" }),
+        ]}
         onRefresh={vi.fn(async () => {})}
       />,
     );
@@ -229,7 +249,39 @@ describe("ActiveSessionsBlock", () => {
       fireEvent.click(button);
     });
 
-    expect(onRevoke).toHaveBeenCalledWith("sess_target");
+    expect(onRevoke).toHaveBeenCalledWith("sess_target", "web");
+    await waitFor(() => expect(onRefresh).toHaveBeenCalled());
+  });
+
+  it("posts the device kind to the default revoke endpoint", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ ok: true })));
+    vi.stubGlobal("fetch", fetchMock);
+    const onRefresh = vi.fn(async () => {});
+
+    render(
+      <ActiveSessionsBlock
+        capability={capability}
+        sessions={[
+          makeSession({
+            id: "desktop_target",
+            kind: "desktop",
+            label: "Nebutra Foundry desktop",
+          }),
+        ]}
+        onRefresh={onRefresh}
+      />,
+    );
+
+    const button = screen.getByRole("button", { name: /sign out/i });
+    await act(async () => {
+      fireEvent.click(button);
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith("/api/auth/device-sessions/revoke", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sessionId: "desktop_target", kind: "desktop" }),
+    });
     await waitFor(() => expect(onRefresh).toHaveBeenCalled());
   });
 
@@ -240,8 +292,10 @@ describe("ActiveSessionsBlock", () => {
     render(
       <ActiveSessionsBlock
         capability={capability}
-        sessions={[makeSession({ id: "sess_1" }), makeSession({ id: "sess_2" })]}
-        currentSessionId="sess_1"
+        sessions={[
+          makeSession({ id: "sess_1", isCurrent: true, canRevoke: false }),
+          makeSession({ id: "sess_2" }),
+        ]}
         onRefresh={onRefresh}
         onRevokeAllOthers={onRevokeAllOthers}
       />,
@@ -269,7 +323,10 @@ describe("ActiveSessionsBlock", () => {
     render(
       <ActiveSessionsBlock
         capability={capability}
-        sessions={[makeSession({ id: "sess_1" }), makeSession({ id: "sess_2" })]}
+        sessions={[
+          makeSession({ id: "sess_1", isCurrent: true, canRevoke: false }),
+          makeSession({ id: "sess_2" }),
+        ]}
         onRefresh={vi.fn(async () => {})}
         onRevokeAllOthers={onRevokeAllOthers}
       />,
