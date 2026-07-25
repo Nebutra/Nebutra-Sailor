@@ -1266,6 +1266,9 @@ restore_nginx_config() {
   if [ -f "$backup_dir/forge.nebutra.com.conf" ]; then
     cp -p "$backup_dir/forge.nebutra.com.conf" /etc/nginx/conf.d/forge.nebutra.com.conf
   fi
+  if [ -f "$backup_dir/router.nebutra.com.conf" ]; then
+    cp -p "$backup_dir/router.nebutra.com.conf" /etc/nginx/conf.d/router.nebutra.com.conf
+  fi
 }
 
 dump_nginx_web_diagnostics() {
@@ -1294,6 +1297,7 @@ sync_nginx_runtime_config() {
   local nginx_proxy="/tmp/nebutra-nginx-proxy_params.conf"
   local nginx_security="/tmp/nebutra-nginx-security.conf"
   local nginx_forge="/tmp/nebutra-nginx-forge.conf"
+  local nginx_router="/tmp/nebutra-nginx-router.conf"
 
   if ! command -v nginx >/dev/null 2>&1; then
     log "nginx not installed; skipping nginx config sync"
@@ -1310,6 +1314,7 @@ sync_nginx_runtime_config() {
   [ -f /etc/nginx/conf.d/proxy_params.conf ] && cp -p /etc/nginx/conf.d/proxy_params.conf "$backup_dir/proxy_params.conf" || true
   [ -f /etc/nginx/conf.d/security.conf ] && cp -p /etc/nginx/conf.d/security.conf "$backup_dir/security.conf" || true
   [ -f /etc/nginx/conf.d/forge.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/forge.nebutra.com.conf "$backup_dir/forge.nebutra.com.conf" || true
+  [ -f /etc/nginx/conf.d/router.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/router.nebutra.com.conf "$backup_dir/router.nebutra.com.conf" || true
 
   local rendered_main worker_user
   rendered_main="$(mktemp)"
@@ -1320,26 +1325,32 @@ sync_nginx_runtime_config() {
     cp "$nginx_main" "$rendered_main"
   fi
 
-  # Ensure forge vhost is always loaded even if an older nginx.conf artifact
-  # lacked the include (historical footgun: PM2 healthy, forge.nebutra.com → 301).
-  if ! grep -q 'conf.d/forge.nebutra.com.conf' "$rendered_main"; then
-    # Insert include before the final closing brace of the http {} block.
-    awk '
+  # Ensure product vhosts are always loaded even if an older nginx.conf artifact
+  # lacked the include (historical footgun: PM2 healthy, host → 301 to apex).
+  inject_vhost_include() {
+    local conf_name="$1"
+    local comment="$2"
+    if grep -q "conf.d/${conf_name}" "$rendered_main"; then
+      return 0
+    fi
+    awk -v conf="$conf_name" -v comment="$comment" '
       { lines[NR] = $0 }
       END {
         last = NR
         for (i = 1; i <= last; i++) {
           if (i == last && lines[i] ~ /^}/) {
-            print "    # Nebutra Forge tool station (PM2 :3105)"
-            print "    include /etc/nginx/conf.d/forge.nebutra.com.conf;"
+            print "    # " comment
+            print "    include /etc/nginx/conf.d/" conf ";"
           }
           print lines[i]
         }
       }
-    ' "$rendered_main" > "${rendered_main}.with-forge"
-    mv "${rendered_main}.with-forge" "$rendered_main"
-    log "injected forge.nebutra.com.conf include into nginx.conf"
-  fi
+    ' "$rendered_main" > "${rendered_main}.with-vhost"
+    mv "${rendered_main}.with-vhost" "$rendered_main"
+    log "injected ${conf_name} include into nginx.conf"
+  }
+  inject_vhost_include "forge.nebutra.com.conf" "Nebutra Forge tool station (PM2 :3105)"
+  inject_vhost_include "router.nebutra.com.conf" "Nebutra Router product edge (PM2 :3106)"
 
   install -m 0644 "$rendered_main" /etc/nginx/nginx.conf
   rm -f "$rendered_main"
@@ -1350,6 +1361,12 @@ sync_nginx_runtime_config() {
     log "installed forge.nebutra.com.conf"
   else
     log "forge nginx fragment not uploaded; keeping existing conf.d/forge.nebutra.com.conf if present"
+  fi
+  if [ -f "$nginx_router" ]; then
+    install -m 0644 "$nginx_router" /etc/nginx/conf.d/router.nebutra.com.conf
+    log "installed router.nebutra.com.conf"
+  else
+    log "router nginx fragment not uploaded; keeping existing conf.d/router.nebutra.com.conf if present"
   fi
 
   if ! nginx -t; then
@@ -1364,7 +1381,7 @@ sync_nginx_runtime_config() {
   else
     nginx -s reload
   fi
-  log "nginx config synced from deploy artifacts (incl. forge vhost)"
+  log "nginx config synced from deploy artifacts (incl. forge + router vhosts)"
 }
 
 verify_nginx_web_origin() {

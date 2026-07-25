@@ -51,15 +51,17 @@ on:
         description: "Reason (shown in run summary)"
         required: false
         default: ""
-  # Forge-only auto CI/CD: main push of forge product paths → deploy forge only.
-  # Other ECS apps remain workflow_dispatch to avoid filling the VM disk and
-  # re-shipping the whole fleet on every monorepo commit.
+  # Product edges auto CI/CD: main push of forge/router product paths deploys
+  # those apps (+ nginx vhosts). Other ECS apps remain workflow_dispatch.
   push:
     branches: [main]
     paths:
       - "apps/forge/**"
+      - "apps/router/**"
       - "packages/ai/forge-runtime/**"
+      - "packages/platform/router-supply/**"
       - "infra/runtime/nginx/conf.d/forge.nebutra.com.conf"
+      - "infra/runtime/nginx/conf.d/router.nebutra.com.conf"
       - "infra/runtime/nginx/nginx.conf"
       - "infra/ops/scripts/ecs-deploy-remote.sh"
       - ".github/workflows/deploy-ecs.yml"
@@ -601,6 +603,7 @@ jobs:
             infra/runtime/nginx/conf.d/proxy_params.conf
             infra/runtime/nginx/conf.d/security.conf
             infra/runtime/nginx/conf.d/forge.nebutra.com.conf
+            infra/runtime/nginx/conf.d/router.nebutra.com.conf
 
       - name: Download landing bundle
         if: needs.detect-changes.outputs.landing == 'true'
@@ -789,6 +792,8 @@ jobs:
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-security.conf"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/forge.nebutra.com.conf \
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-forge.conf"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/router.nebutra.com.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-router.conf"
 
       - name: Run remote deploy
         env:

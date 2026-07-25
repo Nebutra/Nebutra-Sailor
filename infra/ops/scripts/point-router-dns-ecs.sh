@@ -6,16 +6,27 @@ TOKEN="${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN required}"
 ZONE_NAME="${CF_ZONE_NAME:-nebutra.com}"
 ORIGIN_IP="${ECS_HOST:-106.15.4.31}"
 HOST="router.${ZONE_NAME}"
+ACC="${CLOUDFLARE_ACCOUNT_ID:-}"
 
 echo "=== token verify ==="
 VERIFY=$(curl -sS -H "Authorization: Bearer $TOKEN" "https://api.cloudflare.com/client/v4/user/tokens/verify" || true)
 echo "$VERIFY" | python3 -m json.tool | head -50
 echo "$VERIFY" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("success"), d; print("token_ok", d.get("result",{}).get("status"))'
 
-ZONE_JSON=$(curl -sS -H "Authorization: Bearer $TOKEN" \
-  "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}")
-ZONE_ID=$(echo "$ZONE_JSON" | python3 -c 'import json,sys; r=json.load(sys.stdin); print((r.get("result") or [{}])[0].get("id",""))')
-[ -n "$ZONE_ID" ] || { echo "zone missing: $ZONE_JSON"; exit 1; }
+if [ -n "${CF_ZONE_ID:-}" ]; then
+  ZONE_ID="$CF_ZONE_ID"
+else
+  QUERY="name=${ZONE_NAME}"
+  if [ -n "$ACC" ]; then
+    QUERY="${QUERY}&account.id=${ACC}"
+  fi
+  ZONE_JSON=$(curl -sS -H "Authorization: Bearer $TOKEN" \
+    "https://api.cloudflare.com/client/v4/zones?${QUERY}")
+  echo "=== zone lookup ==="
+  echo "$ZONE_JSON" | python3 -m json.tool | head -40
+  ZONE_ID=$(echo "$ZONE_JSON" | python3 -c 'import json,sys; r=json.load(sys.stdin); print((r.get("result") or [{}])[0].get("id",""))')
+fi
+[ -n "$ZONE_ID" ] || { echo "zone missing for ${ZONE_NAME} (set CF_ZONE_ID if token cannot list zones)"; exit 1; }
 echo "ZONE_ID=$ZONE_ID ORIGIN_IP=$ORIGIN_IP HOST=$HOST"
 
 BODY=$(python3 -c "import json; print(json.dumps({'type':'A','name':'router','content':'${ORIGIN_IP}','proxied':True,'ttl':1,'comment':'nebutra-router product edge'}))")
