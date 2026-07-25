@@ -324,8 +324,27 @@ const ADVISORY_CEILINGS = {
   fr: 80,
   ja: 80,
   ko: 80,
+  "zh-Hans": 80,
+  "zh-Hant": 80,
   zh: 80,
 };
+
+/**
+ * Locales that already ship real above-the-fold translations.
+ * New product-wheel locales (pt, ar, hi, …) are en-seeded until SenseNova
+ * auto-translate lands — key/placeholder parity still blocks, but
+ * critical-identical-to-EN does not (would always fail on pure seeds).
+ */
+const CRITICAL_IDENTICAL_ENFORCED = new Set([
+  "de",
+  "es",
+  "fr",
+  "ja",
+  "ko",
+  "zh-Hans",
+  "zh-Hant",
+  "zh", // legacy stem if still present
+]);
 
 // ICU placeholder pattern. Matches `{name}`, `{count, number}`, `{n, plural, one {...}}`, etc.
 const PLACEHOLDER_RE = /\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
@@ -506,10 +525,11 @@ function main() {
 
   let hasBlockingDrift = false;
   for (const r of results) {
+    const enforceCritical = CRITICAL_IDENTICAL_ENFORCED.has(r.locale);
     const blocking =
       r.missing.length > 0 ||
       r.extra.length > 0 ||
-      r.identicalCritical.length > 0 ||
+      (enforceCritical && r.identicalCritical.length > 0) ||
       r.placeholderMismatches.length > 0 ||
       (STRICT && r.identicalAdvisory.length > 0);
     const status = blocking ? "DRIFT" : r.identicalAdvisory.length > 0 ? "WARN" : "OK";
@@ -546,10 +566,11 @@ function main() {
 
   log(`\n[i18n-verify] DRIFT DETECTED\n`);
   for (const r of results) {
+    const enforceCritical = CRITICAL_IDENTICAL_ENFORCED.has(r.locale);
     const blocking =
       r.missing.length > 0 ||
       r.extra.length > 0 ||
-      r.identicalCritical.length > 0 ||
+      (enforceCritical && r.identicalCritical.length > 0) ||
       r.placeholderMismatches.length > 0 ||
       (STRICT && r.identicalAdvisory.length > 0);
     if (!blocking) continue;
