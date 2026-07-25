@@ -34,6 +34,9 @@ const requestCount = new Counter("custom_total_requests");
 const BASE_URL = __ENV.BASE_URL || "http://localhost:3002";
 const SCENARIO = __ENV.SCENARIO || "smoke";
 const API_TOKEN = __ENV.API_TOKEN || "test-token";
+// Real auth tokens must be injected via secrets. The default placeholder only
+// validates that protected routes reject anonymous/forged callers (401/403).
+const HAS_REAL_AUTH = Boolean(__ENV.API_TOKEN) && API_TOKEN !== "test-token";
 
 const SCENARIOS = {
   smoke: {
@@ -135,61 +138,87 @@ export default function () {
 
   sleep(randomIntBetween(1, 3));
 
-  // Subscription retrieval
+  // Protected routes: with a real token assert success; without, assert auth gate.
+  // k6 counts status>=400 as http_req_failed unless expectedStatuses is set.
+  const authExpected = HAS_REAL_AUTH
+    ? http.expectedStatuses(200, 404)
+    : http.expectedStatuses(401, 403);
+
   group("billing", () => {
     const res = http.get(`${BASE_URL}/api/v1/billing/subscription`, {
       headers,
       tags: { type: "api" },
+      responseCallback: authExpected,
     });
     requestCount.add(1);
-    const ok = check(res, {
-      "billing/subscription: 200 or 404": (r) => r.status === 200 || r.status === 404,
-      "billing/subscription: <500ms": (r) => r.timings.duration < 500,
-    });
-    errorRate.add(!ok && res.status !== 404);
+    const ok = check(
+      res,
+      HAS_REAL_AUTH
+        ? {
+            "billing/subscription: 200 or 404": (r) => r.status === 200 || r.status === 404,
+            "billing/subscription: <500ms": (r) => r.timings.duration < 500,
+          }
+        : {
+            "billing/subscription: auth gate (401/403)": (r) =>
+              r.status === 401 || r.status === 403,
+          },
+    );
+    errorRate.add(!ok);
     apiLatency.add(res.timings.duration, { endpoint: "billing/subscription" });
   });
 
   sleep(randomIntBetween(1, 2));
 
-  // AI models list (cheap read-only endpoint)
   group("ai", () => {
     const res = http.get(`${BASE_URL}/api/v1/ai/models`, {
       headers,
       tags: { type: "api" },
+      responseCallback: authExpected,
     });
     requestCount.add(1);
-    const ok = check(res, {
-      "ai/models: status 200": (r) => r.status === 200,
-      "ai/models: has models array": (r) => Array.isArray(jsonValue(r, "models")),
-      "ai/models: <300ms": (r) => r.timings.duration < 300,
-    });
+    const ok = check(
+      res,
+      HAS_REAL_AUTH
+        ? {
+            "ai/models: status 200": (r) => r.status === 200,
+            "ai/models: has models array": (r) => Array.isArray(jsonValue(r, "models")),
+            "ai/models: <300ms": (r) => r.timings.duration < 300,
+          }
+        : {
+            "ai/models: auth gate (401/403)": (r) => r.status === 401 || r.status === 403,
+          },
+    );
     errorRate.add(!ok);
     apiLatency.add(res.timings.duration, { endpoint: "ai/models" });
   });
 
   sleep(randomIntBetween(1, 3));
 
-  // Idempotency test — send same key twice, expect replay header on second
-  group("idempotency", () => {
-    const idempotencyKey = `k6-${__VU}-${__ITER}`;
-    const payload = JSON.stringify({ event: "test.load", data: {} });
+  // Idempotency requires a real auth token; skip when smoke runs unauthenticated.
+  if (HAS_REAL_AUTH) {
+    group("idempotency", () => {
+      const idempotencyKey = `k6-${__VU}-${__ITER}`;
+      const payload = JSON.stringify({ event: "test.load", data: {} });
+      const authOk = http.expectedStatuses(200, 202, 401, 403, 404, 422);
 
-    const _first = http.post(`${BASE_URL}/api/v1/events`, payload, {
-      headers: { ...headers, "Idempotency-Key": idempotencyKey },
-      tags: { type: "api" },
-    });
-    const second = http.post(`${BASE_URL}/api/v1/events`, payload, {
-      headers: { ...headers, "Idempotency-Key": idempotencyKey },
-      tags: { type: "api" },
-    });
-    requestCount.add(2);
+      const _first = http.post(`${BASE_URL}/api/v1/events`, payload, {
+        headers: { ...headers, "Idempotency-Key": idempotencyKey },
+        tags: { type: "api" },
+        responseCallback: authOk,
+      });
+      const second = http.post(`${BASE_URL}/api/v1/events`, payload, {
+        headers: { ...headers, "Idempotency-Key": idempotencyKey },
+        tags: { type: "api" },
+        responseCallback: authOk,
+      });
+      requestCount.add(2);
 
-    check(second, {
-      "idempotency: replay header on duplicate": (r) =>
-        r.headers["Idempotency-Replayed"] === "true" || r.status === 200 || r.status === 202,
+      check(second, {
+        "idempotency: replay header on duplicate": (r) =>
+          r.headers["Idempotency-Replayed"] === "true" || r.status === 200 || r.status === 202,
+      });
     });
-  });
+  }
 
   sleep(randomIntBetween(2, 5));
 }

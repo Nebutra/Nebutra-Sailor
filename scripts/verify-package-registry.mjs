@@ -24,8 +24,26 @@ const allowedContainerPackages = new Set([
   "nebutra-ai",
   "nebutra-api-gateway",
   "nebutra-landing",
+  "nebutra-landing-page", // historical image name before apps/landing rename
   "nebutra-web",
 ]);
+
+/**
+ * Registry mirrors (GitHub Packages + npmjs) are only required for packages that
+ * are production-ready. WIP / 0.x support-contract packages may stay workspace-only
+ * until an intentional first publish. This matches nebutra.package metadata.
+ */
+function requiresRegistryMirror(entry) {
+  const meta = entry.manifest.nebutra;
+  if (meta && meta.productionReady === true) return true;
+  if (meta && meta.productionReady === false) return false;
+  if (meta && (meta.status === "wip" || meta.status === "stub" || meta.status === "incubator")) {
+    return false;
+  }
+  const version = String(entry.manifest.version ?? "0.0.0");
+  const major = Number.parseInt(version.split(".")[0] ?? "0", 10);
+  return Number.isFinite(major) && major >= 1;
+}
 
 let insideGitWorkTree;
 
@@ -256,7 +274,12 @@ async function main() {
     .filter((entry) => !isTrackedByGit(entry.manifestPath))
     .map((entry) => entry.manifest.name)
     .sort();
-  const expectedNpmjsPackages = publishable.map((entry) => entry.manifest.name);
+  const requiredPublishable = publishable.filter((entry) => requiresRegistryMirror(entry));
+  const workspaceOnlyPublishable = publishable
+    .filter((entry) => !requiresRegistryMirror(entry))
+    .map((entry) => entry.manifest.name)
+    .sort();
+  const expectedNpmjsPackages = requiredPublishable.map((entry) => entry.manifest.name);
   const expectedGithubNpm = new Set(
     expectedNpmjsPackages.map((name) => githubNpmName(name)).filter(Boolean),
   );
@@ -277,10 +300,16 @@ async function main() {
   const actualGithubNpm = new Set(repoNpmPackages.map((entry) => entry.name));
   const actualContainers = new Set(repoContainerPackages.map((entry) => entry.name));
 
+  // Orphans = on GH Packages but not a current non-private workspace package.
+  // WIP packages that are already mirrored are allowed without being "required".
+  const allPublishableGithubNpm = new Set(
+    publishable.map((entry) => githubNpmName(entry.manifest.name)).filter(Boolean),
+  );
   const missingNpmMirrors = difference(expectedGithubNpm, actualGithubNpm);
-  const orphanNpmPackages = difference(actualGithubNpm, expectedGithubNpm);
+  const orphanNpmPackages = difference(actualGithubNpm, allPublishableGithubNpm);
+  // Private visibility is only a failure for production-ready packages we require public.
   const privateNpmPackages = repoNpmPackages
-    .filter((entry) => entry.visibility !== "public")
+    .filter((entry) => entry.visibility !== "public" && expectedGithubNpm.has(entry.name))
     .map((entry) => entry.name)
     .sort();
   const legacyContainers = [...actualContainers]
@@ -294,10 +323,13 @@ async function main() {
     : [];
 
   console.log(
-    `[package-registry] ${repository.fullName}: expected ${expectedGithubNpm.size} GitHub npm mirrors, found ${actualGithubNpm.size}`,
+    `[package-registry] ${repository.fullName}: expected ${expectedGithubNpm.size} production-ready GitHub npm mirrors, found ${actualGithubNpm.size}`,
   );
   console.log(
     `[package-registry] skipped untracked publishable packages: ${formatList(skippedUntracked)}`,
+  );
+  console.log(
+    `[package-registry] workspace-only (WIP / non-productionReady): ${formatList(workspaceOnlyPublishable)}`,
   );
   console.log(`[package-registry] private GitHub npm packages: ${formatList(privateNpmPackages)}`);
   console.log(`[package-registry] missing GitHub npm mirrors: ${formatList(missingNpmMirrors)}`);

@@ -4,6 +4,17 @@
   "type": "module",
   "description": "Self-hosted OSS font registry — build-time next/font faces + a name→CSS-var resolver so theme / DESIGN.md fonts render with zero runtime external requests",
   "private": false,
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "featureId": "fonts",
+    "category": "design",
+    "summary": "Self-hosted OSS font registry for next/font + CSS-var resolution",
+    "gaps": [
+      "First intentional public publish not yet cut — workspace-only until release surface includes fonts"
+    ]
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

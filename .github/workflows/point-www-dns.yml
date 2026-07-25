@@ -1,0 +1,32 @@
+name: Point www DNS to apex
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Upsert www.nebutra.com → apex
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash infra/ops/scripts/point-www-dns-apex.sh
+      - name: Smoke www + refer
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://www.nebutra.com/ || echo 000)
+            refer=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 'https://www.nebutra.com/refer?code=smoke' || echo 000)
+            echo "attempt $i apex-www=$code www-refer=$refer"
+            if [ "$code" = "200" ] && [ "$refer" = "200" ]; then
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "www still not healthy after retries (DNS prop?)"
+          exit 1
