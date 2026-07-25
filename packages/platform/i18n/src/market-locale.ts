@@ -1,4 +1,4 @@
-import { getLanguageDisplayName, getLanguageEndonym, getRegionDisplayName } from "./display-names";
+import { getLanguageEndonym, getRegionDisplayName } from "./display-names";
 import {
   isProductLanguage,
   PRODUCT_LANGUAGE_META,
@@ -132,10 +132,9 @@ export function getMarketLocaleLabels(
 ): MarketLocaleLabels {
   const countryName = getRegionDisplayName(marketLocale.country, displayLocale);
   const meta = PRODUCT_LANGUAGE_META[marketLocale.language];
-  const languageEndonym = meta.endonym || getLanguageEndonym(meta.language);
-  const languageName =
-    getLanguageDisplayName(meta.language, displayLocale) ||
-    (meta.script ? `${meta.language}-${meta.script}` : meta.language);
+  // Prefer product endonyms (esp. zh-Hans / zh-Hant); ISO 639 for DisplayNames fallback
+  const languageEndonym = meta.endonym;
+  const languageName = meta.endonym;
   return {
     countryName,
     languageName,

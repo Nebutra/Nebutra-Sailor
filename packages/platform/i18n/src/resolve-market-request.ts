@@ -12,7 +12,8 @@ export type MarketRequestHints = {
 
 const DEFAULT_COUNTRY_FOR_LANGUAGE: Partial<Record<ProductLanguage, string>> = {
   en: "US",
-  zh: "CN",
+  "zh-Hans": "CN",
+  "zh-Hant": "TW",
   ja: "JP",
   ko: "KR",
   de: "DE",
@@ -22,6 +23,28 @@ const DEFAULT_COUNTRY_FOR_LANGUAGE: Partial<Record<ProductLanguage, string>> = {
   it: "IT",
   nl: "NL",
   sv: "SE",
+  da: "DK",
+  fi: "FI",
+  no: "NO",
+  pl: "PL",
+  cs: "CZ",
+  ro: "RO",
+  hu: "HU",
+  el: "GR",
+  ru: "RU",
+  uk: "UA",
+  tr: "TR",
+  ar: "SA",
+  he: "IL",
+  fa: "IR",
+  hi: "IN",
+  bn: "BD",
+  ur: "PK",
+  th: "TH",
+  vi: "VN",
+  id: "ID",
+  ms: "MY",
+  sw: "KE",
 };
 
 export function resolveCountryFromRequest(hints: MarketRequestHints): string {
