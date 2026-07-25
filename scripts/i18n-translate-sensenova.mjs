@@ -265,7 +265,9 @@ function collectWork(sourceMap, targetMap, { force }) {
     if (typeof enVal !== "string" || shouldSkipValue(enVal)) continue;
     const cur = targetMap.get(key);
     const missing = cur === undefined;
-    const identical = typeof cur === "string" && cur === enVal && enVal.length > 12;
+    // Product UI is full of short labels ("Search", "Docs") — still retranslate
+    // any leaf that remains identical to English, not only long copy.
+    const identical = typeof cur === "string" && cur === enVal && enVal.trim().length > 0;
     if (force || missing || identical) work.push([key, enVal]);
   }
   return work;

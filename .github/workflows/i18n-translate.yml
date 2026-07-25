@@ -138,13 +138,14 @@ jobs:
       - name: Verify landing i18n integrity
         run: pnpm --filter @nebutra/landing check:i18n
 
-      - name: Open PR with locale updates
+      - name: Push locale updates (branch + best-effort PR)
         uses: peter-evans/create-pull-request@v7
+        continue-on-error: true
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore(i18n): global auto-translate via SenseNova flash-lite"
           branch: chore/i18n-auto-translate
-          delete-branch: true
+          delete-branch: false
           title: "chore(i18n): global auto-translate (PRODUCT_LANGUAGES wheel)"
           body: |
             Automated **global** localization across product message catalogs.
@@ -165,4 +166,5 @@ jobs:
             - Runner: concurrent `scripts/i18n-translate-sensenova.mjs`
               (`CATALOG_CONCURRENCY` × `LOCALE_CONCURRENCY` × `CONCURRENCY` × `BATCH_SIZE`)
             - Docs: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
+            - If PR creation is blocked by org policy, merge branch `chore/i18n-auto-translate` manually.
           labels: i18n, automated
