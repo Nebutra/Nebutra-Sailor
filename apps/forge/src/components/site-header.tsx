@@ -58,9 +58,9 @@ export function SiteHeader() {
             href={ROUTER_URL}
             aria-label={`${brand.name} Router`}
             title="Router"
-            className="hidden h-8 w-8 items-center justify-center rounded-[var(--radius-md)] transition hover:bg-[var(--neutral-3)] sm:inline-flex"
+            className="hidden h-9 w-9 items-center justify-center rounded-[var(--radius-md)] transition hover:bg-[var(--neutral-3)] sm:inline-flex"
           >
-            <RouterMark className="h-5 w-5" />
+            <RouterMark className="h-7 w-7" />
           </a>
           <AuthActions />
         </div>
