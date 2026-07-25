@@ -7,10 +7,12 @@ import {
   useAuth,
 } from "@nebutra/auth/client";
 import { Button } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export function AuthActions() {
   const { user, isSignedIn, isLoaded, signOut } = useAuth();
+  const t = useTranslations("auth");
   const [returnTo, setReturnTo] = useState("http://localhost:3105/");
   useEffect(() => {
     if (typeof window !== "undefined") setReturnTo(window.location.href);
@@ -39,7 +41,7 @@ export function AuthActions() {
             void signOut();
           }}
         >
-          退出
+          {t("signOut")}
         </Button>
       </div>
     );
@@ -50,10 +52,10 @@ export function AuthActions() {
   return (
     <div className="flex items-center gap-2">
       <Button asChild variant="ghost" size="sm">
-        <a href={signInHref}>登录</a>
+        <a href={signInHref}>{t("signIn")}</a>
       </Button>
       <Button asChild variant="outline" size="sm">
-        <a href={signUpHref}>注册</a>
+        <a href={signUpHref}>{t("signUp")}</a>
       </Button>
     </div>
   );

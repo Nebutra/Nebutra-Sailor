@@ -22,6 +22,11 @@
     "apiHint": "与页面同一调用契约。生产环境请走认证 Key。",
     "related": "相关工具"
   },
+  "auth": {
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出"
+  },
   "footer": {
     "navAria": "页脚",
     "blurb": "在线工具站。页面上手动完成，或经 API / MCP 接入自动化。",

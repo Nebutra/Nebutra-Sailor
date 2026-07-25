@@ -43,6 +43,47 @@
     "grid": "网格",
     "list": "列表",
     "apiShelf": "API 货架",
-    "toolShelf": "工具货架"
+    "toolShelf": "工具货架",
+    "categories": "分类",
+    "apps": "应用",
+    "newRelease": "新品发布",
+    "forgeTitle": "Forge 工具工作台",
+    "forgeBlurb": "文本变换、编解码、表单与可编排工具。应用集市在 lab 中指向 Forge。",
+    "openForge": "打开 Forge →",
+    "allApi": "全部 API →",
+    "all": "全部 →",
+    "viewAll": "查看全部 {label} →",
+    "gridView": "网格视图",
+    "listView": "列表视图",
+    "hiTitle": "企业级 AI 资源平台",
+    "hiSubtitle": "让 AI 为每个需求找到答案",
+    "sellable": "可售",
+    "walletTopup": "充值"
+  },
+  "apiTaxonomy": {
+    "llm": { "label": "语言大模型", "hint": "对话 · 推理" },
+    "image-gen": { "label": "图片生成", "hint": "文生图" },
+    "image-edit": { "label": "图片处理", "hint": "编辑 · 抠图" },
+    "video": { "label": "视频生成", "hint": "文生视频" },
+    "audio": { "label": "音视频处理", "hint": "语音 · 转写" },
+    "data": { "label": "信息处理", "hint": "检索 · 抽取" },
+    "rag": { "label": "RAG 相关", "hint": "知识增强" },
+    "tools": { "label": "工具 API", "hint": "Agent · 工具" }
+  },
+  "toolTaxonomy": {
+    "bots": { "label": "机器人", "chips": "聊天机器人 · 绘画机器人 · 知识库" },
+    "productivity": { "label": "工作效率", "chips": "模型竞技场 · AI 文案助手" },
+    "academic": { "label": "学术相关", "chips": "PDF 工具箱 · AI 专利搜索" },
+    "image": { "label": "图片处理", "chips": "3D 摄影棚 · Canvas" },
+    "audio": { "label": "音频相关", "chips": "语音生成 · AI 音乐" },
+    "code": { "label": "代码相关", "chips": "网页生成器 · Forge" }
+  },
+  "shortcuts": {
+    "dashboard": "汇总",
+    "keys": "Keys",
+    "wallet": "钱包",
+    "use": "试用",
+    "docs": "文档",
+    "models": "更多"
   }
 }

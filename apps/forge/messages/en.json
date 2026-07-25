@@ -22,6 +22,11 @@
     "apiHint": "Same contract as the page. Use an authenticated key in production.",
     "related": "Related tools"
   },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
+  },
   "footer": {
     "navAria": "Footer",
     "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",

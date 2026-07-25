@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AuthActions } from "@/components/auth-actions";
@@ -47,6 +48,9 @@ export function MarketHome({
   sourceNote: string;
   productType?: "api" | "tool";
 }) {
+  const tMarket = useTranslations("market");
+  const tApi = useTranslations("apiTaxonomy");
+  const tTool = useTranslations("toolTaxonomy");
   const [hoverCat, setHoverCat] = useState<string | null>(null);
   const [flyoutPos, setFlyoutPos] = useState<{ top: number; left: number } | null>(null);
   const [tab, setTab] = useState<"new" | "hot" | "forYou">("new");
@@ -115,17 +119,19 @@ export function MarketHome({
         blurb: BRAND_BLURB[provider] ?? PROVIDER_LABEL[provider],
         count: liveByProvider.get(provider) ?? 0,
       }));
+      const labelKey = `${row.id}.label` as const;
+      const hintKey = `${row.id}.hint` as const;
       return {
         id: row.id,
-        label: row.label,
+        label: tApi.has(labelKey) ? tApi(labelKey) : row.label,
         icon: row.icon,
-        hint: row.hint,
+        hint: tApi.has(hintKey) ? tApi(hintKey) : row.hint,
         listingTags: row.listingTags,
         brands,
         count: items.length,
       };
     });
-  }, [models]);
+  }, [models, tApi]);
 
   const grid = useMemo(() => {
     let pool = [...models];
@@ -170,50 +176,58 @@ export function MarketHome({
         <div className="grid gap-3 lg:grid-cols-[minmax(200px,212px)_minmax(0,1fr)_minmax(236px,252px)] lg:items-stretch xl:grid-cols-[220px_minmax(0,1fr)_264px] xl:gap-4 2xl:grid-cols-[228px_minmax(0,1fr)_272px]">
           <aside className="router-market-panel p-1.5">
             <div className="mb-0.5 flex items-center justify-between px-2 py-1.5">
-              <span className="text-[12px] font-semibold">分类</span>
+              <span className="text-[12px] font-semibold">{tMarket("categories")}</span>
               <span className="rounded-full bg-[var(--neutral-12)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--neutral-1)]">
-                应用
+                {tMarket("apps")}
               </span>
             </div>
-            {TOOL_TAXONOMY.map((row) => (
-              <a
-                key={row.id}
-                href={row.href}
-                className="group flex w-full items-center gap-2 rounded-lg py-1.5 pr-1.5 pl-1.5 text-left transition hover:bg-[var(--neutral-2)]/90"
-              >
-                <span
-                  className="h-7 w-0.5 shrink-0 rounded-full bg-transparent group-hover:bg-[var(--neutral-6)]"
-                  aria-hidden
-                />
-                <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[var(--neutral-10)] group-hover:bg-[var(--neutral-3)]/80 group-hover:text-[var(--neutral-12)]">
-                  <MarketIcon name={row.icon} className="h-3.5 w-3.5" />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-medium text-[var(--neutral-12)]">
-                    {row.label}
+            {TOOL_TAXONOMY.map((row) => {
+              const labelKey = `${row.id}.label` as const;
+              const chipsKey = `${row.id}.chips` as const;
+              const label = tTool.has(labelKey) ? tTool(labelKey) : row.label;
+              const chips = tTool.has(chipsKey)
+                ? tTool(chipsKey)
+                : row.chips.slice(0, 2).join(" · ");
+              return (
+                <a
+                  key={row.id}
+                  href={row.href}
+                  className="group flex w-full items-center gap-2 rounded-lg py-1.5 pr-1.5 pl-1.5 text-left transition hover:bg-[var(--neutral-2)]/90"
+                >
+                  <span
+                    className="h-7 w-0.5 shrink-0 rounded-full bg-transparent group-hover:bg-[var(--neutral-6)]"
+                    aria-hidden
+                  />
+                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[var(--neutral-10)] group-hover:bg-[var(--neutral-3)]/80 group-hover:text-[var(--neutral-12)]">
+                    <MarketIcon name={row.icon} className="h-3.5 w-3.5" />
                   </span>
-                  <span className="mt-0.5 block truncate text-[11px] text-[var(--neutral-9)]">
-                    {row.chips.slice(0, 2).join(" · ")}
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[13px] font-medium text-[var(--neutral-12)]">
+                      {label}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[11px] text-[var(--neutral-9)]">
+                      {chips}
+                    </span>
                   </span>
-                </span>
-                <span className="text-[11px] text-[var(--neutral-8)] opacity-0 group-hover:opacity-100">
-                  ›
-                </span>
-              </a>
-            ))}
+                  <span className="text-[11px] text-[var(--neutral-8)] opacity-0 group-hover:opacity-100">
+                    ›
+                  </span>
+                </a>
+              );
+            })}
           </aside>
 
           <section className="flex min-h-[220px] flex-col justify-between overflow-hidden rounded-2xl bg-[var(--neutral-12)] p-6 text-[var(--neutral-1)]">
             <div>
               <div className="flex items-center gap-2">
                 <ForgeMark className="h-8 w-8" />
-                <p className="text-[12px] text-[var(--neutral-8)]">新品发布</p>
+                <p className="text-[12px] text-[var(--neutral-8)]">{tMarket("newRelease")}</p>
               </div>
               <h1 className="mt-2 text-[26px] font-semibold tracking-tight md:text-[30px]">
-                Forge 工具工作台
+                {tMarket("forgeTitle")}
               </h1>
               <p className="mt-2 max-w-lg text-[13px] text-[var(--neutral-7)]">
-                文本变换、编解码、表单与可编排工具。应用集市在 lab 中指向 Forge。
+                {tMarket("forgeBlurb")}
               </p>
             </div>
             <a
@@ -221,7 +235,7 @@ export function MarketHome({
               className="inline-flex w-fit items-center gap-1.5 rounded-full bg-[var(--neutral-1)] px-3.5 py-1.5 text-[12px] font-medium text-[var(--neutral-12)]"
             >
               <ForgeMark className="h-4 w-4" />
-              打开 Forge →
+              {tMarket("openForge")}
             </a>
           </section>
 
@@ -260,7 +274,7 @@ export function MarketHome({
           onMouseLeave={scheduleClose}
         >
           <div className="mb-0.5 flex items-center justify-between px-2 py-1.5">
-            <span className="text-[12px] font-semibold">分类</span>
+            <span className="text-[12px] font-semibold">{tMarket("categories")}</span>
             <div className="flex gap-1">
               <span className="rounded-full bg-[var(--neutral-12)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--neutral-1)]">
                 API
@@ -269,7 +283,7 @@ export function MarketHome({
                 href="/?product_type=tool"
                 className="rounded-full bg-[var(--neutral-3)] px-1.5 py-0.5 text-[10px] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]"
               >
-                应用
+                {tMarket("apps")}
               </Link>
             </div>
           </div>
@@ -336,7 +350,7 @@ export function MarketHome({
             href="/models?cate=api"
             className="mt-auto flex h-8 items-center px-2 text-[12px] text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
           >
-            全部 API →
+            {tMarket("allApi")}
           </Link>
         </aside>
 
@@ -355,9 +369,9 @@ export function MarketHome({
         <div className="mb-4 flex items-center gap-6 text-[15px]">
           {(
             [
-              ["new", "最新"],
-              ["hot", "热门"],
-              ["forYou", "猜你喜欢"],
+              ["new", tMarket("new")],
+              ["hot", tMarket("hot")],
+              ["forYou", tMarket("forYou")],
             ] as const
           ).map(([id, label]) => (
             <button
@@ -379,7 +393,7 @@ export function MarketHome({
             <div className="flex rounded-[10px] border border-[var(--rm-panel-border)] bg-white p-0.5 shadow-[0_1px_2px_rgb(15_23_42/0.03)]">
               <button
                 type="button"
-                aria-label="网格视图"
+                aria-label={tMarket("gridView")}
                 aria-pressed={view === "grid"}
                 onClick={() => setView("grid")}
                 className={[
@@ -393,7 +407,7 @@ export function MarketHome({
               </button>
               <button
                 type="button"
-                aria-label="列表视图"
+                aria-label={tMarket("listView")}
                 aria-pressed={view === "list"}
                 onClick={() => setView("list")}
                 className={[
@@ -410,7 +424,7 @@ export function MarketHome({
               href="/models?cate=api"
               className="text-[12px] font-medium text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
             >
-              全部 →
+              {tMarket("all")}
             </Link>
           </div>
         </div>
@@ -438,6 +452,7 @@ export function MarketHome({
 }
 
 function CategoryFlyout({ row }: { row: CategoryRow }) {
+  const tMarket = useTranslations("market");
   return (
     <div className="rounded-2xl border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 shadow-[0_20px_56px_rgb(15_23_42/0.18)]">
       <p className="px-1 pb-2.5 text-[13px] font-semibold text-[var(--neutral-12)]">{row.label}</p>
@@ -479,7 +494,7 @@ function CategoryFlyout({ row }: { row: CategoryRow }) {
         href={`/models?cate=api&tag=${encodeURIComponent(row.listingTags[0] ?? "chat")}`}
         className="mt-2 flex h-8 items-center px-1 text-[12px] text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
       >
-        查看全部 {row.label} →
+        {tMarket("viewAll", { label: row.label })}
       </Link>
     </div>
   );
@@ -490,6 +505,8 @@ function CategoryFlyout({ row }: { row: CategoryRow }) {
  * 结构：问候 + CTA · 2×3 快捷 · 底栏统计（去掉重复的「快捷使用」大卡）
  */
 function HiPanel({ sellableCount }: { sellableCount: number }) {
+  const tMarket = useTranslations("market");
+  const tShort = useTranslations("shortcuts");
   return (
     <aside className="router-market-panel flex h-full min-h-0 flex-1 flex-col bg-[linear-gradient(165deg,color-mix(in_srgb,var(--blue-3)_22%,white)_0%,#fff_60%)] p-4 xl:p-5">
       <div className="flex items-center gap-2.5">
@@ -498,10 +515,10 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
       </div>
 
       <p className="mt-3 text-[13px] leading-snug font-semibold text-[var(--neutral-12)]">
-        企业级 AI 资源平台
+        {tMarket("hiTitle")}
       </p>
       <p className="mt-1 text-[12px] leading-relaxed text-[var(--neutral-10)]">
-        让 AI 为每个需求找到答案
+        {tMarket("hiSubtitle")}
       </p>
 
       <div className="mt-3.5">
@@ -509,22 +526,32 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-x-1 gap-y-3">
-        {MARKET_SHORTCUTS.map((s) => (
-          <Link
-            key={`${s.href}-${s.label}`}
-            href={s.href}
-            title={s.label}
-            aria-label={s.label}
-            className="group flex flex-col items-center gap-1 text-center"
-          >
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--neutral-2)] text-[var(--neutral-11)] transition group-hover:bg-[var(--neutral-3)] group-hover:text-[var(--neutral-12)]">
-              <MarketIcon name={s.icon} className="h-4 w-4" />
-            </span>
-            <span className="w-full truncate text-center text-[11px] leading-none font-medium text-[var(--neutral-11)]">
-              {s.label}
-            </span>
-          </Link>
-        ))}
+        {MARKET_SHORTCUTS.map((s) => {
+          const shortKey = s.href.replace(/^\//, "") as
+            | "dashboard"
+            | "keys"
+            | "wallet"
+            | "use"
+            | "docs"
+            | "models";
+          const shortLabel = tShort.has(shortKey) ? tShort(shortKey) : s.label;
+          return (
+            <Link
+              key={s.href}
+              href={s.href}
+              title={shortLabel}
+              aria-label={shortLabel}
+              className="group flex flex-col items-center gap-1 text-center"
+            >
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--neutral-2)] text-[var(--neutral-11)] transition group-hover:bg-[var(--neutral-3)] group-hover:text-[var(--neutral-12)]">
+                <MarketIcon name={s.icon} className="h-4 w-4" />
+              </span>
+              <span className="w-full truncate text-center text-[11px] leading-none font-medium text-[var(--neutral-11)]">
+                {shortLabel}
+              </span>
+            </Link>
+          );
+        })}
       </div>
 
       {/* 底栏：单行双指标，不再叠大卡 */}
@@ -533,7 +560,7 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
           href="/models?cate=api"
           className="rounded-xl bg-[var(--neutral-2)]/80 px-2.5 py-2 transition hover:bg-[var(--neutral-3)]"
         >
-          <p className="text-[10px] tracking-wide text-[var(--neutral-9)]">可售</p>
+          <p className="text-[10px] tracking-wide text-[var(--neutral-9)]">{tMarket("sellable")}</p>
           <p className="mt-0.5 text-[17px] font-semibold tabular-nums tracking-tight text-[var(--neutral-12)]">
             {sellableCount}
           </p>
@@ -542,8 +569,10 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
           href="/wallet"
           className="rounded-xl bg-[var(--neutral-2)]/80 px-2.5 py-2 transition hover:bg-[var(--neutral-3)]"
         >
-          <p className="text-[10px] tracking-wide text-[var(--neutral-9)]">钱包</p>
-          <p className="mt-0.5 text-[13px] font-semibold text-[var(--neutral-12)]">充值</p>
+          <p className="text-[10px] tracking-wide text-[var(--neutral-9)]">{tShort("wallet")}</p>
+          <p className="mt-0.5 text-[13px] font-semibold text-[var(--neutral-12)]">
+            {tMarket("walletTopup")}
+          </p>
         </Link>
       </div>
     </aside>
