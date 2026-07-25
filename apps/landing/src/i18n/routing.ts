@@ -1,48 +1,13 @@
+import { DEFAULT_ROUTE_LOCALE, ROUTE_LOCALES } from "@nebutra/i18n/locales";
 import { defineRouting } from "next-intl/routing";
 
 /**
- * Product language wheel (URL path tags).
- * Chinese is CLDR multi-script: zh-Hans (简体) + zh-Hant (繁體).
- * Keep in sync with @nebutra/i18n PRODUCT_LANGUAGES / ROUTE_LOCALES.
+ * Product language wheel (URL path tags) — SSOT from @nebutra/i18n.
+ * Chinese is CLDR multi-script: zh-Hans (简体) + zh-Hant (繁體). Never bare `zh`.
  */
 export const routing = defineRouting({
-  locales: [
-    "en",
-    "zh-Hans",
-    "zh-Hant",
-    "de",
-    "es",
-    "fr",
-    "ja",
-    "ko",
-    "pt",
-    "it",
-    "nl",
-    "sv",
-    "da",
-    "fi",
-    "no",
-    "pl",
-    "cs",
-    "ro",
-    "hu",
-    "el",
-    "ru",
-    "uk",
-    "tr",
-    "ar",
-    "he",
-    "fa",
-    "hi",
-    "bn",
-    "ur",
-    "th",
-    "vi",
-    "id",
-    "ms",
-    "sw",
-  ],
-  defaultLocale: "en",
+  locales: ROUTE_LOCALES as unknown as [string, ...string[]],
+  defaultLocale: DEFAULT_ROUTE_LOCALE,
   localePrefix: "as-needed",
   // Locale is determined PURELY by the URL on this marketing site — never by a
   // cookie or Accept-Language header. With detection on (the default), the

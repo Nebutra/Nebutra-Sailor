@@ -146,7 +146,8 @@ export default function proxy(request: NextRequest): NextResponse {
 export const config = {
   matcher: [
     "/docs/:path*",
-    "/:locale(en|zh|ja|ko|es|fr|de)/docs/:path*",
+    // Full PRODUCT_LANGUAGES wheel (+ bare zh legacy alias → Hans). Keep in sync with apps/landing/src/i18n/routing.ts
+    "/:locale(en|zh-Hans|zh-Hant|zh|de|es|fr|ja|ko|pt|it|nl|sv|da|fi|no|pl|cs|ro|hu|el|ru|uk|tr|ar|he|fa|hi|bn|ur|th|vi|id|ms|sw)/docs/:path*",
     "/((?!api|trpc|_next|_vercel|.*/opengraph-image|.*\\..*).*)",
   ],
 };
