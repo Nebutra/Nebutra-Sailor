@@ -44,12 +44,14 @@ export function createModel(modelOrPreset: string, config: ResolvedNebutraAIConf
     }
 
     case "sensenova": {
-      // 商汤 SenseNova OpenAI-compatible API
-      // Docs: https://platform.sensenova.cn/docs
-      // Models: SenseChat-5, SenseChat-Turbo, SenseNova-V6-5, …
+      // 商汤 SenseNova Token Plan — OpenAI-compatible
+      // Docs: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
+      //       https://platform.sensenova.cn/docs
+      // Base: https://token.sensenova.cn/v1  (NOT api.sensenova.cn)
+      // Small chat models: sensenova-6.7-flash-lite, deepseek-v4-flash
       const provider = createOpenAI({
         apiKey,
-        baseURL: process.env.SENSENOVA_BASE_URL ?? "https://api.sensenova.cn/compatible-mode/v1",
+        baseURL: process.env.SENSENOVA_BASE_URL ?? "https://token.sensenova.cn/v1",
       });
       return provider(modelId);
     }

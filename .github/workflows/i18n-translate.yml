@@ -1,0 +1,114 @@
+name: i18n Translate (SenseNova)
+
+# Auto-localize apps/landing message catalogs when English source changes.
+# Uses SenseNova Token Plan small model (sensenova-6.7-flash-lite) via lingo.dev.
+#
+# Docs:
+#   https://platform.sensenova.cn/docs
+#   https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
+#   Base URL: https://token.sensenova.cn/v1
+#
+# Secrets:
+#   SENSENOVA_API_KEY — Token Plan API key (mapped to OPENAI_API_KEY for lingo)
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Re-run localization even if en.json is unchanged"
+        required: false
+        default: "false"
+  push:
+    branches: [main]
+    paths:
+      - "apps/landing/messages/en.json"
+      - "apps/landing/i18n.json"
+      - ".github/workflows/i18n-translate.yml"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: i18n-translate-landing
+  cancel-in-progress: true
+
+jobs:
+  translate:
+    name: Translate landing locales
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node + pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Enable corepack pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.32.1 --activate
+
+      - name: Require SENSENOVA_API_KEY
+        env:
+          SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
+        run: |
+          if [ -z "${SENSENOVA_API_KEY:-}" ]; then
+            echo "::error::SENSENOVA_API_KEY secret is not set"
+            exit 1
+          fi
+
+      - name: Smoke SenseNova Token Plan (flash-lite)
+        env:
+          SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
+        run: |
+          code=$(curl -sS -m 45 -o /tmp/sn-smoke.json -w '%{http_code}' \
+            -H "Authorization: Bearer ${SENSENOVA_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d '{"model":"sensenova-6.7-flash-lite","max_tokens":128,"messages":[{"role":"user","content":"Reply with exactly: ok"}]}' \
+            "https://token.sensenova.cn/v1/chat/completions")
+          echo "smoke HTTP=$code"
+          head -c 600 /tmp/sn-smoke.json; echo
+          test "$code" = "200"
+
+      - name: Run lingo.dev (SenseNova flash-lite, thinking disabled)
+        working-directory: apps/landing
+        env:
+          # lingo openai provider: OPENAI_API_KEY + OPENAI_BASE_URL (AI SDK fallback)
+          # Token Plan docs: https://token.sensenova.cn/v1 + sensenova-6.7-flash-lite
+          OPENAI_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
+          OPENAI_BASE_URL: https://token.sensenova.cn/v1
+          SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
+          SENSENOVA_BASE_URL: https://token.sensenova.cn/v1
+          # Force non-thinking mode on Token Plan flash-lite (see patch script)
+          NODE_OPTIONS: --import ./scripts/patch-sensenova-thinking.mjs
+        run: npx --yes lingo.dev@latest run
+
+      - name: Verify i18n key integrity
+        run: |
+          pnpm install --frozen-lockfile --filter @nebutra/landing...
+          pnpm --filter @nebutra/landing check:i18n
+
+      - name: Open PR with locale updates
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(i18n): auto-translate landing locales via SenseNova flash-lite"
+          branch: chore/i18n-auto-translate
+          delete-branch: true
+          title: "chore(i18n): auto-translate landing locales (SenseNova flash-lite)"
+          body: |
+            Automated localization for `apps/landing/messages/*`.
+
+            - Provider: SenseNova **Token Plan** (`https://token.sensenova.cn/v1`)
+            - Model: `sensenova-6.7-flash-lite` (small — not enterprise SenseChat)
+            - Tool: lingo.dev + `apps/landing/i18n.json`
+            - Source: `en.json` → zh / ja / ko / es / fr / de
+            - Docs: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
+
+            Triggered by English source changes or manual `workflow_dispatch`.
+          labels: i18n, automated

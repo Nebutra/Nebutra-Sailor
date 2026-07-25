@@ -11,7 +11,7 @@
     "check:i18n": "node scripts/verify-i18n-keys.mjs",
     "gen:ai-showcase": "tsx scripts/gen-ai-showcase.ts",
     "search:index": "pagefind --site .next/server/app --output public/pagefind --glob \"**/*.html\"",
-    "translate": "npx lingo.dev@latest run",
+    "translate": "OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://token.sensenova.cn/v1} OPENAI_API_KEY=${OPENAI_API_KEY:-$SENSENOVA_API_KEY} NODE_OPTIONS=\"--import ./scripts/patch-sensenova-thinking.mjs${NODE_OPTIONS:+ $NODE_OPTIONS}\" npx lingo.dev@latest run",
     "test": "vitest run",
     "test:watch": "vitest"
   },

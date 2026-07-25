@@ -26,7 +26,8 @@ const bailian = createOpenAICompatible({
 // @sailor:cn-instance:sensetime
 const sensetime = createOpenAICompatible({
   name: 'sensetime',
-  baseURL: process.env.SENSENOVA_BASE_URL ?? 'https://api.sensenova.cn/compatible-mode/v1',
+  // Token Plan (platform.sensenova.cn) — not enterprise api.sensenova.cn
+  baseURL: process.env.SENSENOVA_BASE_URL ?? 'https://token.sensenova.cn/v1',
   apiKey: process.env.SENSENOVA_API_KEY!,
 });
 

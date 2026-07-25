@@ -31,10 +31,10 @@ describe("SenseNova provider wiring", () => {
     ).toThrow(/SENSENOVA_API_KEY/);
   });
 
-  it("maps SenseNova model presets", () => {
-    expect(resolveModel("sn-sensechat-5")).toBe("SenseChat-5");
-    expect(resolveModel("sn-sensechat-turbo")).toBe("SenseChat-Turbo");
-    expect(resolveModel("sn-v6-5")).toBe("SenseNova-V6-5");
-    expect(resolveModel("SenseChat-5")).toBe("SenseChat-5");
+  it("maps SenseNova Token Plan small-model presets", () => {
+    expect(resolveModel("sn-flash-lite")).toBe("sensenova-6.7-flash-lite");
+    expect(resolveModel("sn-deepseek-flash")).toBe("deepseek-v4-flash");
+    expect(resolveModel("sn-translate")).toBe("sensenova-6.7-flash-lite");
+    expect(resolveModel("sensenova-6.7-flash-lite")).toBe("sensenova-6.7-flash-lite");
   });
 });

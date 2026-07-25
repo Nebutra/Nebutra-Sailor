@@ -48,16 +48,18 @@ export const models = {
   /** SiliconFlow — DeepSeek V3 (fast, capable) */
   "sf-deepseek-v3": "deepseek-ai/DeepSeek-V3",
 
-  // --- SenseNova presets (use with provider: "sensenova") ---
+  // --- SenseNova Token Plan presets (use with provider: "sensenova") ---
+  // Base URL: https://token.sensenova.cn/v1
+  // Docs: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
 
-  /** SenseNova — SenseChat 5 flagship */
-  "sn-sensechat-5": "SenseChat-5",
+  /** SenseNova 6.7 Flash-Lite — small multimodal agent (default for i18n CI) */
+  "sn-flash-lite": "sensenova-6.7-flash-lite",
 
-  /** SenseNova — SenseChat Turbo (fast / cheap) */
-  "sn-sensechat-turbo": "SenseChat-Turbo",
+  /** DeepSeek V4 Flash via SenseNova Token Plan — long context, cheap */
+  "sn-deepseek-flash": "deepseek-v4-flash",
 
-  /** SenseNova — V6.5 general */
-  "sn-v6-5": "SenseNova-V6-5",
+  /** Alias: prefer flash-lite for bulk translation */
+  "sn-translate": "sensenova-6.7-flash-lite",
 } as const;
 
 export type ModelPreset = keyof typeof models;

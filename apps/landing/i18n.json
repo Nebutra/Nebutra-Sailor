@@ -11,12 +11,12 @@
     }
   },
   "provider": {
-    "id": "ollama",
-    "model": "qwen3:1.7b",
-    "baseUrl": "http://localhost:11434",
-    "prompt": "You are a professional translator. Translate the provided text from {source} to {target}. Keep brand names (Nebutra, Stripe, Clerk, etc.) untranslated. Preserve any technical terms. Output only the translation, nothing else.",
+    "id": "openai",
+    "model": "sensenova-6.7-flash-lite",
+    "baseUrl": "https://token.sensenova.cn/v1",
+    "prompt": "You are a professional translator. Translate the provided text from {source} to {target}. Keep brand names (Nebutra, Stripe, Clerk, etc.) untranslated. Preserve any technical terms, ICU placeholders like {name}, and HTML/Markdown markup. Output only the translation, nothing else.",
     "settings": {
-      "temperature": 0
+      "temperature": 0.2
     }
   }
 }

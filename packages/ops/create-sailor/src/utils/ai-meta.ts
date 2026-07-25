@@ -211,8 +211,9 @@ export const PROVIDERS: ProviderMeta[] = [
     category: "国内平台",
     status: "cn-compatible",
     docs: "https://platform.sensenova.cn/docs",
-    // OpenAI-compatible surface — not the legacy /v1 native path
-    baseURL: "https://api.sensenova.cn/compatible-mode/v1",
+    // Token Plan OpenAI-compatible surface (NOT enterprise api.sensenova.cn)
+    // Ref: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
+    baseURL: "https://token.sensenova.cn/v1",
     envVarPrefix: "SENSENOVA",
     requiredEnvVars: ["SENSENOVA_API_KEY"],
   },
