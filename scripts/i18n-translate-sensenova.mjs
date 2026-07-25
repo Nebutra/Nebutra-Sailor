@@ -32,14 +32,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  chunk,
-  collectWork,
-  flatten,
-  pLimit,
-  shouldSkipValue,
-  unflatten,
-} from "./i18n-translate-helpers.mjs";
+import { chunk, collectWork, flatten, pLimit, unflatten } from "./i18n-translate-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..");

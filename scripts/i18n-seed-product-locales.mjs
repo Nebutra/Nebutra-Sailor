@@ -1,11 +1,24 @@
 #!/usr/bin/env node
 /**
- * Seed missing product message catalogs from en.json.
+ * Seed missing product message catalogs from en.json + deep-merge missing keys.
  * Uses the global PRODUCT language wheel (incl. zh-Hans / zh-Hant).
  *
  *   node scripts/i18n-seed-product-locales.mjs
+ *
+ * Behavior:
+ *   1. Missing locale files → copy from en.json (so SenseNova can translate)
+ *   2. Existing locale files → deep-merge any keys present in en but missing in target
+ *      (preserves already-translated leaves; fills new keys with English)
+ *   3. Regenerate packages/platform/i18n/src/product-locales.generated.ts
  */
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -56,19 +69,51 @@ const CATALOGS = [
   "apps/router/messages",
 ];
 
+/**
+ * Deep-merge: for every key in `source`, if `target` lacks it (or has null/undefined),
+ * take source value. Nested objects merge recursively. Arrays/scalars from target win.
+ */
+function deepMergeMissing(source, target) {
+  if (source === null || typeof source !== "object" || Array.isArray(source)) {
+    return target === undefined || target === null ? source : target;
+  }
+  const out = target && typeof target === "object" && !Array.isArray(target) ? { ...target } : {};
+  let added = 0;
+  for (const [k, v] of Object.entries(source)) {
+    if (!(k in out) || out[k] === undefined || out[k] === null) {
+      out[k] = v;
+      added += 1;
+    } else if (
+      v !== null &&
+      typeof v === "object" &&
+      !Array.isArray(v) &&
+      typeof out[k] === "object" &&
+      out[k] !== null &&
+      !Array.isArray(out[k])
+    ) {
+      const nested = deepMergeMissing(v, out[k]);
+      out[k] = nested.value;
+      added += nested.added;
+    }
+  }
+  return { value: out, added };
+}
+
 let seeded = 0;
+let mergedKeys = 0;
+
 for (const rel of CATALOGS) {
   const dir = join(REPO, rel);
   if (!existsSync(dir)) {
     console.warn(`skip missing dir ${rel}`);
     continue;
   }
-  const en = join(dir, "en.json");
-  if (!existsSync(en)) {
+  const enPath = join(dir, "en.json");
+  if (!existsSync(enPath)) {
     console.warn(`skip no en.json in ${rel}`);
     continue;
   }
-  // Prefer Simplified Chinese as seed for Traditional if present
+  const en = JSON.parse(readFileSync(enPath, "utf8"));
   const hans = join(dir, "zh-Hans.json");
   const legacyZh = join(dir, "zh.json");
   if (!existsSync(hans) && existsSync(legacyZh)) {
@@ -78,14 +123,28 @@ for (const rel of CATALOGS) {
   }
   for (const loc of TARGETS) {
     const dest = join(dir, `${loc}.json`);
-    if (existsSync(dest)) continue;
-    // Always seed from English so SenseNova translates every leaf.
-    // (Copying zh-Hans → zh-Hant skips Hant conversion because strings ≠ en.)
-    // Only legacy bare-zh migration uses a Chinese source.
-    const src = loc === "zh-Hans" && existsSync(legacyZh) && !existsSync(hans) ? legacyZh : en;
-    copyFileSync(src, dest);
-    console.log(`seed ${rel}/${loc}.json`);
-    seeded++;
+    if (!existsSync(dest)) {
+      // Always seed from English so SenseNova translates every leaf.
+      // Only legacy bare-zh migration uses a Chinese source.
+      const src =
+        loc === "zh-Hans" && existsSync(legacyZh) && !existsSync(hans) ? legacyZh : enPath;
+      copyFileSync(src, dest);
+      console.log(`seed ${rel}/${loc}.json`);
+      seeded++;
+      continue;
+    }
+    // Deep-merge missing keys from en (preserve translations)
+    try {
+      const cur = JSON.parse(readFileSync(dest, "utf8"));
+      const { value, added } = deepMergeMissing(en, cur);
+      if (added > 0) {
+        writeFileSync(dest, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+        console.log(`merge ${rel}/${loc}.json (+${added} keys from en)`);
+        mergedKeys += added;
+      }
+    } catch (err) {
+      console.warn(`skip merge ${rel}/${loc}.json: ${err instanceof Error ? err.message : err}`);
+    }
   }
 }
 
@@ -109,10 +168,6 @@ export type ProductMessageLocale = (typeof PRODUCT_MESSAGE_LOCALES)[number];
 export const DEFAULT_PRODUCT_MESSAGE_LOCALE = "en" as const;
 `;
 mkdirSync(dirname(out), { recursive: true });
-
-// write via import fs
-import { writeFileSync } from "node:fs";
-
 writeFileSync(out, body);
 console.log(`Wrote ${out} (${files.length} locales)`);
-console.log(`Done. seeded=${seeded}`);
+console.log(`Done. seeded=${seeded} mergedKeys=${mergedKeys}`);

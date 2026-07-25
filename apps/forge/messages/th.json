@@ -46,19 +46,66 @@
     "emptyHint": "Try another keyword, or pick a tool from the categories below."
   },
   "categories": {
-    "codec": { "label": "Codecs", "hint": "Base64 · URL · JWT · Unicode" },
-    "cn": { "label": "China validation", "hint": "ID · phone" },
-    "data": { "label": "Data", "hint": "JSON · YAML · CSV · XML" },
-    "dev": { "label": "Developer", "hint": "Regex · SQL · color · UUID" },
-    "doc": { "label": "Documents", "hint": "Markdown · PDF merge/split" },
-    "finance": { "label": "Finance", "hint": "Amount to words" },
-    "hash": { "label": "Hash & security", "hint": "MD5 · SHA · HMAC · password" },
-    "image": { "label": "Images", "hint": "Compress · QR · convert" },
-    "life": { "label": "Life calculators", "hint": "Mortgage · BMI · kinship" },
-    "llm": { "label": "LLM", "hint": "Tokens · cost · schema" },
-    "security": { "label": "Security", "hint": "Password generator" },
-    "text": { "label": "Text", "hint": "Word count · CJK · pinyin · Diff" },
-    "time": { "label": "Time", "hint": "Timestamp · timezone · Cron · lunar" },
-    "unit": { "label": "Units", "hint": "Length · weight · temperature · data" }
+    "codec": {
+      "label": "Codecs",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "China validation",
+      "hint": "ID · phone"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Developer",
+      "hint": "Regex · SQL · color · UUID"
+    },
+    "doc": {
+      "label": "Documents",
+      "hint": "Markdown · PDF merge/split"
+    },
+    "finance": {
+      "label": "Finance",
+      "hint": "Amount to words"
+    },
+    "hash": {
+      "label": "Hash & security",
+      "hint": "MD5 · SHA · HMAC · password"
+    },
+    "image": {
+      "label": "Images",
+      "hint": "Compress · QR · convert"
+    },
+    "life": {
+      "label": "Life calculators",
+      "hint": "Mortgage · BMI · kinship"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokens · cost · schema"
+    },
+    "security": {
+      "label": "Security",
+      "hint": "Password generator"
+    },
+    "text": {
+      "label": "Text",
+      "hint": "Word count · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Time",
+      "hint": "Timestamp · timezone · Cron · lunar"
+    },
+    "unit": {
+      "label": "Units",
+      "hint": "Length · weight · temperature · data"
+    }
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
   }
 }

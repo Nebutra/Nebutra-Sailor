@@ -86,6 +86,7 @@ jobs:
           fi
 
       - name: Smoke SenseNova Token Plan (flash-lite, thinking off)
+        id: smoke
         env:
           SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
         run: |
@@ -96,6 +97,11 @@ jobs:
             "https://token.sensenova.cn/v1/chat/completions")
           echo "smoke HTTP=$code"
           head -c 800 /tmp/sn-smoke.json; echo
+          if [ "$code" = "429" ] || grep -q 'quota_exceeded\|limit exhausted' /tmp/sn-smoke.json 2>/dev/null; then
+            echo "::warning::SenseNova Token Plan quota exhausted — seed will run; translate skipped"
+            echo "quota=exhausted" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           test "$code" = "200"
           python3 - <<'PY'
           import json
@@ -104,12 +110,14 @@ jobs:
           assert c.strip(), "empty content"
           print("smoke content:", c.strip()[:80])
           PY
+          echo "quota=ok" >> "$GITHUB_OUTPUT"
 
       - name: Seed missing PRODUCT_LANGUAGES catalogs
         run: node scripts/i18n-seed-product-locales.mjs
 
       - name: Concurrent global translate (full wheel)
         # continue-on-error: Token Plan quota may exhaust mid-run; still commit partial catalogs.
+        if: steps.smoke.outputs.quota != 'exhausted'
         continue-on-error: true
         env:
           SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
