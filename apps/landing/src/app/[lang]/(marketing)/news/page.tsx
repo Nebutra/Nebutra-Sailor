@@ -25,6 +25,7 @@ import { NewsroomHero } from "@/components/landing/news-hero";
 import type { NewsRailSlide } from "@/components/landing/news-rail-carousel";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -41,7 +42,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  const isZh = lang === "zh";
+  const isZh = isZhUiLocale(lang);
   return {
     title: isZh ? "新闻中心 — Nebutra" : "Newsroom — Nebutra",
     description: isZh
@@ -151,7 +152,7 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  const isZh = lang === "zh";
+  const isZh = isZhUiLocale(lang);
   const posts = await getCachedAllPosts(toBlogLanguage(lang));
 
   const contactHref = `${localePrefix(lang)}/contact`;

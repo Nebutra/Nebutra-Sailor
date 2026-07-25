@@ -1,6 +1,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { routing } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 type SanityBlogWebhookPayload = {
   _type?: string;
@@ -42,8 +43,11 @@ export async function POST(req: NextRequest) {
   }
 
   const slug = payload.slug?.current;
+  // Content language "zh" invalidates Chinese UI locales (Hans + Hant).
   const affectedLocales =
-    payload.language === "zh" ? ["zh"] : routing.locales.filter((l) => l !== "zh");
+    payload.language === "zh"
+      ? (["zh-Hans", "zh-Hant"] as const)
+      : routing.locales.filter((l) => l !== "zh-Hans" && l !== "zh-Hant");
 
   revalidateTag("blog", "max");
   for (const locale of affectedLocales) {

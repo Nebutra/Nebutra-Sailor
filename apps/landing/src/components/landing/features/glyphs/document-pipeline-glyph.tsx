@@ -1,5 +1,6 @@
 import { ArrowRight, Check, FileText, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
 
 type PipelineStep = {
@@ -39,9 +40,9 @@ const DOCS_ZH: ReadonlyArray<DocRow> = [
 ];
 
 export function DocumentPipelineGlyph({ locale }: SubpackageGlyphProps) {
-  const steps = locale === "zh" ? PIPELINE_STEPS_ZH : PIPELINE_STEPS_EN;
-  const docs = locale === "zh" ? DOCS_ZH : DOCS_EN;
-  const processedLabel = locale === "zh" ? "已处理" : "processed";
+  const steps = isZhUiLocale(locale) ? PIPELINE_STEPS_ZH : PIPELINE_STEPS_EN;
+  const docs = isZhUiLocale(locale) ? DOCS_ZH : DOCS_EN;
+  const processedLabel = isZhUiLocale(locale) ? "已处理" : "processed";
 
   return (
     <div

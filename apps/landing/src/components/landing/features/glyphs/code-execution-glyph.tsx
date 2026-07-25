@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { ArrowRight, Check, Code, Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
@@ -14,9 +16,10 @@ import type { SubpackageGlyphProps } from "./types";
  * Footer: provider attribution.
  */
 export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
-  const footerLabel =
-    locale === "zh" ? "Vercel Sandbox · 安全执行不可信代码" : "Vercel Sandbox · safe untrusted";
-  const executedLabel = locale === "zh" ? "47ms 内执行完成" : "executed in 47ms";
+  const footerLabel = isZhUiLocale(locale)
+    ? "Vercel Sandbox · 安全执行不可信代码"
+    : "Vercel Sandbox · safe untrusted";
+  const executedLabel = isZhUiLocale(locale) ? "47ms 内执行完成" : "executed in 47ms";
 
   return (
     <div

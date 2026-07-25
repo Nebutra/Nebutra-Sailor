@@ -17,8 +17,8 @@ import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
-
 import type { Locale } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 import {
   type Bilingual,
@@ -337,12 +337,11 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
   );
 
   const orgPrinciplesCopy = {
-    eyebrow: lang === "zh" ? "组织演进准则" : "ORGANIZATIONAL PRINCIPLES",
-    heading: lang === "zh" ? "AI 杠杆对抗人治腐化" : "AI Leverage vs. Administrative Decay",
-    intro:
-      lang === "zh"
-        ? "伟大的组织不应在业务扩张过程中走向平庸与官僚化。当 Nebutra 生态及其孵化公司面临规模激增时，以下三条是唯一不可妥协的组织演进准则——每一条都直接约束 hiring、治理与资源配置决策。"
-        : "Great organizations should not drift into mediocrity and bureaucracy as they scale. When the Nebutra ecosystem and its incubated companies face rapid growth, the following three are the only non-negotiable principles of organizational evolution — each directly constraining hiring, governance, and resource allocation decisions.",
+    eyebrow: isZhUiLocale(lang) ? "组织演进准则" : "ORGANIZATIONAL PRINCIPLES",
+    heading: isZhUiLocale(lang) ? "AI 杠杆对抗人治腐化" : "AI Leverage vs. Administrative Decay",
+    intro: isZhUiLocale(lang)
+      ? "伟大的组织不应在业务扩张过程中走向平庸与官僚化。当 Nebutra 生态及其孵化公司面临规模激增时，以下三条是唯一不可妥协的组织演进准则——每一条都直接约束 hiring、治理与资源配置决策。"
+      : "Great organizations should not drift into mediocrity and bureaucracy as they scale. When the Nebutra ecosystem and its incubated companies face rapid growth, the following three are the only non-negotiable principles of organizational evolution — each directly constraining hiring, governance, and resource allocation decisions.",
   };
 
   return (
@@ -737,7 +736,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="max-w-3xl mb-16">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-              {lang === "zh" ? "创新时间线" : "Innovation Timeline"}
+              {isZhUiLocale(lang) ? "创新时间线" : "Innovation Timeline"}
             </span>
             <AnimateIn preset="fadeUp">
               <h2
@@ -747,7 +746,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {lang === "zh"
+                {isZhUiLocale(lang)
                   ? "我们走过的路与即将抵达的站台"
                   : "The road walked and stations ahead"}
               </h2>

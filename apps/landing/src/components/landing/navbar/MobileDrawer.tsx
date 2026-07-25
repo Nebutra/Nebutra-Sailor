@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { Cross, Menu } from "@nebutra/icons";
 import { useLocale, useTranslations } from "next-intl";
@@ -20,7 +22,7 @@ export function MobileDrawer() {
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
   const [open, setOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const themeLabel = locale === "zh" ? "外观" : "Theme";
+  const themeLabel = isZhUiLocale(locale) ? "外观" : "Theme";
 
   return (
     <div className="lg:hidden flex items-center">

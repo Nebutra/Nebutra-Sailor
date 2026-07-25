@@ -16,6 +16,7 @@ import {
   chinaVcLogoFor,
 } from "@/lib/constants/china-vc";
 import { getSolution, getSolutionGroup, pick } from "@/lib/constants/solutions-data";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 const COPY = {
   back: { en: "All solutions", zh: "全部解决方案" },
@@ -36,8 +37,8 @@ export interface ChinaVcSolutionProps {
 export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
   const solution = getSolution("china-vc");
   const group = solution ? getSolutionGroup(solution.groupId) : undefined;
-  const copyLocale: "en" | "zh" = locale === "zh" ? "zh" : "en";
-  const text = (key: keyof typeof COPY) => (locale === "zh" ? COPY[key].zh : COPY[key].en);
+  const copyLocale: "en" | "zh" = isZhUiLocale(locale) ? "zh" : "en";
+  const text = (key: keyof typeof COPY) => (isZhUiLocale(locale) ? COPY[key].zh : COPY[key].en);
 
   const tokens: FeatureGroupTokens = {
     auroraColors: group?.auroraColors ?? DEFAULT_GROUP_TOKENS.auroraColors,

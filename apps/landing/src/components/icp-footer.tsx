@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 export interface IcpFooterProps {
   /** Current locale; component renders only when this is "zh". */
@@ -13,7 +14,7 @@ export interface IcpFooterProps {
  * Renders the mandatory mainland-China ICP filing footer.
  *
  * Only renders when:
- *   - `locale === "zh"`, AND
+ *   - `isZhUiLocale(locale)`, AND
  *   - `icpNumber` is non-empty
  *
  * Both checks happen at render time so a partially-configured deploy

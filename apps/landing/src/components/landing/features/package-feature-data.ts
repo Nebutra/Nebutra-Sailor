@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { type FileNode, TREE_DATA } from "@/lib/constants/landing-data";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 type FeatureKind = "capability" | "group" | "package";
 
@@ -588,7 +589,7 @@ export function getFeatureSummary(entry: PackageFeatureEntry, locale: "en" | "zh
     return authored[locale];
   }
 
-  if (locale === "zh") {
+  if (isZhUiLocale(locale)) {
     if (entry.kind === "group" || entry.kind === "capability") {
       return ZH_GROUP_SUMMARIES[entry.group] ?? entry.description;
     }
@@ -606,7 +607,7 @@ export function getFeatureSummary(entry: PackageFeatureEntry, locale: "en" | "zh
 }
 
 export function getFeatureTitle(entry: PackageFeatureEntry, locale: "en" | "zh") {
-  if (locale === "zh") {
+  if (isZhUiLocale(locale)) {
     if (entry.kind === "package") return `${entry.label} 能力包`;
     return `${GROUP_LABELS[entry.group]?.zh ?? entry.label}能力面`;
   }

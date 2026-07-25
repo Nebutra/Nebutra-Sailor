@@ -11,6 +11,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
@@ -62,7 +63,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
   const { lang } = await params;
   const locale = lang as Locale;
   setRequestLocale(locale);
-  const isZh = locale === "zh";
+  const isZh = isZhUiLocale(locale);
 
   const categories = Object.entries(PROVIDERS_BY_CATEGORY) as [ProviderCategory, ProviderMeta[]][];
   const total = categories.reduce((sum, [, items]) => sum + items.length, 0);

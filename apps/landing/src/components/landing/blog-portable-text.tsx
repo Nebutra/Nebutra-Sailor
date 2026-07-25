@@ -19,6 +19,7 @@ import katex from "katex";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { prepareBlogPortableTextBlocks } from "@/lib/blog-code-highlighting";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { BlogCodeBlock } from "./blog-code-block";
 import { BlogCopyButton } from "./blog-copy-button";
 import { BlogCtaBlock, type BlogCtaBlockItem } from "./blog-cta-block";
@@ -526,10 +527,10 @@ function BlogSourceCardGroup({
       <div className="mb-4 flex items-end justify-between gap-4 border-b border-border pb-3">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            {language === "zh" ? "资料索引" : "Source index"}
+            {isZhUiLocale(language) ? "资料索引" : "Source index"}
           </div>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            {language === "zh"
+            {isZhUiLocale(language)
               ? `${sources.length} 个来源支撑这篇 Frontier 笔记。`
               : `${sources.length} sources behind this Frontier note.`}
           </p>
@@ -546,7 +547,7 @@ function BlogSourceCardGroup({
           >
             <div className="flex items-start justify-between gap-3">
               <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                {source.publisher ?? (language === "zh" ? "来源" : "Source")}
+                {source.publisher ?? (isZhUiLocale(language) ? "来源" : "Source")}
               </div>
               <ArrowUpRight
                 className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"

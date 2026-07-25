@@ -7,8 +7,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { SocialProofBar } from "@/components/landing/social-proof-bar";
 import { Link } from "@/i18n/navigation";
-
 import type { Locale } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 import {
@@ -116,7 +116,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="max-w-4xl mx-auto text-center mb-16 md:mb-24">
             <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-              {lang === "zh" ? "我们的宣言" : "Our Manifesto"}
+              {isZhUiLocale(lang) ? "我们的宣言" : "Our Manifesto"}
             </span>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
@@ -158,7 +158,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           <AnimateIn preset="fadeUp" inView>
             <div className="mb-16 md:mb-24 text-center md:text-left max-w-4xl">
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-                {lang === "zh" ? "我们的愿景" : "Our Vision"}
+                {isZhUiLocale(lang) ? "我们的愿景" : "Our Vision"}
               </span>
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
@@ -167,7 +167,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {lang === "zh"
+                {isZhUiLocale(lang)
                   ? "创业,应该智能化、轻量化、民主化"
                   : "Entrepreneurship should be AI-Native, Lightweight, and Democratic"}
               </h2>
@@ -212,7 +212,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                 className="text-xl md:text-2xl font-semibold text-foreground leading-relaxed text-balance"
                 style={{ letterSpacing: "var(--tracking-tight)" }}
               >
-                {lang === "zh"
+                {isZhUiLocale(lang)
                   ? "这不是口号——这是我们对产品、制度与生态的工程化承诺。"
                   : "This isn't a slogan — it's our engineering commitment to product, institution, and ecosystem."}
               </p>
@@ -227,7 +227,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           <AnimateIn preset="fadeUp" inView>
             <div className="mb-16 md:mb-20 max-w-4xl">
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-                {lang === "zh"
+                {isZhUiLocale(lang)
                   ? "OMNI-FACTOR ROUTING / 超级要素路由"
                   : "OMNI-FACTOR ROUTING / 超级要素路由"}
               </span>
@@ -238,10 +238,12 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {lang === "zh" ? "让生产要素去到最适合的地方" : "Route Every Factor of Production"}
+                {isZhUiLocale(lang)
+                  ? "让生产要素去到最适合的地方"
+                  : "Route Every Factor of Production"}
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-balance max-w-3xl">
-                {lang === "zh"
+                {isZhUiLocale(lang)
                   ? "Nebutra 把商业运转中的中介低效、系统傲慢与标签偏见视为资源错配的根源。我们构建全球数字神经网络,作为生产要素的路由引擎——三类要素,同等精度对待。"
                   : "Nebutra treats intermediary inefficiency, systemic arrogance, and label bias as root causes of resource misallocation. We build a global digital nervous system as the routing engine for factors of production — three categories, all treated with equal precision."}
               </p>
@@ -277,12 +279,12 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
           <AnimateIn preset="fadeUp" inView>
             <p className="text-sm text-muted-foreground">
-              {lang === "zh" ? "完整协议见 → " : "Full protocol → "}
+              {isZhUiLocale(lang) ? "完整协议见 → " : "Full protocol → "}
               <Link
                 href="/about/whitepaper"
                 className="font-semibold text-foreground underline underline-offset-4 hover:text-primary transition-colors"
               >
-                {lang === "zh" ? "商业白皮书" : "Business Whitepaper"}
+                {isZhUiLocale(lang) ? "商业白皮书" : "Business Whitepaper"}
               </Link>
             </p>
           </AnimateIn>
@@ -432,7 +434,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-16 text-center md:text-left">
             <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-4 block">
-              {lang === "zh" ? "深入了解" : "Explore More"}
+              {isZhUiLocale(lang) ? "深入了解" : "Explore More"}
             </span>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
@@ -441,7 +443,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              {lang === "zh" ? "走进云毓的不同维度" : "Dimensions of Nebutra"}
+              {isZhUiLocale(lang) ? "走进云毓的不同维度" : "Dimensions of Nebutra"}
             </h2>
           </div>
 
@@ -450,47 +452,42 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               {
                 href: "/about/business-portfolio",
                 kicker: "01",
-                title: lang === "zh" ? "核心能力布局" : "Business Portfolio",
-                desc:
-                  lang === "zh"
-                    ? "19 项核心能力，覆盖模态 / 技术 / 平台 / 治理四个层面"
-                    : "19 core capabilities across modality, technology, platform, and governance",
+                title: isZhUiLocale(lang) ? "核心能力布局" : "Business Portfolio",
+                desc: isZhUiLocale(lang)
+                  ? "19 项核心能力，覆盖模态 / 技术 / 平台 / 治理四个层面"
+                  : "19 core capabilities across modality, technology, platform, and governance",
               },
               {
                 href: "/about/products",
                 kicker: "02",
-                title: lang === "zh" ? "旗舰产品" : "Flagship Product",
-                desc:
-                  lang === "zh"
-                    ? "云毓万象 Nebutra Sailor · 三大业务闭环"
-                    : "Nebutra Sailor · Three business pillars",
+                title: isZhUiLocale(lang) ? "旗舰产品" : "Flagship Product",
+                desc: isZhUiLocale(lang)
+                  ? "云毓万象 Nebutra Sailor · 三大业务闭环"
+                  : "Nebutra Sailor · Three business pillars",
               },
               {
                 href: "/about/innovation",
                 kicker: "03",
-                title: lang === "zh" ? "研发与创新" : "R&D & Innovation",
-                desc:
-                  lang === "zh"
-                    ? "AI 原生架构 · 开源基础设施 · 工程最佳实践"
-                    : "AI-native architecture · Open-source infrastructure · Engineering excellence",
+                title: isZhUiLocale(lang) ? "研发与创新" : "R&D & Innovation",
+                desc: isZhUiLocale(lang)
+                  ? "AI 原生架构 · 开源基础设施 · 工程最佳实践"
+                  : "AI-native architecture · Open-source infrastructure · Engineering excellence",
               },
               {
                 href: "/about/global",
                 kicker: "04",
-                title: lang === "zh" ? "全球化布局" : "Global Presence",
-                desc:
-                  lang === "zh"
-                    ? "Day 1 出海 · 多语种合规 · 全球 Edge"
-                    : "Day-1 Global · Multi-lingual compliance · Global Edge",
+                title: isZhUiLocale(lang) ? "全球化布局" : "Global Presence",
+                desc: isZhUiLocale(lang)
+                  ? "Day 1 出海 · 多语种合规 · 全球 Edge"
+                  : "Day-1 Global · Multi-lingual compliance · Global Edge",
               },
               {
                 href: "/about/whitepaper",
                 kicker: "05",
-                title: lang === "zh" ? "白皮书" : "Business Whitepaper",
-                desc:
-                  lang === "zh"
-                    ? "受治理 AI 平台白皮书 · 工程原则 · 组织演进准则"
-                    : "Governed AI platform whitepaper · Engineering principles · Organizational operating model",
+                title: isZhUiLocale(lang) ? "白皮书" : "Business Whitepaper",
+                desc: isZhUiLocale(lang)
+                  ? "受治理 AI 平台白皮书 · 工程原则 · 组织演进准则"
+                  : "Governed AI platform whitepaper · Engineering principles · Organizational operating model",
               },
             ].map((card) => (
               <Link
@@ -512,7 +509,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   <p className="text-base text-muted-foreground leading-relaxed">{card.desc}</p>
                 </div>
                 <div className="flex items-center gap-2 mt-8 text-sm font-semibold text-foreground group-hover:translate-x-1 transition-transform">
-                  {lang === "zh" ? "深入了解" : "Explore"}
+                  {isZhUiLocale(lang) ? "深入了解" : "Explore"}
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </Link>
@@ -527,7 +524,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <div className="container mx-auto px-4 text-center max-w-4xl relative">
           <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
             <span className="text-sm font-semibold tracking-widest uppercase text-primary">
-              {lang === "zh" ? "加入我们的愿景" : "Join Our Vision"}
+              {isZhUiLocale(lang) ? "加入我们的愿景" : "Join Our Vision"}
             </span>
           </div>
           <h2
@@ -537,7 +534,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               lineHeight: "var(--leading-display)",
             }}
           >
-            {lang === "zh"
+            {isZhUiLocale(lang)
               ? "加入我们，共创科技未来"
               : "Join us to co-create the technological future"}
           </h2>

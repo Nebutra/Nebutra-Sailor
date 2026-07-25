@@ -12,6 +12,7 @@ import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 // Static fallback changelog data — same 8 releases from main changelog page
 const STATIC_RELEASES = [
@@ -393,7 +394,7 @@ export default async function ChangelogVersionPage({
 
   if (cmsEntry) {
     const date = new Date(cmsEntry.publishedAt);
-    const isZh = lang === "zh";
+    const isZh = isZhUiLocale(lang);
     const formattedDate = Number.isNaN(date.getTime())
       ? cmsEntry.publishedAt
       : dateFnsFormat(
@@ -510,7 +511,7 @@ export default async function ChangelogVersionPage({
   }
 
   const date = new Date(staticRelease.date);
-  const isZhStatic = lang === "zh";
+  const isZhStatic = isZhUiLocale(lang);
   const formattedDate = Number.isNaN(date.getTime())
     ? staticRelease.date
     : dateFnsFormat(

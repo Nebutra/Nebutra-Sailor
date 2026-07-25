@@ -10,6 +10,7 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { createAppSignUpUrl } from "@/lib/app-url";
 import { getSolutionGroup, pick, type Solution } from "@/lib/constants/solutions-data";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { getSolutionContentSource } from "@/lib/solutions/content-source";
 
 const COPY = {
@@ -24,7 +25,7 @@ const COPY = {
 } as const;
 
 function copy(key: keyof typeof COPY, locale: string): string {
-  return locale === "zh" ? COPY[key].zh : COPY[key].en;
+  return isZhUiLocale(locale) ? COPY[key].zh : COPY[key].en;
 }
 
 export interface SolutionPageProps {

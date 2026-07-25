@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { BarChart, Clock, Database, Lightning, Users } from "@nebutra/icons";
 import {
@@ -134,7 +136,7 @@ function tone(pct: number): ProgressTone {
 }
 
 function formatNumber(value: number, locale: "en" | "zh", compact = false): string {
-  return new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US", {
+  return new Intl.NumberFormat(isZhUiLocale(locale) ? "zh-CN" : "en-US", {
     notation: compact ? "compact" : "standard",
     maximumFractionDigits: 1,
   }).format(value);

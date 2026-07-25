@@ -16,6 +16,7 @@ import {
   globalVcLogoFor,
 } from "@/lib/constants/global-vc";
 import { getSolution, getSolutionGroup, pick } from "@/lib/constants/solutions-data";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 const COPY = {
   back: { en: "All solutions", zh: "全部解决方案" },
@@ -36,8 +37,9 @@ export interface GlobalVcSolutionProps {
 export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
   const solution = getSolution("global-vc");
   const group = solution ? getSolutionGroup(solution.groupId) : undefined;
-  const copyLocale: "en" | "zh" = locale === "zh" ? "zh" : "en";
-  const text = (key: keyof typeof COPY) => (locale === "zh" ? COPY[key].zh : COPY[key].en);
+  const isZh = isZhUiLocale(locale) || locale.startsWith("zh-") || locale.startsWith("zh_");
+  const copyLocale: "en" | "zh" = isZh ? "zh" : "en";
+  const text = (key: keyof typeof COPY) => (isZh ? COPY[key].zh : COPY[key].en);
 
   const tokens: FeatureGroupTokens = {
     auroraColors: group?.auroraColors ?? DEFAULT_GROUP_TOKENS.auroraColors,

@@ -1,5 +1,6 @@
 import { ArrowRight, Check, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
 
 const BAR_COUNT = 32;
@@ -14,7 +15,7 @@ const PIPELINE_STEPS_EN = ["transcribe", "denoise", "master"] as const;
 const PIPELINE_STEPS_ZH = ["转写", "降噪", "母带"] as const;
 
 export function AudioPipelineGlyph({ locale }: SubpackageGlyphProps) {
-  const steps = locale === "zh" ? PIPELINE_STEPS_ZH : PIPELINE_STEPS_EN;
+  const steps = isZhUiLocale(locale) ? PIPELINE_STEPS_ZH : PIPELINE_STEPS_EN;
 
   return (
     <div

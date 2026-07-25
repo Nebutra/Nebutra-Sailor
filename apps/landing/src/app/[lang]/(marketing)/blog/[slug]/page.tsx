@@ -40,6 +40,7 @@ import {
   getPostTranslation,
 } from "@/lib/blog";
 import { env } from "@/lib/env";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { getSiteUrl } from "@/lib/seo/site-routes";
 
 type Params = { lang: string; slug: string };
@@ -102,7 +103,8 @@ function languageSwitchPostHref(locale: Locale, slug: string): string {
 }
 
 function localeForBlogLanguage(language: BlogLanguage): Locale {
-  return language === "zh" ? "zh" : "en";
+  // Content language "zh" maps to Simplified Chinese product locale (CLDR Hans).
+  return language === "zh" ? "zh-Hans" : "en";
 }
 
 async function getCachedBlogPost(
@@ -267,7 +269,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const { lang, slug } = await params;
 
   if (!hasLocale(routing.locales, lang)) notFound();
-  const isZh = lang === "zh";
+  const isZh = isZhUiLocale(lang);
   setRequestLocale(lang as Locale);
 
   const blogLanguage = toBlogLanguage(lang);
@@ -400,11 +402,11 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     {translation && (
                       <a
                         href={languageSwitchPostHref(translationLocale, translation.slug)}
-                        hrefLang={targetLanguage === "zh" ? "zh-Hans-CN" : "en-US"}
+                        hrefLang={isZhUiLocale(targetLanguage) ? "zh-Hans-CN" : "en-US"}
                         className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                       >
                         <Globe className="size-4" aria-hidden />
-                        {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
+                        {isZhUiLocale(targetLanguage) ? "阅读中文版" : "Read in English"}
                       </a>
                     )}
                   </div>

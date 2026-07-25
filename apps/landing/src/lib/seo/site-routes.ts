@@ -8,15 +8,10 @@ import { type Locale, routing } from "@/i18n/routing";
 // is not a compile-time string literal from TypeScript's perspective.
 export const DEFAULT_SITE_URL = `https://${brand.domains.landing}`;
 
-export const HREFLANG_BY_LOCALE = {
-  en: toHreflang("en"),
-  zh: toHreflang("zh"),
-  ja: toHreflang("ja"),
-  ko: toHreflang("ko"),
-  es: toHreflang("es"),
-  fr: toHreflang("fr"),
-  de: toHreflang("de"),
-} as const satisfies Record<Locale, string>;
+/** hreflang map for every product locale (incl. zh-Hans / zh-Hant). */
+export const HREFLANG_BY_LOCALE = Object.fromEntries(
+  routing.locales.map((locale) => [locale, toHreflang(locale)]),
+) as Record<Locale, string>;
 
 export type PublicSeoRoute = {
   readonly path: `/${string}`;

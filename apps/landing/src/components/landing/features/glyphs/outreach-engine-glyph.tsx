@@ -1,5 +1,6 @@
 import { Check, Clock, Envelope, Users } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
 
 type StepState = "done" | "current" | "pending";
@@ -30,11 +31,11 @@ function StepIcon({ state }: { state: StepState }) {
 }
 
 export function OutreachEngineGlyph({ locale }: SubpackageGlyphProps) {
-  const campaignName = locale === "zh" ? "Q4 企业级外联" : "Q4 enterprise outbound";
-  const statusText = locale === "zh" ? "运行中 · 47 位潜在客户" : "Active · 47 prospects";
-  const sentLabel = locale === "zh" ? "已发" : "Sent";
-  const openLabel = locale === "zh" ? "打开" : "Opens";
-  const replyLabel = locale === "zh" ? "回复" : "Replies";
+  const campaignName = isZhUiLocale(locale) ? "Q4 企业级外联" : "Q4 enterprise outbound";
+  const statusText = isZhUiLocale(locale) ? "运行中 · 47 位潜在客户" : "Active · 47 prospects";
+  const sentLabel = isZhUiLocale(locale) ? "已发" : "Sent";
+  const openLabel = isZhUiLocale(locale) ? "打开" : "Opens";
+  const replyLabel = isZhUiLocale(locale) ? "回复" : "Replies";
 
   return (
     <div

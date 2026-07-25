@@ -23,6 +23,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 type Params = { author: string; lang: string };
 
@@ -125,7 +126,7 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  const isZh = lang === "zh";
+  const isZh = isZhUiLocale(lang);
   const allPosts = await getCachedAllPosts(toBlogLanguage(lang));
   const posts = allPosts.filter((post) => {
     const name = getAuthorName(post.author);

@@ -10,6 +10,7 @@ import {
   getPostTranslationByKey as fetchSanityPostTranslationByKey,
   getPosts,
 } from "@nebutra/sanity/queries";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { type BlogPost, FALLBACK_POSTS } from "./blog-fallback";
 
 export type { PortableTextBlock, PortableTextSpan } from "@nebutra/blog";
@@ -166,7 +167,7 @@ export async function getLocalizedPostForSiblingSlug(
   slug: string,
   language: BlogLanguage,
 ): Promise<BlogPostWithSource | null> {
-  const siblingLanguage: BlogLanguage = language === "zh" ? "en" : "zh";
+  const siblingLanguage: BlogLanguage = isZhUiLocale(language) ? "en" : "zh";
   const siblingPost = await getPost(slug, siblingLanguage);
   if (!siblingPost?.translationKey) return null;
 

@@ -12,8 +12,8 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
-
 import type { Locale } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 import {
   type Bilingual,
@@ -388,7 +388,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {lang === "zh" ? "超级要素路由协议" : "Omni-Factor Routing Protocol"}
+                {isZhUiLocale(lang) ? "超级要素路由协议" : "Omni-Factor Routing Protocol"}
               </h2>
             </AnimateIn>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
@@ -454,7 +454,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {lang === "zh" ? "全链路 AI 原生基建" : "The AI-Native Convergence"}
+                {isZhUiLocale(lang) ? "全链路 AI 原生基建" : "The AI-Native Convergence"}
               </h2>
             </AnimateIn>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
@@ -595,7 +595,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {lang === "zh"
+                {isZhUiLocale(lang)
                   ? "组织演进准则 · AI 杠杆对抗人治腐化"
                   : "Organizational Principles · AI Leverage over Human Corrosion"}
               </h2>

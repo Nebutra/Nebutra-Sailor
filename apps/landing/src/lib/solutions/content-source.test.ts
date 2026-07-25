@@ -10,6 +10,6 @@ describe("solution content source", () => {
   it("getSolutionContentSource resolves a usable source while content is being built", async () => {
     const source = getSolutionContentSource();
     expect(typeof source.getRelatedPosts).toBe("function");
-    expect(await source.getRelatedPosts("growth", "zh", 5)).toEqual([]);
+    expect(await source.getRelatedPosts("growth", "zh-Hans", 5)).toEqual([]);
   });
 });

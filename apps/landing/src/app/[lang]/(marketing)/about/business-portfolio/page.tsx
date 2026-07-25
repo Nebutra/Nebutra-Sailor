@@ -5,8 +5,8 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
-
 import type { Locale } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { CAPABILITY_GROUPS, pick } from "../_about-data";
 
 // ─── Static metadata (bilingual) ─────────────────────────────────────────────
@@ -79,7 +79,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
-  const meta = lang === "zh" ? PAGE_META.zh : PAGE_META.en;
+  const meta = isZhUiLocale(lang) ? PAGE_META.zh : PAGE_META.en;
   return {
     title: meta.title,
     description: meta.description,
@@ -96,8 +96,8 @@ export default async function BusinessPortfolioPage({
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
-  const hero = lang === "zh" ? HERO_COPY.zh : HERO_COPY.en;
-  const copy = lang === "zh" ? SECTION_HEADINGS.zh : SECTION_HEADINGS.en;
+  const hero = isZhUiLocale(lang) ? HERO_COPY.zh : HERO_COPY.en;
+  const copy = isZhUiLocale(lang) ? SECTION_HEADINGS.zh : SECTION_HEADINGS.en;
 
   // Stats pulled directly from CAPABILITY_GROUPS — kept in-sync with source data.
   const stats = CAPABILITY_GROUPS.map((g) => {
@@ -155,7 +155,7 @@ export default async function BusinessPortfolioPage({
           </div>
 
           <p className="mt-10 text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
-            {lang === "zh"
+            {isZhUiLocale(lang)
               ? `总计 ${totalCount} 项核心能力 · 四大维度`
               : `Total ${totalCount} capabilities · 4 dimensions`}
           </p>
@@ -185,7 +185,7 @@ export default async function BusinessPortfolioPage({
                   <div className="inline-flex items-center gap-3 mb-6 px-3 py-1.5 rounded-full border border-border bg-background">
                     <Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
                     <span className="text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
-                      {`Group ${String.fromCharCode(65 + groupIdx)} · ${group.items.length} ${lang === "zh" ? "项" : "items"}`}
+                      {`Group ${String.fromCharCode(65 + groupIdx)} · ${group.items.length} ${isZhUiLocale(lang) ? "项" : "items"}`}
                     </span>
                   </div>
 

@@ -22,6 +22,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 
 type Params = { lang: string; tag: string };
 
@@ -119,7 +120,7 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  const isZh = lang === "zh";
+  const isZh = isZhUiLocale(lang);
   const posts = (await getCachedAllPosts(toBlogLanguage(lang))).filter((post) =>
     post.tags.some((postTag) => matchesSegment(postTag, tag)),
   );

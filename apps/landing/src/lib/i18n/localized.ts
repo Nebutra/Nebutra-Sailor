@@ -1,24 +1,24 @@
 /**
  * Localized content primitive for marketing data files.
  *
- * The site's i18n architecture is two-tier:
- *   - Persistent shell (nav, footer, forms) → next-intl message catalogs,
- *     fully translated across all 7 routing locales.
- *   - Marketing CONTENT (solutions, packages, capabilities, playbook, …) →
- *     authored inline as `LocalizedCopy` and resolved with `pick()`.
- *
- * Content is authored in English and Chinese only. The other five routing
- * locales (ja, ko, es, fr, de) intentionally fall back to English here until
- * a localized copy deck exists — this keeps the data files authorable by the
- * core team without blocking the 7-locale routing surface. `pick()` is the
- * single place that fallback decision lives, so widening locale coverage later
- * is a one-file change.
+ * Two-tier i18n:
+ *   - Shell UI → next-intl catalogs (global PRODUCT_LANGUAGES wheel,
+ *     Chinese = zh-Hans + zh-Hant per CLDR)
+ *   - Marketing CONTENT decks → LocalizedCopy { en, zh } via pick()
  */
 
 export type LocalizedCopy = { en: string; zh: string };
 
-/** Pick a locale-specific string. Only `zh` diverges; every other locale
- *  falls back to English (see module doc). */
+/**
+ * True for any Chinese UI locale tag:
+ * - product keys: zh-Hans (简体), zh-Hant (繁體)
+ * - legacy bare zh / region tags (zh-CN, zh-TW, …)
+ */
+export function isZhUiLocale(locale: string): boolean {
+  return locale === "zh" || locale.startsWith("zh-") || locale.startsWith("zh_");
+}
+
+/** Pick a locale-specific string. Chinese uses the zh deck; others → en. */
 export function pick(copy: LocalizedCopy, locale: string): string {
-  return locale === "zh" ? copy.zh : copy.en;
+  return isZhUiLocale(locale) ? copy.zh : copy.en;
 }

@@ -5,6 +5,7 @@ import { ImageResponse } from "next/og";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { getPostBySlug } from "@/lib/blog";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { getSiteUrl } from "@/lib/seo/site-routes";
 
 type Params = { lang: string; slug: string };
@@ -34,7 +35,7 @@ export default async function Image({ params }: { params: Promise<Params> }) {
       })
     : null;
   const coverSrc = cover?.src.startsWith("/") ? `${baseUrl}${cover.src}` : cover?.src;
-  const isZh = lang === "zh";
+  const isZh = isZhUiLocale(lang);
 
   return new ImageResponse(
     <div

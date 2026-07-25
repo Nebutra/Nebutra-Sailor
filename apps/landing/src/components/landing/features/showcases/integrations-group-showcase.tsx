@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { ArrowRight, Bell, Check, Connection, Database, Envelope, Lightning } from "@nebutra/icons";
 import {
@@ -84,7 +86,7 @@ function pickStageIcon(slug: string): typeof Envelope {
 
 export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
-  const numLocale = locale === "zh" ? "zh-CN" : "en-US";
+  const numLocale = isZhUiLocale(locale) ? "zh-CN" : "en-US";
   const providers = PROVIDERS_FOR_SLUG[entry.slug] ?? DEFAULT_PROVIDERS;
   const activeIdx = seeded(entry.slug, providers.length);
   const activeProvider = providers[activeIdx] ?? providers[0] ?? "Adapter";

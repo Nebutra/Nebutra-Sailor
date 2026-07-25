@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { Check, Clock, Connection, Lightning, RefreshClockwise } from "@nebutra/icons";
 import {
@@ -102,7 +104,7 @@ const STATUS_META: Record<
 
 export function QueueShowcase(props: PackageShowcaseProps) {
   const { locale } = props;
-  const isZh = locale === "zh";
+  const isZh = isZhUiLocale(locale);
   const numLocale = isZh ? "zh-CN" : "en-US";
   const t = {
     attempts: isZh ? "重试" : "Attempts",

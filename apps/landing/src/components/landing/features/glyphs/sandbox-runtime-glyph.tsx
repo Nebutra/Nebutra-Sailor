@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { Box, Check, LockClosed, Play, Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
@@ -13,10 +15,11 @@ import type { SubpackageGlyphProps } from "./types";
  * Footer: Vercel Sandbox attribution.
  */
 export const SandboxRuntimeGlyph = ({ locale }: SubpackageGlyphProps) => {
-  const footerLabel =
-    locale === "zh" ? "Vercel Sandbox · 安全执行不可信代码" : "Vercel Sandbox · safe untrusted";
-  const runLabel = locale === "zh" ? "运行" : "Run";
-  const lastExecLabel = locale === "zh" ? "上次执行" : "Last exec";
+  const footerLabel = isZhUiLocale(locale)
+    ? "Vercel Sandbox · 安全执行不可信代码"
+    : "Vercel Sandbox · safe untrusted";
+  const runLabel = isZhUiLocale(locale) ? "运行" : "Run";
+  const lastExecLabel = isZhUiLocale(locale) ? "上次执行" : "Last exec";
 
   return (
     <div

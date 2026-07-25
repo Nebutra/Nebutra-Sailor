@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { SolutionsIndex } from "@/components/landing/solutions/SolutionsIndex";
 import { type Locale, routing } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
@@ -17,7 +18,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  const isZh = lang === "zh";
+  const isZh = isZhUiLocale(lang);
   return buildPageMetadata({
     title: isZh ? "解决方案 | Nebutra" : "Solutions | Nebutra",
     description: isZh

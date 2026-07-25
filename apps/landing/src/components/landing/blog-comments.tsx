@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { Heart, HeartFill, Message, PaperAirplane, Star, StarFill } from "@nebutra/icons";
 import { Textarea } from "@nebutra/ui/primitives";
@@ -135,7 +137,7 @@ function initialsFor(name: string): string {
 
 function formatDate(value: string | null, language: "en" | "zh"): string | null {
   if (!value) return null;
-  return new Intl.DateTimeFormat(language === "zh" ? "zh-CN" : "en-US", {
+  return new Intl.DateTimeFormat(isZhUiLocale(language) ? "zh-CN" : "en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",

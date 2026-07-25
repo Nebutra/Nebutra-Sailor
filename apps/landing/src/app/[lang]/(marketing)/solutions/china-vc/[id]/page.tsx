@@ -8,6 +8,7 @@ import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { CHINA_VC_ORGS, chinaVcLogoFor, getChinaVc } from "@/lib/constants/china-vc";
 import { similarVcs } from "@/lib/constants/vc";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ lang: string; id: string }> };
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!hasLocale(routing.locales, lang)) return {};
   const org = getChinaVc(Number(id));
   if (!org) return {};
-  const zh = lang === "zh";
+  const zh = isZhUiLocale(lang);
   return buildPageMetadata({
     title: zh ? `${org.name} — 投资机构画像 | Nebutra` : `${org.name} — Investor Profile | Nebutra`,
     description:
@@ -54,7 +55,7 @@ export default async function ChinaVcProfilePage({ params }: Props) {
         org={org}
         similar={similar}
         locale={lang as Locale}
-        directoryLabel={lang === "zh" ? "中国 VC" : "China VC"}
+        directoryLabel={isZhUiLocale(lang) ? "中国 VC" : "China VC"}
         hrefBase="/solutions/china-vc"
         variant="deals"
       />

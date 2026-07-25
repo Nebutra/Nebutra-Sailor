@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { Bug, Check, Clock, Connection, RefreshClockwise } from "@nebutra/icons";
 import { Badge, Card, CardHeader, StatusBadge, StatusDot, Table } from "@nebutra/ui/primitives";
@@ -199,7 +201,7 @@ export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
                 </span>
               </Table.Cell>
               <Table.Cell numeric className="font-mono text-xs">
-                {d.latency.toLocaleString(locale === "zh" ? "zh-CN" : "en-US")}ms
+                {d.latency.toLocaleString(isZhUiLocale(locale) ? "zh-CN" : "en-US")}ms
               </Table.Cell>
               <Table.Cell className="font-mono text-xs text-muted-foreground">
                 {d.timestamp[locale]}

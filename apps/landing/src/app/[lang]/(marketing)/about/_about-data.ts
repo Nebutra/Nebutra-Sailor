@@ -1,8 +1,9 @@
+import { isZhUiLocale } from "@/lib/i18n/localized";
 // Bilingual content for About page extended sections.
 // Chinese is the primary market (无锡/政务), English is for global audiences.
 
 export type Bilingual<T> = { zh: T; en: T };
-export const pick = <T>(lang: string, b: Bilingual<T>): T => (lang === "zh" ? b.zh : b.en);
+export const pick = <T>(lang: string, b: Bilingual<T>): T => (isZhUiLocale(lang) ? b.zh : b.en);
 
 // ─── Section: Company Overview Stats ─────────────────────────────────────────
 export const OVERVIEW_STATS: ReadonlyArray<Bilingual<{ label: string; value: string }>> = [

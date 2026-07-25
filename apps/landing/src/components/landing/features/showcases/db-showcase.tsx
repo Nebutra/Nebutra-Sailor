@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { Check, Database, Eye, EyeOff, LockClosed, Shield } from "@nebutra/icons";
 import {
@@ -126,7 +128,7 @@ const posts = await prisma.post.findMany({
 // =============================================================================
 
 function formatNumber(value: number, locale: "en" | "zh") {
-  return value.toLocaleString(locale === "zh" ? "zh-CN" : "en-US");
+  return value.toLocaleString(isZhUiLocale(locale) ? "zh-CN" : "en-US");
 }
 
 function tenantBadgeVariant(tenantId: Row["tenantId"]): "blue-subtle" | "gray-subtle" {

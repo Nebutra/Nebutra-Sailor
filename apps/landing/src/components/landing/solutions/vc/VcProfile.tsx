@@ -4,6 +4,7 @@ import { Badge } from "@nebutra/ui/primitives";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import type { VcOrg } from "@/lib/constants/vc";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { VcLogo } from "./VcLogo";
 
 const COPY = {
@@ -42,7 +43,7 @@ export function VcProfile({
   hrefBase,
   variant,
 }: VcProfileProps) {
-  const zh = locale === "zh";
+  const zh = isZhUiLocale(locale) || locale.startsWith("zh-") || locale.startsWith("zh_");
   const t = (k: keyof typeof COPY) => (zh ? COPY[k].zh : COPY[k].en);
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
 

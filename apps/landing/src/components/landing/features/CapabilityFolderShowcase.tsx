@@ -7,6 +7,7 @@ import {
 } from "@nebutra/ui/patterns";
 import Link from "next/link";
 import type { Locale } from "@/i18n/routing";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { CAPABILITY_FOLDERS, type CapabilityFolder } from "./capability-folder-data";
 import { getCodeSampleForGroup } from "./feature-group-code-samples";
 
@@ -16,10 +17,10 @@ const SECTION_COPY = {
 } as const;
 
 type LocaleKey = "en" | "zh";
-const toLocaleKey = (locale: Locale): LocaleKey => (locale === "zh" ? "zh" : "en");
+const toLocaleKey = (locale: Locale): LocaleKey => (isZhUiLocale(locale) ? "zh" : "en");
 
 function copyFor(label: { en: string; zh: string }, locale: Locale) {
-  return locale === "zh" ? label.zh : label.en;
+  return isZhUiLocale(locale) ? label.zh : label.en;
 }
 
 function previewCode(code: string, maxLines = 14): string {

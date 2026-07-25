@@ -53,7 +53,7 @@ describe("site SEO route registry", () => {
 
   it("does not expose sitemap alternates with raw locale keys when BCP-47 differs", () => {
     expect(HREFLANG_BY_LOCALE.en).toBe("en-US");
-    expect(HREFLANG_BY_LOCALE.zh).toBe("zh-Hans-CN");
+    expect(HREFLANG_BY_LOCALE["zh-Hans"]).toBe("zh-Hans-CN");
     expect(HREFLANG_BY_LOCALE.de).toBe("de-DE");
     expect(PUBLIC_SEO_ROUTES.every((route) => route.path.startsWith("/"))).toBe(true);
   });

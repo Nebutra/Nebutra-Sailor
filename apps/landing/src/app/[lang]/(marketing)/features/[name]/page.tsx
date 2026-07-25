@@ -25,13 +25,14 @@ import { ShowcaseFrame } from "@/components/landing/features/showcases/showcase-
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type FeatureDetailPageProps = {
   params: Promise<{ lang: string; name: string }>;
 };
 
-const localeForCopy = (lang: string): "en" | "zh" => (lang === "zh" ? "zh" : "en");
+const localeForCopy = (lang: string): "en" | "zh" => (isZhUiLocale(lang) ? "zh" : "en");
 
 const COPY = {
   back: { en: "All features", zh: "全部能力" },
@@ -252,7 +253,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
               const childTitle = childEntry?.label ?? child;
               const childDesc = childEntry
                 ? getFeatureSummary(childEntry, locale)
-                : locale === "zh"
+                : isZhUiLocale(locale)
                   ? `${child} — ${entry.label} 能力域中的子 package。`
                   : `${child} — sub-package inside ${entry.label}.`;
               const childKind = childEntry?.kind ?? "package";
@@ -328,7 +329,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
               className="hidden items-center gap-1.5 transition-colors hover:text-foreground sm:inline-flex"
               href={`/${lang}/features#capability-${entry.group}`}
             >
-              {locale === "zh" ? "查看能力域" : "View domain"}
+              {isZhUiLocale(locale) ? "查看能力域" : "View domain"}
               <ArrowRight aria-hidden="true" className="size-3" />
             </Link>
           </div>

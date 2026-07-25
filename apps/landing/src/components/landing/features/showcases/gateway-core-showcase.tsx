@@ -1,4 +1,6 @@
-"use client";
+import { isZhUiLocale } from "@/lib/i18n/localized";
+
+("use client");
 
 import { Api, ArrowRight, Check, Lightning, LockClosed, Shield } from "@nebutra/icons";
 import {
@@ -66,7 +68,7 @@ const COPY = {
 } as const;
 
 function formatMs(ms: number, locale: "en" | "zh"): string {
-  return `${new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US").format(ms)} ms`;
+  return `${new Intl.NumberFormat(isZhUiLocale(locale) ? "zh-CN" : "en-US").format(ms)} ms`;
 }
 
 const TOTAL_MS = STOPS.reduce((acc, stop) => acc + stop.ms, 0);
