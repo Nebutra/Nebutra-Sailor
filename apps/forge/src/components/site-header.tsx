@@ -1,6 +1,6 @@
 "use client";
 import { brand } from "@nebutra/brand/metadata";
-import { Button } from "@nebutra/ui/primitives";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,6 +14,9 @@ const NAV = [
   { href: "/wallet", label: "钱包" },
   { href: "/docs", label: "API" },
 ] as const;
+
+const ROUTER_URL = process.env.NEXT_PUBLIC_ROUTER_URL?.trim() || getBrandOrigin("router");
+
 export function SiteHeader() {
   const pathname = usePathname();
   return (
@@ -51,15 +54,14 @@ export function SiteHeader() {
           })}
         </nav>
         <div className="flex shrink-0 items-center gap-2">
-          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
-            <a
-              href={process.env.NEXT_PUBLIC_ROUTER_URL ?? "http://localhost:3106"}
-              className="inline-flex items-center gap-1.5"
-            >
-              <RouterMark className="h-4 w-4" />
-              Router
-            </a>
-          </Button>
+          <a
+            href={ROUTER_URL}
+            aria-label={`${brand.name} Router`}
+            title="Router"
+            className="hidden h-8 w-8 items-center justify-center rounded-[var(--radius-md)] transition hover:bg-[var(--neutral-3)] sm:inline-flex"
+          >
+            <RouterMark className="h-5 w-5" />
+          </a>
           <AuthActions />
         </div>
       </div>

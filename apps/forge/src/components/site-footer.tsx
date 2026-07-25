@@ -1,7 +1,10 @@
 import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { LogoGithub as Github, LogoTwitterX as Twitter } from "@nebutra/icons";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
+
+const ROUTER_URL = process.env.NEXT_PUBLIC_ROUTER_URL?.trim() || getBrandOrigin("router");
 
 const COLUMNS = [
   {
@@ -16,7 +19,7 @@ const COLUMNS = [
     title: "开发",
     links: [
       { href: "/docs", label: "接入文档" },
-      { href: "http://localhost:3106", label: "Router", external: true },
+      { href: ROUTER_URL, label: "Router", external: true },
       { href: brand.social.github, label: "GitHub", external: true },
     ],
   },
