@@ -7,7 +7,7 @@ export const config = {
   matcher: [
     // Match root and locale-prefixed paths, skip Next.js internals and static files
     "/",
-    "/(en|zh|ja)/:path*",
+    // Include multi-segment tags (zh-Hans, zh-Hant) — next-intl handles parsing
     "/((?!_next|_vercel|api|og|.*\\..*).*)",
   ],
 };

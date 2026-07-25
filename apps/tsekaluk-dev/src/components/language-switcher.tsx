@@ -4,15 +4,17 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { motion, useReducedMotion } from "@/shared/motion";
 
-/** Global product locales — aligned with @nebutra/i18n ROUTE_LOCALES. */
+/** Global wheel (subset of UI labels; full set lives in message catalogs). */
 const LOCALES = [
   { code: "en", label: "EN" },
-  { code: "zh", label: "中文" },
+  { code: "zh-Hans", label: "简体" },
+  { code: "zh-Hant", label: "繁體" },
   { code: "ja", label: "日本語" },
   { code: "ko", label: "한국어" },
   { code: "es", label: "ES" },
   { code: "fr", label: "FR" },
   { code: "de", label: "DE" },
+  { code: "pt", label: "PT" },
 ] as const;
 export function LanguageSwitcher() {
   const locale = useLocale();

@@ -414,7 +414,9 @@ function diff(locale, enKeys, localeKeys) {
 }
 
 function findIdenticalMessages(locale, enFlat, localeFlat, namespaces) {
-  if (locale === "zh") return [];
+  // Chinese catalogs (zh-Hans / zh-Hant / legacy zh) use different scripts —
+  // identical-English check does not apply the same way as for Latin locales.
+  if (locale === "zh" || locale.startsWith("zh-")) return [];
 
   const identical = [];
   for (const [key, enValue] of Object.entries(enFlat)) {

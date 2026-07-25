@@ -1,7 +1,47 @@
 import { defineRouting } from "next-intl/routing";
 
+/**
+ * Product language wheel (URL path tags).
+ * Chinese is CLDR multi-script: zh-Hans (简体) + zh-Hant (繁體).
+ * Keep in sync with @nebutra/i18n PRODUCT_LANGUAGES / ROUTE_LOCALES.
+ */
 export const routing = defineRouting({
-  locales: ["en", "zh", "ja", "ko", "es", "fr", "de"],
+  locales: [
+    "en",
+    "zh-Hans",
+    "zh-Hant",
+    "de",
+    "es",
+    "fr",
+    "ja",
+    "ko",
+    "pt",
+    "it",
+    "nl",
+    "sv",
+    "da",
+    "fi",
+    "no",
+    "pl",
+    "cs",
+    "ro",
+    "hu",
+    "el",
+    "ru",
+    "uk",
+    "tr",
+    "ar",
+    "he",
+    "fa",
+    "hi",
+    "bn",
+    "ur",
+    "th",
+    "vi",
+    "id",
+    "ms",
+    "sw",
+  ],
   defaultLocale: "en",
   localePrefix: "as-needed",
   // Locale is determined PURELY by the URL on this marketing site — never by a

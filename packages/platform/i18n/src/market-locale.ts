@@ -86,11 +86,18 @@ function inferCountryFromAccept(accept?: null | string): string | undefined {
   }
 }
 
+function chineseProductKeyFromLocale(locale: Intl.Locale): ProductLanguage {
+  // CLDR: script Hant → Traditional; Hans / default → Simplified
+  const max = locale.maximize();
+  if (max.script === "Hant") return "zh-Hant";
+  return "zh-Hans";
+}
+
 function inferLanguageFromAccept(accept?: null | string): string | undefined {
   if (!accept) return undefined;
   try {
     const locale = new Intl.Locale(accept.split(",")[0]?.trim().split(";")[0] ?? "");
-    if (locale.language === "zh") return "zh";
+    if (locale.language === "zh") return chineseProductKeyFromLocale(locale);
     return locale.language;
   } catch {
     return accept.split("-")[0]?.toLowerCase();
@@ -100,15 +107,18 @@ function inferLanguageFromAccept(accept?: null | string): string | undefined {
 export function parseMarketLocaleTag(tag: null | string | undefined): MarketLocale | undefined {
   if (!tag) return undefined;
   try {
-    const locale = new Intl.Locale(tag.trim().replace(/_/g, "-"));
+    const normalized = tag.trim().replace(/_/g, "-");
+    if (isProductLanguage(normalized)) {
+      // Path tags like zh-Hans need a region — use default region from meta
+      const { defaultRegion } = PRODUCT_LANGUAGE_META[normalized];
+      return createMarketLocale(defaultRegion, normalized);
+    }
+    const locale = new Intl.Locale(normalized);
     const country = locale.region?.toUpperCase();
     if (!country) return undefined;
     const langRaw = locale.language;
-    const language: ProductLanguage | undefined = isProductLanguage(langRaw)
-      ? langRaw
-      : langRaw === "zh"
-        ? "zh"
-        : undefined;
+    let language: ProductLanguage | undefined = isProductLanguage(langRaw) ? langRaw : undefined;
+    if (!language && langRaw === "zh") language = chineseProductKeyFromLocale(locale);
     if (!language) return undefined;
     return createMarketLocale(country, language);
   } catch {
@@ -121,8 +131,11 @@ export function getMarketLocaleLabels(
   displayLocale = "en",
 ): MarketLocaleLabels {
   const countryName = getRegionDisplayName(marketLocale.country, displayLocale);
-  const languageEndonym = getLanguageEndonym(marketLocale.language);
-  const languageName = getLanguageDisplayName(marketLocale.language, displayLocale);
+  const meta = PRODUCT_LANGUAGE_META[marketLocale.language];
+  const languageEndonym = meta.endonym || getLanguageEndonym(meta.language);
+  const languageName =
+    getLanguageDisplayName(meta.language, displayLocale) ||
+    (meta.script ? `${meta.language}-${meta.script}` : meta.language);
   return {
     countryName,
     languageName,

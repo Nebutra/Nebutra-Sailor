@@ -1,0 +1,1748 @@
+{
+  "nav": {
+    "features": "特性",
+    "solutions": "解决方案",
+    "pricing": "定价",
+    "docs": "开发文档",
+    "github": "开源社区",
+    "npm": "npm",
+    "about": "关于我们",
+    "ideas": "点子广场",
+    "opc": "平台能力",
+    "roadmap": "路线图",
+    "resources": "资源",
+    "signIn": "登录控制台",
+    "getStarted": "起航",
+    "changelog": "更新日志",
+    "news": "新闻",
+    "designDocs": "设计系统",
+    "avatarMenu": {
+      "ariaLabel": "账户菜单",
+      "loadingName": "加载中…",
+      "dashboard": "控制台",
+      "account": "账户设置",
+      "billing": "账单",
+      "docs": "文档",
+      "signOut": "退出登录"
+    }
+  },
+  "refer": {
+    "metadataTitle": "加入 {brandName} 创始人推荐闭环",
+    "metadataDescription": "加入 {brandName} 等候名单，保留推荐归因，并在同一个 PLG 闭环里生成你的专属分享链接。",
+    "eyebrow": "创始人推荐闭环",
+    "title": "加入下一批创始人队列，并领取你的专属分享链接。",
+    "description": "可以带任意邀请码进入，也可以直接加入。若邀请码真实存在，系统会保留归因；同时把你写入等候名单，并立即生成可分享的私有 referral URL。",
+    "signal": {
+      "waitlist": "持久化等候名单",
+      "codeDetected": "已识别邀请码 {code}",
+      "direct": "直接加入"
+    },
+    "form": {
+      "emailLabel": "工作邮箱",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "推荐码",
+      "codePlaceholder": "可选推荐码",
+      "submit": "加入等候名单",
+      "submitting": "加入中",
+      "invalidEmail": "请输入有效邮箱。",
+      "error": "暂时无法加入，请稍后重试。",
+      "successTitle": "你已进入队列",
+      "successDescription": "你的专属分享链接已经生成。",
+      "positionLabel": "队列位置",
+      "referralCodeLabel": "你的推荐码",
+      "referralUrlLabel": "你的分享链接",
+      "copyLink": "复制链接",
+      "copied": "已复制",
+      "share": "分享",
+      "shareTitle": "加入 {brandName} 创始人闭环",
+      "shareText": "使用我的邀请链接加入 {brandName} 创始人等候名单。",
+      "directMode": "无需推荐码也可加入",
+      "codeMode": "推荐归因已启用"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "创始人到创始人的增长闭环",
+        "description": "每个成功加入的用户都会获得推荐码和链接，下一次传播无需人工转交。"
+      },
+      "attribution": {
+        "title": "可信归因",
+        "description": "未知码会作为尝试归因被记录；有效码会增加推荐人计数，并保持 signup 数据干净。"
+      },
+      "shareLink": {
+        "title": "成功态即可分享",
+        "description": "确认页直接展示队列位置、推荐码、复制与系统分享动作，让闭环在页面内完成。"
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "产品驱动基础设施",
+      "title": "它是耐久 SaaS 基础设施，不是一次性表单。",
+      "description": "推荐页背后由领域包、持久化 Prisma 模型、类型化 Next.js route 和可接入 ECS 部署后的 public smoke checks 支撑。",
+      "data": {
+        "eyebrow": "数据",
+        "title": "单一持久等候名单表",
+        "description": "邮箱唯一性、自动递增位置、推荐码索引、尝试归因 metadata 与状态流转都落在平台数据库里。"
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "类型化加入端点",
+        "description": "页面提交到 `/api/waitlist`，归一化任意推荐码，重复邮箱幂等返回既有记录，并且不依赖任何样例码。"
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "部署时 public smoke",
+        "description": "canonical 和 alias URL 都可自动检查，让 ECS 交付能捕获路由、DNS 与健康检查回归。"
+      }
+    }
+  },
+  "hero": {
+    "headline1": "睡前的一个念头，",
+    "headline2": "也可能是下一个独角兽。",
+    "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 <highlight>受治理的架构</highlight> 开发，跳过数周平台工作。专为 <highlight>AI 编程智能体与出海创始人</highlight> 优化。",
+    "copyLabel": "复制环境配置",
+    "copiedLabel": "代码已复制",
+    "ctaGetAccess": "启动我的创业",
+    "ctaExploreDemo": "探索演示 Demo",
+    "pillCopied": "已复制"
+  },
+  "features": {
+    "sectionTitle": "开箱即用的基础设施，从原型直到海量扩张。",
+    "item0": {
+      "title": "AI 应用级基础设施",
+      "description": "内置且久经考验的大模型编排引擎。绕开底层死胡同，直接通过结构化的智能 API 开展业务。"
+    },
+    "item1": {
+      "title": "受治理的平台底座",
+      "description": "为 AI Native SaaS 团队提供统一的平台基线。把脚手架、运行时能力和交付面收敛到一个可审计、可扩展的体系里，而不是临时拼装工具链。"
+    },
+    "item2": {
+      "title": "全自动 SaaS 商业底座",
+      "description": "将 Vercel、Supabase 与 Stripe 的现代技术栈深度熔铸。完全内置开箱即用的访问控制以及订阅式计费。"
+    }
+  },
+  "cta": {
+    "heading": "即刻启动您的 AI 原生产品。",
+    "subheading": "通过单一命令，在本地极速初始化完整的云原生与 AI 架构。",
+    "copyLabel": "复制",
+    "copiedLabel": "已复制",
+    "startBuilding": "开始使用"
+  },
+  "footer": {
+    "brandDescription": "用 {brandName} Agent OS 发布你的 Startup。多租户、计费、身份验证及 AI 能力——开箱即用的生产级架构。",
+    "columns": {
+      "product": "产品",
+      "resources": "资源",
+      "legal": "法律",
+      "community": "社区"
+    },
+    "links": {
+      "product": "产品",
+      "features": "功能特性",
+      "pricing": "定价方案",
+      "about": "关于我们",
+      "showcase": "案例展示",
+      "blog": "技术博客",
+      "playbook": "实战手册",
+      "changelog": "更新日志",
+      "roadmap": "产品路线图",
+      "docs": "开发者文档",
+      "ideas": "创意实验室",
+      "opc": "平台能力",
+      "careers": "招聘",
+      "security": "安全",
+      "dpa": "数据处理",
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "cookies": "Cookie 政策",
+      "refund": "退款政策",
+      "contact": "联系我们",
+      "faq": "常见问题",
+      "github": "GitHub",
+      "discord": "Discord",
+      "twitter": "X (Twitter)",
+      "licensing": "授权与协议"
+    },
+    "copyright": "© 2026 {brandName} Intelligence. 保留所有权利。",
+    "statusOnline": "所有子系统在线运行",
+    "newsletterTitle": "保持最新动态",
+    "newsletterPlaceholder": "you@example.com",
+    "newsletterSubscribe": "订阅",
+    "newsletterSuccess": "感谢订阅！",
+    "newsletterError": "出了些问题"
+  },
+  "logoStrip": {
+    "tagline": "基于您热爱的技术栈构建。"
+  },
+  "monorepoTree": {
+    "badge": "TURBOREPO 架构",
+    "title": "10 个应用 · 104 个包 · 4 条后端线",
+    "description": "共享代码、并行构建、零冗余。从数据库到前端的完整端到端类型安全。",
+    "metricApps": "应用",
+    "metricBackends": "后端线",
+    "metricPackages": "包",
+    "verifiedPaths": "已按当前 workspace 路径校验",
+    "cta": "探索 Monorepo 架构"
+  },
+  "stats": {
+    "title": "关键数字指标",
+    "github": "GitHub 星标",
+    "discord": "Discord 社区",
+    "setup": "平均部署延迟",
+    "packages": "Monorepo 包数量",
+    "ctaStar": "前往 GitHub 点赞",
+    "ctaJoin": "加入社群交流",
+    "ctaStart": "快速开始",
+    "ctaExplore": "探索技术栈"
+  },
+  "legalPages": {
+    "about": {
+      "title": "关于我们 — 受治理的 AI 平台",
+      "description": "了解 {brandName} 围绕受治理 AI 平台所建立的商业判断与工程原则。",
+      "heading": "精干产品团队时代",
+      "subheading": "用受治理的平台基础设施、自动化与工程杠杆，替代重复的平台体力劳动。",
+      "missionTitle": "抵抗人治腐化的新秩序",
+      "missionP1": "{brandName} 正在构建一套面向长期主义交付的受治理 AI 平台，让团队依赖的不是短生命周期的 starter，而是可审计、可扩展、可持续演进的平台基线。面对规模增长带来的官僚化和熵增，我们选择用代码治理、自动化与平台纪律来回应。",
+      "missionP2": "商业系统今天依然被协作成本、工具割裂和升级路径薄弱所拖累。我们更关心如何通过清晰的平台契约、更稳的交付原语和可观测的运行时，把这些摩擦系统性地降下来。",
+      "missionP3": "我们不接受靠增加层级和组织阻力来解决规模问题。自动化、测试与治理规则应该吞掉重复运营工作，让团队把注意力放回产品、架构与客户结果。",
+      "missionP4": "",
+      "valuesTitle": "四大核心基石 (The 4 Pillars)",
+      "values": {
+        "0": {
+          "title": "受治理的规模 (Philosophy)",
+          "description": "规模不应来自更重的组织负担，而应来自更强的系统杠杆、更清晰的运行规则和更稳的工程基础。"
+        },
+        "1": {
+          "title": "Builder Core (Infrastructure)",
+          "description": "把多租户、计费、认证、合规与 AI 集成收敛成一套可审计、可扩展、可重复交付的平台基线。"
+        },
+        "2": {
+          "title": "升级纪律 (Routing)",
+          "description": "健康的平台应通过兼容性检查、迁移机制与可观测运行时持续演进，而不是依赖临时救火和隐性漂移。"
+        },
+        "3": {
+          "title": "代码即规则 (Code is Law)",
+          "description": "把运营纪律编码进测试、工作流与治理规则，让团队在不依赖政治与口口相传的前提下持续改进平台。"
+        }
+      },
+      "jobsTitle": "工程信号优先于头衔资历",
+      "jobsDescription": "我们更看重可验证的工程产出、系统判断力和表达清晰度，而不是被包装过的履历与头衔。",
+      "jobsButton": "提交 Github Profile",
+      "companyInfoTitle": "组织与合规信息",
+      "companyInfo": {
+        "legalName": "法定实体名称",
+        "founded": "实体注册年份",
+        "headquarters": "全球运营总部",
+        "jurisdiction": "管辖适用法律"
+      },
+      "ctaHeading": "期望更深入的探讨？",
+      "ctaDescription": "联系我们的技术团队进行企业级系统集成的评估，或查阅开发者文档。",
+      "ctaButton": "建立通讯"
+    },
+    "contact": {
+      "title": "技术与商务联络 — {brandName} Intelligence",
+      "description": "针对商务授权、企业私有化部署以及疑难技术支持的联系通道。",
+      "heading": "建立支持联结",
+      "subheading": "我们将指派对应的技术专员或架构师跟进您的具体需求。",
+      "contacts": {
+        "founder": {
+          "title": "创始人信箱",
+          "description": "针对核心战略布局及深度业务协同等高级别事项的直达联络通道。"
+        },
+        "general": {
+          "title": "企业综合咨询",
+          "description": "针对生态战略合作及产品整体演进规划的初步探讨。"
+        },
+        "sales": {
+          "title": "商业部署方案",
+          "description": "深入沟通商业闭源授权方案与特定私有化集群环境的部署细节。"
+        },
+        "support": {
+          "title": "专家级支持",
+          "description": "为当前业务集成和核心系统调试提供针对性的架构指导与排障服务。"
+        },
+        "legal": {
+          "title": "法务与商业合规",
+          "description": "涉及开源协议边界设定、企业使用合规审查与合同约定解读。"
+        },
+        "privacy": {
+          "title": "数据中心隐私",
+          "description": "GDPR 与国内外其他数据隐私保护法的技术侧验证及遵循规范问题。"
+        },
+        "security": {
+          "title": "系统安全报告",
+          "description": "向我们的基础设施团队安全地提交针对软件服务潜在漏洞的技术复现报告。"
+        }
+      },
+      "formTitle": "信息递交口",
+      "form": {
+        "name": "递交人名称",
+        "email": "官方邮件地址",
+        "company": "所属机构组织",
+        "category": "需求归属领域",
+        "categories": {
+          "general": "企业综合咨询",
+          "sales": "商业授权与架构方案",
+          "support": "开发者技术支持",
+          "legal": "法务边界与合规",
+          "privacy": "数据与隐私处理",
+          "partnership": "产品与生态联动",
+          "press": "公关与舆论"
+        },
+        "subject": "关键议题提要",
+        "message": "技术或商务考量详情",
+        "submit": "递交后台系统",
+        "privacyNotice": "触发递交动作表明您已阅读并赞同我们的",
+        "privacyLink": "系统化隐私政策",
+        "submitting": "正在进入队列...",
+        "successMessage": "数据流转成功。相关的责任团队将会在 1-2 个基准工作日内予以详实答复。"
+      },
+      "companyInfoTitle": "对外运营资讯",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
+      "companyAddress": "无锡市，江苏省，中国",
+      "socialMedia": "主流社交链路"
+    },
+    "cookies": {
+      "title": "Cookie 政策 — {brandName}",
+      "description": "{brandName} 如何在网站和服务中使用 Cookie 及类似追踪技术。",
+      "heading": "Cookie 政策",
+      "effectiveDate": "生效日期",
+      "lastUpdated": "最后更新",
+      "dates": {
+        "effective": "2025 年 1 月 1 日",
+        "updated": "2025 年 1 月 1 日"
+      },
+      "intro": "本 Cookie 政策说明了{companyLegal}（以下简称「{brandName}」、「我们」或「本公司」）如何在网站和服务中使用 Cookie 及类似追踪技术。",
+      "whatAreCookies": {
+        "title": "什么是 Cookie？",
+        "content": "Cookie 是您访问网站时存放在设备上的小型文本文件。它们被广泛用于提升网站运行效率，并向网站所有者提供访问信息。"
+      },
+      "howWeUse": {
+        "title": "我们如何使用 Cookie",
+        "intro": "我们使用 Cookie 来：",
+        "items": {
+          "0": {
+            "label": "启用核心功能",
+            "desc": "提供用户身份验证和安全防护等基本功能"
+          },
+          "1": {
+            "label": "记住偏好设置",
+            "desc": "存储您的语言、主题和其他个性化设置"
+          },
+          "2": {
+            "label": "提升性能表现",
+            "desc": "了解访客如何与我们的服务进行交互"
+          },
+          "3": {
+            "label": "个性化体验",
+            "desc": "提供相关内容和推荐"
+          },
+          "4": {
+            "label": "衡量营销效果",
+            "desc": "追踪营销活动的实际效果"
+          }
+        }
+      },
+      "typesTitle": "我们使用的 Cookie 类型",
+      "tableHeaders": {
+        "cookie": "Cookie 名称",
+        "provider": "提供方",
+        "purpose": "用途",
+        "duration": "有效期"
+      },
+      "necessary": {
+        "title": "严格必要 Cookie",
+        "description": "这些 Cookie 是网站正常运行所必需的，无法被禁用。",
+        "cookies": {
+          "0": {
+            "name": "__session",
+            "provider": "{brandName}",
+            "purpose": "用户身份验证会话",
+            "duration": "会话期间"
+          },
+          "1": {
+            "name": "__clerk_db_jwt",
+            "provider": "Clerk",
+            "purpose": "身份验证令牌",
+            "duration": "7 天"
+          },
+          "2": {
+            "name": "cookie_consent",
+            "provider": "{brandName}",
+            "purpose": "存储 Cookie 同意偏好",
+            "duration": "1 年"
+          }
+        }
+      },
+      "functional": {
+        "title": "功能性 Cookie",
+        "description": "这些 Cookie 启用个性化功能并记住您的偏好设置。",
+        "cookies": {
+          "0": {
+            "name": "locale",
+            "provider": "{brandName}",
+            "purpose": "存储语言偏好",
+            "duration": "1 年"
+          },
+          "1": {
+            "name": "theme",
+            "provider": "{brandName}",
+            "purpose": "存储主题偏好",
+            "duration": "1 年"
+          }
+        }
+      },
+      "analyticsType": {
+        "title": "分析类 Cookie",
+        "description": "这些 Cookie 帮助我们了解访客如何与网站交互。",
+        "cookies": {
+          "0": {
+            "name": "_ga",
+            "provider": "Google Analytics",
+            "purpose": "区分独立用户",
+            "duration": "2 年"
+          },
+          "1": {
+            "name": "ph_*",
+            "provider": "PostHog",
+            "purpose": "产品分析",
+            "duration": "1 年"
+          }
+        }
+      },
+      "marketingType": {
+        "title": "营销类 Cookie",
+        "description": "这些 Cookie 用于广告投放和追踪广告效果。",
+        "cookies": {
+          "0": {
+            "name": "_fbp",
+            "provider": "Facebook",
+            "purpose": "追踪 Facebook 广告访问",
+            "duration": "3 个月"
+          },
+          "1": {
+            "name": "_gcl_au",
+            "provider": "Google Ads",
+            "purpose": "转化追踪",
+            "duration": "3 个月"
+          }
+        }
+      },
+      "managingTitle": "管理您的 Cookie 偏好",
+      "consentBanner": {
+        "title": "Cookie 同意横幅",
+        "intro": "首次访问我们的网站时，您将看到一个 Cookie 同意横幅，您可以：",
+        "items": {
+          "0": {
+            "label": "全部接受",
+            "desc": "启用所有 Cookie 类别"
+          },
+          "1": {
+            "label": "全部拒绝",
+            "desc": "禁用所有可选 Cookie（必要 Cookie 保留）"
+          },
+          "2": {
+            "label": "自定义",
+            "desc": "选择启用特定的 Cookie 类别"
+          }
+        },
+        "changeNote": "您可以随时通过点击页脚的「Cookie 设置」更改偏好。"
+      },
+      "browserSettings": {
+        "title": "浏览器设置",
+        "intro": "大多数浏览器允许您通过设置来控制 Cookie：",
+        "browsers": {
+          "0": {
+            "name": "Chrome",
+            "path": "设置 > 隐私和安全 > Cookie"
+          },
+          "1": {
+            "name": "Firefox",
+            "path": "设置 > 隐私与安全 > Cookie"
+          },
+          "2": {
+            "name": "Safari",
+            "path": "偏好设置 > 隐私 > Cookie"
+          },
+          "3": {
+            "name": "Edge",
+            "path": "设置 > 隐私、搜索和服务 > Cookie"
+          }
+        },
+        "note": "阻止某些 Cookie 可能会影响网站功能。"
+      },
+      "similarTech": {
+        "title": "类似技术",
+        "intro": "除 Cookie 外，我们还可能使用：",
+        "items": {
+          "0": {
+            "label": "本地存储",
+            "desc": "在本地存储偏好设置和缓存数据"
+          },
+          "1": {
+            "label": "会话存储",
+            "desc": "在浏览会话期间存储临时数据"
+          },
+          "2": {
+            "label": "像素标签",
+            "desc": "用于追踪邮件打开和网站访问的小型图片"
+          }
+        },
+        "noFingerprinting": "我们不使用浏览器指纹技术进行追踪。"
+      },
+      "updates": {
+        "title": "政策更新",
+        "content": "我们可能会不时更新本 Cookie 政策。如有重大变更，我们将在网站上发布更新后的政策通知您。"
+      },
+      "contactUs": {
+        "title": "联系我们",
+        "intro": "如果您对我们使用 Cookie 有任何疑问，请联系我们：",
+        "company": "{companyLegal}",
+        "privacyNote": "如需了解更多关于我们如何收集和处理您的数据的信息，请参阅我们的",
+        "privacyLink": "隐私政策"
+      }
+    },
+    "faq": {
+      "title": "技术指导与应用问答 (FAQ) — {brandName}",
+      "description": "关于系统框架搭建、技术栈原理和商业实施策略的详细说明与解析。",
+      "heading": "执行级深度解析",
+      "subheading": "为系统的工程集成和高管商业决策提供有力支撑的资料。",
+      "categories": {
+        "0": {
+          "name": "工程架构综述",
+          "questions": {
+            "0": {
+              "q": "{productName} 准确的业务作用是什么？",
+              "a": "{productName} 是一套高度结构化的生产级 Next.js AI SaaS 基础建设框架。它内置整合了包括企业计费、鉴权认证以及多端隔离在内的微服务能力，让研发团队得以摆脱边缘业务开发负担，直达核心 AI 功能变现环节。"
+            },
+            "1": {
+              "q": "项目本身的授权许可费用如何界定？",
+              "a": "系统核心组件的架构遵循 AGPLv3 协议向社区完整开源并承诺永久免费。对希望不暴露业务代码及获得深层面系统重构保障的组织机构，则可通过获取高规格商业合同中的闭源授权来保障商业私隐。"
+            },
+            "2": {
+              "q": "团队能够多快地验证本产品的商业适用性？",
+              "a": "极其迅捷。借助提供的标准化 CLI 构建工具及严谨的开发规范文档摘要，一名初级网络开发工程师只需数分钟即可构建起本地端的系统最小化运行实例（MVP）。"
+            }
+          }
+        },
+        "1": {
+          "name": "商业运营系统",
+          "questions": {
+            "0": {
+              "q": "产品对商业扩展的容纳程度是怎样的？",
+              "a": "基于微服务组件模型，系统的承载力可自 Free Tier 无缝扩展至数百万月请求的 Enterprise Level。企业只需在其仪表盘修改资源规模限制要求接口参数。"
+            },
+            "1": {
+              "q": "不同层级的订阅变更是怎么反映在财务状态中的？",
+              "a": "我们采用了精确到核心秒的资源用量记录和 API 调用统计。升降级状态的迁移即时在账单系统中结算成按比例退还差额或附加抵扣凭证。技术上不存在变更冷冻期。"
+            },
+            "2": {
+              "q": "结算核心依托哪个处理中心完成验证？",
+              "a": "全球订单流向 Stripe 后端进行符合 PCI-DSS 高安全等级的信息流验证和转账交割。特殊地区可根据商务安排接入企业内部财务合规审计。"
+            }
+          }
+        },
+        "2": {
+          "name": "系统开发层",
+          "questions": {
+            "0": {
+              "q": "预置了对哪些基础模型底盘的支持？",
+              "a": "统一封装的网关层可自动承接针对 OpenAI、Anthropic、 以及 Gemini 数据交互标准规范，并在极低延迟下对数据清洗重包后送至模型推理服务端点。业务侧实现代码层零修改式切换。"
+            },
+            "1": {
+              "q": "面对数据混淆风险系统的表现如何？",
+              "a": "利用 Postgres 内置特性实现行级别数据不可变控制（RLS），搭配基于边缘端点中间件级别的租户解析机制（Tenant Resolution Routing），杜绝应用层逻辑漏洞造成的高危越权和数据意外渗漏现象。"
+            },
+            "2": {
+              "q": "可以自行主导服务器集群与部署事宜吗？",
+              "a": "毫无约束。本系统组件的设计基准就是面向任意独立云架构，只要部署现场具有健康的 Node.js 和 PostgreSQL 实例，一切即可顺畅运转。"
+            }
+          }
+        },
+        "3": {
+          "name": "系统性安全管理",
+          "questions": {
+            "0": {
+              "q": "安全防卫具体落实在什么细节？",
+              "a": "主要落点在：客户端到数据库物理环境全程强制加密传输、针对环境变量和令牌的底层强散列脱敏加密储存，以及所有写访问和特殊行为都会永久刻印在内部时间序列跟踪表单内。"
+            },
+            "1": {
+              "q": "它有针对全球隐私法例作出反应吗？",
+              "a": "非常重视且落到了实处。业务模块预组装了对于数据所有主体请求撤销授权同意（Consent withdraw）、提取与全部清除记录的关键实现功能代码，对标通用数据保护条例 (GDPR)。"
+            },
+            "2": {
+              "q": "事故发生下的企业应对规程是什么？",
+              "a": "依靠自动执行的哨兵检测系统，系统在预警或识别攻击后通过专门渠道上报。工程团队会采取强制阻断并介入诊断，并遵循向利益相关方提供不超过 3 个自然日的全面公开事故通报协议 (Incident Postmortems)。"
+            }
+          }
+        },
+        "4": {
+          "name": "技术支援指引",
+          "questions": {
+            "0": {
+              "q": "面对使用瓶颈时如何定位资源？",
+              "a": "首推阅读随版本高度覆盖并经过严格同行校验的基础文档库和社区问答库。购买标准授权及更高等级的企业用户激活优先技术工单队列获取内部支持团队的点对点支援响应。"
+            },
+            "1": {
+              "q": "有额外提供的个性化环境配置服务计划吗？",
+              "a": "这处于我们面向高端集团提供的商业覆盖范畴。从对用户既有老旧产品环境进行的源码技术审核、复杂的外部环境迁徙、跨网域验证等深层次要求均会抽调资深实施小组专门负责。"
+            }
+          }
+        }
+      },
+      "ctaHeading": "需要对接进一步的系统调研工作？",
+      "ctaDescription": "无论是希望深入了解 API 调用范式，或是推进相关合作事宜，都可与执行技术专家联络。",
+      "ctaButton": "获取系统接入指南",
+      "ctaEmail": "投递至专职对接账户"
+    },
+    "privacy": {
+      "title": "隐私及信息保护协定 — {brandName}",
+      "description": "详尽透明地剖析公司系统基础设施架构在对个人乃至设备机密数据管控的机制。",
+      "heading": "信息保护及治理细则",
+      "effectiveDate": "生效日期",
+      "lastUpdated": "最后更新",
+      "dates": {
+        "effective": "2025 年 1 月 1 日",
+        "updated": "2025 年 1 月 1 日"
+      },
+      "intro": "{companyLegal}（以下简称「{brandName}」、「我们」或「本公司」）致力于保护您的隐私。本隐私政策说明了我们在您使用本公司网站、应用程序及服务（统称「服务」）时，如何收集、使用、披露和保护您的信息。",
+      "infoWeCollect": {
+        "title": "一、我们收集的信息",
+        "youProvide": {
+          "title": "1.1 您主动提供的信息",
+          "intro": "我们收集您直接向我们提供的信息，包括：",
+          "items": {
+            "0": {
+              "label": "账户信息",
+              "desc": "您在创建账户时提供的姓名、电子邮件地址、密码及组织信息。"
+            },
+            "1": {
+              "label": "个人资料",
+              "desc": "头像、职位、公司名称及其他可选信息。"
+            },
+            "2": {
+              "label": "支付信息",
+              "desc": "账单地址及支付方式详情（通过 Stripe 安全处理）。"
+            },
+            "3": {
+              "label": "通讯内容",
+              "desc": "您向我们发送的消息、反馈及其他通讯内容。"
+            },
+            "4": {
+              "label": "用户内容",
+              "desc": "您通过服务创建、上传或存储的任何内容。"
+            }
+          }
+        },
+        "automatic": {
+          "title": "1.2 自动收集的信息",
+          "intro": "当您使用我们的服务时，我们会自动收集以下信息：",
+          "items": {
+            "0": {
+              "label": "设备信息",
+              "desc": "设备类型、操作系统、浏览器类型及唯一设备标识符。"
+            },
+            "1": {
+              "label": "使用信息",
+              "desc": "浏览页面、使用功能、操作行为及在服务上花费的时间。"
+            },
+            "2": {
+              "label": "日志数据",
+              "desc": "IP 地址、访问时间、来源 URL 及系统活动日志。"
+            },
+            "3": {
+              "label": "位置信息",
+              "desc": "基于 IP 地址的大致地理位置（我们不收集精确的地理定位信息）。"
+            }
+          }
+        }
+      },
+      "howWeUse": {
+        "title": "二、我们如何使用您的信息",
+        "intro": "我们将收集的信息用于以下目的：",
+        "items": {
+          "0": {
+            "label": "提供服务",
+            "desc": "运营、维护和改进我们的服务。"
+          },
+          "1": {
+            "label": "处理交易",
+            "desc": "处理付款、账单及相关操作。"
+          },
+          "2": {
+            "label": "沟通联系",
+            "desc": "发送服务公告、更新通知及营销传播内容（需经您同意）。"
+          },
+          "3": {
+            "label": "个性化体验",
+            "desc": "定制您的使用体验并提供相关推荐。"
+          },
+          "4": {
+            "label": "数据分析",
+            "desc": "了解使用规律并改进我们的服务。"
+          },
+          "5": {
+            "label": "安全防护",
+            "desc": "检测、预防和应对欺诈、滥用及安全事件。"
+          }
+        }
+      },
+      "howWeShare": {
+        "title": "三、我们如何共享您的信息",
+        "intro": "在以下情况下，我们可能共享您的信息：",
+        "serviceProviders": {
+          "title": "3.1 服务提供商",
+          "intro": "我们与代表我们提供服务的第三方供应商共享信息，包括：",
+          "items": {
+            "0": {
+              "label": "基础设施",
+              "desc": "云托管服务（Vercel、Supabase）及数据库服务"
+            },
+            "1": {
+              "label": "支付处理",
+              "desc": "Stripe 提供的安全支付服务"
+            },
+            "2": {
+              "label": "身份认证",
+              "desc": "Clerk 提供的身份管理服务"
+            },
+            "3": {
+              "label": "数据分析",
+              "desc": "PostHog、Vercel Analytics 提供的使用洞察服务"
+            }
+          }
+        },
+        "businessTransfers": {
+          "title": "3.2 业务转让",
+          "content": "若我们涉及合并、收购或资产出售，您的信息可能作为该交易的一部分被转移。"
+        },
+        "legalRequirements": {
+          "title": "3.3 法律要求",
+          "content": "当法律、法律程序或政府要求，或为保护我们的权利、隐私、安全或财产时，我们可能披露相关信息。"
+        }
+      },
+      "yourRights": {
+        "title": "四、您的权利与选择",
+        "accessPortability": {
+          "title": "4.1 访问与数据可携带性",
+          "content": "您可通过账户设置访问您的个人信息，并以可携带格式请求获取您的数据副本。"
+        },
+        "correction": {
+          "title": "4.2 更正",
+          "content": "您可随时通过控制台更新您的账户信息。"
+        },
+        "deletion": {
+          "title": "4.3 删除",
+          "content": "您可通过设置或联系我们，请求删除您的账户及关联数据。"
+        },
+        "marketing": {
+          "title": "4.4 营销通讯",
+          "content": "您可通过点击任意营销邮件中的「取消订阅」链接或更新您的偏好设置，选择退出营销邮件。"
+        }
+      },
+      "dataSecurity": {
+        "title": "五、数据安全",
+        "intro": "我们采取适当的技术与组织措施保护您的信息，包括：",
+        "items": {
+          "0": "传输中（TLS）及静态数据加密",
+          "1": "定期安全评估与渗透测试",
+          "2": "访问控制与身份验证要求",
+          "3": "系统活动监控与日志记录"
+        }
+      },
+      "ccpa": {
+        "title": "六、加利福尼亚州隐私权（CCPA）",
+        "intro": "若您是加利福尼亚州居民，您对个人信息享有以下特定权利：",
+        "items": {
+          "0": {
+            "label": "知情权",
+            "desc": "要求披露我们收集、使用和共享的信息。"
+          },
+          "1": {
+            "label": "删除权",
+            "desc": "要求删除您的个人信息。"
+          },
+          "2": {
+            "label": "退出权",
+            "desc": "选择退出个人信息的出售（我们不出售您的数据）。"
+          },
+          "3": {
+            "label": "非歧视权",
+            "desc": "我们不会因您行使上述权利而对您实施歧视。"
+          }
+        }
+      },
+      "gdpr": {
+        "title": "七、欧洲隐私权（GDPR）",
+        "intro": "若您位于欧洲经济区、英国或瑞士，您在 GDPR 下享有额外权利：",
+        "items": {
+          "0": {
+            "label": "法律依据",
+            "desc": "我们基于合同履行、合法利益或您的同意处理您的数据。"
+          },
+          "1": {
+            "label": "各项权利",
+            "desc": "访问权、更正权、删除权、数据可携带权、限制处理权及反对权。"
+          },
+          "2": {
+            "label": "数据保护官",
+            "desc": "您可通过 dpo@nebutra.com 联系我们的数据保护官。"
+          }
+        }
+      },
+      "contactUs": {
+        "title": "八、联系我们",
+        "intro": "若您对本隐私政策有任何疑问，请通过以下方式联系我们：",
+        "company": "{companyLegal}"
+      }
+    },
+    "refund": {
+      "title": "订单结算异常协定 — {brandName}",
+      "description": "严格约束退费及金额返还程序和相关符合执行标准的重要政策规章。",
+      "heading": "执行类订单争端处理框架",
+      "effectiveDate": "正式强制实施日",
+      "lastUpdated": "条文演化追踪时间",
+      "dates": {
+        "effective": "2025年1月1日",
+        "updated": "2025年1月1日"
+      },
+      "intro": "{brandName} 致力于确保您对我们服务的完全满意。本退款政策阐明了可申请退款的情形及相应的申请流程。",
+      "subscriptionPlans": {
+        "title": "订阅方案",
+        "monthly": {
+          "title": "月度订阅",
+          "items": {
+            "0": {
+              "label": "取消订阅",
+              "desc": "您可随时取消月度订阅"
+            },
+            "1": {
+              "label": "按比例退款",
+              "desc": "我们不提供未使用月份的按比例退款"
+            },
+            "2": {
+              "label": "服务访问",
+              "desc": "您可在当前计费周期结束前持续使用付费功能"
+            },
+            "3": {
+              "label": "自动续费",
+              "desc": "订阅将自动续费，除非您主动取消"
+            }
+          }
+        },
+        "annual": {
+          "title": "年度订阅",
+          "items": {
+            "0": {
+              "label": "14天无理由退款保障",
+              "desc": "新年度订阅用户可在首次购买后14天内申请全额退款"
+            },
+            "1": {
+              "label": "超过14天后",
+              "desc": "14天保障期届满后，原则上不再受理退款申请"
+            },
+            "2": {
+              "label": "取消订阅",
+              "desc": "您可随时取消，但订阅将在年度周期结束前保持有效"
+            },
+            "3": {
+              "label": "不提供按比例退款",
+              "desc": "我们不提供未使用月份的部分退款"
+            }
+          }
+        }
+      },
+      "eligibleScenarios": {
+        "title": "符合退款条件的情形",
+        "intro": "我们将在以下情况下受理退款申请：",
+        "serviceIssues": {
+          "title": "1. 服务故障",
+          "items": {
+            "0": "严重服务中断，导致您无法正常使用核心功能",
+            "1": "我们未能在合理时间内解决的技术问题",
+            "2": "实际功能与宣传内容存在重大差异"
+          }
+        },
+        "billingErrors": {
+          "title": "2. 账单错误",
+          "items": {
+            "0": "重复扣款",
+            "1": "账单金额有误",
+            "2": "未授权扣款（经核实后）"
+          }
+        },
+        "exceptionalCircumstances": {
+          "title": "3. 特殊情形",
+          "items": {
+            "0": "有证明文件的医疗紧急情况",
+            "1": "影响您业务的自然灾害",
+            "2": "其他经逐案评估认定的特殊情形"
+          }
+        }
+      },
+      "nonRefundable": {
+        "title": "不可退款项目",
+        "intro": "以下项目通常不符合退款条件：",
+        "items": {
+          "0": {
+            "label": "按量计费费用",
+            "desc": "API 调用、AI 令牌消耗或已使用的存储空间"
+          },
+          "1": {
+            "label": "附加功能及增值服务",
+            "desc": "一次性购买或附加服务"
+          },
+          "2": {
+            "label": "企业合同",
+            "desc": "定制合同适用其专属条款"
+          },
+          "3": {
+            "label": "主动取消订阅",
+            "desc": "超过退款资格期限后的主动取消"
+          },
+          "4": {
+            "label": "违反使用条款",
+            "desc": "因违反政策而被终止的账户"
+          }
+        }
+      },
+      "howToRequest": {
+        "title": "如何申请退款",
+        "step1": {
+          "title": "第一步：联系支持团队",
+          "intro": "请发送邮件至 billing@nebutra.com，并提供以下信息：",
+          "items": {
+            "0": "您的账户注册邮箱",
+            "1": "订阅方案及计费周期",
+            "2": "申请退款的原因",
+            "3": "相关证明材料（如有）"
+          }
+        },
+        "step2": {
+          "title": "第二步：审核流程",
+          "items": {
+            "0": "我们将在5个工作日内审核您的申请",
+            "1": "我们可能会要求您提供补充信息",
+            "2": "您将通过邮件收到书面审核结果"
+          }
+        },
+        "step3": {
+          "title": "第三步：退款处理",
+          "intro": "申请获批后：",
+          "items": {
+            "0": "退款将原路退回至原始支付方式",
+            "1": "信用卡退款通常在5至10个工作日内到账",
+            "2": "银行处理时间可能因机构而有所不同"
+          }
+        }
+      },
+      "planChanges": {
+        "title": "方案变更",
+        "upgrades": {
+          "title": "升级",
+          "items": {
+            "0": "升级立即生效",
+            "1": "将按当前计费周期剩余时间收取升级差价",
+            "2": "不提供原方案的退款"
+          }
+        },
+        "downgrades": {
+          "title": "降级",
+          "items": {
+            "0": "降级将在下一计费周期生效",
+            "1": "您可在此之前继续使用当前方案的功能",
+            "2": "当前计费周期内不提供部分退款"
+          }
+        }
+      },
+      "freeTrial": {
+        "title": "免费试用",
+        "items": {
+          "0": "免费试用无需提供支付信息",
+          "1": "试用期间不产生任何费用",
+          "2": "正式收费前我们将提前通知您"
+        }
+      },
+      "disputeResolution": {
+        "title": "争议解决",
+        "intro": "若您对我们的退款决定有异议，可按以下步骤处理：",
+        "steps": {
+          "0": "回复决定邮件并附上补充信息",
+          "1": "申请升级至主管级别处理",
+          "2": "通过 legal@nebutra.com 联系我们寻求进一步审核"
+        }
+      },
+      "contactUs": {
+        "title": "联系我们",
+        "intro": "如需申请退款或就本政策提出咨询，请通过以下方式联系我们：",
+        "company": "{brandName} Co., Ltd.",
+        "billingLabel": "账单",
+        "supportLabel": "支持",
+        "legalLabel": "法务",
+        "responseNote": "我们致力于在5个工作日内回复所有退款申请。",
+        "termsNote": "本政策为我们",
+        "termsLink": "服务条款",
+        "termsAgreement": "的组成部分。使用 {brandName} 即表示您同意本退款条款。"
+      }
+    },
+    "terms": {
+      "title": "服务条款 — {brandName}",
+      "description": "规范您访问和使用 {brandName} 网站、应用程序、API 及相关服务的服务条款协议。",
+      "heading": "服务条款",
+      "effectiveDate": "生效日期",
+      "lastUpdated": "最后更新",
+      "dates": {
+        "effective": "2025年1月1日",
+        "updated": "2025年1月1日"
+      },
+      "intro1": "欢迎使用 {brandName}！本服务条款（「条款」）规范您访问和使用 {brandName} 网站、应用程序、API 及服务（统称「服务」）的方式，上述服务由 {brandName} Co., Ltd.（「{brandName}」、「公司」、「我们」或「本公司」）提供。",
+      "intro2": "访问或使用本服务即表示您同意受本条款及我们的",
+      "intro2PrivacyLink": "隐私政策",
+      "intro2End": "的约束。如您不同意本条款，请勿使用本服务。",
+      "acceptance": {
+        "title": "一、条款接受",
+        "eligibility": {
+          "title": "1.1 使用资格",
+          "intro": "使用本服务，您须满足以下条件：",
+          "items": {
+            "0": "年满18周岁，或达到您所在司法管辖区法定成年年龄",
+            "1": "有权代表您本人或所属组织接受本条款约束",
+            "2": "在适用法律下未被禁止使用本服务"
+          }
+        },
+        "orgAccounts": {
+          "title": "1.2 组织账户",
+          "content": "若您代表组织使用本服务，您声明已获授权代表该组织接受本条款约束。"
+        }
+      },
+      "services": {
+        "title": "二、服务描述",
+        "intro": "{brandName} 提供的 SaaS 平台包含以下功能：",
+        "items": {
+          "0": "AI 驱动的功能与内容生成",
+          "1": "内容管理与社区工具",
+          "2": "智能推荐系统",
+          "3": "电子商务集成",
+          "4": "Web3 功能",
+          "5": "数据分析与报告"
+        }
+      },
+      "account": {
+        "title": "三、账户注册",
+        "creation": {
+          "title": "3.1 账户创建",
+          "intro": "访问特定功能须先创建账户。您同意：",
+          "items": {
+            "0": "提供准确、完整的信息",
+            "1": "维护账户凭据的安全性",
+            "2": "信息变更时及时更新",
+            "3": "对账户下的所有活动承担责任"
+          }
+        }
+      },
+      "billing": {
+        "title": "四、订阅与计费",
+        "pricing": {
+          "title": "4.1 定价",
+          "content": "本服务依据定价页面所述的各类订阅方案提供。价格变动将提前30天通知。"
+        },
+        "payment": {
+          "title": "4.2 付款",
+          "items": {
+            "0": "订阅费用按月或按年预先收取",
+            "1": "所有费用不予退款，除非符合我们的",
+            "2": "您授权我们向您的支付方式收取相应费用",
+            "3": "我们使用 Stripe 进行安全支付处理",
+            "1RefundLink": "退款政策"
+          }
+        }
+      },
+      "acceptableUse": {
+        "title": "五、可接受使用",
+        "prohibited": {
+          "title": "5.1 禁止行为",
+          "intro": "您同意不得进行以下行为：",
+          "items": {
+            "0": "违反任何适用法律、法规或第三方权利",
+            "1": "利用本服务传播恶意软件、垃圾信息或有害内容",
+            "2": "尝试未经授权访问我们的系统",
+            "3": "干扰或破坏本服务的完整性或性能",
+            "4": "未经许可使用自动化工具抓取、复制或提取数据",
+            "5": "对本服务进行逆向工程、反编译或反汇编",
+            "6": "利用 AI 功能生成违法、有害或欺骗性内容"
+          }
+        }
+      },
+      "ip": {
+        "title": "六、知识产权",
+        "ours": {
+          "title": "6.1 我们的知识产权",
+          "content": "{brandName} 及其许可方对本服务拥有全部权利、所有权及利益，包括我们创作的所有软件、设计、商标和内容。"
+        },
+        "yours": {
+          "title": "6.2 您的内容",
+          "content": "您保留对自己创建或上传内容（「您的内容」）的所有权。使用本服务即表示您授予我们在全球范围内非独家、免版税的许可，仅用于向您提供服务之目的使用、存储、处理和展示您的内容。"
+        }
+      },
+      "warranties": {
+        "title": "七、免责声明",
+        "content": "本服务按「现状」及「可用状态」提供，不附带任何明示或暗示的保证，包括但不限于对适销性、特定用途适用性、所有权及不侵权的默示保证。"
+      },
+      "liability": {
+        "title": "八、责任限制",
+        "para1": "在法律允许的最大范围内，{brandName} 不对间接性、附带性、特殊性、衍生性或惩罚性损害，以及利润损失、数据损失、使用损失或商誉损失承担责任。",
+        "para2": "在任何情况下，我们的总责任不超过以下两者中的较大值：（A）索赔前12个月内您向我们支付的金额，或（B）100美元。"
+      },
+      "termination": {
+        "title": "九、终止",
+        "byYou": {
+          "title": "9.1 您的终止权",
+          "content": "您可随时通过账户设置终止账户。终止后，您将失去对本服务的访问权限。"
+        },
+        "byUs": {
+          "title": "9.2 我们的终止权",
+          "intro": "如您存在以下情形，我们可暂停或终止您的账户：",
+          "items": {
+            "0": "违反本条款",
+            "1": "从事欺诈或违法活动",
+            "2": "未支付应付费用",
+            "3": "对我们造成风险或法律责任"
+          }
+        }
+      },
+      "disputes": {
+        "title": "十、争议解决",
+        "informal": {
+          "title": "10.1 非正式解决",
+          "content": "在启动正式程序之前，您同意通过 legal@nebutra.com 联系我们，尝试非正式解决争议。"
+        },
+        "governingLaw": {
+          "title": "10.2 适用法律",
+          "content": "本条款受特拉华州法律管辖，不适用冲突法原则。"
+        }
+      },
+      "contactUs": {
+        "title": "十一、联系我们",
+        "intro": "如您对本条款有任何疑问，请通过以下方式联系我们：",
+        "company": "{brandName} Co., Ltd.",
+        "emailLabel": "电子邮件",
+        "supportLabel": "支持"
+      },
+      "acknowledgement": "使用 {brandName} 即表示您确认已阅读、理解并同意受本服务条款约束。"
+    }
+  },
+  "metadata": {
+    "title": "{brandName} Agent OS | 出海创业的起点",
+    "description": "面向出海创始人的 Startup Agent OS。生产就绪的 Next.js 底座，受治理的架构，内置鉴权、计费、智能体与 i18n —— 为 AI 编程智能体与严肃团队打造。"
+  },
+  "microLanding": {
+    "architecture": {
+      "badge": "系统拓扑架构",
+      "title": "透明架构，拒绝技术黑盒",
+      "description": "{productName} 采用高度模块化的 Turborepo 结构进行工程设计，让您完全掌控整个软件生命周期。",
+      "database": {
+        "title": "PostgreSQL + Prisma v7",
+        "desc": "原生内置行级安全 (RLS) 策略的完全强类型 ORM。"
+      },
+      "auth": {
+        "title": "Clerk 多租户 & 身份网关",
+        "desc": "支持 B2B 组织切换和细粒度 RBAC 的 SOC2 级认证网关。"
+      }
+    },
+    "pricing": {
+      "title": "一次买断。终身访问。",
+      "description": "告别续订焦虑。选择最适合您团队的并发方案，即刻开始构建。",
+      "socialProofText": "开源 AGPL-3.0 · 提供商业授权选项。",
+      "startup": {
+        "badge": "STARTUP / 敏捷初创",
+        "price": "$799",
+        "period": "/ 年",
+        "desc": "适合建立在 {brandName} 平台基线之上的小团队。",
+        "cta": "购买 Startup 商业授权",
+        "f1": "闭源商用授权",
+        "f2": "团队主体无界限商用的企业级应用下放额度",
+        "f3": "12 个月更新覆盖",
+        "f4": "邮件支持",
+        "f5": "包含 Solo 架构下的全额度能力特权"
+      },
+      "independent": {
+        "badge": "INDEPENDENT / 独立开发者",
+        "price": "免费",
+        "period": "永久",
+        "desc": "适合在 AGPL 基础上快速验证产品方向的个人开发者。",
+        "cta": "npx create-sailor",
+        "f1": "完整的 Next.js 16 SaaS 核心",
+        "f2": "无限量的个人独立商用级应用接入授权",
+        "f3": "完整的全栈拓扑：多租户管控、计费引擎、行级安全；轻量管理后台 + Retool/Metabase 集成范式（不堆砌冗余 CRUD，沿用头部 SaaS 真正在用的内部工具链）",
+        "f4": "强劲的增长飞轮：原生博客系统、SEO 预渲机制及转化跟踪",
+        "f5": "AGPLv3 开源协议限制"
+      },
+      "enterprise": {
+        "badge": "ENTERPRISE / 企业版",
+        "price": "定制",
+        "period": "",
+        "desc": "适合交付可重复客户平台的代理商与运营团队。",
+        "cta": "联系销售",
+        "f1": "白标商用授权",
+        "f2": "支持向乙方客户无限量出售产品闭源程序的再分发许可",
+        "f3": "12 个月更新覆盖",
+        "f4": "准许白标去 Logo 操作的深度视觉定制与二创潜能",
+        "f5": "继承 Startup 管线所构建的全部底座生态和技术特征",
+        "f6": "包含 Startup 的所有内容"
+      }
+    },
+    "faq": {
+      "title": "定价与授权常见问题",
+      "description": "关于授权层级、退款与商用使用权的常见问题。",
+      "q1": {
+        "q": "Sailor 是按月订阅制吗？",
+        "a": "不是。本页定价面向 Sailor 源代码授权：Independent 免费，Startup 按年授权，Enterprise 走定制合同。"
+      },
+      "q2": {
+        "q": "可以退款吗？",
+        "a": "Startup 商业授权的首次购买提供 14 天退款窗口；Enterprise 退款与验收条款以签署合同为准。"
+      },
+      "q3": {
+        "q": "可以用于客户项目交付吗？",
+        "a": "可以。商业授权允许团队在授权范围内交付闭源客户项目或内部产品；白标权益需通过 Enterprise 书面确认。"
+      },
+      "contactNudge": "还有疑问？与 {brandName} 团队沟通 →"
+    },
+    "cta": {
+      "eyebrow": "立即开始",
+      "title": "停止折腾配置，立即开始构建",
+      "description": "使用 {brandName} CLI 即可在本地初始化您的高可用可扩展 SaaS 架构。",
+      "button": "部署云端架构",
+      "license": "基于 AGPL-3.0 开源协议。无需信用卡。"
+    },
+    "capability": {
+      "badge": "企业级能力",
+      "title": "完全强类型的可扩展核心",
+      "multiTenant": {
+        "title": "原生行级数据安全 (RLS)",
+        "desc": "每次数据库查询都在当前租户上下文中受到严格限制与隔离。",
+        "cta": "阅读数据库设计哲学"
+      },
+      "aiGateway": {
+        "title": "通用 AI 模型网关",
+        "desc": "无缝地将 Prompt 路由到 OpenAI、Anthropic 甚至本地开源大模型。",
+        "cta": "探索 AI SDK 适配器"
+      },
+      "rbac": {
+        "title": "细粒度权限控制 (RBAC)",
+        "desc": "零模板代码即可定义管理员、成员和查看者等细粒度角色与权限。",
+        "cta": "查看 RBAC 鉴权文档"
+      },
+      "billing": {
+        "title": "多供应商计费基础设施",
+        "desc": "按量计费系统、订阅 Webhook 事件分发以及完全自助化的客户门户。",
+        "cta": "了解计费中间件架构"
+      }
+    },
+    "productDemo": {
+      "badge": "交互式演示",
+      "title": "立即体验实时研发加速",
+      "description": "感受顶级的终端命令行工具、Stripe Webhook 本地隧道穿透能力，以及本地开发环境下的多租户数据库自动装配体验。",
+      "analytics": {
+        "label": "实时遥测",
+        "desc": "将生产环境中的全链路业务使用数据直接传输至您的终端仪表盘。"
+      },
+      "billing": {
+        "label": "计费事件分发",
+        "desc": "通过本地环境的即时隧道观察核心 Stripe Webhooks 的异步执行机制。"
+      },
+      "workspaces": {
+        "label": "工作空间隔离",
+        "desc": "利用 Prisma 瞬间装配与隔离全新的 B2B PostgreSQL Schema 架构。"
+      }
+    },
+    "workflow": {
+      "badge": "研发效能",
+      "title": "以破纪录的速度从零走向生产",
+      "step1": {
+        "title": "1. 快速克隆",
+        "desc": "瞬间克隆全功能 {brandName} Monorepo，并运行 pnpm install 初始化工作空间。"
+      },
+      "step2": {
+        "title": "2. 交互式配置",
+        "desc": "几分钟内通过 CLI 引导完成 Prisma、Clerk 和 Stripe 的生产环境级配置。"
+      },
+      "step3": {
+        "title": "3. 专注构建",
+        "desc": "把精力集中在产品逻辑和 UI 上，平台底层能力已预先接好。"
+      },
+      "step4": {
+        "title": "4. 全球部署",
+        "desc": "一键提交至 Vercel 和 AWS 边缘节点，实现分钟级全球可用性分发。"
+      },
+      "speedometer": {
+        "number": "10",
+        "unit": "分钟",
+        "subtitle": "上市时间",
+        "comparison": "比组建内部研发平台团队快 99%。",
+        "phases": {
+          "scaffold": "初始化",
+          "wire": "基建核",
+          "ship": "云部署",
+          "scale": "高扩展",
+          "ongoing": "∞"
+        },
+        "cta": "现在开始计时"
+      },
+      "presetHint": {
+        "badge": "预设系统",
+        "message": "一份配置，全部功能。选择预设，即刻交付。",
+        "detail": "一次配置，自动生成一切——计费、认证、AI、国际化——全部来自单一预设文件。",
+        "readyStatus": "预设系统准备就绪"
+      }
+    }
+  },
+  "featuresPage": {
+    "hero": {
+      "badge": "平台能力",
+      "headlinePrefix": "构建独角兽所需的",
+      "headlineHighlight": "一切就绪。",
+      "description": "{brandName} 是全栈 SaaS 平台——AI、计费、多租户、可观测性和安全性从第一天起就内置其中。停止重复造轮子。"
+    },
+    "sections": {
+      "exploreFeature": "探索功能",
+      "ai_category": "AI 与智能体引擎",
+      "ai_f1_title": "多模型会话代理",
+      "ai_f1_desc": "将请求路由到 Anthropic、OpenAI、Google 或您自己微调的模型。开箱即用支持流式、视觉与函数调用。",
+      "ai_f2_title": "语义向量检索 (RAG)",
+      "ai_f2_desc": "利用 pgvector 生成和存储高维向量。为您的语义搜索、检索增强生成 (RAG) 和推荐引擎注入动力。",
+      "ai_f3_title": "AI 推理用量计量",
+      "ai_f3_desc": "按计划配额追踪用量 —— AI tokens、API 调用、存储,基于 ClickHouse 实时聚合。",
+      "multi_category": "多租户管控中枢",
+      "multi_f1_title": "租户级数据隔离墙",
+      "multi_f1_desc": "基于 Postgres 的行级安全控制 (RLS) 确保租户之间的数据物理隔离——在数据库最底层强制执行，超越应用层限制。",
+      "multi_f2_title": "多供应商认证（Clerk / Better Auth / NextAuth / Supabase）",
+      "multi_f2_desc": "多 provider OAuth（Google、GitHub 等）加邮箱/密码与魔法链接 —— 通过单个环境变量在 Clerk、Better Auth、NextAuth 或 Supabase Auth 间切换。",
+      "multi_f3_title": "自动化租户编排",
+      "multi_f3_desc": "当新企业机构通过 Clerk 注册入驻，系统会自动分配首组 API 密钥并下发定制化欢迎函——剔除所有手工步骤。",
+      "dx_category": "开发者使用体验",
+      "dx_f1_title": "SHA-256 API 密钥哈希",
+      "dx_f1_desc": "带有组织前缀 (例如 nbtr_live_…) 的密文标识加密散列。且仅在首次创建时明文展示一次——兼顾无摩擦的体验与严苛的安全性。",
+      "dx_f2_title": "幂等性校验中间件",
+      "dx_f2_desc": "通过携带 Idempotency-Key 头信息，让所有 POST 请求皆可被安全地进行重试。由 Redis 高速缓存背书支持，并完全遵循 IETF 草案规范。",
+      "dx_f3_title": "多协议 API（REST + oRPC + tRPC）",
+      "dx_f3_desc": "REST/OpenAPI 面向公共 API，oRPC 面向类型安全的前端调用，tRPC 面向 T3 技术栈兼容。所有协议共享相同的 Zod 契约和中间件栈。通过 preset 配置按需启用。",
+      "billing_category": "订阅与商业计费",
+      "billing_f1_title": "Stripe、LemonSqueezy、Polar 及中国支付",
+      "billing_f1_desc": "选择支付供应商：Stripe 面向全球企业，LemonSqueezy 面向独立开发者，Polar 面向开源项目，支付宝/微信支付面向中国市场。一键结账和自助账单门户。",
+      "billing_f2_title": "用量计量与配额执法",
+      "billing_f2_desc": "实时的 Redis 哨兵持续监听租户的接口调用与 Token 损耗。一旦突破硬性配额极限，系统将立刻在 API 边缘网关上将后续请求直接拦截阻断。",
+      "billing_f3_title": "订阅生命周期 Webhook 联动",
+      "billing_f3_desc": "来自 Stripe 的订阅信标事件将会通过 Inngest 的调度，实现对底层组织状态的无缝自愈式同步更新——免除繁琐配置与冗余的轮询作业。",
+      "rel_category": "高可用架构",
+      "rel_f1_title": "熔断器守护机制",
+      "rel_f1_desc": "Gateway 和 AI 服务使用 CLOSED/OPEN/HALF_OPEN 熔断器,带指数退避与抖动 —— 杜绝级联故障。",
+      "rel_f2_title": "死信队列 (DLQ)",
+      "rel_f2_desc": "由于未知异常消耗完自动重试极值的事件序列会被安全地放逐在死信栈中。管理层人员可以借助后端管控面一键重放修复。",
+      "rel_f3_title": "SLO 损耗告警",
+      "rel_f3_desc": "配置了与 Google SRE 理念等同的多段触发告警。能够在可用性错误预算枯竭之前，捕捉并向运维团队紧急发送预警事件。",
+      "sec_category": "企业级安全",
+      "sec_f1_title": "基于单次验证 nonce 指纹的 CSP",
+      "sec_f1_desc": "运用原生边缘特性实现的 strict-dynamic 动态安全策略——在完全剔除 unsafe-inline 危险执行指令背景下安全运行。",
+      "sec_f2_title": "ModSecurity WAF 防火墙",
+      "sec_f2_desc": "接入了 OWASP 底层审查规则集的边界防火墙机制，极速抵御诸如 SQL 注入以及各类跨站点的自动化攻击恶意嗅探行为。",
+      "sec_f3_title": "SBOM 物料清单溯源",
+      "sec_f3_desc": "每个版本的系统核心在上线封装前皆由独立脚本产出规范化网络指纹证明链，透明交付开源与核心商业审计环节进行监督检阅。",
+      "obs_category": "全链路可观测性",
+      "obs_f1_title": "OpenTelemetry 全分布式追踪",
+      "obs_f1_desc": "透视前台 Next.js 穿越 API 到微服务的底层全息追踪，兼容标准的 OpenTelemetry 协议向云端面板发送指标数据流。",
+      "obs_f2_title": "全景 Grafana 监控",
+      "obs_f2_desc": "多面板平台总览：SLO 可用性、错误预算剩余、HPA 饱和度、Pod 重启、CPU 节流。",
+      "obs_f3_title": "Sentry 下钻级错误追捕",
+      "obs_f3_desc": "错误追溯伴随着请求专属 ID 及多租户会话定位信标，方便直接捕捉到任何故障链底层执行错误的完整环境上下文。",
+      "data_category": "数据与增长管理",
+      "data_f1_title": "高吞吐量事件聚合库 (ClickHouse)",
+      "data_f1_desc": "所有遥测与应用内打点皆无摩擦同步送达后端极速缓存，借由 dbt 的数仓操作自动转化为了直观的产品关键业务黄金统计层指标。",
+      "data_f2_title": "漏斗与归类追踪",
+      "data_f2_desc": "将用户的留存活跃按队列进行切分聚类，让收入贡献的衡量维度精确穿过复杂逻辑下落到单个动作的影响效果归因评判中去。",
+      "data_f3_title": "消息网关解耦",
+      "data_f3_desc": "通过 Inngest 高吞吐事件管道进入 ClickHouse bronze 层,在 gateway 边缘进行内存去重和 schema 校验。",
+      "infra_category": "弹性基础设施",
+      "infra_f1_title": "伴随 GitOps 的自动集群治理",
+      "infra_f1_desc": "任何修改均需代码库确认才投放到正式机房。拒绝线上的孤岛式后门变更污染你的产品可靠度；更自带无感知平稳灰度部署策略设计。",
+      "infra_f2_title": "长连接复用池",
+      "infra_f2_desc": "高效转置大量前端零碎应用链接合并向 Postgres 原生引擎发送并接管所有长会话状态——千次以上的会话只需十几根源头查询进程便可轻松满足负载。",
+      "infra_f3_title": "冷热自我调节阵列",
+      "infra_f3_desc": "跟随内存芯片占用比及流量高低峰而完成弹射扩容分配。自带底层健康评估告警、并在 v2 中全面适配高度自由触发策略定义的深度缩放管理手段。"
+    }
+  },
+  "comingSoon": {
+    "badge": "🚧 建设中",
+    "description": {
+      "ideas": "我们正在为您打造极具极客精神的全新体验模块，它将随 {brandName}-Sailor 的下一次核心架构更新同步上线。",
+      "opc": "更完整的平台能力介绍正在整理中。请关注更新日志与路线图获取后续发布。",
+      "roadmap": "从基础架构到企业规模——产品阶段、大版本里程碑与融资愿景一览。"
+    },
+    "returnBtn": "返回首页"
+  },
+  "blogShowcase": {
+    "badge": "博客精选",
+    "title": "工程洞察",
+    "subtitle": "深入探讨SaaS架构、AI基础设施和生产工程。",
+    "readMore": "阅读更多"
+  },
+  "useCases": {
+    "badge": "无限应用场景",
+    "title": "一个基座，无限可能。",
+    "description": "{productName} 驱动全球市场的下一代 SaaS 产品。",
+    "tabs": {
+      "opc": "智能体运营中枢",
+      "ip": "个人 IP 矩阵",
+      "multimodal": "多模态 AI SaaS",
+      "enterprise": "现代企业官网",
+      "export": "软件出海落地页",
+      "design": "现代组件库",
+      "edam": "企业资产数字化"
+    },
+    "content": {
+      "opc": {
+        "title": "AI 原生运营中枢",
+        "desc": "将智能体工作流、内部工具和集成面运行在同一套受治理的平台基线之上。通过注册中心扩展、运营控制台和可复用运行时模式，让系统在扩张时仍保持一致性。",
+        "features": {
+          "f1": "工具注册中心与集成接口",
+          "f2": "运营控制台与内部工作台"
+        }
+      },
+      "ip": {
+        "title": "个人 IP 增长与组合矩阵",
+        "desc": "建立世界级的创始人形象——高转化 MDX 博客、作品集和个人主页。内置邮件列表、数据分析和 SEO，让你的个人品牌持续复利增长。",
+        "features": {
+          "f1": "MDX 博客 + 邮件列表引擎",
+          "f2": "SEO 与社交图谱优化"
+        }
+      },
+      "multimodal": {
+        "title": "创新多模态 AI 应用 SaaS",
+        "desc": "交付 Multi-Agent 编排、Chatbot、文生图、图生文、文生视频等 SaaS 产品，具备 UX 领先的流式 UI、智能模型路由和用量计量。",
+        "features": {
+          "f1": "Multi-Agent 流式 UI",
+          "f2": "模型路由 + 用量计量"
+        }
+      },
+      "enterprise": {
+        "title": "适合中国业务场景的现代企业官网",
+        "desc": "为中国市场量身定制——超速境内 CDN、微信生态对接、移动优先响应式设计，以及开箱即用的本地化合规。",
+        "features": {
+          "f1": "境内 CDN + 合规",
+          "f2": "微信生态已就绪"
+        }
+      },
+      "export": {
+        "title": "适合软件出海场景的落地页",
+        "desc": "专为 SaaS 出海打造。多币种 Stripe 结账、next-intl 7 国语言自动路由、GDPR/CCPA 合规以及地域定向内容。",
+        "features": {
+          "f1": "多币种全球支付",
+          "f2": "7 国语言 + GDPR 就绪"
+        }
+      },
+      "design": {
+        "title": "领先的设计系统与现代组件库",
+        "desc": "四层 Token 驱动架构：品牌 → 令牌 → 主题 → UI。基于 Radix + 共享 Motion 层构建，配合 oklch 多主题、Storybook 文档和视觉回归测试。",
+        "features": {
+          "f1": "四层令牌治理",
+          "f2": "oklch 多主题 + Storybook"
+        }
+      },
+      "edam": {
+        "title": "领先的企业资产数字化管理模板",
+        "desc": "利用可扩展的 PostgreSQL 架构和细粒度的 RBAC 处理结构化数据湖和复杂的管理仪表盘。",
+        "features": {
+          "f1": "行级数据库安全",
+          "f2": "高阶复杂查询",
+          "f3": "细颗粒度读写"
+        }
+      }
+    }
+  },
+  "designSystem": {
+    "badge": "设计系统",
+    "headline": "4 层设计治理。",
+    "subheadline": "从品牌原语到运行时令牌到多主题引擎到治理组件——不只是 shadcn + Tailwind。",
+    "flowBrand": "品牌",
+    "flowBrandDesc": "色彩原语、渐变、动效语言",
+    "flowTokens": "令牌",
+    "flowTokensDesc": "CSS 变量、12 级色阶、暗黑模式",
+    "flowTheme": "主题",
+    "flowThemeDesc": "oklch 多主题、6 个预设、color-mix()",
+    "flowUI": "UI",
+    "flowUIDesc": "组件库、Storybook、Chromatic",
+    "card1Title": "12 级色阶",
+    "card1Desc": "Geist 对齐语义色阶：背景 (1-2)、状态 (3-5)、边框 (6-8)、填充 (9-10)、文本 (11-12)。",
+    "card2Title": "oklch 多主题",
+    "card2Desc": "6 个主题预设使用 oklch 色彩空间，color-mix() 派生悬停/激活态。Display-P3 广色域 + sRGB 回退。",
+    "card3Title": "视觉回归测试",
+    "card3Desc": "Chromatic 捕捉每个像素变化。Storybook 记录每个组件。架构测试强制 Story 覆盖率。",
+    "card4Title": "令牌治理",
+    "card4Desc": "棘轮预算：hex 上限、oklch 下限、原始色彩类限额。品牌漂移检测集成到 CI。",
+    "card5Title": "交互式文档",
+    "card5Desc": "基于 Fumadocs 的完整设计文档站，中英双语组件 API 文档、令牌展廊、布局模式指南和实时代码示例。"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "desc": "链接可能已过期，或页面已迁移。",
+    "home": "返回 {brandName}",
+    "docs": "打开文档"
+  },
+  "ui": {
+    "search": {
+      "placeholder": "搜索版本发布..."
+    },
+    "nav": {
+      "toggleMenu": "切换菜单"
+    },
+    "actions": {
+      "showFullRelease": "查看完整发布",
+      "copyLinkToRelease": "复制发布链接",
+      "copyLink": "复制链接",
+      "openInNewTab": "在新标签页打开"
+    },
+    "status": {
+      "comingSoon": "即将推出"
+    }
+  },
+  "licensing": {
+    "hero": {
+      "title": "双<hl>许可证</hl>模式",
+      "description": "{brandName}-Sailor 基于 AGPL-3.0 开源。我们同时为构建闭源产品的团队提供商业授权。"
+    },
+    "plans": {
+      "agpl": {
+        "badge": "永久免费",
+        "title": "AGPL-3.0",
+        "subtitle": "开源协议",
+        "description": "开源项目、学术研究、个人学习",
+        "features": {
+          "sourceAccess": "完整源码访问权限",
+          "mustOpenSource": "产品必须同步开源",
+          "mustCredit": "必须署名 {brandName}-Sailor",
+          "communitySupport": "仅限社区支持"
+        },
+        "cta": "在 GitHub 上查看"
+      },
+      "freeCommercial": {
+        "badge": "永久免费",
+        "title": "免费商用",
+        "subtitle": "个人与独立开发者",
+        "description": "个人开发者与单席位商业使用者",
+        "features": {
+          "closedSource": "可用于闭源产品",
+          "teamSize": "团队规模 ≤ 1 FTE",
+          "creditRequired": "需要署名",
+          "freeKey": "注册即可获得免费授权密钥"
+        },
+        "cta": "领取免费授权"
+      },
+      "commercial": {
+        "badge": "{price} 起/年",
+        "title": "商业授权",
+        "subtitle": "初创与企业",
+        "description": "初创公司、代理商、团队（2 人及以上）、商业 SaaS 产品",
+        "features": {
+          "closedSource": "可用于闭源产品",
+          "noCopyleft": "无 Copyleft 约束",
+          "noTeamLimits": "无团队人数限制",
+          "commercialSupport": "提供商业支持"
+        },
+        "cta": "购买商业授权"
+      }
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "把授权决策讲清楚：开源分发选择 AGPL，需要闭源交付时使用商业例外授权。",
+      "items": {
+        "whyAgpl": {
+          "q": "为什么选择 AGPL-3.0？",
+          "a": "AGPL 能确保模板的改进始终开源。商业授权则为企业移除了这一约束。"
+        },
+        "soloFree": {
+          "q": "个人开发者真的有免费路径吗？",
+          "a": "是的，完全免费。前往 /get-license 注册、获取密钥、构建你的产品，毫无附加条件。"
+        },
+        "opcDefinition": {
+          "q": "什么算作单席位商业使用？",
+          "a": "即一个全职当量或更少。当你的团队或交付范围超出单席位形态时，就应升级到 Startup 授权。"
+        },
+        "upgrade": {
+          "q": "之后可以升级授权吗？",
+          "a": "当然可以。当团队规模或交付需求超出免费商用层级时，再升级即可。"
+        },
+        "contributions": {
+          "q": "关于开源贡献有什么要求？",
+          "a": "所有贡献都需签署 CLA，详见 CONTRIBUTING.md。"
+        }
+      }
+    },
+    "meta": {
+      "title": "授权方案 — {brandName}",
+      "description": "双许可证模式：AGPL-3.0 开源或商业授权。"
+    }
+  },
+  "licenseWizard": {
+    "tiers": {
+      "individualFree": "个人免费授权",
+      "opcFree": "单人公司授权",
+      "startupCommercial": "Startup 商业授权",
+      "enterprise": "企业授权"
+    },
+    "referralSource": {
+      "selectPlaceholder": "请选择...",
+      "productHunt": "Product Hunt"
+    }
+  },
+  "changelogMeta": {
+    "title": "更新日志 — {brandName}",
+    "description": "每一次发布，都倾注极致的打磨。",
+    "versionTitleSuffix": "{brandName} 更新日志"
+  },
+  "roadmapMeta": {
+    "title": "平台路线图 — {brandName}",
+    "description": "{brandName} 平台基线、Harness 运行时与升级路径的演进路线。"
+  },
+  "blogMeta": {
+    "title": "博客 — {brandName}",
+    "description": "{brandName} 团队的工程洞察、产品更新与 SaaS 最佳实践。"
+  },
+  "getLicenseMeta": {
+    "title": "获取授权 — {brandName}",
+    "description": "2 分钟获取 {brandName} 授权与平台访问权限。"
+  },
+  "landing": {
+    "faq": {
+      "badge": "常见问题",
+      "title": "把疑问一次讲清楚",
+      "subtitle": "在动手之前你需要知道的一切。",
+      "items": {
+        "what-is-sailor": {
+          "question": "{productName} 到底是什么？",
+          "answer": "Sailor 是一个观点鲜明的 Next.js + Tailwind v4 SaaS 基础脚手架，认证、计费、多租户、AI、队列、搜索与邮件等模块开箱即用。克隆代码、配置提供商，通常一周内就能上线。"
+        },
+        "who-is-it-for": {
+          "question": "Sailor 适合谁？",
+          "answer": "适合希望把精力放在产品差异化、不愿第五次重写同一套 auth / 计费 / 租户底座的创业者和产品工程师。"
+        },
+        "free-or-paid": {
+          "question": "免费还是付费？",
+          "answer": "源码以 AGPL-3.0 发布 —— 个人项目、内部工具与 AGPL 兼容的开源项目完全免费。要在闭源 SaaS 中商用，需购买商业授权。所有套餐均提供完整功能（认证、计费、多租户、AI、审计日志）；套餐差异仅在于授权范围与支持 SLA，而非功能限制。"
+        },
+        "china-friendly": {
+          "question": "在中国大陆能用吗？",
+          "answer": "可以。我们提供并行的基础设施配置（阿里云兼容 CDN、ICP 友好域名、可选 Penpot 替代 Figma），同一份代码可以无障碍部署在长城防火墙内。"
+        },
+        "deployment": {
+          "question": "可以部署到哪些环境？",
+          "answer": "任何支持 Node 22+ 的环境。营销站默认部署到 Vercel；后台、网关与 Python 服务通过 Docker / PM2 部署（我们目前在阿里云 ECS 上运行，infra/iac/k8s/ 提供完整的 Kubernetes 清单可用于集群）。企业客户还可部署在客户自有的 VPC 内。"
+        },
+        "security": {
+          "question": "安全性如何保障？",
+          "answer": "应用层信封加密保管密钥（@nebutra/vault）、Postgres RLS 强制租户隔离、CASL/OpenFGA 实现的 RBAC/ABAC（@nebutra/permissions）、HMAC 签名的服务间令牌、签名出站 Webhook，以及所有套餐都内置的 SOC 2 对齐审计管道（@nebutra/audit）。Pro 与企业版额外提供 SOC 2 认证支持、专属事件响应与更长的审计日志保留。"
+        },
+        "support": {
+          "question": "支持服务包括哪些？",
+          "answer": "免费用户享受社区 Discord 与 GitHub Issues 支持。Pro 版增加 1 个工作日响应的优先邮件支持。企业版提供专属 Slack 频道与专属 onboarding 工程师。"
+        },
+        "byo-provider": {
+          "question": "可以接入我自己的供应商吗？",
+          "answer": "可以。所有集成（认证、队列、搜索、邮件、支付、存储、计费）均为 provider-agnostic。每个包内的工厂方法根据单个环境变量挑选适配器——把 Clerk 换成 Better Auth、NextAuth 或 Supabase Auth、把 QStash 换成 BullMQ、把 Resend 换成 SES、把 Stripe 换成 Polar / LemonSqueezy / 国内支付——业务代码无需改动。"
+        },
+        "tech-stack": {
+          "question": "技术栈是什么？",
+          "answer": "Next.js 16 (App Router) + React 19、TypeScript 5.9、Tailwind v4、Prisma 7 + Postgres（含 pgvector + RLS）、Hono 作为 BFF 网关、FastAPI 承载 ML 与重型服务，组件库基于 Radix、{brandName} UI 原语与共享 Motion 层。AI 能力通过 Vercel AI SDK 接入，可在 OpenAI / OpenRouter / SiliconFlow / Azure / 本地模型间自由切换。"
+        },
+        "license": {
+          "question": "授权方式是什么？",
+          "answer": "AGPL-3.0 + 商业例外条款（Commercial Exception）。个人使用、内部工具与 AGPL 兼容的开源项目可免费使用；要在闭源 SaaS 中按现状商用需购买商业授权。所有套餐都包含完整源码。"
+        },
+        "paid-updates": {
+          "question": "升级是否需要再付费？",
+          "answer": "不需要。每份商业授权都包含源码更新——随时从 main 拉取并 rebase 你的 fork 即可。付费购买的是在商业生产环境中使用 Sailor 的权利，而不是获取代码的权利。每个 minor 版本都附带 CHANGELOG 与升级指南，破坏性变更会专门提示。"
+        },
+        "why-turborepo": {
+          "question": "为什么用 Turborepo 而不是单一 Next.js 项目？",
+          "answer": "Sailor 由 10 个应用 + packages/*/* 下的 104 个共享包 + 4 条后端线（Hono gateway、FastAPI/Python、Go、Rust）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
+        },
+        "multi-tenancy": {
+          "question": "多租户怎么实现？",
+          "answer": "两层。请求级租户上下文通过 @nebutra/tenant 实现（AsyncLocalStorage 在每次服务端调用中传播当前组织，含 DB 查询与出站 Webhook）；数据库级隔离通过 Postgres Row-Level Security 策略（infra/data/database/policies/rls.sql）绑定到 session-local 的 app.current_tenant_id。Service-role 连接仅在受信任的内部服务中绕过 RLS；所有面向用户的路由都走 tenant-scoped 客户端。"
+        },
+        "swap-clerk": {
+          "question": "可以把 Clerk 换成其他认证服务吗？",
+          "answer": "可以。@nebutra/auth 内置 Clerk、Better Auth、NextAuth (Auth.js v5) 与 Supabase Auth 四套一等适配器。通过 AUTH_PROVIDER 环境变量切换，或在 create-sailor --auth=... 脚手架时选择——server / React / middleware 接口在不同 provider 下完全一致。要接入第五套只需实现同一接口（约 80 行代码），周边代码不耦合到任何具体 provider。"
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "构建者好评",
+      "title": "用 Sailor 上线后，他们这么说",
+      "subtitle": "我们 beta 内测的客户故事即将上线 — 你可以成为最早登场的那一个。"
+    },
+    "comparison": {
+      "badge": "套餐对比",
+      "title": "按当前阶段选择最合适的套餐",
+      "subtitle": "所有套餐都包含完整源代码以及对应版本线的终身更新。",
+      "plan": {
+        "startup": "初创版",
+        "independent": "独立开发者版",
+        "enterprise": "企业版版"
+      },
+      "feature": {
+        "license": {
+          "label": "许可证",
+          "type": "许可类型",
+          "projects": "可授权项目数"
+        },
+        "source": {
+          "label": "源代码",
+          "full-source": "完整源代码",
+          "all-packages": "全部包与模块",
+          "update-window": "更新窗口"
+        },
+        "support": {
+          "label": "支持",
+          "channel": "支持渠道"
+        }
+      },
+      "ariaTable": "套餐与功能对比"
+    },
+    "socialProof": {
+      "title": "建立在你能信赖的技术栈之上",
+      "logosLabel": "集成合作伙伴",
+      "metrics": {
+        "developers": {
+          "value": "47+",
+          "label": "AI 提供商支持"
+        },
+        "projects": {
+          "value": "104",
+          "label": "monorepo 包"
+        },
+        "uptime": {
+          "value": "7",
+          "label": "种 i18n 语言开箱即用"
+        }
+      }
+    }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP 备案号",
+      "publicSecurity": "公安备案"
+    }
+  },
+  "icpFooter": {
+    "publicSecurity": "公安备案",
+    "recordNumber": "ICP 备案号"
+  },
+  "MarketLocalePicker": {
+    "title": "国家和语言",
+    "description": "为营销站点选择国家与语言。",
+    "triggerAria": "选择国家和语言",
+    "searchPlaceholder": "搜索国家…",
+    "plannedHint": "该语言尚未上线，界面暂以英文显示",
+    "noResults": "没有匹配的国家",
+    "menuAria": "国家和语言"
+  }
+}

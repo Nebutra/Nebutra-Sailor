@@ -34,8 +34,46 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..");
 
-/** Product SSOT — matches packages/platform/i18n ROUTE_LOCALES (minus source). */
-const GLOBAL_TARGETS = ["zh", "ja", "ko", "es", "fr", "de"];
+/**
+ * Global product language wheel targets (minus en).
+ * Keep in sync with packages/platform/i18n PRODUCT_LANGUAGES.
+ * Chinese is CLDR script-split: zh-Hans + zh-Hant (not bare zh).
+ */
+const GLOBAL_TARGETS = [
+  "zh-Hans",
+  "zh-Hant",
+  "de",
+  "es",
+  "fr",
+  "ja",
+  "ko",
+  "pt",
+  "it",
+  "nl",
+  "sv",
+  "da",
+  "fi",
+  "no",
+  "pl",
+  "cs",
+  "ro",
+  "hu",
+  "el",
+  "ru",
+  "uk",
+  "tr",
+  "ar",
+  "he",
+  "fa",
+  "hi",
+  "bn",
+  "ur",
+  "th",
+  "vi",
+  "id",
+  "ms",
+  "sw",
+];
 
 const CATALOGS = [
   {
@@ -76,12 +114,39 @@ const MAX_RETRIES = Math.max(1, Number(process.env.MAX_RETRIES || 4));
 const REQUEST_TIMEOUT_MS = Math.max(5_000, Number(process.env.REQUEST_TIMEOUT_MS || 60_000));
 
 const LOCALE_NAMES = {
-  zh: "Simplified Chinese",
+  "zh-Hans": "Simplified Chinese (简体中文)",
+  "zh-Hant": "Traditional Chinese (繁體中文)",
   ja: "Japanese",
   ko: "Korean",
   es: "Spanish",
   fr: "French",
   de: "German",
+  pt: "Portuguese",
+  it: "Italian",
+  nl: "Dutch",
+  sv: "Swedish",
+  da: "Danish",
+  fi: "Finnish",
+  no: "Norwegian",
+  pl: "Polish",
+  cs: "Czech",
+  ro: "Romanian",
+  hu: "Hungarian",
+  el: "Greek",
+  ru: "Russian",
+  uk: "Ukrainian",
+  tr: "Turkish",
+  ar: "Arabic",
+  he: "Hebrew",
+  fa: "Persian",
+  hi: "Hindi",
+  bn: "Bengali",
+  ur: "Urdu",
+  th: "Thai",
+  vi: "Vietnamese",
+  id: "Indonesian",
+  ms: "Malay",
+  sw: "Swahili",
 };
 
 /** Minimal p-limit (no external dep at repo root). */
