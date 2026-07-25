@@ -109,15 +109,18 @@ jobs:
         run: node scripts/i18n-seed-product-locales.mjs
 
       - name: Concurrent global translate (full wheel)
+        # continue-on-error: Token Plan quota may exhaust mid-run; still commit partial catalogs.
+        continue-on-error: true
         env:
           SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
           SENSENOVA_BASE_URL: https://token.sensenova.cn/v1
           SENSENOVA_TRANSLATE_MODEL: sensenova-6.7-flash-lite
-          CATALOG_CONCURRENCY: "3"
-          LOCALE_CONCURRENCY: "6"
-          CONCURRENCY: ${{ github.event.inputs.concurrency || '24' }}
-          BATCH_SIZE: ${{ github.event.inputs.batch_size || '20' }}
-          MAX_RETRIES: "4"
+          # Conservative defaults so forge/router shell catalogs finish before quota dies
+          CATALOG_CONCURRENCY: "2"
+          LOCALE_CONCURRENCY: "4"
+          CONCURRENCY: ${{ github.event.inputs.concurrency || '8' }}
+          BATCH_SIZE: ${{ github.event.inputs.batch_size || '16' }}
+          MAX_RETRIES: "3"
         run: |
           EXTRA=()
           if [ "${{ github.event.inputs.force }}" = "true" ]; then
@@ -127,7 +130,13 @@ jobs:
           if [ -n "$CAT" ] && [ "$CAT" != "all" ]; then
             EXTRA+=(--catalog "$CAT")
           fi
-          node scripts/i18n-translate-sensenova.mjs "${EXTRA[@]}"
+          # Prefer product shell catalogs first when running "all"
+          if [ "$CAT" = "all" ] || [ -z "$CAT" ]; then
+            node scripts/i18n-translate-sensenova.mjs --catalog forge --catalog router "${EXTRA[@]}" || true
+            node scripts/i18n-translate-sensenova.mjs --catalog web --catalog tsekaluk-dev --catalog landing "${EXTRA[@]}" || true
+          else
+            node scripts/i18n-translate-sensenova.mjs "${EXTRA[@]}"
+          fi
 
       - name: Enable pnpm + install for i18n verify
         run: |

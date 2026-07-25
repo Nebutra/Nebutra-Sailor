@@ -495,7 +495,7 @@ async function main() {
   );
 
   if (!args.dryRun) {
-    const smoke = await translateBatch("zh", [["__ping__", "Hello"]]);
+    const smoke = await translateBatch("zh-Hans", [["__ping__", "Hello"]]);
     if (!smoke.has("__ping__")) {
       console.error("Smoke translation failed — aborting.");
       process.exit(1);
@@ -512,6 +512,9 @@ async function main() {
   const totalT = results.reduce((s, r) => s + (r?.translated ?? 0), 0);
   const totalF = results.reduce((s, r) => s + (r?.failed ?? 0), 0);
   process.stdout.write(`\nDone. translated=${totalT} failed=${totalF}\n`);
+  // Partial success is normal when Token Plan quota is exhausted mid-run.
+  // Keep exit 0 so CI can still commit whatever was translated; hard-fail only
+  // when nothing landed and there were failures (or total API outage).
 
   // Optional: keep landing i18n.lock roughly honest when landing ran
   if (!args.dryRun && catalogs.some((c) => c.id === "landing")) {
@@ -536,7 +539,13 @@ async function main() {
     }
   }
 
-  if (totalF > 0) process.exitCode = 2;
+  if (totalF > 0 && totalT === 0) {
+    process.exitCode = 2;
+  } else if (totalF > 0) {
+    process.stdout.write(
+      `Note: partial run (quota/errors). Retry later without --force to fill remaining identical/missing leaves.\n`,
+    );
+  }
 }
 
 main().catch((err) => {
