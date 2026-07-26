@@ -2,16 +2,28 @@ import { useTranslations } from "next-intl";
 import { COMPARISON_GROUPS, type ComparisonCell, PLAN_IDS } from "@/lib/landing/pricing-features";
 
 /**
+ * next-intl types `t` with a deep template-literal key union. Every key this
+ * table needs is computed (`feature.${groupId}.${rowId}`, `value.${token}`),
+ * which pushes that union past TS2590 "type instantiation is excessively deep".
+ *
+ * The ids and tokens are the SSOT in `pricing-features.ts`, and a test asserts
+ * every referenced token resolves in every locale — so the safety here comes
+ * from that test, not from the key union. Narrow the escape to this ONE
+ * documented boundary instead of scattering per-call-site escape hatches.
+ */
+type DynamicTranslate = (key: string) => string;
+
+/**
  * Pricing comparison table for the marketing landing page.
  *
  * Renders an accessible HTML `<table>` with a sticky header row and per-group
  * section headers. Cell shape:
  *   - boolean true  → check glyph
  *   - boolean false → em-dash
- *   - string       → rendered verbatim
+ *   - string        → i18n token resolved against `landing.comparison.value.*`
  */
 export function PricingComparisonTable() {
-  const t = useTranslations("landing.comparison");
+  const t = useTranslations("landing.comparison") as unknown as DynamicTranslate;
 
   return (
     <section
@@ -77,7 +89,7 @@ PricingComparisonTable.displayName = "LandingPricingComparisonTable";
 interface GroupBlockProps {
   group: (typeof COMPARISON_GROUPS)[number];
   plans: typeof PLAN_IDS;
-  t: ReturnType<typeof useTranslations>;
+  t: DynamicTranslate;
 }
 
 function GroupBlock({ group, plans, t }: GroupBlockProps) {
@@ -89,19 +101,17 @@ function GroupBlock({ group, plans, t }: GroupBlockProps) {
           colSpan={plans.length + 1}
           className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]"
         >
-          {/* biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in COMPARISON_GROUPS; next-intl union is TS2590-complex */}
-          {t(`feature.${group.id}.label` as any)}
+          {t(`feature.${group.id}.label`)}
         </th>
       </tr>
       {group.rows.map((row) => (
         <tr key={row.id} className="border-t border-border hover:bg-muted/40">
           <th scope="row" className="px-6 py-4 text-left text-sm font-medium text-foreground">
-            {/* biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in COMPARISON_GROUPS; next-intl union is TS2590-complex */}
-            {t(`feature.${group.id}.${row.id}` as any)}
+            {t(`feature.${group.id}.${row.id}`)}
           </th>
           {plans.map((plan) => (
             <td key={plan} className="px-6 py-4 text-center text-sm text-muted-foreground">
-              <CellValue value={row.values[plan]} />
+              <CellValue value={row.values[plan]} t={t} />
             </td>
           ))}
         </tr>
@@ -110,13 +120,13 @@ function GroupBlock({ group, plans, t }: GroupBlockProps) {
   );
 }
 
-function CellValue({ value }: { value: ComparisonCell }) {
+function CellValue({ value, t }: { value: ComparisonCell; t: DynamicTranslate }) {
   if (value === true) {
     return (
       <span
         data-cell="check"
         role="img"
-        aria-label="Included"
+        aria-label={t("value.included")}
         className="inline-flex h-6 w-6 items-center justify-center rounded-full font-semibold text-white"
         style={{ background: "hsl(var(--primary))" }}
       >
@@ -126,14 +136,19 @@ function CellValue({ value }: { value: ComparisonCell }) {
   }
   if (value === false) {
     return (
-      <span data-cell="dash" role="img" aria-label="Not included" className="text-muted-foreground">
+      <span
+        data-cell="dash"
+        role="img"
+        aria-label={t("value.notIncluded")}
+        className="text-muted-foreground"
+      >
         —
       </span>
     );
   }
   return (
     <span data-cell="text" className="font-medium text-foreground">
-      {value}
+      {t(`value.${value}`)}
     </span>
   );
 }

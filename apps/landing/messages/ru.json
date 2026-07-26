@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Строить бесплатно. Платить — только если нужна наша ответственность.",
+      "description": "Создание коммерческого продукта на {brandName} не стоит ничего — без платы, без лицензионного ключа, без регистрации, без copyleft. Платные уровни продают поддержку, SLA, возмещение ущерба и права на товарный знак, но никогда — разрешение на использование.",
+      "socialProofText": "MIT в npm · FSL-1.1-ALv2 в репозитории, через два года переходит в Apache-2.0 · коммерческое использование бесплатно при любом масштабе.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "СООБЩЕСТВО",
+        "price": "Бесплатно",
+        "period": "навсегда",
+        "desc": "Для всех. Любой размер команды, любая выручка. Коммерческое использование с закрытым кодом включено, без регистрации и без обязательного упоминания.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Полное ядро SaaS на Next.js 16, все пакеты включены",
+        "f2": "Коммерческое использование с закрытым кодом при любом размере команды и выручке",
+        "f3": "Весь стек: Auth, Платежи, Организации, API, Email, i18n, Фоновые задачи, Хранилище и другое",
+        "f4": "Маркетинговые функции: Блог, лендинг, SEO, Аналитика",
+        "f5": "Публичные issues, Discussions и Discord — по мере возможностей, без гарантии ответа"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "КОМАНДА",
+        "price": "2 000 $",
+        "period": "/ год",
+        "desc": "Для команд, которым нужно обязательство, а не надежда. Всё и так бесплатно — здесь вы покупаете наше внимание.",
+        "cta": "Получить поддержку {brandName}",
+        "f1": "Приватный канал поддержки (email + общий Slack или Discord)",
+        "f2": "Первый ответ гарантированно в течение двух рабочих дней",
+        "f3": "Приоритетная сортировка багов — раньше issues сообщества",
+        "f4": "Помощь с обновлениями и предупреждение о ломающих изменениях",
+        "f5": "Всё из Сообщества"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "От 30 000 $",
+        "period": "/ год",
+        "desc": "Для организаций, чьи закупки, юристы или служба безопасности требуют контрагента, который подпишет договор.",
+        "cta": "Связаться с отделом продаж",
+        "f1": "SLA по времени ответа — 4 рабочих часа стандартно, 1 час при простое продакшена",
+        "f2": "Возмещение ущерба и договорное обязательство по патчам безопасности",
+        "f3": "Подписанное соглашение об обработке данных, пакет соответствия и обязательство непрерывности",
+        "f4": "Права на товарный знак и white label, а также отказ от ограничения конкурирующего использования",
+        "f5": "Ветка долгосрочной поддержки и инженерное сопровождение частного развёртывания",
+        "f6": "Всё из Команды"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Истории клиентов из нашей бета-группы скоро появятся — будьте среди первых."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Сравнить уровни",
+      "title": "Всё бесплатно. Выберите, насколько твёрдые обязательства вам нужны.",
+      "subtitle": "Каждый уровень включает полный исходный код и разрешает бесплатное коммерческое использование с закрытым кодом. Различия — в поддержке, договорных обязательствах и правах на товарный знак.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
+        "community": "Сообщество",
+        "team": "Команда",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Лицензия",
+          "type": "Лицензия",
+          "commercial-use": "Коммерческое использование с закрытым кодом",
+          "registration": "Регистрация",
+          "trademark": "Права на товарный знак"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Исходный код",
+          "full-source": "Полный исходный код",
+          "all-packages": "Все пакеты и модули",
+          "update-window": "Обновления"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Поддержка",
+          "channel": "Канал поддержки",
+          "first-response": "Гарантированный первый ответ",
+          "security-patch": "Обязательство по патчам безопасности"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Закупки",
+          "indemnification": "Возмещение ущерба",
+          "dpa": "Подписанное соглашение об обработке и пакет соответствия",
+          "continuity": "Обязательство непрерывности"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Сравнение уровней и возможностей",
+      "value": {
+        "included": "Включено",
+        "notIncluded": "Не включено",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Не требуется",
+        "whiteLabelRights": "Права white label",
+        "unlimited": "Без ограничений",
+        "unlimitedPlusNotice": "Без ограничений + предупреждение о ломающих изменениях",
+        "unlimitedPlusLts": "Без ограничений + ветка долгосрочной поддержки",
+        "publicChannels": "Публичные issues и Discord",
+        "privateChannel": "Приватный канал",
+        "namedContact": "Персональный контакт",
+        "twoBusinessDays": "2 рабочих дня",
+        "fourBusinessHours": "4 рабочих часа",
+        "bestEffort": "По мере возможностей",
+        "contractual": "По договору"
+      }
     },
     "socialProof": {
       "title": "Построено на надёжном стеке",

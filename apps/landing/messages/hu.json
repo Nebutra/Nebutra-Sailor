@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Ingyenes az építéshez. Csak akkor fizess, ha helytállást vársz tőlünk.",
+      "description": "Kereskedelmi termék építése {brandName} alapon semmibe sem kerül — nincs díj, nincs licenckulcs, nincs regisztráció, nincs copyleft. A fizetős csomagok támogatást, SLA-t, kártalanítást és védjegyjogokat adnak, sosem használati engedélyt.",
+      "socialProofText": "MIT az npm-en · FSL-1.1-ALv2 a repóban, két év után Apache-2.0-ra vált · a kereskedelmi használat bármilyen méretben ingyenes.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "KÖZÖSSÉG",
+        "price": "Ingyenes",
+        "period": "örökre",
+        "desc": "Mindenkinek. Bármilyen csapatméret, bármilyen árbevétel. A zárt forráskódú kereskedelmi használat benne van, regisztráció és feltüntetési kötelezettség nélkül.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Teljes Next.js 16 SaaS-mag, minden csomaggal",
+        "f2": "Zárt forráskódú kereskedelmi használat bármilyen csapatméret és árbevétel mellett",
+        "f3": "Teljes stack: Auth, Fizetések, Szervezetek, API, E-mail, i18n, Háttérfeladatok, Tárolás és több",
+        "f4": "Marketingfunkciók: Blog, landing oldal, SEO, Analytics",
+        "f5": "Nyilvános issue-k, Discussions és Discord — legjobb tudásunk szerint, válaszgarancia nélkül"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "CSAPAT",
+        "price": "2 000 $",
+        "period": "/ év",
+        "desc": "Olyan csapatoknak, akiknek nem remény, hanem vállalás kell. Minden eleve ingyenes — ez a figyelmünket veszi meg.",
+        "cta": "{brandName} támogatás igénylése",
+        "f1": "Privát támogatási csatorna (e-mail + közös Slack vagy Discord)",
+        "f2": "Első válasz garantáltan két munkanapon belül",
+        "f3": "Elsőbbségi hibabesorolás a közösségi issue-k előtt",
+        "f4": "Frissítési segítség és előzetes értesítés a törő változásokról",
+        "f5": "Minden, ami a Közösségben"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "30 000 $-tól",
+        "period": "/ év",
+        "desc": "Olyan szervezeteknek, ahol a beszerzés, a jogi vagy a biztonsági felülvizsgálat aláíró szerződő felet kíván.",
+        "cta": "Kapcsolatfelvétel az értékesítéssel",
+        "f1": "Válasz-SLA — 4 munkaóra alapesetben, 1 óra éles leállásnál",
+        "f2": "Kártalanítás és szerződéses vállalás a biztonsági javításokra",
+        "f3": "Aláírt adatfeldolgozói szerződés, megfelelőségi csomag és folytonossági vállalás",
+        "f4": "Védjegy- és white label-jogok, valamint a versenytárs-használati kikötés alóli felmentés",
+        "f5": "Hosszú távú támogatási ág és privát telepítési mérnöki támogatás",
+        "f6": "Minden, ami a Csapatban"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "A béta csoportunk ügyféltörténetei hamarosan elérhetők – legyél te is az első között."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Csomagok összehasonlítása",
+      "title": "Minden ingyenes. Válaszd ki, mekkora vállalásra van szükséged.",
+      "subtitle": "Minden csomag tartalmazza a teljes forráskódot, és díjmentesen engedi a zárt forráskódú kereskedelmi használatot. A különbség a támogatásban, a szerződéses vállalásokban és a védjegyjogokban van.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
+        "community": "Közösség",
+        "team": "Csapat",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Licenc",
+          "type": "Licenc",
+          "commercial-use": "Zárt forráskódú kereskedelmi használat",
+          "registration": "Regisztráció",
+          "trademark": "Védjegyjogok"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Forráskód",
+          "full-source": "Teljes forráskód",
+          "all-packages": "Minden csomag és modul",
+          "update-window": "Frissítések"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Támogatás",
+          "channel": "Támogatási csatorna",
+          "first-response": "Garantált első válasz",
+          "security-patch": "Biztonsági javítási vállalás"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Beszerzés",
+          "indemnification": "Kártalanítás",
+          "dpa": "Aláírt adatfeldolgozói szerződés és megfelelőségi csomag",
+          "continuity": "Folytonossági vállalás"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Csomagok és funkciók összehasonlítása",
+      "value": {
+        "included": "Tartalmazza",
+        "notIncluded": "Nem tartalmazza",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Nem szükséges",
+        "whiteLabelRights": "White label-jogok",
+        "unlimited": "Korlátlan",
+        "unlimitedPlusNotice": "Korlátlan + előzetes értesítés a törő változásokról",
+        "unlimitedPlusLts": "Korlátlan + hosszú távú támogatási ág",
+        "publicChannels": "Nyilvános issue-k és Discord",
+        "privateChannel": "Privát csatorna",
+        "namedContact": "Kijelölt kapcsolattartó",
+        "twoBusinessDays": "2 munkanap",
+        "fourBusinessHours": "4 munkaóra",
+        "bestEffort": "Legjobb tudás szerint",
+        "contractual": "Szerződéses"
+      }
     },
     "socialProof": {
       "title": "Megbízható technológiai alapokon",

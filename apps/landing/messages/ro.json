@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Gratuit de construit. Plătești doar dacă ai nevoie să răspundem noi.",
+      "description": "Construirea unui produs comercial pe {brandName} nu costă nimic — fără taxă, fără cheie de licență, fără înregistrare, fără copyleft. Nivelurile plătite vând suport, SLA-uri, despăgubire și drepturi de marcă, niciodată permisiunea de utilizare.",
+      "socialProofText": "MIT pe npm · FSL-1.1-ALv2 în repository, trece la Apache-2.0 după doi ani · utilizare comercială gratuită la orice scară.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "COMUNITATE",
+        "price": "Gratuit",
+        "period": "pentru totdeauna",
+        "desc": "Pentru toată lumea. Orice dimensiune a echipei, orice cifră de afaceri. Utilizarea comercială cu sursă închisă este inclusă, fără înregistrare și fără obligația de atribuire.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Nucleu SaaS Next.js 16 complet, toate pachetele incluse",
+        "f2": "Utilizare comercială cu sursă închisă la orice dimensiune sau cifră de afaceri",
+        "f3": "Stivă completă: Auth, Plăți, Organizații, API, Email, i18n, Sarcini de fundal, Stocare și altele",
+        "f4": "Funcții de marketing: Blog, pagină de destinație, SEO, Analytics",
+        "f5": "Issue-uri publice, Discussions și Discord — în măsura posibilului, fără garanție de răspuns"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "ECHIPĂ",
+        "price": "2.000 $",
+        "period": "/ an",
+        "desc": "Pentru echipele care au nevoie de un angajament, nu de o speranță. Totul este deja gratuit — asta cumpără atenția noastră.",
+        "cta": "Obține suport {brandName}",
+        "f1": "Canal privat de suport (email + Slack sau Discord partajat)",
+        "f2": "Primul răspuns garantat în două zile lucrătoare",
+        "f3": "Triaj prioritar al erorilor, înaintea issue-urilor comunității",
+        "f4": "Asistență la actualizare și notificare prealabilă a modificărilor incompatibile",
+        "f5": "Tot ce este în Comunitate"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "De la 30.000 $",
+        "period": "/ an",
+        "desc": "Pentru organizațiile ale căror achiziții, departament juridic sau analiză de securitate cer o contraparte care semnează.",
+        "cta": "Contactează echipa de vânzări",
+        "f1": "SLA de răspuns — 4 ore lucrătoare standard, 1 oră la oprirea producției",
+        "f2": "Despăgubire și angajament contractual privind patch-urile de securitate",
+        "f3": "DPA semnat, pachet de conformitate și angajament de continuitate",
+        "f4": "Drepturi de marcă și white label, plus derogare pentru utilizarea concurentă",
+        "f5": "Ramură de suport pe termen lung și inginerie pentru implementare privată",
+        "f6": "Tot ce este în Echipă"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Povestile clienților din cohorta noastră beta vor apărea curând — fii printre primii."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Compară nivelurile",
+      "title": "Totul este gratuit. Alege de cât angajament ai nevoie.",
+      "subtitle": "Fiecare nivel include codul sursă complet și permite utilizarea comercială cu sursă închisă fără costuri. Diferențele sunt suportul, angajamentele contractuale și drepturile de marcă.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
+        "community": "Comunitate",
+        "team": "Echipă",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Licență",
+          "type": "Licență",
+          "commercial-use": "Utilizare comercială cu sursă închisă",
+          "registration": "Înregistrare",
+          "trademark": "Drepturi de marcă"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Cod sursă",
+          "full-source": "Cod sursă complet",
+          "all-packages": "Toate pachetele și modulele",
+          "update-window": "Actualizări"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Suport",
+          "channel": "Canal de suport",
+          "first-response": "Primul răspuns garantat",
+          "security-patch": "Angajament privind patch-urile de securitate"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Achiziții",
+          "indemnification": "Despăgubire",
+          "dpa": "DPA semnat și pachet de conformitate",
+          "continuity": "Angajament de continuitate"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Compararea nivelurilor și funcțiilor",
+      "value": {
+        "included": "Inclus",
+        "notIncluded": "Neinclus",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Nu este necesară",
+        "whiteLabelRights": "Drepturi white label",
+        "unlimited": "Nelimitate",
+        "unlimitedPlusNotice": "Nelimitate + notificare prealabilă a modificărilor incompatibile",
+        "unlimitedPlusLts": "Nelimitate + ramură de suport pe termen lung",
+        "publicChannels": "Issue-uri publice și Discord",
+        "privateChannel": "Canal privat",
+        "namedContact": "Contact desemnat",
+        "twoBusinessDays": "2 zile lucrătoare",
+        "fourBusinessHours": "4 ore lucrătoare",
+        "bestEffort": "În măsura posibilului",
+        "contractual": "Contractual"
+      }
     },
     "socialProof": {
       "title": "Construit pe o stack pe care îl poți încrede",

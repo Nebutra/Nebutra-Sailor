@@ -1715,7 +1715,24 @@
           "continuity": "業務持續性承諾"
         }
       },
-      "ariaTable": "各方案與功能比較"
+      "ariaTable": "各方案與功能比較",
+      "value": {
+        "included": "包含",
+        "notIncluded": "不包含",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "無需註冊",
+        "whiteLabelRights": "白牌授權",
+        "unlimited": "不限",
+        "unlimitedPlusNotice": "不限 + 破壞性變更預告",
+        "unlimitedPlusLts": "不限 + 長期支援分支",
+        "publicChannels": "公開 issue 與 Discord",
+        "privateChannel": "私有管道",
+        "namedContact": "專屬對接人",
+        "twoBusinessDays": "2 個工作天",
+        "fourBusinessHours": "4 個工作小時",
+        "bestEffort": "盡力而為",
+        "contractual": "合約約定"
+      }
     },
     "socialProof": {
       "title": "建立在你能信赖的技术栈之上",

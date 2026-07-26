@@ -1715,7 +1715,24 @@
           "continuity": "业务连续性承诺"
         }
       },
-      "ariaTable": "各档位与能力对比"
+      "ariaTable": "各档位与能力对比",
+      "value": {
+        "included": "包含",
+        "notIncluded": "不包含",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "无需注册",
+        "whiteLabelRights": "白牌授权",
+        "unlimited": "不限",
+        "unlimitedPlusNotice": "不限 + 破坏性变更预告",
+        "unlimitedPlusLts": "不限 + 长期支持分支",
+        "publicChannels": "公开 issue 与 Discord",
+        "privateChannel": "私有通道",
+        "namedContact": "专属对接人",
+        "twoBusinessDays": "2 个工作日",
+        "fourBusinessHours": "4 个工作小时",
+        "bestEffort": "尽力而为",
+        "contractual": "合同约定"
+      }
     },
     "socialProof": {
       "title": "建立在你能信赖的技术栈之上",

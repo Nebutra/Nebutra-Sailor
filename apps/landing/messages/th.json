@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "สร้างได้ฟรี จ่ายเฉพาะเมื่อคุณต้องการให้เรารับผิดชอบ",
+      "description": "การสร้างผลิตภัณฑ์เชิงพาณิชย์บน {brandName} ไม่มีค่าใช้จ่าย — ไม่มีค่าธรรมเนียม ไม่มีคีย์ไลเซนส์ ไม่ต้องลงทะเบียน ไม่มีคอปปีเลฟต์ แพ็กเกจแบบชำระเงินขายการสนับสนุน SLA การชดใช้ค่าเสียหาย และสิทธิ์เครื่องหมายการค้า ไม่เคยขายสิทธิ์การใช้งาน",
+      "socialProofText": "MIT บน npm · FSL-1.1-ALv2 บนรีโพ เปลี่ยนเป็น Apache-2.0 หลังสองปี · ใช้เชิงพาณิชย์ฟรีทุกขนาด",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "คอมมูนิตี",
+        "price": "ฟรี",
+        "period": "ตลอดไป",
+        "desc": "สำหรับทุกคน ไม่จำกัดขนาดทีมและรายได้ รวมการใช้เชิงพาณิชย์แบบปิดซอร์ส โดยไม่ต้องลงทะเบียนและไม่ต้องให้เครดิต",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "แกน SaaS ของ Next.js 16 ครบถ้วน พร้อมทุกแพ็กเกจ",
+        "f2": "ใช้เชิงพาณิชย์แบบปิดซอร์สได้ทุกขนาดทีมและทุกระดับรายได้",
+        "f3": "สแตกครบ: Auth, การชำระเงิน, องค์กร, API, อีเมล, i18n, งานเบื้องหลัง, พื้นที่จัดเก็บ และอื่น ๆ",
+        "f4": "ฟีเจอร์การตลาด: บล็อก, แลนดิงเพจ, SEO, Analytics",
+        "f5": "issue สาธารณะ, Discussions และ Discord — ตามความเหมาะสม ไม่รับประกันการตอบกลับ"
       },
       "team": {
-        "badge": "TEAM",
+        "badge": "ทีม",
         "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "period": "/ ปี",
+        "desc": "สำหรับทีมที่ต้องการคำมั่น ไม่ใช่ความหวัง ทุกอย่างฟรีอยู่แล้ว — แพ็กเกจนี้ซื้อความใส่ใจของเรา",
+        "cta": "รับการสนับสนุน {brandName}",
+        "f1": "ช่องทางสนับสนุนส่วนตัว (อีเมล + Slack หรือ Discord ร่วมกัน)",
+        "f2": "รับประกันการตอบกลับครั้งแรกภายในสองวันทำการ",
+        "f3": "จัดลำดับความสำคัญของบั๊กก่อน issue จากคอมมูนิตี",
+        "f4": "ช่วยเหลือการอัปเกรดและแจ้งล่วงหน้าเรื่องการเปลี่ยนแปลงที่กระทบความเข้ากันได้",
+        "f5": "ทุกอย่างในแพ็กเกจคอมมูนิตี"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "องค์กร",
+        "price": "เริ่มต้น $30,000",
+        "period": "/ ปี",
+        "desc": "สำหรับองค์กรที่ฝ่ายจัดซื้อ กฎหมาย หรือการตรวจสอบความปลอดภัยต้องการคู่สัญญาที่ลงนาม",
+        "cta": "ติดต่อฝ่ายขาย",
+        "f1": "SLA การตอบกลับ — 4 ชั่วโมงทำการตามมาตรฐาน, 1 ชั่วโมงเมื่อระบบโปรดักชันล่ม",
+        "f2": "การชดใช้ค่าเสียหายและคำมั่นตามสัญญาเรื่องแพตช์ความปลอดภัย",
+        "f3": "DPA ที่ลงนามแล้ว ชุดเอกสารการปฏิบัติตามข้อกำหนด และคำมั่นเรื่องความต่อเนื่อง",
+        "f4": "สิทธิ์เครื่องหมายการค้าและไวต์เลเบล พร้อมการยกเว้นข้อจำกัดการใช้แข่งขัน",
+        "f5": "สาขาการสนับสนุนระยะยาวและวิศวกรรมการติดตั้งแบบส่วนตัว",
+        "f6": "ทุกอย่างในแพ็กเกจทีม"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "เปรียบเทียบแพ็กเกจ",
+      "title": "ทุกอย่างฟรี เลือกระดับคำมั่นที่คุณต้องการ",
+      "subtitle": "ทุกแพ็กเกจให้ซอร์สโค้ดทั้งหมดและอนุญาตให้ใช้เชิงพาณิชย์แบบปิดซอร์สโดยไม่มีค่าใช้จ่าย ความแตกต่างอยู่ที่การสนับสนุน คำมั่นตามสัญญา และสิทธิ์เครื่องหมายการค้า",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "คอมมูนิตี",
+        "team": "ทีม",
+        "enterprise": "องค์กร"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "ไลเซนส์",
+          "type": "ไลเซนส์",
+          "commercial-use": "ใช้เชิงพาณิชย์แบบปิดซอร์ส",
+          "registration": "การลงทะเบียน",
+          "trademark": "สิทธิ์เครื่องหมายการค้า"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "ซอร์สโค้ด",
+          "full-source": "ซอร์สโค้ดทั้งหมด",
+          "all-packages": "ทุกแพ็กเกจและโมดูล",
+          "update-window": "การอัปเดต"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "การสนับสนุน",
+          "channel": "ช่องทางสนับสนุน",
+          "first-response": "รับประกันการตอบกลับครั้งแรก",
+          "security-patch": "คำมั่นเรื่องแพตช์ความปลอดภัย"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "การจัดซื้อ",
+          "indemnification": "การชดใช้ค่าเสียหาย",
+          "dpa": "DPA ที่ลงนามแล้วและชุดเอกสารการปฏิบัติตามข้อกำหนด",
+          "continuity": "คำมั่นเรื่องความต่อเนื่อง"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "เปรียบเทียบแพ็กเกจและคุณสมบัติ",
+      "value": {
+        "included": "รวมอยู่ด้วย",
+        "notIncluded": "ไม่รวม",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "ไม่ต้อง",
+        "whiteLabelRights": "สิทธิ์ไวต์เลเบล",
+        "unlimited": "ไม่จำกัด",
+        "unlimitedPlusNotice": "ไม่จำกัด + แจ้งล่วงหน้าเรื่องการเปลี่ยนแปลงที่กระทบความเข้ากันได้",
+        "unlimitedPlusLts": "ไม่จำกัด + สาขาสนับสนุนระยะยาว",
+        "publicChannels": "issue สาธารณะ และ Discord",
+        "privateChannel": "ช่องทางส่วนตัว",
+        "namedContact": "ผู้ติดต่อเฉพาะ",
+        "twoBusinessDays": "2 วันทำการ",
+        "fourBusinessHours": "4 ชั่วโมงทำการ",
+        "bestEffort": "ตามความเหมาะสม",
+        "contractual": "ตามสัญญา"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

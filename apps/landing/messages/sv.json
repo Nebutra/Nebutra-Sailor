@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Gratis att bygga på. Betala bara om du behöver att vi ansvarar.",
+      "description": "Att bygga en kommersiell produkt på {brandName} kostar ingenting — ingen avgift, ingen licensnyckel, ingen registrering, ingen copyleft. Betalda nivåer säljer support, SLA:er, skadeslöshet och varumärkesrättigheter, aldrig tillstånd.",
+      "socialProofText": "MIT på npm · FSL-1.1-ALv2 i repot, övergår till Apache-2.0 efter två år · kommersiell användning gratis i alla storlekar.",
       "community": {
         "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "price": "Gratis",
+        "period": "för alltid",
+        "desc": "För alla. Oavsett teamstorlek och omsättning. Kommersiell användning med sluten källkod ingår, utan registrering och utan krav på attribution.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Komplett Next.js 16-SaaS-kärna, alla paket inkluderade",
+        "f2": "Kommersiell användning med sluten källkod oavsett storlek eller omsättning",
+        "f3": "Hela stacken: Auth, Betalningar, Organisationer, API, E-post, i18n, Bakgrundsjobb, Lagring med mera",
+        "f4": "Marknadsföringsfunktioner: Blogg, landningssida, SEO, Analytics",
+        "f5": "Publika issues, Discussions och Discord — efter bästa förmåga, ingen svarsgaranti"
       },
       "team": {
         "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "price": "2 000 $",
+        "period": "/ år",
+        "desc": "För team som behöver ett åtagande i stället för en förhoppning. Allt är redan gratis — det här köper vår uppmärksamhet.",
+        "cta": "Skaffa {brandName}-support",
+        "f1": "Privat supportkanal (e-post + delad Slack eller Discord)",
+        "f2": "Första svar garanterat inom två arbetsdagar",
+        "f3": "Prioriterad buggtriage före community-issues",
+        "f4": "Uppgraderingshjälp och förvarning om brytande ändringar",
+        "f5": "Allt i Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "Från 30 000 $",
+        "period": "/ år",
+        "desc": "För organisationer vars inköp, juridik eller säkerhetsgranskning kräver en motpart som skriver under.",
+        "cta": "Kontakta säljteamet",
+        "f1": "Svars-SLA — 4 arbetstimmar som standard, 1 timme vid produktionsstopp",
+        "f2": "Skadeslöshet och avtalat åtagande om säkerhetspatchar",
+        "f3": "Undertecknat personuppgiftsbiträdesavtal, efterlevnadspaket och kontinuitetsåtagande",
+        "f4": "Varumärkes- och white label-rättigheter samt undantag från konkurrensklausulen",
+        "f5": "Long term support-gren och teknikstöd för privat driftsättning",
+        "f6": "Allt i Team"
       }
     },
     "faq": {
@@ -1680,9 +1680,9 @@
       "subtitle": "Kundberättelser från vår beta-kohort landar snart — var bland de första."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Jämför nivåer",
+      "title": "Allt är gratis. Välj hur mycket åtagande du behöver.",
+      "subtitle": "Varje nivå levererar hela källkoden och tillåter kommersiell användning med sluten källkod utan kostnad. Skillnaderna ligger i support, avtalade åtaganden och varumärkesrättigheter.",
       "plan": {
         "community": "Community",
         "team": "Team",
@@ -1690,32 +1690,49 @@
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Licens",
+          "type": "Licens",
+          "commercial-use": "Kommersiell användning med sluten källkod",
+          "registration": "Registrering",
+          "trademark": "Varumärkesrättigheter"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Källkod",
+          "full-source": "Fullständig källkod",
+          "all-packages": "Alla paket och moduler",
+          "update-window": "Uppdateringar"
         },
         "support": {
           "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "channel": "Supportkanal",
+          "first-response": "Garanterat första svar",
+          "security-patch": "Åtagande om säkerhetspatchar"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Inköp",
+          "indemnification": "Skadeslöshet",
+          "dpa": "Undertecknat biträdesavtal och efterlevnadspaket",
+          "continuity": "Kontinuitetsåtagande"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Jämförelse av nivåer och funktioner",
+      "value": {
+        "included": "Ingår",
+        "notIncluded": "Ingår inte",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Krävs inte",
+        "whiteLabelRights": "White label-rättigheter",
+        "unlimited": "Obegränsat",
+        "unlimitedPlusNotice": "Obegränsat + förvarning om brytande ändringar",
+        "unlimitedPlusLts": "Obegränsat + long term support-gren",
+        "publicChannels": "Publika issues och Discord",
+        "privateChannel": "Privat kanal",
+        "namedContact": "Namngiven kontakt",
+        "twoBusinessDays": "2 arbetsdagar",
+        "fourBusinessHours": "4 arbetstimmar",
+        "bestEffort": "Efter bästa förmåga",
+        "contractual": "Avtalat"
+      }
     },
     "socialProof": {
       "title": "Byggt på en stack du kan lita på",

@@ -25,6 +25,12 @@
  */
 export type PlanId = "community" | "team" | "enterprise";
 
+/**
+ * A cell is either a boolean (rendered as check / dash) or an i18n token
+ * resolved against `landing.comparison.value.*`. Cells are NEVER raw display
+ * text — otherwise the table renders translated row labels beside English
+ * values, which is how it shipped before 2026-07-26.
+ */
 export type ComparisonCell = boolean | string;
 
 export interface ComparisonRow {
@@ -46,9 +52,9 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
       {
         id: "type",
         values: {
-          community: "MIT + FSL-1.1-ALv2",
-          team: "MIT + FSL-1.1-ALv2",
-          enterprise: "MIT + FSL-1.1-ALv2",
+          community: "licenseIds",
+          team: "licenseIds",
+          enterprise: "licenseIds",
         },
       },
       {
@@ -57,11 +63,11 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
       },
       {
         id: "registration",
-        values: { community: "Not required", team: "Not required", enterprise: "Not required" },
+        values: { community: "notRequired", team: "notRequired", enterprise: "notRequired" },
       },
       {
         id: "trademark",
-        values: { community: false, team: false, enterprise: "White-label rights" },
+        values: { community: false, team: false, enterprise: "whiteLabelRights" },
       },
     ],
   },
@@ -73,9 +79,9 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
       {
         id: "update-window",
         values: {
-          community: "Unlimited",
-          team: "Unlimited + advance breaking-change notice",
-          enterprise: "Unlimited + long-term support branch",
+          community: "unlimited",
+          team: "unlimitedPlusNotice",
+          enterprise: "unlimitedPlusLts",
         },
       },
     ],
@@ -86,18 +92,18 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
       {
         id: "channel",
         values: {
-          community: "Public issues & Discord",
-          team: "Private channel",
-          enterprise: "Named contact",
+          community: "publicChannels",
+          team: "privateChannel",
+          enterprise: "namedContact",
         },
       },
       {
         id: "first-response",
-        values: { community: false, team: "2 business days", enterprise: "4 business hours" },
+        values: { community: false, team: "twoBusinessDays", enterprise: "fourBusinessHours" },
       },
       {
         id: "security-patch",
-        values: { community: "Best-effort", team: "Best-effort", enterprise: "Contractual" },
+        values: { community: "bestEffort", team: "bestEffort", enterprise: "contractual" },
       },
     ],
   },

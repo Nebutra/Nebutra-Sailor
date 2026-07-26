@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Gratuit pour construire. Payez seulement si vous voulez nous engager.",
+      "description": "Créer un produit commercial sur {brandName} ne coûte rien — aucun frais, aucune clé de licence, aucune inscription, aucun copyleft. Les offres payantes vendent du support, des SLA, une garantie d'indemnisation et des droits de marque, jamais une autorisation d'utilisation.",
+      "socialProofText": "MIT sur npm · FSL-1.1-ALv2 sur le dépôt, converti en Apache-2.0 après deux ans · usage commercial gratuit à toute échelle.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "COMMUNAUTÉ",
+        "price": "Gratuit",
+        "period": "pour toujours",
+        "desc": "Pour tout le monde. Quelle que soit la taille de l'équipe ou le chiffre d'affaires. Usage commercial en code fermé inclus, sans inscription ni obligation d'attribution.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Noyau SaaS Next.js 16 complet, tous les paquets inclus",
+        "f2": "Usage commercial en code fermé, quelle que soit la taille ou le revenu",
+        "f3": "Stack complète : Auth, Paiements, Organisations, API, E-mail, i18n, Tâches de fond, Stockage et plus",
+        "f4": "Fonctions marketing : Blog, page d'accueil, SEO, Analytics",
+        "f5": "Issues publiques, Discussions et Discord — au mieux, sans garantie de réponse"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "ÉQUIPE",
+        "price": "2 000 $",
+        "period": "/ an",
+        "desc": "Pour les équipes qui ont besoin d'un engagement plutôt que d'un espoir. Tout est déjà gratuit — ceci achète notre attention.",
+        "cta": "Obtenir le support {brandName}",
+        "f1": "Canal de support privé (e-mail + Slack ou Discord partagé)",
+        "f2": "Première réponse garantie sous deux jours ouvrés",
+        "f3": "Tri prioritaire des bugs, avant les issues de la communauté",
+        "f4": "Aide à la migration et préavis des changements cassants",
+        "f5": "Tout ce que contient Communauté"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "ENTREPRISE",
+        "price": "À partir de 30 000 $",
+        "period": "/ an",
+        "desc": "Pour les organisations dont les achats, le juridique ou la sécurité exigent une contrepartie qui signe.",
+        "cta": "Contacter le service commercial",
+        "f1": "SLA de réponse — 4 heures ouvrées en standard, 1 heure en cas d'arrêt de production",
+        "f2": "Indemnisation et engagement contractuel sur les correctifs de sécurité",
+        "f3": "DPA signé, dossier de conformité et engagement de continuité",
+        "f4": "Droits de marque et de marque blanche, plus dérogation à l'usage concurrent",
+        "f5": "Branche de support long terme et ingénierie de déploiement privé",
+        "f6": "Tout ce que contient Équipe"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Les témoignages clients de notre cohorte bêta arrivent bientôt — soyez parmi les premiers."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Comparer les offres",
+      "title": "Tout est gratuit. Choisissez le niveau d'engagement dont vous avez besoin.",
+      "subtitle": "Chaque offre livre le code source complet et autorise l'usage commercial en code fermé sans frais. Les différences portent sur le support, les engagements contractuels et les droits de marque.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "Communauté",
+        "team": "Équipe",
+        "enterprise": "Entreprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Licence",
+          "type": "Licence",
+          "commercial-use": "Usage commercial en code fermé",
+          "registration": "Inscription",
+          "trademark": "Droits de marque"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Code source",
+          "full-source": "Code source complet",
+          "all-packages": "Tous les paquets et modules",
+          "update-window": "Mises à jour"
         },
         "support": {
           "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "channel": "Canal de support",
+          "first-response": "Première réponse garantie",
+          "security-patch": "Engagement sur les correctifs de sécurité"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Achats",
+          "indemnification": "Indemnisation",
+          "dpa": "DPA signé et dossier de conformité",
+          "continuity": "Engagement de continuité"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Comparaison des offres et des fonctionnalités",
+      "value": {
+        "included": "Inclus",
+        "notIncluded": "Non inclus",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Non requise",
+        "whiteLabelRights": "Droits de marque blanche",
+        "unlimited": "Illimitées",
+        "unlimitedPlusNotice": "Illimitées + préavis des changements cassants",
+        "unlimitedPlusLts": "Illimitées + branche de support long terme",
+        "publicChannels": "Issues publiques et Discord",
+        "privateChannel": "Canal privé",
+        "namedContact": "Contact dédié",
+        "twoBusinessDays": "2 jours ouvrés",
+        "fourBusinessHours": "4 heures ouvrées",
+        "bestEffort": "Au mieux",
+        "contractual": "Contractuel"
+      }
     },
     "socialProof": {
       "title": "Construit sur une stack en laquelle vous pouvez avoir confiance",

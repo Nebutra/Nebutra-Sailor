@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "তৈরি করা বিনামূল্যে। টাকা দিন কেবল যদি চান আমরা দায়বদ্ধ থাকি।",
+      "description": "{brandName}-এর উপর বাণিজ্যিক পণ্য তৈরি করতে কোনো খরচ নেই — কোনো ফি নেই, কোনো লাইসেন্স কী নেই, কোনো নিবন্ধন নেই, কোনো কপিলেফট নেই। পেইড স্তরগুলো সাপোর্ট, SLA, ক্ষতিপূরণ ও ট্রেডমার্ক অধিকার বিক্রি করে, কখনোই ব্যবহারের অনুমতি নয়।",
+      "socialProofText": "npm-এ MIT · রিপোজিটরিতে FSL-1.1-ALv2, দুই বছর পর Apache-2.0-তে রূপান্তরিত · যেকোনো মাপে বাণিজ্যিক ব্যবহার বিনামূল্যে।",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "কমিউনিটি",
+        "price": "বিনামূল্যে",
+        "period": "চিরকাল",
+        "desc": "সবার জন্য। যেকোনো দলের আকার, যেকোনো আয়। ক্লোজড-সোর্স বাণিজ্যিক ব্যবহার অন্তর্ভুক্ত, নিবন্ধন ও কৃতিত্ব দেওয়ার বাধ্যবাধকতা ছাড়াই।",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "সম্পূর্ণ Next.js 16 SaaS কোর, সব প্যাকেজসহ",
+        "f2": "যেকোনো দলের আকার বা আয়ে ক্লোজড-সোর্স বাণিজ্যিক ব্যবহার",
+        "f3": "পূর্ণ স্ট্যাক: অথ, পেমেন্ট, অর্গানাইজেশন, API, ইমেইল, i18n, ব্যাকগ্রাউন্ড জব, স্টোরেজ ও আরও",
+        "f4": "মার্কেটিং ফিচার: ব্লগ, ল্যান্ডিং পেজ, SEO, অ্যানালিটিক্স",
+        "f5": "পাবলিক issues, Discussions ও Discord — সাধ্যমতো, উত্তরের নিশ্চয়তা ছাড়া"
       },
       "team": {
-        "badge": "TEAM",
+        "badge": "টিম",
         "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "period": "/ বছর",
+        "desc": "যেসব দলের আশা নয়, প্রতিশ্রুতি দরকার তাদের জন্য। সবই আগে থেকেই বিনামূল্যে — এটি আমাদের মনোযোগ কেনে।",
+        "cta": "{brandName} সাপোর্ট নিন",
+        "f1": "ব্যক্তিগত সাপোর্ট চ্যানেল (ইমেইল + শেয়ার্ড Slack বা Discord)",
+        "f2": "দুই কর্মদিবসের মধ্যে প্রথম উত্তরের নিশ্চয়তা",
+        "f3": "কমিউনিটি issues-এর আগে অগ্রাধিকারভিত্তিক বাগ ট্রায়াজ",
+        "f4": "আপগ্রেড সহায়তা ও ব্রেকিং পরিবর্তনের আগাম নোটিশ",
+        "f5": "কমিউনিটির সবকিছু"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "এন্টারপ্রাইজ",
+        "price": "$30,000 থেকে",
+        "period": "/ বছর",
+        "desc": "যেসব প্রতিষ্ঠানের ক্রয়, আইনি বা নিরাপত্তা পর্যালোচনার জন্য স্বাক্ষরকারী প্রতিপক্ষ প্রয়োজন।",
+        "cta": "সেলসের সঙ্গে যোগাযোগ করুন",
+        "f1": "রেসপন্স SLA — সাধারণভাবে ৪ কর্মঘণ্টা, প্রোডাকশন বন্ধ থাকলে ১ ঘণ্টা",
+        "f2": "ক্ষতিপূরণ ও নিরাপত্তা প্যাচের চুক্তিভিত্তিক প্রতিশ্রুতি",
+        "f3": "স্বাক্ষরিত ডেটা প্রসেসিং চুক্তি, কমপ্লায়েন্স প্যাক ও ধারাবাহিকতার অঙ্গীকার",
+        "f4": "ট্রেডমার্ক ও হোয়াইট-লেবেল অধিকার, সেইসঙ্গে প্রতিযোগী ব্যবহারের অব্যাহতি",
+        "f5": "দীর্ঘমেয়াদি সাপোর্ট ব্রাঞ্চ ও প্রাইভেট ডিপ্লয়মেন্ট ইঞ্জিনিয়ারিং",
+        "f6": "টিমের সবকিছু"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "স্তর তুলনা করুন",
+      "title": "সবই বিনামূল্যে। বেছে নিন কতটা প্রতিশ্রুতি আপনার দরকার।",
+      "subtitle": "প্রতিটি স্তরে সম্পূর্ণ সোর্স কোড থাকে এবং বিনা খরচে ক্লোজড-সোর্স বাণিজ্যিক ব্যবহারের অনুমতি দেয়। পার্থক্য সাপোর্ট, চুক্তিভিত্তিক প্রতিশ্রুতি ও ট্রেডমার্ক অধিকারে।",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "কমিউনিটি",
+        "team": "টিম",
+        "enterprise": "এন্টারপ্রাইজ"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "লাইসেন্স",
+          "type": "লাইসেন্স",
+          "commercial-use": "ক্লোজড-সোর্স বাণিজ্যিক ব্যবহার",
+          "registration": "নিবন্ধন",
+          "trademark": "ট্রেডমার্ক অধিকার"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "সোর্স কোড",
+          "full-source": "সম্পূর্ণ সোর্স কোড",
+          "all-packages": "সব প্যাকেজ ও মডিউল",
+          "update-window": "আপডেট"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "সাপোর্ট",
+          "channel": "সাপোর্ট চ্যানেল",
+          "first-response": "নিশ্চিত প্রথম উত্তর",
+          "security-patch": "নিরাপত্তা প্যাচের প্রতিশ্রুতি"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "ক্রয়",
+          "indemnification": "ক্ষতিপূরণ",
+          "dpa": "স্বাক্ষরিত ডেটা প্রসেসিং চুক্তি ও কমপ্লায়েন্স প্যাক",
+          "continuity": "ধারাবাহিকতার অঙ্গীকার"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "স্তর ও বৈশিষ্ট্যের তুলনা",
+      "value": {
+        "included": "অন্তর্ভুক্ত",
+        "notIncluded": "অন্তর্ভুক্ত নয়",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "প্রয়োজন নেই",
+        "whiteLabelRights": "হোয়াইট-লেবেল অধিকার",
+        "unlimited": "সীমাহীন",
+        "unlimitedPlusNotice": "সীমাহীন + ব্রেকিং পরিবর্তনের আগাম নোটিশ",
+        "unlimitedPlusLts": "সীমাহীন + দীর্ঘমেয়াদি সাপোর্ট ব্রাঞ্চ",
+        "publicChannels": "পাবলিক issues ও Discord",
+        "privateChannel": "ব্যক্তিগত চ্যানেল",
+        "namedContact": "নির্দিষ্ট যোগাযোগকারী",
+        "twoBusinessDays": "২ কর্মদিবস",
+        "fourBusinessHours": "৪ কর্মঘণ্টা",
+        "bestEffort": "সাধ্যমতো",
+        "contractual": "চুক্তিভিত্তিক"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

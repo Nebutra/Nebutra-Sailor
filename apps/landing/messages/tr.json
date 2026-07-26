@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Üzerine inşa etmek ücretsiz. Yalnızca sorumluluk almamızı istiyorsanız ödeyin.",
+      "description": "{brandName} üzerinde ticari bir ürün geliştirmek hiçbir şeye mal olmaz — ücret yok, lisans anahtarı yok, kayıt yok, copyleft yok. Ücretli katmanlar destek, SLA, tazminat ve marka hakları satar; asla kullanım izni satmaz.",
+      "socialProofText": "npm'de MIT · depoda FSL-1.1-ALv2, iki yıl sonra Apache-2.0'a dönüşür · her ölçekte ticari kullanım ücretsiz.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "TOPLULUK",
+        "price": "Ücretsiz",
+        "period": "sonsuza dek",
+        "desc": "Herkes için. Her ekip büyüklüğü, her ciro. Kapalı kaynak ticari kullanım dahildir; kayıt ve atıf zorunluluğu yoktur.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Eksiksiz Next.js 16 SaaS çekirdeği, tüm paketler dahil",
+        "f2": "Her ekip büyüklüğü ve ciroda kapalı kaynak ticari kullanım",
+        "f3": "Tam yığın: Auth, Ödemeler, Organizasyonlar, API, E-posta, i18n, Arka plan işleri, Depolama ve dahası",
+        "f4": "Pazarlama özellikleri: Blog, açılış sayfası, SEO, Analitik",
+        "f5": "Herkese açık issue'lar, Discussions ve Discord — elden geldiğince, yanıt garantisi yok"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "EKİP",
+        "price": "2.000 $",
+        "period": "/ yıl",
+        "desc": "Umut değil taahhüt isteyen ekipler için. Her şey zaten ücretsiz — bu, ilgimizi satın alır.",
+        "cta": "{brandName} desteği alın",
+        "f1": "Özel destek kanalı (e-posta + paylaşılan Slack veya Discord)",
+        "f2": "İki iş günü içinde garantili ilk yanıt",
+        "f3": "Topluluk issue'larının önünde öncelikli hata triyajı",
+        "f4": "Yükseltme desteği ve kırıcı değişiklikler için önceden bildirim",
+        "f5": "Topluluk'taki her şey"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "KURUMSAL",
+        "price": "30.000 $'dan başlayan",
+        "period": "/ yıl",
+        "desc": "Satın alma, hukuk veya güvenlik incelemesi imza atacak bir muhatap gerektiren kuruluşlar için.",
+        "cta": "Satışla iletişime geçin",
+        "f1": "Yanıt SLA'sı — standartta 4 iş saati, üretim durduğunda 1 saat",
+        "f2": "Tazminat ve sözleşmeye bağlı güvenlik yaması taahhüdü",
+        "f3": "İmzalı veri işleme sözleşmesi, uyumluluk paketi ve süreklilik taahhüdü",
+        "f4": "Marka ve white label hakları, ayrıca rakip kullanım muafiyeti",
+        "f5": "Uzun vadeli destek dalı ve özel dağıtım mühendisliği",
+        "f6": "Ekip'teki her şey"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Beta grubumuzdan müşteri hikayeleri yakında gelecek — ilkler arasında olun."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Katmanları karşılaştır",
+      "title": "Her şey ücretsiz. Ne kadar taahhüde ihtiyacınız olduğunu seçin.",
+      "subtitle": "Her katman tam kaynak kodu içerir ve kapalı kaynak ticari kullanıma ücretsiz izin verir. Farklar destek, sözleşmesel taahhütler ve marka haklarındadır.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "Topluluk",
+        "team": "Ekip",
+        "enterprise": "Kurumsal"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Lisans",
+          "type": "Lisans",
+          "commercial-use": "Kapalı kaynak ticari kullanım",
+          "registration": "Kayıt",
+          "trademark": "Marka hakları"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Kaynak Kodu",
+          "full-source": "Tam kaynak kodu",
+          "all-packages": "Tüm paketler ve modüller",
+          "update-window": "Güncellemeler"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Destek",
+          "channel": "Destek kanalı",
+          "first-response": "Garantili ilk yanıt",
+          "security-patch": "Güvenlik yaması taahhüdü"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Satın Alma",
+          "indemnification": "Tazminat",
+          "dpa": "İmzalı veri işleme sözleşmesi ve uyumluluk paketi",
+          "continuity": "Süreklilik taahhüdü"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Katman ve özellik karşılaştırması",
+      "value": {
+        "included": "Dahil",
+        "notIncluded": "Dahil değil",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Gerekmez",
+        "whiteLabelRights": "White label hakları",
+        "unlimited": "Sınırsız",
+        "unlimitedPlusNotice": "Sınırsız + kırıcı değişiklik ön bildirimi",
+        "unlimitedPlusLts": "Sınırsız + uzun vadeli destek dalı",
+        "publicChannels": "Herkese açık issue'lar ve Discord",
+        "privateChannel": "Özel kanal",
+        "namedContact": "Atanmış temsilci",
+        "twoBusinessDays": "2 iş günü",
+        "fourBusinessHours": "4 iş saati",
+        "bestEffort": "Elden geldiğince",
+        "contractual": "Sözleşmeye bağlı"
+      }
     },
     "socialProof": {
       "title": "Güvenebileceğiniz bir yığın üzerine inşa edildi",

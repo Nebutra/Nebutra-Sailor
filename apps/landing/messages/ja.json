@@ -1715,7 +1715,24 @@
           "continuity": "事業継続の確約"
         }
       },
-      "ariaTable": "プランと機能の比較"
+      "ariaTable": "プランと機能の比較",
+      "value": {
+        "included": "含む",
+        "notIncluded": "含まない",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "登録不要",
+        "whiteLabelRights": "ホワイトラベル権",
+        "unlimited": "無制限",
+        "unlimitedPlusNotice": "無制限 + 破壊的変更の事前通知",
+        "unlimitedPlusLts": "無制限 + 長期サポートブランチ",
+        "publicChannels": "公開 issue と Discord",
+        "privateChannel": "プライベート窓口",
+        "namedContact": "専任担当",
+        "twoBusinessDays": "2 営業日",
+        "fourBusinessHours": "4 営業時間",
+        "bestEffort": "ベストエフォート",
+        "contractual": "契約上の確約"
+      }
     },
     "socialProof": {
       "title": "信頼できるスタックで構築",

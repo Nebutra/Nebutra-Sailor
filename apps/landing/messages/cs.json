@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Stavět můžete zdarma. Platíte, jen když potřebujete, abychom ručili.",
+      "description": "Postavit komerční produkt na {brandName} nic nestojí — žádný poplatek, žádný licenční klíč, žádná registrace, žádný copyleft. Placené úrovně prodávají podporu, SLA, odškodnění a práva k ochranné známce, nikdy povolení k použití.",
+      "socialProofText": "MIT na npm · FSL-1.1-ALv2 v repozitáři, po dvou letech přechází na Apache-2.0 · komerční použití zdarma v jakémkoli rozsahu.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "KOMUNITA",
+        "price": "Zdarma",
+        "period": "navždy",
+        "desc": "Pro všechny. Jakákoli velikost týmu, jakékoli tržby. Komerční použití s uzavřeným kódem je zahrnuto, bez registrace a bez povinnosti uvádět autorství.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Kompletní jádro SaaS Next.js 16, všechny balíčky součástí",
+        "f2": "Komerční použití s uzavřeným kódem při jakékoli velikosti týmu či tržbách",
+        "f3": "Celý stack: Auth, Platby, Organizace, API, E-mail, i18n, Úlohy na pozadí, Úložiště a další",
+        "f4": "Marketingové funkce: Blog, vstupní stránka, SEO, Analytics",
+        "f5": "Veřejné issues, Discussions a Discord — dle možností, bez záruky odpovědi"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "TÝM",
+        "price": "2 000 $",
+        "period": "/ rok",
+        "desc": "Pro týmy, které potřebují závazek, ne naději. Vše je už zdarma — tímto si kupujete naši pozornost.",
+        "cta": "Získat podporu {brandName}",
+        "f1": "Soukromý kanál podpory (e-mail + sdílený Slack nebo Discord)",
+        "f2": "První odpověď zaručeně do dvou pracovních dnů",
+        "f3": "Přednostní třídění chyb před issues komunity",
+        "f4": "Pomoc s upgrady a předběžné upozornění na nekompatibilní změny",
+        "f5": "Vše z Komunity"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "Od 30 000 $",
+        "period": "/ rok",
+        "desc": "Pro organizace, jejichž nákup, právní oddělení nebo bezpečnostní prověrka vyžaduje protistranu, která podepíše.",
+        "cta": "Kontaktovat obchod",
+        "f1": "SLA odezvy — 4 pracovní hodiny standardně, 1 hodina při výpadku produkce",
+        "f2": "Odškodnění a smluvní závazek k bezpečnostním záplatám",
+        "f3": "Podepsaná smlouva o zpracování údajů, balíček shody a závazek kontinuity",
+        "f4": "Práva k ochranné známce a white label plus výjimka z konkurenčního použití",
+        "f5": "Větev dlouhodobé podpory a inženýrská podpora privátního nasazení",
+        "f6": "Vše z Týmu"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Zákaznické příběhy z naší beta skupiny přicházejí brzy — buďte mezi prvními."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Porovnat úrovně",
+      "title": "Vše je zdarma. Vyberte si, jak velký závazek potřebujete.",
+      "subtitle": "Každá úroveň obsahuje kompletní zdrojový kód a umožňuje bezplatné komerční použití s uzavřeným kódem. Rozdíly jsou v podpoře, smluvních závazcích a právech k ochranné známce.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
+        "community": "Komunita",
+        "team": "Tým",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Licence",
+          "type": "Licence",
+          "commercial-use": "Komerční použití s uzavřeným kódem",
+          "registration": "Registrace",
+          "trademark": "Práva k ochranné známce"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Zdrojový kód",
+          "full-source": "Kompletní zdrojový kód",
+          "all-packages": "Všechny balíčky a moduly",
+          "update-window": "Aktualizace"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Podpora",
+          "channel": "Kanál podpory",
+          "first-response": "Zaručená první odpověď",
+          "security-patch": "Závazek k bezpečnostním záplatám"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Nákup",
+          "indemnification": "Odškodnění",
+          "dpa": "Podepsaná smlouva o zpracování a balíček shody",
+          "continuity": "Závazek kontinuity"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Porovnání úrovní a funkcí",
+      "value": {
+        "included": "Zahrnuto",
+        "notIncluded": "Nezahrnuto",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Není nutná",
+        "whiteLabelRights": "Práva white label",
+        "unlimited": "Neomezené",
+        "unlimitedPlusNotice": "Neomezené + předběžné upozornění na nekompatibilní změny",
+        "unlimitedPlusLts": "Neomezené + větev dlouhodobé podpory",
+        "publicChannels": "Veřejné issues a Discord",
+        "privateChannel": "Soukromý kanál",
+        "namedContact": "Určený kontakt",
+        "twoBusinessDays": "2 pracovní dny",
+        "fourBusinessHours": "4 pracovní hodiny",
+        "bestEffort": "Dle možností",
+        "contractual": "Smluvní"
+      }
     },
     "socialProof": {
       "title": "Postaveno na stacku, kterému můžete věřit",

@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Gratis om op te bouwen. Betaal alleen als wij moeten instaan.",
+      "description": "Een commercieel product bouwen op {brandName} kost niets — geen kosten, geen licentiesleutel, geen registratie, geen copyleft. Betaalde niveaus verkopen support, SLA's, vrijwaring en merkrechten, nooit toestemming.",
+      "socialProofText": "MIT op npm · FSL-1.1-ALv2 op de repository, na twee jaar Apache-2.0 · commercieel gebruik gratis op elke schaal.",
       "community": {
         "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "price": "Gratis",
+        "period": "voor altijd",
+        "desc": "Voor iedereen. Elke teamgrootte, elke omzet. Closed-source commercieel gebruik inbegrepen, zonder registratie en zonder naamsvermelding.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Volledige Next.js 16 SaaS-kern, alle pakketten inbegrepen",
+        "f2": "Closed-source commercieel gebruik bij elke teamgrootte of omzet",
+        "f3": "Volledige stack: Auth, Betalingen, Organisaties, API, E-mail, i18n, Achtergrondtaken, Opslag en meer",
+        "f4": "Marketingfuncties: Blog, landingspagina, SEO, Analytics",
+        "f5": "Publieke issues, Discussions en Discord — naar beste vermogen, zonder reactiegarantie"
       },
       "team": {
         "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "price": "$2.000",
+        "period": "/ jaar",
+        "desc": "Voor teams die een toezegging nodig hebben in plaats van hoop. Alles is al gratis — hiermee koopt u onze aandacht.",
+        "cta": "{brandName}-support afnemen",
+        "f1": "Privé supportkanaal (e-mail + gedeelde Slack of Discord)",
+        "f2": "Eerste reactie gegarandeerd binnen twee werkdagen",
+        "f3": "Prioritaire bugtriage, vóór community-issues",
+        "f4": "Upgradehulp en vooraankondiging van breaking changes",
+        "f5": "Alles uit Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "Vanaf $30.000",
+        "period": "/ jaar",
+        "desc": "Voor organisaties waarvan inkoop, juridische zaken of security een tegenpartij eist die tekent.",
+        "cta": "Neem contact op met sales",
+        "f1": "Reactie-SLA — 4 werkuren standaard, 1 uur bij productiestoring",
+        "f2": "Vrijwaring en contractuele toezegging voor securitypatches",
+        "f3": "Ondertekende verwerkersovereenkomst, compliancepakket en continuïteitstoezegging",
+        "f4": "Merk- en white-labelrechten, plus ontheffing van de concurrentieclausule",
+        "f5": "Long-term-supportbranch en engineering voor privé-implementaties",
+        "f6": "Alles uit Team"
       }
     },
     "faq": {
@@ -1680,9 +1680,9 @@
       "subtitle": "Klantverhalen uit onze beta-cohort komen binnenkort — wees een van de eersten."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Niveaus vergelijken",
+      "title": "Alles is gratis. Kies hoeveel zekerheid u nodig hebt.",
+      "subtitle": "Elk niveau bevat de volledige broncode en staat kosteloos closed-source commercieel gebruik toe. De verschillen zitten in support, contractuele toezeggingen en merkrechten.",
       "plan": {
         "community": "Community",
         "team": "Team",
@@ -1690,32 +1690,49 @@
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Licentie",
+          "type": "Licentie",
+          "commercial-use": "Closed-source commercieel gebruik",
+          "registration": "Registratie",
+          "trademark": "Merkrechten"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
+          "label": "Broncode",
+          "full-source": "Volledige broncode",
+          "all-packages": "Alle pakketten en modules",
           "update-window": "Updates"
         },
         "support": {
           "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "channel": "Supportkanaal",
+          "first-response": "Gegarandeerde eerste reactie",
+          "security-patch": "Toezegging securitypatches"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Inkoop",
+          "indemnification": "Vrijwaring",
+          "dpa": "Ondertekende verwerkersovereenkomst en compliancepakket",
+          "continuity": "Continuïteitstoezegging"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Vergelijking van niveaus en functies",
+      "value": {
+        "included": "Inbegrepen",
+        "notIncluded": "Niet inbegrepen",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Niet vereist",
+        "whiteLabelRights": "White-labelrechten",
+        "unlimited": "Onbeperkt",
+        "unlimitedPlusNotice": "Onbeperkt + vooraankondiging breaking changes",
+        "unlimitedPlusLts": "Onbeperkt + long-term-supportbranch",
+        "publicChannels": "Publieke issues en Discord",
+        "privateChannel": "Privékanaal",
+        "namedContact": "Vast aanspreekpunt",
+        "twoBusinessDays": "2 werkdagen",
+        "fourBusinessHours": "4 werkuren",
+        "bestEffort": "Naar beste vermogen",
+        "contractual": "Contractueel"
+      }
     },
     "socialProof": {
       "title": "Gebouwd op een stack die je kunt vertrouwen",

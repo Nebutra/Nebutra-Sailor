@@ -1715,7 +1715,24 @@
           "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Tier and feature comparison",
+      "value": {
+        "included": "Included",
+        "notIncluded": "Not included",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Not required",
+        "whiteLabelRights": "White-label rights",
+        "unlimited": "Unlimited",
+        "unlimitedPlusNotice": "Unlimited + advance breaking-change notice",
+        "unlimitedPlusLts": "Unlimited + long-term support branch",
+        "publicChannels": "Public issues & Discord",
+        "privateChannel": "Private channel",
+        "namedContact": "Named contact",
+        "twoBusinessDays": "2 business days",
+        "fourBusinessHours": "4 business hours",
+        "bestEffort": "Best-effort",
+        "contractual": "Contractual"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

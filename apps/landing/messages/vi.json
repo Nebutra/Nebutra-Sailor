@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Xây dựng miễn phí. Chỉ trả tiền khi bạn cần chúng tôi chịu trách nhiệm.",
+      "description": "Xây dựng sản phẩm thương mại trên {brandName} không tốn gì — không phí, không khóa giấy phép, không đăng ký, không copyleft. Các gói trả phí bán hỗ trợ, SLA, bồi thường và quyền thương hiệu, chứ không bao giờ bán quyền sử dụng.",
+      "socialProofText": "MIT trên npm · FSL-1.1-ALv2 trên kho mã, chuyển sang Apache-2.0 sau hai năm · sử dụng thương mại miễn phí ở mọi quy mô.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "CỘNG ĐỒNG",
+        "price": "Miễn phí",
+        "period": "vĩnh viễn",
+        "desc": "Dành cho tất cả. Mọi quy mô đội ngũ, mọi mức doanh thu. Bao gồm sử dụng thương mại mã nguồn đóng, không cần đăng ký và không bắt buộc ghi công.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Lõi SaaS Next.js 16 đầy đủ, kèm tất cả gói",
+        "f2": "Sử dụng thương mại mã nguồn đóng ở mọi quy mô và doanh thu",
+        "f3": "Toàn bộ stack: Auth, Thanh toán, Tổ chức, API, Email, i18n, Tác vụ nền, Lưu trữ và hơn thế",
+        "f4": "Tính năng tiếp thị: Blog, trang đích, SEO, Analytics",
+        "f5": "Issue công khai, Discussions và Discord — theo khả năng, không đảm bảo phản hồi"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "NHÓM",
+        "price": "2.000 $",
+        "period": "/ năm",
+        "desc": "Dành cho các nhóm cần một cam kết chứ không phải một hy vọng. Mọi thứ vốn đã miễn phí — khoản này mua sự chú ý của chúng tôi.",
+        "cta": "Nhận hỗ trợ {brandName}",
+        "f1": "Kênh hỗ trợ riêng (email + Slack hoặc Discord dùng chung)",
+        "f2": "Đảm bảo phản hồi đầu tiên trong hai ngày làm việc",
+        "f3": "Ưu tiên phân loại lỗi, trước các issue của cộng đồng",
+        "f4": "Hỗ trợ nâng cấp và báo trước về thay đổi phá vỡ tương thích",
+        "f5": "Mọi thứ trong gói Cộng đồng"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "DOANH NGHIỆP",
+        "price": "Từ 30.000 $",
+        "period": "/ năm",
+        "desc": "Dành cho tổ chức mà bộ phận mua sắm, pháp lý hoặc rà soát bảo mật yêu cầu một đối tác ký kết.",
+        "cta": "Liên hệ bộ phận kinh doanh",
+        "f1": "SLA phản hồi — 4 giờ làm việc tiêu chuẩn, 1 giờ khi ngừng sản xuất",
+        "f2": "Bồi thường và cam kết hợp đồng về bản vá bảo mật",
+        "f3": "DPA đã ký, gói tuân thủ và cam kết duy trì hoạt động",
+        "f4": "Quyền thương hiệu và white-label, kèm miễn trừ điều khoản sử dụng cạnh tranh",
+        "f5": "Nhánh hỗ trợ dài hạn và kỹ thuật triển khai riêng",
+        "f6": "Mọi thứ trong gói Nhóm"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "So sánh các gói",
+      "title": "Tất cả đều miễn phí. Hãy chọn mức cam kết bạn cần.",
+      "subtitle": "Mọi gói đều cung cấp toàn bộ mã nguồn và cho phép sử dụng thương mại mã nguồn đóng miễn phí. Khác biệt nằm ở hỗ trợ, cam kết hợp đồng và quyền thương hiệu.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "Cộng đồng",
+        "team": "Nhóm",
+        "enterprise": "Doanh nghiệp"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Giấy phép",
+          "type": "Giấy phép",
+          "commercial-use": "Sử dụng thương mại mã nguồn đóng",
+          "registration": "Đăng ký",
+          "trademark": "Quyền thương hiệu"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Mã nguồn",
+          "full-source": "Toàn bộ mã nguồn",
+          "all-packages": "Tất cả gói và mô-đun",
+          "update-window": "Cập nhật"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Hỗ trợ",
+          "channel": "Kênh hỗ trợ",
+          "first-response": "Đảm bảo phản hồi đầu tiên",
+          "security-patch": "Cam kết bản vá bảo mật"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Mua sắm",
+          "indemnification": "Bồi thường",
+          "dpa": "DPA đã ký và gói tuân thủ",
+          "continuity": "Cam kết duy trì hoạt động"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "So sánh gói và tính năng",
+      "value": {
+        "included": "Có",
+        "notIncluded": "Không",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Không cần",
+        "whiteLabelRights": "Quyền white-label",
+        "unlimited": "Không giới hạn",
+        "unlimitedPlusNotice": "Không giới hạn + báo trước thay đổi phá vỡ tương thích",
+        "unlimitedPlusLts": "Không giới hạn + nhánh hỗ trợ dài hạn",
+        "publicChannels": "Issue công khai và Discord",
+        "privateChannel": "Kênh riêng",
+        "namedContact": "Đầu mối chỉ định",
+        "twoBusinessDays": "2 ngày làm việc",
+        "fourBusinessHours": "4 giờ làm việc",
+        "bestEffort": "Theo khả năng",
+        "contractual": "Theo hợp đồng"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

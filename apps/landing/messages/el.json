@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Δωρεάν για να χτίσετε. Πληρώνετε μόνο αν χρειάζεστε να αναλάβουμε ευθύνη.",
+      "description": "Η δημιουργία εμπορικού προϊόντος πάνω στο {brandName} δεν κοστίζει τίποτα — καμία χρέωση, κανένα κλειδί άδειας, καμία εγγραφή, κανένα copyleft. Τα επί πληρωμή επίπεδα πωλούν υποστήριξη, SLA, αποζημίωση και δικαιώματα σήματος, ποτέ άδεια χρήσης.",
+      "socialProofText": "MIT στο npm · FSL-1.1-ALv2 στο αποθετήριο, μετατρέπεται σε Apache-2.0 μετά από δύο χρόνια · εμπορική χρήση δωρεάν σε κάθε κλίμακα.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "ΚΟΙΝΟΤΗΤΑ",
+        "price": "Δωρεάν",
+        "period": "για πάντα",
+        "desc": "Για όλους. Οποιοδήποτε μέγεθος ομάδας, οποιοσδήποτε τζίρος. Περιλαμβάνεται εμπορική χρήση κλειστού κώδικα, χωρίς εγγραφή και χωρίς υποχρέωση αναφοράς.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Πλήρης πυρήνας SaaS Next.js 16, με όλα τα πακέτα",
+        "f2": "Εμπορική χρήση κλειστού κώδικα σε οποιοδήποτε μέγεθος ομάδας ή τζίρο",
+        "f3": "Πλήρες stack: Auth, Πληρωμές, Οργανισμοί, API, Email, i18n, Εργασίες παρασκηνίου, Αποθήκευση και άλλα",
+        "f4": "Λειτουργίες μάρκετινγκ: Blog, σελίδα προορισμού, SEO, Analytics",
+        "f5": "Δημόσια issues, Discussions και Discord — κατά το δυνατόν, χωρίς εγγύηση απάντησης"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "ΟΜΑΔΑ",
+        "price": "2.000 $",
+        "period": "/ έτος",
+        "desc": "Για ομάδες που χρειάζονται δέσμευση αντί για ελπίδα. Όλα είναι ήδη δωρεάν — αυτό αγοράζει την προσοχή μας.",
+        "cta": "Αποκτήστε υποστήριξη {brandName}",
+        "f1": "Ιδιωτικό κανάλι υποστήριξης (email + κοινόχρηστο Slack ή Discord)",
+        "f2": "Πρώτη απάντηση εγγυημένα εντός δύο εργάσιμων ημερών",
+        "f3": "Προτεραιότητα στη διαλογή σφαλμάτων, πριν από τα issues της κοινότητας",
+        "f4": "Βοήθεια αναβάθμισης και προειδοποίηση για ασύμβατες αλλαγές",
+        "f5": "Όλα όσα περιλαμβάνει η Κοινότητα"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "Από 30.000 $",
+        "period": "/ έτος",
+        "desc": "Για οργανισμούς των οποίων οι προμήθειες, το νομικό τμήμα ή ο έλεγχος ασφαλείας απαιτούν αντισυμβαλλόμενο που υπογράφει.",
+        "cta": "Επικοινωνήστε με τις πωλήσεις",
+        "f1": "SLA απόκρισης — 4 εργάσιμες ώρες κανονικά, 1 ώρα σε διακοπή παραγωγής",
+        "f2": "Αποζημίωση και συμβατική δέσμευση για διορθώσεις ασφαλείας",
+        "f3": "Υπογεγραμμένη σύμβαση επεξεργασίας δεδομένων, πακέτο συμμόρφωσης και δέσμευση συνέχειας",
+        "f4": "Δικαιώματα σήματος και white label, καθώς και εξαίρεση από τον περιορισμό ανταγωνιστικής χρήσης",
+        "f5": "Κλάδος μακροχρόνιας υποστήριξης και μηχανική υποστήριξη ιδιωτικής ανάπτυξης",
+        "f6": "Όλα όσα περιλαμβάνει η Ομάδα"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Ιστορίες πελατών από την beta cohort μας θα δημοσιευτούν σύντομα — βρεθείτε ανάμεσα στους πρώτους."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Σύγκριση επιπέδων",
+      "title": "Όλα είναι δωρεάν. Επιλέξτε πόση δέσμευση χρειάζεστε.",
+      "subtitle": "Κάθε επίπεδο περιλαμβάνει τον πλήρη πηγαίο κώδικα και επιτρέπει δωρεάν εμπορική χρήση κλειστού κώδικα. Οι διαφορές αφορούν την υποστήριξη, τις συμβατικές δεσμεύσεις και τα δικαιώματα σήματος.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
+        "community": "Κοινότητα",
+        "team": "Ομάδα",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Άδεια",
+          "type": "Άδεια",
+          "commercial-use": "Εμπορική χρήση κλειστού κώδικα",
+          "registration": "Εγγραφή",
+          "trademark": "Δικαιώματα σήματος"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Πηγαίος κώδικας",
+          "full-source": "Πλήρης πηγαίος κώδικας",
+          "all-packages": "Όλα τα πακέτα και οι μονάδες",
+          "update-window": "Ενημερώσεις"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Υποστήριξη",
+          "channel": "Κανάλι υποστήριξης",
+          "first-response": "Εγγυημένη πρώτη απάντηση",
+          "security-patch": "Δέσμευση για διορθώσεις ασφαλείας"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Προμήθειες",
+          "indemnification": "Αποζημίωση",
+          "dpa": "Υπογεγραμμένη σύμβαση επεξεργασίας και πακέτο συμμόρφωσης",
+          "continuity": "Δέσμευση συνέχειας"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Σύγκριση επιπέδων και δυνατοτήτων",
+      "value": {
+        "included": "Περιλαμβάνεται",
+        "notIncluded": "Δεν περιλαμβάνεται",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Δεν απαιτείται",
+        "whiteLabelRights": "Δικαιώματα white label",
+        "unlimited": "Απεριόριστες",
+        "unlimitedPlusNotice": "Απεριόριστες + προειδοποίηση για ασύμβατες αλλαγές",
+        "unlimitedPlusLts": "Απεριόριστες + κλάδος μακροχρόνιας υποστήριξης",
+        "publicChannels": "Δημόσια issues και Discord",
+        "privateChannel": "Ιδιωτικό κανάλι",
+        "namedContact": "Ορισμένος υπεύθυνος",
+        "twoBusinessDays": "2 εργάσιμες ημέρες",
+        "fourBusinessHours": "4 εργάσιμες ώρες",
+        "bestEffort": "Κατά το δυνατόν",
+        "contractual": "Συμβατικό"
+      }
     },
     "socialProof": {
       "title": "Δημιουργημένο σε ένα stack στο οποίο μπορείτε να εμπιστευτείτε",

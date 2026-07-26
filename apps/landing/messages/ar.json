@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "البناء عليه مجاني. ادفع فقط إذا احتجت أن نتحمّل المسؤولية.",
+      "description": "بناء منتج تجاري على {brandName} لا يكلّف شيئًا — بلا رسوم، بلا مفتاح ترخيص، بلا تسجيل، بلا كوبي‌ليفت. الباقات المدفوعة تبيع الدعم واتفاقيات مستوى الخدمة والتعويض وحقوق العلامة التجارية، ولا تبيع الإذن بالاستخدام أبدًا.",
+      "socialProofText": "MIT على npm · FSL-1.1-ALv2 على المستودع، ويتحوّل إلى Apache-2.0 بعد عامين · الاستخدام التجاري مجاني بأي حجم.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "المجتمع",
+        "price": "مجاني",
+        "period": "إلى الأبد",
+        "desc": "للجميع. أي حجم فريق، وأي إيرادات. يشمل الاستخدام التجاري مغلق المصدر، بلا تسجيل وبلا التزام بالإسناد.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "نواة SaaS كاملة على Next.js 16 مع جميع الحزم",
+        "f2": "استخدام تجاري مغلق المصدر مهما كان حجم الفريق أو الإيرادات",
+        "f3": "حزمة متكاملة: المصادقة، المدفوعات، المؤسسات، API، البريد، i18n، المهام الخلفية، التخزين وغيرها",
+        "f4": "ميزات التسويق: مدونة، صفحة هبوط، تحسين محركات البحث، تحليلات",
+        "f5": "المشكلات العامة والنقاشات وDiscord — وفق أفضل جهد، دون ضمان الرد"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "الفريق",
+        "price": "2,000 $",
+        "period": "/ سنة",
+        "desc": "للفرق التي تحتاج التزامًا لا أملًا. كل شيء مجاني أصلًا — هذا يشتري انتباهنا.",
+        "cta": "احصل على دعم {brandName}",
+        "f1": "قناة دعم خاصة (بريد إلكتروني + Slack أو Discord مشترك)",
+        "f2": "أول رد مضمون خلال يومَي عمل",
+        "f3": "فرز أولوي للأخطاء قبل مشكلات المجتمع",
+        "f4": "مساعدة في الترقية وإشعار مسبق بالتغييرات الكاسرة",
+        "f5": "كل ما في باقة المجتمع"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "المؤسسات",
+        "price": "ابتداءً من 30,000 $",
+        "period": "/ سنة",
+        "desc": "للمؤسسات التي تشترط إدارة المشتريات أو الشؤون القانونية أو مراجعة الأمن وجود طرف مقابل يوقّع.",
+        "cta": "تواصل مع المبيعات",
+        "f1": "اتفاقية مستوى خدمة للرد — 4 ساعات عمل قياسيًا، وساعة واحدة عند توقف الإنتاج",
+        "f2": "تعويض والتزام تعاقدي بترقيعات الأمان",
+        "f3": "اتفاقية معالجة بيانات موقّعة، وحزمة امتثال، وتعهّد بالاستمرارية",
+        "f4": "حقوق العلامة التجارية والعلامة البيضاء، بالإضافة إلى إعفاء من قيد الاستخدام المنافس",
+        "f5": "فرع دعم طويل الأمد وهندسة للنشر الخاص",
+        "f6": "كل ما في باقة الفريق"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "قارن الباقات",
+      "title": "كل شيء مجاني. اختر مقدار الالتزام الذي تحتاجه.",
+      "subtitle": "كل باقة تتضمّن الشيفرة المصدرية كاملة وتسمح بالاستخدام التجاري مغلق المصدر بلا تكلفة. الفروق في الدعم والالتزامات التعاقدية وحقوق العلامة التجارية.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "المجتمع",
+        "team": "الفريق",
+        "enterprise": "المؤسسات"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "الترخيص",
+          "type": "الترخيص",
+          "commercial-use": "استخدام تجاري مغلق المصدر",
+          "registration": "التسجيل",
+          "trademark": "حقوق العلامة التجارية"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "الشيفرة المصدرية",
+          "full-source": "الشيفرة المصدرية كاملة",
+          "all-packages": "جميع الحزم والوحدات",
+          "update-window": "التحديثات"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "الدعم",
+          "channel": "قناة الدعم",
+          "first-response": "أول رد مضمون",
+          "security-patch": "التزام بترقيعات الأمان"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "المشتريات",
+          "indemnification": "التعويض",
+          "dpa": "اتفاقية معالجة بيانات موقّعة وحزمة امتثال",
+          "continuity": "تعهّد بالاستمرارية"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "مقارنة الباقات والميزات",
+      "value": {
+        "included": "مشمول",
+        "notIncluded": "غير مشمول",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "غير مطلوب",
+        "whiteLabelRights": "حقوق العلامة البيضاء",
+        "unlimited": "غير محدودة",
+        "unlimitedPlusNotice": "غير محدودة + إشعار مسبق بالتغييرات الكاسرة",
+        "unlimitedPlusLts": "غير محدودة + فرع دعم طويل الأمد",
+        "publicChannels": "المشكلات العامة وDiscord",
+        "privateChannel": "قناة خاصة",
+        "namedContact": "جهة اتصال مخصصة",
+        "twoBusinessDays": "يوما عمل",
+        "fourBusinessHours": "4 ساعات عمل",
+        "bestEffort": "وفق أفضل جهد",
+        "contractual": "تعاقدي"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

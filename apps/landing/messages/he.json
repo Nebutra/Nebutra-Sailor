@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "בנייה בחינם. משלמים רק אם צריך שניקח אחריות.",
+      "description": "בניית מוצר מסחרי על {brandName} לא עולה כלום — בלי תשלום, בלי מפתח רישיון, בלי הרשמה, בלי copyleft. החבילות בתשלום מוכרות תמיכה, הסכמי SLA, שיפוי וזכויות סימן מסחרי — לעולם לא הרשאת שימוש.",
+      "socialProofText": "MIT ב-npm · FSL-1.1-ALv2 במאגר, עובר ל-Apache-2.0 אחרי שנתיים · שימוש מסחרי חינם בכל היקף.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "קהילה",
+        "price": "חינם",
+        "period": "לתמיד",
+        "desc": "לכולם. כל גודל צוות, כל מחזור הכנסות. שימוש מסחרי בקוד סגור כלול, ללא הרשמה וללא חובת ייחוס.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "ליבת SaaS מלאה ב-Next.js 16, כולל כל החבילות",
+        "f2": "שימוש מסחרי בקוד סגור בכל גודל צוות והכנסה",
+        "f3": "סטאק מלא: אימות, תשלומים, ארגונים, API, דוא\"ל, i18n, משימות רקע, אחסון ועוד",
+        "f4": "יכולות שיווק: בלוג, דף נחיתה, SEO, אנליטיקס",
+        "f5": "issues ציבוריים, Discussions ו-Discord — כמיטב היכולת, ללא התחייבות למענה"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "צוות",
+        "price": "2,000 $",
+        "period": "/ שנה",
+        "desc": "לצוותים שצריכים התחייבות ולא תקווה. הכול ממילא חינם — כאן קונים את תשומת הלב שלנו.",
+        "cta": "קבלו תמיכת {brandName}",
+        "f1": "ערוץ תמיכה פרטי (דוא\"ל + Slack או Discord משותף)",
+        "f2": "מענה ראשון מובטח בתוך שני ימי עסקים",
+        "f3": "מיון באגים בעדיפות, לפני issues של הקהילה",
+        "f4": "סיוע בשדרוגים והתראה מראש על שינויים שוברים",
+        "f5": "כל מה שבחבילת הקהילה"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "ארגוני",
+        "price": "החל מ-30,000 $",
+        "period": "/ שנה",
+        "desc": "לארגונים שהרכש, הייעוץ המשפטי או בדיקת האבטחה שלהם דורשים צד נגדי שחותם.",
+        "cta": "צרו קשר עם המכירות",
+        "f1": "SLA למענה — 4 שעות עבודה בתקן, שעה אחת בהשבתת ייצור",
+        "f2": "שיפוי והתחייבות חוזית לעדכוני אבטחה",
+        "f3": "הסכם עיבוד נתונים חתום, חבילת ציות והתחייבות להמשכיות",
+        "f4": "זכויות סימן מסחרי ו-white label, בתוספת פטור מסעיף השימוש המתחרה",
+        "f5": "ענף תמיכה ארוכת טווח והנדסה לפריסה פרטית",
+        "f6": "כל מה שבחבילת הצוות"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "השוואת חבילות",
+      "title": "הכול חינם. בחרו כמה התחייבות אתם צריכים.",
+      "subtitle": "כל חבילה כוללת את קוד המקור המלא ומתירה שימוש מסחרי בקוד סגור ללא עלות. ההבדלים הם בתמיכה, בהתחייבויות החוזיות ובזכויות הסימן המסחרי.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "קהילה",
+        "team": "צוות",
+        "enterprise": "ארגוני"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "רישיון",
+          "type": "רישיון",
+          "commercial-use": "שימוש מסחרי בקוד סגור",
+          "registration": "הרשמה",
+          "trademark": "זכויות סימן מסחרי"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "קוד מקור",
+          "full-source": "קוד מקור מלא",
+          "all-packages": "כל החבילות והמודולים",
+          "update-window": "עדכונים"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "תמיכה",
+          "channel": "ערוץ תמיכה",
+          "first-response": "מענה ראשון מובטח",
+          "security-patch": "התחייבות לעדכוני אבטחה"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "רכש",
+          "indemnification": "שיפוי",
+          "dpa": "הסכם עיבוד נתונים חתום וחבילת ציות",
+          "continuity": "התחייבות להמשכיות"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "השוואת חבילות ותכונות",
+      "value": {
+        "included": "כלול",
+        "notIncluded": "לא כלול",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "לא נדרשת",
+        "whiteLabelRights": "זכויות white label",
+        "unlimited": "ללא הגבלה",
+        "unlimitedPlusNotice": "ללא הגבלה + התראה מראש על שינויים שוברים",
+        "unlimitedPlusLts": "ללא הגבלה + ענף תמיכה ארוכת טווח",
+        "publicChannels": "issues ציבוריים ו-Discord",
+        "privateChannel": "ערוץ פרטי",
+        "namedContact": "איש קשר ייעודי",
+        "twoBusinessDays": "יומיים עסקים",
+        "fourBusinessHours": "4 שעות עבודה",
+        "bestEffort": "כמיטב היכולת",
+        "contractual": "חוזי"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

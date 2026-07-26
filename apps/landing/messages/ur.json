@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "اس پر بنانا مفت ہے۔ صرف تب ادائیگی کریں جب آپ چاہیں کہ ہم جوابدہ ہوں۔",
+      "description": "{brandName} پر تجارتی پروڈکٹ بنانے کی کوئی قیمت نہیں — کوئی فیس نہیں، کوئی لائسنس کلید نہیں، کوئی رجسٹریشن نہیں، کوئی کاپی لیفٹ نہیں۔ ادا شدہ درجات سپورٹ، SLA، ہرجانہ اور ٹریڈ مارک حقوق بیچتے ہیں، استعمال کی اجازت کبھی نہیں۔",
+      "socialProofText": "npm پر MIT · ریپازٹری پر FSL-1.1-ALv2، دو سال بعد Apache-2.0 میں تبدیل · کسی بھی پیمانے پر تجارتی استعمال مفت۔",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "کمیونٹی",
+        "price": "مفت",
+        "period": "ہمیشہ کے لیے",
+        "desc": "سب کے لیے۔ کسی بھی ٹیم سائز، کسی بھی آمدنی پر۔ بند سورس تجارتی استعمال شامل ہے، بغیر رجسٹریشن اور بغیر انتساب کی شرط کے۔",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "مکمل Next.js 16 SaaS کور، تمام پیکجز شامل",
+        "f2": "کسی بھی ٹیم سائز یا آمدنی پر بند سورس تجارتی استعمال",
+        "f3": "مکمل اسٹیک: تصدیق، ادائیگیاں، تنظیمیں، API، ای میل، i18n، پس منظر کے کام، اسٹوریج اور مزید",
+        "f4": "مارکیٹنگ خصوصیات: بلاگ، لینڈنگ پیج، SEO، اینالیٹکس",
+        "f5": "عوامی issues، Discussions اور Discord — حتی الامکان، جواب کی ضمانت کے بغیر"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "ٹیم",
+        "price": "2,000 ڈالر",
+        "period": "/ سال",
+        "desc": "ان ٹیموں کے لیے جنہیں امید نہیں، وعدہ چاہیے۔ سب کچھ پہلے ہی مفت ہے — یہ ہماری توجہ خریدتا ہے۔",
+        "cta": "{brandName} سپورٹ حاصل کریں",
+        "f1": "نجی سپورٹ چینل (ای میل + مشترکہ Slack یا Discord)",
+        "f2": "دو کاروباری دنوں میں پہلا جواب یقینی",
+        "f3": "کمیونٹی issues سے پہلے ترجیحی بگ ٹرائیج",
+        "f4": "اپ گریڈ میں مدد اور بریکنگ تبدیلیوں کی پیشگی اطلاع",
+        "f5": "کمیونٹی کی ہر چیز"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "badge": "انٹرپرائز",
+        "price": "30,000 ڈالر سے",
+        "period": "/ سال",
+        "desc": "ان اداروں کے لیے جن کی خریداری، قانونی یا سکیورٹی جانچ کو دستخط کرنے والا فریق درکار ہو۔",
+        "cta": "سیلز سے رابطہ کریں",
+        "f1": "جوابی SLA — معیاری طور پر 4 کاروباری گھنٹے، پروڈکشن بند ہونے پر 1 گھنٹہ",
+        "f2": "ہرجانہ اور سکیورٹی پیچ کی معاہداتی ضمانت",
+        "f3": "دستخط شدہ ڈیٹا پروسیسنگ معاہدہ، تعمیل پیکج اور تسلسل کی یقین دہانی",
+        "f4": "ٹریڈ مارک اور وائٹ لیبل حقوق، نیز مسابقتی استعمال سے استثنیٰ",
+        "f5": "طویل مدتی سپورٹ برانچ اور نجی تعیناتی کی انجینئرنگ",
+        "f6": "ٹیم کی ہر چیز"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "درجات کا موازنہ",
+      "title": "سب کچھ مفت ہے۔ منتخب کریں کہ آپ کو کتنی ضمانت درکار ہے۔",
+      "subtitle": "ہر درجہ مکمل سورس کوڈ فراہم کرتا ہے اور بند سورس تجارتی استعمال کی مفت اجازت دیتا ہے۔ فرق سپورٹ، معاہداتی ضمانتوں اور ٹریڈ مارک حقوق میں ہے۔",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "کمیونٹی",
+        "team": "ٹیم",
+        "enterprise": "انٹرپرائز"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "لائسنس",
+          "type": "لائسنس",
+          "commercial-use": "بند سورس تجارتی استعمال",
+          "registration": "رجسٹریشن",
+          "trademark": "ٹریڈ مارک حقوق"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "سورس کوڈ",
+          "full-source": "مکمل سورس کوڈ",
+          "all-packages": "تمام پیکجز اور ماڈیولز",
+          "update-window": "اپ ڈیٹس"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "سپورٹ",
+          "channel": "سپورٹ چینل",
+          "first-response": "یقینی پہلا جواب",
+          "security-patch": "سکیورٹی پیچ کی ضمانت"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "خریداری",
+          "indemnification": "ہرجانہ",
+          "dpa": "دستخط شدہ ڈیٹا پروسیسنگ معاہدہ اور تعمیل پیکج",
+          "continuity": "تسلسل کی یقین دہانی"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "درجات اور خصوصیات کا موازنہ",
+      "value": {
+        "included": "شامل ہے",
+        "notIncluded": "شامل نہیں",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "ضروری نہیں",
+        "whiteLabelRights": "وائٹ لیبل حقوق",
+        "unlimited": "لامحدود",
+        "unlimitedPlusNotice": "لامحدود + بریکنگ تبدیلیوں کی پیشگی اطلاع",
+        "unlimitedPlusLts": "لامحدود + طویل مدتی سپورٹ برانچ",
+        "publicChannels": "عوامی issues اور Discord",
+        "privateChannel": "نجی چینل",
+        "namedContact": "مخصوص رابطہ کار",
+        "twoBusinessDays": "2 کاروباری دن",
+        "fourBusinessHours": "4 کاروباری گھنٹے",
+        "bestEffort": "حتی الامکان",
+        "contractual": "معاہداتی"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

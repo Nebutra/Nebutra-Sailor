@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Percuma untuk dibina. Bayar hanya jika anda perlukan kami bertanggungjawab.",
+      "description": "Membina produk komersial di atas {brandName} tidak berkos — tiada yuran, tiada kunci lesen, tiada pendaftaran, tiada copyleft. Peringkat berbayar menjual sokongan, SLA, tanggung rugi dan hak tanda dagangan, bukan kebenaran penggunaan.",
+      "socialProofText": "MIT di npm · FSL-1.1-ALv2 di repositori, bertukar kepada Apache-2.0 selepas dua tahun · penggunaan komersial percuma pada sebarang skala.",
       "community": {
-        "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "badge": "KOMUNITI",
+        "price": "Percuma",
+        "period": "selamanya",
+        "desc": "Untuk semua orang. Sebarang saiz pasukan, sebarang hasil. Termasuk penggunaan komersial sumber tertutup, tanpa pendaftaran dan tanpa kewajipan atribusi.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Teras SaaS Next.js 16 lengkap, semua pakej disertakan",
+        "f2": "Penggunaan komersial sumber tertutup pada sebarang saiz pasukan atau hasil",
+        "f3": "Stack penuh: Auth, Pembayaran, Organisasi, API, E-mel, i18n, Kerja latar belakang, Storan dan lain-lain",
+        "f4": "Ciri pemasaran: Blog, halaman pendaratan, SEO, Analytics",
+        "f5": "Issue awam, Discussions dan Discord — sedaya upaya, tiada jaminan maklum balas"
       },
       "team": {
-        "badge": "TEAM",
+        "badge": "PASUKAN",
         "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "period": "/ tahun",
+        "desc": "Untuk pasukan yang perlukan komitmen, bukan harapan. Semuanya sudah percuma — ini membeli perhatian kami.",
+        "cta": "Dapatkan sokongan {brandName}",
+        "f1": "Saluran sokongan peribadi (e-mel + Slack atau Discord dikongsi)",
+        "f2": "Maklum balas pertama dijamin dalam dua hari bekerja",
+        "f3": "Triaj pepijat keutamaan, mendahului issue komuniti",
+        "f4": "Bantuan naik taraf dan notis awal tentang perubahan yang memecahkan keserasian",
+        "f5": "Semua dalam Komuniti"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "Dari $30,000",
+        "period": "/ tahun",
+        "desc": "Untuk organisasi yang bahagian perolehan, guaman atau semakan keselamatannya memerlukan pihak yang menandatangani.",
+        "cta": "Hubungi jualan",
+        "f1": "SLA maklum balas — 4 jam bekerja standard, 1 jam apabila produksi terhenti",
+        "f2": "Tanggung rugi dan komitmen kontrak bagi tampung keselamatan",
+        "f3": "DPA ditandatangani, pakej pematuhan dan akujanji kesinambungan",
+        "f4": "Hak tanda dagangan dan white label, serta pengecualian penggunaan pesaing",
+        "f5": "Cabang sokongan jangka panjang dan kejuruteraan penggunaan persendirian",
+        "f6": "Semua dalam Pasukan"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Bandingkan peringkat",
+      "title": "Semuanya percuma. Pilih tahap komitmen yang anda perlukan.",
+      "subtitle": "Setiap peringkat menyertakan kod sumber penuh dan membenarkan penggunaan komersial sumber tertutup tanpa kos. Perbezaannya ialah sokongan, komitmen kontrak dan hak tanda dagangan.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
+        "community": "Komuniti",
+        "team": "Pasukan",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Lesen",
+          "type": "Lesen",
+          "commercial-use": "Penggunaan komersial sumber tertutup",
+          "registration": "Pendaftaran",
+          "trademark": "Hak tanda dagangan"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Kod Sumber",
+          "full-source": "Kod sumber penuh",
+          "all-packages": "Semua pakej dan modul",
+          "update-window": "Kemas kini"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Sokongan",
+          "channel": "Saluran sokongan",
+          "first-response": "Maklum balas pertama dijamin",
+          "security-patch": "Komitmen tampung keselamatan"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Perolehan",
+          "indemnification": "Tanggung rugi",
+          "dpa": "DPA ditandatangani dan pakej pematuhan",
+          "continuity": "Akujanji kesinambungan"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Perbandingan peringkat dan ciri",
+      "value": {
+        "included": "Termasuk",
+        "notIncluded": "Tidak termasuk",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Tidak perlu",
+        "whiteLabelRights": "Hak white label",
+        "unlimited": "Tanpa had",
+        "unlimitedPlusNotice": "Tanpa had + notis awal perubahan yang memecahkan keserasian",
+        "unlimitedPlusLts": "Tanpa had + cabang sokongan jangka panjang",
+        "publicChannels": "Issue awam dan Discord",
+        "privateChannel": "Saluran peribadi",
+        "namedContact": "Kenalan khusus",
+        "twoBusinessDays": "2 hari bekerja",
+        "fourBusinessHours": "4 jam bekerja",
+        "bestEffort": "Sedaya upaya",
+        "contractual": "Kontraktual"
+      }
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Free to build on. Pay only if you need us on the hook.",
-      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "title": "Rakentaminen on ilmaista. Maksa vain, jos tarvitset meiltä sitoumuksen.",
+      "description": "Kaupallisen tuotteen rakentaminen {brandName}-pohjalle ei maksa mitään — ei maksuja, ei lisenssiavainta, ei rekisteröitymistä, ei copyleftiä. Maksulliset tasot myyvät tukea, SLA-tasoja, vastuunkantoa ja tavaramerkkioikeuksia, eivät koskaan käyttölupaa.",
+      "socialProofText": "MIT npm:ssä · FSL-1.1-ALv2 repositoriossa, muuttuu Apache-2.0:ksi kahden vuoden kuluttua · kaupallinen käyttö ilmaista kaikissa kokoluokissa.",
       "community": {
         "badge": "COMMUNITY",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "price": "Ilmainen",
+        "period": "ikuisesti",
+        "desc": "Kaikille. Mikä tahansa tiimin koko, mikä tahansa liikevaihto. Suljetun lähdekoodin kaupallinen käyttö sisältyy, ilman rekisteröitymistä ja ilman mainintavelvoitetta.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core, all packages included",
-        "f2": "Closed-source commercial use at any team size or revenue",
-        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
+        "f1": "Täysi Next.js 16 -SaaS-ydin, kaikki paketit mukana",
+        "f2": "Suljetun lähdekoodin kaupallinen käyttö tiimin koosta ja liikevaihdosta riippumatta",
+        "f3": "Koko pino: Auth, Maksut, Organisaatiot, API, Sähköposti, i18n, Taustatyöt, Tallennus ja muuta",
+        "f4": "Markkinointiominaisuudet: Blogi, laskeutumissivu, SEO, Analytiikka",
+        "f5": "Julkiset issuet, Discussions ja Discord — parhaan kyvyn mukaan, ei vastaustakuuta"
       },
       "team": {
-        "badge": "TEAM",
-        "price": "$2,000",
-        "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
-        "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
-        "f2": "Two business-day first response, guaranteed",
-        "f3": "Prioritised bug triage ahead of community issues",
-        "f4": "Upgrade assistance and advance notice of breaking changes",
-        "f5": "Everything in Community"
+        "badge": "TIIMI",
+        "price": "2 000 $",
+        "period": "/ vuosi",
+        "desc": "Tiimeille, jotka tarvitsevat sitoumuksen toiveen sijaan. Kaikki on jo ilmaista — tämä ostaa huomiomme.",
+        "cta": "Hanki {brandName}-tuki",
+        "f1": "Yksityinen tukikanava (sähköposti + jaettu Slack tai Discord)",
+        "f2": "Ensimmäinen vastaus taatusti kahden arkipäivän kuluessa",
+        "f3": "Priorisoitu vikojen käsittely yhteisön issueiden edellä",
+        "f4": "Päivitysapu ja ennakkoilmoitus rikkovista muutoksista",
+        "f5": "Kaikki Community-tasolta"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "From $30,000",
-        "period": "/ year",
-        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
-        "cta": "Contact sales",
-        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
-        "f2": "Indemnification and a contractual security-patch commitment",
-        "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
-        "f5": "Long-term support branch and private-deployment engineering",
-        "f6": "Everything in Team"
+        "price": "Alkaen 30 000 $",
+        "period": "/ vuosi",
+        "desc": "Organisaatioille, joiden hankinta, lakiasiat tai tietoturva-arviointi edellyttää sopimuskumppania, joka allekirjoittaa.",
+        "cta": "Ota yhteyttä myyntiin",
+        "f1": "Vastaus-SLA — 4 työtuntia vakiona, 1 tunti tuotantokatkossa",
+        "f2": "Vastuunkanto ja sopimusperusteinen sitoumus tietoturvapäivityksiin",
+        "f3": "Allekirjoitettu tietojenkäsittelysopimus, vaatimustenmukaisuuspaketti ja jatkuvuussitoumus",
+        "f4": "Tavaramerkki- ja white label -oikeudet sekä vapautus kilpailevan käytön rajoituksesta",
+        "f5": "Pitkän tuen haara ja yksityisen käyttöönoton tekninen tuki",
+        "f6": "Kaikki Tiimi-tasolta"
       }
     },
     "faq": {
@@ -1680,42 +1680,59 @@
       "subtitle": "Beta-ryhmämme asiakaskokemukset julkaistaan pian — ole yksi ensimmäisistä."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Vertaile tasoja",
+      "title": "Kaikki on ilmaista. Valitse, kuinka paljon sitoumusta tarvitset.",
+      "subtitle": "Jokainen taso sisältää koko lähdekoodin ja sallii suljetun lähdekoodin kaupallisen käytön maksutta. Erot ovat tuessa, sopimussitoumuksissa ja tavaramerkkioikeuksissa.",
       "plan": {
         "community": "Community",
-        "team": "Team",
+        "team": "Tiimi",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Lisenssi",
+          "type": "Lisenssi",
+          "commercial-use": "Suljetun lähdekoodin kaupallinen käyttö",
+          "registration": "Rekisteröityminen",
+          "trademark": "Tavaramerkkioikeudet"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Lähdekoodi",
+          "full-source": "Koko lähdekoodi",
+          "all-packages": "Kaikki paketit ja moduulit",
+          "update-window": "Päivitykset"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Tuki",
+          "channel": "Tukikanava",
+          "first-response": "Taattu ensimmäinen vastaus",
+          "security-patch": "Sitoumus tietoturvapäivityksiin"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Hankinta",
+          "indemnification": "Vastuunkanto",
+          "dpa": "Allekirjoitettu tietojenkäsittelysopimus ja vaatimustenmukaisuuspaketti",
+          "continuity": "Jatkuvuussitoumus"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Tasojen ja ominaisuuksien vertailu",
+      "value": {
+        "included": "Sisältyy",
+        "notIncluded": "Ei sisälly",
+        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "notRequired": "Ei vaadita",
+        "whiteLabelRights": "White label -oikeudet",
+        "unlimited": "Rajoittamaton",
+        "unlimitedPlusNotice": "Rajoittamaton + ennakkoilmoitus rikkovista muutoksista",
+        "unlimitedPlusLts": "Rajoittamaton + pitkän tuen haara",
+        "publicChannels": "Julkiset issuet ja Discord",
+        "privateChannel": "Yksityinen kanava",
+        "namedContact": "Nimetty yhteyshenkilö",
+        "twoBusinessDays": "2 arkipäivää",
+        "fourBusinessHours": "4 työtuntia",
+        "bestEffort": "Parhaan kyvyn mukaan",
+        "contractual": "Sopimusperusteinen"
+      }
     },
     "socialProof": {
       "title": "Rakennettu luotettavalle stackille",
