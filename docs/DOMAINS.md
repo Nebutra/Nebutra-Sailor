@@ -11,7 +11,7 @@
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
 | `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |
 | `design.nebutra.com` | design-docs | Design system docs (optional) |
-| `docs.nebutra.com` | sailor-docs (Vercel project `docs`) | Product/docs site |
+| `docs.nebutra.com` | sailor-docs (Cloudflare Worker / Vercel fallback) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias |
 | `router.nebutra.com` | router | **Nebutra Router** — model fabric / OpenAI-compatible product edge (ECS PM2) |
@@ -26,7 +26,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | Host | DNS (Cloudflare) | Runtime | Notes |
 |------|------------------|---------|-------|
 | `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
-| `docs.nebutra.com` | CNAME `331816c5997d8344.vercel-dns-017.com` **DNS only** | **Vercel** `docs` | Project-specific target; grey-cloud (not orange) |
+| `docs.nebutra.com` | CNAME → Worker `nebutra-sailor-docs` **proxied** (or Vercel grey-cloud fallback) | **Cloudflare Worker** (OpenNext) preferred | Vercel Hobby daily cap; CF path: `deploy-sailor-docs.yml` |
 | `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
 | `auth.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `auth-center` | Target: Vercel (`nebutra-auth`) |
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
@@ -50,14 +50,14 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 |----------|------------------|---------|
 | `HA_TOPOLOGY` | `cf-edge + vercel-marketing/docs + ecs-origin(app,auth,api,sso)` | Describe *actual* routing |
 | `DEPLOY_TARGET_LANDING` | `vercel` | Primary deploy path |
-| `DEPLOY_TARGET_SAILOR_DOCS` | `vercel` | Primary deploy path |
+| `DEPLOY_TARGET_SAILOR_DOCS` | `cloudflare-workers` | Primary deploy path (Vercel fallback when CF unavailable) |
 | `DEPLOY_TARGET_WEB` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
 | `DEPLOY_TARGET_AUTH` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
 | `DEPLOY_TARGET_GATEWAY` | `cloudflare-workers` | Edge API |
 | `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` | Login center origin |
 | `ECS_HOST` | `106.15.4.31` | Cloud VM origin |
 
-`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). Prefer **Vercel Git deploys** for marketing (`nebutra.com`) and docs (`docs.nebutra.com`). Do **not** point `docs.nebutra.com` DNS at ECS in steady state — ECS sailor-docs is emergency-only.
+`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). Prefer **Cloudflare Workers (OpenNext)** for docs (`docs.nebutra.com`); Vercel is quota-limited Hobby fallback. Marketing (`nebutra.com`) stays on Vercel. Do **not** point `docs.nebutra.com` DNS at ECS in steady state — ECS sailor-docs is emergency-only.
 
 ## DNS records (reference)
 
@@ -75,7 +75,7 @@ A       api       106.15.4.31              ✅           ECS
 A       sso       106.15.4.31              ✅           ECS permanent issuer
 A       router    106.15.4.31              ✅           ECS PM2 @nebutra/router
 A       forge     106.15.4.31              ✅           ECS PM2 @nebutra/forge
-CNAME   docs      331816c5997d8344.vercel-dns-017.com  DNS only  # project-specific     Vercel (grey cloud)
+CNAME   docs      nebutra-sailor-docs.nebutra.workers.dev  ✅  # OpenNext Worker; Vercel grey-cloud is fallback only
 ```
 
 When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.
