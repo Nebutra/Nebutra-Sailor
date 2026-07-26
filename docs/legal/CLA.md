@@ -12,8 +12,8 @@
 > Google CLA template. **Not** counsel-reviewed. Before enabling the CLA bot
 > for external contributions, a qualified IP lawyer must review:
 >
-> 1. Dual-license grant (§4) — AGPL-3.0 + Independent Developer License + any
->    future Commercial License simultaneously.
+> 1. Multi-license grant (§4) — FSL-1.1-ALv2 (repository) + MIT (published
+>    packages) + the irrevocable Apache-2.0 future-license grant, simultaneously.
 > 2. Jurisdiction / governing law (`[JURISDICTION]` placeholder below).
 > 3. Corporate CLA (CCLA) need vs employer-binding representation in §8.
 > 4. Moral-rights waiver language (EU/PRC fit).
@@ -78,18 +78,22 @@ You explicitly acknowledge and agree that Nebutra Technologies may
 license Your Contributions under MULTIPLE licenses simultaneously,
 including but not limited to:
 
-(a) the **GNU Affero General Public License version 3** (the project's
-    upstream license);
+(a) the **Functional Source License, Version 1.1, ALv2 Future License**
+    (FSL-1.1-ALv2 — the repository's current license), including its
+    irrevocable grant of the **Apache License 2.0** effective on the second
+    anniversary of each release;
 
-(b) the **Nebutra-Sailor Independent Developer License** emitted to
-    end-users who scaffold via `create-sailor` (free tier for
-    individuals and ≤ 1-FTE entities under $1M ARR);
+(b) the **MIT License**, under which the `@nebutra/*` packages, `nebutra`,
+    `create-sailor`, and CLI-scaffolded projects are distributed;
 
-(c) any **Commercial License** Nebutra Technologies may offer in the
-    future to enterprise customers, including proprietary
-    redistributions.
+(c) any **future license** the project adopts, and any **commercial
+    agreement** Wuxi Nebutra Intelligence Technology Co., Ltd. may offer to
+    enterprise customers, including proprietary redistributions;
 
-This dual-licensing grant is irrevocable and survives termination of
+(d) the **GNU Affero General Public License version 3**, the repository's
+    license until 2026-07-26, for versions released under it.
+
+This multi-licensing grant is irrevocable and survives termination of
 this Agreement. You retain Your copyright in Your Contributions; You are
 granting Nebutra Technologies the right to *relicense*, not transferring
 ownership.

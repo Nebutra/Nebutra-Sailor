@@ -32,12 +32,35 @@ We will acknowledge your report within **48 hours** and aim to:
 
 We follow [CVSS v3.1](https://www.first.org/cvss/) for severity scoring:
 
-| Severity | CVSS Score | Response SLA |
+| Severity | CVSS Score | Patch target |
 | -------- | ---------- | ------------ |
 | Critical | 9.0–10.0   | 14 days      |
 | High     | 7.0–8.9    | 14 days      |
 | Medium   | 4.0–6.9    | 30 days      |
 | Low      | 0.1–3.9    | Next release |
+
+## Commitment level by tier
+
+The targets above are what we aim for and have met to date. Whether they are a
+**best-effort target** or a **contractual obligation** depends on your tier —
+we would rather state this plainly than let a published table read as a
+guarantee it is not.
+
+| | Community (free) | Team | Enterprise |
+| --- | --- | --- | --- |
+| Acknowledgement of report | 48h target | 48h target | **4 business hours, contractual** |
+| Patch timelines above | Best-effort target | Best-effort target | **Contractual, with remedies** |
+| Production-down escalation | ✗ | ✗ | **1 hour** |
+| Advance notice of security releases | ✗ | ✅ | ✅ |
+| Backports to a pinned major version | ✗ | ✗ | ✅ long-term support branch |
+| Named security contact | ✗ | ✗ | ✅ |
+
+No commitment level changes how we handle a report from a security
+researcher — disclosure is triaged on severity, never on who is paying. The
+tiers govern what we owe *deployers*, not what we do for *reporters*.
+
+See [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) and
+[Security & Compliance](./docs/legal/security-compliance.md).
 
 ## Security Measures
 

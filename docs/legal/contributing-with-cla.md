@@ -89,11 +89,16 @@ for the same tradeoff retroactive contributors face.
 Without a CLA, every contributor retains exclusive copyright over their
 commits. That would mean:
 
-- We **cannot** offer a permissive Independent Developer License to
-  end-users (because we'd be relicensing code we don't own the right to
-  relicense).
-- We **cannot** sell a Commercial License to an enterprise without
-  obtaining individual consent from every past contributor.
+- We **cannot** publish the packages to npm under MIT while the repository
+  is FSL-1.1-ALv2 (because we'd be relicensing code we don't own the right
+  to relicense).
+- We **cannot** honour the irrevocable Apache-2.0 future-license grant on
+  your behalf.
+- We **cannot** relicense when it is in users' interest — as happened on
+  2026-07-26, when the project moved off AGPL-3.0 — without obtaining
+  individual consent from every past contributor.
+- We **cannot** sign an enterprise agreement carrying indemnification
+  without owning the rights we are indemnifying.
 
 The CLA grants Nebutra Technologies the right to **relicense** your
 contributions under multiple licenses simultaneously — you keep your

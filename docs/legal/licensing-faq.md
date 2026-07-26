@@ -1,164 +1,197 @@
 # Licensing FAQ — Nebutra-Sailor
 
-> **Status: DRAFT — not legal advice.**
->
-> | Field | Value |
-> |-------|-------|
-> | **Owner** | Nebutra Legal (interim: engineering @nebutra.com) |
-> | **As of** | 2026-07-24 |
-> | **Counsel review** | Pending |
->
-> Engineering's best-effort interpretation of tier thresholds. Not
-> authoritative until counsel-reviewed. Binding answers:
-> [licensing@nebutra.com](mailto:licensing@nebutra.com).
+> **Not legal advice.** This FAQ is explanatory. Where it and the
+> [LICENSE](../../LICENSE) file conflict, the LICENSE file governs.
+> Binding answers: [legal@nebutra.com](mailto:legal@nebutra.com).
 
-Last updated: 2026-07-24.
-
-This document covers edge cases for the three Nebutra-Sailor commercial tiers:
-
-| Tier         | Eligibility                                          | Price        | Document                                                                 |
-|--------------|------------------------------------------------------|--------------|--------------------------------------------------------------------------|
-| Independent  | ≤ 1 FTE, < $1M ARR                                   | Free         | [`LICENSE-INDEPENDENT.md`](../../packages/ops/create-sailor/templates/LICENSE-INDEPENDENT.md) (CLI-emitted) |
-| Startup      | 2–50 FTE, any revenue                                | $799/year    | [`LICENSE-COMMERCIAL.md`](../../LICENSE-COMMERCIAL.md) §2                |
-| Enterprise   | 50+ FTE, ≥ $1M ARR, or white-label / SLA needs       | Custom       | [`LICENSE-COMMERCIAL.md`](../../LICENSE-COMMERCIAL.md) §3                |
+Last updated: 2026-07-26.
 
 ---
 
-## "What is an FTE?"
+## "What does it cost to build a commercial product on this?"
 
-A full-time equivalent is one person working full-time hours (typically ≥ 32
-hours/week) on the product built with Nebutra-Sailor. The threshold counts
-**people working on the product**, not your total headcount.
+**Nothing.**
 
-### Worked examples
+No fee, no licence key, no registration, no revenue threshold, no headcount
+threshold, no copyleft obligation. Build a closed-source product, sell it,
+keep the money.
 
-- **Two co-founders, each 20 hours/week on the product, day jobs otherwise.**
-  Combined effort = roughly 1 FTE. Independent tier eligible while combined
-  product-effort stays at-or-below 1 FTE.
-- **You + a part-time contractor doing 8 hours/week.**
-  ≈ 1.2 FTE. Strictly speaking, above the Independent threshold; upgrade to
-  Startup. The Independent license says "part-time contractors do not count"
-  for occasional/short-engagement contractors, but a recurring 8-hour-per-week
-  arrangement is sustained product work and should be counted.
-- **You + a second co-founder who also works full-time on the product.**
-  2 FTE. Startup tier required from day one.
-- **You alone, 60 hours/week.**
-  Still 1 FTE (an FTE is one person, regardless of overtime). Independent tier
-  eligible.
-
-When in doubt, count anyone whose ongoing weekly contribution to the product
-is non-trivial.
+This changed on 2026-07-26. If you previously read that you needed an
+Independent Developer License or a $799/year Startup License, that is no
+longer true — both tiers were retired. See
+[License History](./license-history.md).
 
 ---
 
-## "Annual revenue — gross or net? Product-specific or total?"
+## "Then what am I actually bound by?"
 
-The $1,000,000 USD threshold is **gross annual revenue derived from the
-product built on Nebutra-Sailor**, measured over a trailing 12-month window.
+Two licences, depending on how you obtained the code.
 
-- **Multiple unrelated businesses, one of which uses Nebutra-Sailor.**
-  Only count revenue from the Nebutra-Sailor-derived product.
-- **Single business with multiple products, one uses Nebutra-Sailor.**
-  Only count revenue attributable to the Nebutra-Sailor-derived product.
-- **Currency conversion.**
-  Use the average exchange rate over the measurement window.
-- **Pre-revenue / bootstrapping.**
-  Zero revenue ≪ $1M; Independent tier eligible.
+| How you got it | Licence | Practical effect |
+| --- | --- | --- |
+| `npm install @nebutra/…`, `npx create-sailor` | **MIT** | Do anything. Keep the copyright notice. |
+| Cloned or forked this repository | **FSL-1.1-ALv2** | Do anything except sell a Sailor substitute. Converts to Apache-2.0 two years after each release. |
+
+Most people use both at once. That is fine and intended.
 
 ---
 
-## "What happens if I cross the threshold mid-year?"
+## "What is the one thing I can't do?"
 
-You have **30 days** from the point you cross either threshold (FTE > 1 or ARR
-≥ $1M) to upgrade to the Startup tier. You do not need to retroactively pay
-for the months before crossing; the Independent license remained valid for
-that period.
+Under FSL you may not make Sailor available to others in a commercial product
+or service that:
 
-If you cross the Startup threshold (FTE > 50 or you need white-label / SLA),
-you have 30 days to negotiate Enterprise terms. Contact
-[sales@nebutra.com](mailto:sales@nebutra.com) before the 30 days
-expire to start the conversation — actual contract close can take longer.
+1. substitutes for Sailor, or
+2. substitutes for another product we offer built on Sailor, or
+3. offers the same or substantially similar functionality.
 
----
+**In one line: build products with Sailor, don't sell Sailor.**
 
-## "What counts as 'a project' under the Independent license?"
-
-One Independent license covers **one product or product line** under one legal
-entity (you-the-individual or your OPC). Examples:
-
-- One indie SaaS at `myapp.com` — one project. ✅
-- A SaaS at `myapp.com` plus a free dev tool at `mytool.dev` you also make —
-  treat as one project under one entity. ✅
-- A SaaS at `myapp.com` and a separate consulting business where you scaffold
-  client projects with `create-sailor` — **the client projects are separate
-  products** and each needs its own license (or a Startup license that covers
-  agency-style work; see below).
-- Multiple sites that are all part of the same product offering (marketing
-  site, app, admin dashboard, status page) — one project. ✅
-
-If you scaffold projects on behalf of clients (agency / consultancy work), the
-Independent tier does not cover that use case. You'll need Startup tier
-licensing, and ideally each client's project carries its own commercial
-license. Contact licensing@nebutra.com for agency-pricing guidance — this is
-not formally a separate tier yet.
+The restriction expires. Every version becomes Apache-2.0 on the second
+anniversary of its release, and that grant is made irrevocably in advance.
 
 ---
 
-## "Internal-only use at a large company — does that need a commercial license?"
+## "Is my SaaS a 'competing use'?"
 
-Yes, if your company has > 1 FTE working on the internal tool or ≥ $1M ARR as
-a company. Internal tooling is still a "product built on Nebutra-Sailor" for
-licensing purposes — the AGPL network-copyleft trigger doesn't apply for
-internal-only use, but the *commercial license* requirement does, because
-you've still received the source-code grant.
+Almost certainly not. The test is whether *your product substitutes for
+Sailor* — not whether it is software, or a SaaS, or multi-tenant.
 
-In practice, most companies use the Startup tier ($799/year) for internal
-tools until they outgrow 50 FTE.
+| What you're building | Competing use? |
+| --- | --- |
+| A CRM for dental clinics, built on Sailor | ❌ No |
+| An AI writing tool, built on Sailor | ❌ No |
+| An internal admin portal | ❌ No |
+| A vertical SaaS in any industry | ❌ No |
+| "SailorCloud — hosted Nebutra Sailor, $49/mo" | ✅ **Yes** |
+| A rebranded SaaS-boilerplate product sold to developers | ✅ **Yes** |
+| A developer platform pitched as "Sailor, but managed" | ✅ **Yes** |
 
----
+The pattern: if your customers are buying *Sailor's* functionality rather than
+*your product's* functionality, it is a competing use.
 
-## "I forked the GitHub repo directly without using `create-sailor`. What license applies?"
-
-The upstream repository is **AGPL-3.0**. Direct forks inherit AGPL, including
-the network-copyleft clause (Section 13): if you offer the modified software
-as a network service, you must make the modified source available to users.
-
-To get the no-copyleft permissions of the Independent / Startup / Enterprise
-tiers, you must **either**:
-
-1. **Scaffold a fresh project with `create-sailor`** — the CLI emits the
-   Independent License and a signed `.nebutra/scaffold-meta.json` marker that
-   distinguishes the two grants legally; or
-2. **Purchase a Startup or Enterprise commercial license** at
-   [nebutra.com/get-license](https://nebutra.com/get-license), which grants
-   the same no-copyleft permissions to your existing fork.
-
-The presence or absence of `.nebutra/scaffold-meta.json` at the repo root is
-the legal marker that distinguishes the two paths.
+If your model does require competing use, it is negotiable — Enterprise
+agreements can include a written competing-use waiver. Ask rather than guess.
 
 ---
 
-## "What about reading the source on GitHub?"
+## "Do I have to say 'Built with Nebutra-Sailor'?"
 
-Reading, studying, and learning from the GitHub source is unrestricted — the
-source is public. The license restrictions apply to **distribution and
-deployment** of derivative works, not reading. You don't need any license to
-browse the code on github.com.
+**No.** Attribution is appreciated and never required. The retired Independent
+tier did require it; that requirement is gone.
+
+You must retain existing copyright notices **if you redistribute Sailor's
+source code**. That concerns redistributing the source, not shipping a product
+built on it — your compiled application carries no such obligation.
 
 ---
 
-## "Can I contribute code while using the Independent license?"
+## "Can I use it for client work / agency projects?"
 
-Yes — and we encourage it. Contributions to the upstream repository are
-governed by the Contributor License Agreement in
-[`CONTRIBUTING.md`](../../CONTRIBUTING.md). Your contribution grants Nebutra
-Technologies a broad license to use, modify, and redistribute it (so we can
-keep offering the dual-license model). You retain copyright.
+**Yes, explicitly.** FSL Permitted Purpose 4 covers "professional services
+that you provide to a licensee using the Software in accordance with these
+Terms and Conditions."
+
+Build client projects on Sailor and charge whatever you like. The client
+receives the software under the same terms you did.
+
+---
+
+## "We're a 5,000-person company. Do we need a licence?"
+
+**Not to use it.** Headcount and revenue are irrelevant now — those thresholds
+belonged to the retired tiers.
+
+You may still want an Enterprise agreement, for different reasons: indemnity,
+a contractual SLA, a signed DPA, compliance documentation, or a named
+counterparty your procurement process can point at. That is buying assurance,
+not permission. See [LICENSE-COMMERCIAL.md](../../LICENSE-COMMERCIAL.md).
+
+---
+
+## "Internal-only use at a large company?"
+
+No licence needed. Internal use is an explicit Permitted Purpose.
+
+---
+
+## "Can I fork it and keep my changes private?"
+
+Yes. FSL has no copyleft clause, and no network-use trigger — that was the
+AGPL clause, and it is gone. There is no obligation to publish modifications.
+
+If you *redistribute the source* of your fork, the FSL terms travel with it and
+you must retain copyright notices.
+
+---
+
+## "What if I'm already using it under AGPL?"
+
+Versions released before 2026-07-26 remain available under AGPL-3.0-only, and
+that grant is irrevocable. You may continue under AGPL if you prefer.
+
+Almost nobody should. FSL is strictly more permissive for ordinary product
+work — it removes the copyleft and network-disclosure obligations AGPL
+imposed. Pulling a newer version moves you onto the better terms.
+
+---
+
+## "I paid for a Startup licence. What now?"
+
+You keep the full value of your term, moved to the equivalent support tier at
+no additional cost. Email `legal@nebutra.com` and we will confirm in writing.
+
+The right you paid for — closed-source commercial use — is now free for
+everyone. What you paid is being converted into support, which is the part
+with ongoing value.
+
+---
+
+## "Is this open source?"
+
+**The MIT packages: yes.** The 79 published `@nebutra/*` packages are
+OSI-approved open source.
+
+**The repository: no, not yet.** FSL is *source-available*, not OSI-approved
+open source, because of the competing-use restriction. We will not call it
+open source while that clause is live — that would be inaccurate, and you
+would find out.
+
+Each version becomes genuinely open source (Apache-2.0) on its second
+anniversary.
+
+---
+
+## "Can I contribute while using it commercially?"
+
+Yes. Contributions are covered by the [CLA](./CLA.md), which grants us a broad
+licence to your contribution. You retain copyright. Contributing changes
+nothing about your rights as a user.
+
+---
+
+## "What about just reading the source on GitHub?"
+
+Reading, studying, and learning from the code carry no obligations
+whatsoever. Non-commercial education and research are explicit Permitted
+Purposes.
+
+---
+
+## "Why FSL rather than MIT or Apache for the whole repository?"
+
+Because a two-year clock does something a permissive licence cannot: it stops
+a hosted substitute appearing while the project is young, without imposing
+anything on the people actually building products — which is everyone else.
+
+A restriction that expires on a fixed date, with the conversion grant made
+irrevocably in advance, is more honest than a permanent one. If we stop
+maintaining the project, it becomes fully open source on schedule regardless.
 
 ---
 
 ## Still uncertain?
 
-Email [licensing@nebutra.com](mailto:licensing@nebutra.com) with a one-paragraph
-description of your situation. We typically reply within two business days. We
-would much rather you ask than guess wrong.
+Email `legal@nebutra.com` with a short description of what you are building.
+Plain-language answer, no sales call. If the answer is "you need nothing from
+us", we will say so.
