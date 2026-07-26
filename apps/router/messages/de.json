@@ -5,127 +5,127 @@
     "description": "Marktplatz für alle Modelle · Pay-as-you-go · Schlüssel & Wallet verwalten · schnell testen."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
+    "dashboard": "Übersicht",
+    "keys": "API-Schlüssel",
     "wallet": "Wallet",
-    "docs": "Docs",
+    "docs": "Dokumentation",
     "title": "Admin",
     "backToMarket": "Zurück zum Marktplatz",
-    "quickUse": "Quick use"
+    "quickUse": "Schnellstart"
   },
   "chrome": {
     "searchPlaceholder": "Was möchten Sie mit KI tun?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Suche",
+    "locale": "Sprache",
+    "currency": "Währung",
     "collapseSidebar": "Seitenleiste einklappen",
     "expandSidebar": "Seitenleiste ausklappen",
-    "home": "Home",
+    "home": "Startseite",
     "adminConsole": "Admin",
-    "quickUse": "Quick use",
+    "quickUse": "Schnellstart",
     "support": "Support",
-    "apiDocs": "API docs",
+    "apiDocs": "API-Dokumentation",
     "integrationHelp": "Integrationsanleitung",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "KI-Empfehlungen",
+    "market": "Markt",
+    "usageTitle": "Schnellzugriff"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "App-Markt",
+    "api": "API-Markt",
     "models": "Modellkatalog",
     "client": "Client"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
+    "new": "Neu",
+    "hot": "Beliebt",
+    "forYou": "Für dich",
+    "grid": "Raster",
+    "list": "Liste",
+    "apiShelf": "API-Regal",
+    "toolShelf": "Werkzeug-Regal",
+    "categories": "Kategorien",
     "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "newRelease": "Neue Veröffentlichung",
+    "forgeTitle": "Forge-Werkzeugarbeitsbereich",
+    "forgeBlurb": "Texttransformationen, Codecs, Formulare und komponierbare Tools. Der App-Marktplatz führt zu Forge.",
+    "openForge": "Forge öffnen →",
+    "allApi": "Alle APIs →",
+    "all": "Alle →",
+    "viewAll": "Alle {label} anzeigen →",
+    "gridView": "Rasteransicht",
+    "listView": "Listenansicht",
+    "hiTitle": "Unternehmensplattform für KI-Ressourcen",
+    "hiSubtitle": "Jeden Bedarf mit der passenden KI abdecken",
+    "sellable": "Verkäuflich",
+    "walletTopup": "Aufladen"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Sprachmodelle",
+      "hint": "Chat · Reasoning"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Bildgenerierung",
+      "hint": "Text-zu-Bild"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "Bildbearbeitung",
+      "hint": "Bearbeiten · Freistellen"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "Videogenerierung",
+      "hint": "Text-zu-Video"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "Audio & Video",
+      "hint": "Sprache · Transkription"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "Informationen",
+      "hint": "Abruf · Extraktion"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Wissensgestützt"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "Tool-APIs",
+      "hint": "Agent · Tools"
     }
   },
   "toolTaxonomy": {
     "bots": {
       "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "chips": "Chat-Bots · Zeichen-Bots · Wissen"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Produktivität",
+      "chips": "Modell-Arena · KI-Schreiben"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "Akademisch",
+      "chips": "PDF-Toolkit · KI-Patent-Suche"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "Bild-Tools",
+      "chips": "3D-Studio · Canvas"
     },
     "audio": {
       "label": "Audio",
-      "chips": "Speech · AI music"
+      "chips": "Sprache · KI-Musik"
     },
     "code": {
       "label": "Code",
-      "chips": "Web generator · Forge"
+      "chips": "Web-Generator · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
+    "dashboard": "Übersicht",
+    "keys": "Schlüssel",
     "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "use": "Ausprobieren",
+    "docs": "Dokumentation",
+    "models": "Mehr"
   }
 }

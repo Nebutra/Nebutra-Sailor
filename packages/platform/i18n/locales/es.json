@@ -70,7 +70,7 @@
     "system": "Sistema"
   },
   "LocaleSwitcher": {
-    "en": "English",
+    "en": "Inglés",
     "zh": "中文",
     "de": "Alemán",
     "es": "Español",
@@ -1083,7 +1083,7 @@
         "revenue": "Ingresos reconocidos"
       },
       "meta": {
-        "snapshot": "Snapshot",
+        "snapshot": "Instantánea",
         "cadence": "Cadencia",
         "tenant": "Inquilino",
         "daily": "Diario",

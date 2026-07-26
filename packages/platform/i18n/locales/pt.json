@@ -1,347 +1,347 @@
 {
   "admin": {
     "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "description": "Painel de super admin — gerencie usuários, organizações e a saúde do sistema.",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "Visão geral",
+      "users": "Usuários",
+      "organizations": "Organizações"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "Usuários",
+      "description": "Navegue, pesquise e faça impersonation de qualquer usuário em todas as organizações.",
+      "searchPlaceholder": "Pesquisar usuários…",
+      "totalCount": "{count, plural, one {# usuário} other {# usuários}}",
+      "empty": "Nenhum usuário encontrado.",
+      "loadError": "Falha ao carregar usuários.",
       "columns": {
         "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "name": "Nome",
+        "created": "Criado",
+        "activeOrgs": "Orgs ativas",
+        "actions": "Ações"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "Ver organizações"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "Organizações",
+      "description": "Todos os workspaces do sistema, ordenados por data de criação.",
+      "searchPlaceholder": "Pesquisar organizações…",
+      "totalCount": "{count, plural, one {# organização} other {# organizações}}",
+      "empty": "Nenhuma organização encontrada.",
+      "loadError": "Falha ao carregar organizações.",
       "columns": {
-        "name": "Name",
+        "name": "Nome",
         "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "plan": "Plano",
+        "members": "Membros",
+        "created": "Criado",
+        "actions": "Ações"
       },
-      "view": "View"
+      "view": "Ver"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "Personificar",
+      "starting": "Iniciando…",
+      "stop": "Parar de se passar",
+      "confirm": "Se passar por {label}? Você verá o app como este usuário até parar.",
+      "error": "Falha ao iniciar a simulação.",
+      "stopError": "Falha ao parar a simulação."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "Anterior",
+      "next": "Próximo",
+      "pageOf": "Página {page} de {total}"
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "Olá Mundo",
+    "dashboard": "Painel",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "Continuar",
+      "confirm": "Confirmar",
+      "done": "Concluído",
+      "cancel": "Cancelar"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
   },
   "LocaleSwitcher": {
-    "en": "English",
-    "zh": "中文",
-    "de": "German",
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "label": "Language",
-    "ariaLabel": "Change language"
+    "en": "Inglês",
+    "zh": "Chinês",
+    "de": "Alemão",
+    "es": "Espanhol",
+    "fr": "Francês",
+    "ja": "Japonês",
+    "ko": "Coreano",
+    "label": "Idioma",
+    "ariaLabel": "Alterar idioma"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "Número de registro ICP",
+      "publicSecurity": "Registro de segurança pública"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "Entrar com WeChat",
+      "notConfigured": "Login com WeChat não configurado"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "Configure seu workspace",
+    "subtitle": "Três passos rápidos e você já pode lançar.",
     "steps": {
       "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "invite": "Convidar equipe",
+      "plan": "Escolher plano"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "Voltar",
+      "stepCounter": "Etapa {current} de {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "Escolha um plano",
+      "description": "Comece grátis ou desbloqueie mais capacidade. Você pode alterar o plano a qualquer momento.",
+      "choose": "Escolher um plano",
+      "skip": "Pular por enquanto"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
+    "ariaLabel": "Abrir menu do usuário",
+    "profile": "Perfil",
+    "settings": "Configurações",
     "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "theme": "Tema",
+    "language": "Idioma",
+    "signOut": "Sair",
+    "signedInAs": "Conectado como"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "Perfil",
+      "description": "Atualize suas informações pessoais.",
+      "nameLabel": "Nome",
+      "namePlaceholder": "Seu nome completo",
+      "emailLabel": "E-mail",
+      "emailHint": "Enviaremos um link de verificação para confirmar um novo endereço de e-mail.",
+      "languageLabel": "Idioma",
+      "submit": "Salvar alterações",
+      "saving": "Salvando…",
+      "verifyEmail": "Verificar",
+      "verifying": "Enviando verificação…",
+      "success": "Perfil atualizado.",
+      "verificationSent": "E-mail de verificação enviado.",
+      "errorRequiredName": "O nome é obrigatório.",
+      "errorInvalidEmail": "O endereço de e-mail não é válido.",
+      "subtitle": "Sua identidade e informações de contato.",
+      "unknown": "Usuário sem nome",
+      "manageCta": "Abrir configurações completas da conta"
     },
     "avatar": {
       "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "description": "Carregue uma imagem quadrada (PNG, JPEG ou WebP, no máximo 2MB).",
+      "uploadButton": "Carregar avatar",
+      "uploading": "Carregando…",
+      "fileTooBig": "O arquivo é muito grande. O tamanho máximo é 2MB.",
+      "invalidType": "Tipo de imagem não suportado. Use PNG, JPEG ou WebP.",
+      "success": "Avatar atualizado.",
+      "removeButton": "Remover avatar",
+      "removed": "Avatar removido.",
+      "deleteError": "Falha ao excluir o avatar."
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "Exportar meus dados",
+      "description": "Baixe uma cópia de todos os registros que mantemos para sua conta, incluindo perfil, organizações, eventos de auditoria, notificações e convites.",
+      "compliance": "Exigido pelo Artigo 20 do GDPR (Direito à portabilidade de dados) e Artigo 45 do PIPL (Direito de obter uma cópia das informações pessoais).",
+      "export": "Exportar meus dados",
+      "pending": "Preparando exportação…",
+      "ready": "Sua exportação está pronta.",
+      "download": "Baixar JSON",
+      "error": "Falha ao preparar sua exportação. Tente novamente."
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "Alterar endereço de e-mail",
+      "description": "Enviaremos um link de verificação para o novo endereço. A alteração só será efetivada após você confirmá-la nessa caixa de entrada.",
+      "newEmailLabel": "Novo endereço de e-mail",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "Enviar link de verificação",
+      "submitting": "Enviando…",
+      "verificationSent": "Verifique sua caixa de entrada em {email} para confirmar a alteração.",
+      "errorInvalidEmail": "O endereço de e-mail não é válido.",
+      "error": "Falha ao solicitar alteração de e-mail.",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "E-mail atualizado",
+        "successDescription": "Seu e-mail de login foi atualizado.",
+        "successWithEmail": "Seu e-mail de login agora é {email}.",
+        "failureTitle": "Não foi possível confirmar esse link",
+        "failureDescription": "Este link de verificação é inválido, expirou ou já foi usado. Solicite um novo nas configurações da sua conta.",
+        "errorCode": "Motivo: {code}",
+        "continueCta": "Voltar à conta",
+        "backCta": "Voltar à conta"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "Conta",
+    "ariaLabel": "Configurações da conta",
+    "navLabel": "Abas de configurações da conta",
+    "tip": "Pressione {key} em qualquer lugar para reabrir este diálogo.",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "Perfil",
+      "subscription": "Assinatura",
+      "billing": "Cobrança",
+      "preferences": "Preferências",
+      "personalization": "Personalização"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "Assinatura",
+      "subtitle": "Plano, cota e renovação.",
+      "currentPlan": "Plano atual",
+      "upgradeCta": "Comparar planos",
+      "manageCta": "Gerenciar assinatura"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "Faturamento",
+      "subtitle": "Histórico de faturas e método de pagamento.",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "Sem histórico ainda",
+        "description": "As cobranças e faturas aparecerão aqui após o primeiro período pago.",
+        "cta": "Abrir faturamento completo"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "Preferências",
+      "subtitle": "Tema e acessibilidade.",
+      "theme": "Tema",
+      "light": "Claro",
+      "dark": "Escuro",
+      "system": "Sistema",
+      "help": "Ajuda",
+      "reportIssue": "Relatar um problema",
+      "shortcuts": "Atalhos de teclado"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "Personalização",
+      "subtitle": "Diga ao Sailor quem você é e como responder."
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
+    "hero_title": "Redefinindo o Paradigma",
+    "hero_subtitle": "Que não haja negócios difíceis no mundo.",
     "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "social_headline": "Igualdade Tecnológica Absoluta",
+    "social_description": "Capacitando inovadores de ponta. Quebrando filtros tradicionais e capacitando fundadores individuais com infraestrutura inovadora.",
+    "governance_title": "Governança",
+    "governance_headline": "Código é Lei",
+    "governance_description": "Governança algorítmica construída sobre Prova de Trabalho e resultados reais de negócios, substituindo a burocracia opaca.",
+    "environment_title": "Ambiente",
+    "environment_headline": "Minimalismo Digital",
+    "environment_description": "Impulsionando a redução da pegada na nuvem por meio de integração extrema de SaaS e eficiência de recursos."
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "Segurança",
+      "description": "Gerencie sua senha, autenticação multifator e sessões ativas.",
+      "managedByProvider": "As configurações de segurança são gerenciadas pelo seu provedor de autenticação.",
+      "openProviderProfile": "Abrir perfil",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "Alterar senha",
+        "description": "Use uma senha forte que você não reutilize em outros sites.",
+        "currentPasswordLabel": "Senha atual",
+        "newPasswordLabel": "Nova senha",
+        "confirmPasswordLabel": "Confirmar nova senha",
+        "revokeOtherSessions": "Sair de outros dispositivos",
+        "submit": "Atualizar senha",
+        "pending": "Atualizando senha…",
+        "success": "Senha atualizada com sucesso."
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "Autenticação de dois fatores",
+        "description": "Adicione uma segunda etapa de verificação usando um aplicativo autenticador.",
+        "enabled": "Ativado",
+        "disabled": "Desativado",
+        "enabledHelp": "Sua conta solicita um código de 6 dígitos do autenticador após o login com senha.",
+        "disabledHelp": "Proteja sua conta com um código de 6 dígitos de um aplicativo autenticador.",
+        "enable": "Ativar autenticação de dois fatores",
+        "disable": "Desativar autenticação de dois fatores",
+        "passwordPrompt": "Confirme sua senha",
+        "scanQrCode": "Escaneie este código QR com seu aplicativo autenticador e, em seguida, insira o código de 6 dígitos abaixo.",
+        "secretKeyLabel": "Ou insira este segredo manualmente",
+        "verificationCodeLabel": "Código de verificação",
+        "verify": "Verificar e ativar",
+        "backupCodesTitle": "Códigos de backup",
+        "backupCodesDescription": "Guarde esses códigos em um local seguro. Cada um pode ser usado uma vez se você perder o acesso ao seu autenticador.",
+        "copyBackupCodes": "Copiar códigos",
+        "finishSetup": "Concluir configuração",
+        "successEnabled": "Autenticação de dois fatores ativada.",
+        "successDisabled": "Autenticação de dois fatores desativada."
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "Sessões ativas",
+        "description": "Dispositivos e navegadores atualmente conectados à sua conta.",
+        "currentSession": "(atual)",
+        "ipLabel": "Endereço IP",
+        "lastActiveLabel": "Última atividade",
+        "revoke": "Sair",
+        "revokeAll": "Sair de todos os outros dispositivos",
+        "empty": "Nenhuma outra sessão ativa.",
+        "successRevoked": "Sessão encerrada.",
+        "successRevokedAll": "Todas as outras sessões encerradas."
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "Excluir conta",
+        "description": "Remova permanentemente sua conta e todos os dados associados. Isso não pode ser desfeito.",
+        "passwordPrompt": "Digite sua senha para confirmar",
+        "confirmTextLabel": "Digite EXCLUIR para confirmar",
+        "submit": "Excluir conta",
+        "cancel": "Cancelar",
+        "success": "Conta excluída."
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "Contas conectadas",
+        "description": "Revise os métodos de login OAuth vinculados à sua identidade Nebutra.",
+        "connected": "Conectado",
+        "connect": "Conectar",
+        "help": "Mantenha pelo menos um método de login confiável disponível antes de desvincular um provedor.",
+        "unlink": "Desvincular",
+        "notLinked": "Não vinculado"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "Chaves de acesso",
+        "description": "Use credenciais vinculadas ao dispositivo para login resistente a phishing.",
+        "empty": "Nenhuma chave de acesso registrada ainda",
+        "addPasskey": "Adicionar chave de acesso",
+        "cancelAdd": "Cancelar",
+        "cancelled": "A configuração da chave de acesso foi cancelada. Nada foi alterado.",
+        "defaultName": "Chave de acesso {number}",
+        "nameHelp": "Dê um nome reconhecível a esta chave de acesso antes que o navegador peça confirmação.",
+        "nameLabel": "Nome da chave de acesso",
+        "rename": "Renomear",
+        "saveRename": "Salvar nome",
+        "remove": "Remover",
+        "successAdded": "Chave de acesso adicionada.",
+        "successRemoved": "Chave de acesso removida.",
+        "unavailableBadge": "Indisponível"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "Definir uma senha",
+        "description": "Adicione uma senha para fazer login sem usar seu provedor OAuth.",
+        "submit": "Definir senha",
+        "pending": "Enviando link de configuração de senha…",
+        "sentMessage": "Enviamos um link de configuração de senha para o seu e-mail."
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "Lance sua Startup, governada desde o primeiro dia.",
+      "tagline": "Agentes multi-região, multi-tenant por padrão. Sem necessidade de equipe de plataforma."
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Entrar no Nebutra",
+      "subtitle": "Escolha como deseja fazer login.",
+      "continueWith": "Continuar com",
+      "continueWithProvider": "Continuar com {provider}",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,380 +349,380 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "Redirecionando…",
+      "dividerOr": "Ou continue com e-mail",
+      "emailLabel": "E-mail",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "Continuar",
+      "back": "Voltar",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Ocultar senha",
+      "capsLockOn": "Caps Lock está ativado",
+      "forgotPassword": "Esqueceu a senha?",
+      "submit": "Entrar",
+      "submitLoading": "Entrando…",
+      "useMagicLink": "Enviar um link mágico",
+      "usePasskey": "Entrar com uma chave de acesso",
+      "passkeyTitle": "Entrar com sua chave de acesso",
+      "passkeyDescription": "Use Face ID, Touch ID ou sua chave de segurança. Nenhuma senha necessária.",
+      "passkeyButton": "Continuar com chave de acesso",
+      "passkeyCancelled": "Solicitação de chave de acesso cancelada.",
+      "passkeyUnsupported": "Este navegador não suporta chaves de acesso.",
+      "passkeyError": "Falha ao entrar com chave de acesso. Tente outro método.",
+      "ssoTitle": "Continuar com SSO Empresarial",
+      "ssoDescription": "Redirecionando você para {provider} para {email}.",
+      "ssoError": "Não foi possível iniciar o SSO Empresarial. Tente outro método.",
+      "ssoRetry": "Tentar novamente",
+      "newToProduct": "Novo no Nebutra?",
+      "signUpLink": "Cadastrar-se",
+      "homeLink": "Início",
+      "signInFailed": "Falha ao fazer login",
+      "genericError": "Ocorreu um erro. Tente novamente.",
+      "captchaError": "Verificação de bot falhou. Atualize a página e tente novamente."
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "Crie sua conta Nebutra",
+      "subtitle": "Uma conta para todos os apps Nebutra.",
+      "firstNameLabel": "Nome",
+      "lastNameLabel": "Sobrenome",
+      "firstNamePlaceholder": "Nome",
+      "lastNamePlaceholder": "Sobrenome",
+      "submit": "Criar conta",
+      "submitLoading": "Criando conta…",
+      "alreadyHaveAccount": "Já tem uma conta?",
+      "signInLink": "Fazer login",
+      "signUpFailed": "Falha ao criar conta"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "Chaves de acesso",
+      "description": "Use Face ID, Touch ID, Windows Hello ou uma chave de segurança em vez de uma senha. Cada dispositivo tem sua própria chave de acesso.",
+      "addButton": "Adicionar chave de acesso",
+      "adding": "Configurando…",
+      "namePlaceholder": "ex. MacBook Pro",
+      "nameLabel": "Nome (opcional)",
+      "registerSuccess": "Chave de acesso adicionada.",
+      "registerCancelled": "Configuração cancelada.",
+      "registerUnsupported": "Este navegador não suporta chaves de acesso.",
+      "registerError": "Falha ao registrar chave de acesso.",
+      "empty": "Nenhuma chave de acesso ainda.",
+      "loadError": "Falha ao carregar chaves de acesso.",
+      "revoke": "Remover",
+      "revoking": "Removendo…",
+      "revokeConfirm": "Remover esta chave de acesso? Você não poderá mais fazer login com ela.",
+      "revokeSuccess": "Chave de acesso removida.",
+      "revokeError": "Falha ao remover chave de acesso.",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "Vinculado ao dispositivo",
+        "multiDevice": "Sincronizado entre dispositivos"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "Adicionado em {date}"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "Entrar com link mágico",
+      "description": "Digite seu e-mail e enviaremos um código de 6 dígitos para você fazer login.",
+      "emailLabel": "E-mail",
+      "send": "Enviar link",
+      "codeLabel": "Código de verificação",
+      "verify": "Verificar",
+      "resend": "Reenviar código",
+      "resendCooldown": "Reenviar em {seconds}s",
+      "sentTo": "Enviámos um código para {email}"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "Esqueceu a senha?",
+      "description": "Digite seu e-mail e enviaremos um link para redefinir sua senha.",
+      "emailLabel": "E-mail",
+      "submit": "Enviar link de redefinição",
+      "successTitle": "Verifique seu e-mail",
+      "success": "Se esse e-mail estiver cadastrado, você receberá um link de redefinição em breve."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "Redefinir sua senha",
+      "description": "Escolha uma nova senha para sua conta.",
+      "newPasswordLabel": "Nova senha",
+      "confirmPasswordLabel": "Confirmar nova senha",
+      "submit": "Redefinir senha",
+      "successTitle": "Senha redefinida",
+      "successDescription": "Agora você pode fazer login com sua nova senha.",
+      "signInCta": "Ir para o login",
+      "invalidTitle": "Link de redefinição inválido",
+      "invalidDescription": "Este link de redefinição de senha está ausente ou corrompido. Solicite um novo na página de esqueci minha senha."
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "E-mail verificado",
+      "successDescription": "Seu endereço de e-mail foi verificado.",
+      "failureTitle": "Verificação falhou",
+      "failureDescription": "Não foi possível verificar seu e-mail com esse link.",
+      "continueCta": "Continuar",
+      "signInCta": "Ir para o login"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
+      "eyebrow": "Login concluído",
+      "title": "Você está conectado",
+      "description": "Sua sessão está pronta. Estamos abrindo o workspace do Nebutra e mantendo a transferência segura do fluxo de autenticação.",
+      "session": "Sessão",
+      "verified": "Verificado",
       "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "preparing": "Preparando",
+      "redirecting": "Entrando no workspace em {seconds}s",
+      "secureHandoff": "Transferência segura",
+      "continueCta": "Continuar para o workspace",
+      "signInCta": "Usar outra conta"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "O e-mail ou a senha estão incorretos.",
+      "userNotFound": "Nenhuma conta encontrada com esse e-mail.",
+      "userAlreadyExists": "Já existe uma conta com esse e-mail.",
+      "weakPassword": "A senha é muito fraca. Use pelo menos 8 caracteres com letras maiúsculas, minúsculas e números.",
+      "passwordsDontMatch": "As senhas não coincidem.",
+      "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",
+      "currentPasswordIncorrect": "A senha atual está incorreta.",
+      "samePassword": "A nova senha deve ser diferente da senha atual.",
+      "invalidEmail": "O endereço de e-mail não é válido.",
+      "emailNotVerified": "Verifique seu endereço de e-mail primeiro.",
+      "sessionExpired": "Sua sessão expirou. Faça login novamente.",
+      "twoFactorRequired": "Verificação em duas etapas necessária.",
+      "invalidVerificationCode": "O código de verificação está incorreto ou expirou.",
+      "twoFactorAlreadyEnabled": "A autenticação em duas etapas já está ativada.",
+      "twoFactorNotEnabled": "A autenticação em duas etapas não está ativada.",
+      "tooManyAttempts": "Muitas tentativas. Tente novamente mais tarde.",
+      "rateLimited": "Você está fazendo isso com muita frequência. Diminua o ritmo.",
+      "providerNotSupported": "Esta ação é gerenciada pelo seu provedor de autenticação.",
+      "networkError": "Erro de rede. Verifique sua conexão e tente novamente.",
+      "unknown": "Algo deu errado. Tente novamente."
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "Experimente uma dessas para começar",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "Mostrar atividade recente",
+        "prompt": "Mostrar a atividade mais recente em todo o meu workspace das últimas 24 horas."
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "Depurar um erro",
+        "prompt": "Ajude-me a depurar um erro em tempo de execução. Vou colar o stack trace e você pode me guiar."
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "Rascunhar um e-mail de resumo",
+        "prompt": "Rascunhar um e-mail de resumo semanal conciso que posso enviar à minha equipe sobre o progresso da plataforma."
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "Explorar recursos da plataforma",
+        "prompt": "Guie-me pelos principais recursos desta plataforma SaaS e como posso usá-los."
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "Plano ativo",
+      "manage": "Gerenciar assinatura",
+      "noPlanTitle": "Nenhum plano ativo",
+      "noPlanDescription": "Escolha um plano para desbloquear recursos pagos e limites de uso mais altos.",
+      "choosePlan": "Escolher um plano",
+      "renewsOn": "Renova em {date}",
+      "endsOn": "Encerra em {date}",
+      "trialEndsOn": "O teste termina em {date}",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "Ativo",
+        "trialing": "Em teste",
+        "past_due": "Vencido",
+        "canceled": "Cancelado",
+        "free": "Gratuito"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "Não foi possível carregar o status da sua fatura."
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "Teste gratuito de {days} dias",
+      "seat": "{count, plural, one {# assento} other {# assentos}}",
+      "perSeat": "/ assento"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "Logotipo da organização",
+        "description": "Carregue uma imagem quadrada (PNG, JPEG ou WebP, no máximo 2 MB) para representar sua organização.",
+        "uploadButton": "Carregar logotipo",
+        "uploading": "Carregando…",
+        "fileTooBig": "O arquivo é muito grande. O tamanho máximo é 2 MB.",
+        "invalidType": "Tipo de imagem não suportado. Use PNG, JPEG ou WebP.",
+        "success": "Logotipo atualizado.",
+        "removeButton": "Remover logotipo",
+        "removed": "Logotipo removido."
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "Nome da organização",
+        "description": "Atualize o nome de exibição mostrado à sua equipe e aos clientes.",
+        "label": "Nome",
+        "submit": "Salvar",
+        "saving": "Salvando…",
+        "success": "Nome da organização atualizado."
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "Excluir organização",
+        "description": "Remova permanentemente esta organização, todos os membros, convites e dados associados. Esta ação não pode ser desfeita.",
+        "trigger": "Excluir organização",
+        "confirmLabel": "Digite o nome da organização para confirmar",
+        "submit": "Excluir organização",
+        "cancel": "Cancelar",
+        "success": "Organização excluída."
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "Você foi convidado",
+      "heading": "Você foi convidado para entrar em {organizationName}",
+      "description": "Aceite o convite para começar a colaborar com a equipe.",
+      "accept": "Aceitar convite",
+      "accepting": "Aceitando...",
+      "decline": "Recusar",
+      "declining": "Recusando...",
+      "declinedView": "Convite recusado",
+      "success": "Informamos ao convidante.",
+      "backToDashboard": "Voltar ao painel",
+      "roleLabel": "Função: {role}",
+      "errorEmailMismatch": "Este convite foi enviado para outro e-mail",
+      "errorEmailMismatchDetail": "Faça login com o e-mail que recebeu o convite para aceitá-lo.",
+      "errorExpired": "Convite expirado",
+      "errorExpiredDetail": "Peça ao convidante para enviar um novo convite.",
+      "errorNotFound": "Convite não encontrado",
+      "errorNotFoundDetail": "O link de convite é inválido ou foi revogado.",
+      "errorNotAvailable": "Convite indisponível",
+      "errorNotAvailableDetail": "Este convite já foi respondido e não está mais ativo.",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "Proprietário",
+        "admin": "Administrador",
+        "member": "Membro",
+        "viewer": "Visualizador"
       }
     }
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "title": "Chaves de API",
+      "description": "Gere e gerencie chaves de API para acesso programático ao Nebutra.",
+      "createButton": "Criar chave de API",
+      "noPermission": "Você não tem permissão para visualizar chaves de API.",
+      "loading": "Carregando…",
+      "loadError": "Falha ao carregar chaves de API.",
+      "createError": "Falha ao criar chave de API.",
+      "revokeError": "Falha ao revogar chave de API.",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "Nenhuma chave de API ainda",
+        "cta": "Crie sua primeira chave de API"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "Nome",
+        "prefix": "Prefixo",
+        "lastUsed": "Último uso",
+        "scopes": "Escopos",
+        "created": "Criado",
+        "actions": "Ações",
+        "never": "Nunca"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "Revogar",
+        "revoking": "Revogando…",
+        "copy": "Copiar",
+        "copied": "Copiado",
+        "close": "Fechar",
+        "submit": "Criar chave",
+        "submitting": "Criando…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "Criar chave de API",
+        "description": "As chaves de API permitem que sistemas externos se comuniquem com o Nebutra em seu nome. Trate-as como senhas.",
+        "nameLabel": "Nome",
+        "namePlaceholder": "ex. Backend de produção",
+        "scopesLabel": "Escopos",
+        "successWarning": "Esta chave aparece apenas uma vez. Armazene-a antes de fechar.",
+        "confirmClose": "Fechar ocultará esta chave permanentemente. Certifique-se de que ela foi armazenada."
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "Log de Auditoria",
+      "description": "Acompanhe todas as ações administrativas no seu workspace. Filtre por ator, ação, entidade ou intervalo de tempo.",
+      "empty": "Nenhum evento de auditoria ainda",
+      "loadMore": "Carregar mais",
+      "loading": "Carregando…",
+      "forbidden": "Você precisa de acesso de administrador para visualizar o log de auditoria.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
+        "when": "Quando",
+        "actor": "Ator",
+        "action": "Ação",
+        "entity": "Entidade",
+        "outcome": "Resultado",
         "ip": "IP"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "Valor antigo",
+        "newValue": "Novo valor"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "Ação",
+        "actionPlaceholder": "Pesquisar ação…",
+        "entityType": "Tipo de entidade",
+        "outcome": "Resultado",
+        "outcomeSuccess": "Sucesso",
+        "outcomeFailure": "Falha",
+        "outcomePending": "Pendente",
+        "startDate": "Data de início",
+        "endDate": "Data de término",
+        "range24h": "Últimas 24h",
+        "range7d": "Últimos 7d",
+        "range30d": "Últimos 30d",
+        "reset": "Limpar",
+        "all": "Todos"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "Notificações",
+      "description": "Escolha como a Nebutra entra em contato com você para cada tipo de evento, em cada canal de entrega.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "Restaurar padrões",
+        "save": "Salvar"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "Salvando…",
+        "saved": "Salvo",
+        "error": "Falha ao salvar. Tente novamente."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "Alertas de segurança",
+          "description": "Alertas de login, alterações de senha e alterações de autenticação de dois fatores."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "Faturamento",
+          "description": "Faturas, falhas de pagamento e alterações de assinatura."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "Convites de equipe",
+          "description": "Convites para entrar em uma organização, aceitos ou recusados."
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "Atividade da equipe",
+          "description": "Membros entraram, alterações de função e outra atividade do workspace."
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "Atualizações do produto",
+          "description": "Novos recursos, destaques do changelog e notas de lançamento."
         },
         "marketing": {
           "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "description": "Newsletter e promoções ocasionais. Apenas com opt-in."
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "No app"
         },
         "email": {
-          "label": "Email"
+          "label": "E-mail"
         },
         "push": {
           "label": "Push"
@@ -734,144 +734,144 @@
     },
     "webhooks": {
       "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "description": "Assine os eventos emitidos pelo seu workspace. Assinamos cada payload com o segredo do seu endpoint para que você possa verificar a autenticidade.",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "Novo endpoint",
+        "urlLabel": "URL do endpoint",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "Eventos",
+        "submit": "Criar endpoint",
+        "submitting": "Criando…",
+        "selectEvent": "Selecione pelo menos um evento.",
+        "successTitle": "Endpoint criado. O segredo de assinatura aparece apenas uma vez.",
+        "successWarning": "Armazene-o no gerenciador de segredos do seu aplicativo antes de fechar.",
+        "copy": "Copiar",
+        "copied": "Copiado"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "Endpoints ativos",
+        "empty": "Nenhum endpoint de webhook ainda. Crie um acima.",
+        "loading": "Carregando…",
+        "loadFailed": "Falha ao carregar webhooks",
         "columns": {
           "url": "URL",
-          "events": "Events",
+          "events": "Eventos",
           "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "lastDelivered": "Última entrega",
+          "actions": "Ações"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "Ativo",
+          "disabled": "Desativado"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "Editar",
+          "enable": "Ativar",
+          "disable": "Desativar",
+          "viewDeliveries": "Ver entregas",
+          "delete": "Excluir"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "Entregas recentes",
+        "close": "Fechar",
+        "loading": "Carregando…",
+        "loadFailed": "Falha ao carregar entregas",
+        "empty": "Nenhuma entrega ainda.",
+        "viewPayload": "Ver payload",
+        "hidePayload": "Ocultar payload",
+        "replay": "Repetir",
+        "replaying": "Repetindo…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "sucesso",
+          "failed": "falhou",
+          "retrying": "tentando novamente"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "Aparência",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "Tema",
+        "description": "Use claro, escuro ou siga a preferência do sistema."
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "Predefinição de tema",
+        "description": "Aplique qualquer tema do Theme Playground em todo o app. Os controles abaixo ajustam os detalhes.",
+        "search": "Pesquisar temas…",
+        "searchLabel": "Pesquisar temas",
+        "default": "Padrão",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "Ativo",
+        "empty": "Nenhum tema corresponde à sua pesquisa.",
+        "count": "{count} temas"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "Tema",
+        "description": "Escolha uma predefinição, importe um DESIGN.md e ajuste os tokens abaixo.",
+        "selectLabel": "Predefinição de tema",
+        "import": "Importar",
+        "copy": "Copiar tema",
+        "copied": "Copiado",
+        "copyError": "Falha ao copiar",
+        "custom": "Personalizado"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "Importar DESIGN.md",
+        "description": "Cole ou faça upload de um DESIGN.md para aplicar suas cores, raio, fontes, espaçamento e sombras em todo o app — persistido entre recarregamentos.",
+        "applied": "Aplicado:",
+        "remove": "Remover"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "Modo do tema",
+        "light": "Claro",
+        "dark": "Escuro",
+        "system": "Sistema"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "Cor de destaque",
+        "description": "Escolha uma cor de destaque da marca que aplique tom aos estados ativos em todo o app.",
+        "label": "Cor de destaque",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
-          "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "default": "Padrão",
+          "blue": "Azul",
+          "cyan": "Ciano",
+          "violet": "Violeta",
+          "pink": "Rosa",
+          "amber": "Âmbar",
+          "green": "Verde",
+          "red": "Vermelho"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "Cores",
+        "description": "Cor de destaque, fundo e primeiro plano.",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "Fundo",
+          "description": "Substituir a cor de fundo da superfície."
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "Primeiro plano",
+          "description": "Substituir a cor do texto do corpo."
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "Restaurar padrão"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "Fonte da UI",
+        "uiDescription": "Família de fontes usada em toda a UI.",
+        "codeLabel": "Fonte de código",
+        "codeDescription": "Família de fontes usada em superfícies de código.",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "Padrão do tema",
+            "system": "Sistema",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
-            "system": "System mono",
+            "theme": "Padrão do tema",
+            "system": "Mono do sistema",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
             "jetbrains-mono": "JetBrains Mono"
@@ -879,385 +879,385 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "Contraste",
+        "description": "Ajuste fino do contraste do texto (50 = sem alteração).",
+        "label": "Nível de contraste"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "Usar cursor de ponteiro",
+        "description": "Alterne para um cursor de ponteiro em elementos interativos ao passar o mouse.",
+        "label": "Cursor de ponteiro em elementos interativos"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "Marcadores de diff",
+        "description": "Exibir faixas de cor ou glifos +/- em cada linha alterada.",
+        "label": "Estilo do marcador de diff",
+        "color": "Cor",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "Suavização de fonte",
+        "description": "Aplicar antialiasing de fonte nativo do macOS.",
+        "label": "Suavização de fonte nativa"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "Tipografia",
+        "description": "Tamanhos de fonte base para a interface e superfícies de código.",
+        "uiFontSize": "Tamanho da fonte da interface",
+        "uiFontSizeDescription": "Ajuste o tamanho base da fonte da interface.",
+        "codeFontSize": "Tamanho da fonte do código",
+        "codeFontSizeDescription": "Ajuste o tamanho base da fonte do código."
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "Tema",
+        "customize": "Personalizar"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "Reduzir movimento",
+        "description": "Reduzir animações ou seguir a preferência do sistema.",
+        "label": "Preferência de movimento",
+        "system": "Sistema",
+        "on": "Ativado",
+        "off": "Desativado"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "Barra lateral translúcida",
+        "description": "Aplicar um material translúcido à barra lateral."
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "Barra lateral translúcida",
+        "description": "Aplicar um material translúcido à barra lateral."
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "Versão",
+    "effective": "Válido",
+    "notFound": "Este documento não está disponível.",
+    "backHome": "Voltar ao início"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "Paleta de comandos",
+    "placeholder": "Digite um comando ou pesquise…",
+    "empty": "Nenhum resultado encontrado.",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
+      "navigation": "Navegação",
+      "actions": "Ações",
+      "settings": "Configurações",
+      "account": "Conta",
       "admin": "Admin",
-      "help": "Help"
+      "help": "Ajuda"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
-        "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
+        "home": "Início",
+        "settings": "Configurações",
+        "billing": "Faturamento",
+        "team": "Equipe",
+        "apiKeys": "Chaves de API",
+        "notifications": "Notificações",
+        "auditLog": "Registro de Auditoria",
         "webhooks": "Webhooks",
         "admin": "Admin"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "Convidar membro da equipe",
+        "createApiKey": "Criar chave de API",
+        "switchOrganization": "Trocar organização"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "Usar tema claro",
+        "themeDark": "Usar tema escuro",
+        "themeSystem": "Usar tema do sistema"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "Sair"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "Reportar um problema",
+        "shortcuts": "Atalhos de teclado"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "Suas escolhas de privacidade",
+      "description": "Usamos cookies para melhorar sua experiência, analisar o tráfego do site e personalizar o conteúdo. Escolha quais categorias deseja permitir."
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "Aceitar todos",
+      "savePreferences": "Salvar preferências"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "Necessários",
+        "description": "Necessários para o funcionamento do site. Não podem ser desativados."
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "Funcional",
+        "description": "Lembrar suas preferências (idioma, tema, layout)."
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "Análise",
+        "description": "Dados anônimos de uso para melhorar o produto."
       },
       "marketing": {
         "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "description": "Publicidade personalizada e retargeting em plataformas de terceiros."
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "Notificações",
+      "description": "Todas as suas notificações em um só lugar.",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "Todas",
+        "unread": "Não lidas"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "Marcar todas como lidas",
+        "markRead": "Marcar como lida",
+        "archive": "Arquivar",
+        "loadMore": "Carregar mais",
+        "loading": "Carregando...",
+        "selected": "{count} selecionadas"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "Tudo em dia.",
+        "unread": "Nenhuma notificação não lida."
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "Falha ao carregar notificações.",
+        "network": "Erro de rede. Tente novamente.",
+        "markRead": "Falha ao marcar notificação como lida.",
+        "archive": "Falha ao arquivar notificação.",
+        "bulkMarkRead": "Algumas notificações não puderam ser marcadas como lidas."
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "A caixa de entrada requer um backend de notificações persistente. Verifique a configuração do provedor.",
+        "emptyCaughtUp": "Caixa de entrada limpa.",
+        "emptyChangelog": "Atualizações do changelog aparecerão aqui."
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "Bom dia",
+      "afternoon": "Boa tarde",
+      "evening": "Boa noite"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "Potencialize seu app com conectores",
+      "subtitle": "Insira um prompt, pressione ⌘K de qualquer lugar ou vá direto para uma superfície de workspace.",
+      "promptPlaceholder": "O que você tem em mente?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "Conectar uma integração",
+        "theme": "Playground de Temas",
+        "audit": "Log de auditoria",
+        "billing": "Faturamento"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "A autenticação não está configurada para o provedor selecionado. Defina os segredos do provedor para habilitar sessões de usuário."
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "Comece com uma ação: pergunte ao Sailor, inspecione sinais do workspace ou roteie tarefas para uma superfície de automação.",
+      "openSailor": "Abrir Sailor AI",
+      "viewAnalytics": "Ver Análises"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "Visão Geral do Workspace",
+      "description": "Último dia do warehouse · {day}",
+      "viewAnalytics": "Ver análises →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "Usuários Ativos",
+        "totalEvents": "Total de Eventos",
+        "conversions": "Conversões",
+        "revenue": "Receita"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "Usuários logados",
+        "totalEvents": "Eventos capturados",
+        "conversions": "Ações qualificadas",
+        "revenue": "Receita reconhecida"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
+        "snapshot": "Instantâneo",
+        "cadence": "Cadência",
         "tenant": "Tenant",
-        "daily": "Daily",
+        "daily": "Diário",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "Usuários do tenant",
+        "events": "Fluxo de eventos",
+        "funnel": "Funil",
+        "billing": "Cobrança"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "Pipeline de documentos",
+      "description": "Envie arquivos de origem para a fila de tarefas de origem.",
+      "intakeTitle": "Recebimento de documentos",
+      "intakeDescription": "PDF, Markdown, texto ou documento Word",
+      "chooseDocument": "Escolher documento",
+      "startParseTask": "Iniciar tarefa de análise",
+      "queued": "Na fila",
+      "fileInputLabel": "Arquivo do documento",
+      "fallbackError": "A tarefa do documento falhou.",
+      "taskStatus": "Status da tarefa",
+      "progressLabel": "Progresso da tarefa",
+      "refreshStatus": "Atualizar",
+      "cancelTask": "Cancelar",
+      "statusError": "Não foi possível atualizar o status da tarefa.",
+      "cancelError": "Não foi possível cancelar a tarefa.",
+      "statusQueued": "Na fila",
+      "statusRunning": "Em execução",
+      "statusSucceeded": "Concluída",
+      "statusFailed": "Falhou",
+      "statusCancelled": "Cancelada",
+      "resultReady": "Resultado pronto",
+      "taskError": "Erro na tarefa",
+      "updatedAt": "Atualizado"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "Continue de onde parou",
+      "subtitle": "{count, plural, =0 {Nenhuma sessão} =1 {1 sessão recente} other {# sessões recentes}}",
+      "viewAll": "Ver tudo →",
+      "newChat": "Novo chat",
+      "untitled": "Sessão sem título",
+      "messageCount": "{count, plural, =1 {1 mensagem} other {# mensagens}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "Primeiros passos",
+      "description": "{done} de {total} concluídos · finalize a configuração para desbloquear o workspace completo",
+      "progressLabel": "Progresso da configuração",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "Convide um colega",
+          "description": "Traga pelo menos um colaborador para o seu workspace."
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "Gere uma chave de API",
+          "description": "Acesso programático aos endpoints do seu workspace."
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "Conecte uma integração",
+          "description": "Stripe, Slack, webhooks, filas e mais."
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "Experimente o modo de chat, dados ou fluxo de trabalho."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "Projetos",
+    "noThreads": "Nenhum thread",
+    "expandAll": "Expandir tudo",
+    "collapseAll": "Recolher tudo",
+    "sectionMore": "Mais opções",
+    "newProject": "Novo projeto",
+    "restoredGroups": "Grupos expandidos anteriormente restaurados",
+    "newProjectPlaceholder": "Nome do projeto",
+    "newProjectDefault": "Sem título",
+    "newProjectSuccess": "Projeto criado",
+    "newProjectError": "Não foi possível criar o projeto",
+    "sortBy": "Ordenar por",
+    "sortRecent": "Atividade recente",
+    "sortAlphabetical": "Alfabética",
+    "sortCreated": "Data de criação",
+    "archiveAll": "Arquivar tudo",
+    "comingV2": "Em breve na v2"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "A primeira sala está pronta.",
+      "firstFolder": "Muitas empresas começam como uma pasta.",
+      "firstTable": "A primeira mesa tem um segundo lugar.",
+      "firstSignal": "O mundo real começou a falar.",
+      "firstShip": "O mundo vê pela primeira vez.",
+      "firstBeliever": "A partir de hoje, você não está mais construindo apenas para si.",
+      "firstRevenue": "O sonho agora tem fluxo de caixa.",
+      "firstReturn": "Voltar importa mais do que visitar.",
+      "firstTeam": "Três pessoas podem começar a formar uma empresa.",
+      "firstCrowd": "A primeira mesa está ficando cheia.",
+      "firstReset": "Reiniciar é um começo mais honesto.",
+      "firstPublic": "Coloque um pedaço do futuro em público.",
+      "firstDemo": "Isso não é uma apresentação. É um teste.",
+      "graduation": "Você superou o básico. O caminho à frente exige ferramentas mais robustas."
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "Muitas empresas começam como uma pasta.",
+      "integrations": "Nenhum conector configurado.",
+      "creditActivity": "A atividade de créditos aparecerá após a sua primeira solicitação.",
+      "usageData": "Os dados de uso aparecerão assim que sua organização começar a fazer solicitações.",
+      "apiKeys": "Nenhuma chave ainda.",
+      "apiKeysCta": "Crie sua primeira chave",
+      "teamMembers": "Um pode começar. Alguns podem construir.",
+      "cofounders": "A primeira pessoa que acredita em você ainda não apareceu.",
+      "cofoundersDescription": "Quando você e outro fundador sinalizarem interesse, eles aparecerão aqui.",
+      "cofoundersAction": "Encontre cofundadores",
+      "growthChart": "Os dados de tendência aparecerão assim que a atividade começar.",
+      "revenueChart": "Os dados de receita aparecerão assim que as transações começarem.",
+      "webhookDeliveries": "As entregas aparecerão aqui após o primeiro evento.",
+      "webhookEndpoints": "Adicione um endpoint acima para começar a receber eventos.",
+      "accessInvites": "Nenhum código de convite emitido."
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "A primeira sala está pronta.",
+    "failure": "Reiniciar é um começo mais honesto.",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "Não foi possível carregar as partidas.",
+      "loadMatchesDescription": "Algo deu errado do nosso lado. Atualize para tentar novamente.",
+      "loadWebhookDeliveries": "Não foi possível carregar as entregas.",
+      "replayWebhookDelivery": "A reprodução não foi concluída.",
+      "loadWebhookEndpoints": "Não foi possível carregar os endpoints."
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "Um pode começar. Alguns podem construir.",
+    "revenue": "O sonho agora tem fluxo de caixa.",
+    "growth": "O sinal está ficando mais forte.",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "O mundo vê pela primeira vez.",
+      "echo": "Finalmente saiu do localhost."
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "Você não precisa estar pronto. Precisa começar.",
+    "graduation": "Você superou o básico. Experimente o {tool} para o caminho à frente.",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "Sua primeira torre de contexto começa aqui.",
+      "emptyDescription": "Compile uma empresa no Startup OS para ver e editar sua torre de contexto.",
+      "emptyAction": "Abrir Startup OS",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "Conecte uma chave de provedor de IA para preencher os campos automaticamente.",
+        "generateFailed": "A geração não foi concluída.",
+        "saveFailed": "Suas alterações não foram salvas."
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "Salvar",
+        "saving": "Salvando…",
+        "cancel": "Cancelar",
+        "open": "Abrir Startup OS"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "Nenhuma aposta ainda.",
+      "noRuns": "Nenhuma execução ativa."
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "Este projeto ainda não tem arquivos."
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "O workspace está sendo configurado.",
+      "emptyDescription": "O convite ainda pode estar sincronizando. Atualize esta página ou crie um workspace separado."
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "Crie um workspace antes da cobrança.",
+      "emptyDescription": "Ações de cobrança precisam de um workspace ativo. Crie um primeiro e depois volte à cobrança."
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "O primeiro espaço de trabalho começa aqui.",
+      "emptyDescription": "Crie um espaço de trabalho para começar."
     }
   }
 }

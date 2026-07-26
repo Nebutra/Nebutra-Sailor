@@ -32,7 +32,7 @@
       "loadError": "조직을 불러올 수 없습니다.",
       "columns": {
         "name": "이름",
-        "slug": "Slug",
+        "slug": "슬러그",
         "plan": "플랜",
         "members": "멤버",
         "created": "생성됨",

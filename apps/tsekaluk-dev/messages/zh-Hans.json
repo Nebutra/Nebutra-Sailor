@@ -116,22 +116,22 @@
       {
         "value": 50,
         "suffix": "+",
-        "label": "项目交付"
+        "label": "Projects delivered"
       },
       {
         "value": 6,
         "suffix": "",
-        "label": "专业服务线"
+        "label": "Service lines"
       },
       {
         "value": 3,
         "suffix": "+",
-        "label": "年独立交付"
+        "label": "Years independent"
       },
       {
         "value": 4,
         "suffix": "+",
-        "label": "跨时区协作"
+        "label": "Timezones covered"
       }
     ],
     "tiers": {
@@ -139,7 +139,11 @@
         "name": "聊一聊",
         "price": "免费",
         "description": "15 分钟快聊",
-        "features": ["方向建议", "技术选型参考", "快速 Q&A"],
+        "features": [
+          "Direction advice",
+          "Tech stack recommendations",
+          "Quick Q&A"
+        ],
         "cta": "和灵魂对话",
         "href": "/soul"
       },
@@ -147,7 +151,12 @@
         "name": "Coffee",
         "price": "¥18",
         "description": "一杯咖啡的价格",
-        "features": ["以上所有", "Code Review", "UX 快速诊断", "增长策略建议"],
+        "features": [
+          "Everything above",
+          "Code Review",
+          "UX quick audit",
+          "Growth strategy tips"
+        ],
         "cta": "请我喝咖啡",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
@@ -155,7 +164,11 @@
         "name": "雇佣关系",
         "price": "按项目报价",
         "description": "完整专业交付",
-        "features": ["以上所有", "6 条服务线全部解锁", "按需组合交付"],
+        "features": [
+          "Everything above",
+          "All 6 service lines unlocked",
+          "Custom scope & delivery"
+        ],
         "cta": "抛出橄榄枝",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
@@ -163,7 +176,12 @@
         "name": "梦想合伙",
         "price": "共同成长",
         "description": "长期共创关系",
-        "features": ["以上所有", "产品共创", "黑客增长体系", "股权 / 利润分成"],
+        "features": [
+          "Everything above",
+          "Product co-creation",
+          "Growth hacking system",
+          "Equity / revenue share"
+        ],
         "cta": "聊聊愿景",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
@@ -171,38 +189,52 @@
     "services": {
       "engineering": {
         "name": "产品工程",
-        "items": ["Next.js 全栈开发", "React 前端架构"]
+        "items": [
+          "Next.js full-stack",
+          "React frontend architecture"
+        ]
       },
       "ai": {
         "name": "AI & 自动化",
         "items": [
-          "AI Agent 架构研发",
-          "OpenClaw 自动化工作流",
-          "企业 Skill 研发设计",
-          "AIGC 内容工作流"
+          "AI Agent architecture",
+          "OpenClaw workflows",
+          "Enterprise Skill design",
+          "AIGC content pipeline"
         ]
       },
       "design": {
         "name": "设计 & 产品",
-        "items": ["UI/UX 设计", "产品研发"]
+        "items": [
+          "UI/UX design",
+          "Product R&D"
+        ]
       },
       "growth": {
         "name": "增长 & 全球化",
         "items": [
-          "市场营销策略",
-          "黑客增长",
-          "软件出海",
-          "本地化 & 跨文化叙事",
-          "数据分析 & A/B 测试"
+          "Marketing strategy",
+          "Growth hacking",
+          "Software internationalization",
+          "Localization & cross-cultural narrative",
+          "Data analysis & A/B testing"
         ]
       },
       "consulting": {
         "name": "专业咨询",
-        "items": ["数学建模", "商务英语", "IT 项目管理"]
+        "items": [
+          "Mathematical modeling",
+          "Business English",
+          "IT project management"
+        ]
       },
       "strategy": {
         "name": "创投 & 战略",
-        "items": ["创投调研", "YC-ready 创业规划", "独角兽级产品思维"]
+        "items": [
+          "Venture research",
+          "YC-ready startup planning",
+          "Unicorn-level product thinking"
+        ]
       }
     }
   },
@@ -281,6 +313,7 @@
       "stat_awards": "奖项",
       "stat_first_prizes": "一等奖",
       "stat_certs": "证书",
+      "resume_download": "下载简历",
       "journey_label": "/ 旅程",
       "journey_2020": "自学 Web 开发与数字营销",
       "journey_2022": "就读江苏海洋大学信息与计算科学（嵌入式培养）理学学士与计算机科学与技术工学学士",
@@ -322,7 +355,6 @@
       "award_10_level": "特等奖（全国总决赛）",
       "award_10_detail": "非英语专业，双语翻译全国最高荣誉",
       "credentials_label": "/ 资质证书",
-      "resume_download": "下载简历",
       "cred_1": "Columbia University — Numerical Models（成绩 A）",
       "cred_2": "华为 HCIA-Datacom 网络工程师",
       "cred_3": "HarmonyOS 高级开发者",

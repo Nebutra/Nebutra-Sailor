@@ -1,347 +1,347 @@
 {
   "admin": {
     "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "description": "Super admin panel — kezelje a felhasználókat, szervezeteket és a rendszer állapotát.",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "Áttekintés",
+      "users": "Felhasználók",
+      "organizations": "Szervezetek"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "Felhasználók",
+      "description": "Tallózza, keresse és lépjön be bármelyik felhasználó helyébe minden szervezetben.",
+      "searchPlaceholder": "Felhasználók keresése…",
+      "totalCount": "{count, plural, one {# felhasználó} other {# felhasználó}}",
+      "empty": "Nem találhatók felhasználók.",
+      "loadError": "Nem sikerült betölteni a felhasználókat.",
       "columns": {
-        "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "email": "E-mail",
+        "name": "Név",
+        "created": "Létrehozva",
+        "activeOrgs": "Aktív szervezetek",
+        "actions": "Műveletek"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "Szervezetek megtekintése"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "Szervezetek",
+      "description": "A rendszer összes munkaterülete, legfrissebb sorrendben.",
+      "searchPlaceholder": "Szervezetek keresése…",
+      "totalCount": "{count, plural, one {# szervezet} other {# szervezet}}",
+      "empty": "Nem található szervezet.",
+      "loadError": "Nem sikerült betölteni a szervezeteket.",
       "columns": {
-        "name": "Name",
+        "name": "Név",
         "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "plan": "Csomag",
+        "members": "Tagok",
+        "created": "Létrehozva",
+        "actions": "Műveletek"
       },
-      "view": "View"
+      "view": "Megtekintés"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "Személyazonosság átvétele",
+      "starting": "Indítás…",
+      "stop": "Impersonálás leállítása",
+      "confirm": "Impersonálás: {label}? Addig látod az alkalmazást, mint ez a felhasználó, amíg le nem állítod.",
+      "error": "Nem sikerült elindítani az impersonálást.",
+      "stopError": "Nem sikerült leállítani az impersonálást."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "Előző",
+      "next": "Következő",
+      "pageOf": "{page}. oldal / {total}"
     }
   },
   "Common": {
     "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "dashboard": "Vezérlőpult",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "Folytatás",
+      "confirm": "Megerősítés",
+      "done": "Kész",
+      "cancel": "Mégse"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "Világos",
+    "dark": "Sötét",
+    "system": "Rendszer"
   },
   "LocaleSwitcher": {
-    "en": "English",
-    "zh": "中文",
-    "de": "German",
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "label": "Language",
-    "ariaLabel": "Change language"
+    "en": "Angol",
+    "zh": "Kínai",
+    "de": "Német",
+    "es": "Spanyol",
+    "fr": "Francia",
+    "ja": "Japán",
+    "ko": "Koreai",
+    "label": "Nyelv",
+    "ariaLabel": "Nyelv módosítása"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "ICP regisztrációs szám",
+      "publicSecurity": "Nyilvános biztonsági bejegyzés"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "Bejelentkezés WeChat segítségével",
+      "notConfigured": "A WeChat-bejelentkezés nincs beállítva"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "Munkaterület beállítása",
+    "subtitle": "Három gyors lépés, és már kész is.",
     "steps": {
-      "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "workspace": "Munkaterület",
+      "invite": "Csapat meghívása",
+      "plan": "Csomag kiválasztása"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "Vissza",
+      "stepCounter": "{current}. lépés / {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "Válassz csomagot",
+      "description": "Kezdd ingyen, vagy oldj fel több kapacitást. A csomagot bármikor módosíthatod.",
+      "choose": "Csomag kiválasztása",
+      "skip": "Kihagyom most"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "Felhasználói menü megnyitása",
+    "profile": "Profil",
+    "settings": "Beállítások",
+    "feedback": "Visszajelzés",
+    "theme": "Téma",
+    "language": "Nyelv",
+    "signOut": "Kijelentkezés",
+    "signedInAs": "Bejelentkezve mint"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "Profil",
+      "description": "Frissítsd a személyes adataidat.",
+      "nameLabel": "Név",
+      "namePlaceholder": "Teljes neved",
+      "emailLabel": "E-mail",
+      "emailHint": "Egy ellenőrző linket küldünk az új e-mail cím megerősítéséhez.",
+      "languageLabel": "Nyelv",
+      "submit": "Módosítások mentése",
+      "saving": "Mentés…",
+      "verifyEmail": "Ellenőrzés",
+      "verifying": "Ellenőrző küldése…",
+      "success": "Profil frissítve.",
+      "verificationSent": "Ellenőrző e-mail elküldve.",
+      "errorRequiredName": "A név megadása kötelező.",
+      "errorInvalidEmail": "Az e-mail cím érvénytelen.",
+      "subtitle": "A személyazonosságod és elérhetőségeid.",
+      "unknown": "Névtelen felhasználó",
+      "manageCta": "Teljes fiókbeállítások megnyitása"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "Profilkép",
+      "description": "Töltsön fel egy négyzet alakú képet (PNG, JPEG vagy WebP, max. 2 MB).",
+      "uploadButton": "Profilkép feltöltése",
+      "uploading": "Feltöltés…",
+      "fileTooBig": "A fájl túl nagy. A maximális méret 2 MB.",
+      "invalidType": "Nem támogatott képtípus. Használjon PNG, JPEG vagy WebP formátumot.",
+      "success": "A profilkép frissítve.",
+      "removeButton": "Profilkép eltávolítása",
+      "removed": "A profilkép eltávolítva.",
+      "deleteError": "Nem sikerült törölni a profilképet."
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "Adataim exportálása",
+      "description": "Töltse le a fiókjához kapcsolódó összes adat másolatát, beleértve a profilját, szervezeteket, ellenőrzési eseményeket, értesítéseket és meghívókat.",
+      "compliance": "A GDPR 20. cikkének (az adatok hordozhatósága) és a PIPL 45. cikkének (a személyes adatok másolatának beszerzésének joga) előírása.",
+      "export": "Adataim exportálása",
+      "pending": "Export előkészítése…",
+      "ready": "Az exportod már kész.",
+      "download": "JSON letöltése",
+      "error": "Nem sikerült előkészíteni az exportot. Kérjük, próbáld újra."
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "E-mail cím módosítása",
+      "description": "A új címre küldünk egy ellenőrző linket. A módosítás csak akkor lép életbe, ha megerősíted az adott postafiókból.",
+      "newEmailLabel": "Új e-mail cím",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "Ellenőrző link küldése",
+      "submitting": "Küldés…",
+      "verificationSent": "Nézd meg a {email} postafiókodat a módosítás megerősítéséhez.",
+      "errorInvalidEmail": "Az e-mail cím nem érvényes.",
+      "error": "Nem sikerült kezdeményezni az e-mail módosítást.",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "E-mail frissítve",
+        "successDescription": "A belépési e-mail címed frissítve.",
+        "successWithEmail": "A belépési e-mail címed most: {email}.",
+        "failureTitle": "Nem tudtuk megerősíteni ezt a linket",
+        "failureDescription": "Ez a ellenőrző hivatkozás érvénytelen, lejárt vagy már használt. Kérj egy újat a fiókbeállításokból.",
+        "errorCode": "Ok: {code}",
+        "continueCta": "Vissza a fiókhoz",
+        "backCta": "Vissza a fiókhoz"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "Fiók",
+    "ariaLabel": "Fiókbeállítások",
+    "navLabel": "Fiókbeállítások lapjai",
+    "tip": "Nyomd meg a {key} billentyűt bárhol a párbeszédablak újranyitásához.",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "Profil",
+      "subscription": "Előfizetés",
+      "billing": "Számlázás",
+      "preferences": "Beállítások",
+      "personalization": "Személyre szabás"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "Előfizetés",
+      "subtitle": "Csomag, kvóta és megújítás.",
+      "currentPlan": "Jelenlegi csomag",
+      "upgradeCta": "Tervek összehasonlítása",
+      "manageCta": "Előfizetés kezelése"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "Számlázás",
+      "subtitle": "Számlatörténet és fizetési mód.",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "Még nincs előzmény",
+        "description": "Az első fizetős időszak után itt jelennek meg a díjszámítások és számlák.",
+        "cta": "Teljes számlázás megnyitása"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "Beállítások",
+      "subtitle": "Téma és hozzáférhetőség.",
+      "theme": "Téma",
+      "light": "Világos",
+      "dark": "Sötét",
+      "system": "Rendszer",
+      "help": "Súgó",
+      "reportIssue": "Hiba bejelentése",
+      "shortcuts": "Billentyűparancsok"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "Személyre szabás",
+      "subtitle": "Mondja el Sailor-nak, ki Ön és hogyan válaszoljon."
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "A paradigma újradefiniálása",
+    "hero_subtitle": "Legyen a világon semmi nehéz üzleti ügy.",
+    "social_title": "Társadalmi",
+    "social_headline": "Abszolút technológiai egyenlőség",
+    "social_description": "A szélső innovátorok felhatalmazása. A hagyományos szűrők lebontása és az önálló alapítók felhatalmazása a dobozon kívüli infrastruktúrával.",
+    "governance_title": "Kormányzás",
+    "governance_headline": "A kód a törvény",
+    "governance_description": "Algoritmikus kormányzás, amely a Proof of Work és a valós üzleti eredmények alapján épül fel, és helyettesíti a homályos bürokráciát.",
+    "environment_title": "Környezet",
+    "environment_headline": "Digitális minimalizmus",
+    "environment_description": "A felhő-lábnyom csökkentése extrém SaaS integrációval és erőforrás-hatékonysággal."
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "Biztonság",
+      "description": "Jelszó, többtényezős hitelesítés és aktív munkamenetek kezelése.",
+      "managedByProvider": "A biztonsági beállításokat a hitelesítési szolgáltatója kezeli.",
+      "openProviderProfile": "Profil megnyitása",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "Jelszó módosítása",
+        "description": "Használj erős jelszót, amit más oldalakon nem használsz újra.",
+        "currentPasswordLabel": "Jelenlegi jelszó",
+        "newPasswordLabel": "Új jelszó",
+        "confirmPasswordLabel": "Új jelszó megerősítése",
+        "revokeOtherSessions": "Kijelentkezés más eszközökről",
+        "submit": "Jelszó frissítése",
+        "pending": "Jelszó frissítése…",
+        "success": "A jelszó sikeresen frissítve."
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "Kétfaktoros hitelesítés",
+        "description": "Adj hozzá egy második ellenőrzési lépést egy hitelesítő alkalmazással.",
+        "enabled": "Engedélyezve",
+        "disabled": "Letiltva",
+        "enabledHelp": "A fiókod a jelszavas bejelentkezés után egy 6 jegyű hitelesítő kódot kér.",
+        "disabledHelp": "Védj meg a fiókod egy 6 jegyű kóddal egy hitelesítő alkalmazásból.",
+        "enable": "Kétlépcsős hitelesítés engedélyezése",
+        "disable": "Kétlépcsős hitelesítés letiltása",
+        "passwordPrompt": "Jelszó megerősítése",
+        "scanQrCode": "Olvasd be ezt a QR-kódot a hitelesítő alkalmazásoddal, majd írd be az alábbi 6 jegyű kódot.",
+        "secretKeyLabel": "Vagy add meg ezt a titkos kulcsot manuálisan",
+        "verificationCodeLabel": "Hitelesítési kód",
+        "verify": "Ellenőrzés és engedélyezés",
+        "backupCodesTitle": "Biztonsági kódok",
+        "backupCodesDescription": "Mentsd el ezeket a kódokat biztonságos helyen. Mindegyiket egyszer használhatod, ha elveszíted a hozzáférést a hitelesítő alkalmazáshoz.",
+        "copyBackupCodes": "Kódok másolása",
+        "finishSetup": "Beállítás befejezése",
+        "successEnabled": "A kétlépcsős hitelesítés engedélyezve.",
+        "successDisabled": "A kétlépcsős hitelesítés letiltva."
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "Aktív munkamenetek",
+        "description": "Eszközök és böngészők, amelyek jelenleg be vannak jelentkezve a fiókodba.",
+        "currentSession": "(jelenlegi)",
+        "ipLabel": "IP-cím",
+        "lastActiveLabel": "Utolsó aktivitás",
+        "revoke": "Kijelentkezés",
+        "revokeAll": "Kijelentkezés minden más eszközről",
+        "empty": "Nincsenek más aktív munkamenetek.",
+        "successRevoked": "A munkamenetből kijelentkeztél.",
+        "successRevokedAll": "Minden más munkamenetből kijelentkeztél."
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "Fiók törlése",
+        "description": "Véglegesen eltávolítja a fiókját és minden kapcsolódó adatot. Ez nem vonható vissza.",
+        "passwordPrompt": "Írja be a jelszavát a megerősítéshez",
+        "confirmTextLabel": "Írja be a TÖRLÉS szót a megerősítéshez",
+        "submit": "Fiók törlése",
+        "cancel": "Mégse",
+        "success": "A fiók törölve."
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "Kapcsolt fiókok",
+        "description": "Tekintse át az OAuth-bejelentkezési módszereket, amelyek a Nebutra-azonosságához vannak kapcsolva.",
+        "connected": "Csatlakoztatva",
+        "connect": "Csatlakozás",
+        "help": "Tarts fenn legalább egy megbízható bejelentkezési módszert, mielőtt egy szolgáltatót leválasztasz.",
+        "unlink": "Leválasztás",
+        "notLinked": "Nincs csatlakoztatva"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "Jelszavak",
+        "description": "Használj eszközhöz kötött hitelesítő adatokat a csalóüzenetekkel szemben ellenálló bejelentkezéshez.",
+        "empty": "Még nincs regisztrált jelszav",
+        "addPasskey": "Jelszav hozzáadása",
+        "cancelAdd": "Mégse",
+        "cancelled": "A jelszav beállítása megszakadt. Semmi sem változott.",
+        "defaultName": "Jelszav {number}",
+        "nameHelp": "Adj ennek a jelszavnak egy felismerhető nevet, mielőtt a böngésző megerősítést kér.",
+        "nameLabel": "Jelszav neve",
+        "rename": "Átnevezés",
+        "saveRename": "Név mentése",
+        "remove": "Eltávolítás",
+        "successAdded": "A passkey hozzáadva.",
+        "successRemoved": "A passkey eltávolítva.",
+        "unavailableBadge": "Nem elérhető"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "Jelszó beállítása",
+        "description": "Adj hozzá egy jelszót, hogy be tudj jelentkezni az OAuth szolgáltatód nélkül.",
+        "submit": "Jelszó beállítása",
+        "pending": "Jelszó-beállító link küldése…",
+        "sentMessage": "Elküldtük a jelszó-beállító linket az e-mail címedre."
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "Indítsd el a Startupodat, már az első naptól kezdve szabályozva.",
+      "tagline": "Több régiós ügynökök, alapértelmezett több bérlős. Nem szükséges platform csapat."
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Bejelentkezés a Nebutra-ba",
+      "subtitle": "Válaszd ki, hogyan szeretnél bejelentkezni.",
+      "continueWith": "Folytatás ezzel",
+      "continueWithProvider": "Folytatás ezzel: {provider}",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,380 +349,380 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "Átirányítás…",
+      "dividerOr": "Vagy folytatás e-mail címével",
+      "emailLabel": "E-mail",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "Folytatás",
+      "back": "Vissza",
+      "passwordLabel": "Jelszó",
+      "passwordPlaceholder": "Írd be a jelszavad",
+      "showPassword": "Jelszó megjelenítése",
+      "hidePassword": "Jelszó elrejtése",
+      "capsLockOn": "A Caps Lock be van kapcsolva",
+      "forgotPassword": "Elfelejtett jelszó?",
+      "submit": "Bejelentkezés",
+      "submitLoading": "Bejelentkezés…",
+      "useMagicLink": "Küldj inkább varázsló linket",
+      "usePasskey": "Bejelentkezés jelszómentes kulccsal",
+      "passkeyTitle": "Bejelentkezés a jelszómentes kulccsal",
+      "passkeyDescription": "Használd az ArcID-t, Touch ID-t vagy biztonsági kulcsot. Nincs szükség jelszóra.",
+      "passkeyButton": "Folytatás jelszómentes kulccsal",
+      "passkeyCancelled": "A jelszómentes kulcs kérése megszakítva.",
+      "passkeyUnsupported": "Ez a böngésző nem támogatja a jelszómentes kulcsokat.",
+      "passkeyError": "A jelszómentes kulcsos bejelentkezés sikertelen. Próbálj másik módszert.",
+      "ssoTitle": "Folytatás vállalati SSO-val",
+      "ssoDescription": "Átirányítunk a {provider} oldalára a {email} címhez.",
+      "ssoError": "A vállalati SSO nem indítható el. Próbálj másik módszert.",
+      "ssoRetry": "Újrapróbál",
+      "newToProduct": "Új a Nebutra-nál?",
+      "signUpLink": "Regisztráció",
+      "homeLink": "Kezdőlap",
+      "signInFailed": "Bejelentkezés sikertelen",
+      "genericError": "Hiba történt. Kérjük, próbáld újra.",
+      "captchaError": "A bot-ellenőrzés sikertelen. Frissítsd az oldalt, és próbáld újra."
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "Hozd létre a Nebutra-fiókod",
+      "subtitle": "Egy fiók minden Nebutra-alkalmazáshoz.",
+      "firstNameLabel": "Keresztnév",
+      "lastNameLabel": "Vezetéknév",
+      "firstNamePlaceholder": "Kereszt",
+      "lastNamePlaceholder": "Vezeték",
+      "submit": "Fiók létrehozása",
+      "submitLoading": "Fiók létrehozása…",
+      "alreadyHaveAccount": "Már van fiókod?",
+      "signInLink": "Bejelentkezés",
+      "signUpFailed": "Regisztráció sikertelen"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "Jelszómentes belépés",
+      "description": "Használd a Face ID-t, Touch ID-t, Windows Hello-t vagy biztonsági kulcsot jelszó helyett. Minden eszköznek saját jelszómentes belépési kulcsa van.",
+      "addButton": "Passkey hozzáadása",
+      "adding": "Beállítás…",
+      "namePlaceholder": "pl. MacBook Pro",
+      "nameLabel": "Név (nem kötelező)",
+      "registerSuccess": "A passkey hozzáadva.",
+      "registerCancelled": "A beállítás megszakítva.",
+      "registerUnsupported": "Ez a böngésző nem támogatja a passkeyeket.",
+      "registerError": "Nem sikerült regisztrálni a passkeyt.",
+      "empty": "Még nincsenek passkeyek.",
+      "loadError": "Nem sikerült betölteni a passkeyeket.",
+      "revoke": "Eltávolítás",
+      "revoking": "Eltávolítás…",
+      "revokeConfirm": "Eltávolítod ezt a passkeyt? Innentől nem tudsz vele bejelentkezni.",
+      "revokeSuccess": "A passkey eltávolítva.",
+      "revokeError": "Nem sikerült eltávolítani a passkeyt.",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "Eszközhez kötött",
+        "multiDevice": "Szinkronizálva eszközök között"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "Hozzáadva: {date}"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "Bejelentkezés varázslóhivatkozással",
+      "description": "Add meg az e-mail címed, és elküldünk egy 6 jegyű kódot a bejelentkezéshez.",
+      "emailLabel": "E-mail",
+      "send": "Hivatkozás küldése",
+      "codeLabel": "Erősítő kód",
+      "verify": "Ellenőrzés",
+      "resend": "Kód újraküldése",
+      "resendCooldown": "Újraküldés {seconds} másodperc múlva",
+      "sentTo": "Küldtünk egy kódot a(z) {email} címre"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "Elfelejtetted a jelszavad?",
+      "description": "Add meg a(z) e-mail címed, és elküldjük a jelszó-visszaállítási hivatkozást.",
+      "emailLabel": "E-mail",
+      "submit": "Visszaállítási hivatkozás küldése",
+      "successTitle": "Nézd meg az e-mail fiókodat",
+      "success": "Ha ez az e-mail cím regisztrálva van, hamarosan megkapod a jelszó-visszaállítási linket."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "Jelszó visszaállítása",
+      "description": "Válassz új jelszót a fiókodhoz.",
+      "newPasswordLabel": "Új jelszó",
+      "confirmPasswordLabel": "Új jelszó megerősítése",
+      "submit": "Jelszó visszaállítása",
+      "successTitle": "Jelszó visszaállítva",
+      "successDescription": "Most már bejelentkezhetsz az új jelszavadkal.",
+      "signInCta": "Bejelentkezés",
+      "invalidTitle": "Érvénytelen visszaállítási link",
+      "invalidDescription": "A jelszó-visszaállítási link hiányos vagy hibás. Kérj egy újat a jelszó-emlékeztető oldalon."
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "E-mail ellenőrizve",
+      "successDescription": "Az e-mail címed sikeresen ellenőrizve.",
+      "failureTitle": "Az ellenőrzés sikertelen",
+      "failureDescription": "Nem tudtuk ellenőrizni az e-mail címedet ezzel a linkkel.",
+      "continueCta": "Folytatás",
+      "signInCta": "Vissza a bejelentkezéshez"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "Bejelentkezés sikeres",
+      "title": "Bejelentkeztél",
+      "description": "A munkamenet készen áll. Megnyitjuk a Nebutra munkateret és biztosítjuk a hitelesítési folyamat biztonságos átadását.",
+      "session": "Munkamenet",
+      "verified": "Hitelesített",
+      "workspace": "Munkater",
+      "preparing": "Előkészítés",
+      "redirecting": "Belépés a munkaterbe {seconds} másodperc múlva",
+      "secureHandoff": "Biztonságos átadás",
+      "continueCta": "Folytatás a munkaterben",
+      "signInCta": "Másik fiók használata"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "Az e-mail cím vagy a jelszó helytelen.",
+      "userNotFound": "Nincs fiók ezzel az e-mail címmel.",
+      "userAlreadyExists": "Már létezik fiók ezzel az e-mail címmel.",
+      "weakPassword": "A jelszó túl gyenge. Használj legalább 8 karaktert, kis- és nagybetűvel, valamint számokkal.",
+      "passwordsDontMatch": "A jelszavak nem egyeznek.",
+      "passwordTooShort": "A jelszónak legalább 8 karakter hosszúnak kell lennie.",
+      "currentPasswordIncorrect": "A jelenlegi jelszó helytelen.",
+      "samePassword": "Az új jelszónak eltérőnek kell lennie a jelenlegi jelszótól.",
+      "invalidEmail": "Az e-mail cím érvénytelen.",
+      "emailNotVerified": "Kérjük, először igazold az e-mail címed.",
+      "sessionExpired": "A munkamenet lejárt. Kérjük, jelentkezz be újra.",
+      "twoFactorRequired": "Kétfaktoros hitelesítés szükséges.",
+      "invalidVerificationCode": "Az ellenőrző kód helytelen vagy lejárt.",
+      "twoFactorAlreadyEnabled": "A kétfaktoros hitelesítés már engedélyezve van.",
+      "twoFactorNotEnabled": "A kétfaktoros hitelesítés nincs engedélyezve.",
+      "tooManyAttempts": "Túl sok próbálkozás. Kérjük, próbáld meg később újra.",
+      "rateLimited": "Túl gyakran végzed ezt. Lassíts.",
+      "providerNotSupported": "Ezt a műveletet a hitelesítési szolgáltatód kezeli.",
+      "networkError": "Hálózati hiba. Ellenőrizd a kapcsolatot, és próbáld meg újra.",
+      "unknown": "Valami hiba történt. Kérjük, próbáld meg újra."
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "Próbáld ki az alábbiak egyikét a kezdéshez",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "Legutóbbi tevékenység megjelenítése",
+        "prompt": "Mutasd meg a munkaterületem legutóbbi tevékenységét az elmúlt 24 órában."
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "Hiba hibakeresése",
+        "prompt": "Segíts egy futásidejű hiba hibakeresésében. Beillesztem a hibakövetést, és te irányítasz végig rajta."
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "Összefoglaló e-mail tervezése",
+        "prompt": "Készíts egy tömör heti összefoglaló e-mailt, amit elküldhetek a csapatomnak a platform előrehaladásáról."
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "Platform funkciók felfedezése",
+        "prompt": "Vezess végig ezen a SaaS platformon a legfontosabb funkciókon és hogy hogyan használhatom őket."
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "Aktív csomag",
+      "manage": "Előfizetés kezelése",
+      "noPlanTitle": "Nincs aktív csomag",
+      "noPlanDescription": "Válassz egy csomagot a fizetős funkciók és a magasabb használati korlátok feloldásához.",
+      "choosePlan": "Csomag választása",
+      "renewsOn": "Megújul {date}-án",
+      "endsOn": "Lejár {date}-án",
+      "trialEndsOn": "A próbaidőszak {date} dátumával ér véget",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "Aktív",
+        "trialing": "Próbaidőszak",
+        "past_due": "Hátralék",
+        "canceled": "Törölve",
+        "free": "Ingyenes"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "Nem sikerült betölteni a számlázási státuszodat."
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "Ingyenes {days} napos próbaidőszak",
+      "seat": "{count, plural, one {# ülőhely} other {# ülőhely}}",
+      "perSeat": "/ ülőhely"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "Szervezet logója",
+        "description": "Tölts fel egy négyzet alakú képet (PNG, JPEG vagy WebP, max. 2 MB), amely képviseli a szervezetedet.",
+        "uploadButton": "Logó feltöltése",
+        "uploading": "Feltöltés…",
+        "fileTooBig": "A fájl túl nagy. A maximális méret 2 MB.",
+        "invalidType": "Nem támogatott képfájl-típus. Használj PNG, JPEG vagy WebP formátumot.",
+        "success": "A logó frissítve.",
+        "removeButton": "Logó eltávolítása",
+        "removed": "A logó eltávolítva."
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "Szervezet neve",
+        "description": "Frissítsd a csapatodnak és ügyfeleidnek megjelenített név megjelenítését.",
+        "label": "Név",
+        "submit": "Mentés",
+        "saving": "Mentés…",
+        "success": "A szervezet neve frissítve."
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "Szervezet törlése",
+        "description": "Ez a szervezet, minden tag, meghívó és kapcsolódó adat véglegesen törlésre kerül. Ez a művelet nem vonható vissza.",
+        "trigger": "Szervezet törlése",
+        "confirmLabel": "Írd be a szervezet nevét a megerősítéshez",
+        "submit": "Szervezet törlése",
+        "cancel": "Mégse",
+        "success": "A szervezet törölve."
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "Meghívót kaptál",
+      "heading": "Meghívtak a(z) {organizationName} csatlakozására",
+      "description": "Fogadd el a meghívót, hogy elkezdhesd a csapatmunkát.",
+      "accept": "Meghívó elfogadása",
+      "accepting": "Elfogadás...",
+      "decline": "Elutasítás",
+      "declining": "Elutasítás...",
+      "declinedView": "Meghívó elutasítva",
+      "success": "Értesítettük a meghívót küldőt.",
+      "backToDashboard": "Vissza a vezérlőpultba",
+      "roleLabel": "Szerepkör: {role}",
+      "errorEmailMismatch": "Ezt a meghívót egy másik e-mail címre küldték",
+      "errorEmailMismatchDetail": "Jelentkezz be azzal az e-mail címmel, amelyre a meghívót kaptad, hogy elfogadhasd.",
+      "errorExpired": "A meghívó lejárt",
+      "errorExpiredDetail": "Kérj a meghívót küldőtől egy új meghívót.",
+      "errorNotFound": "A meghívó nem található",
+      "errorNotFoundDetail": "A meghívó hivatkozás érvénytelen vagy visszavont.",
+      "errorNotAvailable": "A meghívó nem elérhető",
+      "errorNotAvailableDetail": "Ezt a meghívót már elfogadták vagy elutasították, így már nem aktív.",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "Tulajdonos",
+        "admin": "Adminisztrátor",
+        "member": "Tag",
+        "viewer": "Megtekintő"
       }
     }
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "title": "API-kulcsok",
+      "description": "Hozzon létre és kezeljen API-kulcsokat a Nebutra programozott hozzáféréséhez.",
+      "createButton": "API-kulcs létrehozása",
+      "noPermission": "Nincs jogosultsága az API-kulcsok megtekintéséhez.",
+      "loading": "Betöltés…",
+      "loadError": "Nem sikerült betölteni a API-kulcsokat.",
+      "createError": "Nem sikerült létrehozni a API-kulcsot.",
+      "revokeError": "Nem sikerült visszavonni a API-kulcsot.",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "Még nincsenek API-kulcsok",
+        "cta": "Hozd létre az első API-kulcsodat"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "Név",
+        "prefix": "Előtag",
+        "lastUsed": "Utolsó használat",
+        "scopes": "Hatáskörök",
+        "created": "Létrehozva",
+        "actions": "Műveletek",
+        "never": "Soha"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "Visszavonás",
+        "revoking": "Visszavonás…",
+        "copy": "Másolás",
+        "copied": "Másolva",
+        "close": "Bezárás",
+        "submit": "Kulcs létrehozása",
+        "submitting": "Létrehozás…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "API-kulcs létrehozása",
+        "description": "Az API-kulcsok lehetővé teszik, hogy külső rendszerek a nevedben kommunikáljanak a Nebutrával. Jelszavakhoz hasonlóan kezeld őket.",
+        "nameLabel": "Név",
+        "namePlaceholder": "pl. Éles környezet háttér",
+        "scopesLabel": "Hatókörök",
+        "successWarning": "Ez a kulcs csak egyszer jelenik meg. Mentsd el, mielőtt bezárnád.",
+        "confirmClose": "A bezárással a kulcs örökre eltűnik. Győződj meg róla, hogy elmentetted."
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "Audit napló",
+      "description": "Kövesd nyomon a munkaterület minden adminisztratív műveletét. Szűrhetsz végrehajtó, művelet, entitás vagy időtartomány alapján.",
+      "empty": "Még nincsenek audit események",
+      "loadMore": "Továbbiak betöltése",
+      "loading": "Betöltés…",
+      "forbidden": "Admin hozzáférés szükséges az audit napló megtekintéséhez.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
+        "when": "Mikor",
+        "actor": "Végrehajtó",
+        "action": "Művelet",
+        "entity": "Entitás",
+        "outcome": "Eredmény",
         "ip": "IP"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "Régi érték",
+        "newValue": "Új érték"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "Művelet",
+        "actionPlaceholder": "Művelet keresése…",
+        "entityType": "Entitás típusa",
+        "outcome": "Eredmény",
+        "outcomeSuccess": "Siker",
+        "outcomeFailure": "Hibás",
+        "outcomePending": "Folyamatban",
+        "startDate": "Kezdő dátum",
+        "endDate": "Záró dátum",
+        "range24h": "Elmúlt 24 óra",
+        "range7d": "Elmúlt 7 nap",
+        "range30d": "Elmúlt 30 nap",
+        "reset": "Visszaállítás",
+        "all": "Összes"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "Értesítések",
+      "description": "Válaszd ki, hogyan érjen el a Nebutra az egyes eseménytípusoknál, minden kézbesítési csatornán.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "Alapértelmezettre visszaállítás",
+        "save": "Mentés"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "Mentés…",
+        "saved": "Mentve",
+        "error": "A mentés sikertelen. Kérjük, próbáld újra."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "Biztonsági figyelmeztetések",
+          "description": "Bejelentkezési figyelmeztetések, jelszóváltoztatások, kétfaktoros hitelesítési módosítások."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "Számlázás",
+          "description": "Számlák, fizetési hibák és előfizetési módosítások."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "Csapatmeghívók",
+          "description": "Szervezethez való csatlakozásra szóló meghívók, elfogadva vagy elutasítva."
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "Csapattevékenység",
+          "description": "Tagok csatlakozása, szerepkör-változások és egyéb munkaterület-aktivitás."
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "Termékfrissítések",
+          "description": "Új funkciók, változásnapló-kiemelések és kiadási jegyzetek."
         },
         "marketing": {
           "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "description": "Hírlevél és alkalmi akciók. Csak engedélyezéssel."
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "Alkalmazáson belül"
         },
         "email": {
-          "label": "Email"
+          "label": "E-mail"
         },
         "push": {
           "label": "Push"
@@ -733,145 +733,145 @@
       }
     },
     "webhooks": {
-      "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "title": "Webhookok",
+      "description": "Iratkozz fel a munkaterület által kibocsátott eseményekre. Minden adatcsomagot az végpont titkos kulcsával írunk alá, így ellenőrizheted az eredetiségét.",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "Új végpont",
+        "urlLabel": "Végpont URL",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "Események",
+        "submit": "Végpont létrehozása",
+        "submitting": "Létrehozás…",
+        "selectEvent": "Válassz legalább egy eseményt.",
+        "successTitle": "A végpont létrejött. Az aláírási titok csak egyszer jelenik meg.",
+        "successWarning": "Mentsd el az alkalmazás titokkezelőjébe bezárás előtt.",
+        "copy": "Másolás",
+        "copied": "Másolva"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "Aktív végpontok",
+        "empty": "Még nincs webhook végpont. Hozz létre egyet fent.",
+        "loading": "Betöltés…",
+        "loadFailed": "Nem sikerült betölteni a webhookokat",
         "columns": {
           "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "events": "Események",
+          "status": "Állapot",
+          "lastDelivered": "Utolsó kézbesítés",
+          "actions": "Műveletek"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "Aktív",
+          "disabled": "Letiltva"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "Szerkesztés",
+          "enable": "Engedélyezés",
+          "disable": "Letiltás",
+          "viewDeliveries": "Kézbesítések megtekintése",
+          "delete": "Törlés"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "Legutóbbi kézbesítések",
+        "close": "Bezárás",
+        "loading": "Betöltés…",
+        "loadFailed": "Nem sikerült betölteni a kézbesítéseket",
+        "empty": "Még nincsenek kézbesítések.",
+        "viewPayload": "Tartalom megtekintése",
+        "hidePayload": "Tartalom elrejtése",
+        "replay": "Újra küldés",
+        "replaying": "Újra küldés…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "sikeres",
+          "failed": "sikertelen",
+          "retrying": "újrapróbálva"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "Megjelenés",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "Téma",
+        "description": "Válassz világos vagy sötét témát, vagy használd a rendszer beállításait."
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "Témaminta",
+        "description": "Alkalmazz bármelyik Theme Playground témát az egész alkalmazásra. Az alábbi vezérlőkkel finomhangolhatod.",
+        "search": "Témák keresése…",
+        "searchLabel": "Témák keresése",
+        "default": "Alapértelmezett",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "Aktív",
+        "empty": "Nincs találat a keresésre.",
+        "count": "{count} téma"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "Téma",
+        "description": "Válassz egy mintát, importálj egy DESIGN.md fájlt, majd finomhangold az alábbi tokeneket.",
+        "selectLabel": "Témaminta",
+        "import": "Importálás",
+        "copy": "Téma másolása",
+        "copied": "Másolva",
+        "copyError": "A másolás sikertelen",
+        "custom": "Egyedi"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "DESIGN.md importálása",
+        "description": "Illeszd be vagy töltsd fel a DESIGN.md fájlt, hogy az alkalmazás színeit, sarkait, betűtípusait, távolságait és árnyékait egységesen alkalmazd – az értékek újratöltés után is megmaradnak.",
+        "applied": "Alkalmazva:",
+        "remove": "Eltávolítás"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "Témamód",
+        "light": "Világos",
+        "dark": "Sötét",
+        "system": "Rendszer"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "Kiemelő szín",
+        "description": "Válassz egy márka kiemelő színt, amely átveszi az aktív állapotok színezését az egész alkalmazásban.",
+        "label": "Kiemelő szín",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
-          "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "default": "Alapértelmezett",
+          "blue": "Kék",
+          "cyan": "Cián",
+          "violet": "Ibolya",
+          "pink": "Rózsaszín",
+          "amber": "Borostyán",
+          "green": "Zöld",
+          "red": "Piros"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "Színek",
+        "description": "Kiemelés, háttér és előtér.",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "Háttér",
+          "description": "Felülírja a felület háttérszínét."
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "Előtér",
+          "description": "Felülírja a szöveg színeszínét."
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "Visszaállítás alapértelmezettre"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "UI betűtípus",
+        "uiDescription": "A felületen használt betűtípuscsalád.",
+        "codeLabel": "Kód betűtípus",
+        "codeDescription": "A kód felületein használt betűcsalád.",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "Téma alapértelmezett",
+            "system": "Rendszer",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
-            "system": "System mono",
+            "theme": "Téma alapértelmezett",
+            "system": "Rendszer mono",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
             "jetbrains-mono": "JetBrains Mono"
@@ -879,385 +879,385 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "Kontraszt",
+        "description": "Szöveg kontrasztjának finomhangolása (50 = nincs változás).",
+        "label": "Kontraszt szint"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "Mutató kurzor használata",
+        "description": "Kattintásra interaktív elemeknél mutató kurzor használata.",
+        "label": "Mutató kurzor interaktív elemeknél"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "Diff jelölők",
+        "description": "Színes sávok vagy +/- szimbólumok megjelenítése minden módosított sorban.",
+        "label": "Diff jelölő stílusa",
+        "color": "Szín",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "Betűsimítás",
+        "description": "macOS natív betűsimítás alkalmazása.",
+        "label": "Natív betűsimítás"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "Tipográfia",
+        "description": "Alap betűméretek a felület és a kód megjelenítéséhez.",
+        "uiFontSize": "Felület betűmérete",
+        "uiFontSizeDescription": "Az alap felületi betűméret beállítása.",
+        "codeFontSize": "Kód betűmérete",
+        "codeFontSizeDescription": "Az alap kód betűméret beállítása."
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "Téma",
+        "customize": "Testreszabás"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "Mozgás csökkentése",
+        "description": "Csökkentse az animációkat vagy illessze a rendszer beállításaihoz.",
+        "label": "Mozgásbeállítás",
+        "system": "Rendszer",
+        "on": "Be",
+        "off": "Ki"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "Áttetsző oldalsáv",
+        "description": "Áttetsző anyagot alkalmaz az oldalsávra."
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "Áttetsző oldalsáv",
+        "description": "Áttetsző anyagot alkalmaz az oldalsávra."
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "Verzió",
+    "effective": "Hatályba lépés",
+    "notFound": "Ez a dokumentum nem érhető el.",
+    "backHome": "Vissza a főoldalra"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "Parancspaletta",
+    "placeholder": "Írj egy parancsot vagy keress…",
+    "empty": "Nincs találat.",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
+      "navigation": "Navigáció",
+      "actions": "Műveletek",
+      "settings": "Beállítások",
+      "account": "Fiók",
       "admin": "Admin",
-      "help": "Help"
+      "help": "Súgó"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
-        "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
-        "webhooks": "Webhooks",
-        "admin": "Admin"
+        "home": "Főoldal",
+        "settings": "Beállítások",
+        "billing": "Számlázás",
+        "team": "Csapat",
+        "apiKeys": "API-kulcsok",
+        "notifications": "Értesítések",
+        "auditLog": "Audit napló",
+        "webhooks": "Webhookok",
+        "admin": "Adminisztráció"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "Csapattag meghívása",
+        "createApiKey": "API-kulcs létrehozása",
+        "switchOrganization": "Szervezet váltása"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "Világos téma használata",
+        "themeDark": "Sötét téma használata",
+        "themeSystem": "Rendszertéma használata"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "Kijelentkezés"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "Hiba jelentése",
+        "shortcuts": "Gyorsbillentyűk"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "Adatvédelmi beállításaid",
+      "description": "Sütiket használunk a felhasználói élmény javítására, a forgalom elemzésére és a tartalom személyre szabására. Válaszd ki, mely kategóriákat engedélyezni szeretnéd."
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "Összes elfogadása",
+      "savePreferences": "Beállítások mentése"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "Szükséges",
+        "description": "A weboldal működéséhez szükséges. Nem kapcsolható ki."
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "Funkcionális",
+        "description": "Emlékezz a beállításaidra (nyelv, téma, elrendezés)."
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "Analitika",
+        "description": "Névtelen használati adatok a termék fejlesztéséhez."
       },
       "marketing": {
         "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "description": "Személyre szabott hirdetések és újratervezés harmadik féltől származó platformokon."
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "Értesítések",
+      "description": "Minden értesítésed egy helyen.",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "Összes",
+        "unread": "Olvasatlan"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "Összes jelölése olvasottként",
+        "markRead": "Jelölés olvasottként",
+        "archive": "Archiválás",
+        "loadMore": "Továbbiak betöltése",
+        "loading": "Betöltés...",
+        "selected": "{count} kijelölve"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "Minden naprakész.",
+        "unread": "Nincsenek olvasatlan értesítések."
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "Az értesítések betöltése sikertelen.",
+        "network": "Hálózati hiba. Kérjük, próbáld újra.",
+        "markRead": "Az értesítés olvasottként jelölése sikertelen.",
+        "archive": "Az értesítés archiválása sikertelen.",
+        "bulkMarkRead": "Néhány értesítést nem sikerült olvasottként jelölni."
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "A beérkezett üzenetekhez tartós értesítési háttérrendszer szükséges. Ellenőrizd a szolgáltató konfigurációját.",
+        "emptyCaughtUp": "A beérkezett üzenetek listája üres.",
+        "emptyChangelog": "A változásnapló-frissítések itt jelennek meg."
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "Jó reggelt",
+      "afternoon": "Jó napot",
+      "evening": "Jó estét"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "Tápláld az alkalmazásodat csatlakoztatókkal",
+      "subtitle": "Dobd be a kérést, nyomd meg a ⌘K-t bárhol, vagy lépj közvetlenül egy munkaterületre.",
+      "promptPlaceholder": "Mi jár a fejedben?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "Integráció csatlakoztatása",
+        "theme": "Téma kipróbálása",
+        "audit": "Audit napló",
+        "billing": "Számlázás"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "A kiválasztott szolgáltatóhoz nincs beállítva hitelesítés. Állítsd be a szolgáltató titkait a felhasználói munkamenetek engedélyezéséhez."
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "Kezdj egy cselekvéssel: kérdezd meg a Sailort, vizsgálj meg munkaterületi jelzéseket, vagy irányítsd a munkát egy automatizálási felületre.",
+      "openSailor": "Sailor AI megnyitása",
+      "viewAnalytics": "Analitika megtekintése"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "Munkaterület pillanatkép",
+      "description": "Legutóbbi raktárnap · {day}",
+      "viewAnalytics": "Analitika megtekintése →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "Aktív felhasználók",
+        "totalEvents": "Összes esemény",
+        "conversions": "Konverziók",
+        "revenue": "Bevétel"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "Bejelentkezett felhasználók",
+        "totalEvents": "Rögzített események",
+        "conversions": "Minősített műveletek",
+        "revenue": "Egyedírt bevétel"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
-        "tenant": "Tenant",
-        "daily": "Daily",
+        "snapshot": "Pillanatkép",
+        "cadence": "Ütem",
+        "tenant": "Bérlő",
+        "daily": "Napi",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "Bérlő felhasználók",
+        "events": "Eseménypálya",
+        "funnel": "Tölcsér",
+        "billing": "Számlázás"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "Dokumentum-folyamat",
+      "description": "Küldje a forrásfájlokat az eredeti feladat-várólistára.",
+      "intakeTitle": "Dokumentum-bevitel",
+      "intakeDescription": "PDF, Markdown, szöveg vagy Word dokumentum",
+      "chooseDocument": "Dokumentum kiválasztása",
+      "startParseTask": "Feladat indítása",
+      "queued": "Folyamatban",
+      "fileInputLabel": "Dokumentumfájl",
+      "fallbackError": "A dokumentumfeladat sikertelen.",
+      "taskStatus": "Feladat állapota",
+      "progressLabel": "Feladat előrehaladása",
+      "refreshStatus": "Frissítés",
+      "cancelTask": "Mégse",
+      "statusError": "Nem sikerült frissíteni a feladat állapotát.",
+      "cancelError": "Nem sikerült megszüntetni a feladatot.",
+      "statusQueued": "Folyamatban",
+      "statusRunning": "Folyamatban",
+      "statusSucceeded": "Sikeres",
+      "statusFailed": "Sikertelen",
+      "statusCancelled": "Törölve",
+      "resultReady": "Az eredmény készen áll",
+      "taskError": "Feladat hiba",
+      "updatedAt": "Frissítve"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "Folytasd, ahol abbahagytad",
+      "subtitle": "{count, plural, =0 {Nincs munkamenet} =1 {1 legutóbbi munkamenet} other {# legutóbbi munkamenet}}",
+      "viewAll": "Összes megtekintése →",
+      "newChat": "Új csevegés",
+      "untitled": "Névtelen munkamenet",
+      "messageCount": "{count, plural, =1 {1 üzenet} other {# üzenet}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "Első lépések",
+      "description": "{done} / {total} kész · fejezd be a beállítást a teljes munkaterület feloldásához",
+      "progressLabel": "Beállítási folyamat",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "Hívj meg egy csapattagot",
+          "description": "Vigyen be legalább egy együttműködőt a munkaterületére."
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "API-kulcs generálása",
+          "description": "Programozott hozzáférés a munkaterület végpontjaihoz."
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "Integráció csatlakoztatása",
+          "description": "Stripe, Slack, webhooks, queues és még sok más."
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "Próbáld ki a chat, adat vagy munkafolyamat módot."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "Projektek",
+    "noThreads": "Nincsenek szálak",
+    "expandAll": "Összes kibontása",
+    "collapseAll": "Összes összecsukása",
+    "sectionMore": "További lehetőségek",
+    "newProject": "Új projekt",
+    "restoredGroups": "Korábban kibontott csoportok visszaállítva",
+    "newProjectPlaceholder": "Projekt neve",
+    "newProjectDefault": "Névtelen",
+    "newProjectSuccess": "Projekt létrehozva",
+    "newProjectError": "Nem sikerült létrehozni a projektet",
+    "sortBy": "Rendezés",
+    "sortRecent": "Legutóbb aktív",
+    "sortAlphabetical": "Ábécé sorrend",
+    "sortCreated": "Létrehozás dátuma",
+    "archiveAll": "Összes archiválása",
+    "comingV2": "A v2-ben érkezik"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "Az első szoba készen áll.",
+      "firstFolder": "Sok cég egy mappaként kezd.",
+      "firstTable": "Az első asztalhoz már van második ülőhely.",
+      "firstSignal": "A való világ elkezdett beszélni.",
+      "firstShip": "A világ először látja meg.",
+      "firstBeliever": "Ma már nem csak magadnak építesz.",
+      "firstRevenue": "A álomnak most már cash flow-ja van.",
+      "firstReturn": "A visszatérés többet ér, mint az egyszeri látogatás.",
+      "firstTeam": "Három emberből már kezdhet formálódni egy cég.",
+      "firstCrowd": "Az első asztal egyre zsúfoltabb.",
+      "firstReset": "Egy újraindítás őszintébb kezdés.",
+      "firstPublic": "Tessz egy darabot a jövőből a nyilvánosságnak.",
+      "firstDemo": "Ez nem bemutató. Ez teszt.",
+      "graduation": "Már túllépted az alapokat. Az út előtted erősebb eszközöket igényel."
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "Sok cég egy mappával kezd.",
+      "integrations": "Nincs konfigurált kapcsoló.",
+      "creditActivity": "A kreditalakítás az első kérés után jelenik meg.",
+      "usageData": "A használati adatok akkor jelennek meg, amikor a szervezeted elkezd kéréseket küldeni.",
+      "apiKeys": "Még nincsenek kulcsok.",
+      "apiKeysCta": "Hozd létre az első kulcsot",
+      "teamMembers": "Egy emberrel el lehet kezdeni. Néhány emberrel építeni.",
+      "cofounders": "Az első, aki hisz benned, még nem jelent meg.",
+      "cofoundersDescription": "Amikor te és egy másik alapító is jelezitek az érdeklődést, itt jelennek meg.",
+      "cofoundersAction": "Alapítótárs keresése",
+      "growthChart": "A trendadatok akkor jelennek meg, amikor az aktivitás elkezdődik.",
+      "revenueChart": "A bevételi adatok akkor jelennek meg, amikor a tranzakciók elkezdődnek.",
+      "webhookDeliveries": "A kézbesítések az első esemény után jelennek meg itt.",
+      "webhookEndpoints": "Adj hozzá egy végpontot fent, hogy elkezdd fogadni az eseményeket.",
+      "accessInvites": "Nincs kiadott meghívó."
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "Az első szoba készen áll.",
+    "failure": "Az újraindítás őszintébb kezdés.",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "A párosítások nem tölthetők be.",
+      "loadMatchesDescription": "Valami hiba történt a mi oldalunkon. Frissítsd az oldalt, és próbáld újra.",
+      "loadWebhookDeliveries": "A kézbesítések nem tölthetők be.",
+      "replayWebhookDelivery": "Az ismétlés nem sikerült.",
+      "loadWebhookEndpoints": "A végpontok nem tölthetők be."
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "Egy emberrel el lehet kezdeni. Hányan együtt építhetnek.",
+    "revenue": "A álomnak most már cash flow-ja van.",
+    "growth": "A jel egyre erősebb.",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "A világ először látja meg.",
+      "echo": "Végül elhagyta a localhostot."
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "Nem kell készen állnod. Kezdened kell.",
+    "graduation": "Nőtted túl az alapokat. Próbáld ki a {tool} eszközt az út folytatásához.",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "Az első kontextus tornyod itt kezdődik.",
+      "emptyDescription": "Fordítsd le a céget a Startup OS-ben, hogy lásd és szerkeszd a kontextus tornyát.",
+      "emptyAction": "Startup OS megnyitása",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "Csatlakoztass egy AI-szolgáltató kulcsot az mezők automatikus kitöltéséhez.",
+        "generateFailed": "A generálás nem fejeződött be.",
+        "saveFailed": "A módosításaid nem mentődtek el."
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "Mentés",
+        "saving": "Mentés…",
+        "cancel": "Mégse",
+        "open": "Startup OS megnyitása"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "Még nincsenek fogadások.",
+      "noRuns": "Nincsenek aktív futások."
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "Ez a projekt még nem tartalmaz fájlokat."
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "A munkaterület már úton van.",
+      "emptyDescription": "A meghívó szinkronizálása még folyamatban lehet. Frissítsd az oldalt, vagy hozz létre egy külön munkaterületet."
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "Hozz létre egy munkaterületet a számlázás előtt.",
+      "emptyDescription": "A számlázási műveletekhez aktív munkaterület szükséges. Először hozz létre egyet, majd térj vissza a számlázáshoz."
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "Az első munkaterület itt kezdődik.",
+      "emptyDescription": "Hozz létre egy munkaterületet a kezdéshez."
     }
   }
 }

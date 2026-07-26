@@ -5,127 +5,127 @@
     "description": "全模型 API 市場 · 按用量付費 · 管理金鑰與錢包 · 快速試用"
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
-    "title": "Admin",
+    "dashboard": "總覽",
+    "keys": "API 金鑰",
+    "wallet": "錢包",
+    "docs": "文件",
+    "title": "管理員",
     "backToMarket": "返回市場",
-    "quickUse": "Quick use"
+    "quickUse": "快速使用"
   },
   "chrome": {
     "searchPlaceholder": "你想用 AI 做什麼？",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "搜尋",
+    "locale": "語言",
+    "currency": "幣別",
     "collapseSidebar": "收起側邊欄",
     "expandSidebar": "展開側邊欄",
-    "home": "Home",
-    "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "home": "首頁",
+    "adminConsole": "管理員",
+    "quickUse": "快速使用",
+    "support": "支援",
+    "apiDocs": "API 文件",
     "integrationHelp": "整合指南",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI 推薦",
+    "market": "市場",
+    "usageTitle": "快速使用"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "App 市場",
+    "api": "API 市場",
     "models": "模型目錄",
-    "client": "Client"
+    "client": "客戶端"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "new": "最新",
+    "hot": "熱門",
+    "forYou": "為你推薦",
+    "grid": "網格",
+    "list": "列表",
+    "apiShelf": "API 架",
+    "toolShelf": "工具架",
+    "categories": "分類",
+    "apps": "App",
+    "newRelease": "新發布",
+    "forgeTitle": "Forge 工具工作區",
+    "forgeBlurb": "文字轉換、編碼器、表單與可組合工具。應用市場實驗室指向 Forge。",
+    "openForge": "開啟 Forge →",
+    "allApi": "所有 API →",
+    "all": "全部 →",
+    "viewAll": "查看全部 {label} →",
+    "gridView": "網格檢視",
+    "listView": "清單檢視",
+    "hiTitle": "企業 AI 資源平台",
+    "hiSubtitle": "以合適的 AI 滿足每一項需求",
+    "sellable": "可銷售",
+    "walletTopup": "充值"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "語言模型",
+      "hint": "聊天 · 推理"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "圖像生成",
+      "hint": "文字轉圖像"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "圖像編輯",
+      "hint": "編輯 · 抠圖"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "影片生成",
+      "hint": "文字轉影片"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "音訊與影片",
+      "hint": "語音 · 轉錄"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "資訊",
+      "hint": "檢索 · 提取"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "知識增強"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "工具 API",
+      "hint": "代理 · 工具"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "機器人",
+      "chips": "聊天機器人 · 繪圖機器人 · 知識"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "生產力",
+      "chips": "模型競技場 · AI 寫作"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "學術",
+      "chips": "PDF 工具包 · AI 專利搜尋"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "影像工具",
+      "chips": "3D 工作室 · 畫布"
     },
     "audio": {
-      "label": "Audio",
-      "chips": "Speech · AI music"
+      "label": "音訊",
+      "chips": "語音 · AI 音樂"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "程式碼",
+      "chips": "網頁產生器 · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "總覽",
+    "keys": "金鑰",
+    "wallet": "錢包",
+    "use": "試用",
+    "docs": "文件",
+    "models": "更多"
   }
 }

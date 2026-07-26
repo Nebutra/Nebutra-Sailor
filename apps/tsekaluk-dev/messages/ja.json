@@ -113,17 +113,37 @@
     "capabilities_label": "/ ケイパビリティ",
     "radar_title": "ケイパビリティ",
     "stats": [
-      { "value": 50, "suffix": "+", "label": "納品プロジェクト" },
-      { "value": 6, "suffix": "", "label": "サービスライン" },
-      { "value": 3, "suffix": "+", "label": "独立年数" },
-      { "value": 4, "suffix": "+", "label": "対応タイムゾーン" }
+      {
+        "value": 50,
+        "suffix": "+",
+        "label": "Projects delivered"
+      },
+      {
+        "value": 6,
+        "suffix": "",
+        "label": "Service lines"
+      },
+      {
+        "value": 3,
+        "suffix": "+",
+        "label": "Years independent"
+      },
+      {
+        "value": 4,
+        "suffix": "+",
+        "label": "Timezones covered"
+      }
     ],
     "tiers": {
       "chat": {
         "name": "チャット",
         "price": "無料",
         "description": "15分のクイックコール",
-        "features": ["方向性アドバイス", "技術スタック推薦", "Q&A"],
+        "features": [
+          "Direction advice",
+          "Tech stack recommendations",
+          "Quick Q&A"
+        ],
         "cta": "ソウルに話す",
         "href": "/soul"
       },
@@ -131,7 +151,12 @@
         "name": "コーヒー",
         "price": "¥18",
         "description": "コーヒー一杯分",
-        "features": ["上記すべて", "コードレビュー", "UXクイック診断", "グロース戦略ヒント"],
+        "features": [
+          "Everything above",
+          "Code Review",
+          "UX quick audit",
+          "Growth strategy tips"
+        ],
         "cta": "コーヒーを奢る",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
@@ -139,7 +164,11 @@
         "name": "採用",
         "price": "プロジェクト制",
         "description": "フルプロフェッショナル契約",
-        "features": ["上記すべて", "全6サービスライン解放", "カスタムスコープ＆納品"],
+        "features": [
+          "Everything above",
+          "All 6 service lines unlocked",
+          "Custom scope & delivery"
+        ],
         "cta": "連絡する",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
@@ -148,10 +177,10 @@
         "price": "共に成長",
         "description": "長期的な共創",
         "features": [
-          "上記すべて",
-          "プロダクト共同制作",
-          "グロースハッキングシステム",
-          "エクイティ／収益シェア"
+          "Everything above",
+          "Product co-creation",
+          "Growth hacking system",
+          "Equity / revenue share"
         ],
         "cta": "ビジョンを共有する",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
@@ -160,38 +189,52 @@
     "services": {
       "engineering": {
         "name": "プロダクトエンジニアリング",
-        "items": ["Next.jsフルスタック", "Reactフロントエンドアーキテクチャ"]
+        "items": [
+          "Next.js full-stack",
+          "React frontend architecture"
+        ]
       },
       "ai": {
         "name": "AI＆オートメーション",
         "items": [
-          "AIエージェントアーキテクチャ",
-          "OpenClawワークフロー",
-          "エンタープライズスキル設計",
-          "AIGCコンテンツパイプライン"
+          "AI Agent architecture",
+          "OpenClaw workflows",
+          "Enterprise Skill design",
+          "AIGC content pipeline"
         ]
       },
       "design": {
         "name": "デザイン＆プロダクト",
-        "items": ["UI/UXデザイン", "プロダクトR&D"]
+        "items": [
+          "UI/UX design",
+          "Product R&D"
+        ]
       },
       "growth": {
         "name": "グロース＆グローバル",
         "items": [
-          "マーケティング戦略",
-          "グロースハッキング",
-          "ソフトウェア国際化",
-          "ローカライズ＆クロスカルチャーナラティブ",
-          "データ分析＆A/Bテスト"
+          "Marketing strategy",
+          "Growth hacking",
+          "Software internationalization",
+          "Localization & cross-cultural narrative",
+          "Data analysis & A/B testing"
         ]
       },
       "consulting": {
         "name": "コンサルティング",
-        "items": ["数理モデリング", "ビジネス英語", "ITプロジェクト管理"]
+        "items": [
+          "Mathematical modeling",
+          "Business English",
+          "IT project management"
+        ]
       },
       "strategy": {
         "name": "VC＆戦略",
-        "items": ["ベンチャーリサーチ", "YC準備スタートアップ計画", "ユニコーン級プロダクト思考"]
+        "items": [
+          "Venture research",
+          "YC-ready startup planning",
+          "Unicorn-level product thinking"
+        ]
       }
     }
   },

@@ -5,127 +5,127 @@
     "description": "Pasar API semua model · bayar ikut guna · urus kunci & dompet · cuba pantas."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
+    "dashboard": "Gambaran Keseluruhan",
+    "keys": "Kunci API",
+    "wallet": "Dompet",
+    "docs": "Dokumen",
     "title": "Admin",
     "backToMarket": "Kembali ke pasar",
-    "quickUse": "Quick use"
+    "quickUse": "Guna pantas"
   },
   "chrome": {
     "searchPlaceholder": "Apa yang anda mahu lakukan dengan AI?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Cari",
+    "locale": "Bahasa",
+    "currency": "Mata wang",
     "collapseSidebar": "Runtuhkan bar sisi",
     "expandSidebar": "Kembangkan bar sisi",
-    "home": "Home",
+    "home": "Utama",
     "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "quickUse": "Guna pantas",
+    "support": "Sokongan",
+    "apiDocs": "Dokumen API",
     "integrationHelp": "Panduan integrasi",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "Cadangan AI",
+    "market": "Pasaran",
+    "usageTitle": "Gunakan segera"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "Pasaran aplikasi",
+    "api": "Pasaran API",
     "models": "Katalog model",
-    "client": "Client"
+    "client": "Pelanggan"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
+    "new": "Baru",
+    "hot": "Popular",
+    "forYou": "Untuk anda",
     "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "list": "Senarai",
+    "apiShelf": "Rak API",
+    "toolShelf": "Rak alat",
+    "categories": "Kategori",
+    "apps": "Aplikasi",
+    "newRelease": "Keluaran baru",
+    "forgeTitle": "Ruang kerja alat Forge",
+    "forgeBlurb": "Transformasi teks, codec, borang, dan alat yang boleh digabungkan. Pasaran aplikasi merujuk kepada Forge.",
+    "openForge": "Buka Forge →",
+    "allApi": "Semua API →",
+    "all": "Semua →",
+    "viewAll": "Lihat semua {label} →",
+    "gridView": "Paparan grid",
+    "listView": "Paparan senarai",
+    "hiTitle": "Platform sumber AI perusahaan",
+    "hiSubtitle": "Padankan setiap keperluan dengan AI yang sesuai",
+    "sellable": "Boleh dijual",
+    "walletTopup": "Isi semula"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Model bahasa",
+      "hint": "Sembang · penalaran"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Penjanaan imej",
+      "hint": "Teks-ke-imej"
     },
     "image-edit": {
-      "label": "Image editing",
+      "label": "Penyuntingan imej",
       "hint": "Edit · matting"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "Penjanaan video",
+      "hint": "Teks-ke-video"
     },
     "audio": {
       "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "hint": "Suara · transkripsi"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "Maklumat",
+      "hint": "Pemulangan · ekstraksi"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Diperkukuh pengetahuan"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "API alat",
+      "hint": "Ejen · alat"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "Bot",
+      "chips": "Bot sembang · bot lukisan · pengetahuan"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Produktiviti",
+      "chips": "Arena model · penulisan AI"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "Akademik",
+      "chips": "Alat PDF · Carian paten AI"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "Alat imej",
+      "chips": "Studio 3D · Kanvas"
     },
     "audio": {
       "label": "Audio",
-      "chips": "Speech · AI music"
+      "chips": "Suara · Muzik AI"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "Kod",
+      "chips": "Penjana web · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "Gambaran keseluruhan",
+    "keys": "Kunci",
+    "wallet": "Dompet",
+    "use": "Cuba",
+    "docs": "Dok",
+    "models": "Lagi"
   }
 }

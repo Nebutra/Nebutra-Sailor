@@ -1,1688 +1,1688 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "Можливості",
+    "solutions": "Рішення",
+    "pricing": "Тарифи",
+    "docs": "Документація",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "Про нас",
+    "ideas": "Ідеї",
+    "opc": "Платформа",
+    "roadmap": "Дорожня карта",
+    "resources": "Ресурси",
+    "signIn": "Увійти",
+    "getStarted": "Почати",
+    "changelog": "Що нового",
+    "news": "Новини",
+    "designDocs": "Дизайн-система",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "Меню облікового запису",
+      "loadingName": "Завантаження…",
+      "dashboard": "Панель керування",
+      "account": "Обліковий запис",
+      "billing": "Оплата",
+      "docs": "Документація",
+      "signOut": "Вийти"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "Приєднуйтесь до ланцюжка рекомендацій засновників {brandName}",
+    "metadataDescription": "Приєднуйтесь до списку очікування {brandName}, збережіть атрибуцію рекомендації та відкрийте власну посилання для поширення в одному замкненому продуктово-орієнтованому циклі.",
+    "eyebrow": "Ланцюжок рекомендацій засновників",
+    "title": "Приєднуйтесь до наступної когорти засновників і отримайте власне посилання для поширення.",
+    "description": "Введіть будь-який запрошувальний код або приєднуйтесь напряму. Ми збережемо атрибуцію, якщо код існує, додамо вас до списку очікування та надамо приватне посилання для рекомендації, яке ви зможете одразу поширити.",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "Надійний список очікування",
+      "codeDetected": "Виявлено код {code}",
+      "direct": "Пряма реєстрація"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "Робоча електронна пошта",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "Код рекомендації",
+      "codePlaceholder": "Код (необов’язково)",
+      "submit": "Приєднатися до списку",
+      "submitting": "Додаємо",
+      "invalidEmail": "Введіть коректну електронну адресу.",
+      "error": "На жаль, зараз не вдалося приєднатися. Спробуйте ще раз.",
+      "successTitle": "Ви в списку",
+      "successDescription": "Ваше приватне посилання для поширення готове.",
+      "positionLabel": "Позиція в черзі",
+      "referralCodeLabel": "Ваш код",
+      "referralUrlLabel": "Ваше посилання для поширення",
+      "copyLink": "Копіювати посилання",
+      "copied": "Скопійовано",
+      "share": "Поділитися",
+      "shareTitle": "Приєднуйтесь до засновницького кола {brandName}",
+      "shareText": "Використайте моє запрошення, щоб приєднатися до списку очікування засновників {brandName}.",
+      "directMode": "Код реферала не потрібен",
+      "codeMode": "Відстеження рефералів увімкнено"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "Петля засновник-засновник",
+        "description": "Кожен підтверджений реєстраційний запис отримує код та посилання, тому наступний реферал починається без ручного передавання."
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "Щира атрибуція",
+        "description": "Невідомі коди зберігаються як спроби атрибуції, а дійсні коди збільшують показник реферера та зберігають реєстрацію чистою."
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "Стан успіху, готовий до поширення",
+        "description": "Стан підтвердження відображає позицію, код, копію та нативні дії поширення, щоб петля завершувалася прямо на сторінці."
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "Інфраструктура, що базується на продукті",
+      "title": "Розроблено як надійну SaaS-інфраструктуру, а не як одноразову форму.",
+      "description": "Поверхня рефералів підтримується пакетом домену, постійною моделлю Prisma, типізованим маршрутом Next.js та публічними перевіркою працездатності, які можна запускати після розгортання ECS.",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "Дані",
+        "title": "Одна надійна таблиця списку очікування",
+        "description": "Унікальність електронної пошти, автоматичне збільшення позиції, індекси реферальних кодів, метадані спроб атрибуції та переходи станів зберігаються в базі даних платформи."
       },
       "api": {
         "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "title": "Типізований кінцевий пункт приєднання",
+        "description": "Сторінка надсилає дані до `/api/waitlist`, нормалізує довільні коди, повертає існуючі записи ідемпотентно та ніколи не залежить від зразка коду."
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "Публічні перевірки під час розгортання",
+        "description": "Канонічні та псевдонім-URL готові до автоматизованих перевірок, щоб доставка ECS виявляла регресії маршрутів, DNS та стану системи."
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "Запускайте свій стартап,",
+    "headline2": "на потужностях {brandName} Agent OS.",
+    "subheadline": "Пропустіть тижні роботи над платформою на <highlight>виробничо готовій</highlight> основі з <highlight>керованою архітектурою</highlight>, створеною для <highlight>AI-агентів та засновників</highlight>, що виходять на глобальний ринок.",
+    "copyLabel": "Копіювати команду",
+    "copiedLabel": "Скопійовано",
+    "ctaGetAccess": "Запустіть свій стартап",
+    "ctaExploreDemo": "Огляд демо",
+    "pillCopied": "Скопійовано"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "Інфраструктура з коробки — від прототипу до масштабу.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "Інфраструктура для AI-додатків",
+      "description": "Вбудовані, перевірені у виробництві Agent Frameworks та двигуни оркестрації LLM. Обійдіть складні нижчележачі абстракції та взаємодійте напряму зі структурованими API інтелекту."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "Керована базова платформа",
+      "description": "Керована базова платформа для команд, що запускають AI-нативний SaaS. Узгодьте каркас, примітиви виконання та поверхні доставки без зшивання тимчасових інструментів."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "Автоматизація Enterprise SaaS",
+      "description": "Глибока інтеграція сучасного технологічного стеку Vercel, Supabase та Stripe. Забезпечує готову безпеку на рівні рядків, складну ізоляцію багатокористувацьких середовищ та глобальне підписне билінг."
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "Готові розгорнути свій наступний AI-продукт?",
+    "subheading": "Ініціалізуйте повну хмарно-орієнтовану SaaS-архітектуру локально однією командою в терміналі.",
+    "copyLabel": "Копіювати команду",
+    "copiedLabel": "Скопійовано",
+    "startBuilding": "Почати будувати"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "Запускайте свій стартап з {brandName} Agent OS. Багатокористувацькість, билінг, аутентифікація та AI — готові до продакшену з першого дня.",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "Продукт",
+      "resources": "Ресурси",
+      "legal": "Юридична інформація",
+      "community": "Спільнота"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
-      "blog": "Blog",
-      "playbook": "Playbook",
-      "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
-      "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
-      "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
+      "product": "Продукт",
+      "features": "Можливості",
+      "pricing": "Ціни",
+      "about": "Про нас",
+      "showcase": "Виставка",
+      "blog": "Блог",
+      "playbook": "Посібник",
+      "changelog": "Журнал змін",
+      "roadmap": "Дорожня карта",
+      "docs": "Документація",
+      "ideas": "Ідеї",
+      "opc": "Платформа",
+      "careers": "Кар'єра",
+      "security": "Безпека",
+      "dpa": "Угода про обробку даних",
+      "privacy": "Конфіденційність",
+      "terms": "Умови",
+      "cookies": "Файли cookie",
+      "refund": "Повернення коштів",
+      "licensing": "Ліцензування",
+      "contact": "Зв'язатися",
       "faq": "FAQ",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. Усі права захищено.",
+    "statusOnline": "Усі системи працюють",
+    "newsletterTitle": "Будьте в курсі",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "Підписатися",
+    "newsletterSuccess": "Дякуємо за підписку!",
+    "newsletterError": "Щось пішло не так"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "СТВОРЕНО НА СТЕКУ, ЯКУ ВИ ЛЮБИТЕ."
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "СТРУКТУРА TURBOREPO",
+    "title": "10 додатків. 104 пакети. 4 бекенд-лінії.",
+    "description": "Спільний код, паралельні збірки, нуль дублювання. Повна кінцева типізація від бази даних до фронтенду.",
+    "metricApps": "додатків",
+    "metricBackends": "лані бекенду",
+    "metricPackages": "пакети",
+    "verifiedPaths": "Шляхи перевірено відповідно до поточної робочої області",
+    "cta": "Дослідити архітектуру монорепозиторію"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "У цифрах",
+    "github": "Зірки на GitHub",
+    "discord": "Учасники Discord",
+    "setup": "Середній час налаштування",
+    "packages": "Пакети монорепозиторію",
+    "ctaStar": "Зірка →",
+    "ctaJoin": "Приєднатися →",
+    "ctaStart": "Почати →",
+    "ctaExplore": "Дослідити →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "Про нас — платформа керованого ШІ",
+      "description": "Дізнайтеся про комерційну візію та інженерні принципи платформи керованого ШІ {brandName}.",
+      "heading": "Ера спритних продуктових команд",
+      "subheading": "Замініть повторювану роботу з платформою на керовану інфраструктуру, потужну автоматизацію та стійкий інженерний важіль.",
+      "missionTitle": "Новий порядок, що чинить опір адміністративному занепаду",
+      "missionP1": "{brandName} будує керовану платформу ШІ для команд, яким потрібна стійка інфраструктура, а не тимчасові стартові стеки. Традиційне масштабування часто тягне за собою бюрократію та ентропію; ми відповідаємо на це керуванням кодом, автоматизацією та платформуною базою, яка залишається аудитуваною під час зростання.",
+      "missionP2": "Комерція досі страждає від витрат на координацію, роздробленого інструментарію та слабких шляхів оновлення. Ми дбаємо про зменшення цих терть через чіткіші платформенні контракти, сильніші примітиви доставки та поведінку в часі виконання, яку команди можуть спостерігати та довіряти.",
+      "missionP3": "Ми відкидаємо звичку вирішувати проблеми масштабування додатковим організаційним тягарем. Автоматизація, тести та керування мають поглинати повторювану операційну роботу, щоб команди могли зосередитися на продукті, архітектурі та результатах для клієнтів.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "Чотири стовпи",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "Кероване масштабування (Філософія)",
+          "description": "Масштабування має приходити від сильніших систем, кращого важеля та чіткіших правил експлуатації — а не від накопичення додаткової організаційної ваги."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "Ядро будівельника (Інфраструктура)",
+          "description": "База повторюваної платформи для багатокористувацькості, билінгу, аутентифікації, комплаєнсу та інтеграцій ШІ, яку команди можуть аудитувати, розширювати та використовувати для швидкого виведення продуктів на ринок."
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "Дисципліна оновлення (Маршрутизація)",
+          "description": "Здорові системи ростуть завдяки перевіркам сумісності, міграціям та спостережуваним контрактам у часі виконання, а не через дрейф, героїчні зусилля та разові переписування."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "Код — це закон (Організація)",
+          "description": "Операційна дисципліна має бути закодована в тестах, робочих процесах та правилах керування, щоб команди могли покращувати платформу, не покладаючись на політику чи інституційну пам'ять."
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "Інженерні сигнали важливіші за кваліфікаційні посвідчення",
+      "jobsDescription": "Для нас важливіше перевірений інженерний результат, ясність мислення та системне судження, ніж походження чи інфляція посад.",
+      "jobsButton": "Надіслати профіль GitHub",
+      "companyInfoTitle": "Організаційна відповідність",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "Реєстрація юридичної особи",
+        "founded": "Дата реєстрації",
+        "headquarters": "Глобальний центр операцій",
+        "jurisdiction": "Юрисдикція"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "Потрібна глибша технічна оцінка?",
+      "ctaDescription": "Зверніться до наших інженерних спеціалістів для оцінки корпоративної інтеграції або перегляньте документацію щодо розгортання.",
+      "ctaButton": "Встановити зв’язок"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "Технічне та комерційне запитання — {brandName} Intelligence",
+      "description": "Спеціалізований канал зв’язку для комерційної ліцензії, корпоративного самостійного розміщення та розширеної технічної підтримки.",
+      "heading": "Встановити зв’язок підтримки",
+      "subheading": "Ми направимо спеціаліста технічної підтримки або архітектора для оцінки ваших конкретних вимог.",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "Прямий зв’язок із засновником",
+          "description": "Прямий канал зв’язку для основних стратегічних узгоджень та запитань на рівні керівництва."
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "Корпоративна консультація",
+          "description": "Попередні обговорення щодо екологічних стратегічних партнерств та загальної еволюції архітектури."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "Комерційне розгортання",
+          "description": "Переговори щодо ліцензування закритих джерел та деталей, що стосуються розгортання в приватних кластерних середовищах."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "Підтримка експертного рівня",
+          "description": "Цільове архітектурне керівництво та послуги з усунення несправностей для активних бізнес-інтеграцій та налагодження основних систем."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "Юридичні питання та відповідність",
+          "description": "Запити, пов'язані з визначенням меж відкритих джерел, аудитом корпоративної відповідності та умовами контрактів."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "Конфіденційність дата-центру",
+          "description": "Технічна перевірка та директиви відповідності щодо GDPR та наступних міжнародних законів про захист даних."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "Розкриття безпеки",
+          "description": "Безпечно надсилайте технічні звіти про відтворення щодо потенційних вразливостей програмного забезпечення безпосередньо нашій команді інфраструктури."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "Портал подання",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "Позначення заявника",
+        "email": "Офіційна електронна адреса",
+        "company": "Пов'язана організація",
+        "category": "Сфера вимог",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "Корпоративні консультації",
+          "sales": "Ліцензування та архітектура",
+          "support": "Допомога розробникам",
+          "legal": "Юридичні та комплаєнс-питання",
+          "privacy": "Політики обробки даних",
+          "partnership": "Інтеграції екосистеми",
+          "press": "Спілкування з пресою"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "Короткий опис проблеми",
+        "message": "Детальні технічні/комерційні специфікації",
+        "submit": "Надіслати на бекенд",
+        "privacyNotice": "Надсилання цього запиту означає, що ви ознайомилися та погодилися з нашими",
+        "privacyLink": "Політикою конфіденційності",
+        "submitting": "Дані передаються...",
+        "successMessage": "Дані успішно передані. Відповідальна команда надасть детальну відповідь протягом 1-2 робочих днів."
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "Контактна інформація",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "Вусі, провінція Цзянсу, Китай",
+      "socialMedia": "Основні посилання в соцмережах"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Політика використання файлів cookie — {brandName}",
+      "description": "Як {brandName} використовує файли cookie та подібні технології відстеження на нашому сайті та в наших сервісах.",
+      "heading": "Політика використання файлів cookie",
+      "effectiveDate": "Дата набрання чинності",
+      "lastUpdated": "Останнє оновленя",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 січня 2025",
+        "updated": "1 січня 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "Ця Політика використання файлів cookie пояснює, як компанія {brandName} Co., Ltd. (\"{brandName}\", \"ми\", \"нас\" або \"наш\") використовує файли cookie та подібні технології відстеження на нашому сайті та в наших сервісах.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "Що таке файли cookie?",
+        "content": "Файли cookie — це невеликі текстові файли, які розміщуються на вашому пристрої під час відвідування вебсайту. Вони широко використовуються для підвищення ефективності роботи сайтів та надання інформації власникам сайтів."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "Як ми використовуємо файли cookie",
+        "intro": "Ми використовуємо файли cookie для того, щоб:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "Забезпечити основні функції",
+            "desc": "Надавати базовий функціонал, такий як аутентифікація користувачів та безпека"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "Запам’ятовувати налаштування",
+            "desc": "Зберігаємо вашу мову, тему та інші налаштування"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "Покращення продуктивності",
+            "desc": "Дізнаємося, як відвідувачі взаємодіють із нашими сервісами"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "Персоналізація досвіду",
+            "desc": "Надаємо релевантний контент та рекомендації"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "Вимірювання маркетингу",
+            "desc": "Відстежуємо ефективність наших маркетингових кампаній"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "Типи файлів cookie, які ми використовуємо",
       "tableHeaders": {
-        "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "cookie": "Файл cookie",
+        "provider": "Постачальник",
+        "purpose": "Призначення",
+        "duration": "Тривалість"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "Суво необхідні файли cookie",
+        "description": "Ці файли cookie необхідні для належної роботи сайту. Їх неможливо вимкнути.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "Сесія автентифікації користувача",
+            "duration": "Сесія"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "Токен автентифікації",
+            "duration": "7 днів"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "Зберігає налаштування згоди на використання cookie",
+            "duration": "1 рік"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "Функціональні cookie",
+        "description": "Ці cookie забезпечують персоналізовані функції та запам’ятовують ваші налаштування.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "Зберігає налаштування мови",
+            "duration": "1 рік"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "Зберігає налаштування теми",
+            "duration": "1 рік"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "Куки для аналітики",
+        "description": "Ці куки допомагають нам розуміти, як відвідувачі взаємодіють із нашим сайтом.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "Розрізняє унікальних користувачів",
+            "duration": "2 роки"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "Аналітика продукту",
+            "duration": "1 рік"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "Маркетингові куки",
+        "description": "Ці куки використовуються для реклами та відстеження ефективності рекламних кампаній.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Відстежує відвідування для реклами Facebook",
+            "duration": "3 місяці"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "Відстеження конверсій",
+            "duration": "3 місяці"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "Керування налаштуваннями файлів cookie",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "Банер згоди на файли cookie",
+        "intro": "Під час першого відвідування нашого вебсайту ви побачите банер згоди на файли cookie, який дозволить вам:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "Прийняти все",
+            "desc": "Увімкнути всі категорії файлів cookie"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "Відхилити все",
+            "desc": "Вимкнути всі необов’язкові файли cookie (необхідні файли cookie залишаться)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "Налаштувати",
+            "desc": "Обрати конкретні категорії файлів cookie для увімкнення"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "Ви можете змінити свої налаштування в будь-який час, натиснувши «Налаштування файлів cookie» у нижній частині сторінки."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "Налаштування браузера",
+        "intro": "Більшість веббраузерів дозволяють керувати файлами cookie через свої налаштування:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "Налаштування > Приватність і безпека > Файли cookie"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "Налаштування > Приватність і безпека > Файли cookie"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "Параметри > Приватність > Файли cookie"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "Налаштування > Приватність, пошук та служби > Файли cookie"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "Блокування певних файлів cookie може вплинути на функціональність сайту."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "Подібні технології",
+        "intro": "Окрім файлів cookie, ми можемо використовувати:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "Локальне сховище",
+            "desc": "Для зберігання налаштувань та кешування даних локально"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "Сесійне сховище",
+            "desc": "Для тимчасових даних під час вашої сесії перегляду"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "Піксельні теги",
+            "desc": "Маленькі зображення для відстеження відкриття електронних листів та відвідувань вебсайту"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "Ми НЕ використовуємо відбитки браузера для відстеження."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "Оновлення цієї політики",
+        "content": "Ми можемо періодично оновлювати цю політику щодо файлів cookie. Ми повідомимо вас про суттєві зміни, розмістивши оновлену політику на нашому вебсайті."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "Зв’яжіться з нами",
+        "intro": "Якщо у вас є запитання щодо нашого використання файлів cookie, будь ласка, зв’яжіться з нами:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "Для отримання додаткової інформації про те, як ми збираємо та обробляємо ваші дані, будь ласка, ознайомтеся з нашою",
+        "privacyLink": "Політикою конфіденційності"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "Інженерні рекомендації та ЧЗП — {brandName}",
+      "description": "Комплексний аналіз архітектури фреймворка, базових топологій та стратегій комерційного впровадження.",
+      "heading": "Детальний огляд для керівництва",
+      "subheading": "Додаткові матеріали, оптимізовані для інтеграції системної інженерії та прийняття комерційних рішень керівництвом.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "Огляд архітектури",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "Яка є явним операційним призначенням {productName}?",
+              "a": "{productName} — це високо структурований, готовий до виробництва Next.js AI SaaS фреймворк. Він об’єднує корпоративне билінг, багатofакторну аутентифікацію та багатокористувацьку ізоляцію в керовану базову платформу, дозволяючи командам зосередитися на реалізації специфічних для продукту AI-функцій."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "Як організована ліцензія репозиторію?",
+              "a": "Базова інфраструктура суворо дотримується умов OSS AGPLv3, гарантуючи прозорість та безкоштовне використання. Для організацій, яким потрібне пропрієтарне затемнення та підвищені гарантії переписування, доступні окремі комерційні контракти з закритим вихідним кодом."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "Яка швидкість початкової комерційної оцінки?",
+              "a": "Надзвичайно висока. Завдяки нашому спеціалізованому Node CLI-інструментарію та точній технічній специфікації, молодший інженер може за кілька хвилин запустити автономну локальну MVP-версію."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "Комерційні операції",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "Який запас для комерційного масштабування?",
+              "a": "Архітектура побудована на мікрокомпонентах, тому пропускна здатність безшовно масштабується від безкоштовних тарифів з нульовим навантаженням до корпоративних рівнів, що обслуговують мільйони запитів на місяць, з повною конфігурацією через обмеження в панелі керування."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "Як волатильність підписки впливає на стандартний облік?",
+              "a": "Ми використовуємо точне логування ресурсів та пропускної здатності API з точністю до секунди. Зміни обмежень миттєво узгоджуються з обліковим шаром — або повертаються пропорційні різниці, або видаються автоматичні кредити. Жодного періоду блокування тарифу немає."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "Яка обробна інфраструктура ізолює платіжні вектори?",
+              "a": "Глобальний касовий трафік повністю передається інтерфейсам серверів Stripe, що гарантує суворе дотримання телеметрії PCI-DSS та цілісності обробки. Корпоративні розгортання можуть інтегрувати приватні фінансові аудиторські конвеєри, що регулюються індивідуальними зобов’язаннями SLA."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "Шар системної інженерії",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "Які фундаментальні абстракції інтелекту підтримуються нативно?",
+              "a": "Основна логіка взаємодії передбачає нативну інтероперабельність зі стандартними специфікаціями OpenAI, Anthropic та Gemini. Це забезпечує величезну гнучкість для ефективного гарячого заміни кінцевих точок міркувань через мапування змінних без деградації вихідної комерційної логіки."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "Як вирішується ризик затемнення бази даних?",
+              "a": "Реалізація за замовчуванням автоматично розгортає політики Postgres Row-Level Security (RLS), тісно інтегровані з нашими примітивами безсерверного Tenant Resolution Routing. Це гарантує жорсткі розділення, які активно запобігають критичному забрудненню даних на рівні додатка та перекриттю виконання."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "Чи існують архітектурні обмеження для самостійного розгортання?",
+              "a": "Зовсім ні. Топологія повністю роз'єднана. Якщо середовище виконує незалежні Node.js-рuntimes поряд із стабільними PostgreSQL-кластерами, повна функціональність зберігається автоматично."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "Системна цілісність",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "Які протоколи визначають механічний захист периметра?",
+              "a": "Механізми виконують обов'язкове TLS-шифрування під час передачі, детерміновані алгоритми хешування для мапування секретів та універсальне записування подій мутації, які суворо вносяться до внутрішніх реєстрів часових рядів."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "Чи дотримується топологія основних міжнародних законів про конфіденційність?",
+              "a": "Так, безумовно. Бізнес-модулі надають готові алгоритмічні реалізації для станів відкликання згоди, логіки жорсткого видалення та глибоких запитів експорту, які оптимально відповідають GDPR та локальним регуляторним рамкам."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "Що виконується під час аномальної катастрофічної події?",
+              "a": "Автоматизовані системи миттєво попереджають основні інженерні команди, які блокують контури та здійснюють швидку сортування. Згідно з розширеною довідкою з розв'язання, повністю прозорі звіти після інцидентів публікуються протягом 72 годин."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "Директиви технічної підтримки",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "Як вирішується усунення операційних вузьких місць?",
+              "a": "Початкові вектори сортування спрямовані на ретельно підтримувану та перевірену документацію та перевірені взаємодії спільноти. Отримання стандартної або корпоративної ліцензії відкриває доступ до приватних черг ескалації, які вирішуються через прямі внутрішні інженерні вузли."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "Чи надаєте ви фізичні або спеціалізовані операції інтеграції середовища?",
+              "a": "Це входить до нашого індивідуального преміум-рівня виконання для великих корпорацій. Наші найкращі архітектори виїжджають на місце для аудиту коду щодо застарілої архітектури, керування складними хмарними міграціями та валідації високо ізольованих мережевих сегментів."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "Потрібна негайна технічна синхронізація?",
+      "ctaDescription": "Чи то валідація конкретної схеми поведінки API, чи то виконання довгострокових угод про інтеграцію — звертайтеся напряму до інженерної ієрархії.",
+      "ctaButton": "Отримати інструкції з інтеграції",
+      "ctaEmail": "Надіслати пряме повідомлення"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Протокол захисту конфіденційності та інформації — {brandName}",
+      "description": "Детальне документування того, як механізми інфраструктури регулюють автономію користувача та ізоляцію машинних даних.",
+      "heading": "Директиви захисту інформації",
+      "effectiveDate": "Дата набрання чинності",
+      "lastUpdated": "Останнє оновлення",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 січня 2025",
+        "updated": "1 січня 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "Компанія {brandName} (\"Компанія\", \"ми\", \"нас\" або \"наш\") зобов'язується захищати вашу конфіденційність. Ця Політика конфіденційності пояснює, як ми збираємо, використовуємо, розголошуємо та захищаємо вашу інформацію під час використання нашого вебсайту, програм та послуг (разом — \"Послуги\").",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. Інформація, яку ми збираємо",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 Інформація, яку ви надаєте",
+          "intro": "Ми збираємо інформацію, яку ви безпосередньо надаєте нам, включаючи:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "Інформація облікового запису",
+              "desc": "Ім'я, електронна адреса, пароль та дані організації під час створення облікового запису."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "Інформація профілю",
+              "desc": "Фото профілю, посада, назва компанії та інша необов’язкова інформація."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "Інформація про оплату",
+              "desc": "Адреса для рахунків та дані способу оплати (обробляються безпечно через Stripe)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "Комунікації",
+              "desc": "Повідомлення, відгуки та інші комунікації, які ви надсилаєте нам."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "Контент",
+              "desc": "Будь-який контент, який ви створюєте, завантажуєте або зберігаєте, використовуючи наші сервіси."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 Інформація, що збирається автоматично",
+          "intro": "Коли ви користуєтеся нашими сервісами, ми автоматично збираємо певну інформацію:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "Інформація про пристрій",
+              "desc": "Тип пристрою, операційна система, тип браузера та унікальні ідентифікатори пристрою."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "Інформація про використання",
+              "desc": "Переглянуті сторінки, використані функції, виконані дії та час, проведений у сервісах."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "Журнал даних",
+              "desc": "IP-адреса, час доступу, посилання на сторінки та журнали системної активності."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "Інформація про місцезнаходження",
+              "desc": "Загальне місцезнаходження на основі IP-адреси (ми не збираємо точну геолокацію)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. Як ми використовуємо вашу інформацію",
+        "intro": "Ми використовуємо зібрану інформацію для того, щоб:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "Надавати послуги",
+            "desc": "Забезпечувати функціонування, підтримку та покращення наших Послуг."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "Обробляти транзакції",
+            "desc": "Обробляти платежі, виставляти рахунки та виконувати пов'язані операції."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "Комунікувати",
+            "desc": "Надсилати службові оголошення, оновлення та маркетингові повідомлення (за згодою)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "Персоналізувати",
+            "desc": "Налаштовувати ваш досвід та надавати релевантні рекомендації."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "Аналізувати",
+            "desc": "Вивчати патерни використання та покращувати наші Послуги."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "Захищати",
+            "desc": "Виявляти, запобігати та реагувати на шахрайство, зловживання та інциденти безпеки."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. Як ми ділимося вашою інформацією",
+        "intro": "Ми можемо передавати вашу інформацію в таких випадках:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 Постачальники послуг",
+          "intro": "Ми передаємо інформацію стороннім постачальникам, які надають послуги від нашого іменя, зокрема:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "Інфраструктура",
+              "desc": "Хмарний хостинг (Vercel, Supabase), базоданні послуги"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "Обробка платежів",
+              "desc": "Stripe для безпечної обробки платежів"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "Автентифікація",
+              "desc": "Clerk для управління ідентичністю"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "Аналітика",
+              "desc": "PostHog, Vercel Analytics для аналізу використання"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 Бізнес-передачі",
+          "content": "Якщо ми беремо участь у злитті, придбанні або продажу активів, ваша інформація може бути передана в рамках цієї угоди."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 Вимоги закону",
+          "content": "Ми можемо розголошувати інформацію, коли цього вимагає закон, юридичний процес або урядовий запит, або для захисту наших прав, приватності, безпеки чи майна."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. Ваші права та вибір",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 Доступ та переносимість",
+          "content": "Ви можете отримати доступ до своєї особистої інформації через налаштування акаунта та запросити копію своїх даних у переносному форматі."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 Виправлення",
+          "content": "Ви можете оновити інформацію свого акаунта в будь-який час через панель керування."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 Видалення",
+          "content": "Ви можете запросити видалення свого акаунта та пов'язаних даних через налаштування або зв'язавшись із нами."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 Маркетингові комунікації",
+          "content": "Ви можете відмовитися від маркетингових електронних листів, натиснувши «відписатися» в будь-якому маркетинговому листі або оновивши свої налаштування."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. Безпека даних",
+        "intro": "Ми впроваджуємо відповідні технічні та організаційні заходи для захисту вашої інформації, включаючи:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "Шифрування даних під час передачі (TLS) та зберігання",
+          "1": "Регулярні оцінки безпеки та тестування на проникнення",
+          "2": "Контроль доступу та вимоги аутентифікації",
+          "3": "Моніторинг та ведення журналів системної активності"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. Права на конфіденційність у Каліфорнії (CCPA)",
+        "intro": "Якщо ви є резидентом Каліфорнії, ви маєте певні права щодо своєї особистої інформації:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "Право на знання",
+            "desc": "Запитати розкриття інформації, яку ми збираємо, використовуємо та передаємо."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "Право на видалення",
+            "desc": "Запитати видалення ваших персональних даних."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "Право на відмову",
+            "desc": "Відмовитися від продажу персональних даних (ми не продаємо ваші дані)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "Право на недискримінацію",
+            "desc": "Ми не будемо дискримінувати вас за здійснення ваших прав."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. Права на конфіденційність в Європі (GDPR)",
+        "intro": "Якщо ви перебуваєте в ЕЕЗ, Великобританії чи Швейцарії, ви маєте додаткові права згідно з GDPR:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "Правові підстави",
+            "desc": "Ми обробляємо ваші дані на основі виконання договору, законних інтересів або згоди."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "Права",
+            "desc": "Доступ, виправлення, видалення, переносимість, обмеження та заперечення."
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "Ви можете зв’язатися з нашим офіцером з захисту даних за адресою dpo@nebutra.com."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. Зв'яжіться з нами",
+        "intro": "Якщо у вас виникли запитання щодо цієї Політики конфіденційності, будь ласка, зв'яжіться з нами:",
         "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "Протоколи аномалій транзакцій — {brandName}",
+      "description": "Детальне визначення параметрів повернення коштів для різних моделей співпраці.",
+      "heading": "Механізм вирішення спорів",
+      "effectiveDate": "Дата вступу в силу",
+      "lastUpdated": "Дата останнього оновлення",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 січня 2025",
+        "updated": "1 січня 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "У {brandName} ми хочемо, щоб ви були повністю задоволені нашими послугами. Ця Політика повернення коштів описує обставини, за яких можливе повернення коштів, та процес його оформлення.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "План підписки",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "Місячна підписка",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "Скасування",
+              "desc": "Ви можете скасувати місячну підписку в будь-який час"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "Пропорційне повернення",
+              "desc": "Ми не надаємо пропорційні повернення коштів за частину місяця"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "Доступ",
+              "desc": "Ви зберігаєте доступ до платних функцій до кінця вашого розрахункового періоду"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "Автоматичне оновлення",
+              "desc": "Підписки автоматично оновлюються, якщо їх не скасовано"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "Річні підписки",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "14-денна гарантія повернення коштів",
+              "desc": "Нові річні підписники можуть подати запит на повне повернення коштів протягом 14 днів після початкової покупки"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "Після 14 днів",
+              "desc": "Повернення коштів, як правило, не доступне після закінчення 14-денного періоду"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "Скасування",
+              "desc": "Ви можете скасувати підписку в будь-який час, але вона залишатиметься активною до кінця річного терміну"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "Без пропорційного повернення",
+              "desc": "Ми не надаємо часткове повернення коштів за невикористані місяці"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "Сценарії, що підлягають поверненню коштів",
+        "intro": "Ми розглянемо запити на повернення коштів у наступних випадках:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. Проблеми зі службою",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "Серйозні перебої в роботі, які заважають користуватися основними функціями",
+            "1": "Технічні проблеми, які ми не можемо вирішити в розумні терміни",
+            "2": "Функції, які суттєво відрізняються від заявлених"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. Помилки в биллінгу",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "Подвійні списання",
+            "1": "Неправильні суми в рахунку",
+            "2": "Неавторизовані списання (після перевірки)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. Виняткові обставини",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "Документально підтверджені медичні надзвичайні ситуації",
+            "1": "Стихійні лиха, що вплинули на ваш бізнес",
+            "2": "Інші обставини, які розглядаються індивідуально"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "Позиції, що не підлягають поверненню",
+        "intro": "Наступні позиції, як правило, не підлягають поверненню коштів:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "Плата за використання",
+            "desc": "Виклики API, споживання токенів ШІ або використаний обсяг сховища"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "Додатки та опції",
+            "desc": "Разові покупки або додаткові послуги"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "Корпоративні контракти",
+            "desc": "Індивідуальні угоди мають власні умови"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "Добровільне скасування",
+            "desc": "Після закінчення періоду, під час якого можна отримати повернення коштів"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "Порушення умов",
+            "desc": "Облікові записи, закриті через порушення політики"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "Як подати запит на повернення коштів",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "Крок 1: Зв’яжіться з підтримкою",
+          "intro": "Надішліть нам електронного листа на billing@nebutra.com із зазначенням:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "Електронну адресу вашого облікового запису",
+            "1": "Тарифний план та період оплати",
+            "2": "Причину запиту на повернення коштів",
+            "3": "Відповідну документацію"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "Крок 2: Процес розгляду",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "Ми розглянемо ваш запит протягом 5 робочих днів",
+            "1": "Ми можемо запросити додаткову інформацію",
+            "2": "Ви отримаєте письмове рішення електронною поштою"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "Крок 3: Обробка повернення коштів",
+          "intro": "Якщо затверджено:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "Повернення коштів здійснюється на спосіб оплати, який використовувався",
+            "1": "Повернення на банківські картки зазвичай відображається протягом 5–10 робочих днів",
+            "2": "Час обробки банком може відрізнятися"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "Зміни тарифного плану",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "Підвищення тарифу",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "Підвищення тарифу набуває чинності негайно",
+            "1": "Вам нараховується пропорційна різниця за залишок поточного розрахункового періоду",
+            "2": "Повернення коштів за попередній тариф не надається"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "Зниження тарифу",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "Зниження тарифу набуває чинності з наступного розрахункового періоду",
+            "1": "Ви зберігаєте доступ до поточних функцій до цього часу",
+            "2": "Часткові повернення коштів за поточний період не надаються"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "Безкоштовний пробний період",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "Для безкоштовних пробних періодів не потрібні дані для оплати",
+          "1": "Під час пробного періоду жодних платежів не стягується",
+          "2": "Вас буде повідомлено перед початком будь-яких платежів"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "Вирішення спорів",
+        "intro": "Якщо ви не згодні з нашим рішенням щодо повернення коштів:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "Відповідайте на електронний лист із рішенням, надавши додаткову інформацію",
+          "1": "Запитайте про ескалацію до керівника",
+          "2": "Звертайтеся до нас за адресою legal@nebutra.com для подальшого розгляду"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "Зв’яжіться з нами",
+        "intro": "Щодо запитів на повернення коштів або питань щодо цієї політики:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "Білінг",
+        "supportLabel": "Підтримка",
+        "legalLabel": "Юридичний відділ",
+        "responseNote": "Ми прагнемо відповідати на всі запити щодо повернення коштів протягом 5 робочих днів.",
+        "termsNote": "Ця політика є частиною наших",
+        "termsLink": "Умов використання",
+        "termsAgreement": "Використовуючи {brandName}, ви погоджуєтесь із цими умовами повернення коштів."
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Умови використання — {brandName}",
+      "description": "Умови використання, що регулюють доступ до {brandName} та використання його вебсайту, додатків, API та сервісів.",
+      "heading": "Умови використання",
+      "effectiveDate": "Дата набрання чинності",
+      "lastUpdated": "Останнє оновлення",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 січня 2025",
+        "updated": "1 січня 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "Ласкаво просимо до {brandName}! Ці Умови використання (\"Умови\") регулюють ваш доступ до {brandName} та використання його вебсайту, додатків, API та сервісів (разом — \"Сервіси\"), які надає {brandName} Co., Ltd. (\"{brandName}\", \"Компанія\", \"ми\", \"нас\" або \"наш\").",
+      "intro2": "Отримуючи доступ до наших Сервісів або використовуючи їх, ви погоджуєтесь дотримуватися цих Умов та нашої",
+      "intro2PrivacyLink": "Політики конфіденційності",
+      "intro2End": ". Якщо ви не погоджуєтесь із цими Умовами, будь ласка, не використовуйте наші Сервіси.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. Погодження з Умовами",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 Кваліфікація",
+          "intro": "Щоб користуватися нашими послугами, ви повинні:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "Бути не молодше 18 років або досягти віку повної цивільної дієздатності у вашій юрисдикції",
+            "1": "Мати повноваження укладати ці Умови від свого імені або імені вашої організації",
+            "2": "Не бути забороненим користуватися нашими послугами згідно з чинним законодавством"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 Організаційні акаунти",
+          "content": "Якщо ви користуєтеся нашими послугами від імені організації, ви підтверджуєте, що маєте повноваження зобов’язувати цю організацію дотримуватися цих Умов."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. Опис послуг",
+        "intro": "{brandName} надає SaaS-платформу, яка включає:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "Функції на основі ШІ та генерацію контенту",
+          "1": "Інструменти управління контентом та спільнотами",
+          "2": "Системи рекомендацій",
+          "3": "Інтеграції для електронної комерції",
+          "4": "Можливості Web3",
+          "5": "Аналітику та звіти"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. Реєстрація акаунту",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 Створення облікового запису",
+          "intro": "Для доступу до певних функцій вам потрібно створити обліковий запис. Ви погоджуєтесь:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "Надавати точну та повну інформацію",
+            "1": "Зберігати безпеку облікових даних свого запису",
+            "2": "Негайно оновлювати інформацію, якщо вона змінилася",
+            "3": "Брати на себе відповідальність за всі дії в межах свого облікового запису"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. Підписка та розрахунки",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 Ціноутворення",
+          "content": "Наші послуги надаються за різними планами підписки, як описано на нашій сторінці з цінами. Ціни можуть змінюватися за попередженням за 30 днів."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 Оплата",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "Підписка оплачується заздалегідь щомісяця або щорічно",
+            "1": "Усі платежі не підлягають поверненню, якщо інше не зазначено в нашій",
+            "2": "Ви надаєте нам дозвіл на списання коштів з вашого платіжного інструменту за відповідні збори",
+            "3": "Ми використовуємо Stripe для безпечної обробки платежів",
+            "1RefundLink": "Політика повернення коштів"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. Дозволене використання",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 Заборонена діяльність",
+          "intro": "Ви зобов’язуєтеся НЕ робити наступного:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "Порушувати будь-які чинні закони, нормативні акти або права третіх осіб",
+            "1": "Використовувати Послуги для передачі шкідливого ПЗ, спаму або шкідливого контенту",
+            "2": "Намагатися отримати несанкціонований доступ до наших систем",
+            "3": "Перешкоджати або порушувати цілісність або продуктивність наших Послуг",
+            "4": "Використовувати автоматизовані інструменти для збору, копіювання або вилучення даних без дозволу",
+            "5": "Робити реверс-інжиніринг, декомпілювати або розбирати наші Послуги",
+            "6": "Використовувати наші функції ШІ для генерації незаконного, шкідливого або оманливого контенту"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. Інтелектуальна власність",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 Наша інтелектуальна власність",
+          "content": "{brandName} та її ліцензори володіють усіма правами, титулами та інтересами щодо Послуг, включаючи все програмне забезпечення, дизайн, торгові марки та контент, створений нами."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 Ваш контент",
+          "content": "Ви зберігаєте право власності на контент, який ви створюєте або завантажуєте (\"Ваш контент\"). Використовуючи наші Послуги, ви надаєте нам світову, невиключну, безоплатну ліцензія на використання, зберігання, обробку та відображення Вашого контенту виключно для надання вам Послуг."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. Відмова від гарантій",
+        "content": "ПОСЛУГИ НАДАЮТЬСЯ \"ЯК Є\" ТА \"ЯК ДОСТУПНІ\" БЕЗ ЖОДНИХ ГАРАНТІЙ, ЯВНИХ АБО ПІДРАЗУМІНИХ, ВКЛЮЧАЮЧИ, АЛЕ НЕ ОБМЕЖУЮЧИСЬ, ПІДРАЗУМІНИМИ ГАРАНТІЯМИ ТОВАРНОЇ ПРИДАТНОСТІ, ВІДПОВІДНОСТІ ВИМОГАМ, ТИТУЛУ ТА НЕПОРУШЕННЯ ПРАВ."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. Обмеження відповідальності",
+        "para1": "У МАКСИМАЛЬНОЙ МЕРІ, ДОЗВОЛЕНІЙ ЗАКОНОМ, NEBUTRA НЕ НЕСЕ ВІДПОВІДАЛЬНОСТІ ЗА НЕПРЯМІ, ВІДПУДКОВІ, ОСОБЛИВІ, НАСЛІДКОВІ АБО ПРИКЛАДНІ ЗБИТКИ, А ТАКОЖ ЗА ВТРАТУ ПРИБУТКІВ, ДАНИХ, МОЖЛИВОСТЕЙ КОРИСТУВАННЯ АБО ДОБРОЇ ЗВІТНОСТІ.",
+        "para2": "У ЖОДНОМУ ВРАЖКУ НАША ЗАГАЛЬНА ВІДПОВІДАЛЬНІСТЬ НЕ МОЖЕ ПЕРЕВИЩУВАТИ БІЛЬШУ З СУМ: (A) КОШТОРІС, ЯКУ ВИ СПЛАТИЛИ НАМ ЗА ОСТАННІ 12 МІСЯЦІВ ПЕРЕД ПОДАЧЕЮ ПОЗОВУ, АБО (B) 100 ДОЛ. США."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. Розірвання договору",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 З вашого боку",
+          "content": "Ви можете закрити свій обліковий запис у будь-який час через налаштування акаунта. Після закриття ви втратите доступ до сервісів."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 З нашого боку",
+          "intro": "Ми можемо призупинити або закрити ваш обліковий запис, якщо ви:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "Порушуєте ці Умови",
+            "1": "Дієте шахрайським чи незаконним шляхом",
+            "2": "Не сплачуєте належні платежі",
+            "3": "Створюєте для нас ризики або правові загрози"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. Вирішення спорів",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 Неформальне вирішення",
+          "content": "Перш ніж ініціювати офіційну процедуру, ви зобов’язуєтеся зв’язатися з нами за адресою legal@nebutra.com, щоб спробувати вирішити спір неформально."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 Примінне право",
+          "content": "Ці Умови регулюються законодавством штату Делавер, без урахування принципів колізії законів."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. Зв'язатися з нами",
+        "intro": "Якщо у вас виникли запитання щодо цих Умов, будь ласка, зв'яжіться з нами:",
         "company": "{brandName} Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "Електронна пошта",
+        "supportLabel": "Підтримка"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "Використовуючи {brandName}, ви підтверджуєте, що ознайомилися, зрозуміли та погоджуєтеся дотримуватися цих Умов надання послуг."
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | Стартап Agent OS",
+    "description": "Стартап Agent OS для засновників, які виходять на глобальний ринок. Готовий до продакшену фундамент на Next.js із керованою архітектурою, аутентифікацією, биллінгом, агентами та i18n — створений для AI-агентів кодування та серйозних команд."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "СИСТЕМНА ТОПОЛОГІЯ",
+      "title": "Прозора архітектура, без чорних скриньок.",
+      "description": "{productName} розроблено з надмодульною структурою Turborepo, що дає вам повний контроль над усім життєвим циклом програмного забезпечення.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "Повністю типізований ORM із вбудованою підтримкою політик безпеки на рівні рядків (RLS)."
       },
       "auth": {
         "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "desc": "Шлюз аутентифікації, готовий до SOC2, з підтримкою перемикання між B2B-організаціями та RBAC."
       }
     },
     "pricing": {
-      "title": "Start free. Scale when you're ready.",
-      "description": "Independent and OPC developers ship for free. Annual commercial licenses unlock closed-source use for growing teams. Pick the tier that fits and start building today.",
-      "socialProofText": "AGPL-3.0 on fork · Independent Developer License via CLI · annual commercial tiers for teams.",
+      "title": "Почніть безкоштовно. Масштабуйте, коли будете готові.",
+      "description": "Незалежні розробники та OPC-розробники публікують безкоштовно. Щорічні комерційні ліцензії відкривають використання закритого коду для зростаючих команд. Оберіть підходящий тариф і почніть будувати вже сьогодні.",
+      "socialProofText": "AGPL-3.0 на форку · Ліцензія незалежного розробника через CLI · щорічні комерційні тарифи для команд.",
       "independent": {
-        "badge": "INDEPENDENT",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Solo builders and one-person companies (≤ 1 FTE, < $1M ARR). No copyleft when scaffolded via create-sailor.",
+        "badge": "НЕЗАЛЕЖНИЙ",
+        "price": "Безкоштовно",
+        "period": "назавжди",
+        "desc": "Соло-розробники та компанії з однією особою (≤ 1 FTE, < $1M ARR). Без copyleft при створенні через create-sailor.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited personal projects (commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more — plus thin admin + Retool/Metabase recipes (we don't ship bloated CRUD; we ship the integration patterns top SaaS use)",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Independent Developer License (no AGPL copyleft when scaffolded with the CLI)"
+        "f1": "Повний SaaS-ядро на Next.js 16",
+        "f2": "Необмежена кількість особистих проєктів (дозволено комерційне використання)",
+        "f3": "Повний SaaS-стек: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage та інше — плюс мінімалістичний адмін + рецепти для Retool/Metabase (ми не робимо надмірний CRUD; ми надаємо патерни інтеграції, які використовують топові SaaS)",
+        "f4": "Маркетингові функції: блог, лендінг, SEO, аналітика",
+        "f5": "Ліцензія незалежного розробника (без copyleft AGPL при створенні через CLI)"
       },
       "startup": {
-        "badge": "STARTUP",
+        "badge": "СТАРТУП",
         "price": "$799",
-        "period": "/ year",
-        "desc": "For teams of 2–50 people. Closed-source commercial use, annual renewal.",
-        "cta": "Get {brandName} for Startups",
-        "f1": "Closed-source use (commercial license, 2–50 FTE)",
-        "f2": "Unlimited team projects",
-        "f3": "12 months of updates included",
-        "f4": "Email support",
-        "f5": "Everything in Independent"
+        "period": "/ рік",
+        "desc": "Для команд від 2 до 50 осіб. Комерційне використання закритого коду, щорічне оновлення.",
+        "cta": "Отримати {brandName} для стартапів",
+        "f1": "Використання закритого коду (комерційна ліцензія, 2–50 штатних працівників)",
+        "f2": "Необмежена кількість командних проєктів",
+        "f3": "12 місяців оновлень включено",
+        "f4": "Підтримка електронною поштою",
+        "f5": "Все, що в Independent"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Custom",
+        "price": "Індивідуально",
         "period": "",
-        "desc": "50+ FTE, ≥ $1M ARR, or white-label / SLA needs. Custom contract with priority support.",
-        "cta": "Contact sales",
-        "f1": "Unlimited use across your organization (commercial license)",
-        "f2": "White-label rights (with written approval)",
-        "f3": "Priority support with SLA (2-hour critical, 24-hour standard)",
-        "f4": "Custom contract negotiation and roadmap input",
-        "f5": "Multi-product / multi-division licensing",
-        "f6": "Everything in Startup"
+        "desc": "50+ штатних працівників, ≥ 1 млн дол. ARR або потреби у білому лейблі / SLA. Індивідуальний контракт із пріоритетною підтримкою.",
+        "cta": "Зв’язатися з відділом продажів",
+        "f1": "Необмежене використання в організації (комерційна ліцензія)",
+        "f2": "Права на білий лейбл (за письмовою згодою)",
+        "f3": "Пріоритетна підтримка з SLA (2 години для критичних, 24 години для стандартних)",
+        "f4": "Переговори щодо індивідуального контракту та вплив на дорожню карту",
+        "f5": "Ліцензування для кількох продуктів / підрозділів",
+        "f6": "Все, що в Startup"
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "Питання щодо цін та ліцензування",
+      "description": "Питання щодо рівнів ліцензування, повернення коштів та прав комерційного використання.",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "Чи є Sailor щомісячною SaaS-підпискою?",
+        "a": "Ні. Ці ціни стосуються ліцензій на вихідний код Sailor: Independent — безкоштовна, Startup — з щорічною оплатой, а Enterprise — індивідуальна."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "Чи надаєте ви повернення коштів?",
+        "a": "Комерційні ліцензії Startup включають 14-денне вікно для повернення коштів при першій покупці. Умови Enterprise визначаються в підписаному контракті."
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "Чи можу я використовувати Sailor для роботи з клієнтами?",
+        "a": "Так. Комерційна ліцензія дозволяє вашій команді випускати закриті клієнтські або внутрішні продукти в межах ліцензованих повноважень; права на білий лейбл вимагають схвалення Enterprise."
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "Ще є питання? Зв'яжіться з командою {brandName} →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "Почати",
+      "title": "Перестаньте налаштовувати. Почніть будувати.",
+      "description": "Ініціалізуйте масштабовану SaaS-архітектуру локально за допомогою {brandName} CLI.",
+      "button": "Розгорнути архітектуру",
+      "license": "Відкритий код під ліцензією AGPL-3.0. Кредитна картка не потрібна."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "Можливості Enterprise",
+      "title": "Повністю типізована, розширювана основа.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "Вбудована безпека на рівні рядків",
+        "desc": "Кожен запит до бази даних суворо обмежений поточним контекстом орендаря.",
+        "cta": "Дізнатися про філософію бази даних"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "Універсальний AI-шлюз",
+        "desc": "Безшовно маршрутизуйте запити до OpenAI, Anthropic або відкритих моделей.",
+        "cta": "Дослідити обробник AI SDK"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "Детальний контроль доступу",
+        "desc": "Визначайте ролі адміністратора, учасника та глядача з вбудованою структурою політик.",
+        "cta": "Переглянути документацію RBAC"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "Інфраструктура розрахунків від кількох постачальників",
+        "desc": "Вимірюване використання, вебхуки підписок та самостійні портали для клієнтів.",
+        "cta": "Переглянути архітектуру розрахунків"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "Інтерактивна демонстрація",
+      "title": "Відчуйте швидкість у реальному часі.",
+      "description": "Ознайомтеся з інтерфейсом командного рядка, тунелюванням вебхуків Stripe та локальним налаштуванням багатокористувацької бази даних.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "Телеметрія в реальному часі",
+        "desc": "Передавайте дані використання з виробничого середовища прямо в термінал."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "Події билінгу",
+        "desc": "Спостерігайте за виконанням вебхуків Stripe через локальний тунель."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "Ініціалізація робочої області",
+        "desc": "Миттєво створюйте ізольовані B2B схеми PostgreSQL."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "Швидкість",
+      "title": "Від нуля до продакшену за рекордний час.",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "title": "1. Клонувати",
+        "desc": "Миттєво клонуйте монорепо {brandName} і запустіть pnpm install."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. Налаштувати",
+        "desc": "Налаштуйте Prisma, Clerk та Stripe через інтерактивний CLI за кілька хвилин."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. Розробляти",
+        "desc": "Зосередьтеся на логіці продукту та UI, поки базова платформа вже підключена."
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. Деплой",
+        "desc": "Відправте на Vercel та AWS для миттєвого глобального розгортання."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "хв",
+        "subtitle": "ЧАС ДО ВИПУСКУ",
+        "comparison": "Заощадьте місяці роботи з платформою.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "Старт",
+          "wire": "Ядро",
+          "ship": "Розгортання",
+          "scale": "Масштабування",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "Запустіть таймер"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "Система шаблонів",
+        "message": "Одна конфігурація. Усі функції. Оберіть шаблон і запускайте.",
+        "detail": "Налаштуйте один раз, згенеруйте все — биллінг, аутентифікацію, ШІ, i18n — з єдиної конфігурації шаблону.",
+        "readyStatus": "Система шаблонів готова"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "Можливості платформи",
+      "headlinePrefix": "Все, що потрібно, щоб ",
+      "headlineHighlight": "запускати впевнено.",
+      "description": "{brandName} — це повнофункціональна SaaS-платформа: ШІ, биллінг, багатокористувацькість, спостережність і безпека вбудовані з першого дня. Перестаньте перебудовувати шар платформи."
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
-      "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "exploreFeature": "Дослідити функцію",
+      "ai_category": "ШІ та інтелект",
+      "ai_f1_title": "Багатомодельні завершення чату",
+      "ai_f1_desc": "Маршрутизація запитів до Anthropic, OpenAI, Google або ваших власних донавчених моделей. Підтримка потокової передачі, обробки зображень та виклику функцій з коробки.",
+      "ai_f2_title": "Семантичні вбудовування",
+      "ai_f2_desc": "Генерація та зберігання векторних вбудовувань за допомогою pgvector. Потужна семантична пошук, RAG-конвеєри та системи рекомендацій.",
+      "ai_f3_title": "Метри використання ШІ",
+      "ai_f3_desc": "Квоти на план з відстеженням використання — облік токенів ШІ, викликів API та місця зберігання на основі реального часу через ClickHouse.",
+      "multi_category": "Платформа для багатьох орендарів",
+      "multi_f1_title": "Ізоляція на рівні організації",
+      "multi_f1_desc": "Безпека на рівні рядків у Postgres гарантує, що орендарі ніколи не отримають доступ до даних інших — це забезпечується на рівні бази даних, а не лише додатка.",
+      "multi_f2_title": "Автентифікація з кількома провайдерами (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth з кількома провайдерами (Google, GitHub тощо) плюс електронна пошта/пароль та магічне посилання — переключайтеся між Clerk, Better Auth, NextAuth або Supabase Auth через один змінну середовища.",
+      "multi_f3_title": "Автоматичне налаштування орендаря",
+      "multi_f3_desc": "Коли нова організація реєструється через Clerk, ми автоматично генеруємо її перший ключ API та надсилаємо брендований лист привітання — без жодних ручних дій.",
+      "dx_category": "Досвід розробника",
+      "dx_f1_title": "Хешовані ключі API",
+      "dx_f1_desc": "Хешовані ключі SHA-256 з відображенням префікса (nbtr_live_…). Показуються у відкритому вигляді лише один раз під час створення — безпека без зайвих перешкод.",
+      "dx_f2_title": "Посередник ідемпотентності",
+      "dx_f2_desc": "Передайте заголовок Idempotency-Key, і будь-який POST-запит стане безпечним для повторення. Підтримується Redis, кеш на 24 години, відповідність чернетці IETF.",
+      "dx_f3_title": "Мультипротокольний API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI для публічних API, oRPC для типобезпечних викликів з фронтенду, tRPC для сумісності зі стеком T3. Усі протоколи використовують спільні контракти Zod та стек посередників. Увімкніть потрібний протокол через налаштування шаблону.",
+      "billing_category": "Білінг та монетизація",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar та China Pay",
+      "billing_f1_desc": "Оберіть платіжного провайдера: Stripe для глобального бізнесу, LemonSqueezy для незалежних розробників, Polar для OSS або Alipay/WeChat Pay для ринку Китаю. Однокліковий чекаут та самостійний білінговий портал.",
+      "billing_f2_title": "Виконання квот на основі використання",
+      "billing_f2_desc": "Лічильники Redis у реальному часі відстежують виклики API та використання токенів для кожного орендаря. Запити блокуються на шлюзі, коли досягаються ліміти.",
+      "billing_f3_title": "Синхронізація життєвого циклу вебхуків",
+      "billing_f3_desc": "Події підписки Stripe автоматично оновлюють плани організацій у вашій базі даних через Inngest — без cron-джобів та опитувань.",
+      "rel_category": "Надійність",
+      "rel_f1_title": "Автоматичний вимикач + повтор",
+      "rel_f1_desc": "Шлюз та сервіс ШІ використовують автоматичний вимикач CLOSED/OPEN/HALF_OPEN з експоненційним відкатом та джиттером — без каскадних збоїв.",
+      "rel_f2_title": "Черга мертвих листів",
+      "rel_f2_desc": "Обробники подій, які вичерпали 3 спроби повторення, потрапляють у DLQ. Відтворіть їх окремо через адміністративний API без перезатягування.",
+      "rel_f3_title": "Сповіщення про швидкість спалювання SLO",
+      "rel_f3_desc": "Багатодіапазонні сповіщення у стилі Google SRE спрацьовують при швидкостях спалювання 14.4×, 6× та 3× до того, як вичерпається ваш бюджет помилок.",
+      "sec_category": "Безпека",
+      "sec_f1_title": "Заголовки CSP на основі nonce",
+      "sec_f1_desc": "Політика безпеки контенту strict-dynamic з nonce для кожного запиту, що генеруються в проміжному програмному забезпеченні Clerk — без unsafe-inline.",
+      "sec_f2_title": "WAF ModSecurity",
+      "sec_f2_desc": "Набір основних правил OWASP у режимі DetectionOnly на кожному вхідному потоці. Обмеження частоти на рівні 30 запитів на секунду з толерантністю до сплесків через ануotaції nginx.",
+      "sec_f3_title": "SBOM + походження SLSA",
+      "sec_f3_desc": "Кожен реліз генерує CycloneDX перелік програмного забезпечення та атестацію походження SLSA, які завантажуються до GitHub Release.",
+      "obs_category": "Спостережуваність",
+      "obs_f1_title": "Трасування OpenTelemetry",
+      "obs_f1_desc": "Розподілені траси проходять від Next.js → Hono → мікросервіси Python через OTLP. Експортуються до Jaeger (dev) та Grafana Tempo (prod).",
+      "obs_f2_title": "Панелі Grafana",
+      "obs_f2_desc": "Багатопанельний огляд платформи: доступність SLO, залишок бюджету помилок, насичення HPA, перезавантаження подів та дроселювання CPU.",
+      "obs_f3_title": "Відстеження помилок Sentry",
+      "obs_f3_desc": "Помилки на сервері та клієнті фіксуються з контекстом орендаря, ID запиту та ID траси для кореляції між системами.",
+      "data_category": "Дані та аналітика",
+      "data_f1_title": "Склад OLAP ClickHouse",
+      "data_f1_desc": "Події надходять у ClickHouse для швидких аналітичних запитів. dbt перетворює сирі події на метрики росту рівня gold, які відображаються на панелі керування.",
+      "data_f2_title": "Аналітика воронки",
+      "data_f2_desc": "Відстежуйте реєстрації → активації → конверсії з атрибуцією на рівні когорт. Дохід на активного користувача розраховується з рівня gold.",
+      "data_f3_title": "Kafka / інгест подій",
+      "data_f3_desc": "Інгест подій високої пропускної здатності через Inngest у ClickHouse bronze з дедуплікацією в пам’яті та валідацією схеми на межі шлюзу.",
+      "infra_category": "Інфраструктура",
+      "infra_f1_title": "GitOps з ArgoCD",
+      "infra_f1_desc": "Зміни в основній гілці автоматично узгоджуються з кластером. Самовідновлення скасовує ручні зміни через kubectl. Вікна синхронізації забезпечують безпечні години розгортання.",
+      "infra_f2_title": "Пул підключень PgBouncer",
+      "infra_f2_desc": "PgBouncer у режимі транзакцій перед Supabase обробляє 1000 підключень додатка на 20 підключень Postgres. HA з 2 репліками.",
+      "infra_f3_title": "Горизонтальне + вертикальне автоскейлінг",
+      "infra_f3_desc": "HPA масштабує за CPU/пам’яттю. VPA працює в режимі Off, надаючи рекомендації щодо розміру. Кастомні метрики KEDA заплановані для v2."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 У будівництві",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "Зараз ми створюємо неймовірний досвід для цієї секції, орієнтований на технічних ентузіастів. Він буде запущений разом із наступним великим оновленням архітектурного конвеєра.",
+      "opc": "Детальний огляд платформи вже в розробці. Слідкуйте за щоденником змін та дорожньою картою для нових випусків.",
+      "roadmap": "Від інфраструктурної основи до масштабу підприємства — етапи продукту, версійні віхи та фінансове бачення."
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "Повернутися до Hub"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "З БЛОГУ",
+    "title": "Інженерні інсайти",
+    "subtitle": "Глибокий аналіз архітектури SaaS, інфраструктури ШІ та інженерії продукції.",
+    "readMore": "Читати далі"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "МАСШТАБОВАНІ СЦЕНАРІЇ",
+    "title": "Одна основа. Безмежні можливості.",
+    "description": "{productName} забезпечує наступне покоління SaaS-продуктів на глобальних ринках.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "Агентні операції",
+      "ip": "Особиста матриця IP",
+      "multimodal": "Мультимодальний ШІ SaaS",
+      "enterprise": "Сучасне підприємство (Китай)",
+      "export": "Глобальний експорт ПЗ",
+      "design": "Рушій системи дизайну",
+      "edam": "Корпоративні цифрові активи"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "Центр операцій на базі ШІ",
+        "desc": "Запускайте робочі процеси агентів, внутрішні інструменти та поверхні інтеграції на єдиній платформі з управлінням. Розширення на основі реєстру, портали операторів та повторювані шаблони виконання залишаються узгодженими під час масштабування системи.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "Реєстр інструментів та поверхня інтеграції",
+          "f2": "Портал оператора та внутрішня консоль"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "Особистий ріст IP та портфельна матриця",
+        "desc": "Створіть світовий рівень присутності засновника за допомогою MDX-блогу, портфоліо та сторінок профілю з високою конверсією. Вбудований розсилка, аналітика та SEO забезпечують зростання вашого особистого бренду.",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "MDX-блог + рушій розсилки",
+          "f2": "Оптимізовано для SEO та соціальних графів"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "Інноваційний мультимодальний ШІ SaaS",
+        "desc": "Випускайте SaaS-продукти з оркестрацією Multi-Agent, чат-ботами, Text-to-Image, Image-to-Text та Text-to-Video з провідним UX потокового інтерфейсу, інтелектуальним маршрутизацією моделей та вимірюванням використання.",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
-          "f2": "Model Router + Usage Metering"
+          "f1": "Потоковий інтерфейс Multi-Agent",
+          "f2": "Маршрутизатор моделей + вимірювання використання"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "Сучасний корпоративний вебсайт (Китай)",
+        "desc": "Адаптовано для бізнес-сценаріїв Китаю — надшвидкий внутрішній CDN, інтеграція з екосистемою WeChat, мобільно-орієнтований адаптивний дизайн та локалізована відповідність вбудовані.",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "Локальний CDN + відповідність",
+          "f2": "Готовий до екосистеми WeChat"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "Лендінги для глобального експорту ПЗ",
+        "desc": "Створено спеціально для SaaS, що виходить на глобальний ринок. Платіжний шлюз Stripe з підтримкою багатьох валют, автоматичний роутинг next-intl i18n для 7 мов, відповідність GDPR/CCPA та гео-таргетований контент.",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "Глобальні платежі в багатьох валютах",
+          "f2": "7 мов + готовність до GDPR"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "Провідна дизайн-система та бібліотека компонентів",
+        "desc": "4-рівнева архітектура на основі токенів: Бренд → Токени → Тема → UI. Побудовано на Radix + спільному шарі Motion з підтримкою багатьох тем через oklch, документацією Storybook та тестами візуальної регресії.",
         "features": {
-          "f1": "4-Layer Token Governance",
+          "f1": "4-рівневе управління токенами",
           "f2": "oklch Multi-Theme + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "Корпоративне управління цифровими активами",
+        "desc": "Структуровані дані та складні топології дашбордів із використанням масштабованих архітектур PostgreSQL та детального RBAC.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "Безпека на рівні рядків",
+          "f2": "Складні запити",
+          "f3": "Управління ролями"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
-    "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
-    "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
-    "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
+    "badge": "ДИЗАЙН-СИСТЕМА",
+    "headline": "4 рівні управління дизайном.",
+    "subheadline": "Від примітивів бренду до токенів виконання, від рушія багатотемності до керованих компонентів — це не просто shadcn з Tailwind.",
+    "flowBrand": "Бренд",
+    "flowBrandDesc": "Кольорові примітиви, градієнти, мова руху",
+    "flowTokens": "Токени",
+    "flowTokensDesc": "CSS-змінні, 12-ступеневі шкали, темний режим",
+    "flowTheme": "Тема",
+    "flowThemeDesc": "oklch багатотемність, 6 пресетів, color-mix()",
     "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "flowUIDesc": "Компоненти, Storybook, Chromatic",
+    "card1Title": "12-ступеневі кольорові шкали",
+    "card1Desc": "Семантична шкала, узгоджена з Geist: фони (1-2), стани (3-5), межі (6-8), заповнення (9-10), текст (11-12).",
+    "card2Title": "oklch багатотемність",
+    "card2Desc": "6 пресетів тем на основі oklch з виведенням через color-mix(). Ширококольоровий Display-P3 із відкатом до sRGB.",
+    "card3Title": "Візуальна регресія",
+    "card3Desc": "Chromatic фіксує кожну зміну пікселя. Storybook документує кожен компонент. Архітектурні тести забезпечують покриття історій.",
+    "card4Title": "Керування токенами",
+    "card4Desc": "Бюджети Ratchet: шестигранний стелю, підлогу oklch, обмеження класів кольорів. Виявлення відхилень бренду в CI.",
+    "card5Title": "Інтерактивна документація",
+    "card5Desc": "Повноцінний сайт документації дизайну на основі Fumadocs з двомовними (EN/ZH) документами API компонентів, галереями токенів, посібниками з патернів макетів та прикладами коду в реальному часі."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "Сторінку не знайдено",
+    "desc": "Посилання може бути застарілим або сторінку переміщено.",
+    "home": "Назад до {brandName}",
+    "docs": "Відкрити документацію"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "Пошук релізів..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "Перемкнути меню"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "Показати повний реліз",
+      "copyLinkToRelease": "Копіювати посилання на реліз",
+      "copyLink": "Копіювати посилання",
+      "openInNewTab": "Відкрити в новій вкладці"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "Незабаром"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Dual <hl>License</hl> Model",
-      "description": "{brandName}-Sailor is open source under AGPL-3.0. We also offer commercial licenses for teams building closed-source products."
+      "title": "Подвійна модель <hl>ліцензування</hl>",
+      "description": "{brandName}-Sailor є відкритим під ліцензією AGPL-3.0. Ми також пропонуємо комерційні ліцензії для команд, які розробляють продукти з закритим кодом."
     },
     "plans": {
       "agpl": {
-        "badge": "Always Free",
+        "badge": "Завжди безкоштовно",
         "title": "AGPL-3.0",
         "subtitle": "Open Source",
-        "description": "Open source projects, academic research, personal learning",
+        "description": "Проєкти з відкритим кодом, академічні дослідження, особисте навчання",
         "features": {
-          "sourceAccess": "Full source code access",
-          "mustOpenSource": "Must open-source your product",
-          "mustCredit": "Must credit {brandName}-Sailor",
-          "communitySupport": "Community support only"
+          "sourceAccess": "Повний доступ до вихідного коду",
+          "mustOpenSource": "Потрібно відкрити код свого продукту",
+          "mustCredit": "Потрібно вказати {brandName}-Sailor",
+          "communitySupport": "Тільки підтримка спільноти"
         },
-        "cta": "View on GitHub"
+        "cta": "Переглянути на GitHub"
       },
       "freeCommercial": {
-        "badge": "Free Forever",
-        "title": "Free Commercial",
-        "subtitle": "Individual & Solo",
-        "description": "Individual builders and single-seat operators",
+        "badge": "Безкоштовно назавжди",
+        "title": "Безкоштовний комерційний",
+        "subtitle": "Індивідуальний та соло",
+        "description": "Особисті розробники та оператори з одним місцем",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "teamSize": "Team size ≤ 1 FTE",
-          "creditRequired": "Credit required",
-          "freeKey": "Free license key via registration"
+          "closedSource": "Використовувати у продуктах із закритим кодом",
+          "teamSize": "Розмір команди ≤ 1 FTE",
+          "creditRequired": "Потрібно вказати авторство",
+          "freeKey": "Безкоштовний ліцензійний ключ після реєстрації"
         },
-        "cta": "Get Your Free License"
+        "cta": "Отримати безкоштовну ліцензія"
       },
       "commercial": {
-        "badge": "From {price}/yr",
-        "title": "Commercial",
-        "subtitle": "Startup & Enterprise",
-        "description": "Startups, agencies, teams (2+ people), commercial SaaS products",
+        "badge": "Від {price}/рік",
+        "title": "Комерційна",
+        "subtitle": "Стартапи та підприємства",
+        "description": "Стартапи, агенції, команди (від 2 осіб), комерційні SaaS-продукти",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "noCopyleft": "No copyleft obligations",
-          "noTeamLimits": "No team size limits",
-          "commercialSupport": "Commercial support available"
+          "closedSource": "Використання у закритих продуктах",
+          "noCopyleft": "Без обов'язків copyleft",
+          "noTeamLimits": "Без обмежень розміру команди",
+          "commercialSupport": "Доступна комерційна підтримка"
         },
-        "cta": "Get Commercial License"
+        "cta": "Отримати комерційну ліцензія"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Keep the license decision legible: pick AGPL for open-source distribution, or use a commercial exception when your product must stay closed-source.",
+      "title": "Часті запитання",
+      "description": "Зробіть рішення щодо ліцензії зрозумілим: оберіть AGPL для розповсюдження з відкритим кодом або використовуйте комерційний виняток, якщо ваш продукт має залишатися закритим.",
       "items": {
         "whyAgpl": {
-          "q": "Why AGPL-3.0?",
-          "a": "AGPL ensures that improvements to the template stay open source. Commercial license removes this obligation for businesses."
+          "q": "Чому AGPL-3.0?",
+          "a": "AGPL гарантує, що покращення шаблону залишаться з відкритим кодом. Комерційна ліцензія знімає цей обов'язок для бізнесу."
         },
         "soloFree": {
-          "q": "Is there really a free path for individual builders?",
-          "a": "Yes, completely. Register at /get-license, get your key, build your product. No strings attached."
+          "q": "Чи дійсно є безкоштовний шлях для індивідуальних розробників?",
+          "a": "Так, повністю. Зареєструйтеся на /get-license, отримайте ключ і створюйте свій продукт. Без жодних обмежень."
         },
         "opcDefinition": {
-          "q": "What counts as a single-seat commercial use case?",
-          "a": "One full-time equivalent or less. If you move beyond a single-seat setup, you should upgrade to a Startup license."
+          "q": "Що вважається комерційним використанням для однієї робочої позиції?",
+          "a": "Одна повна ставка або менше. Якщо ви перевищуєте одне робоче місце, вам слід перейти на ліцензію Startup."
         },
         "upgrade": {
-          "q": "Can I upgrade later?",
-          "a": "Absolutely. Upgrade whenever your team or delivery scope outgrows the free commercial tier."
+          "q": "Чи можна оновити пізніше?",
+          "a": "Звичайно. Оновлюйте, коли ваша команда або масштаб доставки перевищить безкоштовний комерційний рівень."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "А як щодо внесків у відкритий код?",
+          "a": "Усі внески потребують підписання CLA. Дивіться CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Dual license model: AGPL-3.0 open source or commercial licenses."
+      "title": "Ліцензування — {brandName}",
+      "description": "Подвійна модель ліцензування: AGPL-3.0 з відкритим кодом або комерційні ліцензії."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "Безкоштовна індивідуальна ліцензія",
+      "opcFree": "Ліцензія для компанії з одним власником",
+      "startupCommercial": "Комерційна ліцензія для стартапу",
+      "enterprise": "Корпоративна ліцензія"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "Оберіть варіант...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "Журнал змін — {brandName}",
+    "description": "Кожен реліз випускається з надмірною увагою до деталей.",
+    "versionTitleSuffix": "{brandName} Журнал змін"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "Дорожня карта платформи — {brandName}",
+    "description": "Дорожня карта для базової платформи {brandName}, середовища виконання Harness та шляху оновлення."
   },
   "blogMeta": {
-    "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "title": "Блог — {brandName}",
+    "description": "Інженерні інсайти, оновлення продукту та найкращі практики SaaS від команди {brandName}."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "Отримайте ліцензію — {brandName}",
+    "description": "Отримайте ліцензію {brandName} та доступ до платформи за 2 хвилини."
   },
   "landing": {
     "faq": {
       "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "title": "Питання, відповідей прямо",
+      "subtitle": "Все, що потрібно знати перед запуском.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "Що саме таке {productName}?",
+          "answer": "Sailor — це SaaS-фундамент на Next.js + Tailwind v4 з чіткими думками щодо архітектури, де вже налаштовані аутентифікація, билінг, багатокористувацькість, ШІ, черги, пошук та електронна пошта. Ви клонуєте його, налаштовуєте провайдери та запускаєте — зазвичай протягом тижня."
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "Для кого створено Sailor?",
+          "answer": "Для засновників та інженерів продукту, які хочуть витрачати час на унікальні переваги — а не на п'яте поспіль перебудовування однієї й тієї ж інфраструктури аутентифікації, билінгу та багатокористувацькості."
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "Чи це безкоштовно чи платно?",
+          "answer": "Повний вихідний код поширюється під ліцензією AGPL-3.0 — безкоштовно для особистих проєктів, внутрішніх інструментів та відкритих проєктів, сумісних з AGPL. Комерційна ліцензія надає право впроваджувати Sailor у власних закритих SaaS-продуктах. Кожен тариф включає повний набір функцій (автентифікація, билінг, багатокористувацькість, ШІ, аудит); відмінності між тарифами стосуються лише умов ліцензування та підтримки, а не функціоналу."
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "Чи працює це в Китаї?",
+          "answer": "Так. Ми надаємо паралельну конфігурацію інфраструктури (CDN, сумісна з Aliyun, домени, дружні до ICP, необов’язковий Penpot замість Figma), щоб одна й та сама кодова база без проблем розгорталася всередині Великого файрволу."
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "Де я можу це розгорнути?",
+          "answer": "У будь-якому місці, де працює Node 22+. Маркетинговий сайт розгортається на Vercel; панель керування, шлюз та Python-сервіси працюють на Docker / PM2 (зараз ми використовуємо Aliyun ECS, а повні маніфести Kubernetes знаходяться в infra/iac/k8s/ для кластерів). Корпоративні клієнти також можуть розгортати систему у власних VPC."
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "Як забезпечується безпека?",
+          "answer": "Шифрування на рівні додатку для секретів (@nebutra/vault), Postgres RLS для ізоляції орендарів, RBAC/ABAC через CASL або OpenFGA (@nebutra/permissions), HMAC-підписані токени між сервісами, підписані вихідні вебхуки та аудит-ланцюжок, узгоджений із SOC 2 (@nebutra/audit), включені у кожен тариф. Тарифи Pro та Enterprise додають підтримку атестації SOC 2, спеціалізовану реакцію на інциденти та подовжений термін зберігання журналів аудиту."
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "Яку підтримку я отримаю?",
+          "answer": "Безкоштовні користувачі отримують спільноту в Discord та GitHub Issues. Тариф Pro додає пріоритетну електронну пошту зі SLA відповіді протягом 1 робочого дня. Тариф Enterprise надає окремий канал у Slack та інженера з онбордингу."
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "Чи можу я використовувати власного провайдера?",
+          "answer": "Так. Кожен інтеграційний компонент (автентифікація, черга, пошук, електронна пошта, платежі, сховище, билінг) є незалежним від провайдера. Фабрика в кожному пакеті вибирає потрібний адаптер за допомогою однієї змінної середовища — можна замінити Clerk на Better Auth, NextAuth або Supabase Auth, QStash на BullMQ, Resend на SES, Stripe на Polar / LemonSqueezy / ChinaPay — без змін у коді додатка."
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "Який стек технологій використовується?",
+          "answer": "Next.js 16 (App Router) на React 19, TypeScript 5.9, Tailwind v4, Prisma 7 над Postgres (з pgvector + RLS), Hono для BFF-шлюзу, FastAPI для ML/важких сервісів та підібрана бібліотека компонентів на основі Radix, примітивів {brandName} UI та спільного шару Motion. Функції ШІ працюють через Vercel AI SDK із портативністю провайдерів (OpenAI / OpenRouter / SiliconFlow / Azure / локальні)."
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "Яка ліцензія використовується?",
+          "answer": "AGPL-3.0 із комерційним винятком. Безкоштовно для особистого використання, внутрішніх інструментів та відкритих проєктів, сумісних з AGPL. Платна комерційна ліцензія надає право впроваджувати Sailor «як є」 у власних SaaS-продуктах. Повний вихідний код включений у кожен тариф."
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "Чи потрібно платити за оновлення?",
+          "answer": "Ні. Оновлення вихідного коду входять до кожної комерційної ліцензії — робіть pull з main, коли завгодно, і робіть rebase своєї форку. Платний тариф — це право використовувати Sailor у комерційному продакшені, а не право отримувати код. Кожен мінорний реліз містить CHANGELOG та гайд по оновленню для будь-яких breaking changes."
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "Чому Turborepo, а не звичайний додаток на Next.js?",
+          "answer": "Sailor — це 10 додатків + 104 спільних пакунків під packages/*/* + 4 бекенд-лані (Hono gateway, FastAPI/Python, Go, Rust) — далеко за межами того, де один Next.js мега-додаток залишається підтримуваним. Turborepo дає нам affected-only builds, прозорий remote caching та єдине джерело істини для спільних design tokens, auth, billing та observability — не змушуючи кожну команду працювати в одному Next.js процесі."
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "Як реалізовано multi-tenancy?",
+          "answer": "Два шари. Контекст орендаря в межах запиту через @nebutra/tenant (AsyncLocalStorage передає активну організацію через кожний серверний виклик, включаючи запити до БД та вихідні вебхуки) та ізоляція на рівні бази даних через політики Row-Level Security у Postgres (infra/data/database/policies/rls.sql), прив'язані до session-local app.current_tenant_id. З'єднання з роллю сервісу обходять RLS лише всередині довірених внутрішніх сервісів; усі маршрути, доступні користувачам, проходять через клієнт із контекстом орендаря."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "Чи можна замінити Clerk на інший провайдер автентифікації?",
+          "answer": "Так. @nebutra/auth постачається з адаптерами першого класу для Clerk, Better Auth, NextAuth (Auth.js v5) та Supabase Auth. Переключіться через змінну AUTH_PROVIDER або оберіть під час scaffold з create-sailor --auth=... — сервер, React та middleware залишаються ідентичними незалежно від провайдера. Додавання п'ятого адаптера означає реалізацію одного інтерфейсу (~80 LOC); нічого в оточуючому коді не прив'язане до конкретного провайдера."
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "Обирають будівельники",
+      "title": "Що кажуть засновники після запуску з Sailor",
+      "subtitle": "Історії клієнтів з нашого бета-когорту з'являться найближчим часом — будьте серед перших."
     },
     "comparison": {
-      "badge": "Compare plans",
-      "title": "Pick the plan that fits the stage you are in",
-      "subtitle": "Every plan includes the full source code. Commercial licenses include 12 months of updates.",
+      "badge": "Порівняти плани",
+      "title": "Оберіть план, що підходить вашому етапу",
+      "subtitle": "Кожен план включає повний вихідний код. Комерційні ліцензії включають 12 місяців оновлень.",
       "plan": {
         "independent": "Independent",
         "startup": "Startup",
@@ -1690,59 +1690,59 @@
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License type",
-          "projects": "Number of projects"
+          "label": "Ліцензія",
+          "type": "Тип ліцензії",
+          "projects": "Кількість проєктів"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Update window"
+          "label": "Вихідний код",
+          "full-source": "Повний вихідний код",
+          "all-packages": "Усі пакети та модулі",
+          "update-window": "Вікно оновлення"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel"
+          "label": "Підтримка",
+          "channel": "Канал підтримки"
         }
       },
-      "ariaTable": "Plan and feature comparison"
+      "ariaTable": "Порівняння планів та функцій"
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "Побудовано на надійному стеку",
+      "logosLabel": "Партнери з інтеграцією",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "Підтримувані AI-провайдери"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "пакети monorepo"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "локалі i18n із коробки"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "Запис ICP",
+      "publicSecurity": "Громадська безпека"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "Запис ICP",
+    "publicSecurity": "Запис про громадську безпеку"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "Країни та мови",
+    "description": "Виберіть країну та мову для маркетингового сайту.",
+    "triggerAria": "Виберіть країну та мову",
+    "searchPlaceholder": "Пошук країн…",
+    "plannedHint": "Інтерфейс буде англійською, доки ця мова не буде випущена",
+    "noResults": "Країн не знайдено",
+    "menuAria": "Країни та мови"
   }
 }

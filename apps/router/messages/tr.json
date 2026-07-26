@@ -5,127 +5,127 @@
     "description": "Tüm model API pazarı · kullandıkça öde · anahtarları ve cüzdanı yönet · hızlı dene."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
-    "title": "Admin",
+    "dashboard": "Genel Bakış",
+    "keys": "API Anahtarları",
+    "wallet": "Cüzdan",
+    "docs": "Dokümanlar",
+    "title": "Yönetici",
     "backToMarket": "Pazara dön",
-    "quickUse": "Quick use"
+    "quickUse": "Hızlı kullanım"
   },
   "chrome": {
     "searchPlaceholder": "AI ile ne yapmak istiyorsun?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Ara",
+    "locale": "Dil",
+    "currency": "Para Birimi",
     "collapseSidebar": "Kenar çubuğunu daralt",
     "expandSidebar": "Kenar çubuğunu genişlet",
-    "home": "Home",
-    "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "home": "Ana Sayfa",
+    "adminConsole": "Yönetici",
+    "quickUse": "Hızlı kullanım",
+    "support": "Destek",
+    "apiDocs": "API dokümanları",
     "integrationHelp": "Entegrasyon kılavuzu",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI önerileri",
+    "market": "Pazar",
+    "usageTitle": "Hızlı kullanım"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "Uygulama mağazası",
+    "api": "API mağazası",
     "models": "Model kataloğu",
-    "client": "Client"
+    "client": "İstemci"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "new": "Yeni",
+    "hot": "Popüler",
+    "forYou": "Senin için",
+    "grid": "Izgara",
+    "list": "Liste",
+    "apiShelf": "API rafı",
+    "toolShelf": "Araç rafı",
+    "categories": "Kategoriler",
+    "apps": "Uygulamalar",
+    "newRelease": "Yeni sürüm",
+    "forgeTitle": "Forge araç çalışma alanı",
+    "forgeBlurb": "Metin dönüşümleri, codec'ler, formlar ve birleştirilebilir araçlar. Uygulama pazarı laboratuvarı Forge'u işaret ediyor.",
+    "openForge": "Forge'u Aç →",
+    "allApi": "Tüm API'ler →",
+    "all": "Tümü →",
+    "viewAll": "Tüm {label} göster →",
+    "gridView": "Izgara görünümü",
+    "listView": "Liste görünümü",
+    "hiTitle": "Kurumsal AI kaynak platformu",
+    "hiSubtitle": "Her ihtiyacı doğru AI ile eşleştirin",
+    "sellable": "Satışa uygun",
+    "walletTopup": "Yükle"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Dil modelleri",
+      "hint": "Sohbet · akıl yürütme"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Görsel oluşturma",
+      "hint": "Metinden görsel"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "Görsel düzenleme",
+      "hint": "Düzenle · matlama"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "Video oluşturma",
+      "hint": "Metinden videoya"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "Ses ve video",
+      "hint": "Konuşma · transkripsiyon"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "Bilgi",
+      "hint": "Getirme · çıkarma"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Bilgi destekli"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "Araç API'leri",
+      "hint": "Ajan · araçlar"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "Botlar",
+      "chips": "Sohbet botları · çizim botları · bilgi"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Verimlilik",
+      "chips": "Model arenası · AI yazma"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "Akademik",
+      "chips": "PDF araç seti · AI patent araması"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "Görsel araçları",
+      "chips": "3D stüdyo · Tuval"
     },
     "audio": {
-      "label": "Audio",
-      "chips": "Speech · AI music"
+      "label": "Ses",
+      "chips": "Konuşma · AI müzik"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "Kod",
+      "chips": "Web oluşturucu · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "Genel bakış",
+    "keys": "Anahtarlar",
+    "wallet": "Cüzdan",
+    "use": "Dene",
+    "docs": "Dokümanlar",
+    "models": "Daha fazla"
   }
 }

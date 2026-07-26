@@ -5,127 +5,127 @@
     "description": "全モデル API マーケットプレイス · 従量課金 · キーとウォレットの管理 · すぐに試せる。"
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
-    "title": "Admin",
+    "dashboard": "概要",
+    "keys": "API キー",
+    "wallet": "ウォレット",
+    "docs": "ドキュメント",
+    "title": "管理",
     "backToMarket": "マーケットに戻る",
-    "quickUse": "Quick use"
+    "quickUse": "クイック使用"
   },
   "chrome": {
     "searchPlaceholder": "AI で何をしたいですか？",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "検索",
+    "locale": "言語",
+    "currency": "通貨",
     "collapseSidebar": "サイドバーを折りたたむ",
     "expandSidebar": "サイドバーを展開する",
-    "home": "Home",
-    "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "home": "ホーム",
+    "adminConsole": "管理",
+    "quickUse": "クイック使用",
+    "support": "サポート",
+    "apiDocs": "API ドキュメント",
     "integrationHelp": "統合ガイド",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI ピック",
+    "market": "マーケット",
+    "usageTitle": "クイック使用"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "アプリマーケット",
+    "api": "APIマーケット",
     "models": "モデルカタログ",
-    "client": "Client"
+    "client": "クライアント"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "new": "新着",
+    "hot": "人気",
+    "forYou": "あなたへ",
+    "grid": "グリッド",
+    "list": "リスト",
+    "apiShelf": "API棚",
+    "toolShelf": "ツール棚",
+    "categories": "カテゴリ",
+    "apps": "アプリ",
+    "newRelease": "新リリース",
+    "forgeTitle": "Forgeツールワークスペース",
+    "forgeBlurb": "テキスト変換、コーデック、フォーム、コンポーザブルツール。アプリマーケットのラボはForgeを指しています。",
+    "openForge": "Forgeを開く →",
+    "allApi": "すべてのAPI →",
+    "all": "すべて →",
+    "viewAll": "すべての {label} を表示 →",
+    "gridView": "グリッド表示",
+    "listView": "リスト表示",
+    "hiTitle": "エンタープライズAIリソースプラットフォーム",
+    "hiSubtitle": "あらゆるニーズに最適なAIをマッチング",
+    "sellable": "販売可能",
+    "walletTopup": "チャージ"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "言語モデル",
+      "hint": "チャット・推論"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "画像生成",
+      "hint": "テキストから画像"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "画像編集",
+      "hint": "編集 · マッティング"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "動画生成",
+      "hint": "テキストから動画"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "音声と動画",
+      "hint": "音声合成 · 文字起こし"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "情報",
+      "hint": "検索 · 抽出"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "知識拡張"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "ツールAPI",
+      "hint": "エージェント · ツール"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "ボット",
+      "chips": "チャットボット · 描画ボット · ナレッジ"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "生産性",
+      "chips": "モデルアリーナ · AIライティング"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "学術",
+      "chips": "PDFツールキット · AI特許検索"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "画像ツール",
+      "chips": "3Dスタジオ · キャンバス"
     },
     "audio": {
-      "label": "Audio",
-      "chips": "Speech · AI music"
+      "label": "オーディオ",
+      "chips": "音声 · AI音楽"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "コード",
+      "chips": "Webジェネレーター · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "概要",
+    "keys": "キー",
+    "wallet": "ウォレット",
+    "use": "試す",
+    "docs": "ドキュメント",
+    "models": "もっと見る"
   }
 }

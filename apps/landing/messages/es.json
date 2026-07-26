@@ -12,7 +12,7 @@
     "roadmap": "Hoja de Ruta",
     "resources": "Recursos",
     "signIn": "Iniciar Sesión",
-    "getStarted": "Get Sailed",
+    "getStarted": "Empezar a navegar",
     "changelog": "Registro de cambios",
     "news": "Noticias",
     "designDocs": "Sistema de Diseño",
@@ -1152,6 +1152,18 @@
       "title": "Compra única. Acceso de por vida.",
       "description": "Sin suscripciones. Sin tarifas recurrentes. Elija el plan que se adapte a su equipo y empiece a construir hoy.",
       "socialProofText": "Código abierto AGPL-3.0 · licencia comercial disponible.",
+      "independent": {
+        "badge": "INDEPENDIENTE",
+        "price": "Gratis",
+        "period": "para siempre",
+        "desc": "Ideal para constructores individuales que validan productos sobre la base AGPL.",
+        "cta": "npx create-sailor",
+        "f1": "Núcleo SaaS completo con Next.js 16",
+        "f2": "Proyectos personales ilimitados (uso comercial permitido)",
+        "f3": "Stack SaaS completo: Auth, Pagos, Organizaciones, API, Admin UI, Email, i18n, Tareas en segundo plano, Almacenamiento y más",
+        "f4": "Funciones de marketing: Blog, Landing page, SEO, Análisis",
+        "f5": "Licencia de código abierto AGPLv3"
+      },
       "startup": {
         "badge": "STARTUP",
         "price": "$799",
@@ -1164,20 +1176,8 @@
         "f4": "Soporte por correo electrónico",
         "f5": "Todo lo del plan Solo"
       },
-      "independent": {
-        "badge": "INDEPENDENT",
-        "price": "Gratis",
-        "period": "para siempre",
-        "desc": "Ideal para constructores individuales que validan productos sobre la base AGPL.",
-        "cta": "npx create-sailor",
-        "f1": "Núcleo SaaS completo con Next.js 16",
-        "f2": "Proyectos personales ilimitados (uso comercial permitido)",
-        "f3": "Stack SaaS completo: Auth, Pagos, Organizaciones, API, Admin UI, Email, i18n, Tareas en segundo plano, Almacenamiento y más",
-        "f4": "Funciones de marketing: Blog, Landing page, SEO, Análisis",
-        "f5": "Licencia de código abierto AGPLv3"
-      },
       "enterprise": {
-        "badge": "ENTERPRISE",
+        "badge": "EMPRESARIAL",
         "price": "Personalizado",
         "period": "",
         "desc": "Para agencias y operadores que desarrollan plataformas de clientes repetibles.",
@@ -1256,34 +1256,34 @@
       }
     },
     "workflow": {
-      "badge": "Velocity",
+      "badge": "Velocidad",
       "title": "De cero a producción en tiempo récord.",
       "step1": {
-        "title": "1. Clone",
+        "title": "1. Clonar",
         "desc": "Clone el monorepo de {brandName} al instante y ejecute pnpm install."
       },
       "step2": {
-        "title": "2. Configure",
+        "title": "2. Configurar",
         "desc": "Configure Prisma, Clerk y Stripe mediante el CLI interactivo en minutos."
       },
       "step3": {
-        "title": "3. Build",
+        "title": "3. Construir",
         "desc": "Concéntrese en la lógica del producto y la interfaz mientras la base de plataforma ya está conectada."
       },
       "step4": {
-        "title": "4. Deploy",
+        "title": "4. Desplegar",
         "desc": "Haga push a Vercel y AWS para distribución global instantánea."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
+        "unit": "min",
+        "subtitle": "TIEMPO DE LANZAMIENTO",
         "comparison": "Ahorre meses de trabajo de plataforma.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "Inicio",
+          "wire": "Núcleo",
+          "ship": "Despliegue",
+          "scale": "Escalado",
           "ongoing": "∞"
         },
         "cta": "Empieza tu cronómetro"
@@ -1684,8 +1684,8 @@
       "title": "Elija el plan que se adapta a la etapa en la que se encuentra",
       "subtitle": "Todos los planes incluyen el código fuente completo. Las licencias comerciales incluyen 12 meses de actualizaciones.",
       "plan": {
+        "independent": "Independiente",
         "startup": "Startup",
-        "independent": "Independent",
         "enterprise": "Empresa"
       },
       "feature": {

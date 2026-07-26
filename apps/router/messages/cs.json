@@ -5,127 +5,127 @@
     "description": "Tržiště API pro všechny modely · platba podle spotřeby · správa klíčů a peněženky · rychlé vyzkoušení."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
-    "title": "Admin",
+    "dashboard": "Přehled",
+    "keys": "Klíče API",
+    "wallet": "Peněženka",
+    "docs": "Dokumentace",
+    "title": "Administrace",
     "backToMarket": "Zpět na tržiště",
-    "quickUse": "Quick use"
+    "quickUse": "Rychlé použití"
   },
   "chrome": {
     "searchPlaceholder": "Co chcete dělat s AI?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Hledat",
+    "locale": "Jazyk",
+    "currency": "Měna",
     "collapseSidebar": "Sbalit postranní panel",
     "expandSidebar": "Rozbalit postranní panel",
-    "home": "Home",
-    "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "home": "Domů",
+    "adminConsole": "Administrace",
+    "quickUse": "Rychlé použití",
+    "support": "Podpora",
+    "apiDocs": "Dokumentace API",
     "integrationHelp": "Návod k integraci",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI výběr",
+    "market": "Trh",
+    "usageTitle": "Rychlé použití"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "Obchod s aplikacemi",
+    "api": "Obchod s API",
     "models": "Katalog modelů",
-    "client": "Client"
+    "client": "Klient"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "new": "Nové",
+    "hot": "Populární",
+    "forYou": "Pro vás",
+    "grid": "Mřížka",
+    "list": "Seznam",
+    "apiShelf": "Regál API",
+    "toolShelf": "Regál nástrojů",
+    "categories": "Kategorie",
+    "apps": "Aplikace",
+    "newRelease": "Nová verze",
+    "forgeTitle": "Prostor nástrojů Forge",
+    "forgeBlurb": "Textové transformace, kodeky, formuláře a skládací nástroje. Trh aplikací směřuje k Forge.",
+    "openForge": "Otevřít Forge →",
+    "allApi": "Všechny API →",
+    "all": "Vše →",
+    "viewAll": "Zobrazit vše {label} →",
+    "gridView": "Zobrazení mřížky",
+    "listView": "Zobrazení seznamu",
+    "hiTitle": "Platforma pro podnikové AI zdroje",
+    "hiSubtitle": "Přizpůsobte každou potřebu správné AI",
+    "sellable": "Prodejné",
+    "walletTopup": "Nabít"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Jazykové modely",
+      "hint": "Chat · uvažování"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Generování obrázků",
+      "hint": "Text na obrázek"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "Editace obrázků",
+      "hint": "Úprava · matting"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "Generování videa",
+      "hint": "Text na video"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "Audio a video",
+      "hint": "Řeč · přepis"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "Informace",
+      "hint": "Získávání · extrakce"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Rozšířeno znalostmi"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "Nástrojové API",
+      "hint": "Agent · nástroje"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "Boti",
+      "chips": "Chat boti · kreslení · znalosti"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Produktivita",
+      "chips": "Arena modelů · psaní s AI"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "Akademie",
+      "chips": "PDF nástroje · AI patentové vyhledávání"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "Nástroje pro obrázky",
+      "chips": "3D studio · Plátno"
     },
     "audio": {
       "label": "Audio",
-      "chips": "Speech · AI music"
+      "chips": "Řeč · AI hudba"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "Kód",
+      "chips": "Web generátor · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "Přehled",
+    "keys": "Klíče",
+    "wallet": "Peněženka",
+    "use": "Vyzkoušet",
+    "docs": "Dokumentace",
+    "models": "Více"
   }
 }

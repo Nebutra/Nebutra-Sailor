@@ -1,1537 +1,1537 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "الميزات",
+    "solutions": "الحلول",
+    "pricing": "الأسعار",
+    "docs": "التوثيق",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "من نحن",
+    "ideas": "الأفكار",
+    "opc": "المنصة",
+    "roadmap": "خارطة الطريق",
+    "resources": "الموارد",
+    "signIn": "تسجيل الدخول",
+    "getStarted": "ابدأ الإبحار",
+    "changelog": "سجل التغييرات",
+    "news": "الأخبار",
+    "designDocs": "نظام التصميم",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "قائمة الحساب",
+      "loadingName": "جارٍ التحميل…",
+      "dashboard": "لوحة التحكم",
+      "account": "الحساب",
+      "billing": "الفواتير",
+      "docs": "التوثيق",
+      "signOut": "تسجيل الخروج"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "انضم إلى حلقة إحالة المؤسسين في {brandName}",
+    "metadataDescription": "انضم إلى قائمة الانتظار في {brandName}، واحتفظ بتتبع الإحالة، واحصل على رابط المشاركة الخاص بك ضمن حلقة مغلقة تقودها المنتج.",
+    "eyebrow": "حلقة إحالة المؤسسين",
+    "title": "انضم إلى دفعة المؤسسين التالية واحصل على رابط المشاركة الخاص بك.",
+    "description": "أدخل باستخدام أي رمز دعوة أو انضم مباشرة. سنحتفظ بتتبع الإحالة عند وجود رمز، ونضعك في قائمة الانتظار، ونصدر لك رابط إحالة خاص يمكنك مشاركته فوراً.",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "قائمة انتظار دائمة",
+      "codeDetected": "تم اكتشاف الرمز {code}",
+      "direct": "تسجيل مباشر"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "البريد الإلكتروني للعمل",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "رمز الإحالة",
+      "codePlaceholder": "رمز اختياري",
+      "submit": "انضم إلى قائمة الانتظار",
+      "submitting": "جارٍ الانضمام",
+      "invalidEmail": "أدخل بريدًا إلكترونيًا صالحًا.",
+      "error": "تعذر الانضمام حاليًا. يرجى المحاولة مرة أخرى.",
+      "successTitle": "أنت في القائمة",
+      "successDescription": "رابط المشاركة الخاص بك جاهز.",
+      "positionLabel": "المركز في الطابور",
+      "referralCodeLabel": "رمزك",
+      "referralUrlLabel": "رابط المشاركة الخاص بك",
+      "copyLink": "نسخ الرابط",
+      "copied": "تم النسخ",
+      "share": "مشاركة",
+      "shareTitle": "انضم إلى حلقة تأسيس {brandName}",
+      "shareText": "استخدم رابط الدعوة الخاص بي للانضمام إلى قائمة انتظار مؤسسي {brandName}.",
+      "directMode": "لا حاجة إلى رمز إحالة",
+      "codeMode": "تمكين تتبع الإحالة"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "حلقة مؤسس إلى مؤسس",
+        "description": "يتلقى كل تسجيل مقبول رمزًا وارتباطًا، لذا تبدأ الإحالة التالية دون تسليم يدوي."
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "تتبع صادق",
+        "description": "يتم تخزين الرموز غير المعروفة كتتبع مُحاوَل، بينما تزيد الرموز الصحيحة من رصيد المُحيل وتبقي التسجيل نظيفًا."
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "حالة نجاح جاهزة للمشاركة",
+        "description": "تعرض حالة التأكيد الموقع والرمز والنسخ وإجراءات المشاركة الأصلية حتى تكتمل الحلقة في الصفحة."
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "بنية تحتية تقودها المنتج",
+      "title": "مصممة كبنية تحتية SaaS متينة، وليست نموذجًا يُستخدم لمرة واحدة.",
+      "description": "تدعم واجهة الإحالة حزمة نطاق، ونموذج Prisma دائم، ومسار Next.js مُنَوَّع، وفحوصات دخانية عامة يمكن تشغيلها بعد نشر ECS.",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "البيانات",
+        "title": "جدول قائمة انتظار واحد متين",
+        "description": "توجد فريدة البريد الإلكتروني، وترتيب مُزايَد تلقائيًا، وفهارس رموز الإحالة، ومعدّات تتبع الإحالة المُحاوَلَة، وانتقالات الحالة في قاعدة بيانات المنصة."
       },
       "api": {
-        "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "eyebrow": "واجهة برمجة التطبيقات",
+        "title": "نقطة اتصال الانضمام مُنَوَّعة",
+        "description": "تُرسل الصفحة إلى `/api/waitlist`، وتُوحّد الرموز العشوائية، وتُعيد الإدخالات الموجودة بشكل مُستقر، ولا تعتمد أبدًا على رمز عيّنة."
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "اختبارات الدخان العامة وقت النشر",
+        "description": "روابط URL الأساسية والاختصارات جاهزة للفحوصات الآلية، بحيث تلتقط ECS أي تراجعات في المسارات، DNS، أو الصحة."
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "أطلق شركتك الناشئة،",
+    "headline2": "مدعومة بنظام {brandName} Agent OS.",
+    "subheadline": "تجاوز أسابيع من العمل على المنصة مع أساس <highlight>جاهز للإنتاج</highlight> يتضمن <highlight>هندسة مُدارة</highlight>، مُصمم لـ <highlight>وكلاء البرمجة بالذكاء الاصطناعي والمؤسسين</highlight> المتجهين عالمياً.",
+    "copyLabel": "نسخ الأمر",
+    "copiedLabel": "تم النسخ",
+    "ctaGetAccess": "أطلق شركتك الناشئة",
+    "ctaExploreDemo": "استكشف العرض التوضيحي",
+    "pillCopied": "تم النسخ"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "بنية تحتية جاهزة للاستخدام، من النموذج الأولي إلى التوسع.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "البنية التحتية لتطبيقات الذكاء الاصطناعي",
+      "description": "إطارات عمل للوكلاء ومحركات تنسيق LLM مدمجة ومختبرة للإنتاج. تجاوز التجريدات المعقدة وتفاعل مباشرة مع واجهات برمجة التطبيقات الذكية المهيكلة."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "قاعدة منصة مُدارة",
+      "description": "قاعدة منصة مُدارة للفرق التي تطلق SaaS أصيلة بالذكاء الاصطناعي. مواءمة الهيكل الأساسي، البدائيات وقت التشغيل، وسطوح التسليم دون الحاجة لدمج أدوات مؤقتة."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "أتمتة SaaS للمؤسسات",
+      "description": "تكامل عميق مع أحدث التقنيات من Vercel و Supabase و Stripe. يوفر أمانًا على مستوى الصفوف جاهزًا للاستخدام، وعزلًا متعدد المستأجرين معقدًا، وفوترة اشتراكات عالمية."
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "هل أنت مستعد لنشر منتجك القادم بالذكاء الاصطناعي؟",
+    "subheading": "قم بتهيئة بنية SaaS كاملة وسحابية محليًا باستخدام أمر واحد في الطرفية.",
+    "copyLabel": "نسخ الأمر",
+    "copiedLabel": "تم النسخ",
+    "startBuilding": "ابدأ البناء"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "أطلق مشروعك الناشئ مع {brandName} Agent OS. تعدد المستأجرين، الفوترة، المصادقة، والذكاء الاصطناعي — جاهز للإنتاج من اليوم الأول.",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
+      "product": "المنتج",
+      "resources": "الموارد",
       "legal": "Legal",
-      "community": "Community"
+      "community": "المجتمع"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
-      "blog": "Blog",
-      "playbook": "Playbook",
-      "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
-      "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
-      "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "product": "المنتج",
+      "features": "الميزات",
+      "pricing": "الأسعار",
+      "about": "حول",
+      "showcase": "أبرز المشاريع",
+      "blog": "المدونة",
+      "playbook": "دليل الاستخدام",
+      "changelog": "سجل التغييرات",
+      "roadmap": "خارطة الطريق",
+      "docs": "التوثيق",
+      "ideas": "الأفكار",
+      "opc": "المنصة",
+      "careers": "الوظائف",
+      "security": "الأمان",
+      "dpa": "اتفاقية معالجة البيانات",
+      "privacy": "الخصوصية",
+      "terms": "الشروط",
+      "cookies": "ملفات تعريف الارتباط",
+      "refund": "الاسترداد",
+      "licensing": "التراخيص",
+      "contact": "تواصل معنا",
+      "faq": "الأسئلة الشائعة",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. جميع الحقوق محفوظة.",
+    "statusOnline": "جميع الأنظمة تعمل",
+    "newsletterTitle": "ابقَ على اطلاع",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "اشترك",
+    "newsletterSuccess": "شكرًا لاشتراكك!",
+    "newsletterError": "حدث خطأ ما"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "مبني باستخدام التقنيات التي تحبها."
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "هيكلية TURBOREPO",
+    "title": "10 تطبيقات. 104 حزمة. 4 مسارات خلفية.",
+    "description": "كود مشترك، بناء متوازي، وعدم تكرار. كتابة كاملة من قاعدة البيانات إلى الواجهة الأمامية.",
+    "metricApps": "تطبيقات",
+    "metricBackends": "مسارات الخلفية",
+    "metricPackages": "الحزم",
+    "verifiedPaths": "تم التحقق من المسارات مقابل مساحة العمل الحالية",
+    "cta": "استكشف بنية المستودع الموحد"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "بالأرقام",
+    "github": "نجوم GitHub",
+    "discord": "أعضاء Discord",
+    "setup": "متوسط وقت الإعداد",
+    "packages": "حزم المستودع الموحد",
+    "ctaStar": "نجم →",
+    "ctaJoin": "انضم →",
+    "ctaStart": "ابدأ →",
+    "ctaExplore": "استكشف →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "من نحن — منصة الذكاء الاصطناعي المُدار",
+      "description": "اكتشف الرؤية التجارية ومبادئ الهندسة وراء منصة الذكاء الاصطناعي المُدار من {brandName}.",
+      "heading": "عصر فرق المنتجات الرشيق",
+      "subheading": "استبدل العمل المتكرر على المنصة ببنية تحتية مُدارة، وأتمتة قوية، وميزة هندسية دائمة.",
+      "missionTitle": "ترتيب جديد يقاوم التدهور الإداري",
+      "missionP1": "تُبنى {brandName} منصة ذكاء اصطناعي مُدارة للفرق التي تحتاج إلى بنية تحتية دائمة بدلاً من مجموعات البداية قصيرة العمر. غالباً ما يأتي التوسع التقليدي مع البيروقراطية والإنتروبيا؛ نحن نردّ بإدارة الكود، والأتمتة، وخط أساس للمنصة يبقى قابلاً للتدقيق مع نموه.",
+      "missionP2": "لا يزال قطاع التجارة يعاني من عبء التنسيق، وتجزئة الأدوات، ومسارات ترقية ضعيفة. نهتم بتقليل هذه الاحتكاكات من خلال عقود منصة أوضح، ووسائط تسليم أقوى، وسلوك وقت تشغيل يمكن للفرق ملاحظته والاعتماد عليه فعلياً.",
+      "missionP3": "نرفض عادة حل مشاكل التوسع بإضافة مزيد من السحب التنظيمي. يجب أن تمتص الأتمتة والاختبارات والإدارة العمل التشغيلي المتكرر حتى تبقى الفرق مركزة على المنتج، والهندسة المعمارية، ونتائج العملاء.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "الأعمدة الأربعة",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "التوسع المُدار (فلسفة)",
+          "description": "يجب أن يأتي التوسع من أنظمة أقوى، وميزة أفضل، وقواعد تشغيل أوضح — وليس من تراكم مزيد من الوزن التنظيمي."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "نواة الباني (البنية التحتية)",
+          "description": "خط أساس لمنصة قابلة لإعادة الاستخدام للتعدد، والفوترة، والمصادقة، والامتثال، وتكاملات الذكاء الاصطناعي يمكن للفرق تدقيقه، وتوسيعه، وإصداره بشكل متكرر."
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "انضباط الترقية (التوجيه)",
+          "description": "تنمو الأنظمة الصحية من خلال فحوصات التوافق، والهجرة، وعقود وقت التشغيل القابلة للملاحظة بدلاً من الانحراف، والأعمال البطولية، والإصلاحات الفردية."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "الكود هو القانون (التنظيم)",
+          "description": "يجب أن تُشفَّر الانضباط التشغيلي في الاختبارات، وسير العمل، وقواعد الإدارة حتى تتمكن الفرق من تحسين المنصة دون الاعتماد على السياسة أو الذاكرة المؤسسية."
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "إشارات الهندسة قبل الشهادات",
+      "jobsDescription": "نهتم أكثر بالإنتاج الهندسي القابل للتحقق، ووضوح التفكير، وحكم النظام من الخلفية أو تضخم المسميات.",
+      "jobsButton": "إرسال ملف GitHub الشخصي",
+      "companyInfoTitle": "الامتثال التنظيمي",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "تسجيل الكيان القانوني",
+        "founded": "تاريخ التسجيل",
+        "headquarters": "مركز العمليات العالمي",
+        "jurisdiction": "الولاية القضائية المنظمة"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "هل تحتاج إلى تقييم تقني أعمق؟",
+      "ctaDescription": "تواصل مع متخصصينا في الهندسة للحصول على تقييم تكامل المؤسسات أو مراجعة وثائق النشر.",
+      "ctaButton": "بدء التواصل"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "استفسار تقني وتجاري — {brandName} Intelligence",
+      "description": "قناة التواصل المخصصة للتراخيص التجارية، والاستضافة الذاتية للمؤسسات، والدعم التقني المتقدم.",
+      "heading": "إنشاء اتصال الدعم",
+      "subheading": "سنرسل متخصصًا تقنيًا مخصصًا أو مهندسًا معماريًا لتقييم متطلباتك المحددة.",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "تواصل مباشر مع المؤسس",
+          "description": "قناة تواصل مباشرة للمواءمات الاستراتيجية الأساسية والاستفسارات على المستوى التنفيذي."
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "استشارة المؤسسات",
+          "description": "مناقشات أولية تتعلق بالشراكات الاستراتيجية البيئية والتطور المعماري الشامل."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "النشر التجاري",
+          "description": "التفاوض بشأن الترخيص المغلق المصدر والتفاصيل المتعلقة بالنشر في بيئات العناقيد الخاصة."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "الدعم على مستوى الخبراء",
+          "description": "إرشادات معمارية موجهة وخدمات استكشاف الأخطاء وإصلاحها للتكاملات التجارية النشطة وتصحيح أخطاء الأنظمة الأساسية."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "القانون والامتثال",
+          "description": "استفسارات تتعلق بتعريف حدود المصادر المفتوحة، ومراجعات الامتثال المؤسسي، وشروط العقود."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "خصوصية مركز البيانات",
+          "description": "التحقق الفني وتوجيهات الامتثال المتعلقة بـ GDPR والقوانين الدولية اللاحقة لحماية البيانات."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "كشف الثغرات الأمنية",
+          "description": "تقديم تقارير إعادة إنتاج تقنية بأمان بشأن الثغرات الأمنية المحتملة في البرنامج مباشرة إلى فريق البنية التحتية لدينا."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "بوابة التقديم",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "اسم مقدم الطلب",
+        "email": "البريد الإلكتروني الرسمي",
+        "company": "المنظمة التابعة",
+        "category": "مجال المتطلبات",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "استشارة مؤسسية",
+          "sales": "التراخيص والهندسة المعمارية",
+          "support": "مساعدة المطورين",
+          "legal": "الحدود القانونية والامتثال",
+          "privacy": "سياسات معالجة البيانات",
+          "partnership": "تكاملات النظام البيئي",
+          "press": "العلاقات العامة"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "ملخص المشكلة الأساسية",
+        "message": "المواصفات الفنية/التجارية التفصيلية",
+        "submit": "إرسال إلى الخلفية",
+        "privacyNotice": "تنفيذ هذا الطلب الشبكي يعني قراءة وموافقة على",
+        "privacyLink": "البنية التحتية للخصوصية النظامية",
+        "submitting": "دخول طابور المعالجة...",
+        "successMessage": "تم نقل البيانات بنجاح. سيقوم الفريق التشغيلي المسؤول بإصدار رد مفصل خلال 1-2 أيام عمل قياسية."
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "قياسات التشغيل",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "ووشى، مقاطعة جيانغسو، الصين",
+      "socialMedia": "روابط الشبكات الرئيسية"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "سياسة ملفات تعريف الارتباط — {brandName}",
+      "description": "كيف تستخدم {brandName} ملفات تعريف الارتباط وتقنيات التتبع المماثلة على موقعنا وخدماتنا.",
+      "heading": "سياسة ملفات تعريف الارتباط",
+      "effectiveDate": "تاريخ النفاذ",
+      "lastUpdated": "آخر تحديث",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 يناير 2025",
+        "updated": "1 يناير 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "توضح سياسة ملفات تعريف الارتباط هذه كيف تستخدم {brandName} Co., Ltd. (\"{brandName}\" أو \"نحن\" أو \"لنا\") ملفات تعريف الارتباط وتقنيات التتبع المماثلة على موقعنا وخدماتنا.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "ما هي ملفات تعريف الارتباط؟",
+        "content": "ملفات تعريف الارتباط هي ملفات نصية صغيرة تُوضع على جهازك عند زيارة موقع ويب. تُستخدم على نطاق واسع لجعل المواقع تعمل بكفاءة أكبر وتوفير معلومات لأصحاب المواقع."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "كيف نستخدم ملفات تعريف الارتباط",
+        "intro": "نستخدم ملفات تعريف الارتباط لـ:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "تمكين الميزات الأساسية",
+            "desc": "توفير الوظائف الأساسية مثل مصادقة المستخدم والأمان"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "تذكر التفضيلات",
+            "desc": "تخزين اللغة، والمظهر، والإعدادات الأخرى"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "تحسين الأداء",
+            "desc": "فهم كيفية تفاعل الزوار مع خدماتنا"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "تخصيص التجربة",
+            "desc": "تقديم محتوى وتوصيات ذات صلة"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "قياس التسويق",
+            "desc": "تتبع فعالية حملاتنا التسويقية"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "أنواع ملفات تعريف الارتباط التي نستخدمها",
       "tableHeaders": {
-        "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "cookie": "ملف تعريف الارتباط",
+        "provider": "المزود",
+        "purpose": "الغرض",
+        "duration": "المدة"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "ملفات تعريف الارتباط الضرورية",
+        "description": "هذه الملفات ضرورية لعمل الموقع بشكل صحيح. ولا يمكن تعطيلها.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "جلسة مصادقة المستخدم",
+            "duration": "الجلسة"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "رمز المصادقة",
+            "duration": "7 أيام"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "تخزين تفضيلات الموافقة على ملفات تعريف الارتباط",
+            "duration": "سنة واحدة"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "ملفات تعريف الارتباط الوظيفية",
+        "description": "تتيح هذه الملفات ميزات مخصصة وتذكر تفضيلاتك.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "تخزين تفضيل اللغة",
+            "duration": "سنة واحدة"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "تخزين تفضيل المظهر",
+            "duration": "سنة واحدة"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "ملفات تعريف الارتباط التحليلية",
+        "description": "تساعدنا هذه الملفات على فهم كيفية تفاعل الزوار مع موقعنا.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "تمييز المستخدمين الفريدين",
+            "duration": "سنتان"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "تحليلات المنتج",
+            "duration": "سنة واحدة"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "ملفات تعريف الارتباط التسويقية",
+        "description": "تُستخدم هذه الملفات للإعلان وتتبع أداء حملات الإعلانات.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "تتبع الزيارات لإعلانات فيسبوك",
+            "duration": "3 أشهر"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "تتبع التحويلات",
+            "duration": "3 أشهر"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "إدارة تفضيلات ملفات تعريف الارتباط الخاصة بك",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "شريط موافقة ملفات تعريف الارتباط",
+        "intro": "عند زيارتك لموقعنا الإلكتروني لأول مرة، ستظهر لك نافذة موافقة ملفات تعريف الارتباط التي تتيح لك ما يلي:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "قبول الكل",
+            "desc": "تفعيل جميع فئات ملفات تعريف الارتباط"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "رفض الكل",
+            "desc": "تعطيل جميع ملفات تعريف الارتباط الاختيارية (تظل ملفات تعريف الارتباط الضرورية)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "تخصيص",
+            "desc": "اختيار فئات ملفات تعريف الارتباط المحددة للتفعيل"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "يمكنك تغيير تفضيلاتك في أي وقت بالنقر على \"إعدادات ملفات تعريف الارتباط\" في التذييل."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "إعدادات المتصفح",
+        "intro": "تتيح لك معظم متصفحات الويب التحكم في ملفات تعريف الارتباط من خلال إعداداتها:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "الإعدادات > الخصوصية والأمان > ملفات تعريف الارتباط"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "الإعدادات > الخصوصية والأمان > ملفات تعريف الارتباط"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "التفضيلات > الخصوصية > ملفات تعريف الارتباط"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "الإعدادات > الخصوصية والبحث والخدمات > ملفات تعريف الارتباط"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "قد يؤثر حظر ملفات تعريف الارتباط معينة على وظائف الموقع."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "تقنيات مشابهة",
+        "intro": "بالإضافة إلى ملفات تعريف الارتباط، قد نستخدم ما يلي:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "التخزين المحلي",
+            "desc": "لتخزين التفضيلات وتخزين البيانات مؤقتًا محليًا"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "تخزين الجلسة",
+            "desc": "للتخزين المؤقت للبيانات أثناء جلسة التصفح الخاصة بك"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "علامات البكسل",
+            "desc": "صور صغيرة لتتبع فتح رسائل البريد الإلكتروني وزيارات الموقع"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "نحن لا نستخدم بصمة المتصفح للتتبع."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "تحديثات هذه السياسة",
+        "content": "قد نقوم بتحديث سياسة ملفات تعريف الارتباط هذه من وقت لآخر. سنقوم بإعلامك بالتغييرات الجوهرية من خلال نشر السياسة المحدثة على موقعنا."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "اتصل بنا",
+        "intro": "إذا كانت لديك أسئلة حول استخدامنا لملفات تعريف الارتباط، يرجى الاتصال بنا:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "لمزيد من المعلومات حول كيفية جمعنا ومعالجة بياناتك، يرجى الاطلاع على",
+        "privacyLink": "سياسة الخصوصية"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "إرشادات الهندسة والأسئلة الشائعة — {brandName}",
+      "description": "تحليل شامل لهندسة الإطار، والطوبولوجيات الأساسية، واستراتيجيات النشر التجاري.",
+      "heading": "تحليل تنفيذي متعمق",
+      "subheading": "مواد داعمة مُحسّنة لدمج هندسة الأنظمة واتخاذ القرارات التجارية التنفيذية.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "نظرة عامة على الهندسة",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "ما هو الغرض التشغيلي الصريح لـ {productName}؟",
+              "a": "{productName} هو إطار عمل AI SaaS مبني على Next.js، عالي التنظيم وجاهز للإنتاج. يجمع بين الفوترة المؤسسية، والمصادقة متعددة العوامل، وعزل متعدد المستأجرين في قاعدة منصة مُدارة، مما يتيح للفرق التركيز على تنفيذ الذكاء الاصطناعي الخاص بالمنتج."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "كيف يتم تنظيم ترخيص المستودع؟",
+              "a": "تفرض البنية التحتية الأساسية بصرامة اتفاقية OSS AGPLv3، مما يضمن الشفافية والاستخدام المجاني تماماً. بالنسبة للمنظمات التي تحتاج إلى إخفاء الملكية وضمانات إعادة كتابة متقدمة، تتوفر عقود تجارية مغلقة المصدر صريحة."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "ما هي سرعة التقييم التجاري الأولي؟",
+              "a": "عالية السرعة جداً. باستخدام مجموعة أدوات Node CLI المخصصة لدينا جنباً إلى جنب مع المواصفات التقنية الدقيقة، يمكن لمهندس مبتدئ إعداد نسخة MVP محلية مستقلة في غضون دقائق معدودة."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "العمليات التجارية",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "ما مدى تحمل التوسع التجاري؟",
+              "a": "تم التصميم بشكل كبير على نماذج المكونات الدقيقة، حيث تتطابق سعة التحميل الهيكلية بسلاسة من مستويات مجانية بدون طلب ديناميكية وصولاً إلى حدود المؤسسات التي تخدم ملايين الطلبات الشهرية، ويتم تكوينها بالكامل عبر قيود لوحة التحكم."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "كيف يؤثر تقلب الاشتراك على المحاسبة القياسية؟",
+              "a": "نعمل باستخدام تسجيل دقيق على مستوى الثانية للموارد ومعدل نقل البيانات عبر API. تعيد القيود المتغيرة المصالحة فوراً مع طبقة المحاسبة—إما عن طريق استرداد الفروقات التناسبية أو إصدار أرصدة تلقائية. لا توجد فترة تجميد للمستويات على الإطلاق."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "ما هي بنية المعالجة التي تعزل متجهات الدفع؟",
+              "a": "تعتمد التوجيه النقدي العالمي بشكل أساسي على واجهات خوادم Stripe، مما يضمن تقييماً دقيقاً لـ PCI-DSS وسلامة المعالجة. قد تدمج عمليات النشر الخاصة بالمؤسسات خطوط تدقيق مالي خاصة تخضع لالتزامات SLA مخصصة."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "طبقة هندسة النظام",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "ما هي تجريدات الذكاء الأساسية المدعومة بشكل أصلي؟",
+              "a": "تفرض منطق التفاعل الأساسي قابلية التشغيل البيني الأصلية عبر مواصفات OpenAI و Anthropic و Gemini القياسية. وهذا يمنح مرونة هائلة لتبديل نقاط نهاية الاستدلال بكفاءة عبر تعيين المتغيرات دون أي تدهور في المنطق التجاري العلوي."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "كيف يتم التعامل مع مخاطر إخفاء قاعدة البيانات؟",
+              "a": "تقوم التنفيذات الافتراضية بشكل جوهري بنشر سياسات أمان مستوى الصف Postgres RLS المقترنة ارتباطاً وثيقاً ببدائيات توجيه حل المستأجر الخادم عديم الخادم لدينا. وهذا يضمن أن الحواجز الصلبة تمنع بنشاط تلوث البيانات على مستوى التطبيق والتداخل في التنفيذ."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "هل توجد قيود معمارية على عمليات النشر ذاتية الإدارة؟",
+              "a": "لا توجد أي قيود. البنية منفصلة تمامًا. إذا كان البيئة تنفذ عمليات تشغيل مستقلة لـ Node.js جنبًا إلى جنب مع مجموعات PostgreSQL صحية، فإن الوظائف الكاملة محفوظة بشكل جوهري."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "سلامة منهجية",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "ما هي البروتوكولات التي تحدد الدفاع الميكانيكي للحدود؟",
+              "a": "تنفذ الآليات تشفير TLS الإلزامي خلال النقل، وخوارزميات التجزئة الحتمية لتعيين الأسرار، وتسجيل شامل لأحداث التغيير المكتوبة بدقة في سجلات تتبع السلاسل الزمنية الداخلية."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "هل تحترم البنية القوانين الدولية الرئيسية للخصوصية؟",
+              "a": "نعم، بعمق. توفر وحدات الأعمال تطبيقات خوارزمية جاهزة تستهدف حالات سحب الموافقة، ومنطق الحذف القاطع، واستعلامات التصدير العميقة المتوافقة بشكل أمثل مع اللائحة العامة لحماية البيانات (GDPR) والإطارات التنظيمية المحلية."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "ماذا يحدث عند وقوع حادث كارثي غير طبيعي؟",
+              "a": "تنبه الحراس الآليون فورًا فرق الهندسة الأساسية التي تفرض حجب الدوائر وتنفيذ التصنيف السريع. وفقًا لدليل حل متقدم، تُنشر تقارير ما بعد الحادث الشفافة تمامًا خلال نافذة زمنية مطلقة مدتها 72 ساعة."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "توجيهات المساعدة التقنية",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "كيف يتم حل استكشاف أعطال الاختناقات التشغيلية؟",
+              "a": "تستهدف متجهات التصنيف الأولية مصفوفة التوثيق المُحافظ عليها بدقة ومراجعة الأقران والتفاعلات المجتمعية المُثبتة. شراء ترخيص قياسي أو على مستوى المؤسسات يفتح الوصول إلى طوابير التصعيد الخاصة التي تحل عبر عقد الهندسة الداخلية المباشر."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "هل تمدون عمليات التكامل البيئي المتخصصة أو المادية؟",
+              "a": "هذا يقع ضمن طبقة التنفيذ المميزة المخصصة لدينا للمجموعات المؤسسية العليا. ينشر أرقانا المعماريون الأكثر خبرة خارجيًا لإجراء تدقيق الكود ضد البنية القديمة، وإدارة عمليات النقل السحابية الحساسة، والتحقق من تقسيمات الشبكة المعزولة بشدة."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "تحتاج إلى مزامنة تقنية فورية؟",
+      "ctaDescription": "سواء كنت تتحقق من مخطط سلوك API محدد أو تنفذ اتفاقيات تكامل طويلة الأجل، تفاعل مباشرة مع تسلسل الهندسة.",
+      "ctaButton": "استلام تعليمات التكامل",
+      "ctaEmail": "إرسال رسالة مباشرة"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "بروتوكول الخصوصية والدفاع عن المعلومات — {brandName}",
+      "description": "توثيق شامل لكيفية تحكم آليات البنية التحتية في استقلالية المستخدم وعزل بيانات الآلة.",
+      "heading": "توجيهات حماية المعلومات",
+      "effectiveDate": "تاريخ النفاذ",
+      "lastUpdated": "آخر تحديث",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 يناير 2025",
+        "updated": "1 يناير 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "في {brandName} (\"الشركة\" أو \"نحن\" أو \"لنا\" أو \"خاصتنا\")، نحن ملتزمون بحماية خصوصيتك. يوضح هذا سياسة الخصوصية كيفية جمعنا واستخدامنا وكشفنا وحمايتنا لمعلوماتك عند استخدامك لموقعنا الإلكتروني وتطبيقاتنا وخدماتنا (مجتمعة، \"الخدمات\").",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. المعلومات التي نجمعها",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 المعلومات التي تقدمها",
+          "intro": "نجمع المعلومات التي تقدمها لنا مباشرة، بما في ذلك:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "معلومات الحساب",
+              "desc": "الاسم، وعنوان البريد الإلكتروني، وكلمة المرور، وتفاصيل المنظمة عند إنشاء حساب."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "معلومات الملف الشخصي",
+              "desc": "صورة الملف الشخصي، والمسمى الوظيفي، واسم الشركة، ومعلومات أخرى اختيارية."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "معلومات الدفع",
+              "desc": "عنوان الفوترة وتفاصيل طريقة الدفع (تُعالَج بأمان عبر Stripe)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "التواصل",
+              "desc": "الرسائل والتعليقات وأي تواصل آخر ترسله إلينا."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "المحتوى",
+              "desc": "أي محتوى تنشئه أو ترفعه أو تخزنه باستخدام خدماتنا."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 المعلومات التي نجمعها تلقائيًا",
+          "intro": "عند استخدامك لخدماتنا، نجمع تلقائيًا معلومات معينة:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "معلومات الجهاز",
+              "desc": "نوع الجهاز، ونظام التشغيل، ونوع المتصفح، ومعرفات الجهاز الفريدة."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "معلومات الاستخدام",
+              "desc": "الصفحات التي تمت مشاهدتها، والميزات المستخدمة، والإجراءات المتخذة، والوقت الذي قضيته في الخدمات."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "بيانات السجلات",
+              "desc": "عنوان IP، وأوقات الوصول، وعناوين URL المرجعية، وسجلات نشاط النظام."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "معلومات الموقع",
+              "desc": "الموقع العام بناءً على عنوان IP (لا نجمع الموقع الجغرافي الدقيق)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. كيفية استخدامنا لمعلوماتك",
+        "intro": "نستخدم المعلومات التي نجمعها لـ:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "تقديم الخدمات",
+            "desc": "تشغيل خدماتنا وصيانتها وتحسينها."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "معالجة المعاملات",
+            "desc": "التعامل مع المدفوعات والفواتير والعمليات ذات الصلة."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "التواصل",
+            "desc": "إرسال إعلانات الخدمة والتحديثات والتواصل التسويقي (بموافقتك)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "التخصيص",
+            "desc": "تخصيص تجربتك وتقديم توصيات ذات صلة."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "التحليل",
+            "desc": "فهم أنماط الاستخدام وتحسين خدماتنا."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "الحماية",
+            "desc": "كشف الاحتيال وسوء الاستخدام والحوادث الأمنية ومنعها والاستجابة لها."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. كيفية مشاركة معلوماتك",
+        "intro": "قد نشارك معلوماتك في الحالات التالية:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 مقدمو الخدمات",
+          "intro": "نشارك المعلومات مع موردين من جهات خارجية يقدمون خدمات نيابة عنا، بما في ذلك:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "البنية التحتية",
+              "desc": "الاستضافة السحابية (Vercel، Supabase)، خدمات قواعد البيانات"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "معالجة المدفوعات",
+              "desc": "Stripe للتعامل الآمن مع المدفوعات"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "المصادقة",
+              "desc": "Clerk لإدارة الهوية"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "تحليلات",
+              "desc": "PostHog، Vercel Analytics للحصول على رؤى حول الاستخدام"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 نقل الأعمال",
+          "content": "إذا كنا طرفًا في عملية اندماج أو استحواذ أو بيع أصول، فقد تُنقل معلوماتك كجزء من تلك الصفقة."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 المتطلبات القانونية",
+          "content": "قد نكشف عن المعلومات عند اشتراط القانون أو الإجراءات القانونية أو طلب الحكومة لذلك، أو لحماية حقوقنا أو خصوصيتنا أو سلامتنا أو ممتلكاتنا."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. حقوقك وخياراتك",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 الوصول والنقل",
+          "content": "يمكنك الوصول إلى معلوماتك الشخصية من خلال إعدادات حسابك وطلب نسخة من بياناتك بتنسيق قابل للنقل."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 التصحيح",
+          "content": "يمكنك تحديث معلومات حسابك في أي وقت من خلال لوحة التحكم."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 الحذف",
+          "content": "يمكنك طلب حذف حسابك والبيانات المرتبطة به من خلال الإعدادات أو عن طريق التواصل معنا."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 رسائل التسويق",
+          "content": "يمكنك إلغاء الاشتراك في رسائل التسويق عبر النقر على \"إلغاء الاشتراك\" في أي رسالة تسويقية أو تحديث تفضيلاتك."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. أمان البيانات",
+        "intro": "نطبق إجراءات تقنية وتنظيمية مناسبة لحماية معلوماتك، بما في ذلك:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "تشفير البيانات أثناء النقل (TLS) وعند التخزين",
+          "1": "تقييمات أمنية منتظمة واختبارات اختراق",
+          "2": "ضوابط الوصول ومتطلبات المصادقة",
+          "3": "مراقبة وتسجيل نشاط النظام"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. حقوق الخصوصية في كاليفورنيا (CCPA)",
+        "intro": "إذا كنت مقيماً في كاليفورنيا، فلك حقوق محددة فيما يتعلق بمعلوماتك الشخصية:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "حق المعرفة",
+            "desc": "طلب الإفصاح عن المعلومات التي نجمعها ونستخدمها ونشاركها."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "حق الحذف",
+            "desc": "طلب حذف معلوماتك الشخصية."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "حق الاعتراض",
+            "desc": "الاعتراض على بيع المعلومات الشخصية (نحن لا نبيع بياناتك)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "حق عدم التمييز",
+            "desc": "لن نمارس أي تمييز ضدك لممارسة حقوقك."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. حقوق الخصوصية الأوروبية (GDPR)",
+        "intro": "إذا كنت في المنطقة الاقتصادية الأوروبية أو المملكة المتحدة أو سويسرا، فلديك حقوق إضافية بموجب اللائحة العامة لحماية البيانات (GDPR):",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "الأساس القانوني",
+            "desc": "نعالج بياناتك بناءً على تنفيذ العقد، المصالح المشروعة، أو الموافقة."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "الحقوق",
+            "desc": "الوصول، التصحيح， الحذف، قابلية النقل، التقييد، والاعتراض."
           },
           "2": {
-            "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "label": "مسؤول حماية البيانات",
+            "desc": "يمكنك التواصل مع مسؤول حماية البيانات لدينا عبر dpo@nebutra.com."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
-        "company": "{brandName} Co., Ltd."
+        "title": "8. تواصل معنا",
+        "intro": "إذا كانت لديك أسئلة حول سياسة الخصوصية هذه، يرجى التواصل معنا:",
+        "company": "شركة {brandName} المحدودة"
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "بروتوكولات الشذوذ في المعاملات — {brandName}",
+      "description": "تحديد دقيق لسياسات استرداد الأموال عبر نماذج الاشتراك المختلفة.",
+      "heading": "إطار تنفيذ النزاعات",
+      "effectiveDate": "تاريخ بدء التنفيذ",
+      "lastUpdated": "تاريخ آخر تحديث",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 يناير 2025",
+        "updated": "1 يناير 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "في {brandName}، نرغب في رضاك التام عن خدماتنا. توضح سياسة الاسترداد هذه الظروف التي يمكن فيها طلب استرداد الأموال والإجراءات المطلوبة لذلك.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "خطط الاشتراك",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "الاشتراكات الشهرية",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "الإلغاء",
+              "desc": "يمكنك إلغاء اشتراكك الشهري في أي وقت"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "استرداد متبقي",
+              "desc": "لا نقدم استرداداً جزئياً للأشهر غير المكتملة"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "الوصول",
+              "desc": "تحتفظ بإمكانية الوصول إلى الميزات المدفوعة حتى نهاية فترة الفوترة الخاصة بك"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "التجديد التلقائي",
+              "desc": "تتجدد الاشتراكات تلقائياً ما لم يتم إلغاؤها"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "الاشتراكات السنوية",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "ضمان استرداد الأموال خلال 14 يوماً",
+              "desc": "يمكن للمشتركين الجدد في الاشتراك السنوي طلب استرداد كامل خلال 14 يوماً من الشراء الأولي"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "بعد 14 يوماً",
+              "desc": "لا يتوفر الاسترداد عادةً بعد فترة الـ 14 يوماً"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "الإلغاء",
+              "desc": "يمكنك الإلغاء في أي وقت، لكن سيبقى اشتراكك نشطاً حتى نهاية المدة السنوية"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "لا يوجد استرداد جزئي",
+              "desc": "لا نقدم استرداداً جزئياً عن الأشهر غير المستخدمة"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "السيناريوهات المؤهلة للاسترداد",
+        "intro": "سننظر في طلبات الاسترداد في الحالات التالية:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. مشكلات الخدمة",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "توقفات كبيرة في الخدمة تؤثر على قدرتك على استخدام الميزات الأساسية",
+            "1": "مشكلات تقنية لا يمكننا حلها في إطار زمني معقول",
+            "2": "ميزات تختلف بشكل كبير عما تم الإعلان عنه"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. أخطاء الفوترة",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "شحنات مكررة",
+            "1": "مبالغ فوترة غير صحيحة",
+            "2": "شحنات غير مصرح بها (بعد التحقق)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. ظروف استثنائية",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "حالات طوارئ طبية موثقة",
+            "1": "كوارث طبيعية تؤثر على عملك",
+            "2": "ظروف أخرى تُقيّم حالة بحالة"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "عناصر غير قابلة للاسترداد",
+        "intro": "العناصر التالية لا تخضع للاسترداد بشكل عام:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "رسوم الاستخدام",
+            "desc": "مكالمات API، استهلاك رموز الذكاء الاصطناعي، أو التخزين المستخدم"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "الإضافات والخدمات الإضافية",
+            "desc": "عمليات الشراء لمرة واحدة أو الخدمات الإضافية"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "عقود المؤسسات",
+            "desc": "تتضمن الاتفاقيات المخصصة شروطها الخاصة"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "الإلغاءات الطوعية",
+            "desc": "بعد انتهاء فترة الأهلية للاسترداد"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "انتهاكات الشروط",
+            "desc": "الحسابات التي تم إنهاؤها بسبب انتهاك السياسات"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "كيفية طلب استرداد المبلغ",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "الخطوة 1: تواصل مع الدعم",
+          "intro": "أرسل لنا بريدًا إلكترونيًا على billing@nebutra.com يتضمن ما يلي:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "عنوان البريد الإلكتروني لحسابك",
+            "1": "خطة الاشتراك وفترة الفوترة",
+            "2": "سبب طلب الاسترداد",
+            "3": "أي مستندات ذات صلة"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "الخطوة 2: عملية المراجعة",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "سنراجع طلبك خلال 5 أيام عمل",
+            "1": "قد نطلب معلومات إضافية",
+            "2": "ستتلقى قراراً كتابياً عبر البريد الإلكتروني"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "الخطوة 3: معالجة الاسترداد",
+          "intro": "في حال الموافقة:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "تُعالَج الاستردادات إلى طريقة الدفع الأصلية",
+            "1": "تظهر استردادات بطاقات الائتمان عادةً خلال 5-10 أيام عمل",
+            "2": "قد تختلف أوقات معالجة البنك"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "تغييرات الخطة",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "التحديثات",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "تدخل التحديثات حيز التنفيذ فوراً",
+            "1": "يتم خصم الفرق التناسبي عن الفترة المتبقية من دورة الفوترة",
+            "2": "لا يُقدم استرداد للخطة السابقة"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "التخفيضات",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "تدخل التخفيضات حيز التنفيذ في دورة الفوترة التالية",
+            "1": "تحتفظ بالوصول إلى الميزات الحالية حتى ذلك الحين",
+            "2": "لا تُصرف استردادات جزئية عن الفترة الحالية"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "فترة التجربة المجانية",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "لا تتطلب فترات التجربة المجانية إدخال معلومات الدفع",
+          "1": "لا تُفرض أي رسوم خلال فترة التجربة",
+          "2": "سيتم إشعارك قبل بدء أي رسوم"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "حل النزاعات",
+        "intro": "إذا كنت لا توافق على قرار الاسترداد الخاص بنا:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "أجب على بريد القرار الإلكتروني بمعلومات إضافية",
+          "1": "اطلب تصعيد الأمر إلى مشرف",
+          "2": "تواصل معنا على legal@nebutra.com لمراجعة إضافية"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "تواصل معنا",
+        "intro": "لطلبات الاسترداد أو الأسئلة حول هذه السياسة:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "الفواتير",
+        "supportLabel": "الدعم",
+        "legalLabel": "القانوني",
+        "responseNote": "نهدف إلى الرد على جميع طلبات الاسترداد خلال 5 أيام عمل.",
+        "termsNote": "تُعد هذه السياسة جزءًا من",
+        "termsLink": "شروط الخدمة",
+        "termsAgreement": "باستخدامك لـ {brandName}، فإنك توافق على شروط الاسترداد هذه."
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "شروط الخدمة — {brandName}",
+      "description": "شروط الخدمة التي تحكم وصولك واستخدامك لموقع {brandName} وتطبيقاته وواجهات برمجة التطبيقات (APIs) وخدماته.",
+      "heading": "شروط الخدمة",
+      "effectiveDate": "تاريخ النفاذ",
+      "lastUpdated": "آخر تحديث",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 يناير 2025",
+        "updated": "1 يناير 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "مرحبًا بك في {brandName}! تحكم شروط الخدمة هذه (\"الشروط\") في وصولك واستخدامك لموقع {brandName} وتطبيقاته وواجهات برمجة التطبيقات (APIs) وخدماته (مجتمعةً، \"الخدمات\") المقدمة من {brandName} Co., Ltd. (\"{brandName}\"، \"الشركة\"، \"نحن\"، \"لنا\"، أو \"خاصتنا\").",
+      "intro2": "من خلال الوصول إلى خدماتنا أو استخدامها، فإنك توافق على الالتزام بهذه الشروط و",
+      "intro2PrivacyLink": "سياسة الخصوصية",
+      "intro2End": ". إذا لم توافق على هذه الشروط، فلا تستخدم خدماتنا.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. قبول الشروط",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 الأهلية",
+          "intro": "لاستخدام خدماتنا، يجب عليك:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "أن تكون قد بلغت 18 عاماً أو سن الرشد القانوني في ولايتك القضائية",
+            "1": "أن تكون مخوّلاً بالتعاقد على هذه الشروط نيابةً عن نفسك أو مؤسستك",
+            "2": "ألا تكون محروماً من استخدام خدماتنا بموجب القانون المعمول به"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 حسابات المؤسسات",
+          "content": "إذا كنت تستخدم خدماتنا نيابةً عن مؤسسة، فأنت تؤكد أن لديك الصلاحية لالتزام تلك المؤسسة بهذه الشروط."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. وصف الخدمات",
+        "intro": "تقدّم {brandName} منصة SaaS تشمل:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "ميزات مدعومة بالذكاء الاصطناعي وإنشاء المحتوى",
+          "1": "أدوات إدارة المحتوى والمجتمع",
+          "2": "أنظمة التوصيات",
+          "3": "تكاملات التجارة الإلكترونية",
+          "4": "قدرات Web3",
+          "5": "تحليلات وتقارير"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. تسجيل الحساب",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 إنشاء الحساب",
+          "intro": "للوصول إلى ميزات معينة، يجب عليك إنشاء حساب. أنت توافق على ما يلي:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "تقديم معلومات دقيقة وكاملة",
+            "1": "الحفاظ على أمان بيانات اعتماد حسابك",
+            "2": "تحديث معلوماتك على الفور عند تغييرها",
+            "3": "تحمل المسؤولية عن جميع الأنشطة التي تتم تحت حسابك"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. الاشتراك والفواتير",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 التسعير",
+          "content": "تُقدم خدماتنا بموجب خطط اشتراك مختلفة كما هو موضح في صفحة التسعير. الأسعار قابلة للتغيير مع إشعار مسبق مدته 30 يومًا."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 الدفع",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "يتم فواتير الاشتراكات مسبقًا على أساس شهري أو سنوي",
+            "1": "جميع الرسوم غير قابلة للاسترداد إلا كما هو مذكور في",
+            "2": "تفوضنا بشحن طريقة الدفع الخاصة بك مقابل الرسوم المستحقة",
+            "3": "نستخدم Stripe لمعالجة المدفوعات بشكل آمن",
+            "1RefundLink": "سياسة الاسترداد"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. الاستخدام المقبول",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 الأنشطة المحظورة",
+          "intro": "أنت توافق على عدم القيام بما يلي:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "انتهاك أي قوانين أو لوائح أو حقوق أطراف ثالثة سارية",
+            "1": "استخدام الخدمات لنقل البرامج الضارة أو البريد العشوائي أو المحتوى الضار",
+            "2": "محاولة الوصول غير المصرح به إلى أنظمتنا",
+            "3": "التدخل في سلامة أو أداء خدماتنا أو تعطيلها",
+            "4": "استخدام أدوات آلية لاستخراج أو نسخ أو جمع البيانات دون إذن",
+            "5": "هندسة الخدمات عكسياً أو فك تجميعها أو تفكيكها",
+            "6": "استخدام ميزات الذكاء الاصطناعي لدينا لتوليد محتوى غير قانوني أو ضار أو خادع"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. الملكية الفكرية",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 ملكيتنا الفكرية",
+          "content": "{brandName} ومرخصوها يمتلكون جميع الحقوق والعنوان والاهتمام في الخدمات، بما في ذلك جميع البرامج والتصاميم والعلامات التجارية والمحتوى الذي ننشئه."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 محتواك",
+          "content": "تحتفظ بملكية المحتوى الذي تنشئه أو ترفعه (\"محتواك\"). ومن خلال استخدام خدماتنا، تمنحنا ترخيصاً عالمياً غير حصري وخالياً من الرسوم لاستخدام وتخزين ومعالجة وعرض محتواك حصرياً لتقديم الخدمات لك."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. إخلاء المسؤولية عن الضمانات",
+        "content": "تُقدَّم الخدمات \"كما هي\" و\"كما هي متاحة\" دون أي ضمانات من أي نوع، سواء صريحة أو ضمنية، بما في ذلك على سبيل المثال لا الحصر الضمانات الضمنية حول قابلية البيع والملاءمة لغرض معين والعنوان وعدم الانتهاك."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. تحديد المسؤولية",
+        "para1": "إلى أقصى حد مسموح به بموجب القانون، لا تتحمل NEBUTRA أي مسؤولية عن الأضرار غير المباشرة، العرضية، الخاصة، التبعية، أو العقابية، أو عن فقدان الأرباح، البيانات， الاستخدام، أو السمعة.",
+        "para2": "في أي حال من الأحوال، لن تتجاوز مسؤوليتنا الإجمالية أكبر مبلغ من بين (أ) المبلغ الذي دفعته لنا خلال الـ 12 شهراً السابقة للمطالبة، أو (ب) 100 دولار أمريكي."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. الإنهاء",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 من قبلك",
+          "content": "يمكنك إنهاء حسابك في أي وقت من خلال إعدادات حسابك. عند الإنهاء، ستفقد الوصول إلى الخدمات."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 من قبلنا",
+          "intro": "يمكننا تعليق أو إنهاء حسابك إذا:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "تنتهك هذه الشروط",
+            "1": "تشارك في أنشطة احتيالية أو غير قانونية",
+            "2": "تفشل في دفع الرسوم المستحقة",
+            "3": "تسبب مخاطر أو تعريضاً قانونياً لنا"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. حل النزاعات",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 الحل غير الرسمي",
+          "content": "قبل بدء الإجراءات الرسمية، أنت توافق على الاتصال بنا على legal@nebutra.com لمحاولة حل النزاعات بشكل غير رسمي."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 القانون الحاكم",
+          "content": "تخضع هذه الشروط لقوانين ولاية ديلاوير، دون مراعاة مبادئ تعارض القوانين."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
-        "company": "{brandName} Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "title": "11. تواصل معنا",
+        "intro": "إذا كانت لديك أسئلة حول هذه الشروط، يرجى التواصل معنا:",
+        "company": "شركة {brandName} المحدودة.",
+        "emailLabel": "البريد الإلكتروني",
+        "supportLabel": "الدعم"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "باستخدامك لـ {brandName}، فإنك تقر بأنك قد قرأت وفهمت وتوافق على الالتزام بشروط الخدمة هذه."
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | نظام تشغيل الوكلاء لرواد الأعمال",
+    "description": "نظام تشغيل الوكلاء لرواد الأعمال الذين يتجهون نحو العالمية. أساس Next.js جاهز للإنتاج مع بنية محكومة، مصادقة، فوترة، وكلاء، ودعم متعدد اللغات — مُصمم لوكلاء البرمجة بالذكاء الاصطناعي والفرق الجادة."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "طوبولوجيا النظام",
+      "title": "بنية شفافة، بدون صناديق سوداء.",
+      "description": "تم تصميم {productName} بهيكل Turborepo فائق التعيين، مما يمنحك ملكية كاملة لدورة حياة برمجياتك بأكملها.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "واجهة ORM مُعرّفة بالكامل مع سياسات أمان على مستوى الصفوف (RLS) مدمجة بشكل أصلي."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk Multi-Tenant / هوية مخصصة",
+        "desc": "بوابة مصادقة جاهزة لـ SOC2 تدعم التبديل بين منظمات B2B ونموذج التحكم في الوصول القائم على الأدوار (RBAC)."
       }
     },
     "pricing": {
-      "title": "Start free. Scale when you're ready.",
-      "description": "Independent and OPC developers ship for free. Annual commercial licenses unlock closed-source use for growing teams. Pick the tier that fits and start building today.",
-      "socialProofText": "AGPL-3.0 on fork · Independent Developer License via CLI · annual commercial tiers for teams.",
+      "title": "ابدأ مجاناً. وسّع نطاقك عندما تكون جاهزاً.",
+      "description": "يطرح المطورون المستقلون ومطورو OPC منتجاتهم مجاناً. تفتح التراخيص التجارية السنوية استخدام المصدر المغلق للفرق النامية. اختر المستوى المناسب وابدأ البناء اليوم.",
+      "socialProofText": "AGPL-3.0 عند التفرع · ترخيص المطور المستقل عبر CLI · مستويات تجارية سنوية للفرق.",
       "independent": {
-        "badge": "INDEPENDENT",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Solo builders and one-person companies (≤ 1 FTE, < $1M ARR). No copyleft when scaffolded via create-sailor.",
+        "badge": "مستقل",
+        "price": "مجاني",
+        "period": "للأبد",
+        "desc": "للمبنيين الفرديين والشركات المكونة من شخص واحد (≤ 1 FTE، < 1 مليون دولار ARR). لا يوجد copyleft عند التوليد عبر create-sailor.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited personal projects (commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more — plus thin admin + Retool/Metabase recipes (we don't ship bloated CRUD; we ship the integration patterns top SaaS use)",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Independent Developer License (no AGPL copyleft when scaffolded with the CLI)"
+        "f1": "نواة SaaS كاملة لـ Next.js 16",
+        "f2": "مشاريع شخصية غير محدودة (يُسمح بالاستخدام التجاري)",
+        "f3": "مجموعة SaaS كاملة: المصادقة، المدفوعات، المنظمات، API، البريد الإلكتروني، i18n، مهام الخلفية، التخزين والمزيد — بالإضافة إلى لوحة إدارة خفيفة وصفات Retool/Metabase (لا نطرح CRUD متضخم؛ نطرح أنماط التكامل التي تستخدمها أفضل خدمات SaaS)",
+        "f4": "ميزات التسويق: المدونة، صفحة الهبوط، SEO، التحليلات",
+        "f5": "ترخيص المطور المستقل (لا يوجد copyleft لـ AGPL عند التوليد باستخدام CLI)"
       },
       "startup": {
-        "badge": "STARTUP",
+        "badge": "شركة ناشئة",
         "price": "$799",
-        "period": "/ year",
-        "desc": "For teams of 2–50 people. Closed-source commercial use, annual renewal.",
-        "cta": "Get {brandName} for Startups",
-        "f1": "Closed-source use (commercial license, 2–50 FTE)",
-        "f2": "Unlimited team projects",
-        "f3": "12 months of updates included",
-        "f4": "Email support",
-        "f5": "Everything in Independent"
+        "period": "/ سنة",
+        "desc": "للفرق المكونة من 2 إلى 50 شخصاً. استخدام تجاري للمصدر المغلق، وتجديد سنوي.",
+        "cta": "احصل على {brandName} للشركات الناشئة",
+        "f1": "الاستخدام المغلق المصدر (ترخيص تجاري، 2–50 موظف)",
+        "f2": "مشاريع فريق غير محدودة",
+        "f3": "12 شهرًا من التحديثات متضمنة",
+        "f4": "دعم عبر البريد الإلكتروني",
+        "f5": "كل ما في الباقة المستقلة"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
-        "price": "Custom",
+        "badge": "المؤسسات",
+        "price": "حسب الطلب",
         "period": "",
-        "desc": "50+ FTE, ≥ $1M ARR, or white-label / SLA needs. Custom contract with priority support.",
-        "cta": "Contact sales",
-        "f1": "Unlimited use across your organization (commercial license)",
-        "f2": "White-label rights (with written approval)",
-        "f3": "Priority support with SLA (2-hour critical, 24-hour standard)",
-        "f4": "Custom contract negotiation and roadmap input",
-        "f5": "Multi-product / multi-division licensing",
-        "f6": "Everything in Startup"
+        "desc": "50+ موظف، أو إيرادات سنوية ≥ 1 مليون دولار، أو احتياجات العلامة البيضاء / اتفاقيات مستوى الخدمة. عقد مخصص مع دعم ذو أولوية.",
+        "cta": "تواصل مع المبيعات",
+        "f1": "استخدام غير محدود عبر مؤسستك (ترخيص تجاري)",
+        "f2": "حقوق العلامة البيضاء (بموافقة كتابية)",
+        "f3": "دعم ذو أولوية مع اتفاقية مستوى الخدمة (2 ساعة للحالات الحرجة، 24 ساعة للمعايير)",
+        "f4": "تفاوض على العقود المخصصة وإدخال في خارطة الطريق",
+        "f5": "ترخيص متعدد المنتجات / الأقسام",
+        "f6": "كل ما في باقة الشركات الناشئة"
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "الأسئلة الشائعة حول التسعير والترخيص",
+      "description": "أسئلة حول مستويات الترخيص، والاسترداد، وحقوق الاستخدام التجاري.",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "هل Sailor اشتراك SaaS شهري؟",
+        "a": "لا. هذا التسعير مخصص لترخيص شفرة Sailor المصدر: Independent مجاني، و Startup يُفوتَر سنوياً، و Enterprise مخصص."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "هل تقدمون استرداداً للأموال؟",
+        "a": "تتضمن التراخيص التجارية لـ Startup نافذة استرداد مدتها 14 يوماً للشراء الأولي. تُدار شروط Enterprise في العقد الموقع."
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "هل يمكنني استخدام Sailor لأعمال العملاء؟",
+        "a": "نعم. يتيح لك الترخيص التجاري شحن منتجات مغلقة المصدر للعملاء أو للاستخدام الداخلي ضمن نطاق الترخيص؛ وتتطلب حقوق العلامة البيضاء موافقة Enterprise."
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "ما زلت لديك أسئلة؟ تحدث إلى فريق {brandName} →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "ابدأ الآن",
+      "title": "توقف عن التكوين. ابدأ البناء.",
+      "description": "قم بتهيئة بنية SaaS قابلة للتوسع محلياً باستخدام {brandName} CLI.",
+      "button": "انشر البنية",
+      "license": "مفتوح المصدر بموجب ترخيص AGPL-3.0. لا حاجة لبطاقة ائتمان."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "قدرات المؤسسات",
+      "title": "نواة كاملة الأنواع وقابلة للتوسع.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "أمان أصلي على مستوى الصف",
+        "desc": "كل استعلام قاعدة بيانات مقيد بدقة بسياق المستأجر الحالي.",
+        "cta": "اقرأ فلسفة قاعدة البيانات"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "بوابة ذكاء اصطناعي عالمية",
+        "desc": "توجيه المطالبات بسلاسة إلى OpenAI وAnthropic أو النماذج مفتوحة المصدر.",
+        "cta": "استكشف معالج حزمة تطوير الذكاء الاصطناعي"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "التحكم الدقيق في الوصول",
+        "desc": "تعريف أدوار المسؤول والعضو والمشاهد مع هيكل سياسات مدمج.",
+        "cta": "عرض مستندات RBAC"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "بنية فواتير متعددة المزودين",
+        "desc": "قياس الاستخدام، ووكلاء الويب للاشتراكات، وبوابات العملاء ذاتية الخدمة.",
+        "cta": "عرض بنية الفواتير"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "عرض تفاعلي",
+      "title": "اختبر سرعة الوقت الفعلي.",
+      "description": "احصل على فكرة عن واجهة سطر الأوامر، وتوجيه وكلاء الويب لـ Stripe، وتزويد قاعدة بيانات متعددة المستأجرين محليًا.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "قياسات فورية",
+        "desc": "نقل بيانات استخدام الإنتاج مباشرة إلى جهازك الطرفي."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "أحداث الفوترة",
+        "desc": "شاهد تنفيذ Webhooks الخاصة بـ Stripe عبر النفق المحلي."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "تهيئة مساحة العمل",
+        "desc": "قم بتوفير مخططات PostgreSQL معزولة لـ B2B فوراً."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "السرعة",
+      "title": "من الصفر إلى الإنتاج في وقت قياسي.",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "title": "1. استنساخ",
+        "desc": "استنسخ مستودع {brandName} الموحد فوراً وقم بتشغيل pnpm install."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. تهيئة",
+        "desc": "قم بإعداد Prisma و Clerk و Stripe عبر واجهة CLI التفاعلية في دقائق."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. بناء",
+        "desc": "ركّز على منطق المنتج وواجهة المستخدم بينما تم بالفعل توصيل الأساس المنصوري للمنصة."
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. نشر",
+        "desc": "انشر على Vercel و AWS للتوزيع العالمي الفوري."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "دقائق",
+        "subtitle": "الوقت للوصول إلى السوق",
+        "comparison": "تجاوز شهورًا من العمل على المنصة.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "التهيئة",
+          "wire": "الأساس",
+          "ship": "النشر",
+          "scale": "التوسع",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "ابدأ المؤقت"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "نظام الإعدادات المسبقة",
+        "message": "إعداد واحد. كل الميزات. اختر الإعداد المسبق وانشر.",
+        "detail": "اضبط مرة واحدة، وولّد كل شيء — الفوترة، المصادقة، الذكاء الاصطناعي، تعدد اللغات — من إعداد مسبق واحد.",
+        "readyStatus": "نظام الإعدادات المسبقة جاهز"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "قدرات المنصة",
+      "headlinePrefix": "كل ما تحتاجه لـ ",
+      "headlineHighlight": "النشر بثقة.",
+      "description": "{brandName} هي منصة SaaS متكاملة — الذكاء الاصطناعي، الفوترة، تعدد المستأجرين، المراقبة، والأمان مدمجة منذ اليوم الأول. توقف عن إعادة بناء طبقة المنصة."
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
+      "exploreFeature": "استكشف الميزة",
+      "ai_category": "الذكاء الاصطناعي والذكاء",
+      "ai_f1_title": "إكمال الدردشة متعدد النماذج",
+      "ai_f1_desc": "توجيه الطلبات إلى Anthropic و OpenAI و Google أو نماذجك المُحسّنة. يدعم البث المباشر والرؤية والاستدعاء الوظيفي جاهزاً من البداية.",
+      "ai_f2_title": "التضمينات الدلالية",
+      "ai_f2_desc": "إنشاء وتخزين التضمينات المتجهة باستخدام pgvector. دعم البحث الدلالي وسلاسل RAG ومحركات التوصيات.",
+      "ai_f3_title": "قياس استخدام الذكاء الاصطناعي",
+      "ai_f3_desc": "حصص لكل خطة مع تتبع الاستخدام — قياس رموز الذكاء الاصطناعي واستدعاءات API والتخزين مقابل التجميعات الفورية المدعومة بـ ClickHouse.",
+      "multi_category": "منصة متعددة المستأجرين",
+      "multi_f1_title": "عزل على مستوى المؤسسة",
+      "multi_f1_desc": "تضمن الأمان على مستوى الصفوف في Postgres أن المستأجرين لا يمكنهم الوصول إلى بيانات بعضهم البعض — مُنفذ على مستوى قاعدة البيانات وليس التطبيق فقط.",
+      "multi_f2_title": "المصادقة متعددة المزودين (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth متعدد المزودين (Google و GitHub وغيرها) بالإضافة إلى البريد/كلمة المرور والروابط السحرية — التبديل بين Clerk و Better Auth و NextAuth أو Supabase Auth عبر متغير بيئة واحد.",
+      "multi_f3_title": "تجهيز المستأجرين تلقائياً",
+      "multi_f3_desc": "عند تسجيل مؤسسة جديدة عبر Clerk، نقوم تلقائياً بإنشاء مفتاح API الأول وإرسال رسالة ترحيبية مميزة — بدون خطوات يدوية.",
+      "dx_category": "تجربة المطور",
+      "dx_f1_title": "مفاتيح API مشفرة",
+      "dx_f1_desc": "مفاتيح مشفرة SHA-256 مع عرض بادئة (nbtr_live_…). تُعرض كنص واضح مرة واحدة فقط عند الإنشاء — أمان دون تعقيد.",
+      "dx_f2_title": "وسيط التكرار الآمن (Idempotency)",
+      "dx_f2_desc": "أرسل رأس Idempotency-Key لتصبح أي طلب POST آمناً لإعادة المحاولة. مدعوم بـ Redis، ذاكرة تخزين مؤقت لمدة 24 ساعة، ومتوافق مع مسودة IETF.",
+      "dx_f3_title": "واجهة برمجة تطبيقات متعددة البروتوكولات (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI للواجهات العامة، oRPC لاستدعاءات الواجهة الأمامية الآمنة نوعياً، وtRPC لتوافق مكدس T3. تشارك جميع البروتوكولات نفس عقود Zod ومكدس الوسائط. فعّلها لكل بروتوكول عبر إعدادات جاهزة.",
+      "billing_category": "الفوترة والربح",
+      "billing_f1_title": "Stripe، LemonSqueezy، Polar والدفع الصيني",
+      "billing_f1_desc": "اختر مزود الدفع المناسب: Stripe للمؤسسات العالمية، LemonSqueezy للمطورين المستقلين، Polar للمشاريع مفتوحة المصدر، أو Alipay/WeChat Pay للسوق الصيني. إتمام الشراء بنقرة واحدة وبوابة فوترة ذاتية.",
+      "billing_f2_title": "إنفاذ الحصص بناءً على الاستخدام",
+      "billing_f2_desc": "تتبع عدادات Redis في الوقت الفعلي طلبات واجهة التطبيقات واستهلاك الرموز لكل مستأجر. يتم حظر الطلبات عند البوابة عند تجاوز الحدود.",
+      "billing_f3_title": "مزامنة دورة حياة الويب هوك",
+      "billing_f3_desc": "تحديث خطط المنظمات في قاعدة بياناتك تلقائياً عبر أحداث اشتراكات Stripe باستخدام Inngest — بدون مهام cron أو استعلامات متكررة.",
+      "rel_category": "الموثوقية",
+      "rel_f1_title": "قاطع الدائرة + إعادة المحاولة",
       "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
+      "rel_f2_title": "طابور الرسائل الميتة",
+      "rel_f2_desc": "تنتقل معالجات الأحداث التي تستنفد 3 محاولات إعادة إلى طابور الرسائل الميتة (DLQ). أعد تشغيلها فردياً من واجهة الإدارة دون إعادة النشر.",
+      "rel_f3_title": "تنبيهات معدل استهلاك SLO",
+      "rel_f3_desc": "تنبيهات متعددة النوافذ على غرار Google SRE تُطلق عند معدلات استهلاك 14.4× و6× و3× قبل نفاذ ميزانية الأخطاء الخاصة بك.",
+      "sec_category": "الأمان",
+      "sec_f1_title": "عناوين CSP مبنية على nonce",
       "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
-      "sec_f2_title": "ModSecurity WAF",
+      "sec_f2_title": "جدار الحماية ModSecurity WAF",
       "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
+      "sec_f3_title": "SBOM + أصل SLSA",
       "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
+      "obs_category": "الرؤية المراقبة",
+      "obs_f1_title": "تتبع OpenTelemetry",
       "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
+      "obs_f2_title": "لوحات Grafana",
       "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
+      "obs_f3_title": "تتبع أخطاء Sentry",
       "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "data_category": "البيانات والتحليلات",
+      "data_f1_title": "مستودع ClickHouse OLAP",
+      "data_f1_desc": "تصل الأحداث إلى ClickHouse لاستعلامات تحليلية سريعة. يقوم dbt بتحويل الأحداث الخام إلى مقاييس نمو من الطبقة الذهبية المرئية في لوحة التحكم.",
+      "data_f2_title": "تحليلات القمع",
+      "data_f2_desc": "تتبع التسجيلات → التفعيلات → التحويلات مع الإسناد على مستوى الفئات. يتم حساب الإيرادات لكل مستخدم نشط من الطبقة الذهبية.",
+      "data_f3_title": "Kafka / استقبال الأحداث",
+      "data_f3_desc": "استقبال أحداث عالي الإنتاجية عبر Inngest إلى طبقة ClickHouse البرونزية، مع إزالة التكرار في الذاكرة والتحقق من المخطط عند حافة البوابة.",
+      "infra_category": "البنية التحتية",
+      "infra_f1_title": "GitOps مع ArgoCD",
+      "infra_f1_desc": "تتم مزامنة تغييرات الفرع الرئيسي تلقائيًا مع العنقود. يعيد الإصلاح الذاتي التعديلات اليدوية باستخدام kubectl. تفرض نوافذ المزامنة ساعات نشر آمنة.",
+      "infra_f2_title": "تجميع اتصالات PgBouncer",
+      "infra_f2_desc": "يعمل PgBouncer في وضع المعاملات أمام Supabase ويتعامل مع 1,000 اتصال للتطبيق على 20 اتصال Postgres. متوفر بتوفر عالٍ مع نسختين.",
+      "infra_f3_title": "التوسع الأفقي + العمودي التلقائي",
+      "infra_f3_desc": "يوسع HPA بناءً على وحدة المعالجة المركزية/الذاكرة. يعمل VPA في وضع إيقاف ويوفر توصيات لتعديل الحجم المناسب. مقترحات مقاييس KEDA المخصصة للإصدار v2."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 قيد الإنشاء",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "نحن بصدد صياغة تجربة رائعة مدفوعة بالهواة لهذا القسم. سيتم إطلاقها جنبًا إلى جنب مع تحديث خط أنابيب البنية الرئيسية القادم.",
+      "opc": "نعمل حالياً على تقديم نظرة أعمق للمنصة. تابع سجل التغييرات وخارطة الطريق لمعرفة الإصدارات القادمة.",
+      "roadmap": "من الأساسات التقنية إلى نطاق المؤسسات — مراحل المنتج، نقاط الإصدار الرئيسية، ورؤية التمويل."
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "العودة إلى المركز"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "من المدونة",
+    "title": "رؤى هندسية",
+    "subtitle": "استكشاف معمّق لهندسة SaaS، بنية AI التحتية، والهندسة الإنتاجية.",
+    "readMore": "اقرأ المزيد"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "سيناريوهات قابلة للتوسع",
+    "title": "أساس واحد. إمكانيات لا نهائية.",
+    "description": "{productName} يدعم الجيل القادم من منتجات SaaS عبر الأسواق العالمية.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "عمليات Agentic",
+      "ip": "مصفوفة الملكية الفكرية الشخصية",
+      "multimodal": "SaaS متعدد الوسائط بالذكاء الاصطناعي",
+      "enterprise": "المؤسسات الحديثة (الصين)",
+      "export": "تصدير البرمجيات عالمياً",
+      "design": "محرك نظام التصميم",
+      "edam": "الأصول الرقمية المؤسسية"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "مركز العمليات الأصلي بالذكاء الاصطناعي",
+        "desc": "شغّل سير عمل الوكلاء، الأدوات الداخلية، وواجهات التكامل على منصة موحدة ومُدارة. تظل الإضافات القائمة على السجل، بوابات المشغلين، وأنماط وقت التشغيل القابلة لإعادة الاستخدام متناسقة مع توسع النظام.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "سجل الأدوات وواجهة التكامل",
+          "f2": "بوابة المشغلين ولوحة التحكم الداخلية"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "مصفوفة نمو الملكية الفكرية الشخصية والمحفظة",
+        "desc": "أضف حضوراً عالمياً للمؤسس مع مدونة MDX عالية التحويل، ومحفظة أعمال، وصفحات تعريفية. تضمن النشرة الإخبارية المدمجة والتحليلات وتحسين محركات البحث نمو علامتك الشخصية.",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "مدونة MDX + محرك النشرة الإخبارية",
+          "f2": "محسّن لمحركات البحث والشبكة الاجتماعية"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "SaaS ذكاء اصطناعي متعدد الوسائط مبتكر",
+        "desc": "أطلق منتجات SaaS لتوجيه الوكلاء المتعددين، روبوتات الدردشة، النص إلى صورة، الصورة إلى نص، والنص إلى فيديو بواجهة مستخدم متدفقة رائدة، وتوجيه ذكي للنماذج، وقياس الاستخدام.",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
-          "f2": "Model Router + Usage Metering"
+          "f1": "واجهة مستخدم متدفقة للوكلاء المتعددين",
+          "f2": "موجه النماذج + قياس الاستخدام"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "موقع مؤسسي حديث (الصين)",
+        "desc": "مصمم خصيصاً لسيناريوهات الأعمال في الصين — CDN محلي فائق السرعة، تكامل مع نظام WeChat، تصميم متجاوب يركز على الجوال، والامتثال المحلي جاهز من البداية.",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "CDN محلي + الامتثال",
+          "f2": "جاهز لنظام WeChat البيئي"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "صفحات هبوط تصدير البرمجيات عالمياً",
+        "desc": "مصممة خصيصاً لـ SaaS المتجهة عالمياً. دفع Stripe متعدد العملات، توجيه تلقائي للترجمة عبر next-intl لـ 7 لغات، امتثال لـ GDPR/CCPA، ومحتوى مستهدف جغرافياً.",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "مدفوعات عالمية متعددة العملات",
+          "f2": "7 لغات + جاهز لـ GDPR"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "نظام تصميم ومكتبة مكونات رائدة",
+        "desc": "بنية مدعومة بالرموز على 4 طبقات: العلامة التجارية → الرموز → السمة → واجهة المستخدم. مبني على Radix وطبقة Motion المشتركة مع سمة متعددة oklch، وثائق Storybook، واختبار الانحدار البصري.",
         "features": {
-          "f1": "4-Layer Token Governance",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f1": "حوكمة رموز على 4 طبقات",
+          "f2": "سمة متعددة oklch + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "إدارة الأصول الرقمية المؤسسية",
+        "desc": "بحيرات بيانات منظمة وطوبولوجيات لوحات معلومات معقدة باستخدام بنية PostgreSQL قابلة للتوسع و RBAC تفصيلي.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "الأمان على مستوى الصف",
+          "f2": "استعلامات معقدة",
+          "f3": "إدارة الأدوار"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
-    "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
-    "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
-    "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
-    "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "badge": "نظام التصميم",
+    "headline": "4 طبقات من حوكمة التصميم.",
+    "subheadline": "من العناصر الأساسية للعلامة التجارية إلى الرموز التشغيلية، ومن محرك السمات المتعددة إلى المكونات المُدارة — ليس مجرد shadcn مع Tailwind.",
+    "flowBrand": "العلامة التجارية",
+    "flowBrandDesc": "العناصر اللونية الأساسية، التدرجات، لغة الحركة",
+    "flowTokens": "الرموز",
+    "flowTokensDesc": "متغيرات CSS، مقاييس من 12 خطوة، الوضع الداكن",
+    "flowTheme": "السمة",
+    "flowThemeDesc": "سمات متعددة باستخدام oklch، 6 قوالب جاهزة، color-mix()",
+    "flowUI": "واجهة المستخدم",
+    "flowUIDesc": "مكونات، Storybook，Chromatic",
+    "card1Title": "مقاييس لونية من 12 خطوة",
+    "card1Desc": "مقياس دلالي متوافق مع Geist: الخلفيات (1-2)، الحالات (3-5)، الحدود (6-8)，الملء (9-10)، النص (11-12).",
+    "card2Title": "سمات متعددة باستخدام oklch",
+    "card2Desc": "6 قوالب سمات باستخدام oklch مع اشتقاق color-mix(). نطاق عرض Display-P3 مع بديل sRGB.",
+    "card3Title": "الانحدار البصري",
+    "card3Desc": "Chromatic يلتقط كل تغيير بكسل. Storybook يوثق كل مكون. اختبارات البنية تفرض تغطية القصص.",
+    "card4Title": "حُكم الرموز",
+    "card4Desc": "ميزانيات متدرجة: سقف سداسي، أرضية oklch، حدود فئات الألوان الخام. كشف انحراف العلامة التجارية في CI.",
+    "card5Title": "توثيق تفاعلي",
+    "card5Desc": "موقع توثيق تصميم كامل مدعوم بـ Fumadocs يتضمن وثائق واجهة برمجة المكونات ثنائية اللغة (EN/ZH)، ومعارض الرموز، ودلائل أنماط التخطيط، وأمثلة أكواد حية."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "الصفحة غير موجودة",
+    "desc": "قد يكون الرابط قديماً، أو ربما تم نقل الصفحة.",
+    "home": "العودة إلى {brandName}",
+    "docs": "فتح التوثيق"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "البحث عن الإصدارات..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "تبديل القائمة"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "عرض الإصدار الكامل",
+      "copyLinkToRelease": "نسخ رابط الإصدار",
+      "copyLink": "نسخ الرابط",
+      "openInNewTab": "فتح في علامة تبويب جديدة"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "قريباً"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Dual <hl>License</hl> Model",
-      "description": "{brandName}-Sailor is open source under AGPL-3.0. We also offer commercial licenses for teams building closed-source products."
+      "title": "نموذج <hl>ترخيص</hl> مزدوج",
+      "description": "{brandName}-Sailor مفتوح المصدر بموجب AGPL-3.0. نقدم أيضاً تراخيص تجارية للفرق التي تبني منتجات مغلقة المصدر."
     },
     "plans": {
       "agpl": {
-        "badge": "Always Free",
+        "badge": "مجاني دائماً",
         "title": "AGPL-3.0",
-        "subtitle": "Open Source",
-        "description": "Open source projects, academic research, personal learning",
+        "subtitle": "مفتوح المصدر",
+        "description": "المشاريع مفتوحة المصدر، البحث الأكاديمي، التعلم الشخصي",
         "features": {
-          "sourceAccess": "Full source code access",
-          "mustOpenSource": "Must open-source your product",
-          "mustCredit": "Must credit {brandName}-Sailor",
-          "communitySupport": "Community support only"
+          "sourceAccess": "الوصول الكامل إلى الكود المصدري",
+          "mustOpenSource": "يجب أن يكون منتجك مفتوح المصدر",
+          "mustCredit": "يجب ذكر {brandName}-Sailor",
+          "communitySupport": "دعم المجتمع فقط"
         },
-        "cta": "View on GitHub"
+        "cta": "عرض على GitHub"
       },
       "freeCommercial": {
-        "badge": "Free Forever",
-        "title": "Free Commercial",
-        "subtitle": "Individual & Solo",
-        "description": "Individual builders and single-seat operators",
+        "badge": "مجاني للأبد",
+        "title": "تجاري مجاني",
+        "subtitle": "فردي وواحد",
+        "description": "المطورون الأفراد والمشغلون بمقعد واحد",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "teamSize": "Team size ≤ 1 FTE",
-          "creditRequired": "Credit required",
+          "closedSource": "الاستخدام في المنتجات مغلقة المصدر",
+          "teamSize": "حجم الفريق ≤ 1 FTE",
+          "creditRequired": "يتطلب ذكر المصدر",
           "freeKey": "Free license key via registration"
         },
         "cta": "Get Your Free License"

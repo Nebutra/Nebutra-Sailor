@@ -80,6 +80,16 @@
     "label": "语言",
     "ariaLabel": "切换语言"
   },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP 备案号",
+      "publicSecurity": "公安备案"
+    },
+    "wechat": {
+      "signIn": "使用微信登录",
+      "notConfigured": "微信登录未配置"
+    }
+  },
   "onboarding": {
     "title": "搭建你的工作空间",
     "subtitle": "三步即可开始使用。",
@@ -228,33 +238,6 @@
     "environment_title": "Environment 可持续生态",
     "environment_headline": "数字极简主义",
     "environment_description": "推崇高人效、低消耗。将庞大的云基础设施成本压缩至最低，大幅降低无意义的算力沉没与碳排放。"
-  },
-  "billing": {
-    "activePlan": {
-      "title": "当前套餐",
-      "manage": "管理订阅",
-      "noPlanTitle": "暂无套餐",
-      "noPlanDescription": "选择一个套餐以解锁付费功能和更高用量。",
-      "choosePlan": "选择套餐",
-      "renewsOn": "{date} 续订",
-      "endsOn": "{date} 到期",
-      "trialEndsOn": "试用期 {date} 结束",
-      "status": {
-        "active": "使用中",
-        "trialing": "试用中",
-        "past_due": "已逾期",
-        "canceled": "已取消",
-        "free": "免费版"
-      },
-      "errors": {
-        "loadFailed": "无法加载账单状态。"
-      }
-    },
-    "pricing": {
-      "trial": "免费试用 {days} 天",
-      "seat": "{count} 个席位",
-      "perSeat": "/ 席位"
-    }
   },
   "auth": {
     "security": {
@@ -530,6 +513,33 @@
         "title": "探索平台功能",
         "prompt": "请带我了解这个 SaaS 平台的核心功能以及我可以如何使用它们。"
       }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "当前套餐",
+      "manage": "管理订阅",
+      "noPlanTitle": "暂无套餐",
+      "noPlanDescription": "选择一个套餐以解锁付费功能和更高用量。",
+      "choosePlan": "选择套餐",
+      "renewsOn": "{date} 续订",
+      "endsOn": "{date} 到期",
+      "trialEndsOn": "试用期 {date} 结束",
+      "status": {
+        "active": "使用中",
+        "trialing": "试用中",
+        "past_due": "已逾期",
+        "canceled": "已取消",
+        "free": "免费版"
+      },
+      "errors": {
+        "loadFailed": "无法加载账单状态。"
+      }
+    },
+    "pricing": {
+      "trial": "免费试用 {days} 天",
+      "seat": "{count} 个席位",
+      "perSeat": "/ 席位"
     }
   },
   "organizations": {
@@ -995,16 +1005,6 @@
         "label": "营销",
         "description": "在第三方平台上的个性化广告与再营销。"
       }
-    }
-  },
-  "compliance": {
-    "icp": {
-      "recordNumber": "ICP 备案号",
-      "publicSecurity": "公安备案"
-    },
-    "wechat": {
-      "signIn": "使用微信登录",
-      "notConfigured": "微信登录未配置"
     }
   },
   "notifications": {

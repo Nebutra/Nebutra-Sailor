@@ -5,127 +5,127 @@
     "description": "API-marknadsplats för alla modeller · betala per användning · hantera nycklar och plånbok · prova snabbt."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
+    "dashboard": "Översikt",
+    "keys": "API-nycklar",
+    "wallet": "Plånbok",
+    "docs": "Dokumentation",
     "title": "Admin",
     "backToMarket": "Tillbaka till marknadsplatsen",
-    "quickUse": "Quick use"
+    "quickUse": "Snabbstart"
   },
   "chrome": {
     "searchPlaceholder": "Vad vill du göra med AI?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Sök",
+    "locale": "Språk",
+    "currency": "Valuta",
     "collapseSidebar": "Dölj sidofält",
     "expandSidebar": "Visa sidofält",
-    "home": "Home",
+    "home": "Hem",
     "adminConsole": "Admin",
-    "quickUse": "Quick use",
+    "quickUse": "Snabbstart",
     "support": "Support",
-    "apiDocs": "API docs",
+    "apiDocs": "API-dokumentation",
     "integrationHelp": "Integrationsguide",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI-rekommendationer",
+    "market": "Marknad",
+    "usageTitle": "Snabb användning"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "Appmarknad",
+    "api": "API-marknad",
     "models": "Modellkatalog",
-    "client": "Client"
+    "client": "Klient"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "new": "Nytt",
+    "hot": "Populärt",
+    "forYou": "För dig",
+    "grid": "Rutnät",
+    "list": "Lista",
+    "apiShelf": "API-hylla",
+    "toolShelf": "Verktygshylla",
+    "categories": "Kategorier",
+    "apps": "Appar",
+    "newRelease": "Ny utgåva",
+    "forgeTitle": "Forge-verktygsarbetsplats",
+    "forgeBlurb": "Texttransformeringar, codecs, formulär och sammansättbara verktyg. Appmarknads labbet pekar mot Forge.",
+    "openForge": "Öppna Forge →",
+    "allApi": "Alla API:er →",
+    "all": "Alla →",
+    "viewAll": "Visa alla {label} →",
+    "gridView": "Rutnät",
+    "listView": "Lista",
+    "hiTitle": "Plattformen för företags AI-resurser",
+    "hiSubtitle": "Matcha varje behov med rätt AI",
+    "sellable": "Säljbar",
+    "walletTopup": "Ladda på"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Språkmodeller",
+      "hint": "Chatt · resonemang"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Bildgenerering",
+      "hint": "Text till bild"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "Bildredigering",
+      "hint": "Redigera · utklipp"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "Videogenerering",
+      "hint": "Text till video"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "Ljud & video",
+      "hint": "Tal · transkribering"
     },
     "data": {
       "label": "Information",
-      "hint": "Retrieval · extract"
+      "hint": "Hämtning · extrahering"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Kunskapsutökad"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "Verktygs-API:er",
+      "hint": "Agent · verktyg"
     }
   },
   "toolTaxonomy": {
     "bots": {
       "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "chips": "Chattbots · ritbots · kunskap"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Produktivitet",
+      "chips": "Modellarena · AI-skrivning"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "Akademisk",
+      "chips": "PDF-verktyg · AI-patentsökning"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "Bildverktyg",
+      "chips": "3D-studio · Canvas"
     },
     "audio": {
-      "label": "Audio",
-      "chips": "Speech · AI music"
+      "label": "Ljud",
+      "chips": "Tal · AI-musik"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "Kod",
+      "chips": "Webgenerator · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "Översikt",
+    "keys": "Nycklar",
+    "wallet": "Plånbok",
+    "use": "Prova",
+    "docs": "Dokumentation",
+    "models": "Mer"
   }
 }

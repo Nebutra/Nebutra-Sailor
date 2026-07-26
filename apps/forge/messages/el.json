@@ -8,7 +8,7 @@
     "main": "Κύρια πλοήγηση",
     "homeAria": "Αρχική {brandName} Forge",
     "tools": "Εργαλεία",
-    "wallet": "Wallet",
+    "wallet": "Πορτοφόλι",
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Κατηγορίες εργαλείων"
@@ -16,7 +16,7 @@
   "tool": {
     "breadcrumbAria": "Breadcrumb",
     "labNotice": "Δυνατότητα Lab: περιορισμένο σύνολο δεδομένων ή κάλυψη λεξικού· τα αποτελέσματα είναι μόνο ενδεικτικά.",
-    "workspace": "Workspace",
+    "workspace": "Εργαζιακός Χώρος",
     "workspaceHint": "Τοπικό ή server · ίδια διαδρομή με την API",
     "api": "API",
     "apiHint": "Ίδιο contract με τη σελίδα. Χρησιμοποιήστε authenticated key σε παραγωγή.",

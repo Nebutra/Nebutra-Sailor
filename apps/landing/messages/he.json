@@ -1,622 +1,622 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "תכונות",
+    "solutions": "פתרונות",
+    "pricing": "מחירון",
+    "docs": "תיעוד",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "אודות",
+    "ideas": "רעיונות",
+    "opc": "פלטפורמה",
+    "roadmap": "מפת דרכים",
+    "resources": "משאבים",
+    "signIn": "התחברות",
+    "getStarted": "התחל לשייט",
+    "changelog": "יומן שינויים",
+    "news": "חדשות",
+    "designDocs": "מערכת עיצוב",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "תפריט חשבון",
+      "loadingName": "טוען…",
+      "dashboard": "לוח בקרה",
+      "account": "חשבון",
+      "billing": "חיוב",
+      "docs": "תיעוד",
+      "signOut": "התנתק"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "הצטרף ללולאת המלצות של {brandName}",
+    "metadataDescription": "הצטרף לרשימת ההמתנה של {brandName}, שמור על זיהוי המלצות ופתח קישור שיתוף אישי שלך בלולאה מוצרית סגורה אחת.",
+    "eyebrow": "לולאת המלצות של מייסדים",
+    "title": "הצטרף לקבוצת המייסדים הבאה וקבל קישור שיתוף אישי.",
+    "description": "היכנס עם קוד הזמנה כלשהו או הצטרף ישירות. נשמור על זיהוי המקור אם הקוד קיים, נרשום אותך לרשימת ההמתנה ונפיק לך כתובת URL להמלצות פרטית שתוכל לשתף מיד.",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "רשימת המתנה יציבה",
+      "codeDetected": "התגלה קוד {code}",
+      "direct": "הרשמה ישירה"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "דוא״ל עבודה",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "קוד המלצה",
+      "codePlaceholder": "קוד אופציונלי",
+      "submit": "הצטרף לרשימת ההמתנה",
+      "submitting": "מתחבר",
+      "invalidEmail": "הזן כתובת דואר אלקטרוני תקינה.",
+      "error": "לא ניתן להצטרף כרגע. נסה שוב.",
+      "successTitle": "אתה ברשימה",
+      "successDescription": "קישור השיתוף הפרטי שלך מוכן.",
+      "positionLabel": "מיקום בתור",
+      "referralCodeLabel": "הקוד שלך",
+      "referralUrlLabel": "קישור השיתוף שלך",
+      "copyLink": "העתק קישור",
+      "copied": "הועתק",
+      "share": "שתף",
+      "shareTitle": "הצטרף ללולאת המייסדים של {brandName}",
+      "shareText": "השתמש בקישור ההזמנה שלי כדי להצטרף לרשימת ההמתנה של מייסדי {brandName}.",
+      "directMode": "אין צורך בקוד הפניה",
+      "codeMode": "זיהוי הפניות מופעל"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "לולאה מייסד למייסד",
+        "description": "כל הרשמה שאושרה מקבלת קוד וכתובת, כך שההפניה הבאה מתחילה ללא העברה ידנית."
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "זיהוי כנה",
+        "description": "קודים לא מוכרים נשמרים כניסיון זיהוי, בעוד קודים תקינים מגדילים את המפנה ושומרים על ההרשמה נקייה."
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "מצב הצלחה מוכן לשתף",
+        "description": "מצב האישור חושף מיקום, קוד, העתקה ופעולות שיתוף מקוריות, כך שהלולאה מסתיימת בדף."
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "תשתית מונעת מוצר",
+      "title": "מעוצבת כתשתית SaaS עמידה, לא טופס חד-פעמי.",
+      "description": "משטח ההפניות נתמך על ידי חבילת דומיין, מודל Prisma מתמשך, מסלול Next.js מתויג, ובדיקות עשן ציבוריות שניתן להריץ לאחר פריסות ECS.",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "נתונים",
+        "title": "טבלת רשימת המתנה אחת עמידה",
+        "description": "ייחודי אימייל, מיקום מוגדל אוטומטית, אינדקסים לקודי הפניה, מטא-נתוני ניסיון זיהוי ומעברי סטטוס נמצאים במסד הנתונים של הפלטפורמה."
       },
       "api": {
         "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "title": "נקודת קצה להצטרפות מתויגת",
+        "description": "הדף שולח ל-`/api/waitlist`, מנרמל קודים שרירותיים, מחזיר רשומות קיימות באופן אידימפוטנטי, ולא תלוי לעולם בקוד דוגמה."
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "בדיקות עשן ציבוריות בזמן הפעלה",
+        "description": "כתובות URL קנוניות ואלאסיות מוכנות לבדיקות אוטומטיות, כך ש-ECS יזהה נסיגות בנתיבים, DNS ובריאות המערכת."
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "השק את הסטארטאפ שלך,",
+    "headline2": "מופעל על ידי {brandName} Agent OS.",
+    "subheadline": "דלג על שבועות של עבודה על פלטפורמה עם בסיס <highlight>מוכן לייצור</highlight> עם <highlight>ארכיטקטורה מנוהלת</highlight>, שנבנה עבור <highlight>סוכני קידוד AI ומייסדים</highlight> שפועלים בגלובל.",
+    "copyLabel": "העתק פקודה",
+    "copiedLabel": "הועתק",
+    "ctaGetAccess": "השק את הסטארטאפ שלך",
+    "ctaExploreDemo": "חקור הדגמה",
+    "pillCopied": "הועתק"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "תשתית מוכנה מראש, מהאב טיפוס ועד להרחבה.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "תשתית לאפליקציות AI",
+      "description": "מסגרות סוכנים מובנות ובדיקות ייצור, ומנועי אורקסטראציה ל-LLM. עקוף את האבסטרקציות המורכבות ותתקשר ישירות עם ממשקי API של אינטליגנציה מובנית."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "בסיס פלטפורמה מנוהל",
+      "description": "בסיס פלטפורמה מנוהל לצוותים שמשיקים SaaS ילידי AI. תיישר שלד, רכיבי ריצה ומשטחי אספקה בלי לרקום יחד כלים אד-הוק."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "אוטומציה ל-SaaS ארגוני",
+      "description": "אינטגרציה עמוקה עם הטכנולוגיות המודרניות של Vercel, Supabase ו-Stripe. מספקת אבטחה ברמת השורה מוכנה לשימוש, בידוד מורכב לריבוי שוכרים, וחשבוניות מנויים גלובליות."
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "מוכנים להפעיל את המוצר הבא שלכם מבוסס AI?",
+    "subheading": "אתחלו ארכיטקטורת SaaS מלאה ומקורית לענן מקומית עם פקודת טרמינל אחת.",
+    "copyLabel": "העתק פקודה",
+    "copiedLabel": "הועתק",
+    "startBuilding": "התחל לבנות"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "השק את הסטארטאפ שלך עם {brandName} Agent OS. ריבוי שוכרים, חיוב, אימות ו-AI — מוכן לייצור מהיום הראשון.",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "מוצר",
+      "resources": "משאבים",
+      "legal": "משפטי",
+      "community": "קהילה"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
-      "blog": "Blog",
-      "playbook": "Playbook",
-      "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
-      "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
-      "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "product": "מוצר",
+      "features": "תכונות",
+      "pricing": "מחירון",
+      "about": "אודות",
+      "showcase": "תערוכה",
+      "blog": "בלוג",
+      "playbook": "ספר הנחיות",
+      "changelog": "יומן שינויים",
+      "roadmap": "מפת דרכים",
+      "docs": "תיעוד",
+      "ideas": "רעיונות",
+      "opc": "פלטפורמה",
+      "careers": "קריירה",
+      "security": "אבטחה",
+      "dpa": "הסכם עיבוד נתונים",
+      "privacy": "פרטיות",
+      "terms": "תנאים",
+      "cookies": "עוגיות",
+      "refund": "החזר כספי",
+      "licensing": "רישוי",
+      "contact": "צור קשר",
+      "faq": "שאלות נפוצות",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. כל הזכויות שמורות.",
+    "statusOnline": "כל המערכות פעילות",
+    "newsletterTitle": "הישארו מעודכנים",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "הירשמו",
+    "newsletterSuccess": "תודה על ההרשמה!",
+    "newsletterError": "משהו השתבש"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "בנוי עם הטכנולוגיות שאתם אוהבים."
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "מבנה TURBOREPO",
+    "title": "10 אפליקציות. 104 חבילות. 4 מסלולי backend.",
+    "description": "קוד משותף, בנייה מקבילית, אפס כפילויות. טיפוס מלא מקצה לקצה מהמסד נתונים ועד ה־frontend.",
+    "metricApps": "אפליקציות",
+    "metricBackends": "מסלולי backend",
+    "metricPackages": "חבילות",
+    "verifiedPaths": "נבדקו מול workspace נוכחי",
+    "cta": "חקור את ארכיטקטורת ה-monorepo"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "במספרs",
+    "github": "כוכבי GitHub",
+    "discord": "חברי Discord",
+    "setup": "זמן התקנה ממוצע",
+    "packages": "חבילות Monorepo",
+    "ctaStar": "כוכב →",
+    "ctaJoin": "הצטרף →",
+    "ctaStart": "התחל →",
+    "ctaExplore": "חקור →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "אודות — פלטפורמת ה-AI המנוהלת",
+      "description": "גלה את החזון המסחרי ועקרונות ההנדסה שמאחורי פלטפורמת ה-AI המנוהלת של {brandName}.",
+      "heading": "תקופת צוותי המוצר הזריזים",
+      "subheading": "החלפו עבודה חוזרת על פלטפורמה בתשתית מנוהלת, אוטומציה חזקה ויתרון הנדסי עמיד לאורך זמן.",
+      "missionTitle": "סדר חדש העמיד בפני ריקבון מנהלי",
+      "missionP1": "{brandName} בונה פלטפורמת AI מנוהלת עבור צוותים שזקוקים לתשתית עמידה במקום סטארט-קיטים זמניים. קנה מידה מסורתי לרוב מגיע עם ביורוקרטיה ואנטרופיה; אנחנו עונים בקוד מנוהל, אוטומציה ובסיס פלטפורמה שנשאר בדיקתי ככל שהוא גדל.",
+      "missionP2": "המסחר עדיין סובל מעומס תיאום, כלים מפוצצים ונתיבי שדרוג חלשים. אנחנו מתמקדים בהפחתת החיכוכים האלה באמצעות חוזי פלטפורמה ברורים יותר, פרימיטיבי אספקה חזקים יותר והתנהגות ריצה שצוותים באמת יכולים לצפות ולסמוך עליה.",
+      "missionP3": "אנחנו דוחים את ההרגל לפתור בעיות קנה מידה עם עוד גרר ארגוני. אוטומציה, בדיקות וניהול צריכים לספוג עבודה תפעולית חוזרת כדי שצוותים יוכלו להישאר ממוקדים במוצר, בארכיטקטורה ובתוצאות לקוח.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "ארבעת העמודים",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "קנה מידה מנוהל (פילוסופיה)",
+          "description": "קנה מידה צריך לנבוע ממערכות חזקות יותר, יתרון טוב יותר וכללי הפעלה ברורים יותר — לא מערימת עוד משקל ארגוני."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "ליבת הבונה (תשתית)",
+          "description": "בסיס פלטפורמה חוזר לשימוש עבור ריבוי שכירות, חיוב, אימות, התאמה לתקנים ואינטגרציות AI שצוותים יכולים לבדוק, להרחיב ולשחרר שוב ושוב."
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "משמעת שדרוג (ניתוב)",
+          "description": "מערכות בריאות גדלות באמצעות בדיקות תאימות, הגירות וחוזי ריצה נצפים במקום סחף, גיבורים וכתבות חד-פעמיות."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "קוד הוא חוק (ארגון)",
+          "description": "משמעת תפעולית צריכה להיות מקודדת בבדיקות, זרימות עבודה וכללי ניהול כדי שצוותים יוכלו לשפר את הפלטפורמה ללא תלות בפוליטיקה או בזיכרון מוסדי."
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "אותות הנדסיים על פני תעודות",
+      "jobsDescription": "אנחנו שמים לב יותר לתפוקה הנדסית ניתנת לאימות, לבהירות המחשבה ולשיקול דעת מערכתי מאשר לשושלת או לנפח תארים.",
+      "jobsButton": "הגש פרופיל GitHub",
+      "companyInfoTitle": "עמידה בארגון",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "רישום ישות משפטית",
+        "founded": "תאריך רישום",
+        "headquarters": "מרכז פעילות גלובלי",
+        "jurisdiction": "מחוז שיפוט מנהל"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "נדרשת הערכה טכנית מעמיקה יותר?",
+      "ctaDescription": "צור קשר עם מומחי ההנדסה שלנו להערכת שילוב ארגוני או סקור את תיעוד ההטמעה.",
+      "ctaButton": "צור קשר"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "פנייה טכנית ומסחרית — {brandName} Intelligence",
+      "description": "ערוץ התקשורת המוקדש לרישוי מסחרי, אירוח עצמי ארגוני ותמיכה טכנית מתקדמת.",
+      "heading": "הקם חיבור תמיכה",
+      "subheading": "נשלח מומחה טכני או ארכיטקט ייעודי להעריך את הדרישות המפורשות שלך.",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "קו ישיר למייסד",
+          "description": "ערוץ תקשורת ישיר ליישור קו אסטרטגי ליבה ופניות ברמה הבכירה."
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "ייעוץ ארגוני",
+          "description": "דיונים מקדימים בנוגע לשיתופי פעולה אקולוגיים אסטרטגיים ולתהליך האבולוציה הארכיטקטונית הכללי."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "פריסה מסחרית",
+          "description": "משא ומתן בנוגע לרישוי קוד סגור ולפרטים הקשורים לפריסות בסביבות קלאסטר פרטיות."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "תמיכה ברמה מומחית",
+          "description": "הנחיה ארכיטקטונית ממוקדת ושירותי פתרון תקלות לאינטגרציות עסקיות פעילות ולניפוי באגים במערכות ליבה."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "משפטי ותאימות",
+          "description": "פניות הקשורות להגדרת גבולות קוד פתוח, בדיקות תאימות ארגוניות ותנאי חוזה."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "פרטיות במרכז הנתונים",
+          "description": "אימות טכני והנחיות תאימות בנוגע ל-GDPR ולחוקי הגנת נתונים בינלאומיים עוקבים."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "חשיפת אבטחה",
+          "description": "הגשה מאובטחת של דוחות שחזור טכניים בנוגע לפגיעויות תוכנה פוטנציאליות ישירות לצוות התשתיות שלנו."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "שער הגשה",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "שם הגורם המגיש",
+        "email": "כתובת דואר אלקטרוני רשמית",
+        "company": "ארגון מקושר",
+        "category": "תחום הדרישה",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "ייעוץ ארגוני",
+          "sales": "רישוי וארכיטקטורה",
+          "support": "סיוע למפתחים",
+          "legal": "גבולות משפטיים ועמידה בתקנות",
+          "privacy": "מדיניות עיבוד נתונים",
+          "partnership": "אינטגרציות מערכת אקולוגית",
+          "press": "יחסי ציבור"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "סיכום הבעיה המרכזית",
+        "message": "מפרטים טכניים/מסחריים מפורטים",
+        "submit": "שליחה לשרת",
+        "privacyNotice": "ביצוע בקשת רשת זו מהווה אישור לקריאה והסכמה ל",
+        "privacyLink": "תשתית פרטיות מערכתית",
+        "submitting": "הכנסה לתור עיבוד...",
+        "successMessage": "הנתונים הועברו בהצלחה. צוות התפעול הממונה יענה בתוך 1-2 ימי עסקים סטנדרטיים."
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "טלמטריה תפעולית",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "וושי, מחוז ג'יאנגסו, סין",
+      "socialMedia": "קישורי רשתות מרכזיות"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "מדיניות עוגיות — {brandName}",
+      "description": "כיצד {brandName} משתמשת בעוגיות וטכנולוגיות מעקב דומות באתר ובשירותים שלנו.",
+      "heading": "מדיניות עוגיות",
+      "effectiveDate": "תאריך תחילה",
+      "lastUpdated": "עודכן לאחרונה",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 בינואר 2025",
+        "updated": "1 בינואר 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "מדיניות עוגיות זו מסבירה כיצד {brandName} Co., Ltd. (\"{brandName},\" \"אנו,\" \"לנו,\" או \"שלנו\") משתמשת בעוגיות וטכנולוגיות מעקב דומות באתר ובשירותים שלנו.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "מהן עוגיות?",
+        "content": "עוגיות הן קבצי טקסט קטנים הממוקמים במכשיר שלך כשאתה מבקר באתר אינטרנט. הן נפוצות מאוד כדי להפוך את האתרים לפעילים יותר ביעילות ולספק מידע לבעלי האתרים."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "כיצד אנו משתמשים בעוגיות",
+        "intro": "אנו משתמשים בעוגיות כדי ל:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "לאפשר תכונות חיוניות",
+            "desc": "ספק פונקציונליות ליבה כמו אימות משתמשים ואבטחה"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "זכור העדפות",
+            "desc": "שמירה על השפה, העיצוב וההגדרות האחרות שלך"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "שיפור הביצועים",
+            "desc": "הבנת האופן שבו המבקרים מתקשרים עם השירותים שלנו"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "התאמה אישית של החוויה",
+            "desc": "ספקת תוכן והמלצות רלוונטיים"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "מדידת שיווק",
+            "desc": "מעקב אחר יעילות קמפייני השיווק שלנו"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "סוגי עוגיות שאנו משתמשים בהן",
       "tableHeaders": {
-        "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "cookie": "עוגיה",
+        "provider": "ספק",
+        "purpose": "מטרה",
+        "duration": "משך"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "עוגיות הכרחיות",
+        "description": "עוגיות אלה חיוניות לתפקוד התקין של האתר. לא ניתן להשבית אותן.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "מפגש אימות משתמש",
+            "duration": "מקור"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "אסימון אימות",
+            "duration": "7 ימים"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "שומר את העדפות הסכמת העוגיות",
+            "duration": "שנה אחת"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "עוגיות פונקציונליות",
+        "description": "עוגיות אלה מאפשרות תכונות מותאמות אישית וזוכרות את ההעדפות שלך.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "שומר את העדפת השפה",
+            "duration": "שנה אחת"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "שומר את העדפת הערכת",
+            "duration": "שנה אחת"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "עוגיות ניתוח",
+        "description": "עוגיות אלו עוזרות לנו להבין כיצד מבקרים מתקשרים עם האתר שלנו.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "מבדיל בין משתמשים ייחודיים",
+            "duration": "2 שנים"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "ניתוח מוצר",
+            "duration": "שנה אחת"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "עוגיות שיווק",
+        "description": "עוגיות אלו משמשות לפרסום ולמעקב אחר ביצועי קמפייני פרסום.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "מעקב אחר ביקורים עבור פרסומות פייסבוק",
+            "duration": "3 חודשים"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "מעקב המרות",
+            "duration": "3 חודשים"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "ניהול העדפות העוגיות שלך",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "פס קבלת עוגיות",
+        "intro": "כאשר תבקר באתר שלנו בפעם הראשונה, תראה פס קבלת עוגיות שמאפשר לך ל:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "קבל הכל",
+            "desc": "הפעל את כל קטגוריות העוגיות"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "דחה הכל",
+            "desc": "כבה את כל העוגיות האופציונליות (עוגיות הכרחיות נשארות)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "התאם אישית",
+            "desc": "בחר קטגוריות עוגיות ספציפיות להפעלה"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "אתה יכול לשנות את העדפותיך בכל עת על ידי לחיצה על \"הגדרות עוגיות\" בתחתית הדף."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "הגדרות דפדפן",
+        "intro": "רוב דפדפני האינטרנט מאפשרים לך לשלוט בעוגיות דרך ההגדרות שלהם:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "הגדרות > פרטיות ואבטחה > קבצי Cookie"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "הגדרות > פרטיות ואבטחה > קבצי Cookie"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "העדפות > פרטיות > קבצי Cookie"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "הגדרות > פרטיות, חיפוש ושירותים > קבצי Cookie"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "חסימת קבצי Cookie מסוימים עשויה להשפיע על תפקוד האתר."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "טכנולוגיות דומות",
+        "intro": "בנוסף לקבצי Cookie, אנו עשויים להשתמש ב:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "אחסון מקומי",
+            "desc": "לאחסון העדפות ונתוני מטמון באופן מקומי"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "אחסון סשן",
+            "desc": "לנתונים זמניים במהלך סשן הגלישה שלך"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "תגי פיקסל",
+            "desc": "תמונות קטנות לניטור פתיחות מיילים וביקורים באתר"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "אנו לא משתמשים בהדמיה של הדפוס האצבע של הדפדפן לניטור."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "עדכונים למדיניות זו",
+        "content": "ייתכן שנעדכן את מדיניות העוגיות מזמן לזמן. נודיע לך על שינויים מהותיים באמצעות פרסום המדיניות המעודכנת באתר שלנו."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "צור קשר",
+        "intro": "אם יש לך שאלות לגבי השימוש שלנו בעוגיות, אנא פנה אלינו:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "לקבלת מידע נוסף על אופן איסוף ועיבוד הנתונים שלך, אנא עיין ב",
+        "privacyLink": "מדיניות הפרטיות"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "הנחיות הנדסיות ושאלות נפוצות — {brandName}",
+      "description": "ניתוח מקיף של ארכיטקטורת המסגרת, טופולוגיות בסיס ואסטרטגיות פריסה מסחריות.",
+      "heading": "סקירה מעמיקה מבצעית",
+      "subheading": "חומר תומך מותאם לאינטגרציה בהנדסת מערכות ולקבלת החלטות מסחריות בכירות.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "סקירה ארכיטקטונית",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "מהו המטרה ההפעלתית המפורשת של {productName}?",
+              "a": "{productName} היא מסגרת Next.js מוכנה לייצור, מובנית היטב, ל-SaaS מבוסס בינה מלאכותית. היא כוללת בתוכה חשבוניות תאגידיות, אימות רב-גורמי ובידוד רב-שכירתי בתוך בסיס פלטפורמה מנוהל, ומאפשרת לצוותים להתמקד ביישום בינה מלאכותית ספציפי למוצר."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "כיצד מובנה רישוי המאגר?",
+              "a": "התשתית הבסיסית אכפה בקפדנות את הסכם ה-OSS AGPLv3, ומבטיחה שקיפות ושימוש ללא עלות. לארגונים הדורשים הסתרה קניינית ואחריות גבוהה יותר לרשיכת קוד, זמינים חוזים מסחריים סגורים במפורש."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "מהי מהירות הערכה מסחרית ראשונית?",
+              "a": "מהירות גבוהה במיוחד. באמצעות שרשרת הכלים המותאמת שלנו Node CLI יחד עם המפרט הטכני המדויק, מהנדס צעיר יכול להקים מופע מקומי עצמאי של MVP (מוצר מינימלי חיוני) תוך דקות ספורות."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "פעולות מסחריות",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "כמה רחבה הסובלנות להרחבה מסחרית?",
+              "a": "מעוצב כבד על פרגמטיקות של רכיבים מיקרו, קיבולת העומס המבנית מתמפה בצורה חלקה משכבות חינמיות ללא ביקוש דינמית ועד לספים של ארגונים המשרתים מיליוני בקשות חודשיות, מוגדר לחלוטין באמצעות אילוצי לוח בקרה."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "כיצד משפיעה תנודתיות מנויים על חשבונאות סטנדרטית?",
+              "a": "אנו פועלים באמצעות לוגיסטיקה מבנית מדויקת ברמת שניות של משאבים וקצב העברת ה-API. שינוי אילוצים מתאזן מיד מול שכבת החשבונאות – או החזר הפרשי יחס או הנפקת זיכויים אוטומטיים. אין תקופת קיפאון שכבות כלל."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "איזו תשתית עיבוד מבודדת וקטורי תשלום?",
+              "a": "ניתוב מזומנים גלובלי מעביר באופן בסיסי את הממשקים לשרתי Stripe, ומבטיח תלמטריה קפדנית של PCI-DSS ושלמות עיבוד. פריסות ארגוניות עשויות לשלב צינורות ביקורת פיננסית פרטית המנוהלות על ידי התחייבויות SLA מותאמות."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "שכבת הנדסת מערכת",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "אילו אבסטרקציות בסיסיות של בינה נתמכות באופן מקורי?",
+              "a": "לוגיקת האינטראקציה הראשית קובעת אינטראופרבליות מקורית מעל OpenAI, Anthropic ו-Gemini לפי מפרטים סטנדרטיים. זה מספק גמישות עצומה להחלפת נקודות קצה של 추론 בצורה יעילה באמצעות מיפוי משתנים ללא ירידה בלוגיקה המסחרית העליונה."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "כיצד מטופל הסיכון להסתרת מסדי נתונים?",
+              "a": "התקנה ברירת מחדל מיישמת באופן פנימי מדיניות Postgres Row-Level Security (RLS) המצומדת היטב לרכיבי ניתוב פתרון שכירות ללא שרתים שלנו. זה מבטיח מחיצות קשות המונעות באופן אקטיבי זיהום נתונים ברמת היישום וספיגת ביצועים."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "האם יש הגבלות ארכיטקטוניות על פריסות מנוהלות עצמית?",
+              "a": "אין שום הגבלה. הטופולוגיה מופרדת לחלוטין. אם הסביבה מריצה ריצות עצמאיות של Node.js לצד צבירי PostgreSQL בריאים, הפונקציונליות המלאה נשמרת באופן מובנה."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "שלמות שיטתית",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "איזה פרוטוקולים קובעים את ההגנה המכנית של ההיקף?",
+              "a": "מנגנונים מבצעים הצפנת TLS חובה לאורך ההעברה, אלגוריתמי הקודתה דטרמיניסטיים למיפוי סודות, ורישום אוניברסלי של אירועי שינוי שנכתבים באופן קפדני ליומני מעקב סדרות זמן פנימיים."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "האם הטופולוגיה מכבדת את חוקי הפרטיות הבינלאומיים המרכזיים?",
+              "a": "כן, באופן עמוק. מודולי עסקים מספקים יישומים אלגוריתמיים מוכנים לשימוש המכוונים למצבי ביטול הסכמה, לוגיקה של מחיקה קשה, ושאילתות ייצוא עמוקות התואמות באופן אופטימלי את ה-GDPR ומסגרות רגולטוריות מקומיות."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "מה מתבצע בעת אירוע קטסטרופלי חריג?",
+              "a": "שומרים אוטומטיים מזהירים מיד את וקטורי ההנדסה המרכזיים, המפעילים חסימות מעגל ומיישמים טריאז' מהיר. בהתאם לספר הוראות פתרון מתקדם, פוסט-מוארטמים של אירועים שקופים לחלוטין מופצים באופן אוניברסלי בתוך חלון זמן מוחלט of 72 שעות."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "הנחיות סיוע טכני",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "כיצד נפתרת אבחון צווארי בקבוק תפעוליים?",
+              "a": "וקטורי טריאז' ראשוניים מכוונים למטריצת התיעוד המטופחת בקפידה והנבדקת עמיתים, ולאינטראקציות קהילה מאומתות. רכישת רישיון סטנדרטי או ברמת ארגון מפעילה גישה לתורים פרטיים להסלמה, המפותרים דרך צמתים הנדסיים פנימיים ישירים."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "האם אתם מספקים פעולות אינטגרציה פיזיות או סביבתיות מיוחדות?",
+              "a": "זה נכלל בשכבת הביצוע הפרמיום המותאמת אישית שלנו לקונגלומרטות תאגידיות ברמה הגבוהה ביותר. הארכיטקטים הבכירים ביותר שלנו מפרסים צוותים חיצוניים לבצע בדיקת קוד מול ארכיטקטורה מורשת, לנהל העברות ענן עדינות, ולאימות מחיצות רשת מבודדות מאוד."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "דורש סנכרון טכני מיידי?",
+      "ctaDescription": "בין אם מאמתים סכמת התנהגות API ספציפית או מבצעים הסכמי אינטגרציה לטווח ארוך, פנו ישירות להיררכיה ההנדסית.",
+      "ctaButton": "קבל הוראות אינטגרציה",
+      "ctaEmail": "שלח הודעה ישירה"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "פרוטוקול הגנה על פרטיות ומידע — {brandName}",
+      "description": "תיעוד מפורט של אופן הפעולה של תשתיות המערכת, אוטונומיה של המשתמש ובידוד נתונים.",
+      "heading": "הנחיות להגנה על מידע",
+      "effectiveDate": "תאריך תחילה",
+      "lastUpdated": "עודכן לאחרונה",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 בינואר 2025",
+        "updated": "1 בינואר 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "ב-{brandName} (\"החברה\", \"אנו\", \"לנו\" או \"שלנו\"), אנו מחויבים להגן על הפרטיות שלך. מדיניות הפרטיות הזו מסבירה כיצד אנו אוספים, משתמשים, חושפים ומגנים על המידע שלך בעת השימוש באתר האינטרנט, באפליקציות ובשירותים שלנו (ביחד, \"השירותים\").",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. המידע שאנו אוספים",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 מידע שאתה מספק",
+          "intro": "אנו אוספים מידע שאתה מספק לנו ישירות, כולל:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "מידע על החשבון",
+              "desc": "שם, כתובת דואר אלקטרוני, סיסמה ופרטי הארגון בעת יצירת חשבון."
             },
             "1": {
-              "label": "Profile Information",
+              "label": "מידע על הפרופיל",
               "desc": "Profile picture, job title, company name, and other optional information."
             },
             "2": {

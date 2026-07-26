@@ -5,72 +5,72 @@
     "description": "Marketplace API semua model · bayar sesuai pemakaian · kelola kunci & dompet · coba cepat."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
+    "dashboard": "Ringkasan",
+    "keys": "Kunci API",
+    "wallet": "Dompet",
+    "docs": "Dokumentasi",
     "title": "Admin",
     "backToMarket": "Kembali ke marketplace",
-    "quickUse": "Quick use"
+    "quickUse": "Gunakan cepat"
   },
   "chrome": {
     "searchPlaceholder": "Apa yang ingin Anda lakukan dengan AI?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Cari",
+    "locale": "Bahasa",
+    "currency": "Mata uang",
     "collapseSidebar": "Ciutkan sidebar",
     "expandSidebar": "Perluas sidebar",
-    "home": "Home",
+    "home": "Beranda",
     "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "quickUse": "Gunakan cepat",
+    "support": "Dukungan",
+    "apiDocs": "Dokumentasi API",
     "integrationHelp": "Panduan integrasi",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "Rekomendasi AI",
+    "market": "Pasar",
+    "usageTitle": "Penggunaan cepat"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "Pasar aplikasi",
+    "api": "Pasar API",
     "models": "Katalog model",
-    "client": "Client"
+    "client": "Klien"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
+    "new": "Baru",
+    "hot": "Populer",
+    "forYou": "Untuk Anda",
     "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "list": "Daftar",
+    "apiShelf": "Rak API",
+    "toolShelf": "Rak alat",
+    "categories": "Kategori",
+    "apps": "Aplikasi",
+    "newRelease": "Rilis baru",
+    "forgeTitle": "Ruang kerja alat Forge",
+    "forgeBlurb": "Transformasi teks, codec, formulir, dan alat yang dapat dikomposisikan. Lab pasar aplikasi mengarah ke Forge.",
+    "openForge": "Buka Forge →",
+    "allApi": "Semua API →",
+    "all": "Semua →",
+    "viewAll": "Lihat semua {label} →",
+    "gridView": "Tampilan grid",
+    "listView": "Tampilan daftar",
+    "hiTitle": "Platform sumber daya AI perusahaan",
+    "hiSubtitle": "Penuhi setiap kebutuhan dengan AI yang tepat",
+    "sellable": "Dapat dijual",
+    "walletTopup": "Isi ulang"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Model bahasa",
+      "hint": "Chat · penalaran"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Generasi gambar",
+      "hint": "Teks-ke-gambar"
     },
     "image-edit": {
-      "label": "Image editing",
+      "label": "Pengeditan gambar",
       "hint": "Edit · matting"
     },
     "video": {
@@ -105,27 +105,27 @@
     },
     "academic": {
       "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "chips": "Toolkit PDF · Pencarian paten AI"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "Alat gambar",
+      "chips": "Studio 3D · Kanvas"
     },
     "audio": {
       "label": "Audio",
-      "chips": "Speech · AI music"
+      "chips": "Suara · Musik AI"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "Kode",
+      "chips": "Generator web · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "Ringkasan",
+    "keys": "Kunci",
+    "wallet": "Dompet",
+    "use": "Coba",
+    "docs": "Dokumentasi",
+    "models": "Lainnya"
   }
 }

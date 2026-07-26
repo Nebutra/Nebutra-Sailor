@@ -1,347 +1,347 @@
 {
   "admin": {
-    "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "title": "مدیریت",
+    "description": "پنل ابرمدیر — مدیریت کاربران، سازمان‌ها و سلامت سیستم.",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "نمای کلی",
+      "users": "کاربران",
+      "organizations": "سازمان‌ها"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "کاربران",
+      "description": "مرور، جستجو و تغییر هویت هر کاربر در تمام سازمان‌ها.",
+      "searchPlaceholder": "جستجوی کاربران…",
+      "totalCount": "{count, plural, one {# کاربر} other {# کاربر}}",
+      "empty": "کاربری یافت نشد.",
+      "loadError": "بارگذاری کاربران ناموفق بود.",
       "columns": {
-        "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "email": "ایمیل",
+        "name": "نام",
+        "created": "ایجاد شده",
+        "activeOrgs": "سازمان‌های فعال",
+        "actions": "عملیات"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "مشاهده سازمان‌ها"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "سازمان‌ها",
+      "description": "تمام فضای‌های کاری در سیستم، مرتب‌شده بر اساس جدیدترین.",
+      "searchPlaceholder": "جستجوی سازمان‌ها…",
+      "totalCount": "{count, plural, one {# سازمان} other {# سازمان}}",
+      "empty": "هیچ سازمانی یافت نشد.",
+      "loadError": "بارگذاری سازمان‌ها ناموفق بود.",
       "columns": {
-        "name": "Name",
-        "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "name": "نام",
+        "slug": "اسلاگ",
+        "plan": "پلن",
+        "members": "اعضا",
+        "created": "ایجاد شده",
+        "actions": "عملیات"
       },
-      "view": "View"
+      "view": "مشاهده"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "جایگزینی",
+      "starting": "در حال شروع…",
+      "stop": "توقف از نقش‌پذیری",
+      "confirm": "نقش‌پذیری به {label}؟ تا زمان توقف، برنامه را از دید این کاربر مشاهده خواهید کرد.",
+      "error": "شروع نقش‌پذیری ناموفق بود.",
+      "stopError": "توقف نقش‌پذیری ناموفق بود."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "قبلی",
+      "next": "بعدی",
+      "pageOf": "صفحه {page} از {total}"
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "سلام دنیا",
+    "dashboard": "داشبورد",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "ادامه",
+      "confirm": "تأیید",
+      "done": "انجام شد",
+      "cancel": "لغو"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "روشن",
+    "dark": "تاریک",
+    "system": "سیستم"
   },
   "LocaleSwitcher": {
-    "en": "English",
-    "zh": "中文",
-    "de": "German",
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "label": "Language",
-    "ariaLabel": "Change language"
+    "en": "انگلیسی",
+    "zh": "چینی",
+    "de": "آلمانی",
+    "es": "اسپانیایی",
+    "fr": "فرانسوی",
+    "ja": "ژاپنی",
+    "ko": "کره‌ای",
+    "label": "زبان",
+    "ariaLabel": "تغییر زبان"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "شماره ثبت ICP",
+      "publicSecurity": "ثبت امنیت عمومی"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "ورود با WeChat",
+      "notConfigured": "ورود WeChat پیکربندی نشده است"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "فضای کار خود را راه‌اندازی کنید",
+    "subtitle": "سه مرحله سریع و آماده انتشار هستید.",
     "steps": {
-      "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "workspace": "فضای کار",
+      "invite": "دعوت از تیم",
+      "plan": "انتخاب طرح"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "بازگشت",
+      "stepCounter": "مرحله {current} از {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "یک طرح انتخاب کنید",
+      "description": "رایگان شروع کنید یا ظرفیت بیشتری باز کنید. می‌توانید هر زمان طرح را تغییر دهید.",
+      "choose": "انتخاب طرح",
+      "skip": "فعلاً رد شوید"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "باز کردن منوی کاربر",
+    "profile": "پروفایل",
+    "settings": "تنظیمات",
+    "feedback": "بازخورد",
+    "theme": "پوسته",
+    "language": "زبان",
+    "signOut": "خروج",
+    "signedInAs": "وارد شده به عنوان"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "پروفایل",
+      "description": "اطلاعات شخصی خود را به‌روز کنید.",
+      "nameLabel": "نام",
+      "namePlaceholder": "نام کامل شما",
+      "emailLabel": "ایمیل",
+      "emailHint": "برای تأیید آدرس ایمیل جدید، یک لینک تأیید به آن ارسال می‌کنیم.",
+      "languageLabel": "زبان",
+      "submit": "ذخیره تغییرات",
+      "saving": "در حال ذخیره…",
+      "verifyEmail": "تأیید",
+      "verifying": "در حال ارسال تأیید…",
+      "success": "پروفایل به‌روز شد.",
+      "verificationSent": "ایمیل تأیید ارسال شد.",
+      "errorRequiredName": "نام الزامی است.",
+      "errorInvalidEmail": "آدرس ایمیل معتبر نیست.",
+      "subtitle": "هویت و اطلاعات تماس شما.",
+      "unknown": "کاربر بدون نام",
+      "manageCta": "باز کردن تنظیمات کامل حساب"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "آواتار",
+      "description": "یک تصویر مربع‌شکل آپلود کنید (PNG، JPEG یا WebP، حداکثر 2 مگابایت).",
+      "uploadButton": "آپلود آواتار",
+      "uploading": "در حال آپلود…",
+      "fileTooBig": "فایل خیلی بزرگ است. حداکثر حجم 2 مگابایت است.",
+      "invalidType": "نوع تصویر پشتیبانی نمی‌شود. از PNG، JPEG یا WebP استفاده کنید.",
+      "success": "آواتار به‌روزرسانی شد.",
+      "removeButton": "حذف آواتار",
+      "removed": "آواتار حذف شد.",
+      "deleteError": "حذف آواتار ناموفق بود."
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "خروجی گرفتن از داده‌های من",
+      "description": "یک کپی از تمام رکوردهایی که برای حساب شما نگهداری می‌کنیم دانلود کنید، شامل پروفایل، سازمان‌ها，رویدادهای حسابرسی，اعلان‌ها و دعوت‌نامه‌ها.",
+      "compliance": "مطابق با ماده 20 GDPR (حق قابلیت انتقال داده) و ماده 45 PIPL (حق دریافت کپی از اطلاعات شخصی).",
+      "export": "خروجی گرفتن از داده‌های من",
+      "pending": "در حال آماده‌سازی خروجی…",
+      "ready": "خروجی شما آماده است.",
+      "download": "دانلود JSON",
+      "error": "آماده‌سازی خروجی شما ناموفق بود. لطفاً دوباره تلاش کنید."
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "تغییر آدرس ایمیل",
+      "description": "ما یک لینک تأیید به آدرس جدید ارسال خواهیم کرد. تغییر تنها زمانی اعمال می‌شود که آن را از صندوق ورودی آن تأیید کنید.",
+      "newEmailLabel": "آدرس ایمیل جدید",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "ارسال لینک تأیید",
+      "submitting": "در حال ارسال…",
+      "verificationSent": "برای تأیید تغییر، صندوق ورودی خود در {email} را بررسی کنید.",
+      "errorInvalidEmail": "آدرس ایمیل معتبر نیست.",
+      "error": "درخواست تغییر ایمیل ناموفق بود.",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "ایمیل به‌روز شد",
+        "successDescription": "ایمیل ورود شما به‌روز شد.",
+        "successWithEmail": "ایمیل ورود شما اکنون {email} است.",
+        "failureTitle": "ما نتوانستیم آن لینک را تأیید کنیم",
+        "failureDescription": "این لینک تأیید نامعتبر، منقضی شده یا قبلاً استفاده شده است. لطفاً از تنظیمات حساب خود درخواست جدیدی ارسال کنید.",
+        "errorCode": "دلیل: {code}",
+        "continueCta": "بازگشت به حساب",
+        "backCta": "بازگشت به حساب"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "حساب",
+    "ariaLabel": "تنظیمات حساب",
+    "navLabel": "زبانه‌های تنظیمات حساب",
+    "tip": "برای باز کردن مجدد این پنجره، در هر جای صفحه کلید {key} را فشار دهید.",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "پروفایل",
+      "subscription": "اشتراک",
+      "billing": "صورتحساب",
+      "preferences": "ترجیحات",
+      "personalization": "شخصی‌سازی"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "اشتراک",
+      "subtitle": "پلن، سهمیه و تمدید.",
+      "currentPlan": "پلن فعلی",
+      "upgradeCta": "مقایسه طرح‌ها",
+      "manageCta": "مدیریت اشتراک"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "صورتحساب",
+      "subtitle": "تاریخچه صورتحساب و روش پرداخت.",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "هنوز تاریخی وجود ندارد",
+        "description": "پس از اولین دوره پرداختی، هزینه‌ها و صورتحساب‌ها در اینجا نمایش داده می‌شوند.",
+        "cta": "باز کردن صورتحساب کامل"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "ترجیحات",
+      "subtitle": "پوسته و دسترسی‌پذیری.",
+      "theme": "پوسته",
+      "light": "روشن",
+      "dark": "تاریک",
+      "system": "سیستم",
+      "help": "راهنما",
+      "reportIssue": "گزارش مشکل",
+      "shortcuts": "میانبرهای صفحه‌کلید"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "شخصی‌سازی",
+      "subtitle": "به Sailor بگویید شما کی هستید و چگونه پاسخ دهد."
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "بازتعریف پارادایم",
+    "hero_subtitle": "بیایید هیچ کسب‌وکار دشواری در جهان وجود نداشته باشد.",
+    "social_title": "اجتماعی",
+    "social_headline": "برابری مطلق فناوری",
+    "social_description": "توانمندسازی نوآوران لبه. شکستن فیلترهای سنتی و توانمندسازی بنیانگذاران مستقل با زیرساخت‌های خارج از چارچوب.",
+    "governance_title": "حاکمیت",
+    "governance_headline": "کد قانون است",
+    "governance_description": "حاکمیت الگوریتمی مبتنی بر اثبات کار و نتایج واقعی کسب‌وکار، جایگزین بوروکراسی مبهم.",
+    "environment_title": "محیط",
+    "environment_headline": "مینیمالیسم دیجیتال",
+    "environment_description": "کاهش ردپای ابری از طریق یکپارچه‌سازی شدید SaaS و کارایی منابع."
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "امنیت",
+      "description": "رمز عبور، احراز هویت چندمرحله‌ای و جلسات فعال خود را مدیریت کنید.",
+      "managedByProvider": "تنظیمات امنیت توسط ارائه‌دهنده احراز هویت شما مدیریت می‌شود.",
+      "openProviderProfile": "باز کردن پروفایل",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "تغییر رمز عبور",
+        "description": "از یک رمز عبور قوی استفاده کنید که در سایت‌های دیگر تکرار نمی‌شود.",
+        "currentPasswordLabel": "رمز عبور فعلی",
+        "newPasswordLabel": "رمز عبور جدید",
+        "confirmPasswordLabel": "تأیید رمز عبور جدید",
+        "revokeOtherSessions": "خروج از دستگاه‌های دیگر",
+        "submit": "بروزرسانی رمز عبور",
+        "pending": "در حال بروزرسانی رمز عبور…",
+        "success": "رمز عبor با موفقیت بروزرسانی شد."
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "احراز هویت دو مرحله‌ای",
+        "description": "یک مرحله تأیید دوم با استفاده از یک برنامه احراز هویت اضافه کنید.",
+        "enabled": "فعال",
+        "disabled": "غیرفعال",
+        "enabledHelp": "حساب شما پس از ورود با رمز عبور، یک کد 6 رقمی از برنامه احراز هویت درخواست می‌کند.",
+        "disabledHelp": "حساب خود را با یک کد 6 رقمی از برنامه احراز هویت محافظت کنید.",
+        "enable": "فعال‌سازی احراز هویت دو مرحله‌ای",
+        "disable": "غیرفعال‌سازی احراز هویت دو مرحله‌ای",
+        "passwordPrompt": "رمز عبور خود را تأیید کنید",
+        "scanQrCode": "این کد QR را با برنامه احراز هویت خود اسکن کنید، سپس کد 6 رقمی زیر را وارد کنید.",
+        "secretKeyLabel": "یا این کلید مخفی را دستی وارد کنید",
+        "verificationCodeLabel": "کد تأیید",
+        "verify": "تأیید و فعال‌سازی",
+        "backupCodesTitle": "کدهای پشتیبان",
+        "backupCodesDescription": "این کدها را در جای امنی ذخیره کنید. هر کد یک بار قابل استفاده است اگر به برنامه احراز هویت خود دسترسی نداشته باشید.",
+        "copyBackupCodes": "کپی کدها",
+        "finishSetup": "تکمیل تنظیمات",
+        "successEnabled": "احراز هویت دو مرحله‌ای فعال شد.",
+        "successDisabled": "احراز هویت دو مرحله‌ای غیرفعال شد."
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "جلسات فعال",
+        "description": "دستگاه‌ها و مرورگرهایی که در حال حاضر به حساب شما وارد شده‌اند.",
+        "currentSession": "(جاری)",
+        "ipLabel": "آدرس IP",
+        "lastActiveLabel": "آخرین فعالیت",
+        "revoke": "خروج",
+        "revokeAll": "خروج از تمام دستگاه‌های دیگر",
+        "empty": "هیچ جلسه فعال دیگری وجود ندارد.",
+        "successRevoked": "از جلسه خارج شدید.",
+        "successRevokedAll": "از تمام جلسات دیگر خارج شدید."
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "حذف حساب",
+        "description": "حساب و تمام داده‌های مرتبط با آن به‌طور دائمی حذف می‌شوند. این عمل قابل بازگشت نیست.",
+        "passwordPrompt": "برای تأیید رمز عبور خود را وارد کنید",
+        "confirmTextLabel": "برای تأیید DELETE را تایپ کنید",
+        "submit": "حذف حساب",
+        "cancel": "لغو",
+        "success": "حساب حذف شد."
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "حساب‌های متصل",
+        "description": "روش‌های ورود OAuth متصل به هویت Nebutra خود را بررسی کنید.",
+        "connected": "متصل",
+        "connect": "اتصال",
+        "help": "قبل از قطع ارتباط با یک ارائه‌دهنده، حداقل یک روش ورود قابل اعتماد را در دسترس نگه دارید.",
+        "unlink": "قطع ارتباط",
+        "notLinked": "متصل نیست"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "کلیدهای عبور",
+        "description": "از اعتبارنامه‌های متصل به دستگاه برای ورود مقاوم در برابر فیشینگ استفاده کنید.",
+        "empty": "هنوز هیچ کلید عبوری ثبت نشده است",
+        "addPasskey": "افزودن کلید عبور",
+        "cancelAdd": "لغو",
+        "cancelled": "تنظیم کلید عبور لغو شد. تغییری ایجاد نشد.",
+        "defaultName": "کلید عبور {number}",
+        "nameHelp": "قبل از اینکه مرورگر برای تأیید درخواست کند، به این کلید عبor یک نام قابل تشخیص بدهید.",
+        "nameLabel": "نام کلید عبور",
+        "rename": "تغییر نام",
+        "saveRename": "ذخیره نام",
+        "remove": "حذف",
+        "successAdded": "کلید عبور اضافه شد.",
+        "successRemoved": "کلید عبور حذف شد.",
+        "unavailableBadge": "در دسترس نیست"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "تنظیم رمز عبور",
+        "description": "برای ورود بدون ارائه‌دهنده OAuth، یک رمز عبor اضافه کنید.",
+        "submit": "تنظیم رمز عبور",
+        "pending": "ارسال لینک تنظیم رمز عبور…",
+        "sentMessage": "لینک تنظیم رمز عبور به ایمیل شما ارسال شد."
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "استارتاپ خود را از روز اول با کنترل کامل عرضه کنید.",
+      "tagline": "ایجنت‌های چندمنطقه‌ای، چنداجاره‌نشین به‌طور پیش‌فرض. بدون نیاز به تیم پلتفرم."
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "ورود به Nebutra",
+      "subtitle": "روش ورود خود را انتخاب کنید.",
+      "continueWith": "ادامه با",
+      "continueWithProvider": "ادامه با {provider}",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,529 +349,529 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "در حال انتقال…",
+      "dividerOr": "یا با ایمیل ادامه دهید",
+      "emailLabel": "ایمیل",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "ادامه",
+      "back": "بازگشت",
+      "passwordLabel": "رمز عبور",
+      "passwordPlaceholder": "رمز عبور خود را وارد کنید",
+      "showPassword": "نمایش رمز عبور",
+      "hidePassword": "مخفی کردن رمز عبور",
+      "capsLockOn": "Caps Lock روشن است",
+      "forgotPassword": "رمز عبور را فراموش کرده‌اید؟",
+      "submit": "ورود",
+      "submitLoading": "در حال ورود…",
+      "useMagicLink": "به جای آن یک لینک جادویی برایم بفرست",
+      "usePasskey": "با کلید عبور وارد شو",
+      "passkeyTitle": "با کلید عبور خود وارد شو",
+      "passkeyDescription": "از Face ID، Touch ID یا کلید امنیتی خود استفاده کن. نیازی به رمز عبور نیست.",
+      "passkeyButton": "ادامه با کلید عبور",
+      "passkeyCancelled": "درخواست کلید عبور لغو شد.",
+      "passkeyUnsupported": "این مرورگر از کلیدهای عبور پشتیبانی نمی‌کند.",
+      "passkeyError": "ورود با کلید عبور ناموفق بود. روش دیگری را امتحان کن.",
+      "ssoTitle": "ادامه با SSO سازمانی",
+      "ssoDescription": "در حال انتقال شما به {provider} برای {email}.",
+      "ssoError": "SSO سازمانی شروع نشد. روش دیگری را امتحان کن.",
+      "ssoRetry": "دوباره تلاش کن",
+      "newToProduct": "اولین بار است که از Nebutra استفاده می‌کنی؟",
+      "signUpLink": "ثبت‌نام",
+      "homeLink": "خانه",
+      "signInFailed": "ورود ناموفق بود",
+      "genericError": "خطایی رخ داد. لطفاً دوباره تلاش کنید.",
+      "captchaError": "تأیید ربات ناموفق بود. صفحه را تازه کنید و دوباره تلاش کنید."
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "حساب Nebutra خود را بسازید",
+      "subtitle": "یک حساب برای تمام برنامه‌های Nebutra.",
+      "firstNameLabel": "نام",
+      "lastNameLabel": "نام خانوادگی",
+      "firstNamePlaceholder": "نام",
+      "lastNamePlaceholder": "نام خانوادگی",
+      "submit": "ساخت حساب",
+      "submitLoading": "در حال ساخت حساب…",
+      "alreadyHaveAccount": "قبلاً حساب دارید؟",
+      "signInLink": "ورود",
+      "signUpFailed": "ثبت‌نام ناموفق بود"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "کلیدهای عبور",
+      "description": "به جای رمز عبور از Face ID، Touch ID، Windows Hello یا کلید امنیتی استفاده کنید. هر دستگاه کلید عبور مخصوص خود را دارد.",
+      "addButton": "افزودن کلید عبور",
+      "adding": "در حال راه‌اندازی…",
+      "namePlaceholder": "مثلاً MacBook Pro",
+      "nameLabel": "نام (اختیاری)",
+      "registerSuccess": "کلید عبور اضافه شد.",
+      "registerCancelled": "راه‌اندازی لغو شد.",
+      "registerUnsupported": "این مرورگر از کلیدهای عبور پشتیبانی نمی‌کند.",
+      "registerError": "ثبت کلید عبور ناموفق بود.",
+      "empty": "هنوز کلید عبوری وجود ندارد.",
+      "loadError": "بارگذاری کلیدهای عبور ناموفق بود.",
+      "revoke": "حذف",
+      "revoking": "در حال حذف…",
+      "revokeConfirm": "این کلید عبور حذف شود؟ دیگر نمی‌توانید با آن وارد شوید.",
+      "revokeSuccess": "کلید عبور حذف شد.",
+      "revokeError": "حذف کلید عبور ناموفق بود.",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "محدود به دستگاه",
+        "multiDevice": "همگام‌شده در دستگاه‌ها"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "افزوده شده در {date}"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "ورود با لینک جادویی",
+      "description": "ایمیل خود را وارد کنید تا یک کد 6 رقمی برای ورود برایتان ارسال کنیم.",
+      "emailLabel": "ایمیل",
+      "send": "ارسال لینک",
+      "codeLabel": "کد تأیید",
+      "verify": "تأیید",
+      "resend": "ارسال مجدد کد",
+      "resendCooldown": "ارسال مجدد در {seconds} ثانیه",
+      "sentTo": "کدی به {email} ارسال کردیم"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "رمز عبور را فراموش کرده‌اید؟",
+      "description": "ایمیل خود را وارد کنید تا لینک بازنشانی رمز عبور برایتان ارسال شود.",
+      "emailLabel": "ایمیل",
+      "submit": "ارسال لینک بازنشانی",
+      "successTitle": "ایمیل خود را بررسی کنید",
+      "success": "اگر این ایمیل ثبت شده باشد، به‌زودی لینک بازنشانی دریافت خواهید کرد."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "بازنشانی رمز عبور",
+      "description": "یک رمز عبور جدید برای حساب خود انتخاب کنید.",
+      "newPasswordLabel": "رمز عبور جدید",
+      "confirmPasswordLabel": "تأیید رمز عبور جدید",
+      "submit": "بازنشانی رمز عبور",
+      "successTitle": "رمز عبور بازنشانی شد",
+      "successDescription": "اکنون می‌توانید با رمز عبور جدید وارد شوید.",
+      "signInCta": "رفتن به ورود",
+      "invalidTitle": "لینک بازنشانی نامعتبر",
+      "invalidDescription": "لینک بازنشانی رمز عبور ناقص یا نادرست است. از صفحه فراموشی رمز عبور درخواست لینک جدید کنید."
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "ایمیل تأیید شد",
+      "successDescription": "آدرس ایمیل شما تأیید شد.",
+      "failureTitle": "تأیید ناموفق بود",
+      "failureDescription": "نتوانستیم ایمیل شما را با این لینک تأیید کنیم.",
+      "continueCta": "ادامه",
+      "signInCta": "رفتن به ورود"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "ورود کامل شد",
+      "title": "شما وارد شدید",
+      "description": "جلسه شما آماده است. فضای کاری Nebutra باز می‌شود و انتقال امن از جریان احراز هویت حفظ می‌شود.",
+      "session": "جلسه",
+      "verified": "تأیید شده",
+      "workspace": "فضای کاری",
+      "preparing": "در حال آماده‌سازی",
+      "redirecting": "ورود به فضای کاری در {seconds} ثانیه",
+      "secureHandoff": "انتقال امن",
+      "continueCta": "ادامه به فضای کاری",
+      "signInCta": "استفاده از حساب دیگر"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "ایمیل یا رمز عبور نادرست است.",
+      "userNotFound": "هیچ حسابی با آن ایمیل یافت نشد.",
+      "userAlreadyExists": "حسابی با آن ایمیل از قبل وجود دارد.",
+      "weakPassword": "رمز عبور بسیار ضعیف است. حداقل ۸ کاراکتر با ترکیب حروف بزرگ و کوچک و اعداد استفاده کنید.",
+      "passwordsDontMatch": "رمزهای عبور مطابقت ندارند.",
+      "passwordTooShort": "رمز عبور باید حداقل ۸ کاراکتر باشد.",
+      "currentPasswordIncorrect": "رمز عبور فعلی اشتباه است.",
+      "samePassword": "رمز عبور جدید باید با رمز عبور فعلی متفاوت باشد.",
+      "invalidEmail": "آدرس ایمیل معتبر نیست.",
+      "emailNotVerified": "لطفاً ابتدا آدرس ایمیل خود را تأیید کنید.",
+      "sessionExpired": "جلسه شما منقضی شده است. لطفاً دوباره وارد شوید.",
+      "twoFactorRequired": "احراز هویت دو مرحله‌ای لازم است.",
+      "invalidVerificationCode": "کد تأیید اشتباه یا منقضی شده است.",
+      "twoFactorAlreadyEnabled": "احراز هویت دو مرحله‌ای قبلاً فعال شده است.",
+      "twoFactorNotEnabled": "احراز هویت دو مرحله‌ای فعال نیست.",
+      "tooManyAttempts": "تلاش‌های زیاد. لطفاً بعداً دوباره امتحان کنید.",
+      "rateLimited": "شما این کار را خیلی زیاد انجام می‌دهید. سرعت را کم کنید.",
+      "providerNotSupported": "این عملیات توسط ارائه‌دهنده احراز هویت شما مدیریت می‌شود.",
+      "networkError": "خطای شبکه. اتصال خود را بررسی و دوباره تلاش کنید.",
+      "unknown": "مشکلی پیش آمد. لطفاً دوباره تلاش کنید."
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "برای شروع یکی از این‌ها را امتحان کنید",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "نمایش فعالیت‌های اخیر",
+        "prompt": "فعالیت‌های اخیر در فضای کاری من را در ۲۴ ساعت گذشته نشان بده."
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "عیب‌یابی یک خطا",
+        "prompt": "به من در عیب‌یابی یک خطای زمان اجرا کمک کن. ردپای خطا را می‌چسبانم و تو مرا راهنمایی کن."
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "پیش‌نویس یک ایمیل خلاصه",
+        "prompt": "یک ایمیل خلاصه هفتگی مختصر برای ارسال به تیمم درباره پیشرفت پلتفرم بنویس."
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "کاوش ویژگی‌های پلتفرم",
+        "prompt": "ویژگی‌های کلیدی این پلتفرم SaaS و نحوه استفاده از آن‌ها را برایم توضیح بده."
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "پلن فعال",
+      "manage": "مدیریت اشتراک",
+      "noPlanTitle": "بدون پلن فعال",
+      "noPlanDescription": "یک پلن انتخاب کنید تا ویژگی‌های پولی و محدودیت‌های استفاده بالاتر باز شوند.",
+      "choosePlan": "انتخاب پلن",
+      "renewsOn": "تمدید می‌شود در {date}",
+      "endsOn": "پایان می‌یابد در {date}",
+      "trialEndsOn": "دوره آزمایشی در {date} به پایان می‌رسد",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "فعال",
+        "trialing": "دوره آزمایشی",
+        "past_due": "سررسید گذشته",
+        "canceled": "لغو شده",
+        "free": "رایگان"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "بارگذاری وضعیت صورتحساب شما امکان‌پذیر نبود."
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "دوره آزمایشی رایگان {days} روزه",
+      "seat": "{count, plural, one {# صندلی} other {# صندلی}}",
+      "perSeat": "/ صندلی"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "لوگوی سازمان",
+        "description": "یک تصویر مربعی (PNG، JPEG یا WebP، حداکثر 2 مگابایت) برای نمایش سازمان خود آپلود کنید.",
+        "uploadButton": "آپلود لوگو",
+        "uploading": "در حال آپلود…",
+        "fileTooBig": "فایل بسیار بزرگ است. حداکثر حجم مجاز 2 مگابایت است.",
+        "invalidType": "نوع تصویر پشتیبانی نمی‌شود. از PNG، JPEG یا WebP استفاده کنید.",
+        "success": "لوگو به‌روز شد.",
+        "removeButton": "حذف لوگو",
+        "removed": "لوگو حذف شد."
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "نام سازمان",
+        "description": "نام نمایشی که برای تیم و مشتریان شما نشان داده می‌شود را به‌روز کنید.",
+        "label": "نام",
+        "submit": "ذخیره",
+        "saving": "در حال ذخیره…",
+        "success": "نام سازمان به‌روز شد."
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "حذف سازمان",
+        "description": "این سازمان، تمام اعضا، دعوت‌نامه‌ها و داده‌های مرتبط به‌طور دائم حذف می‌شوند. این عمل قابل بازگشت نیست.",
+        "trigger": "حذف سازمان",
+        "confirmLabel": "برای تأیید، نام سازمان را وارد کنید",
+        "submit": "حذف سازمان",
+        "cancel": "لغو",
+        "success": "سازمان حذف شد."
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "دعوت شده‌اید",
+      "heading": "برای پیوستن به {organizationName} دعوت شده‌اید",
+      "description": "دعوت‌نامه را بپذیرید تا همکاری با تیم آغاز شود.",
+      "accept": "پذیرش دعوت",
+      "accepting": "در حال پذیرش...",
+      "decline": "رد کردن",
+      "declining": "در حال رد کردن...",
+      "declinedView": "دعوت‌نامه رد شد",
+      "success": "به دعوت‌کننده اطلاع دادیم.",
+      "backToDashboard": "بازگشت به داشبورد",
+      "roleLabel": "نقش: {role}",
+      "errorEmailMismatch": "این دعوت‌نامه به ایمیل دیگری ارسال شده است",
+      "errorEmailMismatchDetail": "برای پذیرش دعوت‌نامه، با آدرس ایمیلی که دعوت‌نامه را دریافت کرده وارد شوید.",
+      "errorExpired": "دعوت‌نامه منقضی شده است",
+      "errorExpiredDetail": "از دعوت‌کننده بخواهید دعوت‌نامه جدیدی ارسال کند.",
+      "errorNotFound": "دعوت‌نامه یافت نشد",
+      "errorNotFoundDetail": "لینک دعوت نامعتبر است یا لغو شده است.",
+      "errorNotAvailable": "دعوت‌نامه در دسترس نیست",
+      "errorNotAvailableDetail": "این دعوت‌نامه قبلاً پاسخ داده شده و دیگر فعال نیست.",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "مالک",
+        "admin": "مدیر",
+        "member": "عضو",
+        "viewer": "بیننده"
       }
     }
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "title": "کلیدهای API",
+      "description": "کلیدهای API را برای دسترسی برنامه‌ای به Nebutra ایجاد و مدیریت کنید.",
+      "createButton": "ایجاد کلید API",
+      "noPermission": "شما اجازه مشاهده کلیدهای API را ندارید.",
+      "loading": "در حال بارگذاری…",
+      "loadError": "بارگذاری کلیدهای API ناموفق بود.",
+      "createError": "ایجاد کلید API ناموفق بود.",
+      "revokeError": "لغو کلید API ناموفق بود.",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "هنوز کلید API وجود ندارد",
+        "cta": "اولین کلید API خود را بسازید"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "نام",
+        "prefix": "پیشوند",
+        "lastUsed": "آخرین استفاده",
+        "scopes": "محدوده‌ها",
+        "created": "ایجاد شده",
+        "actions": "عملیات",
+        "never": "هرگز"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "لغو",
+        "revoking": "در حال لغو…",
+        "copy": "کپی",
+        "copied": "کپی شد",
+        "close": "بستن",
+        "submit": "ساخت کلید",
+        "submitting": "در حال ساخت…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "ساخت کلید API",
+        "description": "کلیدهای API به سیستم‌های خارجی اجازه می‌دهند به جای شما با Nebutra ارتباط برقرار کنند. با آن‌ها مانند رمز عبور رفتار کنید.",
+        "nameLabel": "نام",
+        "namePlaceholder": "مثلاً بک‌اند تولید",
+        "scopesLabel": "محدوده‌ها",
+        "successWarning": "این کلید تنها یک بار نمایش داده می‌شود. قبل از بستن آن را ذخیره کنید.",
+        "confirmClose": "با بستن، این کلید برای همیشه مخفی می‌شود. مطمئن شوید که ذخیره شده است."
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "گزارش حسابرسی",
+      "description": "تمام اقدامات مدیریتی در فضای کاری خود را ردیابی کنید. بر اساس انجام‌دهنده، اقدام، موجودیت یا بازه زمانی فیلتر کنید.",
+      "empty": "هنوز رویداد حسابرسی وجود ندارد",
+      "loadMore": "بارگذاری بیشتر",
+      "loading": "در حال بارگذاری…",
+      "forbidden": "برای مشاهده گزارش حسابرسی به دسترسی مدیر نیاز دارید.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
-        "ip": "IP"
+        "when": "زمان",
+        "actor": "انجام‌دهنده",
+        "action": "اقدام",
+        "entity": "موجودیت",
+        "outcome": "نتیجه",
+        "ip": "آی‌پی"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "مقدار قبلی",
+        "newValue": "مقدار جدید"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "عمل",
+        "actionPlaceholder": "جستجوی عمل…",
+        "entityType": "نوع موجودیت",
+        "outcome": "نتیجه",
+        "outcomeSuccess": "موفق",
+        "outcomeFailure": "ناموفق",
+        "outcomePending": "در انتظار",
+        "startDate": "تاریخ شروع",
+        "endDate": "تاریخ پایان",
+        "range24h": "۲۴ ساعت گذشته",
+        "range7d": "۷ روز گذشته",
+        "range30d": "۳۰ روز گذشته",
+        "reset": "بازنشانی",
+        "all": "همه"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "اعلان‌ها",
+      "description": "برای هر نوع رویداد و در هر کانال تحویل، مشخص کنید که Nebutra چگونه با شما تماس بگیرد.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "بازنشانی به پیش‌فرض",
+        "save": "ذخیره"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "در حال ذخیره…",
+        "saved": "ذخیره شد",
+        "error": "ذخیره ناموفق بود. لطفاً دوباره تلاش کنید."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "هشدارهای امنیتی",
+          "description": "هشدارهای ورود، تغییر رمز عبور، تغییر احراز هویت دو مرحله‌ای."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "صورتحساب",
+          "description": "صورتحساب‌ها، شکست پرداخت‌ها و تغییرات اشتراک."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "دعوت‌های تیم",
+          "description": "دعوت‌ها برای پیوستن به یک سازمان، پذیرفته یا رد شده."
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "فعالیت تیم",
+          "description": "اعضای جدید، تغییر نقش‌ها و سایر فعالیت‌های فضای کار."
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "بروزرسانی‌های محصول",
+          "description": "ویژگی‌های جدید، نکات برجسته تغییرات و یادداشت‌های انتشار."
         },
         "marketing": {
-          "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "label": "بازاریابی",
+          "description": "خبرنامه و تبلیغات گاه‌به‌گاه. فقط با رضایت شما."
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "داخل برنامه"
         },
         "email": {
-          "label": "Email"
+          "label": "ایمیل"
         },
         "push": {
-          "label": "Push"
+          "label": "اعلان"
         },
         "sms": {
-          "label": "SMS"
+          "label": "پیامک"
         }
       }
     },
     "webhooks": {
-      "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "title": "وب‌هوک‌ها",
+      "description": "به رویدادهای منتشرشده توسط فضای کار خود مشترک شوید. ما هر بار با کلید مخفی نقطه پایانی شما امضا می‌کنیم تا بتوانید اصالت آن را تأیید کنید.",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "نقطه پایانی جدید",
+        "urlLabel": "آدرس نقطه پایانی",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "رویدادها",
+        "submit": "ایجاد نقطه پایانی",
+        "submitting": "در حال ایجاد…",
+        "selectEvent": "حداقل یک رویداد را انتخاب کنید.",
+        "successTitle": "نقطه پایانی ایجاد شد. رمز امضا تنها یک بار نمایش داده می‌شود.",
+        "successWarning": "قبل از بستن، آن را در مدیر رمزهای برنامه خود ذخیره کنید.",
+        "copy": "کپی",
+        "copied": "کپی شد"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "نقاط پایانی فعال",
+        "empty": "هنوز نقطه پایانی وب‌هوک وجود ندارد. یکی در بالا ایجاد کنید.",
+        "loading": "در حال بارگذاری…",
+        "loadFailed": "بارگذاری وب‌هوک‌ها ناموفق بود",
         "columns": {
-          "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "url": "آدرس",
+          "events": "رویدادها",
+          "status": "وضعیت",
+          "lastDelivered": "آخرین تحویل",
+          "actions": "عملیات"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "فعال",
+          "disabled": "غیرفعال"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "ویرایش",
+          "enable": "فعال‌سازی",
+          "disable": "غیرفعال‌سازی",
+          "viewDeliveries": "مشاهده تحویل‌ها",
+          "delete": "حذف"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "تحویل‌های اخیر",
+        "close": "بستن",
+        "loading": "در حال بارگذاری…",
+        "loadFailed": "بارگذاری تحویل‌ها ناموفق بود",
+        "empty": "هنوز تحویلی وجود ندارد.",
+        "viewPayload": "مشاهده داده‌ها",
+        "hidePayload": "مخفی کردن داده‌ها",
+        "replay": "تکرار",
+        "replaying": "در حال تکرار…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "موفق",
+          "failed": "ناموفق",
+          "retrying": "در حال تلاش مجدد"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "ظاهر",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "پوسته",
+        "description": "از حالت روشن، تیره یا هماهنگ با تنظیمات سیستم استفاده کنید."
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "پیش‌فرض پوسته",
+        "description": "هر پوسته‌ای از Theme Playground را در کل برنامه اعمال کنید. کنترل‌های زیر برای تنظیم دقیق روی آن قرار می‌گیرند.",
+        "search": "جستجوی پوسته‌ها…",
+        "searchLabel": "جستجوی پوسته‌ها",
+        "default": "پیش‌فرض",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "فعال",
+        "empty": "هیچ پوسته‌ای با جستجوی شما مطابقت ندارد.",
+        "count": "{count} پوسته"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "پوسته",
+        "description": "یک پیش‌فرض انتخاب کنید، یک فایل DESIGN.md وارد کنید، سپس توکن‌های زیر را تنظیم دقیق کنید.",
+        "selectLabel": "پیش‌فرض پوسته",
+        "import": "وارد کردن",
+        "copy": "کپی تم",
+        "copied": "کپی شد",
+        "copyError": "کپی ناموفق بود",
+        "custom": "سفارشی"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "وارد کردن DESIGN.md",
+        "description": "یک DESIGN.md را پیست یا آپلود کنید تا رنگ‌ها، شعاع، فونت‌ها，فاصله‌ها و سایه‌های آن در کل برنامه اعمال شوند — و پس از بارگذاری مجدد حفظ شوند.",
+        "applied": "اعمال شد:",
+        "remove": "حذف"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "حالت تم",
+        "light": "روشن",
+        "dark": "تاریک",
+        "system": "سیستم"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "رنگ تأکیدی",
+        "description": "یک رنگ تأکیدی برند انتخاب کنید که حالت‌های فعال در کل برنامه را رنگ‌آمیزی کند.",
+        "label": "رنگ تأکیدی",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
-          "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "default": "پیش‌فرض",
+          "blue": "آبی",
+          "cyan": "فیروزه‌ای",
+          "violet": "بنفش",
+          "pink": "صورتی",
+          "amber": "کهربایی",
+          "green": "سبز",
+          "red": "قرمز"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "رنگ‌ها",
+        "description": "رنگ تأکیدی، پس‌زمینه و پیش‌زمینه.",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "پس‌زمینه",
+          "description": "تغییر رنگ پس‌زمینه سطح."
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "پیش‌زمینه",
+          "description": "تغییر رنگ متن اصلی."
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "بازنشانی به پیش‌فرض"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "فونت رابط کاربری",
+        "uiDescription": "خانواده فونت استفاده‌شده در رابط کاربری.",
+        "codeLabel": "فونت کد",
+        "codeDescription": "خانواده فونت استفاده‌شده برای سطوح کد.",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "پیش‌فرض تم",
+            "system": "سیستم",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
-            "system": "System mono",
+            "theme": "پیش‌فرض تم",
+            "system": "سیستم مونو",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
             "jetbrains-mono": "JetBrains Mono"
@@ -879,385 +879,385 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "کنتراست",
+        "description": "تنظیم دقیق کنتراست متن (۵۰ = بدون تغییر).",
+        "label": "سطح کنتراست"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "استفاده از نشانگر اشاره‌گر",
+        "description": "نشانگر ماوس را به حالت اشاره‌گر روی عناصر تعاملی تغییر دهید.",
+        "label": "نشانگر اشاره‌گر روی عناصر تعاملی"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "نشانگرهای تفاوت",
+        "description": "نوارهای رنگی یا نمادهای +/- را در هر خط تغییر یافته نمایش دهید.",
+        "label": "سبک نشانگر تفاوت",
+        "color": "رنگ",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "صاف‌سازی فونت",
+        "description": "ضدالیاژ بومی macOS را برای فونت اعمال کنید.",
+        "label": "صاف‌سازی بومی فونت"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "تایپوگرافی",
+        "description": "اندازه‌های پایه فونت برای رابط کاربری و سطوح کد.",
+        "uiFontSize": "اندازه فونت رابط کاربری",
+        "uiFontSizeDescription": "اندازه پایه فونت رابط کاربری را تنظیم کنید.",
+        "codeFontSize": "اندازه فونت کد",
+        "codeFontSizeDescription": "اندازه پایه فونت کد را تنظیم کنید."
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "پوسته",
+        "customize": "سفارشی‌سازی"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "کاهش حرکت",
+        "description": "کاهش انیمیشن‌ها یا هماهنگی با ترجیح سیستم.",
+        "label": "ترجیح حرکت",
+        "system": "سیستم",
+        "on": "روشن",
+        "off": "خاموش"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "نوار کناری شفاف",
+        "description": "اعمال متریال شفاف به نوار کناری."
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "نوار کناری شفاف",
+        "description": "اعمال متریال شفاف به نوار کناری."
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "نسخه",
+    "effective": "موثر",
+    "notFound": "این سند در دسترس نیست.",
+    "backHome": "بازگشت به خانه"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "پالت فرمان",
+    "placeholder": "دستوری بنویسید یا جستجو کنید…",
+    "empty": "نتیجه‌ای یافت نشد.",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
-      "admin": "Admin",
-      "help": "Help"
+      "navigation": "ناوبری",
+      "actions": "عملیات",
+      "settings": "تنظیمات",
+      "account": "حساب کاربری",
+      "admin": "مدیریت",
+      "help": "راهنما"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
-        "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
-        "webhooks": "Webhooks",
-        "admin": "Admin"
+        "home": "خانه",
+        "settings": "تنظیمات",
+        "billing": "صورتحساب",
+        "team": "تیم",
+        "apiKeys": "کلیدهای API",
+        "notifications": "اعلان‌ها",
+        "auditLog": "گزارش حسابرسی",
+        "webhooks": "وب‌هوک‌ها",
+        "admin": "مدیریت"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "دعوت از عضو تیم",
+        "createApiKey": "ایجاد کلید API",
+        "switchOrganization": "تغییر سازمان"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "تغییر به حالت روشن",
+        "themeDark": "تغییر به حالت تیره",
+        "themeSystem": "استفاده از حالت سیستم"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "خروج"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "گزارش مشکل",
+        "shortcuts": "میانبرهای صفحه‌کلید"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "انتخاب‌های حریم خصوصی شما",
+      "description": "ما از کوکی‌ها برای بهبود تجربه شما، تحلیل ترافیک سایت و شخصی‌سازی محتوا استفاده می‌کنیم. انتخاب کنید کدام دسته‌ها مجاز باشند."
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "پذیرش همه",
+      "savePreferences": "ذخیره تنظیمات"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "ضروری",
+        "description": "برای عملکرد سایت لازم است. غیرفعال‌سازی امکان‌پذیر نیست."
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "عملکردی",
+        "description": "ذخیره ترجیحات شما (زبان، پوسته، چیدمان)."
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "تحلیل‌ها",
+        "description": "داده‌های ناشناس استفاده برای بهبود محصول."
       },
       "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "label": "بازاریابی",
+        "description": "تبلیغات شخصی‌سازی‌شده و بازهدف‌گذاری در پلتفرم‌های شخص ثالث."
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "اعلان‌ها",
+      "description": "تمام اعلان‌های شما در یک مکان.",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "همه",
+        "unread": "خوانده نشده"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "علامت‌گذاری همه به عنوان خوانده شده",
+        "markRead": "علامت‌گذاری به عنوان خوانده شده",
+        "archive": "بایگانی",
+        "loadMore": "بارگذاری بیشتر",
+        "loading": "در حال بارگذاری...",
+        "selected": "{count} انتخاب شده"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "همه چیز به‌روز است.",
+        "unread": "هیچ اعلان خوانده‌نشده‌ای وجود ندارد."
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "بارگذاری اعلان‌ها انجام نشد.",
+        "network": "خطای شبکه. لطفاً دوباره تلاش کنید.",
+        "markRead": "نشان‌گذاری اعلان به‌عنوان خوانده‌شده انجام نشد.",
+        "archive": "آرشیو کردن اعلان انجام نشد.",
+        "bulkMarkRead": "برخی اعلان‌ها نتوانستند به‌عنوان خوانده‌شده علامت‌گذاری شوند."
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "صندوق ورودی به یک بک‌اند اعلان پایدار نیاز دارد. پیکربندی ارائه‌دهنده خود را بررسی کنید.",
+        "emptyCaughtUp": "صندوق ورودی خالی است.",
+        "emptyChangelog": "بروزرسانی‌های تغییرات اینجا نمایش داده می‌شوند."
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "صبح بخیر",
+      "afternoon": "عصر بخیر",
+      "evening": "شام بخیر"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "اپ خود را با کانکتورها توانمند کنید",
+      "subtitle": "یک پرامپت رها کنید، از هر جایی ⌘K را بزنید، یا مستقیماً به سطح کاری بروید.",
+      "promptPlaceholder": "چه چیزی در ذهن دارید؟",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "اتصال یک یکپارچه‌سازی",
+        "theme": "زمینه بازی",
+        "audit": "لاگ حسابرسی",
+        "billing": "صورتحساب"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "احراز هویت برای ارائه‌دهنده انتخاب‌شده پیکربندی نشده است. برای فعال‌سازی جلسات کاربر، اسرار ارائه‌دهنده را تنظیم کنید."
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "با یک اقدام شروع کنید: از Sailor بپرسید، سیگنال‌های فضای کار را بررسی کنید، یا کار را به یک سطح خودکارسازی هدایت کنید.",
+      "openSailor": "باز کردن Sailor AI",
+      "viewAnalytics": "مشاهده تحلیل‌ها"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "نمای کلی فضای کار",
+      "description": "آخرین روز انبار · {day}",
+      "viewAnalytics": "مشاهده تحلیل‌ها →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "کاربران فعال",
+        "totalEvents": "مجموع رویدادها",
+        "conversions": "تبدیل‌ها",
+        "revenue": "درآمد"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "کاربران واردشده",
+        "totalEvents": "رویدادهای ثبت‌شده",
+        "conversions": "عملکردهای واجد شرایط",
+        "revenue": "درآمد شناسایی‌شده"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
-        "tenant": "Tenant",
-        "daily": "Daily",
+        "snapshot": "نمای لحظه‌ای",
+        "cadence": "تکرار",
+        "tenant": "مستاجر",
+        "daily": "روزانه",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "کاربران مستاجر",
+        "events": "جریان رویدادها",
+        "funnel": "قیف",
+        "billing": "صورتحساب"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "خط لوله اسناد",
+      "description": "فایل‌های مبدأ را به صف وظیفه مبدأ ارسال کنید.",
+      "intakeTitle": "دریافت اسناد",
+      "intakeDescription": "PDF، Markdown، متن یا سند Word",
+      "chooseDocument": "انتخاب سند",
+      "startParseTask": "شروع وظیفه تجزیه",
+      "queued": "در صف انتظار",
+      "fileInputLabel": "فایل سند",
+      "fallbackError": "وظیفه سند با خطا مواجه شد.",
+      "taskStatus": "وضعیت وظیفه",
+      "progressLabel": "پیشرفت وظیفه",
+      "refreshStatus": "بروزرسانی",
+      "cancelTask": "لغو",
+      "statusError": "امکان بروزرسانی وضعیت وظیفه وجود ندارد.",
+      "cancelError": "امکان لغو وظیفه وجود ندارد.",
+      "statusQueued": "در صف انتظار",
+      "statusRunning": "در حال اجرا",
+      "statusSucceeded": "موفق",
+      "statusFailed": "ناموفق",
+      "statusCancelled": "لغو شده",
+      "resultReady": "نتیجه آماده است",
+      "taskError": "خطای وظیفه",
+      "updatedAt": "بروزرسانی شده"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "از جایی که رها کردید ادامه دهید",
+      "subtitle": "{count, plural, =0 {هیچ جلسه‌ای} =1 {۱ جلسه اخیر} other {# جلسه اخیر}}",
+      "viewAll": "مشاهده همه →",
+      "newChat": "چت جدید",
+      "untitled": "جلسه بدون عنوان",
+      "messageCount": "{count, plural, =1 {۱ پیام} other {# پیام}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "شروع کار",
+      "description": "{done} از {total} تکمیل شده · برای باز کردن فضای کاری کامل، راه‌اندازی را به پایان برسانید",
+      "progressLabel": "پیشرفت راه‌اندازی",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "دعوت از یک همکار",
+          "description": "حداقل یک همکار را به فضای کاری خود اضافه کنید."
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "تولید کلید API",
+          "description": "دسترسی برنامه‌ای به نقاط پایانی فضای کاری شما."
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "اتصال یک یکپارچه‌سازی",
+          "description": "Stripe، Slack، وب‌هوک‌ها، صف‌ها و موارد دیگر."
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "حالت چت، داده یا گردش کار را امتحان کنید."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "پروژه‌ها",
+    "noThreads": "بدون رشته",
+    "expandAll": "باز کردن همه",
+    "collapseAll": "جمع کردن همه",
+    "sectionMore": "گزینه‌های بیشتر",
+    "newProject": "پروژه جدید",
+    "restoredGroups": "گروه‌های پیش‌تر باز شده بازیابی شدند",
+    "newProjectPlaceholder": "نام پروژه",
+    "newProjectDefault": "بدون عنوان",
+    "newProjectSuccess": "پروژه ایجاد شد",
+    "newProjectError": "نمی‌توان پروژه ایجاد کرد",
+    "sortBy": "مرتب‌سازی بر اساس",
+    "sortRecent": "فعالیت اخیر",
+    "sortAlphabetical": "الفبایی",
+    "sortCreated": "تاریخ ایجاد",
+    "archiveAll": "بایگانی همه",
+    "comingV2": "در نسخه ۲"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "اولین اتاق آماده است.",
+      "firstFolder": "بسیاری از شرکت‌ها با یک پوشه شروع می‌شوند.",
+      "firstTable": "اولین میز یک صندلی دوم دارد.",
+      "firstSignal": "دنیای واقعی شروع به صحبت کرده است.",
+      "firstShip": "دنیای واقعی برای اولین بار آن را می‌بیند.",
+      "firstBeliever": "از امروز، دیگر فقط برای خودتان نمی‌سازید.",
+      "firstRevenue": "رویای شما حالا جریان نقدی دارد.",
+      "firstReturn": "بازگشت مهم‌تر از بازدید است.",
+      "firstTeam": "سه نفر می‌توانند شروع به تشکیل یک شرکت کنند.",
+      "firstCrowd": "اولین میز شلوغ‌تر می‌شود.",
+      "firstReset": "شروع دوباره، آغاز صادقانه‌تری است.",
+      "firstPublic": "تکه‌ای از آینده را در معرض دید عموم قرار دهید.",
+      "firstDemo": "این یک نمایش نیست. یک آزمایش است.",
+      "graduation": "شما از مقدمات فراتر رفته‌اید. جاده‌ی پیش رو به ابزارهای قوی‌تری نیاز دارد."
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "بسیاری از شرکت‌ها به‌عنوان یک پوشه شروع می‌شوند.",
+      "integrations": "هیچ کانکتوری پیکربندی نشده است.",
+      "creditActivity": "فعالیت اعتبار پس از اولین درخواست شما نمایش داده می‌شود.",
+      "usageData": "داده‌های استفاده پس از اینکه سازمان شما شروع به ارسال درخواست‌ها کند نمایش داده می‌شوند.",
+      "apiKeys": "هنوز کلیدی وجود ندارد.",
+      "apiKeysCta": "اولین کلید خود را بسازید",
+      "teamMembers": "یک نفر می‌تواند شروع کند. چند نفر می‌توانند بسازند.",
+      "cofounders": "اولین کسی که به شما ایمان دارد هنوز ظاهر نشده است.",
+      "cofoundersDescription": "وقتی شما و یک هم‌بنیان‌گذار دیگر هر دو علاقه نشان دهید، در اینجا ظاهر می‌شوند.",
+      "cofoundersAction": "هم‌بنیان‌گذار پیدا کنید",
+      "growthChart": "داده‌های روند پس از شروع فعالیت نمایش داده می‌شوند.",
+      "revenueChart": "داده‌های درآمد پس از شروع تراکنش‌ها نمایش داده می‌شوند.",
+      "webhookDeliveries": "تحویل‌ها پس از اولین رویداد در اینجا نمایش داده می‌شوند.",
+      "webhookEndpoints": "یک نقطه پایانی در بالا اضافه کنید تا دریافت رویدادها را شروع کنید.",
+      "accessInvites": "هیچ کد دعوتی صادر نشده است."
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "اولین اتاق آماده است.",
+    "failure": "شروع دوباره، آغاز صادقانه‌تری است.",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "تطبیق‌ها بارگذاری نشدند.",
+      "loadMatchesDescription": "مشکلی از سمت ما پیش آمد. برای تلاش مجدد صفحه را تازه کنید.",
+      "loadWebhookDeliveries": "تحویل‌ها بارگذاری نشدند.",
+      "replayWebhookDelivery": "پخش مجدد انجام نشد.",
+      "loadWebhookEndpoints": "نقاط پایانی بارگذاری نشدند."
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "یکی می‌تواند شروع کند. چند نفر می‌توانند بسازند.",
+    "revenue": "رویای شما حالا جریان نقدی دارد.",
+    "growth": "سیگنال قوی‌تر می‌شود.",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "جهان برای اولین بار آن را می‌بیند.",
+      "echo": "بالاخره از localhost خارج شد."
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "نیاز نیست آماده باشید. نیاز است شروع کنید.",
+    "graduation": "از مقدمات فراتر رفته‌اید. برای مسیر پیش رو {tool} را امتحان کنید.",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "اولین برج زمینه شما از اینجا آغاز می‌شود.",
+      "emptyDescription": "یک شرکت را در Startup OS کامپایل کنید تا برج زمینه آن را ببینید و ویرایش کنید.",
+      "emptyAction": "باز کردن Startup OS",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "کلید ارائه‌دهنده هوش مصنوعی را متصل کنید تا فیلدها به‌طور خودکار پر شوند.",
+        "generateFailed": "تولید به پایان نرسید.",
+        "saveFailed": "تغییرات شما ذخیره نشدند."
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "ذخیره",
+        "saving": "در حال ذخیره…",
+        "cancel": "لغو",
+        "open": "باز کردن Startup OS"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "هنوز شرطی وجود ندارد.",
+      "noRuns": "هیچ اجرای فعالی وجود ندارد."
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "این پروژه هنوز فایلی ندارد."
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "فضای کار در حال راه‌اندازی است.",
+      "emptyDescription": "دعوت‌نامه ممکن است هنوز در حال همگام‌سازی باشد. این صفحه را تازه کنید یا یک فضای کار جداگane ایجاد کنید."
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "قبل از صورتحساب، یک فضای کار ایجاد کنید.",
+      "emptyDescription": "عملیات صورتحساب به یک فضای کار فعال نیاز دارد. ابتدا یکی ایجاد کنید، سپس به صورتحساب بازگردید."
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "اولین فضای کاری از اینجا آغاز می‌شود.",
+      "emptyDescription": "برای شروع، یک فضای کاری ایجاد کنید."
     }
   }
 }

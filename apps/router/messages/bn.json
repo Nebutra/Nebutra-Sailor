@@ -5,106 +5,106 @@
     "description": "সব মডেলের API মার্কেটপ্লেস · ব্যবহার অনুযায়ী পেমেন্ট · কী ও ওয়ালেট ম্যানেজ করুন · দ্রুত ট্রাই করুন।"
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
-    "title": "Admin",
+    "dashboard": "সারসংক্ষেপ",
+    "keys": "API কী",
+    "wallet": "ওয়ালেট",
+    "docs": "ডক্স",
+    "title": "অ্যাডমিন",
     "backToMarket": "মার্কেটে ফিরে যান",
-    "quickUse": "Quick use"
+    "quickUse": "দ্রুত ব্যবহার"
   },
   "chrome": {
     "searchPlaceholder": "AI দিয়ে আপনি কী করতে চান?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "খুঁজুন",
+    "locale": "ভাষা",
+    "currency": "মুদ্রা",
     "collapseSidebar": "সাইডবার সংকুচিত করুন",
     "expandSidebar": "সাইডবার প্রসারিত করুন",
-    "home": "Home",
-    "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "home": "হোম",
+    "adminConsole": "অ্যাডমিন",
+    "quickUse": "দ্রুত ব্যবহার",
+    "support": "সাপোর্ট",
+    "apiDocs": "API ডক্স",
     "integrationHelp": "ইন্টিগ্রেশন গাইড",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI পিকস",
+    "market": "মার্কেট",
+    "usageTitle": "দ্রুত ব্যবহার"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "অ্যাপ মার্কেট",
+    "api": "এপিআই মার্কেট",
     "models": "মডেল ক্যাটালগ",
-    "client": "Client"
+    "client": "ক্লায়েন্ট"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
+    "new": "নতুন",
+    "hot": "জনপ্রিয়",
+    "forYou": "আপনার জন্য",
+    "grid": "গ্রিড",
+    "list": "তালিকা",
+    "apiShelf": "এপিআই শেলফ",
+    "toolShelf": "টুল শেলফ",
+    "categories": "ক্যাটাগরি",
+    "apps": "অ্যাপস",
+    "newRelease": "নতুন রিলিজ",
+    "forgeTitle": "ফোর্জ টুল ওয়ার্কস্পেস",
+    "forgeBlurb": "টেক্সট রূপান্তর, কোডেক, ফর্ম এবং কম্পোজেবল টুলস। অ্যাপ মার্কেট ল্যাব Forge-এর দিকে ইঙ্গিত করে।",
     "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "allApi": "সব API →",
+    "all": "সব →",
+    "viewAll": "সব {label} দেখুন →",
+    "gridView": "গ্রিড ভিউ",
+    "listView": "লিস্ট ভিউ",
+    "hiTitle": "এন্টারপ্রাইজ AI রিসোর্স প্ল্যাটফর্ম",
+    "hiSubtitle": "প্রতিটি প্রয়োজনকে সঠিক AI দিয়ে মিলান",
+    "sellable": "বিক্রয়যোগ্য",
+    "walletTopup": "টপ আপ"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "ভাষা মডেল",
+      "hint": "চ্যাট · রিজনিং"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "ছবি তৈরি",
+      "hint": "টেক্সট-টু-ইমেজ"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "ছবি সম্পাদনা",
+      "hint": "এডিট · ম্যাটিং"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "ভিডিও জেনারেশন",
+      "hint": "টেক্সট-টু-ভিডিও"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "অডিও ও ভিডিও",
+      "hint": "স্পিচ · ট্রান্সক্রিপশন"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "তথ্য",
+      "hint": "রিকভারি · এক্সট্র্যাক্ট"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "জ্ঞান-সমৃদ্ধ"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "টুল API",
+      "hint": "এজেন্ট · টুল"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "বট",
+      "chips": "চ্যাট বট · ড্রয়িং বট · জ্ঞান"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "প্রোডাক্টিভিটি",
+      "chips": "মডেল অ্যারেনা · AI লেখা"
     },
     "academic": {
-      "label": "Academic",
+      "label": "শিক্ষামূলক",
       "chips": "PDF toolkit · AI patent search"
     },
     "image": {

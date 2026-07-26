@@ -5,115 +5,115 @@
     "description": "API-marktplaats voor alle modellen · betaal per gebruik · beheer sleutels & portemonnee · snel uitproberen."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
+    "dashboard": "Overzicht",
+    "keys": "API-sleutels",
     "wallet": "Wallet",
-    "docs": "Docs",
+    "docs": "Documentatie",
     "title": "Admin",
     "backToMarket": "Terug naar de markt",
-    "quickUse": "Quick use"
+    "quickUse": "Snel gebruiken"
   },
   "chrome": {
     "searchPlaceholder": "Wat wil je met AI doen?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Zoeken",
+    "locale": "Taal",
+    "currency": "Valuta",
     "collapseSidebar": "Zijbalk inklappen",
     "expandSidebar": "Zijbalk uitvouwen",
     "home": "Home",
     "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "quickUse": "Snel gebruiken",
+    "support": "Ondersteuning",
+    "apiDocs": "API-documentatie",
     "integrationHelp": "Integratiehandleiding",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI-keuzes",
+    "market": "Marktplaats",
+    "usageTitle": "Snel gebruiken"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "App-marktplaats",
+    "api": "API-marktplaats",
     "models": "Modelcatalogus",
     "client": "Client"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
+    "new": "Nieuw",
+    "hot": "Populair",
+    "forYou": "Voor jou",
+    "grid": "Roster",
+    "list": "Lijst",
+    "apiShelf": "API-schouw",
+    "toolShelf": "Tool-schouw",
+    "categories": "Categorieën",
     "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
+    "newRelease": "Nieuwe release",
+    "forgeTitle": "Forge-toolwerkruimte",
+    "forgeBlurb": "Teksttransformaties, codecs, formulieren en samenstelbare tools. De app-marktplaatslab verwijst naar Forge.",
     "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "allApi": "Alle API's →",
+    "all": "Alles →",
+    "viewAll": "Bekijk alle {label} →",
+    "gridView": "Rasterweergave",
+    "listView": "Lijstweergave",
+    "hiTitle": "Enterprise AI-bronnenplatform",
+    "hiSubtitle": "Voor elke behoefte de juiste AI",
+    "sellable": "Verkoopt",
+    "walletTopup": "Opladen"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Taalmodellen",
+      "hint": "Chat · redeneren"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Afbeeldingsgeneratie",
+      "hint": "Tekst-naar-afbeelding"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "Afbeeldingsbewerking",
+      "hint": "Bewerken · matting"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "Videogeneratie",
+      "hint": "Tekst-naar-video"
     },
     "audio": {
       "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "hint": "Spraak · transcriptie"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "Informatie",
+      "hint": "Ophalen · extraheren"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Kennisverrijkt"
     },
     "tools": {
-      "label": "Tool APIs",
+      "label": "Tool-API's",
       "hint": "Agent · tools"
     }
   },
   "toolTaxonomy": {
     "bots": {
       "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "chips": "Chatbots · tekenbots · kennis"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Productiviteit",
+      "chips": "Modelarena · AI-schrijven"
     },
     "academic": {
-      "label": "Academic",
+      "label": "Academisch",
       "chips": "PDF toolkit · AI patent search"
     },
     "image": {
-      "label": "Image tools",
+      "label": "Afbeeldingstools",
       "chips": "3D studio · Canvas"
     },
     "audio": {
       "label": "Audio",
-      "chips": "Speech · AI music"
+      "chips": "Spraak · AI muziek"
     },
     "code": {
       "label": "Code",
@@ -121,11 +121,11 @@
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
+    "dashboard": "Overzicht",
+    "keys": "Sleutels",
     "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "use": "Proberen",
+    "docs": "Documentatie",
+    "models": "Meer"
   }
 }

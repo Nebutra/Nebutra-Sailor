@@ -1,67 +1,67 @@
 {
   "admin": {
-    "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "title": "एडमिन",
+    "description": "सुपर एडमिन पैनल — उपयोगकर्ताओं, संगठनों और सिस्टम स्वास्थ्य का प्रबंधन करें।",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "अवलोकन",
+      "users": "उपयोगकर्ता",
+      "organizations": "संगठन"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "उपयोगकर्ता",
+      "description": "सभी संगठनों में किसी भी उपयोगकर्ता को ब्राउज़, खोजें और इम्पर्सोनेट करें।",
+      "searchPlaceholder": "उपयोगकर्ता खोजें…",
+      "totalCount": "{count, plural, one {# उपयोगकर्ता} other {# उपयोगकर्ता}}",
+      "empty": "कोई उपयोगकर्ता नहीं मिला।",
+      "loadError": "उपयोगकर्ता लोड करने में विफल।",
       "columns": {
-        "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "email": "ईमेल",
+        "name": "नाम",
+        "created": "बनाया गया",
+        "activeOrgs": "सक्रिय संगठन",
+        "actions": "कार्रवाई"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "संगठन देखें"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "संगठन",
+      "description": "सिस्टम में सभी वर्कस्पेस, ताज़ाता के अनुसार क्रमबद्ध।",
+      "searchPlaceholder": "संगठन खोजें…",
+      "totalCount": "{count, plural, one {# संगठन} other {# संगठन}}",
+      "empty": "कोई संगठन नहीं मिला।",
+      "loadError": "संगठन लोड करने में विफल।",
       "columns": {
-        "name": "Name",
-        "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "name": "नाम",
+        "slug": "स्लग",
+        "plan": "प्लान",
+        "members": "सदस्य",
+        "created": "बनाया गया",
+        "actions": "कार्रवाई"
       },
-      "view": "View"
+      "view": "देखें"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "प्रतिनिधित्व करें",
+      "starting": "शुरू हो रहा है…",
+      "stop": "Impersonation बंद करें",
+      "confirm": "{label} का impersonation करें? आप इस उपयोगकर्ता के रूप में ऐप देखेंगे जब तक आप इसे बंद न करें।",
+      "error": "Impersonation शुरू करने में विफल।",
+      "stopError": "Impersonation बंद करने में विफल।"
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "पिछला",
+      "next": "अगला",
+      "pageOf": "{total} में {page} पृष्ठ"
     }
   },
   "Common": {
     "hello": "Hello World",
     "dashboard": "Dashboard",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "जारी रखें",
+      "confirm": "पुष्टि करें",
+      "done": "हो गया",
+      "cancel": "रद्द करें"
     }
   },
   "theme": {
@@ -95,253 +95,253 @@
     "subtitle": "Three quick steps and you're ready to ship.",
     "steps": {
       "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "invite": "टीम को आमंत्रित करें",
+      "plan": "प्लान चुनें"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "वापस",
+      "stepCounter": "चरण {current} / {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "एक प्लान चुनें",
+      "description": "मुफ़्त से शुरू करें या अधिक क्षमता अनलॉक करें। आप किसी भी समय प्लान बदल सकते हैं।",
+      "choose": "एक प्लान चुनें",
+      "skip": "अभी छोड़ें"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "उपयोगकर्ता मेनू खोलें",
+    "profile": "प्रोफ़ाइल",
+    "settings": "सेटिंग्स",
+    "feedback": "फीडबैक",
+    "theme": "थीम",
+    "language": "भाषा",
+    "signOut": "साइन आउट",
+    "signedInAs": "साइन इन किया गया है"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "प्रोफ़ाइल",
+      "description": "अपनी व्यक्तिगत जानकारी अपडेट करें।",
+      "nameLabel": "नाम",
+      "namePlaceholder": "आपका पूरा नाम",
+      "emailLabel": "ईमेल",
+      "emailHint": "नए ईमेल पते की पुष्टि करने के लिए हम एक सत्यापन लिंक भेजेंगे।",
+      "languageLabel": "भाषा",
+      "submit": "बदलाव सहेजें",
+      "saving": "सहेजा जा रहा है…",
+      "verifyEmail": "सत्यापित करें",
+      "verifying": "सत्यापन भेजा जा रहा है…",
+      "success": "प्रोफ़ाइल अपडेट हो गई।",
+      "verificationSent": "सत्यापन ईमेल भेजा गया।",
+      "errorRequiredName": "नाम आवश्यक है।",
+      "errorInvalidEmail": "ईमेल पता वैध नहीं है।",
+      "subtitle": "आपकी पहचान और संपर्क जानकारी।",
+      "unknown": "अनामक उपयोगकर्ता",
+      "manageCta": "पूर्ण खाता सेटिंग्स खोलें"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "अवतार",
+      "description": "एक वर्गाकार छवि अपलोड करें (PNG, JPEG, या WebP, अधिकतम 2MB)।",
+      "uploadButton": "अवतार अपलोड करें",
+      "uploading": "अपलोड हो रहा है…",
+      "fileTooBig": "फ़ाइल बहुत बड़ी है। अधिकतम आकार 2MB है।",
+      "invalidType": "छवि का प्रकार समर्थित नहीं है। PNG, JPEG, या WebP का उपयोग करें।",
+      "success": "अवतार अपडेट किया गया।",
+      "removeButton": "अवतार हटाएं",
+      "removed": "अवतार हटा दिया गया।",
+      "deleteError": "अवतार हटाने में विफल।"
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "मेरे डेटा को निर्यात करें",
+      "description": "अपने खाते के लिए हमारे पास मौजूद हर रिकॉर्ड की एक कॉपी डाउनलोड करें, जिसमें प्रोफ़ाइल, संगठन, ऑडिट इवेंट्स, सूचनाएं और आमंत्रण शामिल हैं।",
+      "compliance": "GDPR Article 20 (डेटा पोर्टेबिलिटी का अधिकार) और PIPL Article 45 (व्यक्तिगत जानकारी की कॉपी प्राप्त करने का अधिकार) द्वारा आवश्यक।",
+      "export": "मेरे डेटा को निर्यात करें",
+      "pending": "Export तैयार हो रहा है…",
+      "ready": "आपका export तैयार है।",
+      "download": "JSON डाउनलोड करें",
+      "error": "आपका export तैयार करने में विफल। कृपया पुनः प्रयास करें।"
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "ईमेल पता बदलें",
+      "description": "हम नए पते पर एक सत्यापन लिंक भेजेंगे। यह बदलाव तभी लागू होगा जब आप उस इनबॉक्स से इसकी पुष्टि करेंगे।",
+      "newEmailLabel": "नया ईमेल पता",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "सत्यापन लिंक भेजें",
+      "submitting": "भेजा जा रहा है…",
+      "verificationSent": "बदलाव की पुष्टि करने के लिए {email} पर अपने इनबॉक्स की जाँच करें।",
+      "errorInvalidEmail": "ईमेल पता वैध नहीं है।",
+      "error": "ईमेल बदलने का अनुरोध करने में विफल।",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "ईमेल अपडेट किया गया",
+        "successDescription": "आपका साइन-इन ईमेल अपडेट कर दिया गया है।",
+        "successWithEmail": "आपका साइन-इन ईमेल अब {email} है।",
+        "failureTitle": "हम उस लिंक की पुष्टि नहीं कर सके",
+        "failureDescription": "यह सत्यापन लिंक अमान्य है, समाप्त हो चुका है, या पहले से उपयोग किया जा चुका है। कृपया अपने खाता सेटिंग्स से एक नया अनुरोध करें।",
+        "errorCode": "कारण: {code}",
+        "continueCta": "खाते पर वापस जाएं",
+        "backCta": "खाते पर वापस जाएं"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "खाता",
+    "ariaLabel": "खाता सेटिंग्स",
+    "navLabel": "खाता सेटिंग्स टैब",
+    "tip": "इस डायलॉग को फिर से खोलने के लिए कहीं भी {key} दबाएं।",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "प्रोफ़ाइल",
+      "subscription": "सब्सक्रिप्शन",
+      "billing": "बिलिंग",
+      "preferences": "प्राथमिकताएं",
+      "personalization": "व्यक्तिगतकरण"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "सब्सक्रिप्शन",
+      "subtitle": "प्लान, कोटा, और नवीनीकरण।",
+      "currentPlan": "वर्तमान प्लान",
+      "upgradeCta": "योजनाओं की तुलना करें",
+      "manageCta": "सदस्यता प्रबंधित करें"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "बिलिंग",
+      "subtitle": "इनवॉइस इतिहास और भुगतान विधि।",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "अभी तक कोई इतिहास नहीं",
+        "description": "आपके पहले भुगतान अवधि के बाद चार्ज और इनवॉइस यहाँ दिखेंगे।",
+        "cta": "पूर्ण बिलिंग खोलें"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "प्राथमिकताएँ",
+      "subtitle": "थीम और सुलभता।",
+      "theme": "थीम",
+      "light": "लाइट",
+      "dark": "डार्क",
+      "system": "सिस्टम",
+      "help": "सहायता",
+      "reportIssue": "समस्या रिपोर्ट करें",
+      "shortcuts": "कीबोर्ड शॉर्टकट"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "व्यक्तिगत अनुकूलन",
+      "subtitle": "Sailor को बताएं कि आप कौन हैं और वे कैसे प्रतिक्रिया करें।"
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "परिदृश्य को पुनर्परिभाषित करना",
+    "hero_subtitle": "दुनिया में कोई कठिन व्यापार नहीं होना चाहिए।",
+    "social_title": "सामाजिक",
+    "social_headline": "पूर्ण तकनीकी समानता",
+    "social_description": "एज इनोवेटरों को सशक्त बनाना। पारंपरिक फ़िल्टर तोड़ना और बॉक्स से बाहर की इंफ्रास्ट्रक्चर के साथ सॉलो फाउंडर्स को सशक्त बनाना।",
+    "governance_title": "शासन",
+    "governance_headline": "कोड ही कानून है",
+    "governance_description": "Proof of Work और वास्तविक व्यापारिक परिणामों पर आधारित एल्गोरिदमिक शासन, अस्पष्ट ब्यूरोकेरासी को बदलना।",
+    "environment_title": "पर्यावरण",
+    "environment_headline": "डिजिटल न्यूनतमवाद",
+    "environment_description": "अत्यधिक SaaS एकीकरण और संसाधन दक्षता के माध्यम से क्लाउड फुटप्रिंट में कमी लाना。"
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "सुरक्षा",
+      "description": "अपना पासवर्ड, मल्टी-फैक्टर प्रमाणीकरण और सक्रिय सत्र प्रबंधित करें।",
+      "managedByProvider": "सुरक्षा सेटिंग्स आपके प्रमाणीकरण प्रदाता द्वारा प्रबंधित हैं।",
+      "openProviderProfile": "प्रोफ़ाइल खोलें",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "पासवर्ड बदलें",
+        "description": "एक मजबूत पासवर्ड का उपयोग करें जो आप अन्य साइटों पर दोबारा न उपयोग करें।",
+        "currentPasswordLabel": "वर्तमान पासवर्ड",
+        "newPasswordLabel": "नया पासवर्ड",
+        "confirmPasswordLabel": "नए पासवर्ड की पुष्टि करें",
+        "revokeOtherSessions": "अन्य डिवाइस से साइन आउट करें",
+        "submit": "पासवर्ड अपडेट करें",
+        "pending": "पासवर्ड अपडेट हो रहा है…",
+        "success": "पासवर्ड सफलतापूर्वक अपडेट हो गया।"
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "दो-कारक प्रमाणीकरण",
+        "description": "एक प्रमाणीकरण ऐप का उपयोग करके एक दूसरी सत्यापन चरण जोड़ें।",
+        "enabled": "सक्रिय",
+        "disabled": "निष्क्रिय",
+        "enabledHelp": "आपका खाता पासवर्ड साइन-इन के बाद एक 6-अंकीय प्रमाणीकरण कोड मांगता है।",
+        "disabledHelp": "एक प्रमाणीकरण ऐप से 6-अंकीय कोड के साथ अपने खाते की सुरक्षा करें।",
+        "enable": "दो-कारक सत्यापन चालू करें",
+        "disable": "दो-कारक सत्यापन बंद करें",
+        "passwordPrompt": "अपना पासवर्ड पुष्टि करें",
+        "scanQrCode": "इस QR कोड को अपने ऑथेंटिकेटर ऐप से स्कैन करें, फिर नीचे 6-अंकों का कोड दर्ज करें।",
+        "secretKeyLabel": "या इस गुप्त कोड को मैन्युअल रूप से दर्ज करें",
+        "verificationCodeLabel": "सत्यापन कोड",
+        "verify": "सत्यापित करें और चालू करें",
+        "backupCodesTitle": "बैकअप कोड",
+        "backupCodesDescription": "इन कोड को कहीं सुरक्षित जगह पर सहेजें। यदि आपका ऑथेंटिकेटर ऐप उपलब्ध नहीं है, तो प्रत्येक कोड एक बार उपयोग किया जा सकता है।",
+        "copyBackupCodes": "कोड कॉपी करें",
+        "finishSetup": "सेटअप पूरा करें",
+        "successEnabled": "दो-कारक सत्यापन चालू कर दिया गया।",
+        "successDisabled": "दो-कारक सत्यापन बंद कर दिया गया।"
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "सक्रिय सत्र",
+        "description": "आपके खाते में वर्तमान में साइन इन किए गए डिवाइस और ब्राउज़र।",
+        "currentSession": "(वर्तमान)",
+        "ipLabel": "IP पता",
+        "lastActiveLabel": "आखिरी सक्रिय",
+        "revoke": "साइन आउट",
+        "revokeAll": "सभी अन्य डिवाइसों से साइन आउट करें",
+        "empty": "कोई अन्य सक्रिय सत्र नहीं।",
+        "successRevoked": "सत्र साइन आउट किया गया।",
+        "successRevokedAll": "सभी अन्य सत्र साइन आउट किए गए।"
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "खाता हटाएं",
+        "description": "अपना खाता और सभी संबंधित डेटा स्थायी रूप से हटाएं। इसे वापस नहीं किया जा सकता।",
+        "passwordPrompt": "पुष्टि करने के लिए अपना पासवर्ड दर्ज करें",
+        "confirmTextLabel": "पुष्टि करने के लिए DELETE टाइप करें",
+        "submit": "खाता हटाएं",
+        "cancel": "रद्द करें",
+        "success": "खाता हटा दिया गया।"
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "जुड़े खाते",
+        "description": "अपने Nebutra पहचान से जुड़े OAuth साइन-इन तरीकों की समीक्षा करें।",
+        "connected": "जुड़ा हुआ",
+        "connect": "जोड़ें",
+        "help": "किसी प्रदाता को अनलिंक करने से पहले कम से कम एक विश्वसनीय साइन-इन विधि उपलब्ध रखें।",
+        "unlink": "अनलिंक करें",
+        "notLinked": "जुड़ा नहीं है"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "पासकी",
+        "description": "फ़िशिंग-रोधी साइन-इन के लिए डिवाइस-बाउंड क्रेडेंशियल का उपयोग करें।",
+        "empty": "अभी तक कोई पासकी पंजीकृत नहीं है",
+        "addPasskey": "पासकी जोड़ें",
+        "cancelAdd": "रद्द करें",
+        "cancelled": "पासकी सेटअप रद्द कर दिया गया। कुछ नहीं बदला।",
+        "defaultName": "पासकी {number}",
+        "nameHelp": "अपने ब्राउज़र की पुष्टि मांगने से पहले इस पासकी को एक पहचानने योग्य नाम दें।",
+        "nameLabel": "पासकी का नाम",
+        "rename": "नाम बदलें",
+        "saveRename": "नाम सहेजें",
+        "remove": "हटाएं",
+        "successAdded": "Passkey जोड़ा गया।",
+        "successRemoved": "Passkey हटाया गया।",
+        "unavailableBadge": "उपलब्ध नहीं"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "पासवर्ड सेट करें",
+        "description": "OAuth प्रदाता के बिना साइन इन करने के लिए पासवर्ड जोड़ें।",
+        "submit": "पासवर्ड सेट करें",
+        "pending": "पासवर्ड सेटअप लिंक भेजा जा रहा है…",
+        "sentMessage": "हमने आपके ईमेल पर पासवर्ड सेटअप लिंक भेजा है।"
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "अपना Startup शिप करें, पहले दिन से ही नियंत्रित।",
+      "tagline": "बहु-क्षेत्रीय एजेंट, डिफ़ॉल्ट रूप से बहु-टेनेंट। प्लेटफ़ॉर्म टीम की आवश्यकता नहीं।"
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Nebutra में लॉग इन करें",
+      "subtitle": "चुनें कि आप कैसे साइन इन करना चाहते हैं।",
+      "continueWith": "इसके साथ जारी रखें",
+      "continueWithProvider": "{provider} के साथ जारी रखें",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,293 +349,293 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "रिडायरेक्ट किया जा रहा है…",
+      "dividerOr": "या ईमेल से जारी रखें",
+      "emailLabel": "ईमेल",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "जारी रखें",
+      "back": "वापस",
+      "passwordLabel": "पासवर्ड",
+      "passwordPlaceholder": "अपना पासवर्ड दर्ज करें",
+      "showPassword": "पासवर्ड दिखाएं",
+      "hidePassword": "पासवर्ड छुपाएं",
+      "capsLockOn": "Caps Lock चालू है",
+      "forgotPassword": "पासवर्ड भूल गए?",
+      "submit": "लॉग इन करें",
+      "submitLoading": "साइन इन हो रहा है…",
+      "useMagicLink": "इसके बजाय मुझे एक मैजिक लिंक भेजें",
+      "usePasskey": "पासकी के साथ साइन इन करें",
+      "passkeyTitle": "अपनी पासकी के साथ साइन इन करें",
+      "passkeyDescription": "Face ID, Touch ID, या अपनी सुरक्षा कुंजी का उपयोग करें। पासवर्ड की आवश्यकता नहीं।",
+      "passkeyButton": "पासकी के साथ जारी रखें",
+      "passkeyCancelled": "पासकी प्रॉम्प्ट रद्द किया गया।",
+      "passkeyUnsupported": "यह ब्राउज़र पासकी का समर्थन नहीं करता है।",
+      "passkeyError": "पासकी साइन-इन विफल रहा। कोई अन्य विधि आज़माएं।",
+      "ssoTitle": "एंटरप्राइज़ SSO के साथ जारी रखें",
+      "ssoDescription": "आपको {email} के लिए {provider} पर रीडायरेक्ट किया जा रहा है।",
+      "ssoError": "एंटरप्राइज़ SSO शुरू नहीं हो सका। कोई अन्य विधि आज़माएं。",
+      "ssoRetry": "फिर से आज़माएं",
+      "newToProduct": "Nebutra में नए हैं?",
+      "signUpLink": "साइन अप करें",
+      "homeLink": "होम",
+      "signInFailed": "साइन इन विफल",
+      "genericError": "एक त्रुटि हुई। कृपया पुनः प्रयास करें।",
+      "captchaError": "बॉट सत्यापन विफल। पेज रीफ़्रेश करें और पुनः प्रयास करें।"
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "अपना Nebutra खाता बनाएं",
+      "subtitle": "हर Nebutra ऐप के लिए एक खाता।",
+      "firstNameLabel": "पहला नाम",
+      "lastNameLabel": "उपनाम",
+      "firstNamePlaceholder": "पहला",
+      "lastNamePlaceholder": "उपनाम",
+      "submit": "खाता बनाएं",
+      "submitLoading": "खाता बनाया जा रहा है…",
+      "alreadyHaveAccount": "पहले से खाता है?",
+      "signInLink": "लॉग इन करें",
+      "signUpFailed": "साइन अप विफल"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "पासकीज़",
+      "description": "पासवर्ड की जगह Face ID, Touch ID, Windows Hello या एक सुरक्षा की का उपयोग करें। हर डिवाइस का अपना पासकी होता है।",
+      "addButton": "Passkey जोड़ें",
+      "adding": "सेटअप हो रहा है…",
+      "namePlaceholder": "जैसे, MacBook Pro",
+      "nameLabel": "नाम (वैकल्पिक)",
+      "registerSuccess": "Passkey जोड़ा गया।",
+      "registerCancelled": "सेटअप रद्द किया गया।",
+      "registerUnsupported": "यह ब्राउज़र passkeys का समर्थन नहीं करता।",
+      "registerError": "Passkey रजिस्टर करने में विफल।",
+      "empty": "अभी तक कोई passkey नहीं।",
+      "loadError": "Passkeys लोड करने में विफल।",
+      "revoke": "हटाएं",
+      "revoking": "हटाया जा रहा है…",
+      "revokeConfirm": "इस passkey को हटाएं? अब आप इससे साइन इन नहीं कर पाएंगे।",
+      "revokeSuccess": "Passkey हटाया गया।",
+      "revokeError": "Passkey हटाने में विफल।",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "डिवाइस-बाउंड",
+        "multiDevice": "सभी डिवाइसों पर सिंक किया गया"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "{date} को जोड़ा गया"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "मैजिक लिंक से साइन इन करें",
+      "description": "अपना ईमेल दर्ज करें और हम आपको साइन इन करने के लिए एक 6-अंकीय कोड भेजेंगे।",
+      "emailLabel": "ईमेल",
+      "send": "लिंक भेजें",
+      "codeLabel": "सत्यापन कोड",
+      "verify": "सत्यापित करें",
+      "resend": "कोड पुनः भेजें",
+      "resendCooldown": "{seconds} सेकंड में पुनः भेजें",
+      "sentTo": "हमने {email} पर एक कोड भेजा है"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "पासवर्ड भूल गए?",
+      "description": "अपना ईमेल दर्ज करें और हम आपको पासवर्ड रीसेट करने के लिए एक लिंक भेजेंगे।",
+      "emailLabel": "ईमेल",
+      "submit": "रीसेट लिंक भेजें",
+      "successTitle": "अपना ईमेल देखें",
+      "success": "यदि वह ईमेल पंजीकृत है, तो आपको जल्द ही एक रीसेट लिंक प्राप्त होगा।"
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "अपना पासवर्ड रीसेट करें",
+      "description": "अपने खाते के लिए एक नया पासवर्ड चुनें।",
+      "newPasswordLabel": "नया पासवर्ड",
+      "confirmPasswordLabel": "नए पासवर्ड की पुष्टि करें",
+      "submit": "पासवर्ड रीसेट करें",
+      "successTitle": "पासवर्ड रीसेट किया गया",
+      "successDescription": "अब आप अपने नए पासवर्ड के साथ साइन इन कर सकते हैं।",
+      "signInCta": "साइन इन पर जाएं",
+      "invalidTitle": "अमान्य रीसेट लिंक",
+      "invalidDescription": "यह पासवर्ड रीसेट लिंक गायब है या गलत है। भूल गए पासवर्ड पृष्ठ से एक नया अनुरोध करें।"
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "ईमेल सत्यापित",
+      "successDescription": "आपका ईमेल पता सत्यापित कर दिया गया है।",
+      "failureTitle": "सत्यापन विफल",
+      "failureDescription": "हम उस लिंक के साथ आपका ईमेल सत्यापित नहीं कर सके।",
+      "continueCta": "जारी रखें",
+      "signInCta": "साइन इन पर जाएं"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "लॉगिन पूर्ण",
+      "title": "आप साइन इन हैं",
+      "description": "आपका सेशन तैयार है। हम Nebutra वर्कस्पेस खोल रहे हैं और प्रमाणीकरण प्रवाह से सुरक्षित हस्तान्तरण बनाए रख रहे हैं।",
+      "session": "सेशन",
+      "verified": "सत्यापित",
+      "workspace": "वर्कस्पेस",
+      "preparing": "तैयार कर रहे हैं",
+      "redirecting": "{seconds} सेकंड में वर्कस्पेस में प्रवेश कर रहे हैं",
+      "secureHandoff": "सुरक्षित हस्तान्तरण",
+      "continueCta": "वर्कस्पेस पर जाएं",
+      "signInCta": "दूसरा खाता उपयोग करें"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "ईमेल या पासवर्ड गलत है।",
+      "userNotFound": "उस ईमेल से कोई खाता नहीं मिला।",
+      "userAlreadyExists": "उस ईमेल से एक खाता पहले से मौजूद है।",
+      "weakPassword": "पासवर्ड बहुत कमजोर है। कम से कम 8 अक्षरों का उपयोग करें जिनमें मिक्स्ड केस और नंबर हों।",
+      "passwordsDontMatch": "पासवर्ड मेल नहीं खाते।",
+      "passwordTooShort": "पासवर्ड कम से कम 8 अक्षर का होना चाहिए।",
+      "currentPasswordIncorrect": "वर्तमान पासवर्ड गलत है।",
+      "samePassword": "नया पासवर्ड आपके वर्तमान पासवर्ड से अलग होना चाहिए।",
+      "invalidEmail": "ईमेल पता वैध नहीं है।",
+      "emailNotVerified": "कृपया पहले अपना ईमेल पता सत्यापित करें।",
+      "sessionExpired": "आपकी सत्र समाप्त हो गई है। कृपया फिर से साइन इन करें。",
+      "twoFactorRequired": "दो-कारक सत्यापन आवश्यक है।",
+      "invalidVerificationCode": "सत्यापन कोड गलत या समाप्त हो गया है।",
+      "twoFactorAlreadyEnabled": "दो-कारक प्रमाणीकरण पहले से सक्षम है।",
+      "twoFactorNotEnabled": "दो-कारक प्रमाणीकरण सक्षम नहीं है।",
+      "tooManyAttempts": "बहुत सारे प्रयास। कृपया बाद में फिर से प्रयास करें।",
+      "rateLimited": "आप यह बहुत बार कर रहे हैं। धीमे हो जाएं।",
+      "providerNotSupported": "यह क्रिया आपके प्रमाणीकरण प्रदाता द्वारा प्रबंधित होती है।",
+      "networkError": "नेटवर्क त्रुटि। अपनी कनेक्शन की जांच करें और फिर से प्रयास करें।",
+      "unknown": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।"
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "शुरू करने के लिए इनमें से कोई एक आज़माएं",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "हाल की गतिविधि दिखाएं",
+        "prompt": "मुझे पिछले 24 घंटों में अपने वर्कस्पेस में हुई सबसे हाल की गतिविधि दिखाएं।"
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "एक त्रुटि का निवारण करें",
+        "prompt": "मुझे एक रनटाइम त्रुटि का निवारण करने में मदद करें। मैं स्टैक ट्रेस पेस्ट करूँगा और आप मुझे उसमें मार्गदर्शन कर सकते हैं।"
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "एक सारांश ईमेल तैयार करें",
+        "prompt": "मेरी टीम को प्लेटफ़ॉर्म की प्रगति के बारे में भेजने के लिए एक संक्षिप्त साप्ताहिक सारांश ईमेल तैयार करें।"
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "प्लेटफ़ॉर्म की सुविधाएँ देखें",
+        "prompt": "मुझे इस SaaS प्लेटफ़ॉर्म की मुख्य सुविधाओं और उनके उपयोग के बारे में बताएं।"
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "सक्रिय प्लान",
+      "manage": "सदस्यता प्रबंधित करें",
+      "noPlanTitle": "कोई सक्रिय प्लान नहीं",
+      "noPlanDescription": "भुगतान वाली सुविधाएँ और उच्च उपयोग सीमाएँ अनलॉक करने के लिए एक प्लान चुनें।",
+      "choosePlan": "एक प्लान चुनें",
+      "renewsOn": "{date} को नवीकृत होगा",
+      "endsOn": "{date} को समाप्त होगा",
+      "trialEndsOn": "ट्रायल {date} को समाप्त होता है",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "सक्रिय",
+        "trialing": "ट्रायलिंग",
+        "past_due": "समय से अधिक",
+        "canceled": "रद्द किया गया",
+        "free": "मुफ़्त"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "आपका बिलिंग स्थिति लोड नहीं किया जा सका।"
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "मुफ़्त {days}-दिन का ट्रायल",
+      "seat": "{count, plural, one {# सीट} other {# सीटें}}",
+      "perSeat": "/ सीट"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "संगठन लोगो",
+        "description": "अपने संगठन का प्रतिनिधित्व करने के लिए एक वर्गाकार छवि (PNG, JPEG, या WebP, अधिकतम 2MB) अपलोड करें।",
+        "uploadButton": "लोगो अपलोड करें",
+        "uploading": "अपलोड हो रहा है…",
+        "fileTooBig": "फ़ाइल बहुत बड़ी है। अधिकतम आकार 2MB है।",
+        "invalidType": "छवि का प्रकार समर्थित नहीं है। PNG, JPEG, या WebP का उपयोग करें।",
+        "success": "लोगो अपडेट किया गया।",
+        "removeButton": "लोगो हटाएं",
+        "removed": "लोगो हटा दिया गया।"
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "संगठन का नाम",
+        "description": "अपनी टीम और ग्राहकों को दिखाने के लिए प्रदर्शन नाम अपडेट करें।",
+        "label": "नाम",
+        "submit": "सहेजें",
+        "saving": "सहेजा जा रहा है…",
+        "success": "संगठन का नाम अपडेट किया गया।"
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "संगठन हटाएं",
+        "description": "इस संगठन, सभी सदस्यों, आमंत्रणों और संबंधित डेटा को स्थायी रूप से हटाएं। यह क्रिया पूर्ववत नहीं की जा सकती।",
+        "trigger": "संगठन हटाएं",
+        "confirmLabel": "पुष्टि करने के लिए संगठन का नाम टाइप करें",
+        "submit": "संगठन हटाएं",
+        "cancel": "रद्द करें",
+        "success": "संगठन हटा दिया गया।"
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "आपको आमंत्रित किया गया है",
+      "heading": "{organizationName} में शामिल होने के लिए आपको आमंत्रित किया गया है",
+      "description": "टीम के साथ सहयोग शुरू करने के लिए आमंत्रण स्वीकार करें।",
+      "accept": "आमंत्रण स्वीकार करें",
+      "accepting": "स्वीकार किया जा रहा है...",
+      "decline": "अस्वीकार करें",
+      "declining": "अस्वीकार किया जा रहा है...",
+      "declinedView": "आमंत्रण अस्वीकार किया गया",
+      "success": "हमने आमंत्रण भेजने वाले को सूचित कर दिया है।",
+      "backToDashboard": "डैशबोर्ड पर वापस जाएं",
+      "roleLabel": "भूमिका: {role}",
+      "errorEmailMismatch": "यह आमंत्रण किसी अलग ईमेल पर भेजा गया था",
+      "errorEmailMismatchDetail": "इसे स्वीकार करने के लिए उस ईमेल पते से साइन इन करें जिस पर आमंत्रण मिला था।",
+      "errorExpired": "आमंत्रण की समय सीमा समाप्त हो गई",
+      "errorExpiredDetail": "आमंत्रण भेजने वाले से नया आमंत्रण भेजने के लिए कहें।",
+      "errorNotFound": "आमंत्रण नहीं मिला",
+      "errorNotFoundDetail": "आमंत्रण लिंक अमान्य है या वापस ले लिया गया है।",
+      "errorNotAvailable": "आमंत्रण उपलब्ध नहीं है",
+      "errorNotAvailableDetail": "इस आमंत्रण का पहले ही जवाब दिया जा चुका है और यह अब सक्रिय नहीं है।",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "मालिक",
+        "admin": "एडमिन",
+        "member": "सदस्य",
+        "viewer": "दर्शक"
       }
     }
   },
   "settings": {
     "apiKeys": {
       "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "description": "Nebutra तक प्रोग्रामेटिक एक्सेस के लिए API keys बनाएं और प्रबंधित करें।",
+      "createButton": "API key बनाएं",
+      "noPermission": "आपके पास API keys देखने की अनुमति नहीं है।",
+      "loading": "लोड हो रहा है…",
+      "loadError": "API keys लोड करने में विफल।",
+      "createError": "API key बनाने में विफल।",
+      "revokeError": "API key वापस लेने में विफल।",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "अभी तक कोई API key नहीं",
+        "cta": "अपना पहला API key बनाएं"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "नाम",
+        "prefix": "प्रीफिक्स",
+        "lastUsed": "आखिरी बार उपयोग किया",
+        "scopes": "स्कोप्स",
+        "created": "बनाया गया",
+        "actions": "कार्रवाई",
+        "never": "कभी नहीं"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "रद्द करें",
+        "revoking": "रद्द किया जा रहा है…",
+        "copy": "कॉपी करें",
+        "copied": "कॉपी किया गया",
+        "close": "बंद करें",
+        "submit": "की बनाएं",
+        "submitting": "बनाया जा रहा है…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
+        "title": "API key बनाएं",
+        "description": "API keys allow external systems to communicate with Nebutra on your behalf. Treat them like passwords.",
         "nameLabel": "Name",
         "namePlaceholder": "e.g. Production backend",
         "scopesLabel": "Scopes",
@@ -655,223 +655,223 @@
         "actor": "Actor",
         "action": "Action",
         "entity": "Entity",
-        "outcome": "Outcome",
+        "outcome": "परिणाम",
         "ip": "IP"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "पुराना मान",
+        "newValue": "नया मान"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "कार्य",
+        "actionPlaceholder": "कार्य खोजें…",
+        "entityType": "संस्था प्रकार",
+        "outcome": "परिणाम",
+        "outcomeSuccess": "सफल",
+        "outcomeFailure": "असफल",
+        "outcomePending": "लंबित",
+        "startDate": "प्रारंभ तिथि",
+        "endDate": "समाप्ति तिथि",
+        "range24h": "पिछले 24 घंटे",
+        "range7d": "पिछले 7 दिन",
+        "range30d": "पिछले 30 दिन",
+        "reset": "रीसेट करें",
+        "all": "सभी"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "सूचनाएँ",
+      "description": "चुनें कि Nebutra आपको प्रत्येक इवेंट प्रकार और प्रत्येक डिलीवरी चैनल के लिए कैसे पहुँचे।",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "डिफ़ॉल्ट पर रीसेट करें",
+        "save": "सहेजें"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "सहेजा जा रहा है…",
+        "saved": "सहेजा गया",
+        "error": "सहेजने में विफल। कृपया पुनः प्रयास करें।"
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "सुरक्षा अलर्ट",
+          "description": "साइन-इन अलर्ट, पासवर्ड बदलाव, दो-कारक बदलाव।"
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "बिलिंग",
+          "description": "इनवॉइस, भुगतान विफलताएँ, और सब्सक्रिप्शन बदलाव।"
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "टीम आमंत्रण",
+          "description": "एक संगठन में शामिल होने के लिए आमंत्रण, स्वीकृत या अस्वीकृत।"
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "टीम गतिविधि",
+          "description": "सदस्य जुड़े, भूमिका परिवर्तन, और अन्य वर्कस्पेस गतिविधि।"
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "उत्पाद अपडेट",
+          "description": "नए फीचर, चेंजलॉग हाइलाइट्स, और रिलीज़ नोट्स।"
         },
         "marketing": {
-          "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "label": "मार्केटिंग",
+          "description": "न्यूज़लेटर और कभी-कभी प्रमोशन। केवल ऑप्ट-इन।"
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "इन-ऐप"
         },
         "email": {
-          "label": "Email"
+          "label": "ईमेल"
         },
         "push": {
-          "label": "Push"
+          "label": "पुश"
         },
         "sms": {
-          "label": "SMS"
+          "label": "एसएमएस"
         }
       }
     },
     "webhooks": {
-      "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "title": "वेबहुक्स",
+      "description": "अपने वर्कस्पेस द्वारा उत्सर्जित इवेंट्स के लिए सब्सक्राइब करें। हम प्रत्येक पेयलोड को आपके एंडपॉइंट के सीक्रेट के साथ साइन करते हैं ताकि आप प्रामाणिकता की सत्यापना कर सकें।",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "नया एंडपॉइंट",
+        "urlLabel": "एंडपॉइंट URL",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "इवेंट्स",
+        "submit": "एंडपॉइंट बनाएं",
+        "submitting": "बना रहे हैं…",
+        "selectEvent": "कम से कम एक इवेंट चुनें।",
+        "successTitle": "एंडपॉइंट बनाया गया। साइनिंग सीक्रेट केवल एक बार दिखता है।",
+        "successWarning": "बंद करने से पहले इसे अपने ऐप्लिकेशन के सीक्रेट मैनेजर में सेव करें।",
+        "copy": "कॉपी करें",
+        "copied": "कॉपी किया गया"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "सक्रिय एंडपॉइंट",
+        "empty": "अभी कोई वेबहुक एंडपॉइंट नहीं है। ऊपर से एक बनाएं।",
+        "loading": "लोड हो रहा है…",
+        "loadFailed": "वेबहुक लोड करने में विफल",
         "columns": {
           "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "events": "इवेंट",
+          "status": "स्थिति",
+          "lastDelivered": "आखिरी डिलीवरी",
+          "actions": "कार्रवाई"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "सक्रिय",
+          "disabled": "अक्षम"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "संपादित करें",
+          "enable": "सक्रिय करें",
+          "disable": "अक्षम करें",
+          "viewDeliveries": "डिलीवरी देखें",
+          "delete": "हटाएं"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "हाल की डिलीवरी",
+        "close": "बंद करें",
+        "loading": "लोड हो रहा है…",
+        "loadFailed": "डिलीवरी लोड करने में विफल",
+        "empty": "अभी तक कोई डिलीवरी नहीं।",
+        "viewPayload": "पेयलोड देखें",
+        "hidePayload": "पेयलोड छुपाएं",
+        "replay": "पुनः चलाएं",
+        "replaying": "पुनः चलाया जा रहा है…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "सफल",
+          "failed": "विफल",
+          "retrying": "पुनः प्रयास हो रहा है"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "दिखावट",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "थीम",
+        "description": "लाइट, डार्क, या सिस्टम पसंद के अनुसार उपयोग करें।"
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "थीम प्रीसेट",
+        "description": "पूरे ऐप में किसी भी Theme Playground थीम लागू करें। नीचे दिए गए नियंत्रण इसे और परिष्कृत करने के लिए ऊपर से जोड़े जाते हैं।",
+        "search": "थीम खोजें…",
+        "searchLabel": "थीम खोजें",
+        "default": "डिफ़ॉल्ट",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "सक्रिय",
+        "empty": "आपकी खोज से कोई थीम मेल नहीं खाती।",
+        "count": "{count} थीम"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "थीम",
+        "description": "एक प्रीसेट चुनें, DESIGN.md आयात करें, फिर नीचे दिए गए टोकन को परिष्कृत करें।",
+        "selectLabel": "थीम प्रीसेट",
+        "import": "आयात करें",
+        "copy": "थीम कॉपी करें",
+        "copied": "कॉपी किया गया",
+        "copyError": "कॉपी करने में विफल",
+        "custom": "कस्टम"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "DESIGN.md आयात करें",
+        "description": "पूरे ऐप में रंग, रेडियस, फ़ॉन्ट, स्पेसिंग और शैडो लागू करने के लिए DESIGN.md पेस्ट या अपलोड करें — रीलोड के बाद भी बने रहेंगे।",
+        "applied": "लागू किया गया:",
+        "remove": "हटाएं"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "थीम मोड",
+        "light": "लाइट",
+        "dark": "डार्क",
+        "system": "सिस्टम"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "एक्सेंट रंग",
+        "description": "ऐप में सक्रिय स्थितियों को रंग देने के लिए एक ब्रांड एक्सेंट चुनें।",
+        "label": "एक्सेंट रंग",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
-          "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "default": "डिफ़ॉल्ट",
+          "blue": "नीला",
+          "cyan": "सायन",
+          "violet": "बैंगनी",
+          "pink": "गुलाबी",
+          "amber": "एम्बर",
+          "green": "हरा",
+          "red": "लाल"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "रंग",
+        "description": "एक्सेंट, बैकग्राउंड और फोरग्राउंड।",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "बैकग्राउंड",
+          "description": "सतह के बैकग्राउंड रंग को ओवरराइड करें।"
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "फोरग्राउंड",
+          "description": "बॉडी टेक्स्ट के रंग को ओवरराइड करें।"
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "डिफ़ॉल्ट पर रीसेट करें"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "UI फ़ॉन्ट",
+        "uiDescription": "UI में इस्तेमाल होने वाला फ़ॉन्ट परिवार।",
+        "codeLabel": "कोड फ़ॉन्ट",
+        "codeDescription": "कोड सतहों के लिए उपयोग किया जाने वाला फ़ॉन्ट परिवार।",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "थीम डिफ़ॉल्ट",
+            "system": "सिस्टम",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
-            "system": "System mono",
+            "theme": "थीम डिफ़ॉल्ट",
+            "system": "सिस्टम मोनो",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
             "jetbrains-mono": "JetBrains Mono"
@@ -879,274 +879,274 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "कंट्रास्ट",
+        "description": "टेक्स्ट कंट्रास्ट को फ़ाइन-ट्यून करें (50 = कोई बदलाव नहीं)।",
+        "label": "कंट्रास्ट स्तर"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "पॉइंटर कर्सर का उपयोग करें",
+        "description": "होवर-इंटरैक्टिव तत्वों पर पॉइंटर कर्सर पर स्विच करें।",
+        "label": "इंटरैक्टिव तत्वों पर पॉइंटर कर्सर"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "डिफ़ मार्कर",
+        "description": "प्रत्येक बदले गए पंक्ति पर रंग बैंड या +/- ग्लिफ़ दिखाएं।",
+        "label": "डिफ़ मार्कर शैली",
+        "color": "रंग",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "फ़ॉन्ट स्मूथिंग",
+        "description": "macOS नेटिव फ़ॉन्ट एंटीएलियासिंग लागू करें।",
+        "label": "नेटिव फ़ॉन्ट स्मूथिंग"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "टाइपोग्राफी",
+        "description": "UI और कोड सतहों के लिए आधार फ़ॉन्ट आकार।",
+        "uiFontSize": "UI फ़ॉन्ट आकार",
+        "uiFontSizeDescription": "आधार UI फ़ॉन्ट आकार समायोजित करें।",
+        "codeFontSize": "कोड फ़ॉन्ट आकार",
+        "codeFontSizeDescription": "आधार कोड फ़ॉन्ट आकार समायोजित करें।"
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "थीम",
+        "customize": "कस्टमाइज़ करें"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "मोशन कम करें",
+        "description": "एनिमेशन कम करें या सिस्टम पसंद से मिलाएं।",
+        "label": "मोशन पसंद",
+        "system": "सिस्टम",
+        "on": "ऑन",
+        "off": "ऑफ"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "पारदर्शी साइडबार",
+        "description": "साइडबार पर पारदर्शी मटीरियल लागू करें।"
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "पारदर्शी साइडबार",
+        "description": "साइडबार पर पारदर्शी मटीरियल लागू करें।"
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "संस्करण",
+    "effective": "प्रभावी",
+    "notFound": "यह दस्तावेज़ उपलब्ध नहीं है।",
+    "backHome": "होम पर वापस जाएं"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "कमांड पैलेट",
+    "placeholder": "कमांड टाइप करें या खोजें…",
+    "empty": "कोई परिणाम नहीं मिला।",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
-      "admin": "Admin",
-      "help": "Help"
+      "navigation": "नेविगेशन",
+      "actions": "एक्शन",
+      "settings": "सेटिंग्स",
+      "account": "खाता",
+      "admin": "एडमिन",
+      "help": "सहायता"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
+        "home": "होम",
+        "settings": "सेटिंग्स",
+        "billing": "बिलिंग",
+        "team": "टीम",
         "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
+        "notifications": "सूचनाएं",
+        "auditLog": "ऑडिट लॉग",
         "webhooks": "Webhooks",
-        "admin": "Admin"
+        "admin": "एडमिन"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "टीम सदस्य को आमंत्रित करें",
+        "createApiKey": "API की बनाएं",
+        "switchOrganization": "संस्था बदलें"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "लाइट थीम पर जाएं",
+        "themeDark": "डार्क थीम पर जाएं",
+        "themeSystem": "सिस्टम थीम का उपयोग करें"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "साइन आउट करें"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "समस्या रिपोर्ट करें",
+        "shortcuts": "कीबोर्ड शॉर्टकट"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "आपके गोपनीयता विकल्प",
+      "description": "हम आपके अनुभव को बेहतर बनाने, साइट ट्रैफिक का विश्लेषण करने और सामग्री को व्यक्तिगत बनाने के लिए कुकीज़ का उपयोग करते हैं। चुनें कि आप किन श्रेणियों की अनुमति देना चाहते हैं।"
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "सभी स्वीकार करें",
+      "savePreferences": "प्राथमिकताएँ सहेजें"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "आवश्यक",
+        "description": "साइट के काम करने के लिए आवश्यक। अक्षम नहीं किया जा सकता।"
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "कार्यात्मक",
+        "description": "आपकी पसंदें याद रखें (भाषा, थीम, लेआउट)।"
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "विश्लेषण",
+        "description": "अज्ञात उपयोग डेटा ताकि हम उत्पाद को बेहतर बना सकें।"
       },
       "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "label": "विपणन",
+        "description": "तीसरे पक्ष की प्लेटफ़ॉर्म पर व्यक्तिगत विज्ञापन और री-टारगेटिंग।"
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "सूचनाएं",
+      "description": "सभी सूचनाएं एक ही जगह पर।",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "सभी",
+        "unread": "अपठित"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "सभी को पढ़ा हुआ चिह्नित करें",
+        "markRead": "पढ़ा हुआ चिह्नित करें",
+        "archive": "संग्रहित करें",
+        "loadMore": "और लोड करें",
+        "loading": "लोड हो रहा है...",
+        "selected": "{count} चयनित"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "सब कुछ अपडेट है।",
+        "unread": "कोई अनपढ़ सूचना नहीं है।"
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "सूचनाएँ लोड करने में विफल।",
+        "network": "नेटवर्क त्रुटि। कृपया पुनः प्रयास करें।",
+        "markRead": "सूचना को पढ़ा गया चिह्नित करने में विफल।",
+        "archive": "सूचना को आर्काइव करने में विफल।",
+        "bulkMarkRead": "कुछ सूचनाओं को पढ़ा गया चिह्नित नहीं किया जा सका।"
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "इनबॉक्स के लिए एक स्थायी सूचना बैकएंड की आवश्यकता होती है। अपने प्रदाता कॉन्फ़िगरेशन की जाँच करें。",
+        "emptyCaughtUp": "इनबॉक्स साफ़ है।",
+        "emptyChangelog": "चेंजलॉग अपडेट यहाँ दिखेंगे।"
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "सुप्रभात",
+      "afternoon": "शुभ दोपहर",
+      "evening": "शुभ संध्या"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "कनेक्टर्स से अपनी ऐप को सशक्त बनाएं",
+      "subtitle": "एक प्रॉम्प्ट ड्रॉप करें, कहीं से भी ⌘K दबाएं, या सीधे वर्कस्पेस सतह पर जाएं।",
+      "promptPlaceholder": "आपके मन में क्या है?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "एक इंटीग्रेशन कनेक्ट करें",
+        "theme": "थीम प्लेग्राउंड",
+        "audit": "ऑडिट लॉग",
+        "billing": "बिलिंग"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "चुने गए प्रोवाइडर के लिए ऑथ कॉन्फ़िगर नहीं है। यूज़र सेशन्स को सक्षम करने के लिए प्रोवाइडर सीक्रेट्स सेट करें।"
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "एक एक्शन से शुरू करें: Sailor से पूछें, वर्कस्पेस सिग्नल्स की जाँच करें, या किसी ऑटोमेशन सर्फ़ेस में काम राउट करें।",
+      "openSailor": "Sailor AI खोलें",
+      "viewAnalytics": "एनालिटिक्स देखें"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "वर्कस्पेस स्नैपशॉट",
+      "description": "नवीनतम वेयरहाउस दिन · {day}",
+      "viewAnalytics": "एनालिटिक्स देखें →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "सक्रिय यूज़र्स",
+        "totalEvents": "कुल इवेंट्स",
+        "conversions": "कन्वर्ज़न्स",
+        "revenue": "रेवेन्यू"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "साइन-इन यूज़र्स",
+        "totalEvents": "रिकॉर्ड किए गए इवेंट्स",
+        "conversions": "योग्य एक्शन्स",
+        "revenue": "पहचाना गया राजस्व"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
-        "tenant": "Tenant",
-        "daily": "Daily",
+        "snapshot": "स्नैपशॉट",
+        "cadence": "कैडेंस",
+        "tenant": "टेनेंट",
+        "daily": "दैनिक",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "टेनेंट यूज़र्स",
+        "events": "इवेंट स्ट्रीम",
+        "funnel": "फ़नल",
+        "billing": "बिलिंग"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "डॉक्यूमेंट पाइपलाइन",
+      "description": "सोर्स फाइल्स को ओरिजिन टास्क क्यू में भेजें।",
+      "intakeTitle": "डॉक्यूमेंट इंटेक",
+      "intakeDescription": "PDF, Markdown, टेक्स्ट, या Word डॉक्यूमेंट",
+      "chooseDocument": "डॉक्यूमेंट चुनें",
+      "startParseTask": "पार्स टास्क शुरू करें",
+      "queued": "कतार में",
+      "fileInputLabel": "दस्तावेज़ फ़ाइल",
+      "fallbackError": "दस्तावेज़ टास्क विफल रहा।",
+      "taskStatus": "टास्क स्थिति",
+      "progressLabel": "टास्क प्रगति",
+      "refreshStatus": "रिफ़्रेश करें",
+      "cancelTask": "रद्द करें",
+      "statusError": "टास्क स्थिति रिफ़्रेश नहीं की जा सकी।",
+      "cancelError": "टास्क रद्द नहीं किया जा सका।",
+      "statusQueued": "कतार में",
+      "statusRunning": "चल रहा है",
+      "statusSucceeded": "सफल",
+      "statusFailed": "विफल",
+      "statusCancelled": "रद्द किया गया",
+      "resultReady": "परिणाम तैयार है",
+      "taskError": "कार्य त्रुटि",
+      "updatedAt": "अपडेट किया गया"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "जहाँ छोड़ा था वहाँ से जारी रखें",
+      "subtitle": "{count, plural, =0 {कोई सत्र नहीं} =1 {1 हाल का सत्र} other {# हाल के सत्र}}",
+      "viewAll": "सभी देखें →",
+      "newChat": "नया चैट",
+      "untitled": "शीर्षकहीन सत्र",
+      "messageCount": "{count, plural, =1 {1 संदेश} other {# संदेश}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "शुरुआत कैसे करें",
+      "description": "{done} of {total} पूर्ण · पूरे वर्कस्पेस को अनलॉक करने के लिए सेटअप पूरा करें",
+      "progressLabel": "सेटअप प्रगति",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "एक टीममेट को आमंत्रित करें",
+          "description": "अपने वर्कस्पेस में कम से कम एक सहयोगी को शामिल करें।"
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "एक API कुंजी बनाएं",
+          "description": "अपने वर्कस्पेस एंडपॉइंट्स तक प्रोग्रामेटिक एक्सेस।"
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "एक इंटीग्रेशन कनेक्ट करें",
+          "description": "Stripe, Slack, webhooks, queues, और अधिक।"
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "Chat, data, या workflow mode आज़माएं।"
         }
       }
     }
@@ -1165,99 +1165,99 @@
     "newProjectError": "Could not create project",
     "sortBy": "Sort by",
     "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "sortAlphabetical": "वर्णानुक्रम",
+    "sortCreated": "निर्माण तिथि",
+    "archiveAll": "सभी को आर्काइव करें",
+    "comingV2": "v2 में आ रहा है"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "पहला कमरा तैयार है।",
+      "firstFolder": "बहुत सी कंपनियाँ एक फ़ोल्डर से शुरू होती हैं।",
+      "firstTable": "पहली टेबल पर दूसरा सीट है।",
+      "firstSignal": "वास्तविक दुनिया बोलना शुरू कर चुकी है。",
+      "firstShip": "दुनिया इसे पहली बार देख रही है।",
+      "firstBeliever": "आज से, आप अब केवल अपने लिए नहीं बना रहे हैं।",
+      "firstRevenue": "सपने में अब नकद प्रवाह है।",
+      "firstReturn": "वापसी आने का महत्व बस आने से ज़्यादा है।",
+      "firstTeam": "तीन लोग मिलकर कंपनी बनाना शुरू कर सकते हैं।",
+      "firstCrowd": "पहली टेबल भीड़भाड़ वाली हो रही है।",
+      "firstReset": "दोबारा शुरू करना एक अधिक ईमानदार शुरुआत है。",
+      "firstPublic": "भविष्य का एक टुकड़ा सार्वजनिक रूप से रखें।",
+      "firstDemo": "यह कोई शो नहीं है। यह एक टेस्ट है।",
+      "graduation": "आपने बेसिक्स से आगे निकल गए हैं। आगे की राह के लिए मजबूत टूल्स की ज़रूरत है।"
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "कई कंपनियाँ एक फ़ोल्डर से शुरू होती हैं।",
+      "integrations": "कोई कनेक्टर कॉन्फ़िगर नहीं किया गया।",
+      "creditActivity": "पहली रिक्वेस्ट के बाद क्रेडिट एक्टिविटी दिखेगी।",
+      "usageData": "जब आपकी ऑर्गनाइज़ेशन रिक्वेस्ट्स भेजना शुरू करेगी, तब यूज़ेज डेटा दिखेगा।",
+      "apiKeys": "अभी तक कोई की नहीं।",
+      "apiKeysCta": "अपनी पहली की बनाएँ",
+      "teamMembers": "एक शुरू कर सकता है। कुछ मिलकर बिल्ड कर सकते हैं。",
+      "cofounders": "वह पहला व्यक्ति जो आप पर विश्वास करे, अभी तक नहीं आया है।",
+      "cofoundersDescription": "जब आप और एक और फाउंडर दोनों इंटरेस्ट सिग्नल करेंगे, तो वे यहाँ दिखेंगे।",
+      "cofoundersAction": "को-फाउंडर्स खोजें",
+      "growthChart": "एक्टिविटी शुरू होने पर ट्रेंड डेटा दिखेगा।",
+      "revenueChart": "ट्रांज़ैक्शन शुरू होने पर रेवेन्यू डेटा दिखेगा。",
+      "webhookDeliveries": "पहले इवेंट के बाद डिलीवरीज़ यहाँ दिखेंगी।",
+      "webhookEndpoints": "इवेंट्स पाना शुरू करने के लिए ऊपर एक एंडपॉइंट जोड़ें।",
+      "accessInvites": "कोई आमंत्रण कोड जारी नहीं किया गया।"
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "पहला रूम तैयार है।",
+    "failure": "रीस्टार्ट एक अधिक ईमानदार शुरुआत है।",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "मैच लोड नहीं किए जा सके।",
+      "loadMatchesDescription": "हमारी तरफ से कुछ गलत हो गया। दोबारा आज़माने के लिए रिफ़्रेश करें।",
+      "loadWebhookDeliveries": "डिलीवरीज़ लोड नहीं की जा सकीं।",
+      "replayWebhookDelivery": "रीप्ले पूरा नहीं हो सका।",
+      "loadWebhookEndpoints": "एंडपॉइंट्स लोड नहीं किए जा सके।"
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "एक शुरू कर सकता है। कुछ लोग बना सकते हैं。",
+    "revenue": "सपने को अब कैश फ़्लो मिला है।",
+    "growth": "सिग्नल मज़बूत हो रहा है।",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "दुनिया इसे पहली बार देख रही है।",
+      "echo": "अंततः यह localhost से बाहर आ गया।"
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "आपको तैयार होने की ज़रूरत नहीं है। आपको शुरू करने की ज़रूरत है。",
+    "graduation": "आपने बुनियादी बातों से आगे निकल गए हैं। आगे की राह के लिए {tool} आज़माएं।",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "आपका पहला कॉन्टेक्स्ट टावर यहीं से शुरू होता है।",
+      "emptyDescription": "Startup OS में एक कंपनी कंपाइल करें ताकि उसका context tower देख और संपादित किया जा सके।",
+      "emptyAction": "Startup OS खोलें",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "फील्ड्स को ऑटो-फिल करने के लिए एक AI प्रोवाइडर की कोड जोड़ें।",
+        "generateFailed": "जनरेशन पूरा नहीं हुआ।",
+        "saveFailed": "आपके बदलाव सेव नहीं हुए।"
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "सेव करें",
+        "saving": "सेव हो रहा है…",
+        "cancel": "रद्द करें",
+        "open": "Startup OS खोलें"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "अभी तक कोई बेट नहीं।",
+      "noRuns": "कोई सक्रिय रन नहीं।"
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "इस प्रोजेक्ट में अभी तक कोई फाइल नहीं है।"
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "वर्कस्पेस बन रहा है।",
+      "emptyDescription": "आमंत्रण अभी भी सिंक हो रहा हो सकता है। इस पेज को रिफ्रेश करें या एक अलग वर्कस्पेस बनाएं।"
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "बिलिंग से पहले एक वर्कस्पेस बनाएं।",
+      "emptyDescription": "बिलिंग एक्शन के लिए एक सक्रिय वर्कस्पेस की जरूरत होती है。पहले एक बनाएं, फिर बिलिंग पर वापस आएं।"
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "पहला वर्कस्पेस यहीं से शुरू होता है।",
+      "emptyDescription": "शुरू करने के लिए एक वर्कस्पेस बनाएं।"
     }
   }
 }

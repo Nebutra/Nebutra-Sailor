@@ -1,347 +1,347 @@
 {
   "admin": {
     "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "description": "Bảng điều khiển super admin — quản lý người dùng, tổ chức và tình trạng hệ thống.",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "Tổng quan",
+      "users": "Người dùng",
+      "organizations": "Tổ chức"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "Người dùng",
+      "description": "Duyệt, tìm kiếm và nhập vai bất kỳ người dùng nào trên tất cả các tổ chức.",
+      "searchPlaceholder": "Tìm kiếm người dùng…",
+      "totalCount": "{count, plural, one {# người dùng} other {# người dùng}}",
+      "empty": "Không tìm thấy người dùng nào.",
+      "loadError": "Không thể tải người dùng.",
       "columns": {
         "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "name": "Tên",
+        "created": "Ngày tạo",
+        "activeOrgs": "Tổ chức hoạt động",
+        "actions": "Hành động"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "Xem tổ chức"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "Tổ chức",
+      "description": "Tất cả không gian làm việc trong hệ thống, sắp xếp theo thời gian gần nhất.",
+      "searchPlaceholder": "Tìm kiếm tổ chức…",
+      "totalCount": "{count, plural, one {# tổ chức} other {# tổ chức}}",
+      "empty": "Không tìm thấy tổ chức nào.",
+      "loadError": "Không thể tải danh sách tổ chức.",
       "columns": {
-        "name": "Name",
+        "name": "Tên",
         "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "plan": "Gói",
+        "members": "Thành viên",
+        "created": "Ngày tạo",
+        "actions": "Hành động"
       },
-      "view": "View"
+      "view": "Xem"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "Thay mặt",
+      "starting": "Đang bắt đầu…",
+      "stop": "Dừng giả mạo",
+      "confirm": "Giả mạo {label}? Bạn sẽ thấy ứng dụng dưới quyền người dùng này cho đến khi dừng.",
+      "error": "Không thể bắt đầu giả mạo.",
+      "stopError": "Không thể dừng giả mạo."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "Trước",
+      "next": "Tiếp",
+      "pageOf": "Trang {page} trong {total}"
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "Xin chào Thế giới",
+    "dashboard": "Bảng điều khiển",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "Tiếp tục",
+      "confirm": "Xác nhận",
+      "done": "Hoàn tất",
+      "cancel": "Hủy"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "Sáng",
+    "dark": "Tối",
+    "system": "Hệ thống"
   },
   "LocaleSwitcher": {
-    "en": "English",
+    "en": "Tiếng Anh",
     "zh": "中文",
-    "de": "German",
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "label": "Language",
-    "ariaLabel": "Change language"
+    "de": "Tiếng Đức",
+    "es": "Tiếng Tây Ban Nha",
+    "fr": "Tiếng Pháp",
+    "ja": "Tiếng Nhật",
+    "ko": "Tiếng Hàn",
+    "label": "Ngôn ngữ",
+    "ariaLabel": "Đổi ngôn ngữ"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "Số đăng ký ICP",
+      "publicSecurity": "Đăng ký an ninh công cộng"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "Đăng nhập bằng WeChat",
+      "notConfigured": "Chưa cấu hình đăng nhập WeChat"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "Thiết lập không gian làm việc",
+    "subtitle": "Ba bước nhanh và bạn đã sẵn sàng phát hành.",
     "steps": {
-      "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "workspace": "Không gian làm việc",
+      "invite": "Mời đội nhóm",
+      "plan": "Chọn gói"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "Quay lại",
+      "stepCounter": "Bước {current} trong {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "Chọn một gói",
+      "description": "Bắt đầu miễn phí hoặc mở khóa thêm dung lượng. Bạn có thể thay đổi gói bất cứ lúc nào.",
+      "choose": "Chọn gói",
+      "skip": "Bỏ qua"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "Mở menu người dùng",
+    "profile": "Hồ sơ",
+    "settings": "Cài đặt",
+    "feedback": "Phản hồi",
+    "theme": "Giao diện",
+    "language": "Ngôn ngữ",
+    "signOut": "Đăng xuất",
+    "signedInAs": "Đăng nhập với"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
+      "title": "Hồ sơ",
+      "description": "Cập nhật thông tin cá nhân của bạn.",
+      "nameLabel": "Họ và tên",
+      "namePlaceholder": "Họ và tên đầy đủ",
       "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "emailHint": "Chúng tôi sẽ gửi liên kết xác minh để xác nhận địa chỉ email mới.",
+      "languageLabel": "Ngôn ngữ",
+      "submit": "Lưu thay đổi",
+      "saving": "Đang lưu…",
+      "verifyEmail": "Xác minh",
+      "verifying": "Đang gửi xác minh…",
+      "success": "Đã cập nhật hồ sơ.",
+      "verificationSent": "Đã gửi email xác minh.",
+      "errorRequiredName": "Họ và tên là bắt buộc.",
+      "errorInvalidEmail": "Địa chỉ email không hợp lệ.",
+      "subtitle": "Thông tin danh tính và liên hệ của bạn.",
+      "unknown": "Người dùng chưa đặt tên",
+      "manageCta": "Mở cài đặt tài khoản đầy đủ"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "Ảnh đại diện",
+      "description": "Tải lên hình ảnh vuông (PNG, JPEG hoặc WebP, tối đa 2MB).",
+      "uploadButton": "Tải ảnh đại diện",
+      "uploading": "Đang tải lên…",
+      "fileTooBig": "Tệp quá lớn. Kích thước tối đa là 2MB.",
+      "invalidType": "Loại hình ảnh không được hỗ trợ. Vui lòng dùng PNG, JPEG hoặc WebP.",
+      "success": "Đã cập nhật ảnh đại diện.",
+      "removeButton": "Xóa ảnh đại diện",
+      "removed": "Đã xóa ảnh đại diện.",
+      "deleteError": "Không thể xóa ảnh đại diện."
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "Xuất dữ liệu của tôi",
+      "description": "Tải xuống bản sao mọi bản ghi chúng tôi lưu trữ cho tài khoản của bạn, bao gồm hồ sơ, tổ chức, sự kiện kiểm toán, thông báo và lời mời.",
+      "compliance": "Yêu cầu theo Điều 20 GDPR (Quyền di chuyển dữ liệu) và Điều 45 PIPL (Quyền nhận bản sao thông tin cá nhân).",
+      "export": "Xuất dữ liệu của tôi",
+      "pending": "Đang chuẩn bị xuất…",
+      "ready": "Xuất của bạn đã sẵn sàng.",
+      "download": "Tải xuống JSON",
+      "error": "Không thể chuẩn bị xuất của bạn. Vui lòng thử lại."
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "Đổi địa chỉ email",
+      "description": "Chúng tôi sẽ gửi liên kết xác minh đến địa chỉ mới. Thay đổi chỉ có hiệu lực sau khi bạn xác nhận từ hộp thư đó.",
+      "newEmailLabel": "Địa chỉ email mới",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "Gửi liên kết xác minh",
+      "submitting": "Đang gửi…",
+      "verificationSent": "Kiểm tra hộp thư tại {email} để xác nhận thay đổi.",
+      "errorInvalidEmail": "Địa chỉ email không hợp lệ.",
+      "error": "Không thể yêu cầu đổi email.",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "Email đã cập nhật",
+        "successDescription": "Email đăng nhập của bạn đã được cập nhật.",
+        "successWithEmail": "Email đăng nhập của bạn giờ là {email}.",
+        "failureTitle": "Chúng tôi không thể xác nhận liên kết đó",
+        "failureDescription": "Liên kết xác minh này không hợp lệ, đã hết hạn hoặc đã được sử dụng. Vui lòng yêu cầu liên kết mới từ cài đặt tài khoản.",
+        "errorCode": "Lý do: {code}",
+        "continueCta": "Quay lại tài khoản",
+        "backCta": "Quay lại tài khoản"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "Tài khoản",
+    "ariaLabel": "Cài đặt tài khoản",
+    "navLabel": "Các tab cài đặt tài khoản",
+    "tip": "Nhấn {key} ở bất kỳ đâu để mở lại hộp thoại này.",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "Hồ sơ",
+      "subscription": "Gói đăng ký",
+      "billing": "Thanh toán",
+      "preferences": "Tùy chọn",
+      "personalization": "Cá nhân hóa"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "Gói đăng ký",
+      "subtitle": "Gói, hạn mức và gia hạn.",
+      "currentPlan": "Gói hiện tại",
+      "upgradeCta": "So sánh gói",
+      "manageCta": "Quản lý gói"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "Thanh toán",
+      "subtitle": "Lịch sử hóa đơn và phương thức thanh toán.",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "Chưa có lịch sử",
+        "description": "Các khoản phí và hóa đơn sẽ hiển thị ở đây sau kỳ thanh toán đầu tiên của bạn.",
+        "cta": "Mở trang thanh toán"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "Tùy chọn",
+      "subtitle": "Giao diện và khả năng truy cập.",
+      "theme": "Giao diện",
+      "light": "Sáng",
+      "dark": "Tối",
+      "system": "Hệ thống",
+      "help": "Trợ giúp",
+      "reportIssue": "Báo cáo sự cố",
+      "shortcuts": "Phím tắt"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "Cá nhân hóa",
+      "subtitle": "Cho Sailor biết bạn là ai và cách phản hồi."
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "Định nghĩa lại mô hình",
+    "hero_subtitle": "Không để công việc kinh doanh nào trở nên khó khăn.",
+    "social_title": "Xã hội",
+    "social_headline": "Bình đẳng công nghệ tuyệt đối",
+    "social_description": "Trao quyền cho những nhà đổi mới ở rìa. Phá vỡ các bộ lọc truyền thống và trao quyền cho các founder đơn lẻ với hạ tầng đột phá.",
+    "governance_title": "Quản trị",
+    "governance_headline": "Mã nguồn là luật",
+    "governance_description": "Quản trị bằng thuật toán dựa trên Proof of Work và kết quả kinh doanh thực tế, thay thế quan liêu mờ ảo.",
+    "environment_title": "Môi trường",
+    "environment_headline": "Chủ nghĩa tối giản số",
+    "environment_description": "Giảm dấu chân đám mây thông qua tích hợp SaaS cực đoan và hiệu quả tài nguyên."
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "Bảo mật",
+      "description": "Quản lý mật khẩu, xác thực đa yếu tố và các phiên đang hoạt động.",
+      "managedByProvider": "Cài đặt bảo mật được quản lý bởi nhà cung cấp xác thực của bạn.",
+      "openProviderProfile": "Mở hồ sơ",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "Đổi mật khẩu",
+        "description": "Sử dụng mật khẩu mạnh và không dùng lại trên các trang khác.",
+        "currentPasswordLabel": "Mật khẩu hiện tại",
+        "newPasswordLabel": "Mật khẩu mới",
+        "confirmPasswordLabel": "Xác nhận mật khẩu mới",
+        "revokeOtherSessions": "Đăng xuất khỏi các thiết bị khác",
+        "submit": "Cập nhật mật khẩu",
+        "pending": "Đang cập nhật mật khẩu…",
+        "success": "Đã cập nhật mật khẩu thành công."
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "Xác thực hai yếu tố",
+        "description": "Thêm bước xác minh thứ hai bằng ứng dụng xác thực.",
+        "enabled": "Đã bật",
+        "disabled": "Đã tắt",
+        "enabledHelp": "Tài khoản của bạn yêu cầu mã xác thực 6 chữ số sau khi đăng nhập bằng mật khẩu.",
+        "disabledHelp": "Bảo vệ tài khoản bằng mã 6 chữ số từ ứng dụng xác thực.",
+        "enable": "Bật xác thực hai yếu tố",
+        "disable": "Tắt xác thực hai yếu tố",
+        "passwordPrompt": "Xác nhận mật khẩu của bạn",
+        "scanQrCode": "Quét mã QR này bằng ứng dụng xác thực, sau đó nhập mã 6 chữ số bên dưới.",
+        "secretKeyLabel": "Hoặc nhập thủ công khóa bí mật này",
+        "verificationCodeLabel": "Mã xác thực",
+        "verify": "Xác thực và bật",
+        "backupCodesTitle": "Mã dự phòng",
+        "backupCodesDescription": "Lưu các mã này ở nơi an toàn. Mỗi mã chỉ dùng được một lần nếu bạn mất quyền truy cập vào ứng dụng xác thực.",
+        "copyBackupCodes": "Sao chép mã",
+        "finishSetup": "Hoàn tất thiết lập",
+        "successEnabled": "Đã bật xác thực hai yếu tố.",
+        "successDisabled": "Đã tắt xác thực hai yếu tố."
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "Phiên đang hoạt động",
+        "description": "Các thiết bị và trình duyệt hiện đang đăng nhập vào tài khoản của bạn.",
+        "currentSession": "(hiện tại)",
+        "ipLabel": "Địa chỉ IP",
+        "lastActiveLabel": "Hoạt động lần cuối",
+        "revoke": "Đăng xuất",
+        "revokeAll": "Đăng xuất khỏi tất cả thiết bị khác",
+        "empty": "Không có phiên hoạt động nào khác.",
+        "successRevoked": "Đã đăng xuất phiên.",
+        "successRevokedAll": "Đã đăng xuất khỏi tất cả các phiên khác."
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "Xóa tài khoản",
+        "description": "Xóa vĩnh viễn tài khoản và tất cả dữ liệu liên quan. Thao tác này không thể hoàn tác.",
+        "passwordPrompt": "Nhập mật khẩu để xác nhận",
+        "confirmTextLabel": "Nhập DELETE để xác nhận",
+        "submit": "Xóa tài khoản",
+        "cancel": "Hủy",
+        "success": "Đã xóa tài khoản."
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "Tài khoản đã kết nối",
+        "description": "Xem xét các phương thức đăng nhập OAuth đã liên kết với danh tính Nebutra của bạn.",
+        "connected": "Đã kết nối",
+        "connect": "Kết nối",
+        "help": "Giữ ít nhất một phương thức đăng nhập đáng tin cậy trước khi ngắt kết nối nhà cung cấp.",
+        "unlink": "Ngắt kết nối",
+        "notLinked": "Chưa kết nối"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "Mật khẩu thông minh",
+        "description": "Sử dụng thông tin xác thực gắn liền thiết bị để đăng nhập chống lừa đảo.",
+        "empty": "Chưa đăng ký mật khẩu thông minh nào",
+        "addPasskey": "Thêm mật khẩu thông minh",
+        "cancelAdd": "Hủy",
+        "cancelled": "Thiết lập mật khẩu thông minh đã bị hủy. Không có thay đổi nào.",
+        "defaultName": "Mật khẩu thông minh {number}",
+        "nameHelp": "Đặt tên dễ nhận biết cho mật khẩu thông minh này trước khi trình duyệt yêu cầu xác nhận.",
+        "nameLabel": "Tên mật khẩu thông minh",
+        "rename": "Đổi tên",
+        "saveRename": "Lưu tên",
+        "remove": "Xóa",
+        "successAdded": "Đã thêm khóa truy cập.",
+        "successRemoved": "Đã xóa khóa truy cập.",
+        "unavailableBadge": "Không khả dụng"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "Đặt mật khẩu",
+        "description": "Thêm mật khẩu để đăng nhập mà không cần nhà cung cấp OAuth của bạn.",
+        "submit": "Đặt mật khẩu",
+        "pending": "Đang gửi liên kết thiết lập mật khẩu…",
+        "sentMessage": "Chúng tôi đã gửi liên kết thiết lập mật khẩu đến email của bạn."
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "Phát hành Startup của bạn, được quản trị ngay từ ngày đầu.",
+      "tagline": "Tác nhân đa vùng, đa thuê bao mặc định. Không cần đội ngũ nền tảng."
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Đăng nhập vào Nebutra",
+      "subtitle": "Chọn cách bạn muốn đăng nhập.",
+      "continueWith": "Tiếp tục với",
+      "continueWithProvider": "Tiếp tục với {provider}",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,377 +349,377 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
+      "providerLoading": "Đang chuyển hướng…",
+      "dividerOr": "Hoặc tiếp tục với email",
       "emailLabel": "Email",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "Tiếp tục",
+      "back": "Quay lại",
+      "passwordLabel": "Mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu của bạn",
+      "showPassword": "Hiển thị mật khẩu",
+      "hidePassword": "Ẩn mật khẩu",
+      "capsLockOn": "Caps Lock đang bật",
+      "forgotPassword": "Quên mật khẩu?",
+      "submit": "Đăng nhập",
+      "submitLoading": "Đang đăng nhập…",
+      "useMagicLink": "Gửi cho tôi liên kết ma thuật thay thế",
+      "usePasskey": "Đăng nhập bằng khóa bảo mật",
+      "passkeyTitle": "Đăng nhập bằng khóa bảo mật của bạn",
+      "passkeyDescription": "Sử dụng Face ID, Touch ID hoặc khóa bảo mật của bạn. Không cần mật khẩu.",
+      "passkeyButton": "Tiếp tục với khóa bảo mật",
+      "passkeyCancelled": "Yêu cầu khóa bảo mật đã bị hủy.",
+      "passkeyUnsupported": "Trình duyệt này không hỗ trợ khóa bảo mật.",
+      "passkeyError": "Đăng nhập bằng khóa bảo mật thất bại. Hãy thử phương thức khác.",
+      "ssoTitle": "Tiếp tục với SSO doanh nghiệp",
+      "ssoDescription": "Đang chuyển hướng bạn đến {provider} cho {email}.",
+      "ssoError": "Không thể khởi động SSO doanh nghiệp. Hãy thử phương thức khác.",
+      "ssoRetry": "Thử lại",
+      "newToProduct": "Mới dùng Nebutra?",
+      "signUpLink": "Đăng ký",
+      "homeLink": "Trang chủ",
+      "signInFailed": "Đăng nhập thất bại",
+      "genericError": "Đã xảy ra lỗi. Vui lòng thử lại.",
+      "captchaError": "Xác minh chống bot thất bại. Làm mới trang và thử lại."
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "Tạo tài khoản Nebutra",
+      "subtitle": "Một tài khoản cho mọi ứng dụng Nebutra.",
+      "firstNameLabel": "Tên",
+      "lastNameLabel": "Họ",
+      "firstNamePlaceholder": "Tên",
+      "lastNamePlaceholder": "Họ",
+      "submit": "Tạo tài khoản",
+      "submitLoading": "Đang tạo tài khoản…",
+      "alreadyHaveAccount": "Đã có tài khoản?",
+      "signInLink": "Đăng nhập",
+      "signUpFailed": "Đăng ký thất bại"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "Passkey",
+      "description": "Sử dụng Face ID, Touch ID, Windows Hello hoặc khóa bảo mật thay vì mật khẩu. Mỗi thiết bị có một passkey riêng.",
+      "addButton": "Thêm khóa truy cập",
+      "adding": "Đang thiết lập…",
+      "namePlaceholder": "ví dụ: MacBook Pro",
+      "nameLabel": "Tên (tùy chọn)",
+      "registerSuccess": "Đã thêm khóa truy cập.",
+      "registerCancelled": "Đã hủy thiết lập.",
+      "registerUnsupported": "Trình duyệt này không hỗ trợ khóa truy cập.",
+      "registerError": "Không thể đăng ký khóa truy cập.",
+      "empty": "Chưa có khóa truy cập nào.",
+      "loadError": "Không thể tải khóa truy cập.",
+      "revoke": "Xóa",
+      "revoking": "Đang xóa…",
+      "revokeConfirm": "Xóa khóa truy cập này? Bạn sẽ không thể đăng nhập bằng nó nữa.",
+      "revokeSuccess": "Đã xóa khóa truy cập.",
+      "revokeError": "Không thể xóa khóa truy cập.",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "Gắn với thiết bị",
+        "multiDevice": "Đồng bộ trên nhiều thiết bị"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "Đã thêm {date}"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
+      "title": "Đăng nhập bằng liên kết ma thuật",
+      "description": "Nhập email của bạn, chúng tôi sẽ gửi mã 6 chữ số để đăng nhập.",
       "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "send": "Gửi liên kết",
+      "codeLabel": "Mã xác minh",
+      "verify": "Xác minh",
+      "resend": "Gửi lại mã",
+      "resendCooldown": "Gửi lại sau {seconds}s",
+      "sentTo": "Chúng tôi đã gửi mã đến {email}"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
+      "title": "Quên mật khẩu?",
+      "description": "Nhập email của bạn, chúng tôi sẽ gửi liên kết để đặt lại mật khẩu.",
       "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "submit": "Gửi liên kết đặt lại",
+      "successTitle": "Kiểm tra email của bạn",
+      "success": "Nếu email đó đã được đăng ký, bạn sẽ nhận được liên kết đặt lại mật khẩu trong vài phút."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "Đặt lại mật khẩu",
+      "description": "Chọn mật khẩu mới cho tài khoản của bạn.",
+      "newPasswordLabel": "Mật khẩu mới",
+      "confirmPasswordLabel": "Xác nhận mật khẩu mới",
+      "submit": "Đặt lại mật khẩu",
+      "successTitle": "Đặt lại mật khẩu",
+      "successDescription": "Bạn đã có thể đăng nhập bằng mật khẩu mới.",
+      "signInCta": "Đi đến đăng nhập",
+      "invalidTitle": "Liên kết đặt lại không hợp lệ",
+      "invalidDescription": "Liên kết đặt lại mật khẩu này bị thiếu hoặc không đúng định dạng. Vui lòng yêu cầu liên kết mới từ trang quên mật khẩu."
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "Đã xác minh email",
+      "successDescription": "Địa chỉ email của bạn đã được xác minh.",
+      "failureTitle": "Xác minh thất bại",
+      "failureDescription": "Chúng tôi không thể xác minh email của bạn bằng liên kết này.",
+      "continueCta": "Tiếp tục",
+      "signInCta": "Đi đến đăng nhập"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "Đăng nhập hoàn tất",
+      "title": "Bạn đã đăng nhập",
+      "description": "Phiên làm việc của bạn đã sẵn sàng. Chúng tôi đang mở không gian làm việc Nebutra và duy trì quá trình chuyển giao an toàn từ luồng xác thực.",
+      "session": "Phiên làm việc",
+      "verified": "Đã xác minh",
+      "workspace": "Không gian làm việc",
+      "preparing": "Đang chuẩn bị",
+      "redirecting": "Đang vào không gian làm việc sau {seconds}s",
+      "secureHandoff": "Chuyển giao an toàn",
+      "continueCta": "Tiếp tục đến không gian làm việc",
+      "signInCta": "Sử dụng tài khoản khác"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "Email hoặc mật khẩu không đúng.",
+      "userNotFound": "Không tìm thấy tài khoản với email đó.",
+      "userAlreadyExists": "Email này đã có tài khoản.",
+      "weakPassword": "Mật khẩu quá yếu. Hãy dùng ít nhất 8 ký tự với chữ hoa, chữ thường và số.",
+      "passwordsDontMatch": "Mật khẩu không khớp.",
+      "passwordTooShort": "Mật khẩu phải có ít nhất 8 ký tự.",
+      "currentPasswordIncorrect": "Mật khẩu hiện tại không đúng.",
+      "samePassword": "Mật khẩu mới phải khác với mật khẩu hiện tại của bạn.",
+      "invalidEmail": "Địa chỉ email không hợp lệ.",
+      "emailNotVerified": "Vui lòng xác thực địa chỉ email trước.",
+      "sessionExpired": "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.",
+      "twoFactorRequired": "Yêu cầu xác thực hai yếu tố.",
+      "invalidVerificationCode": "Mã xác thực không đúng hoặc đã hết hạn.",
+      "twoFactorAlreadyEnabled": "Xác thực hai yếu tố đã được bật.",
+      "twoFactorNotEnabled": "Xác thực hai yếu tố chưa được bật.",
+      "tooManyAttempts": "Quá nhiều lần thử. Vui lòng thử lại sau.",
+      "rateLimited": "Bạn đang thực hiện thao tác này quá nhiều. Vui lòng làm chậm lại.",
+      "providerNotSupported": "Hành động này được quản lý bởi nhà cung cấp xác thực của bạn.",
+      "networkError": "Lỗi mạng. Kiểm tra kết nối và thử lại.",
+      "unknown": "Đã xảy ra lỗi. Vui lòng thử lại."
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "Thử một trong những gợi ý này để bắt đầu",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "Xem hoạt động gần đây",
+        "prompt": "Hiển thị cho tôi hoạt động mới nhất trong không gian làm việc của tôi trong 24 giờ qua."
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "Gỡ lỗi một lỗi",
+        "prompt": "Giúp tôi gỡ lỗi một lỗi thời gian chạy. Tôi sẽ dán stack trace và bạn có thể hướng dẫn tôi qua nó."
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "Soạn email tóm tắt",
+        "prompt": "Soạn một email tóm tắt hàng tuần ngắn gọn mà tôi có thể gửi cho đội của mình về tiến độ nền tảng."
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "Khám phá tính năng nền tảng",
+        "prompt": "Hướng dẫn tôi qua các tính năng chính của nền tảng SaaS này và cách tôi có thể sử dụng chúng."
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "Gói đang hoạt động",
+      "manage": "Quản lý đăng ký",
+      "noPlanTitle": "Không có gói đang hoạt động",
+      "noPlanDescription": "Chọn một gói để mở khóa các tính năng trả phí và giới hạn sử dụng cao hơn.",
+      "choosePlan": "Chọn một gói",
+      "renewsOn": "Gia hạn vào {date}",
+      "endsOn": "Hết hạn vào {date}",
+      "trialEndsOn": "Dùng thử kết thúc {date}",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "Hoạt động",
+        "trialing": "Đang dùng thử",
+        "past_due": "Quá hạn",
+        "canceled": "Đã hủy",
+        "free": "Miễn phí"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "Không thể tải trạng thái thanh toán của bạn."
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "Dùng thử miễn phí {days} ngày",
+      "seat": "{count, plural, one {# chỗ} other {# chỗ}}",
+      "perSeat": "/ chỗ"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "Logo tổ chức",
+        "description": "Tải lên hình ảnh hình vuông (PNG, JPEG hoặc WebP, tối đa 2MB) để đại diện cho tổ chức của bạn.",
+        "uploadButton": "Tải lên logo",
+        "uploading": "Đang tải lên…",
+        "fileTooBig": "Tệp quá lớn. Kích thước tối đa là 2MB.",
+        "invalidType": "Loại hình ảnh không được hỗ trợ. Hãy dùng PNG, JPEG hoặc WebP.",
+        "success": "Đã cập nhật logo.",
+        "removeButton": "Xóa logo",
+        "removed": "Đã xóa logo."
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "Tên tổ chức",
+        "description": "Cập nhật tên hiển thị cho đội ngũ và khách hàng của bạn.",
+        "label": "Tên",
+        "submit": "Lưu",
+        "saving": "Đang lưu…",
+        "success": "Đã cập nhật tên tổ chức."
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "Xóa tổ chức",
+        "description": "Xóa vĩnh viễn tổ chức này, tất cả thành viên, lời mời và dữ liệu liên quan. Hành động này không thể hoàn tác.",
+        "trigger": "Xóa tổ chức",
+        "confirmLabel": "Nhập tên tổ chức để xác nhận",
+        "submit": "Xóa tổ chức",
+        "cancel": "Hủy",
+        "success": "Đã xóa tổ chức."
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "Bạn đã được mời",
+      "heading": "Bạn đã được mời tham gia {organizationName}",
+      "description": "Chấp nhận lời mời để bắt đầu cộng tác với đội nhóm.",
+      "accept": "Chấp nhận lời mời",
+      "accepting": "Đang chấp nhận...",
+      "decline": "Từ chối",
+      "declining": "Đang từ chối...",
+      "declinedView": "Đã từ chối lời mời",
+      "success": "Chúng tôi đã thông báo cho người mời.",
+      "backToDashboard": "Quay lại bảng điều khiển",
+      "roleLabel": "Vai trò: {role}",
+      "errorEmailMismatch": "Lời mời này được gửi đến một email khác",
+      "errorEmailMismatchDetail": "Đăng nhập bằng địa chỉ email nhận được lời mời để chấp nhận.",
+      "errorExpired": "Lời mời đã hết hạn",
+      "errorExpiredDetail": "Yêu cầu người mời gửi lời mời mới.",
+      "errorNotFound": "Không tìm thấy lời mời",
+      "errorNotFoundDetail": "Liên kết mời không hợp lệ hoặc đã bị thu hồi.",
+      "errorNotAvailable": "Mời không khả dụng",
+      "errorNotAvailableDetail": "Mời này đã được phản hồi và không còn hoạt động.",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "Chủ sở hữu",
+        "admin": "Quản trị viên",
+        "member": "Thành viên",
+        "viewer": "Người xem"
       }
     }
   },
   "settings": {
     "apiKeys": {
       "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "description": "Tạo và quản lý API keys để truy cập Nebutra theo chương trình.",
+      "createButton": "Tạo API key",
+      "noPermission": "Bạn không có quyền xem API keys.",
+      "loading": "Đang tải…",
+      "loadError": "Không thể tải API keys.",
+      "createError": "Không thể tạo API key.",
+      "revokeError": "Không thể thu hồi API key.",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "Chưa có API key nào",
+        "cta": "Tạo khóa API đầu tiên của bạn"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "Tên",
+        "prefix": "Tiền tố",
+        "lastUsed": "Lần sử dụng cuối",
+        "scopes": "Phạm vi",
+        "created": "Đã tạo",
+        "actions": "Hành động",
+        "never": "Chưa bao giờ"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "Thu hồi",
+        "revoking": "Đang thu hồi…",
+        "copy": "Sao chép",
+        "copied": "Đã sao chép",
+        "close": "Đóng",
+        "submit": "Tạo khóa",
+        "submitting": "Đang tạo…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "Tạo khóa API",
+        "description": "API keys cho phép các hệ thống bên ngoài giao tiếp với Nebutra thay mặt bạn. Hãy coi chúng như mật khẩu.",
+        "nameLabel": "Tên",
+        "namePlaceholder": "ví dụ: Production backend",
+        "scopesLabel": "Phạm vi",
+        "successWarning": "Key này chỉ hiển thị một lần. Hãy lưu lại trước khi đóng.",
+        "confirmClose": "Đóng sẽ ẩn key này vĩnh viễn. Hãy đảm bảo đã lưu."
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "Nhật ký kiểm toán",
+      "description": "Theo dõi mọi hành động quản trị trong workspace của bạn. Lọc theo người thực hiện, hành động, thực thể hoặc khoảng thời gian.",
+      "empty": "Chưa có sự kiện kiểm toán nào",
+      "loadMore": "Tải thêm",
+      "loading": "Đang tải…",
+      "forbidden": "Bạn cần quyền admin để xem nhật ký kiểm toán.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
+        "when": "Thời gian",
+        "actor": "Người thực hiện",
+        "action": "Hành động",
+        "entity": "Thực thể",
+        "outcome": "Kết quả",
         "ip": "IP"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "Giá trị cũ",
+        "newValue": "Giá trị mới"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "Hành động",
+        "actionPlaceholder": "Tìm kiếm hành động…",
+        "entityType": "Loại thực thể",
+        "outcome": "Kết quả",
+        "outcomeSuccess": "Thành công",
+        "outcomeFailure": "Thất bại",
+        "outcomePending": "Đang chờ",
+        "startDate": "Ngày bắt đầu",
+        "endDate": "Ngày kết thúc",
+        "range24h": "24 giờ qua",
+        "range7d": "7 ngày qua",
+        "range30d": "30 ngày qua",
+        "reset": "Đặt lại",
+        "all": "Tất cả"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "Thông báo",
+      "description": "Chọn cách Nebutra liên hệ với bạn cho từng loại sự kiện, trên mỗi kênh phân phối.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "Đặt lại về mặc định",
+        "save": "Lưu"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "Đang lưu…",
+        "saved": "Đã lưu",
+        "error": "Lưu không thành công. Vui lòng thử lại."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "Cảnh báo bảo mật",
+          "description": "Cảnh báo đăng nhập, thay đổi mật khẩu, thay đổi xác thực hai yếu tố."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "Thanh toán",
+          "description": "Hóa đơn, lỗi thanh toán và thay đổi gói đăng ký."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "Mời đội nhóm",
+          "description": "Mời tham gia tổ chức, đã chấp nhận hoặc từ chối."
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "Hoạt động đội nhóm",
+          "description": "Thành viên tham gia, thay đổi vai trò và các hoạt động khác trong workspace."
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "Cập nhật sản phẩm",
+          "description": "Tính năng mới, điểm nổi bật trong changelog và ghi chú phát hành."
         },
         "marketing": {
           "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "description": "Bản tin và khuyến mãi định kỳ. Chỉ gửi khi bạn đồng ý."
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "Trong ứng dụng"
         },
         "email": {
           "label": "Email"
@@ -734,143 +734,143 @@
     },
     "webhooks": {
       "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "description": "Đăng ký nhận các sự kiện từ workspace của bạn. Chúng tôi ký mọi payload bằng secret của endpoint để bạn xác minh tính xác thực.",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "Endpoint mới",
+        "urlLabel": "URL endpoint",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "Sự kiện",
+        "submit": "Tạo endpoint",
+        "submitting": "Đang tạo…",
+        "selectEvent": "Chọn ít nhất một sự kiện.",
+        "successTitle": "Đã tạo endpoint. Bí mật ký chỉ hiển thị một lần.",
+        "successWarning": "Lưu nó trong bộ quản lý bí mật của ứng dụng trước khi đóng.",
+        "copy": "Sao chép",
+        "copied": "Đã sao chép"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "Các endpoint đang hoạt động",
+        "empty": "Chưa có endpoint webhook. Tạo một cái ở trên.",
+        "loading": "Đang tải…",
+        "loadFailed": "Không tải được webhooks",
         "columns": {
           "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "events": "Sự kiện",
+          "status": "Trạng thái",
+          "lastDelivered": "Gửi lần cuối",
+          "actions": "Hành động"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "Hoạt động",
+          "disabled": "Vô hiệu hóa"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "Chỉnh sửa",
+          "enable": "Bật",
+          "disable": "Tắt",
+          "viewDeliveries": "Xem giao hàng",
+          "delete": "Xóa"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "Giao hàng gần đây",
+        "close": "Đóng",
+        "loading": "Đang tải…",
+        "loadFailed": "Không thể tải giao hàng",
+        "empty": "Chưa có giao hàng nào.",
+        "viewPayload": "Xem payload",
+        "hidePayload": "Ẩn payload",
+        "replay": "Phát lại",
+        "replaying": "Đang phát lại…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "thành công",
+          "failed": "thất bại",
+          "retrying": "đang thử lại"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "Giao diện",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "Chủ đề",
+        "description": "Sử dụng sáng, tối, hoặc khớp với tùy chọn hệ thống."
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "Mẫu chủ đề",
+        "description": "Áp dụng bất kỳ chủ đề nào từ Theme Playground cho toàn bộ ứng dụng. Các điều khiển bên dưới sẽ tinh chỉnh thêm trên đó.",
+        "search": "Tìm kiếm chủ đề…",
+        "searchLabel": "Tìm kiếm chủ đề",
+        "default": "Mặc định",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "Đang dùng",
+        "empty": "Không có chủ đề nào khớp với tìm kiếm của bạn.",
+        "count": "{count} chủ đề"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "Chủ đề",
+        "description": "Chọn một mẫu, nhập DESIGN.md, sau đó tinh chỉnh các token bên dưới.",
+        "selectLabel": "Mẫu chủ đề",
+        "import": "Nhập",
+        "copy": "Sao chép chủ đề",
+        "copied": "Đã sao chép",
+        "copyError": "Sao chép thất bại",
+        "custom": "Tùy chỉnh"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "Nhập DESIGN.md",
+        "description": "Dán hoặc tải lên DESIGN.md để áp dụng màu sắc, bo góc, phông chữ, khoảng cách và đổ bóng cho toàn bộ ứng dụng — được lưu giữ qua các lần tải lại.",
+        "applied": "Đã áp dụng:",
+        "remove": "Xóa"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "Chế độ chủ đề",
+        "light": "Sáng",
+        "dark": "Tối",
+        "system": "Hệ thống"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "Màu nhấn",
+        "description": "Chọn màu nhấn thương hiệu để tô màu các trạng thái đang hoạt động trên toàn bộ ứng dụng.",
+        "label": "Màu nhấn",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
-          "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "default": "Mặc định",
+          "blue": "Xanh dương",
+          "cyan": "Xanh ngọc",
+          "violet": "Tím",
+          "pink": "Hồng",
+          "amber": "Vàng hổ phách",
+          "green": "Xanh lá",
+          "red": "Đỏ"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "Màu sắc",
+        "description": "Màu nhấn, nền và nền trước.",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "Nền",
+          "description": "Ghi đè màu nền bề mặt."
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "Nền trước",
+          "description": "Ghi đè màu văn bản nội dung."
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "Đặt lại mặc định"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "Phông chữ UI",
+        "uiDescription": "Bộ phông chữ dùng trong giao diện.",
+        "codeLabel": "Phông chữ code",
+        "codeDescription": "Dòng phông chữ dùng cho bề mặt code.",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "Mặc định theme",
+            "system": "Hệ thống",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
+            "theme": "Mặc định theme",
             "system": "System mono",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
@@ -879,385 +879,385 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "Độ tương phản",
+        "description": "Điều chỉnh độ tương phản văn bản (50 = không thay đổi).",
+        "label": "Mức độ tương phản"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "Sử dụng con trỏ pointer",
+        "description": "Chuyển sang con trỏ mũi tên trên các phần tử có thể tương tác khi di chuột.",
+        "label": "Con trỏ mũi tên trên phần tử tương tác"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "Đánh dấu khác biệt",
+        "description": "Hiển thị dải màu hoặc ký hiệu +/- trên mỗi dòng đã thay đổi.",
+        "label": "Phong cách đánh dấu khác biệt",
+        "color": "Màu sắc",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "Làm mượt phông chữ",
+        "description": "Áp dụng làm mịn phông chữ gốc của macOS.",
+        "label": "Làm mượt phông chữ gốc"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "Kiểu chữ",
+        "description": "Kích thước phông chữ cơ bản cho giao diện và bề mặt mã.",
+        "uiFontSize": "Kích thước phông chữ giao diện",
+        "uiFontSizeDescription": "Điều chỉnh kích thước phông chữ giao diện cơ bản.",
+        "codeFontSize": "Kích thước phông chữ mã",
+        "codeFontSizeDescription": "Điều chỉnh kích thước phông chữ mã cơ bản."
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "Giao diện",
+        "customize": "Tùy chỉnh"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "Giảm chuyển động",
+        "description": "Giảm hiệu ứng chuyển động hoặc đồng bộ với cài đặt hệ thống.",
+        "label": "Tùy chọn chuyển động",
+        "system": "Hệ thống",
+        "on": "Bật",
+        "off": "Tắt"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "Thanh bên trong suốt",
+        "description": "Áp dụng chất liệu trong suốt cho thanh bên."
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "Thanh bên trong suốt",
+        "description": "Áp dụng chất liệu trong suốt cho thanh bên."
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "Phiên bản",
+    "effective": "Hiệu lực",
+    "notFound": "Tài liệu này không khả dụng.",
+    "backHome": "Quay về trang chủ"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "Bảng lệnh",
+    "placeholder": "Nhập lệnh hoặc tìm kiếm…",
+    "empty": "Không tìm thấy kết quả.",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
-      "admin": "Admin",
-      "help": "Help"
+      "navigation": "Điều hướng",
+      "actions": "Hành động",
+      "settings": "Cài đặt",
+      "account": "Tài khoản",
+      "admin": "Quản trị",
+      "help": "Trợ giúp"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
+        "home": "Trang chủ",
+        "settings": "Cài đặt",
+        "billing": "Thanh toán",
+        "team": "Đội nhóm",
         "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
+        "notifications": "Thông báo",
+        "auditLog": "Nhật ký kiểm toán",
         "webhooks": "Webhooks",
-        "admin": "Admin"
+        "admin": "Quản trị"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "Mời thành viên nhóm",
+        "createApiKey": "Tạo khóa API",
+        "switchOrganization": "Chuyển tổ chức"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "Chuyển sang giao diện sáng",
+        "themeDark": "Chuyển sang giao diện tối",
+        "themeSystem": "Sử dụng giao diện hệ thống"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "Đăng xuất"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "Báo cáo sự cố",
+        "shortcuts": "Phím tắt"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "Lựa chọn quyền riêng tư của bạn",
+      "description": "Chúng tôi sử dụng cookie để cải thiện trải nghiệm, phân tích lưu lượng truy cập và cá nhân hóa nội dung. Chọn các danh mục bạn muốn cho phép."
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "Chấp nhận tất cả",
+      "savePreferences": "Lưu tùy chọn"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "Cần thiết",
+        "description": "Bắt buộc để trang web hoạt động. Không thể tắt."
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "Chức năng",
+        "description": "Ghi nhớ tùy chọn của bạn (ngôn ngữ, chủ đề, bố cục)."
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "Phân tích",
+        "description": "Dữ liệu sử dụng ẩn danh để chúng tôi cải thiện sản phẩm."
       },
       "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "label": "Tiếp thị",
+        "description": "Quảng cáo cá nhân hóa và nhắm lại trên các nền tảng bên thứ ba."
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "Thông báo",
+      "description": "Tất cả thông báo của bạn ở một nơi.",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "Tất cả",
+        "unread": "Chưa đọc"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "Đánh dấu tất cả đã đọc",
+        "markRead": "Đánh dấu đã đọc",
+        "archive": "Lưu trữ",
+        "loadMore": "Tải thêm",
+        "loading": "Đang tải...",
+        "selected": "{count} đã chọn"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "Bạn đã cập nhật hết rồi.",
+        "unread": "Không có thông báo chưa đọc."
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "Không thể tải thông báo.",
+        "network": "Lỗi mạng. Vui lòng thử lại.",
+        "markRead": "Không thể đánh dấu thông báo là đã đọc.",
+        "archive": "Không thể lưu trữ thông báo.",
+        "bulkMarkRead": "Một số thông báo không thể đánh dấu là đã đọc."
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "Hộp thư yêu cầu backend thông báo bền vững. Kiểm tra cấu hình nhà cung cấp của bạn.",
+        "emptyCaughtUp": "Hộp thư trống.",
+        "emptyChangelog": "Các cập nhật nhật ký thay đổi sẽ hiển thị ở đây."
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "Chào buổi sáng",
+      "afternoon": "Chào buổi chiều",
+      "evening": "Chào buổi tối"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "Cung cấp năng lượng cho ứng dụng với connectors",
+      "subtitle": "Nhập một prompt, nhấn ⌘K từ bất kỳ đâu, hoặc truy cập trực tiếp vào bề mặt workspace.",
+      "promptPlaceholder": "Bạn đang nghĩ gì?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "Kết nối tích hợp",
+        "theme": "Góc thử nghiệm giao diện",
+        "audit": "Nhật ký kiểm toán",
+        "billing": "Thanh toán"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "Xác thực chưa được cấu hình cho nhà cung cấp đã chọn. Đặt bí mật nhà cung cấp để kích hoạt phiên người dùng."
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "Bắt đầu với một hành động: hỏi Sailor, kiểm tra tín hiệu không gian làm việc, hoặc định tuyến công việc vào bề mặt tự động hóa.",
+      "openSailor": "Mở Sailor AI",
+      "viewAnalytics": "Xem phân tích"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "Tóm tắt không gian làm việc",
+      "description": "Ngày kho hàng mới nhất · {day}",
+      "viewAnalytics": "Xem phân tích →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "Người dùng hoạt động",
+        "totalEvents": "Tổng sự kiện",
+        "conversions": "Chuyển đổi",
+        "revenue": "Doanh thu"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "Người dùng đã đăng nhập",
+        "totalEvents": "Sự kiện đã thu thập",
+        "conversions": "Hành động đạt chuẩn",
+        "revenue": "Doanh thu đã ghi nhận"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
+        "snapshot": "Ảnh chụp",
+        "cadence": "Nhịp độ",
         "tenant": "Tenant",
-        "daily": "Daily",
+        "daily": "Hàng ngày",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "Người dùng tenant",
+        "events": "Luồng sự kiện",
+        "funnel": "Phễu",
+        "billing": "Thanh toán"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "Quy trình tài liệu",
+      "description": "Gửi tệp nguồn vào hàng đợi tác vụ nguồn.",
+      "intakeTitle": "Nhận tài liệu",
+      "intakeDescription": "PDF, Markdown, văn bản hoặc tài liệu Word",
+      "chooseDocument": "Chọn tài liệu",
+      "startParseTask": "Bắt đầu tác vụ phân tích",
+      "queued": "Đã xếp hàng",
+      "fileInputLabel": "Tệp tài liệu",
+      "fallbackError": "Tác vụ tài liệu thất bại.",
+      "taskStatus": "Trạng thái tác vụ",
+      "progressLabel": "Tiến độ tác vụ",
+      "refreshStatus": "Làm mới",
+      "cancelTask": "Hủy",
+      "statusError": "Không thể làm mới trạng thái tác vụ.",
+      "cancelError": "Không thể hủy tác vụ.",
+      "statusQueued": "Đã xếp hàng",
+      "statusRunning": "Đang chạy",
+      "statusSucceeded": "Thành công",
+      "statusFailed": "Thất bại",
+      "statusCancelled": "Đã hủy",
+      "resultReady": "Kết quả sẵn sàng",
+      "taskError": "Lỗi tác vụ",
+      "updatedAt": "Đã cập nhật"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "Tiếp tục nơi bạn đã dừng lại",
+      "subtitle": "{count, plural, =0 {Không có phiên} =1 {1 phiên gần đây} other {# phiên gần đây}}",
+      "viewAll": "Xem tất cả →",
+      "newChat": "Trò chuyện mới",
+      "untitled": "Phiên không tiêu đề",
+      "messageCount": "{count, plural, =1 {1 tin nhắn} other {# tin nhắn}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "Bắt đầu",
+      "description": "{done}/{total} hoàn tất · hoàn thành cài đặt để mở khóa toàn bộ không gian làm việc",
+      "progressLabel": "Tiến độ cài đặt",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "Mời đồng đội",
+          "description": "Mời ít nhất một cộng tác viên vào không gian làm việc của bạn."
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "Tạo khóa API",
+          "description": "Truy cập theo chương trình vào các điểm cuối của không gian làm việc."
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "Kết nối tích hợp",
+          "description": "Stripe, Slack, webhooks, queues, và nhiều hơn nữa."
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "Thử chế độ chat, data, hoặc workflow."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "Dự án",
+    "noThreads": "Không có thread",
+    "expandAll": "Mở rộng tất cả",
+    "collapseAll": "Thu gọn tất cả",
+    "sectionMore": "Tùy chọn khác",
+    "newProject": "Dự án mới",
+    "restoredGroups": "Đã khôi phục các nhóm đã mở rộng trước đó",
+    "newProjectPlaceholder": "Tên dự án",
+    "newProjectDefault": "Chưa đặt tên",
+    "newProjectSuccess": "Đã tạo dự án",
+    "newProjectError": "Không thể tạo dự án",
+    "sortBy": "Sắp xếp theo",
+    "sortRecent": "Hoạt động gần đây",
+    "sortAlphabetical": "Thứ tự chữ cái",
+    "sortCreated": "Ngày tạo",
+    "archiveAll": "Lưu trữ tất cả",
+    "comingV2": "Sắp ra mắt trong v2"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "Phòng đầu tiên đã sẵn sàng.",
+      "firstFolder": "Nhiều công ty bắt đầu từ một thư mục.",
+      "firstTable": "Bàn đầu tiên đã có thêm một chỗ ngồi.",
+      "firstSignal": "Thế giới thực đã bắt đầu lên tiếng.",
+      "firstShip": "Thế giới đã được chứng kiến lần đầu.",
+      "firstBeliever": "Từ hôm nay, bạn không còn xây dựng chỉ cho riêng mình.",
+      "firstRevenue": "Giấc mơ giờ đây đã có dòng tiền.",
+      "firstReturn": "Việc quay lại quan trọng hơn việc ghé thăm.",
+      "firstTeam": "Ba người có thể bắt đầu hình thành một công ty.",
+      "firstCrowd": "Bàn đầu tiên đang dần đông đúc.",
+      "firstReset": "Một khởi động lại là một khởi đầu chân thực hơn.",
+      "firstPublic": "Đưa một mảnh tương lai ra công chúng.",
+      "firstDemo": "Đây không phải là một buổi trình diễn. Đây là một bài kiểm tra.",
+      "graduation": "Bạn đã vượt qua những điều cơ bản. Con đường phía trước cần những công cụ mạnh mẽ hơn."
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "Nhiều công ty bắt đầu từ một thư mục.",
+      "integrations": "Chưa cấu hình kết nối nào.",
+      "creditActivity": "Hoạt động tín dụng sẽ hiển thị sau yêu cầu đầu tiên của bạn.",
+      "usageData": "Dữ liệu sử dụng sẽ hiển thị khi tổ chức của bạn bắt đầu thực hiện yêu cầu.",
+      "apiKeys": "Chưa có khóa nào.",
+      "apiKeysCta": "Tạo khóa đầu tiên",
+      "teamMembers": "Một người có thể bắt đầu. Một vài người có thể xây dựng.",
+      "cofounders": "Người đầu tiên tin tưởng vào bạn chưa xuất hiện.",
+      "cofoundersDescription": "Khi bạn và một đồng sáng lập khác cùng thể hiện sự quan tâm, họ sẽ xuất hiện ở đây.",
+      "cofoundersAction": "Tìm đồng sáng lập",
+      "growthChart": "Dữ liệu xu hướng sẽ hiển thị khi có hoạt động.",
+      "revenueChart": "Dữ liệu doanh thu sẽ hiển thị khi có giao dịch.",
+      "webhookDeliveries": "Các lần giao sẽ hiển thị ở đây sau sự kiện đầu tiên.",
+      "webhookEndpoints": "Thêm điểm cuối ở trên để bắt đầu nhận sự kiện.",
+      "accessInvites": "Chưa có mã mời nào được phát hành."
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "Phòng đầu tiên đã sẵn sàng.",
+    "failure": "Khởi động lại là một khởi đầu chân thực hơn.",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "Không thể tải các trận đấu.",
+      "loadMatchesDescription": "Có lỗi xảy ra từ phía chúng tôi. Hãy làm mới để thử lại.",
+      "loadWebhookDeliveries": "Không thể tải các lần giao webhook.",
+      "replayWebhookDelivery": "Phát lại không thành công.",
+      "loadWebhookEndpoints": "Không thể tải các điểm cuối webhook."
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "Một người có thể bắt đầu. Một vài người có thể xây dựng.",
+    "revenue": "Giấc mơ giờ đã có dòng tiền.",
+    "growth": "Tín hiệu đang ngày càng mạnh hơn.",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "Thế giới lần đầu tiên nhìn thấy nó.",
+      "echo": "Cuối cùng nó đã rời khỏi localhost."
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "Bạn không cần phải sẵn sàng. Bạn cần bắt đầu.",
+    "graduation": "Bạn đã vượt qua những điều cơ bản. Hãy thử {tool} cho chặng đường phía trước.",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "Tháp ngữ cảnh đầu tiên của bạn bắt đầu từ đây.",
+      "emptyDescription": "Biên dịch một công ty trong Startup OS để xem và chỉnh sửa tháp ngữ cảnh của nó.",
+      "emptyAction": "Mở Startup OS",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "Kết nối khóa nhà cung cấp AI để tự động điền các trường.",
+        "generateFailed": "Quá trình tạo không hoàn tất.",
+        "saveFailed": "Các thay đổi của bạn chưa được lưu."
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "Lưu",
+        "saving": "Đang lưu…",
+        "cancel": "Hủy",
+        "open": "Mở Startup OS"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "Chưa có cược nào.",
+      "noRuns": "Không có lần chạy đang hoạt động."
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "Dự án này chưa có tệp nào."
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "Không gian làm việc đang được thiết lập.",
+      "emptyDescription": "Lời mời có thể vẫn đang đồng bộ. Làm mới trang này hoặc tạo một không gian làm việc riêng."
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "Tạo không gian làm việc trước khi thanh toán.",
+      "emptyDescription": "Các hành động thanh toán cần một không gian làm việc đang hoạt động. Hãy tạo một không gian trước, sau đó quay lại thanh toán."
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "Không gian làm việc đầu tiên bắt đầu từ đây.",
+      "emptyDescription": "Tạo không gian làm việc để bắt đầu."
     }
   }
 }

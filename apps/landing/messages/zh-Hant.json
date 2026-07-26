@@ -154,12 +154,12 @@
       "terms": "服务条款",
       "cookies": "Cookie 政策",
       "refund": "退款政策",
+      "licensing": "授权与协议",
       "contact": "联系我们",
       "faq": "常见问题",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X (Twitter)",
-      "licensing": "授权与协议"
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {brandName} Intelligence. 保留所有权利。",
     "statusOnline": "所有子系统在线运行",
@@ -1152,18 +1152,6 @@
       "title": "一次买断。终身访问。",
       "description": "告别续订焦虑。选择最适合您团队的并发方案，即刻开始构建。",
       "socialProofText": "开源 AGPL-3.0 · 提供商业授权选项。",
-      "startup": {
-        "badge": "STARTUP / 敏捷初创",
-        "price": "$799",
-        "period": "/ 年",
-        "desc": "适合建立在 {brandName} 平台基线之上的小团队。",
-        "cta": "购买 Startup 商业授权",
-        "f1": "闭源商用授权",
-        "f2": "团队主体无界限商用的企业级应用下放额度",
-        "f3": "12 个月更新覆盖",
-        "f4": "邮件支持",
-        "f5": "包含 Solo 架构下的全额度能力特权"
-      },
       "independent": {
         "badge": "INDEPENDENT / 独立开发者",
         "price": "免费",
@@ -1175,6 +1163,18 @@
         "f3": "完整的全栈拓扑：多租户管控、计费引擎、行级安全；轻量管理后台 + Retool/Metabase 集成范式（不堆砌冗余 CRUD，沿用头部 SaaS 真正在用的内部工具链）",
         "f4": "强劲的增长飞轮：原生博客系统、SEO 预渲机制及转化跟踪",
         "f5": "AGPLv3 开源协议限制"
+      },
+      "startup": {
+        "badge": "STARTUP / 敏捷初创",
+        "price": "$799",
+        "period": "/ 年",
+        "desc": "适合建立在 {brandName} 平台基线之上的小团队。",
+        "cta": "购买 Startup 商业授权",
+        "f1": "闭源商用授权",
+        "f2": "团队主体无界限商用的企业级应用下放额度",
+        "f3": "12 个月更新覆盖",
+        "f4": "邮件支持",
+        "f5": "包含 Solo 架构下的全额度能力特权"
       },
       "enterprise": {
         "badge": "ENTERPRISE / 企业版",
@@ -1684,8 +1684,8 @@
       "title": "按当前阶段选择最合适的套餐",
       "subtitle": "所有套餐都包含完整源代码以及对应版本线的终身更新。",
       "plan": {
-        "startup": "初创版",
         "independent": "独立开发者版",
+        "startup": "初创版",
         "enterprise": "企业版版"
       },
       "feature": {
@@ -1733,8 +1733,8 @@
     }
   },
   "icpFooter": {
-    "publicSecurity": "公安备案",
-    "recordNumber": "ICP 备案号"
+    "recordNumber": "ICP 备案号",
+    "publicSecurity": "公安备案"
   },
   "MarketLocalePicker": {
     "title": "国家和语言",

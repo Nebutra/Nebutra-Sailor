@@ -1,1748 +1,1748 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "Özellikler",
+    "solutions": "Çözümler",
+    "pricing": "Fiyatlandırma",
+    "docs": "Dokümantasyon",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
+    "about": "Hakkımızda",
+    "ideas": "Fikirler",
     "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "roadmap": "Yol Haritası",
+    "resources": "Kaynaklar",
+    "signIn": "Giriş Yap",
+    "getStarted": "Yelken Al",
+    "changelog": "Değişiklik Günlüğü",
+    "news": "Haberler",
+    "designDocs": "Tasarım Sistemi",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "Hesap menüsü",
+      "loadingName": "Yükleniyor…",
+      "dashboard": "Panel",
+      "account": "Hesap",
+      "billing": "Faturalandırma",
+      "docs": "Dokümantasyon",
+      "signOut": "Çıkış yap"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "{brandName} kurucu referans döngüsüne katıl",
+    "metadataDescription": "{brandName} bekleme listesine katıl, referans atfını koru ve tek kapalı ürün odaklı döngüde kendi paylaşım bağlantını aç.",
+    "eyebrow": "Kurucu referans döngüsü",
+    "title": "Sonraki kurucu grubuna katıl ve kendi paylaşım bağlantını al.",
+    "description": "Herhangi bir davet kodu ile gir veya doğrudan katıl. Kod mevcut olduğunda atfı koruyacağız, seni bekleme listesine ekleyeceğiz ve hemen paylaşabileceğin özel bir referans URL’si vereceğiz.",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "Kalıcı bekleme listesi",
+      "codeDetected": "{code} kodu algılandı",
+      "direct": "Doğrudan kayıt"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "İş e-postası",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "Referans kodu",
+      "codePlaceholder": "İsteğe bağlı kod",
+      "submit": "Bekleme listesine katıl",
+      "submitting": "Katılıyor",
+      "invalidEmail": "Geçerli bir e-posta adresi girin.",
+      "error": "Şu anda katılamadınız. Lütfen tekrar deneyin.",
+      "successTitle": "Listede yeriniz hazır",
+      "successDescription": "Özel paylaşım bağlantınız hazır.",
+      "positionLabel": "Sıra pozisyonu",
+      "referralCodeLabel": "Kodunuz",
+      "referralUrlLabel": "Paylaşım bağlantınız",
+      "copyLink": "Bağlantıyı kopyala",
+      "copied": "Kopyalandı",
+      "share": "Paylaş",
+      "shareTitle": "{brandName} kuruluş döngüsüne katıl",
+      "shareText": "{brandName} kurucu bekleme listesine katılmak için davet bağlantımı kullanın.",
+      "directMode": "Referans kodu gerekmez",
+      "codeMode": "Referans izleme etkinleştirildi"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "Kurucudan kurucuya döngü",
+        "description": "Her kabul edilen kayıt bir kod ve URL alır, böylece bir sonraki referans manuel devir olmadan başlar."
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "Dürüst izleme",
+        "description": "Bilinmeyen kodlar denenmiş izleme olarak saklanır, geçerli kodlar referans verenin sayısını artırır ve kaydı temiz tutar."
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "Paylaşmaya hazır başarı durumu",
+        "description": "Onay durumu, döngünün sayfada tamamlanabilmesi için konum, kod, kopyalama ve yerel paylaşım işlemlerini sunar."
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "Ürün odaklı altyapı",
+      "title": "Tek kullanımlık bir form değil, dayanıklı SaaS altyapısı olarak tasarlandı.",
+      "description": "Referans yüzeyi, bir etki alanı paketi, kalıcı bir Prisma modeli, tipli bir Next.js rotası ve ECS dağıtımlarından sonra çalıştırılabilecek genel duman testleriyle desteklenir.",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "Veri",
+        "title": "Tek dayanıklı bekleme listesi tablosu",
+        "description": "E-posta benzersizliği, otomatik artan konum, referans kodu indeksleri, denenmiş izleme meta verileri ve durum geçişleri platform veritabanında tutulur."
       },
       "api": {
         "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "title": "Tipli katılma uç noktası",
+        "description": "Sayfa `/api/waitlist` adresine gönderim yapar, rastgele kodları normalize eder, mevcut girişleri idempotent olarak döndürür ve asla örnek bir koda bağlı değildir."
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "Dağıtım anı genel duman testi",
+        "description": "Kanonik ve takma ad URL'leri otomatik kontroller için hazır; ECS teslimatı rota, DNS ve sağlık gerilemelerini yakalar."
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "Startup'ınızı Piyasaya Sunun,",
+    "headline2": "{brandName} Agent OS ile güçlendirilmiş.",
+    "subheadline": "Globalleşen <highlight>AI kodlama ajanları ve kurucular</highlight> için tasarlanmış, <highlight>yönetilen mimari</highlight>ye sahip <highlight>üretim hazır</highlight> bir temel üzerinde platform işinin haftalarını atlayın.",
+    "copyLabel": "Komutu Kopyala",
+    "copiedLabel": "Kopyalandı",
+    "ctaGetAccess": "Startup'ınızı Başlatın",
+    "ctaExploreDemo": "Demoyu keşfedin",
+    "pillCopied": "Kopyalandı"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "Prototipten ölçeklenmeye kadar hazır altyapı.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "AI Uygulama Altyapısı",
+      "description": "Dahili, üretimde test edilmiş Ajan Çerçeveleri ve LLM orkestrasyon motorları. Karmaşık alt soyutlamaları atlayın ve yapılandırılmış zeka API'leri ile doğrudan etkileşime geçin."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "Yönetilen Platform Temeli",
+      "description": "AI-özlü SaaS çıkaran ekipler için yönetilen bir platform temeli. Ad-hoc araçları bir araya getirmeden iskelet, çalışma zamanı birincil yapıları ve teslimat yüzeylerini hizalayın."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "Kurumsal SaaS Otomasyonu",
+      "description": "Vercel, Supabase ve Stripe ile modern teknoloji yığınını derinlemesine entegre eder. Kutudan çıktığı gibi satır düzeyinde güvenlik, karmaşık çok kiracılı yalıtım ve küresel abonelik faturalama sağlar."
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "Bir sonraki AI ürününüzü yayınlamaya hazır mısınız?",
+    "subheading": "Tek bir terminal komutuyla yerel olarak eksiksiz, bulut yerli bir SaaS mimarisini başlatın.",
+    "copyLabel": "Komutu Kopyala",
+    "copiedLabel": "Kopyalandı",
+    "startBuilding": "Yapmaya Başla"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "Startup'ınızı {brandName} Agent OS ile yayınlayın. Çok kiracılık, faturalama, kimlik doğrulama ve AI — ilk günden itibaren üretim hazır.",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "Ürün",
+      "resources": "Kaynaklar",
+      "legal": "Yasal",
+      "community": "Topluluk"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
+      "product": "Ürün",
+      "features": "Özellikler",
+      "pricing": "Fiyatlandırma",
+      "about": "Hakkında",
+      "showcase": "Vitrin",
       "blog": "Blog",
-      "playbook": "Playbook",
-      "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
+      "playbook": "Oyun Kitabı",
+      "changelog": "Değişiklik Günlüğü",
+      "roadmap": "Yol Haritası",
+      "docs": "Dokümanlar",
+      "ideas": "Fikirler",
       "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
+      "careers": "Kariyer",
+      "security": "Güvenlik",
       "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
-      "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "privacy": "Gizlilik",
+      "terms": "Şartlar",
+      "cookies": "Çerezler",
+      "refund": "İade",
+      "licensing": "Lisanslama",
+      "contact": "İletişim",
+      "faq": "SSS",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. Tüm hakları saklıdır.",
+    "statusOnline": "Tüm sistemler çalışıyor",
+    "newsletterTitle": "Gelişmeleri takip edin",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "Abone Ol",
+    "newsletterSuccess": "Abone olduğunuz için teşekkürler!",
+    "newsletterError": "Bir şeyler yanlış gitti"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "SEVDİĞİNİZ TEKNOLOJİLERLE İNŞA EDİLDİ."
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "TURBOREPO YAPISI",
+    "title": "10 uygulama. 104 paket. 4 arka uç hattı.",
+    "description": "Paylaşılan kod, paralel derlemeler, sıfır tekrar. Veritabanından ön yüzeye kadar uçtan uca tam tipleme.",
+    "metricApps": "uygulama",
+    "metricBackends": "arka uç şeritleri",
+    "metricPackages": "paketler",
+    "verifiedPaths": "Mevcut çalışma alanına göre doğrulanmış yollar",
+    "cta": "Monorepo mimarisini keşfedin"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "Rakamlarla",
+    "github": "GitHub Yıldızları",
+    "discord": "Discord Üyeleri",
+    "setup": "Ort. Kurulum Süresi",
+    "packages": "Monorepo Paketleri",
+    "ctaStar": "Yıldızla →",
+    "ctaJoin": "Katıl →",
+    "ctaStart": "Başla →",
+    "ctaExplore": "Keşfet →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "Hakkımızda — Yönetilen AI Platformu",
+      "description": "{brandName}'ın yönetilen AI platformunun arkasındaki ticari vizyonu ve mühendislik ilkelerini keşfedin.",
+      "heading": "İnce Ürün Takımlarının Çağı",
+      "subheading": "Tekrarlayan platform işlerini yönetilen altyapı, güçlü otomasyon ve kalıcı mühendislik kaldıracı ile değiştirin.",
+      "missionTitle": "İdari Çürümeye Karşı Yeni Bir Düzen",
+      "missionP1": "{brandName}, kısa ömürlü başlangıç yığınları yerine kalıcı altyapıya ihtiyaç duyan ekipler için yönetilen bir AI platformu inşa ediyor. Geleneksel ölçek genellikle bürokrasi ve entropi ile gelir; biz buna kod yönetişimi, otomasyon ve büyüdükçe denetlenebilir kalan bir platform tabanı ile karşılık veriyoruz.",
+      "missionP2": "Ticaret hala koordinasyon maliyetleri, parçalı araçlar ve zayıf yükseltme yollarından muzdarip. Daha net platform sözleşmeleri, daha güçlü teslimat birimleri ve ekiplerin gerçekten gözlemleyip güvenebileceği çalışma zamanı davranışları aracılığıyla bu sürtünmeleri azaltmaya önem veriyoruz.",
+      "missionP3": "Ölçek sorunlarını daha fazla örgütsel ağırlıkla çözme alışkanlığını reddediyoruz. Otomasyon, testler ve yönetişim, tekrarlayan operasyonel işleri emmeli; böylece ekipler ürün, mimari ve müşteri sonuçlarına odaklanabilir.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "Dört Temel",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "Yönetilen Ölçek (Felsefe)",
+          "description": "Ölçek, daha güçlü sistemlerden, daha iyi kaldıraçtan ve daha net çalışma kurallarından gelmeli — daha fazla örgütsel ağırlık ekleyerek değil."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "İnşa Eden Çekirdek (Altyapı)",
+          "description": "Ekiplerin tekrar tekrar denetleyip, genişletebileceği ve üzerine ürün çıkarabileceği çok kiracılık, faturalandırma, kimlik doğrulama, uyumluluk ve AI entegrasyonları için yeniden kullanılabilir bir platform tabanı."
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "Yükseltme Disiplini (Yönlendirme)",
+          "description": "Sağlıklı sistemler, sapma, kahramanca çabalar ve tek seferlik yeniden yazımlar yerine uyumluluk kontrolleri, göçler ve gözlemlenebilir çalışma zamanı sözleşmeleri aracılığıyla büyür."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "Kod Yasadır (Örgüt)",
+          "description": "Operasyonel disiplin, testlerde, iş akışlarında ve yönetişim kurallarında kodlanmalı; böylece ekipler platformu siyasete veya kurumsal hafızaya güvenmeden geliştirebilir."
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "Unvanlardan Çok Mühendislik Sinyalleri",
+      "jobsDescription": "Köken veya unvan şişirmesinden çok, doğrulanabilir mühendislik çıktısına, düşünce netliğine ve sistem yargısına daha çok önem veriyoruz.",
+      "jobsButton": "GitHub Profilini Gönder",
+      "companyInfoTitle": "Kurumsal Uyumluluk",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "Yasal Varlık Kaydı",
+        "founded": "Kayıt Tarihi",
+        "headquarters": "Global Operasyon Merkezi",
+        "jurisdiction": "Yargı Yetkisi"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "Daha derin teknik değerlendirme mi gerekiyor?",
+      "ctaDescription": "Kurumsal entegrasyon değerlendirmesi için mühendislik uzmanlarımızla iletişime geçin veya dağıtım dokümantasyonunu inceleyin.",
+      "ctaButton": "İletişime Geç"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "Teknik & Ticari Soruşturma — {brandName} Intelligence",
+      "description": "Ticari lisanslama, kurumsal kendi barındırma ve gelişmiş teknik destek için özel iletişim kanalı.",
+      "heading": "Destek Bağlantısı Kur",
+      "subheading": "Belirgin gereksinimlerinizi değerlendirmek için özel bir teknik uzman veya mimar göndereceğiz.",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "Kurucu Doğrudan",
+          "description": "Temel stratejik uyumlar ve üst düzey soruşturmalar için doğrudan iletişim kanalı."
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "Kurumsal Danışmanlık",
+          "description": "Ekolojik stratejik ortaklıklar ve genel mimari evrim ile ilgili ön görüşmeler."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "Ticari Dağıtım",
+          "description": "Kapalı kaynak lisanslama ve özel küme ortamı dağıtımları ile ilgili müzakereler."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "Uzman Düzeyi Destek",
+          "description": "Aktif iş entegrasyonları ve temel sistem hata ayıklama işlemleri için özel mimari rehberliği ve sorun giderme hizmetleri."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "Hukuk ve Uyum",
+          "description": "Açık kaynak sınırları, kurumsal uyum denetimleri ve sözleşme koşulları ile ilgili sorular."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "Veri Merkezi Gizliliği",
+          "description": "GDPR ve sonraki uluslararası veri koruma yasalarına ilişkin teknik doğrulama ve uyum yönergeleri."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "Güvenlik Bildirimleri",
+          "description": "Olası yazılım açıklarıyla ilgili teknik yeniden üretim raporlarını doğrudan altyapı ekibimize güvenli bir şekilde gönderin."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "Gönderim Portalı",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "Gönderen Ünvanı",
+        "email": "Resmi E-posta Adresi",
+        "company": "İlgili Kuruluş",
+        "category": "İhtiyaç Alanı",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "Kurumsal Danışmanlık",
+          "sales": "Lisanslama ve Mimari",
+          "support": "Geliştirici Desteği",
+          "legal": "Yasal ve Uyum Sınırları",
+          "privacy": "Veri İşleme Politikaları",
+          "partnership": "Ekosistem Entegrasyonları",
+          "press": "Halkla İlişkiler"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "Temel Sorun Özeti",
+        "message": "Detaylı Teknik/Ticari Özellikler",
+        "submit": "Arka Uca Gönder",
+        "privacyNotice": "Bu ağ isteğini çalıştırmak, şunları okuduğunuzu ve kabul ettiğinizi gösterir:",
+        "privacyLink": "Sistemik Gizlilik Altyapısı",
+        "submitting": "İşleme kuyruğuna alınıyor...",
+        "successMessage": "Veriler başarıyla iletildi. Sorumlu operasyon ekibi 1-2 standart iş günü içinde detaylı bir yanıt verecektir."
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "Operasyonel Telemetri",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "Wuxi, Jiangsu Eyaleti, Çin",
+      "socialMedia": "Ana Ağ Bağlantıları"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Çerez Politikası — {brandName}",
+      "description": "{brandName}, web sitemiz ve hizmetlerimizde çerezleri ve benzeri izleme teknolojilerini nasıl kullanır.",
+      "heading": "Çerez Politikası",
+      "effectiveDate": "Uygulama Tarihi",
+      "lastUpdated": "Son Güncelleme",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ocak 2025",
+        "updated": "1 Ocak 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "Bu Çerez Politikası, {brandName} Co., Ltd. (\"{brandName},\" \"biz,\" \"bizi,\" veya \"bizim\") tarafından web sitemiz ve hizmetlerimizde çerezlerin ve benzeri izleme teknolojilerinin nasıl kullanıldığını açıklar.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "Çerezler Nedir?",
+        "content": "Çerezler, bir web sitesini ziyaret ettiğinizde cihazınıza yerleştirilen küçük metin dosyalarıdır. Web sitelerinin daha verimli çalışmasını sağlamak ve site sahiplerine bilgi sağlamak için yaygın olarak kullanılırlar."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "Çerezleri Nasıl Kullanıyoruz",
+        "intro": "Çerezleri şu amaçlarla kullanıyoruz:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "Temel Özellikleri Etkinleştir",
+            "desc": "Kullanıcı kimlik doğrulaması ve güvenlik gibi temel işlevleri sağlar"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "Tercihleri Hatırla",
+            "desc": "Dil, tema ve diğer ayarlarınızı saklar"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "Performansı İyileştirme",
+            "desc": "Ziyaretçilerin hizmetlerimizle nasıl etkileşime girdiğini anlama"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "Deneyimi Kişiselleştirme",
+            "desc": "İlgili içerik ve öneriler sunma"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "Pazarlamayı Ölçme",
+            "desc": "Pazarlama kampanyalarımızın etkinliğini takip etme"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "Kullandığımız Çerez Türleri",
       "tableHeaders": {
-        "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "cookie": "Çerez",
+        "provider": "Sağlayıcı",
+        "purpose": "Amaç",
+        "duration": "Süre"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "Kesinlikle Gerekli Çerezler",
+        "description": "Bu çerezler, web sitesinin düzgün çalışması için önemlidir. Devre dışı bırakılamazlar.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "Kullanıcı kimlik doğrulama oturumu",
+            "duration": "Oturum"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "Kimlik doğrulama belirteci",
+            "duration": "7 gün"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "Çerez onay tercihlerini saklar",
+            "duration": "1 yıl"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "İşlevsel Çerezler",
+        "description": "Bu çerezler kişiselleştirilmiş özellikleri etkinleştirir ve tercihlerinizi hatırlar.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "Dil tercihini saklar",
+            "duration": "1 yıl"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "Tema tercihini saklar",
+            "duration": "1 yıl"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "Analitik Çerezleri",
+        "description": "Bu çerezler, ziyaretçilerin web sitemizle nasıl etkileşime girdiğini anlamamıza yardımcı olur.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "Benzersiz kullanıcıları ayırt eder",
+            "duration": "2 yıl"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "Ürün analitiği",
+            "duration": "1 yıl"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "Pazarlama Çerezleri",
+        "description": "Bu çerezler reklamcılık ve reklam kampanyası performansını izleme amacıyla kullanılır.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Facebook reklamları için ziyaretleri izler",
+            "duration": "3 ay"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "Dönüşüm takibi",
+            "duration": "3 ay"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "Çerez Tercihlerinizi Yönetme",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "Çerez Onay Bannerı",
+        "intro": "Web sitemize ilk ziyaretinizde, aşağıdakileri yapmanıza olanak tanıyan bir çerez onay bannerı göreceksiniz:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "Tümünü Kabul Et",
+            "desc": "Tüm çerez kategorilerini etkinleştir"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "Tümünü Reddet",
+            "desc": "Tüm isteğe bağlı çerezleri devre dışı bırak (gerekli çerezler kalır)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "Özelleştir",
+            "desc": "Etkinleştirmek istediğiniz belirli çerez kategorilerini seçin"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "Tercihlerinizi istediğiniz zaman altbilgi'deki \"Çerez Ayarları\"'na tıklayarak değiştirebilirsiniz."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "Tarayıcı Ayarları",
+        "intro": "Çoğu web tarayıcısı, ayarları aracılığıyla çerezleri kontrol etmenize olanak tanır:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "Ayarlar > Gizlilik ve güvenlik > Çerezler"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "Ayarlar > Gizlilik ve Güvenlik > Çerezler"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "Tercihler > Gizlilik > Çerezler"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "Ayarlar > Gizlilik, arama ve hizmetler > Çerezler"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "Belirli çerezleri engellemek, web sitesi işlevselliğini etkileyebilir."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "Benzer Teknolojiler",
+        "intro": "Çerezlerin yanı sıra şunları da kullanabiliriz:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "Yerel Depolama",
+            "desc": "Tercihleri ve önbellek verilerini yerel olarak saklamak için"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "Oturum Depolama",
+            "desc": "Gezinti oturumunuz sırasında geçici veriler için"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "Piksel Etiketleri",
+            "desc": "E-posta açılışlarını ve web sitesi ziyaretlerini izlemek için kullanılan küçük resimler"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "İzleme amacıyla tarayıcı parmak izi kullanmıyoruz."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "Bu Politika ile İlgili Güncellemeler",
+        "content": "Bu Çerez Politikası'nı zaman zaman güncelleyebiliriz. Önemli değişiklikleri web sitemizde güncellenmiş politikayı yayımlayarak size bildireceğiz."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "Bize Ulaşın",
+        "intro": "Çerez kullanımımız hakkında sorularınız varsa lütfen bizimle iletişime geçin:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "Verilerinizi nasıl topladığımız ve işlediğimiz hakkında daha fazla bilgi için lütfen",
+        "privacyLink": "Gizlilik Politikası'mızı inceleyin"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "Mühendislik Rehberi & SSS — {brandName}",
+      "description": "Çerçeve mimarisi, temel topolojiler ve ticari dağıtım stratejileri hakkında kapsamlı analiz.",
+      "heading": "Yönetici Derin Analizi",
+      "subheading": "Sistem mühendisliği entegrasyonu ve yönetici ticari karar alma süreçleri için optimize edilmiş destekleyici materyaller.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "Mimari Genel Bakış",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "{productName}'in açık işlevsel amacı nedir?",
+              "a": "{productName}, son derece yapılandırılmış ve üretim ortamına hazır bir Next.js AI SaaS çerçevesidir. Kurumsal faturalandırma, çok faktörlü kimlik doğrulama ve çok kiracılı yalıtımı yönetilen bir platform temelinde birleştirerek ekiplerin ürün özelinde AI uygulamasına odaklanmasını sağlar."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "Depo lisanslaması nasıl yapılandırılmış?",
+              "a": "Altta yatan altyapı, OSS AGPLv3 anlaşmasını sıkı bir şekilde uygulayarak şeffaflığı ve sıfır maliyetli kullanımı garanti eder. Özel karartma ve yükseltilmiş yeniden yazma garantilerine ihtiyaç duyan kuruluşlar için açık kaynak dışı ticari sözleşmeler mevcuttur."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "İlk ticari değerlendirme hızı nedir?",
+              "a": "Son derece yüksek hızda. Özelleştirilmiş Node CLI araç zincirimizi ve kesin teknik spesifikasyonu kullanarak, bir junior mühendis tek basamaklı dakikalar içinde otonom yerel Minimum Uygulanabilir Ürün (MVP) örneğini ayakta tutabilir."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "Ticari Operasyonlar",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "Ticari ölçeklendirmede tolerans ne kadar geniş?",
+              "a": "Ağırlıklı olarak mikro bileşen paradigması üzerine tasarlanmıştır; yapısal yük kapasitesi, sıfır talepli Ücretsiz Katmanlardan, aylık milyonlarca isteği karşılayan Kurumsal eşiklere kadar dinamik olarak sorunsuz bir şekilde haritalanır ve tamamen dashboard kısıtlamaları aracılığıyla yapılandırılır."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "Abonelik volatilitesi standart muhasebeyi nasıl etkiler?",
+              "a": "Kaynakların ve API verimliliğinin saniye düzeyinde kesin yapısal günlüğünü kullanarak çalışıyoruz. Kısıtlamaları değiştirmek, muhasebe katmanına anında uyarlanır—ya oranla farkları iade eder ya da otomatik krediler verir. Hiçbir katman dondurma dönemi yoktur."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "Ödeme vektörlerini izole eden işleme altyapısı nedir?",
+              "a": "Global nakit yönlendirme temel olarak Stripe sunucu arayüzlerine ertelenir ve sıkı PCI-DSS telemetrisi ile işleme bütünlüğünü garanti eder. Kurumsal dağıtımlar, özel SLA taahhütleri tarafından yönetilen özel finansal denetim boru hatlarını entegre edebilir."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "Sistem Mühendisliği Katmanı",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "Hangi temel zeka soyutlamaları yerel olarak desteklenir?",
+              "a": "Birincil etkileşim mantığı, OpenAI, Anthropic ve Gemini standart spesifikasyonları üzerinde yerel etkileşime geçmeyi şart koşar. Bu, yukarı akış ticari mantığına sıfır bozulma ile değişken eşlemesi aracılığıyla akıl yürütme uç noktalarını verimli bir şekilde sıcak değiştirme konusunda büyük esneklik sağlar."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "Veritabanı karartma riski nasıl ele alınır?",
+              "a": "Uygulama varsayılan olarak, sunucusuz Kiracı Çözümleme Yönlendirme ilkeleriyle sıkı bir şekilde bağlantılı Postgres Satır Düzeyi Güvenliği (RLS) politikalarını içsel olarak dağıtır. Bu, kritik uygulama düzeyi veri kirliliğini ve yürütme çakışmasını aktif olarak önleyen sert bölümlendirmeleri sağlar."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "Kendi yönetimi yapılan dağıtımlarda mimari kısıtlamalar var mı?",
+              "a": "Kesinlikle yok. Topoloji tamamen bağımsız. Ortam, sağlıklı PostgreSQL kümeleriyle birlikte bağımsız Node.js çalışma zamanlarını çalıştırıyorsa, tam işlevsellik doğal olarak korunur."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "Sistemik Bütünlük",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "Sınırın mekanik savunmasını hangi protokoller belirler?",
+              "a": "Mekanizmalar, iletim sırasında zorunlu TLS şifrelemesini, gizli verilerin eşleştirilmesi için deterministik karma algoritmalarını ve iç zaman serisi izleme defterlerine sıkıca yazılan değişiklik olaylarının evrensel olarak kaydedilmesini yürütür."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "Topoloji, önemli uluslararası gizlilik yasalarına saygı gösteriyor mu?",
+              "a": "Evet, derinden. İş modülleri, onay geri çekme durumlarını, zorunlu silme mantığını ve GDPR ile yerel düzenleyici çerçevelere en uygun şekilde uyan derin dışa aktarma sorgularını hedefleyen hazır algoritmik uygulamalar sağlar."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "Anormal bir felaket durumunda ne gerçekleşir?",
+              "a": "Otomatik nöbetçiler, devre bloklarını zorlayan ve hızlı triaj uygulayan temel mühendislik vektörlerini anında uyarır. Gelişmiş bir çözüm el kitabı tarafından yönetilen, tamamen şeffaf Olay Sonrası Analizleri, kesin olarak 72 saatlik bir pencere içinde evrensel olarak yayılır."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "Teknik Destek Yönergeleri",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "İşletimsel darboğaz sorun giderme nasıl çözülür?",
+              "a": "İlk triaj vektörleri, titizlikle bakımı yapılan ve akranlar tarafından gözden geçirilen dokümantasyon matrisini ve doğrulanmış topluluk etkileşimlerini hedefler. Standart veya kurumsal düzeyde bir lisans satın almak, doğrudan iç mühendislik düğümleri aracılığıyla çözülen özel yükseltme kuyruklarına erişimi açar."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "Fiziksel veya özel çevresel entegrasyon operasyonları sağlıyor musunuz?",
+              "a": "Bu, üst düzey kurumsal konglomeratlar için özel premium yürütme katmanımıza girer. En kıdemli mimarlarımız, eski mimariye karşı kod denetimi yapmak, hassas bulut taşıma işlemlerini yönetmek ve son derece izole ağ bölümlerini doğrulamak için dışarıda çalışır."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "Acil teknik senkronizasyona mı ihtiyacınız var?",
+      "ctaDescription": "Belirli bir API davranış şemasını doğrulamak veya uzun vadeli entegrasyon anlaşmalarını yürütmek olsun, doğrudan mühendislik hiyerarşisiyle arayüz kurun.",
+      "ctaButton": "Entegrasyon Talimatlarını Al",
+      "ctaEmail": "Doğrudan Mesaj Gönder"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Gizlilik ve Bilgi Koruma Protokolü — {brandName}",
+      "description": "Altyapı mekanizmalarının kullanıcı özerkliği ve makine verisi izolasyonunu nasıl yönettiğini detaylı olarak belgelemek.",
+      "heading": "Bilgi Koruma Yönergeleri",
+      "effectiveDate": "Uygulama Tarihi",
+      "lastUpdated": "Son Güncelleme",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ocak 2025",
+        "updated": "1 Ocak 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "{brandName} olarak (\"Şirket,\" \"biz,\" \"bizi\" veya \"bizim\"), gizliliğinizi korumaya kararlıyız. Bu Gizlilik Politikası, web sitemizi, uygulamalarımızı ve hizmetlerimizi (toplamda \"Hizmetler\") kullandığınızda bilgilerinizi nasıl topladığımızı, kullandığımızı, açıkladığımızı ve güvence altına aldığımızı açıklar.",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. Topladığımız Bilgiler",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 Sunduğunuz Bilgiler",
+          "intro": "Size doğrudan sağladığınız bilgileri topluyoruz, bunlar şunları içerir:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "Hesap Bilgileri",
+              "desc": "Hesap oluşturduğunuzda ad, e-posta adresi, şifre ve kuruluş detayları."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "Profil Bilgileri",
+              "desc": "Profil fotoğrafı, unvan, şirket adı ve diğer isteğe bağlı bilgiler."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "Ödeme Bilgileri",
+              "desc": "Fatura adresi ve ödeme yöntemi detayları (Stripe üzerinden güvenli bir şekilde işlenir)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "İletişimler",
+              "desc": "Bize gönderdiğiniz mesajlar, geri bildirimler ve diğer iletişim bilgileri."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "İçerik",
+              "desc": "Hizmetlerimizi kullanarak oluşturduğunuz, yüklediğiniz veya sakladığınız herhangi bir içerik."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 Otomatik Olarak Toplanan Bilgiler",
+          "intro": "Hizmetlerimizi kullandığınızda, belirli bilgileri otomatik olarak toplarız:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "Cihaz Bilgileri",
+              "desc": "Cihaz türü, işletim sistemi, tarayıcı türü ve benzersiz cihaz tanımlayıcıları."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "Kullanım Bilgileri",
+              "desc": "Görüntülenen sayfalar, kullanılan özellikler, gerçekleştirilen işlemler ve Hizmetlerde geçirilen süre."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "Günlük Verileri",
+              "desc": "IP adresi, erişim zamanları, yönlendiren URL'ler ve sistem aktivite günlükleri."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "Konum Bilgileri",
+              "desc": "IP adresine dayalı genel konum (kesin coğrafi konum bilgisi toplamayız)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. Bilgilerinizi Nasıl Kullanıyoruz",
+        "intro": "Topladığımız bilgileri şu amaçlarla kullanıyoruz:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "Hizmet Sağlama",
+            "desc": "Hizmetlerimizi işletmek, sürdürmek ve geliştirmek."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "İşlemleri İşleme",
+            "desc": "Ödemeleri, faturalandırmayı ve ilgili işlemleri yönetmek."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "İletişim",
+            "desc": "Hizmet duyuruları, güncellemeler ve pazarlama iletişimleri göndermek (izinle)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "Kişiselleştirme",
+            "desc": "Deneyiminizi özelleştirmek ve alakalı öneriler sunmak."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "Analiz",
+            "desc": "Kullanım kalıplarını anlamak ve Hizmetlerimizi geliştirmek."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "Koruma",
+            "desc": "Dolandırıcılığı, kötüye kullanımı ve güvenlik olaylarını tespit etmek, önlemek ve bunlara yanıt vermek."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. Bilgilerinizi Nasıl Paylaşıyoruz",
+        "intro": "Bilgilerinizi aşağıdaki durumlarda paylaşabiliriz:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 Hizmet Sağlayıcıları",
+          "intro": "Bilgileri, adımıza hizmet sunan üçüncü taraf tedarikçileriyle paylaşıyoruz, bunlar arasında:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "Altyapı",
+              "desc": "Bulut barındırma (Vercel, Supabase), veritabanı hizmetleri"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "Ödeme İşleme",
+              "desc": "Güvenli ödeme işlemleri için Stripe"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "Kimlik Doğrulama",
+              "desc": "Kimlik yönetimi için Clerk"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "Analitik",
+              "desc": "Kullanım içgörileri için PostHog, Vercel Analytics"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 İşletme Devirleri",
+          "content": "Bir birleşme, satın alma veya varlık satışı söz konusu olduğunda, bilgileriniz bu işlem kapsamında devredilebilir."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 Yasal Gereklilikler",
+          "content": "Yasa, yasal süreç veya devlet talebi gereği, veya haklarımızı, gizliliğimizi, güvenliğinizi veya mülkümüzü korumak için bilgi açığa çıkarabiliriz."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. Haklarınız ve Seçenekleriniz",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 Erişim ve Taşınabilirlik",
+          "content": "Kişisel bilgilerinize hesap ayarlarınız üzerinden erişebilir ve verilerinizin taşınabilir bir formatta kopyasını talep edebilirsiniz."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 Düzeltme",
+          "content": "Hesap bilgilerinizi istediğiniz zaman kontrol paneli üzerinden güncelleyebilirsiniz."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 Silme",
+          "content": "Hesabınızın ve ilişkili verilerin silinmesini ayarlar üzerinden veya bizimle iletişime geçerek talep edebilirsiniz."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 Pazarlama İletişimi",
+          "content": "Pazarlama e-postalarından çıkmak için herhangi bir pazarlama e-postasındaki \"abonelikten çık\" bağlantısına tıklayabilir veya tercihlerinizi güncelleyebilirsiniz."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. Veri Güvenliği",
+        "intro": "Bilgilerinizi korumak için uygun teknik ve organizasyonel önlemler uyguluyoruz, bunlar şunları içerir:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "İletişim sırasındaki (TLS) ve depolanan verilerin şifrelenmesi",
+          "1": "Düzenli güvenlik değerlendirmeleri ve penetrasyon testleri",
+          "2": "Erişim kontrolleri ve kimlik doğrulama gereksinimleri",
+          "3": "Sistem aktivitesinin izlenmesi ve günlüğe kaydedilmesi"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. Kaliforniya Gizlilik Hakları (CCPA)",
+        "intro": "Kaliforniya sakini iseniz, kişisel bilgilerinizle ilgili belirli haklara sahipsiniz:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "Bilme Hakkı",
+            "desc": "Topladığımız, kullandığımız ve paylaştığımız bilgilerin ifşa edilmesini talep edin."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "Silme Hakkı",
+            "desc": "Kişisel bilgilerinizin silinmesini talep edin."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "Çıkma Hakkı",
+            "desc": "Kişisel bilgilerinizin satılmasından çıkın (verilerinizi satmıyoruz)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "Ayrımcılık Yapılmama Hakkı",
+            "desc": "Haklarınızı kullanmanız nedeniyle size karşı ayrımcılık yapmayacağız."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. Avrupa Gizlilik Hakları (GDPR)",
+        "intro": "EEA, Birleşik Krallık veya İsviçre'de bulunuyorsanız, GDPR kapsamında ek haklara sahipsiniz:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "Hukuki Dayanak",
+            "desc": "Verilerinizi sözleşme ifası, meşru menfaatler veya rıza esaslarına göre işliyoruz."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "Haklar",
+            "desc": "Erişim, düzeltme, silme, taşınabilirlik, kısıtlama ve itiraz."
           },
           "2": {
-            "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "label": "KVKK",
+            "desc": "Veri Koruma Sorumlumuz ile dpo@nebutra.com adresinden iletişime geçebilirsiniz."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. Bize Ulaşın",
+        "intro": "Bu Gizlilik Politikası hakkında sorularınız varsa lütfen bizimle iletişime geçin:",
         "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "İşlem Anomali Protokolleri — {brandName}",
+      "description": "Çeşitli yapısal katılım modelleri arasında tam sermaye geri dönüş parametrelerine ilişkin titiz sınırlama.",
+      "heading": "Uyuşmazlık Uygulama Çerçevesi",
+      "effectiveDate": "Uygulama Başlangıç Tarihi",
+      "lastUpdated": "Revizyon İzleme Dönemi",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ocak 2025",
+        "updated": "1 Ocak 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "{brandName} olarak, hizmetlerimizden tamamen memnun olmanızı istiyoruz. Bu İade Politikası, iadenin mümkün olduğu durumları ve bunları talep etme sürecini açıklar.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "Abonelik Planları",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "Aylık Abonelikler",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "İptal",
+              "desc": "Aylık aboneliğinizi istediğiniz zaman iptal edebilirsiniz"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "Oransal İadeler",
+              "desc": "Kısmi aylar için orantısal iade sunmuyoruz"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "Erişim",
+              "desc": "Faturalandırma döneminizin sonuna kadar ücretli özelliklere erişiminiz devam eder"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "Otomatik Yenileme",
+              "desc": "Abonelikler iptal edilmedikçe otomatik olarak yenilenir"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "Yıllık Abonelikler",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "14 Günlük Para İade Garantisi",
+              "desc": "Yeni yıllık aboneler, ilk satın alımlarından itibaren 14 gün içinde tam iade talep edebilir"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "14 Gün Sonrası",
+              "desc": "14 günlük süreden sonra genellikle iade yapılmaz"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "İptal",
+              "desc": "İstediğiniz zaman iptal edebilirsiniz, ancak aboneliğiniz yıllık sürenin sonuna kadar aktif kalır"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "Orantısal İade Yok",
+              "desc": "Kullanılmayan aylar için kısmi iade sunmuyoruz"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "İade Yapılabilecek Durumlar",
+        "intro": "Aşağıdaki durumlarda iade taleplerinizi değerlendireceğiz:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. Hizmet Sorunları",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "Temel özellikleri kullanmanızı etkileyen önemli hizmet kesintileri",
+            "1": "Makul bir süre içinde çözemediğimiz teknik sorunlar",
+            "2": "Reklamda verilenlerden önemli ölçüde farklı özellikler"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. Faturalama Hataları",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "Tekrarlayan ücretler",
+            "1": "Yanlış faturalama tutarları",
+            "2": "Yetkisiz ücretler (doğrulama sonrası)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. Olağanüstü Durumlar",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "Belgelenmiş tıbbi acil durumlar",
+            "1": "İşletmenizi etkileyen doğal afetler",
+            "2": "Duruma göre değerlendirilen diğer koşullar"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "İade Edilemeyen Öğeler",
+        "intro": "Aşağıdakiler genellikle iade için uygun değildir:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "Kullanıma dayalı ücretler",
+            "desc": "API çağrıları, AI token tüketimi veya kullanılan depolama"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "Eklentiler ve ek hizmetler",
+            "desc": "Tek seferlik satın alımlar veya ek hizmetler"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "Kurumsal sözleşmeler",
+            "desc": "Özel anlaşmaların kendi şartları vardır"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "İsteğe bağlı iptaller",
+            "desc": "İade hak süresinin ardından"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "Şart ihlalleri",
+            "desc": "Politika ihlalleri nedeniyle kapatılan hesaplar"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "İade Nasıl Talep Edilir",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "Adım 1: Destek ile İletişime Geçin",
+          "intro": "Aşağıdaki bilgileri billing@nebutra.com adresine gönderin:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "Hesap e-posta adresiniz",
+            "1": "Abonelik planı ve faturalama dönemi",
+            "2": "İade talebinizin nedeni",
+            "3": "İlgili tüm belgeler"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "Adım 2: İnceleme Süreci",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "Talebiniz 5 iş günü içinde incelenecektir",
+            "1": "Ek bilgi talep edebiliriz",
+            "2": "Yazılı karar e-posta yoluyla size iletilir"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "Adım 3: İade İşleme",
+          "intro": "Onaylanırsa:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "İadeler, orijinal ödeme yöntemine işlenir",
+            "1": "Kredi kartı iadeleri genellikle 5-10 iş günü içinde görünür",
+            "2": "Banka işleme süreleri değişebilir"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "Plan Değişiklikleri",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "Yükseltmeler",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "Yükseltmeler anında yürürlüğe girer",
+            "1": "Faturalama döneminizin kalan süresi için oranlı fark ücretlendirilir",
+            "2": "Önceki plan için iade yapılmaz"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "Düşürmeler",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "Düşürmeler, bir sonraki faturalama döneminde yürürlüğe girer",
+            "1": "O zamana kadar mevcut özelliklere erişiminiz devam eder",
+            "2": "Mevcut dönem için kısmi iade yapılmaz"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "Ücretsiz Deneme",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "Ücretsiz denemeler için ödeme bilgisi gerekmez",
+          "1": "Deneme süresince herhangi bir ücret alınmaz",
+          "2": "Herhangi bir ücret başlamadan önce bilgilendirileceksiniz"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "Uyuşmazlık Çözümü",
+        "intro": "İade kararımızla ilgili bir itirazınız varsa:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "Karar e-postasına ek bilgilerle yanıt verin",
+          "1": "Bir yöneticiye yükseltme talep edin",
+          "2": "Daha fazla inceleme için legal@nebutra.com adresinden bizimle iletişime geçin"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "Bize Ulaşın",
+        "intro": "İade talepleri veya bu politika hakkında sorularınız için:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "Faturalama",
+        "supportLabel": "Destek",
+        "legalLabel": "Hukuk",
+        "responseNote": "İade taleplerine 5 iş günü içinde yanıt vermeyi hedefliyoruz.",
+        "termsNote": "Bu politika, hizmet koşullarımızın bir parçasıdır.",
+        "termsLink": "Hizmet Koşulları",
+        "termsAgreement": "{brandName} kullanarak bu iade koşullarını kabul etmiş olursunuz."
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Hizmet Koşulları — {brandName}",
+      "description": "{brandName} web sitesine, uygulamalarına, API'lerine ve hizmetlerine erişiminizi ve kullanımınızı düzenleyen Hizmet Koşulları.",
+      "heading": "Hizmet Koşulları",
+      "effectiveDate": "Uygulama Tarihi",
+      "lastUpdated": "Son Güncelleme",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ocak 2025",
+        "updated": "1 Ocak 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "{brandName}’a hoş geldiniz! Bu Hizmet Koşulları (\"Koşullar\"), {brandName} Co., Ltd. (\"{brandName}\", \"Şirket\", \"biz\", \"bizi\" veya \"bizim\") tarafından sağlanan web sitesine, uygulamalara, API'lere ve hizmetlerine (toplamda \"Hizmetler\") erişiminizi ve kullanımınızı düzenler.",
+      "intro2": "Hizmetlerimize erişerek veya bunları kullanarak bu Koşullar ve",
+      "intro2PrivacyLink": "Gizlilik Politikası",
+      "intro2End": "mize bağlı kalmayı kabul etmiş olursunuz. Bu Koşulları kabul etmiyorsanız Hizmetlerimizi kullanmayın.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. Koşulların Kabulü",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 Uygunluk",
+          "intro": "Hizmetlerimizi kullanmak için aşağıdaki şartları sağlamalısınız:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "En az 18 yaşında veya yargı alanınızdaki reşitlik yaşında olmalısınız",
+            "1": "Kendiniz veya kuruluşunuz adına bu Şartları kabul etme yetkisine sahip olmalısınız",
+            "2": "Uygulanabilir yasalara göre Hizmetlerimizi kullanmanız yasaklanmamalıdır"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 Kuruluş Hesapları",
+          "content": "Hizmetlerimizi bir kuruluş adına kullanıyorsanız, bu Şartları söz konusu kuruluşu bağlayacak şekilde yetkiniz olduğunu beyan edersiniz."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. Hizmetlerin Tanımı",
+        "intro": "{brandName}, aşağıdakileri içeren bir SaaS platformu sunar:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "Yapay zekâ destekli özellikler ve içerik üretimi",
+          "1": "İçerik yönetimi ve topluluk araçları",
+          "2": "Öneri sistemleri",
+          "3": "E-ticaret entegrasyonları",
+          "4": "Web3 yetenekleri",
+          "5": "Analitik ve raporlama"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. Hesap Kaydı",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 Hesap Oluşturma",
+          "intro": "Belirli özelliklere erişmek için bir hesap oluşturmanız gerekir. Şunları kabul edersiniz:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "Doğru ve eksiksiz bilgi sağlamak",
+            "1": "Hesap kimlik bilgilerinizin güvenliğini sağlamak",
+            "2": "Bilgileriniz değiştiğinde bunları derhal güncellemek",
+            "3": "Hesabınız altında gerçekleşen tüm faaliyetlerden sorumlu olmak"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. Abonelik ve Faturalandırma",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 Fiyatlandırma",
+          "content": "Hizmetlerimiz, Fiyatlandırma sayfamızda açıklandığı şekilde çeşitli abonelik planları altında sunulmaktadır. Fiyatlar 30 gün önceden bildirimle değiştirilebilir."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 Ödeme",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "Abonelikler aylık veya yıllık olarak önceden faturalandırılır",
+            "1": "Tüm ücretler, aşağıda belirtilen durumlar dışında iade edilemez",
+            "2": "Uygulanabilir ücretleri ödeme yönteminize yansıtmamıza yetki verirsiniz",
+            "3": "Güvenli ödeme işlemleri için Stripe kullanıyoruz",
+            "1RefundLink": "İade Politikası"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. Kabul Edilebilir Kullanım",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 Yasaklı Faaliyetler",
+          "intro": "Aşağıdakileri yapmayacağınızı kabul edersiniz:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "Uygulanabilir herhangi bir yasa, düzenleme veya üçüncü taraf hakkını ihlal etmek",
+            "1": "Hizmetleri kötü amaçlı yazılım, istenmeyen mesaj veya zararlı içerik iletmek için kullanmak",
+            "2": "Sistemlerimize yetkisiz erişim sağlamaya çalışmak",
+            "3": "Hizmetlerimizin bütünlüğüne veya performansına müdahale etmek veya bunları bozmak",
+            "4": "İzinsiz olarak otomatik araçlar kullanarak veri kazımak, kopyalamak veya çıkarmak",
+            "5": "Hizmetlerimizi tersine mühendislik yapmak, derlemek veya parçalara ayırmak",
+            "6": "Yasadışı, zararlı veya yanıltıcı içerik oluşturmak için yapay zeka özelliklerimizi kullanmak"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. Fikri Mülkiyet",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 Fikri Mülkiyet Haklarımız",
+          "content": "{brandName} ve lisans verenleri, Hizmetler dahil olmak üzere tüm yazılımlar, tasarımlar, ticari markalar ve tarafımızca oluşturulan içerikler dahil olmak üzere Hizmetler üzerindeki tüm hakları, mülkiyeti ve menfaati sahiptir."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 İçeriğiniz",
+          "content": "Oluşturduğunuz veya yüklediğiniz içeriklerin mülkiyeti size aittir (\"İçeriğiniz\"). Hizmetlerimizi kullanarak, İçeriğinizi yalnızca size Hizmetleri sağlamak amacıyla kullanmamıza, depolamamıza, işlememize ve görüntülememize dünya çapında, tekel olmayan, bedelsiz bir lisans verirsiniz."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. Garanti Reddi",
+        "content": "HİZMETLER \"OLDUĞU GİBİ\" VE \"MEVCUT OLDUĞU GİBİ\" ŞARTLARI İLE, AÇIK VEYA ZIMNİ OLMAK ÜZERE HERHANGİ BİR GARANTİ OLMADAN, SATILABİLİRLİK, BELİRLİ BİR AMAÇA UYGUNLUK, MÜLKİYET VE İHLAL ETMEME ZIMNİ GARANTİLERİ DAHİL OLMAK ÜZERE SINIRLI OLMAKSIZIN SUNULUR."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. Sorumluluk Sınırı",
+        "para1": "YASANIN İZİN VERDİĞİ EN YÜKSEK ÖLÇÜDE, NEBUTRA DOLAYLI, ARACI, ÖZEL, SONUÇTAN KAYNAKLI VEYA İKNA EDİCİ ZARARLARLA KARIŞIK, KÂR, VERİ, KULLANIM VEYA İYİ NİYET KAYBI ZARARLARI İÇİN SORUMLU DEĞİLDİR.",
+        "para2": "HİÇBİR DURUMDA TOPLAM SORUMLULUĞUMUZ, (A) TALEPTEN ÖNCEKİ 12 AY İÇİNDE BİZE ÖDEDİĞİNİZ TUTAR VEYA (B) 100 ABD DOLARI'NIN DAHA YÜKSEK OLANI İLE SINIRLI OLACAKTIR."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. Fesih",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 Tarafınızdan",
+          "content": "Hesabınızı istediğiniz zaman hesap ayarlarınız üzerinden sonlandırabilirsiniz. Fesih sonrası Hizmetlere erişiminiz sona erecektir."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 Tarafımızdan",
+          "intro": "Aşağıdaki durumlarda hesabınızı askıya alabilir veya sonlandırabiliriz:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "Bu Şartları ihlal etmeniz",
+            "1": "Dolandırıcılık veya yasa dışı faaliyetlerde bulunmanız",
+            "2": "Uygulanabilir ücretleri ödememeniz",
+            "3": "Bize risk veya yasal sorumluluk doğurmanız"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. Uyuşmazlık Çözümü",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 Bilgi Düzeyinde Çözüm",
+          "content": "Resmi yargı sürecini başlatmadan önce, uyuşmazlıkları bilgilendirme düzeyinde çözmek için legal@nebutra.com adresinden bizimle iletişime geçmeyi kabul edersiniz."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 Uygulanabilir Hukuk",
+          "content": "Bu Şartlar, hukuk çatışması ilkeleri dikkate alınmaksızın, Delaware Eyaleti yasalarına tabidir."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. Bize Ulaşın",
+        "intro": "Bu Şartlar hakkında sorularınız varsa lütfen bizimle iletişime geçin:",
         "company": "{brandName} Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "E-posta",
+        "supportLabel": "Destek"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "{brandName} kullanarak, bu Hizmet Şartlarını okuduğunuzu, anladığınızı ve bunlara bağlı kalmayı kabul ettiğinizi beyan edersiniz."
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | Küresel Girişimciler İçin Agent OS",
+    "description": "Küresel pazara açılan girişimciler için Startup Agent OS. Yönetilen mimari, kimlik doğrulama, faturalama, ajanlar ve i18n ile donatılmış, üretim hazır Next.js altyapısı — AI kodlama ajanları ve ciddi ekipler için tasarlandı."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "SİSTEM TOPOLOJİSİ",
+      "title": "Şeffaf mimari, siyah kutu yok.",
+      "description": "{productName}, tamamen modüler bir Turborepo yapısıyla tasarlandı; yazılım yaşam döngünüzün tamamı üzerinde tam kontrol sağlarsınız.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "Satır Düzeyinde Güvenlik (RLS) politikaları yerleşik olarak gelen, tamamen tipli ORM."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk Çok Kiracılı / Özel Kimlik",
+        "desc": "B2B organizasyon geçişlerini ve RBAC'yi destekleyen, SOC2 hazır kimlik doğrulama geçidi."
       }
     },
     "pricing": {
-      "title": "Start free. Scale when you're ready.",
-      "description": "Independent and OPC developers ship for free. Annual commercial licenses unlock closed-source use for growing teams. Pick the tier that fits and start building today.",
-      "socialProofText": "AGPL-3.0 on fork · Independent Developer License via CLI · annual commercial tiers for teams.",
+      "title": "Ücretsiz başlayın. Hazır olduğunuzda ölçeklendirin.",
+      "description": "Bağımsız ve OPC geliştiriciler ücretsiz dağıtım yapabilir. Yıllık ticari lisanslar, büyüyen ekipler için kapalı kaynak kullanımını açar. Size uygun paketi seçin ve bugün inşa etmeye başlayın.",
+      "socialProofText": "Fork üzerinde AGPL-3.0 · CLI üzerinden Bağımsız Geliştirici Lisansı · ekipler için yıllık ticari paketler.",
       "independent": {
-        "badge": "INDEPENDENT",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Solo builders and one-person companies (≤ 1 FTE, < $1M ARR). No copyleft when scaffolded via create-sailor.",
+        "badge": "BAĞIMSIZ",
+        "price": "Ücretsiz",
+        "period": "süresiz",
+        "desc": "Tek kişilik geliştiriciler ve tek kişilik şirketler (≤ 1 FTE, < 1M USD ARR). create-sailor ile oluşturulduğunda copyleft yok.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited personal projects (commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more — plus thin admin + Retool/Metabase recipes (we don't ship bloated CRUD; we ship the integration patterns top SaaS use)",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Independent Developer License (no AGPL copyleft when scaffolded with the CLI)"
+        "f1": "Tam Next.js 16 SaaS çekirdeği",
+        "f2": "Sınırsız kişisel proje (ticari kullanım dahil)",
+        "f3": "Tam SaaS yığını: Kimlik Doğrulama, Ödemeler, Organizasyonlar, API, E-posta, i18n, Arka Plan İşleri, Depolama ve daha fazlası — ayrıca ince yönetici paneli + Retool/Metabase tarifleri (şişmiş CRUD göndermiyoruz; en iyi SaaS'lerin kullandığı entegrasyon kalıplarını gönderiyoruz)",
+        "f4": "Pazarlama özellikleri: Blog, Açılış sayfası, SEO, Analitik",
+        "f5": "Bağımsız Geliştirici Lisansı (CLI ile oluşturulduğunda AGPL copyleft'i yok)"
       },
       "startup": {
         "badge": "STARTUP",
         "price": "$799",
-        "period": "/ year",
-        "desc": "For teams of 2–50 people. Closed-source commercial use, annual renewal.",
-        "cta": "Get {brandName} for Startups",
-        "f1": "Closed-source use (commercial license, 2–50 FTE)",
-        "f2": "Unlimited team projects",
-        "f3": "12 months of updates included",
-        "f4": "Email support",
-        "f5": "Everything in Independent"
+        "period": "/ yıl",
+        "desc": "2–50 kişilik ekipler için. Kapalı kaynak ticari kullanım, yıllık yenileme.",
+        "cta": "Startups için {brandName} Edinin",
+        "f1": "Kapalı kaynak kullanım (ticari lisans, 2–50 FTE)",
+        "f2": "Sınırsız ekip projesi",
+        "f3": "12 ay güncelleme dahil",
+        "f4": "E-posta desteği",
+        "f5": "Independent paketinin tamamı"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Custom",
+        "price": "Özel",
         "period": "",
-        "desc": "50+ FTE, ≥ $1M ARR, or white-label / SLA needs. Custom contract with priority support.",
-        "cta": "Contact sales",
-        "f1": "Unlimited use across your organization (commercial license)",
-        "f2": "White-label rights (with written approval)",
-        "f3": "Priority support with SLA (2-hour critical, 24-hour standard)",
-        "f4": "Custom contract negotiation and roadmap input",
-        "f5": "Multi-product / multi-division licensing",
-        "f6": "Everything in Startup"
+        "desc": "50+ FTE, ≥ 1M$ ARR veya white-label / SLA ihtiyacı. Öncelikli destekle özel sözleşme.",
+        "cta": "Satış ekibiyle iletişime geç",
+        "f1": "Organizasyon genelinde sınırsız kullanım (ticari lisans)",
+        "f2": "White-label hakları (yazılı onay ile)",
+        "f3": "SLA ile öncelikli destek (kritik 2 saat, standart 24 saat)",
+        "f4": "Özel sözleşme müzakeresi ve yol haritası katkısı",
+        "f5": "Çoklu ürün / çoklu bölüm lisanslama",
+        "f6": "Startup paketinin tamamı"
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "Fiyatlandırma ve lisanslama SSS",
+      "description": "Lisans katmanları, iade ve ticari kullanım hakları hakkında sorular.",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "Sailor aylık bir SaaS aboneliği mi?",
+        "a": "Hayır. Bu fiyatlandırma Sailor kaynak kodu lisansları içindir: Independent ücretsizdir, Startup yıllık faturalandırılır ve Enterprise özeldir."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "İade yapıyor musunuz?",
+        "a": "Startup ticari lisansları, ilk satın alımlar için 14 günlük bir iade süresi içerir. Enterprise koşulları imzalanan sözleşmede ele alınır."
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "Sailor'u müşteri işleri için kullanabilir miyim?",
+        "a": "Evet. Ticari bir lisans, ekibinizin lisans kapsamı içinde kapalı kaynaklı müşteri veya iç ürünleri yayınlamasına olanak tanır; beyaz etiket hakları Enterprise onayı gerektirir."
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "Hala sorularınız mı var? {brandName} ekibiyle konuşun →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "Başlayın",
+      "title": "Yapılandırmayı bırakın. İnşa etmeye başlayın.",
+      "description": "{brandName} CLI ile ölçeklenebilir bir SaaS mimarisini yerel olarak başlatın.",
+      "button": "Mimarisi Dağıt",
+      "license": "AGPL-3.0 lisansı altında açık kaynak. Kredi kartı gerekmez."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "Kurumsal Yetenekler",
+      "title": "Tamamen tipli, genişletilebilir bir çekirdek.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "Yerel Satır Düzeyi Güvenliği",
+        "desc": "Her veritabanı sorgusu, mevcut kiracı bağlamına göre kesinlikle sınırlandırılır.",
+        "cta": "Veritabanı felsefesini oku"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "Evrensel AI Ağ Geçidi",
+        "desc": "İstemleri OpenAI, Anthropic veya açık kaynaklı modellere sorunsuz şekilde yönlendirin.",
+        "cta": "AI SDK işleyicisini keşfet"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "Detaylı Erişim Kontrolü",
+        "desc": "Yönetici, üye ve görüntüleyici rollerini yerleşik politika yapısıyla tanımlayın.",
+        "cta": "RBAC dokümantasyonunu görüntüle"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "Çoklu Sağlayıcı Faturalandırma Altyapısı",
+        "desc": "Ölçülü kullanım, abonelik webhook'ları ve kendi kendine hizmet veren müşteri portalları.",
+        "cta": "Faturalandırma mimarisini gör"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "Etkileşimli Demo",
+      "title": "Gerçek zamanlı hızı deneyimleyin.",
+      "description": "Komut satırı arayüzü, Stripe webhook tünellemesi ve yerel çok kiracılı veritabanı sağlama hakkında bir fikir edinin.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "Canlı Telemetri",
+        "desc": "Üretim kullanım verilerini doğrudan terminalinize aktarın."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "Faturalama Olayları",
+        "desc": "Stripe webhooks'lerini yerel tünelleme ile çalıştırırken izleyin."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "Çalışma Alanı Başlatma",
+        "desc": "İzole B2B PostgreSQL şemalarını anında hazırlayın."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "Hız",
+      "title": "Sıfırdan üretime rekor sürede.",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "title": "1. Kopyala",
+        "desc": "Anında {brandName} monorepo'sunu kopyalayın ve pnpm install çalıştırın."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. Yapılandır",
+        "desc": "Prisma, Clerk ve Stripe'ı interaktif CLI ile dakikalar içinde kurun."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. Geliştir",
+        "desc": "Platform altyapısı zaten hazırken ürün mantığına ve arayüze odaklanın."
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. Dağıt",
+        "desc": "Vercel ve AWS'ye gönderin ve anında küresel dağıtım sağlayın."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "dk",
+        "subtitle": "PİYASA SÜRESİ",
+        "comparison": "Platform işinden aylar kaybetmeyin.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "Başlat",
+          "wire": "Çekirdek",
+          "ship": "Yayınla",
+          "scale": "Ölçekle",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "Zamanlayıcını başlat"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "Hazır Sistem",
+        "message": "Tek yapılandırma. Her özellik. Hazır şablonunu seç ve yayınla.",
+        "detail": "Bir kez yapılandır, her şeyi oluştur — faturalama, kimlik doğrulama, yapay zeka, çoklu dil — tek bir hazır yapılandırmadan.",
+        "readyStatus": "Hazır sistem hazır"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "Platform Yetenekleri",
+      "headlinePrefix": "Güvenle yayınlamak için ",
+      "headlineHighlight": "ihtiyacın olan her şey.",
+      "description": "{brandName}, tam yığın bir SaaS platformudur — yapay zeka, faturalama, çok kiracılık, gözlemlenebilirlik ve güvenlik ilk günden itibaren dahildir. Platform katmanını yeniden kurmayı bırakın."
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
+      "exploreFeature": "Özelliği keşfet",
+      "ai_category": "Yapay Zeka ve Zeka",
+      "ai_f1_title": "Çoklu model sohbet tamamlamaları",
+      "ai_f1_desc": "İstekleri Anthropic, OpenAI, Google veya kendi ince ayarlı modellerinize yönlendirin. Streaming, vision ve function calling hazır olarak desteklenir.",
+      "ai_f2_title": "Anlamsal gömme (embeddings)",
+      "ai_f2_desc": "pgvector ile vektör gömme oluşturun ve saklayın. Anlamsal arama, RAG pipeline'ları ve öneri motorlarını güçlendirin.",
+      "ai_f3_title": "AI kullanım ölçümü",
+      "ai_f3_desc": "Kullanım takibi ile plan başına kota — AI token'ları, API çağrıları ve depolamayı ClickHouse destekli gerçek zamanlı toplamlara göre ölçün.",
+      "multi_category": "Çok Kiracılı Platform",
+      "multi_f1_title": "Organizasyon düzeyinde izolasyon",
+      "multi_f1_desc": "Postgres'teki satır düzeyinde güvenlik, kiracıların birbirlerinin verilerine asla erişememesini sağlar — uygulama katmanında değil, veritabanı katmanında uygulanır.",
+      "multi_f2_title": "Çoklu sağlayıcı kimlik doğrulama (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "Çoklu sağlayıcı OAuth (Google, GitHub vb.) yanı sıra e-posta/şifre ve magic-link — Clerk, Better Auth, NextAuth veya Supabase Auth arasında tek bir env değişkeni ile geçiş yapın.",
+      "multi_f3_title": "Otomatik kiracı sağlama",
+      "multi_f3_desc": "Yeni bir organizasyon Clerk üzerinden kayıt olduğunda, ilk API anahtarını otomatik oluşturur ve markalı bir hoş geldin e-postası gönderir — sıfır manuel işlem.",
+      "dx_category": "Geliştirici Deneyimi",
+      "dx_f1_title": "Hash'lenmiş API anahtarları",
+      "dx_f1_desc": "Önek gösterimi (nbtr_live_…) ile SHA-256 hash'lenmiş anahtarlar. Oluşturma sırasında yalnızca bir kez düz metin olarak gösterilir — sürtünmesiz güvenlik.",
+      "dx_f2_title": "İdempotens ara yazılımı",
+      "dx_f2_desc": "Bir Idempotency-Key başlığı gönderin ve herhangi bir POST isteği yeniden denenmesi güvenli hale gelir. Redis destekli, 24 saatlik önbellek, IETF taslağına uygun.",
+      "dx_f3_title": "Çok Protokol API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "Genel API'ler için REST/OpenAPI, tür güvenli ön uç çağrıları için oRPC, T3 yığını uyumluluğu için tRPC. Tüm protokoller aynı Zod sözleşmeleri ve ara yazılım yığınını paylaşır. Her protokol için hazır yapılandırma ile etkinleştirin.",
+      "billing_category": "Faturalama & Para Kazanma",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "billing_f1_desc": "Ödeme sağlayıcınızı seçin: küresel kurumsal için Stripe, bağımsız geliştiriciler için LemonSqueezy, açık kaynak için Polar veya Çin pazarı için Alipay/WeChat Pay. Tek tıkla ödeme ve kendi kendine hizmet veren faturalama portalı.",
+      "billing_f2_title": "Kullanıma dayalı kota uygulaması",
+      "billing_f2_desc": "Gerçek zamanlı Redis sayaçları, her kiracı için API çağrılarını ve token kullanımını izler. Limitlere ulaşıldığında istekler ağ geçidinde engellenir.",
+      "billing_f3_title": "Webhook yaşam döngüsü senkronizasyonu",
+      "billing_f3_desc": "Stripe abonelik olayları, Inngest aracılığıyla veritabanınızdaki kuruluş planlarını otomatik olarak günceller — cron işleri yok, sorgulama yok.",
+      "rel_category": "Güvenilirlik",
+      "rel_f1_title": "Devre kesici + yeniden deneme",
+      "rel_f1_desc": "Ağ geçidi ve AI servisi, üstel geri çekilme ve jitter ile CLOSED/OPEN/HALF_OPEN devre kesici kullanır — kademeli hatalar yok.",
+      "rel_f2_title": "Ölü mektup kuyruğu",
+      "rel_f2_desc": "3 yeniden deneme girişimini tüketen olay işleyicileri DLQ'ye düşer. Yeniden dağıtım yapmadan yönetici API'sinden tek tek yeniden oynatın.",
+      "rel_f3_title": "SLO tüketim hızı uyarıları",
+      "rel_f3_desc": "Çoklu pencere Google SRE tarzı uyarılar, hata bütçeniz tükenmeden önce 14.4×, 6× ve 3× tüketim hızlarında tetiklenir.",
+      "sec_category": "Güvenlik",
+      "sec_f1_title": "CSP nonce tabanlı başlıklar",
+      "sec_f1_desc": "Clerk ara yazılımında istek başına oluşturulan nonce'lerle Strict-dynamic İçerik Güvenliği Politikası — hiçbir yerde unsafe-inline yok.",
       "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "sec_f2_desc": "Her giriş noktasında DetectionOnly modunda OWASP Core Rule Set. nginx ek açıklamalarıyla 30 RPS hız sınırlaması ve patlama toleransı.",
+      "sec_f3_title": "SBOM + SLSA köken bilgisi",
+      "sec_f3_desc": "Her sürüm bir CycloneDX yazılım malzeme listesi ve SLSA köken bilgisi onayı oluşturur ve GitHub Release'e yüklenir.",
+      "obs_category": "Gözlemlenebilirlik",
+      "obs_f1_title": "OpenTelemetry izleme",
+      "obs_f1_desc": "Dağıtık izler Next.js → Hono → Python mikro servisleri üzerinden OTLP ile akar. Jaeger'e (dev) ve Grafana Tempo'ya (prod) dışa aktarılır.",
+      "obs_f2_title": "Grafana panoları",
+      "obs_f2_desc": "Çok panolu platform genel bakışı: SLO kullanılabilirliği, kalan hata bütçesi, HPA doyması, pod yeniden başlatmaları ve CPU boğulması.",
+      "obs_f3_title": "Sentry hata takibi",
+      "obs_f3_desc": "Sunucu tarafı ve istemci tarafı hataları, sistemler arası korelasyon için kiracı bağlamı, istek ID'si ve izleme ID'si ile yakalanır.",
+      "data_category": "Veri & Analitik",
+      "data_f1_title": "ClickHouse OLAP veri ambarı",
+      "data_f1_desc": "Olaylar hızlı analitik sorgular için ClickHouse'a aktarılır. dbt, ham olayları dashboard'da görünen altın katman büyüme metriklerine dönüştürür.",
+      "data_f2_title": "Huni analitiği",
+      "data_f2_desc": "Kayıt olma → aktivasyon → dönüşüm adımlarını kohort düzeyinde izleyin. Aktif kullanıcı başına gelir, altın katmandan hesaplanır.",
+      "data_f3_title": "Kafka / olay alımı",
+      "data_f3_desc": "Inngest üzerinden ClickHouse bronz katmanına yüksek kapasiteli olay alımı; gateway kenarında bellek içi tekrar giderme ve şema doğrulama.",
+      "infra_category": "Altyapı",
+      "infra_f1_title": "ArgoCD ile GitOps",
+      "infra_f1_desc": "Ana dal değişiklikleri otomatik olarak kümeye senkronize edilir. Kendini iyileştirme, manuel kubectl düzenlemelerini geri alır. Senkronizasyon pencereleri güvenli dağıtım saatlerini zorlar.",
+      "infra_f2_title": "PgBouncer bağlantı havuzlaması",
+      "infra_f2_desc": "Supabase'in önündeki işlem modundaki PgBouncer, 20 Postgres bağlantısı üzerinde 1.000 uygulama bağlantısını yönetir. 2 replika ile yüksek kullanılabilirlik.",
+      "infra_f3_title": "Yatay + dikey otomatik ölçeklendirme",
+      "infra_f3_desc": "HPA, CPU/bellek üzerine ölçeklendirme yapar. VPA, Off modunda doğru boyutlandırma önerileri sunar. KEDA özel metrikleri v2 için planlanıyor."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 Yapım Aşamasında",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "Bu bölüm için şu anda muhteşem bir deneyim hazırlıyoruz. Bir sonraki büyük mimari pipeline güncellemesiyle birlikte yayına alınacak.",
+      "opc": "Daha derin bir platform genel bakışı hazırlanıyor. Yaklaşan sürümler için değişiklik günlüğüne ve yol haritasına göz atın.",
+      "roadmap": "Altyapı temellerinden kurumsal ölçeğe — ürün aşamalarımız, sürüm kilometre taşlarımız ve yatırım vizyonumuz."
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "Hub'a Dön"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "BLOG'DAN",
+    "title": "Mühendislik İçgörileri",
+    "subtitle": "SaaS mimarisi, AI altyapısı ve üretim mühendisliği üzerine derinlemesine incelemeler.",
+    "readMore": "Devamını oku"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "ÖLÇEĞİ BÜYÜYEBİLİR SENARYOLAR",
+    "title": "Tek bir temel. Sonsuz olasılık.",
+    "description": "{productName}, küresel pazarlarda bir sonraki nesil SaaS ürünlerini güçlendiriyor.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "Ajan Tabanlı Operasyonlar",
+      "ip": "Kişisel Fikri Mülkiyet Matrisi",
+      "multimodal": "Çok Modlu AI SaaS",
+      "enterprise": "Modern Kurumsal (CN)",
+      "export": "Küresel Yazılım İhracatı",
+      "design": "Tasarim Sistemi Motoru",
+      "edam": "Kurumsal Dijital Varlıklar"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "Yapay Zeka Odaklı Operasyon Merkezi",
+        "desc": "Ajan iş akışlarını, dahili araçları ve entegrasyon arayüzlerini tek bir yönetilen platform tabanı üzerinde çalıştırın. Kayıt defteriyle yönetilen uzantılar, operatör portalları ve yeniden kullanılabilir çalışma zamanı kalıpları, sistem büyüdükçe uyum içinde kalır.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "Araç Kayıt Defteri ve Entegrasyon Arayüzü",
+          "f2": "Operatör Portalı ve Dahili Konsol"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "Kişisel Fikri Mülkiyet Büyümesi ve Portföy Matrisi",
+        "desc": "Yüksek dönüşüm oranlı MDX blog, portföy ve profil sayfalarıyla dünya standartlarında bir girişimci varlığı oluşturun. Dahili bülten, analitik ve SEO, kişisel markanızın değerini artırmayı sağlar.",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "MDX Blog ve Bülten Motoru",
+          "f2": "SEO ve Sosyal Grafik Optimizasyonu"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "Yenilikçi Çok Modlu Yapay Zeka SaaS",
+        "desc": "UX öncülüğünde akışlı kullanıcı arayüzü, akıllı model yönlendirme ve kullanım ölçümü ile Çoklu Ajan orkestrasyonu, Sohbet Botu, Metinden Görüntüye, Görüntüden Metne ve Metinden Videoya SaaS ürünleri geliştirin.",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
-          "f2": "Model Router + Usage Metering"
+          "f1": "Çoklu Ajan Akışlı Kullanıcı Arayüzü",
+          "f2": "Model Yönlendirici ve Kullanım Ölçümü"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "Modern Kurumsal Web Sitesi (CN)",
+        "desc": "Çin iş senaryoları için özelleştirildi — ultra hızlı yerel CDN, WeChat ekosistemi entegrasyonu, mobil öncelikli duyarlı tasarım ve yerelleştirilmiş uyumluluk hazır olarak sunulur.",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "Yerel CDN ve Uyumluluk",
+          "f2": "WeChat Ekosistemine Hazır"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "Global Yazılım İhracatı Açılış Sayfaları",
+        "desc": "Globalleşen SaaS'ler için özel olarak tasarlandı. Çoklu para birimi Stripe ödeme, 7 dilde next-intl i18n otomatik yönlendirme, GDPR/CCPA uyumluluğu ve coğrafi hedefli içerik.",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "Çoklu Para Birimi Global Ödemeler",
+          "f2": "7 Dil + GDPR Hazır"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "Önde Gelen Tasarim Sistemi ve Bileşen Kütüphanesi",
+        "desc": "4 katmanlı token odaklı mimari: Marka → Token'lar → Tema → UI. Radix + ortak Motion katmanı üzerine inşa edildi, oklch çoklu tema, Storybook dokümantasyonu ve görsel regresyon testleri içerir.",
         "features": {
-          "f1": "4-Layer Token Governance",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f1": "4 Katmanlı Token Yönetimi",
+          "f2": "oklch Çoklu Tema + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "Kurumsal Dijital Varlık Yönetimi",
+        "desc": "Ölçeklenebilir PostgreSQL mimarileri ve granüler RBAC kullanan yapılandırılmış veri gölleri ve karmaşık dashboard topolojileri.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "Satır Seviyesinde Güvenlik",
+          "f2": "Karmaşık Sorgular",
+          "f3": "Rol Yönetimi"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
-    "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
-    "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
-    "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
-    "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "badge": "TASARIM SİSTEMİ",
+    "headline": "4 katman tasarım yönetimi.",
+    "subheadline": "Marka temel öğelerinden çalışma zamanı belirteçlerine, çoklu tema motorundan yönetilen bileşenlere — sadece Tailwind ile shadcn değil.",
+    "flowBrand": "Marka",
+    "flowBrandDesc": "Renk temel öğeleri, geçişler, hareket dili",
+    "flowTokens": "Belirteçler",
+    "flowTokensDesc": "CSS değişkenleri, 12 adımlı ölçekler, karanlık mod",
+    "flowTheme": "Tema",
+    "flowThemeDesc": "oklch çoklu tema, 6 hazır ayar, color-mix()",
+    "flowUI": "Arayüz",
+    "flowUIDesc": "Bileşenler, Storybook, Chromatic",
+    "card1Title": "12 Adımlı Renk Ölçekleri",
+    "card1Desc": "Geist uyumlu anlamsal ölçek: arka planlar (1-2), durumlar (3-5), kenarlıklar (6-8), dolgular (9-10), metin (11-12).",
+    "card2Title": "oklch Çoklu Tema",
+    "card2Desc": "color-mix() türetimi ile oklch kullanan 6 tema hazır ayarı. sRGB geri dönüşümlü Display-P3 geniş gamut.",
+    "card3Title": "Görsel Regresyon",
+    "card3Desc": "Chromatic her piksel değişikliğini yakalar. Storybook her bileşeni belgeleyerek. Mimari testleri hikaye kapsamını zorunlu kılar.",
+    "card4Title": "Belirteç Yönetimi",
+    "card4Desc": "Ratchet bütçeleri: hex tavanı, oklch tabanı, ham renk sınıfı limitleri. CI'de marka sapma algılama.",
+    "card5Title": "Etkileşimli Dokümantasyon",
+    "card5Desc": "Fumadocs destekli tam tasarım dokümanları sitesi; çok dilli (EN/ZH) bileşen API dokümanları, token galerileri, düzen kalıp kılavuzları ve canlı kod örnekleri içerir."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "Sayfa Bulunamadı",
+    "desc": "Bağlantı eski olabilir veya sayfa taşınmış olabilir.",
+    "home": "{brandName} ana sayfasına dön",
+    "docs": "Dokümanları aç"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "Sürümleri ara..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "Menüyü aç/kapat"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "Tam sürümü göster",
+      "copyLinkToRelease": "Sürüm bağlantısını kopyala",
+      "copyLink": "Bağlantıyı kopyala",
+      "openInNewTab": "Yeni sekmede aç"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "Yakında"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Dual <hl>License</hl> Model",
-      "description": "{brandName}-Sailor is open source under AGPL-3.0. We also offer commercial licenses for teams building closed-source products."
+      "title": "Çift <hl>Lisans</hl> Modeli",
+      "description": "{brandName}-Sailor, AGPL-3.0 altında açık kaynaklıdır. Kapalı kaynaklı ürünler geliştiren ekipler için ticari lisanslar da sunuyoruz."
     },
     "plans": {
       "agpl": {
-        "badge": "Always Free",
+        "badge": "Her Zaman Ücretsiz",
         "title": "AGPL-3.0",
-        "subtitle": "Open Source",
-        "description": "Open source projects, academic research, personal learning",
+        "subtitle": "Açık Kaynak",
+        "description": "Açık kaynak projeler, akademik araştırma, kişisel öğrenme",
         "features": {
-          "sourceAccess": "Full source code access",
-          "mustOpenSource": "Must open-source your product",
-          "mustCredit": "Must credit {brandName}-Sailor",
-          "communitySupport": "Community support only"
+          "sourceAccess": "Tam kaynak kodu erişimi",
+          "mustOpenSource": "Ürününüzü açık kaynak yapmanız gerekir",
+          "mustCredit": "{brandName}-Sailor'a atıf yapmanız gerekir",
+          "communitySupport": "Sadece topluluk desteği"
         },
-        "cta": "View on GitHub"
+        "cta": "GitHub'da Görüntüle"
       },
       "freeCommercial": {
-        "badge": "Free Forever",
-        "title": "Free Commercial",
-        "subtitle": "Individual & Solo",
-        "description": "Individual builders and single-seat operators",
+        "badge": "Sonsuza Kadar Ücretsiz",
+        "title": "Ücretsiz Ticari",
+        "subtitle": "Bireysel & Tek Kişilik",
+        "description": "Bireysel geliştiriciler ve tek koltuklu operatörler",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "teamSize": "Team size ≤ 1 FTE",
-          "creditRequired": "Credit required",
-          "freeKey": "Free license key via registration"
+          "closedSource": "Kapalı kaynak ürünlerde kullanın",
+          "teamSize": "Takım boyutu ≤ 1 FTE",
+          "creditRequired": "Atıf gerekli",
+          "freeKey": "Kayıt ile ücretsiz lisans anahtarı"
         },
-        "cta": "Get Your Free License"
+        "cta": "Ücretsiz Lisansınızı Alın"
       },
       "commercial": {
-        "badge": "From {price}/yr",
-        "title": "Commercial",
-        "subtitle": "Startup & Enterprise",
-        "description": "Startups, agencies, teams (2+ people), commercial SaaS products",
+        "badge": "{price}/yıl'dan başlayan",
+        "title": "Ticari",
+        "subtitle": "Başlangıç & Kurumsal",
+        "description": "Başlangıç şirketleri, ajanslar, ekipler (2+ kişi), ticari SaaS ürünleri",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "noCopyleft": "No copyleft obligations",
-          "noTeamLimits": "No team size limits",
-          "commercialSupport": "Commercial support available"
+          "closedSource": "Kapalı kaynaklı ürünlerde kullanım",
+          "noCopyleft": "Copyleft yükümlülükleri yok",
+          "noTeamLimits": "Ekip boyutu sınırı yok",
+          "commercialSupport": "Ticari destek mevcut"
         },
-        "cta": "Get Commercial License"
+        "cta": "Ticari Lisans Alın"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Keep the license decision legible: pick AGPL for open-source distribution, or use a commercial exception when your product must stay closed-source.",
+      "title": "Sıkça Sorulan Sorular",
+      "description": "Lisans kararını anlaşılır tutun: açık kaynak dağıtım için AGPL seçin veya ürününüzün kapalı kaynaklı kalması gerekiyorsa ticari istisna kullanın.",
       "items": {
         "whyAgpl": {
-          "q": "Why AGPL-3.0?",
-          "a": "AGPL ensures that improvements to the template stay open source. Commercial license removes this obligation for businesses."
+          "q": "Neden AGPL-3.0?",
+          "a": "AGPL, şablona yapılan iyileştirmelerin açık kaynaklı kalmasını sağlar. Ticari lisans, işletmeler için bu yükümlülüğü kaldırır."
         },
         "soloFree": {
-          "q": "Is there really a free path for individual builders?",
-          "a": "Yes, completely. Register at /get-license, get your key, build your product. No strings attached."
+          "q": "Bireysel geliştiriciler için gerçekten ücretsiz bir yol var mı?",
+          "a": "Evet, tamamen. /get-license adresinden kaydolun, anahtarınızı alın ve ürününüzü oluşturun. Hiçbir koşul yok."
         },
         "opcDefinition": {
-          "q": "What counts as a single-seat commercial use case?",
-          "a": "One full-time equivalent or less. If you move beyond a single-seat setup, you should upgrade to a Startup license."
+          "q": "Tek koltuklu ticari kullanım senaryosu neyi kapsar?",
+          "a": "Bir tam zamanlı eşdeğer veya daha azı. Tek koltuklu kurulumun ötesine geçtiğinizde, Startup lisansına yükseltme yapmalısınız."
         },
         "upgrade": {
-          "q": "Can I upgrade later?",
-          "a": "Absolutely. Upgrade whenever your team or delivery scope outgrows the free commercial tier."
+          "q": "Daha sonra yükseltebilir miyim?",
+          "a": "Kesinlikle. Ekip veya teslim kapsamınız ücretsiz ticari seviyeyi aştığında istediğiniz zaman yükseltme yapabilirsiniz."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Açık kaynak katkılar ne olacak?",
+          "a": "Tüm katkılar için bir CLA gerekir. CONTRIBUTING.md dosyasına bakın."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Dual license model: AGPL-3.0 open source or commercial licenses."
+      "title": "Lisanslama — {brandName}",
+      "description": "Çift lisans modeli: AGPL-3.0 açık kaynak veya ticari lisanslar."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "Bireysel Ücretsiz Lisans",
+      "opcFree": "Tek Sahipli Şirket Lisansı",
+      "startupCommercial": "Startup Ticari Lisansı",
+      "enterprise": "Kurumsal Lisans"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "Bir seçenek seçin...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "Değişiklik Günlüğü — {brandName}",
+    "description": "Her sürüm, titiz bir detay dikkatiyle teslim edilir.",
+    "versionTitleSuffix": "{brandName} Sürüm Notları"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "Platform Yol Haritası — {brandName}",
+    "description": "{brandName} yönetilen platform temel seti, Harness çalışma zamanı ve yükseltme yolu için yol haritası."
   },
   "blogMeta": {
     "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "description": "{brandName} ekibinden mühendislik içgörileri, ürün güncellemeleri ve SaaS en iyi uygulamaları."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "Lisansınızı Edinin — {brandName}",
+    "description": "{brandName} lisansınızı ve platform erişiminizi 2 dakikada alın."
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "badge": "SSS",
+      "title": "Sorular, doğrudan cevaplandı",
+      "subtitle": "Teslim etmeden önce bilmeniz gereken her şey.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "{productName} tam olarak nedir?",
+          "answer": "Sailor, kimlik doğrulama, faturalandırma, çok kiracılık, yapay zeka, kuyruklar, arama ve e-posta zaten yapılandırılmış, görüşlü bir Next.js + Tailwind v4 SaaS temeli. Klonlarsınız, sağlayıcıları yapılandırırsınız ve teslim edersiniz — genellikle bir hafta içinde."
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "Sailor kimler için tasarlandı?",
+          "answer": "Zamanlarını farklılaştırıcı unsurlara ayırmak isteyen girişimciler ve ürün mühendisleri için; aynı kimlik doğrulama/faturalandırma/kiracılık altyapısını beşinci kez yeniden kurmak için değil."
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "Ücretsiz mi yoksa ücretli mi?",
+          "answer": "Tüm kaynak kodu AGPL-3.0 altında dağıtılır — kişisel projeler, iç araçlar ve AGPL uyumlu açık kaynak çalışmalar için ücretsizdir. Ticari lisans, Sailor'ı kapalı kaynaklı özel SaaS olarak dağıtma hakkını açar. Her plan tam özellik setini içerir (kimlik doğrulama, faturalandırma, çok kiracılık, yapay zeka, denetim); katmanlar özelliklerde değil, lisanslama koşullarında ve destek SLA'sında farklılık gösterir."
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "Çin'de çalışıyor mu?",
+          "answer": "Evet. Paralel bir altyapı yapılandırması sunuyoruz (Aliyun uyumlu CDN, ICP uyumlu alan adları, Figma yerine isteğe bağlı Penpot) böylece aynı kod tabanı Büyük Güvenlik Duvarı'nın içine sorunsuz şekilde dağıtılır."
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "Nereye dağıtabilirim?",
+          "answer": "Node 22+ çalıştığı her yerde. Pazarlama sitesi Vercel'e dağıtılır; panel, ağ geçidi ve Python hizmetleri Docker / PM2 üzerinde çalışır (şu anda Aliyun ECS üzerinde çalıştırıyoruz, kümeler için infra/iac/k8s/ altında tam Kubernetes manifestleri mevcut). Kurumsal müşteriler ayrıca kendi VPC'leri içine dağıtır."
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "Güvenlik nasıl ele alınıyor?",
+          "answer": "Gizli bilgiler için uygulama katmanı zarf şifrelemesi (@nebutra/vault), kiracı izolasyonu için Postgres RLS, CASL veya OpenFGA üzerinden RBAC/ABAC (@nebutra/permissions), HMAC imzalı hizmetler arası belirteçler, imzalı giden web kancaları ve her planda dahil edilen SOC 2 uyumlu denetim hattı (@nebutra/audit). Pro ve Enterprise, SOC 2 onay desteği, özel olay yanıtı ve daha uzun denetim günlüğü saklama süresi ekler."
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "Hangi desteği alırım?",
+          "answer": "Ücretsiz müşteriler topluluk Discord'u + GitHub Sorunları alır. Pro, 1 iş günü yanıt SLA'sı ile öncelikli e-posta ekler. Enterprise, özel bir Slack kanalı ve bir onboarding mühendisi alır."
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "Kendi sağlayıcıyı getirebilir miyim?",
+          "answer": "Evet. Her entegrasyon (kimlik doğrulama, kuyruk, arama, e-posta, ödemeler, depolama, faturalandırma) sağlayıcıdan bağımsızdır. Her paketteki fabrika, tek bir çevre değişkeninden doğru adaptörü seçer — Clerk'i Better Auth, NextAuth veya Supabase Auth ile, QStash'ı BullMQ ile, Resend'i SES ile, Stripe'ı Polar / LemonSqueezy / ChinaPay ile değiştirin — uygulama koduna dokunmadan."
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "Teknoloji yığını nedir?",
+          "answer": "React 19 üzerinde Next.js 16 (App Router), TypeScript 5.9, Tailwind v4, pgvector + RLS ile Postgres üzerinde Prisma 7, BFF ağ geçidi için Hono, ML/ağır hizmetler için FastAPI ve Radix, {brandName} UI ilkeleri ile ortak Motion katmanı üzerinde özenle seçilmiş bir bileşen kütüphanesi. Yapay zeka özellikleri, sağlayıcı taşınabilirliği (OpenAI / OpenRouter / SiliconFlow / Azure / yerel) ile Vercel AI SDK üzerinden geçer."
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "Lisans nedir?",
+          "answer": "Ticari İstisna ile AGPL-3.0. Kişisel kullanım, iç araçlar ve AGPL uyumlu açık kaynak yazılım için ücretsiz. Ücretli bir ticari lisans, Sailor'ı özel SaaS olarak olduğu gibi dağıtma hakkını açar. Her planda tam kaynak kodu dahildir."
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "Güncellemeler için ödeme yapmam gerekiyor mu?",
+          "answer": "Hayır. Kaynak güncellemeleri her ticari lisansla birlikte gelir — istediğiniz zaman ana dallan çekin ve fork'unuzu yeniden tabanlayın. Ücretli katman, Sailor'ı ticari üretimde kullanma hakkıdır; kod alma hakkı değildir. Her küçük sürüm, kırıcı değişiklikler için bir DEĞİŞİKLİK GÜNLÜĞÜ ve yükseltme kılavuzu ile birlikte çıkar."
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "Standart bir Next.js uygulaması yerine neden Turborepo?",
+          "answer": "Sailor, packages/*/* altında 10 uygulama + 104 ortak paket ve 4 arka uç hattından (Hono gateway, FastAPI/Python, Go, Rust) oluşur — tek bir Next.js mega-uygulamasının sürdürülebilir kaldığı noktanın çok ötesinde. Turborepo bize yalnızca etkilenen yapıları, şeffaf uzak önbellekleme ve ortak tasarım belirteçleri, kimlik doğrulama, faturalama ve gözlemlenebilirlik için tek bir gerçeklik kaynağı sağlar — her ekibi aynı Next.js sürecine zorlamadan."
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "Çok kiracılık nasıl işleniyor?",
+          "answer": "İki katman. İstek kapsamındaki kiracı bağlamı @nebutra/tenant aracılığıyla (AsyncLocalStorage, aktif kuruluşu her sunucu çağrısı boyunca — veritabanı sorguları ve dışa giden web kancaları dahil — iletir) ve veritabanında zorlanan yalıtım Postgres Satır Düzeyi Güvenlik politikalarıyla (infra/data/database/policies/rls.sql), oturum yerel app.current_tenant_id'ye bağlı olarak. Hizmet rolü bağlantıları yalnızca güvenilir iç hizmetlerin içinde RLS'yi atlar; tüm kullanıcıya yönelik rotalar kiracı kapsamındaki istemci üzerinden geçer."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "Clerk'i başka bir kimlik doğrulama sağlayıcısıyla değiştirebilir miyim?",
+          "answer": "Evet. @nebutra/auth, Clerk, Better Auth, NextAuth (Auth.js v5) ve Supabase Auth için birinci sınıf adaptörler sunar. AUTH_PROVIDER çevre değişkeni üzerinden geçiş yapın veya create-sailor --auth=... ile iskeletleme sırasında seçin — sağlayıcıdan bağımsız olarak sunucu, React ve ara yazılım yüzeyleri aynı kalır. Beşinci bir adaptör eklemek, tek bir arayüzü (~80 LOC) uygulamak demektir; çevresel kodda belirli bir sağlayıcıya bağlı hiçbir şey yoktur."
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "Yapıcılar tarafından seviliyor",
+      "title": "Kurucular Sailor ile yayınladıktan sonra ne diyor",
+      "subtitle": "Beta grubumuzdan müşteri hikayeleri yakında gelecek — ilkler arasında olun."
     },
     "comparison": {
-      "badge": "Compare plans",
-      "title": "Pick the plan that fits the stage you are in",
-      "subtitle": "Every plan includes the full source code. Commercial licenses include 12 months of updates.",
+      "badge": "Planları karşılaştır",
+      "title": "Bulunduğunuz aşamaya uygun planı seçin",
+      "subtitle": "Her plan tam kaynak kodunu içerir. Ticari lisanslar 12 ay güncelleme içerir.",
       "plan": {
-        "independent": "Independent",
-        "startup": "Startup",
-        "enterprise": "Enterprise"
+        "independent": "Bağımsız",
+        "startup": "Başlangıç",
+        "enterprise": "Kurumsal"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License type",
-          "projects": "Number of projects"
+          "label": "Lisans",
+          "type": "Lisans türü",
+          "projects": "Proje sayısı"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Update window"
+          "label": "Kaynak Kodu",
+          "full-source": "Tam kaynak kodu",
+          "all-packages": "Tüm paketler ve modüller",
+          "update-window": "Güncelleme penceresi"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel"
+          "label": "Destek",
+          "channel": "Destek kanalı"
         }
       },
-      "ariaTable": "Plan and feature comparison"
+      "ariaTable": "Plan ve özellik karşılaştırması"
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "Güvenebileceğiniz bir yığın üzerine inşa edildi",
+      "logosLabel": "Entegrasyon ortakları",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "Desteklenen AI sağlayıcıları"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "monorepo paketleri"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "Hazır i18n yerelleştirmeleri"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "ICP kayıt numarası",
+      "publicSecurity": "Kamu güvenliği"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "ICP kaydı",
+    "publicSecurity": "Kamu güvenliği kaydı"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "Ülkeler ve diller",
+    "description": "Pazarlama sitesinde bir ülke ve dil seçin.",
+    "triggerAria": "Ülke ve dil seç",
+    "searchPlaceholder": "Ülkeleri ara…",
+    "plannedHint": "Bu dil yayına alınana kadar arayüz İngilizce olarak kalır",
+    "noResults": "Eşleşen ülke bulunamadı",
+    "menuAria": "Ülkeler ve diller"
   }
 }

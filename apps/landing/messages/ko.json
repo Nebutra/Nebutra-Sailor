@@ -6,13 +6,13 @@
     "docs": "문서",
     "github": "GitHub",
     "npm": "npm",
-    "signIn": "로그인",
-    "getStarted": "시작하기",
     "about": "회사 소개",
     "ideas": "아이디어",
     "opc": "플랫폼",
     "roadmap": "로드맵",
     "resources": "리소스",
+    "signIn": "로그인",
+    "getStarted": "시작하기",
     "changelog": "변경 이력",
     "news": "뉴스",
     "designDocs": "디자인 시스템",
@@ -135,6 +135,7 @@
       "community": "커뮤니티"
     },
     "links": {
+      "product": "제품",
       "features": "기능",
       "pricing": "요금제",
       "about": "회사 소개",
@@ -153,13 +154,12 @@
       "terms": "이용약관",
       "cookies": "쿠키 정책",
       "refund": "환불 정책",
+      "licensing": "라이선스",
       "contact": "문의하기",
       "faq": "자주 묻는 질문",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X (Twitter)",
-      "product": "제품",
-      "licensing": "라이선스"
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {brandName} Intelligence. 모든 권리 보유.",
     "statusOnline": "모든 시스템 정상 작동 중",
@@ -243,6 +243,10 @@
       "heading": "지원 연결 수립",
       "subheading": "명시적인 요구사항을 평가하기 위해 전담 기술 전문가 또는 아키텍트를 배정해 드립니다.",
       "contacts": {
+        "founder": {
+          "title": "창업자 직통",
+          "description": "핵심 전략 정렬 및 경영진 수준의 문의를 위한 직접 커뮤니케이션 채널입니다."
+        },
         "general": {
           "title": "엔터프라이즈 컨설팅",
           "description": "생태계 전략적 파트너십 및 전반적인 아키텍처 진화에 관한 사전 논의입니다."
@@ -266,10 +270,6 @@
         "security": {
           "title": "보안 취약점 신고",
           "description": "잠재적 소프트웨어 취약점에 관한 기술적 재현 보고서를 저희 인프라 팀에 직접 안전하게 제출하십시오."
-        },
-        "founder": {
-          "title": "창업자 직통",
-          "description": "핵심 전략 정렬 및 경영진 수준의 문의를 위한 직접 커뮤니케이션 채널입니다."
         }
       },
       "formTitle": "제출 포털",
@@ -296,10 +296,10 @@
         "successMessage": "데이터가 성공적으로 전송되었습니다. 담당 운영 팀이 표준 영업일 기준 1~2일 이내에 상세 회신을 드리겠습니다."
       },
       "companyInfoTitle": "운영 텔레메트리",
-      "socialMedia": "주요 네트워크 링크",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "중국 장쑤성 우시시"
+      "companyAddress": "중국 장쑤성 우시시",
+      "socialMedia": "주요 네트워크 링크"
     },
     "cookies": {
       "title": "쿠키 정책 — {brandName}",
@@ -1152,18 +1152,6 @@
       "title": "Accelerate your development cycle.",
       "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
       "socialProofText": "오픈소스 AGPL-3.0 · 상업용 라이선스 사용 가능.",
-      "startup": {
-        "badge": "스타트업",
-        "price": "$799",
-        "period": "lifetime",
-        "desc": "{brandName} 플랫폼 베이스라인 위에서 구축하는 소규모 팀을 위한 플랜입니다.",
-        "cta": "스타트업용 {brandName} 받기",
-        "f1": "Up to 5 Developer Seats",
-        "f2": "무제한 팀 프로젝트",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "Priority Support",
-        "f5": "Solo의 모든 기능 포함"
-      },
       "independent": {
         "badge": "INDEPENDENT / 독립 개발자",
         "price": "무료",
@@ -1175,6 +1163,18 @@
         "f3": "전체 SaaS 스택: 인증, 결제, 조직, API, 관리자 UI, 이메일, 다국어, 백그라운드 작업, 스토리지 등",
         "f4": "마케팅 기능: 블로그, 랜딩 페이지, SEO, 분석",
         "f5": "AGPLv3 오픈소스 라이선스"
+      },
+      "startup": {
+        "badge": "스타트업",
+        "price": "$799",
+        "period": "lifetime",
+        "desc": "{brandName} 플랫폼 베이스라인 위에서 구축하는 소규모 팀을 위한 플랜입니다.",
+        "cta": "스타트업용 {brandName} 받기",
+        "f1": "Up to 5 Developer Seats",
+        "f2": "무제한 팀 프로젝트",
+        "f3": "30-min Architecture Consult (Onboarding Call)",
+        "f4": "Priority Support",
+        "f5": "Solo의 모든 기능 포함"
       },
       "enterprise": {
         "badge": "ENTERPRISE / 엔터프라이즈",
@@ -1610,25 +1610,82 @@
     "title": "라이선스 받기 — {brandName}",
     "description": "2분 안에 {brandName} 라이선스와 플랫폼 액세스를 받으세요."
   },
-  "compliance": {
-    "icp": {
-      "publicSecurity": "공안비안",
-      "recordNumber": "ICP 등록"
-    }
-  },
-  "icpFooter": {
-    "publicSecurity": "공안비안 번호",
-    "recordNumber": "ICP 등록"
-  },
   "landing": {
+    "faq": {
+      "badge": "FAQ",
+      "title": "솔직하게 답해 드립니다",
+      "subtitle": "출시 전 알아두셔야 할 모든 것.",
+      "items": {
+        "what-is-sailor": {
+          "question": "{productName}는 정확히 무엇입니까?",
+          "answer": "Sailor는 인증, 결제, 멀티테넌시, AI, 큐, 검색, 이메일이 이미 연결된 Next.js + Tailwind v4 기반의 의견 있는 SaaS 파운데이션입니다. 복제하고 공급자를 구성한 다음 출시하면 — 보통 일주일 이내에 가능합니다."
+        },
+        "who-is-it-for": {
+          "question": "Sailor는 누구를 위해 만들어졌습니까?",
+          "answer": "차별화 요소에 시간을 쓰고 싶은 — 같은 인증/결제/테넌시 배관을 다섯 번째로 재구축하지 않고 싶은 — 창업자와 제품 엔지니어를 위한 것입니다."
+        },
+        "free-or-paid": {
+          "question": "무료입니까, 유료입니까?",
+          "answer": "전체 소스는 AGPL-3.0으로 제공됩니다 — 개인 프로젝트, 사내 도구, AGPL 호환 오픈소스 작업에 무료입니다. 상용 라이선스는 Sailor를 비공개 독점 SaaS에 출시할 권한을 잠금 해제합니다. 모든 요금제에는 전체 기능 세트(인증, 결제, 멀티테넌시, AI, 감사)가 포함됩니다. 등급은 기능이 아니라 라이선스 조건과 지원 SLA에서 차이가 있습니다."
+        },
+        "china-friendly": {
+          "question": "중국에서 작동합니까?",
+          "answer": "예. 동일한 코드베이스가 만리장성 안에서도 깔끔하게 배포되도록 병렬 인프라 구성(Aliyun 호환 CDN, ICP 친화 도메인, Figma 대신 선택적 Penpot)을 제공합니다."
+        },
+        "deployment": {
+          "question": "어디에 배포할 수 있습니까?",
+          "answer": "Node 22+ 이 실행되는 모든 곳입니다. 마케팅 사이트는 Vercel에 배포되며, 대시보드, 게이트웨이, Python 서비스는 Docker / PM2에서 실행됩니다(현재 Aliyun ECS에서 운영 중이며, 클러스터용 Kubernetes 매니페스트는 infra/iac/k8s/에 포함). 엔터프라이즈 고객은 자체 VPC 내부에도 배포합니다."
+        },
+        "security": {
+          "question": "보안은 어떻게 처리됩니까?",
+          "answer": "비밀에 대한 애플리케이션 레이어 엔벨로프 암호화(@nebutra/vault), 테넌트 격리를 위한 Postgres RLS, CASL 또는 OpenFGA(@nebutra/permissions)를 통한 RBAC/ABAC, HMAC 서명 서비스 간 토큰, 서명된 아웃바운드 웹훅, 그리고 모든 요금제에 포함된 SOC 2 정렬 감사 파이프라인(@nebutra/audit). Pro와 Enterprise는 SOC 2 인증 지원, 전담 사고 대응, 더 긴 감사 로그 보존 기간을 추가합니다."
+        },
+        "support": {
+          "question": "어떤 지원을 받을 수 있습니까?",
+          "answer": "무료 고객은 커뮤니티 Discord + GitHub Issues를 사용합니다. Pro는 1영업일 응답 SLA가 있는 우선 이메일을 추가합니다. Enterprise는 전용 Slack 채널과 온보딩 엔지니어를 제공합니다."
+        },
+        "byo-provider": {
+          "question": "자체 공급자를 가져올 수 있습니까?",
+          "answer": "예. 모든 통합(인증, 큐, 검색, 이메일, 결제, 스토리지, 빌링)은 공급자 독립적입니다. 각 패키지의 팩토리는 단일 환경 변수에서 적합한 어댑터를 선택합니다 — Clerk을 Better Auth, NextAuth, Supabase Auth로, QStash를 BullMQ로, Resend를 SES로, Stripe를 Polar / LemonSqueezy / ChinaPay로 — 애플리케이션 코드를 건드리지 않고 교체할 수 있습니다."
+        },
+        "tech-stack": {
+          "question": "기술 스택은 무엇입니까?",
+          "answer": "React 19 기반의 Next.js 16(App Router), TypeScript 5.9, Tailwind v4, Postgres 위의 Prisma 7(pgvector + RLS 포함), BFF 게이트웨이용 Hono, ML/대규모 서비스용 FastAPI, Radix, {brandName} UI 프리미티브, 공유 Motion 레이어로 큐레이팅된 컴포넌트 라이브러리. AI 기능은 공급자 이식성(OpenAI / OpenRouter / SiliconFlow / Azure / 로컬)을 갖춘 Vercel AI SDK를 통해 처리됩니다."
+        },
+        "license": {
+          "question": "라이선스는 무엇입니까?",
+          "answer": "상용 예외 조항이 있는 AGPL-3.0입니다. 개인 사용, 사내 도구 및 AGPL 호환 OSS에는 무료입니다. 유료 상용 라이선스는 Sailor를 독점 SaaS에 그대로 사용할 권한을 부여합니다. 전체 소스 코드는 모든 요금제에 포함됩니다."
+        },
+        "paid-updates": {
+          "question": "업데이트를 위해 비용을 지불해야 합니까?",
+          "answer": "아니요. 소스 업데이트는 모든 상용 라이선스에 포함됩니다 — 언제든지 main에서 풀하고 포크를 리베이스할 수 있습니다. 유료 등급은 Sailor를 상업적 프로덕션에서 사용할 권한이지, 코드를 받을 권한이 아닙니다. 각 마이너 릴리스에는 변경 로그와 호환성 깨짐에 대한 업그레이드 가이드가 함께 제공됩니다."
+        },
+        "why-turborepo": {
+          "question": "표준 Next.js 앱 대신 왜 Turborepo입니까?",
+          "answer": "Sailor는 10개 앱 + packages/*/* 아래의 104개 공유 패키지 + 4개 백엔드 라인(Hono gateway, FastAPI/Python, Go, Rust)으로 — 단일 Next.js 메가 앱이 유지 관리 가능한 시점을 훨씬 넘어섰습니다. Turborepo는 영향받은 부분만 빌드, 투명한 원격 캐싱, 공유 디자인 토큰/인증/결제/관측성에 대한 단일 소스를 제공합니다 — 모든 팀을 동일한 Next.js 프로세스에 강제하지 않으면서."
+        },
+        "multi-tenancy": {
+          "question": "멀티테넌시는 어떻게 처리됩니까?",
+          "answer": "두 가지 레이어가 있습니다. @nebutra/tenant를 통한 요청 범위 테넌트 컨텍스트(AsyncLocalStorage가 DB 쿼리 및 아웃바운드 웹훅을 포함한 모든 서버 호출에서 활성 조직을 전파), 그리고 세션 로컬 app.current_tenant_id에 바인딩된 Postgres Row-Level Security 정책(infra/data/database/policies/rls.sql)을 통한 데이터베이스 강제 격리. 서비스 역할 연결은 신뢰할 수 있는 내부 서비스 내부에서만 RLS를 우회하며, 모든 사용자 대면 라우트는 테넌트 범위 클라이언트를 통과합니다."
+        },
+        "swap-clerk": {
+          "question": "Clerk을 다른 인증 공급자로 교체할 수 있습니까?",
+          "answer": "예. @nebutra/auth는 Clerk, Better Auth, NextAuth(Auth.js v5), Supabase Auth용 일등급 어댑터를 제공합니다. AUTH_PROVIDER 환경 변수로 전환하거나 스캐폴드 시점에 create-sailor --auth=...로 선택하십시오 — 공급자에 관계없이 서버, React, 미들웨어 표면이 동일하게 유지됩니다. 다섯 번째 어댑터를 추가하는 것은 단일 인터페이스(~80 LOC)를 구현하는 것을 의미하며, 주변 코드의 어떤 부분도 특정 공급자에 결합되지 않습니다."
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "빌더들이 사랑하는",
+      "title": "Sailor로 출시한 후 창업자들이 말하는 것",
+      "subtitle": "베타 코호트 고객 스토리가 곧 도착합니다 — 가장 먼저 만나보십시오."
+    },
     "comparison": {
-      "ariaTable": "요금제 및 기능 비교",
       "badge": "요금제 비교",
       "title": "현재 단계에 맞는 요금제를 선택하십시오",
       "subtitle": "모든 요금제에 전체 소스 코드가 포함됩니다. 상용 라이선스는 12개월의 업데이트를 포함합니다.",
       "plan": {
-        "startup": "스타트업",
         "independent": "독립",
+        "startup": "스타트업",
         "enterprise": "엔터프라이즈"
       },
       "feature": {
@@ -1647,70 +1704,8 @@
           "label": "지원",
           "channel": "지원 채널"
         }
-      }
-    },
-    "faq": {
-      "badge": "FAQ",
-      "title": "솔직하게 답해 드립니다",
-      "subtitle": "출시 전 알아두셔야 할 모든 것.",
-      "items": {
-        "what-is-sailor": {
-          "question": "{productName}는 정확히 무엇입니까?",
-          "answer": "Sailor는 인증, 결제, 멀티테넌시, AI, 큐, 검색, 이메일이 이미 연결된 Next.js + Tailwind v4 기반의 의견 있는 SaaS 파운데이션입니다. 복제하고 공급자를 구성한 다음 출시하면 — 보통 일주일 이내에 가능합니다."
-        },
-        "who-is-it-for": {
-          "question": "Sailor는 누구를 위해 만들어졌습니까?",
-          "answer": "차별화 요소에 시간을 쓰고 싶은 — 같은 인증/결제/테넌시 배관을 다섯 번째로 재구축하지 않고 싶은 — 창업자와 제품 엔지니어를 위한 것입니다."
-        },
-        "tech-stack": {
-          "question": "기술 스택은 무엇입니까?",
-          "answer": "React 19 기반의 Next.js 16(App Router), TypeScript 5.9, Tailwind v4, Postgres 위의 Prisma 7(pgvector + RLS 포함), BFF 게이트웨이용 Hono, ML/대규모 서비스용 FastAPI, Radix, {brandName} UI 프리미티브, 공유 Motion 레이어로 큐레이팅된 컴포넌트 라이브러리. AI 기능은 공급자 이식성(OpenAI / OpenRouter / SiliconFlow / Azure / 로컬)을 갖춘 Vercel AI SDK를 통해 처리됩니다."
-        },
-        "license": {
-          "question": "라이선스는 무엇입니까?",
-          "answer": "상용 예외 조항이 있는 AGPL-3.0입니다. 개인 사용, 사내 도구 및 AGPL 호환 OSS에는 무료입니다. 유료 상용 라이선스는 Sailor를 독점 SaaS에 그대로 사용할 권한을 부여합니다. 전체 소스 코드는 모든 요금제에 포함됩니다."
-        },
-        "free-or-paid": {
-          "question": "무료입니까, 유료입니까?",
-          "answer": "전체 소스는 AGPL-3.0으로 제공됩니다 — 개인 프로젝트, 사내 도구, AGPL 호환 오픈소스 작업에 무료입니다. 상용 라이선스는 Sailor를 비공개 독점 SaaS에 출시할 권한을 잠금 해제합니다. 모든 요금제에는 전체 기능 세트(인증, 결제, 멀티테넌시, AI, 감사)가 포함됩니다. 등급은 기능이 아니라 라이선스 조건과 지원 SLA에서 차이가 있습니다."
-        },
-        "paid-updates": {
-          "question": "업데이트를 위해 비용을 지불해야 합니까?",
-          "answer": "아니요. 소스 업데이트는 모든 상용 라이선스에 포함됩니다 — 언제든지 main에서 풀하고 포크를 리베이스할 수 있습니다. 유료 등급은 Sailor를 상업적 프로덕션에서 사용할 권한이지, 코드를 받을 권한이 아닙니다. 각 마이너 릴리스에는 변경 로그와 호환성 깨짐에 대한 업그레이드 가이드가 함께 제공됩니다."
-        },
-        "deployment": {
-          "question": "어디에 배포할 수 있습니까?",
-          "answer": "Node 22+ 이 실행되는 모든 곳입니다. 마케팅 사이트는 Vercel에 배포되며, 대시보드, 게이트웨이, Python 서비스는 Docker / PM2에서 실행됩니다(현재 Aliyun ECS에서 운영 중이며, 클러스터용 Kubernetes 매니페스트는 infra/iac/k8s/에 포함). 엔터프라이즈 고객은 자체 VPC 내부에도 배포합니다."
-        },
-        "china-friendly": {
-          "question": "중국에서 작동합니까?",
-          "answer": "예. 동일한 코드베이스가 만리장성 안에서도 깔끔하게 배포되도록 병렬 인프라 구성(Aliyun 호환 CDN, ICP 친화 도메인, Figma 대신 선택적 Penpot)을 제공합니다."
-        },
-        "swap-clerk": {
-          "question": "Clerk을 다른 인증 공급자로 교체할 수 있습니까?",
-          "answer": "예. @nebutra/auth는 Clerk, Better Auth, NextAuth(Auth.js v5), Supabase Auth용 일등급 어댑터를 제공합니다. AUTH_PROVIDER 환경 변수로 전환하거나 스캐폴드 시점에 create-sailor --auth=...로 선택하십시오 — 공급자에 관계없이 서버, React, 미들웨어 표면이 동일하게 유지됩니다. 다섯 번째 어댑터를 추가하는 것은 단일 인터페이스(~80 LOC)를 구현하는 것을 의미하며, 주변 코드의 어떤 부분도 특정 공급자에 결합되지 않습니다."
-        },
-        "byo-provider": {
-          "question": "자체 공급자를 가져올 수 있습니까?",
-          "answer": "예. 모든 통합(인증, 큐, 검색, 이메일, 결제, 스토리지, 빌링)은 공급자 독립적입니다. 각 패키지의 팩토리는 단일 환경 변수에서 적합한 어댑터를 선택합니다 — Clerk을 Better Auth, NextAuth, Supabase Auth로, QStash를 BullMQ로, Resend를 SES로, Stripe를 Polar / LemonSqueezy / ChinaPay로 — 애플리케이션 코드를 건드리지 않고 교체할 수 있습니다."
-        },
-        "multi-tenancy": {
-          "question": "멀티테넌시는 어떻게 처리됩니까?",
-          "answer": "두 가지 레이어가 있습니다. @nebutra/tenant를 통한 요청 범위 테넌트 컨텍스트(AsyncLocalStorage가 DB 쿼리 및 아웃바운드 웹훅을 포함한 모든 서버 호출에서 활성 조직을 전파), 그리고 세션 로컬 app.current_tenant_id에 바인딩된 Postgres Row-Level Security 정책(infra/data/database/policies/rls.sql)을 통한 데이터베이스 강제 격리. 서비스 역할 연결은 신뢰할 수 있는 내부 서비스 내부에서만 RLS를 우회하며, 모든 사용자 대면 라우트는 테넌트 범위 클라이언트를 통과합니다."
-        },
-        "security": {
-          "question": "보안은 어떻게 처리됩니까?",
-          "answer": "비밀에 대한 애플리케이션 레이어 엔벨로프 암호화(@nebutra/vault), 테넌트 격리를 위한 Postgres RLS, CASL 또는 OpenFGA(@nebutra/permissions)를 통한 RBAC/ABAC, HMAC 서명 서비스 간 토큰, 서명된 아웃바운드 웹훅, 그리고 모든 요금제에 포함된 SOC 2 정렬 감사 파이프라인(@nebutra/audit). Pro와 Enterprise는 SOC 2 인증 지원, 전담 사고 대응, 더 긴 감사 로그 보존 기간을 추가합니다."
-        },
-        "support": {
-          "question": "어떤 지원을 받을 수 있습니까?",
-          "answer": "무료 고객은 커뮤니티 Discord + GitHub Issues를 사용합니다. Pro는 1영업일 응답 SLA가 있는 우선 이메일을 추가합니다. Enterprise는 전용 Slack 채널과 온보딩 엔지니어를 제공합니다."
-        },
-        "why-turborepo": {
-          "question": "표준 Next.js 앱 대신 왜 Turborepo입니까?",
-          "answer": "Sailor는 10개 앱 + packages/*/* 아래의 104개 공유 패키지 + 4개 백엔드 라인(Hono gateway, FastAPI/Python, Go, Rust)으로 — 단일 Next.js 메가 앱이 유지 관리 가능한 시점을 훨씬 넘어섰습니다. Turborepo는 영향받은 부분만 빌드, 투명한 원격 캐싱, 공유 디자인 토큰/인증/결제/관측성에 대한 단일 소스를 제공합니다 — 모든 팀을 동일한 Next.js 프로세스에 강제하지 않으면서."
-        }
-      }
+      },
+      "ariaTable": "요금제 및 기능 비교"
     },
     "socialProof": {
       "title": "신뢰할 수 있는 스택 위에 구축",
@@ -1729,12 +1724,17 @@
           "label": "기본 제공 i18n 로케일"
         }
       }
-    },
-    "testimonials": {
-      "badge": "빌더들이 사랑하는",
-      "title": "Sailor로 출시한 후 창업자들이 말하는 것",
-      "subtitle": "베타 코호트 고객 스토리가 곧 도착합니다 — 가장 먼저 만나보십시오."
     }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP 등록",
+      "publicSecurity": "공안비안"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP 등록",
+    "publicSecurity": "공안비안 번호"
   },
   "MarketLocalePicker": {
     "title": "국가 및 언어",

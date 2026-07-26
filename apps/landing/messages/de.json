@@ -6,13 +6,13 @@
     "docs": "Dokumentation",
     "github": "GitHub",
     "npm": "npm",
-    "signIn": "Anmelden",
-    "getStarted": "Loslegen",
     "about": "Über uns",
     "ideas": "Ideen",
     "opc": "Plattform",
     "roadmap": "Produktplan",
     "resources": "Ressourcen",
+    "signIn": "Anmelden",
+    "getStarted": "Loslegen",
     "changelog": "Änderungsprotokoll",
     "news": "Neuigkeiten",
     "designDocs": "Design-System",
@@ -135,6 +135,7 @@
       "community": "Community"
     },
     "links": {
+      "product": "Produkt",
       "features": "Funktionen",
       "pricing": "Preise",
       "about": "Über uns",
@@ -153,13 +154,12 @@
       "terms": "Nutzungsbedingungen",
       "cookies": "Cookie-Richtlinie",
       "refund": "Rückerstattung",
+      "licensing": "Lizenzierung",
       "contact": "Kontakt",
       "faq": "FAQ",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X (Twitter)",
-      "product": "Produkt",
-      "licensing": "Lizenzierung"
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {brandName} Intelligence. Alle Rechte vorbehalten.",
     "statusOnline": "Alle Systeme betriebsbereit",
@@ -243,6 +243,10 @@
       "heading": "Support-Verbindung herstellen",
       "subheading": "Wir entsenden eine:n dedizierte:n technische:n Spezialist:in oder Architekt:in, um Ihre konkreten Anforderungen zu bewerten.",
       "contacts": {
+        "founder": {
+          "title": "Gründer direkt",
+          "description": "Direkter Kommunikationskanal für strategische Kernabstimmungen und Anfragen auf Führungsebene."
+        },
         "general": {
           "title": "Enterprise-Beratung",
           "description": "Vorgespräche zu strategischen Ökosystem-Partnerschaften und übergreifender architektonischer Weiterentwicklung."
@@ -264,12 +268,8 @@
           "description": "Technische Verifizierung und Compliance-Hinweise zur DSGVO und weiteren internationalen Datenschutzgesetzen."
         },
         "security": {
-          "title": "Security Disclosures",
+          "title": "Sicherheitsmeldungen",
           "description": "Übermitteln Sie technische Reproduktionsberichte zu potenziellen Schwachstellen sicher direkt an unser Infrastrukturteam."
-        },
-        "founder": {
-          "title": "Gründer direkt",
-          "description": "Direkter Kommunikationskanal für strategische Kernabstimmungen und Anfragen auf Führungsebene."
         }
       },
       "formTitle": "Einreichungsportal",
@@ -296,10 +296,10 @@
         "successMessage": "Daten erfolgreich übermittelt. Das zuständige Operations-Team wird innerhalb von 1-2 Werktagen eine ausführliche Antwort übermitteln."
       },
       "companyInfoTitle": "Operative Telemetrie",
-      "socialMedia": "Wichtigste Netzwerk-Links",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Provinz Jiangsu, China"
+      "companyAddress": "Wuxi, Provinz Jiangsu, China",
+      "socialMedia": "Wichtigste Netzwerk-Links"
     },
     "cookies": {
       "title": "Cookie-Richtlinie — {brandName}",
@@ -1152,18 +1152,6 @@
       "title": "Einmalige Zahlung. Lebenslanger Zugang.",
       "description": "Keine Abonnements. Keine wiederkehrenden Gebühren. Wählen Sie den Plan, der zu Ihrem Team passt.",
       "socialProofText": "Open Source AGPL-3.0 · kommerzielle Lizenz verfügbar.",
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ einmalig",
-        "desc": "Für kleine Teams, die auf der {brandName}-Plattform-Baseline entwickeln.",
-        "cta": "{brandName} für Startups holen",
-        "f1": "Bis zu 5 Entwickler-Plätze",
-        "f2": "Unbegrenzte Team-Projekte",
-        "f3": "30-minütiges Architektur-Gespräch (Onboarding-Call)",
-        "f4": "Priority-Support",
-        "f5": "Alles im Solo-Plan"
-      },
       "independent": {
         "badge": "INDEPENDENT",
         "price": "Kostenlos",
@@ -1175,6 +1163,18 @@
         "f3": "Vollständiger SaaS-Stack: Auth, Zahlungen, Organisationen, API, Admin-UI, E-Mail, i18n, Hintergrundjobs, Storage und mehr",
         "f4": "Marketing-Features: Blog, Landing Page, SEO, Analytics",
         "f5": "AGPLv3 Open-Source-Lizenz"
+      },
+      "startup": {
+        "badge": "STARTUP",
+        "price": "$799",
+        "period": "/ einmalig",
+        "desc": "Für kleine Teams, die auf der {brandName}-Plattform-Baseline entwickeln.",
+        "cta": "{brandName} für Startups holen",
+        "f1": "Bis zu 5 Entwickler-Plätze",
+        "f2": "Unbegrenzte Team-Projekte",
+        "f3": "30-minütiges Architektur-Gespräch (Onboarding-Call)",
+        "f4": "Priority-Support",
+        "f5": "Alles im Solo-Plan"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
@@ -1277,12 +1277,12 @@
       "speedometer": {
         "number": "10",
         "unit": "Min.",
-        "subtitle": "TIME TO MARKET",
+        "subtitle": "ZEIT ZUM MARKT",
         "comparison": "Sparen Sie sich Monate an Plattformarbeit.",
         "phases": {
-          "scaffold": "Init",
+          "scaffold": "Initialisierung",
           "wire": "Kern",
-          "ship": "Deploy",
+          "ship": "Bereitstellen",
           "scale": "Skalieren",
           "ongoing": "∞"
         },
@@ -1319,7 +1319,7 @@
       "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
       "multi_f3_title": "Automatische Mandantenbereitstellung",
       "multi_f3_desc": "Wenn sich eine neue Organisation über Clerk registriert, wird automatisch ihr erster API-Schlüssel generiert und eine gebrandete Willkommens-E-Mail versendet — ohne manuelle Schritte.",
-      "dx_category": "Developer Experience",
+      "dx_category": "Entwicklererfahrung",
       "dx_f1_title": "Gehashte API-Schlüssel",
       "dx_f1_desc": "SHA-256-gehashte Schlüssel mit Präfix-Anzeige (nbtr_live_…). Nur bei der Erstellung einmalig im Klartext angezeigt — Sicherheit ohne Reibung.",
       "dx_f2_title": "Idempotenz-Middleware",
@@ -1347,7 +1347,7 @@
       "sec_f2_desc": "OWASP Core Rule Set im DetectionOnly-Modus an jedem Ingress. Rate Limiting bei 30 RPS mit Burst-Toleranz via nginx-Annotationen.",
       "sec_f3_title": "SBOM + SLSA-Provenienz",
       "sec_f3_desc": "Jedes Release generiert ein CycloneDX Software Bill of Materials und SLSA-Provenance-Attestierung, hochgeladen zum GitHub Release.",
-      "obs_category": "Observability",
+      "obs_category": "Beobachtbarkeit",
       "obs_f1_title": "OpenTelemetry-Tracing",
       "obs_f1_desc": "Verteilte Traces fließen von Next.js → Hono → Python-Microservices via OTLP. Export zu Jaeger (Dev) und Grafana Tempo (Prod).",
       "obs_f2_title": "Grafana-Dashboards",
@@ -1466,13 +1466,13 @@
     "flowBrandDesc": "Farbprimitive, Verläufe, Bewegungssprache",
     "flowTokens": "Tokens",
     "flowTokensDesc": "CSS-Variablen, 12-Stufen-Skalen, Dark Mode",
-    "flowTheme": "Theme",
+    "flowTheme": "Design",
     "flowThemeDesc": "oklch Multi-Theme, 6 Presets, color-mix()",
     "flowUI": "UI",
     "flowUIDesc": "Komponenten, Storybook, Chromatic",
     "card1Title": "12-Stufen-Farbskalen",
     "card1Desc": "Geist-ausgerichtete semantische Skala: Hintergründe (1-2), Zustände (3-5), Rahmen (6-8), Füllungen (9-10), Text (11-12).",
-    "card2Title": "oklch Multi-Theme",
+    "card2Title": "oklch Multi-Design",
     "card2Desc": "6 Theme-Presets mit oklch und color-mix()-Ableitung. Display-P3 Wide-Gamut mit sRGB-Fallback.",
     "card3Title": "Visuelle Regression",
     "card3Desc": "Chromatic erkennt jede Pixeländerung. Storybook dokumentiert jede Komponente. Architekturtests erzwingen Story-Abdeckung.",
@@ -1683,10 +1683,9 @@
       "badge": "Pläne vergleichen",
       "title": "Wählen Sie den Plan, der zu Ihrer aktuellen Phase passt",
       "subtitle": "Jeder Plan enthält den vollständigen Quellcode. Kommerzielle Lizenzen beinhalten 12 Monate Updates.",
-      "ariaTable": "Plan- und Funktionsvergleich",
       "plan": {
-        "startup": "Startup",
         "independent": "Einzelperson",
+        "startup": "Startup",
         "enterprise": "Enterprise"
       },
       "feature": {
@@ -1705,7 +1704,8 @@
           "label": "Support",
           "channel": "Support-Kanal"
         }
-      }
+      },
+      "ariaTable": "Plan- und Funktionsvergleich"
     },
     "socialProof": {
       "title": "Auf einem Stack gebaut, dem Sie vertrauen können",

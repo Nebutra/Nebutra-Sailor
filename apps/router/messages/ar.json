@@ -5,127 +5,127 @@
     "description": "سوق واجهات برمجة التطبيقات لجميع النماذج · ادفع حسب الاستخدام · إدارة المفاتيح والمحفظة · تجربة سريعة."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
-    "title": "Admin",
+    "dashboard": "نظرة عامة",
+    "keys": "مفاتيح API",
+    "wallet": "المحفظة",
+    "docs": "التوثيق",
+    "title": "الإدارة",
     "backToMarket": "العودة إلى السوق",
-    "quickUse": "Quick use"
+    "quickUse": "الاستخدام السريع"
   },
   "chrome": {
     "searchPlaceholder": "ماذا تريد أن تفعل بالذكاء الاصطناعي؟",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "بحث",
+    "locale": "اللغة",
+    "currency": "العملة",
     "collapseSidebar": "إخفاء الشريط الجانبي",
     "expandSidebar": "إظهار الشريط الجانبي",
-    "home": "Home",
-    "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "home": "الرئيسية",
+    "adminConsole": "الإدارة",
+    "quickUse": "الاستخدام السريع",
+    "support": "الدعم",
+    "apiDocs": "توثيق API",
     "integrationHelp": "دليل التكامل",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "اختيارات الذكاء الاصطناعي",
+    "market": "السوق",
+    "usageTitle": "استخدام سريع"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "سوق التطبيقات",
+    "api": "سوق واجهات برمجة التطبيقات",
     "models": "كتالوج النماذج",
-    "client": "Client"
+    "client": "العميل"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "new": "جديد",
+    "hot": "رائج",
+    "forYou": "مخصص لك",
+    "grid": "شبكة",
+    "list": "قائمة",
+    "apiShelf": "رف واجهات برمجة التطبيقات",
+    "toolShelf": "رف الأدوات",
+    "categories": "الفئات",
+    "apps": "التطبيقات",
+    "newRelease": "إصدار جديد",
+    "forgeTitle": "مساحة عمل أدوات Forge",
+    "forgeBlurb": "تحويلات النصوص، مشفرات، نماذج، وأدوات قابلة للتركيب. مختبر سوق التطبيقات يشير إلى Forge.",
+    "openForge": "فتح Forge →",
+    "allApi": "جميع واجهات برمجة التطبيقات →",
+    "all": "الكل →",
+    "viewAll": "عرض الكل {label} →",
+    "gridView": "عرض شبكي",
+    "listView": "عرض قائمة",
+    "hiTitle": "منصة موارد الذكاء الاصطناعي للمؤسسات",
+    "hiSubtitle": "تطابق كل حاجة مع الذكاء الاصطناعي المناسب",
+    "sellable": "قابل للبيع",
+    "walletTopup": "إعادة الشحن"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "نماذج لغوية",
+      "hint": "دردشة · استدلال"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "توليد الصور",
+      "hint": "نص إلى صورة"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "تعديل الصور",
+      "hint": "تعديل · عزل الخلفية"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "إنشاء الفيديو",
+      "hint": "نص إلى فيديو"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "الصوت والفيديو",
+      "hint": "الكلام · التحويل النصي"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "المعلومات",
+      "hint": "الاسترجاع · الاستخراج"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "مُعزَّز بالمعرفة"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "واجهات برمجة الأدوات",
+      "hint": "الوكيل · الأدوات"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "الروبوتات",
+      "chips": "روبوتات الدردشة · روبوتات الرسم · المعرفة"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "الإنتاجية",
+      "chips": "ساحة النماذج · الكتابة بالذكاء الاصطناعي"
     },
     "academic": {
-      "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "label": "أكاديمي",
+      "chips": "أدوات PDF · بحث براءات الاختراع بالذكاء الاصطناعي"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "أدوات الصور",
+      "chips": "استوديو ثلاثي الأبعاد · لوحة الرسم"
     },
     "audio": {
-      "label": "Audio",
-      "chips": "Speech · AI music"
+      "label": "الصوت",
+      "chips": "الكلام · الموسيقى بالذكاء الاصطناعي"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "الكود",
+      "chips": "مولّد الويب · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "نظرة عامة",
+    "keys": "المفاتيح",
+    "wallet": "المحفظة",
+    "use": "تجربة",
+    "docs": "التوثيق",
+    "models": "المزيد"
   }
 }

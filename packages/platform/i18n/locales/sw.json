@@ -1,347 +1,347 @@
 {
   "admin": {
-    "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "title": "Msimamizi",
+    "description": "Paneli ya msimamizi mkuu — simamia watumiaji, mashirika, na afya ya mfumo.",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "Mwongozo",
+      "users": "Watumiaji",
+      "organizations": "Mashirika"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "Watumiaji",
+      "description": "Angalia, tafuta, na uweke nafasi ya mtumiaji yeyote katika mashirika yote.",
+      "searchPlaceholder": "Tafuta watumiaji…",
+      "totalCount": "{count, plural, one {mtumiaji #} other {watumiaji #}}",
+      "empty": "Hakuna watumiaji wamepatikana.",
+      "loadError": "Imeshindikana kupakia watumiaji.",
       "columns": {
-        "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "email": "Barua pepe",
+        "name": "Jina",
+        "created": "Imeundwa",
+        "activeOrgs": "Mashirika yanayofanya kazi",
+        "actions": "Vitendo"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "Angalia mashirika"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "Mashirika",
+      "description": "Maeneo yote ya kazi kwenye mfumo, yaliyopangwa kwa utaratibu wa hivi karibuni.",
+      "searchPlaceholder": "Tafuta mashirika…",
+      "totalCount": "{count, plural, one {shirika #} other {mashirika #}}",
+      "empty": "Hakuna mashirika yaliyopatikana.",
+      "loadError": "Imeshindwa kupakia mashirika.",
       "columns": {
-        "name": "Name",
+        "name": "Jina",
         "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "plan": "Mpango",
+        "members": "Wanachama",
+        "created": "Imeundwa",
+        "actions": "Vitendo"
       },
-      "view": "View"
+      "view": "Angalia"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "Fanya kama",
+      "starting": "Inaanza…",
+      "stop": "Aacha kuwakilisha",
+      "confirm": "Wakilisha {label}? Utakutaona programu kama mtumiaji huyu hadi utakapoaacha.",
+      "error": "Imeshindwa kuanzisha kuwakilisha.",
+      "stopError": "Imeshindwa kuacha kuwakilisha."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "Iliyopita",
+      "next": "Inayofuata",
+      "pageOf": "Ukurasa {page} wa {total}"
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "Habari Dunia",
+    "dashboard": "Dashibodi",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "Endelea",
+      "confirm": "Thibitisha",
+      "done": "Imekamilika",
+      "cancel": "Ghairi"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "Nuru",
+    "dark": "Giza",
+    "system": "Mfumo"
   },
   "LocaleSwitcher": {
-    "en": "English",
-    "zh": "中文",
-    "de": "German",
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "label": "Language",
-    "ariaLabel": "Change language"
+    "en": "Kiingereza",
+    "zh": "Kichina",
+    "de": "Kijerumani",
+    "es": "Kihispania",
+    "fr": "Kifaransa",
+    "ja": "Kijapani",
+    "ko": "Kikorea",
+    "label": "Lugha",
+    "ariaLabel": "Badilisha lugha"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "Nambari ya rekodi ya ICP",
+      "publicSecurity": "Rekodi ya usalama wa umma"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "Ingia kwa WeChat",
+      "notConfigured": "Uingiaji wa WeChat haujasanifiwa"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "Weka kazi yako",
+    "subtitle": "Hatua tatu za haraka na tayari kutoa.",
     "steps": {
-      "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "workspace": "Kazi",
+      "invite": "Karibisha timu",
+      "plan": "Chagua mpango"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "Nyuma",
+      "stepCounter": "Hatua {current} ya {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "Chagua mpango",
+      "description": "Anza bure au ufungue uwezo zaidi. Unaweza kubadilisha mipango wakati wowote.",
+      "choose": "Chagua mpango",
+      "skip": "Ruka kwa sasa"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "Fungua menyu ya mtumiaji",
+    "profile": "Wasifu",
+    "settings": "Mipangilio",
+    "feedback": "Maoni",
+    "theme": "Mandhari",
+    "language": "Lugha",
+    "signOut": "Ondoka",
+    "signedInAs": "Umeingia kama"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "Wasifu",
+      "description": "Sasisha taarifa zako za kibinafsi.",
+      "nameLabel": "Jina",
+      "namePlaceholder": "Jina lako kamili",
+      "emailLabel": "Barua pepe",
+      "emailHint": "Tutapanga kiungo cha uthibitisho ili kuthibitisha anuani mpya ya barua pepe.",
+      "languageLabel": "Lugha",
+      "submit": "Hifadhi mabadiliko",
+      "saving": "Inahifadhi…",
+      "verifyEmail": "Thibitisha",
+      "verifying": "Inatuma uthibitisho…",
+      "success": "Wasifu umesasishwa.",
+      "verificationSent": "Barua pepe ya uthibitisho imetumwa.",
+      "errorRequiredName": "Jina linahitajika.",
+      "errorInvalidEmail": "Anuani ya barua pepe si sahihi.",
+      "subtitle": "Utambulisho wako na taarifa za mawasiliano.",
+      "unknown": "Mtumiaji asiye na jina",
+      "manageCta": "Fungua mipangilio kamili ya akaunti"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "Picha ya mtumiaji",
+      "description": "Pakia picha ya mraba (PNG, JPEG, au WebP, hadi 2MB).",
+      "uploadButton": "Pakia picha ya mtumiaji",
+      "uploading": "Inapakia…",
+      "fileTooBig": "Faili ni kubwa mno. Ukubwa wa juu ni 2MB.",
+      "invalidType": "Aina ya picha haihodheshwi. Tumia PNG, JPEG, au WebP.",
+      "success": "Picha ya mtumiaji imeesasishwa.",
+      "removeButton": "Ondoa picha ya mtumiaji",
+      "removed": "Picha ya mtumiaji imeondolewa.",
+      "deleteError": "Imeshindwa kufuta picha ya mtumiaji."
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "Hamisha data yangu",
+      "description": "Pakua nakala ya kumbukumbu zote tunazoshikilia kwa akaunti yako, ikiwa ni pamoja na wasifu, mashirika, matukio ya ukaguzi, arifa, na madai.",
+      "compliance": "Inahitajwa na GDPR Article 20 (Haki ya uhamishaji wa data) na PIPL Article 45 (Haki ya kupata nakala ya taarifa za kibinafsi).",
+      "export": "Hamisha data yangu",
+      "pending": "Tayari ya uhamisho…",
+      "ready": "Uhamisho wako tayari.",
+      "download": "Pakua JSON",
+      "error": "Imeshindikana kutayarisha uhamisho wako. Tafadhali jaribu tena."
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "Badilisha barua pepe",
+      "description": "Tutapanga kiungo cha uthibitisho kwa anwani mpya. Mabadiliko yanakuza tu baada ya kuthibitisha kutoka kwa sanduku la barua pepe hilo.",
+      "newEmailLabel": "Barua pepe mpya",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "Tuma kiungo cha uthibitisho",
+      "submitting": "Inatuma…",
+      "verificationSent": "Angalia sanduku la barua pepe kwa {email} ili kuthibitisha mabadiliko.",
+      "errorInvalidEmail": "Barua pepe si sahihi.",
+      "error": "Imeshindikana kuomba mabadiliko ya barua pepe.",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "Barua pepe imeasiliwa",
+        "successDescription": "Barua pepe yako ya kuingia imeasiliwa.",
+        "successWithEmail": "Barua pepe yako ya kuingia sasa ni {email}.",
+        "failureTitle": "Tulishindwa kuthibitisha kiungo hicho",
+        "failureDescription": "Kiungo hiki cha uthibitisho si halali, kimeisha muda, au tayari kime tumika. Tafadhali omba kipya kutoka mipangilio ya akaunti yako.",
+        "errorCode": "Sababu: {code}",
+        "continueCta": "Rudi kwenye akaunti",
+        "backCta": "Rudi kwenye akaunti"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "Akaunti",
+    "ariaLabel": "Mipangilio ya akaunti",
+    "navLabel": "Tab za mipangilio ya akaunti",
+    "tip": "Bonyeza {key} popote kufungua tena dialog hii.",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "Wasifu",
+      "subscription": "Ujiuzi",
+      "billing": "Malipo",
+      "preferences": "Mapendeleo",
+      "personalization": "Ubinafsishaji"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "Ujiuzi",
+      "subtitle": "Mpango, kiasi, na mrejesho.",
+      "currentPlan": "Mpango wa sasa",
+      "upgradeCta": "Linganisha mipango",
+      "manageCta": "Simamia usajili"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "Malipo",
+      "subtitle": "Historia ya viapisho na njia ya malipo.",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "Bado hakuna historia",
+        "description": "Malipo na viapisho vitajionekana hapa baada ya kipindi chako kwanza cha kulipwa.",
+        "cta": "Fungua malipo kamili"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "Sifa",
+      "subtitle": "Mandhari na ufikivu.",
+      "theme": "Mandhari",
+      "light": "Nuru",
+      "dark": "Giza",
+      "system": "Mfumo",
+      "help": "Msaada",
+      "reportIssue": "Ripoti tatizo",
+      "shortcuts": "Njia za mkato za kibodi"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "Ubinafsi",
+      "subtitle": "Mwambie Sailor ni nani wewe na jinsi ya kujibu."
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "Kubadilisha Paradimu",
+    "hero_subtitle": "Usiwe na biashara ngumu duniani.",
+    "social_title": "Jamii",
+    "social_headline": "Usawa wa Teknolojia Kamili",
+    "social_description": "Kuleta nguvu kwa wabunifu wa mabadiliko. Kuvunja vichujio vya kawaida na kuwapa nguvu washirika peke yao kwa miundombinu ya nje ya sanduku.",
+    "governance_title": "Utawala",
+    "governance_headline": "Msimbo ni Sheria",
+    "governance_description": "Utawala wa algoriti uliokunjwa kwenye Uthibitisho wa Kazi na matokeo halisi ya biashara, kubadilisha ubureaucracy isiyo wazi.",
+    "environment_title": "Mazingira",
+    "environment_headline": "Uchache wa Kidijitali",
+    "environment_description": "Kusukuma upunguzo wa enzi ya wavu kupitia muunganisho wa SaaS wa kipekee na ufanisi wa rasilimali."
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "Usalama",
+      "description": "Simamia nenosiri lako, uthibitisho wa nyingi, na vikao vya kazi.",
+      "managedByProvider": "Mipangilio ya usalama inasimamiwa na mtoaji wako wa uthibitisho.",
+      "openProviderProfile": "Fungua wasifu",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "Badilisha nenosiri",
+        "description": "Tumia nenosiri imara ambalo hutumii tena kwenye tovuti nyingine.",
+        "currentPasswordLabel": "Nenosiri la sasa",
+        "newPasswordLabel": "Nenosiri jipya",
+        "confirmPasswordLabel": "Thibitisha nenosiri jipya",
+        "revokeOtherSessions": "Ondoka kwenye vifaa vingine",
+        "submit": "Sasisha nenosiri",
+        "pending": "Inasasisha nenosiri…",
+        "success": "Nenosiri limesasishwa kwa mafanikio."
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "Uthibitisho wa hatua mbili",
+        "description": "Ongeza hatua ya pili ya uthibitisho ukitumia programu ya kuthibitisha.",
+        "enabled": "Imewashwa",
+        "disabled": "Imezimwa",
+        "enabledHelp": "Akaunti yako inahitaji nambari ya kuthibitisha ya tarakimu 6 baada ya kuingia kwa nenosiri.",
+        "disabledHelp": "Linda akaunti yako kwa nambari ya tarakimu 6 kutoka programu ya kuthibitisha.",
+        "enable": "Washa uthibitisho wa hatua mbili",
+        "disable": "Zima uthibitisho wa hatua mbili",
+        "passwordPrompt": "Thibitisha nenosiri lako",
+        "scanQrCode": "Skanza kodu ya QR hii kwa programu yako ya uthibitishaji, kisha ingiza nambari ya tarakimu 6 hapa chini.",
+        "secretKeyLabel": "Au ingiza siri hii kwa mkono",
+        "verificationCodeLabel": "Nambari ya uthibitisho",
+        "verify": "Thibitisha na washia",
+        "backupCodesTitle": "Nambari za akiba",
+        "backupCodesDescription": "Hifadhi nambari hizi mahali salama. Kila moja inaweza kutumika mara moja ikiwa utapoteza upatikanaji wa programu yako ya uthibitishaji.",
+        "copyBackupCodes": "Nakili nambari",
+        "finishSetup": "Maliza usanidi",
+        "successEnabled": "Uthibitisho wa hatua mbili umewashwa.",
+        "successDisabled": "Uthibitisho wa hatua mbili umezimwa."
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "Vipindi vya sasa",
+        "description": "Vifaa na kivinjari vilivyowashwa kwenye akaunti yako sasa.",
+        "currentSession": "(sasa)",
+        "ipLabel": "Anuani ya IP",
+        "lastActiveLabel": "Iliamka mwisho",
+        "revoke": "Toka nje",
+        "revokeAll": "Toka nje kwa vifaa vyote vingine",
+        "empty": "Hakuna misaada mingine ya kufanya kazi.",
+        "successRevoked": "Msaada umetoka nje.",
+        "successRevokedAll": "Misaada yote mingine imetoka nje."
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "Futa akaunti",
+        "description": "Ondoa akaunti yako na data zote zinazohusiana na yake milele. Hii haiwezi kurejeshwa.",
+        "passwordPrompt": "Ingiza nenosiri lako ili kuthibitisha",
+        "confirmTextLabel": "Andika FUTA ili kuthibitisha",
+        "submit": "Futa akaunti",
+        "cancel": "Ghairi",
+        "success": "Akaunti imefutwa."
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "Akaunti zilizounganishwa",
+        "description": "Angalia njia za kuingia kwa OAuth zilizounganishwa na utambulisho wako wa Nebutra.",
+        "connected": "Imeunganishwa",
+        "connect": "unganisha",
+        "help": "Weka angalau njia moja ya kuingia inayoweza kuaminika kabla ya kutenganisha mtoa huduma.",
+        "unlink": "Tenganisha",
+        "notLinked": "Haijaunganishwa"
       },
       "passkeys": {
         "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
+        "description": "Tumia nyakati za kifaa kwa kuingia ambazo hazipateki kwa phishing.",
+        "empty": "Hakuna passkeys zilizosajiliwa bado",
+        "addPasskey": "Ongeza passkey",
+        "cancelAdd": "Ghairi",
+        "cancelled": "Mipangilio ya passkey imeghairiwa. Hakuna mabadiliko yaliyofanywa.",
         "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "nameHelp": "Peleka jina linaloweza kutambuliwa kwa passkey hii kabla ya kivinjari chako kukulinda kwa uthibitisho.",
+        "nameLabel": "Jina la passkey",
+        "rename": "Badilisha jina",
+        "saveRename": "Hifadhi jina",
+        "remove": "Ondoa",
+        "successAdded": "Passkey imeongezwa.",
+        "successRemoved": "Passkey imeondolewa.",
+        "unavailableBadge": "Haipatikani"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "Weka nenosiri",
+        "description": "Ongeza nenosiri ili uingie bila mtumaji wako wa OAuth.",
+        "submit": "Weka nenosiri",
+        "pending": "Tunatumia kiungo cha kuweka nenosiri…",
+        "sentMessage": "Tumetuma kiungo cha kuweka nenosiri kwenye barua pepe yako."
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "Zindua Startup yako, ikiongozwa tangu siku ya kwanza.",
+      "tagline": "Wakala wa maeneo mengi, multi-tenant kwa chaguo-msingi. Hakuna timu ya platform inayohitajika."
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Ingia kwenye Nebutra",
+      "subtitle": "Chagua jinsi unavyotaka kuingia.",
+      "continueWith": "Endelea na",
+      "continueWithProvider": "Endelea na {provider}",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,380 +349,380 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "Inaongoza tena…",
+      "dividerOr": "Au endelea kwa barua pepe",
+      "emailLabel": "Barua pepe",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "Endelea",
+      "back": "Rudi",
+      "passwordLabel": "Nywili",
+      "passwordPlaceholder": "Ingiza nywili yako",
+      "showPassword": "Onyesha nywili",
+      "hidePassword": "Ficha nywili",
+      "capsLockOn": "Caps Lock imefunguliwa",
+      "forgotPassword": "Umesahau nywili?",
+      "submit": "Ingia",
+      "submitLoading": "Inaingia…",
+      "useMagicLink": "Nipe kiungo cha magic badala yake",
+      "usePasskey": "Ingia kwa kutumia passkey",
+      "passkeyTitle": "Ingia kwa kutumia passkey yako",
+      "passkeyDescription": "Tumia Face ID, Touch ID, au ufunguo wako wa usalama. Hakuna nenosiri inahitajika.",
+      "passkeyButton": "Endelea kwa passkey",
+      "passkeyCancelled": "Ombi la passkey limekatishwa.",
+      "passkeyUnsupported": "Browser hii haithamini passkeys.",
+      "passkeyError": "Kuingia kwa passkey kimekua. Jaribu njia nyingine.",
+      "ssoTitle": "Endelea na Enterprise SSO",
+      "ssoDescription": "Tunakuletea {provider} kwa {email}.",
+      "ssoError": "Enterprise SSO haikuweza kuanza. Jaribu njia nyingine.",
+      "ssoRetry": "Jaribu tena",
+      "newToProduct": "Mpya kwenye Nebutra?",
+      "signUpLink": "Jisajili",
+      "homeLink": "Nyumbani",
+      "signInFailed": "Uingizaji umeshindwa",
+      "genericError": "Hitilafu imetokea. Tafadhali jaribu tena.",
+      "captchaError": "Uthibitisho wa bot umeshindwa. Onyesha upya ukurasa na jaribu tena."
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "Unda akaunti yako ya Nebutra",
+      "subtitle": "Akaunti moja kwa kila programu ya Nebutra.",
+      "firstNameLabel": "Jina la kwanza",
+      "lastNameLabel": "Jina la mwisho",
+      "firstNamePlaceholder": "Kwanza",
+      "lastNamePlaceholder": "Mwisho",
+      "submit": "Unda akaunti",
+      "submitLoading": "Inaunda akaunti…",
+      "alreadyHaveAccount": "Tayari una akaunti?",
+      "signInLink": "Ingia",
+      "signUpFailed": "Ujiandishi umeshindwa"
     },
     "passkeys": {
       "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "description": "Tumia Face ID, Touch ID, Windows Hello, au ufunguo wa usalama badala ya nenosiri. Kila kifaa kina passkey yake mwenyewe.",
+      "addButton": "Ongeza passkey",
+      "adding": "Inaweka…",
+      "namePlaceholder": "k.m. MacBook Pro",
+      "nameLabel": "Jina (hiari)",
+      "registerSuccess": "Passkey imeongezwa.",
+      "registerCancelled": "Uwekaji umekataliwa.",
+      "registerUnsupported": "Kivinjari hiki hakisaidii passkeys.",
+      "registerError": "Imeshindikana kuweka passkey.",
+      "empty": "Hakuna passkeys bado.",
+      "loadError": "Imeshindikana kupakia passkeys.",
+      "revoke": "Ondoa",
+      "revoking": "Inaondoa…",
+      "revokeConfirm": "Ondoa passkey hii? Hutaweza tena kuingia kwa kutumia.",
+      "revokeSuccess": "Passkey imeondolewa.",
+      "revokeError": "Imeshindikana kuondoa passkey.",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "Imeunganishwa na kifaa",
+        "multiDevice": "Imesasindikwa kati ya vifaa"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "Imeongezwa {date}"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "Ingia kwa kutumia kiungo cha ajabu",
+      "description": "Ingiza barua pepe yako na tutakutumia nambari ya tarakimu 6 kuingia.",
+      "emailLabel": "Barua pepe",
+      "send": "Tuma kiungo",
+      "codeLabel": "Nambari ya uthibitisho",
+      "verify": "Thibitisha",
+      "resend": "Tuma tena nambari",
+      "resendCooldown": "Tuma tena baada ya sekunde {seconds}",
+      "sentTo": "Tumetuma nambari kwa {email}"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "Umesahau nenosiri?",
+      "description": "Ingiza barua pepe yako na tutakutumia kiungo cha kuweka upya nenosiri.",
+      "emailLabel": "Barua pepe",
+      "submit": "Tuma kiungo cha kuweka upya",
+      "successTitle": "Angalia barua pepe yako",
+      "success": "Ikiwa barua pepe hiyo imesajiliwa, utapokea kiungo cha kurudisha hivi karibuni."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "Rudisha nenosiri lako",
+      "description": "Chagua nenosiri jipya kwa akaunti yako.",
+      "newPasswordLabel": "Nenosiri jipya",
+      "confirmPasswordLabel": "Thibitisha nenosiri jipya",
+      "submit": "Rudisha nenosiri",
+      "successTitle": "Nenosiri limekurudishwa",
+      "successDescription": "Sasa unaweza kuingia kwa kutumia nenosiri lako jipya.",
+      "signInCta": "Nenda kwenye kuingia",
+      "invalidTitle": "Kiungo cha kurudisha si halali",
+      "invalidDescription": "Kiungo hiki cha kurudisha nenosiri kinaonekana kuwa kimepotea au kimeharibika.omba kipya kutoka ukurasa wa ulisahau nenosiri."
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "Barua pepe imethibitishwa",
+      "successDescription": "Barua pepe yako imethibitishwa.",
+      "failureTitle": "Uthibitisho umeshindwa",
+      "failureDescription": "Tulishindwa kuthibitisha barua pepe yako kwa kiungo hicho.",
+      "continueCta": "Endelea",
+      "signInCta": "Nenda kwenye kuingia"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "Kuingia kumekamilika",
+      "title": "Umeingia",
+      "description": "Kipindi chako kimeandaliwa. Tunafungua eneo la kazi la Nebutra na kuhifadhi uhamisho salama kutoka mtiririko wa uthibitishaji.",
+      "session": "Kipindi",
+      "verified": "Imethibitishwa",
+      "workspace": "Eneo la kazi",
+      "preparing": "Inaandaliwa",
+      "redirecting": "Inaingia eneo la kazi katika {seconds}s",
+      "secureHandoff": "Uhamisho salama",
+      "continueCta": "Endelea kwenda eneo la kazi",
+      "signInCta": "Tumia akaunti nyingine"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "Barua pepe au neno siri si sahihi.",
+      "userNotFound": "Hakuna akaunti iliyopatikana kwa barua pepe hiyo.",
+      "userAlreadyExists": "Akaunti kwa barua pepe hiyo tayari ipo.",
+      "weakPassword": "Neno siri ni dhaifu sana. Tumia angalau herufi 8 zenye mchanganyiko wa herufi kubwa na ndogo na namba.",
+      "passwordsDontMatch": "Nywila hazilingani.",
+      "passwordTooShort": "Nywila lazima iwe na angalau herufi 8.",
+      "currentPasswordIncorrect": "Nywila ya sasa si sahihi.",
+      "samePassword": "Nywila mpya lazima iwe tofauti na nywila yako ya sasa.",
+      "invalidEmail": "Barua pepe si sahihi.",
+      "emailNotVerified": "Tafadhali thibitisha barua pepe yako kwanza.",
+      "sessionExpired": "Kipindi chako kimeisha. Tafadhali ingia tena.",
+      "twoFactorRequired": "Uthibitisho wa hatua mbili unahitajika.",
+      "invalidVerificationCode": "Msimbo wa uthibitisho si sahihi au umekwisha muda.",
+      "twoFactorAlreadyEnabled": "Uthibitisho wa hatua mbili tayari umewashwa.",
+      "twoFactorNotEnabled": "Uthibitisho wa hatua mbili haujawashwa.",
+      "tooManyAttempts": "Majaribio mengi sana. Tafadhali jaribu tena baadaye.",
+      "rateLimited": "Unafanya hivyo mara nyingi sana. Punguza kasi.",
+      "providerNotSupported": "Kitendo hiki kinashughulikiwa na mtoa huduma wa uthibitisho wako.",
+      "networkError": "Hitilafu ya mtandao. Angalia muunganisho wako na jaribu tena.",
+      "unknown": "Kuna kitu kilichokosea. Tafadhali jaribu tena."
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "Jaribu moja ya hizi kuanza",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "Onyesha shughuli za hivi karibuni",
+        "prompt": "Nionyeshe shughuli za hivi karibuni kote kwenye enzi langu la kazi tangu saa 24 zilizopita."
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "Rekebisha hitilafu",
+        "prompt": "Nisaidie kurekebisha hitilafu ya wakati wa utekelezaji. Nitakopi stack trace na utanisaidia kuelewa."
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "Andaa barua pepe ya muhtasari",
+        "prompt": "Andaa barua pepe fupi ya muhtasari wa wiki ambayo naweza kutuma kwa timu yangu kuhusu maendeleo ya platform."
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "Chunguza vipengele vya platform",
+        "prompt": "Nieleze vipengele muhimu vya platform hii ya SaaS na jinsi naweza kuvitumia."
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "Mpango unaofanya kazi",
+      "manage": "Simamia usajili",
+      "noPlanTitle": "Hakuna mpango unaofanya kazi",
+      "noPlanDescription": "Chagua mpango ili kufungua vipengele vilivyolipwa na mipaka ya matumizi ya juu zaidi.",
+      "choosePlan": "Chagua mpango",
+      "renewsOn": "Inajirejesha tarehe {date}",
+      "endsOn": "Inamalizika tarehe {date}",
+      "trialEndsOn": "Muda wa majaribio unaisha {date}",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "Inafanya kazi",
+        "trialing": "Inajaribiwa",
+        "past_due": "Imepita tarehe",
+        "canceled": "Imetengwa",
+        "free": "Bure"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "Haikuweza kupakia hali yako ya bili."
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "Majaribio ya bure ya siku {days}",
+      "seat": "{count, plural, one {# kiti} other {# viti}}",
+      "perSeat": "/ kiti"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "Nemba ya shirika",
+        "description": "Pakia picha ya mraba (PNG, JPEG, au WebP, hadi 2MB) kuwakilisha shirika lako.",
+        "uploadButton": "Pakia nemba",
+        "uploading": "Inapakia…",
+        "fileTooBig": "Faili ni kubwa mno. Ukubwa wa juu ni 2MB.",
+        "invalidType": "Aina ya picha haihodheshwi. Tumia PNG, JPEG, au WebP.",
+        "success": "Logo imesasishwa.",
+        "removeButton": "Ondoa logo",
+        "removed": "Logo imeondolewa."
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "Jina la shirika",
+        "description": "Sasisha jina la kuonyesha linaloonekana kwa timu yako na wateja.",
+        "label": "Jina",
+        "submit": "Hifadhi",
+        "saving": "Inahifadhi…",
+        "success": "Jina la shirika limesasishwa."
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "Futa shirika",
+        "description": "Ondoa shirika hili kabisa, wanachama wote, mwaliko, na data zinazohusishwa. Hatua hii haiwezi kurejeshwa.",
+        "trigger": "Futa shirika",
+        "confirmLabel": "Andika jina la shirika ili kuthibitisha",
+        "submit": "Futa shirika",
+        "cancel": "Ghairi",
+        "success": "Shirika limefutwa."
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "Umeandikwa",
+      "heading": "Umeandikwa kujiunga na {organizationName}",
+      "description": "Kubali wito huu ili uanze kufanya kazi pamoja na timu.",
+      "accept": "Kubali wito",
+      "accepting": "Inakubaliwa...",
+      "decline": "Kataa",
+      "declining": "Inakataliwa...",
+      "declinedView": "Wito umekataliwa",
+      "success": "Tumemwambia mwenye kuandika.",
+      "backToDashboard": "Rudi kwenye dashibodi",
+      "roleLabel": "Jukumu: {role}",
+      "errorEmailMismatch": "Wito huu ulitumwa kwa barua pepe tofauti",
+      "errorEmailMismatchDetail": "Ingia kwa kutumia anuani ya barua pepe iliyopokea wito ili ukubali.",
+      "errorExpired": "Wito umekufa",
+      "errorExpiredDetail": "Umbie mwenye kuandika atutumie wito mpya.",
+      "errorNotFound": "Wito haukupatikana",
+      "errorNotFoundDetail": "Kiungo cha wito si halali au kimefutwa.",
+      "errorNotAvailable": "Wito haupatikani",
+      "errorNotAvailableDetail": "Wito huu tayari umekabiliwa na hauna nguvu tena.",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "Mwenyeji",
+        "admin": "Msimamizi",
+        "member": "Mwanachama",
+        "viewer": "Mtafuta"
       }
     }
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "title": "Ufunguo wa API",
+      "description": "Tengeneza na simamia ufunguo wa API kwa upatikanaji wa programu wa Nebutra.",
+      "createButton": "Tengeneza ufunguo wa API",
+      "noPermission": "Huna ruhusa ya kuona ufunguo wa API.",
+      "loading": "Inapakia…",
+      "loadError": "Imeshindwa kupakia ufunguo wa API.",
+      "createError": "Imeshindwa kutengeneza ufunguo wa API.",
+      "revokeError": "Imeshindwa kufuta ufunguo wa API.",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "Bado hakuna ufunguo wa API",
+        "cta": "Tengeneza API key yako ya kwanza"
       },
       "columns": {
-        "name": "Name",
+        "name": "Jina",
         "prefix": "Prefix",
-        "lastUsed": "Last Used",
+        "lastUsed": "Iliitumika Mwisho",
         "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "created": "Imetengenezwa",
+        "actions": "Vitendo",
+        "never": "Hakuna"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "Futa",
+        "revoking": "Inafutwa…",
+        "copy": "Nakili",
+        "copied": "Imenakiliwa",
+        "close": "Funga",
+        "submit": "Tengeneza key",
+        "submitting": "Inatengenezwa…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "Tengeneza API key",
+        "description": "Ufunguo wa API huruhusu mifumo ya nje kuongana na Nebutra kwa niaba yako. Uchukue kama nywila.",
+        "nameLabel": "Jina",
+        "namePlaceholder": "k.m. Backend ya uzalishaji",
+        "scopesLabel": "Masafa",
+        "successWarning": "Ufunguo huu unaonekana mara moja. Uhifadhi kabla ya kufunga.",
+        "confirmClose": "Kufunga kunaficha ufunguo huu milele. Hakikisha umehifadhiwa."
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "Logi ya Ukaguzi",
+      "description": "Fuata kila hatua ya utawala katika enzi lako la kazi. Chuja kwa mwenendo, hatua, kitu, au muda.",
+      "empty": "Bado hakuna matukio ya ukaguzi",
+      "loadMore": "Pakia zaidi",
+      "loading": "Inapakia…",
+      "forbidden": "Unahitaji ufikiaji wa msimamizi kuona logi ya ukaguzi.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
+        "when": "Wakati",
+        "actor": "Mwenendo",
+        "action": "Hatua",
+        "entity": "Kitu",
+        "outcome": "Matokeo",
         "ip": "IP"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "Thamani ya zamani",
+        "newValue": "Thamani mpya"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "Kitendo",
+        "actionPlaceholder": "Tafuta kitendo…",
+        "entityType": "Aina ya kitu",
+        "outcome": "Matokeo",
+        "outcomeSuccess": "Mafanikio",
+        "outcomeFailure": "Kushindwa",
+        "outcomePending": "Inasubiri",
+        "startDate": "Tarehe ya kuanza",
+        "endDate": "Tarehe ya kumaliza",
+        "range24h": "Saa 24 zilizopita",
+        "range7d": "Siku 7 zilizopita",
+        "range30d": "Siku 30 zilizopita",
+        "reset": "Weka upya",
+        "all": "Zote"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "Arifa",
+      "description": "Chagua jinsi Nebutra inavyokufika kwa kila aina ya tukio, kwenye kila njia ya utoaji.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "Weka upya kwa vigezo vya awali",
+        "save": "Hifadhi"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "Inahifadhi…",
+        "saved": "Imehifadhiwa",
+        "error": "Kuhifadhi kumeshindwa. Tafadhali jaribu tena."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "Onyo la usalama",
+          "description": "Onyo la kuingia, mabadiliko ya neno siri, mabadiliko ya kuthibitisha kwa hatua mbili."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "Bililingi",
+          "description": "Vibali, kushindwa kwa malipo, na mabadiliko ya usajili."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "Mwongozo wa timu",
+          "description": "Mwongozo wa kujiunga na shirika, ukubali au kukataa."
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "Shughuli za timu",
+          "description": "Wanachama wamejiunga, mabadiliko ya jukumu, na shughuli nyingine za eneo la kazi."
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "Masasisho ya bidhaa",
+          "description": "Vipengele vipya, mabadiliko muhimu, na maelezo ya toleo."
         },
         "marketing": {
-          "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "label": "Masokozi",
+          "description": "Jarida la barua pepe na mapendekezo ya wakati mwingine. Chagua kuingia tu."
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "Ndani ya programu"
         },
         "email": {
-          "label": "Email"
+          "label": "Barua pepe"
         },
         "push": {
           "label": "Push"
@@ -734,143 +734,143 @@
     },
     "webhooks": {
       "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "description": "Jiandikishe kwa matukio yanayotolewa na eneo lako la kazi. Tunasaini kila payload kwa siri ya endpoint yako ili uweze kuhakiki ukweli wake.",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "Endpoint mpya",
+        "urlLabel": "URL ya endpoint",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "Matukio",
+        "submit": "Tengeneza endpoint",
+        "submitting": "Inatengenezwa…",
+        "selectEvent": "Chagua angalau tukio moja.",
+        "successTitle": "Nukta ya mwisho imetengenezwa. Siri ya saini inaonekana mara moja.",
+        "successWarning": "Hifadhi kwenye meneja ya siri za programu yako kabla ya kufunga.",
+        "copy": "Nakili",
+        "copied": "Imenakiliwa"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "Nukta za mwisho zinazofanya kazi",
+        "empty": "Bado hakuna nukta za mwisho za webhook. Tengeneza moja hapo juu.",
+        "loading": "Inapakia…",
+        "loadFailed": "Imeshindwa kupakia webhooks",
         "columns": {
           "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "events": "Matukio",
+          "status": "Hali",
+          "lastDelivered": "Iliyosafirishwa mwisho",
+          "actions": "Vitendo"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "Inafanya kazi",
+          "disabled": "Imezuiwa"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "Hariri",
+          "enable": "Washa",
+          "disable": "Zima",
+          "viewDeliveries": "Angalia usafirishaji",
+          "delete": "Futa"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "Usafirishaji wa hivi karibuni",
+        "close": "Funga",
+        "loading": "Inapakia…",
+        "loadFailed": "Imeshindwa kupakia usafirishaji",
+        "empty": "Hakuna usafirishaji bado.",
+        "viewPayload": "Angalia mzigo",
+        "hidePayload": "Ficha mzigo",
+        "replay": "Cheza tena",
+        "replaying": "Inacheza tena…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "imethibitishwa",
+          "failed": "imekosa",
+          "retrying": "inajaribu tena"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "Muonekano",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "Mandhari",
+        "description": "Tumia mwanga, giza, au ufanane na mapendeleo ya mfumo."
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "Kichujio cha mandhari",
+        "description": "Tumia mandhari yoyote ya Theme Playground kote kwenye programu. Vidhibiti vya chini vinaongezwa juu ili kurekebisha kwa usahihi.",
+        "search": "Tafuta mandhari…",
+        "searchLabel": "Tafuta mandhari",
+        "default": "Chaguo-msingi",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "Inafanya kazi",
+        "empty": "Hakuna mandhari zinazolingana na utafutaji wako.",
+        "count": "mandhari {count}"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "Mandhari",
+        "description": "Chagua kichujio, ingiza DESIGN.md, kisha rekebisha alama za chini.",
+        "selectLabel": "Kichujio cha mandhari",
+        "import": "Ingiza",
+        "copy": "Nakili mandhari",
+        "copied": "Imenakiliwa",
+        "copyError": "Unakiliwa imekosa",
+        "custom": "Maalum"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "Ingiza DESIGN.md",
+        "description": "Nakili au paki DESIGN.md ili kutumia rangi zake, radius, fonti, nafasi, na kivuli kote programu — hifadhiwa hata baada ya kurefresh.",
+        "applied": "Imetumika:",
+        "remove": "Ondoa"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "Hali ya mandhari",
+        "light": "Nuru",
+        "dark": "Giza",
+        "system": "Mfumo"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "Rangi ya kipekee",
+        "description": "Chagua rangi ya kipekee ya brand inayopamba hali za kazi kote programu.",
+        "label": "Rangi ya kipekee",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
+          "default": "Chaguo-msingi",
+          "blue": "Bluu",
+          "cyan": "Saiyani",
+          "violet": "Violeti",
           "pink": "Pink",
           "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "green": "Kijani",
+          "red": "Nyekundu"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "Rangi",
+        "description": "Rangi ya kipekee, ya nyuma, na ya mbele.",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "Rangi ya nyuma",
+          "description": "Badilisha rangi ya nyuma ya uso."
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "Rangi ya mbele",
+          "description": "Badilisha rangi ya maandishi ya mwili."
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "Rudisha kwenye chaguo la awali"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "Fonti ya UI",
+        "uiDescription": "Familia ya fonti inayotumika kote kwenye UI.",
+        "codeLabel": "Fonti ya msimbo",
+        "codeDescription": "Familia ya fonti inayotumika kwa nyuso za msimbo.",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "Chaguo-msingi la mandhari",
+            "system": "Mfumo",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
+            "theme": "Chaguo-msingi la mandhari",
             "system": "System mono",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
@@ -879,119 +879,119 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "Tofauti",
+        "description": "Rekebisha tofauti ya maandishi (50 = hakuna mabadiliko).",
+        "label": "Kiwango cha tofauti"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "Tumia kichwa cha kidirisha",
+        "description": "Badilisha kuwa kipeo cha pointer juu ya vipengele vinavyoweza kuingiliana.",
+        "label": "Kipeo cha pointer juu ya vipengele vinavyoweza kuingiliana"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "Alama za tofauti",
+        "description": "Onyesha bandi za rangi, au alama za +/- kwenye kila mstari uliobadilika.",
+        "label": "Mtindo wa alama za tofauti",
+        "color": "Rangi",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "Kusafisha fonti",
+        "description": "Tumia antialiasing ya fonti ya asili ya macOS.",
+        "label": "Kusafisha fonti ya asili"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "Tipografia",
+        "description": "Ukubwa wa fonti wa msingi kwa UI na nyuso za msimbo.",
+        "uiFontSize": "Ukubwa wa fonti ya UI",
+        "uiFontSizeDescription": "Rekebisha ukubwa wa fonti ya UI ya msingi.",
+        "codeFontSize": "Ukubwa wa fonti ya msimbo",
+        "codeFontSizeDescription": "Rekebisha ukubwa wa fonti ya msimbo ya msingi."
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "Mandhari",
+        "customize": "Badilisha"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "Punguza mwendo",
+        "description": "Punguza animesheni au fuata mpangilio wa mfumo.",
+        "label": "Mpangilio wa mwendo",
+        "system": "Mfumo",
+        "on": "Imewashwa",
+        "off": "Imezimwa"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "Upau wa pembeni wa kioo",
+        "description": "Weka nyenzo ya kioo kwenye upau wa pembeni."
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "Upau wa pembeni wa kioo",
+        "description": "Weka nyenzo ya kioo kwenye upau wa pembeni."
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "Toleo",
+    "effective": "Inaathiri",
+    "notFound": "Hati hii haipatikani.",
+    "backHome": "Rudi nyumbani"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "Betri ya amri",
+    "placeholder": "Andika amri au tafuta…",
+    "empty": "Hakuna matokeo yaliyopatikana.",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
-      "admin": "Admin",
-      "help": "Help"
+      "navigation": "Urambazaji",
+      "actions": "Vitendo",
+      "settings": "Mipangilio",
+      "account": "Akaunti",
+      "admin": "Msimamizi",
+      "help": "Msaada"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
-        "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
+        "home": "Nyumbani",
+        "settings": "Mipangilio",
+        "billing": "Malipo",
+        "team": "Timu",
+        "apiKeys": "Ufunguo wa API",
+        "notifications": "Arifa",
+        "auditLog": "Logi ya Ukaguzi",
         "webhooks": "Webhooks",
-        "admin": "Admin"
+        "admin": "Usimamizi"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "Karibisha mwanachama wa timu",
+        "createApiKey": "Tengeneza ufunguo wa API",
+        "switchOrganization": "Badilisha shirika"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "Badilisha kuwa mandhari ya mwanga",
+        "themeDark": "Badilisha kuwa mandhari ya giza",
+        "themeSystem": "Tumia mandhari ya mfumo"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "Ondoka"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "Ripoti tatizo",
+        "shortcuts": "Njia za mkato za kibodi"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "Chaguzi zako za faragha",
+      "description": "Tunatumia vitabu vya kukumbuka ili kuboresha uzoefu wako, kuchambua trafiki ya tovuti, na kubinafsisha maudhui. Chagua aina unazotaka kuruhusu."
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "Kubali zote",
+      "savePreferences": "Hifadhi chaguzi"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "Zinazohitajika",
+        "description": "Zinazohitajika ili tovuti ifanye kazi. Haziwezi kuzimwa."
       },
       "functional": {
         "label": "Functional",

@@ -5,106 +5,106 @@
     "description": "सभी-मॉडल API मार्केटप्लेस · उपयोग के अनुसार भुगतान · कुंजियाँ और वॉलेट प्रबंधित करें · त्वरित परीक्षण।"
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
-    "title": "Admin",
+    "dashboard": "अवलोकन",
+    "keys": "API कुंजियाँ",
+    "wallet": "वॉलेट",
+    "docs": "दस्तावेज़",
+    "title": "एडमिन",
     "backToMarket": "मार्केट पर वापस जाएं",
-    "quickUse": "Quick use"
+    "quickUse": "त्वरित उपयोग"
   },
   "chrome": {
     "searchPlaceholder": "आप AI के साथ क्या करना चाहते हैं?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "खोजें",
+    "locale": "भाषा",
+    "currency": "मुद्रा",
     "collapseSidebar": "साइडबार संकुचित करें",
     "expandSidebar": "साइडबार विस्तारित करें",
-    "home": "Home",
-    "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "home": "होम",
+    "adminConsole": "एडमिन",
+    "quickUse": "त्वरित उपयोग",
+    "support": "सहायता",
+    "apiDocs": "API दस्तावेज़",
     "integrationHelp": "एकीकरण गाइड",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "AI पसंद",
+    "market": "मार्केट",
+    "usageTitle": "त्वरित उपयोग"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "ऐप मार्केट",
+    "api": "API मार्केट",
     "models": "मॉडल कैटलॉग",
-    "client": "Client"
+    "client": "क्लाइंट"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
+    "new": "नया",
+    "hot": "लोकप्रिय",
+    "forYou": "आपके लिए",
+    "grid": "ग्रिड",
+    "list": "सूची",
+    "apiShelf": "API शेल्फ",
+    "toolShelf": "टूल शेल्फ",
+    "categories": "श्रेणियाँ",
+    "apps": "ऐप्स",
+    "newRelease": "नया रिलीज़",
+    "forgeTitle": "Forge टूल वर्कस्पेस",
+    "forgeBlurb": "टेक्स्ट ट्रांसफॉर्म, कोडेक, फॉर्म और कंपोजेबल टूल्स। ऐप मार्केट लैब Forge की ओर इशारा करता है।",
     "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "allApi": "सभी APIs →",
+    "all": "सभी →",
+    "viewAll": "सभी {label} देखें →",
+    "gridView": "ग्रिड व्यू",
+    "listView": "लिस्ट व्यू",
+    "hiTitle": "एंटरप्राइज़ AI रिसोर्स प्लेटफॉर्म",
+    "hiSubtitle": "हर जरूरत को सही AI से मिलाएं",
+    "sellable": "बिक्री योग्य",
+    "walletTopup": "टॉप अप करें"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "भाषा मॉडल",
+      "hint": "चैट · तर्क"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "छवि उत्पत्ति",
+      "hint": "टेक्स्ट-टू-इमेज"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "छवि संपादन",
+      "hint": "संपादन · मैटिंग"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "वीडियो जनरेशन",
+      "hint": "टेक्स्ट-टू-वीडियो"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "ऑडियो और वीडियो",
+      "hint": "स्पीच · ट्रांसक्रिप्शन"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "जानकारी",
+      "hint": "रिट्रीवल · एक्सट्रैक्ट"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "ज्ञान-समृद्ध"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "टूल APIs",
+      "hint": "एजेंट · टूल्स"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "बॉट्स",
+      "chips": "चैट बॉट्स · ड्रॉइंग बॉट्स · ज्ञान"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "उत्पादकता",
+      "chips": "मॉडल एरिना · AI लेखन"
     },
     "academic": {
-      "label": "Academic",
+      "label": "शैक्षणिक",
       "chips": "PDF toolkit · AI patent search"
     },
     "image": {

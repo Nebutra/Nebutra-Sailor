@@ -89,11 +89,11 @@
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "टोकन · लागत · स्कीमा"
     },
     "security": {
       "label": "सुरक्षा",
-      "hint": "Password generator"
+      "hint": "पासवर्ड जनरेटर"
     },
     "text": {
       "label": "टेक्स्ट",

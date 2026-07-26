@@ -1,347 +1,347 @@
 {
   "admin": {
-    "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "title": "Yönetici",
+    "description": "Süper yönetici paneli — kullanıcıları, kuruluşları ve sistem sağlığını yönetin.",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "Genel Bakış",
+      "users": "Kullanıcılar",
+      "organizations": "Kuruluşlar"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "Kullanıcılar",
+      "description": "Tüm kuruluşlarda kullanıcıları görüntüleyin, arayın ve taklit edin.",
+      "searchPlaceholder": "Kullanıcı ara…",
+      "totalCount": "{count, plural, one {# kullanıcı} other {# kullanıcı}}",
+      "empty": "Kullanıcı bulunamadı.",
+      "loadError": "Kullanıcılar yüklenemedi.",
       "columns": {
-        "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "email": "E-posta",
+        "name": "Ad",
+        "created": "Oluşturulma",
+        "activeOrgs": "Aktif kuruluşlar",
+        "actions": "İşlemler"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "Organizasyonları görüntüle"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "Organizasyonlar",
+      "description": "Sistemdeki tüm çalışma alanları, güncelliğe göre sıralanmıştır.",
+      "searchPlaceholder": "Organizasyon ara…",
+      "totalCount": "{count, plural, one {# organizasyon} other {# organizasyon}}",
+      "empty": "Organizasyon bulunamadı.",
+      "loadError": "Organizasyonlar yüklenemedi.",
       "columns": {
-        "name": "Name",
+        "name": "Ad",
         "slug": "Slug",
         "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "members": "Üyeler",
+        "created": "Oluşturulma",
+        "actions": "İşlemler"
       },
-      "view": "View"
+      "view": "Görüntüle"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "Kimlik taklidi yap",
+      "starting": "Başlatılıyor…",
+      "stop": "Kimlik taklidi durdur",
+      "confirm": "{label} kullanıcısı olarak giriş yapılsın mı? Kimlik taklidini durdurana kadar uygulamayı bu kullanıcı olarak göreceksiniz.",
+      "error": "Kimlik taklidi başlatılamadı.",
+      "stopError": "Kimlik taklidi durdurulamadı."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "Önceki",
+      "next": "Sonraki",
+      "pageOf": "Sayfa {page} / {total}"
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "Merhaba Dünya",
+    "dashboard": "Panel",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "Devam et",
+      "confirm": "Onayla",
+      "done": "Tamamlandı",
+      "cancel": "İptal"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
   },
   "LocaleSwitcher": {
-    "en": "English",
-    "zh": "中文",
-    "de": "German",
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "label": "Language",
-    "ariaLabel": "Change language"
+    "en": "İngilizce",
+    "zh": "Çince",
+    "de": "Almanca",
+    "es": "İspanyolca",
+    "fr": "Fransızca",
+    "ja": "Japonca",
+    "ko": "Korece",
+    "label": "Dil",
+    "ariaLabel": "Dili değiştir"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "ICP kayıt numarası",
+      "publicSecurity": "Güvenlik kaydı"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "WeChat ile giriş yap",
+      "notConfigured": "WeChat girişi yapılandırılmadı"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "Çalışma alanınızı kurun",
+    "subtitle": "Üç hızlı adımda yayına hazır olacaksınız.",
     "steps": {
-      "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "workspace": "Çalışma alanı",
+      "invite": "Takımını davet et",
+      "plan": "Plan seç"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "Geri",
+      "stepCounter": "Adım {current} / {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "Plan seç",
+      "description": "Ücretsiz başla veya daha fazla kapasite aç. İstediğin zaman planını değiştirebilirsin.",
+      "choose": "Plan seç",
+      "skip": "Şimdilik atla"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "Kullanıcı menüsünü aç",
+    "profile": "Profil",
+    "settings": "Ayarlar",
+    "feedback": "Geri bildirim",
+    "theme": "Tema",
+    "language": "Dil",
+    "signOut": "Çıkış yap",
+    "signedInAs": "Olarak giriş yapıldı"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "Profil",
+      "description": "Kişisel bilgilerinizi güncelleyin.",
+      "nameLabel": "Ad",
+      "namePlaceholder": "Adınız ve soyadınız",
+      "emailLabel": "E-posta",
+      "emailHint": "Yeni bir e-posta adresini onaylamak için doğrulama bağlantısı göndereceğiz.",
+      "languageLabel": "Dil",
+      "submit": "Değişiklikleri kaydet",
+      "saving": "Kaydediliyor…",
+      "verifyEmail": "Doğrula",
+      "verifying": "Doğrulama gönderiliyor…",
+      "success": "Profil güncellendi.",
+      "verificationSent": "Doğrulama e-postası gönderildi.",
+      "errorRequiredName": "Ad alanı zorunludur.",
+      "errorInvalidEmail": "E-posta adresi geçerli değil.",
+      "subtitle": "Kimlik ve iletişim bilgileriniz.",
+      "unknown": "İsimsiz kullanıcı",
+      "manageCta": "Tüm hesap ayarlarını aç"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "Profil fotoğrafı",
+      "description": "Kare bir görsel yükleyin (PNG, JPEG veya WebP, en fazla 2MB).",
+      "uploadButton": "Profil fotoğrafı yükle",
+      "uploading": "Yükleniyor…",
+      "fileTooBig": "Dosya çok büyük. Maksimum boyut 2MB.",
+      "invalidType": "Desteklenmeyen görsel türü. PNG, JPEG veya WebP kullanın.",
+      "success": "Profil fotoğrafı güncellendi.",
+      "removeButton": "Profil fotoğrafını kaldır",
+      "removed": "Profil fotoğrafı kaldırıldı.",
+      "deleteError": "Profil fotoğrafı silinemedi."
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "Verilerimi dışa aktar",
+      "description": "Hesabınız için tuttuğumuz tüm kayıtların bir kopyasını indirin; profil, kuruluşlar, denetim olayları, bildirimler ve davetler dahil.",
+      "compliance": "GDPR Madde 20 (Veri taşınabilirliği hakkı) ve PIPL Madde 45 (Kişisel bilgilerin kopyasını alma hakkı) gereği zorunludur.",
+      "export": "Verilerimi dışa aktar",
+      "pending": "Dışa aktarma hazırlanıyor…",
+      "ready": "Dışa aktarma hazır.",
+      "download": "JSON İndir",
+      "error": "Dışa aktarma hazırlanamadı. Lütfen tekrar deneyin."
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "E-posta adresini değiştir",
+      "description": "Yeni adrese bir doğrulama bağlantısı göndereceğiz. Değişiklik, o gelen kutusundan onayladığınızda geçerli olur.",
+      "newEmailLabel": "Yeni e-posta adresi",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "Doğrulama bağlantısı gönder",
+      "submitting": "Gönderiliyor…",
+      "verificationSent": "Değişikliği onaylamak için {email} adresindeki gelen kutunuzu kontrol edin.",
+      "errorInvalidEmail": "E-posta adresi geçerli değil.",
+      "error": "E-posta değişikliği isteği başarısız oldu.",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "E-posta güncellendi",
+        "successDescription": "Giriş e-postanız güncellendi.",
+        "successWithEmail": "Giriş e-postanız artık {email}.",
+        "failureTitle": "Bu bağlantıyı onaylayamadık",
+        "failureDescription": "Bu doğrulama bağlantısı geçersiz, süresi dolmuş veya zaten kullanılmış. Lütfen hesap ayarlarınızdan yeni bir tane isteyin.",
+        "errorCode": "Sebep: {code}",
+        "continueCta": "Hesaba dön",
+        "backCta": "Hesaba dön"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "Hesap",
+    "ariaLabel": "Hesap ayarları",
+    "navLabel": "Hesap ayarları sekmeleri",
+    "tip": "Bu iletişim kutusunu yeniden açmak için herhangi bir yerde {key} tuşuna basın.",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "Profil",
+      "subscription": "Abonelik",
+      "billing": "Faturalama",
+      "preferences": "Tercihler",
+      "personalization": "Kişiselleştirme"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "Abonelik",
+      "subtitle": "Plan, kota ve yenileme.",
+      "currentPlan": "Mevcut plan",
+      "upgradeCta": "Planları karşılaştır",
+      "manageCta": "Aboneliği yönet"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "Faturalandırma",
+      "subtitle": "Fatura geçmişi ve ödeme yöntemi.",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "Henüz geçmiş yok",
+        "description": "İlk ücretli dönemden sonra ücretler ve faturalar burada görünecek.",
+        "cta": "Tüm faturalandırma sayfasını aç"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "Tercihler",
+      "subtitle": "Tema ve erişilebilirlik.",
+      "theme": "Tema",
+      "light": "Açık",
+      "dark": "Koyu",
+      "system": "Sistem",
+      "help": "Yardım",
+      "reportIssue": "Sorun bildir",
+      "shortcuts": "Klavye kısayolları"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "Kişiselleştirme",
+      "subtitle": "Sailor'a kim olduğunu ve nasıl yanıt vermesi gerektiğini söyle."
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "Paradigmayı Yeniden Tanımlama",
+    "hero_subtitle": "Dünyada zor iş olmasın.",
+    "social_title": "Sosyal",
+    "social_headline": "Kesin Teknoloji Eşitliği",
+    "social_description": "Sınır inovatörlerini güçlendirme. Geleneksel filtreleri kırma ve tek kuruculara kutunun dışında altyapı sağlama.",
+    "governance_title": "Yönetişim",
+    "governance_headline": "Kod Yasadır",
+    "governance_description": "İş Kanıtı ve gerçek iş sonuçları üzerine kurulu algoritmik yönetişim, opak bürokrasiyi değiştirir.",
+    "environment_title": "Çevre",
+    "environment_headline": "Dijital Minimalizm",
+    "environment_description": "Aşırı SaaS entegrasyonu ve kaynak verimliliği ile bulut ayak izi azaltımını yönlendirme."
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "Güvenlik",
+      "description": "Şifrenizi, çok faktörlü kimlik doğrulamayı ve aktif oturumlarınızı yönetin.",
+      "managedByProvider": "Güvenlik ayarları, kimlik doğrulama sağlayıcınız tarafından yönetilmektedir.",
+      "openProviderProfile": "Profili aç",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "Şifreyi değiştir",
+        "description": "Diğer sitelerde kullanmadığınız güçlü bir şifre kullanın.",
+        "currentPasswordLabel": "Mevcut şifre",
+        "newPasswordLabel": "Yeni şifre",
+        "confirmPasswordLabel": "Yeni şifreyi onayla",
+        "revokeOtherSessions": "Diğer cihazlardan çıkış yap",
+        "submit": "Şifreyi güncelle",
+        "pending": "Şifre güncelleniyor…",
+        "success": "Şifre başarıyla güncellendi."
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "İki adımlı doğrulama",
+        "description": "Doğrulayıcı uygulaması kullanarak ikinci bir doğrulama adımı ekleyin.",
+        "enabled": "Etkin",
+        "disabled": "Devre dışı",
+        "enabledHelp": "Hesabınız, şifre ile oturum açtıktan sonra 6 haneli bir doğrulayıcı kodu ister.",
+        "disabledHelp": "Hesabınızı doğrulayıcı uygulamasından gelen 6 haneli bir kodla koruyun.",
+        "enable": "İki faktörlü kimlik doğrulamayı etkinleştir",
+        "disable": "İki faktörlü kimlik doğrulamayı devre dışı bırak",
+        "passwordPrompt": "Şifrenizi onaylayın",
+        "scanQrCode": "Bu QR kodunu kimlik doğrulayıcı uygulamanızla tarayın, ardından aşağıya 6 haneli kodu girin.",
+        "secretKeyLabel": "Veya bu gizli anahtarı manuel olarak girin",
+        "verificationCodeLabel": "Doğrulama kodu",
+        "verify": "Doğrula ve etkinleştir",
+        "backupCodesTitle": "Yedek kodlar",
+        "backupCodesDescription": "Bu kodları güvenli bir yerde saklayın. Kimlik doğrulayıcınıza erişiminizi kaybederseniz her biri bir kez kullanılabilir.",
+        "copyBackupCodes": "Kodları kopyala",
+        "finishSetup": "Kurulumu tamamla",
+        "successEnabled": "İki faktörlü kimlik doğrulama etkinleştirildi.",
+        "successDisabled": "İki faktörlü kimlik doğrulama devre dışı bırakıldı."
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "Aktif oturumlar",
+        "description": "Hesabınıza şu anda giriş yapmış cihazlar ve tarayıcılar.",
+        "currentSession": "(mevcut)",
+        "ipLabel": "IP adresi",
+        "lastActiveLabel": "Son aktif",
+        "revoke": "Oturumu kapat",
+        "revokeAll": "Diğer tüm cihazlardan çıkış yap",
+        "empty": "Başka aktif oturum yok.",
+        "successRevoked": "Oturum kapatıldı.",
+        "successRevokedAll": "Diğer tüm oturumlar kapatıldı."
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "Hesabı sil",
+        "description": "Hesabınızı ve ilişkili tüm verileri kalıcı olarak silin. Bu işlem geri alınamaz.",
+        "passwordPrompt": "Onaylamak için şifrenizi girin",
+        "confirmTextLabel": "Onaylamak için SİL yazın",
+        "submit": "Hesabı sil",
+        "cancel": "İptal",
+        "success": "Hesap silindi."
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "Bağlı hesaplar",
+        "description": "Nebutra kimliğinize bağlı OAuth giriş yöntemlerini inceleyin.",
+        "connected": "Bağlandı",
+        "connect": "Bağla",
+        "help": "Bir sağlayıcıyı bağlantıyı kesmeden önce en az bir güvenilir oturum açma yönteminin kullanılabilir olduğundan emin olun.",
+        "unlink": "Bağlantıyı Kestir",
+        "notLinked": "Bağlı değil"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "Parola Anahtarları",
+        "description": "Oltalama saldırılarına karşı dayanıklı oturum açma için cihazla sınırlı kimlik bilgilerini kullanın.",
+        "empty": "Henüz parola anahtarı kaydedilmedi",
+        "addPasskey": "Parola anahtarı ekle",
+        "cancelAdd": "İptal",
+        "cancelled": "Parola anahtarı kurulumu iptal edildi. Hiçbir değişiklik yapılmadı.",
+        "defaultName": "Parola Anahtarı {number}",
+        "nameHelp": "Tarayıcınız onay istemeden önce bu parola anahtarına tanınabilir bir ad verin.",
+        "nameLabel": "Parola anahtarı adı",
+        "rename": "Yeniden Adlandır",
+        "saveRename": "Adı Kaydet",
+        "remove": "Kaldır",
+        "successAdded": "Geçiş anahtarı eklendi.",
+        "successRemoved": "Geçiş anahtarı kaldırıldı.",
+        "unavailableBadge": "Kullanılamıyor"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "Şifre belirle",
+        "description": "OAuth sağlayıcınız olmadan oturum açmak için bir şifre ekleyin.",
+        "submit": "Şifre belirle",
+        "pending": "Şifre ayarlama bağlantısı gönderiliyor…",
+        "sentMessage": "E-posta adresinize bir şifre ayarlama bağlantısı gönderdik."
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "Startup'ınızı, ilk günden itibaren yönetilerek piyasaya sürün.",
+      "tagline": "Bölgesel ajanlar, varsayılan olarak çok kiracılı. Platform ekibi gerekmez."
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Nebutra'ya giriş yapın",
+      "subtitle": "Nasıl oturum açmak istediğinizi seçin.",
+      "continueWith": "Devam et",
+      "continueWithProvider": "{provider} ile devam et",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,380 +349,380 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "Yönlendiriliyor…",
+      "dividerOr": "veya e-posta ile devam et",
+      "emailLabel": "E-posta",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "Devam et",
+      "back": "Geri",
+      "passwordLabel": "Şifre",
+      "passwordPlaceholder": "Şifrenizi girin",
+      "showPassword": "Şifreyi göster",
+      "hidePassword": "Şifreyi gizle",
+      "capsLockOn": "Caps Lock açık",
+      "forgotPassword": "Şifrenizi mi unuttunuz?",
+      "submit": "Giriş yap",
+      "submitLoading": "Giriş yapılıyor…",
+      "useMagicLink": "Bana bunun yerine sihirli bir bağlantı gönder",
+      "usePasskey": "Şifre anahtarı ile giriş yap",
+      "passkeyTitle": "Şifre anahtarınla giriş yap",
+      "passkeyDescription": "Face ID, Touch ID veya güvenlik anahtarını kullan. Şifre gerekmez.",
+      "passkeyButton": "Şifre anahtarı ile devam et",
+      "passkeyCancelled": "Şifre anahtarı istemi iptal edildi.",
+      "passkeyUnsupported": "Bu tarayıcı şifre anahtarlarını desteklemiyor.",
+      "passkeyError": "Şifre anahtarı ile giriş başarısız oldu. Başka bir yöntem deneyin.",
+      "ssoTitle": "Kurumsal SSO ile devam et",
+      "ssoDescription": "{email} için {provider} yönlendiriliyorsunuz.",
+      "ssoError": "Kurumsal SSO başlatılamadı. Başka bir yöntem deneyin.",
+      "ssoRetry": "Tekrar dene",
+      "newToProduct": "Nebutra'yı yeni mi kullanıyorsunuz?",
+      "signUpLink": "Kayıt ol",
+      "homeLink": "Ana sayfa",
+      "signInFailed": "Giriş başarısız oldu",
+      "genericError": "Bir hata oluştu. Lütfen tekrar deneyin.",
+      "captchaError": "Bot doğrulaması başarısız oldu. Sayfayı yenileyin ve tekrar deneyin."
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "Nebutra hesabınızı oluşturun",
+      "subtitle": "Her Nebutra uygulaması için tek bir hesap.",
+      "firstNameLabel": "Ad",
+      "lastNameLabel": "Soyad",
+      "firstNamePlaceholder": "Ad",
+      "lastNamePlaceholder": "Soyad",
+      "submit": "Hesap oluştur",
+      "submitLoading": "Hesap oluşturuluyor…",
+      "alreadyHaveAccount": "Zaten hesabınız var mı?",
+      "signInLink": "Giriş yap",
+      "signUpFailed": "Kayıt başarısız oldu"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "Geçiş Anahtarları",
+      "description": "Şifre yerine Face ID, Touch ID, Windows Hello veya bir güvenlik anahtarı kullanın. Her cihazın kendi geçiş anahtarı vardır.",
+      "addButton": "Parola anahtarı ekle",
+      "adding": "Hazırlanıyor…",
+      "namePlaceholder": "örn. MacBook Pro",
+      "nameLabel": "Ad (isteğe bağlı)",
+      "registerSuccess": "Parola anahtarı eklendi.",
+      "registerCancelled": "Kurulum iptal edildi.",
+      "registerUnsupported": "Bu tarayıcı parola anahtarlarını desteklemiyor.",
+      "registerError": "Parola anahtarı kaydedilemedi.",
+      "empty": "Henüz parola anahtarı yok.",
+      "loadError": "Parola anahtarları yüklenemedi.",
+      "revoke": "Kaldır",
+      "revoking": "Kaldırılıyor…",
+      "revokeConfirm": "Bu parola anahtarını kaldırmak istiyor musunuz? Artık bununla oturum açamayacaksınız.",
+      "revokeSuccess": "Parola anahtarı kaldırıldı.",
+      "revokeError": "Parola anahtarı kaldırılamadı.",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "Cihaza bağlı",
+        "multiDevice": "Cihazlar arasında senkronize edildi"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "{date} tarihinde eklendi"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "Büyülü bağlantı ile giriş yap",
+      "description": "E-posta adresinizi girin, giriş yapmak için size 6 haneli bir kod göndereceğiz.",
+      "emailLabel": "E-posta",
+      "send": "Bağlantı gönder",
+      "codeLabel": "Doğrulama kodu",
+      "verify": "Doğrula",
+      "resend": "Kodu tekrar gönder",
+      "resendCooldown": "{seconds} saniye içinde tekrar gönder",
+      "sentTo": "{email} adresine bir kod gönderdik"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "Şifrenizi mi unuttunuz?",
+      "description": "E-posta adresinizi girin, şifrenizi sıfırlamak için size bir bağlantı göndereceğiz.",
+      "emailLabel": "E-posta",
+      "submit": "Sıfırlama bağlantısı gönder",
+      "successTitle": "E-postanızı kontrol edin",
+      "success": "Bu e-posta adresi kayıtlıysa, kısa süre içinde sıfırlama bağlantısı alacaksınız."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "Şifrenizi sıfırlayın",
+      "description": "Hesabınız için yeni bir şifre belirleyin.",
+      "newPasswordLabel": "Yeni şifre",
+      "confirmPasswordLabel": "Yeni şifreyi onayla",
+      "submit": "Şifreyi sıfırla",
+      "successTitle": "Şifre sıfırlandı",
+      "successDescription": "Artık yeni şifrenizle giriş yapabilirsiniz.",
+      "signInCta": "Giriş sayfasına git",
+      "invalidTitle": "Geçersiz sıfırlama bağlantısı",
+      "invalidDescription": "Bu şifre sıfırlama bağlantısı eksik veya hatalı. Lütfen şifremi unuttum sayfasından yeni bir bağlantı isteyin."
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "E-posta doğrulandı",
+      "successDescription": "E-posta adresiniz doğrulandı.",
+      "failureTitle": "Doğrulama başarısız",
+      "failureDescription": "E-postanızı bu bağlantı ile doğrulayamadık.",
+      "continueCta": "Devam et",
+      "signInCta": "Giriş yap"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "Giriş tamamlandı",
+      "title": "Oturum açtınız",
+      "description": "Oturumunuz hazır. Nebutra çalışma alanını açıyoruz ve kimlik doğrulama akışından güvenli geçişi koruyoruz.",
+      "session": "Oturum",
+      "verified": "Doğrulanmış",
+      "workspace": "Çalışma alanı",
+      "preparing": "Hazırlanıyor",
+      "redirecting": "{seconds} saniye içinde çalışma alanına giriliyor",
+      "secureHandoff": "Güvenli geçiş",
+      "continueCta": "Çalışma alanına devam et",
+      "signInCta": "Başka bir hesap kullan"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "E-posta veya şifre yanlış.",
+      "userNotFound": "Bu e-posta ile bir hesap bulunamadı.",
+      "userAlreadyExists": "Bu e-posta ile bir hesap zaten mevcut.",
+      "weakPassword": "Şifre çok zayıf. En az 8 karakter, büyük-küçük harf ve rakam içeren bir şifre kullanın.",
+      "passwordsDontMatch": "Şifreler eşleşmiyor.",
+      "passwordTooShort": "Şifre en az 8 karakter olmalıdır.",
+      "currentPasswordIncorrect": "Mevcut şifre yanlış.",
+      "samePassword": "Yeni şifre, mevcut şifrenizden farklı olmalıdır.",
+      "invalidEmail": "E-posta adresi geçerli değil.",
+      "emailNotVerified": "Lütfen önce e-posta adresinizi doğrulayın.",
+      "sessionExpired": "Oturumunuz süresi doldu. Lütfen tekrar giriş yapın.",
+      "twoFactorRequired": "İki adımlı doğrulama gerekli.",
+      "invalidVerificationCode": "Doğrulama kodu yanlış veya süresi dolmuş.",
+      "twoFactorAlreadyEnabled": "İki adımlı kimlik doğrulama zaten etkin.",
+      "twoFactorNotEnabled": "İki adımlı kimlik doğrulama etkin değil.",
+      "tooManyAttempts": "Çok fazla deneme. Lütfen daha sonra tekrar deneyin.",
+      "rateLimited": "Bunu çok sık yapıyorsunuz. Yavaşlayın.",
+      "providerNotSupported": "Bu işlem, kimlik doğrulama sağlayıcınız tarafından yönetilir.",
+      "networkError": "Ağ hatası. Bağlantınızı kontrol edin ve tekrar deneyin.",
+      "unknown": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin."
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "Başlamak için bunlardan birini deneyin",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "Son aktiviteleri göster",
+        "prompt": "Son 24 saat içindeki çalışma alanımdaki en son aktiviteleri göster."
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "Bir hatayı hata ayıkla",
+        "prompt": "Bir çalışma zamanı hatasını hata ayıklamama yardımcı ol. Yığın izini yapıştıracağım ve sen de beni yönlendirebilirsin."
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "Özet bir e-posta taslağı oluştur",
+        "prompt": "Takımım için platform ilerlemesi hakkında gönderebileceğim kısa bir haftalık özet e-postası taslağı oluştur."
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "Platform özelliklerini keşfet",
+        "prompt": "Bu SaaS platformunun temel özelliklerini ve bunları nasıl kullanabileceğimi adım adım açıkla."
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "Aktif plan",
+      "manage": "Aboneliği yönet",
+      "noPlanTitle": "Aktif plan yok",
+      "noPlanDescription": "Ücretli özellikleri ve daha yüksek kullanım limitlerini açmak için bir plan seçin.",
+      "choosePlan": "Plan seç",
+      "renewsOn": "{date} tarihinde yenilenir",
+      "endsOn": "{date} tarihinde sona erer",
+      "trialEndsOn": "Deneme süresi {date} tarihinde sona eriyor",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "Aktif",
+        "trialing": "Deneme",
+        "past_due": "Vadesi geçmiş",
+        "canceled": "İptal edildi",
+        "free": "Ücretsiz"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "Faturalandırma durumunuz yüklenemedi."
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "Ücretsiz {days} günlük deneme",
+      "seat": "{count, plural, one {# koltuk} other {# koltuk}}",
+      "perSeat": "/ koltuk"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "Organizasyon logosu",
+        "description": "Organizasyonunuzu temsil etmek için kare bir görsel yükleyin (PNG, JPEG veya WebP, en fazla 2MB).",
+        "uploadButton": "Logo yükle",
+        "uploading": "Yükleniyor…",
+        "fileTooBig": "Dosya çok büyük. Maksimum boyut 2MB'dir.",
+        "invalidType": "Desteklenmeyen görsel türü. PNG, JPEG veya WebP kullanın.",
+        "success": "Logo güncellendi.",
+        "removeButton": "Logoyu kaldır",
+        "removed": "Logo kaldırıldı."
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "Organizasyon adı",
+        "description": "Ekipinize ve müşterilerinize gösterilen görünen adı güncelleyin.",
+        "label": "Ad",
+        "submit": "Kaydet",
+        "saving": "Kaydediliyor…",
+        "success": "Organizasyon adı güncellendi."
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "Organizasyonu sil",
+        "description": "Bu organizasyonu, tüm üyeleri, davetleri ve ilişkili verileri kalıcı olarak kaldırın. Bu işlem geri alınamaz.",
+        "trigger": "Organizasyonu sil",
+        "confirmLabel": "Onaylamak için organizasyon adını yazın",
+        "submit": "Organizasyonu sil",
+        "cancel": "İptal",
+        "success": "Organizasyon silindi."
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "Davet edildiniz",
+      "heading": "{organizationName} kuruluşuna katılmak için davet edildiniz",
+      "description": "Takımla işbirliğine başlamak için daveti kabul edin.",
+      "accept": "Daveti kabul et",
+      "accepting": "Kabul ediliyor...",
+      "decline": "Reddet",
+      "declining": "Reddediliyor...",
+      "declinedView": "Davet reddedildi",
+      "success": "Davet eden kişiye bildirdik.",
+      "backToDashboard": "Panele dön",
+      "roleLabel": "Rol: {role}",
+      "errorEmailMismatch": "Bu davet başka bir e-posta adresine gönderildi",
+      "errorEmailMismatchDetail": "Daveti kabul etmek için daveti alan e-posta adresiyle giriş yapın.",
+      "errorExpired": "Davet süresi doldu",
+      "errorExpiredDetail": "Davet eden kişiden yeni bir davet göndermesini isteyin.",
+      "errorNotFound": "Davet bulunamadı",
+      "errorNotFoundDetail": "Davet bağlantısı geçersiz veya iptal edilmiş.",
+      "errorNotAvailable": "Davet mevcut değil",
+      "errorNotAvailableDetail": "Bu davete zaten yanıt verilmiş ve artık aktif değil.",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "Sahip",
+        "admin": "Yönetici",
+        "member": "Üye",
+        "viewer": "İzleyici"
       }
     }
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "title": "API Anahtarları",
+      "description": "Nebutra'ya programlı erişim için API anahtarları oluşturun ve yönetin.",
+      "createButton": "API anahtarı oluştur",
+      "noPermission": "API anahtarlarını görüntüleme izniniz yok.",
+      "loading": "Yükleniyor…",
+      "loadError": "API anahtarları yüklenemedi.",
+      "createError": "API anahtarı oluşturulamadı.",
+      "revokeError": "API anahtarı iptal edilemedi.",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "Henüz API anahtarı yok",
+        "cta": "İlk API anahtarınızı oluşturun"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "Ad",
+        "prefix": "Önek",
+        "lastUsed": "Son Kullanım",
+        "scopes": "Kapsamlar",
+        "created": "Oluşturulma",
+        "actions": "İşlemler",
+        "never": "Asla"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "İptal Et",
+        "revoking": "İptal ediliyor…",
+        "copy": "Kopyala",
+        "copied": "Kopyalandı",
+        "close": "Kapat",
+        "submit": "Anahtar oluştur",
+        "submitting": "Oluşturuluyor…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "API anahtarı oluştur",
+        "description": "API anahtarları, harici sistemlerin sizin adınıza Nebutra ile iletişim kurmasını sağlar. Onları şifreler gibi koruyun.",
+        "nameLabel": "Ad",
+        "namePlaceholder": "örn. Üretim arka ucu",
+        "scopesLabel": "Kapsamlar",
+        "successWarning": "Bu anahtar yalnızca bir kez görünür. Kapatmadan önce kaydedin.",
+        "confirmClose": "Kapatmak bu anahtarı sonsuza dek gizler. Kaydedildiğinden emin olun."
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "Denetim Günlüğü",
+      "description": "Çalışma alanınızdaki her yönetici eylemini izleyin. Eylemci, işlem, varlık veya zaman aralığına göre filtreleyin.",
+      "empty": "Henüz denetim olayı yok",
+      "loadMore": "Daha fazla yükle",
+      "loading": "Yükleniyor…",
+      "forbidden": "Denetim günlüğüne erişmek için yönetici yetkisine ihtiyacınız var.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
+        "when": "Ne Zaman",
+        "actor": "Eylemci",
+        "action": "İşlem",
+        "entity": "Varlık",
+        "outcome": "Sonuç",
         "ip": "IP"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "Eski değer",
+        "newValue": "Yeni değer"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "Eylem",
+        "actionPlaceholder": "Eylem ara…",
+        "entityType": "Varlık türü",
+        "outcome": "Sonuç",
+        "outcomeSuccess": "Başarılı",
+        "outcomeFailure": "Başarısız",
+        "outcomePending": "Beklemede",
+        "startDate": "Başlangıç tarihi",
+        "endDate": "Bitiş tarihi",
+        "range24h": "Son 24 saat",
+        "range7d": "Son 7 gün",
+        "range30d": "Son 30 gün",
+        "reset": "Sıfırla",
+        "all": "Tümü"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "Bildirimler",
+      "description": "Her etkinlik türü ve her teslim kanalı için Nebutra'nın size nasıl ulaşacağını seçin.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "Varsayılana sıfırla",
+        "save": "Kaydet"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "Kaydediliyor…",
+        "saved": "Kaydedildi",
+        "error": "Kaydetme başarısız oldu. Lütfen tekrar deneyin."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "Güvenlik uyarıları",
+          "description": "Oturum açma uyarıları, şifre değişiklikleri, iki faktörlü değişiklikler."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "Faturalandırma",
+          "description": "Faturalar, ödeme hataları ve abonelik değişiklikleri."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "Ekip davetleri",
+          "description": "Bir organizasyona katılma davetleri, kabul veya reddedildi."
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "Ekip etkinliği",
+          "description": "Üye katılımları, rol değişiklikleri ve diğer çalışma alanı etkinlikleri."
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "Ürün güncellemeleri",
+          "description": "Yeni özellikler, değişiklik günlüğü öne çıkanları ve sürüm notları."
         },
         "marketing": {
-          "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "label": "Pazarlama",
+          "description": "Bülten ve ara sıra promosyonlar. Sadece izin verildiğinde gönderilir."
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "Uygulama içi"
         },
         "email": {
-          "label": "Email"
+          "label": "E-posta"
         },
         "push": {
           "label": "Push"
@@ -734,144 +734,144 @@
     },
     "webhooks": {
       "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "description": "Çalışma alanınız tarafından yayımlanan etkinliklere abone olun. Her yükü, uç noktanızın gizli anahtarıyla imzalıyoruz, böylece doğruluğunu doğrulayabilirsiniz.",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "Yeni uç nokta",
+        "urlLabel": "Uç nokta URL'si",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "Etkinlikler",
+        "submit": "Uç nokta oluştur",
+        "submitting": "Oluşturuluyor…",
+        "selectEvent": "En az bir olay seçin.",
+        "successTitle": "Uç nokta oluşturuldu. İmzalama sırrı yalnızca bir kez görünür.",
+        "successWarning": "Kapatmadan önce bunu uygulamanızın gizli anahtar yöneticisine kaydedin.",
+        "copy": "Kopyala",
+        "copied": "Kopyalandı"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "Aktif uç noktalar",
+        "empty": "Henüz webhook uç noktası yok. Yukarıdan bir tane oluşturun.",
+        "loading": "Yükleniyor…",
+        "loadFailed": "Webhook'lar yüklenemedi",
         "columns": {
           "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "events": "Olaylar",
+          "status": "Durum",
+          "lastDelivered": "Son teslim",
+          "actions": "İşlemler"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "Aktif",
+          "disabled": "Devre dışı"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "Düzenle",
+          "enable": "Etkinleştir",
+          "disable": "Devre Dışı Bırak",
+          "viewDeliveries": "Teslimatları Görüntüle",
+          "delete": "Sil"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "Son Teslimatlar",
+        "close": "Kapat",
+        "loading": "Yükleniyor…",
+        "loadFailed": "Teslimatlar yüklenemedi",
+        "empty": "Henüz teslimat yok.",
+        "viewPayload": "İçeriği Görüntüle",
+        "hidePayload": "İçeriği Gizle",
+        "replay": "Yeniden Gönder",
+        "replaying": "Yeniden Gönderiliyor…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "başarılı",
+          "failed": "başarısız",
+          "retrying": "yeniden deneniyor"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "Görünüm",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "Tema",
+        "description": "Açık, koyu veya sistem tercihine uygun tema kullanın."
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "Tema ön ayarı",
+        "description": "Tema Atölyesi'nden herhangi bir temayı tüm uygulamada kullanın. Aşağıdaki kontroller, temayı ince ayar yapmak için üzerine eklenir.",
+        "search": "Temaları ara…",
+        "searchLabel": "Temaları ara",
+        "default": "Varsayılan",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "Aktif",
+        "empty": "Aramanızla eşleşen tema bulunamadı.",
+        "count": "{count} tema"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "Tema",
+        "description": "Bir ön ayar seçin, bir DESIGN.md dosyası içe aktarın ve ardından aşağıdaki belirteçleri ince ayarlayın.",
+        "selectLabel": "Tema ön ayarı",
+        "import": "İçe aktar",
+        "copy": "Temayı kopyala",
+        "copied": "Kopyalandı",
+        "copyError": "Kopyalama başarısız",
+        "custom": "Özel"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "DESIGN.md içe aktar",
+        "description": "Tüm uygulamada renkleri, yarıçapı, yazı tiplerini, boşlukları ve gölgeleri uygulamak için bir DESIGN.md yapıştırın veya yükleyin — yeniden yüklemeler arasında kalıcı olarak saklanır.",
+        "applied": "Uygulandı:",
+        "remove": "Kaldır"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "Tema modu",
+        "light": "Açık",
+        "dark": "Koyu",
+        "system": "Sistem"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "Vurgu rengi",
+        "description": "Uygulamada aktif durumları renklendirecek bir marka vurgusu seçin.",
+        "label": "Vurgu rengi",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
+          "default": "Varsayılan",
+          "blue": "Mavi",
           "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
+          "violet": "Menekşe",
+          "pink": "Pembe",
           "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "green": "Yeşil",
+          "red": "Kırmızı"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "Renkler",
+        "description": "Vurgu, arka plan ve ön plan.",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "Arka plan",
+          "description": "Yüzey arka plan rengini geçersiz kıl."
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "Ön plan",
+          "description": "Gövde metin rengini geçersiz kıl."
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "Varsayılana sıfırla"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "Arayüz yazı tipi",
+        "uiDescription": "Arayüz genelinde kullanılan yazı tipi ailesi.",
+        "codeLabel": "Kod yazı tipi",
+        "codeDescription": "Kod alanlarında kullanılan yazı tipi ailesi.",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "Tema varsayılanı",
+            "system": "Sistem",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
-            "system": "System mono",
+            "theme": "Tema varsayılanı",
+            "system": "Sistem mono",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
             "jetbrains-mono": "JetBrains Mono"
@@ -879,385 +879,385 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "Kontrast",
+        "description": "Metin kontrastını ince ayarla (50 = değişiklik yok).",
+        "label": "Kontrast seviyesi"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "İmleç işaretini kullan",
+        "description": "Etkileşimli öğelerin üzerine gelindiğinde işaretçi imlecine geç.",
+        "label": "Etkileşimli öğelerde işaretçi imleci"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "Fark işaretleri",
+        "description": "Her değiştirilen satırda renk bantları veya +/- işaretleri göster.",
+        "label": "Fark işareti stili",
+        "color": "Renk",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "Yazı tipi yumuşatma",
+        "description": "macOS yerel yazı tipi antialiasing uygulayın.",
+        "label": "Yerel yazı tipi yumuşatma"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "Tipografi",
+        "description": "Arayüz ve kod alanları için temel yazı tipi boyutları.",
+        "uiFontSize": "Arayüz yazı tipi boyutu",
+        "uiFontSizeDescription": "Temel arayüz yazı tipi boyutunu ayarlayın.",
+        "codeFontSize": "Kod yazı tipi boyutu",
+        "codeFontSizeDescription": "Temel kod yazı tipi boyutunu ayarlayın."
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "Tema",
+        "customize": "Özelleştir"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "Hareketi azalt",
+        "description": "Animasyonları azaltın veya sistem tercihine uyun.",
+        "label": "Hareket tercihi",
+        "system": "Sistem",
+        "on": "Açık",
+        "off": "Kapalı"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "Yarı saydam kenar çubuğu",
+        "description": "Kenar çubuğuna yarı saydam bir malzeme uygulayın."
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "Yarı saydam kenar çubuğu",
+        "description": "Kenar çubuğına yarı saydam bir malzeme uygulayın."
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "Sürüm",
+    "effective": "Geçerlilik",
+    "notFound": "Bu belge mevcut değil.",
+    "backHome": "Ana sayfaya dön"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "Komut paleti",
+    "placeholder": "Bir komut yazın veya arayın…",
+    "empty": "Sonuç bulunamadı.",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
-      "admin": "Admin",
-      "help": "Help"
+      "navigation": "Gezinme",
+      "actions": "Eylemler",
+      "settings": "Ayarlar",
+      "account": "Hesap",
+      "admin": "Yönetici",
+      "help": "Yardım"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
-        "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
-        "webhooks": "Webhooks",
-        "admin": "Admin"
+        "home": "Ana Sayfa",
+        "settings": "Ayarlar",
+        "billing": "Faturalandırma",
+        "team": "Ekip",
+        "apiKeys": "API Anahtarları",
+        "notifications": "Bildirimler",
+        "auditLog": "Denetim Günlüğü",
+        "webhooks": "Webhook'lar",
+        "admin": "Yönetici"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "Takım üyesi davet et",
+        "createApiKey": "API anahtarı oluştur",
+        "switchOrganization": "Organizasyonu değiştir"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "Açık temaya geç",
+        "themeDark": "Koyu temaya geç",
+        "themeSystem": "Sistem temasını kullan"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "Oturumu kapat"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "Sorun bildir",
+        "shortcuts": "Klavye kısayolları"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "Gizlilik tercihleriniz",
+      "description": "Deneyiminizi iyileştirmek, site trafiğini analiz etmek ve içeriği kişiselleştirmek için çerezler kullanıyoruz. İzin vermek istediğiniz kategorileri seçin."
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "Tümünü kabul et",
+      "savePreferences": "Tercihleri kaydet"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "Gerekli",
+        "description": "Sitenin çalışması için gereklidir. Devre dışı bırakılamaz."
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "İşlevsel",
+        "description": "Tercihlerinizi (dil, tema, düzen) hatırlar."
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "Analitik",
+        "description": "Ürünü geliştirebilmemiz için anonim kullanım verileri."
       },
       "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "label": "Pazarlama",
+        "description": "Üçüncü taraf platformlarda kişiselleştirilmiş reklamlar ve yeniden hedefleme."
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "Bildirimler",
+      "description": "Tüm bildirimleriniz tek bir yerde.",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "Tümü",
+        "unread": "Okunmamış"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "Tümünü okundu olarak işaretle",
+        "markRead": "Okundu olarak işaretle",
+        "archive": "Arşivle",
+        "loadMore": "Daha fazla yükle",
+        "loading": "Yükleniyor...",
+        "selected": "{count} seçildi"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "Her şey güncel.",
+        "unread": "Okunmamış bildirim yok."
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "Bildirimler yüklenemedi.",
+        "network": "Ağ hatası. Lütfen tekrar deneyin.",
+        "markRead": "Bildirim okundu olarak işaretlenemedi.",
+        "archive": "Bildirim arşivlenemedi.",
+        "bulkMarkRead": "Bazı bildirimler okundu olarak işaretlenemedi."
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "Gelen kutusu, kalıcı bir bildirim altyapısı gerektirir. Sağlayıcı yapılandırmanızı kontrol edin.",
+        "emptyCaughtUp": "Gelen kutusu temiz.",
+        "emptyChangelog": "Değişiklik günlüğü güncellemeleri burada görünecek."
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "Günaydın",
+      "afternoon": "İyi öğleden sonra",
+      "evening": "İyi akşamlar"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "Uygulamanızı bağlayıcılarla güçlendirin",
+      "subtitle": "Bir istem bırakın, her yerden ⌘K'ye basın veya doğrudan bir çalışma alanı yüzeyine geçin.",
+      "promptPlaceholder": "Aklınızda ne var?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "Entegrasyon bağla",
+        "theme": "Tema Alanı",
+        "audit": "Denetim günlüğü",
+        "billing": "Faturalama"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "Seçilen sağlayıcı için kimlik doğrulama yapılandırılmadı. Kullanıcı oturumlarını etkinleştirmek için sağlayıcı gizli anahtarlarını ayarlayın."
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "Tek bir eylemle başlayın: Sailor'a sorun, çalışma alanı sinyallerini inceleyin veya işleri bir otomasyon yüzeyine yönlendirin.",
+      "openSailor": "Sailor AI'yı aç",
+      "viewAnalytics": "Analitikleri görüntüle"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "Çalışma Alanı Anlık Görüntüsü",
+      "description": "En son depo günü · {day}",
+      "viewAnalytics": "Analitikleri görüntüle →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "Aktif Kullanıcılar",
+        "totalEvents": "Toplam Olay",
+        "conversions": "Dönüşümler",
+        "revenue": "Gelir"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "Oturum açmış kullanıcılar",
+        "totalEvents": "Yakalanan olaylar",
+        "conversions": "Nitelikli işlemler",
+        "revenue": "Tahakkuk ettirilen gelir"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
-        "tenant": "Tenant",
-        "daily": "Daily",
+        "snapshot": "Anlık görüntü",
+        "cadence": "Süreklilik",
+        "tenant": "Kiracı",
+        "daily": "Günlük",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "Kiracı kullanıcıları",
+        "events": "Olay akışı",
+        "funnel": "Huni",
+        "billing": "Faturalandırma"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "Belge iş akışı",
+      "description": "Kaynak dosyaları kaynak görev kuyruğuna gönderin.",
+      "intakeTitle": "Belge alımı",
+      "intakeDescription": "PDF, Markdown, metin veya Word belgesi",
+      "chooseDocument": "Belge seç",
+      "startParseTask": "Ayrıştırma görevini başlat",
+      "queued": "Sırada",
+      "fileInputLabel": "Belge dosyası",
+      "fallbackError": "Belge görevi başarısız oldu.",
+      "taskStatus": "Görev durumu",
+      "progressLabel": "Görev ilerlemesi",
+      "refreshStatus": "Yenile",
+      "cancelTask": "İptal et",
+      "statusError": "Görev durumu yenilenemedi.",
+      "cancelError": "Görev iptal edilemedi.",
+      "statusQueued": "Sırada",
+      "statusRunning": "Çalışıyor",
+      "statusSucceeded": "Başarılı",
+      "statusFailed": "Başarısız",
+      "statusCancelled": "İptal edildi",
+      "resultReady": "Sonuç hazır",
+      "taskError": "Görev hatası",
+      "updatedAt": "Güncellendi"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "Bıraktığınız yerden devam edin",
+      "subtitle": "{count, plural, =0 {Oturum yok} =1 {1 son oturum} other {# son oturum}}",
+      "viewAll": "Tümünü görüntüle →",
+      "newChat": "Yeni sohbet",
+      "untitled": "Başlıksız oturum",
+      "messageCount": "{count, plural, =1 {1 mesaj} other {# mesaj}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "Başlangıç",
+      "description": "{done}/{total} tamamlandı · tam çalışma alanını açmak için kurulumu bitirin",
+      "progressLabel": "Kurulum ilerlemesi",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "Bir takım arkadaşını davet et",
+          "description": "Çalışma alanınıza en az bir işbirlikçi ekleyin."
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "Bir API anahtarı oluşturun",
+          "description": "Çalışma alanı uç noktalarınıza programlı erişim."
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "Bir entegrasyon bağlayın",
+          "description": "Stripe, Slack, webhooks, kuyruklar ve daha fazlası."
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "Sohbet, veri veya iş akışı modunu deneyin."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "Projeler",
+    "noThreads": "Konu yok",
+    "expandAll": "Tümünü genişlet",
+    "collapseAll": "Tümünü daralt",
+    "sectionMore": "Daha fazla seçenek",
+    "newProject": "Yeni proje",
+    "restoredGroups": "Daha önce genişletilmiş gruplar geri yüklendi",
+    "newProjectPlaceholder": "Proje adı",
+    "newProjectDefault": "Adsız",
+    "newProjectSuccess": "Proje oluşturuldu",
+    "newProjectError": "Proje oluşturulamadı",
+    "sortBy": "Sıralama",
+    "sortRecent": "Son aktif",
+    "sortAlphabetical": "Alfabetik",
+    "sortCreated": "Oluşturulma tarihi",
+    "archiveAll": "Tümünü arşivle",
+    "comingV2": "v2'de geliyor"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "İlk oda hazır.",
+      "firstFolder": "Birçok şirket bir klasör olarak başlar.",
+      "firstTable": "İlk masada ikinci bir koltuk var.",
+      "firstSignal": "Gerçek dünya konuşmaya başladı.",
+      "firstShip": "Dünya bunu ilk kez görüyor.",
+      "firstBeliever": "Bugünden itibaren artık sadece kendiniz için inşa etmiyorsunuz.",
+      "firstRevenue": "Hayal artık nakit akışına sahip.",
+      "firstReturn": "Dönüş, ziyaretten daha önemlidir.",
+      "firstTeam": "Üç kişi bir şirket kurmaya başlayabilir.",
+      "firstCrowd": "İlk masa kalabalıklaşıyor.",
+      "firstReset": "Yeniden başlamak daha dürüst bir başlangıçtır.",
+      "firstPublic": "Geleceğin bir parçasını herkese açın.",
+      "firstDemo": "Bu bir gösteri değil. Bir test.",
+      "graduation": "Temellerin ötesine geçtin. Önündeki yol daha güçlü araçlar gerektiriyor."
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "Birçok şirket bir klasör olarak başlar.",
+      "integrations": "Henüz bağlantı yapılandırılmadı.",
+      "creditActivity": "İlk isteğinizden sonra kredi aktivitesi burada görünecek.",
+      "usageData": "Organizasyonunuz istek yapmaya başladığında kullanım verileri görünecek.",
+      "apiKeys": "Henüz anahtar yok.",
+      "apiKeysCta": "İlk anahtarınızı oluşturun",
+      "teamMembers": "Bir kişi başlayabilir. Birkaç kişi inşa edebilir.",
+      "cofounders": "Sizlere ilk inanan kişi henüz görünmedi.",
+      "cofoundersDescription": "Siz ve başka bir kurucu ortak ilgi gösterdiğinizde, burada görünecekler.",
+      "cofoundersAction": "Kurucu ortaklar bulun",
+      "growthChart": "Aktivite başladığında trend verileri görünecek.",
+      "revenueChart": "İşlemler başladığında gelir verileri görünecek.",
+      "webhookDeliveries": "İlk olaydan sonra teslimatlar burada görünecek.",
+      "webhookEndpoints": "Olayları almaya başlamak için yukarıya bir uç nokta ekleyin.",
+      "accessInvites": "Henüz davet kodu oluşturulmadı."
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "İlk oda hazır.",
+    "failure": "Yeniden başlatmak daha dürüst bir başlangıçtır.",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "Eşleşmeler yüklenemedi.",
+      "loadMatchesDescription": "Bizim tarafımızda bir sorun oluştu. Tekrar denemek için sayfayı yenileyin.",
+      "loadWebhookDeliveries": "Teslimatlar yüklenemedi.",
+      "replayWebhookDelivery": "Yeniden oynatma başarılı olmadı.",
+      "loadWebhookEndpoints": "Uç noktalar yüklenemedi."
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "Tek başına başlanabilir. Birkaç kişiyle inşa edilir.",
+    "revenue": "Hayal artık nakit akışına sahip.",
+    "growth": "Sinyal güçleniyor.",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "Dünya ilk kez görüyor.",
+      "echo": "Sonunda localhost'tan çıktı."
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "Hazır olmanıza gerek yok. Başlamanız gerekiyor.",
+    "graduation": "Temellerin ötesine geçtiniz. Öndeki yol için {tool} deneyin.",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "İlk bağlam kuleniz burada başlıyor.",
+      "emptyDescription": "Startup OS'ta bir şirket derleyin ve bağlam kulesini görüntüleyin veya düzenleyin.",
+      "emptyAction": "Startup OS'i Aç",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "Alanları otomatik doldurmak için bir AI sağlayıcı anahtarı bağlayın.",
+        "generateFailed": "Oluşturma işlemi tamamlanmadı.",
+        "saveFailed": "Değişiklikleriniz kaydedilmedi."
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "Kaydet",
+        "saving": "Kaydediliyor…",
+        "cancel": "İptal",
+        "open": "Startup OS'i Aç"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "Henüz bahis yok.",
+      "noRuns": "Aktif çalıştırma yok."
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "Bu projede henüz dosya yok."
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "Çalışma alanı oluşturuluyor.",
+      "emptyDescription": "Davet henüz senkronize ediliyor olabilir. Sayfayı yenileyin veya ayrı bir çalışma alanı oluşturun."
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "Ödeme ayarlarına geçmeden önce bir çalışma alanı oluşturun.",
+      "emptyDescription": "Ödeme işlemleri aktif bir çalışma alanı gerektirir. Önce bir tane oluşturun, ardından ödeme ayarlarına dönün."
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "İlk çalışma alanı burada başlıyor.",
+      "emptyDescription": "Başlamak için bir çalışma alanı oluşturun."
     }
   }
 }

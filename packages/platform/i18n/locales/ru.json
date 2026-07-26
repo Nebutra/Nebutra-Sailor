@@ -1,73 +1,73 @@
 {
   "admin": {
-    "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "title": "Администрирование",
+    "description": "Панель суперадминистратора — управление пользователями, организациями и состоянием системы.",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "Обзор",
+      "users": "Пользователи",
+      "organizations": "Организации"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "Пользователи",
+      "description": "Просмотр, поиск и вход от имени любого пользователя во всех организациях.",
+      "searchPlaceholder": "Поиск пользователей…",
+      "totalCount": "{count, plural, one {# пользователь} few {# пользователя} other {# пользователей}}",
+      "empty": "Пользователи не найдены.",
+      "loadError": "Не удалось загрузить пользователей.",
       "columns": {
-        "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "email": "Электронная почта",
+        "name": "Имя",
+        "created": "Дата создания",
+        "activeOrgs": "Активные организации",
+        "actions": "Действия"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "Просмотр организаций"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "Организации",
+      "description": "Все рабочие пространства в системе, отсортированные по дате создания.",
+      "searchPlaceholder": "Поиск организаций…",
+      "totalCount": "{count, plural, one {# организация} few {# организации} many {# организаций} other {# организация}}",
+      "empty": "Организации не найдены.",
+      "loadError": "Не удалось загрузить организации.",
       "columns": {
-        "name": "Name",
+        "name": "Название",
         "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "plan": "Тариф",
+        "members": "Участники",
+        "created": "Создано",
+        "actions": "Действия"
       },
-      "view": "View"
+      "view": "Просмотр"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "Войти как",
+      "starting": "Начинается…",
+      "stop": "Завершить подмену",
+      "confirm": "Подменить {label}? Вы увидите приложение от имени этого пользователя до завершения подмены.",
+      "error": "Не удалось начать подмену.",
+      "stopError": "Не удалось завершить подмену."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "Назад",
+      "next": "Далее",
+      "pageOf": "Страница {page} из {total}"
     }
   },
   "Common": {
     "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "dashboard": "Панель управления",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "Продолжить",
+      "confirm": "Подтвердить",
+      "done": "Готово",
+      "cancel": "Отмена"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "system": "Системная"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -77,271 +77,271 @@
     "fr": "French",
     "ja": "Japanese",
     "ko": "Korean",
-    "label": "Language",
-    "ariaLabel": "Change language"
+    "label": "Язык",
+    "ariaLabel": "Изменить язык"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "Номер записи ICP",
+      "publicSecurity": "Запись в реестре общественной безопасности"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "Войти через WeChat",
+      "notConfigured": "Вход через WeChat не настроен"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "Настройте рабочее пространство",
+    "subtitle": "Три простых шага — и вы готовы к запуску.",
     "steps": {
-      "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "workspace": "Рабочее пространство",
+      "invite": "Пригласить команду",
+      "plan": "Выбрать тариф"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "Назад",
+      "stepCounter": "Шаг {current} из {total}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "Выберите тариф",
+      "description": "Начните бесплатно или откройте больше возможностей. Тариф можно изменить в любой момент.",
+      "choose": "Выбрать тариф",
+      "skip": "Пропустить"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "Открыть меню пользователя",
+    "profile": "Профиль",
+    "settings": "Настройки",
+    "feedback": "Обратная связь",
+    "theme": "Тема",
+    "language": "Язык",
+    "signOut": "Выйти",
+    "signedInAs": "Вы вошли как"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "Профиль",
+      "description": "Обновите личную информацию.",
+      "nameLabel": "Имя",
+      "namePlaceholder": "Ваше полное имя",
+      "emailLabel": "Электронная почта",
+      "emailHint": "Мы отправим ссылку для подтверждения нового адреса электронной почты.",
+      "languageLabel": "Язык",
+      "submit": "Сохранить изменения",
+      "saving": "Сохранение…",
+      "verifyEmail": "Подтвердить",
+      "verifying": "Отправка подтверждения…",
+      "success": "Профиль обновлён.",
+      "verificationSent": "Письмо с подтверждением отправлено.",
+      "errorRequiredName": "Имя обязательно для заполнения.",
+      "errorInvalidEmail": "Адрес электронной почты недействителен.",
+      "subtitle": "Ваши данные личности и контакты.",
+      "unknown": "Безымянный пользователь",
+      "manageCta": "Открыть полные настройки аккаунта"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "Аватар",
+      "description": "Загрузите квадратное изображение (PNG, JPEG или WebP, макс. 2 МБ).",
+      "uploadButton": "Загрузить аватар",
+      "uploading": "Загрузка…",
+      "fileTooBig": "Файл слишком большой. Максимальный размер — 2 МБ.",
+      "invalidType": "Неподдерживаемый тип изображения. Используйте PNG, JPEG или WebP.",
+      "success": "Аватар обновлён.",
+      "removeButton": "Удалить аватар",
+      "removed": "Аватар удалён.",
+      "deleteError": "Не удалось удалить аватар."
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "Экспорт моих данных",
+      "description": "Скачайте копию всех записей, которые мы храним по вашему аккаунту, включая профиль, организации, события аудита, уведомления и приглашения.",
+      "compliance": "Требуется согласно статье 20 GDPR (Право на переносимость данных) и статье 45 PIPL (Право на получение копии персональных данных).",
+      "export": "Экспортировать мои данные",
+      "pending": "Подготовка экспорта…",
+      "ready": "Экспорт готов.",
+      "download": "Скачать JSON",
+      "error": "Не удалось подготовить экспорт. Попробуйте ещё раз."
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "Изменить адрес электронной почты",
+      "description": "Мы отправим ссылку для подтверждения на новый адрес. Изменение вступит в силу только после подтверждения из этого почтового ящика.",
+      "newEmailLabel": "Новый адрес электронной почты",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "Отправить ссылку для подтверждения",
+      "submitting": "Отправка…",
+      "verificationSent": "Проверьте почтовый ящик {email}, чтобы подтвердить изменение.",
+      "errorInvalidEmail": "Неверный адрес электронной почты.",
+      "error": "Не удалось запросить изменение адреса электронной почты.",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "Электронная почта обновлена",
+        "successDescription": "Адрес электронной почты для входа обновлён.",
+        "successWithEmail": "Теперь ваш адрес электронной почты для входа — {email}.",
+        "failureTitle": "Не удалось подтвердить по этой ссылке",
+        "failureDescription": "Эта ссылка для подтверждения недействительна, истекла или уже использована. Запросите новую в настройках аккаунта.",
+        "errorCode": "Причина: {code}",
+        "continueCta": "Вернуться в аккаунт",
+        "backCta": "Вернуться в аккаунт"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "Аккаунт",
+    "ariaLabel": "Настройки аккаунта",
+    "navLabel": "Вкладки настроек аккаунта",
+    "tip": "Нажмите {key} в любом месте, чтобы снова открыть это окно.",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "Профиль",
+      "subscription": "Подписка",
+      "billing": "Оплата",
+      "preferences": "Настройки",
+      "personalization": "Персонализация"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "Подписка",
+      "subtitle": "Тариф, квота и продление.",
+      "currentPlan": "Текущий тариф",
+      "upgradeCta": "Сравнить тарифы",
+      "manageCta": "Управление подпиской"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "Оплата",
+      "subtitle": "История счетов и способ оплаты.",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "История пока пуста",
+        "description": "После первого платного периода здесь появятся списания и счета.",
+        "cta": "Открыть полную историю оплаты"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "Настройки",
+      "subtitle": "Тема и доступность.",
+      "theme": "Тема",
+      "light": "Светлая",
+      "dark": "Тёмная",
+      "system": "Системная",
+      "help": "Помощь",
+      "reportIssue": "Сообщить о проблеме",
+      "shortcuts": "Горячие клавиши"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "Персонализация",
+      "subtitle": "Расскажите Sailor, кто вы и как отвечать."
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "Переосмысление парадигмы",
+    "hero_subtitle": "Пусть не будет сложного бизнеса в мире.",
+    "social_title": "Социальная сфера",
+    "social_headline": "Абсолютное технологическое равенство",
+    "social_description": "Расширяем возможности инноваторов на периферии. Ломаем традиционные фильтры и даём соло-основателям инфраструктуру вне шаблонов.",
+    "governance_title": "Управление",
+    "governance_headline": "Код — это закон",
+    "governance_description": "Алгоритмическое управление на основе Proof of Work и реальных бизнес-результатов, заменяющее непрозрачную бюрократию.",
+    "environment_title": "Экология",
+    "environment_headline": "Цифровой минимализм",
+    "environment_description": "Снижаем углеродный след облаков через экстремальную интеграцию SaaS и эффективность ресурсов."
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "Безопасность",
+      "description": "Управляйте паролем, многофакторной аутентификацией и активными сессиями.",
+      "managedByProvider": "Настройки безопасности управляются вашим провайдером аутентификации.",
+      "openProviderProfile": "Открыть профиль",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "Сменить пароль",
+        "description": "Используйте надёжный пароль, который вы не используете на других сайтах.",
+        "currentPasswordLabel": "Текущий пароль",
+        "newPasswordLabel": "Новый пароль",
+        "confirmPasswordLabel": "Подтвердите новый пароль",
+        "revokeOtherSessions": "Выйти с других устройств",
+        "submit": "Обновить пароль",
+        "pending": "Обновление пароля…",
+        "success": "Пароль успешно обновлён."
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "Двухфакторная аутентификация",
+        "description": "Добавьте второй шаг проверки с помощью приложения-аутентификатора.",
+        "enabled": "Включено",
+        "disabled": "Отключено",
+        "enabledHelp": "После входа по паролю ваш аккаунт запрашивает 6-значный код из аутентификатора.",
+        "disabledHelp": "Защитите аккаунт 6-значным кодом из приложения-аутентификатора.",
+        "enable": "Включить двухфакторную аутентификацию",
+        "disable": "Отключить двухфакторную аутентификацию",
+        "passwordPrompt": "Подтвердите пароль",
+        "scanQrCode": "Отсканируйте этот QR-код в приложении-аутентификаторе, затем введите 6-значный код ниже.",
+        "secretKeyLabel": "Или введите этот секрет вручную",
+        "verificationCodeLabel": "Код подтверждения",
+        "verify": "Подтвердить и включить",
+        "backupCodesTitle": "Резервные коды",
+        "backupCodesDescription": "Сохраните эти коды в безопасном месте. Каждый код можно использовать один раз, если вы потеряете доступ к приложению-аутентификатору.",
+        "copyBackupCodes": "Скопировать коды",
+        "finishSetup": "Завершить настройку",
+        "successEnabled": "Двухфакторная аутентификация включена.",
+        "successDisabled": "Двухфакторная аутентификация отключена."
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "Активные сеансы",
+        "description": "Устройства и браузеры, в которые выполнен вход в ваш аккаунт.",
+        "currentSession": "(текущий)",
+        "ipLabel": "IP-адрес",
+        "lastActiveLabel": "Последняя активность",
+        "revoke": "Выйти",
+        "revokeAll": "Выйти на всех других устройствах",
+        "empty": "Других активных сессий нет.",
+        "successRevoked": "Сессия завершена.",
+        "successRevokedAll": "Все остальные сессии завершены."
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "Удалить аккаунт",
+        "description": "Безвозвратно удалить аккаунт и все связанные данные. Это действие нельзя отменить.",
+        "passwordPrompt": "Введите пароль для подтверждения",
+        "confirmTextLabel": "Введите DELETE для подтверждения",
+        "submit": "Удалить аккаунт",
+        "cancel": "Отмена",
+        "success": "Аккаунт удален."
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "Подключенные аккаунты",
+        "description": "Проверьте методы входа через OAuth, связанные с вашим аккаунтом Nebutra.",
+        "connected": "Подключено",
+        "connect": "Подключить",
+        "help": "Перед отключением провайдера оставьте хотя бы один проверенный способ входа.",
+        "unlink": "Отключить",
+        "notLinked": "Не подключено"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "Ключи доступа",
+        "description": "Используйте привязанные к устройству учетные данные для входа, устойчивого к фишингу.",
+        "empty": "Ключи доступа еще не зарегистрированы",
+        "addPasskey": "Добавить ключ доступа",
+        "cancelAdd": "Отмена",
+        "cancelled": "Настройка ключа доступа отменена. Ничего не изменилось.",
+        "defaultName": "Ключ доступа {number}",
+        "nameHelp": "Дайте этому ключу доступа узнаваемое имя, прежде чем браузер запросит подтверждение.",
+        "nameLabel": "Имя ключа доступа",
+        "rename": "Переименовать",
+        "saveRename": "Сохранить имя",
+        "remove": "Удалить",
+        "successAdded": "Ключ доступа добавлен.",
+        "successRemoved": "Ключ доступа удалён.",
+        "unavailableBadge": "Недоступно"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "Установить пароль",
+        "description": "Добавьте пароль, чтобы входить без OAuth-провайдера.",
+        "submit": "Установить пароль",
+        "pending": "Отправляем ссылку для настройки пароля…",
+        "sentMessage": "Мы отправили ссылку для настройки пароля на вашу почту."
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "Запускайте стартап с управлением с первого дня.",
+      "tagline": "Мультирегиональные агенты, мультитенантность по умолчанию. Без команды платформы."
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Войти в Nebutra",
+      "subtitle": "Выберите способ входа.",
+      "continueWith": "Продолжить через",
+      "continueWithProvider": "Продолжить через {provider}",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,380 +349,380 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "Перенаправление…",
+      "dividerOr": "Или войдите по электронной почте",
+      "emailLabel": "Электронная почта",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "Продолжить",
+      "back": "Назад",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Введите пароль",
+      "showPassword": "Показать пароль",
+      "hidePassword": "Скрыть пароль",
+      "capsLockOn": "Caps Lock включён",
+      "forgotPassword": "Забыли пароль?",
+      "submit": "Войти",
+      "submitLoading": "Вход…",
+      "useMagicLink": "Отправить мне волшебную ссылку",
+      "usePasskey": "Войти с помощью ключа доступа",
+      "passkeyTitle": "Войдите с помощью ключа доступа",
+      "passkeyDescription": "Используйте Face ID, Touch ID или ключ безопасности. Пароль не требуется.",
+      "passkeyButton": "Продолжить с ключом доступа",
+      "passkeyCancelled": "Запрос ключа доступа отменён.",
+      "passkeyUnsupported": "Этот браузер не поддерживает ключи доступа.",
+      "passkeyError": "Вход с ключом доступа не удался. Попробуйте другой способ.",
+      "ssoTitle": "Продолжить через корпоративный SSO",
+      "ssoDescription": "Перенаправляем вас в {provider} для {email}.",
+      "ssoError": "Не удалось запустить корпоративный SSO. Попробуйте другой способ.",
+      "ssoRetry": "Попробовать снова",
+      "newToProduct": "Впервые в Nebutra?",
+      "signUpLink": "Зарегистрироваться",
+      "homeLink": "Главная",
+      "signInFailed": "Не удалось войти",
+      "genericError": "Произошла ошибка. Пожалуйста, попробуйте снова.",
+      "captchaError": "Проверка на бота не пройдена. Обновите страницу и попробуйте снова."
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "Создайте аккаунт Nebutra",
+      "subtitle": "Один аккаунт для всех приложений Nebutra.",
+      "firstNameLabel": "Имя",
+      "lastNameLabel": "Фамилия",
+      "firstNamePlaceholder": "Имя",
+      "lastNamePlaceholder": "Фамилия",
+      "submit": "Создать аккаунт",
+      "submitLoading": "Создание аккаунта…",
+      "alreadyHaveAccount": "Уже есть аккаунт?",
+      "signInLink": "Войти",
+      "signUpFailed": "Не удалось зарегистрироваться"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "Ключи доступа",
+      "description": "Используйте Face ID, Touch ID, Windows Hello или ключ безопасности вместо пароля. На каждом устройстве свой ключ доступа.",
+      "addButton": "Добавить ключ доступа",
+      "adding": "Настройка…",
+      "namePlaceholder": "напр. MacBook Pro",
+      "nameLabel": "Название (необязательно)",
+      "registerSuccess": "Ключ доступа добавлен.",
+      "registerCancelled": "Настройка отменена.",
+      "registerUnsupported": "Этот браузер не поддерживает ключи доступа.",
+      "registerError": "Не удалось зарегистрировать ключ доступа.",
+      "empty": "Ключей доступа пока нет.",
+      "loadError": "Не удалось загрузить ключи доступа.",
+      "revoke": "Удалить",
+      "revoking": "Удаление…",
+      "revokeConfirm": "Удалить этот ключ доступа? Вы больше не сможете входить с его помощью.",
+      "revokeSuccess": "Ключ доступа удалён.",
+      "revokeError": "Не удалось удалить ключ доступа.",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "Привязан к устройству",
+        "multiDevice": "Синхронизировано на всех устройствах"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "Добавлено {date}"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "Войти по волшебной ссылке",
+      "description": "Введите адрес электронной почты, и мы отправим вам 6-значный код для входа.",
+      "emailLabel": "Электронная почта",
+      "send": "Отправить ссылку",
+      "codeLabel": "Код подтверждения",
+      "verify": "Подтвердить",
+      "resend": "Отправить код повторно",
+      "resendCooldown": "Повторная отправка через {seconds} с",
+      "sentTo": "Мы отправили код на {email}"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "Забыли пароль?",
+      "description": "Введите адрес электронной почты, и мы отправим вам ссылку для сброса пароля.",
+      "emailLabel": "Электронная почта",
+      "submit": "Отправить ссылку для сброса",
+      "successTitle": "Проверьте почту",
+      "success": "Если этот адрес электронной почты зарегистрирован, вы получите ссылку для сброса пароля в ближайшее время."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "Сбросить пароль",
+      "description": "Придумайте новый пароль для вашего аккаунта.",
+      "newPasswordLabel": "Новый пароль",
+      "confirmPasswordLabel": "Подтвердите новый пароль",
+      "submit": "Сбросить пароль",
+      "successTitle": "Пароль сброшен",
+      "successDescription": "Теперь вы можете войти в аккаунт с новым паролем.",
+      "signInCta": "Перейти к входу",
+      "invalidTitle": "Недействительная ссылка для сброса",
+      "invalidDescription": "Ссылка для сброса пароля отсутствует или повреждена. Запросите новую на странице «Забыли пароль?»."
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "Электронная почта подтверждена",
+      "successDescription": "Ваш адрес электронной почты успешно подтвержден.",
+      "failureTitle": "Подтверждение не выполнено",
+      "failureDescription": "Мы не смогли подтвердить вашу электронную почту по этой ссылке.",
+      "continueCta": "Продолжить",
+      "signInCta": "Перейти к входу"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "Вход выполнен",
+      "title": "Вы вошли в систему",
+      "description": "Сессия готова. Мы открываем рабочее пространство Nebutra и обеспечиваем безопасную передачу из потока аутентификации.",
+      "session": "Сессия",
+      "verified": "Подтверждено",
+      "workspace": "Рабочее пространство",
+      "preparing": "Подготовка",
+      "redirecting": "Вход в рабочее пространство через {seconds} с",
+      "secureHandoff": "Безопасная передача",
+      "continueCta": "Перейти в рабочее пространство",
+      "signInCta": "Использовать другой аккаунт"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "Неверный адрес электронной почты или пароль.",
+      "userNotFound": "Аккаунт с таким адресом электронной почты не найден.",
+      "userAlreadyExists": "Аккаунт с таким адресом электронной почты уже существует.",
+      "weakPassword": "Пароль слишком слабый. Используйте минимум 8 символов, включая буквы разного регистра и цифры.",
+      "passwordsDontMatch": "Пароли не совпадают.",
+      "passwordTooShort": "Пароль должен содержать не менее 8 символов.",
+      "currentPasswordIncorrect": "Текущий пароль неверен.",
+      "samePassword": "Новый пароль должен отличаться от текущего.",
+      "invalidEmail": "Неверный адрес электронной почты.",
+      "emailNotVerified": "Сначала подтвердите адрес электронной почты.",
+      "sessionExpired": "Сессия истекла. Пожалуйста, войдите снова.",
+      "twoFactorRequired": "Требуется двухфакторная аутентификация.",
+      "invalidVerificationCode": "Код подтверждения неверен или истек.",
+      "twoFactorAlreadyEnabled": "Двухфакторная аутентификация уже включена.",
+      "twoFactorNotEnabled": "Двухфакторная аутентификация не включена.",
+      "tooManyAttempts": "Слишком много попыток. Попробуйте позже.",
+      "rateLimited": "Вы делаетe это слишком часто. Замедлитесь.",
+      "providerNotSupported": "Это действие управляется вашим провайдером аутентификации.",
+      "networkError": "Ошибка сети. Проверьте подключение и попробуйте снова.",
+      "unknown": "Что-то пошло не так. Попробуйте снова."
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "Попробуйте один из этих вариантов, чтобы начать",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "Показать недавнюю активность",
+        "prompt": "Покажите мне самую свежую активность в моем рабочем пространстве за последние 24 часа."
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "Отладить ошибку",
+        "prompt": "Помогите мне отладить ошибку времени выполнения. Я вставлю трассировку стека, а вы проведете меня через нее."
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "Составить черновик сводного письма",
+        "prompt": "Составьте краткое еженедельное сводное письмо, которое я могу отправить команде о прогрессе платформы."
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "Изучить функции платформы",
+        "prompt": "Расскажите мне о ключевых функциях этой SaaS-платформы и о том, как я могу их использовать."
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "Текущий тариф",
+      "manage": "Управление подпиской",
+      "noPlanTitle": "Нет активного тарифа",
+      "noPlanDescription": "Выберите тариф, чтобы получить доступ к платным функциям и повысить лимиты использования.",
+      "choosePlan": "Выбрать тариф",
+      "renewsOn": "Продлевается {date}",
+      "endsOn": "Действует до {date}",
+      "trialEndsOn": "Испытательный период заканчивается {date}",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "Активен",
+        "trialing": "Испытательный",
+        "past_due": "Просрочен",
+        "canceled": "Отменен",
+        "free": "Бесплатный"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "Не удалось загрузить статус биллинга."
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "Бесплатная {days}-дневная пробная версия",
+      "seat": "{count, plural, one {# рабочее место} few {# рабочих места} other {# рабочих мест}}",
+      "perSeat": "/ рабочее место"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "Логотип организации",
+        "description": "Загрузите квадратное изображение (PNG, JPEG или WebP, макс. 2 МБ) для представления вашей организации.",
+        "uploadButton": "Загрузить логотип",
+        "uploading": "Загрузка…",
+        "fileTooBig": "Файл слишком большой. Максимальный размер — 2 МБ.",
+        "invalidType": "Неподдерживаемый тип изображения. Используйте PNG, JPEG или WebP.",
+        "success": "Логотип обновлён.",
+        "removeButton": "Удалить логотип",
+        "removed": "Логотип удалён."
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "Название организации",
+        "description": "Обновите отображаемое имя, видимое вашей команде и клиентам.",
+        "label": "Название",
+        "submit": "Сохранить",
+        "saving": "Сохранение…",
+        "success": "Название организации обновлено."
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "Удалить организацию",
+        "description": "Безвозвратно удалить эту организацию, всех участников, приглашения и связанные данные. Это действие нельзя отменить.",
+        "trigger": "Удалить организацию",
+        "confirmLabel": "Введите название организации для подтверждения",
+        "submit": "Удалить организацию",
+        "cancel": "Отмена",
+        "success": "Организация удалена."
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "Вас пригласили",
+      "heading": "Вас пригласили в {organizationName}",
+      "description": "Примите приглашение, чтобы начать работу с командой.",
+      "accept": "Принять приглашение",
+      "accepting": "Принимаем...",
+      "decline": "Отклонить",
+      "declining": "Отклоняем...",
+      "declinedView": "Приглашение отклонено",
+      "success": "Мы уведомили отправителя.",
+      "backToDashboard": "Вернуться на панель",
+      "roleLabel": "Роль: {role}",
+      "errorEmailMismatch": "Это приглашение было отправлено на другой адрес электронной почты",
+      "errorEmailMismatchDetail": "Войдите с адресом электронной почты, на который было отправлено приглашение, чтобы принять его.",
+      "errorExpired": "Срок действия приглашения истёк",
+      "errorExpiredDetail": "Попросите отправителя выслать новое приглашение.",
+      "errorNotFound": "Приглашение не найдено",
+      "errorNotFoundDetail": "Ссылка приглашения недействительна или была отозвана.",
+      "errorNotAvailable": "Приглашение недоступно",
+      "errorNotAvailableDetail": "На это приглашение уже был дан ответ, оно больше не активно.",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "Владелец",
+        "admin": "Администратор",
+        "member": "Участник",
+        "viewer": "Наблюдатель"
       }
     }
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "title": "Ключи API",
+      "description": "Создавайте и управляйте ключами API для программной работы с Nebutra.",
+      "createButton": "Создать ключ API",
+      "noPermission": "У вас нет прав для просмотра ключей API.",
+      "loading": "Загрузка…",
+      "loadError": "Не удалось загрузить ключи API.",
+      "createError": "Не удалось создать ключ API.",
+      "revokeError": "Не удалось отозвать ключ API.",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "Ключей API пока нет",
+        "cta": "Создать первый ключ API"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "Название",
+        "prefix": "Префикс",
+        "lastUsed": "Последнее использование",
+        "scopes": "Области доступа",
+        "created": "Создан",
+        "actions": "Действия",
+        "never": "Никогда"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "Отозвать",
+        "revoking": "Отзыв…",
+        "copy": "Копировать",
+        "copied": "Скопировано",
+        "close": "Закрыть",
+        "submit": "Создать ключ",
+        "submitting": "Создание…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "Создать ключ API",
+        "description": "Ключи API позволяют внешним системам обращаться к Nebutra от вашего имени. Относитесь к ним как к паролям.",
+        "nameLabel": "Название",
+        "namePlaceholder": "например, Production backend",
+        "scopesLabel": "Области доступа",
+        "successWarning": "Этот ключ показывается только один раз. Сохраните его, прежде чем закрыть окно.",
+        "confirmClose": "После закрытия ключ будет скрыт навсегда. Убедитесь, что вы его сохранили."
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "Журнал аудита",
+      "description": "Отслеживайте каждое административное действие в вашем рабочем пространстве. Фильтруйте по исполнителю, действию, объекту или диапазону времени.",
+      "empty": "Записей аудита пока нет",
+      "loadMore": "Загрузить ещё",
+      "loading": "Загрузка…",
+      "forbidden": "Для просмотра журнала аудита необходимы права администратора.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
+        "when": "Когда",
+        "actor": "Исполнитель",
+        "action": "Действие",
+        "entity": "Объект",
+        "outcome": "Результат",
         "ip": "IP"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "Старое значение",
+        "newValue": "Новое значение"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "Действие",
+        "actionPlaceholder": "Поиск действия…",
+        "entityType": "Тип сущности",
+        "outcome": "Результат",
+        "outcomeSuccess": "Успех",
+        "outcomeFailure": "Ошибка",
+        "outcomePending": "В ожидании",
+        "startDate": "Дата начала",
+        "endDate": "Дата окончания",
+        "range24h": "Последние 24 ч",
+        "range7d": "Последние 7 дн.",
+        "range30d": "Последние 30 дн.",
+        "reset": "Сбросить",
+        "all": "Все"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "Уведомления",
+      "description": "Выберите, как Nebutra будет связываться с вами по каждому типу события и на каждом канале доставки.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "Сбросить до значений по умолчанию",
+        "save": "Сохранить"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "Сохранение…",
+        "saved": "Сохранено",
+        "error": "Не удалось сохранить. Повторите попытку."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "Оповещения безопасности",
+          "description": "Оповещения о входе, смене пароля, изменениях двухфакторной аутентификации."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "Биллинг",
+          "description": "Счета, ошибки оплаты и изменения подписки."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "Приглашения в команду",
+          "description": "Приглашения присоединиться к организации, принятые или отклонённые."
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "Активность команды",
+          "description": "Участники присоединились, изменения ролей и другая активность в рабочем пространстве."
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "Обновления продукта",
+          "description": "Новые функции, ключевые изменения и заметки о выпуске."
         },
         "marketing": {
-          "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "label": "Маркетинг",
+          "description": "Рассылка и периодические акции. Только по согласию."
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "В приложении"
         },
         "email": {
-          "label": "Email"
+          "label": "Электронная почта"
         },
         "push": {
           "label": "Push"
@@ -734,144 +734,144 @@
     },
     "webhooks": {
       "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "description": "Подпишитесь на события из вашего рабочего пространства. Мы подписываем каждую полезную нагрузку секретом вашего конечного пункта, чтобы вы могли проверять подлинность.",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "Новый конечный пункт",
+        "urlLabel": "URL конечного пункта",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "События",
+        "submit": "Создать конечный пункт",
+        "submitting": "Создание…",
+        "selectEvent": "Выберите хотя бы одно событие.",
+        "successTitle": "Эндпоинт создан. Секрет подписи отображается только один раз.",
+        "successWarning": "Сохраните его в менеджере секретов приложения, прежде чем закрыть окно.",
+        "copy": "Копировать",
+        "copied": "Скопировано"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "Активные эндпоинты",
+        "empty": "Эндпоинтов вебхуков пока нет. Создайте один выше.",
+        "loading": "Загрузка…",
+        "loadFailed": "Не удалось загрузить вебхуки",
         "columns": {
           "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "events": "События",
+          "status": "Статус",
+          "lastDelivered": "Последняя доставка",
+          "actions": "Действия"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "Активен",
+          "disabled": "Отключен"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "Изменить",
+          "enable": "Включить",
+          "disable": "Отключить",
+          "viewDeliveries": "Просмотр доставок",
+          "delete": "Удалить"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "Последние доставки",
+        "close": "Закрыть",
+        "loading": "Загрузка…",
+        "loadFailed": "Не удалось загрузить доставки",
+        "empty": "Доставок пока нет.",
+        "viewPayload": "Просмотр полезной нагрузки",
+        "hidePayload": "Скрыть полезную нагрузку",
+        "replay": "Повторить",
+        "replaying": "Повторяется…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "успешно",
+          "failed": "ошибка",
+          "retrying": "повторная попытка"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "Внешний вид",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "Тема",
+        "description": "Используйте светлую, тёмную или системную тему."
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "Пресет темы",
+        "description": "Примените любую тему из Theme Playground ко всему приложению. Элементы управления ниже позволяют настроить её точнее.",
+        "search": "Поиск тем…",
+        "searchLabel": "Поиск тем",
+        "default": "По умолчанию",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "Активная",
+        "empty": "Темы не найдены.",
+        "count": "{count} темы"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "Тема",
+        "description": "Выберите пресет, импортируйте DESIGN.md, затем настройте токены ниже.",
+        "selectLabel": "Пресет темы",
+        "import": "Импорт",
+        "copy": "Копировать тему",
+        "copied": "Скопировано",
+        "copyError": "Не удалось скопировать",
+        "custom": "Своя"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "Импорт DESIGN.md",
+        "description": "Вставьте или загрузите DESIGN.md, чтобы применить его цвета, радиусы, шрифты, отступы и тени ко всему приложению — настройки сохраняются после перезагрузки.",
+        "applied": "Применено:",
+        "remove": "Удалить"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "Режим темы",
+        "light": "Светлая",
+        "dark": "Тёмная",
+        "system": "Системная"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "Цвет акцента",
+        "description": "Выберите брендовый акцент, который будет окрашивать активные состояния по всему приложению.",
+        "label": "Цвет акцента",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
-          "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "default": "По умолчанию",
+          "blue": "Синий",
+          "cyan": "Голубой",
+          "violet": "Фиолетовый",
+          "pink": "Розовый",
+          "amber": "Янтарный",
+          "green": "Зелёный",
+          "red": "Красный"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "Цвета",
+        "description": "Акцент, фон и передний план.",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "Фон",
+          "description": "Переопределить цвет фона поверхности."
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "Передний план",
+          "description": "Переопределить цвет основного текста."
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "Сбросить до значений по умолчанию"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "Шрифт интерфейса",
+        "uiDescription": "Семейство шрифтов, используемое в интерфейсе.",
+        "codeLabel": "Шрифт кода",
+        "codeDescription": "Семейство шрифтов для блоков кода.",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "По умолчанию",
+            "system": "Системный",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
-            "system": "System mono",
+            "theme": "По умолчанию",
+            "system": "Системный моноширинный",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
             "jetbrains-mono": "JetBrains Mono"
@@ -879,385 +879,385 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "Контраст",
+        "description": "Настройка контрастности текста (50 = без изменений).",
+        "label": "Уровень контраста"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "Использовать курсор-указатель",
+        "description": "Использовать курсор-указатель при наведении на интерактивные элементы.",
+        "label": "Курсор-указатель на интерактивных элементах"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "Маркеры изменений",
+        "description": "Показывать цветовые полосы или символы +/- на каждой изменённой строке.",
+        "label": "Стиль маркеров изменений",
+        "color": "Цвет",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "Сглаживание шрифтов",
+        "description": "Использовать нативное сглаживание шрифтов macOS.",
+        "label": "Нативное сглаживание шрифтов"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "Типографика",
+        "description": "Базовые размеры шрифтов для интерфейса и кода.",
+        "uiFontSize": "Размер шрифта интерфейса",
+        "uiFontSizeDescription": "Настроить базовый размер шрифта интерфейса.",
+        "codeFontSize": "Размер шрифта кода",
+        "codeFontSizeDescription": "Настроить базовый размер шрифта кода."
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "Тема",
+        "customize": "Настроить"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "Уменьшить анимацию",
+        "description": "Уменьшить анимации или использовать системные настройки.",
+        "label": "Предпочтения анимации",
+        "system": "Системные",
+        "on": "Вкл.",
+        "off": "Выкл."
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "Полупрозрачная боковая панель",
+        "description": "Применить полупрозрачный материал к боковой панели."
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "Полупрозрачная боковая панель",
+        "description": "Применить полупрозрачный материал к боковой панели."
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "Версия",
+    "effective": "Дата вступления в силу",
+    "notFound": "Этот документ недоступен.",
+    "backHome": "Вернуться на главную"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "Панель команд",
+    "placeholder": "Введите команду или начните поиск…",
+    "empty": "Ничего не найдено.",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
-      "admin": "Admin",
-      "help": "Help"
+      "navigation": "Навигация",
+      "actions": "Действия",
+      "settings": "Настройки",
+      "account": "Аккаунт",
+      "admin": "Администрирование",
+      "help": "Помощь"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
-        "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
+        "home": "Главная",
+        "settings": "Настройки",
+        "billing": "Тарифы и оплата",
+        "team": "Команда",
+        "apiKeys": "Ключи API",
+        "notifications": "Уведомления",
+        "auditLog": "Журнал аудита",
         "webhooks": "Webhooks",
-        "admin": "Admin"
+        "admin": "Администрирование"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "Пригласить участника команды",
+        "createApiKey": "Создать ключ API",
+        "switchOrganization": "Переключить организацию"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "Переключить на светлую тему",
+        "themeDark": "Переключить на тёмную тему",
+        "themeSystem": "Использовать системную тему"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "Выйти"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "Сообщить о проблеме",
+        "shortcuts": "Горячие клавиши"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "Настройки конфиденциальности",
+      "description": "Мы используем файлы cookie для улучшения работы сайта, анализа трафика и персонализации контента. Выберите категории, которые хотите разрешить."
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "Принять все",
+      "savePreferences": "Сохранить настройки"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "Необходимые",
+        "description": "Необходимы для работы сайта. Отключить невозможно."
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "Функциональные",
+        "description": "Запоминаем ваши настройки (язык, тема, макет)."
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "Аналитика",
+        "description": "Анонимные данные об использовании для улучшения продукта."
       },
       "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "label": "Маркетинг",
+        "description": "Персонализированная реклама и ретаргетинг на сторонних платформах."
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "Уведомления",
+      "description": "Все уведомления в одном месте.",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "Все",
+        "unread": "Непрочитанные"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "Отметить все как прочитанные",
+        "markRead": "Отметить как прочитанное",
+        "archive": "Архивировать",
+        "loadMore": "Загрузить ещё",
+        "loading": "Загрузка...",
+        "selected": "Выбрано: {count}"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "Вы в курсе всех событий.",
+        "unread": "Нет непрочитанных уведомлений."
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "Не удалось загрузить уведомления.",
+        "network": "Ошибка сети. Повторите попытку.",
+        "markRead": "Не удалось отметить уведомление как прочитанное.",
+        "archive": "Не удалось архивировать уведомление.",
+        "bulkMarkRead": "Некоторые уведомления не удалось отметить как прочитанные."
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "Для почтового ящика требуется постоянное хранилище уведомлений. Проверьте конфигурацию провайдера.",
+        "emptyCaughtUp": "Почтовый ящик пуст.",
+        "emptyChangelog": "Обновления журнала изменений будут отображаться здесь."
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "Доброе утро",
+      "afternoon": "Добрый день",
+      "evening": "Добрый вечер"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "Расширьте возможности приложения с помощью коннекторов",
+      "subtitle": "Введите запрос, нажмите ⌘K в любом месте или перейдите прямо на поверхность рабочего пространства.",
+      "promptPlaceholder": "Что вас интересует?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "Подключить интеграцию",
+        "theme": "Тестирование темы",
+        "audit": "Журнал аудита",
+        "billing": "Оплата"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "Аутентификация не настроена для выбранного провайдера. Установите секреты провайдера, чтобы включить пользовательские сессии."
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "Начните с одного действия: спросите Sailor, проверьте сигналы рабочего пространства или направьте работу на поверхность автоматизации.",
+      "openSailor": "Открыть Sailor AI",
+      "viewAnalytics": "Посмотреть аналитику"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "Снимок рабочего пространства",
+      "description": "Последний день в хранилище · {day}",
+      "viewAnalytics": "Посмотреть аналитику →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "Активные пользователи",
+        "totalEvents": "Всего событий",
+        "conversions": "Конверсии",
+        "revenue": "Доход"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "Авторизованные пользователи",
+        "totalEvents": "Зафиксированные события",
+        "conversions": "Квалифицированные действия",
+        "revenue": "Узнанная выручка"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
-        "tenant": "Tenant",
-        "daily": "Daily",
+        "snapshot": "Снимок",
+        "cadence": "Ритм",
+        "tenant": "Тенант",
+        "daily": "Ежедневно",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "Пользователи тенанта",
+        "events": "Поток событий",
+        "funnel": "Воронка",
+        "billing": "Биллинг"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "Конвейер документов",
+      "description": "Отправляйте исходные файлы в очередь задач.",
+      "intakeTitle": "Приём документов",
+      "intakeDescription": "PDF, Markdown, текст или документ Word",
+      "chooseDocument": "Выберите документ",
+      "startParseTask": "Запустить задачу разбора",
+      "queued": "В очереди",
+      "fileInputLabel": "Файл документа",
+      "fallbackError": "Задача обработки документа не выполнена.",
+      "taskStatus": "Статус задачи",
+      "progressLabel": "Прогресс задачи",
+      "refreshStatus": "Обновить",
+      "cancelTask": "Отменить",
+      "statusError": "Не удалось обновить статус задачи.",
+      "cancelError": "Не удалось отменить задачу.",
+      "statusQueued": "В очереди",
+      "statusRunning": "Выполняется",
+      "statusSucceeded": "Выполнено",
+      "statusFailed": "Ошибка",
+      "statusCancelled": "Отменено",
+      "resultReady": "Результат готов",
+      "taskError": "Ошибка задачи",
+      "updatedAt": "Обновлено"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "Продолжить с того места, на котором остановились",
+      "subtitle": "{count, plural, =0 {Нет сессий} =1 {1 недавняя сессия} other {# недавних сессий}}",
+      "viewAll": "Посмотреть все →",
+      "newChat": "Новый чат",
+      "untitled": "Безымянная сессия",
+      "messageCount": "{count, plural, =1 {1 сообщение} other {# сообщений}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "Начало работы",
+      "description": "{done} из {total} выполнено · завершите настройку, чтобы открыть полный доступ к рабочему пространству",
+      "progressLabel": "Прогресс настройки",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "Пригласить коллегу",
+          "description": "Добавьте хотя бы одного участника в рабочее пространство."
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "Создать ключ API",
+          "description": "Программный доступ к конечным точкам рабочего пространства."
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "Подключить интеграцию",
+          "description": "Stripe, Slack, вебхуки, очереди и многое другое."
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "Попробуйте режим чата, данных или рабочих процессов."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "Проекты",
+    "noThreads": "Нет потоков",
+    "expandAll": "Развернуть все",
+    "collapseAll": "Свернуть все",
+    "sectionMore": "Другие варианты",
+    "newProject": "Новый проект",
+    "restoredGroups": "Восстановлены ранее развернутые группы",
+    "newProjectPlaceholder": "Название проекта",
+    "newProjectDefault": "Без названия",
+    "newProjectSuccess": "Проект создан",
+    "newProjectError": "Не удалось создать проект",
+    "sortBy": "Сортировать по",
+    "sortRecent": "Недавно активные",
+    "sortAlphabetical": "По алфавиту",
+    "sortCreated": "Дата создания",
+    "archiveAll": "Архивировать все",
+    "comingV2": "В версии 2"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "Первая комната готова.",
+      "firstFolder": "Многие компании начинаются как папка.",
+      "firstTable": "У первого стола появился второй стул.",
+      "firstSignal": "Реальный мир начал говорить.",
+      "firstShip": "Мир видит это впервые.",
+      "firstBeliever": "Сегодня вы больше не строите только для себя.",
+      "firstRevenue": "У мечты теперь денежный поток.",
+      "firstReturn": "Возвращаться важнее, чем просто заходить.",
+      "firstTeam": "Трое людей могут начать создавать компанию.",
+      "firstCrowd": "Первый стол начинает заполняться.",
+      "firstReset": "Перезапуск — это более честное начало.",
+      "firstPublic": "Вынесите кусочек будущего на публику.",
+      "firstDemo": "Это не шоу. Это тест.",
+      "graduation": "Вы переросли основы. Впереди нужны более мощные инструменты."
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "Многие компании начинаются как папка.",
+      "integrations": "Коннекторы не настроены.",
+      "creditActivity": "Активность кредитов появится после первого запроса.",
+      "usageData": "Данные использования появятся, когда ваша организация начнет отправлять запросы.",
+      "apiKeys": "Ключей пока нет.",
+      "apiKeysCta": "Создать первый ключ",
+      "teamMembers": "Один может начать. Несколько могут строить.",
+      "cofounders": "Первый человек, который поверит в вас, еще не появился.",
+      "cofoundersDescription": "Когда вы и другой основатель проявите интерес, он появится здесь.",
+      "cofoundersAction": "Найти сооснователей",
+      "growthChart": "Данные трендов появятся, когда начнется активность.",
+      "revenueChart": "Данные о выручке появятся, когда начнутся транзакции.",
+      "webhookDeliveries": "Доставки появятся здесь после первого события.",
+      "webhookEndpoints": "Добавьте конечную точку выше, чтобы начать получать события.",
+      "accessInvites": "Коды приглашений не выдавались."
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "Первая комната готова.",
+    "failure": "Перезапуск — это более честное начало.",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "Не удалось загрузить матчи.",
+      "loadMatchesDescription": "Что-то пошло не так с нашей стороны. Обновите страницу и попробуйте снова.",
+      "loadWebhookDeliveries": "Не удалось загрузить доставки.",
+      "replayWebhookDelivery": "Повторная отправка не удалась.",
+      "loadWebhookEndpoints": "Не удалось загрузить конечные точки."
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "Один может начать. Несколько могут построить.",
+    "revenue": "У мечты теперь есть денежный поток.",
+    "growth": "Сигнал становится сильнее.",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "Мир видит это впервые.",
+      "echo": "Наконец-то это покинуло localhost."
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "Вам не нужно быть готовым. Вам нужно начать.",
+    "graduation": "Вы переросли основы. Попробуйте {tool} для дальнейшей дороги.",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "Ваша первая башня контекста начинается здесь.",
+      "emptyDescription": "Соберите компанию в Startup OS, чтобы просмотреть и редактировать её контекстную башню.",
+      "emptyAction": "Открыть Startup OS",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "Подключите ключ провайдера ИИ для автозаполнения полей.",
+        "generateFailed": "Генерация не была завершена.",
+        "saveFailed": "Изменения не были сохранены."
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "Сохранить",
+        "saving": "Сохранение…",
+        "cancel": "Отмена",
+        "open": "Открыть Startup OS"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "Пока нет ставок.",
+      "noRuns": "Нет активных запусков."
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "В этом проекте пока нет файлов."
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "Рабочее пространство создаётся.",
+      "emptyDescription": "Приглашение может ещё синхронизироваться. Обновите страницу или создайте отдельное рабочее пространство."
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "Сначала создайте рабочее пространство.",
+      "emptyDescription": "Для действий с биллингом нужно активное рабочее пространство. Создайте его, затем вернитесь к биллингу."
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "Всё начинается с первого рабочего пространства.",
+      "emptyDescription": "Создайте рабочее пространство, чтобы начать."
     }
   }
 }

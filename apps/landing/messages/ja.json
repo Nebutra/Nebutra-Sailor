@@ -1152,18 +1152,6 @@
       "title": "一回限りの購入。永続アクセス。",
       "description": "サブスクリプション不要。月額費用なし。チームに合ったプランを選んで、今日から構築を始めましょう。",
       "socialProofText": "オープンソース AGPL-3.0 · 商用ライセンスもご利用可能。",
-      "startup": {
-        "badge": "スタートアップ",
-        "price": "$799",
-        "period": "/ 年",
-        "desc": "{brandName} プラットフォームベースラインで構築する小規模チーム向け。",
-        "cta": "スタートアップ向け {brandName} を購入",
-        "f1": "クローズドソース利用（商用ライセンス）",
-        "f2": "チームプロジェクト無制限",
-        "f3": "12 ヶ月のアップデート込み",
-        "f4": "メールサポート",
-        "f5": "Solo プランのすべてを含む"
-      },
       "independent": {
         "badge": "INDEPENDENT / 個人",
         "price": "無料",
@@ -1175,6 +1163,18 @@
         "f3": "フル SaaS スタック：認証、決済、組織管理、API、管理 UI、メール、i18n、バックグラウンドジョブ、ストレージ他",
         "f4": "マーケティング機能：ブログ、ランディングページ、SEO、アナリティクス",
         "f5": "AGPLv3 オープンソースライセンス"
+      },
+      "startup": {
+        "badge": "スタートアップ",
+        "price": "$799",
+        "period": "/ 年",
+        "desc": "{brandName} プラットフォームベースラインで構築する小規模チーム向け。",
+        "cta": "スタートアップ向け {brandName} を購入",
+        "f1": "クローズドソース利用（商用ライセンス）",
+        "f2": "チームプロジェクト無制限",
+        "f3": "12 ヶ月のアップデート込み",
+        "f4": "メールサポート",
+        "f5": "Solo プランのすべてを含む"
       },
       "enterprise": {
         "badge": "ENTERPRISE / エンタープライズ",
@@ -1276,7 +1276,7 @@
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
+        "unit": "分",
         "subtitle": "TIME TO MARKET",
         "comparison": "数ヶ月分のプラットフォーム作業をスキップ。",
         "phases": {
@@ -1610,16 +1610,6 @@
     "title": "ライセンスを取得 — {brandName}",
     "description": "2 分で {brandName} ライセンスとプラットフォームアクセスを取得してください。"
   },
-  "compliance": {
-    "icp": {
-      "recordNumber": "ICP登録",
-      "publicSecurity": "公安備案"
-    }
-  },
-  "icpFooter": {
-    "recordNumber": "ICP登録番号",
-    "publicSecurity": "公安備案番号"
-  },
   "landing": {
     "faq": {
       "badge": "よくある質問",
@@ -1694,8 +1684,8 @@
       "title": "現在のステージに合ったプランを選ぶ",
       "subtitle": "すべてのプランにフルソースコードが含まれます。商用ライセンスには 12 ヶ月のアップデートが含まれます。",
       "plan": {
-        "startup": "スタートアップ",
         "independent": "独立開発者",
+        "startup": "スタートアップ",
         "enterprise": "エンタープライズ"
       },
       "feature": {
@@ -1735,6 +1725,16 @@
         }
       }
     }
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP登録",
+      "publicSecurity": "公安備案"
+    }
+  },
+  "icpFooter": {
+    "recordNumber": "ICP登録番号",
+    "publicSecurity": "公安備案番号"
   },
   "MarketLocalePicker": {
     "title": "国と言語",

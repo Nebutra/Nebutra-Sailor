@@ -1,131 +1,131 @@
 {
   "meta": {
     "titleDefault": "{brandName} Router — piață de API-uri",
-    "titleTemplate": "%s | {brandName} Router",
+    "titleTemplate": "%s | Router {brandName}",
     "description": "Piață de API-uri pentru toate modelele · plătește pe măsură ce folosești · gestionează cheile și portofelul · încearcă rapid."
   },
   "admin": {
-    "dashboard": "Overview",
-    "keys": "API Keys",
-    "wallet": "Wallet",
-    "docs": "Docs",
+    "dashboard": "Prezentare generală",
+    "keys": "Chei API",
+    "wallet": "Portofel",
+    "docs": "Documentație",
     "title": "Admin",
     "backToMarket": "Înapoi la piață",
-    "quickUse": "Quick use"
+    "quickUse": "Utilizare rapidă"
   },
   "chrome": {
     "searchPlaceholder": "Ce vrei să faci cu AI?",
-    "search": "Search",
-    "locale": "Language",
-    "currency": "Currency",
+    "search": "Caută",
+    "locale": "Limbă",
+    "currency": "Monedă",
     "collapseSidebar": "Restrânge bara laterală",
     "expandSidebar": "Extinde bara laterală",
-    "home": "Home",
+    "home": "Acasă",
     "adminConsole": "Admin",
-    "quickUse": "Quick use",
-    "support": "Support",
-    "apiDocs": "API docs",
+    "quickUse": "Utilizare rapidă",
+    "support": "Suport",
+    "apiDocs": "Documentație API",
     "integrationHelp": "Ghid de integrare",
-    "aiRecommend": "AI picks",
-    "market": "Market",
-    "usageTitle": "Quick use"
+    "aiRecommend": "Recomandări AI",
+    "market": "Piață",
+    "usageTitle": "Utilizare rapidă"
   },
   "channels": {
-    "app": "App market",
-    "api": "API market",
+    "app": "Piața de aplicații",
+    "api": "Piața de API-uri",
     "models": "Catalog modele",
     "client": "Client"
   },
   "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
+    "new": "Nou",
+    "hot": "Popular",
+    "forYou": "Pentru tine",
+    "grid": "Grilă",
+    "list": "Listă",
+    "apiShelf": "Raft API",
+    "toolShelf": "Raft instrumente",
+    "categories": "Categorii",
+    "apps": "Aplicații",
+    "newRelease": "Lansare nouă",
+    "forgeTitle": "Spațiu de lucru instrumente Forge",
+    "forgeBlurb": "Transformări de text, codec-uri, formulare și instrumente compozabile. Laboratorul de piață al aplicațiilor indică către Forge.",
+    "openForge": "Deschide Forge →",
+    "allApi": "Toate API-urile →",
+    "all": "Toate →",
+    "viewAll": "Vezi toate {label} →",
+    "gridView": "Vizualizare grilă",
+    "listView": "Vizualizare listă",
+    "hiTitle": "Platformă de resurse AI pentru întreprinderi",
+    "hiSubtitle": "Potrivește fiecare nevoie cu AI-ul potrivit",
+    "sellable": "Vândabil",
+    "walletTopup": "Reîncarcă"
   },
   "apiTaxonomy": {
     "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
+      "label": "Modele de limbaj",
+      "hint": "Chat · raționament"
     },
     "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
+      "label": "Generare de imagini",
+      "hint": "Text în imagine"
     },
     "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
+      "label": "Editare de imagini",
+      "hint": "Editare · matting"
     },
     "video": {
-      "label": "Video generation",
+      "label": "Generare video",
       "hint": "Text-to-video"
     },
     "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "label": "Audio și video",
+      "hint": "Vocă · transcriere"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "Informații",
+      "hint": "Recuperare · extragere"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Augmentat cu cunoștințe"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "API-uri de instrumente",
+      "hint": "Agent · instrumente"
     }
   },
   "toolTaxonomy": {
     "bots": {
       "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "chips": "Chat bots · drawing bots · cunoștințe"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Productivitate",
+      "chips": "Arena modele · scriere AI"
     },
     "academic": {
       "label": "Academic",
-      "chips": "PDF toolkit · AI patent search"
+      "chips": "Set de instrumente PDF · Căutare brevete AI"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "Instrumente imagine",
+      "chips": "Studio 3D · Pânză"
     },
     "audio": {
       "label": "Audio",
-      "chips": "Speech · AI music"
+      "chips": "Vorbire · Muzică AI"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "Cod",
+      "chips": "Generator web · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "Prezentare generală",
+    "keys": "Chei",
+    "wallet": "Portofel",
+    "use": "Încearcă",
+    "docs": "Documentație",
+    "models": "Mai multe"
   }
 }

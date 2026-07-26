@@ -1,1688 +1,1688 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "Χαρακτηριστικά",
+    "solutions": "Λύσεις",
+    "pricing": "Τιμολόγηση",
+    "docs": "Τεκμηρίωση",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "Σχετικά με εμάς",
+    "ideas": "Ιδέες",
+    "opc": "Πλατφόρμα",
+    "roadmap": "Χάρτης οδού",
+    "resources": "Πόροι",
+    "signIn": "Σύνδεση",
+    "getStarted": "Ξεκινήστε",
+    "changelog": "Αρχείο αλλαγών",
+    "news": "Ειδήσεις",
+    "designDocs": "Σύστημα σχεδίασης",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "Μενού λογαριασμού",
+      "loadingName": "Φόρτωση…",
+      "dashboard": "Πίνακας ελέγχου",
+      "account": "Λογαριασμός",
+      "billing": "Τιμολόγηση",
+      "docs": "Τεκμηρίωση",
+      "signOut": "Αποσύνδεση"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "Γίνε μέρος του βρόχου παραπομπής ιδρυτών της {brandName}",
+    "metadataDescription": "Γίνε μέλος της λίστας αναμονής της {brandName}, διατήρησε την αποδοχή παραπομπής και ξεκλείδωσε τον δικό σου σύνδεσμο κοινοποίησης σε έναν κλειστό βρόχο που οδηγείται από το προϊόν.",
+    "eyebrow": "Βρόχος παραπομπής ιδρυτών",
+    "title": "Γίνε μέρος της επόμενης ομάδας ιδρυτών και πήγαινε τον δικό σου σύνδεσμο κοινοποίησης.",
+    "description": "Εισήλθε με οποιοδήποτε κωδικό πρόσκλησης ή γίνε μέλος απευθείας. Θα διατηρήσουμε την αποδοχή όταν υπάρχει κωδικός, θα σε τοποθετήσουμε στη λίστα αναμονής και θα εκδώσουμε έναν ιδιωτικό σύνδεσμο παραπομπής που μπορείς να κοινοποιήσεις αμέσως.",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "Ανθεκτική λίστα αναμονής",
+      "codeDetected": "Ανιχνεύτηκε κωδικός {code}",
+      "direct": "Απευθείας εγγραφή"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "Email εργασίας",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "Κωδικός παραπομπής",
+      "codePlaceholder": "Προαιρετικός κωδικός",
+      "submit": "Εγγραφή στη λίστα αναμονής",
+      "submitting": "Εγγραφή σε εξέλιξη",
+      "invalidEmail": "Εισάγετε ένα έγκυρο email.",
+      "error": "Δεν ήταν δυνατή η εγγραφή αυτή τη στιγμή. Δοκιμάστε ξανά.",
+      "successTitle": "Είστε στη λίστα",
+      "successDescription": "Ο ιδιωτικός σύνδεσμος κοινοποίησης είναι έτοιμος.",
+      "positionLabel": "Θέση στη σειρά",
+      "referralCodeLabel": "Ο κωδικός σας",
+      "referralUrlLabel": "Ο σύνδεσμος κοινοποίησης",
+      "copyLink": "Αντιγραφή συνδέσμου",
+      "copied": "Αντιγράφηκε",
+      "share": "Κοινοποίηση",
+      "shareTitle": "Γίνετε μέλος του founding loop του {brandName}",
+      "shareText": "Χρησιμοποιήστε τον σύνδεσμο πρόσκλησής μου για να εγγραφείτε στη λίστα αναμονής του {brandName}.",
+      "directMode": "Δεν απαιτείται κωδικός παραπομπής",
+      "codeMode": "Ενεργοποιήθηκε αποδοχή παραπομπής"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "Κύκλος ιδρυτή προς ιδρυτή",
+        "description": "Κάθε αποδεκτή εγγραφή λαμβάνει κωδικό και URL, ώστε η επόμενη παραπομπή να ξεκινά χωρίς χειροκίνητη μεταβίβαση."
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "Ειλικρινής αποδοχή",
+        "description": "Οι άγνωστοι κωδικοί αποθηκεύονται ως προσπάθεια αποδοχής, ενώ οι έγκυροι κωδικοί αυξάνουν τον παραπέμποντα και διατηρούν την εγγραφή καθαρή."
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "Κατάσταση επιτυχίας έτοιμη για κοινοποίηση",
+        "description": "Η κατάσταση επιβεβαίωσης εκθέτει θέση, κωδικό, αντιγραφή και εγγενείς ενέργειες κοινοποίησης, ώστε ο κύκλος να ολοκληρώνεται στη σελίδα."
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "Υποδομή με έμφαση στο προϊόν",
+      "title": "Σχεδιασμένη ως ανθεκτική υποδομή SaaS, όχι ως προσωρινή φόρμα.",
+      "description": "Η επιφάνεια παραπομπής στηρίζεται σε πακέτο τομέα, μόνιμο μοντέλο Prisma, τυποποιημένη διαδρομή Next.js και δημόσιους ελέγχους που μπορούν να εκτελεστούν μετά από αναθέσεις ECS.",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "Δεδομένα",
+        "title": "Ένας ανθεκτικός πίνακας λίστας αναμονής",
+        "description": "Η μοναδικότητα email, η αυτόματη αύξηση θέσης, οι δείκτες κωδικών παραπομπής, τα μεταδεδομένα προσπάθειας αποδοχής και οι μεταβάσεις κατάστασης διαμένουν στη βάση δεδομένων της πλατφόρμας."
       },
       "api": {
         "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "title": "Τυποποιημένο σημείο ένταξης",
+        "description": "Η σελίδα αποστέλλει στο `/api/waitlist`, κανονικοποιεί αυθαίρετους κωδικούς, επιστρέφει υπάρχουσες εγγραφές με ιδεμοτική συμπεριφορά και δεν εξαρτάται ποτέ από δείγμα κωδικού."
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "Δημόσια δοκιμή κατά την αναδιάρθρωση",
+        "description": "Οι κανονικοί και οι εναλλακτικοί σύνδεσμοι είναι έτοιμοι για αυτόματους ελέγχους, ώστε η παράδοση μέσω ECS να εντοπίζει υποχωρήσεις σε διαδρομές, DNS και κατάσταση υγείας."
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "Κατάλαβε την επιχείρησή σου,",
+    "headline2": "με την ισχύ του {brandName} Agent OS.",
+    "subheadline": "Παράπεμψε εβδομάδες έργου πλατφόρμας σε μια <highlight>έτοιμη για παραγωγή</highlight> βάση με <highlight>διακυβερνητική αρχιτεκτονική</highlight>, κατασκευασμένη για <highlight>AI coding agents & founders</highlight> που στοχεύουν παγκοσμίως.",
+    "copyLabel": "Αντιγραφή Εντολής",
+    "copiedLabel": "Αντιγράφηκε",
+    "ctaGetAccess": "Εκκίνηση Επιχείρησης",
+    "ctaExploreDemo": "Εξερεύνησε demo",
+    "pillCopied": "Αντιγράφηκε"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "Υποδομή έτοιμη για χρήση, από πρωτότυπο έως κλίμακα.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "Υποδομή Εφαρμογών AI",
+      "description": "Ενσωματωμένα, δοκιμασμένα σε παραγωγή Agent Frameworks και μηχανές ορχήστρας LLM. Πέρασε τις πολύπλοκες υποκείμενες αφαιρέσεις και αλληλεπιδράστε απευθείας με δομημένες APIs νοημοσύνης."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "Διακυβερνητική Βασική Πλατφόρμα",
+      "description": "Μια διακυβερνητική βασική πλατφόρμα για ομάδες που παραδίδουν AI-native SaaS. Εναρμονίστε σκελετούς, πρωτότυπα χρόνου εκτέλεσης και επιφάνειες παράδοσης χωρίς να συνδέετε εργαλεία ad-hoc."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "Αυτοματοποίηση Enterprise SaaS",
+      "description": "Βαθιά ενσωμάτωση του σύγχρονου τεχνολογικού stack του Vercel, Supabase και Stripe. Παρέχει έτοιμη ασφάλεια σε επίπεδο γραμμής, πολύπλοκη απομόνωση multi-tenant και παγκόσμια χρέωση συνδρομών."
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "Έτοιμοι να αναπτύξετε το επόμενο AI προϊόν σας;",
+    "subheading": "Εκκινήστε μια πλήρη, cloud-native αρχιτεκτονική SaaS τοπικά με μία εντολή τερματικού.",
+    "copyLabel": "Αντιγραφή Εντολής",
+    "copiedLabel": "Αντιγράφηκε",
+    "startBuilding": "Ξεκινήστε τη Δημιουργία"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "Κατασκευάστε το Startup σας με το {brandName} Agent OS. Multi-tenancy, χρεώσεις, auth και AI — έτοιμα για παραγωγή από την πρώτη μέρα.",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "Προϊόν",
+      "resources": "Πόροι",
+      "legal": "Νομικά",
+      "community": "Κοινότητα"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
+      "product": "Προϊόν",
+      "features": "Χαρακτηριστικά",
+      "pricing": "Τιμολόγηση",
+      "about": "Σχετικά",
+      "showcase": "Εργασίες",
       "blog": "Blog",
       "playbook": "Playbook",
-      "changelog": "Changelog",
+      "changelog": "Αλλαγές",
       "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
+      "docs": "Έγγραφα",
+      "ideas": "Ιδέες",
+      "opc": "Πλατφόρμα",
+      "careers": "Καριέρα",
+      "security": "Ασφάλεια",
       "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
+      "privacy": "Απορρήτου",
+      "terms": "Όροι",
       "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "refund": "Επιστροφή χρημάτων",
+      "licensing": "Άδειες χρήσης",
+      "contact": "Επικοινωνία",
+      "faq": "Συχνές Ερωτήσεις",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. Με επιφύλαξη παντός δικαιώματος.",
+    "statusOnline": "Όλα τα συστήματα λειτουργούν",
+    "newsletterTitle": "Μείνετε ενημερωμένοι",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "Εγγραφή",
+    "newsletterSuccess": "Ευχαριστούμε για την εγγραφή σας!",
+    "newsletterError": "Κάτι πήγε στραβά"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "ΚΑΤΑΣΚΕΥΑΣΜΕΝΟ ΜΕ ΤΟ STACK ΠΟΥ ΑΓΑΠΑΤΕ."
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "ΔΟΜΗ TURBOREPO",
+    "title": "10 εφαρμογές. 104 πακέτα. 4 backend lanes.",
+    "description": "Κοινός κώδικας, παράλληλες κατασκευές, μηδενική διπλοποίηση. Ολοκληρωμένος end-to-end typing από τη βάση δεδομένων στο frontend.",
+    "metricApps": "εφαρμογές",
+    "metricBackends": "διαδρομές backend",
+    "metricPackages": "πακέτα",
+    "verifiedPaths": "Οι διαδρομές ελέγχθηκαν στο τρέχον workspace",
+    "cta": "Εξερευνήστε την αρχιτεκτονική του monorepo"
   },
   "stats": {
-    "title": "By The Numbers",
+    "title": "Στα Αριθμούς",
     "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
+    "discord": "Μέλη Discord",
+    "setup": "Μέσος Χρόνος Ρύθμισης",
+    "packages": "Πακέτα Monorepo",
     "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "ctaJoin": "Ενταχθείτε →",
+    "ctaStart": "Ξεκινήστε →",
+    "ctaExplore": "Εξερευνήστε →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "Σχετικά με εμάς — Η πλατφόρμα AI με διακυβέρνηση",
+      "description": "Ανακαλύψτε το εμπορικό όραμα και τις αρχές μηχανικής πίσω από την πλατφόρμα AI με διακυβέρνηση της {brandName}.",
+      "heading": "Η Εποχή των Λεπτών Ομάδων Προϊόντων",
+      "subheading": "Αντικαταστήστε την επαναλαμβανόμενη εργασία πλατφόρμας με διαχειριζόμενη υποδομή, ισχυρή αυτοματοποίηση και ανθεκτική μηχανική μοχλευση.",
+      "missionTitle": "Μια Νέα Ταξινόμηση Αντίσταση στην Διοικητική Φθορά",
+      "missionP1": "Το {brandName} κατασκευάζει μια διαχειριζόμενη πλατφόρμα AI για ομάδες που χρειάζονται ανθεκτική υποδομή αντί για προσωρινά αρχικά stacks. Η παραδοσιακή κλίμακα συχνά έρχεται με γραφειοκρατία και εντροπία· εμείς απαντάμε με διαχείριση κώδικα, αυτοματοποίηση και μια βασική πλατφόρμα που παραμένει ελεγχόμενη καθώς μεγαλώνει.",
+      "missionP2": "Το εμπόριο εξακολουθεί να υποφέρει από υπερβολικό συντονισμό, θραυσμένα εργαλεία και αδύνατες διαδρομές αναβάθμισης. Νοιαζόμαστε για τη μείωση αυτών των τριβών μέσω καθαρότερων συμβάσεων πλατφόρμας, ισχυρότερων πρωτογενών παραδόσεων και συμπεριφοράς runtime που οι ομάδες μπορούν πραγματικά να παρατηρούν και να εμπιστεύονται.",
+      "missionP3": "Απορρίπτουμε τη συνήθεια να λύνουμε προβλήματα κλίμακας με περισσότερη οργανωτική έλξη. Η αυτοματοποίηση, τα τεστ και η διαχείριση πρέπει να απορροφούν την επαναλαμβανόμενη λειτουργική εργασία ώστε οι ομάδες να παραμένουν εστιασμένες στο προϊόν, την αρχιτεκτονική και τα αποτελέσματα πελατών.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "Οι Τέσσερις Πυλώνες",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "Διαχειριζόμενη Κλίμακα (Φιλοσοφία)",
+          "description": "Η κλίμακα πρέπει να προέρχεται από ισχυρότερα συστήματα, καλύτερη μοχλευση και καθαρότερους κανόνες λειτουργίας — όχι από συσσώρευση περισσότερου οργανωτικού βάρους."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "Ο Πυρήνας Κατασκευαστή (Υποδομή)",
+          "description": "Μια επαναχρησιμοποιήσιμη βασική πλατφόρμα για multi-tenancy, χρέωση, auth, συμμόρφωση και ολοκληρώσεις AI που οι ομάδες μπορούν να ελέγχουν, να επεκτείνουν και να παραδίδουν επανειλημμένα."
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "Πειθαρχία Αναβάθμισης (Διαδρομή)",
+          "description": "Υγιή συστήματα αναπτύσσονται μέσω ελέγχων συμβατότητας, μεταναστεύσεων και παρατηρήσιμων συμβάσεων runtime αντί για απόκλιση, ηρωισμούς και μοναδικές αναγραφές."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "Ο Κώδικας είναι Νόμος (Οργάνωση)",
+          "description": "Η λειτουργική πειθαρχία πρέπει να κωδικοποιείται σε τεστ, ροές εργασίας και κανόνες διαχείρισης ώστε οι ομάδες να βελτιώνουν την πλατφόρμα χωρίς να βασίζονται σε πολιτική ή θεσμική μνήμη."
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "Μηχανικά Σήματα αντί Βεβαιώσεων",
+      "jobsDescription": "Νοιαζόμαστε περισσότερο για επαληθεύσιμη μηχανική παραγωγή, σαφήνεια σκέψης και κρίση συστήματος παρά για καταγωγή ή φούσκωμα τίτλων.",
+      "jobsButton": "Υποβολή Προφίλ GitHub",
+      "companyInfoTitle": "Οργανωτική Συμμόρφωση",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "Καταχώρηση Νομικού Προσώπου",
+        "founded": "Ημερομηνία Καταχώρησης",
+        "headquarters": "Κέντρο Παγκόσμιας Λειτουργίας",
+        "jurisdiction": "Αρμόδια Νομική Εξουσία"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "Απαιτείται βαθύτερη τεχνική αξιολόγηση;",
+      "ctaDescription": "Επικοινωνήστε με τους ειδικούς μηχανικής μας για αξιολόγηση ενσωμάτωσης επιχείρησης ή εξετάστε την τεκμηρίωση εγγραφής.",
+      "ctaButton": "Καθιέρωση Επικοινωνίας"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "Τεχνική & Εμπορική Ερώτηση — {brandName} Intelligence",
+      "description": "Ο ειδικός κανάλι επικοινωνίας για εμπορικές άδειες, εγγραφή επιχείρησης και προηγμένη τεχνική υποστήριξη.",
+      "heading": "Καθιέρωση Σύνδεσης Υποστήριξης",
+      "subheading": "Θα αποστείλουμε έναν ειδικό τεχνικό ή αρχιτέκτονα για να αξιολογήσει τις ρητές απαιτήσεις σας.",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "Άμεση Επικοινωνία με τον Ιδρυτή",
+          "description": "Άμεσος κανάλι επικοινωνίας για βασικές στρατηγικές ευθυμήσεις και ερωτήσεις επιπέδου διοίκησης."
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "Συμβουλευτική Επιχείρησης",
+          "description": "Προκαταρκτικές συζητήσεις σχετικά με οικολογικά στρατηγικά εγχειρήματα και τη συνολική αρχιτεκτονική εξέλιξη."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "Εμπορική Εφαρμογή",
+          "description": "Διαπραγμάτευση σχετικά με άδειες κλειστού κώδικα και λεπτομέρειες που αφορούν εσωτερικές εφαρμογές σε ιδιωτικά περιβάλλοντα clusters."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "Υποστήριξη Ειδικού Επιπέδου",
+          "description": "Εξειδικευμένη αρχιτεκτονική καθοδήγηση και υπηρεσίες αντιμετώπισης προβλημάτων για ενεργές επιχειρηματικές ολοκληρώσεις και αποσφαλμάτωση βασικών συστημάτων."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "Νομικά & Συμμόρφωση",
+          "description": "Ερωτήματα σχετικά με τον ορισμό των ορίων ανοιχτού κώδικα, επιχειρηματικούς ελέγχους συμμόρφωσης και όρους συμβάσεων."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "Απόρρητο Κέντρου Δεδομένων",
+          "description": "Τεχνική επαλήθευση και οδηγίες συμμόρφωσης σχετικά με τον GDPR και τις επόμενες διεθνείς νόμους προστασίας δεδομένων."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "Αποκλύσεις Ασφαλείας",
+          "description": "Υποβάλετε με ασφάλεια αναφορές τεχνικής αναπαραγωγής σχετικά με πιθανές ευπάθειες λογισμικού απευθείας στην ομάδα υποδομής μας."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "Πύλη Υποβολής",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "Ονομασία Υποβάλλοντος",
+        "email": "Επίσημη Διεύθυνση Email",
+        "company": "Συγγενής Οργανισμός",
+        "category": "Πεδίο Απαιτήσεων",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "Εταιρική Συμβουλευτική",
+          "sales": "Άδειες & Αρχιτεκτονική",
+          "support": "Υποστήριξη Αναπτύκτων",
+          "legal": "Νομικά & Συμμόρφωση",
+          "privacy": "Πολιτικές Επεξεργασίας Δεδομένων",
+          "partnership": "Ολοκληρώσεις Οικοσυστήματος",
+          "press": "Σχέσεις Μεταβιβάσεων"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "Σύνοψη Κύριου Θέματος",
+        "message": "Λεπτομερείς Τεχνικές/Εμπορικές Προδιαγραφές",
+        "submit": "Αποστολή στο Backend",
+        "privacyNotice": "Η εκτέλεση αυτού του αιτήματος δικτύου σημαίνει ότι διαβάσατε και συμφωνείτε με τις",
+        "privacyLink": "Συστηματική Υποδομή Απορρήτου",
+        "submitting": "Εισαγωγή στην ουρά επεξεργασίας...",
+        "successMessage": "Τα δεδομένα μεταδόθηκαν επιτυχώς. Η αρμόδια επιχειρησιακή ομάδα θα εκδώσει λεπτομερή απάντηση εντός 1-2 εργάσιμων ημερών."
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "Λειτουργικά Μετρήματα",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
       "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "socialMedia": "Κύριοι Σύνδεσμοι Δικτύων"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Πολιτική Cookies — {brandName}",
+      "description": "Πώς η {brandName} χρησιμοποιεί cookies και παρόμοιες τεχνολογίες παρακολούθησης στον ιστότοπο και τις υπηρεσίες μας.",
+      "heading": "Πολιτική Cookies",
+      "effectiveDate": "Ημερομηνία Έναρξης Ισχύος",
+      "lastUpdated": "Τελευταία Ενημέρωση",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ιανουαρίου 2025",
+        "updated": "1 Ιανουαρίου 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "Αυτή η Πολιτική Cookies εξηγεί πώς η {brandName} Co., Ltd. (\"{brandName},\" \"εμείς,\" \"μας,\" ή \"δική μας\") χρησιμοποιεί cookies και παρόμοιες τεχνολογίες παρακολούθησης στον ιστότοπο και τις υπηρεσίες μας.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "Τι Είναι τα Cookies;",
+        "content": "Τα cookies είναι μικρά αρχεία κειμένου που τοποθετούνται στη συσκευή σας όταν επισκέπτεστε έναν ιστότοπο. Χρησιμοποιούνται ευρέως για να λειτουργούν οι ιστοτόποι πιο αποδοτικά και να παρέχουν πληροφορίες στους ιδιοκτήτες των ιστοτόπων."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "Πώς Χρησιμοποιούμε τα Cookies",
+        "intro": "Χρησιμοποιούμε cookies για να:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "Ενεργοποίηση Απαραίτητων Λειτουργιών",
+            "desc": "Παροχή βασικής λειτουργικότητας όπως έλεγχος ταυτότητας χρηστών και ασφάλεια"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "Απομνημόνευση Προτιμήσεων",
+            "desc": "Αποθηκεύουμε τη γλώσσα, το θέμα και άλλες ρυθμίσεις σας"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "Βελτίωση Απόδοσης",
+            "desc": "Κατανοούμε πώς αλληλεπιδρούν οι επισκέπτες με τις υπηρεσίες μας"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "Εξατομίκευση Εμπειρίας",
+            "desc": "Παρέχουμε σχετικό περιεχόμενο και προτάσεις"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "Μέτρηση Μάρκετινγκ",
+            "desc": "Παρακολουθούμε την αποτελεσματικότητα των καμπανιών μάρκετινγκ μας"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "Είδη Cookies που Χρησιμοποιούμε",
       "tableHeaders": {
         "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "provider": "Παρόχος",
+        "purpose": "Σκοπός",
+        "duration": "Διάρκεια"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "Απαραίτητα Cookies",
+        "description": "Αυτά τα cookies είναι απαραίτητα για τη σωστή λειτουργία της ιστοσελίδας. Δεν μπορούν να απενεργοποιηθούν.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "Συνεδρία ταυτοποίησης χρήστη",
+            "duration": "Συνεδρία"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "Διακριτικό εγγραφής",
+            "duration": "7 ημέρες"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "Αποθηκεύει τις προτιμήσεις συναίνεσης cookies",
+            "duration": "1 έτος"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "Λειτουργικά Cookies",
+        "description": "Αυτά τα cookies ενεργοποιούν εξατομικευμένες λειτουργίες και θυμούνται τις προτιμήσεις σας.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "Αποθηκεύει την προτίμηση γλώσσας",
+            "duration": "1 έτος"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "Αποθηκεύει την προτίμηση θέματος",
+            "duration": "1 έτος"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "Cookies Αναλυτικών",
+        "description": "Αυτά τα cookies μας βοηθούν να κατανοήσουμε πώς αλληλεπιδρούν οι επισκέπτες με την ιστοσελίδα μας.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "Διαχωρίζει τους μοναδικούς χρήστες",
+            "duration": "2 έτη"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "Αναλυτικά προϊόντος",
+            "duration": "1 έτος"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "Cookies Μάρκετινγκ",
+        "description": "Αυτά τα cookies χρησιμοποιούνται για διαφήμιση και παρακολούθηση της απόδοσης διαφημιστικών καμπανιών.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Παρακολουθεί επισκέψεις για διαφημίσεις Facebook",
+            "duration": "3 μήνες"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "Παρακολούθηση μετατροπών",
+            "duration": "3 μήνες"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "Διαχείριση των Προτιμήσεων Cookies",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "Παράθυρο Συμφωνίας Cookies",
+        "intro": "Όταν επισκεφθείτε τον ιστότοπό μας για πρώτη φορά, θα δείτε ένα παράθυρο συμφωνίας cookies που σας επιτρέπει να:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "Αποδοχή Όλων",
+            "desc": "Ενεργοποίηση όλων των κατηγοριών cookies"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "Απόρριψη Όλων",
+            "desc": "Απενεργοποίηση όλων των προαιρετικών cookies (τα απαραίτητα cookies παραμένουν)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "Προσαρμογή",
+            "desc": "Επιλογή συγκεκριμένων κατηγοριών cookies για ενεργοποίηση"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "Μπορείτε να αλλάξετε τις προτιμήσεις σας ανά πάσα στιγμή κάνοντας κλικ στο \"Ρυθμίσεις Cookies\" στο κάτω μέρος της σελίδας."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "Ρυθμίσεις Περιηγητή",
+        "intro": "Οι περισσότεροι ιστότοποι περιηγητές σας επιτρέπουν να ελέγχετε τα cookies μέσω των ρυθμίσεών τους:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "Ρυθμίσεις > Ιδιωτικότητα και ασφάλεια > Cookies"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "Ρυθμίσεις > Ιδιωτικότητα & Ασφάλεια > Cookies"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "Προτιμήσεις > Ιδιωτικότητα > Cookies"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "Ρυθμίσεις > Ιδιωτικότητα, αναζήτηση και υπηρεσίες > Cookies"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "Ο αποκλεισμός ορισμένων cookies ενδέχεται να επηρεάσει τη λειτουργικότητα του ιστότοπου."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "Παρόμοιες Τεχνολογίες",
+        "intro": "Εκτός από τα cookies, ενδέχεται να χρησιμοποιούμε:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "Τοπική Αποθήκευση",
+            "desc": "Για την αποθήκευση προτιμήσεων και δεδομένων cache τοπικά"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "Αποθήκευση Συνεδρίας",
+            "desc": "Για προσωρινά δεδομένα κατά τη διάρκεια της συνεδρίας περιήγησής σας"
           },
           "2": {
             "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "desc": "Μικρές εικόνες για παρακολούθηση ανοιγμάτων email και επισκέψεων ιστοσελίδων"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "ΔΕΝ χρησιμοποιούμε browser fingerprinting για παρακολούθηση."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "Ενημερώσεις σε αυτή την Πολιτική",
+        "content": "Μπορεί να ενημερώνουμε αυτή την Πολιτική Cookies περιστασιακά. Θα σας ενημερώνουμε για ουσιώδεις αλλαγές δημοσιεύοντας την ενημερωμένη πολιτική στον ιστότοπό μας."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "Επικοινωνία μαζί μας",
+        "intro": "Αν έχετε ερωτήσεις σχετικά με τη χρήση cookies, επικοινωνήστε μαζί μας:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "Για περισσότερες πληροφορίες σχετικά με τον τρόπο συλλογής και επεξεργασίας των δεδομένων σας, δείτε την",
+        "privacyLink": "Πολιτική Απορρήτου"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "Οδηγίες Μηχανικής & Ερωτήσεις — {brandName}",
+      "description": "Αναλυτική μελέτη αρχιτεκτονικής frameworks, βασικών τοπολογιών και εμπορικών στρατηγικών ανάπτυξης.",
+      "heading": "Εκτενής Ανάλυση",
+      "subheading": "Υλικό υποστήριξης βελτιστοποιημένο για ολοκλήρωση συστημάτων μηχανικής και λήψη εμπορικών αποφάσεων.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "Επισκόπηση Αρχιτεκτονικής",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "Ποιος είναι ο ρητός λειτουργικός σκοπός του {productName};",
+              "a": "Το {productName} είναι ένα αυστηρά δομημένο, έτοιμο για παραγωγή Next.js AI SaaS framework. Συγκεντρώνει εταιρική χρέωση, πολυπαραγοντική αυθεντικοποίηση και πολυενοικιαστική απομόνωση σε μια διαχειριζόμενη βασική πλατφόρμα, επιτρέποντας στις ομάδες να εστιάσουν στην υλοποίηση AI ειδικής για το προϊόν."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "Πώς είναι δομημένη η άδεια χρήσης του αποθεματικού;",
+              "a": "Η υποκείμενη υποδομή επιβάλλει αυστηρά τη συμφωνία OSS AGPLv3, εγγυώμενη διαφάνεια και μηδενικό κόστος χρήσης. Για οργανισμούς που απαιτούν ιδιόκτητη αδιαφάνεια και ενισχυμένες εγγυήσεις αναγραφής, διατίθενται ρητές εμπορικές συμβάσεις κλειστού κώδικα."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "Ποια είναι η ταχύτητα της αρχικής εμπορικής αξιολόγησης;",
+              "a": "Εξαιρετικά υψηλή ταχύτητα. Χρησιμοποιώντας το προσαρμοσμένο εργαλείο Node CLI μαζί με το ακριβές τεχνικό εγχειρίδιο, ένας αρχάριος μηχανικός μπορεί να αναπτύξει αυτόνομη τοπική έκδοση MVP σε λίγα λεπτά."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "Εμπορικές Λειτουργίες",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "Πόσο ευρεία είναι η ανοχή για εμπορική κλιμάκωση;",
+              "a": "Σχεδιασμένο βαριά σε παραδείγματα μικρο-συστατικών, η δομική χωρητικότητα φορτίου χαρτογραφείται αβίαστα από μηδενική ζήτηση στα Δωρεάν Επίπεδα δυναμικά έως τα όρια Επιχειρήσεων που εξυπηρετούν εκατομμύρια μηνιαία αιτήματα, ρυθμισμένο πλήρως μέσω περιορισμών πίνακα ελέγχου."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "Πώς επηρεάζει η αστάθεια συνδρομής τη στάνταρ λογιστική;",
+              "a": "Λειτουργούμε χρησιμοποιώντας ακριβή, δομική καταγραφή πόρων και ροής API σε επίπεδο δευτερολέπτου. Οι μεταβαλλόμενοι περιορισμοί εξισώνονται άμεσα με το λογιστικό επίπεδο—είτε επιστρέφοντας αναλογικά διαφορικά είτε εκδίδοντας αυτόματα πιστωτικά. Δεν υπάρχει καθόλου περίοδος κατάψυξης επιπέδου."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "Ποια υποδομή επεξεργασίας απομονώνει τους διανύσματα πληρωμών;",
+              "a": "Η παγκόσμια διαδρομολόγηση μετρητών αναθέτει θεμελιωδώς στις διεπαφές διακομιστή της Stripe, εγγυώμενη αυστηρή τηλεμετρία PCI-DSS και ακεραιότητα επεξεργασίας. Οι επιχειρηματικές αναπτύξεις μπορούν να ενσωματώσουν ιδιωτικές γραμμές ελέγχου χρηματοοικονομικού ελέγχου που διέπονται από προσαρμοσμένες δεσμεύσεις SLA."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "Στρώμα Μηχανικής Συστήματος",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "Ποιες θεμελιώδεις αφαιρέσεις νοημοσύνης υποστηρίζονται εγγενώς;",
+              "a": "Η κύρια λογική αλληλεπίδρασης καθορίζει εγγενή διαλειτουργικότητα μέσω των τυπικών προδιαγραφών OpenAI, Anthropic και Gemini. Αυτό παρέχει τεράστια ευελιξία για αποτελεσματική αλλαγή τελικών σημείων σκέψης μέσω χαρτογράφησης μεταβλητών χωρίς καμία υποβάθμιση της αναβαθμισμένης εμπορικής λογικής."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "Πώς αντιμετωπίζεται ο κίνδυνος αδιαφάνειας της βάσης δεδομένων;",
+              "a": "Η υλοποίηση προεπιλογικά εγγενώς αναπτύσσει πολιτικές Ασφάλειας Επιπέδου Γραμμής Postgres (RLS) στενά συνδεδεμένες με τα πρωτότυπα Διαδρομολόγησης Επίλυσης Ενοικιαστή της serverless αρχιτεκτονικής μας. Αυτό εξασφαλίζει ότι οι σκληρές διαχωρισμοί εμποδίζουν ενεργά τη ρύπανση δεδομένων σε επίπεδο εφαρμογής και την επικάλυψη εκτέλεσης."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "Υπάρχουν αρχιτεκτονικοί περιορισμοί στις αυτοδιαχειριζόμενες εγκαταστάσεις;",
+              "a": "Καθόλου. Η τοπολογία είναι πλήρως αποσυνδεδεμένη. Εάν το περιβάλλον εκτελεί αυτόνομα περιβάλλοντα εκτέλεσης Node.js παράλληλα με υγιείς συστάδες PostgreSQL, η πλήρης λειτουργικότητα διατηρείται εγγενώς."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "Συστηματική Ακεραιότητα",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "Ποια πρωτόκολλα καθορίζουν την μηχανική άμυνα της περιμέτρου;",
+              "a": "Οι μηχανισμοί εκτελούν υποχρεωτική κρυπτογράφηση TLS κατά τη μετάδοση, ντετερμινιστικούς αλγορίθμους κατακερματισμού για τον χαρτογράφηση μυστικών και την καθολική καταγραφή συμβάντων μεταβολής που γράφονται αυστηρά σε εσωτερικά αρχεία παρακολούθησης χρονικών σειρών."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "Σεβεται η τοπολογία τους κύριους διεθνείς νόμους προστασίας απορρήτου;",
+              "a": "Ναι, βαθιά. Τα επιχειρηματικά modules παρέχουν έτοιμες αλγοριθμικές υλοποιήσεις που στοχεύουν σε καταστάσεις ανάκλησης συναίνεσης, λογική σκληρής διαγραφής και βαθιές ερωτήσεις εξαγωγής που συμμορφώνονται βέλτιστα με τον GDPR και τα τοπικά ρυθμιστικά πλαίσια."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "Τι εκτελείται σε περίπτωση ανωμαλικού καταστροφικού συμβάντος;",
+              "a": "Αυτόματοι φρουροί ειδοποιούν άμεσα τους βασικούς μηχανικούς πυρήνες, οι οποίοι επιβάλλουν αποκλεισμούς κυκλώματος και εφαρμόζουν γρήγορη ταξινόμηση. Καθώς διέπεται από ένα προηγμένο εγχειρίδιο επίλυσης, πλήρως διαφανείς Αναλύσεις Μετά από Συμβάν διαδίδονται καθολικά εντός ενός απόλυτου παραθύρου 72 ωρών."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "Οδηγίες Τεχνικής Υποστήριξης",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "Πώς επιλύεται η αντιμετώπιση λειτουργικών φραγμών;",
+              "a": "Οι αρχικοί διανυσματικοί έλεγχοι στοχεύουν στον αυστηρά συντηρούμενο και αξιολογημένο από ομότιμους πίνακα τεκμηρίωσης και τις επαληθευμένες αλληλεπιδράσεις της κοινότητας. Η απόκτηση άδειας τυπικού ή επιπέδου enterprise αποκρυπτογραφεί την πρόσβαση σε ιδιωτικές ουρές αναβάθμισης που επιλύονται μέσω άμεσων εσωτερικών μηχανικών κόμβων."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "Παρέχετε φυσικές ή εξειδικευμένες λειτουργίες ολοκλήρωσης περιβάλλοντος;",
+              "a": "Αυτό εμπίπτει στο προσαρμοσμένο premium επίπεδο εκτέλεσης μας για εταιρικούς κολοσσούς υψηλού επιπέδου. Οι πιο资深的 αρχιτέκτονές μας αναλαμβάνουν εκτός τόπου για να εκτελέσουν έλεγχο κώδικα έναντι κληρονομικής αρχιτεκτονικής, να διαχειριστούν ευαίσθητες μετακινήσεις στο cloud και να επικυρώσουν ισχυρά απομονωμένες διαμερίσεις δικτύου."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "Απαιτείται άμεση τεχνική συγχρονισμός;",
+      "ctaDescription": "Είτε επικυρώνετε ένα συγκεκριμένο σχήμα συμπεριφοράς API είτε εκτελείτε μακροπρόθεσμες συμφωνίες ολοκλήρωσης, αλληλεπιδράστε άμεσα με τη μηχανική ιεραρχία.",
+      "ctaButton": "Λάβετε Οδηγίες Ενσωμάτωσης",
+      "ctaEmail": "Αποστολή Άμεσου Μηνύματος"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Πρωτόκολλο Απορρήτου & Άμυνας Πληροφοριών — {brandName}",
+      "description": "Αναλυτική τεκμηρίωση του τρόπου με τον οποίο οι μηχανισμοί υποδομής διέπουν την αυτονομία του χρήστη και την απομόνωση δεδομένων μηχανής.",
+      "heading": "Οδηγίες Προστασίας Πληροφοριών",
+      "effectiveDate": "Ημερομηνία Έναρξης",
+      "lastUpdated": "Τελευταία Ενημέρωση",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ιανουαρίου 2025",
+        "updated": "1 Ιανουαρίου 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "Στην {brandName} (\"Εταιρεία,\" \"εμείς,\" \"μας,\" ή \"δική μας\"), δεσμευόμαστε να προστατεύσουμε το απόρρητό σας. Η παρούσα Πολιτική Απορρήτου εξηγεί πώς συλλέγουμε, χρησιμοποιούμε, αποκαλύπτουμε και προστατεύουμε τις πληροφορίες σας όταν χρησιμοποιείτε τον ιστότοπό μας, τις εφαρμογές και τις υπηρεσίες μας (συλλογικά, τις \"Υπηρεσίες\").",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. Πληροφορίες που Συλλέγουμε",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 Πληροφορίες που Παρέχετε",
+          "intro": "Συλλέγουμε πληροφορίες που μας παρέχετε άμεσα, συμπεριλαμβανομένων:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "Πληροφορίες Λογαριασμού",
+              "desc": "Όνομα, διεύθυνση email, κωδικός πρόσβασης και στοιχεία οργανισμού κατά τη δημιουργία λογαριασμού."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "Πληροφορίες Προφίλ",
+              "desc": "Φωτογραφία προφίλ, τίτλος εργασίας, όνομα εταιρείας και άλλες προαιρετικές πληροφορίες."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "Πληροφορίες Πληρωμής",
+              "desc": "Διεύθυνση χρέωσης και λεπτομέρειες μεθόδου πληρωμής (επεξεργάζονται με ασφάλεια μέσω Stripe)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "Επικοινωνίες",
+              "desc": "Μηνύματα, σχόλια και άλλες επικοινωνίες που μας στέλνετε."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "Περιεχόμενο",
+              "desc": "Οποιοδήποτε περιεχόμενο δημιουργείτε, ανεβάζετε ή αποθηκεύετε χρησιμοποιώντας τις Υπηρεσίες μας."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 Πληροφορίες που Συλλέγονται Αυτόματα",
+          "intro": "Όταν χρησιμοποιείτε τις Υπηρεσίες μας, συλλέγουμε αυτόματα ορισμένες πληροφορίες:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "Πληροφορίες Συσκευής",
+              "desc": "Τύπος συσκευής, λειτουργικό σύστημα, τύπος προγράμματος περιήγησης και μοναδικοί αναγνωριστικοί κωδικοί συσκευής."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "Πληροφορίες Χρήσης",
+              "desc": "Σελίδες που προβλήθηκαν, λειτουργίες που χρησιμοποιήθηκαν, ενέργειες που εκτελέστηκαν και χρόνος που περάσατε στις Υπηρεσίες."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "Δεδομένα Καταγραφής",
+              "desc": "Διεύθυνση IP, ώρες πρόσβασης, αναφορικές διευθύνσεις URL και αρχεία καταγραφής δραστηριότητας συστήματος."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "Πληροφορίες Τοποθεσίας",
+              "desc": "Γενική τοποθεσία με βάση τη διεύθυνση IP (δεν συλλέγουμε ακριβή γεωτοποθέτηση)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. Πώς Χρησιμοποιούμε τα Στοιχεία σας",
+        "intro": "Χρησιμοποιούμε τα στοιχεία που συλλέγουμε για να:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "Παροχή Υπηρεσιών",
+            "desc": "Λειτουργία, συντήρηση και βελτίωση των Υπηρεσιών μας."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "Επεξεργασία Συναλλαγών",
+            "desc": "Διαχείριση πληρωμών, τιμολόγησης και συναφών εργασιών."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "Επικοινωνία",
+            "desc": "Αποστολή ανακοινώσεων υπηρεσιών, ενημερώσεων και επικοινωνιών μάρκετινγκ (με συναίνεση)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "Εξατομίκευση",
+            "desc": "Προσαρμογή της εμπειρίας σας και παροχή σχετικών προτάσεων."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "Ανάλυση",
+            "desc": "Κατανόηση μοτίβων χρήσης και βελτίωση των Υπηρεσιών μας."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "Προστασία",
+            "desc": "Ανίχνευση, πρόληψη και αντιμετώπιση απάτης, κακοποίησης και περιστατικών ασφαλείας."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. Πώς Κοινοποιούμε τα Στοιχεία σας",
+        "intro": "Μπορεί να κοινοποιήσουμε τις πληροφορίες σας στις ακόλουθες περιπτώσεις:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 Παρόχους Υπηρεσιών",
+          "intro": "Κοινοποιούμε πληροφορίες σε τρίτους προμηθευτές που παρέχουν υπηρεσίες για λογαριασμό μας, συμπεριλαμβανομένων:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "Υποδομή",
+              "desc": "Cloud hosting (Vercel, Supabase), υπηρεσίες βάσεων δεδομένων"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "Επεξεργασία Πληρωμών",
+              "desc": "Stripe για ασφαλή διαχείριση πληρωμών"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "Επαλήθευση",
+              "desc": "Clerk για διαχείριση ταυτότητας"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "Ανάλυση",
+              "desc": "PostHog, Vercel Analytics για εικόνα χρήσης"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 Μεταβιβάσεις Επιχειρήσεων",
+          "content": "Αν εμπλακούμε σε συγχώνευση, εξαγορά ή πώληση περιουσιακών στοιχείων, οι πληροφορίες σας ενδέχεται να μεταβιβαστούν στο πλαίσιο αυτής της συναλλαγής."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 Νομικές Απαιτήσεις",
+          "content": "Μπορεί να αποκαλύψουμε πληροφορίες όταν απαιτείται από τον νόμο, τη νομική διαδικασία ή αιτήματα κυβερνητικών αρχών, ή για να προστατεύσουμε τα δικαιώματά μας, την ιδιωτικότητα, την ασφάλεια ή την περιουσία μας."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. Τα Δικαιώματά Σας και οι Επιλογές Σας",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 Πρόσβαση και Μεταβιβάσιμότητα",
+          "content": "Μπορείτε να accédez aux informations personnelles via les paramètres de votre compte et à demander une copie de vos données dans un format portable."
         },
         "correction": {
           "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "content": "Μπορείτε να ενημερώσετε τις πληροφορίες του λογαριασμού σας ανά πάσα στιγμή μέσω του πίνακα ελέγχου."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 Διαγραφή",
+          "content": "Μπορείτε να ζητήσετε τη διαγραφή του λογαριασμού σας και των σχετικών δεδομένων μέσω των ρυθμίσεων ή επικοινωνώντας μαζί μας."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 Επικοινωνίες Μάρκετινγκ",
+          "content": "Μπορείτε να ακυρώσετε τη συνδρομή σας σε emails μάρκετινγκ κάνοντας κλικ στο \"αποσύνδεση\" σε οποιοδήποτε email μάρκετινγκ ή ενημερώνοντας τις προτιμήσεις σας."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. Ασφάλεια Δεδομένων",
+        "intro": "Εφαρμόζουμε κατάλληλα τεχνικά και οργανωτικά μέτρα για την προστασία των πληροφοριών σας, συμπεριλαμβανομένων:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "Κρυπτογράφηση δεδομένων κατά τη μεταφορά (TLS) και σε ηρεμία",
+          "1": "Τακτικές αξιολογήσεις ασφαλείας και δοκιμές διείσδυσης",
+          "2": "Έλεγχοι πρόσβασης και απαιτήσεις ελέγχου ταυτότητας",
+          "3": "Παρακολούθηση και καταγραφή δραστηριότητας συστήματος"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. Δικαιώματα Απορρήτου της Καλιφόρνιας (CCPA)",
+        "intro": "Αν είστε κάτοικος της Καλιφόρνιας, έχετε συγκεκριμένα δικαιώματα σχετικά με τις προσωπικές σας πληροφορίες:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "Δικαίωμα Γνώσης",
+            "desc": "Αιτηθείτε αποκάλυψη των πληροφοριών που συλλέγουμε, χρησιμοποιούμε και κοινοποιούμε."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "Δικαίωμα Διαγραφής",
+            "desc": "Αιτηθείτε τη διαγραφή των προσωπικών σας πληροφοριών."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "Δικαίωμα Αποκλεισμού",
+            "desc": "Αποκλειστείτε από την πώληση προσωπικών πληροφοριών (δεν πουλάμε τα δεδομένα σας)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "Δικαίωμα Μη Διακρίσεων",
+            "desc": "Δεν θα σας διακρίνουμε επειδή ασκείτε τα δικαιώματά σας."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. Ευρωπαϊκά Δικαιώματα Απορρήτου (GDPR)",
+        "intro": "Αν βρίσκεστε στον ΟΕΕ, στο Ηνωμένο Βασίλειο ή στην Ελβετία, έχετε επιπλέον δικαιώματα βάσει του GDPR:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "Νομική Βάση",
+            "desc": "Επεξεργαζόμαστε τα δεδομένα σας με βάση την εκτέλεση συμβάσεων, νόμιμα συμφέροντα ή συναίνεση."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "Δικαιώματα",
+            "desc": "Πρόσβαση, διόρθωση, διαγραφή, φορητότητα, περιορισμός και αντίρρηση."
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "Μπορείτε να επικοινωνήσετε με τον Υπεύθυνο Προστασίας Δεδομένων στο dpo@nebutra.com."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. Επικοινωνία μαζί μας",
+        "intro": "Αν έχετε ερωτήσεις σχετικά με αυτή την Πολιτική Απορρήτου, επικοινωνήστε μαζί μας:",
         "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "Πρωτόκολλα Ανωμαλιών Συναλλαγών — {brandName}",
+      "description": "Αυστηρός καθορισμός των ακριβών παραμέτρων επιστροφής κεφαλαίου σε διάφορα μοντέλα δομικής συνεργασίας.",
+      "heading": "Πλαίσιο Εκτέλεσης Διαφωνιών",
+      "effectiveDate": "Ημερομηνία Εφαρμογής",
+      "lastUpdated": "Ημερομηνία Τελευταίας Αναθεώρησης",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ιανουαρίου 2025",
+        "updated": "1 Ιανουαρίου 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "Στην {brandName}, θέλουμε να είστε απόλυτα ικανοποιημένοι από τις υπηρεσίες μας. Η παρούσα Πολιτική Επιστροφών περιγράφει τις περιπτώσεις στις οποίες προβλέπεται επιστροφή χρημάτων και τη διαδικασία για την υποβολή αιτήματος.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "Σχέδια Συνδρομής",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "Μηνιές Συνδρομές",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "Ακύρωση",
+              "desc": "Μπορείτε να ακυρώσετε τη μηνιαία συνδρομή σας ανά πάσα στιγμή"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "Αναλογικές Επιστροφές",
+              "desc": "Δεν παρέχουμε αναλογικά επιστροφές χρημάτων για μερικούς μήνες"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "Πρόσβαση",
+              "desc": "Διατηρείτε πρόσβαση στις επί πληρωμή λειτουργίες μέχρι το τέλος της περιόδου χρέωσής σας"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "Αυτόματη Ανανέωση",
+              "desc": "Τα συνδρομές ανανεώνονται αυτόματα εκτός αν ακυρωθούν"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "Ετήσιες Συνδρομές",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "Εγγύηση Επιστροφής Χρημάτων 14 Ημερών",
+              "desc": "Οι νέοι ετήσιοι συνδρομητές μπορούν να ζητήσουν πλήρη επιστροφή χρημάτων εντός 14 ημερών από την αρχική αγορά τους"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "Μετά τις 14 Ημέρες",
+              "desc": "Οι επιστροφές χρημάτων γενικά δεν είναι διαθέσιμες μετά την περίοδο των 14 ημερών"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "Ακύρωση",
+              "desc": "Μπορείτε να ακυρώσετε ανά πάσα στιγμή, αλλά η συνδρομή σας θα παραμείνει ενεργή μέχρι το τέλος της ετήσιας περιόδου"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "Χωρίς Αναλογικές Επιστροφές",
+              "desc": "Δεν παρέχουμε μερικές επιστροφές χρημάτων για μη χρησιμοποιημένους μήνες"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "Επιλέξιμες Περιπτώσεις Επιστροφής",
+        "intro": "Θα εξετάσουμε αιτήματα επιστροφής χρημάτων στις ακόλουθες περιπτώσεις:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. Προβλήματα υπηρεσίας",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "Σημαντικές διακοπές υπηρεσίας που επηρεάζουν την ικανότητά σας να χρησιμοποιείτε βασικές λειτουργίες",
+            "1": "Τεχνικά προβλήματα που δεν μπορούμε να επιλύσουμε σε εύλογο χρονικό διάστημα",
+            "2": "Λειτουργίες που διαφέρουν σημαντικά από αυτές που διαφημίστηκαν"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. Σφάλματα χρέωσης",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "Διπλές χρεώσεις",
+            "1": "Λάθος ποσά χρέωσης",
+            "2": "Μη εξουσιοδοτημένες χρεώσεις (μετά την επαλήθευση)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. Εξαιρετικές περιπτώσεις",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "Τεκμηριωμένα ιατρικά επεισόδια",
+            "1": "Φυσικές καταστροφές που επηρεάζουν την επιχείρησή σας",
+            "2": "Άλλες περιπτώσεις που εξετάζονται μεμονωμένα"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "Μη επιστρεπτέα στοιχεία",
+        "intro": "Τα παρακάτω γενικά δεν δικαιούνται επιστροφή χρημάτων:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "Χρεώσεις βάσει χρήσης",
+            "desc": "Κλήσεις API, κατανάλωση token AI ή χρησιμοποιημένος χώρος αποθήκευσης"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "Πρόσθετα και εξαρτήματα",
+            "desc": "Αγορές μιας φοράς ή πρόσθετες υπηρεσίες"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "Συμβόλαια επιχειρήσεων",
+            "desc": "Τα προσαρμοσμένα συμβόλαια έχουν τους δικούς τους όρους"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "Εκούσιες ακυρώσεις",
+            "desc": "Μετά την περίοδο εligibility επιστροφής χρημάτων"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "Παραβιάσεις όρων",
+            "desc": "Λογαριασμοί που τερματίστηκαν λόγω παραβιάσεων πολιτικής"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "Πώς να ζητήσετε επιστροφή χρημάτων",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "Βήμα 1: Επικοινωνήστε με την Υποστήριξη",
+          "intro": "Στείλτε μας email στο billing@nebutra.com με τα εξής:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "Το email του λογαριασμού σας",
+            "1": "Σχέδιο συνδρομής και περίοδος χρέωσης",
+            "2": "Λόγος αιτήματος επιστροφής χρημάτων",
+            "3": "Οποιαδήποτε σχετικά έγγραφα"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "Βήμα 2: Διαδικασία Εξέτασης",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "Θα εξετάσουμε το αίτημά σας εντός 5 εργάσιμων ημερών",
+            "1": "Ενδέχεται να σας ζητήσουμε επιπλέον πληροφορίες",
+            "2": "Θα λάβετε γραπτή απόφαση μέσω email"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "Βήμα 3: Επεξεργασία Επιστροφής",
+          "intro": "Εάν εγκριθεί:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "Οι επιστροφές πραγματοποιούνται στον αρχικό τρόπο πληρωμής",
+            "1": "Οι επιστροφές σε πιστωτικές κάρτες εμφανίζονται συνήθως εντός 5-10 εργάσιμων ημερών",
+            "2": "Οι χρόνοι επεξεργασίας της τράπεζας ενδέχεται να διαφέρουν"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "Αλλαγές Σχεδίου",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "Αναβαθμίσεις",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "Οι αναβαθμίσεις ισχύουν άμεσα",
+            "1": "Χρεώνεστε τη διαφορά αναλογικά για το υπόλοιπο της περιόδου χρέωσής σας",
+            "2": "Δεν παρέχεται επιστροφή για το προηγούμενο σχέδιο"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "Καταβαθμίσεις",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "Οι καταβαθμίσεις ισχύουν από την επόμενη περίοδο χρέωσης",
+            "1": "Διατηρείτε πρόσβαση στα τρέχοντα χαρακτηριστικά μέχρι τότε",
+            "2": "Δεν χορηγούνται μερικές επιστροφές για την τρέχουσα περίοδο"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "Δωρεάν Δοκιμή",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "Οι δωρεάν δοκιμές δεν απαιτούν στοιχεία πληρωμής",
+          "1": "Δεν επιβάλλονται χρεώσεις κατά την περίοδο δοκιμής",
+          "2": "Θα ειδοποιηθείτε πριν ξεκινήσουν οποιεσδήποτε χρεώσεις"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "Επίλυση Διαφωνιών",
+        "intro": "Αν διαφωνείτε με την απόφαση επιστροφής μας:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "Απαντήστε στο email της απόφασης με επιπλέον πληροφορίες",
+          "1": "Ζητήστε αναβάθμιση σε επόπτη",
+          "2": "Επικοινωνήστε μαζί μας στο legal@nebutra.com για περαιτέρω έλεγχο"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "Επικοινωνία",
+        "intro": "Για αιτήματα επιστροφής ή ερωτήσεις σχετικά με αυτή την πολιτική:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "Χρηματοοικονομικά",
+        "supportLabel": "Υποστήριξη",
+        "legalLabel": "Νομικά",
+        "responseNote": "Στόχος μας είναι να απαντάμε σε όλα τα αιτήματα επιστροφής χρημάτων εντός 5 εργάσιμων ημερών.",
+        "termsNote": "Αυτή η πολιτική αποτελεί μέρος των",
+        "termsLink": "Όρων Χρήσης",
+        "termsAgreement": "Χρησιμοποιώντας το {brandName}, συμφωνείτε με αυτούς τους όρους επιστροφής χρημάτων."
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Όροι Χρήσης — {brandName}",
+      "description": "Οι Όροι Χρήσης που διέπουν την πρόσβαση και τη χρήση του ιστότοπου, των εφαρμογών, των API και των υπηρεσιών του {brandName}.",
+      "heading": "Όροι Χρήσης",
+      "effectiveDate": "Ημερομηνία Έναρξης Ισχύος",
+      "lastUpdated": "Τελευταία Ενημέρωση",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Ιανουαρίου 2025",
+        "updated": "1 Ιανουαρίου 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "Καλώς ήρθατε στο {brandName}! Αυτοί οι Όροι Χρήσης (\"Όροι\") διέπουν την πρόσβαση και τη χρήση του ιστότοπου, των εφαρμογών, των API και των υπηρεσιών (συλλογικά, οι \"Υπηρεσίες\") του {brandName} Co., Ltd. (\"{brandName},\" \"Εταιρεία,\" \"εμείς,\" \"μας,\" ή \"δικός μας\").",
+      "intro2": "Προσβαίνοντας ή χρησιμοποιώντας τις Υπηρεσίες μας, συμφωνείτε να δεσμεύεστε από αυτούς τους Όρους και την",
+      "intro2PrivacyLink": "Πολιτική Απορρήτου",
+      "intro2End": " μας. Εάν δεν συμφωνείτε με αυτούς τους Όρους, μην χρησιμοποιείτε τις Υπηρεσίες μας.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. Αποδοχή Όρων",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 Επικαιρότητα",
+          "intro": "Για να χρησιμοποιήσετε τις Υπηρεσίες μας, πρέπει να:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "Να είστε τουλάχιστον 18 ετών ή της νόμιμης ηλικίας ενηλικίωσης στη δικαιοδοσία σας",
+            "1": "Να έχετε την εξουσία να συνάψετε τους παρόντες Όρους για λογαριασμό του εαυτού σας ή της οργάνωσής σας",
+            "2": "Να μην απαγορεύεται η χρήση των Υπηρεσιών μας βάσει του ισχύοντος νόμου"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 Λογαριασμοί Οργανισμών",
+          "content": "Αν χρησιμοποιείτε τις Υπηρεσίες μας για λογαριασμό οργανισμού, δηλώνετε ότι έχετε την εξουσία να δεσμεύσετε τον οργανισμό αυτό με τους παρόντες Όρους."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. Περιγραφή Υπηρεσιών",
+        "intro": "Το {brandName} παρέχει μια πλατφόρμα SaaS που περιλαμβάνει:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "Λειτουργίες και δημιουργία περιεχομένου με τεχνητή νοημοσύνη",
+          "1": "Εργαλεία διαχείρισης περιεχομένου και κοινότητας",
+          "2": "Συστήματα συστάσεων",
+          "3": "Ολοκληρώσεις ηλεκτρονικού εμπορίου",
+          "4": "Δυνατότητες Web3",
+          "5": "Ανάλυση και αναφορές"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. Εγγραφή Λογαριασμού",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 Δημιουργία Λογαριασμού",
+          "intro": "Για να έχετε πρόσβαση σε ορισμένες λειτουργίες, πρέπει να δημιουργήσετε έναν λογαριασμό. Συμφωνείτε να:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "Παρέχετε ακριβείς και πλήρεις πληροφορίες",
+            "1": "Διατηρείτε την ασφάλεια των στοιχείων πρόσβασης του λογαριασμού σας",
+            "2": "Ενημερώνετε άμεσα τις πληροφορίες σας σε περίπτωση αλλαγής",
+            "3": "Αποδέχεστε την ευθύνη για όλες τις δραστηριότητες στο λογαριασμό σας"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. Συνδρομή και Χρέωση",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 Τιμολόγηση",
+          "content": "Οι Υπηρεσίες μας προσφέρονται με διάφορα σχέδια συνδρομής, όπως περιγράφεται στη σελίδα Τιμολόγησης. Οι τιμές ενδέχεται να αλλάξουν με ειδοποίηση 30 ημερών."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 Πληρωμή",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "Οι συνδρομές χρεώνονται εκ των προτέρων με μηνιαία ή ετήσια βάση",
+            "1": "Όλα τα τέλη είναι μη επιστρεπτέα, εκτός αν αναφέρεται στην",
+            "2": "Μας εξουσιοδοτείτε να χρεώσετε τον τρόπο πληρωμής σας για τα ισχύοντα τέλη",
+            "3": "Χρησιμοποιούμε το Stripe για ασφαλή επεξεργασία πληρωμών",
+            "1RefundLink": "Πολιτική Επιστροφών"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. Αποδεκτή Χρήση",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 Απαγορευμένες Δραστηριότητες",
+          "intro": "Συμφωνείτε ΟΧΙ να:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "Παραβιάζετε οποιοδήποτε ισχύον νόμο, κανονισμό ή δικαιώματα τρίτων",
+            "1": "Χρησιμοποιείτε τις Υπηρεσίες για μετάδοση κακόβουλου λογισμικού, spam ή επιβλαβούς περιεχομένου",
+            "2": "Προσπαθείτε να αποκτήσετε μη εξουσιοδοτημένη πρόσβαση στα συστήματά μας",
+            "3": "Εμποδίζετε ή διαταράσσετε την ακεραιότητα ή την απόδοση των Υπηρεσιών μας",
+            "4": "Χρησιμοποιείτε αυτοματοποιημένα εργαλεία για εξαγωγή, αντιγραφή ή ανάκτηση δεδομένων χωρίς άδεια",
+            "5": "Κάνετε αναστροφή μηχανογράφησης, αποσυμβολισμό ή αποσυναρμολόγηση των Υπηρεσιών μας",
+            "6": "Χρησιμοποιείτε τα χαρακτηριστικά AI μας για δημιουργία παράνομου, επιβλαβούς ή παραπλανητικού περιεχομένου"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. Πνευματική Ιδιοκτησία",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 Η Πνευματική μας Ιδιοκτησία",
+          "content": "Το {brandName} και οι άδειοδοτοί του κατέχουν όλα τα δικαιώματα, τον τίτλο και το συμφέρον στις Υπηρεσίες, συμπεριλαμβανομένου όλου του λογισμικού, των σχεδίων, των εμπορικών σήμων και του περιεχομένου που δημιουργούμε."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 Το Περιεχόμενό σας",
+          "content": "Διατηρείτε την ιδιοκτησία του περιεχομένου που δημιουργείτε ή ανεβάζετε («Περιεχόμενό σας»). Χρησιμοποιώντας τις Υπηρεσίες μας, μας χορηγείτε παγκόσμια, μη αποκλειστική, δωρεάν άδεια χρήσης για να χρησιμοποιούμε, αποθηκεύουμε, επεξεργαζόμαστε και εμφανίζουμε το Περιεχόμενό σας αποκλειστικά για να σας παρέχουμε τις Υπηρεσίες."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. Αποποίηση Εγγυήσεων",
+        "content": "ΟΙ ΥΠΗΡΕΣΙΕΣ ΠΑΡΕΧΟΝΤΑΙ «ΩΣ ΕΚΕΙΝΕΣ» ΚΑΙ «ΩΣ ΔΙΑΘΕΣΙΜΕΣ» ΧΩΡΙΣ ΟΠΟΙΑΔΗΠΟΤΕ ΕΓΓΥΗΣΗ, ΕΙΤΕ ΡΗΤΗ ΕΙΤΕ ΣΥΜΒΑΤΗ, ΣΥΜΠΕΡΙΛΑΜΒΑΝΟΜΕΝΩΝ ΑΛΛΑ ΟΧΙ ΠΕΡΙΟΡΙΖΟΜΕΝΩΝ ΣΕ ΣΥΜΒΑΤΕΣ ΕΓΓΥΗΣΕΙΣ ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ, ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΕΙΔΙΚΟ ΣΚΟΠΟ, ΤΙΤΛΟΥ ΚΑΙ ΜΗ ΠΑΡΑΒΙΑΣΗΣ."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. Περιορισμός Ευθύνης",
+        "para1": "ΣΤΟ ΜΕΓΙΣΤΟ ΕΠΙΤΡΕΠΟΜΕΝΟ ΑΠΟ ΤΟΝ ΝΟΜΟ ΟΡΙΟ, Η NEBUTRA ΔΕΝ ΦΟΡΕΙ ΕΥΘΥΝΗ ΓΙΑ ΕΜΜΕΣΕΣ, ΤΥΧΑΪΕΣ, ΕΙΔΙΚΕΣ, ΕΠΕΠΟΜΕΝΕΣ Ή ΔΙΑΠΡΑΓΜΑΤΙΚΕΣ ΖΗΜΙΕΣ, Ή ΑΠΩΛΕΙΑ ΚΕΡΔΩΝ, ΔΕΔΟΜΕΝΩΝ, ΧΡΗΣΗΣ Ή ΕΠΙΧΕΙΡΗΣΙΑΚΗΣ ΑΞΙΑΣ.",
+        "para2": "ΣΕ ΚΑΜΙΑ ΠΕΡΙΠΤΩΣΗ Η ΣΥΝΟΛΙΚΗ ΜΑΣ ΕΥΘΥΝΗ ΔΕΝ ΘΑ ΥΠΕΡΒΑΙΝΕΙ ΤΟ ΜΕΓΑΛΥΤΕΡΟ ΑΠΟ (Α) ΤΟ ΠΟΣΟ ΠΟΥ ΜΑΣ ΕΞΟΠΛΙΣΑΤΕ ΣΤΙΣ 12 ΜΗΝΕΣ ΠΟΥ ΠΡΟΗΓΟΥΝΤΑΙ ΤΗΣ ΑΠΑΙΤΗΣΗΣ, Ή (Β) 100 ΔΟΛΑΡΙΑ ΗΠΑ."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. Τερματισμός",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 Από Εσάς",
+          "content": "Μπορείτε να τερματίσετε τον λογαριασμό σας ανά πάσα στιγμή μέσω των ρυθμίσεων του λογαριασμού σας. Μετά τον τερματισμό, θα χάσετε την πρόσβαση στις Υπηρεσίες."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 Από Εμάς",
+          "intro": "Μπορούμε να αναστείλουμε ή να τερματίσουμε τον λογαριασμό σας εάν:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "Παραβιάζετε αυτούς τους Όρους",
+            "1": "Δραστηριοποιείστε σε απάτη ή παράνομη δραστηριότητα",
+            "2": "Δεν πληρώνετε τα ισχύοντα τέλη",
+            "3": "Δημιουργείτε κίνδυνο ή νομική έκθεση για εμάς"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. Επίλυση Διαφωνιών",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 Μη Επίσημη Επίλυση",
+          "content": "Πριν ξεκινήσετε επίσημες διαδικασίες, συμφωνείτε να επικοινωνήσετε μαζί μας στο legal@nebutra.com για να προσπαθήσουμε να επιλύσουμε τις διαφωνίες μη επίσημα."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 Εφαρμοζόμενο Δίκαιο",
+          "content": "Οι παρούσες Όροι διέπονται από τους νόμους της Πολιτείας του Delaware, χωρίς να λαμβάνονται υπόψη οι αρχές σύγκρουσης νόμων."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. Επικοινωνία μαζί μας",
+        "intro": "Αν έχετε ερωτήσεις σχετικά με αυτούς τους Όρους, επικοινωνήστε μαζί μας:",
         "company": "{brandName} Co., Ltd.",
         "emailLabel": "Email",
-        "supportLabel": "Support"
+        "supportLabel": "Υποστήριξη"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "Χρησιμοποιώντας το {brandName}, αναγνωρίζετε ότι έχετε διαβάσει, κατανοήσει και συμφωνείτε να δεσμεύεστε από αυτούς τους Όρους Χρήσης."
     }
   },
   "metadata": {
     "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "description": "Το Startup Agent OS για founders που στοχεύουν στο εξωτερικό. Production-ready βάση Next.js με governed architecture, auth, billing, agents και i18n — σχεδιασμένο για AI coding agents και σοβαρές ομάδες."
   },
   "microLanding": {
     "architecture": {
       "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "title": "Διαφανής αρχιτεκτονική, χωρίς black boxes.",
+      "description": "Το {productName} είναι σχεδιασμένο με υπερ-modular δομή Turborepo, δίνοντάς σας πλήρη έλεγχο σε όλο τον κύκλο ζωής του λογισμικού σας.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "Πλήρως typed ORM με πολιτικές Row-Level Security (RLS) ενσωματωμένες native."
       },
       "auth": {
         "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "desc": "Γέφυρα αυθεντικοποίησης SOC2-ready που υποστηρίζει εναλλαγή B2B οργανισμών και RBAC."
       }
     },
     "pricing": {
-      "title": "Start free. Scale when you're ready.",
-      "description": "Independent and OPC developers ship for free. Annual commercial licenses unlock closed-source use for growing teams. Pick the tier that fits and start building today.",
-      "socialProofText": "AGPL-3.0 on fork · Independent Developer License via CLI · annual commercial tiers for teams.",
+      "title": "Ξεκινήστε δωρεάν. Κλιμακώστε όταν είστε έτοιμοι.",
+      "description": "Οι ανεξάρτητοι και OPC προγραμματιστές δημοσιεύουν δωρεάν. Οι ετήσιες εμπορικές άδειες ξεκλειδώνουν χρήση κλειστού κώδικα για αναπτυσσόμενες ομάδες. Επιλέξτε το επίπεδο που σας ταιριάζει και ξεκινήστε να χτίζετε σήμερα.",
+      "socialProofText": "AGPL-3.0 σε fork · Άδεια Ανεξάρτητου Προγραμματιστή μέσω CLI · ετήσια εμπορικά επίπεδα για ομάδες.",
       "independent": {
-        "badge": "INDEPENDENT",
-        "price": "Free",
-        "period": "forever",
-        "desc": "Solo builders and one-person companies (≤ 1 FTE, < $1M ARR). No copyleft when scaffolded via create-sailor.",
+        "badge": "ΑΝΕΞΑΡΤΗΤΟΣ",
+        "price": "Δωρεάν",
+        "period": "για πάντα",
+        "desc": "Μοναχικοί δημιουργοί και εταιρείες ενός ατόμου (≤ 1 FTE, < $1M ARR). Χωρίς copyleft όταν σκαφαριάζεται μέσω create-sailor.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS core",
-        "f2": "Unlimited personal projects (commercial use allowed)",
-        "f3": "Full SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more — plus thin admin + Retool/Metabase recipes (we don't ship bloated CRUD; we ship the integration patterns top SaaS use)",
-        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
-        "f5": "Independent Developer License (no AGPL copyleft when scaffolded with the CLI)"
+        "f1": "Πλήρης πυρήνας SaaS Next.js 16",
+        "f2": "Απεριόριστα προσωπικά έργα (επιτρέπεται εμπορική χρήση)",
+        "f3": "Πλήρες SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & άλλα — συν λεπτό admin + συνταγές Retool/Metabase (δεν στέλνουμε φουσκωμένο CRUD· στέλνουμε τα patterns ολοκλήρωσης που χρησιμοποιούν τα κορυφαία SaaS)",
+        "f4": "Λειτουργίες marketing: Blog, Landing page, SEO, Analytics",
+        "f5": "Άδεια Ανεξάρτητου Προγραμματιστή (χωρίς AGPL copyleft όταν σκαφαριάζεται με το CLI)"
       },
       "startup": {
         "badge": "STARTUP",
         "price": "$799",
-        "period": "/ year",
-        "desc": "For teams of 2–50 people. Closed-source commercial use, annual renewal.",
-        "cta": "Get {brandName} for Startups",
-        "f1": "Closed-source use (commercial license, 2–50 FTE)",
-        "f2": "Unlimited team projects",
-        "f3": "12 months of updates included",
-        "f4": "Email support",
-        "f5": "Everything in Independent"
+        "period": "/ έτος",
+        "desc": "Για ομάδες 2–50 ατόμων. Εμπορική χρήση κλειστού κώδικα, ετήσια ανανέωση.",
+        "cta": "Αποκτήστε το {brandName} για Startups",
+        "f1": "Χρήση κλειστού κώδικα (εμπορική άδεια, 2–50 FTE)",
+        "f2": "Απεριόριστα έργα ομάδας",
+        "f3": "12 μήνες ενημερώσεων περιλαμβάνονται",
+        "f4": "Υποστήριξη μέσω email",
+        "f5": "Όλα τα χαρακτηριστικά του Independent"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Custom",
+        "price": "Κατόπιν συνεννόησης",
         "period": "",
-        "desc": "50+ FTE, ≥ $1M ARR, or white-label / SLA needs. Custom contract with priority support.",
-        "cta": "Contact sales",
-        "f1": "Unlimited use across your organization (commercial license)",
-        "f2": "White-label rights (with written approval)",
-        "f3": "Priority support with SLA (2-hour critical, 24-hour standard)",
-        "f4": "Custom contract negotiation and roadmap input",
-        "f5": "Multi-product / multi-division licensing",
-        "f6": "Everything in Startup"
+        "desc": "50+ FTE, ≥ $1M ARR ή ανάγκες white-label / SLA. Εξατομικευμένο συμβόλαιο με προτεραιότητα στην υποστήριξη.",
+        "cta": "Επικοινωνία με πωλήσεις",
+        "f1": "Απεριόριστη χρήση σε όλη την οργάνωσή σας (εμπορική άδεια)",
+        "f2": "Δικαιώματα white-label (με γραπτή έγκριση)",
+        "f3": "Υποστήριξη προτεραιότητας με SLA (2 ώρες κρίσιμα, 24 ώρες τυπικά)",
+        "f4": "Διαπραγμάτευση εξατομικευμένου συμβολαίου και συμβολή στο roadmap",
+        "f5": "Άδεια για πολλαπλά προϊόντα / διαιρέσεις",
+        "f6": "Όλα τα χαρακτηριστικά του Startup"
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "Συχνές ερωτήσεις τιμολόγησης & αδειοδότησης",
+      "description": "Ερωτήσεις για τα επίπεδα άδειας, επιστροφές χρημάτων και δικαιώματα εμπορικής χρήσης.",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "Το Sailor είναι μηνιαία συνδρομή SaaS;",
+        "a": "Όχι. Αυτή η τιμολόγηση αφορά άδειες πηγαίου κώδικα Sailor: το Independent είναι δωρεάν, το Startup χρεώνεται ετησίως και το Enterprise είναι κατά παραγγελία."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "Προσφέρετε επιστροφές χρημάτων;",
+        "a": "Οι εμπορικές άδειες Startup περιλαμβάνουν παράθυρο επιστροφής 14 ημερών για αρχικές αγορές. Οι όροι Enterprise καθορίζονται στο υπογεγραμμένο συμβόλαιο."
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "Μπορώ να χρησιμοποιήσω το Sailor για εργασίες πελατών;",
+        "a": "Ναι. Μια εμπορική άδεια επιτρέπει στην ομάδα σας να κυκλοφορεί προϊόντα κλειστού κώδικα για πελάτες ή εσωτερική χρήση εντός του εμβελημάτων της άδειας· τα δικαιώματα white-label απαιτούν έγκριση Enterprise."
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "Έχετε ακόμα ερωτήσεις; Μιλήστε με την ομάδα {brandName} →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "Ξεκινήστε",
+      "title": "Διακόψτε τη ρύθμιση. Ξεκινήστε να χτίζετε.",
+      "description": "Αρχικοποιήστε μια κλιμακούμενη αρχιτεκτονική SaaS τοπικά με το CLI του {brandName}.",
+      "button": "Επιπλώστε Αρχιτεκτονική",
+      "license": "Ανοικτού κώδικα υπό άδεια AGPL-3.0. Δεν απαιτείται πιστωτική κάρτα."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "Δυνατότητες Enterprise",
+      "title": "Ένας πλήρως τυποποιημένος, επεκτάσιμος πυρήνας.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "Εγγενής Ασφάλεια Επιπέδου Γραμμής",
+        "desc": "Κάθε ερώτηση στη βάση δεδομένων περιορίζεται αυστηρά στο τρέχον περιβάλλον του tenant.",
+        "cta": "Διαβάστε τη φιλοσοφία της βάσης δεδομένων"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "Καθολική AI Gateway",
+        "desc": "Διαδρομολογήστε prompts αβίαστα προς OpenAI, Anthropic ή open-source μοντέλα.",
+        "cta": "Εξερευνήστε τον χειριστή AI SDK"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "Λεπτομερής Έλεγχος Πρόσβασης",
+        "desc": "Ορίστε ρόλους admin, member και viewer με ενσωματωμένη δομή πολιτικών.",
+        "cta": "Δείτε την τεκμηρίωση RBAC"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "Υποδομή Χρέωσης Multi-Provider",
+        "desc": "Μετρημένη χρήση, webhook συνδρομών και αυτοεξυπηρετούμενα portals πελατών.",
+        "cta": "Δείτε την αρχιτεκτονική χρέωσης"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "Διαδραστική Demo",
+      "title": "Ζήστε την ταχύτητα σε πραγματικό χρόνο.",
+      "description": "Αισθανθείτε τη διεπαφή γραμμής εντολών, το tunneling webhook Stripe και την τοπική προμήθεια multi-tenant βάσης δεδομένων.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "Ζωντανή Τηλεμετρία",
+        "desc": "Μεταδώστε δεδομένα χρήσης παραγωγής απευθείας στο terminal σας."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "Συμβάντα Χρέωσης",
+        "desc": "Παρακολουθήστε την εκτέλεση Stripe webhooks μέσω τοπικής σήραγγας."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "Εκκίνηση Χώρου Εργασίας",
+        "desc": "Διαμορφώστε απομονωμένα σχήματα PostgreSQL για B2B άμεσα."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "Ταχύτητα",
+      "title": "Από το μηδέν στην παραγωγή σε ρεκόρ χρόνο.",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "title": "1. Κλωνοποίηση",
+        "desc": "Κλωνοποιήστε άμεσα το μονορεπό του {brandName} και εκτελέστε pnpm install."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. Ρύθμιση",
+        "desc": "Ρυθμίστε Prisma, Clerk και Stripe μέσω της διαδραστικής CLI σε λίγα λεπτά."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. Δημιουργία",
+        "desc": "Εστιάστε στη λογική προϊόντος και στο UI ενώ η βάση της πλατφόρμας είναι ήδη συνδεδεμένη."
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. Εξαγωγή",
+        "desc": "Αντιγράψτε στο Vercel και AWS για άμεση παγκόσμια διανομή."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "λεπτά",
+        "subtitle": "ΧΡΟΝΟΣ ΕΙΣΟΔΟΥ ΣΤΗΝ ΑΓΟΡΑ",
+        "comparison": "Παράκαμψη μηνών εργασίας πλατφόρμας.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "Έναρξη",
+          "wire": "Κύριο",
+          "ship": "Εκπομπή",
+          "scale": "Κλίμακα",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "Ξεκινήστε τον χρονομετρητή σας"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "Σύστημα Προεπιλογών",
+        "message": "Μία ρύθμιση. Κάθε λειτουργία. Επιλέξτε την προεπιλογή σας και εκδώστε.",
+        "detail": "Ρυθμίστε μία φορά, δημιουργήστε τα πάντα — χρέωση, έλεγχο ταυτότητας, AI, i18n — από μία ενιαία ρύθμιση προεπιλογής.",
+        "readyStatus": "Το σύστημα προεπιλογών είναι έτοιμο"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "Δυνατότητες Πλατφόρμας",
+      "headlinePrefix": "Ό,τι χρειάζεστε για ",
+      "headlineHighlight": "να εκδώσετε με σιγουριά.",
+      "description": "Το {brandName} είναι μια πλατφόρμα SaaS full-stack — AI, χρέωση, multi-tenancy, παρατηρησιμότητα και ασφάλεια ενσωματωμένα από την πρώτη μέρα. Σταματήστε να ξαναχτίζετε το επίπεδο της πλατφόρμας."
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
+      "exploreFeature": "Εξερευνήστε τη λειτουργία",
+      "ai_category": "AI & Νοημοσύνη",
+      "ai_f1_title": "Ολοκληρώσεις συνομιλίας με πολλαπλά μοντέλα",
+      "ai_f1_desc": "Κατευθύνετε αιτήματα σε Anthropic, OpenAI, Google ή στα δικά σας προσαρμοσμένα μοντέλα. Υποστήριξη streaming, όρασης και κλήσεων λειτουργιών开箱即用.",
+      "ai_f2_title": "Σημασιολογικά embeddings",
+      "ai_f2_desc": "Δημιουργήστε και αποθηκεύστε διανυσματικά embeddings με pgvector. Δυναμώστε τη σημασιολογική αναζήτηση, τις παροχές RAG και τους μηχανισμούς προτάσεων.",
+      "ai_f3_title": "Μετρήσεις χρήσης AI",
+      "ai_f3_desc": "Ποσά ανά σχέδιο με παρακολούθηση χρήσης — μετρήστε tokens AI, κλήσεις API και αποθήκευση με βάση πραγματικού χρόνου aggregates στο ClickHouse.",
+      "multi_category": "Πλατφόρμα Multi-tenant",
+      "multi_f1_title": "Απομόνωση σε επίπεδο οργανισμού",
+      "multi_f1_desc": "Η ασφάλεια σε επίπεδο γραμμής στο Postgres εξασφαλίζει ότι οι ενοικιαστές δεν μπορούν ποτέ να έχουν πρόσβαση στα δεδομένα του άλλου — επιβάλλεται στο επίπεδο της βάσης δεδομένων, όχι μόνο της εφαρμογής.",
       "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub κ.λπ.) plus email/password και magic-link — εναλλαγή μεταξύ Clerk, Better Auth, NextAuth ή Supabase Auth μέσω μιας μόνο μεταβλητής περιβάλλοντος.",
+      "multi_f3_title": "Αυτόματη προμήθεια ενοικιαστών",
+      "multi_f3_desc": "Όταν ένας νέος οργανισμός εγγραφεί μέσω Clerk, δημιουργούμε αυτόματα το πρώτο API key τους και στέλνουμε ένα email καλωσορίσματος με το brand σας — μηδενικά χειροκίνητα βήματα.",
+      "dx_category": "Εμπειρία Αναπτύκτη",
+      "dx_f1_title": "Κωδικοποιημένα API keys",
+      "dx_f1_desc": "Κλειδιά με hash SHA-256 και εμφάνιση προθέματος (nbtr_live_…). Εμφανίζονται σε plaintext ακριβώς μία φορά κατά τη δημιουργία — ασφάλεια χωρίς τριβές.",
+      "dx_f2_title": "Middleware ιδεμποτάντιας",
+      "dx_f2_desc": "Στείλτε ένα header Idempotency-Key και οποιοδήποτε POST request γίνεται ασφαλές για επανάληψη. Υποστηρίζεται από Redis, cache 24 ωρών, συμμόρφωση με το IETF draft.",
+      "dx_f3_title": "API πολλαπλών πρωτοκόλλων (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI για δημόσια API, oRPC για type-safe κλήσεις frontend, tRPC για συμβατότητα με το T3-stack. Όλα τα πρωτόκολλα μοιράζονται τα ίδια συμβόλαια Zod και το stack middleware. Ενεργοποίηση ανά πρωτόκολλο μέσω preset config.",
+      "billing_category": "Χρηματοοικονομικά & Εμπορευματοποίηση",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
+      "billing_f1_desc": "Επιλέξτε τον πάροχο πληρωμών σας: Stripe για παγκόσμια enterprise, LemonSqueezy για indie devs, Polar για OSS, ή Alipay/WeChat Pay για την αγορά της Κίνας. Checkout με ένα κλικ και αυτοσυνεχόμενο billing portal.",
+      "billing_f2_title": "Εκτέλεση ορίων βάσει χρήσης",
+      "billing_f2_desc": "Μετρητές Redis σε πραγματικό χρόνο παρακολουθούν τις κλήσεις API και τη χρήση tokens ανά tenant. Τα requests φιλτράρονται στο gateway όταν φτάσουν τα όρια.",
+      "billing_f3_title": "Σύγχρονη ζωή webhook",
+      "billing_f3_desc": "Τα events συνδρομής Stripe ενημερώνουν αυτόματα τα σχέδια org στη βάση σας μέσω Inngest — χωρίς cron jobs, χωρίς polling.",
+      "rel_category": "Αξιοπιστία",
       "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
+      "rel_f1_desc": "Το gateway και η υπηρεσία AI χρησιμοποιούν circuit breaker CLOSED/OPEN/HALF_OPEN με εκθετικό backoff και jitter — χωρίς καταρρέουσες αποτυχίες.",
       "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "rel_f2_desc": "Οι χειριστές events που εξαντλούν 3 προσπάθειες retry καταλήγουν στο DLQ. Αναπαράγετέ τους ατομικά από το admin API χωρίς επανακάθαρση.",
+      "rel_f3_title": "Ειδοποιήσεις ρυθμού κατανάλωσης SLO",
+      "rel_f3_desc": "Ειδοποιήσεις τύπου Google SRE με πολλαπλά παράθυρα ενεργοποιούνται σε ρυθμούς κατανάλωσης 14.4×, 6× και 3× πριν εξαντληθεί ο προϋπολογισμός σφαλμάτων σας.",
+      "sec_category": "Ασφάλεια",
+      "sec_f1_title": "Επικεφαλίδες με βάση CSP nonce",
+      "sec_f1_desc": "Αυστηρή δυναμική Πολιτική Ασφαλείας Περιεχομένου με nonces ανά αίτημα που δημιουργούνται στο middleware του Clerk — χωρίς unsafe-inline πουθενά.",
       "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "sec_f2_desc": "OWASP Core Rule Set σε λειτουργία DetectionOnly σε κάθε ingress. Περιορισμός ρυθμού στα 30 RPS με ανοχή burst μέσω nginx annotations.",
+      "sec_f3_title": "SBOM + προέλευση SLSA",
+      "sec_f3_desc": "Κάθε έκδοση δημιουργεί κατάλογο υλικού λογισμικού CycloneDX και πιστοποίηση προέλευσης SLSA, τα οποία ανεβαίνουν στο GitHub Release.",
+      "obs_category": "Παρατηρησιμότητα",
+      "obs_f1_title": "Ανίχνευση OpenTelemetry",
+      "obs_f1_desc": "Κατανεμημένα traces ρέουν από Next.js → Hono → Python microservices μέσω OTLP. Εξαγόμενα στο Jaeger (dev) και Grafana Tempo (prod).",
+      "obs_f2_title": "Πίνακες ελέγχου Grafana",
+      "obs_f2_desc": "Επισκόπηση πλατφόρμας με πολλαπλά panels: διαθεσιμότητα SLO, υπόλοιπος προϋπολογισμός σφαλμάτων, κορεσμός HPA, επανεκκινήσεις pod και throttling CPU.",
+      "obs_f3_title": "Παρακολούθηση σφαλμάτων Sentry",
+      "obs_f3_desc": "Σφάλματα server-side και client-side καταγράφονται με context tenant, ID αιτήματος και ID trace για συσχέτιση μεταξύ συστημάτων.",
+      "data_category": "Δεδομένα & Αναλυτικά",
+      "data_f1_title": "Αποθήκη OLAP ClickHouse",
+      "data_f1_desc": "Τα συμβάντα καταλήγουν στο ClickHouse για γρήγορα αναλυτικά ερωτήματα. Το dbt μετατρέπει τα ακατέργαστα συμβάντα σε μετρικές ανάπτυξης gold-layer ορατές στο πίνακα ελέγχου.",
+      "data_f2_title": "Ανάλυση χοάνης",
+      "data_f2_desc": "Παρακολουθήστε εγγραφές → ενεργοποιήσεις → μετατροπές με αποδοχή σε επίπεδο cohort. Τα έσοδα ανά ενεργό χρήστη υπολογίζονται από το gold layer.",
+      "data_f3_title": "Καταναλωμός συμβάντων Kafka",
+      "data_f3_desc": "Υψηλής απόδοσης καταναλωμός συμβάντων μέσω Inngest στο ClickHouse bronze, με αποεξίωση στη μνήμη και έλεγχο σχήματος στην άκρη του gateway.",
+      "infra_category": "Υποδομή",
+      "infra_f1_title": "GitOps με ArgoCD",
+      "infra_f1_desc": "Οι αλλαγές στον κύριο κλάδο συντονίζονται αυτόματα στο cluster. Η αυτοεπισκευή αναιρεί χειροκίνητες επεξεργασίες kubectl. Τα παράθυρα συγχρονισμού επιβάλλουν ώρες ασφαλείας για αναπτύξεις.",
+      "infra_f2_title": "Συνδέσεις PgBouncer",
+      "infra_f2_desc": "Το PgBouncer σε λειτουργία συναλλαγής μπροστά από το Supabase διαχειρίζεται 1.000 συνδέσεις εφαρμογής σε 20 συνδέσεις Postgres. HA με 2 αντίγραφα.",
+      "infra_f3_title": "Οριζόντια + κάθετη αυτόματη κλιμάκωση",
+      "infra_f3_desc": "Το HPA κλιμακώνεται με βάση CPU/μνήμη. Το VPA εκτελείται σε λειτουργία Off παρέχοντας προτάσεις βέλτιστου μεγέθους. Προγραμματίζονται μετρικές KEDA για την έκδοση v2."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 Υπό κατασκευή",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "Σχεδιάζουμε αυτή τη στιγμή μια εξαιρετική εμπειρία για αυτό το τμήμα. Θα κυκλοφορήσει μαζί με την επόμενη μεγάλη ενημέρωση του αρχιτεκτονικού αγωγού.",
+      "opc": "Μια πιο εκτενής επισκόπηση της πλατφόρμας βρίσκεται σε εξέλιξη. Ακολουθήστε το changelog και το roadmap για τις επερχόμενες εκδόσεις.",
+      "roadmap": "Από τη θεμελίωση της υποδομής μέχρι την κλίμακα επιχειρήσεων — οι φάσεις του προϊόντος μας, τα ορόσημα εκδόσεων και η στρατηγική χρηματοδότησης."
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "Επιστροφή στο Hub"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "ΑΠΟ ΤΟ BLOG",
+    "title": "Μηχανική Εισαγωγή",
+    "subtitle": "Βαθιές αναλύσεις στην αρχιτεκτονική SaaS, την υποδομή AI και την παραγωγική μηχανική.",
+    "readMore": "Διαβάστε περισσότερα"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "ΚΛΙΜΑΚΑΡΙΑ ΣΕΝΑΡΙΑ",
+    "title": "Μία θεμελίωση. Άπειρες δυνατότητες.",
+    "description": "Το {productName} υποστηρίζει την επόμενη γενιά προϊόντων SaaS σε παγκόσμιες αγορές.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "Αυτοματοποιημένες Λειτουργίες",
+      "ip": "Προσωπικός Πίνακας IP",
+      "multimodal": "Πολυμορφική AI SaaS",
+      "enterprise": "Σύγχρονη Επιχείρηση (CN)",
+      "export": "Παγκόσμια Εξαγωγή Λογισμικού",
+      "design": "Κινητήρας Συστήματος Σχεδίασης",
+      "edam": "Επιχειρησιακά Ψηφιακά Στοιχεία"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "Κέντρο Λειτουργιών AI-Native",
+        "desc": "Εκτελέστε ροές εργασιών agent, εσωτερικά εργαλεία και επιφάνειες ολοκλήρωσης σε μια ενιαία πλατφόρμα με διακυβέρνηση. Οι επεκτάσεις με βάση το μητρώο, τα portals χειριστών και τα επαναχρησιμοποιήσιμα πρότυπα runtime παραμένουν ευθυγραμμισμένα καθώς το σύστημα κλιμακώνεται.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "Μητρώο Εργαλείων & Επιφάνεια Ολοκλήρωσης",
+          "f2": "Portal Χειριστή & Εσωτερικό Console"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "Ατομική Ανάπτυξη IP & Matrix Φορτοφολίου",
+        "desc": "Δημιουργήστε παρουσία founder παγκόσμιας κλάσης με blog MDX υψηλής μετατροπής, σελίδες φορτοφολίου και προφίλ. Το ενσωματωμένο newsletter, η ανάλυση και το SEO διασφαλίζουν την ανάπτυξη του ατομικού σας brand.",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "Blog MDX + Μηχανή Newsletter",
+          "f2": "Βελτιστοποιημένο για SEO & Social Graph"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "Καινοτόμο Multimodal AI SaaS",
+        "desc": "Κατασκευάστε προϊόντα SaaS Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text και Text-to-Video με streaming UI κορυφαίας UX, έξυπνη δρομολόγηση μοντέλων και μέτρηση χρήσης.",
         "features": {
           "f1": "Multi-Agent Streaming UI",
-          "f2": "Model Router + Usage Metering"
+          "f2": "Model Router + Μέτρηση Χρήσης"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "Σύγχρονος Επιχειρησιακός Ιστότοπος (CN)",
+        "desc": "Προσαρμοσμένο για επιχειρηματικά σενάρια Κίνας — εξαιρετικά γρήγορο εγχώριο CDN, ολοκλήρωση οικοσυστήματος WeChat, responsive design mobile-first και τοπική συμμόρφωση από την αρχή.",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "Τοπικό CDN + Συμμόρφωση",
+          "f2": "Έτοιμο για το Οικοσύστημα WeChat"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "Σελίδες Προορισμού Εξαγωγής Λογισμικού σε Παγκόσμια Κλίμακα",
+        "desc": "Σχεδιασμένο για SaaS που διεθνικοποιούνται. Πληρωμές Stripe σε πολλαπλά νομίσματα, αυτόματη διαδρομολόγηση i18n με next-intl σε 7 γλώσσες, συμμόρφωση GDPR/CCPA και περιεχόμενο με γεωγραφικό στοχευμό.",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "Πληρωμές σε Πολλαπλά Νομίσματα",
+          "f2": "7 Γλώσσες + Έτοιμο για GDPR"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "Προηγούμενο Σύστημα Σχεδίασης & Βιβλιοθήκη Συνιστωσών",
+        "desc": "Αρχιτεκτονική με 4 επίπεδα tokens: Brand → Tokens → Theme → UI. Χτισμένο πάνω στο Radix + το κοινό επίπεδο Motion με oklch multi-theme, τεκμηρίωση Storybook και δοκιμές οπτικής παλινδρόμησης.",
         "features": {
-          "f1": "4-Layer Token Governance",
+          "f1": "Διακυβέρνηση Tokens 4 Επιπέδων",
           "f2": "oklch Multi-Theme + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "Διαχείριση Ψηφιακών Περιουσιακών Στοιχείων Επιχειρήσεων",
+        "desc": "Δομημένες λίμνες δεδομένων και σύνθετες τοπολογίες dashboards με κλιμακούμενες αρχιτεκτονικές PostgreSQL και λεπτομερή RBAC.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "Ασφάλεια Επιπέδου Γραμμής",
+          "f2": "Σύνθετα Ερωτήματα",
+          "f3": "Διαχείριση Ρόλων"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
+    "badge": "ΣΥΣΤΗΜΑ ΣΧΕΔΙΑΣΗΣ",
+    "headline": "4 επίπεδα διακυβέρνησης σχεδίασης.",
+    "subheadline": "Από πρωτόγονα στοιχεία brand σε runtime tokens, σε μηχανισμό multi-theme και ελεγχόμενα components — όχι απλά shadcn με Tailwind.",
     "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
+    "flowBrandDesc": "Πρωτόγονα χρώματα, gradients, γλώσσα κίνησης",
     "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
+    "flowTokensDesc": "CSS variables, κλίμακες 12 βημάτων, dark mode",
     "flowTheme": "Theme",
     "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
     "flowUI": "UI",
     "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
+    "card1Title": "Κλίμακες Χρώματος 12 Βημάτων",
+    "card1Desc": "Σημασιολογική κλίμακα ευθυγραμμισμένη με το Geist: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
     "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "card2Desc": "6 presets θεμάτων με oklch και παραγωγή μέσω color-mix(). Display-P3 wide-gamut με fallback σε sRGB.",
+    "card3Title": "Οπτική Παλινδρόμηση",
+    "card3Desc": "Το Chromatic εντοπίζει κάθε αλλαγή pixel. Το Storybook τεκμηριώνει κάθε component. Τα architecture tests επιβάλλουν story coverage.",
+    "card4Title": "Διακυβέρνηση Tokens",
+    "card4Desc": "Προϋπολογισμοί με μηχανισμό ratchet: οροφή hex, πάτωμα oklch, όρια κλάσεων χρωμάτων. Ανίχνευση αποκλίσεων brand στο CI.",
+    "card5Title": "Αλληλεπιδραστική Τεκμηρίωση",
+    "card5Desc": "Πλήρης ιστότοπος τεκμηρίωσης σχεδίασης με Fumadocs, με δίγλωσση (EN/ZH) τεκμηρίωση API συνιστωσών, συλλογές token, οδηγούς μοτίβων διάταξης και ζωντανά παραδείγματα κώδικα."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "Η σελίδα δεν βρέθηκε",
+    "desc": "Ο σύνδεσμος μπορεί να είναι παλιός ή η σελίδα να έχει μετακινηθεί.",
+    "home": "Επιστροφή στο {brandName}",
+    "docs": "Άνοιγμα τεκμηρίωσης"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "Αναζήτηση εκδόσεων..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "Εναλλαγή μενού"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "Εμφάνιση πλήρους έκδοσης",
+      "copyLinkToRelease": "Αντιγραφή συνδέσμου έκδοσης",
+      "copyLink": "Αντιγραφή συνδέσμου",
+      "openInNewTab": "Άνοιγμα σε νέα καρτέλα"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "Επικείμενο"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Dual <hl>License</hl> Model",
-      "description": "{brandName}-Sailor is open source under AGPL-3.0. We also offer commercial licenses for teams building closed-source products."
+      "title": "Διπλό <hl>Μοντέλο</hl> Αδειοδότησης",
+      "description": "Το {brandName}-Sailor είναι ανοιχτού κώδικα υπό AGPL-3.0. Προσφέρουμε επίσης εμπορικές άδειες για ομάδες που αναπτύσσουν προϊόντα κλειστού κώδικα."
     },
     "plans": {
       "agpl": {
-        "badge": "Always Free",
+        "badge": "Δωρεάν για πάντα",
         "title": "AGPL-3.0",
-        "subtitle": "Open Source",
-        "description": "Open source projects, academic research, personal learning",
+        "subtitle": "Ανοικτού Κώδικα",
+        "description": "Έργα ανοικτού κώδικα, ακαδημαϊκή έρευνα, προσωπική μάθηση",
         "features": {
-          "sourceAccess": "Full source code access",
-          "mustOpenSource": "Must open-source your product",
-          "mustCredit": "Must credit {brandName}-Sailor",
-          "communitySupport": "Community support only"
+          "sourceAccess": "Πλήρης πρόσβαση στον πηγαίο κώδικα",
+          "mustOpenSource": "Υποχρεωτική δημοσίευση του προϊόντος σας ως ανοικτού κώδικα",
+          "mustCredit": "Υποχρεωτική αναφορά στο {brandName}-Sailor",
+          "communitySupport": "Υποστήριξη μόνο από την κοινότητα"
         },
-        "cta": "View on GitHub"
+        "cta": "Προβολή στο GitHub"
       },
       "freeCommercial": {
-        "badge": "Free Forever",
-        "title": "Free Commercial",
-        "subtitle": "Individual & Solo",
-        "description": "Individual builders and single-seat operators",
+        "badge": "Δωρεάν για πάντα",
+        "title": "Δωρεάν Εμπορική",
+        "subtitle": "Ατομική & Μοναδική",
+        "description": "Ατομικοί δημιουργοί και μοναδικοί χειριστές",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "teamSize": "Team size ≤ 1 FTE",
-          "creditRequired": "Credit required",
-          "freeKey": "Free license key via registration"
+          "closedSource": "Χρήση σε προϊόντα κλειστού κώδικα",
+          "teamSize": "Μέγεθος ομάδας ≤ 1 FTE",
+          "creditRequired": "Απαιτείται αναφορά",
+          "freeKey": "Δωρεάν κλειδί άδειας μέσω εγγραφής"
         },
-        "cta": "Get Your Free License"
+        "cta": "Λάβετε τη Δωρεάν Άδεια"
       },
       "commercial": {
-        "badge": "From {price}/yr",
-        "title": "Commercial",
-        "subtitle": "Startup & Enterprise",
-        "description": "Startups, agencies, teams (2+ people), commercial SaaS products",
+        "badge": "Από {price}/έτος",
+        "title": "Εμπορική",
+        "subtitle": "Εκκίνηση & Επιχείρηση",
+        "description": "Εκκινήσεις, πρακτορεία, ομάδες (2+ άτομα), εμπορικά προϊόντα SaaS",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "noCopyleft": "No copyleft obligations",
-          "noTeamLimits": "No team size limits",
-          "commercialSupport": "Commercial support available"
+          "closedSource": "Χρήση σε προϊόντα κλειστού κώδικα",
+          "noCopyleft": "Χωρίς υποχρεώσεις copyleft",
+          "noTeamLimits": "Χωρίς όρια μεγέθους ομάδας",
+          "commercialSupport": "Διαθέσιμη εμπορική υποστήριξη"
         },
-        "cta": "Get Commercial License"
+        "cta": "Λάβετε Εμπορική Άδεια"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Keep the license decision legible: pick AGPL for open-source distribution, or use a commercial exception when your product must stay closed-source.",
+      "title": "Συχνές Ερωτήσεις",
+      "description": "Κρατήστε την απόφαση άδειας κατανοητή: επιλέξτε AGPL για διανομή ανοιχτού κώδικα ή χρησιμοποιήστε εμπορική εξαίρεση όταν το προϊόν σας πρέπει να παραμείνει κλειστού κώδικα.",
       "items": {
         "whyAgpl": {
-          "q": "Why AGPL-3.0?",
-          "a": "AGPL ensures that improvements to the template stay open source. Commercial license removes this obligation for businesses."
+          "q": "Γιατί AGPL-3.0;",
+          "a": "Το AGPL εξασφαλίζει ότι οι βελτιώσεις στο πρότυπο παραμένουν ανοιχτού κώδικα. Η εμπορική άδεια καταργεί αυτή την υποχρέωση για επιχειρήσεις."
         },
         "soloFree": {
-          "q": "Is there really a free path for individual builders?",
-          "a": "Yes, completely. Register at /get-license, get your key, build your product. No strings attached."
+          "q": "Υπάρχει πραγματικά δωρεάν διαδρομή για μεμονωμένους δημιουργούς;",
+          "a": "Ναι, απόλυτα. Εγγραφείτε στο /get-license, λάβετε το κλειδί σας και χτίστε το προϊόν σας. Χωρίς δεσμεύσεις."
         },
         "opcDefinition": {
-          "q": "What counts as a single-seat commercial use case?",
-          "a": "One full-time equivalent or less. If you move beyond a single-seat setup, you should upgrade to a Startup license."
+          "q": "Τι μετράει ως περίπτωση εμπορικής χρήσης με μία έδρα;",
+          "a": "Ένα ισοδύναμο πλήρους απασχόλησης ή λιγότερο. Αν ξεπεράσετε τη ρύθμιση με μία έδρα, θα πρέπει να αναβαθμίσετε σε άδεια Startup."
         },
         "upgrade": {
-          "q": "Can I upgrade later?",
-          "a": "Absolutely. Upgrade whenever your team or delivery scope outgrows the free commercial tier."
+          "q": "Μπορώ να αναβαθμίσω αργότερα;",
+          "a": "Απόλυτα. Αναβαθμίστε όποτε η ομάδα ή το πεδίο παράδοσης ξεπεράσει το δωρεάν εμπορικό επίπεδο."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Και τι γίνεται με τις συνεισφορές ανοιχτού κώδικα;",
+          "a": "Όλες οι συνεισφορές απαιτούν CLA. Δείτε το CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Dual license model: AGPL-3.0 open source or commercial licenses."
+      "title": "Άδειες — {brandName}",
+      "description": "Μοντέλο διπλής άδειας: ανοιχτός κώδικας AGPL-3.0 ή εμπορικές άδειες."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "Δωρεάν Άδεια Ατόμου",
+      "opcFree": "Άδεια Εταιρείας Με Έναν Ιδιοκτήτη",
+      "startupCommercial": "Εμπορική Άδεια Startup",
+      "enterprise": "Άδεια Επιχείρησης"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "Επιλέξτε μια επιλογή...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
+    "title": "Αρχείο Αλλαγών — {brandName}",
+    "description": "Κάθε έκδοση, με εμμονή στη λεπτομέρεια.",
     "versionTitleSuffix": "{brandName} Changelog"
   },
   "roadmapMeta": {
     "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "description": "Ο χάρτης διαδρομής για τη διαχειριζόμενη πλατφόρμα {brandName}, το runtime Harness και τη διαδρομή αναβάθμισης."
   },
   "blogMeta": {
     "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "description": "Επισκόπηση μηχανικής, ενημερώσεις προϊόντος και βέλτιστες πρακτικές SaaS από την ομάδα της {brandName}."
   },
   "getLicenseMeta": {
     "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "description": "Αποκτήστε την άδεια {brandName} και την πρόσβαση στην πλατφόρμα σε 2 λεπτά."
   },
   "landing": {
     "faq": {
       "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "title": "Ερωτήσεις, απαντήσεις ευθέως",
+      "subtitle": "Ό,τι χρειάζεται να ξέρετε πριν την εκπομπή.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "Τι ακριβώς είναι το {productName};",
+          "answer": "Το Sailor είναι μια SaaS βάση για Next.js + Tailwind v4 με έμφαση σε auth, billing, multi-tenancy, AI, queues, search και email, όλα έτοιμα. Το αντιγράφετε, ρυθμίζετε τους παρόχους και εκδίδετε — συνήθως μέσα σε μια εβδομάδα."
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "Για ποιους είναι κατασκευασμένο το Sailor;",
+          "answer": "Για founders και product engineers που θέλουν να αφιερώσουν τον χρόνο τους στο διαφοροποιητικό στοιχείο — όχι στην επανακατασκευή της ίδιας υποδομής auth/billing/tenancy για πέμπτη φορά."
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "Είναι δωρεάν ή επί πληρωμή;",
+          "answer": "Ο πλήρης πηγαίος κώδικας διανέμεται υπό AGPL-3.0 — δωρεάν για προσωπικά έργα, εσωτερικά εργαλεία και ανοιχτού κώδικα έργα συμβατά με AGPL. Ένα εμπορικό άδεια ξεκλειδώνει το δικαίωμα να κυκλοφορήσετε το Sailor σε κλειστού κώδικα ιδιόκτητο SaaS. Κάθε πρόγραμμα περιλαμβάνει το πλήρες σύνολο λειτουργιών (επιβεβαίωση ταυτότητας, χρέωση, πολυνοικία, AI, έλεγχος): οι κατηγορίες διαφέρουν στους όρους άδειας και στο SLA υποστήριξης, όχι στις λειτουργίες."
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "Λειτουργεί στην Κίνα;",
+          "answer": "Ναι. Παρέχουμε μια παράλληλη ρύθμιση υποδομής (CDN συμβατό με Aliyun, τομείς φιλικούς προς ICP, προαιρετικό Penpot αντί για Figma) ώστε η ίδια κωδική βάση να αναπτύσσεται καθαρά μέσα στον Μεγάλο Φράχτη."
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "Πού μπορώ να το αναπτύξω;",
+          "answer": "Οπουδήποτε τρέχει Node 22+. Η ιστοσελίδα marketing αναπτύσσεται στο Vercel· το πίνακας ελέγχου, το gateway και οι υπηρεσίες Python τρέχουν σε Docker / PM2 (τώρα τα τρέχουμε σε Aliyun ECS, με πλήρη Kubernetes manifests υπό infra/iac/k8s/ για clusters). Οι επιχειρηματικοί πελάτες αναπτύσσουν επίσης μέσα στις δικές τους VPCs."
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "Πώς διαχειρίζεται η ασφάλεια;",
+          "answer": "Κρυπτογράφηση περιβλήματος σε επίπεδο εφαρμογής για μυστικά (@nebutra/vault), Postgres RLS για απομόνωση ενοικιαστών, RBAC/ABAC μέσω CASL ή OpenFGA (@nebutra/permissions), HMAC-υπογεγραμμένα δια-υπηρεσιακά tokens, υπογεγραμμένα εξερχόμενα webhooks και μια γραμμή ελέγχου ευθυγραμμισμένη με SOC 2 (@nebutra/audit) περιλαμβάνεται σε κάθε πρόγραμμα. Τα Pro και Enterprise προσθέτουν υποστήριξη πιστοποίησης SOC 2, αφιερωμένη ανταπόκριση σε περιστατικά και μεγαλύτερη διατήρηση αρχείων ελέγχου."
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "Ποια υποστήριξη λαμβάνω;",
+          "answer": "Οι δωρεάν πελάτες λαμβάνουν κοινότητα Discord + GitHub Issues. Το Pro προσθέτει προτεραιότητα email με SLA απόκρισης 1 εργάσιμης ημέρας. Το Enterprise λαμβάνει αφιερωμένο κανάλι Slack και μηχανικό εγγραφής."
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "Μπορώ να φέρω τον δικό μου πάροχο;",
+          "answer": "Ναι. Κάθε ολοκλήρωση (επιβεβαίωση ταυτότητας, ουρά, αναζήτηση, email, πληρωμές, αποθήκευση, χρέωση) είναι ανεξάρτητη παρόχου. Το εργοστάσιο σε κάθε πακέτο επιλέγει τον σωστό προσαρμογέα από μια μόνο μεταβλητή περιβάλλοντος — αντικαταστήστε Clerk με Better Auth, NextAuth ή Supabase Auth, QStash με BullMQ, Resend με SES, Stripe με Polar / LemonSqueezy / ChinaPay — χωρίς να αγγίξετε τον κώδικα της εφαρμογής."
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "Ποια είναι η τεχνολογική στοίβα;",
+          "answer": "Next.js 16 (App Router) σε React 19, TypeScript 5.9, Tailwind v4, Prisma 7 πάνω από Postgres (με pgvector + RLS), Hono για το BFF gateway, FastAPI για υπηρεσίες ML/βαριάς, και μια επιλεγμένη βιβλιοθήκη συστατικών σε Radix, {brandName} UI primitives και το κοινό Motion layer. Οι λειτουργίες AI περνούν μέσω του Vercel AI SDK με φορητότητα παρόχου (OpenAI / OpenRouter / SiliconFlow / Azure / τοπικό)."
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "Ποια είναι η άδεια;",
+          "answer": "AGPL-3.0 με Εμπορική Εξαίρεση. Δωρεάν για προσωπική χρήση, εσωτερικά εργαλεία και AGPL-συμβατό OSS. Μια πληρωμένη εμπορική άδεια ξεκλειδώνει το δικαίωμα να κυκλοφορήσετε το Sailor ως έχει σε ιδιόκτητο SaaS. Ο πλήρης πηγαίος κώδικας περιλαμβάνεται σε κάθε πρόγραμμα."
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "Πρέπει να πληρώσω για ενημερώσεις;",
+          "answer": "Όχι. Οι ενημερώσεις πηγής περιλαμβάνονται σε κάθε εμπορική άδεια — κάντε pull από το main όποτε θέλετε και κάντε rebase το fork σας. Το πληρωμένο επίπεδο είναι το δικαίωμα χρήσης του Sailor σε εμπορική παραγωγή, όχι το δικαίωμα λήψης κώδικα. Κάθε μικρή έκδοση περιλαμβάνει CHANGELOG και οδηγό αναβάθμισης για οποιαδήποτε breaking change."
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "Γιατί Turborepo αντί για τυπική εφαρμογή Next.js;",
+          "answer": "Το Sailor είναι 10 εφαρμογές + 104 κοινά πακέτα κάτω από packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — πολύ πέρα από το σημείο όπου μια ενιαία Next.js mega-app παραμένει συντηρήσιμη. Το Turborepo μας δίνει builds μόνο για τα επηρεασμένα, διαφανή remote caching και μία ενιαία πηγή αλήθειας για κοινά design tokens, auth, billing και observability — χωρίς να αναγκάζει κάθε ομάδα να ακολουθεί την ίδια διαδικασία Next.js."
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "Πώς διαχειρίζεται η multi-tenancy;",
+          "answer": "Δύο επίπεδα. Request-scoped tenant context μέσω @nebutra/tenant (το AsyncLocalStorage διαδίδει την ενεργή org σε κάθε server call, συμπεριλαμβανομένων DB queries και outbound webhooks), και database-enforced isolation μέσω πολιτικών Postgres Row-Level Security (infra/data/database/policies/rls.sql) δεσμευμένων σε session-local app.current_tenant_id. Οι συνδέσεις service-role παρακάμπτουν το RLS μόνο μέσα σε αξιόπιστα εσωτερικά services· όλα τα user-facing routes περνούν μέσω του tenant-scoped client."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "Μπορώ να αντικαταστήσω το Clerk με άλλο auth provider;",
+          "answer": "Ναι. Το @nebutra/auth περιλαμβάνει first-class adapters για Clerk, Better Auth, NextAuth (Auth.js v5) και Supabase Auth. Αλλάξτε μέσω της μεταβλητής περιβάλλοντος AUTH_PROVIDER ή επιλέξτε κατά το scaffold με create-sailor --auth=... — τα server, React και middleware surfaces παραμένουν ίδια ανεξάρτητα από τον provider. Η προσθήκη πέμπτου adapter σημαίνει υλοποίηση ενός ενιαίου interface (~80 LOC)· τίποτα στον περιβάλλοντα κώδικα δεν συνδέεται με συγκεκριμένο provider."
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "Αγαπημένο από builders",
+      "title": "Τι λένε οι founders μετά την παραγωγή με Sailor",
+      "subtitle": "Ιστορίες πελατών από την beta cohort μας θα δημοσιευτούν σύντομα — βρεθείτε ανάμεσα στους πρώτους."
     },
     "comparison": {
-      "badge": "Compare plans",
-      "title": "Pick the plan that fits the stage you are in",
-      "subtitle": "Every plan includes the full source code. Commercial licenses include 12 months of updates.",
+      "badge": "Σύγκριση σχεδίων",
+      "title": "Επιλέξτε το σχέδιο που ταιριάζει στο στάδιο που βρίσκεστε",
+      "subtitle": "Κάθε σχέδιο περιλαμβάνει τον πλήρη source code. Οι εμπορικές άδειες περιλαμβάνουν 12 μήνες ενημερώσεων.",
       "plan": {
         "independent": "Independent",
         "startup": "Startup",
@@ -1690,59 +1690,59 @@
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License type",
-          "projects": "Number of projects"
+          "label": "Άδεια",
+          "type": "Τύπος άδειας",
+          "projects": "Αριθμός έργων"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Update window"
+          "label": "Πηγαίος Κώδικας",
+          "full-source": "Πλήρης πηγαίος κώδικας",
+          "all-packages": "Όλα τα πακέτα & modules",
+          "update-window": "Παράθυρο ενημέρωσης"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel"
+          "label": "Υποστήριξη",
+          "channel": "Κανάλι υποστήριξης"
         }
       },
-      "ariaTable": "Plan and feature comparison"
+      "ariaTable": "Σύγκριση σχεδίων και χαρακτηριστικών"
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "Δημιουργημένο σε ένα stack στο οποίο μπορείτε να εμπιστευτείτε",
+      "logosLabel": "Συνεργάτες ολοκλήρωσης",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "Παρόχους AI που υποστηρίζονται"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "πακέτα monorepo"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "τοπικές ρυθμίσεις i18n έτοιμες"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "Αριθμός εγγραφής ICP",
+      "publicSecurity": "Δημόσια ασφάλεια"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "Αριθμός εγγραφής ICP",
+    "publicSecurity": "Αριθμός εγγραφής δημόσιας ασφάλειας"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "Χώρες και γλώσσες",
+    "description": "Επιλέξτε χώρα και γλώσσα για τον ιστότοπο marketing.",
+    "triggerAria": "Επιλογή χώρας και γλώσσας",
+    "searchPlaceholder": "Αναζήτηση χωρών…",
+    "plannedHint": "Η διεπαφή θα χρησιμοποιεί αγγλικά μέχρι να κυκλοφορήσει αυτή η γλώσσα",
+    "noResults": "Δεν βρέθηκαν αντίστοιχες χώρες",
+    "menuAria": "Χώρες και γλώσσες"
   }
 }

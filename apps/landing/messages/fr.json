@@ -6,13 +6,13 @@
     "docs": "Docs",
     "github": "GitHub",
     "npm": "npm",
-    "signIn": "Se Connecter",
-    "getStarted": "Commencer",
     "about": "À propos",
     "ideas": "Idées",
     "opc": "Plateforme",
     "roadmap": "Feuille de Route",
     "resources": "Ressources",
+    "signIn": "Se Connecter",
+    "getStarted": "Commencer",
     "changelog": "Journal des modifications",
     "news": "Actualités",
     "designDocs": "Système de Design",
@@ -135,6 +135,7 @@
       "community": "Communauté"
     },
     "links": {
+      "product": "Produit",
       "features": "Fonctionnalités",
       "pricing": "Tarifs",
       "about": "À propos",
@@ -153,13 +154,12 @@
       "terms": "Conditions",
       "cookies": "Cookies",
       "refund": "Remboursement",
+      "licensing": "Licences",
       "contact": "Contact",
       "faq": "FAQ",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X (Twitter)",
-      "product": "Produit",
-      "licensing": "Licences"
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {brandName} Intelligence. Tous droits réservés.",
     "statusOnline": "Tous les systèmes opérationnels",
@@ -243,6 +243,10 @@
       "heading": "Établir une connexion de support",
       "subheading": "Nous enverrons un spécialiste technique ou un architecte dédié pour évaluer vos exigences précises.",
       "contacts": {
+        "founder": {
+          "title": "Contact direct du fondateur",
+          "description": "Canal de communication direct pour les alignements stratégiques essentiels et les demandes au niveau exécutif."
+        },
         "general": {
           "title": "Consultation en entreprise",
           "description": "Discussions préliminaires concernant les partenariats stratégiques et l'évolution architecturale globale."
@@ -266,10 +270,6 @@
         "security": {
           "title": "Divulgations de sécurité",
           "description": "Soumettez de façon sécurisée des rapports de reproduction technique concernant les vulnérabilités logicielles potentielles directement à notre équipe infrastructure."
-        },
-        "founder": {
-          "title": "Contact direct du fondateur",
-          "description": "Canal de communication direct pour les alignements stratégiques essentiels et les demandes au niveau exécutif."
         }
       },
       "formTitle": "Portail de soumission",
@@ -296,10 +296,10 @@
         "successMessage": "Données transmises avec succès. L'équipe opérationnelle responsable fournira une réponse détaillée dans un délai de 1 à 2 jours ouvrés."
       },
       "companyInfoTitle": "Télémétrie opérationnelle",
-      "socialMedia": "Liens réseau principaux",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, province du Jiangsu, Chine"
+      "companyAddress": "Wuxi, province du Jiangsu, Chine",
+      "socialMedia": "Liens réseau principaux"
     },
     "cookies": {
       "title": "Politique relative aux cookies — {brandName}",
@@ -1152,18 +1152,6 @@
       "title": "Achat unique. Accès à vie.",
       "description": "Pas d'abonnements. Pas de frais récurrents. Choisissez le plan adapté à votre équipe et commencez à construire aujourd'hui.",
       "socialProofText": "Open source AGPL-3.0 · licence commerciale disponible.",
-      "startup": {
-        "badge": "STARTUP",
-        "price": "799 $",
-        "period": "/ an",
-        "desc": "Pour les petites équipes construisant sur la base de plateforme {brandName}.",
-        "cta": "Obtenir {brandName} pour Startups",
-        "f1": "Usage en code fermé (licence commerciale)",
-        "f2": "Projets d'équipe illimités",
-        "f3": "12 mois de mises à jour incluses",
-        "f4": "Support par e-mail",
-        "f5": "Tout ce qu'inclut Solo"
-      },
       "independent": {
         "badge": "INDEPENDENT",
         "price": "Gratuit",
@@ -1175,6 +1163,18 @@
         "f3": "Stack SaaS complète : Auth, Paiements, Organisations, API, Admin UI, E-mail, i18n, Jobs en arrière-plan, Stockage et plus",
         "f4": "Fonctionnalités marketing : Blog, Page d'accueil, SEO, Analytique",
         "f5": "Licence Open Source AGPLv3"
+      },
+      "startup": {
+        "badge": "STARTUP",
+        "price": "799 $",
+        "period": "/ an",
+        "desc": "Pour les petites équipes construisant sur la base de plateforme {brandName}.",
+        "cta": "Obtenir {brandName} pour Startups",
+        "f1": "Usage en code fermé (licence commerciale)",
+        "f2": "Projets d'équipe illimités",
+        "f3": "12 mois de mises à jour incluses",
+        "f4": "Support par e-mail",
+        "f5": "Tout ce qu'inclut Solo"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
@@ -1451,7 +1451,7 @@
         "title": "Gestion d'actifs numériques d'entreprise",
         "desc": "Lacs de données structurés et topologies de tableaux de bord complexes utilisant des architectures PostgreSQL évolutives et un RBAC granulaire.",
         "features": {
-          "f1": "Row-Level Security",
+          "f1": "Sécurité au niveau des lignes",
           "f2": "Requêtes complexes",
           "f3": "Gestion des rôles"
         }
@@ -1464,11 +1464,11 @@
     "subheadline": "Des primitives de marque aux tokens runtime, du moteur multi-thème aux composants gouvernés — pas juste shadcn avec Tailwind.",
     "flowBrand": "Marque",
     "flowBrandDesc": "Primitives de couleur, dégradés, langage de mouvement",
-    "flowTokens": "Tokens",
+    "flowTokens": "Jetons",
     "flowTokensDesc": "Variables CSS, échelles 12 niveaux, mode sombre",
     "flowTheme": "Thème",
     "flowThemeDesc": "oklch multi-thème, 6 presets, color-mix()",
-    "flowUI": "UI",
+    "flowUI": "Interface",
     "flowUIDesc": "Composants, Storybook, Chromatic",
     "card1Title": "Échelles de couleur 12 niveaux",
     "card1Desc": "Échelle sémantique alignée Geist : arrière-plans (1-2), états (3-5), bordures (6-8), remplissages (9-10), texte (11-12).",
@@ -1684,8 +1684,8 @@
       "title": "Choisissez le plan adapté à votre étape",
       "subtitle": "Chaque plan inclut le code source complet. Les licences commerciales incluent 12 mois de mises à jour.",
       "plan": {
-        "startup": "Startup",
         "independent": "Individuel",
+        "startup": "Startup",
         "enterprise": "Entreprise"
       },
       "feature": {

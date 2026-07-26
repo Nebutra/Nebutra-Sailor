@@ -1,73 +1,73 @@
 {
   "admin": {
-    "title": "Admin",
-    "description": "Super admin panel — manage users, organizations, and system health.",
+    "title": "এডমিন",
+    "description": "সুপার এডমিন প্যানেল — ব্যবহারকারী, সংস্থা এবং সিস্টেম স্বাস্থ্য পরিচালনা করুন।",
     "nav": {
-      "overview": "Overview",
-      "users": "Users",
-      "organizations": "Organizations"
+      "overview": "সংক্ষিপ্ত বিবরণ",
+      "users": "ব্যবহারকারী",
+      "organizations": "সংস্থা"
     },
     "users": {
-      "title": "Users",
-      "description": "Browse, search, and impersonate any user across all organizations.",
-      "searchPlaceholder": "Search users…",
-      "totalCount": "{count, plural, one {# user} other {# users}}",
-      "empty": "No users found.",
-      "loadError": "Failed to load users.",
+      "title": "ব্যবহারকারী",
+      "description": "সব সংস্থার মধ্যে যেকোনো ব্যবহারকারী ব্রাউজ, অনুসন্ধান এবং ইম্পার্সোনেশন করুন।",
+      "searchPlaceholder": "ব্যবহারকারী খুঁজুন…",
+      "totalCount": "{count, plural, one {# ব্যবহারকারী} other {# ব্যবহারকারী}}",
+      "empty": "কোনো ব্যবহারকারী পাওয়া যায়নি।",
+      "loadError": "ব্যবহারকারী লোড করতে ব্যর্থ হয়েছে।",
       "columns": {
-        "email": "Email",
-        "name": "Name",
-        "created": "Created",
-        "activeOrgs": "Active orgs",
-        "actions": "Actions"
+        "email": "ইমেইল",
+        "name": "নাম",
+        "created": "তৈরি হয়েছে",
+        "activeOrgs": "সক্রিয় সংস্থা",
+        "actions": "অ্যাকশন"
       },
-      "viewOrgs": "View orgs"
+      "viewOrgs": "অর্গানাইজেশন দেখুন"
     },
     "organizations": {
-      "title": "Organizations",
-      "description": "All workspaces in the system, ranked by recency.",
-      "searchPlaceholder": "Search organizations…",
-      "totalCount": "{count, plural, one {# organization} other {# organizations}}",
-      "empty": "No organizations found.",
-      "loadError": "Failed to load organizations.",
+      "title": "অর্গানাইজেশন",
+      "description": "সিস্টেমের সকল ওয়ার্কস্পেস, সাম্প্রতিকতার ভিত্তিতে সাজানো।",
+      "searchPlaceholder": "অর্গানাইজেশন খুঁজুন…",
+      "totalCount": "{count, plural, one {# অর্গানাইজেশন} other {# অর্গানাইজেশন}}",
+      "empty": "কোনো অর্গানাইজেশন পাওয়া যায়নি।",
+      "loadError": "অর্গানাইজেশন লোড করতে ব্যর্থ হয়েছে।",
       "columns": {
-        "name": "Name",
-        "slug": "Slug",
-        "plan": "Plan",
-        "members": "Members",
-        "created": "Created",
-        "actions": "Actions"
+        "name": "নাম",
+        "slug": "স্লাগ",
+        "plan": "প্ল্যান",
+        "members": "সদস্য",
+        "created": "তৈরি হয়েছে",
+        "actions": "অ্যাকশন"
       },
-      "view": "View"
+      "view": "দেখুন"
     },
     "impersonate": {
-      "trigger": "Impersonate",
-      "starting": "Starting…",
-      "stop": "Stop impersonating",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "trigger": "ইম্পার্সোনেট",
+      "starting": "শুরু হচ্ছে…",
+      "stop": "অনুকরণ বন্ধ করুন",
+      "confirm": "{label} কে অনুকরণ করবেন? আপনি যতক্ষণ না বন্ধ করবেন, ততক্ষণ এই ব্যবহারকারী হিসেবে অ্যাপ দেখতে পাবেন।",
+      "error": "অনুকরণ শুরু করতে ব্যর্থ হয়েছে।",
+      "stopError": "অনুকরণ বন্ধ করতে ব্যর্থ হয়েছে।"
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "আগের",
+      "next": "পরবর্তী",
+      "pageOf": "মোট {total} এর মধ্যে {page} পৃষ্ঠা"
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "হ্যালো ওয়ার্ল্ড",
+    "dashboard": "ড্যাশবোর্ড",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "চলুন",
+      "confirm": "নিশ্চিত করুন",
+      "done": "সম্পন্ন",
+      "cancel": "বাতিল করুন"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "লাইট",
+    "dark": "ডার্ক",
+    "system": "সিস্টেম"
   },
   "LocaleSwitcher": {
     "en": "English",
@@ -95,253 +95,253 @@
     "subtitle": "Three quick steps and you're ready to ship.",
     "steps": {
       "workspace": "Workspace",
-      "invite": "Invite team",
-      "plan": "Choose plan"
+      "invite": "দল আমন্ত্রণ করুন",
+      "plan": "প্ল্যান বেছে নিন"
     },
     "progress": {
-      "back": "Back",
-      "stepCounter": "Step {current} of {total}"
+      "back": "পিছনে যান",
+      "stepCounter": "মোট {total} এর মধ্যে ধাপ {current}"
     },
     "plan": {
-      "title": "Pick a plan",
-      "description": "Start free or unlock more capacity. You can change plans any time.",
-      "choose": "Choose a plan",
-      "skip": "Skip for now"
+      "title": "একটি প্ল্যান বেছে নিন",
+      "description": "বিনামূল্যে শুরু করুন অথবা আরও ক্ষমতা আনলক করুন。আপনি যেকোনো সময় প্ল্যান পরিবর্তন করতে পারবেন।",
+      "choose": "একটি প্ল্যান বেছে নিন",
+      "skip": "এখনের জন্য বাদ দিন"
     }
   },
   "userMenu": {
-    "ariaLabel": "Open user menu",
-    "profile": "Profile",
-    "settings": "Settings",
-    "feedback": "Feedback",
-    "theme": "Theme",
-    "language": "Language",
-    "signOut": "Sign out",
-    "signedInAs": "Signed in as"
+    "ariaLabel": "ব্যবহারকারী মেনু খুলুন",
+    "profile": "প্রোফাইল",
+    "settings": "সেটিংস",
+    "feedback": "ফিডব্যাক",
+    "theme": "থিম",
+    "language": "ভাষা",
+    "signOut": "সাইন আউট",
+    "signedInAs": "সাইন ইন হিসেবে"
   },
   "account": {
     "profile": {
-      "title": "Profile",
-      "description": "Update your personal information.",
-      "nameLabel": "Name",
-      "namePlaceholder": "Your full name",
-      "emailLabel": "Email",
-      "emailHint": "We will send a verification link to confirm a new email address.",
-      "languageLabel": "Language",
-      "submit": "Save changes",
-      "saving": "Saving…",
-      "verifyEmail": "Verify",
-      "verifying": "Sending verification…",
-      "success": "Profile updated.",
-      "verificationSent": "Verification email sent.",
-      "errorRequiredName": "Name is required.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "subtitle": "Your identity and contact information.",
-      "unknown": "Unnamed user",
-      "manageCta": "Open full account settings"
+      "title": "প্রোফাইল",
+      "description": "আপনার ব্যক্তিগত তথ্য আপডেট করুন।",
+      "nameLabel": "নাম",
+      "namePlaceholder": "আপনার পূর্ণ নাম",
+      "emailLabel": "ইমেইল",
+      "emailHint": "নতুন ইমেইল ঠিকানা নিশ্চিত করতে আমরা একটি যাচাইকরণ লিঙ্ক পাঠাব।",
+      "languageLabel": "ভাষা",
+      "submit": "পরিবর্তন সংরক্ষণ করুন",
+      "saving": "সংরক্ষণ হচ্ছে…",
+      "verifyEmail": "যাচাই করুন",
+      "verifying": "যাচাইকরণ পাঠানো হচ্ছে…",
+      "success": "প্রোফাইল আপডেট হয়েছে।",
+      "verificationSent": "যাচাইকরণ ইমেইল পাঠানো হয়েছে。",
+      "errorRequiredName": "নাম আবশ্যক।",
+      "errorInvalidEmail": "ইমেইল ঠিকানা বৈধ নয়।",
+      "subtitle": "আপনার পরিচয় এবং যোগাযোগের তথ্য।",
+      "unknown": "নামহীন ব্যবহারকারী",
+      "manageCta": "সম্পূর্ণ অ্যাকাউন্ট সেটিংস খুলুন"
     },
     "avatar": {
-      "title": "Avatar",
-      "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB).",
-      "uploadButton": "Upload avatar",
-      "uploading": "Uploading…",
-      "fileTooBig": "File is too large. Maximum size is 2MB.",
-      "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-      "success": "Avatar updated.",
-      "removeButton": "Remove avatar",
-      "removed": "Avatar removed.",
-      "deleteError": "Failed to delete avatar."
+      "title": "অ্যাভাটার",
+      "description": "একটি বর্গাকার ছবি আপলোড করুন (PNG, JPEG, বা WebP, সর্বোচ্চ 2MB)।",
+      "uploadButton": "অ্যাভাটার আপলোড করুন",
+      "uploading": "আপলোড হচ্ছে…",
+      "fileTooBig": "ফাইলটি খুব বড়। সর্বোচ্চ আকার 2MB।",
+      "invalidType": "ছবির ধরনটি সমর্থিত নয়। PNG, JPEG, বা WebP ব্যবহার করুন।",
+      "success": "অ্যাভাটার আপডেট হয়েছে।",
+      "removeButton": "অ্যাভাটার সরান",
+      "removed": "অ্যাভাটার সরানো হয়েছে。",
+      "deleteError": "অ্যাভাটার মুছে ফেলতে ব্যর্থ হয়েছে।"
     },
     "export": {
-      "title": "Export my data",
-      "description": "Download a copy of every record we hold for your account, including profile, organizations, audit events, notifications, and invitations.",
-      "compliance": "Required by GDPR Article 20 (Right to data portability) and PIPL Article 45 (Right to obtain a copy of personal information).",
-      "export": "Export my data",
-      "pending": "Preparing export…",
-      "ready": "Your export is ready.",
-      "download": "Download JSON",
-      "error": "Failed to prepare your export. Please try again."
+      "title": "আমার ডেটা রপ্তানি করুন",
+      "description": "আপনার অ্যাকাউন্টের প্রতিটি রেকর্ডের একটি কপি ডাউনলোড করুন, যার মধ্যে প্রোফাইল, সংগঠন, অডিট ইভেন্ট, বিজ্ঞপ্তি এবং আমন্ত্রণ অন্তর্ভুক্ত।",
+      "compliance": "GDPR Article 20 (ডেটা পোর্টেবিলিটির অধিকার) এবং PIPL Article 45 (ব্যক্তিগত তথ্যের কপি প্রাপ্তির অধিকার) দ্বারা আবশ্যক।",
+      "export": "আমার ডেটা রপ্তানি করুন",
+      "pending": "এক্সপোর্ট প্রস্তুত হচ্ছে…",
+      "ready": "আপনার এক্সপোর্ট প্রস্তুত।",
+      "download": "JSON ডাউনলোড করুন",
+      "error": "আপনার এক্সপোর্ট প্রস্তুত করা যায়নি。অনুগ্রহ করে আবার চেষ্টা করুন।"
     },
     "emailChange": {
-      "title": "Change email address",
-      "description": "We will send a verification link to the new address. The change only takes effect once you confirm it from that inbox.",
-      "newEmailLabel": "New email address",
+      "title": "ইমেইল ঠিকানা পরিবর্তন করুন",
+      "description": "আমরা নতুন ঠিকানায় একটি ভেরিফিকেশন লিঙ্ক পাঠাবো। সেই ইনবক্স থেকে নিশ্চিত করলেই পরিবর্তনটি কার্যকর হবে।",
+      "newEmailLabel": "নতুন ইমেইল ঠিকানা",
       "newEmailPlaceholder": "you@example.com",
-      "submit": "Send verification link",
-      "submitting": "Sending…",
-      "verificationSent": "Check your inbox at {email} to confirm the change.",
-      "errorInvalidEmail": "Email address is not valid.",
-      "error": "Failed to request email change.",
+      "submit": "ভেরিফিকেশন লিঙ্ক পাঠান",
+      "submitting": "পাঠানো হচ্ছে…",
+      "verificationSent": "পরিবর্তনটি নিশ্চিত করতে {email} ইনবক্স চেক করুন।",
+      "errorInvalidEmail": "ইমেইল ঠিকানা বৈধ নয়।",
+      "error": "ইমেইল পরিবর্তনের অনুরোধ করা যায়নি।",
       "confirm": {
-        "successTitle": "Email updated",
-        "successDescription": "Your sign-in email has been updated.",
-        "successWithEmail": "Your sign-in email is now {email}.",
-        "failureTitle": "We couldn't confirm that link",
-        "failureDescription": "This verification link is invalid, expired, or already used. Please request a new one from your account settings.",
-        "errorCode": "Reason: {code}",
-        "continueCta": "Back to account",
-        "backCta": "Back to account"
+        "successTitle": "ইমেইল আপডেট হয়েছে",
+        "successDescription": "আপনার সাইন-ইন ইমেইল আপডেট হয়েছে।",
+        "successWithEmail": "আপনার সাইন-ইন ইমেইল এখন {email}।",
+        "failureTitle": "আমরা সেই লিঙ্কটি নিশ্চিত করতে পারিনি",
+        "failureDescription": "এই ভেরিফিকেশন লিঙ্কটি অবৈধ, মেয়াদোত্তীর্ণ, অথবা ইতিমধ্যে ব্যবহৃত হয়েছে। অনুগ্রহ করে আপনার অ্যাকাউন্ট সেটিংস থেকে একটি নতুন লিঙ্ক অনুরোধ করুন।",
+        "errorCode": "কারণ: {code}",
+        "continueCta": "অ্যাকাউন্টে ফিরে যান",
+        "backCta": "অ্যাকাউন্টে ফিরে যান"
       }
     },
-    "title": "Account",
-    "ariaLabel": "Account settings",
-    "navLabel": "Account settings tabs",
-    "tip": "Press {key} anywhere to reopen this dialog.",
+    "title": "অ্যাকাউন্ট",
+    "ariaLabel": "অ্যাকাউন্ট সেটিংস",
+    "navLabel": "অ্যাকাউন্ট সেটিংস ট্যাব",
+    "tip": "এই ডায়ালগটি আবার খুলতে যেকোনো জায়গায় {key} চাপুন।",
     "tabs": {
-      "profile": "Profile",
-      "subscription": "Subscription",
-      "billing": "Billing",
-      "preferences": "Preferences",
-      "personalization": "Personalization"
+      "profile": "প্রোফাইল",
+      "subscription": "সাবস্ক্রিপশন",
+      "billing": "বিলিং",
+      "preferences": "পছন্দসমূহ",
+      "personalization": "ব্যক্তিগতকরণ"
     },
     "subscription": {
-      "title": "Subscription",
-      "subtitle": "Plan, quota, and renewal.",
-      "currentPlan": "Current plan",
-      "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "title": "সাবস্ক্রিপশন",
+      "subtitle": "প্ল্যান, কোটা এবং নবায়ন।",
+      "currentPlan": "বর্তমান প্ল্যান",
+      "upgradeCta": "পরিকল্পনা তুলনা করুন",
+      "manageCta": "সাবস্ক্রিপশন পরিচালনা করুন"
     },
     "billing": {
-      "title": "Billing",
-      "subtitle": "Invoice history and payment method.",
+      "title": "বিলিং",
+      "subtitle": "ইনভয়েসের ইতিহাস এবং পেমেন্ট পদ্ধতি।",
       "empty": {
-        "title": "No history yet",
-        "description": "Charges and invoices will appear here after your first paid period.",
-        "cta": "Open full billing"
+        "title": "এখনো কোনো ইতিহাস নেই",
+        "description": "আপনার প্রথম পেমেন্টকৃত সময়কাল শেষ হওয়ার পরে চার্জ এবং ইনভয়েস এখানে দেখা যাবে।",
+        "cta": "সম্পূর্ণ বিলিং খুলুন"
       }
     },
     "preferences": {
-      "title": "Preferences",
-      "subtitle": "Theme and accessibility.",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "help": "Help",
-      "reportIssue": "Report an issue",
-      "shortcuts": "Keyboard shortcuts"
+      "title": "পছন্দসমূহ",
+      "subtitle": "থিম এবং অ্যাক্সেসিবিলিটি।",
+      "theme": "থিম",
+      "light": "লাইট",
+      "dark": "ডার্ক",
+      "system": "সিস্টেম",
+      "help": "সাহায্য",
+      "reportIssue": "একটি সমস্যা রিপোর্ট করুন",
+      "shortcuts": "কীবোর্ড শর্টকাট"
     },
     "personalization": {
-      "title": "Personalization",
-      "subtitle": "Tell Sailor who you are and how to respond."
+      "title": "ব্যক্তিগতকরণ",
+      "subtitle": "Sailor কে জানান আপনি কে এবং কীভাবে সাড়া দেবেন।"
     }
   },
   "impact": {
-    "hero_title": "Redefining the Paradigm",
-    "hero_subtitle": "Let there be no difficult business in the world.",
-    "social_title": "Social",
-    "social_headline": "Absolute Tech Equality",
-    "social_description": "Empowering edge innovators. Breaking traditional filters and empowering solo founders with out-of-the-box infrastructure.",
-    "governance_title": "Governance",
-    "governance_headline": "Code is Law",
-    "governance_description": "Algorithmic governance built on Proof of Work and real business results, replacing opaque bureaucracy.",
-    "environment_title": "Environment",
-    "environment_headline": "Digital Minimalism",
-    "environment_description": "Driving cloud footprint reduction via extreme SaaS integration and resource efficiency."
+    "hero_title": "প্যারাডাইমকে পুনর্নির্ধারণ",
+    "hero_subtitle": "পৃথিবীতে কোনো কঠিন ব্যবসা থাকবে না।",
+    "social_title": "সামাজিক",
+    "social_headline": "পরম প্রযুক্তি সমতা",
+    "social_description": "এজ ইনোভেটরদের ক্ষমতায়ন। ঐতিহ্যবাহী ফিল্টার ভেঙে বক্সের বাইরের অবকাঠামো দিয়ে একক প্রতিষ্ঠাতাদের ক্ষমতায়ন।",
+    "governance_title": "শাসন",
+    "governance_headline": "কোডই আইন",
+    "governance_description": "পুফ অফ ওয়ার্ক এবং বাস্তব ব্যবসায়িক ফলাফলের উপর ভিত্তি করে অ্যালগরিদমিক শাসন, অস্বচ্ছ বাইরেরক্রেসি প্রতিস্থাপন করে।",
+    "environment_title": "পরিবেশ",
+    "environment_headline": "ডিজিটাল মিনিমালিজম",
+    "environment_description": "এক্সট্রিম SaaS ইন্টিগ্রেশন এবং সম্পদ দক্ষতার মাধ্যমে ক্লাউড ফুটপ্রিন্ট কমানো।"
   },
   "auth": {
     "security": {
-      "title": "Security",
-      "description": "Manage your password, multi-factor authentication, and active sessions.",
-      "managedByProvider": "Security settings are managed by your authentication provider.",
-      "openProviderProfile": "Open profile",
+      "title": "নিরাপত্তা",
+      "description": "আপনার পাসওয়ার্ড, মাল্টি-ফ্যাক্টর অথেন্টিকেশন এবং সক্রিয় সেশন পরিচালনা করুন।",
+      "managedByProvider": "নিরাপত্তা সেটিংস আপনার অথেন্টিকেশন প্রদানকারী দ্বারা পরিচালিত হয়।",
+      "openProviderProfile": "প্রোফাইল খুলুন",
       "changePassword": {
-        "title": "Change password",
-        "description": "Use a strong password you don't reuse on other sites.",
-        "currentPasswordLabel": "Current password",
-        "newPasswordLabel": "New password",
-        "confirmPasswordLabel": "Confirm new password",
-        "revokeOtherSessions": "Sign out of other devices",
-        "submit": "Update password",
-        "pending": "Updating password…",
-        "success": "Password updated successfully."
+        "title": "পাসওয়ার্ড পরিবর্তন করুন",
+        "description": "অন্যান্য সাইটে ব্যবহার না করা একটি শক্তিশালী পাসওয়ার্ড ব্যবহার করুন।",
+        "currentPasswordLabel": "বর্তমান পাসওয়ার্ড",
+        "newPasswordLabel": "নতুন পাসওয়ার্ড",
+        "confirmPasswordLabel": "নতুন পাসওয়ার্ড নিশ্চিত করুন",
+        "revokeOtherSessions": "অন্যান্য ডিভাইস থেকে সাইন আউট করুন",
+        "submit": "পাসওয়ার্ড আপডেট করুন",
+        "pending": "পাসওয়ার্ড আপডেট হচ্ছে…",
+        "success": "পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।"
       },
       "twoFactor": {
-        "title": "Two-factor authentication",
-        "description": "Add a second verification step using an authenticator app.",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "enabledHelp": "Your account asks for a 6-digit authenticator code after password sign-in.",
-        "disabledHelp": "Protect your account with a 6-digit code from an authenticator app.",
-        "enable": "Enable two-factor",
-        "disable": "Disable two-factor",
-        "passwordPrompt": "Confirm your password",
-        "scanQrCode": "Scan this QR code with your authenticator app, then enter the 6-digit code below.",
-        "secretKeyLabel": "Or enter this secret manually",
-        "verificationCodeLabel": "Verification code",
-        "verify": "Verify and enable",
-        "backupCodesTitle": "Backup codes",
-        "backupCodesDescription": "Save these codes somewhere safe. Each can be used once if you lose access to your authenticator.",
-        "copyBackupCodes": "Copy codes",
-        "finishSetup": "Finish setup",
-        "successEnabled": "Two-factor authentication enabled.",
-        "successDisabled": "Two-factor authentication disabled."
+        "title": "দুই-ফ্যাক্টর প্রমাণীকরণ",
+        "description": "একটি অথেন্টিকেটর অ্যাপ ব্যবহার করে দ্বিতীয় যাচাইয়ের ধাপ যোগ করুন。",
+        "enabled": "সক্রিয়",
+        "disabled": "নিষ্ক্রিয়",
+        "enabledHelp": "পাসওয়ার্ড সাইন-ইনের পরে আপনার অ্যাকাউন্ট একটি 6-অঙ্কের অথেন্টিকেটর কোড চায়।",
+        "disabledHelp": "একটি অথেন্টিকেটর অ্যাপ থেকে 6-অঙ্কের কোড দিয়ে আপনার অ্যাকাউন্ট সুরক্ষিত করুন।",
+        "enable": "দুটি-ফ্যাক্টর সক্রিয় করুন",
+        "disable": "দুটি-ফ্যাক্টর নিষ্ক্রিয় করুন",
+        "passwordPrompt": "আপনার পাসওয়ার্ড নিশ্চিত করুন",
+        "scanQrCode": "আপনার অথেন্টিকেটর অ্যাপ দিয়ে এই QR কোড স্ক্যান করুন, তারপর নিচে 6-অঙ্কের কোড লিখুন।",
+        "secretKeyLabel": "অথবা এই গোপন কোডটি ম্যানুয়ালি লিখুন",
+        "verificationCodeLabel": "ভেরিফিকেশন কোড",
+        "verify": "ভেরিফাই এবং সক্রিয় করুন",
+        "backupCodesTitle": "ব্যাকআপ কোড",
+        "backupCodesDescription": "এই কোডগুলো কোথাও নিরাপদে সংরক্ষণ করুন। আপনার অথেন্টিকেটর অ্যাক্সেস হারালে প্রতিটি কোড একবার ব্যবহার করা যাবে।",
+        "copyBackupCodes": "কোড কপি করুন",
+        "finishSetup": "সেটআপ সম্পন্ন করুন",
+        "successEnabled": "দুটি-ফ্যাক্টর অথেন্টিকেশন সক্রিয় হয়েছে।",
+        "successDisabled": "দুটি-ফ্যাক্টর অথেন্টিকেশন নিষ্ক্রিয় হয়েছে。"
       },
       "sessions": {
-        "title": "Active sessions",
-        "description": "Devices and browsers currently signed in to your account.",
-        "currentSession": "(current)",
-        "ipLabel": "IP address",
-        "lastActiveLabel": "Last active",
-        "revoke": "Sign out",
-        "revokeAll": "Sign out of all other devices",
-        "empty": "No other active sessions.",
-        "successRevoked": "Session signed out.",
-        "successRevokedAll": "All other sessions signed out."
+        "title": "সক্রিয় সেশন",
+        "description": "আপনার অ্যাকাউন্টে বর্তমানে সাইন ইন করা ডিভাইস এবং ব্রাউজার।",
+        "currentSession": "(বর্তমান)",
+        "ipLabel": "IP ঠিকানা",
+        "lastActiveLabel": "সর্বশেষ সক্রিয়",
+        "revoke": "সাইন আউট",
+        "revokeAll": "সব অন্য ডিভাইস থেকে সাইন আউট করুন",
+        "empty": "কোনো অন্য সক্রিয় সেশন নেই।",
+        "successRevoked": "সেশন থেকে সাইন আউট করা হয়েছে।",
+        "successRevokedAll": "সব অন্য সেশন থেকে সাইন আউট করা হয়েছে।"
       },
       "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently remove your account and all associated data. This cannot be undone.",
-        "passwordPrompt": "Enter your password to confirm",
-        "confirmTextLabel": "Type DELETE to confirm",
-        "submit": "Delete account",
-        "cancel": "Cancel",
-        "success": "Account deleted."
+        "title": "অ্যাকাউন্ট মুছুন",
+        "description": "আপনার অ্যাকাউন্ট এবং সমস্ত সংশ্লিষ্ট তথ্য স্থায়ীভাবে মুছে ফেলুন। এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+        "passwordPrompt": "নিশ্চিত করতে আপনার পাসওয়ার্ড লিখুন",
+        "confirmTextLabel": "নিশ্চিত করতে DELETE লিখুন",
+        "submit": "অ্যাকাউন্ট মুছুন",
+        "cancel": "বাতিল করুন",
+        "success": "অ্যাকাউন্ট মুছে ফেলা হয়েছে।"
       },
       "connectedAccounts": {
-        "title": "Connected accounts",
-        "description": "Review OAuth sign-in methods linked to your Nebutra identity.",
-        "connected": "Connected",
-        "connect": "Connect",
-        "help": "Keep at least one trusted sign-in method available before unlinking a provider.",
-        "unlink": "Unlink",
-        "notLinked": "Not linked"
+        "title": "সংযুক্ত অ্যাকাউন্ট",
+        "description": "আপনার Nebutra পরিচয়ের সাথে যুক্ত OAuth সাইন-ইন পদ্ধতিগুলো পর্যালোচনা করুন।",
+        "connected": "সংযুক্ত",
+        "connect": "সংযুক্ত করুন",
+        "help": "একটি প্রদানকারী বিচ্ছিন্ন করার আগে অন্তত একটি বিশ্বস্ত সাইন-ইন পদ্ধতি উপলব্ধ রাখুন।",
+        "unlink": "বিচ্ছিন্ন করুন",
+        "notLinked": "সংযুক্ত নয়"
       },
       "passkeys": {
-        "title": "Passkeys",
-        "description": "Use device-bound credentials for phishing-resistant sign-in.",
-        "empty": "No passkeys registered yet",
-        "addPasskey": "Add passkey",
-        "cancelAdd": "Cancel",
-        "cancelled": "Passkey setup was cancelled. Nothing changed.",
-        "defaultName": "Passkey {number}",
-        "nameHelp": "Give this passkey a recognizable name before your browser asks for confirmation.",
-        "nameLabel": "Passkey name",
-        "rename": "Rename",
-        "saveRename": "Save name",
-        "remove": "Remove",
-        "successAdded": "Passkey added.",
-        "successRemoved": "Passkey removed.",
-        "unavailableBadge": "Unavailable"
+        "title": "পাসকি",
+        "description": "ফিশিং-প্রতিরোধী সাইন-ইনের জন্য ডিভাইস-বদ্ধ ক্রেডেনশিয়াল ব্যবহার করুন।",
+        "empty": "এখনও কোনো পাসকি নিবন্ধিত হয়নি",
+        "addPasskey": "পাসকি যোগ করুন",
+        "cancelAdd": "বাতিল করুন",
+        "cancelled": "পাসকি সেটআপ বাতিল করা হয়েছে। কিছুই পরিবর্তন হয়নি।",
+        "defaultName": "পাসকি {number}",
+        "nameHelp": "আপনার ব্রাউজার নিশ্চিতকরণের জন্য জিজ্ঞাসা করার আগে এই পাসকিটির একটি চিনে নেওয়া যায় এমন নাম দিন।",
+        "nameLabel": "পাসকির নাম",
+        "rename": "নাম পরিবর্তন করুন",
+        "saveRename": "নাম সংরক্ষণ করুন",
+        "remove": "সরান",
+        "successAdded": "পাসকি যোগ করা হয়েছে।",
+        "successRemoved": "পাসকি সরানো হয়েছে।",
+        "unavailableBadge": "অনুপলব্ধ"
       },
       "setPassword": {
-        "title": "Set a password",
-        "description": "Add a password to sign in without your OAuth provider.",
-        "submit": "Set password",
-        "pending": "Sending password setup link…",
-        "sentMessage": "We've sent a password setup link to your email."
+        "title": "পাসওয়ার্ড সেট করুন",
+        "description": "আপনার OAuth প্রোভাইডার ছাড়া সাইন ইন করার জন্য একটি পাসওয়ার্ড যোগ করুন।",
+        "submit": "পাসওয়ার্ড সেট করুন",
+        "pending": "পাসওয়ার্ড সেটআপ লিঙ্ক পাঠানো হচ্ছে…",
+        "sentMessage": "আমরা আপনার ইমেইলে একটি পাসওয়ার্ড সেটআপ লিঙ্ক পাঠিয়েছি।"
       }
     },
     "banner": {
       "logoAlt": "Nebutra",
-      "slogan": "Ship your Startup, governed from day one.",
-      "tagline": "Multi-region agents, multi-tenant by default. No platform team required."
+      "slogan": "আপনার স্টার্টআপ শিপ করুন, প্রথম দিন থেকেই নিয়ন্ত্রিত।",
+      "tagline": "মাল্টি-রিজিয়ন এজেন্ট, ডিফল্টভাবে মাল্টি-টেন্যান্ট। প্ল্যাটফর্ম টিমের প্রয়োজন নেই。"
     },
     "signIn": {
-      "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
-      "continueWith": "Continue with",
-      "continueWithProvider": "Continue with {provider}",
+      "title": "Nebutra-তে লগ ইন করুন",
+      "subtitle": "কীভাবে সাইন ইন করতে চান তা বেছে নিন।",
+      "continueWith": "এর মাধ্যমে চালিয়ে যান",
+      "continueWithProvider": "{provider} এর মাধ্যমে চালিয়ে যান",
       "providers": {
         "google": "Google",
         "github": "GitHub",
@@ -349,529 +349,529 @@
         "microsoft": "Microsoft",
         "feishu": "Feishu"
       },
-      "providerLoading": "Redirecting…",
-      "dividerOr": "Or continue with email",
-      "emailLabel": "Email",
+      "providerLoading": "রিডাইরেক্ট করা হচ্ছে…",
+      "dividerOr": "অথবা ইমেইল দিয়ে চালিয়ে যান",
+      "emailLabel": "ইমেইল",
       "emailPlaceholder": "you@example.com",
-      "continue": "Continue",
-      "back": "Back",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "capsLockOn": "Caps Lock is on",
-      "forgotPassword": "Forgot password?",
-      "submit": "Log in",
-      "submitLoading": "Signing in…",
-      "useMagicLink": "Send me a magic link instead",
-      "usePasskey": "Sign in with a passkey",
-      "passkeyTitle": "Sign in with your passkey",
-      "passkeyDescription": "Use Face ID, Touch ID, or your security key. No password needed.",
-      "passkeyButton": "Continue with passkey",
-      "passkeyCancelled": "Passkey prompt cancelled.",
-      "passkeyUnsupported": "This browser does not support passkeys.",
-      "passkeyError": "Passkey sign-in failed. Try another method.",
-      "ssoTitle": "Continue with Enterprise SSO",
-      "ssoDescription": "Redirecting you to {provider} for {email}.",
-      "ssoError": "Enterprise SSO could not start. Try another method.",
-      "ssoRetry": "Try again",
-      "newToProduct": "New to Nebutra?",
-      "signUpLink": "Sign up",
-      "homeLink": "Home",
-      "signInFailed": "Sign in failed",
-      "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "continue": "চালিয়ে যান",
+      "back": "ফিরে যান",
+      "passwordLabel": "পাসওয়ার্ড",
+      "passwordPlaceholder": "আপনার পাসওয়ার্ড লিখুন",
+      "showPassword": "পাসওয়ার্ড দেখান",
+      "hidePassword": "পাসওয়ার্ড লুকান",
+      "capsLockOn": "Caps Lock চালু আছে",
+      "forgotPassword": "পাসওয়ার্ড ভুলে গেছেন?",
+      "submit": "লগ ইন করুন",
+      "submitLoading": "সাইন ইন হচ্ছে…",
+      "useMagicLink": "এর পরিবর্তে একটি ম্যাজিক লিংক পাঠান",
+      "usePasskey": "পাসকি দিয়ে সাইন ইন করুন",
+      "passkeyTitle": "আপনার পাসকি দিয়ে সাইন ইন করুন",
+      "passkeyDescription": "ফেস আইডি, টাচ আইডি বা আপনার সিকিউরিটি কি ব্যবহার করুন। পাসওয়ার্ডের প্রয়োজন নেই।",
+      "passkeyButton": "পাসকি দিয়ে চালিয়ে যান",
+      "passkeyCancelled": "পাসকি প্রম্পট বাতিল করা হয়েছে।",
+      "passkeyUnsupported": "এই ব্রাউজার পাসকি সমর্থন করে না।",
+      "passkeyError": "পাসকি সাইন-ইন ব্যর্থ হয়েছে। অন্য পদ্ধতি চেষ্টা করুন。",
+      "ssoTitle": "এন্টারপ্রাইজ এসএসও দিয়ে চালিয়ে যান",
+      "ssoDescription": "{email} এর জন্য আপনাকে {provider} এ রিডাইরেক্ট করা হচ্ছে।",
+      "ssoError": "এন্টারপ্রাইজ এসএসও শুরু করা যায়নি। অন্য পদ্ধতি চেষ্টা করুন।",
+      "ssoRetry": "আবার চেষ্টা করুন",
+      "newToProduct": "নেবুট্রা নতুন?",
+      "signUpLink": "সাইন আপ করুন",
+      "homeLink": "হোম",
+      "signInFailed": "সাইন ইন ব্যর্থ হয়েছে",
+      "genericError": "একটি ত্রুটি হয়েছে。অনুগ্রহ করে আবার চেষ্টা করুন।",
+      "captchaError": "বট যাচাই ব্যর্থ হয়েছে। পেজটি রিফ্রেশ করে আবার চেষ্টা করুন।"
     },
     "signUp": {
-      "title": "Create your Nebutra account",
-      "subtitle": "One account for every Nebutra app.",
-      "firstNameLabel": "First name",
-      "lastNameLabel": "Last name",
-      "firstNamePlaceholder": "First",
-      "lastNamePlaceholder": "Last",
-      "submit": "Create account",
-      "submitLoading": "Creating account…",
-      "alreadyHaveAccount": "Already have an account?",
-      "signInLink": "Log in",
-      "signUpFailed": "Sign up failed"
+      "title": "আপনার Nebutra অ্যাকাউন্ট তৈরি করুন",
+      "subtitle": "প্রতিটি Nebutra অ্যাপের জন্য একটি অ্যাকাউন্ট।",
+      "firstNameLabel": "প্রথম নাম",
+      "lastNameLabel": "শেষ নাম",
+      "firstNamePlaceholder": "প্রথম",
+      "lastNamePlaceholder": "শেষ",
+      "submit": "অ্যাকাউন্ট তৈরি করুন",
+      "submitLoading": "অ্যাকাউন্ট তৈরি হচ্ছে…",
+      "alreadyHaveAccount": "আগে থেকেই অ্যাকাউন্ট আছে?",
+      "signInLink": "লগ ইন করুন",
+      "signUpFailed": "সাইন আপ ব্যর্থ হয়েছে"
     },
     "passkeys": {
-      "title": "Passkeys",
-      "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",
-      "addButton": "Add a passkey",
-      "adding": "Setting up…",
-      "namePlaceholder": "e.g. MacBook Pro",
-      "nameLabel": "Name (optional)",
-      "registerSuccess": "Passkey added.",
-      "registerCancelled": "Setup cancelled.",
-      "registerUnsupported": "This browser does not support passkeys.",
-      "registerError": "Failed to register passkey.",
-      "empty": "No passkeys yet.",
-      "loadError": "Failed to load passkeys.",
-      "revoke": "Remove",
-      "revoking": "Removing…",
-      "revokeConfirm": "Remove this passkey? You won't be able to sign in with it anymore.",
-      "revokeSuccess": "Passkey removed.",
-      "revokeError": "Failed to remove passkey.",
+      "title": "পাসকি",
+      "description": "পাসওয়ার্ডের পরিবর্তে Face ID, Touch ID, Windows Hello অথবা একটি সিকিউরিটি কি ব্যবহার করুন। প্রতিটি ডিভাইসের নিজস্ব পাসকি থাকে।",
+      "addButton": "একটি পাসকি যোগ করুন",
+      "adding": "সেটআপ করা হচ্ছে…",
+      "namePlaceholder": "যেমন: MacBook Pro",
+      "nameLabel": "নাম (ঐচ্ছিক)",
+      "registerSuccess": "পাসকি যোগ করা হয়েছে।",
+      "registerCancelled": "সেটআপ বাতিল করা হয়েছে。",
+      "registerUnsupported": "এই ব্রাউজার পাসকি সমর্থন করে না।",
+      "registerError": "পাসকি রেজিস্টার করতে ব্যর্থ হয়েছে।",
+      "empty": "এখনো কোনো পাসকি নেই।",
+      "loadError": "পাসকি লোড করতে ব্যর্থ হয়েছে।",
+      "revoke": "সরান",
+      "revoking": "সরাচ্ছে…",
+      "revokeConfirm": "এই পাসকিটি সরান? আপনি আর এটি দিয়ে সাইন ইন করতে পারবেন না।",
+      "revokeSuccess": "পাসকি সরানো হয়েছে।",
+      "revokeError": "পাসকি সরাতে ব্যর্থ হয়েছে।",
       "device": {
-        "singleDevice": "Device-bound",
-        "multiDevice": "Synced across devices"
+        "singleDevice": "ডিভাইস-বন্ধ",
+        "multiDevice": "ডিভাইসগুলোর মধ্যে সিঙ্ক করা হয়েছে"
       },
-      "addedOn": "Added {date}"
+      "addedOn": "{date} এ যোগ করা হয়েছে"
     },
     "magicLink": {
-      "title": "Sign in with a magic link",
-      "description": "Enter your email and we'll send you a 6-digit code to sign in.",
-      "emailLabel": "Email",
-      "send": "Send link",
-      "codeLabel": "Verification code",
-      "verify": "Verify",
-      "resend": "Resend code",
-      "resendCooldown": "Resend in {seconds}s",
-      "sentTo": "We sent a code to {email}"
+      "title": "ম্যাজিক লিংক দিয়ে সাইন ইন করুন",
+      "description": "আপনার ইমেইল দিন এবং আমরা আপনাকে সাইন ইন করার জন্য একটি 6-অঙ্কের কোড পাঠাবো।",
+      "emailLabel": "ইমেইল",
+      "send": "লিংক পাঠান",
+      "codeLabel": "ভেরিফিকেশন কোড",
+      "verify": "ভেরিফাই করুন",
+      "resend": "কোড আবার পাঠান",
+      "resendCooldown": "{seconds} সেকেন্ড পর আবার পাঠানো যাবে",
+      "sentTo": "আমরা {email} এ একটি কোড পাঠিয়েছি"
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter your email and we will send a link to reset your password.",
-      "emailLabel": "Email",
-      "submit": "Send reset link",
-      "successTitle": "Check your email",
-      "success": "If that email is registered, you'll receive a reset link shortly."
+      "title": "পাসওয়ার্ড ভুলে গেছেন?",
+      "description": "আপনার ইমেইল দিন এবং আমরা আপনার পাসওয়ার্ড রিসেট করার জন্য একটি লিংক পাঠাবো।",
+      "emailLabel": "ইমেইল",
+      "submit": "রিসেট লিংক পাঠান",
+      "successTitle": "আপনার ইমেইল চেক করুন",
+      "success": "যদি সেই ইমেইলটি নিবন্ধিত থাকে, তবে আপনি শীঘ্রই একটি রিসেট লিঙ্ক পাবেন।"
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "description": "Choose a new password for your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "successTitle": "Password reset",
-      "successDescription": "You can now sign in with your new password.",
-      "signInCta": "Go to sign in",
-      "invalidTitle": "Invalid reset link",
-      "invalidDescription": "This password reset link is missing or malformed. Request a new one from the forgot-password page."
+      "title": "আপনার পাসওয়ার্ড রিসেট করুন",
+      "description": "আপনার অ্যাকাউন্টের জন্য একটি নতুন পাসওয়ার্ড বেছে নিন।",
+      "newPasswordLabel": "নতুন পাসওয়ার্ড",
+      "confirmPasswordLabel": "নতুন পাসওয়ার্ড নিশ্চিত করুন",
+      "submit": "পাসওয়ার্ড রিসেট করুন",
+      "successTitle": "পাসওয়ার্ড রিসেট হয়েছে",
+      "successDescription": "এখন আপনি আপনার নতুন পাসওয়ার্ড ব্যবহার করে সাইন ইন করতে পারেন।",
+      "signInCta": "সাইন ইনে যান",
+      "invalidTitle": "অবৈধ রিসেট লিঙ্ক",
+      "invalidDescription": "এই পাসওয়ার্ড রিসেট লিঙ্কটি অনুপস্থিত বা ভুলভাবে তৈরি হয়েছে। ভুলে যাওয়া পাসওয়ার্ড পৃষ্ঠা থেকে একটি নতুন লিঙ্ক অনুরোধ করুন。"
     },
     "verifyEmail": {
-      "successTitle": "Email verified",
-      "successDescription": "Your email address has been verified.",
-      "failureTitle": "Verification failed",
-      "failureDescription": "We could not verify your email with that link.",
-      "continueCta": "Continue",
-      "signInCta": "Go to sign in"
+      "successTitle": "ইমেইল যাচাই করা হয়েছে",
+      "successDescription": "আপনার ইমেইল ঠিকানা যাচাই করা হয়েছে।",
+      "failureTitle": "যাচাই ব্যর্থ হয়েছে",
+      "failureDescription": "আমরা সেই লিঙ্ক ব্যবহার করে আপনার ইমেইল যাচাই করতে পারিনি।",
+      "continueCta": "চালিয়ে যান",
+      "signInCta": "সাইন ইন করুন"
     },
     "loginSuccess": {
-      "eyebrow": "Login complete",
-      "title": "You're signed in",
-      "description": "Your session is ready. We are opening the Nebutra workspace and preserving the secure handoff from the authentication flow.",
-      "session": "Session",
-      "verified": "Verified",
-      "workspace": "Workspace",
-      "preparing": "Preparing",
-      "redirecting": "Entering workspace in {seconds}s",
-      "secureHandoff": "Secure handoff",
-      "continueCta": "Continue to workspace",
-      "signInCta": "Use another account"
+      "eyebrow": "লগইন সম্পন্ন",
+      "title": "আপনি সাইন ইন করেছেন",
+      "description": "আপনার সেশন প্রস্তুত। আমরা Nebutra ওয়ার্কস্পেস খুলছি এবং অথেন্টিকেশন ফ্লো থেকে নিরাপদ হ্যান্ডঅফ বজায় রাখছি।",
+      "session": "সেশন",
+      "verified": "যাচাইকৃত",
+      "workspace": "ওয়ার্কস্পেস",
+      "preparing": "প্রস্তুত হচ্ছে",
+      "redirecting": "{seconds} সেকেন্ডে ওয়ার্কস্পেসে প্রবেশ করছে",
+      "secureHandoff": "নিরাপদ হ্যান্ডঅফ",
+      "continueCta": "ওয়ার্কস্পেসে যান",
+      "signInCta": "অন্য একাউন্ট ব্যবহার করুন"
     },
     "errors": {
-      "invalidCredentials": "Email or password is incorrect.",
-      "userNotFound": "No account found with that email.",
-      "userAlreadyExists": "An account with that email already exists.",
-      "weakPassword": "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-      "passwordsDontMatch": "Passwords don't match.",
-      "passwordTooShort": "Password must be at least 8 characters.",
-      "currentPasswordIncorrect": "Current password is incorrect.",
-      "samePassword": "New password must be different from your current password.",
-      "invalidEmail": "Email address is not valid.",
-      "emailNotVerified": "Please verify your email address first.",
-      "sessionExpired": "Your session has expired. Please sign in again.",
-      "twoFactorRequired": "Two-factor verification required.",
-      "invalidVerificationCode": "Verification code is incorrect or expired.",
-      "twoFactorAlreadyEnabled": "Two-factor authentication is already enabled.",
-      "twoFactorNotEnabled": "Two-factor authentication is not enabled.",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "rateLimited": "You're doing that too often. Slow down.",
-      "providerNotSupported": "This action is managed by your authentication provider.",
-      "networkError": "Network error. Check your connection and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "invalidCredentials": "ইমেইল বা পাসওয়ার্ড ভুল।",
+      "userNotFound": "এই ইমেইলে কোনো একাউন্ট পাওয়া যায়নি।",
+      "userAlreadyExists": "এই ইমেইল দিয়ে আগে থেকেই একাউন্ট আছে।",
+      "weakPassword": "পাসওয়ার্ড খুব দুর্বল। কমপক্ষে ৮ অক্ষর ব্যবহার করুন, বড়-ছোট হাতের অক্ষর এবং সংখ্যা মিশিয়ে।",
+      "passwordsDontMatch": "পাসওয়ার্ড মিলছে না।",
+      "passwordTooShort": "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।",
+      "currentPasswordIncorrect": "বর্তমান পাসওয়ার্ড সঠিক নয়।",
+      "samePassword": "নতুন পাসওয়ার্ড বর্তমান পাসওয়ার্ড থেকে ভিন্ন হতে হবে।",
+      "invalidEmail": "ইমেইল ঠিকানা বৈধ নয়।",
+      "emailNotVerified": "প্রথমে আপনার ইমেইল ঠিকানা যাচাই করুন।",
+      "sessionExpired": "আপনার সেশন মেয়াদোত্তীর্ণ হয়েছে। দয়া করে আবার সাইন ইন করুন。",
+      "twoFactorRequired": "দ্বি-ফ্যাক্টর যাচাইকরণ প্রয়োজন।",
+      "invalidVerificationCode": "যাচাইকরণ কোড ভুল বা মেয়াদোত্তীর্ণ।",
+      "twoFactorAlreadyEnabled": "দ্বি-ফ্যাক্টর প্রমাণীকরণ ইতিমধ্যে সক্রিয় আছে।",
+      "twoFactorNotEnabled": "দ্বি-ফ্যাক্টর প্রমাণীকরণ সক্রিয় নয়।",
+      "tooManyAttempts": "অতিরিক্ত চেষ্টা। দয়া করে পরে আবার চেষ্টা করুন।",
+      "rateLimited": "আপনি খুব দ্রুত এটি করছেন। একটু ধীরে করুন।",
+      "providerNotSupported": "এই কাজটি আপনার প্রমাণীকরণ প্রদানকারী দ্বারা পরিচালিত হয়।",
+      "networkError": "নেটওয়ার্ক ত্রুটি। আপনার সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
+      "unknown": "কিছু একটা সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।"
     }
   },
   "chat": {
     "suggestions": {
-      "title": "Try one of these to get started",
+      "title": "শুরু করতে এগুলোর যেকোনো একটি চেষ্টা করুন",
       "activity": {
-        "title": "Show recent activity",
-        "prompt": "Show me the most recent activity across my workspace from the past 24 hours."
+        "title": "সাম্প্রতিক কার্যকলাপ দেখুন",
+        "prompt": "আমার ওয়ার্কস্পেসের গত 24 ঘণ্টার সবচেয়ে সাম্প্রতিক কার্যকলাপ দেখান।"
       },
       "debug": {
-        "title": "Debug an error",
-        "prompt": "Help me debug a runtime error. I will paste the stack trace and you can guide me through it."
+        "title": "একটি ত্রুটি ডিবাগ করুন",
+        "prompt": "আমাকে একটি রানটাইম ত্রুটি ডিবাগ করতে সাহায্য করুন。আমি স্ট্যাক ট্রেস পেস্ট করব এবং আপনি আমাকে তা পারিবারে গাইড করতে পারবেন।"
       },
       "email": {
-        "title": "Draft a summary email",
-        "prompt": "Draft a concise weekly summary email I can send to my team about platform progress."
+        "title": "একটি সারসংক্ষেপ ইমেইল তৈরি করুন",
+        "prompt": "প্ল্যাটফর্মের অগ্রগতির বিষয়ে আমার দলের কাছে পাঠানোর জন্য একটি সংক্ষিপ্ত সাপ্তাহিক সারসংক্ষেপ ইমেইল তৈরি করুন।"
       },
       "features": {
-        "title": "Explore platform features",
-        "prompt": "Walk me through the key features of this SaaS platform and how I can use them."
+        "title": "প্ল্যাটফর্মের বৈশিষ্ট্যগুলো অন্বেষণ করুন",
+        "prompt": "এই SaaS প্ল্যাটফর্মের মূল বৈশিষ্ট্যগুলো এবং আমি কীভাবে সেগুলো ব্যবহার করতে পারি তা আমাকে বুঝিয়ে বলুন।"
       }
     }
   },
   "billing": {
     "activePlan": {
-      "title": "Active plan",
-      "manage": "Manage subscription",
-      "noPlanTitle": "No active plan",
-      "noPlanDescription": "Pick a plan to unlock paid features and higher usage limits.",
-      "choosePlan": "Choose a plan",
-      "renewsOn": "Renews on {date}",
-      "endsOn": "Ends on {date}",
-      "trialEndsOn": "Trial ends {date}",
+      "title": "সক্রিয় প্ল্যান",
+      "manage": "সাবস্ক্রিপশন পরিচালনা করুন",
+      "noPlanTitle": "কোনো সক্রিয় প্ল্যান নেই",
+      "noPlanDescription": "পেইড বৈশিষ্ট্য এবং উচ্চ ব্যবহার সীমা আনলক করতে একটি প্ল্যান নির্বাচন করুন।",
+      "choosePlan": "একটি প্ল্যান নির্বাচন করুন",
+      "renewsOn": "{date} তারিখে নবায়ন হবে",
+      "endsOn": "{date} তারিখে শেষ হবে",
+      "trialEndsOn": "ট্রায়াল {date} তারিখে শেষ হবে",
       "status": {
-        "active": "Active",
-        "trialing": "Trialing",
-        "past_due": "Past due",
-        "canceled": "Canceled",
-        "free": "Free"
+        "active": "সক্রিয়",
+        "trialing": "ট্রায়াল চলছে",
+        "past_due": "মেয়াদ অতিক্রান্ত",
+        "canceled": "বাতিল",
+        "free": "ফ্রি"
       },
       "errors": {
-        "loadFailed": "Could not load your billing status."
+        "loadFailed": "আপনার বিলিং স্ট্যাটাস লোড করা যায়নি।"
       }
     },
     "pricing": {
-      "trial": "Free {days}-day trial",
-      "seat": "{count, plural, one {# seat} other {# seats}}",
-      "perSeat": "/ seat"
+      "trial": "ফ্রি {days}-দিনের ট্রায়াল",
+      "seat": "{count, plural, one {# সিট} other {# সিট}}",
+      "perSeat": "/ সিট"
     }
   },
   "organizations": {
     "settings": {
       "logo": {
-        "title": "Organization logo",
-        "description": "Upload a square image (PNG, JPEG, or WebP, max 2MB) to represent your organization.",
-        "uploadButton": "Upload logo",
-        "uploading": "Uploading…",
-        "fileTooBig": "File is too large. Maximum size is 2MB.",
-        "invalidType": "Unsupported image type. Use PNG, JPEG, or WebP.",
-        "success": "Logo updated.",
-        "removeButton": "Remove logo",
-        "removed": "Logo removed."
+        "title": "অর্গানাইজেশন লোগো",
+        "description": "আপনার অর্গানাইজেশনকে প্রতিনিধিত্ব করতে একটি বর্গাকার ছবি আপলোড করুন (PNG, JPEG, বা WebP, সর্বোচ্চ 2MB)।",
+        "uploadButton": "লোগো আপলোড করুন",
+        "uploading": "আপলোড হচ্ছে…",
+        "fileTooBig": "ফাইলটি খুব বড়। সর্বোচ্চ সাইজ 2MB।",
+        "invalidType": "ছবির টাইপটি সাপোর্ট করা হয় না。PNG, JPEG, বা WebP ব্যবহার করুন।",
+        "success": "লোগো আপডেট হয়েছে।",
+        "removeButton": "লোগো সরান",
+        "removed": "লোগো সরানো হয়েছে।"
       },
       "name": {
-        "title": "Organization name",
-        "description": "Update the display name shown to your team and customers.",
-        "label": "Name",
-        "submit": "Save",
-        "saving": "Saving…",
-        "success": "Organization name updated."
+        "title": "অর্গানাইজেশনের নাম",
+        "description": "আপনার টিম এবং গ্রাহকদের দেখানোর জন্য ডিসপ্লে নাম আপডেট করুন।",
+        "label": "নাম",
+        "submit": "সংরক্ষণ করুন",
+        "saving": "সংরক্ষণ হচ্ছে…",
+        "success": "অর্গানাইজেশনের নাম আপডেট হয়েছে।"
       },
       "delete": {
-        "title": "Delete organization",
-        "description": "Permanently remove this organization, all members, invitations, and associated data. This action cannot be undone.",
-        "trigger": "Delete organization",
-        "confirmLabel": "Type the organization name to confirm",
-        "submit": "Delete organization",
-        "cancel": "Cancel",
-        "success": "Organization deleted."
+        "title": "অর্গানাইজেশন মুছুন",
+        "description": "এই অর্গানাইজেশন, সকল সদস্য, আমন্ত্রণ এবং সংশ্লিষ্ট ডেটা স্থায়ীভাবে মুছে ফেলুন。এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।",
+        "trigger": "অর্গানাইজেশন মুছুন",
+        "confirmLabel": "নিশ্চিত করতে অর্গানাইজেশনের নাম লিখুন",
+        "submit": "অর্গানাইজেশন মুছুন",
+        "cancel": "বাতিল করুন",
+        "success": "অর্গানাইজেশন মুছে ফেলা হয়েছে।"
       }
     },
     "invitation": {
-      "title": "You've been invited",
-      "heading": "You've been invited to join {organizationName}",
-      "description": "Accept the invitation to start collaborating with the team.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting...",
-      "decline": "Decline",
-      "declining": "Declining...",
-      "declinedView": "Invitation declined",
-      "success": "We've let the inviter know.",
-      "backToDashboard": "Back to dashboard",
-      "roleLabel": "Role: {role}",
-      "errorEmailMismatch": "This invitation was sent to a different email",
-      "errorEmailMismatchDetail": "Sign in with the email address that received the invitation to accept it.",
-      "errorExpired": "Invitation expired",
-      "errorExpiredDetail": "Ask the inviter to send a new invitation.",
-      "errorNotFound": "Invitation not found",
-      "errorNotFoundDetail": "The invitation link is invalid or has been revoked.",
-      "errorNotAvailable": "Invitation not available",
-      "errorNotAvailableDetail": "This invitation has already been responded to and is no longer active.",
+      "title": "আপনাকে আমন্ত্রণ জানানো হয়েছে",
+      "heading": "{organizationName}-এ যোগ দিতে আপনাকে আমন্ত্রণ জানানো হয়েছে",
+      "description": "দলটির সাথে সহযোগিতা শুরু করতে আমন্ত্রণটি গ্রহণ করুন।",
+      "accept": "আমন্ত্রণ গ্রহণ করুন",
+      "accepting": "গ্রহণ করা হচ্ছে...",
+      "decline": "প্রত্যাখ্যান করুন",
+      "declining": "প্রত্যাখ্যান করা হচ্ছে...",
+      "declinedView": "আমন্ত্রণ প্রত্যাখ্যান করা হয়েছে",
+      "success": "আমরা আমন্ত্রণকারীকে জানিয়ে দিয়েছি।",
+      "backToDashboard": "ড্যাশবোর্ডে ফিরুন",
+      "roleLabel": "ভূমিকা: {role}",
+      "errorEmailMismatch": "এই আমন্ত্রণটি অন্য একটি ইমেইলে পাঠানো হয়েছিল",
+      "errorEmailMismatchDetail": "এটি গ্রহণ করতে আমন্ত্রণ পাওয়া ইমেইল ঠিকানা দিয়ে সাইন ইন করুন।",
+      "errorExpired": "আমন্ত্রণ মেয়াদোত্তীর্ণ হয়েছে",
+      "errorExpiredDetail": "একটি নতুন আমন্ত্রণ পাঠাতে আমন্ত্রণকারীকে অনুরোধ করুন。",
+      "errorNotFound": "আমন্ত্রণ পাওয়া যায়নি",
+      "errorNotFoundDetail": "আমন্ত্রণ লিঙ্কটি অবৈধ অথবা বাতিল করা হয়েছে।",
+      "errorNotAvailable": "আমন্ত্রণ উপলব্ধ নেই",
+      "errorNotAvailableDetail": "এই আমন্ত্রণের ইতিমধ্যেই প্রতিক্রিয়া দেওয়া হয়েছে এবং এটি আর সক্রিয় নেই।",
       "role": {
-        "owner": "Owner",
-        "admin": "Admin",
-        "member": "Member",
-        "viewer": "Viewer"
+        "owner": "মালিক",
+        "admin": "এডমিন",
+        "member": "সদস্য",
+        "viewer": "ভিউয়ার"
       }
     }
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
-      "description": "Generate and manage API keys for programmatic access to Nebutra.",
-      "createButton": "Create API key",
-      "noPermission": "You do not have permission to view API keys.",
-      "loading": "Loading…",
-      "loadError": "Failed to load API keys.",
-      "createError": "Failed to create API key.",
-      "revokeError": "Failed to revoke API key.",
+      "title": "API কী",
+      "description": "Nebutra-তে প্রোগ্রাম্যাটিক অ্যাক্সেসের জন্য API কী তৈরি এবং পরিচালনা করুন।",
+      "createButton": "API কী তৈরি করুন",
+      "noPermission": "আপনার API কী দেখার অনুমতি নেই।",
+      "loading": "লোড হচ্ছে…",
+      "loadError": "API কী লোড করতে ব্যর্থ হয়েছে।",
+      "createError": "API কী তৈরি করতে ব্যর্থ হয়েছে।",
+      "revokeError": "API কী বাতিল করতে ব্যর্থ হয়েছে।",
       "empty": {
-        "title": "No API keys yet",
-        "cta": "Create your first API key"
+        "title": "এখনো কোনো API কী নেই",
+        "cta": "আপনার প্রথম API কী তৈরি করুন"
       },
       "columns": {
-        "name": "Name",
-        "prefix": "Prefix",
-        "lastUsed": "Last Used",
-        "scopes": "Scopes",
-        "created": "Created",
-        "actions": "Actions",
-        "never": "Never"
+        "name": "নাম",
+        "prefix": "প্রিফিক্স",
+        "lastUsed": "সর্বশেষ ব্যবহৃত",
+        "scopes": "স্কোপ",
+        "created": "তৈরি করা হয়েছে",
+        "actions": "অ্যাকশন",
+        "never": "কখনো নয়"
       },
       "actions": {
-        "revoke": "Revoke",
-        "revoking": "Revoking…",
-        "copy": "Copy",
-        "copied": "Copied",
-        "close": "Close",
-        "submit": "Create key",
-        "submitting": "Creating…"
+        "revoke": "বাতিল করুন",
+        "revoking": "বাতিল করা হচ্ছে…",
+        "copy": "কপি করুন",
+        "copied": "কপি হয়েছে",
+        "close": "বন্ধ করুন",
+        "submit": "কী তৈরি করুন",
+        "submitting": "তৈরি করা হচ্ছে…"
       },
       "dialog": {
-        "title": "Create API key",
-        "description": "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "title": "API কী তৈরি করুন",
+        "description": "API কীগুলি বাহ্যিক সিস্টেমকে আপনার形容 Nebutra-এর সাথে কথা বলতে দেয়। এগুলিকে পাসওয়ার্ডের মতো বিবেচনা করুন।",
+        "nameLabel": "নাম",
+        "namePlaceholder": "যেমন, Production backend",
+        "scopesLabel": "স্কোপ",
+        "successWarning": "এই কীটি একবারই দেখা যাবে। বন্ধ করার আগে এটি সংরক্ষণ করুন।",
+        "confirmClose": "বন্ধ করলে এই কীটি স্থায়ীভাবে লুকিয়ে যাবে。এটি সংরক্ষণ করা হয়েছে কিনা নিশ্চিত হন।"
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "অডিট লগ",
+      "description": "আপনার ওয়ার্কস্পেসের প্রতিটি প্রশাসনিক কাজ ট্র্যাক করুন। অভিনেতা, কাজ, এনটিটি বা সময়ের পরিসরের দ্বারা ফিল্টার করুন।",
+      "empty": "এখনও কোনো অডিট ইভেন্ট নেই",
+      "loadMore": "আরও লোড করুন",
+      "loading": "লোড হচ্ছে…",
+      "forbidden": "অডিট লগ দেখতে আপনাকে অ্যাডমিন অ্যাক্সেস প্রয়োজন।",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "outcome": "Outcome",
-        "ip": "IP"
+        "when": "কখন",
+        "actor": "অভিনেতা",
+        "action": "কাজ",
+        "entity": "এনটিটি",
+        "outcome": "ফলাফল",
+        "ip": "আইপি"
       },
       "diff": {
-        "oldValue": "Old value",
-        "newValue": "New value"
+        "oldValue": "পূর্ববর্তী মান",
+        "newValue": "নতুন মান"
       },
       "filters": {
-        "action": "Action",
-        "actionPlaceholder": "Search action…",
-        "entityType": "Entity type",
-        "outcome": "Outcome",
-        "outcomeSuccess": "Success",
-        "outcomeFailure": "Failure",
-        "outcomePending": "Pending",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "range24h": "Last 24h",
-        "range7d": "Last 7d",
-        "range30d": "Last 30d",
-        "reset": "Reset",
-        "all": "All"
+        "action": "অ্যাকশন",
+        "actionPlaceholder": "অ্যাকশন খুঁজুন…",
+        "entityType": "এনটিটি টাইপ",
+        "outcome": "ফলাফল",
+        "outcomeSuccess": "সফল",
+        "outcomeFailure": "ব্যর্থ",
+        "outcomePending": "অপেক্ষমান",
+        "startDate": "শুরুর তারিখ",
+        "endDate": "শেষের তারিখ",
+        "range24h": "শেষ ২৪ ঘণ্টা",
+        "range7d": "শেষ ৭ দিন",
+        "range30d": "শেষ ৩০ দিন",
+        "reset": "রিসেট করুন",
+        "all": "সব"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "নোটিফিকেশন",
+      "description": "প্রতিটি ইভেন্ট টাইপের জন্য এবং প্রতিটি ডেলিভারি চ্যানেলে Nebutra আপনাকে কীভাবে পৌঁছাবে তা নির্বাচন করুন।",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "ডিফল্টে রিসেট করুন",
+        "save": "সংরক্ষণ করুন"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "সংরক্ষণ হচ্ছে…",
+        "saved": "সংরক্ষিত হয়েছে",
+        "error": "সংরক্ষণ ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "সিকিউরিটি অ্যালার্ট",
+          "description": "সাইন-ইন অ্যালার্ট, পাসওয়ার্ড পরিবর্তন, দুই-ফ্যাক্টর পরিবর্তন।"
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "বিলিং",
+          "description": "ইনভয়েস, পেমেন্ট ব্যর্থতা এবং সাবস্ক্রিপশন পরিবর্তন।"
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "টিম আমন্ত্রণ",
+          "description": "একটি সংস্থায় যোগদানের আমন্ত্রণ, গ্রহণ বা প্রত্যাখ্যান।"
         },
         "activity": {
-          "label": "Team activity",
-          "description": "Members joined, role changes, and other workspace activity."
+          "label": "টিম কার্যকলাপ",
+          "description": "সদস্য যোগদান, ভূমিকা পরিবর্তন এবং অন্যান্য ওয়ার্কস্পেস কার্যকলাপ।"
         },
         "updates": {
-          "label": "Product updates",
-          "description": "New features, changelog highlights, and release notes."
+          "label": "পণ্য আপডেট",
+          "description": "নতুন ফিচার, পরিবর্তন তালিকার মূল বিষয় এবং রিলিজ নোট।"
         },
         "marketing": {
-          "label": "Marketing",
-          "description": "Newsletter and occasional promotions. Opt-in only."
+          "label": "মার্কেটিং",
+          "description": "নিউজলেটার এবং মাঝে মাঝে প্রচার। শুধুমাত্র অপশনাল।"
         }
       },
       "channels": {
         "in_app": {
-          "label": "In-app"
+          "label": "অ্যাপের ভেতরে"
         },
         "email": {
-          "label": "Email"
+          "label": "ইমেইল"
         },
         "push": {
-          "label": "Push"
+          "label": "পুশ"
         },
         "sms": {
-          "label": "SMS"
+          "label": "এসএমএস"
         }
       }
     },
     "webhooks": {
-      "title": "Webhooks",
-      "description": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint's secret so you can verify authenticity.",
+      "title": "ওয়েবহুক",
+      "description": "আপনার ওয়ার্কস্পেস থেকে প্রেরিত ইভেন্টের জন্য সাবস্ক্রাইব করুন。আমরা প্রতিটি পেইলোড আপনার এন্ডপয়েন্টের গোপন চাবি দিয়ে স্বাক্ষর করি যাতে আপনি প্রামাণ্যতা যাচাই করতে পারেন।",
       "create": {
-        "heading": "New endpoint",
-        "urlLabel": "Endpoint URL",
+        "heading": "নতুন এন্ডপয়েন্ট",
+        "urlLabel": "এন্ডপয়েন্ট ইউআরএল",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
-        "eventsLegend": "Events",
-        "submit": "Create endpoint",
-        "submitting": "Creating…",
-        "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created. The signing secret appears once.",
-        "successWarning": "Store it in your application's secret manager before closing.",
-        "copy": "Copy",
-        "copied": "Copied"
+        "eventsLegend": "ইভেন্ট",
+        "submit": "এন্ডপয়েন্ট তৈরি করুন",
+        "submitting": "তৈরি হচ্ছে…",
+        "selectEvent": "অন্তত একটি ইভেন্ট নির্বাচন করুন।",
+        "successTitle": "এন্ডপয়েন্ট তৈরি হয়েছে। সাইনিং সিক্রেট শুধুমাত্র একবার দেখা যাবে।",
+        "successWarning": "বন্ধ করার আগে এটি আপনার অ্যাপ্লিকেশনের সিক্রেট ম্যানেজারে সংরক্ষণ করুন。",
+        "copy": "কপি করুন",
+        "copied": "কপি হয়েছে"
       },
       "list": {
-        "heading": "Active endpoints",
-        "empty": "No webhook endpoints yet. Create one above.",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load webhooks",
+        "heading": "সক্রিয় এন্ডপয়েন্ট",
+        "empty": "এখনও কোনো ওয়েবহুক এন্ডপয়েন্ট নেই। উপরে একটি তৈরি করুন।",
+        "loading": "লোড হচ্ছে…",
+        "loadFailed": "ওয়েবহুক লোড করতে ব্যর্থ হয়েছে",
         "columns": {
           "url": "URL",
-          "events": "Events",
-          "status": "Status",
-          "lastDelivered": "Last delivered",
-          "actions": "Actions"
+          "events": "ইভেন্ট",
+          "status": "অবস্থা",
+          "lastDelivered": "সর্বশেষ ডেলিভারি",
+          "actions": "অ্যাকশন"
         },
         "status": {
-          "active": "Active",
-          "disabled": "Disabled"
+          "active": "সক্রিয়",
+          "disabled": "নিষ্ক্রিয়"
         },
         "actions": {
-          "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "edit": "সম্পাদনা",
+          "enable": "সক্রিয় করুন",
+          "disable": "নিষ্ক্রিয় করুন",
+          "viewDeliveries": "ডেলিভারি দেখুন",
+          "delete": "মুছে ফেলুন"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "সাম্প্রতিক ডেলিভারি",
+        "close": "বন্ধ করুন",
+        "loading": "লোড হচ্ছে…",
+        "loadFailed": "ডেলিভারি লোড করতে ব্যর্থ হয়েছে",
+        "empty": "এখনো কোনো ডেলিভারি নেই।",
+        "viewPayload": "পেইলোড দেখুন",
+        "hidePayload": "পেইলোড লুকান",
+        "replay": "রিপ্লে",
+        "replaying": "রিপ্লে হচ্ছে…",
         "status": {
-          "success": "success",
-          "failed": "failed",
-          "retrying": "retrying"
+          "success": "সফল",
+          "failed": "ব্যর্থ",
+          "retrying": "পুনরায় চেষ্টা করা হচ্ছে"
         }
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "অপpearance",
       "theme": {
-        "title": "Theme",
-        "description": "Use light, dark, or match system preference."
+        "title": "থিম",
+        "description": "লাইট, ডার্ক, অথবা সিস্টেম পছন্দ অনুযায়ী ব্যবহার করুন।"
       },
       "themePreset": {
-        "title": "Theme preset",
-        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
-        "search": "Search themes…",
-        "searchLabel": "Search themes",
-        "default": "Default",
+        "title": "থিম প্রিসেট",
+        "description": "পুরো অ্যাপে থিম প্লেগ্রাউন্ডের যেকোনো থিম প্রয়োগ করুন。নিচের নিয়ন্ত্রণগুলো এটি আরও সূক্ষ্মভাবে ঠিক করতে উপরে স্তরবদ্ধ হবে।",
+        "search": "থিম খুঁজুন…",
+        "searchLabel": "থিম খুঁজুন",
+        "default": "ডিফল্ট",
         "defaultMood": "Nebutra base palette",
-        "active": "Active",
-        "empty": "No themes match your search.",
-        "count": "{count} themes"
+        "active": "সক্রিয়",
+        "empty": "আপনার অনুসন্ধানের সাথে কোনো থিম মিলছে না।",
+        "count": "{count} টি থিম"
       },
       "themeEditor": {
-        "title": "Theme",
-        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
-        "selectLabel": "Theme preset",
-        "import": "Import",
-        "copy": "Copy theme",
-        "copied": "Copied",
-        "copyError": "Copy failed",
-        "custom": "Custom"
+        "title": "থিম",
+        "description": "একটি প্রিসেট নির্বাচন করুন, DESIGN.md আমদানি করুন, তারপর নিচের টোকেনগুলো সূক্ষ্মভাবে ঠিক করুন।",
+        "selectLabel": "থিম প্রিসেট",
+        "import": "আমদানি",
+        "copy": "থিম কপি করুন",
+        "copied": "কপি হয়েছে",
+        "copyError": "কপি ব্যর্থ হয়েছে",
+        "custom": "কাস্টম"
       },
       "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
-        "applied": "Applied:",
-        "remove": "Remove"
+        "title": "DESIGN.md আমদানি করুন",
+        "description": "পুরো অ্যাপে রঙ, রেডিয়াস, ফন্ট, স্পেসিং এবং শ্যাডো প্রয়োগ করতে DESIGN.md পেস্ট বা আপলোড করুন — রিলোডের পরেও এটি সংরক্ষিত থাকবে।",
+        "applied": "প্রয়োগ হয়েছে:",
+        "remove": "সরান"
       },
       "themeMode": {
-        "label": "Theme mode",
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System"
+        "label": "থিম মোড",
+        "light": "লাইট",
+        "dark": "ডার্ক",
+        "system": "সিস্টেম"
       },
       "accent": {
-        "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app.",
-        "label": "Accent color",
+        "title": "এক্সেন্ট রঙ",
+        "description": "অ্যাপ জুড়ে সক্রিয় অবস্থার রঙ পরিবর্তন করতে একটি ব্র্যান্ড এক্সেন্ট বেছে নিন।",
+        "label": "এক্সেন্ট রঙ",
         "options": {
-          "default": "Default",
-          "blue": "Blue",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Pink",
-          "amber": "Amber",
-          "green": "Green",
-          "red": "Red"
+          "default": "ডিফল্ট",
+          "blue": "নীল",
+          "cyan": "সায়ান",
+          "violet": "বেগুনি",
+          "pink": "গোলাপী",
+          "amber": "অ্যাম্বার",
+          "green": "সবুজ",
+          "red": "লাল"
         }
       },
       "colors": {
-        "title": "Colors",
-        "description": "Accent, background, and foreground.",
+        "title": "রং",
+        "description": "একসেন্ট, ব্যাকগ্রাউন্ড এবং ফোরগ্রাউন্ড।",
         "background": {
-          "label": "Background",
-          "description": "Override the surface background color."
+          "label": "ব্যাকগ্রাউন্ড",
+          "description": "সারফেস ব্যাকগ্রাউন্ড রং পরিবর্তন করুন।"
         },
         "foreground": {
-          "label": "Foreground",
-          "description": "Override the body text color."
+          "label": "ফোরগ্রাউন্ড",
+          "description": "বডি টেক্সটের রং পরিবর্তন করুন।"
         },
-        "resetToDefault": "Reset to default"
+        "resetToDefault": "ডিফল্টে রিসেট করুন"
       },
       "fontFamily": {
-        "uiLabel": "UI font",
-        "uiDescription": "Font family used across the UI.",
-        "codeLabel": "Code font",
-        "codeDescription": "Font family used for code surfaces.",
+        "uiLabel": "UI ফন্ট",
+        "uiDescription": "UI জুড়ে ব্যবহৃত ফন্ট ফ্যামিলি।",
+        "codeLabel": "কোড ফন্ট",
+        "codeDescription": "কোড সারফেসের জন্য ব্যবহৃত ফন্ট ফ্যামিলি।",
         "options": {
           "ui": {
-            "theme": "Theme default",
-            "system": "System",
+            "theme": "থিম ডিফল্ট",
+            "system": "সিস্টেম",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
-            "theme": "Theme default",
-            "system": "System mono",
+            "theme": "থিম ডিফল্ট",
+            "system": "সিস্টেম মোনো",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",
             "jetbrains-mono": "JetBrains Mono"
@@ -879,385 +879,385 @@
         }
       },
       "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
+        "title": "কনট্রাস্ট",
+        "description": "টেক্সট কনট্রাস্ট ফাইন-টিউন করুন (50 = কোনো পরিবর্তন নেই)।",
+        "label": "কনট্রাস্ট লেভেল"
       },
       "pointerCursor": {
-        "title": "Use pointer cursor",
-        "description": "Switch to a pointer cursor on hover-interactive elements.",
-        "label": "Pointer cursor on interactive elements"
+        "title": "পয়েন্টার কার্সর ব্যবহার করুন",
+        "description": "হোভার-ইন্টারঅ্যাক্টিভ উপাদানের উপর পয়েন্টার কার্সরে সুইচ করুন।",
+        "label": "ইন্টারঅ্যাক্টিভ উপাদানে পয়েন্টার কার্সর"
       },
       "diffMarkers": {
-        "title": "Diff markers",
-        "description": "Show color bands, or +/- glyphs on each changed line.",
-        "label": "Diff marker style",
-        "color": "Color",
+        "title": "ডিফ মার্কার",
+        "description": "প্রতিটি পরিবর্তিত লাইনে রঙের ব্যান্ড বা +/- গ্লিফ দেখান।",
+        "label": "ডিফ মার্কার স্টাইল",
+        "color": "রঙ",
         "plusminus": "+/-"
       },
       "fontSmoothing": {
-        "title": "Font smoothing",
-        "description": "Apply macOS native font antialiasing.",
-        "label": "Native font smoothing"
+        "title": "ফন্ট স্মুদিং",
+        "description": "macOS নেটিভ ফন্ট অ্যান্টিঅ্যালিয়াসিং প্রয়োগ করুন।",
+        "label": "নেটিভ ফন্ট স্মুদিং"
       },
       "typography": {
-        "title": "Typography",
-        "description": "Base font sizes for UI and code surfaces.",
-        "uiFontSize": "UI font size",
-        "uiFontSizeDescription": "Adjust the base UI font size.",
-        "codeFontSize": "Code font size",
-        "codeFontSizeDescription": "Adjust the base code font size."
+        "title": "টাইপোগ্রাফি",
+        "description": "UI এবং কোড সারফেসের জন্য বেস ফন্ট সাইজ।",
+        "uiFontSize": "UI ফন্ট সাইজ",
+        "uiFontSizeDescription": "বেস UI ফন্ট সাইজ সামঞ্জস্য করুন。",
+        "codeFontSize": "কোড ফন্ট সাইজ",
+        "codeFontSizeDescription": "বেস কোড ফন্ট সাইজ সামঞ্জস্য করুন।"
       },
       "fontSize": {
-        "followTheme": "Theme",
-        "customize": "Customize"
+        "followTheme": "থিম",
+        "customize": "কাস্টমাইজ করুন"
       },
       "motion": {
-        "title": "Reduce motion",
-        "description": "Reduce animations or match system preference.",
-        "label": "Motion preference",
-        "system": "System",
-        "on": "On",
-        "off": "Off"
+        "title": "মোশন কমান",
+        "description": "অ্যানিমেশন কমান অথবা সিস্টেম পছন্দ অনুযায়ী সেট করুন।",
+        "label": "মোশন পছন্দ",
+        "system": "সিস্টেম",
+        "on": "চালু",
+        "off": "বন্ধ"
       },
       "surface": {
-        "title": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "title": "স্বচ্ছ সাইডবার",
+        "description": "সাইডবারে স্বচ্ছ উপাদান প্রয়োগ করুন।"
       },
       "transparency": {
-        "label": "Translucent sidebar",
-        "description": "Apply a translucent material to the sidebar."
+        "label": "স্বচ্ছ সাইডবার",
+        "description": "সাইডবারে স্বচ্ছ উপাদান প্রয়োগ করুন।"
       }
     }
   },
   "legal": {
-    "version": "Version",
-    "effective": "Effective",
-    "notFound": "This document is not available.",
-    "backHome": "Back to home"
+    "version": "সংস্করণ",
+    "effective": "কার্যকর",
+    "notFound": "এই নথিটি উপলব্ধ নেই।",
+    "backHome": "হোমে ফিরে যান"
   },
   "commandPalette": {
-    "ariaLabel": "Command palette",
-    "placeholder": "Type a command or search…",
-    "empty": "No results found.",
+    "ariaLabel": "কমান্ড প্যালেট",
+    "placeholder": "কমান্ড লিখুন অথবা খুঁজুন…",
+    "empty": "কোনো ফলাফল পাওয়া যায়নি।",
     "sections": {
-      "navigation": "Navigation",
-      "actions": "Actions",
-      "settings": "Settings",
-      "account": "Account",
-      "admin": "Admin",
-      "help": "Help"
+      "navigation": "নেভিগেশন",
+      "actions": "অ্যাকশন",
+      "settings": "সেটিংস",
+      "account": "অ্যাকাউন্ট",
+      "admin": "অ্যাডমিন",
+      "help": "সাহায্য"
     },
     "commands": {
       "nav": {
-        "home": "Home",
-        "settings": "Settings",
-        "billing": "Billing",
-        "team": "Team",
+        "home": "হোম",
+        "settings": "সেটিংস",
+        "billing": "বিলিং",
+        "team": "টিম",
         "apiKeys": "API Keys",
-        "notifications": "Notifications",
-        "auditLog": "Audit Log",
+        "notifications": "নোটিফিকেশন",
+        "auditLog": "অডিট লগ",
         "webhooks": "Webhooks",
-        "admin": "Admin"
+        "admin": "এডমিন"
       },
       "action": {
-        "inviteMember": "Invite team member",
-        "createApiKey": "Create API key",
-        "switchOrganization": "Switch organization"
+        "inviteMember": "টিম সদস্য আমন্ত্রণ করুন",
+        "createApiKey": "এপিআই কী তৈরি করুন",
+        "switchOrganization": "অর্গানাইজেশন পরিবর্তন করুন"
       },
       "settings": {
-        "themeLight": "Switch to light theme",
-        "themeDark": "Switch to dark theme",
-        "themeSystem": "Use system theme"
+        "themeLight": "লাইট থিম ব্যবহার করুন",
+        "themeDark": "ডার্ক থিম ব্যবহার করুন",
+        "themeSystem": "সিস্টেম থিম ব্যবহার করুন"
       },
       "account": {
-        "signOut": "Sign out"
+        "signOut": "সাইন আউট"
       },
       "help": {
-        "reportIssue": "Report an issue",
-        "shortcuts": "Keyboard shortcuts"
+        "reportIssue": "সমস্যা রিপোর্ট করুন",
+        "shortcuts": "কীবোর্ড শর্টকাট"
       }
     }
   },
   "cookieConsent": {
     "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
+      "title": "আপনার গোপনীয়তা পছন্দ",
+      "description": "আমরা আপনার অভিজ্ঞতা উন্নত করতে, সাইটের ট্রাফিক বিশ্লেষণ করতে এবং কন্টেন্ট ব্যক্তিগত করতে কুকি ব্যবহার করি。 আপনি কোন ক্যাটাগরি অনুমতি দিতে চান তা নির্বাচন করুন।"
     },
     "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
+      "acceptAll": "সবগুলো গ্রহণ করুন",
+      "savePreferences": "পছন্দ সংরক্ষণ করুন"
     },
     "toggle": {
       "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
+        "label": "প্রয়োজনীয়",
+        "description": "সাইট কাজ করার জন্য প্রয়োজনীয়। এটি বন্ধ করা যাবে না।"
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "কার্যকরী",
+        "description": "আপনার পছন্দ মনে রাখুন (ভাষা, থিম, লেআউট)।"
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "অ্যানালিটিক্স",
+        "description": "অজানা ব্যবহারের তথ্য যাতে আমরা পণ্যটি উন্নত করতে পারি।"
       },
       "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "label": "মার্কেটিং",
+        "description": "তৃতীয় পক্ষের প্ল্যাটফর্মে ব্যক্তিগতকৃত বিজ্ঞাপন এবং রিটার্গেটিং।"
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "বিজ্ঞপ্তি",
+      "description": "আপনার সব বিজ্ঞপ্তি এক জায়গায়।",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "সব",
+        "unread": "অপঠিত"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "সব পঠিত হিসেবে চিহ্নিত করুন",
+        "markRead": "পঠিত হিসেবে চিহ্নিত করুন",
+        "archive": "আর্কাইভ করুন",
+        "loadMore": "আরও লোড করুন",
+        "loading": "লোড হচ্ছে...",
+        "selected": "{count} নির্বাচিত"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "আপনি সব আপডেট পেয়েছেন।",
+        "unread": "কোনো পড়া না থাকা নোটিফিকেশন নেই।"
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "নোটিফিকেশন লোড করা যায়নি।",
+        "network": "নেটওয়ার্ক ত্রুটি। অনুগ্রহ করে আবার চেষ্টা করুন。",
+        "markRead": "নোটিফিকেশন পড়া হিসেবে চিহ্নিত করা যায়নি।",
+        "archive": "নোটিফিকেশন আর্কাইভ করা যায়নি।",
+        "bulkMarkRead": "কিছু নোটিফিকেশন পড়া হিসেবে চিহ্নিত করা যায়নি।"
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "ইনবক্সের জন্য একটি স্থায়ী নোটিফিকেশন ব্যাকএন্ড প্রয়োজন। আপনার প্রোভাইডার কনফিগারেশন পরীক্ষা করুন।",
+        "emptyCaughtUp": "ইনবক্স পরিষ্কার।",
+        "emptyChangelog": "চেনজলগ আপডেট এখানে দেখা যাবে।"
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "শুভ সকাল",
+      "afternoon": "শুভ বিকেল",
+      "evening": "শুভ সন্ধ্যা"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "কানেক্টর দিয়ে আপনার অ্যাপকে শক্তিশালী করুন",
+      "subtitle": "একটি প্রম্পট ফেলুন, যেকোনো জায়গা থেকে ⌘K চাপুন, অথবা সরাসরি একটি ওয়ার্কস্পেস সারফেসে যান।",
+      "promptPlaceholder": "আপনার মনে কী আছে?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "একটি ইন্টিগ্রেশন সংযুক্ত করুন",
+        "theme": "থিম প্লেগ্রাউন্ড",
+        "audit": "অডিট লগ",
+        "billing": "বিলিং"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "নির্বাচিত প্রদানকারীর জন্য অথ কনফিগার করা হয়নি। ব্যবহারকারী সেশন সক্রিয় করতে প্রদানকারী সিক্রেট সেট করুন।"
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "একটি অ্যাকশন দিয়ে শুরু করুন: Sailor-কে জিজ্ঞাসা করুন, ওয়ার্কস্পেস সিগন্যাল পরিদর্শন করুন, অথবা অটোমেশন সারফেসে কাজ রুট করুন。",
+      "openSailor": "Sailor AI খুলুন",
+      "viewAnalytics": "অ্যানালিটিক্স দেখুন"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "ওয়ার্কস্পেস স্ন্যাপশট",
+      "description": "সর্বশেষ ওয়্যারহাউস দিন · {day}",
+      "viewAnalytics": "অ্যানালিটিক্স দেখুন →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "সক্রিয় ব্যবহারকারী",
+        "totalEvents": "মোট ইভেন্ট",
+        "conversions": "কনভার্শন",
+        "revenue": "রেভিনিউ"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "সাইন-ইন করা ব্যবহারকারী",
+        "totalEvents": "রেকর্ডকৃত ইভেন্ট",
+        "conversions": "যোগ্য অ্যাকশন",
+        "revenue": "স্বীকৃত রাজস্ব"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
-        "tenant": "Tenant",
-        "daily": "Daily",
+        "snapshot": "স্ন্যাপশট",
+        "cadence": "ক্যাডেন্স",
+        "tenant": "টেন্যান্ট",
+        "daily": "দৈনিক",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
-        "funnel": "Funnel",
-        "billing": "Billing"
+        "users": "টেন্যান্ট ব্যবহারকারী",
+        "events": "ইভেন্ট স্ট্রিম",
+        "funnel": "ফানেল",
+        "billing": "বিলিং"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "ডকুমেন্ট পাইপলাইন",
+      "description": "উৎস ফাইলগুলো মূল টাস্ক ক্যুতে পাঠান।",
+      "intakeTitle": "ডকুমেন্ট ইনটেক",
+      "intakeDescription": "PDF, Markdown, টেক্সট, অথবা Word ডকুমেন্ট",
+      "chooseDocument": "ডকুমেন্ট নির্বাচন করুন",
+      "startParseTask": "পার্স টাস্ক শুরু করুন",
+      "queued": "কিউতে আছে",
+      "fileInputLabel": "ডকুমেন্ট ফাইল",
+      "fallbackError": "ডকুমেন্ট টাস্ক ব্যর্থ হয়েছে।",
+      "taskStatus": "টাস্কের অবস্থা",
+      "progressLabel": "টাস্কের অগ্রগতি",
+      "refreshStatus": "রিফ্রেশ",
+      "cancelTask": "বাতিল করুন",
+      "statusError": "টাস্কের অবস্থা রিফ্রেশ করা যায়নি।",
+      "cancelError": "টাস্ক বাতিল করা যায়নি。",
+      "statusQueued": "কিউতে আছে",
+      "statusRunning": "চলছে",
+      "statusSucceeded": "সফল হয়েছে",
+      "statusFailed": "ব্যর্থ হয়েছে",
+      "statusCancelled": "বাতিল করা হয়েছে",
+      "resultReady": "ফলাফল প্রস্তুত",
+      "taskError": "টাস্ক এরর",
+      "updatedAt": "আপডেট করা হয়েছে"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "যেখানে থামেছিলেন সেখান থেকে শুরু করুন",
+      "subtitle": "{count, plural, =0 {কোনো সেশন নেই} =1 {১টি সাম্প্রতিক সেশন} other {#টি সাম্প্রতিক সেশন}}",
+      "viewAll": "সব দেখুন →",
+      "newChat": "নতুন চ্যাট",
+      "untitled": "শিরোনামহীন সেশন",
+      "messageCount": "{count, plural, =1 {১টি মেসেজ} other {#টি মেসেজ}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "শুরু করুন",
+      "description": "{done} of {total} সম্পন্ন · সম্পূর্ণ ওয়ার্কস্পেস আনলক করতে সেটআপ শেষ করুন",
+      "progressLabel": "সেটআপ অগ্রগতি",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "একজন সহকর্মীকে আমন্ত্রণ করুন",
+          "description": "আপনার ওয়ার্কস্পেসে অন্তত একজন সহযোগীকে যোগ করুন।"
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "একটি API কী তৈরি করুন",
+          "description": "আপনার ওয়ার্কস্পেস এন্ডপয়েন্টগুলির প্রোগ্রাম্যাটিক অ্যাক্সেস।"
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "একটি ইন্টিগ্রেশন সংযুক্ত করুন",
+          "description": "Stripe, Slack, webhook, কুই এবং আরও অনেক কিছু।"
         },
         "ai": {
           "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "description": "চ্যাট, ডেটা বা ওয়ার্কফ্লো মোড চেষ্টা করুন।"
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "প্রকল্প",
+    "noThreads": "কোনো থ্রেড নেই",
+    "expandAll": "সবগুলো প্রসারিত করুন",
+    "collapseAll": "সবগুলো সংকুচিত করুন",
+    "sectionMore": "আরও অপশন",
+    "newProject": "নতুন প্রকল্প",
+    "restoredGroups": "আগে প্রসারিত থাকা গ্রুপগুলো পুনরুদ্ধার করা হয়েছে",
+    "newProjectPlaceholder": "প্রকল্পের নাম",
+    "newProjectDefault": "শিরোনামহীন",
+    "newProjectSuccess": "প্রকল্প তৈরি হয়েছে",
+    "newProjectError": "প্রকল্প তৈরি করা যায়নি",
+    "sortBy": "ক্রম অনুযায়ী সাজান",
+    "sortRecent": "সাম্প্রতিক সক্রিয়তা",
+    "sortAlphabetical": "অক্ষরক্রমে",
+    "sortCreated": "তৈরির তারিখ",
+    "archiveAll": "সব আর্কাইভ করুন",
+    "comingV2": "v2-এ আসছে"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "প্রথম রুম তৈরি হয়েছে।",
+      "firstFolder": "অনেক কোম্পানি শুরু হয় একটি ফোল্ডার দিয়ে।",
+      "firstTable": "প্রথম টেবিলে দ্বিতীয় আসন আছে।",
+      "firstSignal": "বাস্তব জগৎ কথা বলতে শুরু করেছে।",
+      "firstShip": "বিশ্ব প্রথমবারের মতো এটি দেখছে।",
+      "firstBeliever": "আজ থেকে আপনি আর শুধু নিজের জন্য বিল্ড করছেন না।",
+      "firstRevenue": "স্বপ্ন এখন নগদ প্রবাহ পেয়েছে।",
+      "firstReturn": "ফিরে আসা যাওয়া থেকে বেশি গুরুত্বপূর্ণ।",
+      "firstTeam": "তিনজন মানুষ কোম্পানি গঠন শুরু করতে পারে。",
+      "firstCrowd": "প্রথম টেবিল ভিড় করতে শুরু করেছে।",
+      "firstReset": "পুনরায় শুরু করা আরও সৎ একটি শুরু।",
+      "firstPublic": "ভবিষ্যতের একটি অংশ জনসমক্ষে রাখুন।",
+      "firstDemo": "এটি কোনো শো নয়। এটি একটি পরীক্ষা।",
+      "graduation": "আপনি মৌলিক বিষয়গুলি ছাড়িয়ে গেছেন। সামনের পথে শক্তিশালী টুলের প্রয়োজন।"
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "অনেক কোম্পানি একটি ফোল্ডার হিসেবে শুরু হয়।",
+      "integrations": "কোনো কানেক্টর কনফিগার করা হয়নি।",
+      "creditActivity": "আপনার প্রথম অনুরোধের পরে ক্রেডিট কার্যকলাপ দেখা যাবে।",
+      "usageData": "আপনার সংস্থা অনুরোধ শুরু করলে ব্যবহারের তথ্য দেখা যাবে।",
+      "apiKeys": "এখনো কোনো কী নেই।",
+      "apiKeysCta": "আপনার প্রথম কী তৈরি করুন",
+      "teamMembers": "একজন শুরু করতে পারে। কয়েকজন তৈরি করতে পারে。",
+      "cofounders": "আপনিতে বিশ্বাস করার প্রথম ব্যক্তি এখনো দেখা যায়নি।",
+      "cofoundersDescription": "যখন আপনি এবং অন্য একজন প্রতিষ্ঠাতা উভয়েই আগ্রহ প্রকাশ করেন, তখন তারা এখানে দেখা যাবে।",
+      "cofoundersAction": "সহপ্রতিষ্ঠাতা খুঁজুন",
+      "growthChart": "কার্যকলাপ শুরু হলে ট্রেন্ড ডেটা দেখা যাবে।",
+      "revenueChart": "লেনদেন শুরু হলে আয়ের ডেটা দেখা যাবে。",
+      "webhookDeliveries": "প্রথম ইভেন্টের পরে ডেলিভারি এখানে দেখা যাবে।",
+      "webhookEndpoints": "ইভেন্ট গ্রহণ শুরু করতে উপরে একটি এন্ডপয়েন্ট যোগ করুন।",
+      "accessInvites": "কোনো ইনভাইট কোড জারি করা হয়নি।"
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "প্রথম রুম প্রস্তুত।",
+    "failure": "পুনরায় শুরু করা একটি বেশি সৎ শুরু।",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "ম্যাচগুলো লোড করা যায়নি।",
+      "loadMatchesDescription": "আমাদের পক্ষে কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করতে রিফ্রেশ করুন।",
+      "loadWebhookDeliveries": "ডেলিভারিগুলো লোড করা যায়নি।",
+      "replayWebhookDelivery": "রিপ্লে সম্পন্ন হয়নি。",
+      "loadWebhookEndpoints": "এন্ডপয়েন্টগুলো লোড করা যায়নি।"
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "একজন শুরু করতে পারে। কয়েকজন তৈরি করতে পারে।",
+    "revenue": "স্বপ্ন এখন নগদ প্রবাহ পেয়েছে।",
+    "growth": "সিগন্যাল দিন দিন শক্তিশালী হচ্ছে।",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "বিশ্ব প্রথমবারের মতো এটি দেখছে।",
+      "echo": "এটি অবশেষে localhost থেকে বেরিয়েছে।"
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "তোমাকে প্রস্তুত হতে হবে না। তোমাকে শুরু করতে হবে।",
+    "graduation": "তুমি মৌলিক বিষয়গুলো ছাড়িয়ে গেছো। সামনের পথের জন্য {tool} ব্যবহার করে দেখো।",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "তোমার প্রথম কনটেক্সট টাওয়ার এখান থেকে শুরু হয়।",
+      "emptyDescription": "Startup OS এ একটি কোম্পানি কম্পাইল করুন এবং এর কনটেক্সট টাওয়ার দেখুন বা সম্পাদনা করুন।",
+      "emptyAction": "Startup OS খুলুন",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "ফিল্ডগুলো স্বয়ংক্রিয়ভাবে পূরণ করতে একটি AI প্রোভাইডার কী সংযুক্ত করুন।",
+        "generateFailed": "জেনারেশন সম্পন্ন হয়নি।",
+        "saveFailed": "আপনার পরিবর্তনগুলো সেভ হয়নি。"
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "সেভ করুন",
+        "saving": "সেভ হচ্ছে…",
+        "cancel": "বাতিল করুন",
+        "open": "Startup OS খুলুন"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "এখনো কোনো বেট নেই।",
+      "noRuns": "কোনো সক্রিয় রান নেই।"
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "এই প্রজেক্টে এখনো কোনো ফাইল নেই।"
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "ওয়ার্কস্পেস তৈরি হচ্ছে।",
+      "emptyDescription": "আমন্ত্রণটি এখনো সিঙ্ক হতে পারে। এই পেজটি রিফ্রেশ করুন অথবা একটি আলাদা ওয়ার্কস্পেস তৈরি করুন。"
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "বিলিংয়ের আগে একটি ওয়ার্কস্পেস তৈরি করুন।",
+      "emptyDescription": "বিলিং অ্যাকশনের জন্য একটি সক্রিয় ওয়ার্কস্পেস প্রয়োজন। প্রথমে একটি তৈরি করুন, তারপর বিলিংয়ে ফিরে আসুন।"
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "প্রথম ওয়ার্কস্পেস এখানে শুরু হয়।",
+      "emptyDescription": "শুরু করতে একটি ওয়ার্কস্পেস তৈরি করুন।"
     }
   }
 }
