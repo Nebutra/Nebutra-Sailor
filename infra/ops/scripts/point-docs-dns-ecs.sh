@@ -53,33 +53,97 @@ assert ok, d.get("errors") or d
 r=d.get("result") or {}
 print(r.get("type"), r.get("name"), "→", r.get("content"), "proxied=", r.get("proxied"))'
 
-# Remove leftover Worker routes that would override origin.
+# Drop CF Single Redirects that send docs → marketing (common leftover).
 python3 - <<'PY'
-import json, os, urllib.request
-token=os.environ["CLOUDFLARE_API_TOKEN"]
-zone=os.environ["ZONE_ID"]
-req=urllib.request.Request(
-  f"https://api.cloudflare.com/client/v4/zones/{zone}/workers/routes",
-  headers={"Authorization": f"Bearer {token}"},
-)
-with urllib.request.urlopen(req) as resp:
-  routes=json.load(resp).get("result") or []
-for r in routes:
-  pat=r.get("pattern") or ""
-  if "docs.nebutra.com" not in pat:
-    continue
-  rid=r["id"]
-  print("DELETE worker route", pat, rid)
-  dreq=urllib.request.Request(
-    f"https://api.cloudflare.com/client/v4/zones/{zone}/workers/routes/{rid}",
-    headers={"Authorization": f"Bearer {token}"},
-    method="DELETE",
+import json, os, urllib.error, urllib.request
+
+token = os.environ["CLOUDFLARE_API_TOKEN"]
+zone = os.environ["ZONE_ID"]
+
+def api(method, url, body=None):
+  data = None if body is None else json.dumps(body).encode()
+  req = urllib.request.Request(
+    url,
+    data=data,
+    method=method,
+    headers={
+      "Authorization": f"Bearer {token}",
+      "Content-Type": "application/json",
+    },
   )
   try:
-    with urllib.request.urlopen(dreq) as resp:
-      print(" deleted", json.load(resp).get("success"))
-  except Exception as e:
-    print(" delete failed", e)
+    with urllib.request.urlopen(req) as resp:
+      return json.load(resp)
+  except urllib.error.HTTPError as e:
+    err = e.read().decode("utf-8", "replace")
+    print(f"API {method} {url} → HTTP {e.code}: {err[:400]}")
+    return None
+
+phase = "http_request_dynamic_redirect"
+entry = api(
+  "GET",
+  f"https://api.cloudflare.com/client/v4/zones/{zone}/rulesets/phases/{phase}/entrypoint",
+)
+if not entry or not entry.get("success"):
+  print("skip dynamic_redirect cleanup (cannot read entrypoint)")
+else:
+  rs = entry.get("result") or {}
+  rules = list(rs.get("rules") or [])
+  keep = []
+  removed = 0
+  for rule in rules:
+    blob = json.dumps(rule).lower()
+    is_docs = "docs.nebutra.com" in blob
+    to_marketing = "nebutra.com" in blob and (
+      '"static":"https://nebutra.com' in blob
+      or "https://nebutra.com" in blob
+    )
+    # Keep non-docs rules; drop docs→marketing hijacks.
+    if is_docs and to_marketing:
+      print("REMOVE redirect rule:", rule.get("id"), rule.get("description") or rule.get("expression"))
+      removed += 1
+      continue
+    keep.append(rule)
+  if removed:
+    rid = rs.get("id")
+    if rid:
+      put = api(
+        "PUT",
+        f"https://api.cloudflare.com/client/v4/zones/{zone}/rulesets/{rid}",
+        {"rules": keep},
+      )
+      print("ruleset update success=", bool(put and put.get("success")), "kept", len(keep), "removed", removed)
+    else:
+      print("no ruleset id; cannot PUT")
+  else:
+    print("no docs→marketing dynamic redirects found")
+
+# Best-effort: remove leftover Worker routes (token may lack Workers:Edit).
+try:
+  req = urllib.request.Request(
+    f"https://api.cloudflare.com/client/v4/zones/{zone}/workers/routes",
+    headers={"Authorization": f"Bearer {token}"},
+  )
+  with urllib.request.urlopen(req) as resp:
+    routes = json.load(resp).get("result") or []
+  for r in routes:
+    pat = r.get("pattern") or ""
+    if "docs.nebutra.com" not in pat:
+      continue
+    rid = r["id"]
+    print("DELETE worker route", pat, rid)
+    dreq = urllib.request.Request(
+      f"https://api.cloudflare.com/client/v4/zones/{zone}/workers/routes/{rid}",
+      headers={"Authorization": f"Bearer {token}"},
+      method="DELETE",
+    )
+    try:
+      with urllib.request.urlopen(dreq) as resp:
+        print(" deleted", json.load(resp).get("success"))
+    except Exception as e:
+      print(" delete failed", e)
+except urllib.error.HTTPError as e:
+  print(f"skip worker-route cleanup (HTTP {e.code}) — DNS A already written")
 PY
 
 echo "done — docs.nebutra.com → ECS ${ORIGIN_IP} (proxied)"
