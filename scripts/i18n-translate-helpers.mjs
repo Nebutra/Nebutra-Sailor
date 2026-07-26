@@ -1,6 +1,51 @@
 /**
  * Pure helpers for SenseNova i18n translator (unit-testable, no network).
+ *
+ * Engineering upgrades (throughput + quality gates, not full CAT/TM):
+ *  - namespace-aware batching
+ *  - ICU / double-brace placeholder hard checks
+ *  - product glossary (do-not-translate)
+ *  - failed-batch auto-shrink
  */
+
+/** Brand / product tokens that must survive translation unchanged (case-sensitive when present). */
+export const DEFAULT_GLOSSARY = Object.freeze([
+  "Nebutra",
+  "Forge",
+  "Router",
+  "Sailor",
+  "Stripe",
+  "Clerk",
+  "Vercel",
+  "OpenAI",
+  "GitHub",
+  "SenseNova",
+  "MCP",
+  "API",
+  "UUID",
+  "JWT",
+  "PDF",
+  "JSON",
+  "YAML",
+  "CSV",
+  "XML",
+  "Cron",
+  "LLM",
+  "RAG",
+  "OAuth",
+  "SSO",
+  "RBAC",
+  "ABAC",
+  "OpenFGA",
+  "ClickHouse",
+  "Prisma",
+  "Supabase",
+  "Cloudflare",
+  "WebSocket",
+  "GraphQL",
+  "OpenAPI",
+  "SaaS",
+]);
 
 export function shouldSkipValue(value) {
   if (typeof value !== "string") return true;
@@ -13,6 +58,192 @@ export function shouldSkipValue(value) {
   if (/^https?:\/\//i.test(v) || /^[\w.+-]+@[\w.-]+$/.test(v)) return true;
   if (!/[A-Za-z\u00C0-\u024F\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(v)) return true;
   return false;
+}
+
+/**
+ * Normalize a `{…}` token to a signature for cross-locale comparison.
+ * - simple `{name}` → `{name}`
+ * - ICU `{count, plural, one {#} other {# items}}` → `icu:count:plural`
+ *   (inner branch wording may be translated; arg name + type must stay)
+ * - mustache `{{url}}` → `{{url}}`
+ */
+export function placeholderSignature(token) {
+  if (typeof token !== "string" || !token) return "";
+  if (token.startsWith("{{") && token.endsWith("}}")) return token;
+  if (token.startsWith("%")) return token;
+  if (!(token.startsWith("{") && token.endsWith("}"))) return token;
+  const inner = token.slice(1, -1).trim();
+  const parts = inner.split(",").map((s) => s.trim());
+  if (parts.length >= 2 && /^(plural|select|selectordinal)$/i.test(parts[1])) {
+    return `icu:${parts[0]}:${parts[1].toLowerCase()}`;
+  }
+  // simple arg — ignore accidental whitespace
+  if (!inner.includes(",")) return `{${parts[0]}}`;
+  // other complex forms: keep arg + second token
+  return `icu:${parts[0]}:${(parts[1] || "raw").toLowerCase()}`;
+}
+
+/**
+ * Extract ICU-style and common template placeholders from a string.
+ * Supports: {name}, nested ICU `{count, plural, one {#} other {#}}`, {{mustache}}, %s/%d.
+ * Uses brace-balance scan so nested ICU is one token (not shattered).
+ * Returned list is **signatures** (see placeholderSignature), sorted.
+ */
+export function extractPlaceholders(text) {
+  if (typeof text !== "string" || !text) return [];
+  const raw = [];
+  // Mustache {{...}} first
+  for (const m of text.matchAll(/\{\{[^{}]+\}\}/g)) raw.push(m[0]);
+  // Balanced single-brace tokens
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] !== "{") continue;
+    if (text[i + 1] === "{") {
+      const end = text.indexOf("}}", i + 2);
+      i = end === -1 ? text.length : end + 1;
+      continue;
+    }
+    let depth = 0;
+    for (let j = i; j < text.length; j++) {
+      if (text[j] === "{") depth++;
+      else if (text[j] === "}") {
+        depth--;
+        if (depth === 0) {
+          raw.push(text.slice(i, j + 1));
+          i = j;
+          break;
+        }
+      }
+    }
+  }
+  for (const m of text.matchAll(/%\d*\$?[sdif]/g)) raw.push(m[0]);
+  return raw.map(placeholderSignature).sort();
+}
+
+/** Multiset equality of placeholder **signatures** (order-independent). */
+export function placeholdersMatch(source, translated) {
+  const a = extractPlaceholders(source);
+  const b = extractPlaceholders(translated);
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+/** Glossary terms that appear in source must still appear in translation. */
+export function glossaryTermsPresent(source, translated, glossary = DEFAULT_GLOSSARY) {
+  if (typeof source !== "string" || typeof translated !== "string") return true;
+  for (const term of glossary) {
+    if (!term) continue;
+    if (source.includes(term) && !translated.includes(term)) return false;
+  }
+  return true;
+}
+
+/**
+ * Validate a single translated leaf.
+ * @returns {{ ok: true } | { ok: false, reason: string }}
+ */
+export function validateTranslation(source, translated, { glossary = DEFAULT_GLOSSARY } = {}) {
+  if (typeof translated !== "string" || !translated.trim()) {
+    return { ok: false, reason: "empty" };
+  }
+  if (!placeholdersMatch(source, translated)) {
+    return {
+      ok: false,
+      reason: `placeholder mismatch source=${extractPlaceholders(source).join("|")} got=${extractPlaceholders(translated).join("|")}`,
+    };
+  }
+  if (!glossaryTermsPresent(source, translated, glossary)) {
+    return { ok: false, reason: "glossary term dropped" };
+  }
+  if (/^\s*```/.test(translated)) {
+    return { ok: false, reason: "markdown fence leaked" };
+  }
+  return { ok: true };
+}
+
+/**
+ * Accept parsed batch object against requested entries.
+ * Drops invalid leaves (caller may shrink-retry those keys).
+ * @returns {{ accepted: Map<string,string>, rejected: Array<[string,string,string]> }}
+ *   rejected items are [key, source, reason]
+ */
+export function acceptBatchResults(entries, parsed, options = {}) {
+  const accepted = new Map();
+  const rejected = [];
+  const obj = parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  for (const [key, source] of entries) {
+    const raw = obj[key];
+    if (typeof raw !== "string") {
+      rejected.push([key, source, "missing or non-string"]);
+      continue;
+    }
+    const v = validateTranslation(source, raw, options);
+    if (!v.ok) {
+      rejected.push([key, source, v.reason]);
+      continue;
+    }
+    accepted.set(key, raw);
+  }
+  return { accepted, rejected };
+}
+
+/** First path segment used as UI namespace for context batching. */
+export function namespaceOfKey(key) {
+  if (typeof key !== "string" || !key) return "_";
+  const i = key.indexOf(".");
+  return i === -1 ? key : key.slice(0, i);
+}
+
+/**
+ * Chunk work items by namespace, then into batches of ≤ batchSize.
+ * Keeps related UI strings in the same request for better local consistency.
+ * @param {Array<[string, string]>} work
+ * @param {number} batchSize
+ * @returns {Array<Array<[string, string]>>}
+ */
+export function chunkByNamespace(work, batchSize) {
+  const size = Math.max(1, batchSize | 0);
+  /** @type {Map<string, Array<[string, string]>>} */
+  const groups = new Map();
+  for (const item of work) {
+    const ns = namespaceOfKey(item[0]);
+    if (!groups.has(ns)) groups.set(ns, []);
+    groups.get(ns).push(item);
+  }
+  // Stable namespace order for reproducible logs
+  const namespaces = [...groups.keys()].sort((a, b) => a.localeCompare(b));
+  const batches = [];
+  for (const ns of namespaces) {
+    const items = groups.get(ns);
+    for (let i = 0; i < items.length; i += size) {
+      batches.push(items.slice(i, i + size));
+    }
+  }
+  return batches;
+}
+
+/** Split a failed batch for shrink-retry (half, min size 1). */
+export function splitBatchForRetry(batch) {
+  if (!batch || batch.length <= 1) return [];
+  const mid = Math.ceil(batch.length / 2);
+  return [batch.slice(0, mid), batch.slice(mid)];
+}
+
+/** Prompt-ready glossary block. */
+export function formatGlossaryForPrompt(glossary = DEFAULT_GLOSSARY) {
+  return glossary.join(", ");
+}
+
+/** Optional namespace hint for system prompt. */
+export function namespaceContextLine(entries) {
+  if (!entries?.length) return "";
+  const ns = new Set(entries.map(([k]) => namespaceOfKey(k)));
+  if (ns.size === 1) {
+    return `These strings share UI namespace "${[...ns][0]}" — keep tone and terminology consistent within this group.`;
+  }
+  return `Namespaces in this batch: ${[...ns].sort().join(", ")}.`;
 }
 
 export function flatten(obj, prefix = "", out = new Map()) {
@@ -126,7 +357,7 @@ export function parseTranslateModels({
 }
 
 /** Hard plan/billing quota — model should leave the pool for this run. */
-export function isHardQuotaError(status, bodyText = "") {
+export function isHardQuotaError(_status, bodyText = "") {
   const t = String(bodyText).toLowerCase();
   return (
     t.includes("insufficient_quota") ||

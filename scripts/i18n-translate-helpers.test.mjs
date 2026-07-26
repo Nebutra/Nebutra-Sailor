@@ -1,15 +1,25 @@
 import { describe, expect, it } from "vitest";
 import {
+  acceptBatchResults,
   chunk,
+  chunkByNamespace,
   collectWork,
   createModelPool,
+  extractPlaceholders,
   flatten,
+  formatGlossaryForPrompt,
+  glossaryTermsPresent,
   isHardQuotaError,
   isQuotaOrRateLimitError,
   isSoftRateLimitError,
+  namespaceContextLine,
+  namespaceOfKey,
   parseTranslateModels,
+  placeholdersMatch,
   shouldSkipValue,
+  splitBatchForRetry,
   unflatten,
+  validateTranslation,
 } from "./i18n-translate-helpers.mjs";
 
 describe("shouldSkipValue", () => {
@@ -104,5 +114,120 @@ describe("createModelPool", () => {
     pool.markExhausted("a");
     pool.markExhausted("c");
     expect(pool.pick()).toBeNull();
+  });
+});
+
+describe("placeholders", () => {
+  it("extracts simple ICU and mustache", () => {
+    // Sorted lexicographically: "{name}" < "{{url}}"
+    expect(extractPlaceholders("Hello {name}, see {{url}}")).toEqual(["{name}", "{{url}}"]);
+  });
+
+  it("normalizes nested ICU plural to arg+type signature", () => {
+    const src = "{count, plural, one {# item} other {# items}}";
+    expect(extractPlaceholders(src)).toEqual(["icu:count:plural"]);
+    // Translated branch text is OK as long as count/plural stay
+    const zh = "{count, plural, other {# 项}}";
+    expect(placeholdersMatch(src, zh)).toBe(true);
+  });
+
+  it("matches placeholders multiset-equal", () => {
+    expect(placeholdersMatch("Hi {name}", "你好 {name}")).toBe(true);
+    expect(placeholdersMatch("Hi {name}", "你好 {user}")).toBe(false);
+    expect(placeholdersMatch("a {x} {y}", "b {y} {x}")).toBe(true);
+  });
+});
+
+describe("glossary + validateTranslation", () => {
+  it("requires glossary terms that appear in source", () => {
+    expect(glossaryTermsPresent("Use Nebutra API", "使用 Nebutra API")).toBe(true);
+    expect(glossaryTermsPresent("Use Nebutra API", "使用云毓接口")).toBe(false);
+  });
+
+  it("rejects empty, bad placeholders, dropped glossary", () => {
+    expect(validateTranslation("Hi {n}", "").ok).toBe(false);
+    expect(validateTranslation("Hi {n}", "你好 {x}").ok).toBe(false);
+    expect(validateTranslation("Open Stripe", "打开支付").ok).toBe(false);
+    expect(validateTranslation("Open Stripe", "打开 Stripe").ok).toBe(true);
+  });
+});
+
+describe("acceptBatchResults", () => {
+  it("keeps valid leaves and lists rejects", () => {
+    const entries = [
+      ["nav.title", "Home"],
+      ["nav.user", "Hello {name}"],
+      ["nav.brand", "Nebutra cloud"],
+    ];
+    const parsed = {
+      "nav.title": "首页",
+      "nav.user": "你好 {user}",
+      "nav.brand": "云平台",
+    };
+    const { accepted, rejected } = acceptBatchResults(entries, parsed);
+    expect([...accepted.keys()]).toEqual(["nav.title"]);
+    expect(rejected.map(([k]) => k).sort()).toEqual(["nav.brand", "nav.user"]);
+  });
+});
+
+describe("namespace batching", () => {
+  it("namespaceOfKey takes first segment", () => {
+    expect(namespaceOfKey("nav.title")).toBe("nav");
+    expect(namespaceOfKey("solo")).toBe("solo");
+  });
+
+  it("chunkByNamespace groups then sizes", () => {
+    const work = [
+      ["nav.a", "A"],
+      ["nav.b", "B"],
+      ["nav.c", "C"],
+      ["billing.x", "X"],
+      ["billing.y", "Y"],
+    ];
+    const batches = chunkByNamespace(work, 2);
+    // billing first alphabetically, then nav
+    expect(batches).toEqual([
+      [
+        ["billing.x", "X"],
+        ["billing.y", "Y"],
+      ],
+      [
+        ["nav.a", "A"],
+        ["nav.b", "B"],
+      ],
+      [["nav.c", "C"]],
+    ]);
+  });
+
+  it("splitBatchForRetry halves until empty for size 1", () => {
+    expect(splitBatchForRetry([["a", "1"]])).toEqual([]);
+    expect(
+      splitBatchForRetry([
+        ["a", "1"],
+        ["b", "2"],
+        ["c", "3"],
+      ]),
+    ).toEqual([
+      [
+        ["a", "1"],
+        ["b", "2"],
+      ],
+      [["c", "3"]],
+    ]);
+  });
+
+  it("namespaceContextLine is stable", () => {
+    expect(namespaceContextLine([["nav.a", "x"]])).toContain('namespace "nav"');
+    expect(
+      namespaceContextLine([
+        ["nav.a", "x"],
+        ["billing.b", "y"],
+      ]),
+    ).toContain("billing");
+  });
+
+  it("formatGlossaryForPrompt includes core brands", () => {
+    expect(formatGlossaryForPrompt()).toContain("Nebutra");
+    expect(formatGlossaryForPrompt()).toContain("Stripe");
   });
 });

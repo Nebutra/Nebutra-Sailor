@@ -20,6 +20,12 @@
  *   SENSENOVA_TRANSLATE_MODEL=one    single-model override when MODELS unset
  *   On 429/quota for a model, mark exhausted and rotate to the next.
  *
+ * Quality / batching:
+ *   - Namespace-aware batches (related UI keys travel together)
+ *   - BATCH_SIZE leaves per request (default 20; CI ~12)
+ *   - ICU placeholder + glossary hard validation per leaf
+ *   - Failed / partial batches auto-shrink (half → … → 1) and retry
+ *
  * Concurrency (defaults tuned for Token Plan + GH runners):
  *   CATALOG_CONCURRENCY=3   catalogs in parallel
  *   LOCALE_CONCURRENCY=6    locales per catalog in parallel
@@ -38,14 +44,18 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  chunk,
+  acceptBatchResults,
+  chunkByNamespace,
   collectWork,
   createModelPool,
   flatten,
+  formatGlossaryForPrompt,
   isHardQuotaError,
   isSoftRateLimitError,
+  namespaceContextLine,
   parseTranslateModels,
   pLimit,
+  splitBatchForRetry,
   unflatten,
 } from "./i18n-translate-helpers.mjs";
 
@@ -204,10 +214,11 @@ function parseArgs(argv) {
 function buildTranslateBody(model, targetLocale, entries) {
   const targetName = LOCALE_NAMES[targetLocale] || targetLocale;
   const payload = Object.fromEntries(entries);
+  const nsLine = namespaceContextLine(entries);
   return {
     model,
     temperature: 0.2,
-    max_tokens: Math.min(8192, 64 + entries.length * 120),
+    max_tokens: Math.min(8192, 64 + entries.length * 140),
     thinking: { type: "disabled" },
     messages: [
       {
@@ -215,17 +226,21 @@ function buildTranslateBody(model, targetLocale, entries) {
         content: [
           `You are a professional product UI translator for a global SaaS (Nebutra).`,
           `Translate each JSON string value from English to ${targetName} (${targetLocale}).`,
+          nsLine,
           `Rules:`,
           `- Natural product UI tone — concise, native, not literal machine-translationese.`,
-          `- Keep brand / product names untranslated: Nebutra, Forge, Router, Stripe, Clerk, Vercel, OpenAI, GitHub, MCP, API, UUID, JWT, PDF, JSON, YAML, CSV, XML, Cron, LLM, RAG.`,
-          `- Preserve ICU placeholders exactly: {name}, {count}, {brandName}, {{var}}, etc.`,
+          `- Do NOT translate glossary tokens (keep exact spelling/casing): ${formatGlossaryForPrompt()}.`,
+          `- Preserve EVERY placeholder EXACTLY as in the source (same spelling, braces, order):`,
+          `  ICU {name}, {count, plural, …}, mustache {{var}}, and printf %s/%d.`,
           `- Preserve HTML/Markdown/code spans, file paths, and punctuation structure.`,
           `- For zh-Hant use Traditional Chinese characters (繁體), never Simplified.`,
           `- For zh-Hans use Simplified Chinese characters (简体), never Traditional.`,
           `- For RTL locales (ar/he/fa/ur) return plain translated text only (no bidi marks).`,
           `- Return ONLY a valid JSON object with the SAME keys and translated string values.`,
-          `- No markdown fences, no commentary.`,
-        ].join("\n"),
+          `- No markdown fences, no commentary, no extra keys.`,
+        ]
+          .filter(Boolean)
+          .join("\n"),
       },
       { role: "user", content: JSON.stringify(payload) },
     ],
@@ -233,13 +248,12 @@ function buildTranslateBody(model, targetLocale, entries) {
 }
 
 /**
- * Translate one batch with multi-model rotation.
- * Round-robin picks the next healthy model; quota/429 exhausts that model and
- * continues with the rest of the pool before giving up.
+ * Single network attempt for a batch (multi-model rotation inside).
+ * Returns raw accepted map after placeholder/glossary validation.
+ * Throws if nothing usable after model pool retries.
  */
-async function translateBatch(targetLocale, entries) {
+async function translateBatchOnce(targetLocale, entries) {
   let lastErr;
-  // Allow a few attempts per remaining model (bounded by MAX_RETRIES * pool size).
   const maxAttempts = Math.max(MAX_RETRIES, MODELS.length * 2);
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -293,18 +307,20 @@ async function translateBatch(targetLocale, entries) {
         content = content.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
       }
       const parsed = JSON.parse(content);
-      const out = new Map();
-      for (const [k] of entries) {
-        const v = parsed[k];
-        if (typeof v === "string" && v.trim()) out.set(k, v);
+      const { accepted, rejected } = acceptBatchResults(entries, parsed);
+      if (accepted.size === 0) {
+        const reason = rejected[0]?.[2] ?? "empty";
+        throw new Error(`[${model}] 0 accepted leaves (${reason})`);
       }
-      if (out.size === 0) throw new Error(`[${model}] parsed batch produced 0 usable strings`);
-      return out;
+      return { accepted, rejected, model };
     } catch (err) {
       lastErr = err;
       const msg = err instanceof Error ? err.message : String(err);
-      // Model-not-found / invalid model → exhaust and rotate
-      if (/HTTP 404|model_not_found|does not exist|invalid_model|unknown model/i.test(msg)) {
+      if (
+        /HTTP 404|model_not_found|does not exist|invalid_model|unknown model|model is not found/i.test(
+          msg,
+        )
+      ) {
         modelPool.markExhausted(model);
         process.stderr.write(
           `  model ${model} unavailable; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
@@ -318,7 +334,78 @@ async function translateBatch(targetLocale, entries) {
       clearTimeout(timer);
     }
   }
-  throw lastErr ?? new Error("translateBatch failed");
+  throw lastErr ?? new Error("translateBatchOnce failed");
+}
+
+/**
+ * Translate a batch with quality gates + auto-shrink on failure / partial reject.
+ * @returns {Promise<{ accepted: Map<string,string>, failed: Array<[string,string]> }>}
+ */
+async function translateBatchWithShrink(targetLocale, entries, depth = 0) {
+  if (!entries.length) return { accepted: new Map(), failed: [] };
+
+  try {
+    const { accepted, rejected } = await translateBatchOnce(targetLocale, entries);
+
+    // Full success
+    if (rejected.length === 0) {
+      return { accepted, failed: [] };
+    }
+
+    // Partial: keep good leaves; shrink-retry rejected only
+    const retryEntries = rejected.map(([k, src]) => [k, src]);
+    if (retryEntries.length === entries.length && entries.length === 1) {
+      // Single leaf still bad after accept — hard fail that key
+      return { accepted, failed: retryEntries };
+    }
+
+    if (retryEntries.length === entries.length) {
+      // Entire batch rejected by validation → shrink
+      const halves = splitBatchForRetry(entries);
+      if (halves.length === 0) {
+        return { accepted, failed: entries };
+      }
+      const merged = new Map(accepted);
+      const failed = [];
+      for (const half of halves) {
+        const sub = await translateBatchWithShrink(targetLocale, half, depth + 1);
+        for (const [k, v] of sub.accepted) merged.set(k, v);
+        failed.push(...sub.failed);
+      }
+      return { accepted: merged, failed };
+    }
+
+    // Partial reject → retry only rejects (as one smaller batch, then shrink)
+    const sub = await translateBatchWithShrink(targetLocale, retryEntries, depth + 1);
+    const merged = new Map(accepted);
+    for (const [k, v] of sub.accepted) merged.set(k, v);
+    return { accepted: merged, failed: sub.failed };
+  } catch (err) {
+    // Network / model failure: shrink if possible
+    const halves = splitBatchForRetry(entries);
+    if (halves.length === 0) {
+      return { accepted: new Map(), failed: entries };
+    }
+    if (depth === 0) {
+      process.stderr.write(
+        `  batch size=${entries.length} failed (${err instanceof Error ? err.message : err}); shrinking\n`,
+      );
+    }
+    const merged = new Map();
+    const failed = [];
+    for (const half of halves) {
+      const sub = await translateBatchWithShrink(targetLocale, half, depth + 1);
+      for (const [k, v] of sub.accepted) merged.set(k, v);
+      failed.push(...sub.failed);
+    }
+    return { accepted: merged, failed };
+  }
+}
+
+/** Smoke / simple batch helper used by main smoke check. */
+async function translateBatch(targetLocale, entries) {
+  const { accepted } = await translateBatchWithShrink(targetLocale, entries);
+  return accepted;
 }
 
 async function translateLocale(catalog, targetLocale, sourceMap, { force, dryRun }) {
@@ -342,8 +429,9 @@ async function translateLocale(catalog, targetLocale, sourceMap, { force, dryRun
     return { catalog: catalog.id, locale: targetLocale, translated: 0, failed: 0 };
   }
 
+  const batches = chunkByNamespace(work, BATCH_SIZE);
   process.stdout.write(
-    `[${catalog.id}/${targetLocale}] ${work.length} strings → ${Math.ceil(work.length / BATCH_SIZE)} batches @ concurrency=${CONCURRENCY}\n`,
+    `[${catalog.id}/${targetLocale}] ${work.length} strings → ${batches.length} ns-batches (≤${BATCH_SIZE}) @ concurrency=${CONCURRENCY}\n`,
   );
 
   if (dryRun) {
@@ -357,7 +445,6 @@ async function translateLocale(catalog, targetLocale, sourceMap, { force, dryRun
   }
 
   const limit = pLimit(CONCURRENCY);
-  const batches = chunk(work, BATCH_SIZE);
   let translated = 0;
   let failed = 0;
   const updates = new Map();
@@ -365,27 +452,20 @@ async function translateLocale(catalog, targetLocale, sourceMap, { force, dryRun
   await Promise.all(
     batches.map((batch, idx) =>
       limit(async () => {
-        try {
-          const result = await translateBatch(targetLocale, batch);
-          for (const [k, v] of result) updates.set(k, v);
-          translated += result.size;
-          for (const [k, en] of batch) {
-            if (!updates.has(k)) {
-              failed += 1;
-              if (!targetMap.has(k)) updates.set(k, en);
-            }
-          }
-          if ((idx + 1) % 5 === 0 || idx === batches.length - 1) {
-            process.stdout.write(
-              `  [${catalog.id}/${targetLocale}] batch ${idx + 1}/${batches.length} (+${result.size})\n`,
-            );
-          }
-        } catch (err) {
-          failed += batch.length;
-          process.stderr.write(
-            `  [${catalog.id}/${targetLocale}] batch ${idx + 1} failed: ${
-              err instanceof Error ? err.message : err
-            }\n`,
+        const { accepted, failed: failedEntries } = await translateBatchWithShrink(
+          targetLocale,
+          batch,
+        );
+        for (const [k, v] of accepted) updates.set(k, v);
+        translated += accepted.size;
+        for (const [k, en] of failedEntries) {
+          failed += 1;
+          // Keep English seed for missing keys so shape stays valid
+          if (!targetMap.has(k) && !updates.has(k)) updates.set(k, en);
+        }
+        if ((idx + 1) % 5 === 0 || idx === batches.length - 1) {
+          process.stdout.write(
+            `  [${catalog.id}/${targetLocale}] batch ${idx + 1}/${batches.length} (+${accepted.size}${failedEntries.length ? ` fail=${failedEntries.length}` : ""})\n`,
           );
         }
       }),
@@ -457,6 +537,7 @@ async function main() {
       `  models=${MODELS.join(" → ")} (round-robin; rotate on 429/quota)`,
       `  catalogs=${catalogs.map((c) => c.id).join(",")}`,
       `  catalogConcurrency=${CATALOG_CONCURRENCY} localeConcurrency=${LOCALE_CONCURRENCY} concurrency=${CONCURRENCY} batchSize=${BATCH_SIZE}`,
+      `  quality=namespace-batch + ICU/glossary gate + shrink-retry`,
       `  force=${args.force} dryRun=${args.dryRun}`,
       "",
     ].join("\n"),
