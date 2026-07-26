@@ -11,9 +11,14 @@
  *
  * Official API:
  *   POST https://token.sensenova.cn/v1/chat/completions
- *   model: sensenova-6.7-flash-lite
+ *   Models (rotate): sensenova-6.7-flash-lite, sensenova-u1-fast, deepseek-v4-flash
  *   thinking: { type: "disabled" }
  *   Docs: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
+ *
+ * Model pool:
+ *   SENSENOVA_TRANSLATE_MODELS=csv   preferred multi-model list (round-robin)
+ *   SENSENOVA_TRANSLATE_MODEL=one    single-model override when MODELS unset
+ *   On 429/quota for a model, mark exhausted and rotate to the next.
  *
  * Concurrency (defaults tuned for Token Plan + GH runners):
  *   CATALOG_CONCURRENCY=3   catalogs in parallel
@@ -32,7 +37,16 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { chunk, collectWork, flatten, pLimit, unflatten } from "./i18n-translate-helpers.mjs";
+import {
+  chunk,
+  collectWork,
+  createModelPool,
+  flatten,
+  isQuotaOrRateLimitError,
+  parseTranslateModels,
+  pLimit,
+  unflatten,
+} from "./i18n-translate-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..");
@@ -120,7 +134,11 @@ const API_BASE = (process.env.SENSENOVA_BASE_URL || "https://token.sensenova.cn/
   /\/$/,
   "",
 );
-const MODEL = process.env.SENSENOVA_TRANSLATE_MODEL || "sensenova-6.7-flash-lite";
+const MODELS = parseTranslateModels({
+  modelsCsv: process.env.SENSENOVA_TRANSLATE_MODELS,
+  singleModel: process.env.SENSENOVA_TRANSLATE_MODEL,
+});
+const modelPool = createModelPool(MODELS);
 const API_KEY = process.env.SENSENOVA_API_KEY || process.env.OPENAI_API_KEY;
 
 const CATALOG_CONCURRENCY = Math.max(1, Number(process.env.CATALOG_CONCURRENCY || 3));
@@ -182,11 +200,11 @@ function parseArgs(argv) {
   return { force, dryRun, locales, catalogs };
 }
 
-async function translateBatch(targetLocale, entries) {
+function buildTranslateBody(model, targetLocale, entries) {
   const targetName = LOCALE_NAMES[targetLocale] || targetLocale;
   const payload = Object.fromEntries(entries);
-  const body = {
-    model: MODEL,
+  return {
+    model,
     temperature: 0.2,
     max_tokens: Math.min(8192, 64 + entries.length * 120),
     thinking: { type: "disabled" },
@@ -211,9 +229,25 @@ async function translateBatch(targetLocale, entries) {
       { role: "user", content: JSON.stringify(payload) },
     ],
   };
+}
 
+/**
+ * Translate one batch with multi-model rotation.
+ * Round-robin picks the next healthy model; quota/429 exhausts that model and
+ * continues with the rest of the pool before giving up.
+ */
+async function translateBatch(targetLocale, entries) {
   let lastErr;
-  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+  // Allow a few attempts per remaining model (bounded by MAX_RETRIES * pool size).
+  const maxAttempts = Math.max(MAX_RETRIES, MODELS.length * 2);
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const model = modelPool.pick();
+    if (!model) {
+      throw lastErr ?? new Error("all translate models exhausted (quota/rate-limit)");
+    }
+
+    const body = buildTranslateBody(model, targetLocale, entries);
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     try {
@@ -227,16 +261,26 @@ async function translateBatch(targetLocale, entries) {
         signal: controller.signal,
       });
       const text = await res.text();
-      if (res.status === 429 || res.status >= 500) {
-        lastErr = new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
-        await sleep(400 * 2 ** (attempt - 1) + Math.random() * 200);
+      if (isQuotaOrRateLimitError(res.status, text)) {
+        modelPool.markExhausted(model);
+        lastErr = new Error(
+          `[${model}] HTTP ${res.status} quota/rate-limit: ${text.slice(0, 180)}`,
+        );
+        process.stderr.write(
+          `  model ${model} exhausted (${res.status}); remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
+        );
         continue;
       }
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${text.slice(0, 400)}`);
+      if (res.status >= 500) {
+        lastErr = new Error(`[${model}] HTTP ${res.status}: ${text.slice(0, 200)}`);
+        await sleep(400 * 2 ** Math.min(attempt - 1, 4) + Math.random() * 200);
+        continue;
+      }
+      if (!res.ok) throw new Error(`[${model}] HTTP ${res.status}: ${text.slice(0, 400)}`);
       const data = JSON.parse(text);
       let content = data?.choices?.[0]?.message?.content;
       if (typeof content !== "string" || !content.trim()) {
-        throw new Error(`empty content: ${text.slice(0, 300)}`);
+        throw new Error(`[${model}] empty content: ${text.slice(0, 300)}`);
       }
       content = content.trim();
       if (content.startsWith("```")) {
@@ -248,12 +292,21 @@ async function translateBatch(targetLocale, entries) {
         const v = parsed[k];
         if (typeof v === "string" && v.trim()) out.set(k, v);
       }
-      if (out.size === 0) throw new Error("parsed batch produced 0 usable strings");
+      if (out.size === 0) throw new Error(`[${model}] parsed batch produced 0 usable strings`);
       return out;
     } catch (err) {
       lastErr = err;
-      if (attempt < MAX_RETRIES) {
-        await sleep(300 * 2 ** (attempt - 1) + Math.random() * 150);
+      const msg = err instanceof Error ? err.message : String(err);
+      // Model-not-found / invalid model → exhaust and rotate
+      if (/HTTP 404|model_not_found|does not exist|invalid_model|unknown model/i.test(msg)) {
+        modelPool.markExhausted(model);
+        process.stderr.write(
+          `  model ${model} unavailable; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
+        );
+        continue;
+      }
+      if (attempt < maxAttempts) {
+        await sleep(300 * 2 ** Math.min(attempt - 1, 4) + Math.random() * 150);
       }
     } finally {
       clearTimeout(timer);
@@ -395,7 +448,7 @@ async function main() {
     [
       `SenseNova Token Plan — global i18n translator`,
       `  base=${API_BASE}`,
-      `  model=${MODEL}`,
+      `  models=${MODELS.join(" → ")} (round-robin; rotate on 429/quota)`,
       `  catalogs=${catalogs.map((c) => c.id).join(",")}`,
       `  catalogConcurrency=${CATALOG_CONCURRENCY} localeConcurrency=${LOCALE_CONCURRENCY} concurrency=${CONCURRENCY} batchSize=${BATCH_SIZE}`,
       `  force=${args.force} dryRun=${args.dryRun}`,

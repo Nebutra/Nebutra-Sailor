@@ -93,3 +93,81 @@ export function pLimit(concurrency) {
       next();
     });
 }
+
+/**
+ * Default SenseNova Token Plan model pool for product i18n.
+ * Prefer multi-model rotation so one exhausted plan does not stall the wheel.
+ */
+export const DEFAULT_TRANSLATE_MODELS = [
+  // Prefer plans that still have quota; rotate when one hits 429.
+  "sensenova-u1-fast",
+  "deepseek-v4-flash",
+  "sensenova-6.7-flash-lite",
+];
+
+/**
+ * Parse model list from env-style strings.
+ * Priority: MODELS (csv) → single MODEL → defaults.
+ */
+export function parseTranslateModels({
+  modelsCsv,
+  singleModel,
+  defaults = DEFAULT_TRANSLATE_MODELS,
+} = {}) {
+  const fromCsv = String(modelsCsv ?? "")
+    .split(/[,|\s]+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (fromCsv.length > 0) return [...new Set(fromCsv)];
+  const one = String(singleModel ?? "").trim();
+  if (one) return [one];
+  return [...defaults];
+}
+
+/** True when the provider response indicates quota/rate exhaustion. */
+export function isQuotaOrRateLimitError(status, bodyText = "") {
+  if (status === 429) return true;
+  const t = String(bodyText).toLowerCase();
+  return (
+    t.includes("quota_exceeded") ||
+    t.includes("quota exceeded") ||
+    t.includes("limit exhausted") ||
+    t.includes("rate_limit") ||
+    t.includes("rate limit") ||
+    t.includes("insufficient_quota")
+  );
+}
+
+/**
+ * Thread-safe-ish model pool for concurrent batch workers.
+ * - pick(): round-robin among non-exhausted models
+ * - markExhausted(model): drop model from rotation (quota)
+ * - remaining(): models still usable
+ */
+export function createModelPool(models) {
+  const list = [...new Set((models ?? []).map((m) => String(m).trim()).filter(Boolean))];
+  if (list.length === 0) {
+    throw new Error("createModelPool: empty model list");
+  }
+  const exhausted = new Set();
+  let rr = 0;
+
+  const active = () => list.filter((m) => !exhausted.has(m));
+
+  return {
+    all: () => [...list],
+    remaining: () => active(),
+    exhausted: () => [...exhausted],
+    markExhausted(model) {
+      if (list.includes(model)) exhausted.add(model);
+    },
+    /** @returns {string | null} */
+    pick() {
+      const alive = active();
+      if (alive.length === 0) return null;
+      const model = alive[rr % alive.length];
+      rr += 1;
+      return model;
+    },
+  };
+}
