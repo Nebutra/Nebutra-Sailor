@@ -128,9 +128,11 @@ Scales: `--neutral-{1..12}`, `--blue-{1..12}`, `--cyan-{1..12}`. Light values ar
 | `--primary` | `228 85% 56%` → soft blue for UI | **Canonical product CTA** (`bg-primary`, `Button` default) |
 | `--brand-primary` | `#0033FE` | VI 云毓蓝 — logo / identity |
 | `--brand-gradient` | `hsl(var(--primary))` | **Legacy alias of `--primary`**, not a separate color. Prefer `Button` / `bg-primary`. |
-| `--brand-gradient-logo` | `linear-gradient(135deg, #0033FE → #0BF1C3)` | Logo/VI only |
+| `--brand-gradient-logo` | `linear-gradient(135deg, #0033FE → #00A2E9 → #0BF1C3)` | Logo/VI only (OKLab mid stop) |
 
 **CTA rule:** use existing `@nebutra/ui` `Button` (`bg-primary`). Do not invent parallel “action” colors. `#0033FE` is identity; UI softens via `--primary` already defined in `themes/light.json`.
+
+**Logo gradient / dirty-mid rule:** `--brand-gradient-logo` must keep **three hex stops** ending in `#0033fe` → `#00a2e9` → `#0bf1c3` (see `semantic.json` + `verify-brand-token-sync`). Mid `#00a2e9` is the OKLab midpoint — prevents soft/gray mids on large VI surfaces. Product chrome must not reintroduce multi-stop blue→cyan as button fills. Full guidance: [`packages/design/brand/DESIGN.md` §2.2](../brand/DESIGN.md#22-brand-gradient).
 
 ### 2.4 Semantic theme tokens (HSL triplets — Tailwind compatible)
 

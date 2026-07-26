@@ -45,13 +45,14 @@
         "$description": "Legacy alias of --primary."
       },
       "logo": {
-        "$value": "linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%)",
+        "$value": "linear-gradient(135deg, #0033fe 0%, #00a2e9 50%, #0bf1c3 100%)",
         "$type": "gradient",
-        "$description": "Logo/VI gradient (云毓蓝→云毓青). Brand assets only."
+        "$description": "Logo/VI gradient (云毓蓝→云毓青). Mid stop #00a2e9 is the OKLab perceptual midpoint (avoids sRGB mid-path soft spots). Brand assets only — not product CTAs."
       },
       "logo-reverse": {
-        "$value": "linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%)",
-        "$type": "gradient"
+        "$value": "linear-gradient(135deg, #0bf1c3 0%, #00a2e9 50%, #0033fe 100%)",
+        "$type": "gradient",
+        "$description": "Logo/VI reverse gradient with same OKLab mid stop."
       }
     }
   },

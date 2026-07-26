@@ -127,9 +127,15 @@
   --brand-gradient-logo: linear-gradient(
     135deg,
     #0033fe 0%,
+    #00a2e9 50%,
     #0bf1c3 100%
-  ); /** Logo/VI gradient (云毓蓝→云毓青). Brand assets only. */
-  --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
+  ); /** Logo/VI gradient (云毓蓝→云毓青). Mid stop #00a2e9 is the OKLab perceptual midpoint (avoids sRGB mid-path soft spots). Brand assets only — not product CTAs. */
+  --brand-gradient-logo-reverse: linear-gradient(
+    135deg,
+    #0bf1c3 0%,
+    #00a2e9 50%,
+    #0033fe 100%
+  ); /** Logo/VI reverse gradient with same OKLab mid stop. */
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
   --status-success: #22c55e;
@@ -418,9 +424,15 @@
   --brand-gradient-logo: linear-gradient(
     135deg,
     #0033fe 0%,
+    #00a2e9 50%,
     #0bf1c3 100%
-  ); /** Logo/VI gradient (云毓蓝→云毓青). Brand assets only. */
-  --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
+  ); /** Logo/VI gradient (云毓蓝→云毓青). Mid stop #00a2e9 is the OKLab perceptual midpoint (avoids sRGB mid-path soft spots). Brand assets only — not product CTAs. */
+  --brand-gradient-logo-reverse: linear-gradient(
+    135deg,
+    #0bf1c3 0%,
+    #00a2e9 50%,
+    #0033fe 100%
+  ); /** Logo/VI reverse gradient with same OKLab mid stop. */
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
   --status-success: #22c55e;

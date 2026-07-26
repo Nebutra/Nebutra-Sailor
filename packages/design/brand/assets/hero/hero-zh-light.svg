@@ -6,10 +6,12 @@
     </linearGradient>
     <linearGradient id="iconGrad1" x1="104.63" y1="-13.97" x2="29.26" y2="117.55" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#0033FE"/>
+      <stop offset="0.5" stop-color="#00A2E9"/>
       <stop offset="1" stop-color="#0BF1C3"/>
     </linearGradient>
     <linearGradient id="iconGrad2" x1="204.93" y1="70.85" x2="129.56" y2="202.37" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#0BF1C3"/>
+      <stop offset="0.5" stop-color="#00A2E9"/>
       <stop offset="1" stop-color="#0033FE"/>
     </linearGradient>
     <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(900 60) rotate(45) scale(320 200)">

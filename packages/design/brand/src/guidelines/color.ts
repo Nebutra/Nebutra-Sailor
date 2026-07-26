@@ -68,23 +68,25 @@ export const nebutraCyan = {
  * 让整体更具未来感与科技的锋芒。
  */
 export const brandGradient = {
-  /** Primary gradient (135°) - Logo标准渐变 */
+  /** Primary gradient (135°) - Logo标准渐变；中点为 OKLab 感知中点，控中段避免脏灰 */
   primary: {
-    css: "linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)",
+    css: "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
     angle: 135,
     stops: [
       { color: "#0033FE", position: 0 },
+      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
       { color: "#0BF1C3", position: 100 },
     ],
-    usage: "Logo、Hero区域、主要CTA按钮",
+    usage: "Logo、Hero区域、VI 品牌资产（产品 CTA 用 solid primary）",
   },
 
   /** Reverse gradient */
   reverse: {
-    css: "linear-gradient(135deg, #0BF1C3 0%, #0033FE 100%)",
+    css: "linear-gradient(135deg, #0BF1C3 0%, #00A2E9 50%, #0033FE 100%)",
     angle: 135,
     stops: [
       { color: "#0BF1C3", position: 0 },
+      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
       { color: "#0033FE", position: 100 },
     ],
     usage: "次要元素、hover状态",
@@ -92,10 +94,11 @@ export const brandGradient = {
 
   /** Vertical gradient */
   vertical: {
-    css: "linear-gradient(180deg, #0033FE 0%, #0BF1C3 100%)",
+    css: "linear-gradient(180deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
     angle: 180,
     stops: [
       { color: "#0033FE", position: 0 },
+      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
       { color: "#0BF1C3", position: 100 },
     ],
     usage: "垂直布局元素、页面分割",
@@ -103,10 +106,11 @@ export const brandGradient = {
 
   /** Radial gradient */
   radial: {
-    css: "radial-gradient(circle, #0BF1C3 0%, #0033FE 100%)",
+    css: "radial-gradient(circle, #0BF1C3 0%, #00A2E9 50%, #0033FE 100%)",
     type: "radial",
     stops: [
       { color: "#0BF1C3", position: 0 },
+      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
       { color: "#0033FE", position: 100 },
     ],
     usage: "背景光晕、焦点效果",

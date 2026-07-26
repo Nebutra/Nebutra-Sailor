@@ -1343,8 +1343,14 @@ function buildTokenMap(filePath: string): Record<string, string> {
   if (!map["--brand-primary"] && map["--blue-9"]) map["--brand-primary"] = map["--blue-9"];
   if (!map["--brand-accent"] && map["--cyan-9"]) map["--brand-accent"] = map["--cyan-9"];
   if (!map["--brand-gradient-logo"] && map["--blue-9"] && map["--cyan-9"]) {
-    map["--brand-gradient-logo"] =
-      `linear-gradient(135deg, ${map["--blue-9"]} 0%, ${map["--cyan-9"]} 100%)`;
+    // Mid stop defaults to Nebutra OKLab midpoint when endpoints match VI hexes.
+    const mid =
+      map["--blue-9"]?.toLowerCase() === "#0033fe" && map["--cyan-9"]?.toLowerCase() === "#0bf1c3"
+        ? "#00a2e9"
+        : null;
+    map["--brand-gradient-logo"] = mid
+      ? `linear-gradient(135deg, ${map["--blue-9"]} 0%, ${mid} 50%, ${map["--cyan-9"]} 100%)`
+      : `linear-gradient(135deg, ${map["--blue-9"]} 0%, ${map["--cyan-9"]} 100%)`;
   }
   if (!map["--brand-gradient"] && map["--brand-gradient-start"] && map["--brand-gradient-end"]) {
     map["--brand-gradient"] =

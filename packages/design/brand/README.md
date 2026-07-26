@@ -41,7 +41,7 @@ console.log(brand.domains.app); // "app.nebutra.com"
 // Colors - 云毓蓝 & 云毓青
 const primary = colors.primary[500]; // "#0033FE" 云毓蓝
 const accent = colors.accent[500];   // "#0BF1C3" 云毓青
-const gradient = colors.gradient.primary; // "linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)"
+const gradient = colors.gradient.primary; // "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)"
 
 // Typography
 const fontCn = typography.fontFamily.cn; // vivo Sans
@@ -125,7 +125,7 @@ assets/
 
 ### 品牌渐变 (Brand Gradient)
 ```css
-linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)
+linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)
 ```
 
 ### Semantic

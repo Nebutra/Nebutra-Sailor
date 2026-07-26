@@ -1610,7 +1610,8 @@ RK5CYII=" transform="matrix(1 0 0 1 18.1145 258.1084)">
 	<g>
 		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="210.4281" y1="-28.0971" x2="58.8394" y2="236.4097">
 			<stop  offset="0" style="stop-color:#0033FE"/>
-			<stop  offset="1" style="stop-color:#0BF1C3"/>
+<stop  offset="0.5" style="stop-color:#00A2E9"/>
+<stop  offset="1" style="stop-color:#0BF1C3"/>
 		</linearGradient>
 		<path class="st1" d="M73.2,261.52l30.23-52.33l90.67-156.97C212.79,19.84,247.37-0.07,284.75,0l0,0H164.94
 			c-37.36,0-71.88,19.93-90.56,52.28L14.01,156.85c-18.68,32.35-18.68,72.21,0,104.57c10.78,18.68,26.85,33.2,45.69,42.15
@@ -1618,7 +1619,8 @@ RK5CYII=" transform="matrix(1 0 0 1 18.1145 258.1084)">
 		
 			<linearGradient id="SVGID_00000092432026825153982280000017693828566623791266_" gradientUnits="userSpaceOnUse" x1="412.1473" y1="142.4913" x2="260.5585" y2="406.9983">
 			<stop  offset="0" style="stop-color:#0BF1C3"/>
-			<stop  offset="1" style="stop-color:#0033FE"/>
+<stop  offset="0.5" style="stop-color:#00A2E9"/>
+<stop  offset="1" style="stop-color:#0033FE"/>
 		</linearGradient>
 		<path style="fill:url(#SVGID_00000092432026825153982280000017693828566623791266_);" d="M434.32,157.02
 			c-10.78-18.68-26.85-33.2-45.69-42.15c-1.43,14.58-5.93,28.93-13.5,42.05l-30.19,52.27l-90.7,157.04

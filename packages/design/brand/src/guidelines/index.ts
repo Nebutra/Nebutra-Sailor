@@ -66,7 +66,7 @@ export const brandGuidelines = {
       name: "云毓青",
       hex: "#0BF1C3",
     },
-    gradient: "linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)",
+    gradient: "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
   },
 
   // Typography

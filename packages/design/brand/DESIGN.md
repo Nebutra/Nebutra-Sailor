@@ -61,11 +61,32 @@ These are **TS source primitives**. The runtime equivalent lives in `@nebutra/to
 
 ### 2.2 Brand gradient
 
-```ts
-linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)
+```css
+linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)
 ```
 
-Direction (135°), stops (0% / 100%), and color anchors are **locked**.
+Direction (135°), color anchors, and mid stop are **locked**.
+
+| Stop | Hex | Role |
+|------|-----|------|
+| 0% | `#0033FE` | 云毓蓝 |
+| 50% | `#00A2E9` | OKLab perceptual midpoint (anti-muddy mid control) |
+| 100% | `#0BF1C3` | 云毓青 |
+
+Reverse / vertical / radial variants use the same three anchors (see `colors.gradient` in `metadata.ts`).
+
+#### Dirty gradients（脏渐变）— when to intervene
+
+sRGB `linear-gradient` mixes in device RGB. When **hue span is large** (e.g. yellow↔blue, orange↔blue), the mid path can collapse toward gray (“muddy mid”).
+
+| Situation | Action |
+|-----------|--------|
+| **Logo/VI blue→cyan** (this brand) | Always use the **three-stop** formula above. Mid `#00A2E9` is the OKLab midpoint of the endpoints — do not drop back to two stops. |
+| **Adjacent / close hues** (e.g. blue→sky, green→lime) | Two stops are usually fine. |
+| **Large hue span marketing art** | Add a mid stop: sample the muddy mid, **lift lightness**, nudge hue toward one end (or a soft purple for “dreamy” yellow→blue). Prefer `color-mix(in oklab, …)` for soft washes. |
+| **Product CTAs / buttons** | **Never** multi-stop brand fill. Use solid `--primary` / `Button` / `bg-primary`. Runtime `--brand-gradient` aliases solid primary on purpose. |
+
+Do **not** rely on CSS `in oklab` alone for the locked logo token: SVG assets and older engines need explicit hex mid stops. Prefer three locked hex stops so CSS and brand assets stay identical.
 
 ### 2.3 Motion language (`packages/design/brand/src/motion.ts`)
 

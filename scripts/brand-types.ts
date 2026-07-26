@@ -409,10 +409,11 @@ export const DEFAULT_BRAND: BrandConfig = {
     white: "#FFFFFF",
     black: "#000000",
     gradient: {
-      primary: "linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)",
-      primaryReverse: "linear-gradient(135deg, #0BF1C3 0%, #0033FE 100%)",
-      primaryVertical: "linear-gradient(180deg, #0033FE 0%, #0BF1C3 100%)",
-      primaryRadial: "radial-gradient(circle, #0BF1C3 0%, #0033FE 100%)",
+      // Mid #00A2E9 = OKLab midpoint of brand blue↔cyan (anti-muddy mid control)
+      primary: "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
+      primaryReverse: "linear-gradient(135deg, #0BF1C3 0%, #00A2E9 50%, #0033FE 100%)",
+      primaryVertical: "linear-gradient(180deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
+      primaryRadial: "radial-gradient(circle, #0BF1C3 0%, #00A2E9 50%, #0033FE 100%)",
     },
     // Display-P3 wide-gamut overrides — must exactly match the $extensions in
     // packages/design/design-tokens/tokens/core.json (lines 16 and 36).

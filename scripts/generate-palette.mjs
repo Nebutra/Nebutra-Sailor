@@ -129,11 +129,14 @@ ${Object.entries(secondaryScale)
   .map(([step, hex]) => `  --nebutra-cyan-${pad(step)}: ${hex};`)
   .join("\n")}
 
-  /* Brand gradients (auto-derived from 500 values above) */
+  /* Brand gradients (auto-derived from 500 values above).
+     Prefer an explicit mid stop for large hue spans (anti-muddy); product CTAs
+     in Nebutra still use solid --primary via styles.css SSOT. */
   --brand-gradient: linear-gradient(135deg, var(--nebutra-blue-500) 0%, var(--nebutra-cyan-500) 100%);
   --brand-gradient-reverse: linear-gradient(135deg, var(--nebutra-cyan-500) 0%, var(--nebutra-blue-500) 100%);
   --brand-gradient-vertical: linear-gradient(180deg, var(--nebutra-blue-500) 0%, var(--nebutra-cyan-500) 100%);
   --brand-gradient-radial: radial-gradient(circle, var(--nebutra-cyan-500) 0%, var(--nebutra-blue-500) 100%);
+  --brand-gradient-logo: linear-gradient(135deg, var(--nebutra-blue-500) 0%, var(--nebutra-cyan-500) 100%);
 }
 `;
 

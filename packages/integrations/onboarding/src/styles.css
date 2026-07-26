@@ -129,7 +129,8 @@ html.dark .driver-popover-prev-btn:hover {
 
 .driver-popover-next-btn {
   color: #fff;
-  background: var(--brand-gradient, linear-gradient(135deg, var(--blue-9), var(--cyan-9)));
+  /* Product CTA fill: solid primary (matches --brand-gradient SSOT). No multi-stop fallback. */
+  background: var(--brand-gradient, hsl(var(--primary)));
   border-color: transparent;
   font-weight: 600;
 }

@@ -487,6 +487,7 @@ if (!tokensCss.includes("--gradient-brand:")) {
 
   const logo = semantic.brand.gradient.logo.$value.toLowerCase();
   const logoStops = extractHexStops(logo);
+  // Mid stop #00a2e9 = OKLab perceptual midpoint (anti-muddy mid control for VI path).
   if (logoStops.length < 2) {
     fail(
       "semantic.brand.gradient.logo",
@@ -497,8 +498,13 @@ if (!tokensCss.includes("--gradient-brand:")) {
       "semantic.brand.gradient.logo",
       `Expected #0033fe → #0bf1c3, got ${logoStops[0]} → ${logoStops.at(-1)}`,
     );
+  } else if (!logoStops.includes("#00a2e9")) {
+    fail(
+      "semantic.brand.gradient.logo",
+      `Expected OKLab mid stop #00a2e9 in logo gradient, got stops: ${logoStops.join(" → ")}`,
+    );
   } else {
-    ok("semantic.brand.gradient.logo is 云毓蓝→云毓青 (#0033fe → #0bf1c3)");
+    ok("semantic.brand.gradient.logo is 云毓蓝→#00a2e9→云毓青 (OKLab mid)");
   }
 
   const runtimeBrandGradient = extractCssCustomPropertyValues(tokensCss, "--brand-gradient");
