@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { getReleaseSurfaceDiagnostics } from "../../scripts/lib/release-surface.mjs";
@@ -55,5 +57,31 @@ describe("release surface governance", () => {
       .map((entry) => `${entry.manifest.name} (${entry.manifest.license ?? "missing"})`);
 
     expect(nonMitPackages).toEqual([]);
+  });
+
+  /**
+   * The `license` field is a label; the LICENSE file is the grant. MIT itself
+   * requires its notice to travel with "all copies or substantial portions",
+   * and npm always includes a LICENSE file in the tarball regardless of the
+   * `files` field — so every publishable package must carry one.
+   *
+   * This caught create-sailor shipping the full AGPL-3.0 text while declaring
+   * MIT, and 78 packages shipping no licence text at all.
+   */
+  it("ships an MIT LICENSE file alongside the MIT license field", () => {
+    const offenders = diagnostics.publishable
+      .map((entry) => {
+        const licensePath = join(entry.packageDir, "LICENSE");
+        if (!existsSync(licensePath)) return `${entry.manifest.name} (no LICENSE file)`;
+        const head = readFileSync(licensePath, "utf-8").slice(0, 200);
+        if (!head.includes("MIT License")) {
+          const firstLine = head.split("\n").find((line) => line.trim().length > 0) ?? "";
+          return `${entry.manifest.name} (LICENSE is not MIT: "${firstLine.trim()}")`;
+        }
+        return null;
+      })
+      .filter((offender): offender is string => offender !== null);
+
+    expect(offenders).toEqual([]);
   });
 });
