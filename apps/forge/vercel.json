@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && pnpm turbo build --filter=@nebutra/forge",
+  "buildCommand": "cd ../.. && pnpm --filter @nebutra/brand sync && pnpm turbo build --filter=@nebutra/forge",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/forge",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "outputDirectory": ".next",

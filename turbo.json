@@ -25,7 +25,11 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "packages/design/brand/assets/**",
+        "$TURBO_ROOT$/packages/design/brand/assets/**"
+      ],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "env": [
         "NEXT_PUBLIC_SITE_URL",
@@ -44,7 +48,11 @@
     },
     "build:next": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "packages/design/brand/assets/**",
+        "$TURBO_ROOT$/packages/design/brand/assets/**"
+      ],
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
         "NEXT_PUBLIC_SITE_URL",

@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && pnpm turbo build --filter=@nebutra/router",
+  "buildCommand": "cd ../.. && pnpm --filter @nebutra/brand sync && pnpm turbo build --filter=@nebutra/router",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/router",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "outputDirectory": ".next",

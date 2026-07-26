@@ -110,20 +110,32 @@ function syncAssets() {
         if (mapping.isDir) {
           const result = verifyDirectorySync(srcPath, destPath);
           if (result.mismatch.length > 0) {
-            for (const _m of result.mismatch) {
+            for (const m of result.mismatch) {
+              process.stderr.write(`[brand:sync] ${app}: ${m}\n`);
             }
             totalErrors += result.mismatch.length;
           } else {
+            process.stdout.write(`[brand:sync] ${app}: ${mapping.dest} (${result.ok} files)\n`);
           }
+        } else {
+          process.stdout.write(`[brand:sync] ${app}: ${mapping.dest}\n`);
         }
-      } catch (_error) {
+      } catch (error) {
         totalErrors++;
+        process.stderr.write(
+          `[brand:sync] ${app}: failed ${mapping.src} → ${mapping.dest}: ${
+            error instanceof Error ? error.message : error
+          }\n`,
+        );
       }
     }
   }
 
   if (totalErrors > 0) {
+    process.stderr.write(`[brand:sync] completed with ${totalErrors} error(s)\n`);
+    process.exit(1);
   }
+  process.stdout.write("[brand:sync] ok\n");
 }
 
 syncAssets();
