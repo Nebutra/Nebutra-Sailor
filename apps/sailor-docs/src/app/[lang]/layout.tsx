@@ -1,4 +1,4 @@
-import { LogoEnSVG } from "@nebutra/brand";
+import { LogoEnColorSVG, LogoEnSVG } from "@nebutra/brand";
 import { brand } from "@nebutra/brand/metadata";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { Banner } from "fumadocs-ui/components/banner";
@@ -115,14 +115,18 @@ export default async function RootLayout({
                 title: (
                   <div className="flex items-center gap-2">
                     {/*
-                      Inline mono SVG (fill=currentColor). Color must sit on the <svg>
-                      (LogoEnSVG defaults text-brand-mark); parent text-* does not win.
-                      Light: brand-mark. Dark: pure white 反白 (not color VI + invert).
+                      Light: VI color (gradient mark + #060307 wordmark).
+                      Dark: mono white 反白 (currentColor), not CSS invert on color asset.
                     */}
                     <span className="inline-flex h-6 items-center">
+                      <LogoEnColorSVG
+                        width={140}
+                        className="h-6 w-auto dark:hidden"
+                        aria-label={`${brand.name} Sailor Docs`}
+                      />
                       <LogoEnSVG
                         width={140}
-                        className="h-6 w-auto text-brand-mark dark:!text-white"
+                        className="hidden h-6 w-auto !text-white dark:block"
                         aria-label={`${brand.name} Sailor Docs`}
                       />
                     </span>

@@ -2,19 +2,20 @@
  * Inline SVG Logo Components
  *
  * These components render SVG paths directly in JSX (no <img> tag, no public folder).
- * All paths use fill="currentColor" so they respond to CSS `color` / Tailwind text-* classes.
  *
- * Product chrome default: `text-brand-mark` (roles.brand via recipe.css). Do **not**
- * paint logos with `text-primary` / CTA action — that is roles.action only.
- * Override with `text-white` / `text-foreground` for inverse surfaces.
+ * **Mono** (`LogoEnSVG` / `LogomarkSVG`): fill="currentColor" — recolor via `text-*`.
+ * Product chrome default: `text-brand-mark`. Inverse: `text-white`.
+ *
+ * **Color VI** (`LogoEnColorSVG`): logomark brand gradient + wordmark #060307.
+ * Use for light marketing/docs chrome; pair with mono white in dark mode.
  *
  * Source assets: packages/design/brand/assets/logo/
  *
  * Usage:
- *   <LogomarkSVG className="w-8 h-8" />                 // brand-mark
- *   <LogomarkSVG className="text-white w-8 h-8" />      // inverse
- *   <WordmarkEnSVG className="text-white" width={150} />
- *   <LogoEnSVG width={160} />
+ *   <LogomarkSVG className="w-8 h-8" />
+ *   <LogoEnSVG className="text-white" width={160} />
+ *   <LogoEnColorSVG width={160} className="dark:hidden" />
+ *   <LogoEnSVG width={160} className="hidden dark:block !text-white" />
  */
 
 /** Default logo fill = brand-mark (not product CTA primary). */
@@ -197,18 +198,23 @@ export interface LogoEnSVGProps extends SVGProps {
   gap?: number;
 }
 
-export function LogoEnSVG({
-  className,
-  width = 160,
-  gap = 12,
-  "aria-label": ariaLabel,
-}: LogoEnSVGProps) {
+function layoutLogoEn(width: number, gap: number) {
   const logomarkAspect = 535.71 / 500;
   const wordmarkAspect = 544.21 / 103.74;
   const h = Math.round(width / (logomarkAspect + gap / width + wordmarkAspect));
   const logomarkW = Math.round(h * logomarkAspect);
   const wordmarkW = Math.round(h * wordmarkAspect);
   const totalW = logomarkW + gap + wordmarkW;
+  return { h, logomarkW, wordmarkW, totalW };
+}
+
+export function LogoEnSVG({
+  className,
+  width = 160,
+  gap = 12,
+  "aria-label": ariaLabel,
+}: LogoEnSVGProps) {
+  const { h, logomarkW, wordmarkW, totalW } = layoutLogoEn(width, gap);
   const mergedClass = mergeLogoClass(className);
 
   const children = (
@@ -247,6 +253,78 @@ export function LogoEnSVG({
       width={totalW}
       height={h}
       className={mergedClass}
+      aria-hidden="true"
+      role="img"
+    >
+      {children}
+    </svg>
+  );
+}
+
+/**
+ * Full English logo with VI color fills (gradient mark + #060307 wordmark).
+ * For light surfaces. Dark inverse: use LogoEnSVG with text-white instead.
+ */
+export function LogoEnColorSVG({
+  className,
+  width = 160,
+  gap = 12,
+  "aria-label": ariaLabel,
+}: LogoEnSVGProps) {
+  const { h, logomarkW, wordmarkW, totalW } = layoutLogoEn(width, gap);
+  // Stable id (RSC-safe; one primary chrome logo per page is fine)
+  const gradId = "nebutra-logo-en-color-grad";
+
+  const children = (
+    <>
+      <defs>
+        <linearGradient
+          id={gradId}
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+          gradientUnits="objectBoundingBox"
+        >
+          <stop offset="0%" stopColor="#0033FE" />
+          <stop offset="50%" stopColor="#00A2E9" />
+          <stop offset="100%" stopColor="#0BF1C3" />
+        </linearGradient>
+      </defs>
+      <g transform={`scale(${logomarkW / 535.71}, ${h / 500})`} fill={`url(#${gradId})`}>
+        <path d={LOGOMARK_PATH} />
+      </g>
+      <g
+        transform={`translate(${logomarkW + gap}, 0) scale(${wordmarkW / 544.21}, ${h / 103.74})`}
+        fill="#060307"
+      >
+        <WordmarkPaths />
+      </g>
+    </>
+  );
+
+  if (ariaLabel) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${totalW} ${h}`}
+        width={totalW}
+        height={h}
+        className={className}
+        aria-label={ariaLabel}
+        role="img"
+      >
+        {children}
+      </svg>
+    );
+  }
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={`0 0 ${totalW} ${h}`}
+      width={totalW}
+      height={h}
+      className={className}
       aria-hidden="true"
       role="img"
     >

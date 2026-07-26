@@ -9,8 +9,8 @@ export type { LogoEdition, LogoProps, LogoVariant } from "./components/Logo";
 // Components
 export { Logo, Logomark, Wordmark } from "./components/Logo";
 export type { LogoEnSVGProps } from "./components/LogoSVG";
-// Inline SVG components (no public folder required, fill="currentColor")
-export { LogoEnSVG, LogomarkSVG, WordmarkEnSVG } from "./components/LogoSVG";
+// Inline SVG: mono (currentColor) + color VI (gradient mark)
+export { LogoEnColorSVG, LogoEnSVG, LogomarkSVG, WordmarkEnSVG } from "./components/LogoSVG";
 export type {
   AllowedColorCombination,
   BrandGuidelines,
