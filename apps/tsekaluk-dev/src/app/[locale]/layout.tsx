@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { Providers } from "@/components/providers";
 import { routing } from "@/i18n/routing";
 import { websiteJsonLd } from "@/lib/json-ld";
+import { BASE_URL } from "@/lib/seo/alternates";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -17,16 +18,16 @@ export const metadata: Metadata = {
   },
   description:
     "I design and build AI-powered products from zero to one. Shipping fast and iterating in public.",
-  metadataBase: new URL("https://tsekaluk.dev"),
+  metadataBase: new URL(BASE_URL),
   openGraph: {
     title: "Tseka Luk — AI-Native Builder",
     description: "I design and build AI-powered products from zero to one.",
-    url: "https://tsekaluk.dev",
+    url: BASE_URL,
     siteName: "TsekaLuk.dev",
     type: "website",
     images: [
       {
-        url: "https://tsekaluk.dev/og?title=Tseka+Luk&subtitle=AI-Native+Builder",
+        url: `${BASE_URL}/og?title=Tseka+Luk&subtitle=AI-Native+Builder`,
         width: 1200,
         height: 630,
         alt: "Tseka Luk — AI-Native Builder",
@@ -41,14 +42,17 @@ export const metadata: Metadata = {
     "color-scheme": "light dark",
   },
   alternates: {
-    canonical: "https://tsekaluk.dev",
-    languages: {
-      en: "https://tsekaluk.dev/en",
-      zh: "https://tsekaluk.dev/zh",
-      ja: "https://tsekaluk.dev/ja",
-    },
+    // Deliberately no `canonical` and no `languages` here. Next merges metadata
+    // shallowly per top-level key, so any page that does not set `alternates`
+    // would inherit the layout's verbatim — and a layout cannot know the
+    // request path. The old value pointed every such page at the ORIGIN ROOT,
+    // which under next-intl's "always" localePrefix is itself a redirect URL,
+    // alongside a hand-written cluster whose bare `zh` is not a route locale
+    // (zh-Hans / zh-Hant) and cannot be resolved by the router.
+    //
+    // Each page now declares its own via `seoFor` in src/lib/seo/alternates.ts.
     types: {
-      "application/rss+xml": "https://tsekaluk.dev/rss.xml",
+      "application/rss+xml": `${BASE_URL}/rss.xml`,
     },
   },
 };

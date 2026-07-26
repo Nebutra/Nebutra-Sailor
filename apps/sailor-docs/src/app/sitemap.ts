@@ -1,6 +1,7 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { MetadataRoute } from "next";
-import { htmlLangForLanguage, i18n } from "@/lib/i18n";
+import { languagesWithPage, pathFor, xDefaultLanguage } from "@/lib/docs-fallback";
+import { htmlLangForLanguage } from "@/lib/i18n";
 import { source } from "@/lib/source";
 
 /**
@@ -23,10 +24,6 @@ function docsBaseUrl(): string {
   return process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL?.replace(/\/+$/, "") || getBrandOrigin("docs");
 }
 
-function pathFor(language: string, slugs: readonly string[]): string {
-  return slugs.length > 0 ? `/${language}/${slugs.join("/")}` : `/${language}`;
-}
-
 function lastModifiedOf(data: unknown): Date | undefined {
   const raw = (data as { lastModified?: Date | number | string }).lastModified;
   if (!raw) return undefined;
@@ -45,12 +42,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // hreflang cluster: only the languages that actually have this page, keyed
       // by the app's own BCP-47 mapping (en → en-US, zh → zh-Hans-CN).
       const languages: Record<string, string> = {};
-      for (const candidate of i18n.languages) {
-        if (!source.getPage(slugs, candidate)) continue;
+      for (const candidate of languagesWithPage(source, slugs)) {
         languages[htmlLangForLanguage(candidate)] = `${baseUrl}${pathFor(candidate, slugs)}`;
       }
-      // Exactly one x-default, at the default language's URL.
-      languages["x-default"] = `${baseUrl}${pathFor(i18n.defaultLanguage, slugs)}`;
+      // Exactly one x-default, and only at a URL that resolves: the default
+      // language when it has the page, otherwise the first language that does.
+      // Latent today (the zh tree is a strict subset of en, so the default
+      // language always has the page) — fixed structurally so the first
+      // zh-only page cannot silently publish a 404 as its cluster's x-default.
+      const xDefault = xDefaultLanguage(source, slugs);
+      if (xDefault) languages["x-default"] = `${baseUrl}${pathFor(xDefault, slugs)}`;
 
       const lastModified = lastModifiedOf(page.data);
 

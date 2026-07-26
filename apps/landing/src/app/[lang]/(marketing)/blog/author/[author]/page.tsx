@@ -24,6 +24,7 @@ import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Params = { author: string; lang: string };
 
@@ -107,10 +108,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { author, lang } = await params;
   const authorLabel = decodeURIComponent(author);
   if (!hasLocale(routing.locales, lang)) return {};
-  return {
+  // `none` scope: a thin facet over /blog, served but never canonical, so the
+  // registry publishes it in zero locales and this is noindex,follow.
+  return buildPageMetadata({
     title: `${authorLabel} — Nebutra Blog`,
-    alternates: { canonical: `${localizedBlogHref(lang)}/author/${author}` },
-  };
+    description: `Posts by ${authorLabel} on the Nebutra blog.`,
+    path: `/blog/author/${author}`,
+    locale: lang as Locale,
+  });
 }
 
 export default function BlogAuthorPage({ params }: { params: Promise<Params> }) {

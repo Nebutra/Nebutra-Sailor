@@ -6,6 +6,7 @@ import { HeroMockupWindow, LogoStrip, Navbar } from "@/components/landing";
 import { DesktopProductDemoSection } from "@/components/landing/DesktopProductDemoSection";
 import { HeroSection } from "@/components/landing/HeroSection";
 import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 // Skeleton uses min-h so longer locales don't clip. Heights track real
 // section sizes to keep CLS down while content streams in; mobile uses a
@@ -71,10 +72,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "metadata" });
 
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-  };
+    path: "/",
+    locale,
+  });
 }
 
 export default async function MarketingHomePage({ params }: { params: Promise<{ lang: string }> }) {

@@ -246,6 +246,10 @@
     "wechat_copied": "微信号已复制！"
   },
   "pages": {
+    "home": {
+      "metadata_title": "Tseka Luk — AI 原生构建者",
+      "metadata_desc": "斗星集团 CEO，AI 原生構建者。构建智能系统，而非仅仅是产品。"
+    },
     "work": {
       "label": "/ 19 个已上线项目",
       "headline": "我构建的产品",

@@ -26,6 +26,7 @@ import type { NewsRailSlide } from "@/components/landing/news-rail-carousel";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -43,13 +44,14 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const isZh = isZhUiLocale(lang);
-  return {
+  return buildPageMetadata({
     title: isZh ? "新闻中心 — Nebutra" : "Newsroom — Nebutra",
     description: isZh
       ? "Nebutra 的产品发布、公告与平台动态。"
       : "Product launches, announcements, and platform updates from Nebutra.",
-    alternates: { canonical: `${localePrefix(lang)}/news` },
-  };
+    path: "/news",
+    locale: lang as Locale,
+  });
 }
 
 async function getCachedAllPosts(language: ReturnType<typeof toBlogLanguage>) {

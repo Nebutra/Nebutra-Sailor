@@ -4,13 +4,19 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 
 import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata(props: { params: Promise<{ lang: string }> }) {
   const { lang } = await props.params;
   setRequestLocale(lang as Locale);
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "nav" });
-  return { title: `${t("ideas")} - Nebutra` };
+  return buildPageMetadata({
+    title: `${t("ideas")} - Nebutra`,
+    description: t("ideas"),
+    path: "/ideas",
+    locale: lang as Locale,
+  });
 }
 
 export default async function IdeasPage(props: { params: Promise<{ lang: string }> }) {

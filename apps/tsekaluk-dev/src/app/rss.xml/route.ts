@@ -1,7 +1,7 @@
 import { getArticles } from "@/lib/articles";
 import { projects } from "@/lib/projects";
-
-const BASE_URL = "https://tsekaluk.dev";
+// One origin literal for the whole app — see src/lib/seo/alternates.ts.
+import { BASE_URL } from "@/lib/seo/alternates";
 
 function escapeXml(str: string): string {
   return str

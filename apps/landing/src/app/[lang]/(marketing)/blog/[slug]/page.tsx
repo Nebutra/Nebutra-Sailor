@@ -41,7 +41,9 @@ import {
 } from "@/lib/blog";
 import { env } from "@/lib/env";
 import { isZhUiLocale } from "@/lib/i18n/localized";
-import { getSiteUrl } from "@/lib/seo/site-routes";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { localesForPath } from "@/lib/seo/route-registry";
+import { getSiteUrl, type PublicationSet } from "@/lib/seo/site-routes";
 
 type Params = { lang: string; slug: string };
 
@@ -65,12 +67,52 @@ async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> 
 
   const ogImage = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}/opengraph-image`;
 
-  return {
+  return buildPageMetadata({
     title: `${post.title} — Nebutra Blog`,
-    description: post.excerpt ?? undefined,
-    alternates: { canonical: localizedPostHref(lang, post.slug) },
-    openGraph: { images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }] },
+    description: post.excerpt || post.title,
+    path: `/blog/${post.slug}`,
+    locale: lang as Locale,
+    type: "article",
+    image: ogImage,
+    publishedIn: await blogPublicationSet(post),
+  });
+}
+
+/**
+ * The translation cluster this post belongs to.
+ *
+ * A translated post lives at a *different slug*, so the cluster has to be
+ * assembled from the two real documents rather than reusing this locale's slug
+ * for both — the latter fabricates a sibling URL that 404s. A post with no
+ * sibling is a legitimate single-member cluster: it exists in one language and
+ * says so, instead of claiming a translation that was never written.
+ */
+async function blogPublicationSet(post: BlogPostWithSource): Promise<PublicationSet> {
+  // No `"use cache"` here: the only caller is already inside one, the sibling
+  // lookup it makes is separately cached, and a `post` object is not a valid
+  // cache key.
+  const selfLocale = localeForBlogLanguage(post.language);
+  const pathByLocale: Record<string, `/${string}`> = {
+    [selfLocale]: `/blog/${post.slug}`,
   };
+  const locales: string[] = [selfLocale];
+
+  if (post.translationKey) {
+    const sibling = await getCachedPostTranslation(
+      post.translationKey,
+      oppositeBlogLanguage(post.language),
+    );
+    if (sibling) {
+      const siblingLocale = localeForBlogLanguage(sibling.language);
+      if (!locales.includes(siblingLocale)) locales.push(siblingLocale);
+      pathByLocale[siblingLocale] = `/blog/${sibling.slug}`;
+    }
+  }
+
+  // Registry order, so the cluster and the sitemap list the members alike.
+  const ordered = localesForPath("/blog/*").filter((locale) => locales.includes(locale));
+  const primary = (ordered[0] ?? selfLocale) as string;
+  return { path: pathByLocale[primary] as `/${string}`, locales: ordered, pathByLocale };
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {

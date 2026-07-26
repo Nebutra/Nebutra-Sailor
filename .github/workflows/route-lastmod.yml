@@ -1,0 +1,80 @@
+# Refresh the committed <lastmod> snapshot after a landing route change.
+#
+# Why a post-merge bot commit rather than a pull-request gate:
+# scripts/generate-route-lastmod.mjs derives each pattern's timestamp from
+# `git log -1 --format=%cI` of the files that render it. Regenerating before
+# committing therefore records the PREVIOUS commit's time, and a byte-equality
+# gate would then fail on the new one — unsatisfiable in a single commit, and a
+# two-commit dance on every landing page edit. Regenerating after the merge
+# converges in one iteration instead: the bot commit touches only the generated
+# file, which is not a contributor to any pattern, so the next run is a no-op.
+#
+# Deliberately not wired into ci.yml, and deliberately not a turbo task: apps do
+# not build the snapshot, and a Vercel shallow clone cannot produce it — which
+# is why it is committed in the first place (see the script's header).
+name: route-lastmod
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # `[lang]` MUST stay escaped. GitHub Actions path filters read `[...]` as a
+      # character class, so the unescaped form matches apps/landing/src/app/l/**,
+      # .../a/**, .../n/**, .../g/** — never the literal bracketed segment — and
+      # the workflow silently never fires.
+      # Single-quoted so YAML performs no escape processing: the filter
+      # receives the backslashes verbatim.
+      - 'apps/landing/src/app/\[lang\]/**'
+      - "apps/landing/src/lib/seo/route-registry.ts"
+      - "scripts/generate-route-lastmod.mjs"
+      # DATA_DEPENDENCIES in the script: these modules feed a route family's
+      # rendered output, so touching one makes the snapshot stale too. Keep in
+      # sync with scripts/generate-route-lastmod.mjs.
+      - "apps/landing/src/components/landing/features/package-feature-data.ts"
+      - "apps/landing/src/lib/constants/landing-data.ts"
+      - "apps/landing/src/lib/constants/solutions-data.ts"
+      - "apps/landing/src/lib/blog.ts"
+      - "apps/landing/src/lib/blog-fallback.ts"
+
+concurrency:
+  group: route-lastmod
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # Mandatory: the script reads per-file `git log -1 --format=%cI`, so a
+          # shallow clone silently resolves every pattern to the same commit.
+          fetch-depth: 0
+
+      - name: Regenerate snapshot
+        run: node scripts/generate-route-lastmod.mjs
+
+      - name: Commit if changed
+        env:
+          SNAPSHOT: apps/landing/src/lib/seo/route-lastmod.generated.ts
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- "$SNAPSHOT"; then
+            echo "route-lastmod snapshot already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$SNAPSHOT"
+          git commit -m "chore(seo): refresh route lastmod snapshot [skip ci]"
+          # Losing a race with another push is not a failure: the next run of
+          # this workflow regenerates from the newer tip.
+          if ! git pull --rebase --autostash origin main; then
+            echo "::warning::rebase onto main failed; a later run will refresh the snapshot"
+            exit 0
+          fi
+          if ! git push origin HEAD:main; then
+            echo "::warning::push raced another commit; a later run will refresh the snapshot"
+          fi

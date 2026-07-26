@@ -296,3 +296,209 @@ describe("route lastmod manifest", () => {
     ).toEqual([]);
   });
 });
+
+// ── Shared: the landing route inventory ───────────────────────────────────
+//
+// A Next filesystem route and a hand-maintained registry cannot be made
+// structurally identical — the registry carries a scope decision the filesystem
+// cannot express. This is one of the few places a guard is the correct tool
+// rather than a structural fix.
+const LANDING_APP_ROOT = join(ROOT, "apps/landing/src/app/[lang]");
+const LANDING_REGISTRY = "apps/landing/src/lib/seo/route-registry.ts";
+
+function landingPageFiles(): string[] {
+  return walk(LANDING_APP_ROOT)
+    .filter((file) => /\/page\.tsx?$/.test(file))
+    .sort();
+}
+
+/**
+ * apps/landing/src/app/[lang]/(marketing)/blog/[slug]/page.tsx → "/blog/*".
+ * Same transform as scripts/generate-route-lastmod.mjs routePathForPageFile —
+ * keep the two aligned.
+ */
+function routePathForPageFile(file: string): string {
+  const segments = relative(LANDING_APP_ROOT, dirname(file))
+    .split("/")
+    .filter((segment) => segment && !segment.startsWith("("))
+    .map((segment) => (segment.startsWith("[") ? "*" : segment));
+  return segments.length === 0 ? "/" : `/${segments.join("/")}`;
+}
+
+function registryPatterns(): Set<string> {
+  return new Set([...read(LANDING_REGISTRY).matchAll(/pattern:\s*"([^"]+)"/g)].map((m) => m[1]));
+}
+
+// ── Guard 6: the registry covers the filesystem route inventory ───────────
+describe("landing route registry coverage", () => {
+  /**
+   * Shrink-only. Every entry is a route the filesystem serves but the registry
+   * does not classify, so `localizationFor` cannot answer for it and the
+   * sitemap silently skips it. Each must gain an explicit scope — `none` for
+   * redirect stubs, thin facets and duplicate surfaces — and then be deleted
+   * from here. The list may only shrink.
+   */
+  const KNOWN_UNREGISTERED_ROUTES: Readonly<Record<string, string>> = {
+    // Empty: every filesystem route now carries an explicit scope. Adding an
+    // entry here is a deliberate, reviewable exception — the list may only
+    // shrink, and the staleness sub-guard below deletes it the moment the route
+    // is registered.
+  };
+
+  it("classifies every route the filesystem serves", () => {
+    const derived = [...new Set(landingPageFiles().map(routePathForPageFile))].sort();
+
+    // Non-vacuity: the walk must actually see the landing route tree.
+    expect(derived.length).toBeGreaterThan(30);
+
+    // Exact string equality, not wildcard resolution: an unlisted
+    // `/blog/author/*` must fail even though `/blog/*` would resolve it,
+    // because a broader wildcard silently lends it a scope nobody chose.
+    const patterns = registryPatterns();
+    const unregistered = derived
+      .filter((path) => !patterns.has(path))
+      .filter((path) => !(path in KNOWN_UNREGISTERED_ROUTES));
+
+    expect(
+      unregistered,
+      `Routes with no entry in ${LANDING_REGISTRY}. Add each with an explicit ` +
+        "scope — `none` for redirect stubs, thin facets and duplicate surfaces — " +
+        "so the sitemap and buildPageMetadata agree on whether it is canonical.",
+    ).toEqual([]);
+  });
+
+  it("keeps every unregistered-route exemption real, so the list can only shrink", () => {
+    const derived = new Set(landingPageFiles().map(routePathForPageFile));
+    const patterns = registryPatterns();
+
+    const stale = Object.keys(KNOWN_UNREGISTERED_ROUTES).filter(
+      (path) => !derived.has(path) || patterns.has(path),
+    );
+
+    expect(
+      stale,
+      "Exemptions that are now registered, or whose route no longer exists — delete them",
+    ).toEqual([]);
+  });
+
+  it("has no exact pattern without a page, so a deleted route leaves no phantom URL", () => {
+    const derived = new Set(landingPageFiles().map(routePathForPageFile));
+    const phantom = [...registryPatterns()]
+      .filter((pattern) => !pattern.includes("*"))
+      .filter((pattern) => !derived.has(pattern))
+      .sort();
+
+    expect(
+      phantom,
+      `Registry patterns in ${LANDING_REGISTRY} with no page directory — the sitemap ` +
+        "would publish a URL nothing serves.",
+    ).toEqual([]);
+  });
+});
+
+// ── Guard 7: every page declares its own canonical ────────────────────────
+describe("landing page canonicals", () => {
+  /**
+   * Shrink-only. apps/landing/src/app/[lang]/layout.tsx calls
+   * buildPageMetadata({ path: "/" }), and Next merges metadata shallowly per
+   * top-level key — so a page that exports generateMetadata without setting
+   * `alternates` inherits the LAYOUT's, i.e. rel=canonical pointing at the
+   * origin root plus the homepage's full locale cluster. Pages that hand-roll
+   * `alternates` instead emit a bare relative canonical with no hreflang.
+   *
+   * Every entry migrates by returning buildPageMetadata({ ..., path, locale }).
+   */
+  const KNOWN_HAND_ROLLED_METADATA: Readonly<Record<string, string>> = {
+    // Empty: every page that exports generateMetadata now routes through
+    // buildPageMetadata, so no page inherits the layout's homepage canonical
+    // and none hand-rolls a bare relative one. The list may only shrink.
+  };
+
+  function pagesWithOwnMetadata(): { file: string; source: string }[] {
+    return landingPageFiles()
+      .map((file) => ({ file: relative(ROOT, file), source: readFileSync(file, "utf8") }))
+      .filter(({ source }) => /export\s+(?:async\s+)?function\s+generateMetadata/.test(source));
+  }
+
+  it("routes every page's generateMetadata through buildPageMetadata", () => {
+    // Non-vacuity: most landing pages export generateMetadata.
+    expect(pagesWithOwnMetadata().length).toBeGreaterThan(20);
+
+    const offenders = pagesWithOwnMetadata()
+      .filter(({ source }) => !source.includes("buildPageMetadata"))
+      .map(({ file }) => file)
+      .filter((file) => !(file in KNOWN_HAND_ROLLED_METADATA))
+      .sort();
+
+    expect(
+      offenders,
+      'apps/landing/src/app/[lang]/layout.tsx sets alternates for path "/", and Next ' +
+        "merges metadata shallowly per top-level key — a page that omits `alternates` " +
+        "silently canonicalizes to the origin root. Return buildPageMetadata({ title, " +
+        "description, path, locale }) instead of a hand-built Metadata object.",
+    ).toEqual([]);
+  });
+
+  it("keeps every hand-rolled-metadata exemption real, so the list can only shrink", () => {
+    const byFile = new Map(pagesWithOwnMetadata().map(({ file, source }) => [file, source]));
+
+    const stale = Object.keys(KNOWN_HAND_ROLLED_METADATA).filter((file) => {
+      const source = byFile.get(file);
+      return source === undefined || source.includes("buildPageMetadata");
+    });
+
+    expect(
+      stale,
+      "Exemptions whose page now uses buildPageMetadata (or no longer exists) — delete them",
+    ).toEqual([]);
+  });
+});
+
+// ── Guard 8: the route-lastmod trigger covers what the generator reads ────
+//
+// The workflow's `paths:` filter and the generator's inputs live in different
+// languages and cannot be derived from one another, so this is one of the few
+// places a guard is the right tool. Two failure modes it locks:
+//
+//   1. `apps/landing/src/app/[lang]/**` unescaped — GitHub Actions reads
+//      `[...]` as a character class, so that pattern matches `.../l/**`,
+//      `.../a/**`, `.../n/**`, `.../g/**` and never the literal segment. The
+//      workflow then never fires and the committed snapshot rots silently.
+//   2. A DATA_DEPENDENCIES module missing from the filter — touching
+//      `src/lib/blog.ts` changes what `/blog` and `/blog/*` render, so it must
+//      re-trigger the refresh.
+describe("route-lastmod workflow trigger", () => {
+  const WORKFLOW = ".github/workflows/route-lastmod.yml";
+  const GENERATOR = "scripts/generate-route-lastmod.mjs";
+
+  it("escapes the [lang] segment so the filter can match it", () => {
+    const yaml = read(WORKFLOW);
+
+    expect(yaml).toContain("apps/landing/src/app/\\[lang\\]/**");
+    expect(
+      /["']apps\/landing\/src\/app\/\[lang\]\//.test(yaml),
+      "Unescaped [lang] is a character class — it can never match the directory it names",
+    ).toBe(false);
+  });
+
+  it("triggers on every module the generator folds into a timestamp", () => {
+    const generator = read(GENERATOR);
+    const block = generator.slice(
+      generator.indexOf("const DATA_DEPENDENCIES"),
+      generator.indexOf("function readRegistryPatterns"),
+    );
+    const dependencies = [...new Set([...block.matchAll(/"(src\/[^"]+)"/g)].map((m) => m[1]))];
+
+    // Non-vacuity: the generator really does declare data dependencies.
+    expect(dependencies.length).toBeGreaterThan(3);
+
+    const yaml = read(WORKFLOW);
+    const missing = dependencies.filter((dep) => !yaml.includes(`apps/landing/${dep}`));
+
+    expect(
+      missing,
+      `Modules read by ${GENERATOR} but absent from the ${WORKFLOW} paths filter — ` +
+        "a change to one of these leaves the committed snapshot stale with no refresh run.",
+    ).toEqual([]);
+  });
+});

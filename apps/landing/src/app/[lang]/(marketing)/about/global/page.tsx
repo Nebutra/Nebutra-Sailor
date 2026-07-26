@@ -5,6 +5,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { AnimateIn, AnimateInGroup } from "@/components/landing/AnimateIn";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { GLOBAL_POINTS, pick } from "../_about-data";
 
 // ─── Page-local content (bilingual) ──────────────────────────────────────────
@@ -171,7 +172,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     en: "Nebutra Sailor is Day-1 global — 7 primary languages, cross-border compliance, multi-region payments, and a global edge network, ready on day one.",
   });
 
-  return { title, description };
+  return buildPageMetadata({
+    title,
+    description,
+    path: "/about/global",
+    locale: lang as Locale,
+  });
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────────

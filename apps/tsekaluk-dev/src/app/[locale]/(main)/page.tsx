@@ -1,4 +1,6 @@
+import { DEFAULT_ROUTE_LOCALE, toOpenGraphLocale } from "@nebutra/i18n/locales";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { ConstellationSection } from "@/components/sections/constellation-section";
 import { FocusSection } from "@/components/sections/focus-section";
@@ -9,25 +11,7 @@ import { SelectedWorks } from "@/components/sections/selected-works";
 import { TechMarquee } from "@/components/sections/tech-marquee";
 import { GithubMetrics } from "@/components/ui/github-metrics";
 import { getLocalizedProjects } from "@/lib/projects";
-
-const BASE_URL = "https://tsekaluk.dev";
-
-const meta: Record<string, { title: string; description: string }> = {
-  en: {
-    title: "Tseka Luk — AI-Native Builder",
-    description:
-      "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-  },
-  zh: {
-    title: "Tseka Luk — AI 原生构建者",
-    description: "斗星集团 CEO，AI 原生構建者。构建智能系统，而非仅仅是产品。",
-  },
-  ja: {
-    title: "Tseka Luk — AI-Nativeビルダー",
-    description:
-      "Nebutra Intelligence CEO、AI-Nativeビルダー。プロダクトだけでなくインテリジェントなシステムを構築しています。",
-  },
-};
+import { alternatesFor, canonicalFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -35,7 +19,24 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const { title, description } = meta[locale] ?? meta.en;
+
+  // Title and description come from the message catalogs, not a hand-written
+  // three-language record. The old `meta` map served English to every route
+  // locale outside {en, zh, ja}; `pages.home` is seeded in en/zh-Hans/ja and
+  // filled for the rest by the repo's auto-translate flow, with an explicit
+  // English fallback in the meantime rather than a MISSING_MESSAGE placeholder.
+  const [t, fallback] = await Promise.all([
+    getTranslations({ locale, namespace: "pages.home" }),
+    getTranslations({ locale: DEFAULT_ROUTE_LOCALE, namespace: "pages.home" }),
+  ]);
+  const title = t.has("metadata_title") ? t("metadata_title") : fallback("metadata_title");
+  const description = t.has("metadata_desc") ? t("metadata_desc") : fallback("metadata_desc");
+
+  // The homepage is `ui` — every route locale is a canonical URL for it. The
+  // cluster used to be a hand-written { en, zh, ja } whose bare `zh` is not a
+  // route locale and cannot be resolved by the router.
+  const canonical = canonicalFor("", locale, "ui");
+  const alternates = alternatesFor("", locale, "ui");
 
   return {
     title,
@@ -43,17 +44,17 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `${BASE_URL}/${locale}`,
+      url: canonical,
       siteName: "Tseka Luk",
-      locale: locale === "zh" ? "zh_CN" : locale === "ja" ? "ja_JP" : "en_US",
+      locale: toOpenGraphLocale(locale),
       type: "website",
       images: [
         `/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description)}`,
       ],
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}`,
-      languages: { en: `${BASE_URL}/en`, zh: `${BASE_URL}/zh`, ja: `${BASE_URL}/ja` },
+      canonical,
+      ...(alternates ?? {}),
     },
   };
 }

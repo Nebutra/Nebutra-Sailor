@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ChatInterface } from "@/components/soul/chat-interface";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -19,14 +20,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(t("metadata_title"))}&subtitle=${encodeURIComponent(t("metadata_desc"))}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/soul`,
-      languages: {
-        en: "https://tsekaluk.dev/en/soul",
-        zh: "https://tsekaluk.dev/zh/soul",
-        ja: "https://tsekaluk.dev/ja/soul",
-      },
-    },
+    ...seoFor("/soul", locale, "ui"),
   };
 }
 

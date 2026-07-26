@@ -2,8 +2,38 @@ import { CONTENT_PRIMARY_ROUTE_LOCALES, toHreflang } from "@nebutra/i18n/locales
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { routing } from "@/i18n/routing";
 
+/**
+ * Language-dependent blog fixture. The two members of one translation cluster
+ * deliberately have DIFFERENT slugs — that is the only shape that can catch a
+ * sitemap which reuses the shard's own slug for every cluster member.
+ */
+const EN_POST = {
+  slug: "deep-dive",
+  language: "en",
+  translationKey: "T1",
+  date: "2026-01-05T00:00:00.000Z",
+  updatedAt: "2026-01-09T00:00:00.000Z",
+};
+const ZH_POST = {
+  slug: "shen-du-zhi-nan",
+  language: "zh",
+  translationKey: "T1",
+  date: "2026-01-05T00:00:00.000Z",
+  updatedAt: "2026-01-09T00:00:00.000Z",
+};
+/** No sibling, and no honest timestamp: `@/lib/blog` synthesizes the epoch. */
+const ZH_ONLY_POST = {
+  slug: "zhi-you-zhongwen",
+  language: "zh",
+  translationKey: "T2",
+  date: new Date(0).toISOString(),
+  updatedAt: undefined,
+};
+
 vi.mock("@/lib/blog", () => ({
-  getAllPosts: vi.fn(async () => []),
+  getAllPosts: vi.fn(async (language: string) =>
+    language === "zh" ? [ZH_POST, ZH_ONLY_POST] : [EN_POST],
+  ),
 }));
 
 import robots from "../robots";
@@ -171,5 +201,106 @@ describe("sitemap URL inventory", () => {
       .filter((entry) => new Date(entry.lastModified as string | Date).getTime() >= TEST_START);
 
     expect(stamped.map((entry) => entry.url)).toEqual([]);
+  });
+});
+
+describe("sitemap blog translation clusters", () => {
+  it("advertises each cluster member at its own slug, reciprocally", async () => {
+    const en = (await shard("en")).find((entry) => entry.url === `${BASE_URL}/blog/deep-dive`);
+    const zh = (await shard("zh-Hans")).find(
+      (entry) => entry.url === `${BASE_URL}/zh-Hans/blog/shen-du-zhi-nan`,
+    );
+
+    expect(en).toBeDefined();
+    expect(zh).toBeDefined();
+
+    // Both shards must describe the SAME pair of URLs. Reusing the shard's own
+    // slug for the sibling fabricates a 404 and makes the two clusters
+    // disjoint, which voids the annotation for both real documents.
+    const expected = {
+      [toHreflang("en")]: `${BASE_URL}/blog/deep-dive`,
+      [toHreflang("zh-Hans")]: `${BASE_URL}/zh-Hans/blog/shen-du-zhi-nan`,
+      "x-default": `${BASE_URL}/blog/deep-dive`,
+    };
+    expect(en?.alternates?.languages).toEqual(expected);
+    expect(zh?.alternates?.languages).toEqual(expected);
+  });
+
+  it("does not invent an English sibling for a post that exists only in Chinese", async () => {
+    const zhOnly = (await shard("zh-Hans")).find((entry) =>
+      entry.url.endsWith("/blog/zhi-you-zhongwen"),
+    );
+
+    expect(zhOnly).toBeDefined();
+    // Single-member cluster: no en-US member, and no x-default either — the
+    // default locale has no document here, so an x-default would 404.
+    expect(zhOnly?.alternates?.languages).toEqual({
+      [toHreflang("zh-Hans")]: `${BASE_URL}/zh-Hans/blog/zhi-you-zhongwen`,
+    });
+
+    const en = (await shard("en")).map((entry) => entry.url);
+    expect(en).not.toContain(`${BASE_URL}/blog/zhi-you-zhongwen`);
+  });
+
+  it("never publishes the 1970 epoch sentinel as <lastmod>", async () => {
+    const zhOnly = (await shard("zh-Hans")).find((entry) =>
+      entry.url.endsWith("/blog/zhi-you-zhongwen"),
+    );
+    // The epoch is rejected as a content date, so the entry falls through to
+    // the git-derived ROUTE_LASTMOD snapshot for `/blog/*` — never to 1970.
+    expect(new Date(zhOnly?.lastModified as string | Date).getTime()).toBeGreaterThan(0);
+    const epochOffenders = [...shards.values()]
+      .flat()
+      .filter((entry) => entry.lastModified !== undefined)
+      .filter((entry) => new Date(entry.lastModified as string | Date).getTime() <= 0);
+    expect(epochOffenders.map((entry) => entry.url)).toEqual([]);
+
+    // A real timestamp still survives, so the guard above is not vacuous.
+    const paired = (await shard("en")).find((entry) => entry.url.endsWith("/blog/deep-dive"));
+    expect(new Date(paired?.lastModified as string | Date).toISOString()).toBe(
+      "2026-01-09T00:00:00.000Z",
+    );
+  });
+});
+
+describe("sitemap publication scope", () => {
+  it("keeps a content family at exactly the content-primary locales", async () => {
+    const solutions = (await shard("en")).find(
+      (entry) => entry.url === `${BASE_URL}/solutions/go-global`,
+    );
+
+    // Cardinality, not just membership: widening the loop back to every route
+    // locale must fail here rather than pass silently.
+    const languages = solutions?.alternates?.languages as Record<string, string>;
+    expect(Object.keys(languages).sort()).toEqual(
+      [...CONTENT_PRIMARY_ROUTE_LOCALES.map(toHreflang), "x-default"].sort(),
+    );
+    expect(CONTENT_PRIMARY_ROUTE_LOCALES.length).toBeLessThan(routing.locales.length);
+  });
+
+  it("keeps a ui family at every route locale", async () => {
+    const pricing = (await shard("en")).find((entry) => entry.url === `${BASE_URL}/pricing`);
+    const languages = pricing?.alternates?.languages as Record<string, string>;
+
+    expect(Object.keys(languages)).toHaveLength(routing.locales.length + 1);
+  });
+
+  it("publishes no `none`-scoped route in any shard", () => {
+    const offenders = [...shards.values()]
+      .flat()
+      .map((entry) => entry.url)
+      .filter((url) => /\/(opc|legal\/|blog\/(tag|author)\/)/.test(url));
+
+    expect(offenders).toEqual([]);
+  });
+
+  it("still publishes the changelog family when the CMS is unreachable", async () => {
+    // E2E_SKIP_CMS=1 is set in beforeAll — the offline path. A CMS blip must not
+    // silently delete live URLs from the sitemap.
+    const en = (await shard("en")).map((entry) => entry.url);
+    const changelog = en.filter((url) => /\/changelog\/[^/]+$/.test(url));
+
+    expect(changelog.length).toBeGreaterThan(0);
+    expect(en).toContain(`${BASE_URL}/changelog/0.10.0`);
   });
 });

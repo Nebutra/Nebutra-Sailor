@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { getLegalDocument } from "@/lib/legal-documents";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { LegalDocumentContent, LegalDocumentSkeleton } from "./_components/legal-document-content";
 
 // Known canonical legal documents — enumerated so Next.js 16 cacheComponents
@@ -48,10 +49,14 @@ async function buildLegalMetadata(slug: string, lang: string): Promise<Metadata>
   cacheLife("hours");
   const doc = await getLegalDocument(slug, lang);
   if (!doc) return {};
-  return {
+  // `none` scope: a DB-backed duplicate of /privacy, /terms, /cookies, /refund
+  // and /dpa, so it is served but never canonical.
+  return buildPageMetadata({
     title: doc.title,
-    description: doc.summary ?? undefined,
-  };
+    description: doc.summary ?? doc.title,
+    path: `/legal/${slug}`,
+    locale: lang,
+  });
 }
 
 export async function generateMetadata({ params }: LegalSlugPageProps): Promise<Metadata> {

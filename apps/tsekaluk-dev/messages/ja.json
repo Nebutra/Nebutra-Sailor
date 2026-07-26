@@ -246,6 +246,10 @@
     "wechat_copied": "WeChat IDをコピーしました！"
   },
   "pages": {
+    "home": {
+      "metadata_title": "Tseka Luk — AI-Nativeビルダー",
+      "metadata_desc": "Nebutra Intelligence CEO、AI-Nativeビルダー。プロダクトだけでなくインテリジェントなシステムを構築しています。"
+    },
     "work": {
       "label": "/ 19プロジェクト出荷済み",
       "headline": "作ったもの",

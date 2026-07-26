@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type BlogFrontmatter, blog, getReadingTime } from "@/lib/articles";
 import { articleJsonLd } from "@/lib/json-ld";
+import { BASE_URL, seoFor } from "@/lib/seo/alternates";
 
 export function generateStaticParams() {
   return blog.getPages().map((page) => ({
@@ -28,20 +29,18 @@ export async function generateMetadata({
   return {
     title,
     description: excerpt,
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/thinking/${slug}`,
-      languages: {
-        en: `https://tsekaluk.dev/en/thinking/${slug}`,
-        zh: `https://tsekaluk.dev/zh/thinking/${slug}`,
-        ja: `https://tsekaluk.dev/ja/thinking/${slug}`,
-      },
-    },
+    // `content` — the essay body is a single English MDX file
+    // (content/thinking/*.mdx has no locale directories), matching the scope
+    // src/app/sitemap.ts publishes it under. Without this the sitemap would
+    // list one URL while the markup kept 33 self-canonical, indexable
+    // duplicates alive and internally linked from the /thinking index.
+    ...seoFor(`/thinking/${slug}`, locale, "content"),
     openGraph: {
       title,
       description: excerpt,
       images: [
         {
-          url: `https://tsekaluk.dev/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(excerpt)}`,
+          url: `${BASE_URL}/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(excerpt)}`,
           width: 1200,
           height: 630,
         },

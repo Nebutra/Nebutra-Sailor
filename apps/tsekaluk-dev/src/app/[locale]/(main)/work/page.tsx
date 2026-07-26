@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { WorkGrid } from "@/components/sections/work-grid";
 import { getLocalizedProjects } from "@/lib/projects";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -18,14 +19,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(t("metadata_title"))}&subtitle=${encodeURIComponent(t("metadata_desc"))}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/work`,
-      languages: {
-        en: "https://tsekaluk.dev/en/work",
-        zh: "https://tsekaluk.dev/zh/work",
-        ja: "https://tsekaluk.dev/ja/work",
-      },
-    },
+    ...seoFor("/work", locale, "ui"),
   };
 }
 

@@ -7,6 +7,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { createAppSignInUrl } from "@/lib/app-url";
 import { getAuth } from "@/lib/auth";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { LicenseWizard } from "./LicenseWizard";
 
 // Under Next 16's `cacheComponents: true`, route segment `dynamic = "force-dynamic"`
@@ -25,10 +26,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const t = await getTranslations({ locale: lang as Locale, namespace: "getLicenseMeta" });
-  return {
+  return buildPageMetadata({
     title: t("title"),
     description: t("description"),
-  };
+    path: "/get-license",
+    locale: lang as Locale,
+  });
 }
 
 async function RequireAuth({ children }: { children: React.ReactNode }) {

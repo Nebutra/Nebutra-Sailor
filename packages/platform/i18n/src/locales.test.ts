@@ -135,6 +135,20 @@ describe("legacy locale path redirects", () => {
     expect(legacyLocalePathRedirect("/en-US/pricing")).toBe("/pricing");
   });
 
+  it("folds locale prefixes regardless of casing", () => {
+    // BCP-47 tags are case-insensitive by specification and arrive from the
+    // wild in every casing. An exact-match lookup 404s them instead of
+    // redirecting, which is indistinguishable from the page not existing.
+    expect(legacyLocalePathRedirect("/ZH-CN/pricing")).toBe("/zh-Hans/pricing");
+    expect(legacyLocalePathRedirect("/EN-us")).toBe("/");
+    expect(legacyLocalePathRedirect("/Zh-Hant-hk/pricing")).toBe("/zh-Hant/pricing");
+    // A route locale in non-canonical casing is not the canonical URL either.
+    expect(legacyLocalePathRedirect("/zh-hans/pricing")).toBe("/zh-Hans/pricing");
+    expect(legacyLocalePathRedirect("/JA")).toBe("/ja");
+    // Still not a locale in any casing.
+    expect(legacyLocalePathRedirect("/FEATURES")).toBeNull();
+  });
+
   it("returns null for already-canonical and non-locale paths", () => {
     expect(legacyLocalePathRedirect("/zh-Hans/pricing")).toBeNull();
     expect(legacyLocalePathRedirect("/zh-Hant")).toBeNull();

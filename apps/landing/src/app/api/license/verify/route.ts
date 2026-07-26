@@ -45,7 +45,9 @@ const ScaffoldMetaSchema = z.object({
   purpose: z.string().optional(),
   license: z
     .object({
-      tier: z.literal("independent"),
+      // "independent" is the legacy tier emitted by create-sailor <= 1.8.2.
+      // Those markers are signed and still valid, so both values are accepted.
+      tier: z.union([z.literal("mit-scaffold"), z.literal("independent")]),
       file: z.string(),
       upgradeUrl: z.string(),
     })

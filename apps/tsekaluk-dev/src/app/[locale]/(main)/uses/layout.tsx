@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -29,14 +30,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description)}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/uses`,
-      languages: {
-        en: "https://tsekaluk.dev/en/uses",
-        zh: "https://tsekaluk.dev/zh/uses",
-        ja: "https://tsekaluk.dev/ja/uses",
-      },
-    },
+    ...seoFor("/uses", locale, "ui"),
   };
 }
 

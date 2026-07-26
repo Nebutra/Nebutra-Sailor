@@ -244,15 +244,33 @@ export const LEGACY_LOCALE_PREFIXES = Object.keys(LOCALE_ALIASES)
   .filter((tag) => !ROUTE_LOCALE_SET.has(tag))
   .sort((a, b) => b.length - a.length || a.localeCompare(b)) as readonly string[];
 
-const LEGACY_LOCALE_PREFIX_SET = new Set<string>(LEGACY_LOCALE_PREFIXES);
+/**
+ * Case-folded index of every locale tag that may appear as a path prefix but is
+ * not itself canonical.
+ *
+ * BCP-47 tags are case-insensitive by specification, and the wild emits them in
+ * every casing: `/ZH-CN`, `/en-us`, `/zh-hans`. An exact-match lookup treated
+ * all of those as ordinary paths, so they fell through to a 404 instead of
+ * redirecting onto the route locale — and a 404 on a shared link is
+ * indistinguishable, to a crawler or a user, from the page not existing.
+ *
+ * Route locales in non-canonical casing are folded here too: `/zh-hans` is not
+ * the canonical URL any more than `/zh-CN` is, and both have exactly one right
+ * answer.
+ */
+const CANONICAL_TAG_BY_LOWERCASE: ReadonlyMap<string, string> = new Map(
+  [...ROUTE_LOCALE_SET, ...LEGACY_LOCALE_PREFIXES].map((tag) => [tag.toLowerCase(), tag] as const),
+);
 
 /**
- * Map a pathname whose first segment is a legacy locale tag onto its route
- * locale equivalent, or `null` when the path is already canonical.
+ * Map a pathname whose first segment is a legacy or mis-cased locale tag onto
+ * its route locale equivalent, or `null` when the path is already canonical.
  *
  *   "/zh"                    → "/zh-Hans"
  *   "/zh/docs/cli"           → "/zh-Hans/docs/cli"
  *   "/zh-Hant-HK/pricing"    → "/zh-Hant/pricing"
+ *   "/ZH-CN/pricing"         → "/zh-Hans/pricing"   (case-insensitive)
+ *   "/zh-hans/pricing"       → "/zh-Hans/pricing"   (canonical casing)
  *   "/en-US"                 → "/"          (default route locale drops prefix)
  *   "/zh-Hans/pricing"       → null         (already a route locale)
  *   "/features"              → null
@@ -261,9 +279,12 @@ export function legacyLocalePathRedirect(pathname: string): null | string {
   const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
   const segments = normalized.split("/");
   const first = segments[1];
-  if (!first || !LEGACY_LOCALE_PREFIX_SET.has(first)) return null;
+  if (!first || ROUTE_LOCALE_SET.has(first)) return null;
 
-  const routeLocale = toRouteLocale(first);
+  const canonicalTag = CANONICAL_TAG_BY_LOWERCASE.get(first.toLowerCase());
+  if (!canonicalTag) return null;
+
+  const routeLocale = toRouteLocale(canonicalTag);
   const rest = segments.slice(2).join("/");
   const suffix = rest ? `/${rest}` : "";
   const prefix = routeLocale === DEFAULT_ROUTE_LOCALE ? "" : `/${routeLocale}`;

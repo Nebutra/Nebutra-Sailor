@@ -14,6 +14,7 @@ import {
   resolvePlaybookHref,
 } from "@/lib/constants/playbook-data";
 import { pick } from "@/lib/i18n/localized";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -26,7 +27,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  return {
+  return buildPageMetadata({
     title: "Playbook — Nebutra Sailor",
     description: pick(
       {
@@ -35,8 +36,9 @@ export async function generateMetadata({
       },
       lang,
     ),
-    alternates: { canonical: `/${lang}/playbook` },
-  };
+    path: "/playbook",
+    locale: lang as Locale,
+  });
 }
 
 function PlaybookCard({ item, locale }: { item: PlaybookItem; locale: string }) {

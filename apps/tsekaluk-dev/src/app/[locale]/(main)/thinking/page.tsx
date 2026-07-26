@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type BlogFrontmatter, blog } from "@/lib/articles";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -19,14 +20,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(t("metadata_title"))}&subtitle=${encodeURIComponent(t("metadata_desc"))}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/thinking`,
-      languages: {
-        en: "https://tsekaluk.dev/en/thinking",
-        zh: "https://tsekaluk.dev/zh/thinking",
-        ja: "https://tsekaluk.dev/ja/thinking",
-      },
-    },
+    ...seoFor("/thinking", locale, "ui"),
   };
 }
 

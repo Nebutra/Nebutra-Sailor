@@ -19,8 +19,12 @@ import { routing } from "@/i18n/routing";
  *               English/Chinese bodies, i.e. near-duplicates, so they are kept
  *               out of the sitemap and marked noindex,follow with a canonical
  *               pointing at the content-primary URL.
+ *   `none`    — the route is served but is not a canonical document anywhere:
+ *               redirect stubs, thin facets over another index, and duplicate
+ *               surfaces. Published in zero locales, so it is absent from every
+ *               sitemap shard and `noindex, follow` in every locale.
  */
-export type Localization = "ui" | "content";
+export type Localization = "content" | "none" | "ui";
 
 export type SeoRouteEntry = {
   /** Route path without locale prefix. May end in a single `/*` wildcard. */
@@ -157,11 +161,58 @@ export const SEO_ROUTE_REGISTRY: ReadonlyArray<SeoRouteEntry> = [
   { pattern: "/refund", changeFrequency: "monthly", priority: 0.2, localization: "ui" },
   { pattern: "/dpa", changeFrequency: "monthly", priority: 0.2, localization: "ui" },
 
+  // ── Content-scoped hand-authored en/zh pages ────────────────────
+  // Body copy lives in an in-file en/zh COPY map, not the message catalogs, so
+  // the other 32 route locales would render translated chrome around the same
+  // two bodies.
+  {
+    pattern: "/about/business-portfolio",
+    changeFrequency: "monthly",
+    priority: 0.5,
+    localization: "content",
+  },
+  { pattern: "/about/global", changeFrequency: "monthly", priority: 0.5, localization: "content" },
+  {
+    pattern: "/about/innovation",
+    changeFrequency: "monthly",
+    priority: 0.5,
+    localization: "content",
+  },
+  {
+    pattern: "/about/whitepaper",
+    changeFrequency: "monthly",
+    priority: 0.5,
+    localization: "content",
+  },
+  { pattern: "/playbook", changeFrequency: "weekly", priority: 0.5, localization: "content" },
+  { pattern: "/showcase", changeFrequency: "weekly", priority: 0.5, localization: "content" },
+
   // ── Content-scoped dynamic families ─────────────────────────────
   { pattern: "/blog/*", changeFrequency: "monthly", priority: 0.7, localization: "content" },
   { pattern: "/changelog/*", changeFrequency: "monthly", priority: 0.5, localization: "content" },
   { pattern: "/features/*", changeFrequency: "monthly", priority: 0.6, localization: "content" },
   { pattern: "/solutions/*", changeFrequency: "monthly", priority: 0.65, localization: "content" },
+  {
+    pattern: "/solutions/china-vc/*",
+    changeFrequency: "monthly",
+    priority: 0.4,
+    localization: "content",
+  },
+  {
+    pattern: "/solutions/global-vc/*",
+    changeFrequency: "monthly",
+    priority: 0.4,
+    localization: "content",
+  },
+
+  // ── Served but never canonical ──────────────────────────────────
+  // `none` is not "unclassified" — it is the explicit decision that the URL is
+  // not a document of its own. Absent from every sitemap shard, noindex,follow
+  // in every locale, canonical to itself so nothing else absorbs its signal.
+  { pattern: "/blog/author/*", changeFrequency: "weekly", priority: 0.1, localization: "none" },
+  { pattern: "/blog/tag/*", changeFrequency: "weekly", priority: 0.1, localization: "none" },
+  { pattern: "/legal/*", changeFrequency: "monthly", priority: 0.1, localization: "none" },
+  { pattern: "/opc", changeFrequency: "monthly", priority: 0.1, localization: "none" },
 ] as const;
 
 const WILDCARD_SUFFIX = "/*";
@@ -202,7 +253,8 @@ export function resolveSeoRoute(path: string): SeoRouteEntry | undefined {
  *
  * Throws outside production so a newly added route that nobody registered is
  * loud in dev and test instead of silently over-indexed; in production it
- * degrades to the index-narrowing default (`content`).
+ * degrades to the maximally index-narrowing default (`none`), because an
+ * unclassified route is by definition one nobody decided to publish.
  */
 export function localizationFor(path: string): Localization {
   const entry = resolveSeoRoute(path);
@@ -212,19 +264,29 @@ export function localizationFor(path: string): Localization {
     throw new Error(
       `[seo] Unregistered route "${path}". Add it to apps/landing/src/lib/seo/route-registry.ts ` +
         `with a localization scope ("ui" for catalog-translated pages, "content" for ` +
-        `bilingual-body pages) before shipping it.`,
+        `bilingual-body pages, "none" for stubs/facets) before shipping it.`,
     );
   }
-  return "content";
+  return "none";
 }
 
 /**
  * Locales a path may legitimately be published in — the single mechanism that
- * makes 32-locale duplicate content unrepresentable.
+ * makes 32-locale duplicate content unrepresentable. An empty array means the
+ * path is served but is not a canonical document in any locale.
  */
 export function localesForPath(path: string): readonly string[] {
-  return localizationFor(path) === "ui" ? routing.locales : CONTENT_PRIMARY_ROUTE_LOCALES;
+  switch (localizationFor(path)) {
+    case "ui":
+      return routing.locales;
+    case "content":
+      return CONTENT_PRIMARY_ROUTE_LOCALES;
+    default:
+      return EMPTY_LOCALES;
+  }
 }
+
+const EMPTY_LOCALES: readonly string[] = Object.freeze([]);
 
 /**
  * Feature-detail pages worth indexing. The `package` kind is auto-flattened

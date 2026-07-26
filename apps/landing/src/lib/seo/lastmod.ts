@@ -30,8 +30,17 @@ export function lastModifiedFor(
   return toValidDate(ROUTE_LASTMOD[entry.pattern]);
 }
 
+/**
+ * A date is only usable as `<lastmod>` if it is a real timestamp. The Unix
+ * epoch is not: `@/lib/blog` synthesizes `new Date(0)` for a post with neither
+ * `publishedAt` nor `_updatedAt`, and a 1970 `<lastmod>` is a fabricated date
+ * in the opposite direction from `new Date()` — equally untrustworthy, and it
+ * slips past a guard that only rejects timestamps in the future. Anything at or
+ * before the epoch is a sentinel, so it is dropped and the field is omitted.
+ */
 function toValidDate(value: Date | null | string | undefined): Date | undefined {
   if (!value) return undefined;
   const date = value instanceof Date ? value : new Date(value);
-  return Number.isNaN(date.getTime()) ? undefined : date;
+  const time = date.getTime();
+  return Number.isNaN(time) || time <= 0 ? undefined : date;
 }

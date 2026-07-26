@@ -5,6 +5,7 @@ import { Feedback } from "@/components/feedback/client";
 import { FigmaLink } from "@/components/figma-link";
 import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
+import { translationFallbackFor } from "@/lib/docs-fallback";
 import { onPageFeedbackAction } from "@/lib/github";
 import { getPageImage, source } from "@/lib/source";
 import { useMDXComponents } from "../../../../mdx-components";
@@ -17,13 +18,18 @@ export default async function Page({ params }: PageProps) {
   const { slug, lang } = await params;
   const page = source.getPage(slug, lang);
   if (!page) {
-    // Host root resolves to `/<lang>` with no slug; there is no `index.mdx`
-    // for the docs index yet, so send the visitor to the first authored
-    // page instead of dead-ending on 404. Replaces the deleted
-    // `app/[lang]/page.tsx`, which conflicted with this optional catch-all.
-    if (!slug || slug.length === 0) {
-      redirect(`/${lang}/getting-started/installation`);
-    }
+    // Three miss shapes, two of them recoverable:
+    //  - `/<lang>` (no slug): there is no `index.mdx`, so land on the entry
+    //    page — the requested language's copy when it exists, otherwise the
+    //    default language's. The old unconditional
+    //    `/${lang}/getting-started/installation` 404'd for zh, which has no
+    //    installation page.
+    //  - a slug this language lacks but the default language has: the zh tree
+    //    is a strict subset of en, so serve the English page rather than 404.
+    //    Temporary (307), never permanent — the translation may land later.
+    //  - neither language has it: genuinely gone.
+    const fallback = translationFallbackFor(source, slug, lang);
+    if (fallback) redirect(fallback);
     notFound();
   }
 
@@ -88,7 +94,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
   const { slug, lang } = await params;
   const page = source.getPage(slug, lang);
-  if (!page) notFound();
+  if (!page) {
+    // Metadata resolves before the component, so a bare notFound() here would
+    // 404 every request the component is about to redirect. Yield empty
+    // metadata and let the component own the redirect decision.
+    if (translationFallbackFor(source, slug, lang)) return {};
+    notFound();
+  }
   const image = getPageImage(page);
   return {
     title: page.data.title,

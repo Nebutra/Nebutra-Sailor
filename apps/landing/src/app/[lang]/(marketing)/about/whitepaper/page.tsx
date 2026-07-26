@@ -14,7 +14,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
-
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   type Bilingual,
   CORE_QUOTE,
@@ -200,10 +200,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   const meta = pick(lang, PAGE_META);
 
-  return {
+  return buildPageMetadata({
     title: meta.title,
     description: meta.description,
-  };
+    path: "/about/whitepaper",
+    locale: lang as Locale,
+  });
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────────

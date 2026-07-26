@@ -15,7 +15,8 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv",
     "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "lint:links": "node ./scripts/lint-links.mjs",
-    "clean": "rm -rf .next .open-next .wrangler"
+    "clean": "rm -rf .next .open-next .wrangler",
+    "test": "vitest run"
   },
   "dependencies": {
     "@ai-sdk/openai-compatible": "^2.0.35",
@@ -70,6 +71,7 @@
     "tailwindcss": "^4.2.1",
     "tsx": "^4.21.0",
     "typescript": "catalog:",
+    "vitest": "catalog:",
     "wrangler": "4.112.0"
   },
   "license": "AGPL-3.0-only"

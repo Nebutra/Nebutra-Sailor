@@ -4,6 +4,7 @@ import type { MetadataRoute } from "next";
 import { PACKAGE_FEATURE_ENTRIES } from "@/components/landing/features/package-feature-data";
 import { routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
+import { staticChangelogVersions } from "@/lib/changelog-releases";
 import { getAllSolutionSlugs } from "@/lib/constants/solutions-data";
 import { lastModifiedFor } from "@/lib/seo/lastmod";
 import {
@@ -12,7 +13,15 @@ import {
   SEO_ROUTE_REGISTRY,
   type SeoRouteEntry,
 } from "@/lib/seo/route-registry";
-import { buildHreflangAlternates, canonicalUrlForLocale, getSiteUrl } from "@/lib/seo/site-routes";
+import {
+  buildHreflangAlternates,
+  canonicalUrlForLocale,
+  defaultPublicationSet,
+  getSiteUrl,
+  isPublishedIn,
+  type PublicationSet,
+  pathInLocale,
+} from "@/lib/seo/site-routes";
 
 const CHANGELOG_CMS_TIMEOUT_MS = 3_000;
 
@@ -57,27 +66,38 @@ export default async function sitemap({
     if (route.pattern.endsWith("/*")) {
       entries.push(...(await dynamicFamilyEntries(route, baseUrl, locale)));
     } else {
-      entries.push(staticEntry(route, baseUrl, locale, route.pattern));
+      entries.push(entryFor(route, baseUrl, locale, defaultPublicationSet(route.pattern)));
     }
   }
 
   return entries;
 }
 
-function staticEntry(
+/**
+ * One sitemap entry for one member of a publication set.
+ *
+ * The set — not a bare path string — is the input, because a `<url>` and its
+ * `<xhtml:link>` cluster must describe the same document family. Keying on a
+ * single path forces the sibling URL to be *fabricated* from this locale's
+ * slug, which is how the zh shard came to advertise an English URL built from a
+ * Chinese slug (and vice versa): two shards, two disjoint URL sets, reciprocity
+ * broken in both directions.
+ */
+function entryFor(
   route: SeoRouteEntry,
   baseUrl: string,
   locale: string,
-  path: string,
+  set: PublicationSet,
   contentDate?: Date | null | string,
 ): SitemapEntry {
+  const path = pathInLocale(set, locale);
   const lastModified = lastModifiedFor(path, contentDate);
   return {
     url: canonicalUrlForLocale(baseUrl, locale, path),
     ...(lastModified ? { lastModified } : {}),
     changeFrequency: route.changeFrequency,
     priority: route.priority,
-    alternates: { languages: buildHreflangAlternates(baseUrl, path) },
+    alternates: { languages: buildHreflangAlternates(baseUrl, set) },
   };
 }
 
@@ -88,27 +108,36 @@ async function dynamicFamilyEntries(
 ): Promise<SitemapEntry[]> {
   switch (route.pattern) {
     case "/blog/*": {
-      const posts = await getAllPosts(toContentLocale(locale));
-      return posts.map((post) =>
-        staticEntry(route, baseUrl, locale, `/blog/${post.slug}`, post.date),
-      );
+      // Paired on translationKey so each post cluster carries the real slug of
+      // each language, and a post that exists in one language only advertises
+      // a single-member cluster instead of inventing its sibling.
+      const publications = await blogPublications();
+      return publications
+        .filter(({ set }) => isPublishedIn(set, locale))
+        .map(({ set, dates }) => entryFor(route, baseUrl, locale, set, dates[locale]));
     }
     case "/changelog/*": {
       const releases = await changelogReleases();
       return releases.map((release) =>
-        staticEntry(route, baseUrl, locale, `/changelog/${release.version}`, release.publishedAt),
+        entryFor(
+          route,
+          baseUrl,
+          locale,
+          defaultPublicationSet(`/changelog/${release.version}`),
+          release.publishedAt,
+        ),
       );
     }
     case "/features/*": {
       // Package entries are auto-flattened from a file tree — hundreds of thin
       // near-identical pages. Same predicate the prerender path uses.
       return PACKAGE_FEATURE_ENTRIES.filter(isHighSignalFeatureEntry).map((entry) =>
-        staticEntry(route, baseUrl, locale, `/features/${entry.slug}`),
+        entryFor(route, baseUrl, locale, defaultPublicationSet(`/features/${entry.slug}`)),
       );
     }
     case "/solutions/*": {
       return getAllSolutionSlugs().map((slug) =>
-        staticEntry(route, baseUrl, locale, `/solutions/${slug}`),
+        entryFor(route, baseUrl, locale, defaultPublicationSet(`/solutions/${slug}`)),
       );
     }
     default:
@@ -116,14 +145,74 @@ async function dynamicFamilyEntries(
   }
 }
 
+type BlogPublication = {
+  readonly set: PublicationSet;
+  /** Best content timestamp per member locale. */
+  readonly dates: Readonly<Record<string, string | undefined>>;
+};
+
+/**
+ * Blog posts grouped into translation clusters.
+ *
+ * `translationKey` is normalized onto every post by `@/lib/blog`; a post
+ * without one is its own single-member cluster.
+ */
+async function blogPublications(): Promise<BlogPublication[]> {
+  type Bucket = {
+    locales: string[];
+    pathByLocale: Record<string, `/${string}`>;
+    dates: Record<string, string | undefined>;
+  };
+  const byKey = new Map<string, Bucket>();
+
+  for (const contentLocale of localesForPath("/blog/*")) {
+    const posts = await getAllPosts(toContentLocale(contentLocale));
+    for (const post of posts) {
+      const key = post.translationKey ?? `${contentLocale}::${post.slug}`;
+      const bucket = byKey.get(key) ?? { locales: [], pathByLocale: {}, dates: {} };
+      if (!bucket.locales.includes(contentLocale)) bucket.locales.push(contentLocale);
+      bucket.pathByLocale[contentLocale] = `/blog/${post.slug}`;
+      // `updatedAt` (Sanity _updatedAt) is the honest edit time; `date` is the
+      // publication date and may be the epoch sentinel, which lastmod rejects.
+      bucket.dates[contentLocale] = post.updatedAt ?? post.date;
+      byKey.set(key, bucket);
+    }
+  }
+
+  return [...byKey.values()].map((bucket) => {
+    const primary = bucket.locales.includes(routing.defaultLocale)
+      ? routing.defaultLocale
+      : (bucket.locales[0] as string);
+    return {
+      set: {
+        path: bucket.pathByLocale[primary] as `/${string}`,
+        locales: bucket.locales,
+        pathByLocale: bucket.pathByLocale,
+      },
+      dates: bucket.dates,
+    };
+  });
+}
+
 type ChangelogRelease = { readonly version: string; readonly publishedAt?: string };
 
 /**
- * Released versions from the CMS — the same source the changelog pages read.
- * When the CMS is unreachable the family contributes no URLs rather than
- * publishing a hardcoded version list that would drift from the pages.
+ * Released versions — CMS first, then the static inventory the changelog pages
+ * themselves fall back to (`@/lib/changelog-releases`).
+ *
+ * Falling back rather than returning `[]` is the point. A CMS blip used to
+ * delete a whole family of live, indexable URLs from the sitemap
+ * non-deterministically — the sitemap would disagree with the pages about which
+ * releases exist. Sharing one static inventory means the offline sitemap
+ * publishes exactly the versions the offline detail page serves.
  */
 async function changelogReleases(): Promise<ChangelogRelease[]> {
+  const fromCms = await changelogReleasesFromCms();
+  if (fromCms.length > 0) return fromCms;
+  return staticChangelogVersions().map((version) => ({ version }));
+}
+
+async function changelogReleasesFromCms(): Promise<ChangelogRelease[]> {
   if (process.env.E2E_SKIP_CMS === "1") return [];
 
   let timeoutId: ReturnType<typeof setTimeout> | undefined;

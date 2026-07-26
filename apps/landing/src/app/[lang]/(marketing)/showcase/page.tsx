@@ -9,6 +9,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -21,11 +22,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  return {
+  return buildPageMetadata({
     title: "Showcase — Nebutra Sailor",
     description: "Discover what developers and teams are building with Nebutra Sailor.",
-    alternates: { canonical: `/${lang}/showcase` },
-  };
+    path: "/showcase",
+    locale: lang as Locale,
+  });
 }
 
 interface ShowcaseProject {

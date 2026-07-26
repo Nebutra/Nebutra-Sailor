@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { GuestbookClient } from "@/components/guestbook/guestbook-client";
 import { prisma } from "@/lib/prisma";
+import { seoFor } from "@/lib/seo/alternates";
 
 export const dynamic = "force-dynamic";
 
@@ -33,14 +34,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(t("metadata_title"))}&subtitle=${encodeURIComponent(t("metadata_desc"))}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/guestbook`,
-      languages: {
-        en: "https://tsekaluk.dev/en/guestbook",
-        zh: "https://tsekaluk.dev/zh/guestbook",
-        ja: "https://tsekaluk.dev/ja/guestbook",
-      },
-    },
+    ...seoFor("/guestbook", locale, "ui"),
   };
 }
 

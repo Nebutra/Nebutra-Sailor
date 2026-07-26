@@ -1,6 +1,7 @@
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -19,14 +20,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description)}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/privacy`,
-      languages: {
-        en: "https://tsekaluk.dev/en/privacy",
-        zh: "https://tsekaluk.dev/zh/privacy",
-        ja: "https://tsekaluk.dev/ja/privacy",
-      },
-    },
+    ...seoFor("/privacy", locale, "ui"),
   };
 }
 

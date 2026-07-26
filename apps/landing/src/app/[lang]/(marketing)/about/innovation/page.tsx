@@ -19,7 +19,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
-
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   type Bilingual,
   HARNESS_TIMELINE,
@@ -48,7 +48,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   setRequestLocale(lang as Locale);
 
   const meta = pick(lang, META);
-  return { title: meta.title, description: meta.description };
+  return buildPageMetadata({
+    title: meta.title,
+    description: meta.description,
+    path: "/about/innovation",
+    locale: lang as Locale,
+  });
 }
 
 // ─── Copy Deck (bilingual, heavy extension of INNOVATION_PILLARS) ────────────

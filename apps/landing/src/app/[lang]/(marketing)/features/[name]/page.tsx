@@ -27,6 +27,8 @@ import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { isHighSignalFeatureEntry } from "@/lib/seo/route-registry";
+import { defaultPublicationSet, unpublishedSet } from "@/lib/seo/site-routes";
 
 type FeatureDetailPageProps = {
   params: Promise<{ lang: string; name: string }>;
@@ -75,7 +77,9 @@ function scopeLabel(group: string, locale: "en" | "zh") {
 }
 
 export function generateStaticParams() {
-  const highSignalEntries = PACKAGE_FEATURE_ENTRIES.filter((entry) => entry.kind !== "package");
+  // Same predicate the sitemap uses — one definition of "worth indexing", so
+  // the prerender set and the published set cannot drift apart.
+  const highSignalEntries = PACKAGE_FEATURE_ENTRIES.filter(isHighSignalFeatureEntry);
   return prerenderDefaultLocale(highSignalEntries, (entry) => ({ name: entry.slug }));
 }
 
@@ -87,11 +91,19 @@ export async function generateMetadata({ params }: FeatureDetailPageProps): Prom
   if (!entry) return {};
 
   const locale = localeForCopy(lang);
+  const path = `/features/${entry.slug}`;
+  // A `package` entry is auto-flattened from the file tree: served (and reachable
+  // via getRelatedEntries) but never a canonical document, so it is published in
+  // zero locales rather than being an indexable near-duplicate orphan that no
+  // sitemap lists.
   return buildPageMetadata({
     title: `${getFeatureTitle(entry, locale)} | Nebutra`,
     description: getFeatureSummary(entry, locale),
-    path: `/features/${entry.slug}`,
+    path,
     locale: lang as Locale,
+    publishedIn: isHighSignalFeatureEntry(entry)
+      ? defaultPublicationSet(path)
+      : unpublishedSet(path),
   });
 }
 

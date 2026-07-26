@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getStatusSnapshot, type ServiceState } from "@/lib/status-checks";
 
 const stateCopy: Record<
@@ -48,18 +49,29 @@ const formatter = new Intl.DateTimeFormat("en", {
   timeZone: "UTC",
 });
 
-export function generateMetadata(): Metadata {
-  return {
+/**
+ * `/status` is registered `ui`, so the sitemap publishes it as a distinct
+ * localized document in every route locale. The previous cross-origin canonical
+ * to status.nebutra.com contradicted that outright: 34 published URLs all
+ * declaring a different host as their canonical, and — because setting the
+ * `alternates` key replaces the layout's wholesale — no hreflang at all. This
+ * page renders its own live snapshot from `getStatusSnapshot`, so it is its own
+ * document; the external status host is linked from the body, not canonicalized
+ * to. Locale now comes from params, which a no-arg generateMetadata could not
+ * see.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return buildPageMetadata({
     title: "Nebutra Status",
     description: "Live operational status for Nebutra public services.",
-    alternates: {
-      canonical: "https://status.nebutra.com",
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
+    path: "/status",
+    locale: lang as Locale,
+  });
 }
 
 function formatCheckedAt(value: string): string {

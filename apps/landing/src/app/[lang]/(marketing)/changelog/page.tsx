@@ -9,6 +9,7 @@ import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { InteractiveChangelog, type Release } from "@/components/landing/InteractiveChangelog";
 import { type Locale, routing } from "@/i18n/routing";
+import { STATIC_CHANGELOG_RELEASES } from "@/lib/changelog-releases";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
@@ -51,45 +52,6 @@ const TAG_COLORS: Record<string, string> = {
 };
 
 const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";
-
-// Static fallback. Real entries are sourced from Sanity (`getChangelogEntries`);
-// this list backs the fallback render when CMS returns empty. Items below mirror
-// landed ADRs and major refactors — see docs/architecture/* and CHANGELOG.md.
-const STATIC_RELEASES = [
-  {
-    version: "1.7",
-    date: "2026-05-12",
-    tag: "Refactor",
-    tagColor: "var(--cyan-9)",
-    highlights: [
-      "TS-by-default backend audit — Python fleet collapsed to _shared + ai; event-ingest migrated in-process; ecommerce/recsys/content/third-party/web3 removed (ADR 2026-05-10)",
-      "Dark border token system — pure-neutral nebutra-gray palette + token-aware * wildcard rule fixes high-saturation borders across all surfaces (ADR 2026-05-11)",
-      "Marketing copy honesty audit — fictional testimonials, fabricated developer counts, hallucinated AI model names, and unenforced pricing claims all corrected",
-    ],
-  },
-  {
-    version: "1.5",
-    date: "2026-04",
-    tag: "Feat",
-    tagColor: "var(--cyan-9)",
-    highlights: [
-      "Categorized monorepo layout — packages grouped by domain (design / iam / commerce / integrations / platform / ops / ai)",
-      "Multi-provider auth — Clerk, Better Auth, NextAuth via @nebutra/auth provider abstraction",
-      "Multi-provider billing — Stripe, Polar, LemonSqueezy, ChinaPay, Manual via @nebutra/billing",
-    ],
-  },
-  {
-    version: "1.0",
-    date: "2026-02",
-    tag: "Feat",
-    tagColor: "var(--cyan-9)",
-    highlights: [
-      "Hono API gateway — OpenAPI, oRPC, tRPC with middleware composition",
-      "Prisma + Supabase foundation (PostgreSQL + pgvector)",
-      "Multi-tenant primitives — @nebutra/tenant (AsyncLocalStorage + RLS), @nebutra/permissions (CASL + OpenFGA)",
-    ],
-  },
-] as const;
 
 interface PortableTextChild {
   text?: string;
@@ -228,14 +190,14 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           contributors: [],
         } as Release;
       })
-    : STATIC_RELEASES.map((r) => {
+    : STATIC_CHANGELOG_RELEASES.map((r) => {
         return {
-          title: `v${r.version}: ${r.tag} Update`,
+          title: `v${r.version}: ${r.title}`,
           version: r.version,
           date: r.date,
           tag: r.tag.toLowerCase(),
           tagColor: r.tagColor,
-          excerpt: r.highlights.join(" · "),
+          excerpt: r.summary,
           image: FALLBACK_RELEASE_IMAGE,
           content: (
             <div className="prose prose-sm dark:prose-invert max-w-none">

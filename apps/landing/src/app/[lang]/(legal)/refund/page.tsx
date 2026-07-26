@@ -4,6 +4,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata({
   params,
@@ -13,10 +14,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const t = await getTranslations({ locale: lang, namespace: "legalPages" });
-  return {
+  return buildPageMetadata({
     title: t("refund.title"),
     description: t("refund.description"),
-  };
+    path: "/refund",
+    locale: lang as Locale,
+  });
 }
 
 export function generateStaticParams() {

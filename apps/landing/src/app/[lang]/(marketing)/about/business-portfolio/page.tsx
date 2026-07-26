@@ -7,6 +7,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { CAPABILITY_GROUPS, pick } from "../_about-data";
 
 // ─── Static metadata (bilingual) ─────────────────────────────────────────────
@@ -80,11 +81,12 @@ export async function generateMetadata({
   const { lang } = await params;
   setRequestLocale(lang as Locale);
   const meta = isZhUiLocale(lang) ? PAGE_META.zh : PAGE_META.en;
-  return {
+  return buildPageMetadata({
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `/${lang}/about/business-portfolio` },
-  };
+    path: "/about/business-portfolio",
+    locale: lang as Locale,
+  });
 }
 
 // ─── Page component ──────────────────────────────────────────────────────────

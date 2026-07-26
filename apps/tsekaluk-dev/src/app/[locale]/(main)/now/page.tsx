@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { NowEntry } from "@/components/sections/now-entry";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -18,14 +19,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(t("metadata_title"))}&subtitle=${encodeURIComponent(t("metadata_desc"))}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/now`,
-      languages: {
-        en: "https://tsekaluk.dev/en/now",
-        zh: "https://tsekaluk.dev/zh/now",
-        ja: "https://tsekaluk.dev/ja/now",
-      },
-    },
+    ...seoFor("/now", locale, "ui"),
   };
 }
 

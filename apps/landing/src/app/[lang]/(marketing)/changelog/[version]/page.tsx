@@ -12,125 +12,12 @@ import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
+import {
+  findStaticChangelogRelease,
+  STATIC_CHANGELOG_RELEASES as STATIC_RELEASES,
+} from "@/lib/changelog-releases";
 import { isZhUiLocale } from "@/lib/i18n/localized";
-
-// Static fallback changelog data — same 8 releases from main changelog page
-const STATIC_RELEASES = [
-  {
-    version: "0.10.0",
-    date: "2026-03-13",
-    tag: "Security",
-    tagColor: "var(--cyan-9)",
-    title: "ExternalSecrets & RBAC Hardening",
-    summary:
-      "Production security audit — ExternalSecrets Operator with ClusterSecretStore for AWS Secrets Manager, comprehensive RBAC with least-privilege ServiceAccounts and RoleBindings, Prisma migration automation with K8s init container.",
-    highlights: [
-      "ExternalSecrets Operator — ClusterSecretStore + ExternalSecret CRDs for AWS Secrets Manager",
-      "RBAC — ServiceAccounts + least-privilege Roles + RoleBindings for all 11 workloads",
-      "Prisma migrate:deploy — production migration script + K8s init container on api-gateway",
-      "Storybook component stories — Card, PageHeader, EmptyState, AnimateIn, LoadingState, ErrorState",
-    ],
-  },
-  {
-    version: "0.9.1",
-    date: "2026-03-13",
-    tag: "Platform",
-    tagColor: "var(--status-warning)",
-    title: "Analytics Dashboard & Blog Launch",
-    summary:
-      "Customer insights at your fingertips — analytics dashboard with interactive charts, Sanity-powered blog engine with ISR, and React feature flags with SSR hydration.",
-    highlights: [
-      "Analytics dashboard — recharts AreaChart + BarChart for 30-day funnel and revenue trends",
-      "Blog powered by Sanity CMS — index + post pages with ISR, OG metadata, prose rendering",
-      "Feature flag React hooks — FeatureFlagProvider, useFeatureFlag, useFlags with SSR hydration",
-    ],
-  },
-  {
-    version: "0.9.0",
-    date: "2026-03-13",
-    tag: "Major",
-    tagColor: "hsl(var(--primary))",
-    title: "GitOps & SLO Observability",
-    summary:
-      "Enterprise-grade deployment automation and reliability — ArgoCD GitOps reconciliation, PgBouncer connection pooling, Google SRE burn-rate alerts, and Grafana platform dashboard.",
-    highlights: [
-      "ArgoCD GitOps — production deployments now auto-reconcile from main branch",
-      "PgBouncer connection pooler (transaction mode, 1,000 client connections on 20 server connections)",
-      "SLO burn-rate alerts — multi-window Google SRE methodology (14.4×/6×/3×)",
-      "Grafana platform dashboard — 32 panels, SLO + HPA + resource usage",
-    ],
-  },
-  {
-    version: "0.8.0",
-    date: "2026-03-03",
-    tag: "Feature",
-    tagColor: "var(--cyan-9)",
-    title: "Usage Metering & Error Tracking",
-    summary:
-      "Billing-ready infrastructure — fire-and-forget usage metering with Redis counters, Sentry error tracking with tenant context, transactional email system via Resend.",
-    highlights: [
-      "Usage metering middleware — fire-and-forget Redis counters per tenant / billing period",
-      "Sentry server-side + client-side error tracking with tenant context",
-      "Transactional email package (Resend): welcome, API key creation, quota warnings, invites",
-    ],
-  },
-  {
-    version: "0.7.0",
-    date: "2026-02-20",
-    tag: "Feature",
-    tagColor: "var(--cyan-9)",
-    title: "Settings & Idempotency",
-    summary:
-      "Self-service control panel — settings pages for team management, API key rotation, billing, and security. Idempotency middleware prevents duplicate charges.",
-    highlights: [
-      "Settings pages: General, Team, API Keys (SHA-256 hashed, soft-delete), Billing, Security",
-      "Idempotency middleware — UUID v4 validation, Redis SET NX, 24-hour response cache",
-      "Pricing page — FREE / PRO / ENTERPRISE with gradient-border highlighted card",
-    ],
-  },
-  {
-    version: "0.6.0",
-    date: "2026-02-08",
-    tag: "Infrastructure",
-    tagColor: "var(--brand-tertiary)",
-    title: "Observability & Zero-Trust Security",
-    summary:
-      "Production-hardened infrastructure — Prometheus monitoring, ModSecurity WAF, and zero-trust network policies. Every request traced.",
-    highlights: [
-      "Prometheus ServiceMonitor + PrometheusRule for all Node.js and Python services",
-      "ModSecurity WAF (DetectionOnly) + OWASP CRS on nginx-ingress with rate limiting",
-      "Inter-service NetworkPolicies — zero-trust mesh for every service-to-service call",
-    ],
-  },
-  {
-    version: "0.5.0",
-    date: "2026-01-25",
-    tag: "Platform",
-    tagColor: "var(--status-warning)",
-    title: "Multi-Tenant Auth & RBAC",
-    summary:
-      "Multi-tenant ready — Clerk authentication with organization roles, fine-grained RBAC with 17 typed scopes, AI service proxy routes.",
-    highlights: [
-      "Multi-tenant auth — Clerk clerkMiddleware with org membership roles",
-      "RBAC permission matrix — 17 typed scopes across OWNER/ADMIN/MEMBER/VIEWER",
-      "AI service proxy routes (/api/v1/ai/chat, embeddings, models)",
-    ],
-  },
-  {
-    version: "0.4.0",
-    date: "2026-01-10",
-    tag: "Foundation",
-    tagColor: "var(--status-success)",
-    title: "Turborepo Monorepo & Hono API",
-    summary:
-      "Foundation release — Turborepo-powered monorepo with 33 packages, Hono API gateway with OpenAPI support, PostgreSQL with pgvector for embeddings.",
-    highlights: [
-      "Turborepo monorepo — pnpm workspaces, 33 packages, Node 22",
-      "Hono API gateway with OpenAPI, idiomatic middleware stack",
-      "Prisma + Supabase (PostgreSQL + pgvector)",
-    ],
-  },
-] as const;
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 const TAG_COLORS: Record<string, string> = {
   feature: "var(--cyan-9)",
@@ -299,47 +186,45 @@ async function buildChangelogMetadata(version: string, lang: string): Promise<Me
 
   const cmsEntries = await fetchChangelogEntries();
   const cmsEntry = cmsEntries.find((e) => e.version === version);
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
-  const canonicalUrl = lang === "en" ? `/changelog/${version}` : `/${lang}/changelog/${version}`;
+  const staticRelease = findStaticChangelogRelease(version);
 
-  if (cmsEntry) {
-    const title = `v${version}: ${cmsEntry.title} — Nebutra Changelog`;
-    const description = cmsEntry.summary || cmsEntry.title;
-    return {
-      title,
-      description,
-      openGraph: {
-        title,
-        description,
-        url: `${baseUrl}${canonicalUrl}`,
-        type: "article",
+  const release = cmsEntry
+    ? {
+        title: cmsEntry.title,
+        description: cmsEntry.summary || cmsEntry.title,
         publishedTime: cmsEntry.publishedAt,
-      },
-      twitter: { card: "summary_large_image", title, description },
-      alternates: { canonical: canonicalUrl },
-    };
-  }
+      }
+    : staticRelease
+      ? {
+          title: staticRelease.title,
+          description: staticRelease.summary,
+          publishedTime: toIsoDate(staticRelease.date),
+        }
+      : null;
+  if (!release) return {};
 
-  const staticRelease = STATIC_RELEASES.find((r) => r.version === version);
-  if (staticRelease) {
-    const title = `v${version}: ${staticRelease.title} — Nebutra Changelog`;
-    const description = staticRelease.summary;
-    return {
-      title,
-      description,
-      openGraph: {
-        title,
-        description,
-        url: `${baseUrl}${canonicalUrl}`,
-        type: "article",
-        publishedTime: new Date(staticRelease.date).toISOString(),
-      },
-      twitter: { card: "summary_large_image", title, description },
-      alternates: { canonical: canonicalUrl },
-    };
-  }
+  const title = `v${version}: ${release.title} — Nebutra Changelog`;
 
-  return {};
+  // Routed through buildPageMetadata so the release family obeys the same
+  // publication contract as every other page: `content` scope means the 32
+  // surrogate locales are noindex,follow and canonical at the primary release
+  // URL instead of 34 self-canonical near-duplicates, and og:locale/og:image/
+  // og:site_name survive because the openGraph key is extended, not replaced.
+  return buildPageMetadata({
+    title,
+    description: release.description,
+    path: `/changelog/${version}`,
+    locale: lang as Locale,
+    type: "article",
+    publishedTime: release.publishedTime,
+  });
+}
+
+/** `YYYY-MM` widens to the first of the month; an unparseable date is dropped. */
+function toIsoDate(date: string): string | undefined {
+  const normalized = /^\d{4}-\d{2}$/.test(date) ? `${date}-01` : date;
+  const parsed = new Date(normalized);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
 }
 
 /**

@@ -5,6 +5,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -17,11 +18,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  return {
+  return buildPageMetadata({
     title: `Data Processing Addendum (DPA) — ${brand.name}`,
     description: `${brand.name}'s Data Processing Addendum is available on request for customers handling personal data.`,
-    alternates: { canonical: `/${lang}/dpa` },
-  };
+    path: "/dpa",
+    locale: lang as Locale,
+  });
 }
 
 export default async function DpaPage({ params }: { params: Promise<{ lang: string }> }) {

@@ -74,17 +74,90 @@ export function canonicalUrlForLocale(
     : `${normalizeBaseUrl(baseUrl)}${localizedPath}`;
 }
 
-export function buildHreflangAlternates(baseUrl: string, path: string): Record<string, string> {
+/**
+ * The set of documents a URL belongs to — the single value every SEO decision
+ * (cluster membership, canonical target, robots, sitemap inclusion) is derived
+ * from, so those four can no longer disagree with one another.
+ *
+ * `locales` is the authoritative membership list. Empty means the path is
+ * served but published nowhere (`none` scope, or a thin auto-generated detail
+ * page): no cluster, no sitemap entry, `noindex, follow` everywhere.
+ *
+ * `pathByLocale` exists because a translated document does not always live at
+ * the same path: a Chinese blog post has a Chinese slug. A cluster keyed on one
+ * path string can only ever fabricate the sibling URL — which is why it must
+ * not be the primitive.
+ */
+export type PublicationSet = {
+  /** Unprefixed path used for any member locale without an explicit override. */
+  readonly path: `/${string}`;
+  /** Route locales this document is published in, in registry order. */
+  readonly locales: readonly string[];
+  /** Per-route-locale unprefixed path, for families with localized slugs. */
+  readonly pathByLocale?: Readonly<Record<string, `/${string}`>>;
+};
+
+/** Publication set implied by the route registry alone. */
+export function defaultPublicationSet(path: string): PublicationSet {
+  const normalized = normalizeRoutePath(path);
+  return { path: normalized, locales: localesForPath(normalized) };
+}
+
+/** A served-but-never-canonical URL: no cluster, no sitemap, noindex everywhere. */
+export function unpublishedSet(path: string): PublicationSet {
+  return { path: normalizeRoutePath(path), locales: [] };
+}
+
+export function pathInLocale(set: PublicationSet, locale: string): `/${string}` {
+  return set.pathByLocale?.[locale] ?? set.path;
+}
+
+export function isPublishedIn(set: PublicationSet, routeLocale: string): boolean {
+  return set.locales.includes(routeLocale);
+}
+
+/**
+ * The member locale whose document a request in `routeLocale` should point at.
+ * `undefined` when the set has no members — there is nothing to point at, so
+ * the caller must stay self-canonical.
+ */
+export function primaryLocaleFor(set: PublicationSet, routeLocale?: string): string | undefined {
+  if (routeLocale && isPublishedIn(set, routeLocale)) return routeLocale;
+  if (isPublishedIn(set, routing.defaultLocale)) return routing.defaultLocale;
+  return set.locales[0];
+}
+
+/**
+ * hreflang cluster for a publication set.
+ *
+ * Only members appear, each at its own localized path, and `x-default` is
+ * emitted only when the default locale is itself a member — an x-default at a
+ * URL that does not exist is a 404 annotation exactly like a fabricated
+ * cluster member.
+ *
+ * A non-member must not call this: a cluster that omits the page advertising it
+ * is non-reciprocal, and Google discards a non-reciprocal cluster for *every*
+ * member, so one surrogate locale would unpair the two real documents.
+ */
+export function buildHreflangAlternates(
+  baseUrl: string,
+  target: PublicationSet | string,
+): Record<string, string> {
+  const set = typeof target === "string" ? defaultPublicationSet(target) : target;
   const languages: Record<string, string> = {};
 
-  // Scope-aware: a content-scoped path only advertises the locales whose body
-  // content actually exists, so the cluster never claims 32 duplicate pages.
-  for (const locale of localesForPath(path)) {
+  for (const locale of set.locales) {
     const hreflang = HREFLANG_BY_LOCALE[locale as Locale] ?? toHreflang(locale);
-    languages[hreflang] = canonicalUrlForLocale(baseUrl, locale, path);
+    languages[hreflang] = canonicalUrlForLocale(baseUrl, locale, pathInLocale(set, locale));
   }
 
-  languages["x-default"] = canonicalUrlForLocale(baseUrl, routing.defaultLocale, path);
+  if (isPublishedIn(set, routing.defaultLocale)) {
+    languages["x-default"] = canonicalUrlForLocale(
+      baseUrl,
+      routing.defaultLocale,
+      pathInLocale(set, routing.defaultLocale),
+    );
+  }
   return languages;
 }
 

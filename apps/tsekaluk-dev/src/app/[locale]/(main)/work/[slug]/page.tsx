@@ -10,6 +10,7 @@ import { TechBadge } from "@/components/tech-badge";
 import { Link as LocaleLink } from "@/i18n/navigation";
 import { projectJsonLd } from "@/lib/json-ld";
 import { getLocalizedProjects, projects } from "@/lib/projects";
+import { BASE_URL, seoFor } from "@/lib/seo/alternates";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -28,20 +29,13 @@ export async function generateMetadata({
   return {
     title: `${project.name} — Tseka Luk`,
     description: project.tagline,
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/work/${slug}`,
-      languages: {
-        en: `https://tsekaluk.dev/en/work/${slug}`,
-        zh: `https://tsekaluk.dev/zh/work/${slug}`,
-        ja: `https://tsekaluk.dev/ja/work/${slug}`,
-      },
-    },
+    ...seoFor(`/work/${slug}`, locale, "ui"),
     openGraph: {
       title: `${project.name} — Tseka Luk`,
       description: project.tagline,
       images: [
         {
-          url: `https://tsekaluk.dev/og?title=${encodeURIComponent(project.name)}&subtitle=${encodeURIComponent(project.tagline)}`,
+          url: `${BASE_URL}/og?title=${encodeURIComponent(project.name)}&subtitle=${encodeURIComponent(project.tagline)}`,
           width: 1200,
           height: 630,
         },

@@ -1,8 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { Project } from "./projects";
-
-const BASE_URL = "https://tsekaluk.dev";
+import { BASE_URL, inLanguageTags } from "./seo/alternates";
 
 export function personJsonLd() {
   return {
@@ -43,7 +42,11 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     name: "TsekaLuk.dev",
     url: BASE_URL,
-    inLanguage: ["en", "zh", "ja"],
+    // Derived from the publication set, never a literal array. The old
+    // ["en", "zh", "ja"] both under-declared the catalog-translated surface and
+    // contained a bare `zh`, which is not a route locale (CLDR multi-script:
+    // zh-Hans / zh-Hant) and which the router cannot resolve.
+    inLanguage: inLanguageTags("ui"),
     author: personJsonLd(),
     potentialAction: {
       "@type": "SearchAction",

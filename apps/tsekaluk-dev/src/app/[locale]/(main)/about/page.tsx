@@ -7,6 +7,7 @@ import { AboutAnchorNav } from "@/components/about-anchor-nav";
 import { CountUp } from "@/components/count-up";
 import { ResumeDownloadButton } from "@/components/resume-download-button";
 import { personJsonLd } from "@/lib/json-ld";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -23,14 +24,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(t("metadata_title"))}&subtitle=${encodeURIComponent(t("metadata_desc"))}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/about`,
-      languages: {
-        en: "https://tsekaluk.dev/en/about",
-        zh: "https://tsekaluk.dev/zh/about",
-        ja: "https://tsekaluk.dev/ja/about",
-      },
-    },
+    ...seoFor("/about", locale, "ui"),
   };
 }
 

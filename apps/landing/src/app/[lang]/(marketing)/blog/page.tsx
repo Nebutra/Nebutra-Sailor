@@ -30,6 +30,7 @@ import {
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 import { isZhUiLocale } from "@/lib/i18n/localized";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 // The motion rail surfaces the RAIL_POST_COUNT most recent posts. When the
 // library is at or below that size, "latest" is just a copy of the grid below —
@@ -50,13 +51,14 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   const isZh = isZhUiLocale(lang);
-  return {
+  return buildPageMetadata({
     title: isZh ? "博客 — Nebutra" : "Blog — Nebutra",
     description: isZh
       ? "来自 Nebutra 团队的工程实践、产品进展与 SaaS 架构笔记。"
       : "Engineering insights, product updates, and SaaS best practices from the Nebutra team.",
-    alternates: { canonical: localizedBlogHref(lang) },
-  };
+    path: "/blog",
+    locale: lang as Locale,
+  });
 }
 
 function getAuthorName(author: BlogPostWithSource["author"]): string | null {

@@ -102,7 +102,7 @@ function existsFile(absolutePath) {
   }
 }
 
-function main() {
+function buildTable() {
   const patterns = readRegistryPatterns();
   const pageFiles = walkPageFiles(APP_ROOT);
   const table = {};
@@ -140,10 +140,59 @@ ${body}
 };
 `;
 
+  return { contents, table, patterns };
+}
+
+function main() {
+  const { contents, table, patterns } = buildTable();
   writeFileSync(OUTPUT, contents, "utf8");
   process.stdout.write(
     `route-lastmod: ${Object.keys(table).length}/${patterns.length} patterns resolved → ${relative(REPO, OUTPUT)}\n`,
   );
 }
 
-main();
+/**
+ * `--check` — is the committed snapshot byte-identical to what this script
+ * would generate right now? Writes nothing; exits 1 with a per-pattern diff on
+ * mismatch.
+ *
+ * Note this is NOT usable as a pull-request gate: the table is built from each
+ * contributing file's `git log -1 --format=%cI`, so regenerating before
+ * committing records the PREVIOUS commit's time and the gate would fail on the
+ * new one — an unsatisfiable two-commit dance on every landing page edit. It is
+ * a local diagnostic and the change detector for
+ * .github/workflows/route-lastmod.yml, which regenerates post-merge.
+ */
+function check() {
+  const { contents } = buildTable();
+  const current = existsFile(OUTPUT) ? readFileSync(OUTPUT, "utf8") : "";
+  if (current === contents) {
+    process.stdout.write(`route-lastmod: ${relative(REPO, OUTPUT)} is up to date\n`);
+    return;
+  }
+
+  const parse = (text) =>
+    Object.fromEntries(
+      [...text.matchAll(/^\s*"([^"]+)":\s*"([^"]+)",$/gm)].map((m) => [m[1], m[2]]),
+    );
+  const before = parse(current);
+  const after = parse(contents);
+
+  const lines = [];
+  for (const pattern of new Set([...Object.keys(before), ...Object.keys(after)]).values()) {
+    if (before[pattern] === after[pattern]) continue;
+    lines.push(`  ${pattern}: ${before[pattern] ?? "(absent)"} → ${after[pattern] ?? "(absent)"}`);
+  }
+
+  process.stderr.write(
+    `route-lastmod: ${relative(REPO, OUTPUT)} is stale.\n${lines.sort().join("\n")}\n` +
+      "Regenerate with: node scripts/generate-route-lastmod.mjs\n",
+  );
+  process.exitCode = 1;
+}
+
+if (process.argv.includes("--check")) {
+  check();
+} else {
+  main();
+}

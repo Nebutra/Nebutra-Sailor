@@ -16,7 +16,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 
 import type { Locale } from "@/i18n/routing";
-
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   type Bilingual,
   PILLARS,
@@ -222,10 +222,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   const meta = pick(lang, PAGE_META);
 
-  return {
+  return buildPageMetadata({
     title: meta.title,
     description: meta.description,
-  };
+    path: "/about/products",
+    locale: lang as Locale,
+  });
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────

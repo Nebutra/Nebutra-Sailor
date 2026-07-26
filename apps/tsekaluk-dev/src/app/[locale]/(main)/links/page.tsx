@@ -19,6 +19,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import type React from "react";
+import { seoFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   params,
@@ -35,14 +36,7 @@ export async function generateMetadata({
         `/og?title=${encodeURIComponent(t("metadata_title"))}&subtitle=${encodeURIComponent(t("metadata_desc"))}`,
       ],
     },
-    alternates: {
-      canonical: `https://tsekaluk.dev/${locale}/links`,
-      languages: {
-        en: "https://tsekaluk.dev/en/links",
-        zh: "https://tsekaluk.dev/zh/links",
-        ja: "https://tsekaluk.dev/ja/links",
-      },
-    },
+    ...seoFor("/links", locale, "ui"),
   };
 }
 
