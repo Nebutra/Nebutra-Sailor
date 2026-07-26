@@ -1,6 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nebutra-sailor-docs",
+  // Same account as typelens/gateway; required when API token cannot list accounts.
+  "account_id": "a4248a5738df319996a70092fe598d37",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-06-04",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
