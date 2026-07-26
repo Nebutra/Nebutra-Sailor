@@ -43,9 +43,21 @@ describe("buildPageMetadata", () => {
       title: "定价",
       description: "套餐",
       path: "/pricing",
+      locale: "zh-Hans",
+    });
+    expect(meta.alternates?.canonical).toBe(`${EXPECTED_SITE_URL}/zh-Hans/pricing`);
+  });
+
+  it("folds a legacy locale tag onto its route locale in the canonical", () => {
+    // Bare `zh` is an alias that 308s in src/proxy.ts; it must never surface
+    // as a canonical URL.
+    const meta = buildPageMetadata({
+      title: "定价",
+      description: "套餐",
+      path: "/pricing",
       locale: "zh",
     });
-    expect(meta.alternates?.canonical).toBe(`${EXPECTED_SITE_URL}/zh/pricing`);
+    expect(meta.alternates?.canonical).toBe(`${EXPECTED_SITE_URL}/zh-Hans/pricing`);
   });
 
   it("generates hreflang alternates for every supported locale", () => {
@@ -58,8 +70,11 @@ describe("buildPageMetadata", () => {
     const languages = meta.alternates?.languages as Record<string, string>;
     expect(languages).toBeDefined();
     expect(languages["en-US"]).toBe(EXPECTED_SITE_URL);
-    expect(languages["zh-Hans-CN"]).toBe(`${EXPECTED_SITE_URL}/zh`);
+    expect(languages["zh-Hans-CN"]).toBe(`${EXPECTED_SITE_URL}/zh-Hans`);
+    expect(languages["zh-Hant-TW"]).toBe(`${EXPECTED_SITE_URL}/zh-Hant`);
     expect(languages["x-default"]).toBe(EXPECTED_SITE_URL);
+    expect(languages).not.toHaveProperty("zh");
+    expect(Object.values(languages).filter((url) => /\/zh(\/|$)/.test(url))).toEqual([]);
   });
 
   it("populates openGraph and twitter metadata", () => {

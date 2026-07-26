@@ -1,0 +1,12 @@
+# Nebutra Mail Preview - Internal Email Preview
+# localhost / internal only
+# Internal email template preview - do not index
+#
+# Promotion to indexable requires adopting apps/landing/src/lib/seo first
+# (route registry + buildPageMetadata + sharded sitemap) so this origin does not
+# hand-roll a third robots/canonical/hreflang dialect.
+
+User-agent: *
+Disallow: /
+
+# No sitemap - not a public surface

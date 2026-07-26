@@ -1,6 +1,11 @@
 # Nebutra App - Private Dashboard
 # https://app.nebutra.com
 # User content and private data - do not index
+#
+# This file is the single robots answer for this origin. There is deliberately
+# no src/app/robots.ts: the two used to ship opposite directives.
+# Any public, indexable demo surface belongs on the landing origin, which owns
+# the SEO library (route registry + buildPageMetadata + sharded sitemap).
 
 User-agent: *
 Disallow: /

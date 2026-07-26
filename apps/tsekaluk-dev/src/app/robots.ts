@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { BASE_URL } from "./sitemap";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,6 +10,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/", "/admin/"],
       },
     ],
-    sitemap: "https://tsekaluk.dev/sitemap.xml",
+    // Origin literal lives once, in sitemap.ts, so the two files cannot drift.
+    sitemap: `${BASE_URL}/sitemap.xml`,
   };
 }

@@ -1,9 +1,9 @@
+import { toContentLocale } from "@nebutra/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { DOCS_ORIGIN_URL } from "./docs-links";
 
 const DOCS_ORIGIN = new URL(process.env.DOCS_ORIGIN_URL ?? DOCS_ORIGIN_URL);
 const DOCS_ORIGIN_HOST = DOCS_ORIGIN.hostname;
-const DOCS_SUPPORTED_LOCALES = new Set(["en", "zh"]);
 
 function normalizeHost(host?: string | null): string {
   return (host ?? "").split(":")[0]?.toLowerCase() ?? "";
@@ -34,13 +34,21 @@ export function createDocsRedirectUrl(requestUrl: URL, requestHost?: string | nu
   }
 
   const trailingSegments = segments.slice(docsIndex + 1);
-  const docsSegments =
-    locale && locale !== routing.defaultLocale && DOCS_SUPPORTED_LOCALES.has(locale)
-      ? [locale, ...trailingSegments]
-      : trailingSegments;
+
+  // The docs origin runs its own, narrower locale axis: `i18n.languages` there is
+  // ["en", "zh"] with `parser: "dir"` (apps/sailor-docs/src/lib/i18n.ts), and its
+  // routes are /<lang>/<slug>. So translate the landing *route* locale into the
+  // docs origin's *content* locale — zh-Hans and zh-Hant both land on "zh", every
+  // other route locale on "en" — instead of testing a hardcoded set that could
+  // never contain a multi-script tag.
+  //
+  // The prefix is always emitted (never dropped for the default locale) so
+  // landing does not hand visitors a redirect chain: sailor-docs 301s "/" → "/en"
+  // (apps/sailor-docs/next.config.ts).
+  const docsSegments = [toContentLocale(locale), ...trailingSegments];
 
   const target = new URL(DOCS_ORIGIN);
-  target.pathname = docsSegments.length > 0 ? `/${docsSegments.join("/")}` : "/";
+  target.pathname = `/${docsSegments.join("/")}`;
   target.search = requestUrl.search;
 
   return target;

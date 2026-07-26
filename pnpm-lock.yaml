@@ -1276,6 +1276,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/i18n':
+        specifier: workspace:*
+        version: link:../../packages/platform/i18n
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons

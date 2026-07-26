@@ -201,6 +201,75 @@ export function toLocaleLabelKey(locale: null | string | undefined): RouteLocale
   return toRouteLocale(locale);
 }
 
+/**
+ * Route locales whose own *body content* actually exists.
+ *
+ * Derived, never hand-listed: a route locale qualifies when folding it through
+ * the bilingual content axis (`toContentLocale`) and back to a route locale is
+ * an identity. With today's `ContentLocale = "en" | "zh"` that yields
+ * ["en", "zh-Hans"]; if the content axis ever gains a script split (e.g. a real
+ * zh-Hant content tier) this array widens on its own.
+ *
+ * The other route locales render translated chrome around content that is only
+ * authored in these primaries — SEO surfaces use this to avoid publishing
+ * near-duplicate content URLs.
+ */
+export const CONTENT_PRIMARY_ROUTE_LOCALES = ROUTE_LOCALES.filter(
+  (locale) => toRouteLocale(toContentLocale(locale)) === locale,
+) as readonly RouteLocale[];
+
+const CONTENT_PRIMARY_ROUTE_LOCALE_SET = new Set<string>(CONTENT_PRIMARY_ROUTE_LOCALES);
+
+export function isContentPrimaryRouteLocale(locale: null | string | undefined): boolean {
+  return Boolean(locale && CONTENT_PRIMARY_ROUTE_LOCALE_SET.has(locale));
+}
+
+const ROUTE_LOCALE_SET = new Set<string>(ROUTE_LOCALES);
+
+/**
+ * Locale tags that may appear as a legacy URL path prefix but are NOT route
+ * locales — every alias key that is not itself a route locale (bare `zh`,
+ * `zh-CN`, `zh_TW`, `zh-Hant-HK`, `en-US`, `ja-JP`, …).
+ *
+ * Sorted longest-first so a more specific prefix is considered before a shorter
+ * one that shares its head (`zh-Hant-HK` before `zh`).
+ *
+ * NOTE: the orphan catalog `packages/platform/i18n/locales/zh.json` is kept on
+ * disk despite bare `zh` not being a product language — it is still read by
+ * `tests/architecture/platform-i18n-parity.test.ts` and asserted by
+ * `tests/architecture/governance/ui-governance.policy.json`. Removing it is a
+ * separate change that must update those guards.
+ */
+export const LEGACY_LOCALE_PREFIXES = Object.keys(LOCALE_ALIASES)
+  .filter((tag) => !ROUTE_LOCALE_SET.has(tag))
+  .sort((a, b) => b.length - a.length || a.localeCompare(b)) as readonly string[];
+
+const LEGACY_LOCALE_PREFIX_SET = new Set<string>(LEGACY_LOCALE_PREFIXES);
+
+/**
+ * Map a pathname whose first segment is a legacy locale tag onto its route
+ * locale equivalent, or `null` when the path is already canonical.
+ *
+ *   "/zh"                    → "/zh-Hans"
+ *   "/zh/docs/cli"           → "/zh-Hans/docs/cli"
+ *   "/zh-Hant-HK/pricing"    → "/zh-Hant/pricing"
+ *   "/en-US"                 → "/"          (default route locale drops prefix)
+ *   "/zh-Hans/pricing"       → null         (already a route locale)
+ *   "/features"              → null
+ */
+export function legacyLocalePathRedirect(pathname: string): null | string {
+  const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
+  const segments = normalized.split("/");
+  const first = segments[1];
+  if (!first || !LEGACY_LOCALE_PREFIX_SET.has(first)) return null;
+
+  const routeLocale = toRouteLocale(first);
+  const rest = segments.slice(2).join("/");
+  const suffix = rest ? `/${rest}` : "";
+  const prefix = routeLocale === DEFAULT_ROUTE_LOCALE ? "" : `/${routeLocale}`;
+  return `${prefix}${suffix}` || "/";
+}
+
 /** Product message keys that require RTL layout (Arabic, Hebrew, Persian, Urdu). */
 const RTL_MESSAGE_KEYS = new Set<ProductLanguage>(["ar", "he", "fa", "ur"]);
 

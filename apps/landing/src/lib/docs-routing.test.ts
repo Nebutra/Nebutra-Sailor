@@ -17,25 +17,44 @@ describe("docs URL governance", () => {
     );
   });
 
-  it("redirects the public docs entrypoint to the docs app root", () => {
+  it("redirects the public docs entrypoint to the explicit English docs root", () => {
+    // The locale prefix is always emitted so landing never hands the visitor a
+    // redirect chain — sailor-docs itself 301s "/" → "/en".
     expect(createDocsRedirectUrl(url("/docs"), "nebutra.com")?.toString()).toBe(
-      "https://docs.nebutra.com/",
+      "https://docs.nebutra.com/en",
     );
     expect(
       createDocsRedirectUrl(
         url("/docs/getting-started/installation?utm=npm"),
         "nebutra.com",
       )?.toString(),
-    ).toBe("https://docs.nebutra.com/getting-started/installation?utm=npm");
+    ).toBe("https://docs.nebutra.com/en/getting-started/installation?utm=npm");
   });
 
-  it("preserves supported docs locales and falls unsupported landing locales back to English", () => {
+  it("folds both Chinese scripts onto the docs origin's single bilingual locale", () => {
+    // The docs origin runs a narrower axis: i18n.languages = ["en", "zh"]
+    // (apps/sailor-docs/src/lib/i18n.ts), so zh-Hans and zh-Hant both land on "zh".
     expect(
-      createDocsRedirectUrl(url("/zh/docs/cli/create-sailor"), "nebutra.com")?.toString(),
+      createDocsRedirectUrl(url("/zh-Hans/docs/cli/create-sailor"), "nebutra.com")?.toString(),
     ).toBe("https://docs.nebutra.com/zh/cli/create-sailor");
     expect(
+      createDocsRedirectUrl(url("/zh-Hant/docs/cli/create-sailor"), "nebutra.com")?.toString(),
+    ).toBe("https://docs.nebutra.com/zh/cli/create-sailor");
+  });
+
+  it("falls non-content landing locales back to the English docs path", () => {
+    expect(
       createDocsRedirectUrl(url("/de/docs/cli/create-sailor"), "nebutra.com")?.toString(),
-    ).toBe("https://docs.nebutra.com/cli/create-sailor");
+    ).toBe("https://docs.nebutra.com/en/cli/create-sailor");
+    expect(
+      createDocsRedirectUrl(url("/en/docs/cli/create-sailor"), "nebutra.com")?.toString(),
+    ).toBe("https://docs.nebutra.com/en/cli/create-sailor");
+  });
+
+  it("leaves the legacy bare /zh prefix to the proxy's 308", () => {
+    // Bare `zh` is not a route locale, so this seam must not claim it — it is
+    // redirected to /zh-Hans/docs/... first (see legacyLocalePathRedirect).
+    expect(createDocsRedirectUrl(url("/zh/docs/cli/create-sailor"), "nebutra.com")).toBeNull();
   });
 
   it("does not redirect non-docs paths or the docs app host", () => {

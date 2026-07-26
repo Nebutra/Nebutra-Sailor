@@ -1,11 +1,16 @@
 import { describe, expect, it } from "vitest";
 import {
+  CONTENT_PRIMARY_ROUTE_LOCALES,
   canonicalizeLocale,
   canonicalizeLocaleOrDefault,
+  isContentPrimaryRouteLocale,
   isRtlLocale,
   isSimplifiedChineseLocale,
   isSupportedLocale,
   isTraditionalChineseLocale,
+  LEGACY_LOCALE_PREFIXES,
+  legacyLocalePathRedirect,
+  ROUTE_LOCALES,
   toContentLocale,
   toHreflang,
   toHtmlLang,
@@ -91,5 +96,49 @@ describe("locale contract", () => {
     expect(isRtlLocale("en")).toBe(false);
     expect(toTextDir("ar")).toBe("rtl");
     expect(toTextDir("zh-Hans")).toBe("ltr");
+  });
+});
+
+describe("content-primary route locales", () => {
+  it("derives the route locales whose body content actually exists", () => {
+    // Derived from ContentLocale ("en" | "zh") — not a hand list.
+    expect([...CONTENT_PRIMARY_ROUTE_LOCALES]).toEqual(["en", "zh-Hans"]);
+    expect(isContentPrimaryRouteLocale("en")).toBe(true);
+    expect(isContentPrimaryRouteLocale("zh-Hans")).toBe(true);
+    expect(isContentPrimaryRouteLocale("zh-Hant")).toBe(false);
+    expect(isContentPrimaryRouteLocale("de")).toBe(false);
+    expect(isContentPrimaryRouteLocale(undefined)).toBe(false);
+  });
+
+  it("is a subset of the route locale wheel", () => {
+    for (const locale of CONTENT_PRIMARY_ROUTE_LOCALES) {
+      expect(ROUTE_LOCALES).toContain(locale);
+    }
+  });
+});
+
+describe("legacy locale path redirects", () => {
+  it("never lists a real route locale as a legacy prefix", () => {
+    for (const locale of ROUTE_LOCALES) {
+      expect(LEGACY_LOCALE_PREFIXES).not.toContain(locale);
+    }
+    expect(LEGACY_LOCALE_PREFIXES).toContain("zh");
+    expect(LEGACY_LOCALE_PREFIXES).toContain("zh-CN");
+    expect(LEGACY_LOCALE_PREFIXES).toContain("zh_TW");
+  });
+
+  it("folds legacy prefixes onto their route locale equivalent", () => {
+    expect(legacyLocalePathRedirect("/zh")).toBe("/zh-Hans");
+    expect(legacyLocalePathRedirect("/zh/docs/cli")).toBe("/zh-Hans/docs/cli");
+    expect(legacyLocalePathRedirect("/zh-Hant-HK/pricing")).toBe("/zh-Hant/pricing");
+    expect(legacyLocalePathRedirect("/en-US")).toBe("/");
+    expect(legacyLocalePathRedirect("/en-US/pricing")).toBe("/pricing");
+  });
+
+  it("returns null for already-canonical and non-locale paths", () => {
+    expect(legacyLocalePathRedirect("/zh-Hans/pricing")).toBeNull();
+    expect(legacyLocalePathRedirect("/zh-Hant")).toBeNull();
+    expect(legacyLocalePathRedirect("/features")).toBeNull();
+    expect(legacyLocalePathRedirect("/")).toBeNull();
   });
 });

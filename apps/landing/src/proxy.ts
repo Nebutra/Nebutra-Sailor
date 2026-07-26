@@ -1,7 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { MARKET_COOKIE } from "@nebutra/i18n/cookies";
-import { CANONICAL_LOCALES, toRouteLocale } from "@nebutra/i18n/locales";
+import { legacyLocalePathRedirect } from "@nebutra/i18n/locales";
 import {
   resolveCountryFromRequest,
   resolveCurrencyFromRequest,
@@ -38,25 +38,26 @@ const APP_REDIRECT_URL = process.env.NEXT_PUBLIC_APP_URL ?? getBrandOrigin("app"
  */
 function isAppRedirectablePath(pathname: string): boolean {
   if (pathname === "/" || pathname === "") return true;
-  // Bare locale roots like `/en`, `/zh`, `/ja` — same semantics as `/`.
+  // Bare locale roots like `/en`, `/zh-Hans`, `/ja` — same semantics as `/`.
   return routing.locales.some((locale) => pathname === `/${locale}`);
 }
 
-function createLocaleAliasRedirectUrl(url: URL, pathname: string): URL | null {
-  for (const canonicalLocale of CANONICAL_LOCALES) {
-    const canonicalPrefix = `/${canonicalLocale}`;
-    if (pathname !== canonicalPrefix && !pathname.startsWith(`${canonicalPrefix}/`)) {
-      continue;
-    }
+/**
+ * 308 every legacy locale path prefix onto its route locale.
+ *
+ * Driven entirely by `legacyLocalePathRedirect` (@nebutra/i18n/locales), which
+ * walks every LOCALE_ALIASES key that is not itself a route locale — so bare
+ * `/zh`, `/zh-CN`, `/zh_TW`, `/zh-Hant-HK`, `/en-US`, `/ja-JP` … all resolve by
+ * construction. The previous implementation only walked CANONICAL_LOCALES and
+ * therefore left the whole bare/alias class 404ing.
+ */
+function createLegacyLocaleRedirectUrl(url: URL, pathname: string): URL | null {
+  const redirectPath = legacyLocalePathRedirect(pathname);
+  if (!redirectPath) return null;
 
-    const redirectUrl = new URL(url.toString());
-    const routeLocale = toRouteLocale(canonicalLocale);
-    const routePrefix = routeLocale === routing.defaultLocale ? "" : `/${routeLocale}`;
-    redirectUrl.pathname = pathname.replace(canonicalPrefix, routePrefix) || "/";
-    return redirectUrl;
-  }
-
-  return null;
+  const redirectUrl = new URL(url.toString());
+  redirectUrl.pathname = redirectPath;
+  return redirectUrl;
 }
 
 function withSecurityHeaders(response: NextResponse): NextResponse {
@@ -75,10 +76,12 @@ export default function proxy(request: NextRequest): NextResponse {
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
   const docsRedirectUrl = createDocsRedirectUrl(request.nextUrl, host);
   const legacyAppRedirectUrl = createLegacyAppRedirectUrl(pathname, APP_REDIRECT_URL);
-  const localeAliasRedirectUrl = createLocaleAliasRedirectUrl(request.nextUrl, pathname);
+  const legacyLocaleRedirectUrl = createLegacyLocaleRedirectUrl(request.nextUrl, pathname);
 
-  if (localeAliasRedirectUrl) {
-    return withSecurityHeaders(NextResponse.redirect(localeAliasRedirectUrl, 308));
+  // FIRST branch on purpose: the path is about to change, so no downstream
+  // branch (docs / app / session) may act on the pre-redirect shape.
+  if (legacyLocaleRedirectUrl) {
+    return withSecurityHeaders(NextResponse.redirect(legacyLocaleRedirectUrl, 308));
   }
 
   if (docsRedirectUrl) {
@@ -146,7 +149,11 @@ export default function proxy(request: NextRequest): NextResponse {
 export const config = {
   matcher: [
     "/docs/:path*",
-    // Full PRODUCT_LANGUAGES wheel (+ bare zh legacy alias → Hans). Keep in sync with apps/landing/src/i18n/routing.ts
+    // Full PRODUCT_LANGUAGES wheel (+ bare zh legacy alias → Hans). Next requires
+    // matchers to be statically analyzable literals, so this cannot be computed
+    // from ROUTE_LOCALES. Drift is guarded by
+    // tests/architecture/seo-locale-closure.test.ts, which asserts this
+    // alternation === ROUTE_LOCALES ∪ the legacy prefixes that need redirects.
     "/:locale(en|zh-Hans|zh-Hant|zh|de|es|fr|ja|ko|pt|it|nl|sv|da|fi|no|pl|cs|ro|hu|el|ru|uk|tr|ar|he|fa|hi|bn|ur|th|vi|id|ms|sw)/docs/:path*",
     "/((?!api|trpc|_next|_vercel|.*/opengraph-image|.*\\..*).*)",
   ],

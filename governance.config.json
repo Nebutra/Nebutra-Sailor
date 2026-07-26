@@ -95,7 +95,7 @@
       "apps/landing/src/lib/constants/resources-data.ts",
       "apps/landing/src/lib/constants/solutions-data.ts",
       "apps/landing/src/lib/seo/metadata.ts",
-      "apps/landing/src/lib/seo/site-routes.ts",
+      "apps/landing/src/lib/seo/route-registry.ts",
       "apps/mail-preview/src/app/layout.tsx",
       "apps/sailor-docs/mdx-components.tsx",
       "apps/sailor-docs/src/app/[lang]/[[...slug]]/page.tsx",

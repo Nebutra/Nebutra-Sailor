@@ -247,6 +247,27 @@ jobs:
       - name: i18n integrity (landing locales)
         run: pnpm --filter @nebutra/landing check:i18n
 
+      # ── SEO / locale closure unit tests ──────────────────────────────────
+      # tests/architecture (run above) covers cross-app drift, but the sharded
+      # sitemap, hreflang clusters, docs-routing seam and the locale SSOT
+      # derivations are asserted by colocated unit tests that NO workflow ran —
+      # which is how a red locale migration reached main. Deliberately no
+      # landing `next build`: that has a known 8GB compile OOM.
+      #
+      # Scope note: this gate runs the SEO/locale files it is named for, not
+      # the whole landing suite. `pnpm turbo test` in the affected-tests job
+      # already owns the full suite; pointing a second, always-on gate at it
+      # would only make unrelated pre-existing failures block SEO work.
+      - name: Unit tests (landing SEO + i18n locales)
+        if: needs.detect-changes.outputs.landing == 'true' || needs.detect-changes.outputs.packages == 'true'
+        run: |
+          pnpm --filter @nebutra/landing exec vitest run \
+            src/lib/seo \
+            src/lib/docs-routing.test.ts \
+            src/app/__tests__/sitemap.test.ts \
+            'src/app/[lang]/(marketing)/marketing-client-providers.test.ts'
+          pnpm --filter @nebutra/i18n test
+
       # ── Governance lint guards (full node-script chain) ──────────────────
       # Runs the complete pnpm lint chain: biome check + all 9 node scripts
       # (raw-inputs, dark-overrides, spacing-opacity, arbitrary-breakpoints,
@@ -254,7 +275,7 @@ jobs:
       # brand-literals, microcopy). All are shrink-only ratchets — new
       # violations fail immediately; allowlisted entries migrate on-touch.
       - name: Governance lint guards
-        run: pnpm --config.verify-deps-before-run=false lint
+        run: pnpm lint
 
   # ── Python services — lint + test (matrix, parallel) ──────────────────────
   python-ci:

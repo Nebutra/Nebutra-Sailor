@@ -117,6 +117,7 @@
     "build:dashboard": "turbo run build --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/gateway",
     "preset:env": "tsx packages/ops/preset/src/cli.ts",
     "generate:api-types": "tsx scripts/generate-api-types.ts",
+    "gen:route-lastmod": "node scripts/generate-route-lastmod.mjs",
     "size": "size-limit",
     "size:why": "size-limit --why",
     "license:check": "npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary",

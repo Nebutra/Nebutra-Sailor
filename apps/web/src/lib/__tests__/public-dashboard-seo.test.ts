@@ -31,19 +31,27 @@ describe("public dashboard SEO and access boundaries", () => {
     expect(proxy).toContain("txt|xml");
   });
 
-  it("indexes public web pages while keeping private app surfaces out of search", () => {
+  it("keeps the whole dashboard origin out of search from a single robots source", () => {
     const rootLayout = readFromRepo("apps/web/src/app/layout.tsx");
     const privateLayout = readFromRepo("apps/web/src/app/(app)/layout.tsx");
-    const robots = readFromRepo("apps/web/src/app/robots.ts");
 
-    expect(rootLayout).not.toContain("index: false");
-    expect(rootLayout).not.toContain("follow: false");
     expect(privateLayout).toContain("index: false");
     expect(privateLayout).toContain("follow: false");
-    // Cookie-based i18n: no /en or /zh prefixed paths in robots.txt.
-    expect(robots).toContain('allow: ["/", "/demo"]');
-    expect(robots).toContain('"/workspace"');
-    expect(robots).not.toContain('disallow: "/"');
-    expect(existsSync(repoPath("apps/web/src/app/sitemap.ts"))).toBe(true);
+    // The root layout stays neutral — the origin-wide answer lives in robots.txt.
+    expect(rootLayout).not.toContain("index: false");
+
+    // app.nebutra.com is private: static robots.txt is the ONE robots answer,
+    // and it disallows everything. The app-router robots.ts/sitemap.ts used to
+    // ship the opposite directive (allow: ["/", "/demo"]) from the same origin,
+    // so they must stay deleted — any indexable surface belongs to the landing
+    // origin, which owns the SEO route registry and the sharded sitemap.
+    const robotsTxt = readFromRepo("apps/web/public/robots.txt");
+    expect(robotsTxt).toContain("User-agent: *");
+    expect(robotsTxt).toContain("Disallow: /");
+    expect(robotsTxt).not.toContain("Allow:");
+    expect(robotsTxt).not.toContain("Sitemap:");
+
+    expect(existsSync(repoPath("apps/web/src/app/robots.ts"))).toBe(false);
+    expect(existsSync(repoPath("apps/web/src/app/sitemap.ts"))).toBe(false);
   });
 });

@@ -1,6 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { toHreflang, toRouteLocale } from "@nebutra/i18n/locales";
 import { type Locale, routing } from "@/i18n/routing";
+import { localesForPath, SEO_ROUTE_REGISTRY } from "./route-registry";
 
 // DEFAULT_SITE_URL is derived from the brand SSOT so a single `pnpm brand:apply`
 // propagates the domain change to all SEO surfaces.

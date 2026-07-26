@@ -1,121 +1,141 @@
 import { toContentLocale } from "@nebutra/i18n/locales";
+import { getChangelogEntries } from "@nebutra/sanity/queries";
 import type { MetadataRoute } from "next";
 import { PACKAGE_FEATURE_ENTRIES } from "@/components/landing/features/package-feature-data";
 import { routing } from "@/i18n/routing";
-import { type BlogLanguage, getAllPosts } from "@/lib/blog";
+import { getAllPosts } from "@/lib/blog";
 import { getAllSolutionSlugs } from "@/lib/constants/solutions-data";
+import { lastModifiedFor } from "@/lib/seo/lastmod";
 import {
-  buildHreflangAlternates,
-  canonicalUrlForLocale,
-  getSiteUrl,
-  PUBLIC_SEO_ROUTES,
-} from "@/lib/seo/site-routes";
+  isHighSignalFeatureEntry,
+  localesForPath,
+  SEO_ROUTE_REGISTRY,
+  type SeoRouteEntry,
+} from "@/lib/seo/route-registry";
+import { buildHreflangAlternates, canonicalUrlForLocale, getSiteUrl } from "@/lib/seo/site-routes";
 
-function contentLanguageForLocale(locale: string): BlogLanguage {
-  return toContentLocale(locale);
+const CHANGELOG_CMS_TIMEOUT_MS = 3_000;
+
+type SitemapEntry = MetadataRoute.Sitemap[number];
+
+/**
+ * One sitemap child per route locale — Next serves them at
+ * `/sitemap/<locale>.xml`. Next emits NO index for a sharded sitemap, so the
+ * index at `/sitemap.xml` is hand-written in `app/sitemap.xml/route.ts` and
+ * shares this same shard-id SSOT.
+ *
+ * Sharding on the route-locale SSOT (not a hand list) means adding a language
+ * adds a child automatically, and Search Console reports indexing health per
+ * language instead of one 34-language blob.
+ */
+export function generateSitemaps(): Array<{ id: string }> {
+  return routing.locales.map((id) => ({ id }));
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+/**
+ * Next 16 hands the shard id to the sitemap handler as a *promise* that
+ * resolves to the string (see `getDynamicSitemapRouteCode` in
+ * next/dist/build/webpack/loaders/next-metadata-route-loader.js — it calls
+ * `handler({ id: targetIdPromise })`). Reading `id` as a bare string silently
+ * yields an empty sitemap for every shard, so the promise is awaited here and
+ * a plain string is still accepted for direct callers/tests.
+ */
+export default async function sitemap({
+  id,
+}: {
+  id: Promise<string | undefined> | string | undefined;
+}): Promise<MetadataRoute.Sitemap> {
+  const locale = await id;
+  if (!locale || !routing.locales.includes(locale)) return [];
+
   const baseUrl = getSiteUrl();
 
-  // Generate entries for all static pages across all locales
-  const staticEntries = PUBLIC_SEO_ROUTES.flatMap((page) => {
-    const languages = buildHreflangAlternates(baseUrl, page.path);
+  const entries: SitemapEntry[] = [];
+  for (const route of SEO_ROUTE_REGISTRY) {
+    if (!localesForPath(route.pattern).includes(locale)) continue;
 
-    return routing.locales.map((locale) => ({
-      url: canonicalUrlForLocale(baseUrl, locale, page.path),
-      lastModified: new Date(),
-      changeFrequency: page.changeFrequency,
-      priority: page.priority,
-      alternates: { languages },
-    }));
-  });
+    if (route.pattern.endsWith("/*")) {
+      entries.push(...(await dynamicFamilyEntries(route, baseUrl, locale)));
+    } else {
+      entries.push(staticEntry(route, baseUrl, locale, route.pattern));
+    }
+  }
 
-  const docsLanguages = {
-    "en-US": `${baseUrl}/docs`,
-    "zh-Hans-CN": `${baseUrl}/zh/docs`,
-    "x-default": `${baseUrl}/docs`,
+  return entries;
+}
+
+function staticEntry(
+  route: SeoRouteEntry,
+  baseUrl: string,
+  locale: string,
+  path: string,
+  contentDate?: Date | null | string,
+): SitemapEntry {
+  const lastModified = lastModifiedFor(path, contentDate);
+  return {
+    url: canonicalUrlForLocale(baseUrl, locale, path),
+    ...(lastModified ? { lastModified } : {}),
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+    alternates: { languages: buildHreflangAlternates(baseUrl, path) },
   };
-  const docsEntries = [
-    {
-      url: docsLanguages["en-US"],
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-      alternates: { languages: docsLanguages },
-    },
-    {
-      url: docsLanguages["zh-Hans-CN"],
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-      alternates: { languages: docsLanguages },
-    },
-  ];
+}
 
-  // Individual changelog version URLs
-  const changelogVersions = [
-    "0.10.0",
-    "0.9.1",
-    "0.9.0",
-    "0.8.0",
-    "0.7.0",
-    "0.6.0",
-    "0.5.0",
-    "0.4.0",
-  ];
-  const changelogEntries = changelogVersions.flatMap((version) => {
-    return routing.locales.map((locale) => ({
-      url: canonicalUrlForLocale(baseUrl, locale, `/changelog/${version}`),
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
-    }));
-  });
+async function dynamicFamilyEntries(
+  route: SeoRouteEntry,
+  baseUrl: string,
+  locale: string,
+): Promise<SitemapEntry[]> {
+  switch (route.pattern) {
+    case "/blog/*": {
+      const posts = await getAllPosts(toContentLocale(locale));
+      return posts.map((post) =>
+        staticEntry(route, baseUrl, locale, `/blog/${post.slug}`, post.date),
+      );
+    }
+    case "/changelog/*": {
+      const releases = await changelogReleases();
+      return releases.map((release) =>
+        staticEntry(route, baseUrl, locale, `/changelog/${release.version}`, release.publishedAt),
+      );
+    }
+    case "/features/*": {
+      // Package entries are auto-flattened from a file tree — hundreds of thin
+      // near-identical pages. Same predicate the prerender path uses.
+      return PACKAGE_FEATURE_ENTRIES.filter(isHighSignalFeatureEntry).map((entry) =>
+        staticEntry(route, baseUrl, locale, `/features/${entry.slug}`),
+      );
+    }
+    case "/solutions/*": {
+      return getAllSolutionSlugs().map((slug) =>
+        staticEntry(route, baseUrl, locale, `/solutions/${slug}`),
+      );
+    }
+    default:
+      return [];
+  }
+}
 
-  const featureDetailEntries = PACKAGE_FEATURE_ENTRIES.flatMap((entry) => {
-    return routing.locales.map((locale) => ({
-      url: canonicalUrlForLocale(baseUrl, locale, `/features/${entry.slug}`),
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: entry.kind === "package" ? 0.35 : 0.6,
-      alternates: { languages: buildHreflangAlternates(baseUrl, `/features/${entry.slug}`) },
-    }));
-  });
+type ChangelogRelease = { readonly version: string; readonly publishedAt?: string };
 
-  const solutionDetailEntries = getAllSolutionSlugs().flatMap((slug) => {
-    return routing.locales.map((locale) => ({
-      url: canonicalUrlForLocale(baseUrl, locale, `/solutions/${slug}`),
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.65,
-      alternates: { languages: buildHreflangAlternates(baseUrl, `/solutions/${slug}`) },
-    }));
-  });
+/**
+ * Released versions from the CMS — the same source the changelog pages read.
+ * When the CMS is unreachable the family contributes no URLs rather than
+ * publishing a hardcoded version list that would drift from the pages.
+ */
+async function changelogReleases(): Promise<ChangelogRelease[]> {
+  if (process.env.E2E_SKIP_CMS === "1") return [];
 
-  // Dynamic blog post entries
-  const [englishPosts, chinesePosts] = await Promise.all([getAllPosts("en"), getAllPosts("zh")]);
-  const postsByLanguage: Record<"en" | "zh", typeof englishPosts> = {
-    en: englishPosts,
-    zh: chinesePosts,
-  };
-
-  const blogEntries = routing.locales.flatMap((locale) => {
-    const contentLanguage = contentLanguageForLocale(locale);
-    return postsByLanguage[contentLanguage].map((post) => ({
-      url: canonicalUrlForLocale(baseUrl, locale, `/blog/${post.slug}`),
-      lastModified: post.date ? new Date(post.date) : new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    }));
-  });
-
-  return [
-    ...staticEntries,
-    ...docsEntries,
-    ...changelogEntries,
-    ...featureDetailEntries,
-    ...solutionDetailEntries,
-    ...blogEntries,
-  ];
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const timeout = new Promise<[]>((resolve) => {
+      timeoutId = setTimeout(() => resolve([]), CHANGELOG_CMS_TIMEOUT_MS);
+    });
+    const raw = (await Promise.race([getChangelogEntries(), timeout])) as ChangelogRelease[];
+    return Array.isArray(raw) ? raw.filter((entry) => Boolean(entry?.version)) : [];
+  } catch {
+    return [];
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
+  }
 }

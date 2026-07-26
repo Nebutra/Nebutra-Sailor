@@ -1,9 +1,15 @@
+import { toHreflang } from "@nebutra/i18n/locales";
 import type { MetadataRoute } from "next";
+import { routing } from "@/i18n/routing";
 import { getArticles } from "@/lib/articles";
 import { projects } from "@/lib/projects";
 
-const BASE_URL = "https://tsekaluk.dev";
-const LOCALES = ["en", "zh", "ja"] as const;
+/**
+ * Canonical origin for this site. Personal domain, not part of brand.domains, so
+ * a literal is correct here — but it lives in exactly one place and robots.ts
+ * imports it so the two files cannot drift.
+ */
+export const BASE_URL = "https://tsekaluk.dev";
 
 type StaticRoute = {
   path: string;
@@ -24,37 +30,55 @@ const STATIC_ROUTES: StaticRoute[] = [
   { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
 ];
 
+/**
+ * Canonical URL for one (locale, path) pair.
+ *
+ * `localePrefix` is next-intl's default "always" (src/i18n/routing.ts), so the
+ * prefix is never dropped — the unprefixed `${BASE_URL}${path}` form this file
+ * also used to publish is a redirect, and redirect URLs must not be sitemapped.
+ */
+function urlFor(locale: string, path: string): string {
+  return `${BASE_URL}/${locale}${path}`;
+}
+
+/**
+ * hreflang cluster for a path: one entry per route locale plus a single
+ * x-default at the default locale. Tags come from `toHreflang` (@nebutra/i18n),
+ * never hand-written strings.
+ */
+function alternatesFor(path: string): { languages: Record<string, string> } {
+  const languages: Record<string, string> = {};
+  for (const locale of routing.locales) {
+    languages[toHreflang(locale)] = urlFor(locale, path);
+  }
+  languages["x-default"] = urlFor(routing.defaultLocale, path);
+  return { languages };
+}
+
 function withLocales(
   path: string,
   opts: {
-    lastModified: Date;
+    lastModified?: Date;
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
     priority: number;
   },
 ): MetadataRoute.Sitemap {
-  const base = {
-    url: `${BASE_URL}${path}`,
-    lastModified: opts.lastModified,
-    changeFrequency: opts.changeFrequency,
-    priority: opts.priority,
-  };
+  const alternates = alternatesFor(path);
 
-  const localeEntries: MetadataRoute.Sitemap = LOCALES.map((locale) => ({
-    url: `${BASE_URL}/${locale}${path}`,
-    lastModified: opts.lastModified,
+  return routing.locales.map((locale) => ({
+    url: urlFor(locale, path),
+    // `lastModified` is omitted rather than stamped with build time: a uniform
+    // build timestamp is the exact pattern crawlers classify as untrustworthy.
+    ...(opts.lastModified ? { lastModified: opts.lastModified } : {}),
     changeFrequency: opts.changeFrequency,
     priority: opts.priority,
+    alternates,
   }));
-
-  return [base, ...localeEntries];
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticLastModified = new Date();
-
   const staticRoutes: MetadataRoute.Sitemap = STATIC_ROUTES.flatMap((route) =>
     withLocales(route.path, {
-      lastModified: staticLastModified,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
     }),
@@ -62,7 +86,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const projectRoutes: MetadataRoute.Sitemap = projects.flatMap((p) =>
     withLocales(`/work/${p.slug}`, {
-      lastModified: staticLastModified,
       changeFrequency: "monthly",
       priority: 0.6,
     }),

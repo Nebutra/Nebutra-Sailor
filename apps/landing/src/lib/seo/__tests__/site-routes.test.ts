@@ -13,7 +13,10 @@ describe("site SEO route registry", () => {
 
     expect(languages).toMatchObject({
       "en-US": "https://nebutra.com/pricing",
-      "zh-Hans-CN": "https://nebutra.com/zh/pricing",
+      // Chinese is script-split: the route prefix is zh-Hans / zh-Hant, never
+      // a bare /zh (that prefix only exists as a 308 in src/proxy.ts).
+      "zh-Hans-CN": "https://nebutra.com/zh-Hans/pricing",
+      "zh-Hant-TW": "https://nebutra.com/zh-Hant/pricing",
       "ja-JP": "https://nebutra.com/ja/pricing",
       "ko-KR": "https://nebutra.com/ko/pricing",
       "es-ES": "https://nebutra.com/es/pricing",
@@ -25,7 +28,23 @@ describe("site SEO route registry", () => {
 
   it("normalizes homepage canonical URLs without trailing-slash drift", () => {
     expect(canonicalUrlForLocale("https://nebutra.com/", "en", "/")).toBe("https://nebutra.com");
-    expect(canonicalUrlForLocale("https://nebutra.com/", "zh", "/")).toBe("https://nebutra.com/zh");
+    expect(canonicalUrlForLocale("https://nebutra.com/", "zh-Hans", "/")).toBe(
+      "https://nebutra.com/zh-Hans",
+    );
+  });
+
+  it("folds a legacy locale tag onto its route locale instead of emitting it", () => {
+    // Bare `zh` is a legacy alias, not a route locale — a canonical URL must
+    // never be built from it verbatim.
+    expect(canonicalUrlForLocale("https://nebutra.com/", "zh", "/")).toBe(
+      "https://nebutra.com/zh-Hans",
+    );
+    expect(canonicalUrlForLocale("https://nebutra.com/", "zh-TW", "/pricing")).toBe(
+      "https://nebutra.com/zh-Hant/pricing",
+    );
+    expect(canonicalUrlForLocale("https://nebutra.com/", "en-US", "/pricing")).toBe(
+      "https://nebutra.com/pricing",
+    );
   });
 
   it("marks durable sitelink candidates inside the public route registry", () => {
