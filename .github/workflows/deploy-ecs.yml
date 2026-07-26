@@ -794,6 +794,8 @@ jobs:
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-forge.conf"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/router.nebutra.com.conf \
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-router.conf"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/docs.nebutra.com.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-docs.conf"
 
       - name: Run remote deploy
         env:

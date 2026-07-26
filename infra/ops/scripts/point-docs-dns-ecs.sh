@@ -22,7 +22,10 @@ ZONE_ID=$(echo "$ZONE_JSON" | python3 -c 'import json,sys; r=json.load(sys.stdin
 echo "ZONE_ID=$ZONE_ID ORIGIN_IP=$ORIGIN_IP HOST=$HOST"
 export ZONE_ID CLOUDFLARE_API_TOKEN
 
-BODY=$(python3 -c "import json; print(json.dumps({'type':'A','name':'docs','content':'${ORIGIN_IP}','proxied':True,'ttl':1,'comment':'nebutra-sailor-docs ECS emergency'}))")
+# Grey-cloud (proxied=false): hit ECS TLS directly. Orange-cloud can still
+# hijack via CF-level redirects even when Worker deploy is unavailable.
+PROXIED_RAW="${DOCS_DNS_PROXIED:-false}"
+BODY=$(PROXIED_RAW="$PROXIED_RAW" ORIGIN_IP="$ORIGIN_IP" python3 -c 'import json,os; print(json.dumps({"type":"A","name":"docs","content":os.environ["ORIGIN_IP"],"proxied":os.environ.get("PROXIED_RAW","false").lower() in ("1","true","yes"),"ttl":1,"comment":"nebutra-sailor-docs ECS origin"}))')
 
 # Drop conflicting CNAME (Vercel project DNS) if present
 CNAME_EXIST=$(curl -sS -H "Authorization: Bearer $TOKEN" \

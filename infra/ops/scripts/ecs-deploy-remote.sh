@@ -1269,6 +1269,9 @@ restore_nginx_config() {
   if [ -f "$backup_dir/router.nebutra.com.conf" ]; then
     cp -p "$backup_dir/router.nebutra.com.conf" /etc/nginx/conf.d/router.nebutra.com.conf
   fi
+  if [ -f "$backup_dir/docs.nebutra.com.conf" ]; then
+    cp -p "$backup_dir/docs.nebutra.com.conf" /etc/nginx/conf.d/docs.nebutra.com.conf
+  fi
 }
 
 dump_nginx_web_diagnostics() {
@@ -1298,6 +1301,7 @@ sync_nginx_runtime_config() {
   local nginx_security="/tmp/nebutra-nginx-security.conf"
   local nginx_forge="/tmp/nebutra-nginx-forge.conf"
   local nginx_router="/tmp/nebutra-nginx-router.conf"
+  local nginx_docs="/tmp/nebutra-nginx-docs.conf"
 
   if ! command -v nginx >/dev/null 2>&1; then
     log "nginx not installed; skipping nginx config sync"
@@ -1315,6 +1319,7 @@ sync_nginx_runtime_config() {
   [ -f /etc/nginx/conf.d/security.conf ] && cp -p /etc/nginx/conf.d/security.conf "$backup_dir/security.conf" || true
   [ -f /etc/nginx/conf.d/forge.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/forge.nebutra.com.conf "$backup_dir/forge.nebutra.com.conf" || true
   [ -f /etc/nginx/conf.d/router.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/router.nebutra.com.conf "$backup_dir/router.nebutra.com.conf" || true
+  [ -f /etc/nginx/conf.d/docs.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/docs.nebutra.com.conf "$backup_dir/docs.nebutra.com.conf" || true
 
   local rendered_main worker_user
   rendered_main="$(mktemp)"
@@ -1351,6 +1356,7 @@ sync_nginx_runtime_config() {
   }
   inject_vhost_include "forge.nebutra.com.conf" "Nebutra Forge tool station (PM2 :3105)"
   inject_vhost_include "router.nebutra.com.conf" "Nebutra Router product edge (PM2 :3106)"
+  inject_vhost_include "docs.nebutra.com.conf" "Nebutra Sailor Docs (PM2 :3005)"
 
   install -m 0644 "$rendered_main" /etc/nginx/nginx.conf
   rm -f "$rendered_main"
@@ -1367,6 +1373,12 @@ sync_nginx_runtime_config() {
     log "installed router.nebutra.com.conf"
   else
     log "router nginx fragment not uploaded; keeping existing conf.d/router.nebutra.com.conf if present"
+  fi
+  if [ -f "$nginx_docs" ]; then
+    install -m 0644 "$nginx_docs" /etc/nginx/conf.d/docs.nebutra.com.conf
+    log "installed docs.nebutra.com.conf"
+  else
+    log "docs nginx fragment not uploaded; keeping existing conf.d/docs.nebutra.com.conf if present"
   fi
 
   if ! nginx -t; then
