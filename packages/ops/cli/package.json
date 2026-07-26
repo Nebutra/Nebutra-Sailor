@@ -1,6 +1,6 @@
 {
   "name": "nebutra",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Governance-first CLI for Nebutra Sailor topology scaffolding, registry-backed feature installs, and platform operations.",
   "type": "module",
   "main": "dist/index.js",

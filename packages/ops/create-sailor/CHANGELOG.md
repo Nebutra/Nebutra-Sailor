@@ -1,5 +1,31 @@
 # create-sailor
 
+## 1.8.3
+
+### Patch Changes
+
+- Ship the correct licence in scaffolded projects and in the package itself.
+
+  Two licensing defects are fixed:
+  - **The package declared `"license": "MIT"` while shipping the full AGPL-3.0
+    text as its `LICENSE` file**, which `files` explicitly included. Every
+    published tarball since the first release carried that contradiction. The
+    `LICENSE` file is now MIT, matching the declared field.
+  - **Scaffolded projects received the retired Independent Developer License**,
+    complete with AGPL copyleft warnings, a ≤ 1 FTE limit, and a $799/year
+    upgrade path. Scaffolded output is distributed inside this MIT-licensed
+    package, so it is MIT — the emitted `LICENSE` now says so, and states
+    plainly that commercial use is free with no registration or attribution.
+
+  The upstream repository licence is preserved in the scaffold as
+  `LICENSE-UPSTREAM-REFERENCE.md` (FSL-1.1-ALv2 today, AGPL-3.0 for checkouts
+  from before 2026-07-26).
+
+  `.nebutra/scaffold-meta.json` is demoted to provenance: it no longer gates any
+  right, and its `purpose` string says so. Its `license.tier` value becomes
+  `mit-scaffold`, but verifiers still accept the legacy `independent` value, so
+  markers written by create-sailor <= 1.8.2 keep verifying.
+
 ## 1.8.2
 
 ### Patch Changes
@@ -28,7 +54,6 @@
 ### Minor Changes
 
 - [`4769338`](https://github.com/Nebutra/Nebutra-Sailor/commit/47693386093eb725158753e3ca3b16a632b6935b) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Maintenance + dependency upgrades:
-
   - Bump CLI dependencies: `commander` 12→15, `ignore` 5→7, `@clack/prompts` 0.7→1.5, `@mrleebo/prisma-ast` 0.15→0.16.
   - Raise the Node engine floor to `>=20.9.0` (Node 18 is EOL; `commander` 15 requires Node 20+).
   - Migrate `@clack/prompts` `validate` callbacks to v1's stricter `string | undefined` value type.
@@ -49,7 +74,6 @@
 - [`94adc0a`](https://github.com/Nebutra/Nebutra-Sailor/commit/94adc0ad7d305e92ef62411768b04f8fd79cdb48) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Close drift between the CLI/scaffolder surface and the current monorepo.
 
   `nebutra`:
-
   - Read VERSION from package.json at module load (was hardcoded "0.1.0"
     while published as 0.3.0, breaking --version and update-notifier).
   - Switch `@nebutra/theme` dep from `workspace:*` to published `^0.1.0`
@@ -73,7 +97,6 @@
     pre-merger `packages/ui`).
 
   `create-sailor`:
-
   - Show the same `NEBUTRA_TELEMETRY` first-run banner that the runtime
     CLI shows, using a shared `~/.config/nebutra/first-run-acked` marker
     so the banner only fires once per machine across both tools. Users
@@ -91,7 +114,6 @@
   new code can opt into Drizzle's SQL-shaped query builder while existing
   auth / billing / audit / oauth flows keep working against Prisma. The
   Drizzle package ships with:
-
   - `drizzle.config.ts` targeting Postgres
   - `src/schema/{auth,tenant,billing}.ts` — read-mostly mirrors of the core
     Better Auth (user/session/account/verification/organization/member/

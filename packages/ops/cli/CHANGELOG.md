@@ -1,5 +1,23 @@
 # nebutra
 
+## 0.3.7
+
+### Patch Changes
+
+- Stop `license verify` claiming a licence tier that no longer exists.
+
+  The command printed "Independent Developer License valid." on success. That
+  tier was retired on 2026-07-26 — commercial use is now free at any size under
+  MIT (packages) and FSL-1.1-ALv2 (repository), so a scaffold marker grants
+  nothing. The command now reports "Scaffold marker valid." and states that the
+  marker is provenance only, with the MIT licence applying regardless of it.
+
+  Marker verification itself is unchanged, and the legacy `independent` tier
+  value is still accepted so projects scaffolded by create-sailor <= 1.8.2 keep
+  verifying.
+
+  Also adds the MIT `LICENSE` file the package declared but never shipped.
+
 ## 0.3.6
 
 ### Patch Changes

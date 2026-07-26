@@ -372,6 +372,7 @@
       "js-yaml@5": "5.2.2",
       "js-yaml@^5": "5.2.2",
       "gray-matter>js-yaml": "3.15.0",
+      "read-yaml-file>js-yaml": "3.15.0",
       "fumadocs-mdx>js-yaml": "5.2.2",
       "@changesets/parse>js-yaml": "5.2.2",
       "openapi-typescript>js-yaml": "5.2.2",
