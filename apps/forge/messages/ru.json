@@ -11,7 +11,8 @@
     "wallet": "Кошелёк",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Категории инструментов"
+    "categoriesAria": "Категории инструментов",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Навигационная цепочка",

@@ -11,7 +11,8 @@
     "wallet": "Ví",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Danh mục công cụ"
+    "categoriesAria": "Danh mục công cụ",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumbs",

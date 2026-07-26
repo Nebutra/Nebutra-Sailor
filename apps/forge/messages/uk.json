@@ -11,7 +11,8 @@
     "wallet": "Гаманець",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Категорії інструментів"
+    "categoriesAria": "Категорії інструментів",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Навігаційна стежка",

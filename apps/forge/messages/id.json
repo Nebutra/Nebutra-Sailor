@@ -11,7 +11,8 @@
     "wallet": "Dompet",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Kategori alat"
+    "categoriesAria": "Kategori alat",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",

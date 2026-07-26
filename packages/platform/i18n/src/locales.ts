@@ -200,3 +200,15 @@ export function toContentLocale(locale: null | string | undefined): ContentLocal
 export function toLocaleLabelKey(locale: null | string | undefined): RouteLocale {
   return toRouteLocale(locale);
 }
+
+/** Product message keys that require RTL layout (Arabic, Hebrew, Persian, Urdu). */
+const RTL_MESSAGE_KEYS = new Set<ProductLanguage>(["ar", "he", "fa", "ur"]);
+
+export function isRtlLocale(locale: null | string | undefined): boolean {
+  return RTL_MESSAGE_KEYS.has(toMessageLocale(locale));
+}
+
+/** Value for `<html dir>` — pairs with toHtmlLang(). */
+export function toTextDir(locale: null | string | undefined): "ltr" | "rtl" {
+  return isRtlLocale(locale) ? "rtl" : "ltr";
+}

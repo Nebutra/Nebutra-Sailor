@@ -2,7 +2,7 @@ import "./globals.css";
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
-import { toHtmlLang } from "@nebutra/i18n/locales";
+import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -47,7 +47,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const messages = await getMessages();
 
   return (
-    <html lang={toHtmlLang(locale)} className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html
+      lang={toHtmlLang(locale)}
+      dir={toTextDir(locale)}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
       <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider provider={authProvider} config={authProviderConfig}>

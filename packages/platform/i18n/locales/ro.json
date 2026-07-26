@@ -78,7 +78,10 @@
     "ja": "Japoneză",
     "ko": "Coreeană",
     "label": "Limbă",
-    "ariaLabel": "Schimbă limba"
+    "ariaLabel": "Schimbă limba",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

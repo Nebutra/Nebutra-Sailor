@@ -11,7 +11,8 @@
     "wallet": "Pesa",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Aina za zana"
+    "categoriesAria": "Aina za zana",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",

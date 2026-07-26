@@ -11,7 +11,8 @@
     "wallet": "ওয়ালেট",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "টুল ক্যাটাগরি"
+    "categoriesAria": "টুল ক্যাটাগরি",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "ব্রেডক্রাম্ব",

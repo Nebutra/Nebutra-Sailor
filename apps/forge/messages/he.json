@@ -11,7 +11,8 @@
     "wallet": "ארנק",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "קטגוריות כלים"
+    "categoriesAria": "קטגוריות כלים",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "פירורי לחם",

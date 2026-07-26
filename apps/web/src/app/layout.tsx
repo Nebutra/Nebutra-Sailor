@@ -3,6 +3,7 @@ import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { getSiteMetadata } from "@nebutra/brand/metadata-helpers";
 import { fontRegistryClassName } from "@nebutra/fonts/next";
+import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Toaster } from "@nebutra/ui/primitives";
@@ -96,7 +97,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html
-      lang={locale}
+      lang={toHtmlLang(locale)}
+      dir={toTextDir(locale)}
       className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${fontRegistryClassName}`.trim()}
       suppressHydrationWarning
     >

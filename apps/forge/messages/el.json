@@ -11,7 +11,8 @@
     "wallet": "Πορτοφόλι",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Κατηγορίες εργαλείων"
+    "categoriesAria": "Κατηγορίες εργαλείων",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",

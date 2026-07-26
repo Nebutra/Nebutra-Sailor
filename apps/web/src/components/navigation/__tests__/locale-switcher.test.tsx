@@ -7,37 +7,45 @@ const refreshMock = vi.fn();
 const useLocaleMock = vi.fn(() => "en-US");
 const usePathnameMock = vi.fn(() => "/settings");
 
-vi.mock("@nebutra/i18n/locale-switcher", () => ({
-  createLocaleSwitcher:
-    (routing: { useRouter: () => { refresh: () => void } }, config: { locales: string[] }) =>
-    ({ ariaLabel, labels }: { ariaLabel?: string; labels?: Record<string, string> }) => {
-      const locale = useLocaleMock();
-      const router = routing.useRouter();
-      return (
-        <div>
-          <button type="button" aria-label={ariaLabel}>
-            {locale.slice(0, 2).toUpperCase()}
-          </button>
-          <div role="menu">
-            {config.locales.map((nextLocale) => (
-              <button
-                key={nextLocale}
-                type="button"
-                role="menuitem"
-                aria-current={nextLocale === locale ? "true" : undefined}
-                onClick={() => {
-                  document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; SameSite=Lax`;
-                  router.refresh();
-                }}
-              >
-                {labels?.[nextLocale] ?? nextLocale}
-              </button>
-            ))}
+vi.mock("@nebutra/i18n/locale-switcher", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@nebutra/i18n/locale-switcher")>();
+  return {
+    ...actual,
+    createLocaleSwitcher:
+      (
+        routing: { useRouter: () => { refresh: () => void } },
+        config: { locales: string[]; labels: Record<string, string> },
+      ) =>
+      ({ ariaLabel, labels }: { ariaLabel?: string; labels?: Record<string, string> }) => {
+        const locale = useLocaleMock();
+        const router = routing.useRouter();
+        const resolved = { ...config.labels, ...labels };
+        return (
+          <div>
+            <button type="button" aria-label={ariaLabel}>
+              EN
+            </button>
+            <div role="menu">
+              {config.locales.map((nextLocale) => (
+                <button
+                  key={nextLocale}
+                  type="button"
+                  role="menuitem"
+                  aria-current={nextLocale === locale ? "true" : undefined}
+                  onClick={() => {
+                    document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; SameSite=Lax`;
+                    router.refresh();
+                  }}
+                >
+                  {resolved[nextLocale] ?? nextLocale}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      );
-    },
-}));
+        );
+      },
+  };
+});
 
 vi.mock("next-intl", () => ({
   useLocale: () => useLocaleMock(),
@@ -48,9 +56,6 @@ vi.mock("use-intl", () => ({
   useLocale: () => useLocaleMock(),
 }));
 
-// apps/web runs cookie-based i18n: the switcher imports next/navigation hooks
-// (not @nebutra/i18n/routing) and, in cookie mode, writes the NEXT_LOCALE
-// cookie then calls router.refresh() — no URL change, no router.replace.
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ refresh: refreshMock }),
   usePathname: () => usePathnameMock(),
@@ -58,7 +63,8 @@ vi.mock("next/navigation", () => ({
 
 import { LocaleSwitcher } from "../locale-switcher";
 
-const LOCALE_COUNT = 7; // en-US, zh-Hans-CN, de-DE, es-ES, fr-FR, ja-JP, ko-KR
+// Full PRODUCT_LANGUAGES wheel as canonical BCP-47 tags
+const LOCALE_COUNT = 34;
 
 describe("Navigation LocaleSwitcher", () => {
   beforeEach(() => {
@@ -79,20 +85,23 @@ describe("Navigation LocaleSwitcher", () => {
     expect(trigger.textContent).toMatch(/EN/i);
   });
 
-  it("shows all locale options when opened", () => {
+  it("shows the full language wheel when opened", () => {
     render(<LocaleSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /LocaleSwitcher\.ariaLabel/ }));
     const items = screen.getAllByRole("menuitem");
-    expect(items).toHaveLength(LOCALE_COUNT);
-    expect(items[0].textContent).toContain("LocaleSwitcher.en");
-    expect(items[1].textContent).toContain("LocaleSwitcher.zh");
+    expect(items.length).toBe(LOCALE_COUNT);
+    // Endonyms, not blank / not 7-locale stub keys
+    expect(items.some((el) => el.textContent?.includes("English"))).toBe(true);
+    expect(items.some((el) => el.textContent?.includes("简体中文"))).toBe(true);
   });
 
-  it("writes the NEXT_LOCALE cookie and calls router.refresh (cookie mode, no URL change)", () => {
+  it("writes the NEXT_LOCALE cookie and calls router.refresh (cookie mode)", () => {
     render(<LocaleSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /LocaleSwitcher\.ariaLabel/ }));
     const items = screen.getAllByRole("menuitem");
-    fireEvent.click(items[1]); // zh-Hans-CN
+    const zh = items.find((el) => el.textContent?.includes("简体中文"));
+    expect(zh).toBeTruthy();
+    fireEvent.click(zh!);
 
     expect(document.cookie).toMatch(/NEXT_LOCALE=zh-Hans-CN/);
     expect(refreshMock).toHaveBeenCalledTimes(1);
@@ -103,7 +112,7 @@ describe("Navigation LocaleSwitcher", () => {
     render(<LocaleSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /LocaleSwitcher\.ariaLabel/ }));
     const items = screen.getAllByRole("menuitem");
-    expect(items[1].getAttribute("aria-current")).toBe("true");
-    expect(items[0].getAttribute("aria-current")).toBeNull();
+    const zh = items.find((el) => el.getAttribute("aria-current") === "true");
+    expect(zh?.textContent).toContain("简体中文");
   });
 });

@@ -11,7 +11,8 @@
     "wallet": "Billetera",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Categorías de herramientas"
+    "categoriesAria": "Categorías de herramientas",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Migas de pan",

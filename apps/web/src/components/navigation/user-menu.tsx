@@ -1,7 +1,9 @@
 "use client";
 
 import { useAuth } from "@nebutra/auth/client";
-import { CANONICAL_LOCALES, type CanonicalLocale, toLocaleLabelKey } from "@nebutra/i18n/locales";
+import { setLocaleCookie } from "@nebutra/i18n/cookies";
+import { buildCanonicalLocaleLabels, defaultCompactTrigger } from "@nebutra/i18n/locale-switcher";
+import { CANONICAL_LOCALES, type CanonicalLocale } from "@nebutra/i18n/locales";
 import {
   ChevronDown,
   ChevronRight,
@@ -18,7 +20,7 @@ import { useTheme } from "@nebutra/tokens";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
 import { createPortal } from "react-dom";
 import { useAccountDialog } from "@/components/account/account-dialog";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
@@ -28,7 +30,7 @@ import { dicebearAvatarUrl } from "@/lib/avatar";
 type ThemeChoice = "system" | "light" | "dark";
 const LOCALES = CANONICAL_LOCALES;
 type LocaleCode = CanonicalLocale;
-const NEXT_LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+const LOCALE_LABELS = buildCanonicalLocaleLabels(CANONICAL_LOCALES) as Record<LocaleCode, string>;
 
 interface UserMenuProps {
   /**
@@ -50,11 +52,6 @@ const THEME_ICON: Record<ThemeChoice, typeof Monitor> = {
   dark: Moon,
 };
 
-function setLocaleCookie(locale: LocaleCode): void {
-  if (typeof document === "undefined") return;
-  document.cookie = `NEXT_LOCALE=${locale}; Path=/; Max-Age=${NEXT_LOCALE_COOKIE_MAX_AGE}; SameSite=Lax`;
-}
-
 export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: UserMenuProps = {}) {
   const t = useTranslations("userMenu");
   const tTheme = useTranslations("theme");
@@ -69,11 +66,23 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
   const [open, setOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
   const [localeOpen, setLocaleOpen] = useState(false);
+  const [localeQuery, setLocaleQuery] = useState("");
+
+  const filteredLocales = useMemo(() => {
+    const q = localeQuery.trim().toLowerCase();
+    const ordered = [locale, ...LOCALES.filter((l) => l !== locale)] as readonly LocaleCode[];
+    if (!q) return ordered;
+    return ordered.filter((l) => {
+      const label = (LOCALE_LABELS[l] ?? l).toLowerCase();
+      return label.includes(q) || l.toLowerCase().includes(q);
+    });
+  }, [locale, localeQuery]);
 
   const closeAll = useCallback(() => {
     setOpen(false);
     setThemeOpen(false);
     setLocaleOpen(false);
+    setLocaleQuery("");
   }, []);
 
   const { triggerRef, menuRef, style } = useAnchoredMenu(open, closeAll);
@@ -239,16 +248,33 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
                 <span>{tLocale("ariaLabel")}</span>
               </span>
               <span className="flex items-center gap-1">
-                <span className="uppercase text-xs text-neutral-11">
-                  {toLocaleLabelKey(locale)}
+                <span className="max-w-[4.5rem] truncate text-xs text-neutral-11">
+                  {defaultCompactTrigger(locale)}
                 </span>
                 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
               </span>
             </button>
 
             {localeOpen && (
-              <div role="menu" aria-label={tLocale("ariaLabel")} className="mt-1 px-1">
-                {LOCALES.map((cur) => {
+              <div
+                role="menu"
+                aria-label={tLocale("ariaLabel")}
+                className="mt-1 max-h-56 overflow-y-auto px-1"
+              >
+                <input
+                  data-allow-native
+                  type="search"
+                  value={localeQuery}
+                  onChange={(e) => setLocaleQuery(e.target.value)}
+                  placeholder={
+                    tLocale.has("searchPlaceholder" as never)
+                      ? tLocale("searchPlaceholder" as never)
+                      : "Search…"
+                  }
+                  className="mb-1 h-7 w-full rounded-[var(--radius-sm)] border border-neutral-6 px-2 text-xs outline-none focus:border-neutral-8"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                {filteredLocales.map((cur) => {
                   const isActive = locale === cur;
                   return (
                     <button
@@ -260,7 +286,7 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
                       onClick={() => handleLocaleChange(cur)}
                       className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2"
                     >
-                      <span>{tLocale(toLocaleLabelKey(cur))}</span>
+                      <span className="truncate">{LOCALE_LABELS[cur] ?? cur}</span>
                       {isActive && <span aria-hidden>•</span>}
                     </button>
                   );

@@ -78,7 +78,10 @@
     "ja": "日本語",
     "ko": "한국어",
     "label": "Sprache",
-    "ariaLabel": "Sprache ändern"
+    "ariaLabel": "Sprache ändern",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

@@ -78,7 +78,10 @@
     "ja": "Japonca",
     "ko": "Korece",
     "label": "Dil",
-    "ariaLabel": "Dili değiştir"
+    "ariaLabel": "Dili değiştir",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

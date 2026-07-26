@@ -78,7 +78,10 @@
     "ja": "Japans",
     "ko": "Koreaans",
     "label": "Taal",
-    "ariaLabel": "Taal wijzigen"
+    "ariaLabel": "Taal wijzigen",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

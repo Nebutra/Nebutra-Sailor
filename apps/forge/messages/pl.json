@@ -11,7 +11,8 @@
     "wallet": "Portfel",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Kategorie narzędzi"
+    "categoriesAria": "Kategorie narzędzi",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Ścieżka nawigacji",

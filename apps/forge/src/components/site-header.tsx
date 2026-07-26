@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { ForgeMark } from "@/components/forge-mark";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 import { RouterMark } from "@/components/router-mark";
 
 const NAV_KEYS = [
@@ -56,7 +57,8 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+          <LocaleSwitcher />
           <a
             href={ROUTER_URL}
             aria-label={t("routerAria", { brandName: brand.name })}

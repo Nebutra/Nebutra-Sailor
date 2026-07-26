@@ -11,7 +11,8 @@
     "wallet": "Peněženka",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Kategorie nástrojů"
+    "categoriesAria": "Kategorie nástrojů",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Navigační cesta",

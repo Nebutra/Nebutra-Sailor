@@ -11,7 +11,8 @@
     "wallet": "ウォレット",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "ツールカテゴリ"
+    "categoriesAria": "ツールカテゴリ",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "パンくずリスト",

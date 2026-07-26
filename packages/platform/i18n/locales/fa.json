@@ -78,7 +78,10 @@
     "ja": "ژاپنی",
     "ko": "کره‌ای",
     "label": "زبان",
-    "ariaLabel": "تغییر زبان"
+    "ariaLabel": "تغییر زبان",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

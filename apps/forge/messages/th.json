@@ -11,7 +11,8 @@
     "wallet": "กระเป๋าเงิน",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "หมวดหมู่เครื่องมือ"
+    "categoriesAria": "หมวดหมู่เครื่องมือ",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "เส้นทางนำทาง",

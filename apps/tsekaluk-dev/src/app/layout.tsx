@@ -32,10 +32,12 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
+  const { toHtmlLang, toTextDir } = await import("@nebutra/i18n/locales");
 
   return (
     <html
-      lang={locale}
+      lang={toHtmlLang(locale)}
+      dir={toTextDir(locale)}
       className={`scroll-smooth ${fontRegistryClassName}`.trim()}
       suppressHydrationWarning
     >

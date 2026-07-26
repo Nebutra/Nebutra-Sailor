@@ -11,7 +11,8 @@
     "wallet": "المحفظة",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "فئات الأدوات"
+    "categoriesAria": "فئات الأدوات",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "مسار التنقل",

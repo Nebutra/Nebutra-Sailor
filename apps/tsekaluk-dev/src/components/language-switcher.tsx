@@ -1,65 +1,24 @@
 "use client";
-import { brandSpring } from "@nebutra/brand";
-import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { motion, useReducedMotion } from "@/shared/motion";
 
-/** Global wheel (subset of UI labels; full set lives in message catalogs). */
-const LOCALES = [
-  { code: "en", label: "EN" },
-  { code: "zh-Hans", label: "简体" },
-  { code: "zh-Hant", label: "繁體" },
-  { code: "ja", label: "日本語" },
-  { code: "ko", label: "한국어" },
-  { code: "es", label: "ES" },
-  { code: "fr", label: "FR" },
-  { code: "de", label: "DE" },
-  { code: "pt", label: "PT" },
-] as const;
-export function LanguageSwitcher() {
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const shouldReduceMotion = useReducedMotion();
-  const switchLocale = (newLocale: string) => {
-    if (newLocale === locale) return;
-    router.replace(pathname, { locale: newLocale });
-  };
-  return (
-    // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
-    <div
-      role="group"
-      aria-label="Language switcher"
-      className="flex items-center rounded-full border border-border bg-muted p-0.5"
-    >
-      {LOCALES.map((loc) => {
-        const isActive = locale === loc.code;
-        return (
-          <button
-            key={loc.code}
-            type="button"
-            onClick={() => switchLocale(loc.code)}
-            aria-pressed={isActive}
-            aria-label={`Switch to ${loc.label}`}
-            className="relative px-3 py-1 text-xs font-medium rounded-full transition-transform duration-150 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
-          >
-            {isActive && (
-              <motion.div
-                layoutId="lang-pill"
-                className="absolute inset-0 z-0 bg-background rounded-full shadow-sm"
-                transition={shouldReduceMotion ? { duration: 0 } : brandSpring.default}
-              />
-            )}
-            <span
-              className={`relative z-10 transition-colors duration-150 ${
-                isActive ? "text-foreground" : "text-muted-foreground"
-              }`}
-            >
-              {loc.label}
-            </span>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
+import { PRODUCT_LANGUAGES } from "@nebutra/i18n/languages";
+import {
+  buildMessageKeyLocaleLabels,
+  createLocaleSwitcher,
+  defaultCompactTrigger,
+} from "@nebutra/i18n/locale-switcher";
+import { usePathname, useRouter } from "@/i18n/navigation";
+
+const labels = buildMessageKeyLocaleLabels();
+
+/**
+ * Full PRODUCT_LANGUAGES wheel (path mode). Replaces the legacy 9-pill control.
+ */
+export const LanguageSwitcher = createLocaleSwitcher(
+  { useRouter, usePathname },
+  {
+    locales: PRODUCT_LANGUAGES,
+    labels,
+    mode: "path",
+    displayLocale: (loc) => defaultCompactTrigger(loc),
+  },
+);

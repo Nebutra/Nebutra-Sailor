@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   canonicalizeLocale,
   canonicalizeLocaleOrDefault,
+  isRtlLocale,
   isSimplifiedChineseLocale,
   isSupportedLocale,
   isTraditionalChineseLocale,
@@ -11,6 +12,7 @@ import {
   toMessageLocale,
   toOpenGraphLocale,
   toRouteLocale,
+  toTextDir,
 } from "./locales";
 
 describe("locale contract", () => {
@@ -79,5 +81,15 @@ describe("locale contract", () => {
     expect(isSupportedLocale("xx-YY")).toBe(false);
     expect(canonicalizeLocaleOrDefault("xx-YY")).toBe("en-US");
     expect(toRouteLocale("xx-YY")).toBe("en");
+  });
+
+  it("marks Arabic / Hebrew / Persian / Urdu as RTL", () => {
+    expect(isRtlLocale("ar")).toBe(true);
+    expect(isRtlLocale("he-IL")).toBe(true);
+    expect(isRtlLocale("fa")).toBe(true);
+    expect(isRtlLocale("ur")).toBe(true);
+    expect(isRtlLocale("en")).toBe(false);
+    expect(toTextDir("ar")).toBe("rtl");
+    expect(toTextDir("zh-Hans")).toBe("ltr");
   });
 });

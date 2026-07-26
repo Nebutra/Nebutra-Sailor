@@ -2,9 +2,6 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { safeGetItem, safeSetItem } from "@nebutra/browser-utils";
-import { setLocaleCookie } from "@nebutra/i18n/cookies";
-import { PRODUCT_LANGUAGE_META, PRODUCT_LANGUAGES } from "@nebutra/i18n/languages";
-import { toMessageLocale } from "@nebutra/i18n/locales";
 import {
   BookOpen,
   ChevronDown,
@@ -18,10 +15,11 @@ import {
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import { type FormEvent, type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
+import { type FormEvent, type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 import { MarketFooter } from "@/components/market-footer";
 import { RouterMark } from "@/components/router-mark";
 import { MarketIcon } from "@/lib/market-icons";
@@ -52,12 +50,6 @@ const CURRENCIES = [
   { id: "JPY", label: "JPY ¥" },
   { id: "RUB", label: "RUB ₽" },
 ] as const;
-
-/** Global language wheel — endonyms from PRODUCT_LANGUAGE_META. */
-const WHEEL_LOCALES = PRODUCT_LANGUAGES.map((id) => ({
-  id,
-  label: PRODUCT_LANGUAGE_META[id].endonym,
-}));
 
 type Surface = "market" | "admin" | "use";
 
@@ -179,7 +171,6 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
   const searchParams = useSearchParams();
   const t = useTranslations("chrome");
   const tCh = useTranslations("channels");
-  const activeLocale = toMessageLocale(useLocale());
   const [q, setQ] = useState("");
   const [currency, setCurrency] = useState<(typeof CURRENCIES)[number]["id"]>("USD");
 
@@ -196,26 +187,14 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
     router.push(query ? `/models?q=${encodeURIComponent(query)}` : "/models");
   };
 
-  const onLocaleSelect = (messageKey: string) => {
-    setLocaleCookie(messageKey);
-    router.refresh();
-  };
-
   const currencyLabel = CURRENCIES.find((c) => c.id === currency)?.label ?? "USD $";
-  const localeLabel = useMemo(
-    () =>
-      WHEEL_LOCALES.find((l) => l.id === activeLocale)?.label ??
-      PRODUCT_LANGUAGE_META[activeLocale]?.endonym ??
-      activeLocale,
-    [activeLocale],
-  );
 
   return (
     <div className="router-market text-[var(--neutral-12)]">
       {/* utility bar — hairline, quieter */}
       <div className="border-b border-[var(--rm-line)]/80 bg-white/40 backdrop-blur-sm">
         <div className="router-market-shell flex h-9 items-center justify-between gap-3 text-[12px] text-[var(--neutral-11)]">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <HeaderMenu
               label={currencyLabel}
               items={CURRENCIES.map((c) => ({
@@ -224,14 +203,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
                 onSelect: () => setCurrency(c.id),
               }))}
             />
-            <HeaderMenu
-              label={localeLabel}
-              items={WHEEL_LOCALES.map((l) => ({
-                id: l.id,
-                label: l.label,
-                onSelect: () => onLocaleSelect(l.id),
-              }))}
-            />
+            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
             <span className="text-[var(--neutral-7)]" aria-hidden>
               |
             </span>
@@ -370,7 +342,8 @@ function AdminShell({ pathname, children }: { pathname: string; children: ReactN
             <BrandLogo variant="mark" className="h-6 w-6" />
             <span className="text-[13px] font-semibold">{t("title")}</span>
           </Link>
-          <div className="ml-auto flex gap-3 text-[12px] text-[var(--neutral-11)]">
+          <div className="ml-auto flex items-center gap-2 text-[12px] text-[var(--neutral-11)] sm:gap-3">
+            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
             <Link href="/" className="hover:text-[var(--neutral-12)]">
               {t("backToMarket")}
             </Link>
@@ -447,7 +420,8 @@ function UsageShell({ children }: { children: ReactNode }) {
             <BrandLogo variant="mark" className="h-6 w-6" />
             <span className="text-[13px] font-semibold">{t("usageTitle")}</span>
           </Link>
-          <div className="ml-auto flex gap-3 text-[12px] text-[var(--neutral-11)]">
+          <div className="ml-auto flex items-center gap-2 text-[12px] text-[var(--neutral-11)] sm:gap-3">
+            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
             <Link href="/" className="hover:text-[var(--neutral-12)]">
               {t("market")}
             </Link>

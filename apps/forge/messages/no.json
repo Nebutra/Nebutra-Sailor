@@ -11,7 +11,8 @@
     "wallet": "Lommebok",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Verktøykategorier"
+    "categoriesAria": "Verktøykategorier",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Sti",

@@ -11,7 +11,8 @@
     "wallet": "钱包",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "工具分类"
+    "categoriesAria": "工具分类",
+    "languageAria": "切换语言"
   },
   "tool": {
     "breadcrumbAria": "面包屑",

@@ -11,7 +11,8 @@
     "wallet": "کیف پول",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "دسته‌بندی ابزارها"
+    "categoriesAria": "دسته‌بندی ابزارها",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "مسیر صفحه",

@@ -78,7 +78,10 @@
     "ja": "Jepang",
     "ko": "Korea",
     "label": "Bahasa",
-    "ariaLabel": "Ubah bahasa"
+    "ariaLabel": "Ubah bahasa",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

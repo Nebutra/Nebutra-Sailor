@@ -11,7 +11,8 @@
     "wallet": "Portefeuille",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Catégories d'outils"
+    "categoriesAria": "Catégories d'outils",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Fil d'Ariane",

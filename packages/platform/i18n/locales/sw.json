@@ -78,7 +78,10 @@
     "ja": "Kijapani",
     "ko": "Kikorea",
     "label": "Lugha",
-    "ariaLabel": "Badilisha lugha"
+    "ariaLabel": "Badilisha lugha",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

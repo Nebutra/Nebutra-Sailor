@@ -11,7 +11,8 @@
     "wallet": "Plånbok",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Verktygskategorier"
+    "categoriesAria": "Verktygskategorier",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Brödsmulor",

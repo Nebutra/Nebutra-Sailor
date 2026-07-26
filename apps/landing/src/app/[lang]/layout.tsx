@@ -3,7 +3,7 @@ import {
   buildSoftwareApplicationJsonLd,
   buildWebSiteJsonLd,
 } from "@nebutra/brand/metadata-helpers";
-import { toHtmlLang } from "@nebutra/i18n/locales";
+import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -186,6 +186,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   return (
     <html
       lang={toHtmlLang(locale)}
+      dir={toTextDir(locale)}
       className={`${fontVariables} min-h-screen antialiased`}
       suppressHydrationWarning
     >

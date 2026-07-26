@@ -78,7 +78,10 @@
     "ja": "Japanska",
     "ko": "Koreanska",
     "label": "Språk",
-    "ariaLabel": "Byt språk"
+    "ariaLabel": "Byt språk",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

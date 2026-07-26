@@ -11,7 +11,8 @@
     "wallet": "Cüzdan",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Araç kategorileri"
+    "categoriesAria": "Araç kategorileri",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",

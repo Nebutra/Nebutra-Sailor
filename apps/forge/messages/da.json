@@ -11,7 +11,8 @@
     "wallet": "Wallet",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Værktøjskategorier"
+    "categoriesAria": "Værktøjskategorier",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Brødkrumme",

@@ -78,7 +78,10 @@
     "ja": "اليابانية",
     "ko": "الكورية",
     "label": "اللغة",
-    "ariaLabel": "تغيير اللغة"
+    "ariaLabel": "تغيير اللغة",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

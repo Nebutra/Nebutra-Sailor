@@ -78,7 +78,10 @@
     "ja": "Japán",
     "ko": "Koreai",
     "label": "Nyelv",
-    "ariaLabel": "Nyelv módosítása"
+    "ariaLabel": "Nyelv módosítása",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

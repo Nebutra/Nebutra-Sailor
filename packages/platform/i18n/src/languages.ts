@@ -154,3 +154,23 @@ export function productTranslateTargets(): readonly ProductLanguage[] {
 export function isChineseProductLanguage(id: null | string | undefined): boolean {
   return id === "zh-Hans" || id === "zh-Hant";
 }
+
+/** Full-wheel endonym labels for message-key locales (en, zh-Hans, ja…). */
+export function productLanguageEndonymLabels(): Record<ProductLanguage, string> {
+  const out = {} as Record<ProductLanguage, string>;
+  for (const id of PRODUCT_LANGUAGES) {
+    out[id] = PRODUCT_LANGUAGE_META[id].endonym;
+  }
+  return out;
+}
+
+/**
+ * Compact trigger chip (navbar / header).
+ * Prefer short, scannable marks for CJK + English; endonym otherwise.
+ */
+export function compactLanguageTriggerLabel(messageKey: ProductLanguage): string {
+  if (messageKey === "en") return "EN";
+  if (messageKey === "zh-Hans") return "简体";
+  if (messageKey === "zh-Hant") return "繁體";
+  return PRODUCT_LANGUAGE_META[messageKey].endonym;
+}

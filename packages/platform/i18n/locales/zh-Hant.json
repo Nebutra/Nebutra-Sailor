@@ -78,7 +78,10 @@
     "ja": "日语",
     "ko": "韩语",
     "label": "语言",
-    "ariaLabel": "切换语言"
+    "ariaLabel": "切换语言",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

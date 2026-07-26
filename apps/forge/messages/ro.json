@@ -11,7 +11,8 @@
     "wallet": "Portofel",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Categorii de instrumente"
+    "categoriesAria": "Categorii de instrumente",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Drumuleț",

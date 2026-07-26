@@ -11,7 +11,8 @@
     "wallet": "지갑",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "도구 카테고리"
+    "categoriesAria": "도구 카테고리",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "경로",

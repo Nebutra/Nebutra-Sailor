@@ -78,7 +78,10 @@
     "ja": "Tiếng Nhật",
     "ko": "Tiếng Hàn",
     "label": "Ngôn ngữ",
-    "ariaLabel": "Đổi ngôn ngữ"
+    "ariaLabel": "Đổi ngôn ngữ",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

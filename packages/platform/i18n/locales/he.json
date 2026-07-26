@@ -78,7 +78,10 @@
     "ja": "יפנית",
     "ko": "קוריאנית",
     "label": "שפה",
-    "ariaLabel": "שנה שפה"
+    "ariaLabel": "שנה שפה",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

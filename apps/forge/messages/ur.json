@@ -11,7 +11,8 @@
     "wallet": "والیٹ",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "ٹول کیٹیگریز"
+    "categoriesAria": "ٹول کیٹیگریز",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "بریبڈ کرامب",

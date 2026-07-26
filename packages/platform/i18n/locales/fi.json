@@ -78,7 +78,10 @@
     "ja": "Japani",
     "ko": "Korea",
     "label": "Kieli",
-    "ariaLabel": "Vaihda kieli"
+    "ariaLabel": "Vaihda kieli",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

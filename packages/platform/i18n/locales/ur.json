@@ -78,7 +78,10 @@
     "ja": "جاپانی",
     "ko": "کوریائی",
     "label": "زبان",
-    "ariaLabel": "زبان تبدیل کریں"
+    "ariaLabel": "زبان تبدیل کریں",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match",
+    "menuAria": "Select language"
   },
   "compliance": {
     "icp": {

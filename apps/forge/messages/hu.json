@@ -11,7 +11,8 @@
     "wallet": "Tárca",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Eszköz kategóriák"
+    "categoriesAria": "Eszköz kategóriák",
+    "languageAria": "Change language"
   },
   "tool": {
     "breadcrumbAria": "Vezérlőpálya",
