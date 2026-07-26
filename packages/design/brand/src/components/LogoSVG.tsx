@@ -261,6 +261,10 @@ export function LogoEnSVG({
   );
 }
 
+// Per-render unique gradient ids (duplicate fixed ids break fill=url(#…) when
+// nav renders twice or a sibling SVG is display:none — mark becomes invisible).
+let logoColorGradSeq = 0;
+
 /**
  * Full English logo with VI color fills (gradient mark + #060307 wordmark).
  * For light surfaces. Dark inverse: use LogoEnSVG with text-white instead.
@@ -272,27 +276,29 @@ export function LogoEnColorSVG({
   "aria-label": ariaLabel,
 }: LogoEnSVGProps) {
   const { h, logomarkW, wordmarkW, totalW } = layoutLogoEn(width, gap);
-  // Stable id (RSC-safe; one primary chrome logo per page is fine)
-  const gradId = "nebutra-logo-en-color-grad";
+  logoColorGradSeq += 1;
+  const gradId = `nebutra-logo-en-color-grad-${logoColorGradSeq}`;
 
+  // Gradient in logomark native space (userSpaceOnUse) so fill survives scale().
+  // fill on <path> (not only <g>) — more reliable across engines.
   const children = (
     <>
       <defs>
         <linearGradient
           id={gradId}
-          x1="0%"
-          y1="0%"
-          x2="100%"
-          y2="100%"
-          gradientUnits="objectBoundingBox"
+          gradientUnits="userSpaceOnUse"
+          x1="40"
+          y1="40"
+          x2="490"
+          y2="460"
         >
-          <stop offset="0%" stopColor="#0033FE" />
-          <stop offset="50%" stopColor="#00A2E9" />
-          <stop offset="100%" stopColor="#0BF1C3" />
+          <stop offset="0" stopColor="#0033FE" />
+          <stop offset="0.5" stopColor="#00A2E9" />
+          <stop offset="1" stopColor="#0BF1C3" />
         </linearGradient>
       </defs>
-      <g transform={`scale(${logomarkW / 535.71}, ${h / 500})`} fill={`url(#${gradId})`}>
-        <path d={LOGOMARK_PATH} />
+      <g transform={`scale(${logomarkW / 535.71}, ${h / 500})`}>
+        <path d={LOGOMARK_PATH} fill={`url(#${gradId})`} />
       </g>
       <g
         transform={`translate(${logomarkW + gap}, 0) scale(${wordmarkW / 544.21}, ${h / 103.74})`}
