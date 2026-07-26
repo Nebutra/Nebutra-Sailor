@@ -1,3 +1,5 @@
+import { LogoEnSVG } from "@nebutra/brand";
+import { brand } from "@nebutra/brand/metadata";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { Banner } from "fumadocs-ui/components/banner";
 import { I18nProvider } from "fumadocs-ui/contexts/i18n";
@@ -6,7 +8,6 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { htmlLangForLanguage, i18n } from "@/lib/i18n";
@@ -113,31 +114,17 @@ export default async function RootLayout({
               nav={{
                 title: (
                   <div className="flex items-center gap-2">
-                    {/* Light: color + dark wordmark. Dark: white mono (brand inverted). */}
-                    <Image
-                      src={
-                        lang === "zh"
-                          ? "/logo/logo-horizontal-zh.svg"
-                          : "/logo/logo-horizontal-en.svg"
-                      }
-                      alt="Nebutra Sailor Docs"
-                      width={140}
-                      height={24}
-                      className="h-6 w-auto dark:hidden"
-                      priority
-                    />
-                    <Image
-                      src={
-                        lang === "zh"
-                          ? "/logo/logo-horizontal-zh.svg"
-                          : "/logo/logo-horizontal-en.svg"
-                      }
-                      alt="Nebutra Sailor Docs"
-                      width={140}
-                      height={24}
-                      className="hidden h-6 w-auto dark:block dark:brightness-0 dark:invert"
-                      priority
-                    />
+                    {/*
+                      Inline mono SVG (fill=currentColor) — no public/logo dependency.
+                      Light: brand-mark token. Dark: pure white (反白), not CSS invert on color VI.
+                    */}
+                    <span className="inline-flex h-6 items-center text-brand-mark dark:text-white">
+                      <LogoEnSVG
+                        width={140}
+                        className="h-6 w-auto"
+                        aria-label={`${brand.name} Sailor Docs`}
+                      />
+                    </span>
                   </div>
                 ),
                 url: `/${lang}`,
