@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Online nástroje",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Online nástroje pro kodeky, text, hashování, dokumenty a obrázky."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "Hlavní navigace",
+    "homeAria": "Domů {brandName} Forge",
+    "tools": "Nástroje",
+    "wallet": "Peněženka",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Kategorie nástrojů"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "Navigační cesta",
+    "labNotice": "Funkce v laboratoři: omezená data nebo pokrytí slovníku; výsledky jsou pouze orientační.",
+    "workspace": "Pracovní prostor",
+    "workspaceHint": "Lokální nebo server · stejná cesta jako API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Stejná smlouva jako na stránce. V produkci použijte ověřený klíč.",
+    "related": "Související nástroje"
+  },
+  "auth": {
+    "signIn": "Přihlásit se",
+    "signUp": "Registrovat se",
+    "signOut": "Odhlásit se"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "Patička",
+    "blurb": "Online nástroje. Dokončete úkoly v prohlížeči nebo automatizujte přes API / MCP.",
+    "product": "Produkt",
+    "developers": "Vývojáři",
+    "company": "Společnost",
+    "docs": "Dokumentace integrací",
+    "website": "Web",
+    "privacy": "Ochrana soukromí"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "Uvidíte to. Zavoláte to.",
+    "title": "Švýcarský nůž pro online nástroje",
+    "subtitle": "Kodeky, text, hashování, dokumenty a zpracování obrázků. Dokončete v prohlížeči nebo automatizujte přes API / MCP — jedna implementace.",
+    "toolCount": "{count} nástrojů",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Hledat: počet slov, base64, json, časové razítko…",
+    "aria": "Hledat nástroje",
+    "emptyTitle": "Žádné nástroje neodpovídají „{query}“",
+    "emptyHint": "Zkuste jiné klíčové slovo nebo vyberte nástroj z kategorií níže."
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "Kodeky",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "Ověření pro Čínu",
+      "hint": "ID · telefon"
     },
     "data": {
       "label": "Data",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Vývojář",
+      "hint": "Regex · SQL · barva · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "Dokumenty",
+      "hint": "Markdown · PDF sloučení/rozdělení"
     },
     "finance": {
       "label": "Finance",
-      "hint": "Amount to words"
+      "hint": "Částka slovy"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hash a zabezpečení",
+      "hint": "MD5 · SHA · HMAC · heslo"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "Obrázky",
+      "hint": "Komprese · QR · převod"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Životní kalkulačky",
+      "hint": "Hypotéka · BMI · příbuzenství"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Tokeny · cena · schéma"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Zabezpečení",
+      "hint": "Generátor hesel"
     },
     "text": {
       "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "hint": "Počet slov · CJK · pinyin · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Čas",
+      "hint": "Časová značka · časové pásmo · Cron · lunární"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Jednotky",
+      "hint": "Délka · hmotnost · teplota · data"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

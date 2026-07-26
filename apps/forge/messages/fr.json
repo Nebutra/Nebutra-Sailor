@@ -1,49 +1,54 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Station d'outils en ligne",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Codecs, texte, hachage, documents et outils d'image en ligne."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "Navigation principale",
+    "homeAria": "Accueil {brandName} Forge",
+    "tools": "Outils",
+    "wallet": "Portefeuille",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Catégories d'outils"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "Fil d'Ariane",
+    "labNotice": "Fonctionnalité Lab : couverture de données ou de dictionnaire limitée ; les résultats sont donnés à titre indicatif.",
+    "workspace": "Espace de travail",
+    "workspaceHint": "Local ou serveur · même chemin que l'API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Même contrat que la page. Utilisez une clé authentifiée en production.",
+    "related": "Outils connexes"
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "signOut": "Se déconnecter"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "Pied de page",
+    "blurb": "Station d'outils en ligne. Terminez vos tâches dans le navigateur ou automatisez via API / MCP.",
+    "product": "Produit",
+    "developers": "Développeurs",
+    "company": "Entreprise",
+    "docs": "Docs d'intégration",
+    "website": "Site web",
+    "privacy": "Confidentialité"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "Voyez-le. Appelez-le.",
+    "title": "Couteau suisse pour outils en ligne",
+    "subtitle": "Codecs, texte, hachage, documents et traitement d'images. Terminez dans le navigateur ou automatisez via API / MCP — une seule implémentation.",
+    "toolCount": "{count} outils",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Rechercher : compteur de mots, base64, json, timestamp…",
+    "aria": "Rechercher des outils",
+    "emptyTitle": "Aucun outil ne correspond à « {query} »",
+    "emptyHint": "Essayez un autre mot-clé ou choisissez un outil dans les catégories ci-dessous."
   },
   "categories": {
     "codec": {
@@ -51,61 +56,56 @@
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "Validation Chine",
+      "hint": "ID · téléphone"
     },
     "data": {
-      "label": "Data",
+      "label": "Données",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Développeur",
+      "hint": "Regex · SQL · couleur · UUID"
     },
     "doc": {
       "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "hint": "Markdown · fusion/séparation PDF"
     },
     "finance": {
       "label": "Finance",
-      "hint": "Amount to words"
+      "hint": "Montant en lettres"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hachage & sécurité",
+      "hint": "MD5 · SHA · HMAC · mot de passe"
     },
     "image": {
       "label": "Images",
-      "hint": "Compress · QR · convert"
+      "hint": "Compression · QR · conversion"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Calculatrices vie",
+      "hint": "Hypothèque · IMC · parenté"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Jetons · coût · schéma"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Sécurité",
+      "hint": "Générateur de mots de passe"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "Texte",
+      "hint": "Nombre de mots · CJK · pinyin · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Temps",
+      "hint": "Horodatage · fuseau horaire · Cron · lunaire"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Unités",
+      "hint": "Longueur · poids · température · données"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

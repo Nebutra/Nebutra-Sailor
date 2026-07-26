@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — অনলাইন টুল স্টেশন",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "কোডেক, টেক্সট, হ্যাশিং, ডকুমেন্ট এবং ইমেজ টুলস অনলাইন।"
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "মেইন নেভিগেশন",
+    "homeAria": "{brandName} Forge হোম",
+    "tools": "টুলস",
+    "wallet": "ওয়ালেট",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "টুল ক্যাটাগরি"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "ব্রেডক্রাম্ব",
+    "labNotice": "লেব সক্ষমতা: সীমিত ডেটা বা ডিকশনারি কভারেজ; ফলাফল শুধুমাত্র রেফারেন্সের জন্য।",
+    "workspace": "ওয়ার্কস্পেস",
+    "workspaceHint": "লোকাল বা সার্ভার · API এর মতো একই পথ",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "পেজের মতো একই কনট্রাক্ট। প্রোডাকশনে একটি অথেন্টিকেটেড কী ব্যবহার করুন।",
+    "related": "সম্পর্কিত টুলস"
+  },
+  "auth": {
+    "signIn": "সাইন ইন",
+    "signUp": "সাইন আপ",
+    "signOut": "সাইন আউট"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "ফুটার",
+    "blurb": "অনলাইন টুল স্টেশন। ব্রাউজারে কাজ শেষ করুন, অথবা API / MCP এর মাধ্যমে অটোমেট করুন।",
+    "product": "প্রোডাক্ট",
+    "developers": "ডেভেলপাররা",
+    "company": "কোম্পানি",
+    "docs": "ইন্টিগ্রেশন ডক্স",
+    "website": "ওয়েবসাইট",
+    "privacy": "প্রাইভেসি"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "দেখুন। কল করুন।",
+    "title": "অনলাইন টুলের সুইস আর্মি নাইফ",
+    "subtitle": "কোডেকস, টেক্সট, হ্যাশিং, ডকুমেন্ট এবং ইমেজ প্রসেসিং। ব্রাউজারে শেষ করুন, অথবা API / MCP এর মাধ্যমে অটোমেট করুন — এক ইমপ্লিমেন্টেশন।",
+    "toolCount": "{count} টুল",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "সার্চ করুন: ওয়ার্ড কাউন্ট, base64, json, টাইমস্ট্যাম্প…",
+    "aria": "টুল সার্চ করুন",
+    "emptyTitle": "কোনো টুল মিলছে না “{query}”",
+    "emptyHint": "অন্য কিওয়ার্ড চেষ্টা করুন, অথবা নিচের ক্যাটাগরি থেকে একটি টুল বেছে নিন।"
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
-      "hint": "Base64 · URL · JWT · Unicode"
+      "label": "কোডেকস",
+      "hint": "Base64 · URL · JWT · ইউনিকোড"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "চায়না ভ্যালিডেশন",
+      "hint": "ID · ফোন"
     },
     "data": {
-      "label": "Data",
+      "label": "ডেটা",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "ডেভেলপার",
+      "hint": "রেগুলার এক্সপ্রেশন · SQL · রঙ · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "ডকুমেন্ট",
+      "hint": "মার্কডাউন · PDF মার্জ/বিভাজন"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "ফাইন্যান্স",
+      "hint": "টাকার পরিমাণ শব্দে"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "হ্যাশ ও নিরাপত্তা",
+      "hint": "MD5 · SHA · HMAC · পাসওয়ার্ড"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "ছবি",
+      "hint": "কম্প্রেস · QR · রূপান্তর"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "জীবন ক্যালকুলেটর",
+      "hint": "মর্টগেজ · BMI · সম্পর্ক"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "টোকেন · খরচ · স্কিমা"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "নিরাপত্তা",
+      "hint": "পাসওয়ার্ড জেনারেটর"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "টেক্সট",
+      "hint": "শব্দ গণনা · CJK · পিনিন · ডিফ"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "সময়",
+      "hint": "টাইমস্ট্যাম্প · টাইমজোন · Cron · লুনার"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "একক",
+      "hint": "দৈর্ঘ্য · ওজন · তাপমাত্রা · ডেটা"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

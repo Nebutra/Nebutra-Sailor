@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — 온라인 도구 스테이션",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "인코더, 텍스트, 해싱, 문서, 이미지 도구 등을 온라인에서 사용하세요."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "주 메뉴",
+    "homeAria": "{brandName} Forge 홈",
+    "tools": "도구",
+    "wallet": "지갑",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "도구 카테고리"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "경로",
+    "labNotice": "실험실 기능: 데이터 또는 사전 커버리지가 제한적이며, 결과는 참고용입니다.",
+    "workspace": "작업 공간",
+    "workspaceHint": "로컬 또는 서버 · API와 동일한 경로",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "페이지와 동일한 계약. 프로덕션에서는 인증 키를 사용하세요.",
+    "related": "관련 도구"
+  },
+  "auth": {
+    "signIn": "로그인",
+    "signUp": "회원가입",
+    "signOut": "로그아웃"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "푸터",
+    "blurb": "온라인 도구 스테이션. 브라우저에서 작업을 완료하거나 API / MCP를 통해 자동화하세요.",
+    "product": "제품",
+    "developers": "개발자",
+    "company": "회사",
+    "docs": "통합 문서",
+    "website": "웹사이트",
+    "privacy": "개인정보"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "보고 호출하세요.",
+    "title": "온라인 도구의 스위스 아미 나이프",
+    "subtitle": "코덱, 텍스트, 해싱, 문서, 이미지 처리. 브라우저에서 완료하거나 API / MCP를 통해 자동화하세요 — 단일 구현.",
+    "toolCount": "{count}개 도구",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "검색: 단어 수, base64, json, 타임스탬프…",
+    "aria": "도구 검색",
+    "emptyTitle": "“{query}”와 일치하는 도구가 없습니다.",
+    "emptyHint": "다른 키워드로 시도하거나 아래 카테고리에서 도구를 선택하세요."
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "코덱",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "중국 유효성 검사",
+      "hint": "ID · 전화번호"
     },
     "data": {
-      "label": "Data",
+      "label": "데이터",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "개발자",
+      "hint": "Regex · SQL · 색상 · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "문서",
+      "hint": "Markdown · PDF 병합/분할"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "금융",
+      "hint": "금액 → 문자"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "해시 & 보안",
+      "hint": "MD5 · SHA · HMAC · 비밀번호"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "이미지",
+      "hint": "압축 · QR · 변환"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "생활 계산기",
+      "hint": "주택담보 · BMI · 친족"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "토큰 · 비용 · 스키마"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "보안",
+      "hint": "비밀번호 생성기"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "텍스트",
+      "hint": "단어 수 · CJK · 병음 · 차이"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "시간",
+      "hint": "타임스탬프 · 시간대 · Cron · 음력"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "단위",
+      "hint": "길이 · 무게 · 온도 · 데이터"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

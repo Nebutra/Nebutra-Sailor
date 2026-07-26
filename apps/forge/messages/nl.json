@@ -2,48 +2,53 @@
   "meta": {
     "titleDefault": "{brandName} Forge — Online tool station",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Codecs, tekst, hashing, documenten en beeldtools online."
   },
   "nav": {
-    "main": "Main navigation",
+    "main": "Hoofdnavigatie",
     "homeAria": "{brandName} Forge home",
     "tools": "Tools",
     "wallet": "Wallet",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Toolcategorieën"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
+    "labNotice": "Lab-functie: beperkte data- of woordenboekdekking; resultaten zijn slechts ter referentie.",
     "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "workspaceHint": "Lokaal of server · zelfde pad als API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Zelfde contract als de pagina. Gebruik een geauthenticeerde sleutel in productie.",
+    "related": "Gerelateerde tools"
+  },
+  "auth": {
+    "signIn": "Inloggen",
+    "signUp": "Aanmelden",
+    "signOut": "Uitloggen"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
+    "navAria": "Voettekst",
+    "blurb": "Online toolstation. Voer taken uit in de browser of automatiseer via API / MCP.",
     "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
+    "developers": "Ontwikkelaars",
+    "company": "Bedrijf",
+    "docs": "Integratiedocumentatie",
     "website": "Website",
     "privacy": "Privacy"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
+    "eyebrow": "Zie het. Roep het aan.",
+    "title": "Zwitserse zakmes voor online tools",
+    "subtitle": "Codecs, tekst, hashing, documenten en beeldverwerking. Klaar in de browser of geautomatiseerd via API / MCP — één implementatie.",
     "toolCount": "{count} tools",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Zoeken: woordteller, base64, json, timestamp…",
+    "aria": "Zoek tools",
+    "emptyTitle": "Geen tools gevonden voor “{query}”",
+    "emptyHint": "Probeer een ander trefwoord of kies een tool uit de categorieën hieronder."
   },
   "categories": {
     "codec": {
@@ -51,61 +56,56 @@
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "China-validatie",
+      "hint": "ID · telefoon"
     },
     "data": {
       "label": "Data",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Ontwikkelaar",
+      "hint": "Regex · SQL · kleur · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "Documenten",
+      "hint": "Markdown · PDF samenvoegen/splitsen"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "Financiën",
+      "hint": "Bedrag naar woorden"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hash & beveiliging",
+      "hint": "MD5 · SHA · HMAC · wachtwoord"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "Afbeeldingen",
+      "hint": "Comprimeren · QR · converteren"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Levensrekenmachines",
+      "hint": "Hypotheek · BMI · verwantschap"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Tokens · kosten · schema"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Beveiliging",
+      "hint": "Wachtwoordgenerator"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "Tekst",
+      "hint": "Woordtelling · CJK · pinyin · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Tijd",
+      "hint": "Tijdstempel · tijdzone · Cron · maantijd"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Eenheden",
+      "hint": "Lengte · gewicht · temperatuur · data"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

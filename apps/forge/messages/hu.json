@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Online eszközök",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Kódolók, szöveg, hash, dokumentumok és képeszközök online."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "Fő navigáció",
+    "homeAria": "{brandName} Forge kezdőlap",
+    "tools": "Eszközök",
+    "wallet": "Tárca",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Eszköz kategóriák"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "Vezérlőpálya",
+    "labNotice": "Lab funkció: korlátozott adat- vagy szótárlefedettség; az eredmények tájékoztató jellegűek.",
+    "workspace": "Munkaterület",
+    "workspaceHint": "Helyi vagy szerver · ugyanaz az elérési út, mint az API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Ugyanaz a szerződés, mint az oldalon. Éles környezetben hitelesített kulcsot használj.",
+    "related": "Kapcsolódó eszközök"
+  },
+  "auth": {
+    "signIn": "Bejelentkezés",
+    "signUp": "Regisztráció",
+    "signOut": "Kijelentkezés"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "Lábléc",
+    "blurb": "Online eszközök állomása. Fejezd be a feladatokat böngészőben, vagy automatizáld API / MCP segítségével.",
+    "product": "Termék",
+    "developers": "Fejlesztők",
+    "company": "Cég",
+    "docs": "Integrációs dokumentáció",
+    "website": "Weboldal",
+    "privacy": "Adatvédelem"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "Lásd. Hívd.",
+    "title": "Svájci bicska az online eszközökhöz",
+    "subtitle": "Kódolók, szöveg, hash, dokumentumok és képfeldolgozás. Fejezd be böngészőben, vagy automatizáld API / MCP segítségével – egyetlen implementáció.",
+    "toolCount": "{count} eszköz",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Keresés: szavaszámláló, base64, json, időbélyeg…",
+    "aria": "Eszközök keresése",
+    "emptyTitle": "Nincs eszköz, ami illeszkedik a(z) “{query}” kifejezéshez",
+    "emptyHint": "Próbálj meg egy másik kulcsszót, vagy válassz eszközt az alábbi kategóriákból."
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "Kódolók",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "Kínai érvényesítés",
+      "hint": "ID · telefon"
     },
     "data": {
-      "label": "Data",
+      "label": "Adatok",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Fejlesztő",
+      "hint": "Regex · SQL · szín · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "Dokumentumok",
+      "hint": "Markdown · PDF egyesítés/szétválasztás"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "Pénzügy",
+      "hint": "Összeg szavakra"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hash és biztonság",
+      "hint": "MD5 · SHA · HMAC · jelszó"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "Képek",
+      "hint": "Tömörítés · QR · konvertálás"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Élet kalkulátorok",
+      "hint": "Hitel · BMI · rokonság"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Tokenek · költség · séma"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Biztonság",
+      "hint": "Jelszó generátor"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "Szöveg",
+      "hint": "Szószám · CJK · pinjin · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Idő",
+      "hint": "Időbélyeg · időzóna · Cron · holdnaptár"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Mértékegységek",
+      "hint": "Hossz · tömeg · hőmérséklet · adat"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

@@ -1,49 +1,54 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Stație de instrumente online",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Instrumente online pentru codec-uri, text, hashing, documente și imagini."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "Navigare principală",
+    "homeAria": "Acasă {brandName} Forge",
+    "tools": "Instrumente",
+    "wallet": "Portofel",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Categorii de instrumente"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "Drumuleț",
+    "labNotice": "Capacitate Lab: acoperire limitată de date sau dicționar; rezultatele sunt doar orientative.",
+    "workspace": "Spațiu de lucru",
+    "workspaceHint": "Local sau server · același path ca API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Același contract ca pagina. Folosește o cheie autentificată în producție.",
+    "related": "Instrumente conexe"
+  },
+  "auth": {
+    "signIn": "Autentificare",
+    "signUp": "Înregistrare",
+    "signOut": "Deconectare"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "Subsol",
+    "blurb": "Stație de instrumente online. Finalizează sarcini în browser sau automatizează prin API / MCP.",
+    "product": "Produs",
+    "developers": "Dezvoltatori",
+    "company": "Companie",
+    "docs": "Documentație integrare",
+    "website": "Site web",
+    "privacy": "Confidențialitate"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "Vezi-l. Numește-l.",
+    "title": "Cuțit elvețian pentru instrumente online",
+    "subtitle": "Codecs, text, hashing, documente și procesare imagini. Finalizează în browser sau automatizează prin API / MCP — o singură implementare.",
+    "toolCount": "{count} instrumente",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Caută: număr cuvinte, base64, json, timestamp…",
+    "aria": "Caută instrumente",
+    "emptyTitle": "Niciun instrument nu se potrivește cu „{query}”",
+    "emptyHint": "Încearcă alt cuvânt cheie sau alege un instrument din categoriile de mai jos."
   },
   "categories": {
     "codec": {
@@ -51,61 +56,56 @@
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "Validare China",
+      "hint": "ID · telefon"
     },
     "data": {
-      "label": "Data",
+      "label": "Date",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Dezvoltator",
+      "hint": "Regex · SQL · culoare · UUID"
     },
     "doc": {
-      "label": "Documents",
+      "label": "Documente",
       "hint": "Markdown · PDF merge/split"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "Finanțe",
+      "hint": "Sumă în cuvinte"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hash și securitate",
+      "hint": "MD5 · SHA · HMAC · parolă"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "Imagini",
+      "hint": "Comprimare · QR · conversie"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Calculatoare de viață",
+      "hint": "Ipotecă · IMC · rudenie"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Tokeni · cost · schemă"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Securitate",
+      "hint": "Generator de parole"
     },
     "text": {
       "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "hint": "Număr cuvinte · CJK · pinyin · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Timp",
+      "hint": "Timestamp · fus orar · Cron · lunar"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Unități",
+      "hint": "Lungime · greutate · temperatură · date"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

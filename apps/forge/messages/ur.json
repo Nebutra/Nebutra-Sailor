@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — آن لائن ٹول اسٹیشن",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "کوڈیکس، ٹیکسٹ، ہیشنگ، دستاویزات اور امیج ٹولز آن لائن۔"
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "مین نیویگیشن",
+    "homeAria": "{brandName} Forge ہوم",
+    "tools": "ٹولز",
+    "wallet": "والیٹ",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "ٹول کیٹیگریز"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "بریبڈ کرامب",
+    "labNotice": "لیب کی صلاحیت: محدود ڈیٹا یا ڈکشنری کوریج؛ نتائج صرف حوالہ کے لیے ہیں۔",
+    "workspace": "ورک اسپیس",
+    "workspaceHint": "لوکل یا سرور · API جیسا ہی راستہ",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "صفحے جیسا ہی معاہدہ۔ پروڈکشن میں تصدیق شدہ کلید استعمال کریں۔",
+    "related": "متعلقہ ٹولز"
+  },
+  "auth": {
+    "signIn": "سائن ان",
+    "signUp": "سائن اپ",
+    "signOut": "سائن آؤٹ"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "فوٹر",
+    "blurb": "آن لائن ٹول اسٹیشن۔ براؤزر میں کام مکمل کریں، یا API / MCP کے ذریعے خودکار بنائیں۔",
+    "product": "پروڈکٹ",
+    "developers": "ڈویلپرز",
+    "company": "کمپنی",
+    "docs": "انٹیگریشن دستاویزات",
+    "website": "ویب سائٹ",
+    "privacy": "پرائیویسی"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "دیکھیں۔ کال کریں۔",
+    "title": "آن لائن ٹولز کے لیے سوئس آرمی نائیف",
+    "subtitle": "کوڈیکس، ٹیکسٹ، ہیشنگ، دستاویزات، اور امیج پروسیسنگ۔ براؤزر میں مکمل کریں، یا API / MCP کے ذریعے خودکار بنائیں — ایک ہی امپلیمنٹیشن۔",
+    "toolCount": "{count} ٹولز",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "تلاش کریں: ورڈ کاؤنٹ، base64，json، ٹائم اسٹیمپ…",
+    "aria": "ٹولز تلاش کریں",
+    "emptyTitle": "کوئی ٹول \"{query}\" سے مطابقت نہیں رکھتا",
+    "emptyHint": "دوسرا کی ورڈ آزمائیں، یا نیچے دی گئی زمرہ جات میں سے کوئی ٹول منتخب کریں۔"
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "کوڈیکس",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "چین کی توثیق",
+      "hint": "آئی ڈی · فون"
     },
     "data": {
-      "label": "Data",
+      "label": "ڈیٹا",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "ڈویلپر",
+      "hint": "Regex · SQL · رنگ · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "دستاویزات",
+      "hint": "Markdown · PDF ملاپ/تقسیم"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "مالیات",
+      "hint": "رقم کو الفاظ میں"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "ہیش اور سیکیورٹی",
+      "hint": "MD5 · SHA · HMAC · پاس ورڈ"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "تصاویر",
+      "hint": "کمپریس · QR · تبدیل کریں"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "زندگی کی کیلکولیٹرز",
+      "hint": "مورٹیج · BMI · رشتہ"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "ٹوکنز · لاگت · اسکیم"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "سیکیورٹی",
+      "hint": "پاس ورڈ جنریٹر"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "متن",
+      "hint": "الفاظ کی گنتی · CJK · پین یین · فرق"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "وقت",
+      "hint": "ٹائم اسٹیمپ · ٹائم زون · Cron · قمری"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "اکائیاں",
+      "hint": "لمبائی · وزن · درجہ حرارت · ڈیٹا"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

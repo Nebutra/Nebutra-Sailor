@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — ایستگاه ابزار آنلاین",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "کدک‌ها، متن، هش، اسناد و ابزارهای تصویر به صورت آنلاین."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "ناوبری اصلی",
+    "homeAria": "خانه {brandName} Forge",
+    "tools": "ابزارها",
+    "wallet": "کیف پول",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "دسته‌بندی ابزارها"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "مسیر صفحه",
+    "labNotice": "قابلیت آزمایشگاهی: پوشش داده یا واژه‌نامه محدود؛ نتایج صرفاً جهت مرجع هستند.",
+    "workspace": "محیط کار",
+    "workspaceHint": "محلی یا سرور · مسیر یکسان با API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "قرارداد یکسان با صفحه. در محیط تولید از کلید احراز هویت استفاده کنید.",
+    "related": "ابزارهای مرتبط"
+  },
+  "auth": {
+    "signIn": "ورود",
+    "signUp": "ثبت‌نام",
+    "signOut": "خروج"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "پاورقی",
+    "blurb": "ایستگاه ابزار آنلاین. کارها را در مرورگر انجام دهید یا از طریق API / MCP خودکار کنید.",
+    "product": "محصول",
+    "developers": "توسعه‌دهندگان",
+    "company": "شرکت",
+    "docs": "مستندات یکپارچه‌سازی",
+    "website": "وب‌سایت",
+    "privacy": "حریم خصوصی"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "ببینید. صدا بزنید.",
+    "title": "چاقوی سوئیسی برای ابزارهای آنلاین",
+    "subtitle": "کدک‌ها، متن، هش‌سازی، اسناد و پردازش تصویر. در مرورگر انجام دهید یا از طریق API / MCP خودکار کنید — یک پیاده‌سازی.",
+    "toolCount": "{count} ابزار",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "جستجو: شمارش کلمات، base64，json، timestamp…",
+    "aria": "جستجوی ابزارها",
+    "emptyTitle": "هیچ ابزاری با “{query}” مطابقت ندارد",
+    "emptyHint": "یک کلمه کلیدی دیگر امتحان کنید یا از دسته‌های زیر یک ابزار انتخاب کنید."
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "کدک‌ها",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "اعتبارسنجی چین",
+      "hint": "شناسه · تلفن"
     },
     "data": {
-      "label": "Data",
+      "label": "داده",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "توسعه‌دهنده",
+      "hint": "Regex · SQL · رنگ · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "اسناد",
+      "hint": "Markdown · ادغام/تقسیم PDF"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "مالی",
+      "hint": "مبلغ به حروف"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "هش و امنیت",
+      "hint": "MD5 · SHA · HMAC · رمز عبور"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "تصاویر",
+      "hint": "فشرده‌سازی · QR · تبدیل"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "ماشین‌حساب‌های زندگی",
+      "hint": "مسکن · BMI · خویشاوندی"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "توکن‌ها · هزینه · طرح"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "امنیت",
+      "hint": "تولید رمز عبور"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "متن",
+      "hint": "تعداد کلمات · CJK · پین‌یین · تفاوت"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "زمان",
+      "hint": "برچسب زمانی · منطقه زمانی · Cron · قمری"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "واحدها",
+      "hint": "طول · وزن · دما · داده"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

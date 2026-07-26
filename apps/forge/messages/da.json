@@ -1,49 +1,54 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Online værktøjsstation",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Codecs, tekst, hashing, dokumenter og billedværktøjer online."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
+    "main": "Hovednavigation",
+    "homeAria": "{brandName} Forge hjem",
+    "tools": "Værktøjer",
     "wallet": "Wallet",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Værktøjskategorier"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "Brødkrumme",
+    "labNotice": "Lab-funktion: begrænset data- eller ordbogscoverage; resultater er kun vejledende.",
+    "workspace": "Arbejdsområde",
+    "workspaceHint": "Lokal eller server · samme sti som API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Samme kontrakt som siden. Brug en autentificeret nøgle i produktion.",
+    "related": "Relaterede værktøjer"
+  },
+  "auth": {
+    "signIn": "Log ind",
+    "signUp": "Opret konto",
+    "signOut": "Log ud"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "Sidefod",
+    "blurb": "Online værktøjsstation. Udfør opgaver i browseren, eller automatiser via API / MCP.",
+    "product": "Produkt",
+    "developers": "Udviklere",
+    "company": "Virksomhed",
+    "docs": "Integrationsdokumentation",
+    "website": "Hjemmeside",
+    "privacy": "Privatliv"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "Se det. Kald det.",
+    "title": "Lommekniv til online-værktøjer",
+    "subtitle": "Codecs, tekst, hashing, dokumenter og billedbehandling. Udfør i browseren, eller automatiser via API / MCP — én implementering.",
+    "toolCount": "{count} værktøjer",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Søg: ordtælling, base64, json, tidsstempel…",
+    "aria": "Søg i værktøjer",
+    "emptyTitle": "Ingen værktøjer matcher “{query}”",
+    "emptyHint": "Prøv et andet søgeord, eller vælg et værktøj fra kategorierne nedenfor."
   },
   "categories": {
     "codec": {
@@ -51,61 +56,56 @@
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "Kina-validering",
+      "hint": "ID · telefon"
     },
     "data": {
       "label": "Data",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Udvikler",
+      "hint": "Regex · SQL · farve · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "Dokumenter",
+      "hint": "Markdown · PDF samling/opdeling"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "Finans",
+      "hint": "Beløb til ord"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hash & sikkerhed",
+      "hint": "MD5 · SHA · HMAC · adgangskode"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "Billeder",
+      "hint": "Komprimer · QR · konverter"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Livsberegner",
+      "hint": "Boliglån · BMI · slægtsskab"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Tokens · omkostning · skema"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Sikkerhed",
+      "hint": "Adgangskodegenerator"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "Tekst",
+      "hint": "Ordantælling · CJK · pinyin · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Tid",
+      "hint": "Tidsstempel · tidszone · Cron · lunarskifte"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Enheder",
+      "hint": "Længde · vægt · temperatur · data"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

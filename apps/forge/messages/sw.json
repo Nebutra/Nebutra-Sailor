@@ -1,49 +1,54 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Kituo cha zana za mtandaoni",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Zana za mtandaoni za codecs, maandishi, hashing, hati, na picha."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "Urambazaji mkuu",
+    "homeAria": "Nyumbani kwa {brandName} Forge",
+    "tools": "Zana",
+    "wallet": "Pesa",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Aina za zana"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "labNotice": "Uwezo wa lab: data au dictionary zinazofikiwa ni za kikomo; matokeo ni ya marejeleo tu.",
+    "workspace": "Kazi",
+    "workspaceHint": "Ndani au seva · njia sawa kama API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Mkataba sawa na ukurasa. Tumia ufunguo uliothibitishwa katika uzalishaji.",
+    "related": "Zana zinazohusiana"
+  },
+  "auth": {
+    "signIn": "Ingia",
+    "signUp": "Jisajili",
+    "signOut": "Ondoka"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "Sehemu ya chini",
+    "blurb": "Kituo cha zana za mtandaoni. Maliza kazi kwenye kivinjari, au utengenezee kupitia API / MCP.",
+    "product": "Bidhaa",
+    "developers": "Wanavutano",
+    "company": "Kampuni",
+    "docs": "Nyaraka za muunganisho",
+    "website": "Tovuti",
+    "privacy": "Siri"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "Uone. Uite.",
+    "title": "Kifaa cha kila kitu cha zana za mtandaoni",
+    "subtitle": "Codecs, maandishi, hashing, nyaraka, na usindikaji wa picha. Maliza kwenye kivinjari, au utengenezee kupitia API / MCP — utekelezaji mmoja.",
+    "toolCount": "zana {count}",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Tafuta: hesabu ya maneno, base64, json, timestamp…",
+    "aria": "Tafuta zana",
+    "emptyTitle": "Hakuna zana zinazolingana na “{query}”",
+    "emptyHint": "Jaribu neno lingine, au chagua zana kutoka kwa makundi hapa chini."
   },
   "categories": {
     "codec": {
@@ -51,61 +56,56 @@
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "Uthibitisho wa China",
+      "hint": "Kitambulisho · simu"
     },
     "data": {
       "label": "Data",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Mtaalamu wa programu",
+      "hint": "Regex · SQL · rangi · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "Nyaraka",
+      "hint": "Markdown · Kuunganisha/kuagiza PDF"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "Fedha",
+      "hint": "Kiasi kuwa maneno"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hash na usalama",
+      "hint": "MD5 · SHA · HMAC · neno siri"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "Picha",
+      "hint": "Kupunguza · QR · kubadilisha"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Kikokotozi cha maisha",
+      "hint": "Mkopo wa nyumba · BMI · uhusiano wa damu"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Tokens · gharama · schema"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Usalama",
+      "hint": "Kizalishaji cha neno siri"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "Neno",
+      "hint": "Idadi ya maneno · CJK · pinyin · Tofauti"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Muda",
+      "hint": "Tamshi ya muda · eneo la saa · Cron · mwezi"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Vipimo",
+      "hint": "Urefu · uzito · joto · data"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

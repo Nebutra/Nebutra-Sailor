@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — תחנת כלים מקוונת",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "קודקים, טקסט, הקודות, מסמכים וכלי תמונות מקוונים."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "ניווט ראשי",
+    "homeAria": "דף הבית של {brandName} Forge",
+    "tools": "כלים",
+    "wallet": "ארנק",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "קטגוריות כלים"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "פירורי לחם",
+    "labNotice": "יכולת ניסוי: כיסוי נתונים או מילון מוגבל; התוצאות הן להמחשה בלבד.",
+    "workspace": "מרחב עבודה",
+    "workspaceHint": "מקומי או שרת · אותו נתיב כמו ב-API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "אותו חוזה כמו בדף. השתמש במפתח מאומת בייצור.",
+    "related": "כלים קשורים"
+  },
+  "auth": {
+    "signIn": "התחבר",
+    "signUp": "הירשם",
+    "signOut": "התנתק"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "כותרת תחתונה",
+    "blurb": "תחנת כלים מקוונת. סיימו משימות בדפדפן או אוטומציה דרך API / MCP.",
+    "product": "מוצר",
+    "developers": "מפתחים",
+    "company": "חברה",
+    "docs": "תיעוד אינטגרציה",
+    "website": "אתר",
+    "privacy": "פרטיות"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "ראו את זה. קראו את זה.",
+    "title": "סכין שוויצרית לכלים מקוונים",
+    "subtitle": "קודקים, טקסט, הקודות, מסמכים ועיבוד תמונות. סיימו בדפדפן או אוטומציה דרך API / MCP — יישום אחד.",
+    "toolCount": "{count} כלים",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "חיפוש: ספירת מילים, base64, json, חותמת זמן…",
+    "aria": "חיפוש כלים",
+    "emptyTitle": "אין כלים התואמים ל-“{query}”",
+    "emptyHint": "נסו מילת מפתח אחרת או בחרו כלי מהקטגוריות למטה."
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "קודקים",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "אימות סין",
+      "hint": "מזהה · טלפון"
     },
     "data": {
-      "label": "Data",
+      "label": "נתונים",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "מפתחים",
+      "hint": "Regex · SQL · צבע · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "מסמכים",
+      "hint": "Markdown · מיזוג/פיצול PDF"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "פיננסים",
+      "hint": "סכום למילים"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "האש ואבטחה",
+      "hint": "MD5 · SHA · HMAC · סיסמה"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "תמונות",
+      "hint": "דחיסה · QR · המרה"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "מחשבי חיים",
+      "hint": "משכנתא · BMI · קרבה משפחתית"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "טוקנים · עלות · סכמה"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "אבטחה",
+      "hint": "מחולל סיסמאות"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "טקסט",
+      "hint": "מספר מילים · CJK · פין-יין · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "זמן",
+      "hint": "חותמת זמן · אזור זמן · Cron · לוח ירחי"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "יחידות",
+      "hint": "אורך · משקל · טמפרטורה · נתונים"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

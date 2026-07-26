@@ -1,73 +1,78 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — ऑनलाइन टूल स्टेशन",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "कोडेक्स, टेक्स्ट, हैशिंग, दस्तावेज़ और इमेज टूल्स ऑनलाइन।"
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "मुख्य नेविगेशन",
+    "homeAria": "{brandName} Forge होम",
+    "tools": "टूल्स",
+    "wallet": "वॉलेट",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "टूल श्रेणियाँ"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "ब्रेडक्रंब",
+    "labNotice": "लैब क्षमता: सीमित डेटा या डिक्शनरी कवरेज; परिणाम केवल संदर्भ के लिए हैं।",
+    "workspace": "वर्कस्पेस",
+    "workspaceHint": "स्थानीय या सर्वर · API के समान पथ",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "पेज के समान अनुबंध। उत्पादन में प्रमाणित कुंजी का उपयोग करें।",
+    "related": "संबंधित टूल्स"
+  },
+  "auth": {
+    "signIn": "साइन इन करें",
+    "signUp": "साइन अप करें",
+    "signOut": "साइन आउट करें"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "फ़ूटर",
+    "blurb": "ऑनलाइन टूल स्टेशन। ब्राउज़र में काम पूरा करें, या API / MCP के माध्यम से ऑटोमेट करें।",
+    "product": "प्रोडक्ट",
+    "developers": "डेवलपर्स",
+    "company": "कंपनी",
+    "docs": "इंटीग्रेशन डॉक्स",
+    "website": "वेबसाइट",
+    "privacy": "गोपनीयता"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "देखें। कॉल करें।",
+    "title": "ऑनलाइन टूल्स के लिए स्विस्-आर्मी नाइफ",
+    "subtitle": "कोडेक्स, टेक्स्ट, हैशिंग, दस्तावेज़ और इमेज प्रोसेसिंग। ब्राउज़र में पूरा करें, या API / MCP के माध्यम से ऑटोमेट करें — एक ही इम्प्लीमेंटेशन।",
+    "toolCount": "{count} टूल्स",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "खोजें: शब्द गिनती, base64, json, टाइमस्टैम्प…",
+    "aria": "टूल्स खोजें",
+    "emptyTitle": "कोई टूल “{query}” से मेल नहीं खाता",
+    "emptyHint": "कोई और कीवर्ड आज़माएं, या नीचे दिए गए कैटेगरी से कोई टूल चुनें।"
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "कोडेक्स",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "चीन वैलिडेशन",
+      "hint": "ID · फ़ोन"
     },
     "data": {
-      "label": "Data",
+      "label": "डेटा",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
+      "label": "डेवलपर",
       "hint": "Regex · SQL · color · UUID"
     },
     "doc": {
-      "label": "Documents",
+      "label": "दस्तावेज़",
       "hint": "Markdown · PDF merge/split"
     },
     "finance": {
-      "label": "Finance",
+      "label": "फाइनेंस",
       "hint": "Amount to words"
     },
     "hash": {
@@ -75,7 +80,7 @@
       "hint": "MD5 · SHA · HMAC · password"
     },
     "image": {
-      "label": "Images",
+      "label": "छवियाँ",
       "hint": "Compress · QR · convert"
     },
     "life": {
@@ -87,25 +92,20 @@
       "hint": "Tokens · cost · schema"
     },
     "security": {
-      "label": "Security",
+      "label": "सुरक्षा",
       "hint": "Password generator"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "टेक्स्ट",
+      "hint": "शब्द गिनती · CJK · पिनयिन · अंतर"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "समय",
+      "hint": "टाइमस्टैम्प · समय क्षेत्र · Cron · चंद्र"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "इकाइयाँ",
+      "hint": "लंबाई · वजन · तापमान · डेटा"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }

@@ -1,111 +1,111 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Trạm công cụ trực tuyến",
     "titleTemplate": "%s | {brandName} Forge",
-    "description": "Codecs, text, hashing, documents, and image tools online."
+    "description": "Công cụ mã hóa, văn bản, băm, tài liệu và hình ảnh trực tuyến."
   },
   "nav": {
-    "main": "Main navigation",
-    "homeAria": "{brandName} Forge home",
-    "tools": "Tools",
-    "wallet": "Wallet",
+    "main": "Điều hướng chính",
+    "homeAria": "Trang chủ {brandName} Forge",
+    "tools": "Công cụ",
+    "wallet": "Ví",
     "api": "API",
     "routerAria": "{brandName} Router",
-    "categoriesAria": "Tool categories"
+    "categoriesAria": "Danh mục công cụ"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
-    "workspace": "Workspace",
-    "workspaceHint": "Local or server · same path as API",
+    "breadcrumbAria": "Breadcrumbs",
+    "labNotice": "Tính năng Lab: phạm vi dữ liệu hoặc từ điển hạn chế; kết quả chỉ mang tính tham khảo.",
+    "workspace": "Không gian làm việc",
+    "workspaceHint": "Cục bộ hoặc máy chủ · cùng đường dẫn như API",
     "api": "API",
-    "apiHint": "Same contract as the page. Use an authenticated key in production.",
-    "related": "Related tools"
+    "apiHint": "Cùng hợp đồng như trang. Sử dụng khóa đã xác thực trong môi trường sản xuất.",
+    "related": "Công cụ liên quan"
+  },
+  "auth": {
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "signOut": "Đăng xuất"
   },
   "footer": {
-    "navAria": "Footer",
-    "blurb": "Online tool station. Finish tasks in the browser, or automate via API / MCP.",
-    "product": "Product",
-    "developers": "Developers",
-    "company": "Company",
-    "docs": "Integration docs",
-    "website": "Website",
-    "privacy": "Privacy"
+    "navAria": "Chân trang",
+    "blurb": "Trạm công cụ trực tuyến. Hoàn thành tác vụ trong trình duyệt, hoặc tự động hóa qua API / MCP.",
+    "product": "Sản phẩm",
+    "developers": "Nhà phát triển",
+    "company": "Công ty",
+    "docs": "Tài liệu tích hợp",
+    "website": "Trang web",
+    "privacy": "Bảo mật"
   },
   "home": {
-    "eyebrow": "See it. Call it.",
-    "title": "Swiss-army knife for online tools",
-    "subtitle": "Codecs, text, hashing, documents, and image processing. Finish in the browser, or automate via API / MCP — one implementation.",
-    "toolCount": "{count} tools",
+    "eyebrow": "Nhìn thấy. Gọi tên.",
+    "title": "Con dao quân đội Thụy Sĩ cho công cụ trực tuyến",
+    "subtitle": "Codec, văn bản, băm, tài liệu và xử lý hình ảnh. Hoàn thành trong trình duyệt, hoặc tự động hóa qua API / MCP — một bộ triển khai duy nhất.",
+    "toolCount": "{count} công cụ",
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "Search: word count, base64, json, timestamp…",
-    "aria": "Search tools",
-    "emptyTitle": "No tools match “{query}”",
-    "emptyHint": "Try another keyword, or pick a tool from the categories below."
+    "placeholder": "Tìm kiếm: đếm từ, base64, json, timestamp…",
+    "aria": "Tìm kiếm công cụ",
+    "emptyTitle": "Không có công cụ nào khớp với “{query}”",
+    "emptyHint": "Thử từ khóa khác, hoặc chọn công cụ từ danh mục bên dưới."
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "Codec",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {
-      "label": "China validation",
-      "hint": "ID · phone"
+      "label": "Xác thực Trung Quốc",
+      "hint": "ID · SĐT"
     },
     "data": {
-      "label": "Data",
+      "label": "Dữ liệu",
       "hint": "JSON · YAML · CSV · XML"
     },
     "dev": {
-      "label": "Developer",
-      "hint": "Regex · SQL · color · UUID"
+      "label": "Nhà phát triển",
+      "hint": "Regex · SQL · màu · UUID"
     },
     "doc": {
-      "label": "Documents",
-      "hint": "Markdown · PDF merge/split"
+      "label": "Tài liệu",
+      "hint": "Markdown · gộp/tách PDF"
     },
     "finance": {
-      "label": "Finance",
-      "hint": "Amount to words"
+      "label": "Tài chính",
+      "hint": "Số tiền sang chữ"
     },
     "hash": {
-      "label": "Hash & security",
-      "hint": "MD5 · SHA · HMAC · password"
+      "label": "Hash & bảo mật",
+      "hint": "MD5 · SHA · HMAC · mật khẩu"
     },
     "image": {
-      "label": "Images",
-      "hint": "Compress · QR · convert"
+      "label": "Hình ảnh",
+      "hint": "Nén · QR · chuyển đổi"
     },
     "life": {
-      "label": "Life calculators",
-      "hint": "Mortgage · BMI · kinship"
+      "label": "Công cụ tính toán đời sống",
+      "hint": "Vay mua nhà · BMI · quan hệ họ hàng"
     },
     "llm": {
       "label": "LLM",
-      "hint": "Tokens · cost · schema"
+      "hint": "Token · chi phí · schema"
     },
     "security": {
-      "label": "Security",
-      "hint": "Password generator"
+      "label": "Bảo mật",
+      "hint": "Tạo mật khẩu"
     },
     "text": {
-      "label": "Text",
-      "hint": "Word count · CJK · pinyin · Diff"
+      "label": "Văn bản",
+      "hint": "Đếm từ · CJK · pinyin · Diff"
     },
     "time": {
-      "label": "Time",
-      "hint": "Timestamp · timezone · Cron · lunar"
+      "label": "Thời gian",
+      "hint": "Dấu thời gian · múi giờ · Cron · âm lịch"
     },
     "unit": {
-      "label": "Units",
-      "hint": "Length · weight · temperature · data"
+      "label": "Đơn vị",
+      "hint": "Chiều dài · khối lượng · nhiệt độ · dữ liệu"
     }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
   }
 }
