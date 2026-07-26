@@ -63,8 +63,9 @@ describe("UI/UX audit remediation invariants", () => {
   it("keeps app icons aligned with Nebutra blue-cyan gradient", () => {
     const appleIcon = readFromRepo("apps/landing/src/app/apple-icon.tsx");
 
-    expect(appleIcon).toContain("hsl(var(--primary))");
-    expect(appleIcon).toContain("#0BF1C3");
+    // Satori cannot resolve CSS var(); icons use brand metadata gradient SSOT.
+    expect(appleIcon).toContain("colors.gradient.primary");
+    expect(appleIcon).toContain('from "@nebutra/brand/metadata"');
     expect(appleIcon).not.toContain("#3B82F6");
     expect(appleIcon).not.toContain("#8B5CF6");
   });
@@ -145,10 +146,13 @@ describe("UI/UX audit remediation invariants", () => {
       "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
     );
 
-    expect(brandAssets).toContain('source: "packages/design/brand"');
-    expect(brandAssets).toContain('src: "/brand/logo-color.svg"');
-    expect(brandAssets).toContain('src: "/brand/logo-horizontal-en.svg"');
+    expect(brandAssets).toContain('from "@nebutra/brand"');
+    expect(brandAssets).toContain("LogoEnSVG");
+    expect(brandAssets).toContain("LogomarkSVG");
     expect(brandAssets).toContain("data-brand-source={webBrandAssets.source}");
+    expect(brandAssets).toContain("text-brand-mark");
+    expect(brandAssets).not.toContain('src: "/brand/logo-color.svg"');
+    expect(brandAssets).not.toContain('src: "/brand/logo-horizontal-en.svg"');
     expect(shell).toContain("BrandLogo");
     expect(shell).toContain("webBrandLabels.homeLink");
     expect(shell).not.toContain("Nebutra Sailor");

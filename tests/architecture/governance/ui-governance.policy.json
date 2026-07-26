@@ -204,16 +204,22 @@
       },
       {
         "name": "web-brand-assets-single-source",
-        "description": "Web brand chrome must consume synced logo assets from packages/design/brand instead of retyping or redrawing the brand in app components.",
+        "description": "Web brand chrome must render package inline SVG (LogoEnSVG/LogomarkSVG from @nebutra/brand) instead of retyping the brand or depending on public/brand sync for chrome.",
         "file": "apps/web/src/components/brand/brand-assets.tsx",
         "requiredContains": [
-          "source: \"packages/design/brand\"",
-          "src: \"/brand/logo-color.svg\"",
-          "src: \"/brand/logo-horizontal-en.svg\"",
+          "from \"@nebutra/brand\"",
+          "LogoEnSVG",
+          "LogomarkSVG",
           "data-brand-source={webBrandAssets.source}",
+          "text-brand-mark",
           "alt=\"\""
         ],
-        "forbiddenContains": ["Nebutra Sailor", "alt=\"Nebutra\""]
+        "forbiddenContains": [
+          "Nebutra Sailor",
+          "alt=\"Nebutra\"",
+          "src: \"/brand/logo-color.svg\"",
+          "src: \"/brand/logo-horizontal-en.svg\""
+        ]
       },
       {
         "name": "web-public-chrome-brand-assets",

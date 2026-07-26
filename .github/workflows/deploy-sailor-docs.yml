@@ -68,8 +68,19 @@ jobs:
           EOF
           # Deploy from monorepo root so turbo filter + pnpm workspace resolve.
           # --archive=tgz avoids the 15k-file CLI upload limit on this monorepo.
-          vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" \
-            --scope "${VERCEL_ORG_ID:-}"
+          set +e
+          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" \
+            --scope "${VERCEL_ORG_ID:-}" 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours'; then
+              echo "::warning::Vercel Hobby daily deploy quota exhausted. Rely on Git integration or retry after ~24h. ECS/other targets unaffected."
+              exit 0
+            fi
+            exit "$code"
+          fi
 
       - name: Smoke docs.nebutra.com
         run: |

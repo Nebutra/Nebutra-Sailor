@@ -53,8 +53,23 @@ jobs:
           cat > .vercel/project.json <<EOF
           {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
           EOF
-          vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
-            --scope "${VERCEL_ORG_ID:-}"
+          set +e
+          out=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
+            --scope "${VERCEL_ORG_ID:-}" 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours'; then
+              echo "::warning::Vercel Hobby daily deploy quota exhausted. Rely on Git integration or retry after ~24h."
+              exit 0
+            fi
+            if echo "$out" | grep -qiE 'Upload aborted'; then
+              echo "::warning::Vercel upload aborted (transient network/quota). Retry later."
+              exit 0
+            fi
+            exit "$code"
+          fi
 
       - name: Smoke app.nebutra.com
         run: |

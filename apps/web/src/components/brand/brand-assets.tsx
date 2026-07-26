@@ -77,7 +77,7 @@ export function BrandLogo({
     <span
       className={cn("inline-flex shrink-0 items-center", tone, className)}
       data-brand-asset={variant}
-      data-brand-source="@nebutra/brand/LogoSVG"
+      data-brand-source={webBrandAssets.source}
     >
       {variant === "mark" ? (
         <LogomarkSVG className={cn("block h-full w-full", imgClassName)} width={32} height={32} />
