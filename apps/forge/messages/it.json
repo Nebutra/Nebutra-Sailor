@@ -8,16 +8,16 @@
     "main": "Navigazione principale",
     "homeAria": "Home di {brandName} Forge",
     "tools": "Strumenti",
-    "wallet": "Wallet",
+    "wallet": "Portafoglio",
     "api": "API",
-    "routerAria": "{brandName} Router",
+    "routerAria": "Router di {brandName}",
     "categoriesAria": "Categorie di strumenti",
-    "languageAria": "Change language"
+    "languageAria": "Cambia lingua"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
+    "breadcrumbAria": "Briciola di pane",
     "labNotice": "Funzionalità Lab: copertura dati o dizionario limitata; i risultati sono solo indicativi.",
-    "workspace": "Workspace",
+    "workspace": "Area di lavoro",
     "workspaceHint": "Locale o server · stesso percorso dell'API",
     "api": "API",
     "apiHint": "Stesso contratto della pagina. Usa una chiave autenticata in produzione.",
@@ -29,7 +29,7 @@
     "signOut": "Esci"
   },
   "footer": {
-    "navAria": "Footer",
+    "navAria": "Piè di pagina",
     "blurb": "Stazione di strumenti online. Completa i compiti nel browser o automatizzali tramite API / MCP.",
     "product": "Prodotto",
     "developers": "Sviluppatori",

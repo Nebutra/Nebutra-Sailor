@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Categorii de instrumente",
-    "languageAria": "Change language"
+    "languageAria": "Schimbă limba"
   },
   "tool": {
     "breadcrumbAria": "Drumuleț",

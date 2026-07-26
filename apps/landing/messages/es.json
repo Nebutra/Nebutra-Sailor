@@ -1468,7 +1468,7 @@
     "flowTokensDesc": "Variables CSS, escalas de 12 pasos, modo oscuro",
     "flowTheme": "Tema",
     "flowThemeDesc": "oklch multi-tema, 6 presets, color-mix()",
-    "flowUI": "UI",
+    "flowUI": "IU",
     "flowUIDesc": "Componentes, Storybook, Chromatic",
     "card1Title": "Escalas de Color de 12 Pasos",
     "card1Desc": "Escala semántica alineada con Geist: fondos (1-2), estados (3-5), bordes (6-8), rellenos (9-10), texto (11-12).",
@@ -1612,7 +1612,7 @@
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "Preguntas frecuentes",
       "title": "Preguntas con respuestas directas",
       "subtitle": "Todo lo que necesita saber antes de lanzar.",
       "items": {
@@ -1680,42 +1680,42 @@
       "subtitle": "Las historias de clientes de nuestra cohorte beta están llegando pronto — sea de los primeros."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Comparar planes",
+      "title": "Todo es gratuito. Elige el nivel de compromiso que necesitas.",
+      "subtitle": "Cada plan incluye el código fuente completo y permite el uso comercial de código cerrado sin costo. Las diferencias son el soporte, los compromisos contractuales y los derechos de marca.",
       "plan": {
-        "community": "Community",
-        "team": "Team",
-        "enterprise": "Enterprise"
+        "community": "Comunidad",
+        "team": "Equipo",
+        "enterprise": "Empresa"
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Licencia",
+          "type": "Licencia",
+          "commercial-use": "Uso comercial de código cerrado",
+          "registration": "Registro",
+          "trademark": "Derechos de marca"
         },
         "source": {
-          "label": "Source Code",
-          "full-source": "Full source code",
-          "all-packages": "All packages & modules",
-          "update-window": "Updates"
+          "label": "Código fuente",
+          "full-source": "Código fuente completo",
+          "all-packages": "Todos los paquetes y módulos",
+          "update-window": "Actualizaciones"
         },
         "support": {
-          "label": "Support",
-          "channel": "Support channel",
-          "first-response": "Guaranteed first response",
-          "security-patch": "Security patch commitment"
+          "label": "Soporte",
+          "channel": "Canal de soporte",
+          "first-response": "Primera respuesta garantizada",
+          "security-patch": "Compromiso de parches de seguridad"
         },
         "procurement": {
-          "label": "Procurement",
-          "indemnification": "Indemnification",
-          "dpa": "Signed DPA & compliance pack",
-          "continuity": "Continuity undertaking"
+          "label": "Adquisición",
+          "indemnification": "Indemnización",
+          "dpa": "DPA firmado y paquete de cumplimiento",
+          "continuity": "Compromiso de continuidad"
         }
       },
-      "ariaTable": "Tier and feature comparison"
+      "ariaTable": "Comparación de niveles y funciones"
     },
     "socialProof": {
       "title": "Construido sobre un stack en el que puede confiar",

@@ -12,12 +12,12 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Toolcategorieën",
-    "languageAria": "Change language"
+    "languageAria": "Taal wijzigen"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
+    "breadcrumbAria": "Broodkruimels",
     "labNotice": "Lab-functie: beperkte data- of woordenboekdekking; resultaten zijn slechts ter referentie.",
-    "workspace": "Workspace",
+    "workspace": "Werkruimte",
     "workspaceHint": "Lokaal of server · zelfde pad als API",
     "api": "API",
     "apiHint": "Zelfde contract als de pagina. Gebruik een geauthenticeerde sleutel in productie.",

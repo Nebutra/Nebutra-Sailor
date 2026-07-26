@@ -10,9 +10,9 @@
     "tools": "Narzędzia",
     "wallet": "Portfel",
     "api": "API",
-    "routerAria": "{brandName} Router",
+    "routerAria": "Router {brandName}",
     "categoriesAria": "Kategorie narzędzi",
-    "languageAria": "Change language"
+    "languageAria": "Zmień język"
   },
   "tool": {
     "breadcrumbAria": "Ścieżka nawigacji",

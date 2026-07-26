@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Eszköz kategóriák",
-    "languageAria": "Change language"
+    "languageAria": "Nyelv módosítása"
   },
   "tool": {
     "breadcrumbAria": "Vezérlőpálya",

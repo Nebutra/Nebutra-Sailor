@@ -10,9 +10,9 @@
     "tools": "Alat",
     "wallet": "Dompet",
     "api": "API",
-    "routerAria": "{brandName} Router",
+    "routerAria": "Router {brandName}",
     "categoriesAria": "Kategori alat",
-    "languageAria": "Change language"
+    "languageAria": "Ubah bahasa"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
@@ -29,13 +29,13 @@
     "signOut": "Keluar"
   },
   "footer": {
-    "navAria": "Footer",
+    "navAria": "Bagian Bawah",
     "blurb": "Stasiun alat online. Selesaikan tugas di browser, atau otomatisasi via API / MCP.",
     "product": "Produk",
     "developers": "Pengembang",
     "company": "Perusahaan",
     "docs": "Dokumentasi integrasi",
-    "website": "Website",
+    "website": "Situs Web",
     "privacy": "Privasi"
   },
   "home": {

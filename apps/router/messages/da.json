@@ -7,7 +7,7 @@
   "admin": {
     "dashboard": "Oversigt",
     "keys": "API-nøgler",
-    "wallet": "Wallet",
+    "wallet": "Lommebog",
     "docs": "Dokumentation",
     "title": "Admin",
     "backToMarket": "Tilbage til markedet",
@@ -123,7 +123,7 @@
   "shortcuts": {
     "dashboard": "Oversigt",
     "keys": "Nøgler",
-    "wallet": "Wallet",
+    "wallet": "Lommebog",
     "use": "Prøv",
     "docs": "Dokumentation",
     "models": "Mere"

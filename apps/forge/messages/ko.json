@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "도구 카테고리",
-    "languageAria": "Change language"
+    "languageAria": "언어 변경"
   },
   "tool": {
     "breadcrumbAria": "경로",

@@ -96,7 +96,7 @@
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
+      "label": "Robôs",
       "chips": "Bots de chat · bots de desenho · conhecimento"
     },
     "productivity": {

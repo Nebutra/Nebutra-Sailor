@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "ツールカテゴリ",
-    "languageAria": "Change language"
+    "languageAria": "言語を変更"
   },
   "tool": {
     "breadcrumbAria": "パンくずリスト",

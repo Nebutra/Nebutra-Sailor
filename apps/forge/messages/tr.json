@@ -12,10 +12,10 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Araç kategorileri",
-    "languageAria": "Change language"
+    "languageAria": "Dili değiştir"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
+    "breadcrumbAria": "Gezinme Çıtırması",
     "labNotice": "Lab özelliği: sınırlı veri veya sözlük kapsamı; sonuçlar yalnızca referans amaçlıdır.",
     "workspace": "Çalışma Alanı",
     "workspaceHint": "Yerel veya sunucu · API ile aynı yol",

@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Verktøykategorier",
-    "languageAria": "Change language"
+    "languageAria": "Bytt språk"
   },
   "tool": {
     "breadcrumbAria": "Sti",

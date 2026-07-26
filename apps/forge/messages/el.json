@@ -12,10 +12,10 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Κατηγορίες εργαλείων",
-    "languageAria": "Change language"
+    "languageAria": "Αλλαγή γλώσσας"
   },
   "tool": {
-    "breadcrumbAria": "Breadcrumb",
+    "breadcrumbAria": "Διαδρομή",
     "labNotice": "Δυνατότητα Lab: περιορισμένο σύνολο δεδομένων ή κάλυψη λεξικού· τα αποτελέσματα είναι μόνο ενδεικτικά.",
     "workspace": "Εργαζιακός Χώρος",
     "workspaceHint": "Τοπικό ή server · ίδια διαδρομή με την API",
@@ -53,7 +53,7 @@
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "Κωδικοποιητές",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {

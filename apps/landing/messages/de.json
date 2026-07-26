@@ -1464,7 +1464,7 @@
     "subheadline": "Von Marken-Primitiven zu Runtime-Tokens, Multi-Theme-Engine und governierten Komponenten — nicht nur shadcn mit Tailwind.",
     "flowBrand": "Marke",
     "flowBrandDesc": "Farbprimitive, Verläufe, Bewegungssprache",
-    "flowTokens": "Tokens",
+    "flowTokens": "Token",
     "flowTokensDesc": "CSS-Variablen, 12-Stufen-Skalen, Dark Mode",
     "flowTheme": "Design",
     "flowThemeDesc": "oklch Multi-Theme, 6 Presets, color-mix()",
@@ -1680,9 +1680,9 @@
       "subtitle": "Kundenberichte aus unserem Beta-Kohort folgen bald — seien Sie unter den Ersten."
     },
     "comparison": {
-      "badge": "Compare tiers",
-      "title": "Everything is free. Pick how much of a commitment you need.",
-      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
+      "badge": "Tarife vergleichen",
+      "title": "Alles ist kostenlos. Wählen Sie, wie viel Verbindlichkeit Sie brauchen.",
+      "subtitle": "Jede Stufe enthält den vollständigen Quellcode und erlaubt die kommerz Nutzung mit geschlossenem Quellcode kostenlos. Die Unterschiede liegen in Support, vertraglichen Zusagen und Markenrechten.",
       "plan": {
         "community": "Community",
         "team": "Team",
@@ -1690,11 +1690,11 @@
       },
       "feature": {
         "license": {
-          "label": "License",
-          "type": "License",
-          "commercial-use": "Closed-source commercial use",
-          "registration": "Registration",
-          "trademark": "Trademark rights"
+          "label": "Lizenz",
+          "type": "Lizenz",
+          "commercial-use": "Kommerzielle Nutzung mit geschlossenem Quellcode",
+          "registration": "Registrierung",
+          "trademark": "Markenrechte"
         },
         "source": {
           "label": "Source Code",

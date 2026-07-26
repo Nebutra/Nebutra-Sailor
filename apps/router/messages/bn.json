@@ -105,27 +105,27 @@
     },
     "academic": {
       "label": "শিক্ষামূলক",
-      "chips": "PDF toolkit · AI patent search"
+      "chips": "PDF টুলকিট · AI পেটেন্ট সার্চ"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "ইমেজ টুলস",
+      "chips": "3D স্টুডিও · ক্যানভাস"
     },
     "audio": {
-      "label": "Audio",
-      "chips": "Speech · AI music"
+      "label": "অডিও",
+      "chips": "স্পিচ · AI মিউজিক"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "কোড",
+      "chips": "ওয়েব জেনারেটর · Forge"
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "সংক্ষিপ্ত বিবরণ",
+    "keys": "কী",
+    "wallet": "ওয়ালেট",
+    "use": "চেষ্টা করুন",
+    "docs": "ডক্স",
+    "models": "আরও"
   }
 }

@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Categorias de ferramentas",
-    "languageAria": "Change language"
+    "languageAria": "Alterar idioma"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",

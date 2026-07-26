@@ -167,22 +167,30 @@ checksums:
     hero/subheadline: a11120edada31c59c8ef0d470a4ca8f3
     icpFooter/publicSecurity: c0b956d32b45499f82dc8273c65c8c5b
     icpFooter/recordNumber: 35f85fda8e2b57d72cf1f27f729d0df3
-    landing/comparison/ariaTable: 0f3eb60f121b24227c96d1055692d64e
-    landing/comparison/badge: f182cb9a3b7b4c9a062be6389a10b60d
+    landing/comparison/ariaTable: b25d0263f896df9e83591883f2c3dd9c
+    landing/comparison/badge: 99cb1e8798da7ca6d1336bacd6ceabd2
+    landing/comparison/feature/license/commercial-use: a93e14a1f9ace4471b1d4f22cf8ca1e3
     landing/comparison/feature/license/label: 794df3791a8c800841516007427a2aa3
-    landing/comparison/feature/license/projects: 0717a4a51ccc09f8fb91fac385987d15
-    landing/comparison/feature/license/type: 82060d81b7ce43c57280e879899f9a2c
+    landing/comparison/feature/license/registration: 0f98b7f230f3c91292f0de4c99e263f2
+    landing/comparison/feature/license/trademark: 1dcc295454ab519dde3ef4ae9be15f17
+    landing/comparison/feature/license/type: 794df3791a8c800841516007427a2aa3
+    landing/comparison/feature/procurement/continuity: 11061cfc39a4fe1ebca0701b0b4be14e
+    landing/comparison/feature/procurement/dpa: 3c5789c24f0a21478267f0a063406e01
+    landing/comparison/feature/procurement/indemnification: 557266a3ad5bd3298fea75f7ddcdaf4e
+    landing/comparison/feature/procurement/label: 8bab773ff663833b38f34cd38c401576
     landing/comparison/feature/source/all-packages: 02f31d7cbd4a0722ff387624109bc6f6
     landing/comparison/feature/source/full-source: 4d3657fafd33e572eed95237ab5eef1c
     landing/comparison/feature/source/label: 4c200f344d32f6a87d65cd4615afc915
-    landing/comparison/feature/source/update-window: 344da2a2c869e6ee35d4fdaf38f91057
+    landing/comparison/feature/source/update-window: 9ac41b6a577daadd588f0fcde0071e8b
     landing/comparison/feature/support/channel: c0c7157f9164feeb8055646de9159040
+    landing/comparison/feature/support/first-response: b31e88c77001774da4d4cd0b0517b433
     landing/comparison/feature/support/label: db5eb84117d06047c97c9a0191b5fffe
+    landing/comparison/feature/support/security-patch: 527e569edfe4ac7486f915e16bd9bd2d
+    landing/comparison/plan/community: 7d61983c34edc2a8cabbea71c4732f62
     landing/comparison/plan/enterprise: a0f27638260642afb474516cc918407e
-    landing/comparison/plan/independent: e9e003c325eec6946ed1d23c6ac90a21
-    landing/comparison/plan/startup: 13e685964c2548aa748f7ea263bad4e5
-    landing/comparison/subtitle: 63bd80f9e0c4bd19d4680678851c3c87
-    landing/comparison/title: 78bffb2df8a011d16aa6ae9675aafdef
+    landing/comparison/plan/team: ac848fa228f49ba2b8a5fbd76596817d
+    landing/comparison/subtitle: 426b939f73bca2730fbad51bdab57910
+    landing/comparison/title: 2e21b2e8d381060be81127a51ece3733
     landing/faq/badge: 1fe917b01f9a3f87fa2d7d3b7643fac1
     landing/faq/items/byo-provider/answer: 5713cea62574e24d1a395226aeaf4981
     landing/faq/items/byo-provider/question: bcf9d417fc57b4f667036d8176f3989e
@@ -728,49 +736,49 @@ checksums:
     licenseWizard/tiers/individualFree: 4818546932afef625a4401983ded1ccc
     licenseWizard/tiers/opcFree: 7c4f0758495fc80c29b7fb1ad985761a
     licenseWizard/tiers/startupCommercial: 750471275226d239d86879f84e459632
-    licensing/faq/description: 7013ef3f31d3ad6e7c1167353ca7001c
+    licensing/faq/description: 93fc86d0e2db1ee15a99c0bde5f6a24e
+    licensing/faq/items/competingUse/a: ab2d995c8c010d6b9b25b371754956ee
+    licensing/faq/items/competingUse/q: 4dd9fce98d164d30c4675209bf1eb4ef
     licensing/faq/items/contributions/a: 6a0a9caf2ea7d69315dd0a4daecf17bb
     licensing/faq/items/contributions/q: 7a7dcfd68b1bd34e336e7b714bc15ecc
-    licensing/faq/items/opcDefinition/a: 9959ee84b3d237af8cca59b4ce247f14
-    licensing/faq/items/opcDefinition/q: a26c9af6357c76e21009e9aa264571ff
-    licensing/faq/items/soloFree/a: 9fc61de19cabab92c93576004a4626de
-    licensing/faq/items/soloFree/q: 0f584653770fb194d017a1a9c8f10bde
-    licensing/faq/items/upgrade/a: a8a0fa8ea0510ab68d17783b7898e883
-    licensing/faq/items/upgrade/q: dd36f8ede254b8d2d65744342af2f560
-    licensing/faq/items/whyAgpl/a: 566aac3029e21165de6fd681581a73c2
-    licensing/faq/items/whyAgpl/q: 082e9df04d3930baa1622a004a9c049a
+    licensing/faq/items/reallyFree/a: d8ce427e3f7b0f6865c4cdaa24490b5b
+    licensing/faq/items/reallyFree/q: ee3dbe9de5e0c74bcdf5a7bcc92e2b76
+    licensing/faq/items/upgrade/a: c52b0822c2ba27125a56e9af2b1a6778
+    licensing/faq/items/upgrade/q: b14b2ff57fa3503db5702e5bf202dbe0
+    licensing/faq/items/whyFsl/a: b2af22fa257debdd2a228a85201e3cc2
+    licensing/faq/items/whyFsl/q: 9be159a7891024c7dc0065607520b939
     licensing/faq/title: 5405d8a903c83e89cb649f1b518ef1be
-    licensing/hero/description: 2a232ec5908813321026b538429b52dd
-    licensing/hero/title: 6b192bc6baff6f219774191c88506126
-    licensing/meta/description: 2b30ef0526854c679df5ea4490a46553
+    licensing/hero/description: f0b638b74fba68ac24aae32d8afa6d6d
+    licensing/hero/title: 4683d35e62328760bbcc8aaa2b71d9bd
+    licensing/meta/description: d97312c2a789293901d6f774f0bd5cfb
     licensing/meta/title: d843c9cbe4ce3b55ea7278d1bb07b395
-    licensing/plans/agpl/badge: 535b08189b0e29069e979ae05526148a
-    licensing/plans/agpl/cta: ac190556c6afd7da35816bcc37bfa04c
-    licensing/plans/agpl/description: 81cde72f9e6d0151323e80f826b002ae
-    licensing/plans/agpl/features/communitySupport: 3912fd924a7ea02cf813d239fab2ae49
-    licensing/plans/agpl/features/mustCredit: 9c8f09b98b51b4490c4034ebe1f00958
-    licensing/plans/agpl/features/mustOpenSource: bc823edcd3587106d5ebab5a4088d5e0
-    licensing/plans/agpl/features/sourceAccess: b23e65c47f0910238dc0362899f373ae
-    licensing/plans/agpl/subtitle: 81f4074bd6383b7398ffe2525180cbae
-    licensing/plans/agpl/title: d658535198843d2321ca7305e0438015
-    licensing/plans/commercial/badge: 82326a7034e4e5245f0642581abca7a2
-    licensing/plans/commercial/cta: 50c062da8e89680a10e95a7d28188dd8
-    licensing/plans/commercial/description: 20d770fba3418092cc68a94a2dccbd7a
-    licensing/plans/commercial/features/closedSource: bb48f1699b881da82aa16c8e069d7088
-    licensing/plans/commercial/features/commercialSupport: bb2b00a94460e0d60697f29a88a76532
-    licensing/plans/commercial/features/noCopyleft: 825867e726124c39560eea64be029ba8
-    licensing/plans/commercial/features/noTeamLimits: 153e84f39af060b037c9c75a1c2e2060
-    licensing/plans/commercial/subtitle: 51bc5ca93709787d83dba863b7464c9b
-    licensing/plans/commercial/title: b2788e1ab6be65f1c38bf7d23cd081f1
-    licensing/plans/freeCommercial/badge: 6f4c72df1fad7f27610b820e81eed6f3
-    licensing/plans/freeCommercial/cta: 64292f04b1aa3c5a3a0b8422eddab989
-    licensing/plans/freeCommercial/description: ca3daa8a91771e186740fd3efbe61515
-    licensing/plans/freeCommercial/features/closedSource: bb48f1699b881da82aa16c8e069d7088
-    licensing/plans/freeCommercial/features/creditRequired: 18d913a4902b5ffab029969cb0ceefff
-    licensing/plans/freeCommercial/features/freeKey: 1b2293d13c8fb543434a1c0bbaac91cd
-    licensing/plans/freeCommercial/features/teamSize: 52e41808ca576fc5fd767360521bd53b
-    licensing/plans/freeCommercial/subtitle: f4468f04e4413e960376750f43b1bd0b
-    licensing/plans/freeCommercial/title: 7efbd46056e3131b6daaf0e1b3b27a90
+    licensing/plans/community/badge: 535b08189b0e29069e979ae05526148a
+    licensing/plans/community/cta: ac190556c6afd7da35816bcc37bfa04c
+    licensing/plans/community/description: c067052cac667a84c6ce94e210e31ab8
+    licensing/plans/community/features/closedSourceOk: d31531edfade5f025198ded0238b3aac
+    licensing/plans/community/features/communitySupport: ec9ba0fd37a966169ac111f889a499aa
+    licensing/plans/community/features/fullSource: 4cd3009fab4fffb1c54adb6bd6bc436b
+    licensing/plans/community/features/noAttribution: 65652539caa3688a17a8bb6f98735678
+    licensing/plans/community/subtitle: f9ae5e5c44e59f94680af569879f704a
+    licensing/plans/community/title: 7d61983c34edc2a8cabbea71c4732f62
+    licensing/plans/enterprise/badge: 27e0544b7231555b40f540bead9bbd81
+    licensing/plans/enterprise/cta: 0fb8dd59a0bef75c0f2ec966582f227b
+    licensing/plans/enterprise/description: cf772eb8fbe0b2c769873b0e45bd9d7a
+    licensing/plans/enterprise/features/compliance: 45ea2ced4aba28f637f515e96fb36d30
+    licensing/plans/enterprise/features/indemnity: a8811688e563ed8b31352da896169a62
+    licensing/plans/enterprise/features/sla: 9db811f1e352607e9b653a538946bf25
+    licensing/plans/enterprise/features/trademark: 6ceeb985cdf90e61cd1576f97e557385
+    licensing/plans/enterprise/subtitle: 312ecb25b9ef2c34f7cdf9ab2a1b73ef
+    licensing/plans/enterprise/title: a0f27638260642afb474516cc918407e
+    licensing/plans/team/badge: 82326a7034e4e5245f0642581abca7a2
+    licensing/plans/team/cta: 733b82ee3ef9ae9620dd0c0dfe26af88
+    licensing/plans/team/description: 9e93cf4f69f643ef481c3e216a086e59
+    licensing/plans/team/features/firstResponse: 506692a0cf6c845187cb29d761de4eaf
+    licensing/plans/team/features/priorityTriage: d4cbb7b2781ddb130f2a67fff6cde440
+    licensing/plans/team/features/privateChannel: 4a8ba90d2457a72d3b13a265e13fed80
+    licensing/plans/team/features/upgradeHelp: 5b3d5ab40cf2a688da7fb8064edec05a
+    licensing/plans/team/subtitle: 84f64a490fbe7ab90703010156289eaf
+    licensing/plans/team/title: ac848fa228f49ba2b8a5fbd76596817d
     logoStrip/tagline: e947ea2a8da65d51675665096bc41409
     MarketLocalePicker/description: 2eb3ebe90cc33a64fa68fb87607dfbf2
     MarketLocalePicker/menuAria: 04010c28242722e8a2fbdbfb57594b9a
@@ -816,40 +824,40 @@ checksums:
     microLanding/faq/q3/a: 2ef6c2d89aa02a5efc020b4a67a8a822
     microLanding/faq/q3/q: 2d021f3d0d407490fc7e0421d351fa3f
     microLanding/faq/title: f09ce2fc419fd0b16f624f482908772d
-    microLanding/pricing/description: 370c39c16e85e7f3f6052064f7332295
+    microLanding/pricing/community/badge: 306f14e5ed6e4f8b237eaa58359fa3b2
+    microLanding/pricing/community/cta: 586f9d7f1e5fc72ae0fe7019bdc5f1d0
+    microLanding/pricing/community/desc: 17fa1626031b7c3761c1c1f55639df44
+    microLanding/pricing/community/f1: eccfa53f5e1b93801bcd116c8e48fe35
+    microLanding/pricing/community/f2: 40c6fc6d60313f11850ed0cd9b5fc8f5
+    microLanding/pricing/community/f3: 5baf23f91f5ac334d31a87b3158b1f4a
+    microLanding/pricing/community/f4: 9914309833bdb790b4bb496d3c5aefe5
+    microLanding/pricing/community/f5: 8573453aeb8b95d969e09a938dfcb0f9
+    microLanding/pricing/community/period: d7af994f1f1ef8b5e3beb9f7fb139f57
+    microLanding/pricing/community/price: b24ce0cd392a5b0b8dedc66c25213594
+    microLanding/pricing/description: c0b56dc13bc766fd6674f359428736d7
     microLanding/pricing/enterprise/badge: 4d4afda25a3f52041ee1b569157130b8
     microLanding/pricing/enterprise/cta: 0fb8dd59a0bef75c0f2ec966582f227b
-    microLanding/pricing/enterprise/desc: 31346c410b30af4c58b9635be8fe5fbd
-    microLanding/pricing/enterprise/f1: 695d3082e211908ab5296a02fab134d1
-    microLanding/pricing/enterprise/f2: d1d3afb8d0efd69eda0a827594a64b7f
-    microLanding/pricing/enterprise/f3: d7577a8089cf8454faca9642a96b930a
-    microLanding/pricing/enterprise/f4: b30e8eb9754215c31824876d29bd3fbc
-    microLanding/pricing/enterprise/f5: 5c51f75ab0440432596a6d2a7d70ff3d
-    microLanding/pricing/enterprise/f6: e549247318e37004683b73634fd6e5dc
-    microLanding/pricing/enterprise/period: d41d8cd98f00b204e9800998ecf8427e
-    microLanding/pricing/enterprise/price: 90589c47f06eb971d548591f23c285af
-    microLanding/pricing/independent/badge: 5791d17c7520fefc1d79bfa3796b9ac3
-    microLanding/pricing/independent/cta: 586f9d7f1e5fc72ae0fe7019bdc5f1d0
-    microLanding/pricing/independent/desc: 2736c05bfd4261f3145c82091859fbef
-    microLanding/pricing/independent/f1: 335971bb23bb7f977cbf40cba9cef6fc
-    microLanding/pricing/independent/f2: 1262d004c020c9fa0d65123f83b8696f
-    microLanding/pricing/independent/f3: 0350f361da4782735189172c2f82e778
-    microLanding/pricing/independent/f4: 9914309833bdb790b4bb496d3c5aefe5
-    microLanding/pricing/independent/f5: 6266f85a8fe0d6b859b52a794c953f3f
-    microLanding/pricing/independent/period: d7af994f1f1ef8b5e3beb9f7fb139f57
-    microLanding/pricing/independent/price: b24ce0cd392a5b0b8dedc66c25213594
-    microLanding/pricing/socialProofText: ca964f60ec03dea4ed2bde97281e63f3
-    microLanding/pricing/startup/badge: 1b22fb6d3c3de89ae1dd687d11702354
-    microLanding/pricing/startup/cta: 071a0f3d79461029ee4e2363661a2653
-    microLanding/pricing/startup/desc: 79e85944841196c8e5918b91cf7260d9
-    microLanding/pricing/startup/f1: 7ab849b587e3c3a5adefbd17d389c21f
-    microLanding/pricing/startup/f2: 70efd41cf30f0975b4f82b2d248f6824
-    microLanding/pricing/startup/f3: 9510ec32bf935b2fa514b6cedab2671b
-    microLanding/pricing/startup/f4: 68b2c4df9bfb34694138980d7d1d9bd1
-    microLanding/pricing/startup/f5: df1d705fd930e68806a15fe95d37b3bb
-    microLanding/pricing/startup/period: 8ca68713dba6c7f1c704861a49054441
-    microLanding/pricing/startup/price: bb69f09ca17cf99caeef7367440b8626
-    microLanding/pricing/title: 42c69f7a56535cc1f878fc6e2349b871
+    microLanding/pricing/enterprise/desc: 80a97124dce242cdee9cff3e119cfab1
+    microLanding/pricing/enterprise/f1: 6b2e0dd75d6e5a8ce775d457274fbcdb
+    microLanding/pricing/enterprise/f2: b8a198f13c8065ec50027f8b3573d5b9
+    microLanding/pricing/enterprise/f3: bb580ca1f8fd145f96d6d206732db220
+    microLanding/pricing/enterprise/f4: 60394793d699192c585bda8bde35f822
+    microLanding/pricing/enterprise/f5: 905e1211ffa1e72fec7bce9b4728cf1a
+    microLanding/pricing/enterprise/f6: cbf8329582e4f126df7c2c8ae8825f2b
+    microLanding/pricing/enterprise/period: 8ca68713dba6c7f1c704861a49054441
+    microLanding/pricing/enterprise/price: 526cc282d484ba07a3737ad393ed08b7
+    microLanding/pricing/socialProofText: b33134e6e83528a39c85d0a8a4c4de62
+    microLanding/pricing/team/badge: 732798a292ccd22394a13db3a2ab3480
+    microLanding/pricing/team/cta: 2bd49681d32a8a30d5b6a74ada175774
+    microLanding/pricing/team/desc: c2f550799d30ff59caa9c343dd3ceeca
+    microLanding/pricing/team/f1: b485b2a1a0f534b78e9d7a40bb61ea24
+    microLanding/pricing/team/f2: 506692a0cf6c845187cb29d761de4eaf
+    microLanding/pricing/team/f3: 43383e4b1f8d220cc060dad38fb6e808
+    microLanding/pricing/team/f4: b5dbd17b133085843edaee4a54848cf0
+    microLanding/pricing/team/f5: d4dc15a072f6703a16c4db63a017c5b8
+    microLanding/pricing/team/period: 8ca68713dba6c7f1c704861a49054441
+    microLanding/pricing/team/price: dd5f865c529f13e5a9983f8d2fbbb198
+    microLanding/pricing/title: c72f26a940c256d9af80ab8f9426cf18
     microLanding/productDemo/analytics/desc: a667d24b863e8c54a76713ac39790fc5
     microLanding/productDemo/analytics/label: 7da16dbe6ede9afc738168b92b8bf94a
     microLanding/productDemo/badge: e55f2c112acf2480c37ed0c22bf5a3a1

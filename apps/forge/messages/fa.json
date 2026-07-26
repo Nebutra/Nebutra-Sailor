@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "دسته‌بندی ابزارها",
-    "languageAria": "Change language"
+    "languageAria": "تغییر زبان"
   },
   "tool": {
     "breadcrumbAria": "مسیر صفحه",

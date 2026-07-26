@@ -7,7 +7,7 @@
   "admin": {
     "dashboard": "Overzicht",
     "keys": "API-sleutels",
-    "wallet": "Wallet",
+    "wallet": "Portefeuille",
     "docs": "Documentatie",
     "title": "Admin",
     "backToMarket": "Terug naar de markt",
@@ -20,8 +20,8 @@
     "currency": "Valuta",
     "collapseSidebar": "Zijbalk inklappen",
     "expandSidebar": "Zijbalk uitvouwen",
-    "home": "Home",
-    "adminConsole": "Admin",
+    "home": "Startpagina",
+    "adminConsole": "Beheer",
     "quickUse": "Snel gebruiken",
     "support": "Ondersteuning",
     "apiDocs": "API-documentatie",
@@ -78,7 +78,7 @@
       "hint": "Tekst-naar-video"
     },
     "audio": {
-      "label": "Audio & video",
+      "label": "Audio en video",
       "hint": "Spraak · transcriptie"
     },
     "data": {
@@ -105,11 +105,11 @@
     },
     "academic": {
       "label": "Academisch",
-      "chips": "PDF toolkit · AI patent search"
+      "chips": "PDF-toolkit · AI-patentzoeken"
     },
     "image": {
       "label": "Afbeeldingstools",
-      "chips": "3D studio · Canvas"
+      "chips": "3D-studio · Canvas"
     },
     "audio": {
       "label": "Audio",
@@ -117,13 +117,13 @@
     },
     "code": {
       "label": "Code",
-      "chips": "Web generator · Forge"
+      "chips": "Webgenerator · Forge"
     }
   },
   "shortcuts": {
     "dashboard": "Overzicht",
     "keys": "Sleutels",
-    "wallet": "Wallet",
+    "wallet": "Portefeuille",
     "use": "Proberen",
     "docs": "Documentatie",
     "models": "Meer"

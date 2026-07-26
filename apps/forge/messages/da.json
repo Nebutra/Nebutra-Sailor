@@ -8,11 +8,11 @@
     "main": "Hovednavigation",
     "homeAria": "{brandName} Forge hjem",
     "tools": "Værktøjer",
-    "wallet": "Wallet",
+    "wallet": "Lommebog",
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Værktøjskategorier",
-    "languageAria": "Change language"
+    "languageAria": "Skift sprog"
   },
   "tool": {
     "breadcrumbAria": "Brødkrumme",

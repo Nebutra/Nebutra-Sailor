@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "टूल श्रेणियाँ",
-    "languageAria": "Change language"
+    "languageAria": "भाषा बदलें"
   },
   "tool": {
     "breadcrumbAria": "ब्रेडक्रंब",

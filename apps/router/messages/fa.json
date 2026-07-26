@@ -109,7 +109,7 @@
     },
     "image": {
       "label": "ابزارهای تصویر",
-      "chips": "3D studio · Canvas"
+      "chips": "استودیوی سه‌بعدی · بوم"
     },
     "audio": {
       "label": "صدا",
@@ -117,7 +117,7 @@
     },
     "code": {
       "label": "کد",
-      "chips": "Web generator · Forge"
+      "chips": "تولیدکننده وب · Forge"
     }
   },
   "shortcuts": {

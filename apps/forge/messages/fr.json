@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Catégories d'outils",
-    "languageAria": "Change language"
+    "languageAria": "Changer de langue"
   },
   "tool": {
     "breadcrumbAria": "Fil d'Ariane",

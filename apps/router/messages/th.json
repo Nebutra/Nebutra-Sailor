@@ -6,7 +6,7 @@
   },
   "admin": {
     "dashboard": "ภาพรวม",
-    "keys": "API Keys",
+    "keys": "คีย์ API",
     "wallet": "กระเป๋าเงิน",
     "docs": "เอกสาร",
     "title": "ผู้ดูแลระบบ",

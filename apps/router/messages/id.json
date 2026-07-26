@@ -74,37 +74,37 @@
       "hint": "Edit · matting"
     },
     "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
+      "label": "Generasi video",
+      "hint": "Teks-ke-video"
     },
     "audio": {
       "label": "Audio & video",
-      "hint": "Speech · transcription"
+      "hint": "Ucapan · transkripsi"
     },
     "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
+      "label": "Informasi",
+      "hint": "Pemanggilan · ekstraksi"
     },
     "rag": {
       "label": "RAG",
-      "hint": "Knowledge-augmented"
+      "hint": "Diperkaya pengetahuan"
     },
     "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
+      "label": "API Alat",
+      "hint": "Agen · alat"
     }
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
-      "chips": "Chat bots · drawing bots · knowledge"
+      "label": "Bot",
+      "chips": "Bot obrolan · bot gambar · pengetahuan"
     },
     "productivity": {
-      "label": "Productivity",
-      "chips": "Model arena · AI writing"
+      "label": "Produktivitas",
+      "chips": "Arena model · penulisan AI"
     },
     "academic": {
-      "label": "Academic",
+      "label": "Akademik",
       "chips": "Toolkit PDF · Pencarian paten AI"
     },
     "image": {

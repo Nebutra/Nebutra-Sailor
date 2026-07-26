@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Категории инструментов",
-    "languageAria": "Change language"
+    "languageAria": "Изменить язык"
   },
   "tool": {
     "breadcrumbAria": "Навигационная цепочка",

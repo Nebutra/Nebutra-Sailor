@@ -10,9 +10,9 @@
     "tools": "Alat",
     "wallet": "Dompet",
     "api": "API",
-    "routerAria": "{brandName} Router",
+    "routerAria": "Router {brandName}",
     "categoriesAria": "Kategori alat",
-    "languageAria": "Change language"
+    "languageAria": "Tukar bahasa"
   },
   "tool": {
     "breadcrumbAria": "Jejak roti",

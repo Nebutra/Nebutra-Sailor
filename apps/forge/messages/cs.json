@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Kategorie nástrojů",
-    "languageAria": "Change language"
+    "languageAria": "Změnit jazyk"
   },
   "tool": {
     "breadcrumbAria": "Navigační cesta",

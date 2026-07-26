@@ -121,11 +121,11 @@
     }
   },
   "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
+    "dashboard": "अवलोकन",
+    "keys": "कुंजी",
+    "wallet": "वॉलेट",
+    "use": "आज़माएं",
+    "docs": "दस्तावेज़",
+    "models": "अधिक"
   }
 }

@@ -6,7 +6,7 @@
   },
   "admin": {
     "dashboard": "Tổng quan",
-    "keys": "API Keys",
+    "keys": "Khóa API",
     "wallet": "Ví",
     "docs": "Tài liệu",
     "title": "Quản trị",
@@ -34,11 +34,11 @@
     "app": "Thị trường ứng dụng",
     "api": "Thị trường API",
     "models": "Danh mục mô hình",
-    "client": "Client"
+    "client": "Khách hàng"
   },
   "market": {
     "new": "Mới",
-    "hot": "Hot",
+    "hot": "Nổi bật",
     "forYou": "Dành cho bạn",
     "grid": "Lưới",
     "list": "Danh sách",
@@ -96,7 +96,7 @@
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
+      "label": "Bot",
       "chips": "Chat bot · bot vẽ · tri thức"
     },
     "productivity": {

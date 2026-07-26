@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Aina za zana",
-    "languageAria": "Change language"
+    "languageAria": "Badilisha lugha"
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
