@@ -70,13 +70,6 @@
     "system": "Hệ thống"
   },
   "LocaleSwitcher": {
-    "en": "Tiếng Anh",
-    "zh": "中文",
-    "de": "Tiếng Đức",
-    "es": "Tiếng Tây Ban Nha",
-    "fr": "Tiếng Pháp",
-    "ja": "Tiếng Nhật",
-    "ko": "Tiếng Hàn",
     "label": "Ngôn ngữ",
     "ariaLabel": "Đổi ngôn ngữ",
     "searchPlaceholder": "Search languages…",

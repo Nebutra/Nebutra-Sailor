@@ -70,13 +70,6 @@
     "system": "Rendszer"
   },
   "LocaleSwitcher": {
-    "en": "Angol",
-    "zh": "Kínai",
-    "de": "Német",
-    "es": "Spanyol",
-    "fr": "Francia",
-    "ja": "Japán",
-    "ko": "Koreai",
     "label": "Nyelv",
     "ariaLabel": "Nyelv módosítása",
     "searchPlaceholder": "Search languages…",

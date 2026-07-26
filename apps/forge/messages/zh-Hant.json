@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "工具分類",
-    "languageAria": "Change language"
+    "languageAria": "切換語言"
   },
   "tool": {
     "breadcrumbAria": "麵包屑",

@@ -70,13 +70,6 @@
     "system": "Sistem"
   },
   "LocaleSwitcher": {
-    "en": "Engleză",
-    "zh": "Chineză",
-    "de": "Germană",
-    "es": "Spaniolă",
-    "fr": "Franceză",
-    "ja": "Japoneză",
-    "ko": "Coreeană",
     "label": "Limbă",
     "ariaLabel": "Schimbă limba",
     "searchPlaceholder": "Search languages…",

@@ -70,13 +70,6 @@
     "system": "سسٹم"
   },
   "LocaleSwitcher": {
-    "en": "انگریزی",
-    "zh": "چینی",
-    "de": "جرمن",
-    "es": "ہسپانوی",
-    "fr": "فرانسیسی",
-    "ja": "جاپانی",
-    "ko": "کوریائی",
     "label": "زبان",
     "ariaLabel": "زبان تبدیل کریں",
     "searchPlaceholder": "Search languages…",

@@ -70,13 +70,6 @@
     "system": "Σύστημα"
   },
   "LocaleSwitcher": {
-    "en": "Αγγλικά",
-    "zh": "Κινεζικά",
-    "de": "Γερμανικά",
-    "es": "Ισπανικά",
-    "fr": "Γαλλικά",
-    "ja": "Ιαπωνικά",
-    "ko": "Κορεατικά",
     "label": "Γλώσσα",
     "ariaLabel": "Αλλαγή γλώσσας",
     "searchPlaceholder": "Search languages…",

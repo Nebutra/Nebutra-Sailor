@@ -70,13 +70,6 @@
     "system": "النظام"
   },
   "LocaleSwitcher": {
-    "en": "الإنجليزية",
-    "zh": "الصينية",
-    "de": "الألمانية",
-    "es": "الإسبانية",
-    "fr": "الفرنسية",
-    "ja": "اليابانية",
-    "ko": "الكورية",
     "label": "اللغة",
     "ariaLabel": "تغيير اللغة",
     "searchPlaceholder": "Search languages…",

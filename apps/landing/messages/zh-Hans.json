@@ -974,7 +974,7 @@
       "contactUs": {
         "title": "联系我们",
         "intro": "如需申请退款或就本政策提出咨询，请通过以下方式联系我们：",
-        "company": "{brandName} Co., Ltd.",
+        "company": "{brandName} 有限公司",
         "billingLabel": "账单",
         "supportLabel": "支持",
         "legalLabel": "法务",
@@ -1123,7 +1123,7 @@
       "contactUs": {
         "title": "十一、联系我们",
         "intro": "如您对本条款有任何疑问，请通过以下方式联系我们：",
-        "company": "{brandName} Co., Ltd.",
+        "company": "{brandName} 有限公司",
         "emailLabel": "电子邮件",
         "supportLabel": "支持"
       },
@@ -1468,7 +1468,7 @@
     "flowTokensDesc": "CSS 变量、12 级色阶、暗黑模式",
     "flowTheme": "主题",
     "flowThemeDesc": "oklch 多主题、6 个预设、color-mix()",
-    "flowUI": "UI",
+    "flowUI": "界面",
     "flowUIDesc": "组件库、Storybook、Chromatic",
     "card1Title": "12 级色阶",
     "card1Desc": "Geist 对齐语义色阶：背景 (1-2)、状态 (3-5)、边框 (6-8)、填充 (9-10)、文本 (11-12)。",

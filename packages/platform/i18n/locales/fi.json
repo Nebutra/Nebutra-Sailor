@@ -70,13 +70,6 @@
     "system": "Järjestelmä"
   },
   "LocaleSwitcher": {
-    "en": "Englanti",
-    "zh": "Kiina",
-    "de": "Saksa",
-    "es": "Espanja",
-    "fr": "Ranska",
-    "ja": "Japani",
-    "ko": "Korea",
     "label": "Kieli",
     "ariaLabel": "Vaihda kieli",
     "searchPlaceholder": "Search languages…",

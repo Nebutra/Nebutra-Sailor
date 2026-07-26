@@ -70,13 +70,6 @@
     "system": "Systeem"
   },
   "LocaleSwitcher": {
-    "en": "Engels",
-    "zh": "Chinees",
-    "de": "Duits",
-    "es": "Spaans",
-    "fr": "Frans",
-    "ja": "Japans",
-    "ko": "Koreaans",
     "label": "Taal",
     "ariaLabel": "Taal wijzigen",
     "searchPlaceholder": "Search languages…",

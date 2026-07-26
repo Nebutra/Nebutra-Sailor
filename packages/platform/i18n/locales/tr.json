@@ -70,13 +70,6 @@
     "system": "Sistem"
   },
   "LocaleSwitcher": {
-    "en": "İngilizce",
-    "zh": "Çince",
-    "de": "Almanca",
-    "es": "İspanyolca",
-    "fr": "Fransızca",
-    "ja": "Japonca",
-    "ko": "Korece",
     "label": "Dil",
     "ariaLabel": "Dili değiştir",
     "searchPlaceholder": "Search languages…",

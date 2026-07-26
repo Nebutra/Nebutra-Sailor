@@ -12,7 +12,7 @@
     "api": "API",
     "routerAria": "{brandName} Router",
     "categoriesAria": "Categorías de herramientas",
-    "languageAria": "Change language"
+    "languageAria": "Cambiar idioma"
   },
   "tool": {
     "breadcrumbAria": "Migas de pan",

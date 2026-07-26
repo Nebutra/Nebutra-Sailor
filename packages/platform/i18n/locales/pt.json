@@ -70,13 +70,6 @@
     "system": "Sistema"
   },
   "LocaleSwitcher": {
-    "en": "Inglês",
-    "zh": "Chinês",
-    "de": "Alemão",
-    "es": "Espanhol",
-    "fr": "Francês",
-    "ja": "Japonês",
-    "ko": "Coreano",
     "label": "Idioma",
     "ariaLabel": "Alterar idioma",
     "searchPlaceholder": "Search languages…",

@@ -70,13 +70,6 @@
     "system": "Sistem"
   },
   "LocaleSwitcher": {
-    "en": "Inggris",
-    "zh": "Cina",
-    "de": "Jerman",
-    "es": "Spanyol",
-    "fr": "Prancis",
-    "ja": "Jepang",
-    "ko": "Korea",
     "label": "Bahasa",
     "ariaLabel": "Ubah bahasa",
     "searchPlaceholder": "Search languages…",

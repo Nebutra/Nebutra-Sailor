@@ -70,13 +70,6 @@
     "system": "Mfumo"
   },
   "LocaleSwitcher": {
-    "en": "Kiingereza",
-    "zh": "Kichina",
-    "de": "Kijerumani",
-    "es": "Kihispania",
-    "fr": "Kifaransa",
-    "ja": "Kijapani",
-    "ko": "Kikorea",
     "label": "Lugha",
     "ariaLabel": "Badilisha lugha",
     "searchPlaceholder": "Search languages…",

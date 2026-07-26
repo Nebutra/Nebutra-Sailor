@@ -70,13 +70,6 @@
     "system": "Sistem"
   },
   "LocaleSwitcher": {
-    "en": "English",
-    "zh": "中文",
-    "de": "German",
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "ko": "Korean",
     "label": "Bahasa",
     "ariaLabel": "Tukar bahasa",
     "searchPlaceholder": "Search languages…",

@@ -70,13 +70,6 @@
     "system": "מערכת"
   },
   "LocaleSwitcher": {
-    "en": "אנגלית",
-    "zh": "סינית",
-    "de": "גרמנית",
-    "es": "ספרדית",
-    "fr": "צרפתית",
-    "ja": "יפנית",
-    "ko": "קוריאנית",
     "label": "שפה",
     "ariaLabel": "שנה שפה",
     "searchPlaceholder": "Search languages…",
