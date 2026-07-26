@@ -1,9 +1,8 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { Check, Clock, Message } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
 
 /**

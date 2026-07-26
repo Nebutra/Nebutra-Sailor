@@ -1,6 +1,4 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { Api, ArrowRight, Check, Lightning, LockClosed, Shield } from "@nebutra/icons";
 import {
@@ -15,6 +13,7 @@ import {
   StatusDot,
 } from "@nebutra/ui/primitives";
 import type { ComponentType, SVGProps } from "react";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 

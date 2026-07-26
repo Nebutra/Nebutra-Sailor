@@ -108,7 +108,6 @@ export const colors = {
   white: "#FFFFFF",
   black: "#000000",
   gradient: {
-    // Mid stop #00A2E9 = OKLab perceptual midpoint of 云毓蓝↔云毓青 (anti-muddy path control)
     primary: "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
     primaryReverse: "linear-gradient(135deg, #0BF1C3 0%, #00A2E9 50%, #0033FE 100%)",
     primaryVertical: "linear-gradient(180deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",

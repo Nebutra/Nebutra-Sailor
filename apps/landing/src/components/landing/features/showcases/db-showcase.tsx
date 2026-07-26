@@ -1,6 +1,4 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { Check, Database, Eye, EyeOff, LockClosed, Shield } from "@nebutra/icons";
 import {
@@ -16,6 +14,7 @@ import {
   TableRow,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 

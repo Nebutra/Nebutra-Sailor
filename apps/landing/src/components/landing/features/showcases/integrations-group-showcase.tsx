@@ -1,6 +1,4 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { ArrowRight, Bell, Check, Connection, Database, Envelope, Lightning } from "@nebutra/icons";
 import {
@@ -14,6 +12,7 @@ import {
   Progress,
   StatusDot,
 } from "@nebutra/ui/primitives";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 

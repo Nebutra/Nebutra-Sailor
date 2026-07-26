@@ -1,9 +1,8 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { Bug, Check, Clock, Connection, RefreshClockwise } from "@nebutra/icons";
 import { Badge, Card, CardHeader, StatusBadge, StatusDot, Table } from "@nebutra/ui/primitives";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 

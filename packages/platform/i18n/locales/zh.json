@@ -70,15 +70,11 @@
     "system": "跟随系统"
   },
   "LocaleSwitcher": {
-    "en": "English",
-    "zh": "中文",
-    "de": "德语",
-    "es": "西班牙语",
-    "fr": "法语",
-    "ja": "日语",
-    "ko": "韩语",
     "label": "语言",
-    "ariaLabel": "切换语言"
+    "ariaLabel": "切换语言",
+    "searchPlaceholder": "搜索语言…",
+    "noResults": "没有匹配的语言",
+    "menuAria": "选择语言"
   },
   "onboarding": {
     "title": "搭建你的工作空间",

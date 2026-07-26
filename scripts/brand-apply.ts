@@ -376,16 +376,17 @@ export function runDesignTokensBuild(): void {
     cwd: ROOT,
     stdio: "inherit",
   });
+  // Prefer local biome binary — avoids pnpm verify-deps-before-run failures on
+  // local/dev machines (same pattern as updateBrandMetadata).
+  const biomeBin = path.join(
+    ROOT,
+    "node_modules",
+    ".bin",
+    process.platform === "win32" ? "biome.cmd" : "biome",
+  );
   execFileSync(
-    "pnpm",
-    [
-      "exec",
-      "biome",
-      "format",
-      "--write",
-      "packages/design/tokens/styles.css",
-      "packages/design/theme/themes.css",
-    ],
+    biomeBin,
+    ["format", "--write", "packages/design/tokens/styles.css", "packages/design/theme/themes.css"],
     {
       cwd: ROOT,
       stdio: "inherit",

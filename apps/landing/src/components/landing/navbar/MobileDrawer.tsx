@@ -1,6 +1,4 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { Cross, Menu } from "@nebutra/icons";
 import { useLocale, useTranslations } from "next-intl";
@@ -11,6 +9,7 @@ import { NAV_LINKS } from "@/lib/constants/landing-data";
 import { getGroupResources, RESOURCE_GROUPS } from "@/lib/constants/resources-data";
 import { getGroupSolutions, pick, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
 import { env } from "@/lib/env";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { AnimatePresence, domAnimation, LazyMotion, m, useReducedMotion } from "@/shared/motion";
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL;

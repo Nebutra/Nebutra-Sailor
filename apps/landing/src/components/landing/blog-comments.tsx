@@ -1,12 +1,11 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { Heart, HeartFill, Message, PaperAirplane, Star, StarFill } from "@nebutra/icons";
 import { Textarea } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ComponentType, SVGProps } from "react";
 import { useMemo, useState } from "react";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { queryKeys } from "@/lib/query-keys";
 
 interface BlogComment {

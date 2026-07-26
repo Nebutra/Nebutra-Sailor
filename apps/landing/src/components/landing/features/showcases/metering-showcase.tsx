@@ -1,6 +1,4 @@
-import { isZhUiLocale } from "@/lib/i18n/localized";
-
-("use client");
+"use client";
 
 import { BarChart, Clock, Database, Lightning, Users } from "@nebutra/icons";
 import {
@@ -14,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@nebutra/ui/primitives";
+import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
