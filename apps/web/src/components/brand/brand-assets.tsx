@@ -1,21 +1,23 @@
+/**
+ * Web product chrome brand assets.
+ * Default mark/wordmark: inline SVG from `@nebutra/brand` (no public/brand sync).
+ * Tenant logos still use remote Image URLs.
+ */
+
+import { LogoEnSVG, LogomarkSVG } from "@nebutra/brand";
 import { cn } from "@nebutra/ui/utils";
 import Image from "next/image";
 
+/** @deprecated Prefer inline SVG BrandLogo; kept for callers reading asset metadata. */
 export const webBrandAssets = {
-  source: "packages/design/brand",
+  source: "@nebutra/brand/LogoSVG",
   mark: {
-    src: "/brand/logo-color.svg",
-    // logo-inverse is the brand-compliant white-mark for dark backgrounds —
-    // already white, no CSS filter required.
-    srcDark: "/brand/logo-inverse.svg",
+    src: "inline:LogomarkSVG",
     width: 550,
     height: 513,
   },
   horizontal: {
-    src: "/brand/logo-horizontal-en.svg",
-    // Brand-compliant mono variant — dark glyphs only, paired with invert()
-    // in dark mode so it reads as white on dark.
-    srcDarkMono: "/brand-compliant/logo-horizontal-en-mono.svg",
+    src: "inline:LogoEnSVG",
     width: 1062,
     height: 208,
   },
@@ -35,9 +37,7 @@ interface BrandLogoProps {
   variant?: "horizontal" | "mark";
   /**
    * Tenant-uploaded logo URL. When provided and non-null, the tenant image
-   * is rendered instead of the static brand asset. Falls back to the static
-   * mark/horizontal logo when absent or null.
-   * No dark variant for tenant logos — the image is user-supplied.
+   * is rendered instead of the static brand asset.
    */
   tenantLogoUrl?: string | null;
 }
@@ -49,7 +49,6 @@ export function BrandLogo({
   variant = "horizontal",
   tenantLogoUrl,
 }: BrandLogoProps) {
-  // Tenant-uploaded logo takes priority over the static brand asset.
   if (tenantLogoUrl) {
     return (
       <span
@@ -70,52 +69,21 @@ export function BrandLogo({
     );
   }
 
-  const asset = webBrandAssets[variant];
-  // Pick the brand-compliant dark variant: either an already-white asset
-  // (srcDark, no filter) or a dark-mono asset that needs invert() to flip
-  // to white. mono in, mono out — no hue manipulation on the color SVG.
-  const darkSrc = "srcDark" in asset ? asset.srcDark : null;
-  const darkMonoSrc = "srcDarkMono" in asset ? asset.srcDarkMono : null;
-  const darkVariantSrc = darkSrc ?? darkMonoSrc;
-  const needsInvert = !darkSrc && Boolean(darkMonoSrc);
-  const renderDarkVariant = colorScheme === "auto" && Boolean(darkVariantSrc);
+  // Inline SVG: fill=currentColor + text-brand-mark. Dark surfaces use
+  // text-white via parent chrome; no separate inverse asset file required.
+  const tone = colorScheme === "light" ? "text-brand-mark" : "text-brand-mark dark:text-white";
 
   return (
     <span
-      className={cn("inline-flex shrink-0 items-center", className)}
+      className={cn("inline-flex shrink-0 items-center", tone, className)}
       data-brand-asset={variant}
-      data-brand-source={webBrandAssets.source}
+      data-brand-source="@nebutra/brand/LogoSVG"
     >
-      <Image
-        src={asset.src}
-        alt=""
-        width={asset.width}
-        height={asset.height}
-        unoptimized
-        aria-hidden="true"
-        draggable={false}
-        className={cn(
-          "block h-full w-full object-contain",
-          renderDarkVariant && "dark:hidden",
-          imgClassName,
-        )}
-      />
-      {renderDarkVariant && darkVariantSrc ? (
-        <Image
-          src={darkVariantSrc}
-          alt=""
-          width={asset.width}
-          height={asset.height}
-          unoptimized
-          aria-hidden="true"
-          draggable={false}
-          className={cn(
-            "hidden h-full w-full object-contain dark:block",
-            needsInvert && "invert",
-            imgClassName,
-          )}
-        />
-      ) : null}
+      {variant === "mark" ? (
+        <LogomarkSVG className={cn("block h-full w-full", imgClassName)} width={32} height={32} />
+      ) : (
+        <LogoEnSVG className={cn("block h-full w-auto max-w-full", imgClassName)} width={140} />
+      )}
     </span>
   );
 }
