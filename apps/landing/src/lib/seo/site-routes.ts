@@ -29,113 +29,18 @@ export type PublicSitelinkCandidateRoute = PublicSeoRoute & {
   };
 };
 
-export const PUBLIC_SEO_ROUTES: ReadonlyArray<PublicSeoRoute> = [
-  {
-    path: "/",
-    changeFrequency: "weekly",
-    priority: 1.0,
-    sitelinkCandidate: { label: "Nebutra Agent OS" },
-  },
-  {
-    path: "/features",
-    changeFrequency: "weekly",
-    priority: 0.9,
-    sitelinkCandidate: { label: "Features" },
-  },
-  {
-    path: "/refer",
-    changeFrequency: "weekly",
-    priority: 0.8,
-    sitelinkCandidate: { label: "Founder Referral" },
-  },
-  {
-    path: "/solutions",
-    changeFrequency: "weekly",
-    priority: 0.9,
-    sitelinkCandidate: { label: "Solutions" },
-  },
-  {
-    path: "/pricing",
-    changeFrequency: "weekly",
-    priority: 0.9,
-    sitelinkCandidate: { label: "Pricing" },
-  },
-  {
-    path: "/get-license",
-    changeFrequency: "weekly",
-    priority: 0.9,
-    sitelinkCandidate: { label: "Get License" },
-  },
-  {
-    path: "/licensing",
-    changeFrequency: "monthly",
-    priority: 0.8,
-    sitelinkCandidate: { label: "Licensing" },
-  },
-  {
-    path: "/ai/models",
-    changeFrequency: "monthly",
-    priority: 0.8,
-    sitelinkCandidate: { label: "AI Models" },
-  },
-  {
-    path: "/blog",
-    changeFrequency: "weekly",
-    priority: 0.8,
-    sitelinkCandidate: { label: "Blog" },
-  },
-  {
-    path: "/news",
-    changeFrequency: "weekly",
-    priority: 0.8,
-    sitelinkCandidate: { label: "Newsroom" },
-  },
-  {
-    path: "/changelog",
-    changeFrequency: "weekly",
-    priority: 0.7,
-    sitelinkCandidate: { label: "Changelog" },
-  },
-  {
-    path: "/roadmap",
-    changeFrequency: "monthly",
-    priority: 0.6,
-    sitelinkCandidate: { label: "Roadmap" },
-  },
-  {
-    path: "/status",
-    changeFrequency: "always",
-    priority: 0.6,
-    sitelinkCandidate: { label: "Status" },
-  },
-  {
-    path: "/security",
-    changeFrequency: "monthly",
-    priority: 0.7,
-    sitelinkCandidate: { label: "Security" },
-  },
-  {
-    path: "/about",
-    changeFrequency: "monthly",
-    priority: 0.7,
-    sitelinkCandidate: { label: "About Nebutra" },
-  },
-  { path: "/careers", changeFrequency: "weekly", priority: 0.6 },
-  { path: "/ideas", changeFrequency: "weekly", priority: 0.6 },
-  { path: "/about/products", changeFrequency: "monthly", priority: 0.6 },
-  {
-    path: "/contact",
-    changeFrequency: "monthly",
-    priority: 0.5,
-    sitelinkCandidate: { label: "Contact" },
-  },
-  { path: "/faq", changeFrequency: "monthly", priority: 0.5 },
-  { path: "/privacy", changeFrequency: "monthly", priority: 0.2 },
-  { path: "/terms", changeFrequency: "monthly", priority: 0.2 },
-  { path: "/cookies", changeFrequency: "monthly", priority: 0.2 },
-  { path: "/refund", changeFrequency: "monthly", priority: 0.2 },
-  { path: "/dpa", changeFrequency: "monthly", priority: 0.2 },
-] as const;
+/**
+ * UI-scoped public routes — derived from the SEO route registry so there is
+ * exactly one place where a public path and its scope are declared.
+ */
+export const PUBLIC_SEO_ROUTES: ReadonlyArray<PublicSeoRoute> = SEO_ROUTE_REGISTRY.filter(
+  (entry) => entry.localization === "ui",
+).map((entry) => ({
+  path: entry.pattern,
+  changeFrequency: entry.changeFrequency,
+  priority: entry.priority,
+  ...(entry.sitelinkCandidate ? { sitelinkCandidate: entry.sitelinkCandidate } : {}),
+}));
 
 export function getSiteUrl(): string {
   return normalizeBaseUrl(process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL);
@@ -172,8 +77,11 @@ export function canonicalUrlForLocale(
 export function buildHreflangAlternates(baseUrl: string, path: string): Record<string, string> {
   const languages: Record<string, string> = {};
 
-  for (const locale of routing.locales) {
-    languages[HREFLANG_BY_LOCALE[locale]] = canonicalUrlForLocale(baseUrl, locale, path);
+  // Scope-aware: a content-scoped path only advertises the locales whose body
+  // content actually exists, so the cluster never claims 32 duplicate pages.
+  for (const locale of localesForPath(path)) {
+    const hreflang = HREFLANG_BY_LOCALE[locale as Locale] ?? toHreflang(locale);
+    languages[hreflang] = canonicalUrlForLocale(baseUrl, locale, path);
   }
 
   languages["x-default"] = canonicalUrlForLocale(baseUrl, routing.defaultLocale, path);

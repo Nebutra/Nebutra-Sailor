@@ -74,7 +74,6 @@ export function buildPageMetadata(opts: BuildPageMetadataOptions): Metadata {
     ? canonicalUrlForLocale(baseUrl, toRouteLocale(toContentLocale(opts.locale)), opts.path)
     : canonicalUrlForLocale(baseUrl, opts.locale, opts.path);
 
-  const selfUrl = canonicalUrlForLocale(baseUrl, opts.locale, opts.path);
   const alternateLocale = localesForPath(opts.path)
     .filter((locale) => locale !== routeLocale)
     .map(toOpenGraphLocale);
@@ -91,7 +90,7 @@ export function buildPageMetadata(opts: BuildPageMetadataOptions): Metadata {
       type: ogType,
       title: opts.title,
       description: opts.description,
-      url: selfUrl,
+      url: canonical,
       siteName,
       locale: toOpenGraphLocale(opts.locale),
       alternateLocale,
