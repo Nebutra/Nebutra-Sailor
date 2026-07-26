@@ -30,7 +30,7 @@
       <img src="https://img.shields.io/github/forks/Nebutra/Nebutra-Sailor?style=for-the-badge&logo=github&color=14b8a6&logoColor=fff" alt="GitHub Forks" />
     </a>
     <a href="https://github.com/Nebutra/Nebutra-Sailor/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/repo-AGPLv3-6366f1?style=for-the-badge" alt="Repository License" />
+      <img src="https://img.shields.io/badge/repo-FSL--1.1--ALv2-6366f1?style=for-the-badge" alt="Repository License" />
     </a>
     <a href="#license">
       <img src="https://img.shields.io/badge/npm%20packages-MIT-14b8a6?style=for-the-badge" alt="npm Package License" />
@@ -65,13 +65,14 @@
 <br />
 <br />
 
-> **License at a glance** — published npm packages are **MIT**. Forking the
-> source repository directly remains **AGPL-3.0-only** unless you scaffold with
-> `npx create-sailor` (Independent Developer License, free for ≤ 1 FTE
-> & < $1M ARR, **no copyleft**) or hold a Startup ($799/yr) or
-> Enterprise tier from [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md).
-> Full matrix and edge cases: [License](#license) section below, plus
-> [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md).
+> **License at a glance** — **building a commercial product on this is free.**
+> No fee, no licence key, no registration, no copyleft. Published npm packages
+> are **MIT**; this repository is **FSL-1.1-ALv2**, which permits every use
+> except selling a substitute for Sailor itself, and converts to **Apache-2.0**
+> two years after each release. Paid tiers sell support, SLAs, indemnity, and
+> trademark rights — never permission to use the software. See
+> [License](#license) below, [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md),
+> and [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md).
 
 > **Try it in 30 seconds** — zero SaaS keys required:
 > ```bash
@@ -92,7 +93,7 @@ Built with Next.js 16, React 19, Prisma 7, and the Vercel AI SDK, Sailor treats 
 
 ### Who's building this
 
-Nebutra-Sailor is maintained by **Wuxi Nebutra Intelligence Technology Co., Ltd.** Day-to-day engineering lead is **Tseka Luk** ([@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`). The project ships under a dual-license model designed so solo founders and OPCs can build commercial products on it without copyleft, while corporate forks still owe back to the community — see the [License](#license) section.
+Nebutra-Sailor is maintained by **Wuxi Nebutra Intelligence Technology Co., Ltd.** Day-to-day engineering lead is **Tseka Luk** ([@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`). Building a commercial product on it is free for everyone, at any size — paid tiers sell support, SLAs, indemnity, and trademark rights rather than permission. See the [License](#license) section.
 
 We publish to npm under the `@nebutra/*` scope plus two CLIs (`nebutra`, `create-sailor`). Releases run through [changesets](https://github.com/changesets/changesets) on a manual `workflow_dispatch` gate; SBOMs are attested on every release ([release.yml](.github/workflows/release.yml)). Security reports → [SECURITY.md](SECURITY.md); commercial / licensing inquiries → `legal@nebutra.com`.
 
@@ -745,29 +746,41 @@ treat the surface as "production-ready in shape, evolving in detail."
 
 ## License
 
-Nebutra-Sailor uses a **dual-license** model so independent developers can
-ship a commercial product without copyleft while corporate forks still owe
-back to the community.
+**Building a commercial product on Nebutra-Sailor is free.** No fee, no
+licence key, no registration, no revenue or headcount threshold, no copyleft.
 
-| Path                                  | License                                          | Copyleft? |
-| ------------------------------------- | ------------------------------------------------ | --------- |
-| Install published npm packages        | **MIT** (`@nebutra/*`, `nebutra`, `create-sailor`) | No |
-| Fork from this GitHub repo            | **AGPL-3.0** ([LICENSE](./LICENSE))              | Yes (Section 13 / network) |
-| Scaffolded with `create-sailor` CLI   | **Nebutra Independent Developer License**        | No, for ≤ 1 FTE & < $1M ARR |
-| Larger teams / higher revenue         | **Startup / Enterprise tier** ([LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)) | No |
+| Path | License | Copyleft? | Cost |
+| --- | --- | --- | --- |
+| Install published npm packages | **MIT** (`@nebutra/*`, `nebutra`, `create-sailor`) | No | Free |
+| Scaffold with `create-sailor` | **MIT** | No | Free |
+| Clone or fork this repo | **FSL-1.1-ALv2** ([LICENSE](./LICENSE)) → Apache-2.0 after 2 years | No | Free |
 
-The CLI-generated path is the **default for indie devs and OPC** — running
-`npx create-sailor my-app` emits a `LICENSE` + `.nebutra/scaffold-meta.json`
-that pins the project to the Independent Developer tier. Fork the source
-repo directly and you keep AGPL — including its network-copyleft clause —
-unless you buy a Startup or Enterprise license.
+The only thing the code licence does not permit is making Nebutra Sailor
+available to others in a commercial product or service that substitutes for it.
+**Build products with it, don't sell it.** That restriction expires: every
+version becomes Apache-2.0 on its second anniversary, and the grant is made
+irrevocably in advance.
 
-Both grants come from the same copyright holder
-(Wuxi Nebutra Intelligence Technology Co., Ltd.). The presence and
-signature of `.nebutra/scaffold-meta.json` at the repo root is what
-distinguishes the two paths.
+Trademarks are separate — neither FSL nor Apache-2.0 grants them. Naming your
+own product something unrelated needs no permission; using the Nebutra
+name or white-labelling the platform needs a trademark licence
+([TRADEMARK.md](./TRADEMARK.md)).
 
-For commercial licensing inquiries: **legal@nebutra.com**.
+**Paid tiers do not sell permission.** They sell what a code licence cannot
+give you: a support commitment, response SLAs, indemnification, compliance
+paperwork (DPA, security pack, continuity undertaking), and trademark rights.
+Community $0 · Team $2,000/yr · Enterprise from $30,000/yr — see
+[LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md).
+
+Copyright is held by Wuxi Nebutra Intelligence Technology Co., Ltd.
+
+> Previously AGPL-3.0-only with an Independent Developer tier and a $799/yr
+> Startup tier. Both retired on 2026-07-26; pre-existing grants are
+> irrevocable and unaffected. See
+> [docs/legal/license-history.md](docs/legal/license-history.md).
+
+Licensing questions: **legal@nebutra.com** ·
+[Licensing FAQ](docs/legal/licensing-faq.md)
 
 ### Brand Assets & Trademarks
 

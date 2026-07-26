@@ -30,7 +30,7 @@
       <img src="https://img.shields.io/github/forks/{{repo.full}}?style=for-the-badge&logo=github&color=14b8a6&logoColor=fff" alt="GitHub Forks" />
     </a>
     <a href="https://github.com/{{repo.full}}/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/repo-AGPLv3-6366f1?style=for-the-badge" alt="Repository License" />
+      <img src="https://img.shields.io/badge/repo-FSL--1.1--ALv2-6366f1?style=for-the-badge" alt="Repository License" />
     </a>
     <a href="#ライセンス">
       <img src="https://img.shields.io/badge/npm%20packages-MIT-14b8a6?style=for-the-badge" alt="npm Package License" />
@@ -55,13 +55,13 @@
 <br />
 <br />
 
-> **ライセンス概要** —— npm で公開されているパッケージは **MIT** です。
-> ソースリポジトリを直接 fork する場合は **AGPL-3.0-only** のままです — ただし
-> (a) `npx create-sailor` でスキャフォールドするか（Independent Developer
-> License、≤ 1 FTE & < $1M ARR で無料、**Copyleft なし**）、
-> (b) [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) の Startup
-> ($799/年) または Enterprise 商用ライセンスを取得した場合は除きます。
-> 完全な対応表とエッジケースは下記の [License](#license) セクションと
+> **ライセンス概要** —— **これを使って商用製品を作るのは無料です。**
+> 料金・ライセンスキー・登録・Copyleft はいずれも不要です。npm 公開パッケージは
+> **MIT**、本リポジトリは **FSL-1.1-ALv2** で、Sailor 自体の代替品を販売する
+> 場合を除きあらゆる用途が許可され、各リリースの2年後に **Apache-2.0** へ
+> 自動移行します。有償プランが販売するのはサポート・SLA・補償・商標権であり、
+> ソフトウェアの使用許可ではありません。詳細は下記の [License](#license)、
+> [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)、
 > [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md) を参照してください。
 
 > **30 秒で起動** —— SaaS の API キーは一切不要:
@@ -658,17 +658,37 @@ pnpm db:generate && pnpm dev
 
 ## ライセンス
 
-npm 公開パッケージは **MIT**、このリポジトリを直接 fork する場合は
-**AGPLv3** です。
+**Nebutra-Sailor で商用製品を作るのは無料です。** 料金・ライセンスキー・
+登録・売上や人数の条件・Copyleft はいずれもありません。
 
-|              |                                        |
-| ------------ | -------------------------------------- |
-| **npm パッケージ** | MIT、Copyleft なし                     |
-| **直接 fork** | AGPLv3、ネットワーク利用時はソース公開が必要 |
-| **無料利用** | 個人プロジェクト、学習、社内ツール     |
-| **変更可能** | 派生物の作成                           |
-| **配布可能** | 帰属表示付きで                         |
-| **免除**     | 無錫雲毓智能科技有限公司および関連会社 |
+| 入手方法 | ライセンス | Copyleft | 費用 |
+| --- | --- | --- | --- |
+| npm 公開パッケージ | **MIT**（`@nebutra/*`、`nebutra`、`create-sailor`） | なし | 無料 |
+| `create-sailor` でスキャフォールド | **MIT** | なし | 無料 |
+| 本リポジトリを clone / fork | **FSL-1.1-ALv2**（[LICENSE](./LICENSE)）、2年後に Apache-2.0 へ移行 | なし | 無料 |
+
+コードライセンスが唯一許可しないのは、Sailor 自体の代替となる商用製品・
+サービスとして他者に提供することです。**Sailor で製品を作るのは可、
+Sailor を売るのは不可。** この制限には期限があり、各バージョンはリリースから
+2年後に Apache-2.0 となります。この付与は事前に取消不能な形で行われています。
+
+商標は別です — FSL も Apache-2.0 も商標権を付与しません。自社製品に無関係な
+名前を付ける分には許可は不要ですが、Nebutra の名称使用やプラットフォームの
+ホワイトラベル化には商標ライセンスが必要です（[TRADEMARK.md](./TRADEMARK.md)）。
+
+**有償プランが販売するのは使用許可ではありません。** コードライセンスでは
+得られないもの — サポート確約、応答 SLA、補償、コンプライアンス文書
+（DPA、セキュリティ資料、事業継続の確約）、商標権 — を販売します。
+Community $0 · Team $2,000/年 · Enterprise $30,000/年〜 — 詳細は
+[LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)。
+
+> 以前は AGPL-3.0-only で、Independent Developer 枠と $799/年 の Startup 枠が
+> ありました。両者は 2026-07-26 に廃止されました。既に付与されたライセンスは
+> 取消不能で影響を受けません。詳細は
+> [docs/legal/license-history.md](docs/legal/license-history.md)。
+
+ライセンスに関するお問い合わせ: **legal@nebutra.com** ·
+[ライセンス FAQ](docs/legal/licensing-faq.md)
 
 <br />
 

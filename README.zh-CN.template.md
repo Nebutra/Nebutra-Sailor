@@ -31,7 +31,7 @@
       <img src="https://img.shields.io/github/forks/{{repo.full}}?style=for-the-badge&logo=github&color=14b8a6&logoColor=fff" alt="GitHub Forks" />
     </a>
     <a href="https://github.com/{{repo.full}}/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/仓库-AGPLv3-6366f1?style=for-the-badge" alt="Repository License" />
+      <img src="https://img.shields.io/badge/仓库-FSL--1.1--ALv2-6366f1?style=for-the-badge" alt="Repository License" />
     </a>
     <a href="#许可证">
       <img src="https://img.shields.io/badge/npm%20包-MIT-14b8a6?style=for-the-badge" alt="npm Package License" />
@@ -66,12 +66,12 @@
 <br />
 <br />
 
-> **License 一览** —— npm 上发布的包都是 **MIT**。直接 fork 源码仓库仍然是
-> **AGPL-3.0-only**，除非你 (a) 用 `npx create-sailor` 脚手架（独立开发者
-> 授权，≤ 1 FTE 且 < $1M ARR 免费，**无 Copyleft**），或者 (b) 持有
-> [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) 里的 Startup
-> ($799/年) 或 Enterprise 商业授权。完整边界和边缘情况参见下方
-> [License](#license) 章节和
+> **License 一览** —— **用它做商业产品完全免费**：无费用、无授权密钥、
+> 无需注册、无 Copyleft。npm 发布包是 **MIT**；本仓库是 **FSL-1.1-ALv2**，
+> 除「售卖 Sailor 的替代品」外的一切用途都允许，且每个版本在发布两年后
+> 自动转为 **Apache-2.0**。付费档卖的是支持、SLA、赔偿和商标授权，
+> 从不是软件的使用权。详见下方 [License](#license) 章节、
+> [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) 和
 > [docs/legal/licensing-faq.md](docs/legal/licensing-faq.md)。
 
 > **30 秒上手** —— 零 SaaS 密钥即可启动:
@@ -93,7 +93,7 @@
 
 ### 谁在构建这个项目
 
-{{repo.name}} 由 **{{company.nameCN}}**（{{company.name}}）维护。日常工程负责人是 **Tseka Luk**（[@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`）。项目采用双授权（dual-license）模型，让独立开发者和 OPC 可以在不被 Copyleft 限制的情况下构建商业产品，同时确保企业 fork 仍需回馈社区——详见下方 [License](#license) 章节。
+{{repo.name}} 由 **{{company.nameCN}}**（{{company.name}}）维护。日常工程负责人是 **Tseka Luk**（[@tsekaluk](https://github.com/tsekaluk) · `legal@nebutra.com`）。任何规模的团队用它构建商业产品都完全免费——付费档卖的是支持、SLA、赔偿和商标授权，而不是使用许可。详见下方 [License](#license) 章节。
 
 我们以 `@nebutra/*` 这个 npm scope 发布所有包，外加两个 CLI（`nebutra` 和 `create-sailor`）。发布流程通过 [changesets](https://github.com/changesets/changesets) 驱动，并以手动 `workflow_dispatch` 作为发版门槛；每次发布会生成 SBOM 验证（见 [release.yml](.github/workflows/release.yml)）。安全报告请走 [SECURITY.md](SECURITY.md)；商务/授权咨询请发 `legal@nebutra.com`。
 
@@ -749,19 +749,36 @@ pnpm brand:apply
 
 ## 许可证
 
-{{repo.name}} 采用双许可证模型：npm 发布包走 **MIT**，直接 fork 本仓库仍走
-**AGPLv3**。
+**用 {{repo.name}} 做商业产品完全免费**：无费用、无授权密钥、无需注册、
+无营收或人数门槛、无 Copyleft。
 
-|                |                                    |
-| -------------- | ---------------------------------- |
-| **npm 安装包** | MIT，无 Copyleft                   |
-| **直接 fork**  | AGPLv3，网络使用需开源             |
-| **免费使用**   | 个人项目、学习和内部工具           |
-| **可自由修改** | 创建衍生作品                       |
-| **可自由分发** | 需注明出处                         |
-| **豁免**       | {{company.nameCN}}及关联组织 |
+| 获取方式 | 许可证 | Copyleft | 费用 |
+| --- | --- | --- | --- |
+| 安装 npm 发布包 | **MIT**（`@nebutra/*`、`nebutra`、`create-sailor`） | 无 | 免费 |
+| 用 `create-sailor` 脚手架 | **MIT** | 无 | 免费 |
+| clone / fork 本仓库 | **FSL-1.1-ALv2**（[LICENSE](./LICENSE)），两年后转 Apache-2.0 | 无 | 免费 |
 
-如需商业授权，请与我们联系。
+代码许可证唯一不允许的事：把它本身作为商业产品或服务提供给他人充当替代品。
+**用它造产品可以，卖它不行。** 这条限制会过期——每个版本在发布满两年时
+自动转为 Apache-2.0，且该授权是提前不可撤销地做出的。
+
+商标是独立的——FSL 和 Apache-2.0 都不授予商标权。给自己的产品起一个无关的
+名字不需要任何许可；使用 {{brand.name}} 名称或白牌化平台则需要商标授权
+（见 [TRADEMARK.md](./TRADEMARK.md)）。
+
+**付费档卖的不是使用权**，而是代码许可证给不了的东西：支持承诺、响应 SLA、
+赔偿、合规文件（DPA、安全材料、业务连续性承诺）以及商标授权。
+Community $0 · Team $2,000/年 · Enterprise $30,000/年起——详见
+[LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)。
+
+版权归 {{company.nameCN}} 所有。
+
+> 此前为 AGPL-3.0-only，并设有 Independent Developer 档和 $799/年 Startup 档。
+> 两档已于 2026-07-26 撤销；此前已作出的授权不可撤销，不受影响。详见
+> [docs/legal/license-history.md](docs/legal/license-history.md)。
+
+授权问题请联系 **legal@nebutra.com** ·
+[授权 FAQ](docs/legal/licensing-faq.md)
 
 <br />
 

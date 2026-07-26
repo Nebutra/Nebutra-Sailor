@@ -118,9 +118,10 @@
     "preset:env": "tsx packages/ops/preset/src/cli.ts",
     "generate:api-types": "tsx scripts/generate-api-types.ts",
     "gen:route-lastmod": "node scripts/generate-route-lastmod.mjs",
+    "gen:route-lastmod:check": "node scripts/generate-route-lastmod.mjs --check",
     "size": "size-limit",
     "size:why": "size-limit --why",
-    "license:check": "npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary",
+    "license:check": "npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0;AGPL-3.0' --excludePackages '@nebutra/*' --summary",
     "supply-chain:verify": "node scripts/verify-supply-chain-policy.mjs",
     "legal:contributors": "node scripts/list-external-contributors.mjs --write",
     "trace-store:doctor": "tsx packages/platform/trace-store/src/cli.ts doctor",
@@ -312,7 +313,7 @@
     "multi-tenant"
   ],
   "author": "Nebutra",
-  "license": "AGPL-3.0-only",
+  "license": "SEE LICENSE IN LICENSE",
   "packageManager": "pnpm@10.32.1",
   "engines": {
     "node": ">=22.0.0",

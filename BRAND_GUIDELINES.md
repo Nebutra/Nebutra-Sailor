@@ -16,7 +16,7 @@ You are free to use the open-source code to build your own SaaS, products, or se
 
 ## ✔️ You may:
 
-- **Use the code.** You can use, modify, and distribute the underlying source code in accordance with the AGPLv3 license.
+- **Use the code.** You can use, modify, and distribute the underlying source code in accordance with the FSL-1.1-ALv2 license (and, two years after each release, the Apache-2.0 future license).
 - **Modify the UI.** You are encouraged to customize the UI and build your own unique design on top of our components.
 - **Mention the project for reference.** You can say "This project was built using Nebutra Sailor" or "Based on the open-source Nebutra Sailor project" in a descriptive, non-trademark sense.
 - **Use the name in tutorials or tech talks.** You are well within your rights to mention "Nebutra Sailor" in educational content, blog posts, and technical discussions.

@@ -109,7 +109,7 @@ const config: BrandConfig = {
 
   // License
   license: {
-    type: "AGPLv3",
+    type: "FSL-1.1-ALv2",
     commercialExempt: ["My Company Inc."],
   },
 };

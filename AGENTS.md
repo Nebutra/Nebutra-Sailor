@@ -19,7 +19,7 @@ AI coding agent onboarding guide for Cursor, Claude Code, Codex, Windsurf, and G
 - **Linting**: Biome (not ESLint)
 - **Testing**: Vitest (unit) + Playwright (E2E)
 - **Monorepo**: Turborepo with pnpm workspaces
-- **License**: AGPL-3.0
+- **License**: FSL-1.1-ALv2 (repository, converts to Apache-2.0 after two years) · MIT (published npm packages)
 
 ---
 
