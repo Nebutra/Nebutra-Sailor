@@ -3,24 +3,24 @@ import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
-  emitIndependentLicense,
+  emitScaffoldLicense,
   verifyScaffoldMeta,
   verifyScaffoldMetaDetailed,
 } from "./license-emit";
 
-const TEMPLATE_FIXTURE = `# Nebutra-Sailor Independent Developer License
+const TEMPLATE_FIXTURE = `# License
 
-Free for individuals.
+MIT. Free for everyone.
 `;
 
 function setupTempProject(): { dir: string; templatesRoot: string } {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-license-"));
   const templatesRoot = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-templates-"));
-  fs.writeFileSync(path.join(templatesRoot, "LICENSE-INDEPENDENT.md"), TEMPLATE_FIXTURE);
+  fs.writeFileSync(path.join(templatesRoot, "LICENSE-SCAFFOLD.md"), TEMPLATE_FIXTURE);
   return { dir, templatesRoot };
 }
 
-describe("emitIndependentLicense", () => {
+describe("emitScaffoldLicense", () => {
   let dir: string;
   let templatesRoot: string;
 
@@ -30,8 +30,8 @@ describe("emitIndependentLicense", () => {
     templatesRoot = setup.templatesRoot;
   });
 
-  it("writes LICENSE with the Independent template body", () => {
-    emitIndependentLicense(dir, {
+  it("writes LICENSE with the scaffold template body", () => {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
@@ -39,37 +39,53 @@ describe("emitIndependentLicense", () => {
     expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
   });
 
-  it("preserves an upstream AGPL LICENSE as LICENSE-AGPL-REFERENCE.md", () => {
+  it("preserves an upstream FSL LICENSE as LICENSE-UPSTREAM-REFERENCE.md", () => {
+    fs.writeFileSync(
+      path.join(dir, "LICENSE"),
+      "# Functional Source License, Version 1.1, ALv2 Future License\n...",
+    );
+    emitScaffoldLicense(dir, {
+      projectName: "demo",
+      cliVersion: "1.9.0",
+      templatesRoot,
+    });
+    expect(fs.existsSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"))).toBe(true);
+    expect(fs.readFileSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"), "utf-8")).toMatch(
+      /Functional Source License/,
+    );
+    expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
+  });
+
+  it("still preserves a legacy upstream AGPL LICENSE (pre-2026-07-26 checkouts)", () => {
     fs.writeFileSync(
       path.join(dir, "LICENSE"),
       "GNU AFFERO GENERAL PUBLIC LICENSE\nVersion 3, ...",
     );
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
-      cliVersion: "1.7.0",
+      cliVersion: "1.9.0",
       templatesRoot,
     });
-    expect(fs.existsSync(path.join(dir, "LICENSE-AGPL-REFERENCE.md"))).toBe(true);
-    expect(fs.readFileSync(path.join(dir, "LICENSE-AGPL-REFERENCE.md"), "utf-8")).toMatch(
+    expect(fs.existsSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"))).toBe(true);
+    expect(fs.readFileSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"), "utf-8")).toMatch(
       /GNU AFFERO/,
     );
-    expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
   });
 
-  it("does NOT touch a non-AGPL LICENSE (e.g. user already replaced)", () => {
+  it("does NOT preserve a LICENSE the user already replaced", () => {
     fs.writeFileSync(path.join(dir, "LICENSE"), "MIT License\nCopyright (c)...");
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
-      cliVersion: "1.7.0",
+      cliVersion: "1.9.0",
       templatesRoot,
     });
-    expect(fs.existsSync(path.join(dir, "LICENSE-AGPL-REFERENCE.md"))).toBe(false);
-    // LICENSE is overwritten with Independent text — that's the point.
+    expect(fs.existsSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"))).toBe(false);
+    // LICENSE is overwritten with the scaffold template — that's the point.
     expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
   });
 
   it("writes a signed scaffold marker that verifyScaffoldMeta accepts", () => {
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
@@ -80,14 +96,14 @@ describe("emitIndependentLicense", () => {
     expect(meta.schemaVersion).toBe(1);
     expect(meta.projectName).toBe("demo");
     expect(meta.cliVersion).toBe("1.7.0");
-    expect(meta.license.tier).toBe("independent");
+    expect(meta.license.tier).toBe("mit-scaffold");
     expect(typeof meta.signature).toBe("string");
     expect(meta.signature).toHaveLength(64); // sha256 hex
     expect(verifyScaffoldMeta(meta)).toBe(true);
   });
 
   it("verifyScaffoldMeta rejects tampered markers", () => {
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
@@ -100,7 +116,7 @@ describe("emitIndependentLicense", () => {
   });
 
   it("records the current signingKeyId (Phase 2)", () => {
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.1",
       templatesRoot,
@@ -112,7 +128,7 @@ describe("emitIndependentLicense", () => {
   });
 
   it("Phase 1 back-compat: verifies markers WITHOUT a signingKeyId field", () => {
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
@@ -126,7 +142,7 @@ describe("emitIndependentLicense", () => {
   });
 
   it("rejects markers signed with an unknown keyId", () => {
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
@@ -139,32 +155,31 @@ describe("emitIndependentLicense", () => {
 
   it("prepends a license notice to README.md when one exists", () => {
     fs.writeFileSync(path.join(dir, "README.md"), "# demo\n\nhello\n");
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
     });
     const readme = fs.readFileSync(path.join(dir, "README.md"), "utf-8");
-    expect(readme).toMatch(/Nebutra-Sailor Independent Developer License/);
+    expect(readme).toMatch(/Scaffolded by `create-sailor`/);
     expect(readme).toMatch(/# demo/);
   });
 
   it("is idempotent on the README notice (re-running doesn't double-prepend)", () => {
     fs.writeFileSync(path.join(dir, "README.md"), "# demo\n");
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
     });
     const after1 = fs.readFileSync(path.join(dir, "README.md"), "utf-8");
-    emitIndependentLicense(dir, {
+    emitScaffoldLicense(dir, {
       projectName: "demo",
       cliVersion: "1.7.0",
       templatesRoot,
     });
     const after2 = fs.readFileSync(path.join(dir, "README.md"), "utf-8");
-    const occurrences = (after2.match(/Nebutra-Sailor Independent Developer License/g) ?? [])
-      .length;
+    const occurrences = (after2.match(/Scaffolded by `create-sailor`/g) ?? []).length;
     expect(occurrences).toBe(1);
     expect(after2).toBe(after1);
   });

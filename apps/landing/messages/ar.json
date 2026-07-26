@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "ابدأ مجاناً. وسّع نطاقك عندما تكون جاهزاً.",
-      "description": "يطرح المطورون المستقلون ومطورو OPC منتجاتهم مجاناً. تفتح التراخيص التجارية السنوية استخدام المصدر المغلق للفرق النامية. اختر المستوى المناسب وابدأ البناء اليوم.",
-      "socialProofText": "AGPL-3.0 عند التفرع · ترخيص المطور المستقل عبر CLI · مستويات تجارية سنوية للفرق.",
-      "independent": {
-        "badge": "مستقل",
-        "price": "مجاني",
-        "period": "للأبد",
-        "desc": "للمبنيين الفرديين والشركات المكونة من شخص واحد (≤ 1 FTE، < 1 مليون دولار ARR). لا يوجد copyleft عند التوليد عبر create-sailor.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "نواة SaaS كاملة لـ Next.js 16",
-        "f2": "مشاريع شخصية غير محدودة (يُسمح بالاستخدام التجاري)",
-        "f3": "مجموعة SaaS كاملة: المصادقة، المدفوعات، المنظمات، API، البريد الإلكتروني، i18n، مهام الخلفية، التخزين والمزيد — بالإضافة إلى لوحة إدارة خفيفة وصفات Retool/Metabase (لا نطرح CRUD متضخم؛ نطرح أنماط التكامل التي تستخدمها أفضل خدمات SaaS)",
-        "f4": "ميزات التسويق: المدونة، صفحة الهبوط، SEO، التحليلات",
-        "f5": "ترخيص المطور المستقل (لا يوجد copyleft لـ AGPL عند التوليد باستخدام CLI)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "شركة ناشئة",
-        "price": "$799",
-        "period": "/ سنة",
-        "desc": "للفرق المكونة من 2 إلى 50 شخصاً. استخدام تجاري للمصدر المغلق، وتجديد سنوي.",
-        "cta": "احصل على {brandName} للشركات الناشئة",
-        "f1": "الاستخدام المغلق المصدر (ترخيص تجاري، 2–50 موظف)",
-        "f2": "مشاريع فريق غير محدودة",
-        "f3": "12 شهرًا من التحديثات متضمنة",
-        "f4": "دعم عبر البريد الإلكتروني",
-        "f5": "كل ما في الباقة المستقلة"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
-        "badge": "المؤسسات",
-        "price": "حسب الطلب",
-        "period": "",
-        "desc": "50+ موظف، أو إيرادات سنوية ≥ 1 مليون دولار، أو احتياجات العلامة البيضاء / اتفاقيات مستوى الخدمة. عقد مخصص مع دعم ذو أولوية.",
-        "cta": "تواصل مع المبيعات",
-        "f1": "استخدام غير محدود عبر مؤسستك (ترخيص تجاري)",
-        "f2": "حقوق العلامة البيضاء (بموافقة كتابية)",
-        "f3": "دعم ذو أولوية مع اتفاقية مستوى الخدمة (2 ساعة للحالات الحرجة، 24 ساعة للمعايير)",
-        "f4": "تفاوض على العقود المخصصة وإدخال في خارطة الطريق",
-        "f5": "ترخيص متعدد المنتجات / الأقسام",
-        "f6": "كل ما في باقة الشركات الناشئة"
+        "badge": "ENTERPRISE",
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,69 +1506,69 @@
   },
   "licensing": {
     "hero": {
-      "title": "نموذج <hl>ترخيص</hl> مزدوج",
-      "description": "{brandName}-Sailor مفتوح المصدر بموجب AGPL-3.0. نقدم أيضاً تراخيص تجارية للفرق التي تبني منتجات مغلقة المصدر."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "مجاني دائماً",
-        "title": "AGPL-3.0",
-        "subtitle": "مفتوح المصدر",
-        "description": "المشاريع مفتوحة المصدر، البحث الأكاديمي، التعلم الشخصي",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "الوصول الكامل إلى الكود المصدري",
-          "mustOpenSource": "يجب أن يكون منتجك مفتوح المصدر",
-          "mustCredit": "يجب ذكر {brandName}-Sailor",
-          "communitySupport": "دعم المجتمع فقط"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "عرض على GitHub"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "مجاني للأبد",
-        "title": "تجاري مجاني",
-        "subtitle": "فردي وواحد",
-        "description": "المطورون الأفراد والمشغلون بمقعد واحد",
-        "features": {
-          "closedSource": "الاستخدام في المنتجات مغلقة المصدر",
-          "teamSize": "حجم الفريق ≤ 1 FTE",
-          "creditRequired": "يتطلب ذكر المصدر",
-          "freeKey": "Free license key via registration"
-        },
-        "cta": "Get Your Free License"
-      },
-      "commercial": {
+      "team": {
         "badge": "From {price}/yr",
-        "title": "Commercial",
-        "subtitle": "Startup & Enterprise",
-        "description": "Startups, agencies, teams (2+ people), commercial SaaS products",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Use in closed-source products",
-          "noCopyleft": "No copyleft obligations",
-          "noTeamLimits": "No team size limits",
-          "commercialSupport": "Commercial support available"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Get Commercial License"
+        "cta": "Get support"
+      },
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "features": {
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
+        },
+        "cta": "Contact sales"
       }
     },
     "faq": {
       "title": "Frequently Asked Questions",
-      "description": "Keep the license decision legible: pick AGPL for open-source distribution, or use a commercial exception when your product must stay closed-source.",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Why AGPL-3.0?",
-          "a": "AGPL ensures that improvements to the template stay open source. Commercial license removes this obligation for businesses."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Is there really a free path for individual builders?",
-          "a": "Yes, completely. Register at /get-license, get your key, build your product. No strings attached."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "What counts as a single-seat commercial use case?",
-          "a": "One full-time equivalent or less. If you move beyond a single-seat setup, you should upgrade to a Startup license."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Can I upgrade later?",
-          "a": "Absolutely. Upgrade whenever your team or delivery scope outgrows the free commercial tier."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
           "q": "What about open source contributions?",
@@ -1578,7 +1578,7 @@
     },
     "meta": {
       "title": "Licensing — {brandName}",
-      "description": "Dual license model: AGPL-3.0 open source or commercial licenses."
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
     },
     "comparison": {
-      "badge": "Compare plans",
-      "title": "Pick the plan that fits the stage you are in",
-      "subtitle": "Every plan includes the full source code. Commercial licenses include 12 months of updates.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Independent",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
           "label": "License",
-          "type": "License type",
-          "projects": "Number of projects"
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
           "label": "Source Code",
           "full-source": "Full source code",
           "all-packages": "All packages & modules",
-          "update-window": "Update window"
+          "update-window": "Updates"
         },
         "support": {
           "label": "Support",
-          "channel": "Support channel"
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Plan and feature comparison"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Built on a stack you can trust",

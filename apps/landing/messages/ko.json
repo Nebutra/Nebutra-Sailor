@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Accelerate your development cycle.",
-      "description": "Choose a commercial license that aligns with your engineering velocity and enterprise scale.",
-      "socialProofText": "오픈소스 AGPL-3.0 · 상업용 라이선스 사용 가능.",
-      "independent": {
-        "badge": "INDEPENDENT / 독립 개발자",
-        "price": "무료",
-        "period": "영구",
-        "desc": "AGPL 기반 위에서 제품을 검증하는 개인 빌더에게 가장 적합합니다.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "완전한 Next.js 16 SaaS 코어",
-        "f2": "무제한 개인 프로젝트 (상업적 이용 허용)",
-        "f3": "전체 SaaS 스택: 인증, 결제, 조직, API, 관리자 UI, 이메일, 다국어, 백그라운드 작업, 스토리지 등",
-        "f4": "마케팅 기능: 블로그, 랜딩 페이지, SEO, 분석",
-        "f5": "AGPLv3 오픈소스 라이선스"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "스타트업",
-        "price": "$799",
-        "period": "lifetime",
-        "desc": "{brandName} 플랫폼 베이스라인 위에서 구축하는 소규모 팀을 위한 플랜입니다.",
-        "cta": "스타트업용 {brandName} 받기",
-        "f1": "Up to 5 Developer Seats",
-        "f2": "무제한 팀 프로젝트",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "Priority Support",
-        "f5": "Solo의 모든 기능 포함"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
-        "badge": "ENTERPRISE / 엔터프라이즈",
-        "price": "맞춤",
-        "period": "",
-        "desc": "반복 가능한 클라이언트 플랫폼을 출시하는 에이전시 및 운영자를 위한 플랜입니다.",
-        "cta": "영업팀 문의",
-        "f1": "Up to 10 Developer Seats",
-        "f2": "무제한 클라이언트 프로젝트",
-        "f3": "30-min Architecture Consult (Onboarding Call)",
-        "f4": "화이트 라벨 가능",
-        "f5": "Startup의 모든 기능 포함",
-        "f6": "Private Discord support channel"
+        "badge": "ENTERPRISE",
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "듀얼 <hl>라이선스</hl> 모델",
-      "description": "{brandName}-Sailor는 AGPL-3.0 기반 오픈소스입니다. 클로즈드 소스 제품을 개발하는 팀을 위한 상용 라이선스도 함께 제공합니다."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "영구 무료",
-        "title": "AGPL-3.0",
-        "subtitle": "오픈소스",
-        "description": "오픈소스 프로젝트, 학술 연구, 개인 학습용",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "전체 소스 코드 접근",
-          "mustOpenSource": "제품도 오픈소스로 공개 필수",
-          "mustCredit": "{brandName}-Sailor 크레딧 표기 필수",
-          "communitySupport": "커뮤니티 지원만 제공"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "GitHub에서 보기"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "평생 무료",
-        "title": "무료 상용 라이선스",
-        "subtitle": "개인 & 솔로",
-        "description": "개인 개발자, 1인 회사, 솔로프리뉴어용",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "클로즈드 소스 제품에서 사용 가능",
-          "teamSize": "팀 규모 ≤ 1 FTE",
-          "creditRequired": "크레딧 표기 필수",
-          "freeKey": "가입 시 무료 라이선스 키 발급"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "무료 라이선스 받기"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "{price}/년부터",
-        "title": "상용 라이선스",
-        "subtitle": "스타트업 & 엔터프라이즈",
-        "description": "스타트업, 에이전시, 팀(2인 이상), 상용 SaaS 제품용",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "클로즈드 소스 제품에서 사용 가능",
-          "noCopyleft": "카피레프트 의무 없음",
-          "noTeamLimits": "팀 규모 제한 없음",
-          "commercialSupport": "상용 지원 제공"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "상용 라이선스 구매"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "자주 묻는 질문",
-      "description": "라이선스 결정을 명확하게 유지하세요. 오픈소스 배포에는 AGPL을, 제품을 비공개로 유지해야 할 때는 상업적 예외 라이선스를 사용합니다.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "왜 AGPL-3.0인가요?",
-          "a": "AGPL은 템플릿 개선 사항이 오픈소스로 유지되도록 보장합니다. 상용 라이선스는 기업을 위해 이러한 의무를 해제합니다."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "개인 개발자라면 정말 무료인가요?",
-          "a": "네, 완전히 무료입니다. /get-license에서 가입하고 키를 받아 제품을 개발하세요. 어떠한 조건도 없습니다."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "\"1인 회사\"의 기준은 무엇인가요?",
-          "a": "풀타임 환산 1명 이하입니다. 첫 직원을 채용하면 Startup 라이선스가 필요합니다(저희가 안내드립니다)."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "나중에 업그레이드할 수 있나요?",
-          "a": "물론입니다. 커뮤니티 프로필이 그대로 이어지니, 준비가 되면 Startup 라이선스를 구매하시면 됩니다."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "오픈소스 기여는 어떻게 되나요?",
-          "a": "모든 기여에는 CLA 서명이 필요합니다. CONTRIBUTING.md를 참고하세요."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "라이선스 — {brandName}",
-      "description": "듀얼 라이선스 모델: AGPL-3.0 오픈소스 또는 상용 라이선스."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "베타 코호트 고객 스토리가 곧 도착합니다 — 가장 먼저 만나보십시오."
     },
     "comparison": {
-      "badge": "요금제 비교",
-      "title": "현재 단계에 맞는 요금제를 선택하십시오",
-      "subtitle": "모든 요금제에 전체 소스 코드가 포함됩니다. 상용 라이선스는 12개월의 업데이트를 포함합니다.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "독립",
-        "startup": "스타트업",
-        "enterprise": "엔터프라이즈"
+        "community": "Community",
+        "team": "Team",
+        "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "라이선스",
-          "type": "라이선스 유형",
-          "projects": "프로젝트 수"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "소스 코드",
-          "full-source": "전체 소스 코드",
-          "all-packages": "모든 패키지 및 모듈",
-          "update-window": "업데이트 기간"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "지원",
-          "channel": "지원 채널"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "요금제 및 기능 비교"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "신뢰할 수 있는 스택 위에 구축",

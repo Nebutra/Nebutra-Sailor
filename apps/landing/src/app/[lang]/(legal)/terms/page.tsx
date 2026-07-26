@@ -63,33 +63,41 @@ export default async function TermsOfServicePage({
 
       {/* Scope clarifier — TODO LEGAL: review wording with counsel.
           Hardcoded English: split SaaS-subscription Terms (this document) from
-          source-code licensing (LICENSE-COMMERCIAL.md / LICENSE-INDEPENDENT.md
-          on scaffold). Without this clarifier, customers conflate the two when
-          conflicts arise. */}
+          source-code licensing (LICENSE / LICENSE-COMMERCIAL.md). Without this
+          clarifier, customers conflate the two when conflicts arise. */}
       <h2>Scope of These Terms</h2>
       <p>
         These Terms govern your use of the <strong>{brand.name} hosted SaaS services</strong> (the
         marketing site, dashboard at <code>{brand.domains.app}</code>, and related APIs). They do{" "}
-        <strong>not</strong> govern your use of the open-source {brand.name}-Sailor codebase.
+        <strong>not</strong> govern your use of the {brand.name}-Sailor codebase.
       </p>
-      <p>Source-code use is governed by a separate license, whichever applies to you:</p>
+      <p>
+        Source-code use is governed by a separate license, whichever applies to you. Both are free
+        and neither requires registration:
+      </p>
       <ul>
         <li>
-          <strong>Direct fork from GitHub</strong> — AGPL-3.0 (see{" "}
-          <code>LICENSE-AGPL-REFERENCE.md</code> in the repository).
+          <strong>Published npm packages</strong> — MIT.
+        </li>
+        <li>
+          <strong>Clone or fork from GitHub</strong> — FSL-1.1-ALv2 (see <code>LICENSE</code> in the
+          repository), converting to Apache-2.0 two years after each release.
         </li>
         <li>
           <strong>
             Project scaffolded with <code>create-sailor</code>
           </strong>{" "}
-          — the Independent Developer License or a paid Startup / Enterprise commercial tier (see{" "}
-          <code>LICENSE-COMMERCIAL.md</code> and{" "}
-          <a
-            href={`${getBrandOrigin("landing")}/get-license`}
-          >{`${brand.domains.landing}/get-license`}</a>
-          ).
+          — MIT.
         </li>
       </ul>
+      <p>
+        Paid tiers sell support, SLAs, indemnification, compliance documentation, and trademark
+        rights — not permission to use the software. See <code>LICENSE-COMMERCIAL.md</code> and{" "}
+        <a
+          href={`${getBrandOrigin("landing")}/get-license`}
+        >{`${brand.domains.landing}/get-license`}</a>
+        .
+      </p>
       <p>
         Where these Terms and a source-code license appear to conflict regarding rights to the
         codebase itself, the source-code license controls. Where they appear to conflict regarding

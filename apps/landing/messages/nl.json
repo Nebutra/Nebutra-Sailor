@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Start gratis. Schaal op wanneer je er klaar voor bent.",
-      "description": "Onafhankelijke en OPC-ontwikkelaars kunnen gratis uitbrengen. Jaarlijkse commerciële licenties openen gesloten-bron gebruik voor groeiende teams. Kies het niveau dat past en begin vandaag nog met bouwen.",
-      "socialProofText": "AGPL-3.0 bij fork · Onafhankelijke ontwikkelaarslicentie via CLI · jaarlijkse commerciële niveaus voor teams.",
-      "independent": {
-        "badge": "ONAFHANKELIJK",
-        "price": "Gratis",
-        "period": "voor altijd",
-        "desc": "Solo-builders en eenpersoonsbedrijven (≤ 1 FTE, < $1M ARR). Geen copyleft wanneer gescaffold via create-sailor.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Complete Next.js 16 SaaS-kern",
-        "f2": "Onbeperkt persoonlijke projecten (commercieel gebruik toegestaan)",
-        "f3": "Volledige SaaS-stack: Auth, Betalingen, Organisaties, API, E-mail, i18n, Achtergrondtaken, Opslag & meer — plus dunne admin + Retool/Metabase-recipes (we leveren geen opgeblazen CRUD; we leveren de integratiepatronen die top-SaaS gebruikt)",
-        "f4": "Marketingfuncties: Blog, Landingspagina, SEO, Analytics",
-        "f5": "Onafhankelijke ontwikkelaarslicentie (geen AGPL-copyleft wanneer gescaffold met de CLI)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ jaar",
-        "desc": "Voor teams van 2–50 personen. Gesloten-bron commercieel gebruik, jaarlijkse verlenging.",
-        "cta": "Krijg {brandName} voor Startups",
-        "f1": "Gesloten-bron gebruik (commerciële licentie, 2–50 FTE)",
-        "f2": "Onbeperkt teamprojecten",
-        "f3": "12 maanden updates inbegrepen",
-        "f4": "E-mailondersteuning",
-        "f5": "Alles in Independent"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Op maat",
-        "period": "",
-        "desc": "50+ FTE, ≥ $1M ARR, of white-label / SLA-behoeften. Aangepast contract met prioriteitsondersteuning.",
-        "cta": "Neem contact op met sales",
-        "f1": "Onbeperkt gebruik binnen uw organisatie (commerciële licentie)",
-        "f2": "White-label rechten (met schriftelijke goedkeuring)",
-        "f3": "Prioriteitsondersteuning met SLA (2 uur kritiek, 24 uur standaard)",
-        "f4": "Aangepaste contractonderhandeling en roadmap-input",
-        "f5": "Multi-product / multi-divisie licenties",
-        "f6": "Alles in Startup"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Dubbel <hl>licentie</hl>model",
-      "description": "{brandName}-Sailor is open source onder AGPL-3.0. We bieden ook commerciële licenties voor teams die gesloten-bronproducten bouwen."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Altijd gratis",
-        "title": "AGPL-3.0",
-        "subtitle": "Open source",
-        "description": "Open source-projecten, academisch onderzoek, persoonlijk leren",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Volledige toegang tot broncode",
-          "mustOpenSource": "Moet je product open source maken",
-          "mustCredit": "Moet {brandName}-Sailor vermelden",
-          "communitySupport": "Alleen community-ondersteuning"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Bekijk op GitHub"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Altijd gratis",
-        "title": "Gratis commercieel",
-        "subtitle": "Individueel & solo",
-        "description": "Individuele bouwers en single-seat operators",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Gebruik in gesloten broncode-producten",
-          "teamSize": "Teamgrootte ≤ 1 FTE",
-          "creditRequired": "Vermelding verplicht",
-          "freeKey": "Gratis licentiecode via registratie"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Krijg je gratis licentie"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "Vanaf {price}/jr",
-        "title": "Commercieel",
-        "subtitle": "Startup & Enterprise",
-        "description": "Startups, bureaus, teams (2+ personen), commerciële SaaS-producten",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Gebruik in gesloten-bronproducten",
-          "noCopyleft": "Geen copyleft-verplichtingen",
-          "noTeamLimits": "Geen teamgroottebeperkingen",
-          "commercialSupport": "Commerciële ondersteuning beschikbaar"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Krijg commerciële licentie"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Veelgestelde vragen",
-      "description": "Houd de licentiebeslissing leesbaar: kies AGPL voor open-source-distributie, of gebruik een commerciële uitzondering wanneer je product gesloten-bron moet blijven.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Waarom AGPL-3.0?",
-          "a": "AGPL zorgt ervoor dat verbeteringen aan de template open source blijven. Een commerciële licentie verwijdert deze verplichting voor bedrijven."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Is er echt een gratis optie voor individuele bouwers?",
-          "a": "Ja, helemaal. Registreer je op /get-license, haal je sleutel op en bouw je product. Geen voorwaarden."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Wat telt als een single-seat zakelijk gebruik?",
-          "a": "Eén fulltime-equivalent of minder. Ga je verder dan een single-seat setup, dan moet je upgraden naar een Startup-licentie."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Kan ik later upgraden?",
-          "a": "Absoluut. Upgrade wanneer je team of leveringsomvang de gratis zakelijke laag te boven gaat."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "En open source-bijdragen?",
-          "a": "Alle bijdragen vereisen een CLA. Zie CONTRIBUTING.md."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
       "title": "Licensing — {brandName}",
-      "description": "Dubbel licentiemodel: AGPL-3.0 open source of commerciële licenties."
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Klantverhalen uit onze beta-cohort komen binnenkort — wees een van de eersten."
     },
     "comparison": {
-      "badge": "Vergelijk plannen",
-      "title": "Kies het plan dat past bij jouw fase",
-      "subtitle": "Elk plan bevat de volledige broncode. Commerciële licenties omvatten 12 maanden updates.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Onafhankelijk",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Licentie",
-          "type": "Licentietype",
-          "projects": "Aantal projecten"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Broncode",
-          "full-source": "Volledige broncode",
-          "all-packages": "Alle pakketten en modules",
-          "update-window": "Updatevenster"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Ondersteuning",
-          "channel": "Ondersteuningskanaal"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Vergelijking van plannen en functies"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Gebouwd op een stack die je kunt vertrouwen",

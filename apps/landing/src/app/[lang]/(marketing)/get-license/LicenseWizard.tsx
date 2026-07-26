@@ -109,6 +109,14 @@ function defaultRedirectToCheckout(url: string): void {
   window.location.href = url;
 }
 
+/**
+ * Pre-select a sensible default tier from team size.
+ *
+ * Team size does NOT gate anything: commercial use is free at every size under
+ * MIT + FSL-1.1-ALv2. Paid tiers sell support, SLAs, indemnity, and trademark
+ * rights, so larger orgs are merely *more likely* to want them. Every tier
+ * stays selectable regardless of what this returns.
+ */
 function determineLicenseTier(
   teamSize: TeamSize | null,
 ): "INDIVIDUAL" | "OPC" | "STARTUP" | "ENTERPRISE" | null {
@@ -671,98 +679,63 @@ export function LicenseWizard({
                 </p>
               </div>
 
-              {/* License tier selection */}
-              <div>
-                {step1.teamSize === "1" && (
-                  <div className="space-y-4">
-                    <div className="rounded-[var(--radius-lg)] bg-muted p-4">
-                      <p className="text-sm text-muted-foreground">
-                        If you operate as a single-seat business, you qualify for the Independent
-                        Developer License below (≤ 1 FTE & &lt; $1M ARR, free).
-                      </p>
-                    </div>
-                    <div className="grid gap-4">
-                      <LicenseTierCard
-                        title={t("tiers.individualFree")}
-                        description="For individual builders and personal commercial projects"
-                        features={[
-                          "Free forever (no expiration)",
-                          "Full framework access",
-                          "Community support",
-                          "License key for personal use",
-                        ]}
-                        highlighted={true}
-                        selected={step3.tier === "INDIVIDUAL"}
-                        onClick={() => setStep3((prev) => ({ ...prev, tier: "INDIVIDUAL" }))}
-                      />
-                      <LicenseTierCard
-                        title={t("tiers.opcFree")}
-                        description="For registered single-owner companies"
-                        features={[
-                          "Free forever (no expiration)",
-                          "Full framework access",
-                          "Community support",
-                          "License key for your company",
-                        ]}
-                        highlighted={false}
-                        selected={step3.tier === "OPC"}
-                        onClick={() => setStep3((prev) => ({ ...prev, tier: "OPC" }))}
-                      />
-                    </div>
-                  </div>
-                )}
+              {/* License tier selection — never gated by team size. */}
+              <div className="space-y-4">
+                <div className="rounded-[var(--radius-lg)] bg-muted p-4">
+                  <p className="text-sm text-foreground font-medium">
+                    Commercial use is already free at any team size — no licence key required.
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Register below only if you want release notes, or if you need a support
+                    commitment, an SLA, indemnification, or trademark rights.
+                  </p>
+                </div>
 
-                {(step1.teamSize === "2-5" ||
-                  step1.teamSize === "6-20" ||
-                  step1.teamSize === "21-50") && (
-                  <div className="space-y-4">
-                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-warning)] bg-[color-mix(in_srgb,var(--status-warning)_12%,transparent)] p-4">
-                      <p className="text-sm text-foreground font-medium">
-                        Your team is too large for a free license. Let's find the right commercial
-                        plan.
-                      </p>
-                    </div>
-                    <LicenseTierCard
-                      title={t("tiers.startupCommercial")}
-                      price="$799/year"
-                      description="For teams of 2–50 people"
-                      features={[
-                        "Includes 1 year of updates",
-                        "Community support",
-                        "Commercial usage rights",
-                        "License key for your team",
-                      ]}
-                      highlighted={true}
-                      selected={step3.tier === "STARTUP"}
-                      onClick={() => setStep3((prev) => ({ ...prev, tier: "STARTUP" }))}
-                    />
-                  </div>
-                )}
-
-                {step1.teamSize === "50+" && (
-                  <div className="space-y-4">
-                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-info)] bg-[color-mix(in_srgb,var(--status-info)_10%,transparent)] p-4">
-                      <p className="text-sm text-foreground font-medium">
-                        For enterprises with 50+ people, let's connect with our sales team to find
-                        the perfect fit.
-                      </p>
-                    </div>
-                    <LicenseTierCard
-                      title={t("tiers.enterprise")}
-                      description="Custom pricing and support"
-                      features={[
-                        "Unlimited team members",
-                        "Dedicated support",
-                        "Custom SLAs",
-                        "Volume pricing available",
-                      ]}
-                      highlighted={true}
-                      selected={step3.tier === "ENTERPRISE"}
-                      onClick={() => setStep3((prev) => ({ ...prev, tier: "ENTERPRISE" }))}
-                      cta="Contact sales@nebutra.com"
-                    />
-                  </div>
-                )}
+                <div className="grid gap-4">
+                  <LicenseTierCard
+                    title={t("tiers.individualFree")}
+                    price="Free"
+                    description="Any team size, any revenue — closed-source commercial use included"
+                    features={[
+                      "No fee, no expiry, no attribution required",
+                      "Full source and every published package",
+                      "Community support — best-effort, no response guarantee",
+                      "Optional: register for release notes",
+                    ]}
+                    highlighted={step3.tier === "INDIVIDUAL" || step3.tier === "OPC"}
+                    selected={step3.tier === "INDIVIDUAL"}
+                    onClick={() => setStep3((prev) => ({ ...prev, tier: "INDIVIDUAL" }))}
+                  />
+                  <LicenseTierCard
+                    title={t("tiers.startupCommercial")}
+                    price="$2,000/year"
+                    description="A support commitment — the code is already yours"
+                    features={[
+                      "Private support channel (email + Slack or Discord)",
+                      "Two business-day first response, guaranteed",
+                      "Priority bug triage ahead of community issues",
+                      "Upgrade assistance and breaking-change notice",
+                    ]}
+                    highlighted={step3.tier === "STARTUP"}
+                    selected={step3.tier === "STARTUP"}
+                    onClick={() => setStep3((prev) => ({ ...prev, tier: "STARTUP" }))}
+                  />
+                  <LicenseTierCard
+                    title={t("tiers.enterprise")}
+                    price="From $30,000/year"
+                    description="For procurement, legal, and security review"
+                    features={[
+                      "Response SLA — 4 business hours, 1 hour production-down",
+                      "Indemnification and security-patch commitment",
+                      "Signed DPA, compliance pack, continuity undertaking",
+                      "Trademark and white-label rights",
+                    ]}
+                    highlighted={step3.tier === "ENTERPRISE"}
+                    selected={step3.tier === "ENTERPRISE"}
+                    onClick={() => setStep3((prev) => ({ ...prev, tier: "ENTERPRISE" }))}
+                    cta="Contact sales@nebutra.com"
+                  />
+                </div>
               </div>
 
               {/* Contact fields */}

@@ -63,7 +63,11 @@ export interface ScaffoldMeta {
   signingKeyId?: string;
   purpose?: string;
   license?: {
-    tier: "independent";
+    /**
+     * `mit-scaffold` since 2026-07-26. `independent` is the legacy value from
+     * create-sailor <= 1.8.2 and must keep verifying — those projects exist.
+     */
+    tier: "mit-scaffold" | "independent";
     file: string;
     upgradeUrl: string;
   };

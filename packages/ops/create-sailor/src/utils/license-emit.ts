@@ -25,7 +25,7 @@ export interface LicenseEmitOptions {
   projectName: string;
   cliVersion: string;
   /**
-   * Where to look for the LICENSE-INDEPENDENT.md template. Defaults to the
+   * Where to look for the LICENSE-SCAFFOLD.md template. Defaults to the
    * template that ships inside create-sailor.
    */
   templatesRoot?: string;
@@ -66,7 +66,13 @@ export interface ScaffoldMeta {
    */
   purpose: string;
   license: {
-    tier: "independent";
+    /**
+     * `mit-scaffold` since 2026-07-26. `independent` is the legacy value
+     * emitted by create-sailor <= 1.8.2, when scaffolded projects carried the
+     * now-retired Independent Developer License. Verifiers must keep accepting
+     * it — those projects exist and their marker files are signed and valid.
+     */
+    tier: "mit-scaffold" | "independent";
     file: "LICENSE";
     upgradeUrl: string;
   };
@@ -86,47 +92,47 @@ function computeSignature(
 }
 
 /**
- * Emit the Nebutra-Sailor Independent Developer License + the
+ * Emit the scaffolded project's MIT LICENSE + the
  * `.nebutra/scaffold-meta.json` marker into the scaffold target.
  *
  * Behaviour:
- *  - Writes `LICENSE` (the Independent Developer License) — overwrites the
- *    upstream AGPL because this is the legal grant the scaffolded project
- *    operates under.
- *  - Preserves the upstream AGPL text at `LICENSE-AGPL-REFERENCE.md` so
- *    users can read the alternative grant.
+ *  - Writes `LICENSE` (MIT) — overwrites the upstream repository licence,
+ *    because the scaffolded project is MIT, not FSL. Scaffolded output is
+ *    distributed as part of the MIT-published `create-sailor` package.
+ *  - Preserves the upstream licence text at `LICENSE-UPSTREAM-REFERENCE.md`
+ *    so users can read the terms the monorepo itself is under.
  *  - Writes `.nebutra/scaffold-meta.json` with version + timestamp + HMAC,
  *    signed with the CURRENT key from `license-signing-keys.ts`.
  *  - Adds a one-line license notice at the top of the project's README.
  */
-export function emitIndependentLicense(
+export function emitScaffoldLicense(
   targetDir: string,
   options: LicenseEmitOptions,
 ): { wrote: string[] } {
   const wrote: string[] = [];
   const templatesRoot = resolveTemplatesRoot(options.templatesRoot);
 
-  // 1. Move the upstream AGPL aside (only if it exists). The scaffolded
-  // project operates under the Independent license; AGPL becomes a
-  // reference document for users who want to know the fork-path terms.
+  // 1. Move the upstream repository licence aside (only if it exists). The
+  // scaffolded project is MIT; the upstream terms (FSL today, AGPL for
+  // pre-2026-07-26 checkouts) become a reference document for users who want
+  // to know what the monorepo itself is under.
   const upstreamLicense = path.join(targetDir, "LICENSE");
   if (fs.existsSync(upstreamLicense)) {
     const head = fs.readFileSync(upstreamLicense, "utf-8").slice(0, 256);
-    const looksAgpl = /GNU AFFERO GENERAL PUBLIC LICENSE/i.test(head);
-    if (looksAgpl) {
-      fs.renameSync(upstreamLicense, path.join(targetDir, "LICENSE-AGPL-REFERENCE.md"));
-      wrote.push("LICENSE-AGPL-REFERENCE.md (preserved upstream AGPL)");
+    const looksUpstream =
+      /GNU AFFERO GENERAL PUBLIC LICENSE/i.test(head) || /Functional Source License/i.test(head);
+    if (looksUpstream) {
+      fs.renameSync(upstreamLicense, path.join(targetDir, "LICENSE-UPSTREAM-REFERENCE.md"));
+      wrote.push("LICENSE-UPSTREAM-REFERENCE.md (preserved upstream licence)");
     }
   }
 
-  // 2. Write the Independent Developer License as the project's LICENSE.
-  const independentSrc = path.join(templatesRoot, "LICENSE-INDEPENDENT.md");
-  if (!fs.existsSync(independentSrc)) {
-    throw new Error(
-      `LICENSE-INDEPENDENT.md template missing at ${independentSrc}; cannot emit license.`,
-    );
+  // 2. Write the scaffolded project's MIT LICENSE.
+  const scaffoldSrc = path.join(templatesRoot, "LICENSE-SCAFFOLD.md");
+  if (!fs.existsSync(scaffoldSrc)) {
+    throw new Error(`LICENSE-SCAFFOLD.md template missing at ${scaffoldSrc}; cannot emit license.`);
   }
-  fs.copyFileSync(independentSrc, path.join(targetDir, "LICENSE"));
+  fs.copyFileSync(scaffoldSrc, path.join(targetDir, "LICENSE"));
   wrote.push("LICENSE");
 
   // 3. Write the signed scaffold marker.
@@ -151,9 +157,9 @@ export function emitIndependentLicense(
     signature,
     signingKeyId: currentKey.id,
     purpose:
-      "Marks this project as scaffolded by the official `create-sailor` CLI. The Independent Developer License in LICENSE applies as long as this file is present and the signature verifies.",
+      "Marks this project as scaffolded by the official `create-sailor` CLI. Provenance only — the MIT licence in LICENSE applies unconditionally and does not depend on this file or its signature.",
     license: {
-      tier: "independent",
+      tier: "mit-scaffold",
       file: "LICENSE",
       upgradeUrl: "https://nebutra.com/get-license",
     },
@@ -172,12 +178,11 @@ export function emitIndependentLicense(
   const readmePath = path.join(targetDir, "README.md");
   if (fs.existsSync(readmePath)) {
     const existing = fs.readFileSync(readmePath, "utf-8");
-    if (!existing.includes("Nebutra-Sailor Independent Developer License")) {
-      const notice = `> **License notice:** scaffolded by \`create-sailor\` under the
-> [Nebutra-Sailor Independent Developer License](./LICENSE). Free for
-> individuals/OPC with ≤ 1 FTE and < $1M ARR; upgrade for larger teams at
-> https://nebutra.com/get-license. The upstream repository remains
-> AGPL-3.0 — see \`LICENSE-AGPL-REFERENCE.md\`.\n\n`;
+    if (!existing.includes("Scaffolded by `create-sailor`")) {
+      const notice = `> **License notice:** Scaffolded by \`create-sailor\`. The Nebutra-Sailor
+> code in this project is [MIT licensed](./LICENSE) — commercial use, closed
+> source, no fee, no attribution required. The upstream monorepo is
+> FSL-1.1-ALv2 — see \`LICENSE-UPSTREAM-REFERENCE.md\`.\n\n`;
       fs.writeFileSync(readmePath, notice + existing);
       wrote.push("README.md (prepended license notice)");
     }

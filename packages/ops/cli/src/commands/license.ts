@@ -255,7 +255,8 @@ export async function verifyLicenseCommand(
           `${pc.cyan(`create-sailor@${meta.cliVersion}`)} on ${date}`,
         `  Signing key: ${pc.dim(meta.signingKeyId ?? "v1 (legacy, no keyId)")}`,
         `  Tier: ${pc.bold(meta.license?.tier ?? "independent")}`,
-        `  ${pc.green("Independent Developer License valid.")}`,
+        `  ${pc.green("Scaffold marker valid.")}`,
+        pc.dim("  Provenance only — the MIT licence applies regardless of this marker."),
       ];
       process.stderr.write(`${lines.join("\n")}\n`);
     } else {

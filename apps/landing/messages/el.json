@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Ξεκινήστε δωρεάν. Κλιμακώστε όταν είστε έτοιμοι.",
-      "description": "Οι ανεξάρτητοι και OPC προγραμματιστές δημοσιεύουν δωρεάν. Οι ετήσιες εμπορικές άδειες ξεκλειδώνουν χρήση κλειστού κώδικα για αναπτυσσόμενες ομάδες. Επιλέξτε το επίπεδο που σας ταιριάζει και ξεκινήστε να χτίζετε σήμερα.",
-      "socialProofText": "AGPL-3.0 σε fork · Άδεια Ανεξάρτητου Προγραμματιστή μέσω CLI · ετήσια εμπορικά επίπεδα για ομάδες.",
-      "independent": {
-        "badge": "ΑΝΕΞΑΡΤΗΤΟΣ",
-        "price": "Δωρεάν",
-        "period": "για πάντα",
-        "desc": "Μοναχικοί δημιουργοί και εταιρείες ενός ατόμου (≤ 1 FTE, < $1M ARR). Χωρίς copyleft όταν σκαφαριάζεται μέσω create-sailor.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Πλήρης πυρήνας SaaS Next.js 16",
-        "f2": "Απεριόριστα προσωπικά έργα (επιτρέπεται εμπορική χρήση)",
-        "f3": "Πλήρες SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & άλλα — συν λεπτό admin + συνταγές Retool/Metabase (δεν στέλνουμε φουσκωμένο CRUD· στέλνουμε τα patterns ολοκλήρωσης που χρησιμοποιούν τα κορυφαία SaaS)",
-        "f4": "Λειτουργίες marketing: Blog, Landing page, SEO, Analytics",
-        "f5": "Άδεια Ανεξάρτητου Προγραμματιστή (χωρίς AGPL copyleft όταν σκαφαριάζεται με το CLI)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ έτος",
-        "desc": "Για ομάδες 2–50 ατόμων. Εμπορική χρήση κλειστού κώδικα, ετήσια ανανέωση.",
-        "cta": "Αποκτήστε το {brandName} για Startups",
-        "f1": "Χρήση κλειστού κώδικα (εμπορική άδεια, 2–50 FTE)",
-        "f2": "Απεριόριστα έργα ομάδας",
-        "f3": "12 μήνες ενημερώσεων περιλαμβάνονται",
-        "f4": "Υποστήριξη μέσω email",
-        "f5": "Όλα τα χαρακτηριστικά του Independent"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Κατόπιν συνεννόησης",
-        "period": "",
-        "desc": "50+ FTE, ≥ $1M ARR ή ανάγκες white-label / SLA. Εξατομικευμένο συμβόλαιο με προτεραιότητα στην υποστήριξη.",
-        "cta": "Επικοινωνία με πωλήσεις",
-        "f1": "Απεριόριστη χρήση σε όλη την οργάνωσή σας (εμπορική άδεια)",
-        "f2": "Δικαιώματα white-label (με γραπτή έγκριση)",
-        "f3": "Υποστήριξη προτεραιότητας με SLA (2 ώρες κρίσιμα, 24 ώρες τυπικά)",
-        "f4": "Διαπραγμάτευση εξατομικευμένου συμβολαίου και συμβολή στο roadmap",
-        "f5": "Άδεια για πολλαπλά προϊόντα / διαιρέσεις",
-        "f6": "Όλα τα χαρακτηριστικά του Startup"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Διπλό <hl>Μοντέλο</hl> Αδειοδότησης",
-      "description": "Το {brandName}-Sailor είναι ανοιχτού κώδικα υπό AGPL-3.0. Προσφέρουμε επίσης εμπορικές άδειες για ομάδες που αναπτύσσουν προϊόντα κλειστού κώδικα."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Δωρεάν για πάντα",
-        "title": "AGPL-3.0",
-        "subtitle": "Ανοικτού Κώδικα",
-        "description": "Έργα ανοικτού κώδικα, ακαδημαϊκή έρευνα, προσωπική μάθηση",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Πλήρης πρόσβαση στον πηγαίο κώδικα",
-          "mustOpenSource": "Υποχρεωτική δημοσίευση του προϊόντος σας ως ανοικτού κώδικα",
-          "mustCredit": "Υποχρεωτική αναφορά στο {brandName}-Sailor",
-          "communitySupport": "Υποστήριξη μόνο από την κοινότητα"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Προβολή στο GitHub"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Δωρεάν για πάντα",
-        "title": "Δωρεάν Εμπορική",
-        "subtitle": "Ατομική & Μοναδική",
-        "description": "Ατομικοί δημιουργοί και μοναδικοί χειριστές",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Χρήση σε προϊόντα κλειστού κώδικα",
-          "teamSize": "Μέγεθος ομάδας ≤ 1 FTE",
-          "creditRequired": "Απαιτείται αναφορά",
-          "freeKey": "Δωρεάν κλειδί άδειας μέσω εγγραφής"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Λάβετε τη Δωρεάν Άδεια"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "Από {price}/έτος",
-        "title": "Εμπορική",
-        "subtitle": "Εκκίνηση & Επιχείρηση",
-        "description": "Εκκινήσεις, πρακτορεία, ομάδες (2+ άτομα), εμπορικά προϊόντα SaaS",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Χρήση σε προϊόντα κλειστού κώδικα",
-          "noCopyleft": "Χωρίς υποχρεώσεις copyleft",
-          "noTeamLimits": "Χωρίς όρια μεγέθους ομάδας",
-          "commercialSupport": "Διαθέσιμη εμπορική υποστήριξη"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Λάβετε Εμπορική Άδεια"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Συχνές Ερωτήσεις",
-      "description": "Κρατήστε την απόφαση άδειας κατανοητή: επιλέξτε AGPL για διανομή ανοιχτού κώδικα ή χρησιμοποιήστε εμπορική εξαίρεση όταν το προϊόν σας πρέπει να παραμείνει κλειστού κώδικα.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Γιατί AGPL-3.0;",
-          "a": "Το AGPL εξασφαλίζει ότι οι βελτιώσεις στο πρότυπο παραμένουν ανοιχτού κώδικα. Η εμπορική άδεια καταργεί αυτή την υποχρέωση για επιχειρήσεις."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Υπάρχει πραγματικά δωρεάν διαδρομή για μεμονωμένους δημιουργούς;",
-          "a": "Ναι, απόλυτα. Εγγραφείτε στο /get-license, λάβετε το κλειδί σας και χτίστε το προϊόν σας. Χωρίς δεσμεύσεις."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Τι μετράει ως περίπτωση εμπορικής χρήσης με μία έδρα;",
-          "a": "Ένα ισοδύναμο πλήρους απασχόλησης ή λιγότερο. Αν ξεπεράσετε τη ρύθμιση με μία έδρα, θα πρέπει να αναβαθμίσετε σε άδεια Startup."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Μπορώ να αναβαθμίσω αργότερα;",
-          "a": "Απόλυτα. Αναβαθμίστε όποτε η ομάδα ή το πεδίο παράδοσης ξεπεράσει το δωρεάν εμπορικό επίπεδο."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "Και τι γίνεται με τις συνεισφορές ανοιχτού κώδικα;",
-          "a": "Όλες οι συνεισφορές απαιτούν CLA. Δείτε το CONTRIBUTING.md."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Άδειες — {brandName}",
-      "description": "Μοντέλο διπλής άδειας: ανοιχτός κώδικας AGPL-3.0 ή εμπορικές άδειες."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Ιστορίες πελατών από την beta cohort μας θα δημοσιευτούν σύντομα — βρεθείτε ανάμεσα στους πρώτους."
     },
     "comparison": {
-      "badge": "Σύγκριση σχεδίων",
-      "title": "Επιλέξτε το σχέδιο που ταιριάζει στο στάδιο που βρίσκεστε",
-      "subtitle": "Κάθε σχέδιο περιλαμβάνει τον πλήρη source code. Οι εμπορικές άδειες περιλαμβάνουν 12 μήνες ενημερώσεων.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Independent",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Άδεια",
-          "type": "Τύπος άδειας",
-          "projects": "Αριθμός έργων"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Πηγαίος Κώδικας",
-          "full-source": "Πλήρης πηγαίος κώδικας",
-          "all-packages": "Όλα τα πακέτα & modules",
-          "update-window": "Παράθυρο ενημέρωσης"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Υποστήριξη",
-          "channel": "Κανάλι υποστήριξης"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Σύγκριση σχεδίων και χαρακτηριστικών"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Δημιουργημένο σε ένα stack στο οποίο μπορείτε να εμπιστευτείτε",

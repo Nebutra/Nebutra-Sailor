@@ -12,7 +12,8 @@ import { type Locale, routing } from "@/i18n/routing";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
-const COMMERCIAL_BASE_PRICE_USD = 799;
+/** Team support subscription, USD/year. Mirrors LICENSE-COMMERCIAL.md §2. */
+const COMMERCIAL_BASE_PRICE_USD = 2000;
 
 /**
  * Async child component that resolves geo-aware pricing.
@@ -22,12 +23,21 @@ const COMMERCIAL_BASE_PRICE_USD = 799;
  * price when the request arrives. Avoids "Uncached data accessed outside
  * of <Suspense>" prerender errors while preserving user-facing value.
  */
+type PriceBadgeVariant = "primary" | "muted";
+
+const PRICE_BADGE_CLASS: Record<PriceBadgeVariant, string> = {
+  primary: "mb-6 w-fit bg-primary text-primary-foreground border-none",
+  muted: "mb-6 w-fit bg-muted text-muted-foreground border-border",
+};
+
 async function CommercialPriceBadge({
   lang,
   label,
+  variant = "muted",
 }: {
   lang: Locale;
   label: (price: string) => string;
+  variant?: PriceBadgeVariant;
 }) {
   const headersList = await headers();
   const userCurrency = headersList.get("x-user-currency") ?? "USD";
@@ -39,7 +49,10 @@ async function CommercialPriceBadge({
   }).format(COMMERCIAL_BASE_PRICE_USD * exchangeRate);
 
   return (
-    <Badge className="mb-6 w-fit bg-muted text-muted-foreground border-border" variant="outline">
+    <Badge
+      className={PRICE_BADGE_CLASS[variant]}
+      variant={variant === "primary" ? "default" : "outline"}
+    >
       {label(commercialPrice)}
     </Badge>
   );
@@ -48,9 +61,11 @@ async function CommercialPriceBadge({
 function CommercialPriceBadgeFallback({
   lang,
   label,
+  variant = "muted",
 }: {
   lang: Locale;
   label: (price: string) => string;
+  variant?: PriceBadgeVariant;
 }) {
   const fallbackPrice = new Intl.NumberFormat(lang, {
     style: "currency",
@@ -58,7 +73,10 @@ function CommercialPriceBadgeFallback({
     maximumFractionDigits: 0,
   }).format(COMMERCIAL_BASE_PRICE_USD);
   return (
-    <Badge className="mb-6 w-fit bg-muted text-muted-foreground border-border" variant="outline">
+    <Badge
+      className={PRICE_BADGE_CLASS[variant]}
+      variant={variant === "primary" ? "default" : "outline"}
+    >
       {label(fallbackPrice)}
     </Badge>
   );
@@ -92,12 +110,12 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
   // Geo-aware pricing is resolved in <CommercialPriceBadge> (async server
   // component wrapped in <Suspense>). The marketing shell renders statically;
   // localized price streams in on request. Next 16 Cache Components pattern.
-  const commercialBadgeLabel = (price: string) => t("plans.commercial.badge", { price });
+  const commercialBadgeLabel = (price: string) => t("plans.team.badge", { price });
 
   const faqItems = [
-    { q: t("faq.items.whyAgpl.q"), a: t("faq.items.whyAgpl.a") },
-    { q: t("faq.items.soloFree.q"), a: t("faq.items.soloFree.a") },
-    { q: t("faq.items.opcDefinition.q"), a: t("faq.items.opcDefinition.a") },
+    { q: t("faq.items.whyFsl.q"), a: t("faq.items.whyFsl.a") },
+    { q: t("faq.items.reallyFree.q"), a: t("faq.items.reallyFree.a") },
+    { q: t("faq.items.competingUse.q"), a: t("faq.items.competingUse.a") },
     { q: t("faq.items.upgrade.q"), a: t("faq.items.upgrade.a") },
     { q: t("faq.items.contributions.q"), a: t("faq.items.contributions.a") },
   ];
@@ -149,7 +167,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
           stagger="normal"
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[1200px] mx-auto"
         >
-          {/* Card 1: AGPL-3.0 */}
+          {/* Card 1: Community (free) */}
           <AnimateIn preset="fadeUp" inView>
             <Card
               className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-[background-color,border-color,box-shadow] border-border bg-background/50 h-full"
@@ -159,7 +177,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 className="mb-6 w-fit bg-muted text-muted-foreground border-border"
                 variant="outline"
               >
-                {t("plans.agpl.badge")}
+                {t("plans.community.badge")}
               </Badge>
 
               <div className="mb-6">
@@ -167,38 +185,40 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                   className="text-2xl font-semibold mb-2"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
-                  {t("plans.agpl.title")}
+                  {t("plans.community.title")}
                 </h3>
                 <p className="text-sm font-medium text-muted-foreground">
-                  {t("plans.agpl.subtitle")}
+                  {t("plans.community.subtitle")}
                 </p>
               </div>
 
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed min-h-[50px]">
-                {t("plans.agpl.description")}
+                {t("plans.community.description")}
               </p>
 
               <div className="space-y-3 flex-grow mb-8">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.agpl.features.sourceAccess")}
+                    {t("plans.community.features.fullSource")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.agpl.features.mustOpenSource")}
+                    {t("plans.community.features.closedSourceOk")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">{t("plans.agpl.features.mustCredit")}</span>
+                  <span className="text-sm font-medium">
+                    {t("plans.community.features.noAttribution")}
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.agpl.features.communitySupport")}
+                    {t("plans.community.features.communitySupport")}
                   </span>
                 </div>
               </div>
@@ -213,7 +233,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                   className="flex items-center justify-center gap-2"
                 >
                   <Github className="h-4 w-4" />
-                  {t("plans.agpl.cta")}
+                  {t("plans.community.cta")}
                 </a>
               </Button>
             </Card>
@@ -227,52 +247,61 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
             >
               <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
 
-              <Badge
-                className="mb-6 w-fit bg-primary text-primary-foreground border-none"
-                variant="default"
+              <Suspense
+                fallback={
+                  <CommercialPriceBadgeFallback
+                    lang={lang as Locale}
+                    label={commercialBadgeLabel}
+                    variant="primary"
+                  />
+                }
               >
-                {t("plans.freeCommercial.badge")}
-              </Badge>
+                <CommercialPriceBadge
+                  lang={lang as Locale}
+                  label={commercialBadgeLabel}
+                  variant="primary"
+                />
+              </Suspense>
 
               <div className="mb-6">
                 <h3
                   className="text-2xl font-semibold mb-2"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
-                  {t("plans.freeCommercial.title")}
+                  {t("plans.team.title")}
                 </h3>
                 <p className="text-sm font-medium text-muted-foreground">
-                  {t("plans.freeCommercial.subtitle")}
+                  {t("plans.team.subtitle")}
                 </p>
               </div>
 
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed min-h-[50px]">
-                {t("plans.freeCommercial.description")}
+                {t("plans.team.description")}
               </p>
 
               <div className="space-y-3 flex-grow mb-8">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.freeCommercial.features.closedSource")}
+                    {t("plans.team.features.privateChannel")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.freeCommercial.features.teamSize")}
+                    {t("plans.team.features.firstResponse")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.freeCommercial.features.creditRequired")}
+                    {t("plans.team.features.priorityTriage")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.freeCommercial.features.freeKey")}
+                    {t("plans.team.features.upgradeHelp")}
                   </span>
                 </div>
               </div>
@@ -282,67 +311,61 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 variant="default"
                 asChild
               >
-                <Link href="/get-license">{t("plans.freeCommercial.cta")}</Link>
+                <Link href="/get-license">{t("plans.team.cta")}</Link>
               </Button>
             </Card>
           </AnimateIn>
 
-          {/* Card 3: Startup / Enterprise */}
+          {/* Card 3: Enterprise */}
           <AnimateIn preset="fadeUp" inView>
             <Card
               className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-[background-color,border-color,box-shadow] border-border bg-background/50 h-full"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
-              <Suspense
-                fallback={
-                  <CommercialPriceBadgeFallback
-                    lang={lang as Locale}
-                    label={commercialBadgeLabel}
-                  />
-                }
+              <Badge
+                className="mb-6 w-fit bg-muted text-muted-foreground border-border"
+                variant="outline"
               >
-                <CommercialPriceBadge lang={lang as Locale} label={commercialBadgeLabel} />
-              </Suspense>
+                {t("plans.enterprise.badge")}
+              </Badge>
 
               <div className="mb-6">
                 <h3
                   className="text-2xl font-semibold mb-2"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
-                  {t("plans.commercial.title")}
+                  {t("plans.enterprise.title")}
                 </h3>
                 <p className="text-sm font-medium text-muted-foreground">
-                  {t("plans.commercial.subtitle")}
+                  {t("plans.enterprise.subtitle")}
                 </p>
               </div>
 
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed min-h-[50px]">
-                {t("plans.commercial.description")}
+                {t("plans.enterprise.description")}
               </p>
 
               <div className="space-y-3 flex-grow mb-8">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span className="text-sm font-medium">{t("plans.enterprise.features.sla")}</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.commercial.features.closedSource")}
+                    {t("plans.enterprise.features.indemnity")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.commercial.features.noCopyleft")}
+                    {t("plans.enterprise.features.compliance")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-sm font-medium">
-                    {t("plans.commercial.features.noTeamLimits")}
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium">
-                    {t("plans.commercial.features.commercialSupport")}
+                    {t("plans.enterprise.features.trademark")}
                   </span>
                 </div>
               </div>
@@ -352,7 +375,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                 variant="secondary"
                 asChild
               >
-                <Link href="/get-license">{t("plans.commercial.cta")}</Link>
+                <Link href="/get-license">{t("plans.enterprise.cta")}</Link>
               </Button>
             </Card>
           </AnimateIn>

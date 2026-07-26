@@ -31,7 +31,7 @@ import { generateEnvSecrets } from "../utils/env-secrets";
 import { applyFeatureFlagsSelection } from "../utils/feature-flags";
 import { cloneTemplate } from "../utils/git";
 import { applyGovernanceLints } from "../utils/governance-lints";
-import { emitIndependentLicense } from "../utils/license-emit";
+import { emitScaffoldLicense } from "../utils/license-emit";
 import { applyMcpSwitch } from "../utils/mcp";
 import { applyMeteringSwitch } from "../utils/metering";
 import { applyMonitoringSelection } from "../utils/monitoring";
@@ -489,12 +489,12 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   });
 
   // -- license --
-  // Independent Developer License + scaffold marker. Replaces the upstream
-  // AGPL LICENSE inside the scaffolded project; the AGPL text is preserved
-  // as LICENSE-AGPL-REFERENCE.md so the fork-path grant remains visible.
+  // MIT LICENSE + scaffold marker. Replaces the upstream repository LICENSE
+  // inside the scaffolded project; the upstream text is preserved as
+  // LICENSE-UPSTREAM-REFERENCE.md so the monorepo's own terms stay visible.
   emitJson(useJson, { event: "step", step: "license", status: "start" });
   try {
-    const licenseEmit = emitIndependentLicense(resolvedTarget, {
+    const licenseEmit = emitScaffoldLicense(resolvedTarget, {
       projectName,
       cliVersion: VERSION,
     });
@@ -502,14 +502,14 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
       event: "step",
       step: "license",
       status: "ok",
-      tier: "independent",
+      tier: "mit-scaffold",
       wrote: licenseEmit.wrote,
     });
     if (!useJson) {
       process.stdout.write(
         pc.dim(
-          `  License: Nebutra-Sailor Independent Developer License (free for ≤ 1 FTE, < $1M ARR).\n` +
-            `           Upstream AGPL preserved as LICENSE-AGPL-REFERENCE.md.\n`,
+          `  License: MIT — commercial use, closed source, no fee, no attribution.\n` +
+            `           Upstream terms preserved as LICENSE-UPSTREAM-REFERENCE.md.\n`,
         ),
       );
     }

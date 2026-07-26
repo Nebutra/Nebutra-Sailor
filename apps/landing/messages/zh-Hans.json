@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "一次买断。终身访问。",
-      "description": "告别续订焦虑。选择最适合您团队的并发方案，即刻开始构建。",
-      "socialProofText": "开源 AGPL-3.0 · 提供商业授权选项。",
-      "independent": {
-        "badge": "INDEPENDENT / 独立开发者",
+      "title": "免费使用。只有需要我们担责时才付费。",
+      "description": "用 {brandName} 构建商业产品不花一分钱——无费用、无授权密钥、无需注册、无 Copyleft。付费档卖的是支持、SLA、赔偿和商标授权，从不是使用许可。",
+      "socialProofText": "npm 包 MIT · 仓库 FSL-1.1-ALv2，两年后转 Apache-2.0 · 任何规模商用均免费。",
+      "community": {
+        "badge": "社区版",
         "price": "免费",
         "period": "永久",
-        "desc": "适合在 AGPL 基础上快速验证产品方向的个人开发者。",
+        "desc": "面向所有人。不限团队规模、不限营收。含闭源商用，无需注册，无需署名。",
         "cta": "npx create-sailor",
-        "f1": "完整的 Next.js 16 SaaS 核心",
-        "f2": "无限量的个人独立商用级应用接入授权",
-        "f3": "完整的全栈拓扑：多租户管控、计费引擎、行级安全；轻量管理后台 + Retool/Metabase 集成范式（不堆砌冗余 CRUD，沿用头部 SaaS 真正在用的内部工具链）",
-        "f4": "强劲的增长飞轮：原生博客系统、SEO 预渲机制及转化跟踪",
-        "f5": "AGPLv3 开源协议限制"
+        "f1": "完整 Next.js 16 SaaS 内核，全部包都在内",
+        "f2": "任意团队规模与营收下的闭源商业使用",
+        "f3": "全栈能力：认证、支付、组织、API、邮件、i18n、后台任务、存储等",
+        "f4": "营销能力：博客、落地页、SEO、分析",
+        "f5": "公开 issue、Discussions 和 Discord——尽力而为，不承诺响应"
       },
-      "startup": {
-        "badge": "STARTUP / 敏捷初创",
-        "price": "$799",
+      "team": {
+        "badge": "团队版",
+        "price": "$2,000",
         "period": "/ 年",
-        "desc": "适合建立在 {brandName} 平台基线之上的小团队。",
-        "cta": "购买 Startup 商业授权",
-        "f1": "闭源商用授权",
-        "f2": "团队主体无界限商用的企业级应用下放额度",
-        "f3": "12 个月更新覆盖",
-        "f4": "邮件支持",
-        "f5": "包含 Solo 架构下的全额度能力特权"
+        "desc": "给需要「承诺」而不是「指望」的团队。功能本来就免费——这一档买的是我们的注意力。",
+        "cta": "获取 {brandName} 支持",
+        "f1": "私有支持通道（邮件 + 专属 Slack 或 Discord）",
+        "f2": "两个工作日内首次响应，有保证",
+        "f3": "缺陷优先分诊，排在社区 issue 之前",
+        "f4": "升级协助，破坏性变更提前通知",
+        "f5": "包含社区版全部内容"
       },
       "enterprise": {
-        "badge": "ENTERPRISE / 企业版",
-        "price": "定制",
-        "period": "",
-        "desc": "适合交付可重复客户平台的代理商与运营团队。",
+        "badge": "企业版",
+        "price": "$30,000 起",
+        "period": "/ 年",
+        "desc": "面向采购、法务或安全评审需要一个「签字方」的组织。",
         "cta": "联系销售",
-        "f1": "白标商用授权",
-        "f2": "支持向乙方客户无限量出售产品闭源程序的再分发许可",
-        "f3": "12 个月更新覆盖",
-        "f4": "准许白标去 Logo 操作的深度视觉定制与二创潜能",
-        "f5": "继承 Startup 管线所构建的全部底座生态和技术特征",
-        "f6": "包含 Startup 的所有内容"
+        "f1": "响应 SLA——标准 4 个工作小时，生产环境故障 1 小时",
+        "f2": "赔偿条款，以及具备合同约束力的安全补丁承诺",
+        "f3": "已签署 DPA、合规材料包、业务连续性承诺",
+        "f4": "商标与白牌授权，含竞品使用豁免",
+        "f5": "长期支持分支，私有化部署工程支持",
+        "f6": "包含团队版全部内容"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "双<hl>许可证</hl>模式",
-      "description": "{brandName}-Sailor 基于 AGPL-3.0 开源。我们同时为构建闭源产品的团队提供商业授权。"
+      "title": "免费<hl>拿去用</hl>",
+      "description": "{brandName}-Sailor 商用不收一分钱——npm 包 MIT，仓库 FSL-1.1-ALv2，两年后转 Apache-2.0。付费档卖的是支持和合同承诺，从不是使用许可。"
     },
     "plans": {
-      "agpl": {
+      "community": {
         "badge": "永久免费",
-        "title": "AGPL-3.0",
-        "subtitle": "开源协议",
-        "description": "开源项目、学术研究、个人学习",
+        "title": "社区版",
+        "subtitle": "面向所有人",
+        "description": "不限团队规模、不限营收，含闭源商业产品。",
         "features": {
-          "sourceAccess": "完整源码访问权限",
-          "mustOpenSource": "产品必须同步开源",
-          "mustCredit": "必须署名 {brandName}-Sailor",
-          "communitySupport": "仅限社区支持"
+          "fullSource": "完整源代码，全部包",
+          "closedSourceOk": "闭源商业使用——无 Copyleft",
+          "noAttribution": "无需注册，无需署名",
+          "communitySupport": "社区支持——尽力而为"
         },
-        "cta": "在 GitHub 上查看"
+        "cta": "在 GitHub 查看"
       },
-      "freeCommercial": {
-        "badge": "永久免费",
-        "title": "免费商用",
-        "subtitle": "个人与独立开发者",
-        "description": "个人开发者与单席位商业使用者",
+      "team": {
+        "badge": "{price}/年起",
+        "title": "团队版",
+        "subtitle": "支持订阅",
+        "description": "给需要「承诺」而不是「指望」的团队。代码本来就免费。",
         "features": {
-          "closedSource": "可用于闭源产品",
-          "teamSize": "团队规模 ≤ 1 FTE",
-          "creditRequired": "需要署名",
-          "freeKey": "注册即可获得免费授权密钥"
+          "privateChannel": "私有支持通道",
+          "firstResponse": "两个工作日内首次响应，有保证",
+          "priorityTriage": "缺陷优先分诊",
+          "upgradeHelp": "升级协助与破坏性变更预告"
         },
-        "cta": "领取免费授权"
+        "cta": "获取支持"
       },
-      "commercial": {
-        "badge": "{price} 起/年",
-        "title": "商业授权",
-        "subtitle": "初创与企业",
-        "description": "初创公司、代理商、团队（2 人及以上）、商业 SaaS 产品",
+      "enterprise": {
+        "badge": "$30,000/年起",
+        "title": "企业版",
+        "subtitle": "可过采购流程",
+        "description": "面向法务、安全或采购评审需要一个「签字方」的组织。",
         "features": {
-          "closedSource": "可用于闭源产品",
-          "noCopyleft": "无 Copyleft 约束",
-          "noTeamLimits": "无团队人数限制",
-          "commercialSupport": "提供商业支持"
+          "sla": "响应 SLA——4 个工作小时，生产故障 1 小时",
+          "indemnity": "赔偿条款与安全补丁承诺",
+          "compliance": "已签署 DPA、合规材料包、连续性承诺",
+          "trademark": "商标与白牌授权"
         },
-        "cta": "购买商业授权"
+        "cta": "联系销售"
       }
     },
     "faq": {
       "title": "常见问题",
-      "description": "把授权决策讲清楚：开源分发选择 AGPL，需要闭源交付时使用商业例外授权。",
+      "description": "一句话：用它是免费的。付费是为了在你需要时，让我们负合同责任。",
       "items": {
-        "whyAgpl": {
-          "q": "为什么选择 AGPL-3.0？",
-          "a": "AGPL 能确保模板的改进始终开源。商业授权则为企业移除了这一约束。"
+        "whyFsl": {
+          "q": "为什么选 FSL 而不是 MIT 或 AGPL？",
+          "a": "FSL 允许除「售卖 Sailor 替代品」之外的一切用途，且每个版本在发布两年后转为 Apache-2.0——这个授权是提前不可撤销地做出的。AGPL 在企业法务评审阶段就堵死了采用，却没能保护任何我们真正需要保护的东西。"
         },
-        "soloFree": {
-          "q": "个人开发者真的有免费路径吗？",
-          "a": "是的，完全免费。前往 /get-license 注册、获取密钥、构建你的产品，毫无附加条件。"
+        "reallyFree": {
+          "q": "商业使用真的免费吗？",
+          "a": "是。无费用、无授权密钥、无需注册、无营收或人数门槛、无需署名。做个闭源产品拿去卖就行。"
         },
-        "opcDefinition": {
-          "q": "什么算作单席位商业使用？",
-          "a": "即一个全职当量或更少。当你的团队或交付范围超出单席位形态时，就应升级到 Startup 授权。"
+        "competingUse": {
+          "q": "什么算「竞品使用」？",
+          "a": "把 Sailor 本身提供出去——托管版 Sailor 服务，或重新包装的竞争性平台底座。用 Sailor 做垂直 SaaS、内部工具或客户项目都不算。如果你的模式确实需要，企业协议里可以写入书面豁免。"
         },
         "upgrade": {
-          "q": "之后可以升级授权吗？",
-          "a": "当然可以。当团队规模或交付需求超出免费商用层级时，再升级即可。"
+          "q": "付费档到底买到了什么？",
+          "a": "支持承诺、响应 SLA、赔偿、合规文件和商标授权。从来不是软件使用权——那个本来就是你的。"
         },
         "contributions": {
-          "q": "关于开源贡献有什么要求？",
-          "a": "所有贡献都需签署 CLA，详见 CONTRIBUTING.md。"
+          "q": "开源贡献怎么办？",
+          "a": "所有贡献都需要签署 CLA，详见 CONTRIBUTING.md。"
         }
       }
     },
     "meta": {
-      "title": "授权方案 — {brandName}",
-      "description": "双许可证模式：AGPL-3.0 开源或商业授权。"
+      "title": "授权 — {brandName}",
+      "description": "商业使用免费。npm 包 MIT，仓库 FSL-1.1-ALv2，后续转为 Apache-2.0。"
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "我们 beta 内测的客户故事即将上线 — 你可以成为最早登场的那一个。"
     },
     "comparison": {
-      "badge": "套餐对比",
-      "title": "按当前阶段选择最合适的套餐",
-      "subtitle": "所有套餐都包含完整源代码以及对应版本线的终身更新。",
+      "badge": "方案对比",
+      "title": "全部免费。按你需要多强的承诺来选。",
+      "subtitle": "每一档都提供完整源码，且都允许免费闭源商用。差别在于支持、合同承诺和商标授权。",
       "plan": {
-        "independent": "独立开发者版",
-        "startup": "初创版",
-        "enterprise": "企业版版"
+        "community": "社区版",
+        "team": "团队版",
+        "enterprise": "企业版"
       },
       "feature": {
         "license": {
           "label": "许可证",
-          "type": "许可类型",
-          "projects": "可授权项目数"
+          "type": "许可证",
+          "commercial-use": "闭源商业使用",
+          "registration": "是否需注册",
+          "trademark": "商标授权"
         },
         "source": {
           "label": "源代码",
           "full-source": "完整源代码",
           "all-packages": "全部包与模块",
-          "update-window": "更新窗口"
+          "update-window": "更新"
         },
         "support": {
           "label": "支持",
-          "channel": "支持渠道"
+          "channel": "支持通道",
+          "first-response": "首次响应保证",
+          "security-patch": "安全补丁承诺"
+        },
+        "procurement": {
+          "label": "采购与合规",
+          "indemnification": "赔偿条款",
+          "dpa": "已签署 DPA 与合规材料包",
+          "continuity": "业务连续性承诺"
         }
       },
-      "ariaTable": "套餐与功能对比"
+      "ariaTable": "各档位与能力对比"
     },
     "socialProof": {
       "title": "建立在你能信赖的技术栈之上",

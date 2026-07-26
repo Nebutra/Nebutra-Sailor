@@ -167,7 +167,7 @@ describe("license verify command", () => {
     // plain output goes to stderr; check both streams.
     const combined = result.stdout + result.stderr;
     expect(combined).toMatch(/acme-app/);
-    expect(combined).toMatch(/Independent Developer License valid/);
+    expect(combined).toMatch(/Scaffold marker valid/);
   });
 
   it("accepts a positional path argument", async () => {

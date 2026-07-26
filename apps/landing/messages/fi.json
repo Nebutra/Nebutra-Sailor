@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Aloita ilmaiseksi. Laajenna kun olet valmis.",
-      "description": "Itsenäiset ja OPC-kehittäjät julkaisevat ilmaiseksi. Vuosittaiset kaupalliset lisenssit avaavat suljetun lähdekoodin käytön kasvaville tiimeille. Valitse sopiva taso ja aloita rakentaminen tänään.",
-      "socialProofText": "AGPL-3.0 forkissa · Itsenäisen kehittäjän lisenssi CLI:n kautta · vuosittaiset kaupalliset tasot tiimeille.",
-      "independent": {
-        "badge": "ITSENÄINEN",
-        "price": "Ilmainen",
-        "period": "ikuisesti",
-        "desc": "Yksin toimivat rakentajat ja yhden hengen yritykset (≤ 1 FTE, < 1 M $ ARR). Ei copyleftiä, kun luonnos tehdään create-sailorin kautta.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Täydellinen Next.js 16 SaaS-ydin",
-        "f2": "Rajoittamaton määrä henkilökohtaisia projekteja (kaupallinen käyttö sallittu)",
-        "f3": "Täydellinen SaaS-pino: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage ja paljon muuta — sekä kevyt admin + Retool/Metabase-ohjeet (emme julkaise turhaa CRUDia; julkaisemme integrointimallit, joita huippu-SaaSit käyttävät)",
-        "f4": "Markkinointiominaisuudet: Blogi, etusivu, SEO, analytiikka",
-        "f5": "Itsenäisen kehittäjän lisenssi (ei AGPL-copyleftiä, kun luonnos tehdään CLI:n kanssa)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ vuosi",
-        "desc": "Tiimeille, joissa on 2–50 henkilöä. Suljetun lähdekoodin kaupallinen käyttö, vuosittainen uusiminen.",
-        "cta": "Hanki {brandName} Startupeille",
-        "f1": "Suljettu lähdekoodi (kaupallinen lisenssi, 2–50 FTE)",
-        "f2": "Rajaton määrä tiimiprojekteja",
-        "f3": "12 kuukautta päivityksiä sisältyy",
-        "f4": "Sähköpostituki",
-        "f5": "Kaikki Independent-paketin ominaisuudet"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Mukautettu",
-        "period": "",
-        "desc": "50+ FTE, ≥ 1 M$ ARR tai white-label / SLA -tarpeet. Mukautettu sopimus ja ensisijainen tuki.",
-        "cta": "Ota yhteyttä myyntiin",
-        "f1": "Rajaton käyttö koko organisaatiossa (kaupallinen lisenssi)",
-        "f2": "White-label-oikeudet (kirjallisella hyväksynnällä)",
-        "f3": "Ensisijainen tuki SLA:n mukaisesti (2 h kriittiset, 24 h normaalit)",
-        "f4": "Mukautettu sopimusneuvottelu ja vaikutusvalta tiekarttaan",
-        "f5": "Monen tuotteen / monen yksikön lisenssitys",
-        "f6": "Kaikki Startup-paketin ominaisuudet"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Kaksois<hl>lisenssi</hl>malli",
-      "description": "{brandName}-Sailor on avoimen lähdekoodin AGPL-3.0-lisenssillä. Tarjoamme myös kaupallisia lisenssejä tiimeille, jotka kehittävät suljettua lähdekoodia käyttäviä tuotteita."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Aina ilmainen",
-        "title": "AGPL-3.0",
-        "subtitle": "Avoin lähdekoodi",
-        "description": "Avointen lähdekoodiprojektien, akateemisen tutkimuksen ja henkilökohtaisen oppimisen käyttöön",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Täysi pääsy lähdekoodiin",
-          "mustOpenSource": "Tuotteen on oltava avointa lähdekoodia",
-          "mustCredit": "On mainittava {brandName}-Sailor",
-          "communitySupport": "Vain yhteisön tuki"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Näytä GitHubissa"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Ilmainen aina",
-        "title": "Ilmainen kaupallinen",
-        "subtitle": "Yksityishenkilöt & yksin toimivat",
-        "description": "Yksittäisille kehittäjille ja yksittäisille käyttäjille",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Käytettävissä suljetun lähdekoodin tuotteissa",
-          "teamSize": "Tiimin koko ≤ 1 FTE",
-          "creditRequired": "Maininta vaaditaan",
-          "freeKey": "Ilmainen lisenssiväli avautumisen kautta"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Hanki ilmainen lisenssi"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "Alkaen {price}/vuosi",
-        "title": "Kaupallinen",
-        "subtitle": "Startupit & yritykset",
-        "description": "Startupit, toimistot, tiimit (2+ henkilöä), kaupalliset SaaS-tuotteet",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Käytä suljettujen lähdekoodien tuotteissa",
-          "noCopyleft": "Ei copyleft-velvoitteita",
-          "noTeamLimits": "Ei tiimin kokorajoituksia",
-          "commercialSupport": "Kaupallinen tuki saatavilla"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Hanki kaupallinen lisenssi"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Usein kysytyt kysymykset",
-      "description": "Pidä lisenssipäätös selkeänä: valitse AGPL avoimen lähdekoodin jakeluun tai käytä kaupallista poikkeusta, kun tuotteesi on pysyttävä suljettuna.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Miksi AGPL-3.0?",
-          "a": "AGPL varmistaa, että mallipohjan parannukset pysyvät avoimen lähdekoodin piirissä. Kaupallinen lisenssi poistaa tämän velvoitteen yrityksille."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Onko yksittäisille kehittäjille todella ilmainen vaihtoehto?",
-          "a": "Kyllä, täysin. Rekisteröidy osoitteessa /get-license, hanki lisenssisi ja rakenna tuotteesi. Ei sidonnaisuuksia."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Mitä pidetään yksittäisen istuimen kaupallisena käyttötarkoituksena?",
-          "a": "Yksi kokoaikainen vastaava tai vähemmän. Jos eteneet yksittäisen istuimen asennusta pidemmälle, sinun tulee päivittää Startup-lisenssiin."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Voinko päivittää myöhemmin?",
-          "a": "Ehdottomasti. Päivitä milloin tahansa, kun tiimisi tai toimituksen laajuus ylittää ilmaisen kaupallisen tason."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "Mikä tilanne on avoimen lähdekoodin osalta?",
-          "a": "Kaikki osallistumiset vaativat CLA:n. Katso CONTRIBUTING.md."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Lisenssit — {brandName}",
-      "description": "Kaksoislisenssimalli: AGPL-3.0-avoin lähdekoodi tai kaupalliset lisenssit."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Beta-ryhmämme asiakaskokemukset julkaistaan pian — ole yksi ensimmäisistä."
     },
     "comparison": {
-      "badge": "Vertaa suunnitelmia",
-      "title": "Valitse suunnitelma, joka sopii nykyiseen vaiheeseesi",
-      "subtitle": "Jokainen suunnitelma sisältää koko lähdekoodin. Kaupalliset lisenssit sisältävät 12 kuukautta päivityksiä.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Itsenäinen",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Lisenssi",
-          "type": "Lisenssityyppi",
-          "projects": "Hankkeiden määrä"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Lähdekoodi",
-          "full-source": "Koko lähdekoodi",
-          "all-packages": "Kaikki paketit ja moduulit",
-          "update-window": "Päivitysikkuna"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Tuki",
-          "channel": "Tukikanava"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Suunnitelmien ja ominaisuuksien vertailu"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Rakennettu luotettavalle stackille",

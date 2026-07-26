@@ -5,6 +5,12 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { createAppSignUpUrl } from "@/lib/app-url";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
 
+/**
+ * Team support subscription, USD/year. Mirrors LICENSE-COMMERCIAL.md §2 —
+ * update both together.
+ */
+const TEAM_PRICE_USD = 2000;
+
 export async function PricingSection({
   hideHeader = false,
   currency,
@@ -32,25 +38,26 @@ export async function PricingSection({
 
   const TIERS = [
     {
-      key: "independent",
+      key: "community",
       ctaHref: "/get-license",
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
-      dynamicPrice: t("independent.price"), // "Free"
+      dynamicPrice: t("community.price"), // "Free"
     },
     {
-      key: "startup",
+      key: "team",
       ctaHref: createAppSignUpUrl("/choose-plan"),
       highlighted: true,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
-      dynamicPrice: formatter.format(799 * exchangeRate),
+      dynamicPrice: formatter.format(TEAM_PRICE_USD * exchangeRate),
     },
     {
       key: "enterprise",
       ctaHref: "/contact",
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5", "f6"] as const,
-      dynamicPrice: t("enterprise.price"), // "Custom"
+      // Localised "From $30,000" — a floor, not a converted line item.
+      dynamicPrice: t("enterprise.price"),
     },
   ] as const;
 

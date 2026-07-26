@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Ücretsiz başlayın. Hazır olduğunuzda ölçeklendirin.",
-      "description": "Bağımsız ve OPC geliştiriciler ücretsiz dağıtım yapabilir. Yıllık ticari lisanslar, büyüyen ekipler için kapalı kaynak kullanımını açar. Size uygun paketi seçin ve bugün inşa etmeye başlayın.",
-      "socialProofText": "Fork üzerinde AGPL-3.0 · CLI üzerinden Bağımsız Geliştirici Lisansı · ekipler için yıllık ticari paketler.",
-      "independent": {
-        "badge": "BAĞIMSIZ",
-        "price": "Ücretsiz",
-        "period": "süresiz",
-        "desc": "Tek kişilik geliştiriciler ve tek kişilik şirketler (≤ 1 FTE, < 1M USD ARR). create-sailor ile oluşturulduğunda copyleft yok.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Tam Next.js 16 SaaS çekirdeği",
-        "f2": "Sınırsız kişisel proje (ticari kullanım dahil)",
-        "f3": "Tam SaaS yığını: Kimlik Doğrulama, Ödemeler, Organizasyonlar, API, E-posta, i18n, Arka Plan İşleri, Depolama ve daha fazlası — ayrıca ince yönetici paneli + Retool/Metabase tarifleri (şişmiş CRUD göndermiyoruz; en iyi SaaS'lerin kullandığı entegrasyon kalıplarını gönderiyoruz)",
-        "f4": "Pazarlama özellikleri: Blog, Açılış sayfası, SEO, Analitik",
-        "f5": "Bağımsız Geliştirici Lisansı (CLI ile oluşturulduğunda AGPL copyleft'i yok)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ yıl",
-        "desc": "2–50 kişilik ekipler için. Kapalı kaynak ticari kullanım, yıllık yenileme.",
-        "cta": "Startups için {brandName} Edinin",
-        "f1": "Kapalı kaynak kullanım (ticari lisans, 2–50 FTE)",
-        "f2": "Sınırsız ekip projesi",
-        "f3": "12 ay güncelleme dahil",
-        "f4": "E-posta desteği",
-        "f5": "Independent paketinin tamamı"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Özel",
-        "period": "",
-        "desc": "50+ FTE, ≥ 1M$ ARR veya white-label / SLA ihtiyacı. Öncelikli destekle özel sözleşme.",
-        "cta": "Satış ekibiyle iletişime geç",
-        "f1": "Organizasyon genelinde sınırsız kullanım (ticari lisans)",
-        "f2": "White-label hakları (yazılı onay ile)",
-        "f3": "SLA ile öncelikli destek (kritik 2 saat, standart 24 saat)",
-        "f4": "Özel sözleşme müzakeresi ve yol haritası katkısı",
-        "f5": "Çoklu ürün / çoklu bölüm lisanslama",
-        "f6": "Startup paketinin tamamı"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Çift <hl>Lisans</hl> Modeli",
-      "description": "{brandName}-Sailor, AGPL-3.0 altında açık kaynaklıdır. Kapalı kaynaklı ürünler geliştiren ekipler için ticari lisanslar da sunuyoruz."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Her Zaman Ücretsiz",
-        "title": "AGPL-3.0",
-        "subtitle": "Açık Kaynak",
-        "description": "Açık kaynak projeler, akademik araştırma, kişisel öğrenme",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Tam kaynak kodu erişimi",
-          "mustOpenSource": "Ürününüzü açık kaynak yapmanız gerekir",
-          "mustCredit": "{brandName}-Sailor'a atıf yapmanız gerekir",
-          "communitySupport": "Sadece topluluk desteği"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "GitHub'da Görüntüle"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Sonsuza Kadar Ücretsiz",
-        "title": "Ücretsiz Ticari",
-        "subtitle": "Bireysel & Tek Kişilik",
-        "description": "Bireysel geliştiriciler ve tek koltuklu operatörler",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Kapalı kaynak ürünlerde kullanın",
-          "teamSize": "Takım boyutu ≤ 1 FTE",
-          "creditRequired": "Atıf gerekli",
-          "freeKey": "Kayıt ile ücretsiz lisans anahtarı"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Ücretsiz Lisansınızı Alın"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "{price}/yıl'dan başlayan",
-        "title": "Ticari",
-        "subtitle": "Başlangıç & Kurumsal",
-        "description": "Başlangıç şirketleri, ajanslar, ekipler (2+ kişi), ticari SaaS ürünleri",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Kapalı kaynaklı ürünlerde kullanım",
-          "noCopyleft": "Copyleft yükümlülükleri yok",
-          "noTeamLimits": "Ekip boyutu sınırı yok",
-          "commercialSupport": "Ticari destek mevcut"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Ticari Lisans Alın"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Sıkça Sorulan Sorular",
-      "description": "Lisans kararını anlaşılır tutun: açık kaynak dağıtım için AGPL seçin veya ürününüzün kapalı kaynaklı kalması gerekiyorsa ticari istisna kullanın.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Neden AGPL-3.0?",
-          "a": "AGPL, şablona yapılan iyileştirmelerin açık kaynaklı kalmasını sağlar. Ticari lisans, işletmeler için bu yükümlülüğü kaldırır."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Bireysel geliştiriciler için gerçekten ücretsiz bir yol var mı?",
-          "a": "Evet, tamamen. /get-license adresinden kaydolun, anahtarınızı alın ve ürününüzü oluşturun. Hiçbir koşul yok."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Tek koltuklu ticari kullanım senaryosu neyi kapsar?",
-          "a": "Bir tam zamanlı eşdeğer veya daha azı. Tek koltuklu kurulumun ötesine geçtiğinizde, Startup lisansına yükseltme yapmalısınız."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Daha sonra yükseltebilir miyim?",
-          "a": "Kesinlikle. Ekip veya teslim kapsamınız ücretsiz ticari seviyeyi aştığında istediğiniz zaman yükseltme yapabilirsiniz."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "Açık kaynak katkılar ne olacak?",
-          "a": "Tüm katkılar için bir CLA gerekir. CONTRIBUTING.md dosyasına bakın."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Lisanslama — {brandName}",
-      "description": "Çift lisans modeli: AGPL-3.0 açık kaynak veya ticari lisanslar."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Beta grubumuzdan müşteri hikayeleri yakında gelecek — ilkler arasında olun."
     },
     "comparison": {
-      "badge": "Planları karşılaştır",
-      "title": "Bulunduğunuz aşamaya uygun planı seçin",
-      "subtitle": "Her plan tam kaynak kodunu içerir. Ticari lisanslar 12 ay güncelleme içerir.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Bağımsız",
-        "startup": "Başlangıç",
-        "enterprise": "Kurumsal"
+        "community": "Community",
+        "team": "Team",
+        "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Lisans",
-          "type": "Lisans türü",
-          "projects": "Proje sayısı"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Kaynak Kodu",
-          "full-source": "Tam kaynak kodu",
-          "all-packages": "Tüm paketler ve modüller",
-          "update-window": "Güncelleme penceresi"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Destek",
-          "channel": "Destek kanalı"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Plan ve özellik karşılaştırması"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Güvenebileceğiniz bir yığın üzerine inşa edildi",

@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Începe gratuit. Scalează când ești pregătit.",
-      "description": "Dezvoltatorii independenți și OPC livrează gratuit. Licențele comerciale anuale deblochează utilizarea closed-source pentru echipele în creștere. Alege planul potrivit și începe să construiești astăzi.",
-      "socialProofText": "AGPL-3.0 pe fork · Licență pentru dezvoltatori independenți prin CLI · planuri comerciale anuale pentru echipe.",
-      "independent": {
-        "badge": "INDEPENDENT",
-        "price": "Gratuit",
-        "period": "pe totdeauna",
-        "desc": "Constructori solo și companii cu o singură persoană (≤ 1 FTE, < 1M USD ARR). Fără copyleft când se scaffold prin create-sailor.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Nucleu complet SaaS Next.js 16",
-        "f2": "Proiecte personale nelimitate (utilizare comercială permisă)",
-        "f3": "Stack complet SaaS: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage și multe altele — plus admin subțire și rețete Retool/Metabase (nu livrăm CRUD umflat; livrăm pattern-urile de integrare folosite de top SaaS)",
-        "f4": "Funcționalități marketing: Blog, Landing page, SEO, Analytics",
-        "f5": "Licență pentru dezvoltatori independenți (fără copyleft AGPL când se scaffold cu CLI)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ an",
-        "desc": "Pentru echipe de 2–50 de persoane. Utilizare comercială closed-source, reînnoire anuală.",
-        "cta": "Obține {brandName} pentru Startups",
-        "f1": "Utilizare cu sursă închisă (licență comercială, 2–50 FTE)",
-        "f2": "Proiecte nelimitate pentru echipă",
-        "f3": "12 luni de actualizări incluse",
-        "f4": "Suport prin e-mail",
-        "f5": "Tot ce include Independent"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Personalizat",
-        "period": "",
-        "desc": "50+ FTE, ≥ 1M USD ARR sau nevoi de white-label / SLA. Contract personalizat cu suport prioritar.",
-        "cta": "Contactează vânzările",
-        "f1": "Utilizare nelimitată în organizația ta (licență comercială)",
-        "f2": "Drepturi white-label (cu aprobare scrisă)",
-        "f3": "Suport prioritar cu SLA (2 ore critic, 24 ore standard)",
-        "f4": "Negociere contract personalizat și contribuții la roadmap",
-        "f5": "Licențiere multi-produs / multi-divizie",
-        "f6": "Tot ce include Startup"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Model de <hl>licențiere</hl> dual",
-      "description": "{brandName}-Sailor este open source sub AGPL-3.0. Oferim și licențe comerciale pentru echipele care dezvoltă produse closed-source."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Întotdeauna gratuit",
-        "title": "AGPL-3.0",
-        "subtitle": "Open Source",
-        "description": "Proiecte open source, cercetare academică, învățare personală",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Acces complet la codul sursă",
-          "mustOpenSource": "Trebuie să open-source-uiți produsul tău",
-          "mustCredit": "Trebuie să menționezi {brandName}-Sailor",
-          "communitySupport": "Doar suport din partea comunității"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Vezi pe GitHub"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Gratuit pentru totdeauna",
-        "title": "Comercial gratuit",
-        "subtitle": "Individual & Solo",
-        "description": "Constructori individuali și operatori cu un singur loc",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Folosește în produse closed-source",
-          "teamSize": "Dimensiune echipă ≤ 1 FTE",
-          "creditRequired": "Mentăciune necesară",
-          "freeKey": "Cheie de licență gratuită prin înregistrare"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Obține Licența Gratuită"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "De la {price}/an",
-        "title": "Comercial",
-        "subtitle": "Startup & Enterprise",
-        "description": "Startups, agenții, echipe (2+ persoane), produse SaaS comerciale",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Utilizare în produse cu sursă închisă",
-          "noCopyleft": "Fără obligații copyleft",
-          "noTeamLimits": "Fără limite de dimensiune a echipei",
-          "commercialSupport": "Suport comercial disponibil"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Obține Licența Comercială"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Întrebări Frecvente",
-      "description": "Păstrează decizia de licențiere clară: alege AGPL pentru distribuție open-source sau folosește o excepție comercială când produsul tău trebuie să rămână cu sursă închisă.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "De ce AGPL-3.0?",
-          "a": "AGPL asigură că îmbunătățirile aduse șablonului rămân open-source. Licența comercială elimină această obligație pentru afaceri."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Există cu adevărat o cale gratuită pentru dezvoltatorii individuali?",
-          "a": "Da, complet. Înregistrează-te la /get-license, obține-ți cheia și construiește-ți produsul. Fără condiții ascunse."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Ce se consideră un caz de utilizare comercială pentru un singur utilizator?",
-          "a": "Un echivalent full-time sau mai puțin. Dacă depășești configurația pentru un singur utilizator, ar trebui să faci upgrade la o licență Startup."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Pot face upgrade mai târziu?",
-          "a": "Desigur. Fă upgrade ori de câte ori echipa ta sau domeniul de livrare depășește nivelul gratuit comercial."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "Ce se întâmplă cu contribuțiile open source?",
-          "a": "Toate contribuțiile necesită un CLA. Vezi CONTRIBUTING.md."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licențiere — {brandName}",
-      "description": "Model de licențiere dual: open source AGPL-3.0 sau licențe comerciale."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Povestile clienților din cohorta noastră beta vor apărea curând — fii printre primii."
     },
     "comparison": {
-      "badge": "Compară planurile",
-      "title": "Alege planul care se potrivește etapei în care te afli",
-      "subtitle": "Fiecare plan include codul sursă complet. Licențele comerciale includ 12 luni de actualizări.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Independent",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Licență",
-          "type": "Tip licență",
-          "projects": "Număr de proiecte"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Cod sursă",
-          "full-source": "Cod sursă complet",
-          "all-packages": "Toate pachetele și modulele",
-          "update-window": "Fereastră de actualizare"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Suport",
-          "channel": "Canal de suport"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Comparație planuri și funcționalități"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Construit pe o stack pe care îl poți încrede",

@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Začněte zdarma. Rozšiřujte, až budete připraveni.",
-      "description": "Nezávislí vývojáři a OPC vývojáři nasazují zdarma. Roční komerční licence odemykají použití s uzavřeným zdrojovým kódem pro rostoucí týmy. Vyberte si plán, který vám vyhovuje, a začněte dnes stavět.",
-      "socialProofText": "AGPL-3.0 na fork · Nezávislá vývojářská licence přes CLI · roční komerční plány pro týmy.",
-      "independent": {
-        "badge": "NEZÁVISLÝ",
-        "price": "Zdarma",
-        "period": "navždy",
-        "desc": "Samostatní tvůrci a firmy s jedním člověkem (≤ 1 FTE, < 1 milion USD ARR). Žádný copyleft při generování přes create-sailor.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Kompletní jádro SaaS Next.js 16",
-        "f2": "Neomezené osobní projekty (povoleno komerční použití)",
-        "f3": "Kompletní SaaS stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage a další — plus tenká admin část + recepty pro Retool/Metabase (nedodáváme nafouklé CRUD; dodáváme integrační vzory, které používají nejlepší SaaS)",
-        "f4": "Marketingové funkce: Blog, Landing page, SEO, Analytics",
-        "f5": "Nezávislá vývojářská licence (žádný AGPL copyleft při generování pomocí CLI)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ rok",
-        "desc": "Pro týmy 2–50 lidí. Komerční použití s uzavřeným zdrojovým kódem, roční obnovení.",
-        "cta": "Získejte {brandName} pro Startupy",
-        "f1": "Užití uzavřeného zdroje (komerční licence, 2–50 FTE)",
-        "f2": "Neomezené týmové projekty",
-        "f3": "12 měsíců aktualizací zahrnuto",
-        "f4": "Podpora e-mailem",
-        "f5": "Vše z plánu Independent"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Na míru",
-        "period": "",
-        "desc": "50+ FTE, ≥ 1 milion USD ARR nebo potřeby white-label / SLA. Individuální smlouva s prioritní podporou.",
-        "cta": "Kontaktujte obchodní tým",
-        "f1": "Neomezené použití v celé vaší organizaci (komerční licence)",
-        "f2": "Práva na white-label (s písemným souhlasem)",
-        "f3": "Prioritní podpora s SLA (kritické 2 hodiny, standardní 24 hodin)",
-        "f4": "Vyjednávání individuální smlouvy a vstup do roadmapy",
-        "f5": "Licencování pro více produktů / více divizí",
-        "f6": "Vše z plánu Startup"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Model s dvojitou <hl>licencí</hl>",
-      "description": "{brandName}-Sailor je open source pod licencí AGPL-3.0. Nabízíme také komerční licence pro týmy vyvíjející produkty s uzavřeným zdrojovým kódem."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Vždy zdarma",
-        "title": "AGPL-3.0",
-        "subtitle": "Open Source",
-        "description": "Open source projekty, akademický výzkum, osobní učení",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Plný přístup ke zdrojovému kódu",
-          "mustOpenSource": "Musíte zveřejnit zdrojový kód svého produktu",
-          "mustCredit": "Musíte uvést {brandName}-Sailor",
-          "communitySupport": "Pouze komunitní podpora"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Zobrazit na GitHubu"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Navždy zdarma",
-        "title": "Zdarma komerční",
-        "subtitle": "Jednotlivci & Solo",
-        "description": "Jednotliví tvůrci a provozovatelé s jedním místem",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Použití v uzavřených produktech",
-          "teamSize": "Velikost týmu ≤ 1 FTE",
-          "creditRequired": "Vyžaduje uvedení",
-          "freeKey": "Zdarma licenční klíč po registraci"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Získat bezplatnou licenci"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "Od {price}/rok",
-        "title": "Komerční",
-        "subtitle": "Startupy a firmy",
-        "description": "Startupy, agentury, týmy (2+ lidé), komerční SaaS produkty",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Použití v uzavřených produktech",
-          "noCopyleft": "Žádné copyleft povinnosti",
-          "noTeamLimits": "Žádná omezení velikosti týmu",
-          "commercialSupport": "Komerční podpora k dispozici"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Získat komerční licenci"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Často kladené otázky",
-      "description": "Udržujte rozhodnutí o licenci přehledné: zvolte AGPL pro open-source distribuci nebo použijte komerční výjimku, pokud musí být váš produkt uzavřený.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Proč AGPL-3.0?",
-          "a": "AGPL zajišťuje, že vylepšení šablony zůstanou open source. Komerční licence tuto povinnost pro firmy ruší."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Existuje opravdu bezplatná cesta pro jednotlivé vývojáře?",
-          "a": "Ano, zcela. Zaregistrujte se na /get-license, získáte klíč a postavíte svůj produkt. Bez povinností."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Co se počítá jako komerční využití pro jednoho uživatele?",
-          "a": "Jeden plný úvazek nebo méne. Pokud překročíte nastavení pro jednoho uživatele, měli byste upgradovat na licenci Startup."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Mohu později upgradovat?",
-          "a": "Samozřejmě. Upgradujte kdykoli, když váš tým nebo rozsah dodávek přesáhne bezplatnou komerční úroveň."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "A co příspěvky do open source?",
-          "a": "Všechny příspěvky vyžadují CLA. Viz CONTRIBUTING.md."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licencování — {brandName}",
-      "description": "Dvojitý licenční model: open source AGPL-3.0 nebo komerční licence."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Zákaznické příběhy z naší beta skupiny přicházejí brzy — buďte mezi prvními."
     },
     "comparison": {
-      "badge": "Porovnat plány",
-      "title": "Vyberte plán, který odpovídá vaší fázi",
-      "subtitle": "Každý plán obsahuje kompletní zdrojový kód. Komerční licence zahrnují 12 měsíců aktualizací.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Independent",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Licence",
-          "type": "Typ licence",
-          "projects": "Počet projektů"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Zdrojový kód",
-          "full-source": "Kompletní zdrojový kód",
-          "all-packages": "Všechny balíčky a moduly",
-          "update-window": "Okno aktualizací"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Podpora",
-          "channel": "Kanál podpory"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Porovnání plánů a funkcí"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Postaveno na stacku, kterému můžete věřit",

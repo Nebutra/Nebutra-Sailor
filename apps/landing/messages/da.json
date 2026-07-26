@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Start gratis. Skaler, når du er klar.",
-      "description": "Uafhængige og OPC-udviklere kan udgive gratis. Årlige kommercielle licenser giver adgang til lukket kildekode til voksende teams. Vælg det niveau, der passer, og begynd at bygge i dag.",
-      "socialProofText": "AGPL-3.0 på fork · Uafhængig udviklerlicens via CLI · årlige kommercielle niveauer til teams.",
-      "independent": {
-        "badge": "UAFHÆNGIG",
-        "price": "Gratis",
-        "period": "for evigt",
-        "desc": "Solo-byggere og énmandsfirmaer (≤ 1 FTE, < $1M ARR). Ingen copyleft, når der skaffoldes via create-sailor.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Komplet Next.js 16 SaaS-kerne",
-        "f2": "Ubegrænsede personlige projekter (kommerciel brug tilladt)",
-        "f3": "Fuld SaaS-stack: Auth, betalinger, organisationer, API, e-mail, i18n, baggrundsjob, lager og mere — plus let admin + Retool/Metabase-recepter (vi leverer ikke overfyldt CRUD; vi leverer integrationsmønstre, som top-SaaS'er bruger)",
-        "f4": "Marketing-funktioner: Blog, landing page, SEO, analytics",
-        "f5": "Uafhængig udviklerlicens (ingen AGPL-copyleft, når der skaffoldes med CLI'en)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ år",
-        "desc": "Til teams på 2–50 personer. Lukket kommerciel brug, årlig fornyelse.",
-        "cta": "Få {brandName} til startups",
-        "f1": "Lukket kilde (kommerciel licens, 2–50 FTE)",
-        "f2": "Ubegrænsede teamprojekter",
-        "f3": "12 måneders opdateringer inkluderet",
-        "f4": "E-mail support",
-        "f5": "Alt i Independent"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Tilpasset",
-        "period": "",
-        "desc": "50+ FTE, ≥ $1M ARR, eller behov for white-label / SLA. Tilpasset kontrakt med prioriteret support.",
-        "cta": "Kontakt salg",
-        "f1": "Ubegrænset brug i hele din organisation (kommerciel licens)",
-        "f2": "White-label rettigheder (med skriftlig godkendelse)",
-        "f3": "Prioriteret support med SLA (2 timer kritisk, 24 timer standard)",
-        "f4": "Tilpasset kontraktforhandling og input til roadmap",
-        "f5": "Licensering til flere produkter / divisioner",
-        "f6": "Alt i Startup"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Dobbelt <hl>licens</hl>-model",
-      "description": "{brandName}-Sailor er open source under AGPL-3.0. Vi tilbyder også kommercielle licenser til teams, der bygger lukkede produkter."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Altid gratis",
-        "title": "AGPL-3.0",
-        "subtitle": "Open Source",
-        "description": "Open source-projekter, akademisk forskning, personligt læring",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Fuld adgang til kildekode",
-          "mustOpenSource": "Du skal open-source dit produkt",
-          "mustCredit": "Du skal kreditere {brandName}-Sailor",
-          "communitySupport": "Kun community-support"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Se på GitHub"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Gratis for evigt",
-        "title": "Gratis kommerciel",
-        "subtitle": "Enkelt & Solo",
-        "description": "Enkelte udviklere og single-seat operatører",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Brug i lukkede kildekode-produkter",
-          "teamSize": "Holdstørrelse ≤ 1 FTE",
-          "creditRequired": "Kreditering påkrævet",
-          "freeKey": "Gratis licensnøgle via registrering"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Få din gratis licens"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "Fra {price}/år",
-        "title": "Kommerciel",
-        "subtitle": "Startup & Enterprise",
-        "description": "Startups, bureauer, hold (2+ personer), kommercielle SaaS-produkter",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Brug i lukkede kildetekstprodukter",
-          "noCopyleft": "Ingen copyleft-forpligtelser",
-          "noTeamLimits": "Ingen grænser for holdstørrelse",
-          "commercialSupport": "Kommerciel support tilgængelig"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Få kommerciel licens"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Ofte stillede spørgsmål",
-      "description": "Hold licensvalget overskueligt: vælg AGPL til open-source-distribution, eller brug en kommerciel undtagelse, når dit produkt skal forblive lukket.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Hvorfor AGPL-3.0?",
-          "a": "AGPL sikrer, at forbedringer af skabelonen forbliver open source. En kommerciel licens fjerner denne forpligtelse for virksomheder."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Er der virkelig en gratis vej for individuelle udviklere?",
-          "a": "Ja, helt sikkert. Tilmeld dig på /get-license, få din nøgle, og byg dit produkt. Ingen snor ved."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Hvad tæller som en enkelt-sæde kommerciel brugssag?",
-          "a": "En fuldtidsækvivalent eller mindre. Hvis du går ud over en enkelt-sæde opsætning, bør du opgradere til en Startup-licens."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Kan jeg opgradere senere?",
-          "a": "Absolut. Opgrader når dit team eller leveringsomfang overstiger den gratis kommercielle tier."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "Hvad med open source-bidrag?",
-          "a": "Alle bidrag kræver en CLA. Se CONTRIBUTING.md."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
       "title": "Licensing — {brandName}",
-      "description": "Dobbelt licensmodel: AGPL-3.0 open source eller kommercielle licenser."
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Kundehistorier fra vores beta-kohort lander snart — vær blandt de første."
     },
     "comparison": {
-      "badge": "Sammenlign planer",
-      "title": "Vælg den plan, der passer til det trin, du er i",
-      "subtitle": "Alle planer inkluderer hele kildekoden. Kommercielle licenser inkluderer 12 måneders opdateringer.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Uafhængig",
-        "startup": "Startup",
-        "enterprise": "Virksomhed"
+        "community": "Community",
+        "team": "Team",
+        "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Licens",
-          "type": "Licensetype",
-          "projects": "Antal projekter"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Kildekode",
-          "full-source": "Fuld kildekode",
-          "all-packages": "Alle pakker og moduler",
-          "update-window": "Opdateringsvindue"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
           "label": "Support",
-          "channel": "Supportkanal"
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Sammenligning af planer og funktioner"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Bygget på en stack du kan stole på",

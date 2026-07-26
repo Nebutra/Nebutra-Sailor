@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Почніть безкоштовно. Масштабуйте, коли будете готові.",
-      "description": "Незалежні розробники та OPC-розробники публікують безкоштовно. Щорічні комерційні ліцензії відкривають використання закритого коду для зростаючих команд. Оберіть підходящий тариф і почніть будувати вже сьогодні.",
-      "socialProofText": "AGPL-3.0 на форку · Ліцензія незалежного розробника через CLI · щорічні комерційні тарифи для команд.",
-      "independent": {
-        "badge": "НЕЗАЛЕЖНИЙ",
-        "price": "Безкоштовно",
-        "period": "назавжди",
-        "desc": "Соло-розробники та компанії з однією особою (≤ 1 FTE, < $1M ARR). Без copyleft при створенні через create-sailor.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Повний SaaS-ядро на Next.js 16",
-        "f2": "Необмежена кількість особистих проєктів (дозволено комерційне використання)",
-        "f3": "Повний SaaS-стек: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage та інше — плюс мінімалістичний адмін + рецепти для Retool/Metabase (ми не робимо надмірний CRUD; ми надаємо патерни інтеграції, які використовують топові SaaS)",
-        "f4": "Маркетингові функції: блог, лендінг, SEO, аналітика",
-        "f5": "Ліцензія незалежного розробника (без copyleft AGPL при створенні через CLI)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "СТАРТУП",
-        "price": "$799",
-        "period": "/ рік",
-        "desc": "Для команд від 2 до 50 осіб. Комерційне використання закритого коду, щорічне оновлення.",
-        "cta": "Отримати {brandName} для стартапів",
-        "f1": "Використання закритого коду (комерційна ліцензія, 2–50 штатних працівників)",
-        "f2": "Необмежена кількість командних проєктів",
-        "f3": "12 місяців оновлень включено",
-        "f4": "Підтримка електронною поштою",
-        "f5": "Все, що в Independent"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
         "badge": "ENTERPRISE",
-        "price": "Індивідуально",
-        "period": "",
-        "desc": "50+ штатних працівників, ≥ 1 млн дол. ARR або потреби у білому лейблі / SLA. Індивідуальний контракт із пріоритетною підтримкою.",
-        "cta": "Зв’язатися з відділом продажів",
-        "f1": "Необмежене використання в організації (комерційна ліцензія)",
-        "f2": "Права на білий лейбл (за письмовою згодою)",
-        "f3": "Пріоритетна підтримка з SLA (2 години для критичних, 24 години для стандартних)",
-        "f4": "Переговори щодо індивідуального контракту та вплив на дорожню карту",
-        "f5": "Ліцензування для кількох продуктів / підрозділів",
-        "f6": "Все, що в Startup"
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Подвійна модель <hl>ліцензування</hl>",
-      "description": "{brandName}-Sailor є відкритим під ліцензією AGPL-3.0. Ми також пропонуємо комерційні ліцензії для команд, які розробляють продукти з закритим кодом."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Завжди безкоштовно",
-        "title": "AGPL-3.0",
-        "subtitle": "Open Source",
-        "description": "Проєкти з відкритим кодом, академічні дослідження, особисте навчання",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Повний доступ до вихідного коду",
-          "mustOpenSource": "Потрібно відкрити код свого продукту",
-          "mustCredit": "Потрібно вказати {brandName}-Sailor",
-          "communitySupport": "Тільки підтримка спільноти"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Переглянути на GitHub"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Безкоштовно назавжди",
-        "title": "Безкоштовний комерційний",
-        "subtitle": "Індивідуальний та соло",
-        "description": "Особисті розробники та оператори з одним місцем",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Використовувати у продуктах із закритим кодом",
-          "teamSize": "Розмір команди ≤ 1 FTE",
-          "creditRequired": "Потрібно вказати авторство",
-          "freeKey": "Безкоштовний ліцензійний ключ після реєстрації"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Отримати безкоштовну ліцензія"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "Від {price}/рік",
-        "title": "Комерційна",
-        "subtitle": "Стартапи та підприємства",
-        "description": "Стартапи, агенції, команди (від 2 осіб), комерційні SaaS-продукти",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Використання у закритих продуктах",
-          "noCopyleft": "Без обов'язків copyleft",
-          "noTeamLimits": "Без обмежень розміру команди",
-          "commercialSupport": "Доступна комерційна підтримка"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Отримати комерційну ліцензія"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Часті запитання",
-      "description": "Зробіть рішення щодо ліцензії зрозумілим: оберіть AGPL для розповсюдження з відкритим кодом або використовуйте комерційний виняток, якщо ваш продукт має залишатися закритим.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Чому AGPL-3.0?",
-          "a": "AGPL гарантує, що покращення шаблону залишаться з відкритим кодом. Комерційна ліцензія знімає цей обов'язок для бізнесу."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Чи дійсно є безкоштовний шлях для індивідуальних розробників?",
-          "a": "Так, повністю. Зареєструйтеся на /get-license, отримайте ключ і створюйте свій продукт. Без жодних обмежень."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Що вважається комерційним використанням для однієї робочої позиції?",
-          "a": "Одна повна ставка або менше. Якщо ви перевищуєте одне робоче місце, вам слід перейти на ліцензію Startup."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Чи можна оновити пізніше?",
-          "a": "Звичайно. Оновлюйте, коли ваша команда або масштаб доставки перевищить безкоштовний комерційний рівень."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "А як щодо внесків у відкритий код?",
-          "a": "Усі внески потребують підписання CLA. Дивіться CONTRIBUTING.md."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Ліцензування — {brandName}",
-      "description": "Подвійна модель ліцензування: AGPL-3.0 з відкритим кодом або комерційні ліцензії."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "Історії клієнтів з нашого бета-когорту з'являться найближчим часом — будьте серед перших."
     },
     "comparison": {
-      "badge": "Порівняти плани",
-      "title": "Оберіть план, що підходить вашому етапу",
-      "subtitle": "Кожен план включає повний вихідний код. Комерційні ліцензії включають 12 місяців оновлень.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Independent",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Ліцензія",
-          "type": "Тип ліцензії",
-          "projects": "Кількість проєктів"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Вихідний код",
-          "full-source": "Повний вихідний код",
-          "all-packages": "Усі пакети та модулі",
-          "update-window": "Вікно оновлення"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Підтримка",
-          "channel": "Канал підтримки"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Порівняння планів та функцій"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Побудовано на надійному стеку",

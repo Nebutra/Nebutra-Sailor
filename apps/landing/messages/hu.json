@@ -1149,45 +1149,45 @@
       }
     },
     "pricing": {
-      "title": "Kezdj ingyen. Skálázz, amikor készen állsz.",
-      "description": "A független és OPC fejlesztők ingyen szállíthatnak. Az éves kereskedelmi licencek feloldják a zárt forráskódú használatot a növekvő csapatok számára. Válaszd ki a neked megfelelő csomagot, és kezdj el építeni még ma.",
-      "socialProofText": "AGPL-3.0 fork esetén · Független fejlesztői licenc CLI-n keresztül · éves kereskedelmi csomagok csapatoknak.",
-      "independent": {
-        "badge": "FÜGGETLEN",
-        "price": "Ingyen",
-        "period": "örökké",
-        "desc": "Egyéni fejlesztők és egyfős cégek (≤ 1 FTE, < 1M USD ARR). Nincs copyleft, ha a create-sailor segítségével állítod elő.",
+      "title": "Free to build on. Pay only if you need us on the hook.",
+      "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
+      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "community": {
+        "badge": "COMMUNITY",
+        "price": "Free",
+        "period": "forever",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
         "cta": "npx create-sailor",
-        "f1": "Teljes Next.js 16 SaaS mag",
-        "f2": "Korlátlan személyes projektek (kereskedelmi használat engedélyezett)",
-        "f3": "Teljes SaaS stack: Auth, Fizetések, Szervezetek, API, Email, i18n, Háttérfeladatok, Tárolás és még sok más — plusz vékony admin felület + Retool/Metabase receptek (nem szállítunk felfújt CRUD-ot; a legjobb SaaS-ek által használt integrációs mintákat szállítjuk)",
-        "f4": "Marketing funkciók: Blog, Landing oldal, SEO, Analitika",
-        "f5": "Független fejlesztői licenc (nincs AGPL copyleft, ha a CLI segítségével állítod elő)"
+        "f1": "Complete Next.js 16 SaaS core, all packages included",
+        "f2": "Closed-source commercial use at any team size or revenue",
+        "f3": "Full stack: Auth, Payments, Organizations, API, Email, i18n, Background Jobs, Storage & more",
+        "f4": "Marketing features: Blog, Landing page, SEO, Analytics",
+        "f5": "Public issues, Discussions, and Discord — best-effort, no response guarantee"
       },
-      "startup": {
-        "badge": "STARTUP",
-        "price": "$799",
-        "period": "/ év",
-        "desc": "2–50 fős csapatoknak. Zárt forráskódú kereskedelmi használat, éves megújítással.",
-        "cta": "Szerezd meg a {brandName} Startups csomagját",
-        "f1": "Zárt forráskódú használat (kereskedelmi licenc, 2–50 FTE)",
-        "f2": "Korlátlan csapatprojektek",
-        "f3": "12 hónap frissítést tartalmaz",
-        "f4": "E-mail támogatás",
-        "f5": "Minden, ami az Independentben benne van"
+      "team": {
+        "badge": "TEAM",
+        "price": "$2,000",
+        "period": "/ year",
+        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "cta": "Get {brandName} support",
+        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Prioritised bug triage ahead of community issues",
+        "f4": "Upgrade assistance and advance notice of breaking changes",
+        "f5": "Everything in Community"
       },
       "enterprise": {
-        "badge": "VÁLLALATI",
-        "price": "Egyedi",
-        "period": "",
-        "desc": "50+ FTE, ≥ 1M USD ARR, vagy white-label / SLA igények. Egyedi szerződés prioritásos támogatással.",
-        "cta": "Érdkeszd meg az értékesítést",
-        "f1": "Korlátlan használat a szervezetedben (kereskedelmi licenc)",
-        "f2": "White-label jogok (írásbeli jóváhagyással)",
-        "f3": "Prioritásos támogatás SLA-val (2 óra kritikus, 24 óra szabványos)",
-        "f4": "Egyedi szerződéskötés és útiterv-bemenet",
-        "f5": "Többtermék / többosztályú licencelés",
-        "f6": "Minden, ami a Startupban benne van"
+        "badge": "ENTERPRISE",
+        "price": "From $30,000",
+        "period": "/ year",
+        "desc": "For organisations whose procurement, legal, or security review needs a counterparty who signs.",
+        "cta": "Contact sales",
+        "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
+        "f2": "Indemnification and a contractual security-patch commitment",
+        "f3": "Signed DPA, compliance pack, and continuity undertaking",
+        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f5": "Long-term support branch and private-deployment engineering",
+        "f6": "Everything in Team"
       }
     },
     "faq": {
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Kettős <hl>licenc</hl> modell",
-      "description": "A {brandName}-Sailor nyílt forráskódú AGPL-3.0 alatt. Kereskedelmi licenceket is kínálunk olyan csapatoknak, amelyek zárt forráskódú termékeket fejlesztenek."
+      "title": "Free to <hl>Build On</hl>",
+      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
     },
     "plans": {
-      "agpl": {
-        "badge": "Mindig ingyenes",
-        "title": "AGPL-3.0",
-        "subtitle": "Nyílt forráskódú",
-        "description": "Nyílt forráskódú projektek, tudományos kutatás, személyes tanulás",
+      "community": {
+        "badge": "Always Free",
+        "title": "Community",
+        "subtitle": "Everyone",
+        "description": "Any team size, any revenue. Closed-source commercial products included.",
         "features": {
-          "sourceAccess": "Teljes forráskód-hozzáférés",
-          "mustOpenSource": "A termékedet nyílt forráskódúnak kell tartani",
-          "mustCredit": "Meg kell jelölni a {brandName}-Sailor forrást",
-          "communitySupport": "Csak közösségi támogatás"
+          "fullSource": "Full source code, all packages",
+          "closedSourceOk": "Closed-source commercial use — no copyleft",
+          "noAttribution": "No registration, no attribution required",
+          "communitySupport": "Community support — best-effort"
         },
-        "cta": "Megtekintés a GitHubon"
+        "cta": "View on GitHub"
       },
-      "freeCommercial": {
-        "badge": "Ingyenes örökre",
-        "title": "Ingyenes kereskedelmi",
-        "subtitle": "Egyéni és egyfős",
-        "description": "Egyéni fejlesztők és egyfős üzemeltetők",
+      "team": {
+        "badge": "From {price}/yr",
+        "title": "Team",
+        "subtitle": "Support subscription",
+        "description": "For teams who need a commitment rather than a hope. The code is already free.",
         "features": {
-          "closedSource": "Használat zárt forráskódú termékekben",
-          "teamSize": "Csapatméret ≤ 1 FTE",
-          "creditRequired": "Megjelölés kötelező",
-          "freeKey": "Ingyenes licenc kulcs regisztrációval"
+          "privateChannel": "Private support channel",
+          "firstResponse": "Two business-day first response, guaranteed",
+          "priorityTriage": "Priority bug triage",
+          "upgradeHelp": "Upgrade assistance and breaking-change notice"
         },
-        "cta": "Szerezze meg az ingyenes licencet"
+        "cta": "Get support"
       },
-      "commercial": {
-        "badge": "Éves díj: {price}",
-        "title": "Kereskedelmi",
-        "subtitle": "Startup és vállalati",
-        "description": "Startupok, ügynökségek, csapatok (2+ fő), kereskedelmi SaaS termékek",
+      "enterprise": {
+        "badge": "From $30,000/yr",
+        "title": "Enterprise",
+        "subtitle": "Procurement-ready",
+        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
         "features": {
-          "closedSource": "Használat zárt forráskódú termékekben",
-          "noCopyleft": "Nincs copyleft kötelezettség",
-          "noTeamLimits": "Nincs csapatméret korlát",
-          "commercialSupport": "Kereskedelmi támogatás elérhető"
+          "sla": "Response SLA — 4 business hours, 1 hour production-down",
+          "indemnity": "Indemnification and security-patch commitment",
+          "compliance": "Signed DPA, compliance pack, continuity undertaking",
+          "trademark": "Trademark and white-label rights"
         },
-        "cta": "Szerezze meg a kereskedelmi licencet"
+        "cta": "Contact sales"
       }
     },
     "faq": {
-      "title": "Gyakran Ismételt Kérdések",
-      "description": "Tartsa átláthatóvá a licenc döntést: válassza az AGPL-t nyílt forráskódú terjesztéshez, vagy használjon kereskedelmi kivételt, ha a termékének zárt forráskódúnak kell maradnia.",
+      "title": "Frequently Asked Questions",
+      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyAgpl": {
-          "q": "Miért AGPL-3.0?",
-          "a": "Az AGPL biztosítja, hogy a sablon fejlesztései nyílt forráskódúak maradjanak. A kereskedelmi licenc eltávolítja ezt a kötelezettséget az üzleti felhasználók számára."
+        "whyFsl": {
+          "q": "Why FSL instead of MIT or AGPL?",
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
         },
-        "soloFree": {
-          "q": "Tényleg van ingyenes út az egyéni fejlesztőknek?",
-          "a": "Igen, teljesen. Regisztrálj a /get-license oldalon, szerezd meg a kulcsodat, és építsd meg a termékedet. Nincsenek kötöttségek."
+        "reallyFree": {
+          "q": "Is commercial use really free?",
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
         },
-        "opcDefinition": {
-          "q": "Mi számít együléses kereskedelmi felhasználási esethez?",
-          "a": "Egy teljes munkaidős ekvivalens vagy kevesebb. Ha túlléped az együléses beállítást, frissítsd a Startup licencre."
+        "competingUse": {
+          "q": "What counts as a competing use?",
+          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
         },
         "upgrade": {
-          "q": "Később frissíthetek?",
-          "a": "Természetesen. Frissíts bármikor, amikor a csapatod vagy a szállítási körzet meghaladja a ingyenes kereskedelmi szintet."
+          "q": "What do the paid tiers actually buy?",
+          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
         },
         "contributions": {
-          "q": "Mi a helyzet a nyílt forráskódú hozzájárulásokkal?",
-          "a": "Minden hozzájáruláshoz CLA szükséges. Lásd a CONTRIBUTING.md fájlt."
+          "q": "What about open source contributions?",
+          "a": "All contributions require a CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licencelés — {brandName}",
-      "description": "Kettős licencmodell: AGPL-3.0 nyílt forráskód vagy kereskedelmi licenc."
+      "title": "Licensing — {brandName}",
+      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1680,32 +1680,42 @@
       "subtitle": "A béta csoportunk ügyféltörténetei hamarosan elérhetők – legyél te is az első között."
     },
     "comparison": {
-      "badge": "Tervek összehasonlítása",
-      "title": "Válaszd ki a tervet, amely illeszkedik a jelenlegi szakaszodhoz",
-      "subtitle": "Minden terv tartalmazza a teljes forráskódot. A kereskedelmi licencek tartalmazzák a 12 hónapos frissítéseket.",
+      "badge": "Compare tiers",
+      "title": "Everything is free. Pick how much of a commitment you need.",
+      "subtitle": "Every tier ships the full source code and permits closed-source commercial use at no cost. The differences are support, contractual commitments, and trademark rights.",
       "plan": {
-        "independent": "Független",
-        "startup": "Startup",
+        "community": "Community",
+        "team": "Team",
         "enterprise": "Enterprise"
       },
       "feature": {
         "license": {
-          "label": "Licenc",
-          "type": "Licenc típusa",
-          "projects": "Projektek száma"
+          "label": "License",
+          "type": "License",
+          "commercial-use": "Closed-source commercial use",
+          "registration": "Registration",
+          "trademark": "Trademark rights"
         },
         "source": {
-          "label": "Forráskód",
-          "full-source": "Teljes forráskód",
-          "all-packages": "Minden csomag és modul",
-          "update-window": "Frissítési ablak"
+          "label": "Source Code",
+          "full-source": "Full source code",
+          "all-packages": "All packages & modules",
+          "update-window": "Updates"
         },
         "support": {
-          "label": "Támogatás",
-          "channel": "Támogatási csatorna"
+          "label": "Support",
+          "channel": "Support channel",
+          "first-response": "Guaranteed first response",
+          "security-patch": "Security patch commitment"
+        },
+        "procurement": {
+          "label": "Procurement",
+          "indemnification": "Indemnification",
+          "dpa": "Signed DPA & compliance pack",
+          "continuity": "Continuity undertaking"
         }
       },
-      "ariaTable": "Csomagok és funkciók összehasonlítása"
+      "ariaTable": "Tier and feature comparison"
     },
     "socialProof": {
       "title": "Megbízható technológiai alapokon",
