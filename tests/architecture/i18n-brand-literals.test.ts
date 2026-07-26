@@ -11,6 +11,7 @@
 
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { describe, expect, it } from "vitest";
 
 const REPO_ROOT = resolve(__dirname, "../..");
 const MESSAGES_DIR = join(REPO_ROOT, "apps/landing/messages");

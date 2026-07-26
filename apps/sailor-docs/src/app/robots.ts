@@ -19,6 +19,20 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/api/", "/_next/"],
       },
+      // AI crawlers are declared on the origin that actually serves the docs.
+      // Landing /docs only 308s here (apps/landing/src/lib/docs-routing.ts), so
+      // allowing /docs on marketing advertised a redirect-only path. Documentation
+      // is the content we most want these agents to read.
+      {
+        userAgent: "GPTBot",
+        allow: "/",
+        disallow: ["/api/", "/_next/"],
+      },
+      {
+        userAgent: "ClaudeBot",
+        allow: "/",
+        disallow: ["/api/", "/_next/"],
+      },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
