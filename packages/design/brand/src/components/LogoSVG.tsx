@@ -20,6 +20,11 @@
 /** Default logo fill = brand-mark (not product CTA primary). */
 const LOGO_MARK_CLASS = "text-brand-mark";
 
+/** className last so callers can override color (e.g. dark:!text-white). */
+function mergeLogoClass(className?: string): string {
+  return className ? `${LOGO_MARK_CLASS} ${className}` : LOGO_MARK_CLASS;
+}
+
 interface SVGProps {
   className?: string;
   width?: number;
@@ -56,7 +61,7 @@ export function LogomarkSVG({
   height = 32,
   "aria-label": ariaLabel,
 }: SVGProps) {
-  const mergedClass = className ? `${LOGO_MARK_CLASS} ${className}` : LOGO_MARK_CLASS;
+  const mergedClass = mergeLogoClass(className);
   if (ariaLabel) {
     return (
       <svg
@@ -151,7 +156,7 @@ export function WordmarkEnSVG({
   "aria-label": ariaLabel,
 }: SVGProps) {
   const computedHeight = height ?? Math.round((width * 103.74) / 544.21);
-  const mergedClass = className ? `${LOGO_MARK_CLASS} ${className}` : LOGO_MARK_CLASS;
+  const mergedClass = mergeLogoClass(className);
   if (ariaLabel) {
     return (
       <svg
@@ -204,7 +209,7 @@ export function LogoEnSVG({
   const logomarkW = Math.round(h * logomarkAspect);
   const wordmarkW = Math.round(h * wordmarkAspect);
   const totalW = logomarkW + gap + wordmarkW;
-  const mergedClass = className ? `${LOGO_MARK_CLASS} ${className}` : LOGO_MARK_CLASS;
+  const mergedClass = mergeLogoClass(className);
 
   const children = (
     <>

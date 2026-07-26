@@ -115,13 +115,14 @@ export default async function RootLayout({
                 title: (
                   <div className="flex items-center gap-2">
                     {/*
-                      Inline mono SVG (fill=currentColor) — no public/logo dependency.
-                      Light: brand-mark token. Dark: pure white (反白), not CSS invert on color VI.
+                      Inline mono SVG (fill=currentColor). Color must sit on the <svg>
+                      (LogoEnSVG defaults text-brand-mark); parent text-* does not win.
+                      Light: brand-mark. Dark: pure white 反白 (not color VI + invert).
                     */}
-                    <span className="inline-flex h-6 items-center text-brand-mark dark:text-white">
+                    <span className="inline-flex h-6 items-center">
                       <LogoEnSVG
                         width={140}
-                        className="h-6 w-auto"
+                        className="h-6 w-auto text-brand-mark dark:!text-white"
                         aria-label={`${brand.name} Sailor Docs`}
                       />
                     </span>
