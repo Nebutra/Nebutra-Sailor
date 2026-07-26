@@ -99,9 +99,10 @@ export function pLimit(concurrency) {
  * Prefer multi-model rotation so one exhausted plan does not stall the wheel.
  */
 export const DEFAULT_TRANSLATE_MODELS = [
-  // Prefer plans that still have quota; rotate when one hits 429.
-  "sensenova-u1-fast",
+  // deepseek works on Token Plan; u1-fast may 404 on some accounts (auto-skipped).
+  // flash-lite kept as last resort for residual capacity.
   "deepseek-v4-flash",
+  "sensenova-u1-fast",
   "sensenova-6.7-flash-lite",
 ];
 
@@ -124,17 +125,41 @@ export function parseTranslateModels({
   return [...defaults];
 }
 
-/** True when the provider response indicates quota/rate exhaustion. */
-export function isQuotaOrRateLimitError(status, bodyText = "") {
-  if (status === 429) return true;
+/** Hard plan/billing quota — model should leave the pool for this run. */
+export function isHardQuotaError(status, bodyText = "") {
   const t = String(bodyText).toLowerCase();
   return (
+    t.includes("insufficient_quota") ||
     t.includes("quota_exceeded") ||
     t.includes("quota exceeded") ||
     t.includes("limit exhausted") ||
+    t.includes("billing")
+  );
+}
+
+/**
+ * Soft rate-limit / temporary throttle — retry with backoff, do not exhaust
+ * the whole model on the first 429 (concurrent bursts often trip this).
+ */
+export function isSoftRateLimitError(status, bodyText = "") {
+  if (status !== 429) return false;
+  if (isHardQuotaError(status, bodyText)) return false;
+  const t = String(bodyText).toLowerCase();
+  return (
     t.includes("rate_limit") ||
     t.includes("rate limit") ||
-    t.includes("insufficient_quota")
+    t.includes("too many requests") ||
+    t.includes("slow down") ||
+    // bare 429 with no body still treated as soft
+    !t.trim() ||
+    true
+  );
+}
+
+/** @deprecated use isHardQuotaError / isSoftRateLimitError */
+export function isQuotaOrRateLimitError(status, bodyText = "") {
+  return (
+    status === 429 || isHardQuotaError(status, bodyText) || isSoftRateLimitError(status, bodyText)
   );
 }
 

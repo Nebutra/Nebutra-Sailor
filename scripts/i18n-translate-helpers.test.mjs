@@ -4,7 +4,9 @@ import {
   collectWork,
   createModelPool,
   flatten,
+  isHardQuotaError,
   isQuotaOrRateLimitError,
+  isSoftRateLimitError,
   parseTranslateModels,
   shouldSkipValue,
   unflatten,
@@ -79,10 +81,12 @@ describe("parseTranslateModels", () => {
   });
 });
 
-describe("isQuotaOrRateLimitError", () => {
-  it("detects 429 and quota body markers", () => {
+describe("quota / rate-limit classification", () => {
+  it("splits hard quota vs soft 429", () => {
+    expect(isHardQuotaError(429, '{"code":"insufficient_quota"}')).toBe(true);
+    expect(isSoftRateLimitError(429, '{"code":"insufficient_quota"}')).toBe(false);
+    expect(isSoftRateLimitError(429, "too many requests")).toBe(true);
     expect(isQuotaOrRateLimitError(429, "")).toBe(true);
-    expect(isQuotaOrRateLimitError(400, "quota_exceeded")).toBe(true);
     expect(isQuotaOrRateLimitError(500, "boom")).toBe(false);
   });
 });

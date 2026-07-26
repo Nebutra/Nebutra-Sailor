@@ -42,7 +42,8 @@ import {
   collectWork,
   createModelPool,
   flatten,
-  isQuotaOrRateLimitError,
+  isHardQuotaError,
+  isSoftRateLimitError,
   parseTranslateModels,
   pLimit,
   unflatten,
@@ -261,14 +262,19 @@ async function translateBatch(targetLocale, entries) {
         signal: controller.signal,
       });
       const text = await res.text();
-      if (isQuotaOrRateLimitError(res.status, text)) {
+      if (isHardQuotaError(res.status, text)) {
         modelPool.markExhausted(model);
-        lastErr = new Error(
-          `[${model}] HTTP ${res.status} quota/rate-limit: ${text.slice(0, 180)}`,
-        );
+        lastErr = new Error(`[${model}] HTTP ${res.status} hard-quota: ${text.slice(0, 180)}`);
         process.stderr.write(
-          `  model ${model} exhausted (${res.status}); remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
+          `  model ${model} hard-quota exhausted; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
         );
+        continue;
+      }
+      if (isSoftRateLimitError(res.status, text) || res.status === 429) {
+        lastErr = new Error(`[${model}] HTTP ${res.status} rate-limit: ${text.slice(0, 180)}`);
+        const wait = Math.min(8_000, 600 * 2 ** Math.min(attempt - 1, 4) + Math.random() * 400);
+        process.stderr.write(`  model ${model} rate-limited; backoff ${Math.round(wait)}ms\n`);
+        await sleep(wait);
         continue;
       }
       if (res.status >= 500) {

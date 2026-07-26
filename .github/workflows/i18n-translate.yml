@@ -91,7 +91,7 @@ jobs:
         env:
           SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
           # Prefer models with remaining quota first; pool rotates on 429.
-          SENSENOVA_TRANSLATE_MODELS: ${{ vars.SENSENOVA_TRANSLATE_MODELS || 'sensenova-u1-fast,deepseek-v4-flash,sensenova-6.7-flash-lite' }}
+          SENSENOVA_TRANSLATE_MODELS: ${{ vars.SENSENOVA_TRANSLATE_MODELS || 'deepseek-v4-flash,sensenova-u1-fast,sensenova-6.7-flash-lite' }}
         run: |
           set -euo pipefail
           IFS=',' read -r -a MODELS <<< "${SENSENOVA_TRANSLATE_MODELS}"
@@ -118,7 +118,11 @@ jobs:
               ok=1
               break
             fi
-            if [ "$code" = "429" ] || grep -q 'quota_exceeded\|limit exhausted\|rate_limit' /tmp/sn-smoke.json 2>/dev/null; then
+            if [ "$code" = "404" ] || grep -qi 'model is not found\|not_found' /tmp/sn-smoke.json 2>/dev/null; then
+              echo "::warning::model ${model} not found on this plan — skip"
+              continue
+            fi
+            if [ "$code" = "429" ] || grep -qi 'quota_exceeded\|limit exhausted\|insufficient_quota\|rate_limit' /tmp/sn-smoke.json 2>/dev/null; then
               exhausted=1
               echo "::warning::model ${model} quota/rate-limited — trying next"
               continue
@@ -148,13 +152,13 @@ jobs:
           SENSENOVA_BASE_URL: https://token.sensenova.cn/v1
           # Multi-model rotation (u1-fast + deepseek-v4-flash + flash-lite).
           # Override via repo variable SENSENOVA_TRANSLATE_MODELS if needed.
-          SENSENOVA_TRANSLATE_MODELS: ${{ vars.SENSENOVA_TRANSLATE_MODELS || 'sensenova-u1-fast,deepseek-v4-flash,sensenova-6.7-flash-lite' }}
-          # Conservative defaults so forge/router shell catalogs finish before quota dies
-          CATALOG_CONCURRENCY: "2"
-          LOCALE_CONCURRENCY: "4"
-          CONCURRENCY: ${{ github.event.inputs.concurrency || '8' }}
-          BATCH_SIZE: ${{ github.event.inputs.batch_size || '16' }}
-          MAX_RETRIES: "3"
+          SENSENOVA_TRANSLATE_MODELS: ${{ vars.SENSENOVA_TRANSLATE_MODELS || 'deepseek-v4-flash,sensenova-u1-fast,sensenova-6.7-flash-lite' }}
+          # Low concurrency avoids Token Plan burst 429s that look like hard quota.
+          CATALOG_CONCURRENCY: "1"
+          LOCALE_CONCURRENCY: "2"
+          CONCURRENCY: ${{ github.event.inputs.concurrency || '3' }}
+          BATCH_SIZE: ${{ github.event.inputs.batch_size || '12' }}
+          MAX_RETRIES: "5"
         run: |
           EXTRA=()
           if [ "${{ github.event.inputs.force }}" = "true" ]; then
