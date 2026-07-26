@@ -52,12 +52,13 @@ jobs:
             exit 1
           fi
           npm i -g vercel@56.5.0
-          mkdir -p apps/auth/.vercel
-          cat > apps/auth/.vercel/project.json <<EOF
+          # Deploy from monorepo root. Dashboard Root Directory is already
+          # apps/auth — do NOT also pass --cwd apps/auth (doubles to apps/auth/apps/auth).
+          mkdir -p .vercel
+          cat > .vercel/project.json <<EOF
           {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
           EOF
           vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
-            --cwd apps/auth \
             --scope "${VERCEL_ORG_ID:-}"
 
       - name: Smoke auth.nebutra.com

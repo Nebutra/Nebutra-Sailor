@@ -139,11 +139,7 @@
         "name": "聊一聊",
         "price": "免费",
         "description": "15 分钟快聊",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
         "cta": "和灵魂对话",
         "href": "/soul"
       },
@@ -151,12 +147,7 @@
         "name": "Coffee",
         "price": "¥18",
         "description": "一杯咖啡的价格",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
         "cta": "请我喝咖啡",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
@@ -164,11 +155,7 @@
         "name": "雇佣关系",
         "price": "按项目报价",
         "description": "完整专业交付",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
         "cta": "抛出橄榄枝",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
@@ -189,10 +176,7 @@
     "services": {
       "engineering": {
         "name": "产品工程",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
         "name": "AI & 自动化",
@@ -205,10 +189,7 @@
       },
       "design": {
         "name": "设计 & 产品",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
         "name": "增长 & 全球化",
@@ -222,19 +203,11 @@
       },
       "consulting": {
         "name": "专业咨询",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
         "name": "创投 & 战略",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },

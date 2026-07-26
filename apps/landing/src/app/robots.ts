@@ -16,13 +16,17 @@ export default function robots(): MetadataRoute.Robots {
         // NOT disallowed: they 308 to their route-locale equivalent in
         // src/proxy.ts, and a disallowed URL cannot pass its redirect signal.
       },
+      // `/docs/` is deliberately absent from the AI-crawler allow lists:
+      // marketing /docs only 308s to the docs origin (see src/lib/docs-routing.ts),
+      // so naming it here advertises a redirect-only path. Docs crawling is
+      // declared on the origin that serves them: apps/sailor-docs/src/app/robots.ts.
       {
         userAgent: "GPTBot",
-        allow: ["/", "/blog/", "/docs/", "/features", "/features/", "/pricing"],
+        allow: ["/", "/blog/", "/features", "/features/", "/pricing"],
       },
       {
         userAgent: "ClaudeBot",
-        allow: ["/", "/blog/", "/docs/", "/features", "/features/", "/pricing"],
+        allow: ["/", "/blog/", "/features", "/features/", "/pricing"],
       },
     ],
     // Sharded sitemap. Next serves the shards at /sitemap/<locale>.xml and

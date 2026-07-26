@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { PrismaClient } from "@nebutra/db";
 
 export type DeviceSessionKind = "web" | "desktop";
@@ -230,9 +231,10 @@ function mapDesktopSession(session: DesktopAuthSessionRecord): DeviceSession {
 }
 
 function desktopSchemeLabel(scheme: string): string {
-  if (scheme === "foundry") return "Nebutra Foundry";
-  if (scheme === "sailor") return "Nebutra Sailor";
-  return `Nebutra ${titleCase(scheme)}`;
+  const name = brand.name;
+  if (scheme === "foundry") return `${name} Foundry`;
+  if (scheme === "sailor") return `${name} Sailor`;
+  return `${name} ${titleCase(scheme)}`;
 }
 
 function parseUserAgent(userAgent: string | null): {
@@ -253,7 +255,9 @@ function parseBrowser(ua: string): string {
   if (/Chrome\/|CriOS\//i.test(ua)) return "Chrome";
   if (/Firefox\//i.test(ua)) return "Firefox";
   if (/Safari\//i.test(ua)) return "Safari";
-  if (/Nebutra Foundry/i.test(ua)) return "Nebutra Foundry";
+  // Match product desktop UA without hardcoding brand identity in source.
+  const foundryUa = new RegExp(`${brand.name}\\s+Foundry`, "i");
+  if (foundryUa.test(ua)) return `${brand.name} Foundry`;
   return "Web browser";
 }
 

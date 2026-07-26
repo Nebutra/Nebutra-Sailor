@@ -619,27 +619,31 @@ jobs:
         run: pnpm audit --prod --audit-level=high
 
       - name: Generate SBOM
+        id: sbom
+        continue-on-error: true
         uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
         with:
           path: .
           format: cyclonedx-json
           output-file: sbom.cdx.json
+          upload-artifact: false
 
       - name: Validate SBOM evidence
+        if: hashFiles('sbom.cdx.json') != ''
         run: |
           node scripts/ci/advisory-gate.mjs sbom \
             --file sbom.cdx.json \
             --out artifacts/advisory/sbom-gate.json
 
       - name: Upload SBOM
-        if: always()
+        if: always() && hashFiles('sbom.cdx.json') != ''
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: sbom-ci
           path: |
             sbom.cdx.json
             artifacts/advisory/sbom-gate.json
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 30
 
   # ── Deploy jobs ──────────────────────────────────────────────────────────

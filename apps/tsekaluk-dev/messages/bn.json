@@ -139,11 +139,7 @@
         "name": "Chat",
         "price": "Free",
         "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
         "cta": "Talk to my Soul",
         "href": "/soul"
       },
@@ -151,12 +147,7 @@
         "name": "Coffee",
         "price": "¥18",
         "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
         "cta": "Buy me a coffee",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
@@ -164,11 +155,7 @@
         "name": "Hire Me",
         "price": "Per project",
         "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
         "cta": "Extend an Olive Branch",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
@@ -189,10 +176,7 @@
     "services": {
       "engineering": {
         "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
         "name": "AI & Automation",
@@ -205,10 +189,7 @@
       },
       "design": {
         "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
         "name": "Growth & Global",
@@ -222,19 +203,11 @@
       },
       "consulting": {
         "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
         "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
