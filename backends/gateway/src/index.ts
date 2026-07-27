@@ -16,6 +16,7 @@ import {
 import { logger } from "@nebutra/logger";
 import { initOtel } from "@nebutra/logger/otel";
 import { trace } from "@opentelemetry/api";
+import type { Context } from "hono";
 import { bodyLimit } from "hono/body-limit";
 import { compress } from "hono/compress";
 import { cors } from "hono/cors";
@@ -54,6 +55,7 @@ import { integrationRoutes } from "./routes/integrations/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
 import { healthRoutes } from "./routes/misc/health.js";
 import { notificationRoutes } from "./routes/notifications/index.js";
+import { pebbleRoutes } from "./routes/pebble/index.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
 import { startupOsRoutes } from "./routes/startup-os/index.js";
@@ -154,15 +156,29 @@ app.use(
     credentials: true,
   }),
 );
-app.use(
-  "*",
-  bodyLimit({
-    maxSize: 1 * 1024 * 1024, // 1MB
-    onError: (c) => {
-      return c.json({ error: "Request body too large" }, 413);
-    },
-  }),
-);
+// Pebble diagnostic bundles are capped at 4 MiB by contract, which is above the
+// default body limit. Give that one route its own ceiling rather than raising
+// the limit for every endpoint in the gateway.
+const DEFAULT_BODY_LIMIT_BYTES = 1 * 1024 * 1024;
+const PEBBLE_DIAGNOSTIC_BODY_LIMIT_BYTES = 4 * 1024 * 1024;
+
+const onBodyLimitExceeded = (c: Context) => c.json({ error: "Request body too large" }, 413);
+
+const defaultBodyLimit = bodyLimit({
+  maxSize: DEFAULT_BODY_LIMIT_BYTES,
+  onError: onBodyLimitExceeded,
+});
+const pebbleDiagnosticBodyLimit = bodyLimit({
+  maxSize: PEBBLE_DIAGNOSTIC_BODY_LIMIT_BYTES,
+  onError: onBodyLimitExceeded,
+});
+
+app.use("*", (c, next) => {
+  const path = new URL(c.req.url).pathname;
+  const isPebbleDiagnosticUpload =
+    path === "/pebble/diagnostics/upload" || path === "/api/pebble/diagnostics/upload";
+  return isPebbleDiagnosticUpload ? pebbleDiagnosticBodyLimit(c, next) : defaultBodyLimit(c, next);
+});
 
 // Tenant context extraction (before rate limiting)
 app.use("*", tenantContextMiddleware);
@@ -224,6 +240,15 @@ app.route("/api/v1/workflows", workflowRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/tasks", taskRoutes);
 app.route("/api/v1/uploads", uploadRoutes);
+
+// Pebble desktop support intake. Unauthenticated by design (desktop users have
+// no Nebutra account) — the routes carry their own per-IP limits and size caps.
+// `/pebble` is the frozen product namespace so `/v1/*` stays unclaimed for
+// other products; see docs/DOMAINS.md. Mounted with and without the `/api`
+// prefix because the client calls the bare path on api.nebutra.com.
+app.route("/pebble", pebbleRoutes);
+app.route("/api/pebble", pebbleRoutes);
+
 app.route("/api", authRoutes);
 
 // AI Gateway — build shared deps once, mount route + register completion worker.

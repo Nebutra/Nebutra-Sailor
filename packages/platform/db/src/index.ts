@@ -30,6 +30,11 @@ export type {
   // Multi-Tenant Core
   Organization,
   OrganizationMember,
+  // Pebble support intake (not tenant-scoped — anonymous desktop clients)
+  PebbleDiagnosticStatus,
+  PebbleDiagnosticTicket,
+  PebbleFeedback,
+  PebbleFeedbackKind,
   Plan,
   // E-Commerce
   Product,

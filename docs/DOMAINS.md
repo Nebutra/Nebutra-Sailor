@@ -34,6 +34,15 @@ brand front gets a host; everything transactional runs on the shared platform ho
 | Status | `status.nebutra.com` |
 | Staging | **no host** — env / project isolation only |
 
+Handlers live in `backends/gateway/src/routes/pebble/`. They are unauthenticated
+by design — Pebble users have no Nebutra account — and bounded by per-IP rate
+limits, exact-size body caps, and single-use 10-minute upload tokens instead of
+identity. Baseline policy: 4 MiB cap, 30-day retention, swept hourly by the
+`pebble-diagnostics-retention` Inngest function.
+
+Config: `PEBBLE_DIAGNOSTICS_TOKEN_SECRET` (falls back to `SERVICE_SECRET`) and
+`PEBBLE_DIAGNOSTICS_BUCKET` (defaults to `nebutra-pebble-diagnostics`).
+
 **Frozen decision (2026-07-27):** the API namespace is **prefixed**, not flat.
 `api.nebutra.com` is shared across every product, so `/v1/*` stays unclaimed and
 each product owns `/<product>/v1/*`. Do not add `api.pebble.*`, `status.pebble.*`,

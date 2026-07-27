@@ -135,8 +135,8 @@ model Organization {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  members      OrganizationMember[]
-  tenant       Tenant?
+  members OrganizationMember[]
+  tenant  Tenant?
 
   @@map("organizations")
   @@schema("public")
@@ -187,53 +187,53 @@ enum TenantTransferStatus {
 /// `app.current_tenant_id` = Tenant.id. Owned-data back-relations are added as
 /// the data models retarget their FK from Organization to Tenant.
 model Tenant {
-  id             String              @id @default(cuid())
+  id             String               @id @default(cuid())
   kind           TenantKind
   lifecycleState TenantLifecycleState @default(personal_draft) @map("lifecycle_state")
-  organizationId String?             @unique @map("organization_id")
-  userId         String?             @unique @map("user_id")
-  createdAt      DateTime            @default(now()) @map("created_at")
+  organizationId String?              @unique @map("organization_id")
+  userId         String?              @unique @map("user_id")
+  createdAt      DateTime             @default(now()) @map("created_at")
 
   organization Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Data back-relations (retargeted from Organization in Phase 2)
-  apiKeys                 APIKey[]
-  atelierCanvases         AtelierCanvas[]
-  auditLogs               AuditLog[]
-  chatSessions            ChatSession[]
-  codeRedemptions         CodeRedemption[]
-  connectors              Connector[]
-  cofounderProfile        CofounderProfile?
-  contents                Content[]
-  creditBalances          CreditBalance[]
+  apiKeys                  APIKey[]
+  atelierCanvases          AtelierCanvas[]
+  auditLogs                AuditLog[]
+  chatSessions             ChatSession[]
+  codeRedemptions          CodeRedemption[]
+  connectors               Connector[]
+  cofounderProfile         CofounderProfile?
+  contents                 Content[]
+  creditBalances           CreditBalance[]
   customerFeatureOverrides CustomerFeatureOverride[]
-  customerPlanVersions    CustomerPlanVersion[]
-  customerUsageLimits     CustomerUsageLimit[]
-  feedbackReports         FeedbackReport[]
-  integrations            Integration[]
-  tenantProviderKeys      TenantProviderKey[]
-  automations             Automation[]
-  automationRuns          AutomationRun[]
-  workflowDefinitions     WorkflowDefinition[]
-  workflowRuns            WorkflowRun[]
-  invoices                Invoice[]
-  oauthClients            OAuthClient[]
-  orders                  Order[]
-  payments                Payment[]
-  paymentMethods          PaymentMethod[]
-  products                Product[]
-  requestLogs             RequestLog[]
-  stripeCustomers         StripeCustomer[]
-  subscriptions           Subscription[]
-  tasks                   Task[]
-  threads                 Thread[]
-  uploads                 UploadRecord[]
-  usageLedgerEntries      UsageLedgerEntry[]
-  userConsents            UserConsent[]
-  userSkills              UserSkill[]
-  transferJournalsOut     TenantTransferJournal[] @relation("TenantTransferFrom")
-  transferJournalsIn      TenantTransferJournal[] @relation("TenantTransferTo")
+  customerPlanVersions     CustomerPlanVersion[]
+  customerUsageLimits      CustomerUsageLimit[]
+  feedbackReports          FeedbackReport[]
+  integrations             Integration[]
+  tenantProviderKeys       TenantProviderKey[]
+  automations              Automation[]
+  automationRuns           AutomationRun[]
+  workflowDefinitions      WorkflowDefinition[]
+  workflowRuns             WorkflowRun[]
+  invoices                 Invoice[]
+  oauthClients             OAuthClient[]
+  orders                   Order[]
+  payments                 Payment[]
+  paymentMethods           PaymentMethod[]
+  products                 Product[]
+  requestLogs              RequestLog[]
+  stripeCustomers          StripeCustomer[]
+  subscriptions            Subscription[]
+  tasks                    Task[]
+  threads                  Thread[]
+  uploads                  UploadRecord[]
+  usageLedgerEntries       UsageLedgerEntry[]
+  userConsents             UserConsent[]
+  userSkills               UserSkill[]
+  transferJournalsOut      TenantTransferJournal[]   @relation("TenantTransferFrom")
+  transferJournalsIn       TenantTransferJournal[]   @relation("TenantTransferTo")
 
   @@map("tenants")
   @@schema("public")
@@ -246,18 +246,18 @@ model Tenant {
 /// re-points the named asset, and marks the row `applied` (or `failed` with
 /// `error`). No implicit copy — each row is an explicit ownership change.
 model TenantTransferJournal {
-  id                String               @id @default(cuid())
-  fromTenantId      String               @map("from_tenant_id")
-  toTenantId        String?              @map("to_tenant_id")
-  toOrganizationId  String               @map("to_organization_id")
-  kind              TenantTransferKind
-  subjectId         String?              @map("subject_id")
-  status            TenantTransferStatus @default(pending)
-  initiatedByUserId String               @map("initiated_by_user_id")
-  cofounderProfileId String?             @map("cofounder_profile_id")
-  error             String?
-  createdAt         DateTime             @default(now()) @map("created_at")
-  appliedAt         DateTime?            @map("applied_at")
+  id                 String               @id @default(cuid())
+  fromTenantId       String               @map("from_tenant_id")
+  toTenantId         String?              @map("to_tenant_id")
+  toOrganizationId   String               @map("to_organization_id")
+  kind               TenantTransferKind
+  subjectId          String?              @map("subject_id")
+  status             TenantTransferStatus @default(pending)
+  initiatedByUserId  String               @map("initiated_by_user_id")
+  cofounderProfileId String?              @map("cofounder_profile_id")
+  error              String?
+  createdAt          DateTime             @default(now()) @map("created_at")
+  appliedAt          DateTime?            @map("applied_at")
 
   fromTenant Tenant  @relation("TenantTransferFrom", fields: [fromTenantId], references: [id], onDelete: Cascade)
   toTenant   Tenant? @relation("TenantTransferTo", fields: [toTenantId], references: [id], onDelete: SetNull)
@@ -272,19 +272,19 @@ model TenantTransferJournal {
 // Keys are hashed on creation; the plaintext is shown once and never stored.
 // Soft-deleted via revokedAt so audit log references remain meaningful.
 model APIKey {
-  id             String    @id @default(cuid())
-  name           String    @db.VarChar(64)
-  keyHash        String    @unique @map("key_hash")
-  keyPrefix      String    @map("key_prefix") @db.VarChar(16)
-  tenantId String    @map("tenant_id")
-  createdById    String?   @map("created_by_id")
-  lastUsedAt     DateTime? @map("last_used_at")
-  revokedAt      DateTime? @map("revoked_at")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
-  scopes         String[]  @default([]) @map("scopes")
-  rateLimitRps   Int       @default(10) @map("rate_limit_rps")
-  expiresAt      DateTime? @map("expires_at")
+  id           String    @id @default(cuid())
+  name         String    @db.VarChar(64)
+  keyHash      String    @unique @map("key_hash")
+  keyPrefix    String    @map("key_prefix") @db.VarChar(16)
+  tenantId     String    @map("tenant_id")
+  createdById  String?   @map("created_by_id")
+  lastUsedAt   DateTime? @map("last_used_at")
+  revokedAt    DateTime? @map("revoked_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  scopes       String[]  @default([]) @map("scopes")
+  rateLimitRps Int       @default(10) @map("rate_limit_rps")
+  expiresAt    DateTime? @map("expires_at")
 
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
@@ -398,16 +398,16 @@ model NotificationPreference {
 
 /// @conditional(template=blog|portfolio)
 model Content {
-  id             String        @id @default(cuid())
-  tenantId String        @map("tenant_id")
-  authorId       String        @map("author_id")
-  title          String
-  slug           String?
-  body           String        @db.Text
-  status         ContentStatus @default(DRAFT)
-  publishedAt    DateTime?     @map("published_at")
-  createdAt      DateTime      @default(now()) @map("created_at")
-  updatedAt      DateTime      @updatedAt @map("updated_at")
+  id          String        @id @default(cuid())
+  tenantId    String        @map("tenant_id")
+  authorId    String        @map("author_id")
+  title       String
+  slug        String?
+  body        String        @db.Text
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?     @map("published_at")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
 
   tenant       Tenant               @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   author       User                 @relation(fields: [authorId], references: [id])
@@ -466,21 +466,21 @@ model ContentEmbedding {
 
 /// @conditional(template=ecommerce)
 model Product {
-  id             String   @id @default(cuid())
-  tenantId String   @map("tenant_id")
-  externalId     String?  @map("external_id")
-  name           String
-  description    String?  @db.Text
-  price          Decimal  @db.Decimal(10, 2)
-  currency       String   @default("USD") @db.VarChar(3)
-  inventory      Int      @default(0)
-  imageUrl       String?  @map("image_url")
-  metadata       Json?    @default("{}")
-  isActive       Boolean  @default(true) @map("is_active")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  id          String   @id @default(cuid())
+  tenantId    String   @map("tenant_id")
+  externalId  String?  @map("external_id")
+  name        String
+  description String?  @db.Text
+  price       Decimal  @db.Decimal(10, 2)
+  currency    String   @default("USD") @db.VarChar(3)
+  inventory   Int      @default(0)
+  imageUrl    String?  @map("image_url")
+  metadata    Json?    @default("{}")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
-  tenant     Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant     Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   orderItems OrderItem[]
 
   @@unique([tenantId, externalId])
@@ -491,20 +491,20 @@ model Product {
 
 /// @conditional(template=ecommerce)
 model Order {
-  id             String      @id @default(cuid())
-  tenantId String      @map("tenant_id")
-  userId         String      @map("user_id")
-  externalId     String?     @map("external_id")
-  status         OrderStatus @default(PENDING)
-  totalAmount    Decimal     @db.Decimal(10, 2)
-  currency       String      @default("USD") @db.VarChar(3)
-  shippingInfo   Json?       @map("shipping_info")
-  metadata       Json?       @default("{}")
-  createdAt      DateTime    @default(now()) @map("created_at")
-  updatedAt      DateTime    @updatedAt @map("updated_at")
+  id           String      @id @default(cuid())
+  tenantId     String      @map("tenant_id")
+  userId       String      @map("user_id")
+  externalId   String?     @map("external_id")
+  status       OrderStatus @default(PENDING)
+  totalAmount  Decimal     @db.Decimal(10, 2)
+  currency     String      @default("USD") @db.VarChar(3)
+  shippingInfo Json?       @map("shipping_info")
+  metadata     Json?       @default("{}")
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
 
-  tenant Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  user   User      @relation(fields: [userId], references: [id])
+  tenant Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id])
   items  OrderItem[]
 
   @@index([tenantId])
@@ -533,16 +533,16 @@ model OrderItem {
 
 /// @conditional(template=ecommerce)
 model Integration {
-  id             String          @id @default(cuid())
-  tenantId String          @map("tenant_id")
-  type           IntegrationType
-  name           String
-  credentials    Json            @default("{}") // Encrypt in app layer
-  settings       Json            @default("{}")
-  isActive       Boolean         @default(true) @map("is_active")
-  lastSyncAt     DateTime?       @map("last_sync_at")
-  createdAt      DateTime        @default(now()) @map("created_at")
-  updatedAt      DateTime        @updatedAt @map("updated_at")
+  id          String          @id @default(cuid())
+  tenantId    String          @map("tenant_id")
+  type        IntegrationType
+  name        String
+  credentials Json            @default("{}") // Encrypt in app layer
+  settings    Json            @default("{}")
+  isActive    Boolean         @default(true) @map("is_active")
+  lastSyncAt  DateTime?       @map("last_sync_at")
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
 
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
@@ -653,33 +653,33 @@ model Automation {
 }
 
 model AutomationRun {
-  id           String              @id @default(cuid())
-  tenantId     String              @map("tenant_id")
-  automationId String              @map("automation_id")
-  status       AutomationRunStatus @default(RUNNING)
+  id             String              @id @default(cuid())
+  tenantId       String              @map("tenant_id")
+  automationId   String              @map("automation_id")
+  status         AutomationRunStatus @default(RUNNING)
   // "${automationId}::${scheduledAt.toISOString()}" — blocks double-fire on retry.
-  idempotencyKey String            @map("idempotency_key") @db.VarChar(191)
+  idempotencyKey String              @map("idempotency_key") @db.VarChar(191)
   // Fresh per run (== runId) → links to AgentRolloutLine(tenant, thread, seq).
-  threadId     String              @map("thread_id")
-  triggeredBy  String              @default("scheduler") @map("triggered_by") @db.VarChar(20)
-  scheduledAt  DateTime?           @map("scheduled_at")
-  startedAt    DateTime?           @map("started_at")
-  finishedAt   DateTime?           @map("finished_at")
+  threadId       String              @map("thread_id")
+  triggeredBy    String              @default("scheduler") @map("triggered_by") @db.VarChar(20)
+  scheduledAt    DateTime?           @map("scheduled_at")
+  startedAt      DateTime?           @map("started_at")
+  finishedAt     DateTime?           @map("finished_at")
   // memory.md per-run fields. git*/changedFiles stay null until a git connector
   // is wired into the runtime ToolRegistry (deferred).
-  summary      String?             @db.Text
-  changedFiles String[]            @default([]) @map("changed_files")
-  blockers     String[]            @default([])
-  verifications Json               @default("[]") // [{ command, result }]
-  gitBranch     String?            @map("git_branch") @db.VarChar(200)
-  gitCommitHash String?            @map("git_commit_hash") @db.VarChar(40)
-  gitPushStatus String?            @map("git_push_status") @db.VarChar(20)
-  tokenUsage   Json                @default("{}") @map("token_usage")
+  summary        String?             @db.Text
+  changedFiles   String[]            @default([]) @map("changed_files")
+  blockers       String[]            @default([])
+  verifications  Json                @default("[]") // [{ command, result }]
+  gitBranch      String?             @map("git_branch") @db.VarChar(200)
+  gitCommitHash  String?             @map("git_commit_hash") @db.VarChar(40)
+  gitPushStatus  String?             @map("git_push_status") @db.VarChar(20)
+  tokenUsage     Json                @default("{}") @map("token_usage")
   // Precomputed read-back context ({knownIssues,lastOutcome,recentSummaries[]}).
-  memorySnapshot Json              @default("{}") @map("memory_snapshot")
-  taskId       String?             @map("task_id") // soft FK to tasks.id (no relation)
-  createdAt    DateTime            @default(now()) @map("created_at")
-  updatedAt    DateTime            @updatedAt @map("updated_at")
+  memorySnapshot Json                @default("{}") @map("memory_snapshot")
+  taskId         String?             @map("task_id") // soft FK to tasks.id (no relation)
+  createdAt      DateTime            @default(now()) @map("created_at")
+  updatedAt      DateTime            @updatedAt @map("updated_at")
 
   tenant     Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   automation Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
@@ -818,7 +818,7 @@ model RequestLog {
   id               String   @id @default(cuid())
   requestId        String   @unique @map("request_id")
   apiKeyId         String?  @map("api_key_id")
-  tenantId   String   @map("tenant_id")
+  tenantId         String   @map("tenant_id")
   model            String   @db.VarChar(128)
   promptTokens     Int      @default(0) @map("prompt_tokens")
   completionTokens Int      @default(0) @map("completion_tokens")
@@ -1061,13 +1061,13 @@ model PlanUsageLimit {
 
 // Customer-specific plan version lock (grandfathering)
 model CustomerPlanVersion {
-  id             String    @id @default(cuid())
-  tenantId String    @map("tenant_id")
-  planId         String    @map("plan_id")
-  reason         String? // "Legacy customer", "Enterprise deal", "Beta tester"
-  approvedBy     String?   @map("approved_by") // admin user id
-  expiresAt      DateTime? @map("expires_at")
-  createdAt      DateTime  @default(now()) @map("created_at")
+  id         String    @id @default(cuid())
+  tenantId   String    @map("tenant_id")
+  planId     String    @map("plan_id")
+  reason     String? // "Legacy customer", "Enterprise deal", "Beta tester"
+  approvedBy String?   @map("approved_by") // admin user id
+  expiresAt  DateTime? @map("expires_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
 
   plan   PricingPlan @relation(fields: [planId], references: [id])
   tenant Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
@@ -1079,15 +1079,15 @@ model CustomerPlanVersion {
 
 // Customer-specific feature overrides
 model CustomerFeatureOverride {
-  id             String    @id @default(cuid())
-  tenantId String    @map("tenant_id")
-  featureKey     String    @map("feature_key") @db.VarChar(100)
-  value          Json // override value
-  reason         String? // "Sales deal", "Support escalation"
-  approvedBy     String?   @map("approved_by")
-  expiresAt      DateTime? @map("expires_at")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
+  id         String    @id @default(cuid())
+  tenantId   String    @map("tenant_id")
+  featureKey String    @map("feature_key") @db.VarChar(100)
+  value      Json // override value
+  reason     String? // "Sales deal", "Support escalation"
+  approvedBy String?   @map("approved_by")
+  expiresAt  DateTime? @map("expires_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
 
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
@@ -1099,16 +1099,16 @@ model CustomerFeatureOverride {
 
 // Customer-specific usage limit overrides
 model CustomerUsageLimit {
-  id             String    @id @default(cuid())
-  tenantId String    @map("tenant_id")
-  limitId        String    @map("limit_id")
-  limitValue     BigInt    @map("limit_value") // -1 = unlimited
-  overageRate    Decimal?  @map("overage_rate") @db.Decimal(10, 8)
-  reason         String? // "Enterprise deal", "Promo"
-  approvedBy     String?   @map("approved_by")
-  expiresAt      DateTime? @map("expires_at")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
+  id          String    @id @default(cuid())
+  tenantId    String    @map("tenant_id")
+  limitId     String    @map("limit_id")
+  limitValue  BigInt    @map("limit_value") // -1 = unlimited
+  overageRate Decimal?  @map("overage_rate") @db.Decimal(10, 8)
+  reason      String? // "Enterprise deal", "Promo"
+  approvedBy  String?   @map("approved_by")
+  expiresAt   DateTime? @map("expires_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   limitDef UsageLimitDefinition @relation(fields: [limitId], references: [id])
   tenant   Tenant               @relation(fields: [tenantId], references: [id], onDelete: Cascade)
@@ -1122,7 +1122,7 @@ model CustomerUsageLimit {
 model Subscription {
   id                 String             @id @default(cuid())
   stripeId           String?            @unique @map("stripe_id")
-  tenantId     String             @map("tenant_id")
+  tenantId           String             @map("tenant_id")
   pricingPlanId      String             @map("pricing_plan_id")
   status             SubscriptionStatus @default(ACTIVE)
   currentPeriodStart DateTime           @map("current_period_start")
@@ -1152,7 +1152,7 @@ model Subscription {
 model Invoice {
   id               String        @id @default(cuid())
   stripeId         String?       @unique @map("stripe_id")
-  tenantId   String        @map("tenant_id")
+  tenantId         String        @map("tenant_id")
   subscriptionId   String?       @map("subscription_id")
   number           String        @unique
   status           InvoiceStatus @default(DRAFT)
@@ -1212,7 +1212,7 @@ model InvoiceItem {
 model Payment {
   id                String            @id @default(cuid())
   stripeId          String?           @unique @map("stripe_id")
-  tenantId    String            @map("tenant_id")
+  tenantId          String            @map("tenant_id")
   invoiceId         String?           @map("invoice_id")
   amount            Decimal           @db.Decimal(10, 2)
   currency          String            @default("USD") @db.VarChar(3)
@@ -1242,7 +1242,7 @@ model Payment {
 model PaymentMethod {
   id             String            @id @default(cuid())
   stripeId       String?           @unique @map("stripe_id")
-  tenantId String            @map("tenant_id")
+  tenantId       String            @map("tenant_id")
   type           PaymentMethodType
   isDefault      Boolean           @default(false) @map("is_default")
   lastFour       String?           @map("last_four") @db.VarChar(4)
@@ -1267,7 +1267,7 @@ model PaymentMethod {
 // Immutable usage ledger (idempotent append-only records)
 model UsageLedgerEntry {
   id             String            @id @default(cuid())
-  tenantId String            @map("tenant_id")
+  tenantId       String            @map("tenant_id")
   subscriptionId String?           @map("subscription_id")
   userId         String?           @map("user_id")
   idempotencyKey String            @map("idempotency_key") @db.VarChar(191)
@@ -1301,11 +1301,11 @@ model UsageLedgerEntry {
 // Credits System
 /// @conditional(billing-mode=credits)
 model CreditBalance {
-  id             String   @id @default(cuid())
-  tenantId String   @unique @map("tenant_id")
-  balance        Decimal  @default(0) @db.Decimal(10, 4)
-  currency       String   @default("USD") @db.VarChar(3)
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  id        String   @id @default(cuid())
+  tenantId  String   @unique @map("tenant_id")
+  balance   Decimal  @default(0) @db.Decimal(10, 4)
+  currency  String   @default("USD") @db.VarChar(3)
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   tenant       Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   transactions CreditTransaction[]
@@ -1329,10 +1329,10 @@ model CreditTransaction {
 
   creditBalance CreditBalance @relation(fields: [creditBalanceId], references: [id], onDelete: Cascade)
 
+  @@unique([creditBalanceId, type, relatedId], map: "credit_transactions_credit_balance_id_type_related_id_key")
   @@index([creditBalanceId])
   @@index([type])
   @@index([createdAt])
-  @@unique([creditBalanceId, type, relatedId], map: "credit_transactions_credit_balance_id_type_related_id_key")
   @@map("credit_transactions")
   @@schema("public")
 }
@@ -1341,16 +1341,16 @@ model CreditTransaction {
 
 // Stripe Customer Mapping
 model StripeCustomer {
-  id             String   @id @default(cuid())
-  tenantId String   @unique @map("tenant_id")
-  stripeId       String   @unique @map("stripe_id")
-  email          String?
-  name           String?
-  currency       String   @default("USD") @db.VarChar(3)
-  taxExempt      String   @default("none") @map("tax_exempt") @db.VarChar(20)
-  metadata       Json     @default("{}")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  id        String   @id @default(cuid())
+  tenantId  String   @unique @map("tenant_id")
+  stripeId  String   @unique @map("stripe_id")
+  email     String?
+  name      String?
+  currency  String   @default("USD") @db.VarChar(3)
+  taxExempt String   @default("none") @map("tax_exempt") @db.VarChar(20)
+  metadata  Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
@@ -1382,21 +1382,21 @@ model WebhookEvent {
 // ============================================
 
 model AuditLog {
-  id             String   @id @default(cuid())
-  tenantId String?  @map("tenant_id")
-  userId         String?  @map("user_id")
-  actorType      String?  @map("actor_type") @db.VarChar(20) // "user" | "system" | "api_key" | "admin"
-  action         String   @db.VarChar(50)
-  outcome        String?  @db.VarChar(10) // "success" | "failure" | "pending"
-  reason         String?  @db.VarChar(255)
-  entityType     String   @map("entity_type") @db.VarChar(50)
-  entityId       String?  @map("entity_id")
-  oldValue       Json?    @map("old_value")
-  newValue       Json?    @map("new_value")
-  ipAddress      String?  @map("ip_address") @db.VarChar(45)
-  userAgent      String?  @map("user_agent")
-  metadata       Json?    @default("{}")
-  createdAt      DateTime @default(now()) @map("created_at")
+  id         String   @id @default(cuid())
+  tenantId   String?  @map("tenant_id")
+  userId     String?  @map("user_id")
+  actorType  String?  @map("actor_type") @db.VarChar(20) // "user" | "system" | "api_key" | "admin"
+  action     String   @db.VarChar(50)
+  outcome    String?  @db.VarChar(10) // "success" | "failure" | "pending"
+  reason     String?  @db.VarChar(255)
+  entityType String   @map("entity_type") @db.VarChar(50)
+  entityId   String?  @map("entity_id")
+  oldValue   Json?    @map("old_value")
+  newValue   Json?    @map("new_value")
+  ipAddress  String?  @map("ip_address") @db.VarChar(45)
+  userAgent  String?  @map("user_agent")
+  metadata   Json?    @default("{}")
+  createdAt  DateTime @default(now()) @map("created_at")
 
   tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: SetNull)
 
@@ -1472,7 +1472,7 @@ model LegalDocument {
 model UserConsent {
   id              String      @id @default(cuid())
   userId          String?     @map("user_id") // Clerk user ID
-  tenantId  String?     @map("tenant_id") // Clerk org ID / tenant ID
+  tenantId        String?     @map("tenant_id") // Clerk org ID / tenant ID
   visitorId       String?     @map("visitor_id") // Anonymous visitor fingerprint
   documentId      String      @map("document_id")
   documentSlug    String      @map("document_slug") @db.VarChar(100)
@@ -1680,8 +1680,8 @@ model OAuthClient {
   refreshTokenTtl Int @default(2592000) @map("refresh_token_ttl")
 
   // Ownership
-  tenantId String  @map("tenant_id")
-  createdById    String? @map("created_by_id")
+  tenantId    String  @map("tenant_id")
+  createdById String? @map("created_by_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -1744,29 +1744,29 @@ model OAuthAccessToken {
 
 /// @conditional(auth=betterauth)
 model AuthUser {
-  id               String        @id @default(cuid())
-  email            String?       @unique
-  phone            String?       @unique
-  emailVerified    Boolean       @default(false) @map("email_verified")
-  phoneVerified    Boolean       @default(false) @map("phone_verified")
-  name             String?
-  image            String?
-  passwordHash     String?       @map("password_hash")
-  twoFactorEnabled Boolean       @default(false) @map("two_factor_enabled")
-  twoFactorSecret  String?       @map("two_factor_secret")
-  backupCodes      String[]      @default([]) @map("backup_codes")
-  createdAt        DateTime      @default(now()) @map("created_at")
-  updatedAt        DateTime      @updatedAt @map("updated_at")
-  accounts         AuthAccount[]
-  sessions         AuthSession[]
+  id                  String               @id @default(cuid())
+  email               String?              @unique
+  phone               String?              @unique
+  emailVerified       Boolean              @default(false) @map("email_verified")
+  phoneVerified       Boolean              @default(false) @map("phone_verified")
+  name                String?
+  image               String?
+  passwordHash        String?              @map("password_hash")
+  twoFactorEnabled    Boolean              @default(false) @map("two_factor_enabled")
+  twoFactorSecret     String?              @map("two_factor_secret")
+  backupCodes         String[]             @default([]) @map("backup_codes")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  accounts            AuthAccount[]
+  sessions            AuthSession[]
   desktopAuthHandoffs DesktopAuthHandoff[]
   desktopAuthSessions DesktopAuthSession[]
   // Wave 2 Phase 1.1 — back-relations to BA plugin tables in `auth.*` schema.
   // These exist purely to satisfy Prisma's bidirectional-relation requirement
   // and do not alter `public.auth_users` itself.
-  baMembers        BAMember[]
-  baPasskeys       BAPasskey[]
-  chatSessions     ChatSession[]
+  baMembers           BAMember[]
+  baPasskeys          BAPasskey[]
+  chatSessions        ChatSession[]
 
   @@map("auth_users")
   @@schema("public")
@@ -1778,16 +1778,16 @@ model AuthUser {
 // to query message content, only fetch whole sessions. `mode` records which
 // command mode the session was opened in (chat | data | workflow | search).
 model ChatSession {
-  id             String   @id @default(cuid())
-  tenantId String   @map("tenant_id")
-  userId         String   @map("user_id")
-  title          String   @default("New chat") @db.VarChar(200)
-  mode           String   @default("chat") @db.VarChar(20)
-  messages       Json     @default("[]")
-  messageCount   Int      @default(0) @map("message_count")
-  lastMessageAt  DateTime @default(now()) @map("last_message_at")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  id            String   @id @default(cuid())
+  tenantId      String   @map("tenant_id")
+  userId        String   @map("user_id")
+  title         String   @default("New chat") @db.VarChar(200)
+  mode          String   @default("chat") @db.VarChar(20)
+  messages      Json     @default("[]")
+  messageCount  Int      @default(0) @map("message_count")
+  lastMessageAt DateTime @default(now()) @map("last_message_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   tenant Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   user   AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -1805,7 +1805,7 @@ model ChatSession {
 // command-mode chat session.
 model Thread {
   id             String   @id @default(cuid())
-  tenantId String   @map("tenant_id")
+  tenantId       String   @map("tenant_id")
   userId         String   @map("user_id")
   title          String   @default("Untitled") @db.VarChar(200)
   summary        String?  @db.Text
@@ -1872,13 +1872,13 @@ model Skill {
 }
 
 model UserSkill {
-  id             String   @id @default(cuid())
-  userId         String   @map("user_id")
-  tenantId String?  @map("tenant_id")
-  skillId        String   @map("skill_id")
-  enabled        Boolean  @default(true)
-  config         Json     @default("{}")
-  installedAt    DateTime @default(now()) @map("installed_at")
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  tenantId    String?  @map("tenant_id")
+  skillId     String   @map("skill_id")
+  enabled     Boolean  @default(true)
+  config      Json     @default("{}")
+  installedAt DateTime @default(now()) @map("installed_at")
 
   skill  Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
   tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: SetNull)
@@ -1894,17 +1894,17 @@ model UserSkill {
 // `config` MUST be encrypted via @nebutra/vault before persistence — the
 // model schema doesn't enforce this; the calling code does.
 model Connector {
-  id             String    @id @default(cuid())
-  userId         String    @map("user_id")
-  tenantId String?   @map("tenant_id")
-  type           String    @db.VarChar(40)
-  name           String    @db.VarChar(120)
-  iconUrl        String?   @map("icon_url")
-  config         Json
-  isActive       Boolean   @default(true) @map("is_active")
-  lastUsedAt     DateTime? @map("last_used_at")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  tenantId   String?   @map("tenant_id")
+  type       String    @db.VarChar(40)
+  name       String    @db.VarChar(120)
+  iconUrl    String?   @map("icon_url")
+  config     Json
+  isActive   Boolean   @default(true) @map("is_active")
+  lastUsedAt DateTime? @map("last_used_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
 
   tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: SetNull)
 
@@ -2068,12 +2068,12 @@ model RedemptionCode {
 }
 
 model CodeRedemption {
-  id             String   @id @default(cuid())
-  codeId         String   @map("code_id")
-  userId         String   @map("user_id")
-  tenantId String?  @map("tenant_id")
-  redeemedAt     DateTime @default(now()) @map("redeemed_at")
-  ipAddress      String?  @map("ip_address") @db.VarChar(45)
+  id         String   @id @default(cuid())
+  codeId     String   @map("code_id")
+  userId     String   @map("user_id")
+  tenantId   String?  @map("tenant_id")
+  redeemedAt DateTime @default(now()) @map("redeemed_at")
+  ipAddress  String?  @map("ip_address") @db.VarChar(45)
 
   code   RedemptionCode @relation(fields: [codeId], references: [id], onDelete: Cascade)
   tenant Tenant?        @relation(fields: [tenantId], references: [id], onDelete: SetNull)
@@ -2090,19 +2090,19 @@ model CodeRedemption {
 // `resolved` defaults to false so unread reports surface naturally in queries
 // `ORDER BY resolved ASC, created_at DESC`.
 model FeedbackReport {
-  id             String    @id @default(cuid())
-  tenantId String?   @map("tenant_id")
-  userId         String?   @map("user_id")
-  area           String    @db.VarChar(40)
-  mode           String?   @db.VarChar(20)
-  description    String
-  contactEmail   String?   @map("contact_email") @db.VarChar(254)
-  sessionId      String?   @map("session_id")
-  userAgent      String?   @map("user_agent") @db.VarChar(500)
-  pageUrl        String?   @map("page_url") @db.VarChar(500)
-  resolved       Boolean   @default(false)
-  resolvedAt     DateTime? @map("resolved_at")
-  createdAt      DateTime  @default(now()) @map("created_at")
+  id           String    @id @default(cuid())
+  tenantId     String?   @map("tenant_id")
+  userId       String?   @map("user_id")
+  area         String    @db.VarChar(40)
+  mode         String?   @db.VarChar(20)
+  description  String
+  contactEmail String?   @map("contact_email") @db.VarChar(254)
+  sessionId    String?   @map("session_id")
+  userAgent    String?   @map("user_agent") @db.VarChar(500)
+  pageUrl      String?   @map("page_url") @db.VarChar(500)
+  resolved     Boolean   @default(false)
+  resolvedAt   DateTime? @map("resolved_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
 
   tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: SetNull)
 
@@ -2491,14 +2491,14 @@ model BAPasskey {
 // with a tenant_id + RLS instead of an implicit single user. The logical canvas
 // id is unique *within* a tenant, not globally.
 model AtelierCanvas {
-  pk             String   @id @default(cuid())
-  id             String
-  tenantId String   @map("tenant_id")
-  name           String
-  scene          Json     @default("{\"elements\":[],\"files\":[]}")
-  thumbnail      String?
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  pk        String   @id @default(cuid())
+  id        String
+  tenantId  String   @map("tenant_id")
+  name      String
+  scene     Json     @default("{\"elements\":[],\"files\":[]}")
+  thumbnail String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
@@ -2524,5 +2524,89 @@ model AgentRolloutLine {
   @@unique([tenantId, threadId, seq])
   @@index([tenantId, threadId, seq])
   @@map("agent_rollout_lines")
+  @@schema("public")
+}
+
+// ─── Pebble support intake ────────────────────────────────────────────────────
+// Private support data submitted by anonymous desktop clients, so these tables
+// are deliberately NOT tenant-scoped: there is no signed-in Nebutra tenant at
+// submission time. Access is service-role only; nothing here is addressable by
+// ticket id alone. Contract: pebble/docs/reference/infra-index.md.
+
+enum PebbleDiagnosticStatus {
+  // Token issued, bytes not yet received. Expires without ever storing an object.
+  PENDING_UPLOAD
+  STORED
+  // Tombstone. Kept so a support agent can verify a deletion actually happened;
+  // carries no object key and no payload.
+  DELETED
+
+  @@schema("public")
+}
+
+model PebbleDiagnosticTicket {
+  id String @id @default(cuid())
+
+  // Client-generated, one bundle per submission. Unique so a retried token
+  // request rebinds to the same ticket instead of orphaning storage.
+  bundleSubmissionId String @unique @map("bundle_submission_id") @db.VarChar(191)
+
+  status PebbleDiagnosticStatus @default(PENDING_UPLOAD)
+
+  // Byte count the token was issued for. The upload is rejected unless
+  // Content-Length matches exactly, so a token cannot be replayed for a
+  // larger body than it was minted for.
+  declaredBytes Int  @map("declared_bytes")
+  storedBytes   Int? @map("stored_bytes")
+
+  bucket         String? @db.VarChar(191)
+  objectKey      String? @map("object_key") @db.VarChar(255)
+  checksumSha256 String? @map("checksum_sha256") @db.VarChar(64)
+
+  appVersion String? @map("app_version") @db.VarChar(64)
+  platform   String? @db.VarChar(32)
+
+  // Retention horizon (baseline 30 days). The sweeper deletes the object and
+  // tombstones the row; object lifecycle rules must not outlive this.
+  expiresAt DateTime  @map("expires_at")
+  storedAt  DateTime? @map("stored_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([status, expiresAt])
+  @@map("pebble_diagnostic_tickets")
+  @@schema("public")
+}
+
+enum PebbleFeedbackKind {
+  FEEDBACK
+  // Legacy crash compatibility. New reviewed crashes go straight to Sentry;
+  // this exists for one release cycle of older clients.
+  CRASH
+
+  @@schema("public")
+}
+
+model PebbleFeedback {
+  id String @id @default(cuid())
+
+  submissionId String             @unique @map("submission_id") @db.VarChar(191)
+  kind         PebbleFeedbackKind @default(FEEDBACK)
+
+  message      String  @db.Text
+  // Optional and user-supplied. Private support data — never mirrored into
+  // issue trackers, analytics, or access logs.
+  contactEmail String? @map("contact_email") @db.VarChar(320)
+
+  appVersion String? @map("app_version") @db.VarChar(64)
+  platform   String? @db.VarChar(32)
+  locale     String? @db.VarChar(35)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([kind, createdAt(sort: Desc)])
+  @@map("pebble_feedback")
   @@schema("public")
 }

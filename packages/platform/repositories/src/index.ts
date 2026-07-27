@@ -30,6 +30,21 @@ export type { UpsertMemberData } from "./organization-member.repository";
 export { OrganizationMemberRepository } from "./organization-member.repository";
 export type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
 export type {
+  OpenTicketData,
+  RecordFeedbackData,
+  StoreTicketData,
+} from "./pebble-support.repository";
+// Pebble support intake (diagnostics + feedback) — not tenant-scoped
+export {
+  DIAGNOSTIC_MAX_BYTES,
+  DIAGNOSTIC_RETENTION_DAYS,
+  getPebbleDiagnosticTicketRepository,
+  getPebbleFeedbackRepository,
+  PebbleDiagnosticTicketRepository,
+  PebbleFeedbackRepository,
+  retentionExpiryFrom,
+} from "./pebble-support.repository";
+export type {
   ProviderKeyCredentials,
   ResolvedProviderKey,
   UpsertProviderKeyData,

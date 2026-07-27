@@ -97,6 +97,12 @@ const baseSchema = z.object({
   SERVICE_SECRET: z.string().optional(),
   GATEWAY_SHARED_SECRET: z.string().optional(),
 
+  // Pebble support intake. The token secret falls back to SERVICE_SECRET when
+  // unset so a deployment always signs with something unguessable; the bucket
+  // falls back to a conventional name. See routes/pebble/.
+  PEBBLE_DIAGNOSTICS_TOKEN_SECRET: z.string().min(32).optional(),
+  PEBBLE_DIAGNOSTICS_BUCKET: z.string().optional(),
+
   // ClickHouse — used by event-ingest service module (in-process)
   CLICKHOUSE_URL: z.string().optional(),
   CLICKHOUSE_USERNAME: z.string().optional(),

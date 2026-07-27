@@ -33,6 +33,12 @@ const UNVERSIONED_ROUTE_PREFIXES = new Set([
   "/health", // Root-level container/load-balancer health check
   "/misc", // Legacy health check alias
   "/system", // Legacy status alias
+  // Pebble mounts product-first (`/pebble/v1/feedback`), not `/api/v1/pebble`.
+  // `api.nebutra.com` is shared across products, so each product owns its own
+  // namespace and versions inside it — the frozen decision in docs/DOMAINS.md.
+  // The shipped desktop client also pins these exact paths.
+  "/pebble",
+  "/api/pebble",
   "/openapi.json", // OpenAPI spec document
   "/docs", // Swagger UI
   "/", // Root route
