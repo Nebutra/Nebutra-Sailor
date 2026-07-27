@@ -236,6 +236,12 @@ export interface BrandConfig {
     status: string;
     /** Product analytics / PostHog host. */
     analytics: string;
+    /**
+     * Pebble brand front (landing / download / docs redirect). Backends stay on
+     * the platform hosts — feedback + diagnostics live under `api` at
+     * `/pebble/v1/*`, status under `status`. See docs/DOMAINS.md.
+     */
+    pebble: string;
   };
 
   social: {
@@ -348,6 +354,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     design: "design.nebutra.com",
     status: "status.nebutra.com",
     analytics: "analytics.nebutra.com",
+    pebble: "pebble.nebutra.com",
   },
   social: {
     twitter: "https://twitter.com/nebutra",

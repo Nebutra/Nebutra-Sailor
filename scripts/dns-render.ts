@@ -17,6 +17,8 @@ interface Topology {
   docs_cname: string;
   mail?: { provider: string; records: Record<string, string> };
   ecs_surfaces: DomainKey[];
+  /** Brand fronts served by Vercel — CNAME to `www_cname`, no ECS origin. */
+  vercel_surfaces?: DomainKey[];
   proxy: { proxied: string[]; dns_only: string[] };
 }
 
@@ -55,6 +57,11 @@ function build(brand: BrandConfig, topo: Topology) {
     const host = brand.domains[s];
     if (!host || !topo.ecs_host) continue;
     out.push({ name: rel(host, zone), type: "A", content: topo.ecs_host });
+  }
+  for (const s of topo.vercel_surfaces ?? []) {
+    const host = brand.domains[s];
+    if (!host || !topo.www_cname) continue;
+    out.push({ name: rel(host, zone), type: "CNAME", content: topo.www_cname.replace(/\.$/, "") });
   }
   if (topo.docs_cname && brand.domains.docs) {
     out.push({

@@ -16,8 +16,30 @@
 | `studio.nebutra.com` | studio | Optional branded Studio alias |
 | `router.nebutra.com` | router | **Nebutra Router** — model fabric / OpenAI-compatible product edge (ECS PM2) |
 | `forge.nebutra.com` | forge | **Nebutra Forge** — tool station + Agent tool API (Vercel; ECS PM2 fallback :3105) |
+| `pebble.nebutra.com` | (external repo `Nebutra/pebble`) | **Pebble brand front** — landing / download / docs redirect only. No backend of its own. |
 
 > Router/Forge: product hosts; supply engines (New-API, Sub2API) stay **internal** — see `infra/nebutra-router/`.
+
+### Pebble — brand front, platform backend
+
+Pebble is a separate repo but is **not** allowed a parallel origin stack. Only the
+brand front gets a host; everything transactional runs on the shared platform hosts.
+
+| Capability | Host + path |
+|---|---|
+| Landing / download | `pebble.nebutra.com` (CF CNAME, static/redirect only) |
+| Docs | `docs.nebutra.com/pebble/*` — canonical; `pebble.nebutra.com/docs/*` redirects here |
+| Feedback | `POST api.nebutra.com/pebble/v1/feedback` |
+| Diagnostics | `POST api.nebutra.com/pebble/diagnostics/{token,upload,delete/:ticketId}` |
+| Status | `status.nebutra.com` |
+| Staging | **no host** — env / project isolation only |
+
+**Frozen decision (2026-07-27):** the API namespace is **prefixed**, not flat.
+`api.nebutra.com` is shared across every product, so `/v1/*` stays unclaimed and
+each product owns `/<product>/v1/*`. Do not add `api.pebble.*`, `status.pebble.*`,
+or `staging.pebble.*`. Client-side origins are build-time configurable
+(`DOCS_ORIGIN` / `API_ORIGIN` / `STATUS_ORIGIN`) — see the Pebble repo's
+`docs/reference/infra-index.md`.
 
 ## Production truth (as of 2026-07-22)
 
@@ -78,6 +100,7 @@ A       sso       106.15.4.31              ✅           ECS permanent issuer
 A       router    106.15.4.31              ✅           ECS PM2 @nebutra/router
 A       forge     106.15.4.31              ✅           ECS PM2 @nebutra/forge
 CNAME   docs      nebutra-sailor-docs.nebutra.workers.dev  ✅  # OpenNext Worker; Vercel grey-cloud is fallback only
+CNAME   pebble    cname.vercel-dns.com     ✅           Pebble brand front (landing/download); no backend
 ```
 
 When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.

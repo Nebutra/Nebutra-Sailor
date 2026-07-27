@@ -50,6 +50,7 @@ export const brand = {
     design: "design.nebutra.com",
     status: "status.nebutra.com",
     analytics: "analytics.nebutra.com",
+    pebble: "pebble.nebutra.com",
   },
 
   social: {
