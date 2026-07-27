@@ -4,9 +4,10 @@
  * Light: VI multi-path `logo-color.svg` + independent wordmark (neutral ink).
  * Dark: mono LogomarkSVG white + same wordmark white.
  *
- * Layout is always a horizontal flex row. Callers may pass size / visibility
- * classes (`h-*`, `hidden`, `sm:inline-flex`) but must not pass `sm:block` —
- * that overrides `inline-flex` and stacks mark above wordmark.
+ * Always flex-row. Callers pass size/visibility via className (`hidden`,
+ * `sm:hidden`, `sm:inline-flex`). Never use `sm:block` (stacks mark/wordmark)
+ * and never put `sm:!inline-flex` here — it overrides mark's `sm:hidden` and
+ * double-renders mobile + desktop BrandLogo instances.
  */
 
 import { LogomarkSVG, WordmarkEnSVG } from "@nebutra/brand";
@@ -27,8 +28,8 @@ export function BrandLogo({
   return (
     <span
       className={cn(
-        // flex-row last among display utilities via ! so caller `sm:block` cannot stack
-        "inline-flex shrink-0 flex-row items-center gap-[0.35em] sm:!inline-flex",
+        "inline-flex shrink-0 flex-row items-center gap-[0.35em]",
+        // className last so twMerge lets caller's hidden / sm:hidden / sm:inline-flex win
         className,
       )}
       data-brand-asset={variant}
