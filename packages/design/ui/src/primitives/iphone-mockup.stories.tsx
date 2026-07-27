@@ -122,7 +122,7 @@ export const ChromeVariants: Story = {
 export const LongAddressEdgeCase: Story = {
   render: () => (
     <div className="w-40">
-      <Phone address="platform-web-git-feature-redesign-dashboard-navigation.nebutra.dev/projects/mobile-demo" />
+      <Phone address="preview.nebutra.com/platform-web-git-redesign-dashboard-nav/projects/mobile-demo" />
     </div>
   ),
 };

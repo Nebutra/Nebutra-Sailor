@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { brand } from "@nebutra/brand/metadata";
 import { Button } from "@nebutra/ui/components";
 import {
   Form,
@@ -126,7 +127,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
                 <FormLabel>Workspace URL</FormLabel>
                 <div className="flex items-center rounded-[var(--radius-md)] border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
                   <span className="select-none border-r border-input px-3 py-2 text-sm text-muted-foreground">
-                    nebutra.app /
+                    {brand.domains.app} /
                   </span>
                   <FormControl>
                     <Input

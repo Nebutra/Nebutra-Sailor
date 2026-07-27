@@ -11,7 +11,7 @@ import {
 describe("welcome template", () => {
   const props = {
     userName: "Ada Lovelace",
-    loginUrl: "https://app.nebutra.ai/login",
+    loginUrl: "https://app.nebutra.com/login",
     brandName: "Nebutra",
   };
 
@@ -28,7 +28,7 @@ describe("welcome template", () => {
     expect(html.length).toBeGreaterThan(0);
     expect(html).toContain("Ada Lovelace");
     expect(html).toContain("Nebutra");
-    expect(html).toContain("https://app.nebutra.ai/login");
+    expect(html).toContain("https://app.nebutra.com/login");
     expect(html).toMatch(/<!DOCTYPE html>/i);
   });
 });
@@ -36,7 +36,7 @@ describe("welcome template", () => {
 describe("password-reset template", () => {
   const props = {
     userName: "Grace Hopper",
-    resetUrl: "https://app.nebutra.ai/reset?token=abc",
+    resetUrl: "https://app.nebutra.com/reset?token=abc",
     expiresInMinutes: 30,
     brandName: "Nebutra",
   };
@@ -52,7 +52,7 @@ describe("password-reset template", () => {
   it("includes reset url, user name, expiry and disclaimer in HTML body", () => {
     const html = renderPasswordResetEmail(props);
     expect(html).toContain("Grace Hopper");
-    expect(html).toContain("https://app.nebutra.ai/reset?token=abc");
+    expect(html).toContain("https://app.nebutra.com/reset?token=abc");
     expect(html).toContain("30 minutes");
     expect(html.toLowerCase()).toContain("if this wasn't you");
   });
@@ -63,7 +63,7 @@ describe("invitation template", () => {
     inviterName: "Alan Turing",
     organizationName: "Bletchley Inc.",
     role: "admin",
-    acceptUrl: "https://app.nebutra.ai/invites/xyz",
+    acceptUrl: "https://app.nebutra.com/invites/xyz",
     expiresAt: "2026-06-01",
     brandName: "Nebutra",
   };
@@ -79,7 +79,7 @@ describe("invitation template", () => {
     expect(html).toContain("Alan Turing");
     expect(html).toContain("Bletchley Inc.");
     expect(html).toContain("admin");
-    expect(html).toContain("https://app.nebutra.ai/invites/xyz");
+    expect(html).toContain("https://app.nebutra.com/invites/xyz");
     expect(html).toContain("2026-06-01");
     expect(html).toContain("Sent by Nebutra");
   });
@@ -93,7 +93,7 @@ describe("receipt template", () => {
     currency: "USD",
     periodStart: "2026-04-01",
     periodEnd: "2026-04-30",
-    downloadUrl: "https://app.nebutra.ai/receipts/INV-001234.pdf",
+    downloadUrl: "https://app.nebutra.com/receipts/INV-001234.pdf",
     brandName: "Nebutra",
   };
 
@@ -109,7 +109,7 @@ describe("receipt template", () => {
     expect(html).toContain("USD");
     expect(html).toContain("2026-04-01");
     expect(html).toContain("2026-04-30");
-    expect(html).toContain("https://app.nebutra.ai/receipts/INV-001234.pdf");
+    expect(html).toContain("https://app.nebutra.com/receipts/INV-001234.pdf");
   });
 });
 

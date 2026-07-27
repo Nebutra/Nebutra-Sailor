@@ -96,7 +96,7 @@ spec:
             description: |
               Error rate is {{ humanizePercentage $value }} (threshold 1.44%).
               At this rate, the monthly error budget will be exhausted in ~1 hour.
-              Runbook: https://wiki.nebutra.ai/runbooks/slo-availability
+              Runbook: https://docs.nebutra.com/runbooks/slo-availability
 
         # Page: slow burn — consumes 6× budget → 6h to exhaust
         - alert: NebutraSLOAvailabilitySlowBurn
@@ -115,7 +115,7 @@ spec:
             description: |
               Error rate is {{ humanizePercentage $value }} (threshold 0.6%).
               At this rate, the monthly error budget will be exhausted in ~6 hours.
-              Runbook: https://wiki.nebutra.ai/runbooks/slo-availability
+              Runbook: https://docs.nebutra.com/runbooks/slo-availability
 
         # Ticket: long burn — consumes 3× budget → 3 days to exhaust
         - alert: NebutraSLOAvailabilityLongBurn
@@ -151,7 +151,7 @@ spec:
             summary: "SLO CRITICAL: Latency fast burn"
             description: |
               {{ humanizePercentage $value }} of requests exceed 500ms (budget: 5%, threshold 72%).
-              Runbook: https://wiki.nebutra.ai/runbooks/slo-latency
+              Runbook: https://docs.nebutra.com/runbooks/slo-latency
 
         - alert: NebutraSLOLatencySlowBurn
           expr: |

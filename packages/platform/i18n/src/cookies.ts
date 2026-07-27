@@ -1,3 +1,5 @@
+import { getBrandCookieDomain } from "@nebutra/brand/metadata-helpers";
+
 export const LOCALE_COOKIE = "NEXT_LOCALE";
 export const MARKET_COOKIE = "NEXT_MARKET";
 
@@ -5,9 +7,11 @@ const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 function cookieDomainSuffix(): string {
   if (typeof window === "undefined") return "";
+  const parent = getBrandCookieDomain(); // e.g. ".example.com"
+  if (!parent) return "";
+  const apex = parent.slice(1);
   const host = window.location.hostname.toLowerCase();
-  if (host === "nebutra.com" || host.endsWith(".nebutra.com")) return "; Domain=.nebutra.com";
-  if (host === "nebutra.org" || host.endsWith(".nebutra.org")) return "; Domain=.nebutra.org";
+  if (host === apex || host.endsWith(parent)) return `; Domain=${parent}`;
   return "";
 }
 

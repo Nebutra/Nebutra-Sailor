@@ -152,7 +152,7 @@ export const WithCreateAction: Story = {
       }
       headerSlot={
         <div className="text-xs text-muted-foreground">
-          Signed in as <span className="font-medium text-foreground">peter@nebutra.io</span>
+          Signed in as <span className="font-medium text-foreground">peter@nebutra.com</span>
         </div>
       }
     />

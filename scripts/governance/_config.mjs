@@ -75,15 +75,16 @@ const DEFAULTS = {
     // Raw brand literal patterns to detect (regex strings). Covers:
     //   - Product name: Nebutra
     //   - Chinese brand names: 云毓智能, 云毓
-    //   - Brand domains: nebutra.com, nebutra.ai
+    //   - Brand domains: nebutra.<tld> — the TLD set is enumerated, not just
+    //     the canonical .com, so drift onto an unowned TLD (nebutra.ai /
+    //     .io / .dev / .app) is caught too. Single-TLD policy: docs/DOMAINS.md.
     //   - Brand hex colors: #0033FE (primary), #0BF1C3 (accent)
     // Use @nebutra/brand metadata + CSS vars instead of these literals.
     allowExpressions: [
       "Nebutra",
       "云毓智能",
       "云毓",
-      "nebutra\\.com",
-      "nebutra\\.ai",
+      "nebutra\\.(com|ai|io|dev|app|net|org|co|cn|xyz)\\b",
       "#0033FE",
       "#0BF1C3",
     ],

@@ -85,7 +85,7 @@ resource "vercel_project" "landing" {
 
 resource "vercel_project_environment_variable" "web_env" {
   for_each = {
-    NEXT_PUBLIC_APP_URL         = "https://app.nebutra.ai"
+    NEXT_PUBLIC_APP_URL         = "https://app.nebutra.com"
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = var.clerk_publishable_key != null ? var.clerk_publishable_key : ""
     NODE_ENV                    = "production"
   }

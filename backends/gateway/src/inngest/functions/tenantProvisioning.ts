@@ -17,6 +17,7 @@
  */
 
 import crypto from "node:crypto";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getSystemDb } from "@nebutra/db";
 import { sendWelcomeEmail } from "@nebutra/email";
 import { ClerkOrganizationDataSchema } from "@nebutra/event-bus";
@@ -266,7 +267,7 @@ export const provisionTenant: InngestFunction.Any = inngest.createFunction(
           to: ownerEmail,
           firstName: ownerFirstName || "there",
           orgName: organizationName,
-          dashboardUrl: "https://app.nebutra.ai",
+          dashboardUrl: getBrandOrigin("app"),
         });
 
         logger.info("Welcome email sent", { ownerEmail, organizationId: org.id });

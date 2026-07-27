@@ -264,7 +264,7 @@ export const DarkMode: Story = {
         id="dark-domain"
         label="Domain"
         prefix="https://"
-        suffix=".nebutra.app"
+        suffix="app.nebutra.com"
         defaultValue="docs"
         description="Dark mode uses the same semantic contract."
       />

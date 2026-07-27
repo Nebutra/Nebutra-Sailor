@@ -33,7 +33,7 @@ data:
       "links": [
         {
           "title": "Runbooks",
-          "url": "https://wiki.nebutra.ai/runbooks",
+          "url": "https://docs.nebutra.com/runbooks",
           "type": "link",
           "icon": "external link",
           "targetBlank": true
