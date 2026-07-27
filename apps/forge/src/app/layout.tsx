@@ -1,5 +1,9 @@
 import "./globals.css";
-import { getConfiguredAuthProvider } from "@nebutra/auth";
+import {
+  buildAuthCenterSignInUrl,
+  buildAuthCenterSignUpUrl,
+  getConfiguredAuthProvider,
+} from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
@@ -46,6 +50,17 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const locale = await getLocale();
   const messages = await getMessages();
 
+  // Server-side auth URLs (process.env is available here even when the client
+  // bundle was built without NEXT_PUBLIC_AUTH_URL). Prefer production forge
+  // returnTo default so deep links work before client hydrates.
+  const defaultReturnTo =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    process.env.NEXT_PUBLIC_FORGE_URL?.trim() ||
+    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
+    "https://forge.nebutra.com";
+  const signInHref = buildAuthCenterSignInUrl(defaultReturnTo);
+  const signUpHref = buildAuthCenterSignUpUrl(defaultReturnTo);
+
   return (
     <html
       lang={toHtmlLang(locale)}
@@ -55,7 +70,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider provider={authProvider} config={authProviderConfig}>
-            <SiteHeader />
+            <SiteHeader signInHref={signInHref} signUpHref={signUpHref} />
             <main id="main" className="flex-1">
               {children}
             </main>

@@ -6,6 +6,7 @@
  */
 
 const LOCAL_AUTH_ORIGIN = "http://localhost:3101";
+const PRODUCTION_AUTH_ORIGIN = "https://auth.nebutra.com";
 
 function stripTrailingSlash(value: string): string {
   let end = value.length;
@@ -13,9 +14,30 @@ function stripTrailingSlash(value: string): string {
   return end === value.length ? value : value.slice(0, end);
 }
 
+function isLocalhostOrigin(origin: string): boolean {
+  try {
+    const host = new URL(origin.includes("://") ? origin : `https://${origin}`).hostname;
+    return host === "localhost" || host === "127.0.0.1" || host === "[::1]";
+  } catch {
+    return /localhost|127\.0\.0\.1/.test(origin);
+  }
+}
+
+/** True when the browser is on a first-party Nebutra production host. */
+function isBrowserOnNebutraProductHost(): boolean {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname.toLowerCase();
+  return host === "nebutra.com" || host.endsWith(".nebutra.com");
+}
+
 /**
  * Public origin of the login center.
  * Prefer NEXT_PUBLIC_AUTH_URL, then BETTER_AUTH_URL, then app URL (legacy).
+ *
+ * Safety: when a client bundle was built without NEXT_PUBLIC_AUTH_URL (common
+ * on misconfigured ECS builds), the old fallback was localhost:3101 — which
+ * breaks production Sign-in links. On *.nebutra.com we always force the
+ * production auth center instead of localhost.
  */
 export function getAuthCenterOrigin(env: Record<string, string | undefined> = process.env): string {
   const raw =
@@ -23,7 +45,34 @@ export function getAuthCenterOrigin(env: Record<string, string | undefined> = pr
     env.BETTER_AUTH_URL?.trim() ||
     env.NEXT_PUBLIC_APP_URL?.trim() ||
     LOCAL_AUTH_ORIGIN;
-  return stripTrailingSlash(raw);
+
+  let origin = stripTrailingSlash(raw);
+
+  // Never send production users to a localhost login center.
+  if (isBrowserOnNebutraProductHost() && isLocalhostOrigin(origin)) {
+    origin = PRODUCTION_AUTH_ORIGIN;
+  }
+
+  // Also: if APP_URL was used as fallback and points at forge/router/app,
+  // that is not the auth center — correct to production auth on product hosts.
+  if (isBrowserOnNebutraProductHost()) {
+    try {
+      const host = new URL(origin).hostname.toLowerCase();
+      if (host !== "auth.nebutra.com" && host.endsWith(".nebutra.com")) {
+        // Prefer explicit env when it already targets auth.*; otherwise force.
+        const explicit = env.NEXT_PUBLIC_AUTH_URL?.trim() || env.BETTER_AUTH_URL?.trim() || "";
+        if (!explicit || isLocalhostOrigin(explicit)) {
+          origin = PRODUCTION_AUTH_ORIGIN;
+        } else {
+          origin = stripTrailingSlash(explicit);
+        }
+      }
+    } catch {
+      origin = PRODUCTION_AUTH_ORIGIN;
+    }
+  }
+
+  return origin;
 }
 
 /**

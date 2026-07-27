@@ -45,4 +45,30 @@ describe("auth center URL helpers", () => {
     expect(hosts).toContain("auth.nebutra.com");
     expect(hosts).toContain("console.nebutra.com");
   });
+
+  it("falls back to localhost only when not on a product host", () => {
+    delete process.env.NEXT_PUBLIC_AUTH_URL;
+    delete process.env.BETTER_AUTH_URL;
+    delete process.env.NEXT_PUBLIC_APP_URL;
+    expect(getAuthCenterOrigin()).toBe("http://localhost:3101");
+  });
+
+  it("forces production auth origin when browser host is *.nebutra.com and env is missing", () => {
+    delete process.env.NEXT_PUBLIC_AUTH_URL;
+    delete process.env.BETTER_AUTH_URL;
+    delete process.env.NEXT_PUBLIC_APP_URL;
+    const prev = globalThis.window;
+    // Minimal window stub — only hostname is read.
+    // @ts-expect-error test stub
+    globalThis.window = { location: { hostname: "forge.nebutra.com" } };
+    try {
+      expect(getAuthCenterOrigin()).toBe("https://auth.nebutra.com");
+      expect(buildAuthCenterSignInUrl("https://forge.nebutra.com/")).toContain(
+        "https://auth.nebutra.com/sign-in",
+      );
+    } finally {
+      // @ts-expect-error restore
+      globalThis.window = prev;
+    }
+  });
 });

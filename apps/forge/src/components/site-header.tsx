@@ -5,7 +5,7 @@ import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { AuthActions } from "@/components/auth-actions";
+import { AuthActions, type AuthActionsProps } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { ForgeMark } from "@/components/forge-mark";
 import { LocaleSwitcher } from "@/components/locale-switcher";
@@ -19,7 +19,9 @@ const NAV_KEYS = [
 
 const ROUTER_URL = process.env.NEXT_PUBLIC_ROUTER_URL?.trim() || getBrandOrigin("router");
 
-export function SiteHeader() {
+export type SiteHeaderProps = AuthActionsProps;
+
+export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
   const pathname = usePathname();
   const t = useTranslations("nav");
 
@@ -68,7 +70,10 @@ export function SiteHeader() {
           >
             <RouterMark className="h-7 w-7" />
           </a>
-          <AuthActions />
+          <AuthActions
+            {...(signInHref ? { signInHref } : {})}
+            {...(signUpHref ? { signUpHref } : {})}
+          />
         </div>
       </div>
     </header>
