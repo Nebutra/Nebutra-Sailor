@@ -247,6 +247,27 @@ describe("createModelPool", () => {
     expect(pool.remaining()).toEqual(["b"]);
   });
 
+  /**
+   * The caller uses this to wait out a rolling window instead of reporting
+   * failures that only mean "not this second".
+   */
+  it("reports when a benched pool will next have a model", () => {
+    const pool = createModelPool(["a", "b"]);
+    expect(pool.msUntilAvailable()).toBe(0);
+    pool.markExhausted("a", { cooldownMs: 5_000 });
+    expect(pool.msUntilAvailable()).toBe(0); // b is still free
+    pool.markExhausted("b", { cooldownMs: 10_000 });
+    const wait = pool.msUntilAvailable();
+    expect(wait).toBeGreaterThan(0);
+    expect(wait).toBeLessThanOrEqual(5_000); // soonest, not latest
+  });
+
+  it("reports null when no model can ever come back", () => {
+    const pool = createModelPool(["a"]);
+    pool.markExhausted("a", { cooldownMs: Number.POSITIVE_INFINITY });
+    expect(pool.msUntilAvailable()).toBeNull();
+  });
+
   it("recovers from a fully benched pool rather than dying", async () => {
     const pool = createModelPool(["a", "b"]);
     pool.markExhausted("a", { cooldownMs: 30 });

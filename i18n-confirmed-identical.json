@@ -362,6 +362,132 @@
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
       }
     },
+    "router": {
+      "ar": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "cs": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "da": {
+        "apiTaxonomy.data.label": "a82be0f551b8708bc08eb33cd9ded0cf",
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "chrome.adminConsole": "e3afed0047b08059d0fada10f400c1e5",
+        "chrome.support": "db5eb84117d06047c97c9a0191b5fffe",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "de": {
+        "admin.title": "e3afed0047b08059d0fada10f400c1e5",
+        "admin.wallet": "156e132b014314b1eae89410e54bcc8c",
+        "channels.client": "577d7068826de925ea2aec01dbadf5e4",
+        "chrome.adminConsole": "e3afed0047b08059d0fada10f400c1e5",
+        "chrome.support": "db5eb84117d06047c97c9a0191b5fffe",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b",
+        "shortcuts.wallet": "156e132b014314b1eae89410e54bcc8c",
+        "toolTaxonomy.bots.label": "cd4f10fcba234f0e8b2f60a490c306e6",
+        "toolTaxonomy.code.label": "ca0dbad92a874b2f69b549293387925e"
+      },
+      "el": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "es": {
+        "admin.title": "e3afed0047b08059d0fada10f400c1e5",
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b",
+        "toolTaxonomy.audio.label": "b22f0418e8ac915eb66f829d262d14a2",
+        "toolTaxonomy.bots.label": "cd4f10fcba234f0e8b2f60a490c306e6"
+      },
+      "fa": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "fi": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "fr": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "channels.client": "577d7068826de925ea2aec01dbadf5e4",
+        "toolTaxonomy.audio.label": "b22f0418e8ac915eb66f829d262d14a2",
+        "toolTaxonomy.bots.label": "cd4f10fcba234f0e8b2f60a490c306e6"
+      },
+      "he": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "hi": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087"
+      },
+      "hu": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "id": {
+        "apiTaxonomy.audio.label": "5be040b7a4cea5af7b42a10cd0c354a1",
+        "apiTaxonomy.image-edit.hint": "281dc0829d1d02f72d3a9b86ad06bf2a",
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087"
+      },
+      "it": {
+        "chrome.home": "8cf04a9734132302f96da8e113e80ce5"
+      },
+      "ja": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "ms": {
+        "apiTaxonomy.audio.label": "5be040b7a4cea5af7b42a10cd0c354a1"
+      },
+      "nl": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "apiTaxonomy.tools.hint": "cab8fc2d07998c39fbd284c9a6cd1efb",
+        "market.apps": "a6f00c82b6eb55a13a1f242313aaf9c9",
+        "market.openForge": "8105ac490adf58a1f203e1dfab86bb46",
+        "toolTaxonomy.audio.label": "b22f0418e8ac915eb66f829d262d14a2",
+        "toolTaxonomy.bots.label": "cd4f10fcba234f0e8b2f60a490c306e6"
+      },
+      "no": {
+        "chrome.adminConsole": "e3afed0047b08059d0fada10f400c1e5"
+      },
+      "pl": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b",
+        "toolTaxonomy.audio.label": "b22f0418e8ac915eb66f829d262d14a2"
+      },
+      "ro": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "apiTaxonomy.video.hint": "3d6cd9ab87885461f6b0795e7443f1d9",
+        "channels.client": "577d7068826de925ea2aec01dbadf5e4",
+        "chrome.adminConsole": "e3afed0047b08059d0fada10f400c1e5",
+        "toolTaxonomy.academic.label": "9e1c63fe89fae4da8db2c9e550b3e6c1",
+        "toolTaxonomy.audio.label": "b22f0418e8ac915eb66f829d262d14a2"
+      },
+      "ru": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087"
+      },
+      "sv": {
+        "admin.title": "e3afed0047b08059d0fada10f400c1e5",
+        "apiTaxonomy.data.label": "a82be0f551b8708bc08eb33cd9ded0cf",
+        "chrome.adminConsole": "e3afed0047b08059d0fada10f400c1e5",
+        "chrome.support": "db5eb84117d06047c97c9a0191b5fffe"
+      },
+      "tr": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087"
+      },
+      "uk": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "zh-Hans": {
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      },
+      "zh-Hant": {
+        "apiTaxonomy.rag.label": "fb6a72bbc33faf101b251a60eb3ee087",
+        "meta.titleTemplate": "a08de866c1d204d185dff287b09f9e5b"
+      }
+    },
     "tsekaluk-dev": {
       "da": {
         "focus.label": "70d529695c253d17e992cb9265abc57f",

@@ -96,7 +96,7 @@
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
+      "label": "Botter",
       "chips": "Chatbots · tegnebots · viden"
     },
     "productivity": {

@@ -526,6 +526,21 @@ export function createModelPool(models) {
       if (!list.includes(model)) return;
       benched.set(model, cooldownMs === Infinity ? Infinity : Date.now() + cooldownMs);
     },
+    /**
+     * Milliseconds until a benched model returns, or `null` if the pool can
+     * never refill (every model permanently retired). `0` means one is free
+     * now. Lets callers wait out a rolling window instead of reporting a
+     * failure that only means "not this second".
+     */
+    msUntilAvailable(now = Date.now()) {
+      if (active(now).length > 0) return 0;
+      const waits = list
+        .map((m) => benched.get(m))
+        .filter((u) => u !== undefined && u !== Infinity)
+        .map((u) => u - now);
+      if (waits.length === 0) return null;
+      return Math.max(0, Math.min(...waits));
+    },
     /** @returns {string | null} */
     pick() {
       const alive = active();

@@ -9,7 +9,7 @@
     "keys": "Chei API",
     "wallet": "Portofel",
     "docs": "Documentație",
-    "title": "Admin",
+    "title": "Administrator",
     "backToMarket": "Înapoi la piață",
     "quickUse": "Utilizare rapidă"
   },
@@ -96,7 +96,7 @@
   },
   "toolTaxonomy": {
     "bots": {
-      "label": "Bots",
+      "label": "Boți",
       "chips": "Chat bots · drawing bots · cunoștințe"
     },
     "productivity": {

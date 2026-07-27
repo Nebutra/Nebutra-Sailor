@@ -21,7 +21,7 @@
     "collapseSidebar": "Réduire la barre latérale",
     "expandSidebar": "Développer la barre latérale",
     "home": "Accueil",
-    "adminConsole": "Admin",
+    "adminConsole": "Administration",
     "quickUse": "Utilisation rapide",
     "support": "Support",
     "apiDocs": "Docs API",
@@ -125,7 +125,7 @@
     "keys": "Clés",
     "wallet": "Portefeuille",
     "use": "Essayer",
-    "docs": "Docs",
+    "docs": "Documentation",
     "models": "Plus"
   }
 }

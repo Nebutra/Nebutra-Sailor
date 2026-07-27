@@ -258,9 +258,23 @@ async function translateBatchOnce(targetLocale, entries) {
   const maxAttempts = Math.max(MAX_RETRIES, MODELS.length * 2);
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    const model = modelPool.pick();
+    let model = modelPool.pick();
     if (!model) {
-      throw lastErr ?? new Error("all translate models exhausted (quota/rate-limit)");
+      // Every model is benched. That is usually a rolling window turning over,
+      // not a dead account — waiting is the correct move, and failing here is
+      // what turned a spent window into thousands of bogus "failures".
+      const wait = modelPool.msUntilAvailable();
+      if (wait === null) {
+        throw lastErr ?? new Error("no usable translate model (all ids rejected by the API)");
+      }
+      const padded = Math.min(wait + 250, REQUEST_TIMEOUT_MS);
+      noteCause("waited for a window to turn");
+      process.stderr.write(`  all models benched; waiting ${Math.round(padded)}ms for a window\n`);
+      await sleep(padded);
+      model = modelPool.pick();
+      if (!model) {
+        throw lastErr ?? new Error("all translate models still benched after waiting");
+      }
     }
 
     const body = buildTranslateBody(model, targetLocale, entries);
@@ -279,6 +293,7 @@ async function translateBatchOnce(targetLocale, entries) {
       const text = await res.text();
       if (isHardQuotaError(res.status, text)) {
         // Window budget, not a dead model — it comes back when the window turns.
+        noteCause("window quota spent (recoverable)");
         modelPool.markExhausted(model);
         lastErr = new Error(`[${model}] HTTP ${res.status} window-quota: ${text.slice(0, 180)}`);
         process.stderr.write(
@@ -312,6 +327,7 @@ async function translateBatchOnce(targetLocale, entries) {
       const { accepted, rejected } = acceptBatchResults(entries, parsed, {
         locale: targetLocale,
       });
+      for (const [, , reason] of rejected) noteCause(`validation: ${reason}`);
       if (accepted.size === 0) {
         const reason = rejected[0]?.[2] ?? "empty";
         throw new Error(`[${model}] 0 accepted leaves (${reason})`);
@@ -325,6 +341,7 @@ async function translateBatchOnce(targetLocale, entries) {
           msg,
         )
       ) {
+        noteCause("model id rejected by API (404)");
         modelPool.markExhausted(model, { cooldownMs: Number.POSITIVE_INFINITY });
         process.stderr.write(
           `  model ${model} unavailable (bad id); retired for this run; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
@@ -564,6 +581,57 @@ async function translateCatalog(catalog, args) {
   );
 }
 
+/**
+ * Print what the account actually exposes versus what this run will use.
+ *
+ * Two failure modes were invisible for months without it: `glm-5.2` existed on
+ * the account and was never called (its whole window bucket idle), and
+ * `sensenova-u1-fast` was configured while /v1/chat/completions 404s it. Both
+ * showed up only by reading the dashboard by hand and comparing.
+ */
+/**
+ * Why calls did not land, tallied where the cause is actually observable.
+ *
+ * The run summary used to say only "partial run (quota/errors)". That single
+ * phrase covered a spent rolling window, a 404 model id, a validation reject,
+ * and a real outage — and it was read (by a human and by me) as "the account
+ * is out of credit" on a run where two of three windows were untouched.
+ */
+const FAILURE_CAUSES = new Map();
+function noteCause(cause) {
+  FAILURE_CAUSES.set(cause, (FAILURE_CAUSES.get(cause) ?? 0) + 1);
+}
+
+async function reportModelReachability() {
+  let listed;
+  try {
+    const res = await fetch(`${API_BASE}/models`, {
+      headers: { Authorization: `Bearer ${API_KEY}` },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    listed = (await res.json())?.data?.map((m) => m.id).filter(Boolean) ?? [];
+  } catch (err) {
+    process.stdout.write(`models: preflight skipped (${String(err).slice(0, 60)})\n`);
+    return;
+  }
+
+  const configured = modelPool.all();
+  const unused = listed.filter((m) => !configured.includes(m));
+  const unlisted = configured.filter((m) => !listed.includes(m));
+
+  process.stdout.write(`models: using ${configured.join(", ")}\n`);
+  if (unused.length) {
+    process.stdout.write(
+      `  ⚠ available on this account but NOT used: ${unused.join(", ")}\n` +
+        "    Each model has its own window quota — adding one adds capacity.\n" +
+        "    Enable via SENSENOVA_TRANSLATE_MODELS if it answers /chat/completions.\n",
+    );
+  }
+  if (unlisted.length) {
+    process.stdout.write(`  ⚠ configured but absent from /v1/models: ${unlisted.join(", ")}\n`);
+  }
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   args.confirmed = loadConfirmed();
@@ -603,6 +671,8 @@ async function main() {
     process.stdout.write(`smoke ok → ${smoke.get("__ping__")}\n`);
   }
 
+  if (!args.dryRun) await reportModelReachability();
+
   const catalogLimit = pLimit(CATALOG_CONCURRENCY);
   const nested = await Promise.all(
     catalogs.map((c) => catalogLimit(() => translateCatalog(c, args))),
@@ -612,6 +682,12 @@ async function main() {
   const totalT = results.reduce((s, r) => s + (r?.translated ?? 0), 0);
   const totalF = results.reduce((s, r) => s + (r?.failed ?? 0), 0);
   process.stdout.write(`\nDone. translated=${totalT} failed=${totalF}\n`);
+  if (FAILURE_CAUSES.size) {
+    process.stdout.write("Causes observed (events, not leaves):\n");
+    for (const [cause, n] of [...FAILURE_CAUSES].sort((a, b) => b[1] - a[1])) {
+      process.stdout.write(`  ${String(n).padStart(6)}  ${cause}\n`);
+    }
+  }
   // Partial success is normal when Token Plan quota is exhausted mid-run.
   // Keep exit 0 so CI can still commit whatever was translated; hard-fail only
   // when nothing landed and there were failures (or total API outage).
@@ -651,7 +727,10 @@ async function main() {
     process.exitCode = 2;
   } else if (totalF > 0) {
     process.stdout.write(
-      `Note: partial run (quota/errors). Retry later without --force to fill remaining identical/missing leaves.\n`,
+      "Note: partial run. Check the cause breakdown above before assuming the\n" +
+        "account is out of credit — a spent rolling window refills, and a 404\n" +
+        "model id is a config problem, not a quota one. Re-run without --force\n" +
+        "to fill whatever is left.\n",
     );
   }
 }
