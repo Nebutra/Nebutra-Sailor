@@ -9,10 +9,14 @@
     "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
     "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
     "NEXT_PUBLIC_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_FORGE_URL": "https://forge.nebutra.com",
+    "NEXT_PUBLIC_ROUTER_URL": "https://router.nebutra.com",
     "NEXT_PUBLIC_AUTH_PROVIDER": "better-auth",
     "AUTH_PROVIDER": "better-auth",
     "BETTER_AUTH_URL": "https://auth.nebutra.com",
-    "AUTH_COOKIE_DOMAIN": ".nebutra.com"
+    "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    "AUTH_RETURN_ALLOWED_HOSTS": "forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com",
+    "BETTER_AUTH_TRUSTED_ORIGINS": "https://forge.nebutra.com,https://router.nebutra.com,https://app.nebutra.com,https://nebutra.com,https://www.nebutra.com"
   },
   "headers": [
     {

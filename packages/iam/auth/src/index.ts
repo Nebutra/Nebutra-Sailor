@@ -51,6 +51,11 @@ export {
   isCapabilityEffective,
   listFirstClassAuthProviders,
 } from "./provider-matrix";
+// Multi-app SSO: trusted origins for Better Auth CORS / CSRF checks
+export {
+  MULTI_APP_SSO_DEFAULT_ORIGINS,
+  resolveBetterAuthTrustedOrigins,
+} from "./providers/better-auth/trusted-origins";
 // Service-to-service HMAC helpers
 export type { ServiceTokenContext } from "./s2s";
 export { signServiceToken, verifyServiceToken } from "./s2s";

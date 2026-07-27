@@ -9,6 +9,7 @@
 import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
 import { getConfiguredAuthProvider, sanitizeReturnUrl } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
+import { applyAuthCors } from "@/lib/cors";
 import { isOAuthProvider, type OAuthProvider } from "@/lib/oauth-providers";
 import { applySessionHint } from "@/lib/session-hint";
 
@@ -117,21 +118,31 @@ async function handleOAuthStartRequest(request: Request): Promise<Response | nul
 }
 
 async function handle(request: Request): Promise<Response> {
+  // Preflight must succeed before BA handler (which may not answer OPTIONS).
+  if (request.method.toUpperCase() === "OPTIONS") {
+    return applyAuthCors(request, new Response(null, { status: 204 }));
+  }
+
   if (!PROVIDERS_USING_THIS_ROUTE.has(provider)) {
-    return new Response("Auth provider does not use this route", { status: 404 });
+    return applyAuthCors(
+      request,
+      new Response("Auth provider does not use this route", { status: 404 }),
+    );
   }
 
   const oauthStartResponse = await handleOAuthStartRequest(request);
   if (oauthStartResponse) {
     const url = new URL(request.url);
-    return applySessionHint(oauthStartResponse, url.pathname, oauthStartResponse.status);
+    const withHint = applySessionHint(oauthStartResponse, url.pathname, oauthStartResponse.status);
+    return applyAuthCors(request, withHint);
   }
 
   const auth = await getAuth();
   const authHandler = auth.middleware();
   const response = (await authHandler(request)) ?? new Response(null, { status: 404 });
   const url = new URL(request.url);
-  return applySessionHint(response, url.pathname, response.status);
+  const withHint = applySessionHint(response, url.pathname, response.status);
+  return applyAuthCors(request, withHint);
 }
 
 export const GET = handle;
@@ -139,3 +150,4 @@ export const POST = handle;
 export const PUT = handle;
 export const PATCH = handle;
 export const DELETE = handle;
+export const OPTIONS = handle;

@@ -44,6 +44,7 @@ DEPLOY_RUNTIME_KEYS=(
   DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL
   AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL
   BETTER_AUTH_SECRET BETTER_AUTH_URL NEXT_PUBLIC_AUTH_URL AUTH_COOKIE_DOMAIN AUTH_RETURN_ALLOWED_HOSTS
+  BETTER_AUTH_TRUSTED_ORIGINS NEXT_PUBLIC_FORGE_URL NEXT_PUBLIC_ROUTER_URL
   NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL
   NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN
   NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_AUTH DOMAIN_STUDIO
@@ -608,7 +609,12 @@ load_runtime_env() {
     AUTH_COOKIE_DOMAIN="${AUTH_COOKIE_DOMAIN:-.nebutra.com}"
     NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL:-https://app.nebutra.com}"
     NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://nebutra.com}"
+    NEXT_PUBLIC_FORGE_URL="${NEXT_PUBLIC_FORGE_URL:-https://forge.nebutra.com}"
+    NEXT_PUBLIC_ROUTER_URL="${NEXT_PUBLIC_ROUTER_URL:-https://router.nebutra.com}"
     AUTH_PROVIDER="${AUTH_PROVIDER:-better-auth}"
+    # CORS trust for product RPs that call getSession() cross-origin (forge/router/app).
+    BETTER_AUTH_TRUSTED_ORIGINS="${BETTER_AUTH_TRUSTED_ORIGINS:-https://forge.nebutra.com,https://router.nebutra.com,https://app.nebutra.com,https://nebutra.com,https://www.nebutra.com}"
+    AUTH_RETURN_ALLOWED_HOSTS="${AUTH_RETURN_ALLOWED_HOSTS:-forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com}"
 
     local missing=()
     [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
@@ -634,6 +640,10 @@ load_runtime_env() {
     replace_env_assignment "$app_root/.env" AUTH_COOKIE_DOMAIN "$AUTH_COOKIE_DOMAIN"
     replace_env_assignment "$app_root/.env" NEXT_PUBLIC_APP_URL "$NEXT_PUBLIC_APP_URL"
     replace_env_assignment "$app_root/.env" NEXT_PUBLIC_SITE_URL "$NEXT_PUBLIC_SITE_URL"
+    replace_env_assignment "$app_root/.env" NEXT_PUBLIC_FORGE_URL "$NEXT_PUBLIC_FORGE_URL"
+    replace_env_assignment "$app_root/.env" NEXT_PUBLIC_ROUTER_URL "$NEXT_PUBLIC_ROUTER_URL"
+    replace_env_assignment "$app_root/.env" BETTER_AUTH_TRUSTED_ORIGINS "$BETTER_AUTH_TRUSTED_ORIGINS"
+    replace_env_assignment "$app_root/.env" AUTH_RETURN_ALLOWED_HOSTS "$AUTH_RETURN_ALLOWED_HOSTS"
     persist_google_auth_runtime_env "$app_root"
     persist_github_auth_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"

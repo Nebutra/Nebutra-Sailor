@@ -109,8 +109,11 @@ describe("Better Auth trusted origins (cross-origin One Tap / OAuth)", () => {
       "NEXT_PUBLIC_AUTH_URL",
       "NEXT_PUBLIC_SITE_URL",
       "NEXT_PUBLIC_APP_URL",
+      "NEXT_PUBLIC_FORGE_URL",
+      "NEXT_PUBLIC_ROUTER_URL",
       "NEBUTRA_LANDING_ORIGIN",
       "BETTER_AUTH_TRUSTED_ORIGINS",
+      "AUTH_COOKIE_DOMAIN",
     ]) {
       delete process.env[key];
     }
@@ -133,6 +136,23 @@ describe("Better Auth trusted origins (cross-origin One Tap / OAuth)", () => {
       "https://app.nebutra.com",
       "https://staging.nebutra.com",
     ]);
+  });
+
+  it("includes forge/router when multi-app SSO cookie domain is set", () => {
+    process.env.AUTH_COOKIE_DOMAIN = ".nebutra.com";
+    process.env.BETTER_AUTH_URL = "https://auth.nebutra.com";
+
+    const origins = resolveBetterAuthTrustedOrigins();
+    expect(origins).toContain("https://forge.nebutra.com");
+    expect(origins).toContain("https://router.nebutra.com");
+    expect(origins).toContain("https://app.nebutra.com");
+    expect(origins).toContain("https://auth.nebutra.com");
+    expect(origins).toContain("http://localhost:3105");
+  });
+
+  it("includes NEXT_PUBLIC_FORGE_URL even without AUTH_COOKIE_DOMAIN", () => {
+    process.env.NEXT_PUBLIC_FORGE_URL = "https://forge.nebutra.com";
+    expect(resolveBetterAuthTrustedOrigins()).toEqual(["https://forge.nebutra.com"]);
   });
 });
 
