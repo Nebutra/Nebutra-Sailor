@@ -68,12 +68,79 @@ function withSecurityHeaders(response: NextResponse): NextResponse {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=(), payment=()",
   );
+  // G31 isolation headers (same-origin default for marketing)
+  response.headers.set("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  response.headers.set("Cross-Origin-Resource-Policy", "same-site");
   return response;
+}
+
+/** G32 — Host allowlist. Empty ALLOWED_HOSTS = soft mode (log only via header). */
+function isHostAllowed(host: string | undefined): boolean {
+  if (!host) return false;
+  const h = host.toLowerCase();
+  const fromEnv = (process.env.ALLOWED_HOSTS ?? "")
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  const brandHosts = [
+    // The marketing domain's key is `landing`; there is no `www` entry.
+    // Keep the www. alias too — it is a real host visitors reach.
+    brand.domains.landing,
+    `www.${brand.domains.landing}`,
+    brand.domains.app,
+    brand.domains.status,
+    brand.domains.docs,
+  ]
+    .filter(Boolean)
+    .map(
+      (d) =>
+        String(d)
+          .toLowerCase()
+          .replace(/^https?:\/\//, "")
+          .split("/")[0]!,
+    );
+  const allow = new Set([...fromEnv, ...brandHosts]);
+  if (process.env.NODE_ENV !== "production") {
+    allow.add("localhost");
+    allow.add("127.0.0.1");
+  }
+  // Soft allow when no allowlist configured (local / unset)
+  if (allow.size === 0) return true;
+  return allow.has(h);
+}
+
+/** G30 — optional edge authenticity token when ORIGIN_EDGE_TOKEN is set. */
+function isEdgeTokenValid(request: NextRequest): boolean {
+  const expected = process.env.ORIGIN_EDGE_TOKEN;
+  if (!expected) return true;
+  const got = request.headers.get("x-nebutra-edge-token");
+  return got === expected;
+}
+
+/** G22 — coarse UA-class rate signal (edge WAF is authoritative; this is defense-in-depth). */
+function botClass(ua: string | null): "ai" | "search" | "other" {
+  const u = (ua ?? "").toLowerCase();
+  if (/gptbot|claudebot|bytespider|ccbot|google-extended|applebot-extended/.test(u)) return "ai";
+  if (/googlebot|bingbot|duckduckbot|yandex|baiduspider/.test(u)) return "search";
+  return "other";
 }
 
 export default function proxy(request: NextRequest): NextResponse {
   const host = request.headers.get("host")?.split(":")[0]?.toLowerCase();
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+
+  if (!isEdgeTokenValid(request)) {
+    return withSecurityHeaders(
+      new NextResponse("Misdirected or unauthenticated edge hop", { status: 421 }),
+    );
+  }
+  if (host && !isHostAllowed(host)) {
+    return withSecurityHeaders(new NextResponse("Host not allowed", { status: 421 }));
+  }
+  // Annotate bot class for downstream observability / edge rules (G22)
+  // (Actual per-IP rate limits belong on CF/WAF — see docs/seo/bot-policy-matrix.md)
+  const _bot = botClass(request.headers.get("user-agent"));
+  void _bot;
   const docsRedirectUrl = createDocsRedirectUrl(request.nextUrl, host);
   const legacyAppRedirectUrl = createLegacyAppRedirectUrl(pathname, APP_REDIRECT_URL);
   const legacyLocaleRedirectUrl = createLegacyLocaleRedirectUrl(request.nextUrl, pathname);

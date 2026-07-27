@@ -29,8 +29,13 @@
 // Run: node scripts/governance/lint-brand-literals.mjs
 
 import { execSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { loadGovernanceConfig } from "./_config.mjs";
+
+// Same resolution `loadGovernanceConfig` uses, so --prune rewrites the file the
+// engine actually read.
+const CONFIG_PATH = resolve(process.cwd(), "governance.config.json");
 
 const cfg = loadGovernanceConfig("brandLiterals");
 
@@ -80,6 +85,36 @@ for (const file of candidates) {
 
 const newViolations = [...detected].filter((f) => !allowlist.has(f)).sort();
 const fixedButListed = [...allowlist].filter((f) => existsSync(f) && !detected.has(f)).sort();
+// Entries whose file is gone. These were invisible before: every other check
+// skipped them via existsSync, so a deleted file's allowance lived forever and
+// silently pre-approved anything recreated at the same path.
+const deletedButListed = [...allowlist].filter((f) => !existsSync(f)).sort();
+
+const stale = [...new Set([...fixedButListed, ...deletedButListed])].sort();
+
+// `--prune` rewrites the allowlist instead of asking a human to hand-edit it.
+// The list is shrink-only, so removing entries is always safe; making the
+// remedy one command is what stops "❌ you fixed something" from being a
+// hostile failure.
+if (process.argv.includes("--prune")) {
+  if (stale.length === 0) {
+    process.stdout.write("✓ brand-literals allowlist already minimal\n");
+    process.exit(0);
+  }
+  const raw = JSON.parse(readFileSync(CONFIG_PATH, "utf8"));
+  const before = raw.brandLiterals.allowlist.length;
+  raw.brandLiterals.allowlist = raw.brandLiterals.allowlist
+    .filter((f) => !stale.includes(f))
+    .sort();
+  writeFileSync(CONFIG_PATH, `${JSON.stringify(raw, null, 2)}\n`);
+  process.stdout.write(
+    `✓ pruned ${stale.length} entr${stale.length === 1 ? "y" : "ies"} ` +
+      `(${before} → ${raw.brandLiterals.allowlist.length})\n` +
+      stale.map((f) => `   - ${f}`).join("\n") +
+      "\n",
+  );
+  process.exit(0);
+}
 
 let failed = false;
 
@@ -87,7 +122,7 @@ if (newViolations.length > 0) {
   failed = true;
   process.stderr.write(
     "\n❌ Brand-literal violation — these files contain raw brand literals\n" +
-      "   (Nebutra, 云毓智能, 云毓, nebutra.com, nebutra.ai, #0033FE, #0BF1C3).\n" +
+      "   (Nebutra, 云毓智能, 云毓, nebutra.<tld>, #0033FE, #0BF1C3).\n" +
       "   Route brand identity through @nebutra/brand/metadata (brand.name,\n" +
       "   brand.domains.*) or token vars (var(--brand-primary),\n" +
       "   var(--brand-accent)) — never hardcode.\n" +
@@ -97,14 +132,23 @@ if (newViolations.length > 0) {
   );
 }
 
-if (fixedButListed.length > 0) {
+if (stale.length > 0) {
   failed = true;
-  process.stderr.write(
-    "\n❌ These files no longer contain raw brand literals (migrated 🎉) — remove\n" +
-      "   them from brandLiterals.allowlist in governance.config.json (the list\n" +
-      "   is shrink-only):\n" +
+  const migrated = fixedButListed.length
+    ? "   migrated (no longer contain brand literals):\n" +
       fixedButListed.map((f) => `   - ${f}`).join("\n") +
-      "\n",
+      "\n"
+    : "";
+  const deleted = deletedButListed.length
+    ? "   deleted (file no longer exists):\n" +
+      deletedButListed.map((f) => `   - ${f}`).join("\n") +
+      "\n"
+    : "";
+  process.stderr.write(
+    "\n❌ The brand-literal allowlist has stale entries. It is shrink-only, so\n" +
+      "   these must go. Run:  node scripts/lint-brand-literals.mjs --prune\n" +
+      migrated +
+      deleted,
   );
 }
 

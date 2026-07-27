@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import {
   Box,
   Check,
@@ -22,7 +23,6 @@ import {
   Terminal as TerminalView,
   TypingAnimation,
 } from "@nebutra/ui/primitives";
-
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
@@ -117,7 +117,9 @@ function ConnectionBody({ slug }: { slug: string }) {
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <div className="flex min-w-0 flex-col gap-1">
-          <span className="text-sm font-semibold text-foreground">{slug}.nebutra.dev</span>
+          <span className="text-sm font-semibold text-foreground">
+            {slug}.preview.{brand.domains.landing}
+          </span>
           <span className="font-mono text-xs text-muted-foreground">@nebutra/{slug}@1.4.2</span>
         </div>
         <div className="ml-auto flex flex-col items-end gap-2">

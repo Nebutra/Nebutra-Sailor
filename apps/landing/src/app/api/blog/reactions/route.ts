@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { brand } from "@nebutra/brand/metadata";
 import { getServerClient } from "@nebutra/sanity/client";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -48,7 +49,7 @@ export async function POST(req: NextRequest) {
       authorEmail: user.email ?? "",
       authorId: user.id,
       authorImageUrl: user.imageUrl ?? null,
-      authorName: user.name ?? user.email ?? "Nebutra reader",
+      authorName: user.name ?? user.email ?? `${brand.name} reader`,
       createdAt: new Date().toISOString(),
       kind: parsed.data.kind,
       language: parsed.data.language,
