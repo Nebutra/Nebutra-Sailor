@@ -279,19 +279,13 @@ export function LogoEnColorSVG({
   logoColorGradSeq += 1;
   const gradId = `nebutra-logo-en-color-grad-${logoColorGradSeq}`;
 
-  // Gradient in logomark native space (userSpaceOnUse) so fill survives scale().
-  // fill on <path> (not only <g>) — more reliable across engines.
+  // objectBoundingBox: gradient follows the path's painted bbox after scale().
+  // userSpaceOnUse with native 0–535 coords was wrong — root viewBox is ~151×22,
+  // so the gradient sat outside the mark and the icon looked empty (wordmark only).
   const children = (
     <>
       <defs>
-        <linearGradient
-          id={gradId}
-          gradientUnits="userSpaceOnUse"
-          x1="40"
-          y1="40"
-          x2="490"
-          y2="460"
-        >
+        <linearGradient id={gradId} gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#0033FE" />
           <stop offset="0.5" stopColor="#00A2E9" />
           <stop offset="1" stopColor="#0BF1C3" />
