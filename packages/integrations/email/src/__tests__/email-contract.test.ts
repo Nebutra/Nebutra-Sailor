@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   EMAIL_TEMPLATE_CATALOG,
   sendContactFormReceivedEmail,
+  sendEmailChangeEmail,
   sendInvitationEmail,
   sendLicenseCreatedEmail,
   sendMagicLinkEmail,
@@ -14,6 +15,7 @@ import {
 
 const SEND_HELPERS = {
   sendContactFormReceivedEmail,
+  sendEmailChangeEmail,
   sendInvitationEmail,
   sendLicenseCreatedEmail,
   sendMagicLinkEmail,
