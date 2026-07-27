@@ -1,4 +1,6 @@
-import { LogoEnColorSVG, LogoEnSVG } from "@nebutra/brand";
+import { LogoEnSVG } from "@nebutra/brand";
+// Official VI horizontal logo (multi-path gradient mark + wordmark) — not mono.
+import logoHorizontalEn from "@nebutra/brand/assets/logo/logo-horizontal-en.svg";
 import { brand } from "@nebutra/brand/metadata";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { Banner } from "fumadocs-ui/components/banner";
@@ -8,11 +10,17 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { htmlLangForLanguage, i18n } from "@/lib/i18n";
 import { source } from "@/lib/source";
 import "../globals.css";
+
+const logoHorizontalEnSrc =
+  typeof logoHorizontalEn === "string"
+    ? logoHorizontalEn
+    : (logoHorizontalEn as { src: string }).src;
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // Matches the Precision Stack used across apps/web and apps/landing
@@ -115,14 +123,19 @@ export default async function RootLayout({
                 title: (
                   <div className="flex items-center gap-2">
                     {/*
-                      Light: VI color (gradient mark + #060307 wordmark).
-                      Dark: mono white 反白 (currentColor), not CSS invert on color asset.
+                      Light: official VI 正标 logo-horizontal-en.svg (real multi-path
+                      color mark — not mono path + fake gradient).
+                      Dark: LogoEnSVG mono pure white 反白.
                     */}
                     <span className="inline-flex h-6 items-center">
-                      <LogoEnColorSVG
+                      <Image
+                        src={logoHorizontalEnSrc}
+                        alt={`${brand.name} Sailor Docs`}
                         width={140}
+                        height={27}
                         className="h-6 w-auto dark:hidden"
-                        aria-label={`${brand.name} Sailor Docs`}
+                        priority
+                        unoptimized
                       />
                       <LogoEnSVG
                         width={140}

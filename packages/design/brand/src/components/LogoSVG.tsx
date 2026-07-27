@@ -6,8 +6,9 @@
  * **Mono** (`LogoEnSVG` / `LogomarkSVG`): fill="currentColor" — recolor via `text-*`.
  * Product chrome default: `text-brand-mark`. Inverse: `text-white`.
  *
- * **Color VI** (`LogoEnColorSVG`): logomark brand gradient + wordmark #060307.
- * Use for light marketing/docs chrome; pair with mono white in dark mode.
+ * **Color VI** (`LogoEnColorSVG`): mono mark path painted with brand gradient +
+ * #060307 wordmark. Prefer official asset `assets/logo/logo-horizontal-en.svg`
+ * for full multi-path VI (nav chrome / marketing).
  *
  * Source assets: packages/design/brand/assets/logo/
  *
