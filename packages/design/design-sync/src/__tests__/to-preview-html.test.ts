@@ -141,9 +141,12 @@ describe("serializeToPreviewHtml — document structure", () => {
 // ─── Design-system name ───────────────────────────────────────────────────────
 
 describe("serializeToPreviewHtml — name rendering", () => {
-  it("renders default name 'Nebutra' in the document when no options provided", () => {
+  it("falls back to a generic label, never a brand, when no name is given", () => {
     const html = serializeToPreviewHtml(coreSets);
-    expect(html).toContain("Nebutra");
+    expect(html).toContain("Design System");
+    // This package is provider-agnostic; defaulting to a brand stamped it onto
+    // every downstream design system that omitted the option.
+    expect(html).not.toContain("Nebutra");
   });
 
   it("renders the custom name passed in options", () => {

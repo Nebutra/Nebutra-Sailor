@@ -472,7 +472,7 @@ colors:
     expect(written).toContain("Acme DS");
   });
 
-  it("push without name/description defaults to Nebutra branding", async () => {
+  it("push without name/description writes a generic label, not a brand", async () => {
     const provider = new DesignMdProvider({
       provider: "design-md",
       tokensDir: fixture.tokensDir,
@@ -482,7 +482,8 @@ colors:
     await provider.push();
 
     const written = await readFile(fixture.designMdPath, "utf8");
-    expect(written).toContain('name: "Nebutra"');
+    expect(written).toContain('name: "Design System"');
+    expect(written).not.toContain("Nebutra");
   });
 
   // ── preview.html sibling ─────────────────────────────────────────────────────

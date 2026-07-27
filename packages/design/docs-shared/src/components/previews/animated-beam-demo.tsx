@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { LogoGithub, LogoSlack, Workflow } from "@nebutra/icons";
 import { AnimatedBeam } from "@nebutra/ui/primitives";
 import type * as React from "react";
@@ -53,7 +54,7 @@ export function AnimatedBeamDemo() {
       <FlowNode
         ref={centerRef}
         icon={<Workflow className="size-4 text-[hsl(var(--primary))]" />}
-        label="Nebutra"
+        label={brand.name}
         detail="Policy run"
       />
       <FlowNode

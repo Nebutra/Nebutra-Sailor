@@ -309,10 +309,11 @@ describe("serializeToDesignMd — options", () => {
     expect(frontMatter).toContain('description: "Test design system"');
   });
 
-  it("defaults name to Nebutra when not provided", () => {
+  it("falls back to a generic name, never a brand", () => {
     const md = serializeToDesignMd([coreSet, semanticSet]);
     const { frontMatter } = splitFrontMatter(md);
-    expect(frontMatter).toContain('name: "Nebutra"');
+    expect(frontMatter).toContain('name: "Design System"');
+    expect(frontMatter).not.toContain("Nebutra");
   });
 });
 
@@ -483,14 +484,21 @@ describe("serializeToDesignMd — description in prose Overview", () => {
     expect(overviewSection).toContain(customDesc);
   });
 
-  it("does NOT use the custom description as a hardcoded fallback — must come from option", () => {
-    // Without a description option, the default Nebutra paragraph is used
+  it("generates the fallback Overview from the caller's own tokens", () => {
     const md = serializeToDesignMd([coreSet, semanticSet]);
     const { body } = splitFrontMatter(md);
-    expect(body).toContain("AI-native SaaS design system");
+    const overview = body.split("## Colors")[0] ?? "";
+
+    expect(overview).toContain("token-first design system");
+    // Colours come from the caller's tokens, not from a sentence about someone
+    // else's palette. The old fallback named 云毓蓝 #0033fe as "the brand
+    // palette" for every downstream design system.
+    expect(overview).toContain("#0033fe");
+    expect(overview).not.toContain("云毓");
+    expect(overview).not.toContain("Vercel/Geist visual parity");
   });
 
-  it("custom description replaces (not appends to) the default Nebutra paragraph", () => {
+  it("custom description replaces (not appends to) the generated paragraph", () => {
     const customDesc = "Completely custom overview for Acme Corp.";
     const md = serializeToDesignMd([coreSet, semanticSet], { description: customDesc });
     const { body } = splitFrontMatter(md);

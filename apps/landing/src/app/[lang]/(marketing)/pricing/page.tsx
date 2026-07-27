@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { Star, User } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import type { Metadata } from "next";
@@ -6,9 +7,12 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar, PricingSection } from "@/components/landing";
 import { PricingComparisonTable } from "@/components/landing/pricing-comparison-table";
+import { StructuredData } from "@/components/seo/structured-data";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { getSiteUrl } from "@/lib/seo/site-routes";
+import { buildProductSchema } from "@/lib/seo/structured-data";
 
 const SOCIAL_AVATARS = [
   { id: "avatar-alpha" },
@@ -60,8 +64,22 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
   const faq = await getTranslations({ locale: lang as Locale, namespace: "microLanding.faq" });
   type FaqTranslationKey = Parameters<typeof faq>[0];
 
+  const productLd = buildProductSchema({
+    name: `${brand.name} Sailor`,
+    description: pricing("description"),
+    url: `${getSiteUrl()}/${lang}/pricing`,
+    brand: brand.name,
+    offers: {
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      url: `${getSiteUrl()}/${lang}/pricing`,
+    },
+  });
+
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
+      <StructuredData data={productLd} id="pricing-product-jsonld" />
       <Navbar />
 
       <section className="mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-8">

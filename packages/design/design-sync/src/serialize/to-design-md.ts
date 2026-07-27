@@ -41,7 +41,13 @@ import {
 // ─── Public API ────────────────────────────────────────────────────────────────
 
 export interface ToDesignMdOptions {
-  /** Design system name. Default: "Nebutra" */
+  /**
+   * Design system name written into the exported artefact.
+   *
+   * Defaults to a generic label on purpose: this package is provider-agnostic
+   * and has no brand of its own, so naming one here would stamp it onto every
+   * downstream design system that did not pass this option.
+   */
   name?: string;
   /** One-line brand description for the front matter and prose Overview. */
   description?: string;
@@ -61,7 +67,7 @@ export interface ToDesignMdOptions {
  * @returns A deterministic DESIGN.md string (YAML front matter + markdown prose).
  */
 export function serializeToDesignMd(sets: DesignTokenSet[], options?: ToDesignMdOptions): string {
-  const name = options?.name ?? "Nebutra";
+  const name = options?.name ?? "Design System";
   const description = options?.description;
 
   // 1. Build a flat path→leaf index across ALL sets

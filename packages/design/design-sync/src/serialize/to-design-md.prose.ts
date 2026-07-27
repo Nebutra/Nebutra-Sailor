@@ -48,7 +48,7 @@ export interface ContainerInfo {
 
 export interface ProseArgs {
   name: string;
-  /** Optional custom description. When provided, replaces the default Nebutra Overview paragraph. */
+  /** Optional custom description. Replaces the generated Overview paragraph. */
   description?: string;
   colors: ColorRoles;
   colorDescriptions: ColorDescriptions;
@@ -93,7 +93,7 @@ export const DESIGN_MD_GOVERNANCE = {
 export function buildProse(args: ProseArgs): string {
   const sections: string[] = [];
 
-  sections.push(buildOverview(args.name, args.description));
+  sections.push(buildOverview(args.name, args.colors, args.description));
   sections.push(buildColors(args.colors, args.colorDescriptions));
   sections.push(buildTypographySection(args.typography));
   sections.push(buildLayout(args.containers));
@@ -107,12 +107,29 @@ export function buildProse(args: ProseArgs): string {
 
 // ─── Section helpers ──────────────────────────────────────────────────────────
 
-function buildOverview(name: string, description?: string): string {
+/**
+ * The fallback paragraph is generated from the caller's own tokens.
+ *
+ * It used to be Nebutra's: it named 云毓蓝 #0033fe and 云毓青 #0bf1c3 as "the
+ * brand palette" and asserted Vercel/Geist parity, so every downstream design
+ * system exported a document describing someone else's colours as its own.
+ */
+function buildOverview(name: string, colors: ColorRoles, description?: string): string {
+  if (description) return `## Overview\n\n${description}`;
+
+  const palette = [
+    colors.primary ? `primary ${colors.primary}` : null,
+    colors.accent ? `accent ${colors.accent}` : null,
+  ]
+    .filter(Boolean)
+    .join(" → ");
+
   const paragraph =
-    description ??
-    `${name} is an AI-native SaaS design system built on the 云毓蓝 blue (#0033fe) → 云毓青 cyan (#0bf1c3) brand palette. ` +
-      `It targets Vercel/Geist visual parity, enforces semantic tokens over raw hex values, and ships with ` +
-      `a token-first architecture (DTCG W3C draft) that drives CSS variables, Tailwind utilities, and the Style Dictionary pipeline.`;
+    `${name} is a token-first design system` +
+    (palette ? ` built on a ${palette} palette` : "") +
+    ". It favours semantic tokens over raw hex values and follows the DTCG " +
+    "(W3C draft) format, which drives CSS variables, Tailwind utilities and " +
+    "the Style Dictionary pipeline.";
 
   return `## Overview\n\n${paragraph}`;
 }
