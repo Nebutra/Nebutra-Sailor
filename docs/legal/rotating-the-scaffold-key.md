@@ -1,12 +1,26 @@
 # Rotating the scaffold-marker signing key
 
-> **Status: DRAFT — operational + legal adjacency.**
+> **Status: PROVENANCE ONLY — no longer a legal control.**
 >
 > | Field | Value |
 > |-------|-------|
-> | **Owner** | Nebutra Legal (interim: engineering @nebutra.com) |
-> | **As of** | 2026-07-24 |
-> | **Counsel review** | Pending for invalidate/notification text |
+> | **Owner** | Engineering (`engineering@nebutra.com`) |
+> | **As of** | 2026-07-26 |
+> | **Counsel review** | Not required — this marker grants and gates nothing |
+>
+> **Read this first.** Until 2026-07-26 the marker decided which licence
+> applied to a scaffolded project: its presence and valid signature were what
+> conferred the Independent Developer tier instead of AGPL copyleft. That is
+> no longer true. Scaffolded projects are MIT unconditionally, the repository
+> is FSL-1.1-ALv2, and commercial use is free at any size — so the marker
+> confers no rights, and a forged or missing one costs nobody anything.
+>
+> What remains is a provenance breadcrumb: "this project came from the
+> official CLI, at this version, on this date." Useful for support triage,
+> worthless to forge. Rotation urgency drops accordingly — treat everything
+> below as operational hygiene, not incident response.
+>
+> See [License History](./license-history.md) for the change and its rationale.
 
 The `.nebutra/scaffold-meta.json` file emitted by `create-sailor` carries
 an HMAC signature over `cliVersion|scaffoldedAt|projectName|nonce`. The
