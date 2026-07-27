@@ -25,3 +25,13 @@
 
 /* Icon components often appear in class strings next to UI primitives */
 @source "../../../icons/src/**/*.{ts,tsx,js,jsx}";
+
+/*
+ * @nebutra/i18n ships rendered components (locale-switcher, market-locale-picker),
+ * so its class strings need compiling too. Without this the utilities silently
+ * do not exist: the locale switcher asked for `bg-neutral-1` to opt out of the
+ * translucent popover surface and got nothing, so the DS default `bg-popover/95`
+ * kept winning and the panel stayed see-through — a fix that was correct in the
+ * source and absent from the stylesheet.
+ */
+@source "../../../../platform/i18n/src/**/*.{ts,tsx,js,jsx}";
