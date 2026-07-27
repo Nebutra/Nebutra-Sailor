@@ -45,6 +45,14 @@ export const DEFAULT_GLOSSARY = Object.freeze([
   "GraphQL",
   "OpenAPI",
   "SaaS",
+  // Licence identifiers. These are legal facts, not prose — a mistranslated
+  // "FSL-1.1-ALv2" on a pricing page is a licensing claim going wrong, not a
+  // wording nit. Bare "MIT" is deliberately absent: `includes` is a
+  // case-sensitive substring test, so it would false-positive on "SUBMIT".
+  "FSL-1.1-ALv2",
+  "Apache-2.0",
+  "AGPL-3.0",
+  "SPDX",
 ]);
 
 export function shouldSkipValue(value) {
@@ -56,6 +64,15 @@ export function shouldSkipValue(value) {
     return true;
   }
   if (/^https?:\/\//i.test(v) || /^[\w.+-]+@[\w.-]+$/.test(v)) return true;
+  // Strings that are nothing but licence identifiers ("MIT + FSL-1.1-ALv2").
+  // Sending them to a translator can only corrupt them.
+  if (
+    /^(?:MIT|Apache-2\.0|AGPL-3\.0|FSL-1\.1-ALv2|BSD-[23]-Clause|ISC)(?:\s*[+/·,]\s*(?:MIT|Apache-2\.0|AGPL-3\.0|FSL-1\.1-ALv2|BSD-[23]-Clause|ISC))*$/.test(
+      v,
+    )
+  ) {
+    return true;
+  }
   if (!/[A-Za-z\u00C0-\u024F\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(v)) return true;
   return false;
 }

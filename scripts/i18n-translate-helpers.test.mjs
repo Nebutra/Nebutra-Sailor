@@ -35,6 +35,40 @@ describe("shouldSkipValue", () => {
     expect(shouldSkipValue("钱包")).toBe(false);
     expect(shouldSkipValue("API Keys")).toBe(false);
   });
+
+  /**
+   * `collectWork` retranslates any leaf still identical to English, so a leaf
+   * that is *deliberately* untranslated gets picked up on every ordinary run —
+   * no `--force` needed. Licence identifiers are the dangerous case: they are
+   * legal facts, and the pricing table renders one as a cell value.
+   */
+  it("skips strings that are nothing but licence identifiers", () => {
+    expect(shouldSkipValue("MIT + FSL-1.1-ALv2")).toBe(true);
+    expect(shouldSkipValue("Apache-2.0")).toBe(true);
+    expect(shouldSkipValue("MIT")).toBe(true);
+    // Prose that merely mentions a licence still gets translated.
+    expect(shouldSkipValue("Licensed under MIT, converting to Apache-2.0")).toBe(false);
+  });
+});
+
+describe("licence identifiers survive translation", () => {
+  const social = "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years.";
+
+  it("rejects a translation that mangles a licence identifier", () => {
+    const mangled = "MIT auf npm · FSL-1.1 ALv2 im Repo, wechselt nach zwei Jahren zu Apache-2.0.";
+    expect(validateTranslation(social, mangled).ok).toBe(false);
+  });
+
+  it("accepts a translation that preserves them verbatim", () => {
+    const good = "MIT auf npm · FSL-1.1-ALv2 im Repo, wechselt nach zwei Jahren zu Apache-2.0.";
+    expect(validateTranslation(social, good).ok).toBe(true);
+  });
+
+  it("does not false-positive on words containing a licence acronym", () => {
+    // Bare "MIT" is intentionally absent from the glossary: `includes` is a
+    // case-sensitive substring test and would fire on "SUBMIT".
+    expect(validateTranslation("SUBMIT", "ABSENDEN").ok).toBe(true);
+  });
 });
 
 describe("flatten / unflatten", () => {
