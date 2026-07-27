@@ -1,25 +1,12 @@
-import { createHmac, randomBytes } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { findKeyById, getCurrentKey } from "./license-signing-keys";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SCAFFOLD_META_FILENAME = "scaffold-meta.json";
 const SCAFFOLD_META_DIR = ".nebutra";
-
-/**
- * Phase 2: the signing key is no longer hardcoded here — it lives in
- * `./license-signing-keys.ts` so future create-sailor releases can rotate
- * the key without breaking verification of older scaffolds.
- *
- * Back-compat: scaffold-meta.json files emitted by Phase 1 do NOT have a
- * `signingKeyId` field. `verifyScaffoldMeta` falls back to the `v1` key when
- * the field is absent (see VERIFY_FALLBACK_KEY_ID).
- */
-const VERIFY_FALLBACK_KEY_ID = "v1";
 
 export interface LicenseEmitOptions {
   projectName: string;
@@ -43,38 +30,38 @@ function resolveTemplatesRoot(explicit?: string): string {
   return candidates[0];
 }
 
+/**
+ * `.nebutra/scaffold-meta.json` — an unsigned provenance breadcrumb.
+ *
+ * Until 2026-07-26 this file was HMAC-signed, because its presence and a valid
+ * signature were what conferred the Independent Developer License instead of
+ * AGPL copyleft. Scaffolded projects are now MIT unconditionally, so the
+ * marker grants nothing, gates nothing, and is worthless to forge. The
+ * signature, nonce and key registry were removed along with the tier they
+ * protected.
+ *
+ * What is left is useful for support triage — "which CLI version produced
+ * this project, and when" — and nothing else. Deleting the file costs the
+ * project no rights.
+ *
+ * Markers written by create-sailor <= 1.8.4 additionally carry `signature`,
+ * `nonce` and `signingKeyId`. Those fields are ignored, not rejected.
+ */
 export interface ScaffoldMeta {
   schemaVersion: 1;
   cliVersion: string;
   scaffoldedAt: string;
   projectName: string;
-  nonce: string;
-  /**
-   * HMAC over `cliVersion|scaffoldedAt|projectName|nonce`. Lets future tools
-   * verify that this project was scaffolded by an official CLI release.
-   */
-  signature: string;
-  /**
-   * ID of the signing key in `license-signing-keys.ts` that produced
-   * `signature`. Added in Phase 2 (create-sailor >= 1.7.1). When absent
-   * (Phase 1 markers), verification assumes "v1".
-   */
-  signingKeyId?: string;
-  /**
-   * Marker explaining what this file does — so a human reading the repo
-   * understands its purpose.
-   */
+  /** Explains the file to whoever finds it in the repo. */
   purpose: string;
   license: {
     /**
-     * `mit-scaffold` since 2026-07-26. `independent` is the legacy value
-     * emitted by create-sailor <= 1.8.2, when scaffolded projects carried the
-     * now-retired Independent Developer License. Verifiers must keep accepting
-     * it — those projects exist and their marker files are signed and valid.
+     * `mit-scaffold` since 2026-07-26. `independent` is the legacy value from
+     * create-sailor <= 1.8.2, when scaffolded projects carried the retired
+     * Independent Developer License. Readers should accept both.
      */
     tier: "mit-scaffold" | "independent";
     file: "LICENSE";
-    upgradeUrl: string;
   };
 }
 
@@ -101,8 +88,8 @@ function computeSignature(
  *    distributed as part of the MIT-published `create-sailor` package.
  *  - Preserves the upstream licence text at `LICENSE-UPSTREAM-REFERENCE.md`
  *    so users can read the terms the monorepo itself is under.
- *  - Writes `.nebutra/scaffold-meta.json` with version + timestamp + HMAC,
- *    signed with the CURRENT key from `license-signing-keys.ts`.
+ *  - Writes `.nebutra/scaffold-meta.json` with version + timestamp. Unsigned
+ *    by design — it grants no rights, so there is nothing to protect.
  *  - Adds a one-line license notice at the top of the project's README.
  */
 export function emitScaffoldLicense(
@@ -135,33 +122,17 @@ export function emitScaffoldLicense(
   fs.copyFileSync(scaffoldSrc, path.join(targetDir, "LICENSE"));
   wrote.push("LICENSE");
 
-  // 3. Write the signed scaffold marker.
-  const scaffoldedAt = new Date().toISOString();
-  const nonce = randomBytes(12).toString("hex");
-  const currentKey = getCurrentKey();
-  const signature = computeSignature(
-    {
-      cliVersion: options.cliVersion,
-      scaffoldedAt,
-      projectName: options.projectName,
-      nonce,
-    },
-    currentKey.key,
-  );
+  // 3. Write the provenance marker. Unsigned by design — see ScaffoldMeta.
   const meta: ScaffoldMeta = {
     schemaVersion: 1,
     cliVersion: options.cliVersion,
-    scaffoldedAt,
+    scaffoldedAt: new Date().toISOString(),
     projectName: options.projectName,
-    nonce,
-    signature,
-    signingKeyId: currentKey.id,
     purpose:
-      "Marks this project as scaffolded by the official `create-sailor` CLI. Provenance only — the MIT licence in LICENSE applies unconditionally and does not depend on this file or its signature.",
+      "Records which `create-sailor` version produced this project, for support triage. Provenance only: the MIT licence in LICENSE applies unconditionally and does not depend on this file. Deleting it costs you nothing.",
     license: {
       tier: "mit-scaffold",
       file: "LICENSE",
-      upgradeUrl: "https://nebutra.com/get-license",
     },
   };
   const metaDir = path.join(targetDir, SCAFFOLD_META_DIR);
@@ -189,69 +160,4 @@ export function emitScaffoldLicense(
   }
 
   return { wrote };
-}
-
-/**
- * Reasons a verification can fail. Useful for the CLI's `license verify`
- * command and the marketing-site verification endpoint.
- */
-export type VerifyReason =
-  | "ok"
-  | "missing_meta"
-  | "schema_mismatch"
-  | "unknown_signing_key"
-  | "signature_mismatch";
-
-export interface VerifyResult {
-  valid: boolean;
-  reason: VerifyReason;
-}
-
-/**
- * Detailed verification — preferred for new callers. Returns `{ valid,
- * reason }` so the CLI can show a precise diagnostic.
- */
-export function verifyScaffoldMetaDetailed(meta: ScaffoldMeta | null | undefined): VerifyResult {
-  if (!meta) return { valid: false, reason: "missing_meta" };
-  if (meta.schemaVersion !== 1) return { valid: false, reason: "schema_mismatch" };
-  if (
-    typeof meta.cliVersion !== "string" ||
-    typeof meta.scaffoldedAt !== "string" ||
-    typeof meta.projectName !== "string" ||
-    typeof meta.nonce !== "string" ||
-    typeof meta.signature !== "string"
-  ) {
-    return { valid: false, reason: "schema_mismatch" };
-  }
-
-  const keyId = meta.signingKeyId ?? VERIFY_FALLBACK_KEY_ID;
-  const signingKey = findKeyById(keyId);
-  if (!signingKey) {
-    return { valid: false, reason: "unknown_signing_key" };
-  }
-
-  const expected = computeSignature(
-    {
-      cliVersion: meta.cliVersion,
-      scaffoldedAt: meta.scaffoldedAt,
-      projectName: meta.projectName,
-      nonce: meta.nonce,
-    },
-    signingKey.key,
-  );
-  if (expected !== meta.signature) {
-    return { valid: false, reason: "signature_mismatch" };
-  }
-  return { valid: true, reason: "ok" };
-}
-
-/**
- * Verify a scaffold marker's signature. Returns true when the marker is
- * present, well-formed, and signed with a known key.
- *
- * Kept for backward compatibility with Phase 1 callers — new code should
- * prefer `verifyScaffoldMetaDetailed`.
- */
-export function verifyScaffoldMeta(meta: ScaffoldMeta | null | undefined): boolean {
-  return verifyScaffoldMetaDetailed(meta).valid;
 }

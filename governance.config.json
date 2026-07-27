@@ -63,7 +63,6 @@
       "apps/landing/src/app/api/blog/reactions/route.ts",
       "apps/landing/src/app/api/changelog/webhook/route.ts",
       "apps/landing/src/app/api/license/validate/route.ts",
-      "apps/landing/src/app/api/license/verify/route.ts",
       "apps/landing/src/app/api/og/route.ts",
       "apps/landing/src/app/not-found.tsx",
       "apps/landing/src/components/landing/FooterMinimal.tsx",

@@ -50,6 +50,21 @@ last AGPL-licensed commit under AGPL-3.0-only.
 release. This licensing change does not affect them, and MIT grants already
 made cannot be revoked.
 
+**Retired: the scaffold-marker signing apparatus.** The signed
+`.nebutra/scaffold-meta.json` marker existed to decide which licence applied to
+a scaffolded project — its presence and a valid HMAC were what conferred the
+Independent Developer tier instead of AGPL copyleft. With scaffolded projects
+MIT unconditionally, the marker gated nothing, so the cryptography protected
+nothing. The signing-key registry, the `nebutra license verify` subcommand, the
+public `/api/license/verify` endpoint, and the key-rotation runbook were all
+removed; the endpoint had no callers at all.
+
+The marker file itself survives as an unsigned provenance breadcrumb — which
+CLI version produced the project, and when — useful for support triage.
+Deleting it costs a project no rights. Markers written by create-sailor
+<= 1.8.4 still carry `signature`, `nonce` and `signingKeyId`; those fields are
+ignored, not rejected.
+
 **Retired tiers.** The change made two constructs unnecessary, and both were
 removed:
 

@@ -1,5 +1,37 @@
 # nebutra
 
+## 0.4.0
+
+### Minor Changes
+
+- Retire the scaffold-marker signing apparatus.
+
+  The signed `.nebutra/scaffold-meta.json` marker existed for one reason: its
+  presence and a valid HMAC were what conferred the Independent Developer
+  License instead of AGPL copyleft. That tier was retired on 2026-07-26 and
+  scaffolded projects are now MIT unconditionally, so the marker gated nothing
+  and the cryptography protected nothing — while still costing a signing-key
+  registry, a mirrored verifier, and a key-rotation runbook to maintain.
+
+  Removed:
+  - `nebutra license verify [path]` — the subcommand and its implementation
+  - the signing-key registry and the CLI-side verifier that mirrored it
+  - `POST /api/license/verify` on the marketing site, which had no callers
+  - the key-rotation runbook
+
+  `nebutra license activate <key>` and `nebutra license status` are unaffected —
+  they handle paid support tiers, which still issue keys.
+
+  The marker file itself stays, unsigned, as a provenance breadcrumb: which CLI
+  version produced this project and when. It grants nothing, and deleting it
+  costs a project no rights — the emitted file now says so in its own `purpose`
+  field. Markers written by create-sailor <= 1.8.4 still carry `signature`,
+  `nonce` and `signingKeyId`; nothing reads them any more, and their presence is
+  ignored rather than rejected.
+
+  Minor rather than patch: this removes a published CLI subcommand and a public
+  HTTP endpoint.
+
 ## 0.3.8
 
 ### Patch Changes

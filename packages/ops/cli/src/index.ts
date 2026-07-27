@@ -285,7 +285,7 @@ export function buildProgram(options: BuildProgramOptions): Command {
           logger.success(".nebutra/scaffold-meta.json present (CLI-scaffolded project)");
         } else if (fs.existsSync(scaffoldMetaDir)) {
           logger.warn(
-            ".nebutra/ directory exists but scaffold-meta.json is missing. Run `nebutra license verify` for details.",
+            ".nebutra/ directory exists but scaffold-meta.json is missing. Harmless — the marker is provenance only and grants nothing.",
           );
         }
 
@@ -331,8 +331,6 @@ Examples:
   $ nebutra test e2e                      Run Playwright E2E tests
   $ nebutra stats                         Monorepo overview
   $ nebutra schema --all                  Full CLI schema (for Agents)
-  $ nebutra license verify                Verify the scaffold-meta HMAC signature
-  $ nebutra license verify --format json  Same, in JSON for Agents
 
   Platform & Ecosystem:
   $ nebutra admin tenants                 List all tenants

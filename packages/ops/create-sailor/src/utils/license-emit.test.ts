@@ -2,11 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
-import {
-  emitScaffoldLicense,
-  verifyScaffoldMeta,
-  verifyScaffoldMetaDetailed,
-} from "./license-emit";
+import { emitScaffoldLicense } from "./license-emit";
 
 const TEMPLATE_FIXTURE = `# License
 
@@ -84,10 +80,10 @@ describe("emitScaffoldLicense", () => {
     expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
   });
 
-  it("writes a signed scaffold marker that verifyScaffoldMeta accepts", () => {
+  it("writes an unsigned provenance marker", () => {
     emitScaffoldLicense(dir, {
       projectName: "demo",
-      cliVersion: "1.7.0",
+      cliVersion: "1.9.0",
       templatesRoot,
     });
     const metaPath = path.join(dir, ".nebutra", "scaffold-meta.json");
@@ -95,62 +91,42 @@ describe("emitScaffoldLicense", () => {
     const meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
     expect(meta.schemaVersion).toBe(1);
     expect(meta.projectName).toBe("demo");
-    expect(meta.cliVersion).toBe("1.7.0");
+    expect(meta.cliVersion).toBe("1.9.0");
     expect(meta.license.tier).toBe("mit-scaffold");
-    expect(typeof meta.signature).toBe("string");
-    expect(meta.signature).toHaveLength(64); // sha256 hex
-    expect(verifyScaffoldMeta(meta)).toBe(true);
+    expect(meta.license.file).toBe("LICENSE");
   });
 
-  it("verifyScaffoldMeta rejects tampered markers", () => {
+  /**
+   * The HMAC, nonce and signing-key registry were removed on 2026-07-26 along
+   * with the licence tier they protected. Nothing about the scaffolded
+   * project's rights depends on this file any more, so signing it would only
+   * imply an authority it no longer has.
+   */
+  it("carries no signature, nonce, or signing key", () => {
     emitScaffoldLicense(dir, {
       projectName: "demo",
-      cliVersion: "1.7.0",
-      templatesRoot,
-    });
-    const metaPath = path.join(dir, ".nebutra", "scaffold-meta.json");
-    const meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
-    meta.projectName = "hijacked";
-    expect(verifyScaffoldMeta(meta)).toBe(false);
-    expect(verifyScaffoldMetaDetailed(meta).reason).toBe("signature_mismatch");
-  });
-
-  it("records the current signingKeyId (Phase 2)", () => {
-    emitScaffoldLicense(dir, {
-      projectName: "demo",
-      cliVersion: "1.7.1",
+      cliVersion: "1.9.0",
       templatesRoot,
     });
     const meta = JSON.parse(
       fs.readFileSync(path.join(dir, ".nebutra", "scaffold-meta.json"), "utf-8"),
     );
-    expect(meta.signingKeyId).toBe("v1");
+    expect(meta.signature).toBeUndefined();
+    expect(meta.nonce).toBeUndefined();
+    expect(meta.signingKeyId).toBeUndefined();
   });
 
-  it("Phase 1 back-compat: verifies markers WITHOUT a signingKeyId field", () => {
+  it("states in the file itself that it grants nothing", () => {
     emitScaffoldLicense(dir, {
       projectName: "demo",
-      cliVersion: "1.7.0",
+      cliVersion: "1.9.0",
       templatesRoot,
     });
-    const metaPath = path.join(dir, ".nebutra", "scaffold-meta.json");
-    const meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
-    // Simulate a Phase 1 marker (no signingKeyId) — verifier must fall back to v1.
-    delete meta.signingKeyId;
-    expect(verifyScaffoldMeta(meta)).toBe(true);
-    expect(verifyScaffoldMetaDetailed(meta).reason).toBe("ok");
-  });
-
-  it("rejects markers signed with an unknown keyId", () => {
-    emitScaffoldLicense(dir, {
-      projectName: "demo",
-      cliVersion: "1.7.0",
-      templatesRoot,
-    });
-    const metaPath = path.join(dir, ".nebutra", "scaffold-meta.json");
-    const meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
-    meta.signingKeyId = "v-future-rotated";
-    expect(verifyScaffoldMetaDetailed(meta).reason).toBe("unknown_signing_key");
+    const meta = JSON.parse(
+      fs.readFileSync(path.join(dir, ".nebutra", "scaffold-meta.json"), "utf-8"),
+    );
+    expect(meta.purpose).toMatch(/Provenance only/i);
+    expect(meta.purpose).toMatch(/Deleting it costs you nothing/i);
   });
 
   it("prepends a license notice to README.md when one exists", () => {
