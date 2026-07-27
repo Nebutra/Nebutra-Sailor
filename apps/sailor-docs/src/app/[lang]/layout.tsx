@@ -126,10 +126,7 @@ export default async function RootLayout({
                       - Wordmark: WordmarkEnSVG currentColor — independent of mark fills
                       Never one baked horizontal SVG that locks mark+wordmark together.
                     */}
-                    <span
-                      className="inline-flex h-6 items-center gap-2"
-                      aria-label={`${brand.name} Sailor Docs`}
-                    >
+                    <span className="inline-flex h-6 items-center gap-2">
                       <Image
                         src={logoColorMarkSrc}
                         alt=""
@@ -148,6 +145,7 @@ export default async function RootLayout({
                       <WordmarkEnSVG
                         width={100}
                         className="h-[1.125rem] w-auto !text-[var(--neutral-12)] dark:!text-white"
+                        aria-label={`${brand.name} Sailor Docs`}
                       />
                     </span>
                   </div>
