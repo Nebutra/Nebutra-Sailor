@@ -705,18 +705,37 @@ jobs:
         # disk and even upload staging can fail before the remote helper runs.
         # This step SSHes in BEFORE upload and prunes:
         #   1. Stale /tmp/nebutra-*.tar.gz and .incoming bundles from prior failed runs
-        #   2. Existing releases down to the upload headroom required by KEEP_RELEASES
+        #   2. Existing releases of APPS BEING DEPLOYED ONLY (never other live apps)
+        #      down to the upload headroom required by KEEP_RELEASES
         #   3. Old pnpm store / apt caches as a last resort
         # so the VM has enough headroom for the new bundle + extracted tree.
+        #
+        # CRITICAL: never loop every app when KEEP_RELEASES=1 (upload_keep=0) —
+        # that deleted the sole release of healthy siblings (forge/router/web)
+        # during a sailor-docs-only deploy and left PM2 serving deleted inodes → 500.
         run: |
           set -euo pipefail
           remote_root=$(printf '%q' "${ECS_DEPLOY_ROOT:-/var/www/nebutra}")
           keep_releases=$(printf '%q' "${ECS_KEEP_RELEASES:-1}")
+          # Only prune apps selected for this deploy.
+          prune_apps=""
+          [ "${{ needs.detect-changes.outputs.landing }}" = "true" ] && prune_apps="$prune_apps landing"
+          [ "${{ needs.detect-changes.outputs.web }}" = "true" ] && prune_apps="$prune_apps web"
+          [ "${{ needs.detect-changes.outputs.api }}" = "true" ] && prune_apps="$prune_apps api"
+          [ "${{ needs.detect-changes.outputs.idp }}" = "true" ] && prune_apps="$prune_apps idp"
+          [ "${{ needs.detect-changes.outputs.auth }}" = "true" ] && prune_apps="$prune_apps auth"
+          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && prune_apps="$prune_apps design-docs"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && prune_apps="$prune_apps sailor-docs"
+          [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && prune_apps="$prune_apps router"
+          [ "${{ needs.detect-changes.outputs.forge }}" = "true" ] && prune_apps="$prune_apps forge"
+          prune_apps="$(echo "$prune_apps" | xargs)"
+          prune_apps_q=$(printf '%q' "$prune_apps")
+          echo "Preflight will only prune releases for: ${prune_apps:-<none>}"
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
               "${ECS_USER}@${ECS_HOST}" \
-              "ECS_DEPLOY_ROOT=${remote_root} ECS_KEEP_RELEASES=${keep_releases} bash -s" <<'PREFLIGHT'
+              "ECS_DEPLOY_ROOT=${remote_root} ECS_KEEP_RELEASES=${keep_releases} PRUNE_APPS=${prune_apps_q} bash -s" <<'PREFLIGHT'
           set -euo pipefail
           incoming="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/.incoming"
           keep="${ECS_KEEP_RELEASES:-1}"
@@ -733,8 +752,8 @@ jobs:
           echo "--- incoming bundle staging ---"
           mkdir -p "$incoming"
           find "$incoming" -mindepth 1 -maxdepth 1 -print -exec rm -rf {} + 2>/dev/null || true
-          echo "--- pruning releases for upload headroom (keep latest $upload_keep per app) ---"
-          for app in landing web api idp design-docs sailor-docs auth router forge; do
+          echo "--- pruning releases for deploy targets only (keep latest $upload_keep): ${PRUNE_APPS:-<none>} ---"
+          for app in ${PRUNE_APPS:-}; do
             app_root="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app"
             dir="$app_root/releases"
             [ -d "$dir" ] || continue
