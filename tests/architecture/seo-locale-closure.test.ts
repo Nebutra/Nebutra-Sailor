@@ -167,17 +167,23 @@ describe("bare-zh URL literals", () => {
 
 // ── Guard 3: exactly one robots posture per app ───────────────────────────
 describe("per-app robots posture", () => {
-  /** Public origins that own canonical + hreflang + sitemap infrastructure. */
-  const INDEXABLE = ["landing", "sailor-docs", "tsekaluk-dev"];
+  /**
+   * Public origins that own canonical + hreflang + sitemap infrastructure.
+   *
+   * `forge` and `router` moved here on 2026-07-27. They previously shipped a
+   * static `public/robots.txt` reading `Disallow: /` alongside an
+   * `app/robots.ts` that allowed indexing and advertised a sitemap. Next serves
+   * the dynamic one, so the static file was both stale and already losing; it
+   * was deleted rather than the route.
+   */
+  const INDEXABLE = ["landing", "sailor-docs", "tsekaluk-dev", "forge", "router"];
 
   /** Everything else: internal tooling or authenticated product surfaces. */
   const DISALLOWED = [
     "auth",
     "design-docs",
-    "forge",
     "idp",
     "mail-preview",
-    "router",
     "sleptons",
     "studio",
     "typelens",
