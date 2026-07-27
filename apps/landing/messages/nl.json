@@ -144,8 +144,8 @@
       "playbook": "Playbook",
       "changelog": "Changelog",
       "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
+      "docs": "Documentatie",
+      "ideas": "Ideeën",
       "opc": "Platform",
       "careers": "Vacatures",
       "security": "Beveiliging",
@@ -1144,7 +1144,7 @@
         "desc": "Volledig getypt ORM met Row-Level Security (RLS)-beleid standaard ingebouwd."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Clerk Multi-Tenant / Aangepaste Identiteit",
         "desc": "SOC2-klare authenticatiegateway met ondersteuning voor B2B-organisatiewisseling en RBAC."
       }
     },

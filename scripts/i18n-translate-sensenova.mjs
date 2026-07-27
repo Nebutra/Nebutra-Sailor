@@ -278,10 +278,11 @@ async function translateBatchOnce(targetLocale, entries) {
       });
       const text = await res.text();
       if (isHardQuotaError(res.status, text)) {
+        // Window budget, not a dead model — it comes back when the window turns.
         modelPool.markExhausted(model);
-        lastErr = new Error(`[${model}] HTTP ${res.status} hard-quota: ${text.slice(0, 180)}`);
+        lastErr = new Error(`[${model}] HTTP ${res.status} window-quota: ${text.slice(0, 180)}`);
         process.stderr.write(
-          `  model ${model} hard-quota exhausted; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
+          `  model ${model} window quota spent; benched 90s; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
         );
         continue;
       }
@@ -324,9 +325,9 @@ async function translateBatchOnce(targetLocale, entries) {
           msg,
         )
       ) {
-        modelPool.markExhausted(model);
+        modelPool.markExhausted(model, { cooldownMs: Number.POSITIVE_INFINITY });
         process.stderr.write(
-          `  model ${model} unavailable; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
+          `  model ${model} unavailable (bad id); retired for this run; remaining=[${modelPool.remaining().join(",") || "none"}]\n`,
         );
         continue;
       }

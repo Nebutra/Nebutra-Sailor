@@ -475,7 +475,7 @@
         "intro": "Oltre ai cookie, possiamo utilizzare:",
         "items": {
           "0": {
-            "label": "Local Storage",
+            "label": "Archiviazione locale",
             "desc": "Per memorizzare le preferenze e i dati della cache in locale"
           },
           "1": {
@@ -1334,7 +1334,7 @@
       "billing_f3_title": "Sincronizzazione del ciclo di vita dei webhook",
       "billing_f3_desc": "Gli eventi di abbonamento di Stripe aggiornano automaticamente i piani dell'organizzazione nel tuo database tramite Inngest — senza cron job, senza polling.",
       "rel_category": "Affidabilità",
-      "rel_f1_title": "Circuit breaker + retry",
+      "rel_f1_title": "Interruttore automatico + riprova",
       "rel_f1_desc": "Il gateway e il servizio AI utilizzano un circuit breaker CLOSED/OPEN/HALF_OPEN con backoff esponenziale e jitter — senza guasti a cascata.",
       "rel_f2_title": "Coda delle lettere morte",
       "rel_f2_desc": "I gestori di eventi che esauriscono 3 tentativi di retry finiscono nella DLQ. Riproducili singolarmente dall'API di amministrazione senza ridistribuire.",

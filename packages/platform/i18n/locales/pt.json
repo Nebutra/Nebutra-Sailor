@@ -1,6 +1,6 @@
 {
   "admin": {
-    "title": "Admin",
+    "title": "Administrador",
     "description": "Painel de super admin — gerencie usuários, organizações e a saúde do sistema.",
     "nav": {
       "overview": "Visão geral",

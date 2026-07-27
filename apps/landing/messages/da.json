@@ -9,7 +9,7 @@
     "about": "Om os",
     "ideas": "Ideer",
     "opc": "Platform",
-    "roadmap": "Roadmap",
+    "roadmap": "Køreplan",
     "resources": "Ressourcer",
     "signIn": "Log ind",
     "getStarted": "Kom i gang",
@@ -1144,7 +1144,7 @@
         "desc": "Fuldt typet ORM med Row-Level Security (RLS)-politikker indbygget nativt."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Clerk Multi-Tenant / Brugerdefineret identitet",
         "desc": "SOC2-klar autentificeringsgateway med understøttelse af B2B-organisationsskift og RBAC."
       }
     },
@@ -1153,7 +1153,7 @@
       "description": "At bygge et kommercielt produkt på {brandName} koster ingenting — intet gebyr, ingen licensnøgle, ingen registrering, ingen copyleft. Betalte niveauer sælger support, SLA'er, skadesløsholdelse og varemærkerettigheder, aldrig tilladelse.",
       "socialProofText": "MIT på npm · FSL-1.1-ALv2 i repoet, overgår til Apache-2.0 efter to år · kommerciel brug gratis i enhver størrelse.",
       "community": {
-        "badge": "COMMUNITY",
+        "badge": "FÆLLESSKAB",
         "price": "Gratis",
         "period": "for altid",
         "desc": "Til alle. Enhver teamstørrelse, enhver omsætning. Kommerciel brug med lukket kildekode er inkluderet, uden registrering og uden krav om kreditering.",
@@ -1165,7 +1165,7 @@
         "f5": "Offentlige issues, Discussions og Discord — efter bedste evne, ingen svargaranti"
       },
       "team": {
-        "badge": "TEAM",
+        "badge": "HOLD",
         "price": "2.000 $",
         "period": "/ år",
         "desc": "Til teams, der har brug for et tilsagn frem for et håb. Alt er allerede gratis — det her køber vores opmærksomhed.",
@@ -1177,7 +1177,7 @@
         "f5": "Alt i Community"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
+        "badge": "VIRKSOMHED",
         "price": "Fra 30.000 $",
         "period": "/ år",
         "desc": "Til organisationer, hvis indkøb, jura eller sikkerhedsgennemgang kræver en modpart, der skriver under.",
@@ -1281,7 +1281,7 @@
         "comparison": "Spring over måneder af platformarbejde.",
         "phases": {
           "scaffold": "Init",
-          "wire": "Core",
+          "wire": "Kerne",
           "ship": "Udrul",
           "scale": "Skaler",
           "ongoing": "∞"
@@ -1289,7 +1289,7 @@
         "cta": "Start din timer"
       },
       "presetHint": {
-        "badge": "Preset System",
+        "badge": "Forudindstillet system",
         "message": "Én konfiguration. Alle funktioner. Vælg din preset og udrul.",
         "detail": "Konfigurer én gang, generer alt — fakturering, auth, AI, i18n — fra én enkelt preset-konfiguration.",
         "readyStatus": "Preset system klar"

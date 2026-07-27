@@ -176,7 +176,10 @@ describe("parseTranslateModels", () => {
       "sensenova-u1-fast",
     ]);
     expect(parseTranslateModels({})).toContain("deepseek-v4-flash");
-    expect(parseTranslateModels({})).toContain("sensenova-u1-fast");
+    expect(parseTranslateModels({})).toContain("glm-5.2");
+    // Listed by /v1/models and shown unused on the dashboard, but
+    // /v1/chat/completions 404s it — excluded so runs stop paying to find out.
+    expect(parseTranslateModels({})).not.toContain("sensenova-u1-fast");
   });
 });
 
@@ -210,18 +213,47 @@ describe("quota / rate-limit classification", () => {
 });
 
 describe("createModelPool", () => {
-  it("round-robins and skips exhausted models", () => {
+  it("round-robins and skips benched models", () => {
     const pool = createModelPool(["a", "b", "c"]);
     expect([pool.pick(), pool.pick(), pool.pick()]).toEqual(["a", "b", "c"]);
     pool.markExhausted("b");
     expect(pool.remaining()).toEqual(["a", "c"]);
-    // rr continues; after 3 picks, next alive index maps onto [a,c]
     const next = [pool.pick(), pool.pick(), pool.pick()];
     expect(new Set(next)).toEqual(new Set(["a", "c"]));
     expect(next).toHaveLength(3);
     pool.markExhausted("a");
     pool.markExhausted("c");
     expect(pool.pick()).toBeNull();
+  });
+
+  /**
+   * The plan meters a rolling window, so "out of budget" is temporary. Retiring
+   * a model permanently on one 4xx stalled a whole run while the dashboard
+   * still showed 17.4% of that model's window unspent.
+   */
+  it("returns a benched model to the pool once its cooldown elapses", async () => {
+    const pool = createModelPool(["a", "b"]);
+    pool.markExhausted("a", { cooldownMs: 40 });
+    expect(pool.remaining()).toEqual(["b"]);
+    await new Promise((r) => setTimeout(r, 60));
+    expect(pool.remaining()).toEqual(["a", "b"]);
+    expect(pool.pick()).not.toBeNull();
+  });
+
+  it("keeps an unusable model id out for good", async () => {
+    const pool = createModelPool(["a", "b"]);
+    pool.markExhausted("a", { cooldownMs: Number.POSITIVE_INFINITY });
+    await new Promise((r) => setTimeout(r, 40));
+    expect(pool.remaining()).toEqual(["b"]);
+  });
+
+  it("recovers from a fully benched pool rather than dying", async () => {
+    const pool = createModelPool(["a", "b"]);
+    pool.markExhausted("a", { cooldownMs: 30 });
+    pool.markExhausted("b", { cooldownMs: 30 });
+    expect(pool.pick()).toBeNull();
+    await new Promise((r) => setTimeout(r, 50));
+    expect(pool.pick()).not.toBeNull();
   });
 });
 

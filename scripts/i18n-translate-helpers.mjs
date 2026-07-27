@@ -393,11 +393,20 @@ export function pLimit(concurrency) {
  * Default SenseNova Token Plan model pool for product i18n.
  * Prefer multi-model rotation so one exhausted plan does not stall the wheel.
  */
+/**
+ * Each model has its OWN rolling-window quota bucket, so the pool is capacity,
+ * not just failover — the more usable ids in here, the more of the plan is
+ * reachable in one run.
+ *
+ * `sensenova-u1-fast` is deliberately absent. `GET /v1/models` lists it and the
+ * dashboard shows its window 100% unused, but `POST /v1/chat/completions`
+ * answers `{"message":"model is not found"}` for it under every parameter
+ * combination tried (with/without `thinking`, enabled/disabled). Keeping it
+ * only burns one request per run to rediscover that.
+ */
 export const DEFAULT_TRANSLATE_MODELS = [
-  // deepseek works on Token Plan; u1-fast may 404 on some accounts (auto-skipped).
-  // flash-lite kept as last resort for residual capacity.
   "deepseek-v4-flash",
-  "sensenova-u1-fast",
+  "glm-5.2",
   "sensenova-6.7-flash-lite",
 ];
 
@@ -482,17 +491,40 @@ export function createModelPool(models) {
   if (list.length === 0) {
     throw new Error("createModelPool: empty model list");
   }
-  const exhausted = new Set();
+  /** model → epoch ms at which it may be retried. */
+  const benched = new Map();
   let rr = 0;
 
-  const active = () => list.filter((m) => !exhausted.has(m));
+  const active = (now = Date.now()) =>
+    list.filter((m) => {
+      const until = benched.get(m);
+      if (until === undefined) return true;
+      if (until !== Infinity && now >= until) {
+        benched.delete(m);
+        return true;
+      }
+      return false;
+    });
 
   return {
     all: () => [...list],
     remaining: () => active(),
-    exhausted: () => [...exhausted],
-    markExhausted(model) {
-      if (list.includes(model)) exhausted.add(model);
+    exhausted: () => [...benched.keys()],
+    /**
+     * Bench a model instead of retiring it.
+     *
+     * The plan meters a ROLLING WINDOW ("当前窗口调用余量"), so a model that is
+     * out of budget right now is usable again once the window turns. Permanent
+     * eviction meant one 4xx cost us that model for the rest of the run: a run
+     * stalled with deepseek benched while the dashboard still showed 17.4% of
+     * its window unspent.
+     *
+     * `cooldownMs: Infinity` is for models that will never come back within the
+     * run — a 404 model id, not a spent budget.
+     */
+    markExhausted(model, { cooldownMs = 90_000 } = {}) {
+      if (!list.includes(model)) return;
+      benched.set(model, cooldownMs === Infinity ? Infinity : Date.now() + cooldownMs);
     },
     /** @returns {string | null} */
     pick() {
