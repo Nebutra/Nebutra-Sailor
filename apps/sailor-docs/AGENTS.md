@@ -52,6 +52,27 @@ Treat these as derived artifacts:
 If generated docs output is wrong, change the checked-in docs source or local
 generator code instead of editing build output.
 
+## Nav logo (product chrome)
+
+Nav title logo is **图形 / 文字解耦** — do not collapse back to one horizontal SVG.
+
+| Layer | Light | Dark |
+|-------|-------|------|
+| Mark | `logo-color.svg` multi-path VI (`next/image`) | `LogomarkSVG` mono white |
+| Wordmark | `WordmarkEnSVG` + neutral text token | same + `dark:!text-white` |
+
+Source: `src/app/[lang]/layout.tsx`. Brand rationale and anti-patterns:
+`packages/design/brand/README.md` → “Product chrome (nav / theme dual)”.
+
+## ECS / PM2 deploy notes
+
+- VM production build uses `build:vm` (`next build --webpack`) so standalone
+  does not externalize shiki as unresolvable `shiki-<hash>` packages (Turbopack
+  standalone → `MODULE_NOT_FOUND` / 500 on every page).
+- Deploy with **explicit** `apps=sailor-docs` only when possible. Preflight
+  release pruning must never wipe sibling apps — see
+  `docs/ops/ecs-pm2-release-lessons.md`.
+
 ## Validation
 
 Run the smallest credible validation after changes:

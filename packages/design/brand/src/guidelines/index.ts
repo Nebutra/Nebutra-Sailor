@@ -36,6 +36,7 @@ export {
   logoSafetyZone,
   logoSpecialVersions,
   logoVariants,
+  productChromeLogoRule,
 } from "./logo";
 
 /**

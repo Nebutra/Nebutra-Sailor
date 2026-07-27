@@ -3,20 +3,34 @@
  *
  * These components render SVG paths directly in JSX (no <img> tag, no public folder).
  *
- * **Mono** (`LogoEnSVG` / `LogomarkSVG`): fill="currentColor" — recolor via `text-*`.
- * Product chrome default: `text-brand-mark`. Inverse: `text-white`.
+ * ## Asset taxonomy (do not conflate)
  *
- * **Color VI** (`LogoEnColorSVG`): mono mark path painted with brand gradient +
- * #060307 wordmark. Prefer official asset `assets/logo/logo-horizontal-en.svg`
- * for full multi-path VI (nav chrome / marketing).
+ * | Kind | What it is | Use |
+ * |------|------------|-----|
+ * | **正标 multi-path** | Illustrator export: real facet paths + true gradients (`logo-color.svg`, `logo-horizontal-en.svg`) | Light / print-faithful color |
+ * | **Mono path** | Single `LOGOMARK_PATH` + `currentColor` (`LogomarkSVG`, `LogoEnSVG`) | Dark inverse, themed chrome |
+ * | **LogoEnColorSVG** | Mono path painted with a fake linearGradient + baked `#060307` wordmark | **Avoid for nav** — not VI 正标 |
+ *
+ * ## Product chrome: 图形 / 文字 must be decoupled
+ *
+ * Swapping one baked horizontal SVG (light) for one mono composite (dark) locks
+ * mark fills to the wordmark and fails "文字 logo 解耦". Preferred pattern:
+ *
+ * ```tsx
+ * // Light: official multi-path color MARK only
+ * <Image src={logoColor} className="h-6 w-auto dark:hidden" unoptimized alt="" />
+ * // Dark: mono MARK
+ * <LogomarkSVG className="hidden h-6 w-6 !text-white dark:block" />
+ * // BOTH themes: independent WORDMARK (currentColor)
+ * <WordmarkEnSVG className="h-4.5 w-auto !text-[var(--neutral-12)] dark:!text-white" />
+ * ```
+ *
+ * Reference implementation: `apps/sailor-docs/src/app/[lang]/layout.tsx` nav title.
+ *
+ * **Mono** (`LogoEnSVG` / `LogomarkSVG` / `WordmarkEnSVG`): fill="currentColor".
+ * Default class injects `text-brand-mark`; override with `!text-*` when needed.
  *
  * Source assets: packages/design/brand/assets/logo/
- *
- * Usage:
- *   <LogomarkSVG className="w-8 h-8" />
- *   <LogoEnSVG className="text-white" width={160} />
- *   <LogoEnColorSVG width={160} className="dark:hidden" />
- *   <LogoEnSVG width={160} className="hidden dark:block !text-white" />
  */
 
 /** Default logo fill = brand-mark (not product CTA primary). */

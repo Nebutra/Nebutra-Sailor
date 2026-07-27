@@ -28,6 +28,39 @@ import { Logo, Logomark, Wordmark } from "@nebutra/brand";
 <Wordmark size={100} variant="mono" />
 ```
 
+### Product chrome (nav / theme dual) — 图形 / 文字解耦
+
+Theme-aware product chrome **must not** swap one baked horizontal SVG for one
+mono composite. That couples mark fills to the wordmark (light color lock /
+dark all-white lock) and is not VI-correct.
+
+| Layer | Light | Dark |
+|-------|-------|------|
+| **图形 mark** | Official multi-path `assets/logo/logo-color.svg` (`<Image unoptimized>`) | `LogomarkSVG` + `!text-white` |
+| **文字 wordmark** | `WordmarkEnSVG` + `!text-[var(--neutral-12)]` | same component + `dark:!text-white` |
+
+```tsx
+import { LogomarkSVG, WordmarkEnSVG } from "@nebutra/brand";
+import logoColor from "@nebutra/brand/assets/logo/logo-color.svg";
+import Image from "next/image";
+
+const logoColorSrc = typeof logoColor === "string" ? logoColor : logoColor.src;
+
+<span className="inline-flex h-6 items-center gap-2">
+  <Image src={logoColorSrc} alt="" width={26} height={24} className="h-6 w-auto dark:hidden" unoptimized aria-hidden />
+  <LogomarkSVG width={24} height={24} className="hidden h-6 w-6 shrink-0 !text-white dark:block" />
+  <WordmarkEnSVG width={100} className="h-[1.125rem] w-auto !text-[var(--neutral-12)] dark:!text-white" aria-label="Nebutra" />
+</span>
+```
+
+**Do not:**
+
+- Use `LogoEnColorSVG` for nav (mono path + fake gradient ≠ 正标 multi-path)
+- Use whole `logo-horizontal-en.svg` for light + whole `LogoEnSVG` for dark (整标切换, not 解耦)
+- Invert a color SVG with CSS `filter` for dark (breaks VI fills)
+
+Canonical app reference: `apps/sailor-docs` nav in `src/app/[lang]/layout.tsx`.
+
 ### Brand Metadata
 
 ```tsx

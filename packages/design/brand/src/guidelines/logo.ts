@@ -85,6 +85,29 @@ export const logoVariants = {
 } as const;
 
 /**
+ * Product-chrome dual-theme rule (2026-07 lesson)
+ *
+ * Nav / shell must **decouple** logomark from wordmark:
+ * - Light mark: multi-path VI color asset (`logo-color`), not mono+fake gradient
+ * - Dark mark: mono `currentColor` white
+ * - Wordmark: independent `currentColor` both themes
+ *
+ * Do not theme by swapping one baked horizontal file for one mono composite.
+ * See packages/design/brand/README.md and apps/sailor-docs nav layout.
+ */
+export const productChromeLogoRule = {
+  decoupleMarkAndWordmark: true,
+  lightMark: "logo-color",
+  darkMark: "LogomarkSVG + text-white",
+  wordmark: "WordmarkEnSVG + theme text token",
+  avoid: [
+    "LogoEnColorSVG for nav",
+    "logo-horizontal-en light + LogoEnSVG dark whole-swap",
+    "CSS filter invert on color SVGs",
+  ],
+} as const;
+
+/**
  * Logo Editions (品牌标志版本)
  *
  * v1.0 经典版与 v2.0 合规版的区别在于中文"毓"字的写法。
