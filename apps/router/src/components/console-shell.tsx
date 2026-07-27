@@ -32,7 +32,7 @@ import { MARKET_CHANNELS } from "@/lib/market-taxonomy";
  * Admin   /dashboard|keys|…    admin
  * Use     /use                 quick use
  *
- * Locales: full PRODUCT_LANGUAGES wheel via NEXT_LOCALE cookie (never 7-locale stopgap).
+ * Locales: full canonical BCP-47 wheel via NEXT_LOCALE cookie (never 7-locale stopgap).
  */
 
 const ADMIN_NAV = [

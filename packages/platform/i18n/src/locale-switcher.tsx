@@ -22,7 +22,7 @@ import {
   type ProductLanguage,
   productLanguageEndonymLabels,
 } from "./languages";
-import { toMessageLocale } from "./locales";
+import { canonicalizeLocale, canonicalizeLocaleOrDefault, toMessageLocale } from "./locales";
 import { pinScrollPosition } from "./scroll-pin";
 
 // ---------------------------------------------------------------------------
@@ -135,7 +135,28 @@ export function createLocaleSwitcher<TLocale extends string>(
     labels: labelsProp,
     className,
   }: LocaleSwitcherProps<TLocale> = {}) {
-    const locale = useLocale() as TLocale;
+    const rawLocale = useLocale();
+    // Normalize next-intl locale into the same ID space as `locales` (canonical
+    // BCP-47 for cookie apps, message keys for path apps).
+    const locale = useMemo(() => {
+      const exact = locales.find((l) => l === rawLocale);
+      if (exact) return exact;
+      const canon = canonicalizeLocale(rawLocale);
+      if (canon) {
+        const byCanon = locales.find(
+          (l) =>
+            l === canon ||
+            canonicalizeLocale(l) === canon ||
+            toMessageLocale(l) === toMessageLocale(canon),
+        );
+        if (byCanon) return byCanon;
+      }
+      const msg = toMessageLocale(rawLocale);
+      const byMsg = locales.find((l) => l === msg || toMessageLocale(l) === msg);
+      if (byMsg) return byMsg;
+      return (rawLocale as TLocale) || (locales[0] as TLocale);
+    }, [rawLocale, locales]);
+
     const configLabels = typeof labelsOrHook === "function" ? labelsOrHook() : labelsOrHook;
     const labels: Record<TLocale, string> = labelsProp
       ? ({ ...configLabels, ...labelsProp } as Record<TLocale, string>)
@@ -181,7 +202,9 @@ export function createLocaleSwitcher<TLocale extends string>(
           setOpen(false);
           return;
         }
-        setLocaleCookie(next);
+        // Cookie mode: always persist canonical BCP-47 so request.ts matches.
+        const cookieValue = mode === "cookie" ? canonicalizeLocaleOrDefault(next) : next;
+        setLocaleCookie(cookieValue);
         setOpen(false);
         pinScrollPosition();
         if (mode === "cookie") {
@@ -197,21 +220,30 @@ export function createLocaleSwitcher<TLocale extends string>(
       [locale, pathname, router, mode],
     );
 
-    const renderItem = (l: TLocale) => {
+    const renderItem = (l: TLocale, opts?: { pinned?: boolean }) => {
       const isActive = l === locale;
       const label = labels[l] ?? String(l);
-      const code = String(l);
+      // Compact message key (de, zh-Hans) — not full BCP-47 — for scannable rails
+      const code = toMessageLocale(l);
       return (
         <CommandItem
           key={l}
-          value={`${label} ${code}`}
+          value={`${label} ${code} ${l}`}
+          data-checked={isActive ? "true" : undefined}
           onSelect={() => handleSelect(l)}
-          className="flex cursor-pointer items-center gap-2 px-2.5 py-2 text-sm"
+          className={cn(
+            "flex cursor-pointer items-center gap-2 px-2.5 py-2 text-sm",
+            isActive && "bg-accent/60 font-medium text-accent-foreground",
+            opts?.pinned && "aria-[selected=false]:bg-accent/40",
+          )}
         >
-          <span className="min-w-0 flex-1 truncate text-start font-medium">{label}</span>
+          <span className="min-w-0 flex-1 truncate text-start">{label}</span>
           <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">{code}</span>
           <Check
-            className={cn("h-3.5 w-3.5 shrink-0", isActive ? "opacity-100" : "opacity-0")}
+            className={cn(
+              "h-3.5 w-3.5 shrink-0 text-primary",
+              isActive ? "opacity-100" : "opacity-0",
+            )}
             aria-hidden
           />
         </CommandItem>
@@ -272,13 +304,15 @@ export function createLocaleSwitcher<TLocale extends string>(
                   {noResultsLabel}
                 </CommandEmpty>
 
-                {activeLocale ? <CommandGroup>{renderItem(activeLocale)}</CommandGroup> : null}
+                {activeLocale ? (
+                  <CommandGroup>{renderItem(activeLocale, { pinned: true })}</CommandGroup>
+                ) : null}
 
                 {activeLocale && otherLocales.length > 0 ? <CommandSeparator /> : null}
 
                 {otherLocales.length > 0 ? (
-                  <CommandGroup heading={allLanguagesLabel}>
-                    {otherLocales.map(renderItem)}
+                  <CommandGroup heading={activeLocale ? allLanguagesLabel : undefined}>
+                    {otherLocales.map((l) => renderItem(l))}
                   </CommandGroup>
                 ) : null}
               </CommandList>

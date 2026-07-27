@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /**
  * Shell + @nebutra/auth (default better-auth via Auth Center).
- * Locale: cookie NEXT_LOCALE → PRODUCT_LANGUAGES wheel (@nebutra/i18n).
+ * Locale: cookie NEXT_LOCALE → canonical BCP-47 wheel (@nebutra/i18n).
  */
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const authProvider = getConfiguredAuthProvider();

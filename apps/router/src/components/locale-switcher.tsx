@@ -1,27 +1,31 @@
 "use client";
 
-import { PRODUCT_LANGUAGES } from "@nebutra/i18n/languages";
 import {
-  buildMessageKeyLocaleLabels,
+  buildCanonicalLocaleLabels,
   createLocaleSwitcher,
   defaultCompactTrigger,
 } from "@nebutra/i18n/locale-switcher";
+import { CANONICAL_LOCALES, type CanonicalLocale } from "@nebutra/i18n/locales";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-const labels = buildMessageKeyLocaleLabels();
+type LocaleCode = CanonicalLocale;
 
+const labels = buildCanonicalLocaleLabels(CANONICAL_LOCALES) as Record<LocaleCode, string>;
+
+// Cookie mode: same ID space as request.ts (canonicalizeLocaleOrDefault).
+// Do NOT pass PRODUCT_LANGUAGES message keys — useLocale() returns BCP-47 tags.
 const Inner = createLocaleSwitcher(
   { useRouter, usePathname },
   {
-    locales: PRODUCT_LANGUAGES,
+    locales: CANONICAL_LOCALES,
     labels,
     mode: "cookie",
-    displayLocale: (loc) => defaultCompactTrigger(loc),
+    displayLocale: (locale) => defaultCompactTrigger(locale),
   },
 );
 
-/** Cookie-mode full-wheel switcher for Router chrome (market / admin / use). */
+/** Cookie-mode full-wheel switcher for Router chrome (canonical BCP-47). */
 export function LocaleSwitcher(props: { className?: string } = {}) {
   const t = useTranslations("chrome");
   return (
