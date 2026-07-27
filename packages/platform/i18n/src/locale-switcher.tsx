@@ -1,8 +1,20 @@
 "use client";
 
-import { Check, Globe, MagnifyingGlass } from "@nebutra/icons";
+import { Check, ChevronDown, Globe } from "@nebutra/icons";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@nebutra/ui/primitives";
 import { useLocale } from "next-intl";
-import { useCallback, useEffect, useId, useMemo, useRef, useState, useTransition } from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
 import { setLocaleCookie } from "./cookies";
 import {
   compactLanguageTriggerLabel,
@@ -43,6 +55,8 @@ export interface LocaleSwitcherConfig<TLocale extends string> {
   searchPlaceholder?: string;
   noResultsLabel?: string;
   menuAriaLabel?: string;
+  /** Optional group heading above non-active languages. */
+  allLanguagesLabel?: string;
 }
 
 export interface LocaleSwitcherProps<TLocale extends string = string> {
@@ -53,6 +67,10 @@ export interface LocaleSwitcherProps<TLocale extends string = string> {
 
 function useDefaultAriaLabel(): string {
   return "Change language";
+}
+
+function cn(...parts: Array<string | false | undefined | null>): string {
+  return parts.filter(Boolean).join(" ");
 }
 
 // ---------------------------------------------------------------------------
@@ -90,6 +108,9 @@ export function defaultCompactTrigger(locale: string): string {
 /**
  * Unified language switcher for all product apps.
  * Scroll-preserving, cookie or path mode, searchable full wheel.
+ *
+ * Presentation: DS Popover + Command (portal, keyboard, search chrome).
+ * Do not reintroduce hand-rolled absolute menus + native type=search.
  */
 export function createLocaleSwitcher<TLocale extends string>(
   hooks: LocaleSwitcherHooks,
@@ -106,6 +127,7 @@ export function createLocaleSwitcher<TLocale extends string>(
     searchPlaceholder = "Search languages…",
     noResultsLabel = "No languages match",
     menuAriaLabel = "Select language",
+    allLanguagesLabel = "All languages",
   } = config;
 
   function LocaleSwitcher({
@@ -124,57 +146,34 @@ export function createLocaleSwitcher<TLocale extends string>(
     const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
     const [open, setOpen] = useState(false);
-    const [query, setQuery] = useState("");
-    const containerRef = useRef<HTMLDivElement>(null);
-    const searchRef = useRef<HTMLInputElement>(null);
-    const menuId = useId();
-    const searchId = useId();
 
     const showSearch = searchThreshold === 0 || locales.length > searchThreshold;
 
-    const ordered = useMemo(() => {
-      // Active locale first for scannability
-      const rest = locales.filter((l) => l !== locale);
-      return locale && locales.includes(locale) ? [locale, ...rest] : [...locales];
+    const { activeLocale, otherLocales } = useMemo(() => {
+      const active = locale && locales.includes(locale) ? locale : undefined;
+      const others = locales.filter((l) => l !== active);
+      return { activeLocale: active, otherLocales: others };
     }, [locale, locales]);
 
-    const filtered = useMemo(() => {
-      const q = query.trim().toLowerCase();
-      if (!q) return ordered;
-      return ordered.filter((l) => {
-        const label = (labels[l] ?? l).toLowerCase();
-        return label.includes(q) || String(l).toLowerCase().includes(q);
-      });
-    }, [ordered, query, labels]);
-
-    useEffect(() => {
-      if (!open) {
-        setQuery("");
-        return;
-      }
-      if (showSearch) {
-        // Focus search for keyboard users after open paint
-        const t = window.setTimeout(() => searchRef.current?.focus(), 0);
-        return () => window.clearTimeout(t);
-      }
-    }, [open, showSearch]);
-
-    const handleOpen = useCallback(() => {
-      setOpen((prev) => {
-        if (!prev && mode === "path" && typeof router.prefetch === "function") {
-          for (const l of locales) {
-            if (l !== locale) {
-              try {
-                router.prefetch(pathname, { locale: l });
-              } catch {
-                // older adapters may reject options
-              }
-            }
-          }
+    const prefetchOthers = useCallback(() => {
+      if (mode !== "path" || typeof router.prefetch !== "function") return;
+      for (const l of locales) {
+        if (l === locale) continue;
+        try {
+          router.prefetch(pathname, { locale: l });
+        } catch {
+          // older adapters may reject options
         }
-        return !prev;
-      });
-    }, [locale, pathname, router, locales, mode]);
+      }
+    }, [locale, locales, mode, pathname, router]);
+
+    const handleOpenChange = useCallback(
+      (next: boolean) => {
+        setOpen(next);
+        if (next) prefetchOthers();
+      },
+      [prefetchOthers],
+    );
 
     const handleSelect = useCallback(
       (next: TLocale) => {
@@ -198,115 +197,85 @@ export function createLocaleSwitcher<TLocale extends string>(
       [locale, pathname, router, mode],
     );
 
-    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    }, []);
-
-    const handleBlur = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
-      if (!containerRef.current?.contains(e.relatedTarget as Node | null)) {
-        setOpen(false);
-      }
-    }, []);
-
-    // Outside click (pointer) — complements blur for mouse users
-    useEffect(() => {
-      if (!open) return;
-      const onDoc = (e: MouseEvent) => {
-        if (!containerRef.current?.contains(e.target as Node)) setOpen(false);
-      };
-      document.addEventListener("mousedown", onDoc);
-      return () => document.removeEventListener("mousedown", onDoc);
-    }, [open]);
+    const renderItem = (l: TLocale) => {
+      const isActive = l === locale;
+      const label = labels[l] ?? String(l);
+      const code = String(l);
+      return (
+        <CommandItem
+          key={l}
+          value={`${label} ${code}`}
+          onSelect={() => handleSelect(l)}
+          className="flex cursor-pointer items-center gap-2 px-2.5 py-2 text-sm"
+        >
+          <span className="min-w-0 flex-1 truncate text-start font-medium">{label}</span>
+          <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">{code}</span>
+          <Check
+            className={cn("h-3.5 w-3.5 shrink-0", isActive ? "opacity-100" : "opacity-0")}
+            aria-hidden
+          />
+        </CommandItem>
+      );
+    };
 
     return (
-      <div
-        ref={containerRef}
-        className={className}
-        style={{ position: "relative", display: "inline-block" }}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
-      >
-        <button
-          type="button"
-          aria-label={ariaLabel}
-          aria-haspopup="menu"
-          aria-expanded={open}
-          aria-controls={open ? menuId : undefined}
-          disabled={isPending}
-          onClick={handleOpen}
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:opacity-50"
-        >
-          <Globe className="h-4 w-4 shrink-0" aria-hidden />
-          <span className="max-w-[7rem] truncate">{displayLocale(locale)}</span>
-        </button>
-
-        {open ? (
-          <div
-            id={menuId}
-            role="menu"
-            aria-label={menuAriaLabel}
-            className="absolute end-0 top-full z-50 mt-1 flex w-[min(100vw-2rem,16rem)] flex-col overflow-hidden rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 shadow-lg"
-          >
-            {showSearch ? (
-              <div className="shrink-0 border-b border-neutral-6 p-1.5">
-                {/*
-                  Flex row (icon sibling + text input) — not absolute-icon + type=search.
-                  Absolute icon + WebKit search cancel (×) + placeholder stacked in h-8
-                  and looked like icon/text overlap on product shells (forge/router).
-                */}
-                <label
-                  htmlFor={searchId}
-                  className="flex h-8 w-full items-center gap-2 rounded-[var(--radius-sm)] border border-neutral-6 bg-neutral-1 px-2.5 focus-within:border-neutral-8"
-                >
-                  <MagnifyingGlass className="h-3.5 w-3.5 shrink-0 text-neutral-10" aria-hidden />
-                  <span className="sr-only">{searchPlaceholder}</span>
-                  <input
-                    ref={searchRef}
-                    id={searchId}
-                    data-allow-native
-                    type="text"
-                    inputMode="search"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder={searchPlaceholder}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    className="min-w-0 flex-1 appearance-none border-0 bg-transparent text-sm text-neutral-12 outline-none placeholder:text-neutral-9"
-                    onKeyDown={(e) => {
-                      // Prevent menu from stealing first character focus quirks
-                      e.stopPropagation();
-                    }}
-                  />
-                </label>
-              </div>
-            ) : null}
-
-            <div className="max-h-72 min-h-0 overflow-y-auto overscroll-contain p-1">
-              {filtered.length === 0 ? (
-                <p className="px-3 py-2 text-sm text-neutral-10">{noResultsLabel}</p>
-              ) : (
-                filtered.map((l) => {
-                  const isActive = l === locale;
-                  const label = labels[l] ?? String(l);
-                  return (
-                    <button
-                      key={l}
-                      type="button"
-                      role="menuitem"
-                      aria-current={isActive ? ("true" as const) : undefined}
-                      onClick={() => handleSelect(l)}
-                      className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-start text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
-                    >
-                      <span className="min-w-0 truncate">{label}</span>
-                      {isActive ? <Check className="h-3.5 w-3.5 shrink-0" aria-hidden /> : null}
-                    </button>
-                  );
-                })
+      <div className={cn("inline-flex", className)}>
+        <Popover open={open} onOpenChange={handleOpenChange}>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              disabled={isPending}
+              aria-label={ariaLabel}
+              className={cn(
+                "inline-flex min-h-9 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1.5",
+                "text-sm font-medium text-neutral-11 shadow-sm transition-[background-color,border-color,color,box-shadow]",
+                "hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+                "disabled:pointer-events-none disabled:opacity-50",
+                open && "border-neutral-8 bg-neutral-2 text-neutral-12",
               )}
-            </div>
-          </div>
-        ) : null}
+            >
+              <Globe className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
+              <span className="max-w-[6.5rem] truncate tracking-wide">{displayLocale(locale)}</span>
+              <ChevronDown
+                className={cn(
+                  "h-3.5 w-3.5 shrink-0 text-neutral-10 transition-transform duration-200",
+                  open && "rotate-180",
+                )}
+                aria-hidden
+              />
+            </button>
+          </PopoverTrigger>
+
+          <PopoverContent
+            align="end"
+            side="bottom"
+            sideOffset={8}
+            aria-label={menuAriaLabel}
+            className="w-[min(100vw-2rem,18rem)] overflow-hidden p-0 shadow-xl"
+          >
+            <Command className="rounded-[inherit] border-0 bg-transparent shadow-none">
+              {showSearch ? (
+                <CommandInput placeholder={searchPlaceholder} className="h-10" />
+              ) : null}
+              <CommandList className="max-h-72">
+                <CommandEmpty className="py-8 text-sm text-muted-foreground">
+                  {noResultsLabel}
+                </CommandEmpty>
+
+                {activeLocale ? <CommandGroup>{renderItem(activeLocale)}</CommandGroup> : null}
+
+                {activeLocale && otherLocales.length > 0 ? <CommandSeparator /> : null}
+
+                {otherLocales.length > 0 ? (
+                  <CommandGroup heading={allLanguagesLabel}>
+                    {otherLocales.map(renderItem)}
+                  </CommandGroup>
+                ) : null}
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
     );
   }

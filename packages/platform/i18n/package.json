@@ -36,11 +36,14 @@
   },
   "peerDependencies": {
     "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "next": ">=16.0.7",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
   },
   "devDependencies": {
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "catalog:"
