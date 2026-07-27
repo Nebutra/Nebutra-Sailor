@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 /**
  * Pure helpers for SenseNova i18n translator (unit-testable, no network).
  *
@@ -312,15 +313,41 @@ export function unflatten(map) {
   return root;
 }
 
-export function collectWork(sourceMap, targetMap, { force } = {}) {
+/**
+ * Fingerprint an English source string. Confirmations are keyed on this, so
+ * editing the English automatically invalidates any prior confirmation and the
+ * leaf returns to the queue.
+ */
+export function sourceFingerprint(value) {
+  return createHash("md5").update(String(value)).digest("hex");
+}
+
+/**
+ * Decide which leaves need a translation call.
+ *
+ * A leaf still identical to English is normally re-queued — product UI is full
+ * of short labels ("Search", "Docs") that a seeded catalog leaves untouched.
+ * But some leaves are identical *because that is the correct translation*:
+ * "Wallet", "Admin", "RAG", "Audio" are the same word in German. Those were
+ * re-sent on every single run forever, never converging — 3,743 leaves of
+ * permanent churn across the five catalogs, burning quota to receive the same
+ * answer.
+ *
+ * `confirmedIdentical` is a Map of key → source fingerprint, recorded when a
+ * model returns a translation equal to its source. A leaf is skipped only when
+ * the fingerprint still matches, so changing the English re-queues it.
+ * `force` ignores confirmations entirely.
+ */
+export function collectWork(sourceMap, targetMap, { force, confirmedIdentical } = {}) {
   const work = [];
   for (const [key, enVal] of sourceMap) {
     if (typeof enVal !== "string" || shouldSkipValue(enVal)) continue;
     const cur = targetMap.get(key);
     const missing = cur === undefined;
-    // Product UI is full of short labels ("Search", "Docs") — still retranslate
-    // any leaf that remains identical to English.
     const identical = typeof cur === "string" && cur === enVal && enVal.trim().length > 0;
+    if (!force && identical && confirmedIdentical?.get(key) === sourceFingerprint(enVal)) {
+      continue;
+    }
     if (force || missing || identical) work.push([key, enVal]);
   }
   return work;

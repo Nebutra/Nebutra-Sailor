@@ -1144,7 +1144,7 @@
         "desc": "Vollständig typisiertes ORM mit nativen Row-Level Security (RLS)-Richtlinien."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Clerk Multi-Tenant / Benutzerdefinierte Identität",
         "desc": "SOC2-fähiges Authentifizierungs-Gateway mit B2B-Organisationswechsel und RBAC."
       }
     },
@@ -1218,7 +1218,7 @@
       "badge": "Enterprise-Fähigkeiten",
       "title": "Ein vollständig typisierter, erweiterbarer Kern.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
+        "title": "Native zeilenbasierte Sicherheit",
         "desc": "Jede Datenbankabfrage wird strikt durch den aktuellen Tenant-Kontext abgegrenzt.",
         "cta": "Datenbankphilosophie lesen"
       },

@@ -144,7 +144,7 @@
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "咖啡",
         "price": "¥18",
         "description": "一杯咖啡的价格",
         "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],

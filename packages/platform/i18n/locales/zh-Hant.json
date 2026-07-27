@@ -32,7 +32,7 @@
       "loadError": "加载组织失败。",
       "columns": {
         "name": "名称",
-        "slug": "Slug",
+        "slug": "代碼",
         "plan": "套餐",
         "members": "成员",
         "created": "创建时间",

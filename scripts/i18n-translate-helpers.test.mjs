@@ -17,6 +17,7 @@ import {
   parseTranslateModels,
   placeholdersMatch,
   shouldSkipValue,
+  sourceFingerprint,
   splitBatchForRetry,
   unflatten,
   validateTranslation,
@@ -98,6 +99,60 @@ describe("collectWork", () => {
     const target = new Map([["a", "検索ツール"]]);
     expect(collectWork(en, target, { force: false })).toEqual([]);
     expect(collectWork(en, target, { force: true })).toEqual([["a", "Search tools"]]);
+  });
+});
+
+describe("confirmed-identical leaves", () => {
+  const en = flatten({ a: "Wallet", b: "Search tools" });
+
+  it("re-queues an identical leaf when nothing is confirmed", () => {
+    const target = new Map([
+      ["a", "Wallet"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    expect(collectWork(en, target, { force: false }).map(([k]) => k)).toEqual(["a"]);
+  });
+
+  it("skips it once confirmed against the same English", () => {
+    const target = new Map([
+      ["a", "Wallet"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(collectWork(en, target, { force: false, confirmedIdentical: confirmed })).toEqual([]);
+  });
+
+  it("re-queues when the English changes, so a stale confirmation cannot stick", () => {
+    const changed = flatten({ a: "Wallet balance", b: "Search tools" });
+    const target = new Map([
+      ["a", "Wallet balance"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(
+      collectWork(changed, target, { force: false, confirmedIdentical: confirmed }).map(([k]) => k),
+    ).toEqual(["a"]);
+  });
+
+  it("never lets a confirmation hide a MISSING leaf", () => {
+    const target = new Map([["b", "Suchwerkzeuge"]]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(
+      collectWork(en, target, { force: false, confirmedIdentical: confirmed }).map(([k]) => k),
+    ).toEqual(["a"]);
+  });
+
+  it("--force overrides confirmations", () => {
+    const target = new Map([
+      ["a", "Wallet"],
+      ["b", "Suchwerkzeuge"],
+    ]);
+    const confirmed = new Map([["a", sourceFingerprint("Wallet")]]);
+    expect(
+      collectWork(en, target, { force: true, confirmedIdentical: confirmed })
+        .map(([k]) => k)
+        .sort(),
+    ).toEqual(["a", "b"]);
   });
 });
 
