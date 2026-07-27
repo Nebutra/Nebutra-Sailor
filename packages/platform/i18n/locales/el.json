@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Γλώσσα",
     "ariaLabel": "Αλλαγή γλώσσας",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Αναζήτηση γλωσσών…",
+    "noResults": "Δεν βρέθηκαν γλώσσες",
+    "menuAria": "Επιλογή γλώσσας"
   },
   "compliance": {
     "icp": {
@@ -1141,26 +1141,26 @@
           "description": "Stripe, Slack, webhooks, queues και άλλα."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Άνοιγμα Sailor AI",
           "description": "Δοκιμάστε τη λειτουργία chat, δεδομένων ή workflow."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
+    "projects": "Έργα",
+    "noThreads": "Δεν υπάρχουν νήματα",
+    "expandAll": "Επέκταση όλων",
+    "collapseAll": "Σύμπτυξη όλων",
+    "sectionMore": "Περισσότερες επιλογές",
+    "newProject": "Νέο έργο",
+    "restoredGroups": "Ανέκτηθηκαν οι προηγουμένως επεκταμένες ομάδες",
+    "newProjectPlaceholder": "Όνομα έργου",
+    "newProjectDefault": "Χωρίς τίτλο",
+    "newProjectSuccess": "Το έργο δημιουργήθηκε",
+    "newProjectError": "Δεν ήταν δυνατή η δημιουργία του έργου",
+    "sortBy": "Ταξινόμηση κατά",
+    "sortRecent": "Πρόσφατη δραστηριότητα",
     "sortAlphabetical": "Αλφαβητικά",
     "sortCreated": "Ημερομηνία δημιουργίας",
     "archiveAll": "Αρχείο όλων",

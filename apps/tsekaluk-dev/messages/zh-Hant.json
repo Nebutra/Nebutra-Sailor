@@ -139,11 +139,7 @@
         "name": "聊一聊",
         "price": "免费",
         "description": "15 分钟快聊",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
         "cta": "和灵魂对话",
         "href": "/soul"
       },
@@ -151,12 +147,7 @@
         "name": "Coffee",
         "price": "¥18",
         "description": "一杯咖啡的价格",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
         "cta": "请我喝咖啡",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
@@ -164,11 +155,7 @@
         "name": "雇佣关系",
         "price": "按项目报价",
         "description": "完整专业交付",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
         "cta": "抛出橄榄枝",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
@@ -189,10 +176,7 @@
     "services": {
       "engineering": {
         "name": "产品工程",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
         "name": "AI & 自动化",
@@ -205,10 +189,7 @@
       },
       "design": {
         "name": "设计 & 产品",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
         "name": "增长 & 全球化",
@@ -222,19 +203,11 @@
       },
       "consulting": {
         "name": "专业咨询",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
         "name": "创投 & 战略",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
@@ -274,8 +247,8 @@
   },
   "pages": {
     "home": {
-      "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_title": "Tseka Luk — AI 原生建構者",
+      "metadata_desc": "Nebutra Intelligence 的 CEO 與 AI 原生建構者。打造智慧系統，而不只是產品。"
     },
     "work": {
       "label": "/ 19 个已上线项目",
@@ -329,7 +302,7 @@
       "awards_count": "10 次尝试",
       "awards_description": "不是高手，但什么都想试一试。每一次尝试，都想向专业看齐。",
       "award_1_title": "MCM/ICM 数学建模",
-      "award_1_level": "Honorable Mention",
+      "award_1_level": "榮譽提名",
       "award_1_detail": "NSGA-III 旅游优化器，预测误差 8.3%，28,000+ 支队伍",
       "award_2_title": "蓝桥杯 C/C++（江苏赛区）",
       "award_2_level": "一等奖",
@@ -364,7 +337,7 @@
       "cred_3": "HarmonyOS 高级开发者",
       "cred_4": "实用新型专利——电缆分线设备",
       "cred_5": "3 项软件著作权（电力优化、目标检测分类、图求解器）",
-      "cred_6": "CET-6: 543 · CET-4: 575",
+      "cred_6": "CET-6：543 · CET-4：575",
       "cred_7": "澳门科技大学——创新创业研修",
       "cred_8": "Prompt Engineer（Datawhale x 讯飞）",
       "personality_label": "/ 性格",

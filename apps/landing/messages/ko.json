@@ -792,7 +792,7 @@
       "contactUs": {
         "title": "8. 문의처",
         "intro": "본 개인정보 처리방침에 관한 문의사항이 있으시면 다음으로 연락해 주십시오:",
-        "company": "{brandName} Co., Ltd."
+        "company": "{brandName} 주식회사"
       }
     },
     "refund": {
@@ -974,7 +974,7 @@
       "contactUs": {
         "title": "문의처",
         "intro": "환불 요청 또는 본 정책에 관한 문의:",
-        "company": "{brandName} Co., Ltd.",
+        "company": "{brandName} 주식회사",
         "billingLabel": "결제",
         "supportLabel": "지원",
         "legalLabel": "법무",
@@ -1123,7 +1123,7 @@
       "contactUs": {
         "title": "11. 문의처",
         "intro": "본 약관에 관한 문의사항이 있으시면 다음으로 연락해 주십시오:",
-        "company": "{brandName} Co., Ltd.",
+        "company": "{brandName} 주식회사",
         "emailLabel": "이메일",
         "supportLabel": "지원"
       },
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "무료로 <hl>구축하세요</hl>",
+      "description": "{brandName}-Sailor는 상업적 사용에 비용이 들지 않습니다 — npm에서는 MIT, 저장소에서는 FSL-1.1-ALv2 라이선스이며, 2년 후 Apache-2.0으로 전환됩니다. 유료 요금제는 지원과 계약 약정을 판매하며, 사용 권한을 판매하지 않습니다."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "항상 무료",
+        "title": "커뮤니티",
+        "subtitle": "모든 사용자",
+        "description": "모든 팀 규모, 모든 수익. 폐쇄 소스 상용 제품 포함.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "전체 소스 코드, 모든 패키지",
+          "closedSourceOk": "폐쇄 소스 상업적 사용 — 카피레프트 없음",
+          "noAttribution": "등록 불필요, 저작자 표시 불필요",
+          "communitySupport": "커뮤니티 지원 — 최선의 노력"
         },
-        "cta": "View on GitHub"
+        "cta": "GitHub에서 보기"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "{price}/년부터",
+        "title": "팀",
+        "subtitle": "지원 구독",
+        "description": "희망이 아닌 약속이 필요한 팀을 위한 요금제입니다. 코드는 이미 무료입니다.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "전용 지원 채널",
+          "firstResponse": "2영업일 이내 첫 응답 보장",
+          "priorityTriage": "우선 버그 분류",
+          "upgradeHelp": "업그레이드 지원 및 호환성 변경 사전 통지"
         },
-        "cta": "Get support"
+        "cta": "지원 받기"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
-        "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "badge": "연간 $30,000부터",
+        "title": "엔터프라이즈",
+        "subtitle": "조달 준비 완료",
+        "description": "법무, 보안 또는 조달 검토 과정에서 서명할 상대방이 필요한 조직을 위한 플랜입니다.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "응답 SLA — 영업 시간 기준 4시간, 프로덕션 장애 시 1시간",
+          "indemnity": "면책 및 보안 패치 제공 약정",
+          "compliance": "서명된 DPA, 규정 준수 패키지, 업무 지속성 약정",
+          "trademark": "상표 및 화이트 라벨 사용 권리"
         },
-        "cta": "Contact sales"
+        "cta": "영업팀 문의"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "자주 묻는 질문",
+      "description": "간단히 말하면: 사용은 무료입니다. 비용을 지불하는 것은 계약상 당사자가 필요할 때입니다.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "왜 MIT나 AGPL 대신 FSL을 사용하나요?",
+          "a": "FSL은 Sailor 자체를 대체하는 제품을 판매하는 경우를 제외한 모든 사용을 허용하며, 각 버전은 출시 2년 후 Apache-2.0이 됩니다. 이는 사전에 철회 불가능하게 부여된 권리입니다. AGPL은 실제로 보호해야 할 것을 보호하지 못하면서 기업 법무 검토에서 채택을 막았습니다."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "상업적 사용도 정말 무료인가요?",
+          "a": "네. 수수료, 라이선스 키, 등록, 수익 또는 직원 수 기준, 저작자 표시가 전혀 없습니다. 폐쇄형 소스 제품을 만들어 판매할 수 있습니다."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "어떤 경우가 경쟁 사용에 해당하나요?",
+          "a": "Sailor 자체를 제공하는 경우 — 호스팅된 Sailor 서비스 또는 재포장된 경쟁 플랫폼 기반을 제공하는 것입니다. Sailor 위에 수직 SaaS, 내부 도구 또는 클라이언트 프로젝트를 구축하는 것은 경쟁 사용이 아닙니다. 필요한 경우 Enterprise 계약에 서면 면제 조항을 포함할 수 있습니다."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "유료 플랜으로 실제로 얻을 수 있는 것은 무엇인가요?",
+          "a": "지원 약정, 응답 SLA, 면책, 규정 준수 서류, 상표 권리입니다. 소프트웨어 사용 권한은 이미 귀하의 것입니다."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "오픈 소스 기여는 어떻게 되나요?",
+          "a": "모든 기여에는 CLA가 필요합니다. CONTRIBUTING.md를 참조하세요."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "라이선싱 — {brandName}",
+      "description": "상업적 용도로 무료입니다. npm에서는 MIT, 저장소에서는 FSL-1.1-ALv2이며, Apache-2.0으로 전환됩니다."
     }
   },
   "licenseWizard": {
@@ -1612,7 +1612,7 @@
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "자주 묻는 질문",
       "title": "솔직하게 답해 드립니다",
       "subtitle": "출시 전 알아두셔야 할 모든 것.",
       "items": {

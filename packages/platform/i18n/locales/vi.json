@@ -1,6 +1,6 @@
 {
   "admin": {
-    "title": "Admin",
+    "title": "Quản trị",
     "description": "Bảng điều khiển super admin — quản lý người dùng, tổ chức và tình trạng hệ thống.",
     "nav": {
       "overview": "Tổng quan",
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Ngôn ngữ",
     "ariaLabel": "Đổi ngôn ngữ",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Tìm kiếm ngôn ngữ…",
+    "noResults": "Không có ngôn ngữ nào khớp",
+    "menuAria": "Chọn ngôn ngữ"
   },
   "compliance": {
     "icp": {
@@ -599,7 +599,7 @@
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
+      "title": "Khóa API",
       "description": "Tạo và quản lý API keys để truy cập Nebutra theo chương trình.",
       "createButton": "Tạo API key",
       "noPermission": "Bạn không có quyền xem API keys.",
@@ -950,10 +950,10 @@
         "settings": "Cài đặt",
         "billing": "Thanh toán",
         "team": "Đội nhóm",
-        "apiKeys": "API Keys",
+        "apiKeys": "Khóa API",
         "notifications": "Thông báo",
         "auditLog": "Nhật ký kiểm toán",
-        "webhooks": "Webhooks",
+        "webhooks": "Webhook",
         "admin": "Quản trị"
       },
       "action": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, queues, và nhiều hơn nữa."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Mở Sailor AI",
           "description": "Thử chế độ chat, data, hoặc workflow."
         }
       }

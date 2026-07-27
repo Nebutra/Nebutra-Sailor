@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Sprache",
     "ariaLabel": "Sprache ändern",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Sprachen durchsuchen…",
+    "noResults": "Keine passenden Sprachen",
+    "menuAria": "Sprache auswählen"
   },
   "compliance": {
     "icp": {
@@ -229,7 +229,7 @@
     "social_headline": "Absolute technische Gleichberechtigung",
     "social_description": "Befähigung von Grenz-Innovatoren. Brechen Sie traditionelle Filter auf und befähigen Sie Solo-Gründer mit sofort einsatzbereiter Infrastruktur.",
     "governance_title": "Governance",
-    "governance_headline": "Code is Law",
+    "governance_headline": "Code ist Gesetz",
     "governance_description": "Algorithmische Governance auf Basis von Proof of Work und realen Geschäftsergebnissen, die undurchsichtige Bürokratie ersetzt.",
     "environment_title": "Umwelt",
     "environment_headline": "Digitaler Minimalismus",
@@ -591,7 +591,7 @@
       "errorNotAvailableDetail": "Diese Einladung wurde bereits beantwortet und ist nicht mehr aktiv.",
       "role": {
         "owner": "Eigentümer",
-        "admin": "Admin",
+        "admin": "Administrator",
         "member": "Mitglied",
         "viewer": "Betrachter"
       }
@@ -1079,7 +1079,7 @@
         "revenue": "Realisierter Umsatz"
       },
       "meta": {
-        "snapshot": "Snapshot",
+        "snapshot": "Schnappschuss",
         "cadence": "Rhythmus",
         "tenant": "Mandant",
         "daily": "Täglich",

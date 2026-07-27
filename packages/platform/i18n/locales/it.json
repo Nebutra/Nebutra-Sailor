@@ -55,8 +55,8 @@
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "Ciao Mondo",
+    "dashboard": "Cruscotto",
     "actions": {
       "continue": "Continua",
       "confirm": "Conferma",
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Lingua",
     "ariaLabel": "Cambia lingua",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Cerca lingue…",
+    "noResults": "Nessuna lingua corrispondente",
+    "menuAria": "Seleziona lingua"
   },
   "compliance": {
     "icp": {
@@ -1049,7 +1049,7 @@
       "promptPlaceholder": "Cosa hai in mente?",
       "actions": {
         "connect": "Connetti un'integrazione",
-        "theme": "Theme Playground",
+        "theme": "Sperimenta il tema",
         "audit": "Registro audit",
         "billing": "Fatturazione"
       }
@@ -1079,8 +1079,8 @@
         "revenue": "Ricavi riconosciuti"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
+        "snapshot": "Istantanea",
+        "cadence": "Cadenza",
         "tenant": "Tenant",
         "daily": "Quotidiano",
         "latestDay": "{day}",
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhook, code, e altro."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Apri Sailor AI",
           "description": "Prova chat, dati o workflow."
         }
       }

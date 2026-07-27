@@ -617,535 +617,535 @@
             },
             "1": {
               "label": "מידע על הפרופיל",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "desc": "תמונת פרופיל, תואר תפקיד, שם החברה ומידע אופציונלי נוסף."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "פרטי תשלום",
+              "desc": "כתובת חשבונית ופרטי אמצעי תשלום (מעובדים באופן מאובטח דרך Stripe)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "תקשורת",
+              "desc": "הודעות, משוב ותקשורת אחרת שאתה שולח אלינו."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "תוכן",
+              "desc": "כל תוכן שאתה יוצר, מעלה או מאחסן באמצעות השירותים שלנו."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 מידע הנאסף באופן אוטומטי",
+          "intro": "כאשר אתה משתמש בשירותים שלנו, אנו אוספים באופן אוטומטי מידע מסוים:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "מידע על המכשיר",
+              "desc": "סוג המכשיר, מערכת ההפעלה, סוג הדפדפן ומזהי מכשיר ייחודיים."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "מידע על השימוש",
+              "desc": "דפים שנצפו, תכונות שבהן נעשה שימוש, פעולות שבוצעו וזמן שהייה בשירותים."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "נתוני יומן",
+              "desc": "כתובת IP, זמני גישה, כתובות URL מפנות ויומני פעילות מערכת."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "מידע על מיקום",
+              "desc": "מיקום כללי המבוסס על כתובת IP (אנו לא אוספים מיקום גיאוגרפי מדויק)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. כיצד אנו משתמשים במידע שלך",
+        "intro": "אנו משתמשים במידע שאנו אוספים כדי:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "ספק שירותים",
+            "desc": "להפעיל, לתחזק ולשפר את השירותים שלנו."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "עיבוד עסקאות",
+            "desc": "ניהול תשלומים, חשבוניות ופעולות קשורות."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "תקשורת",
+            "desc": "שליחת הודעות שירות, עדכונים ותקשורת שיווקית (בהסכמה)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "התאמה אישית",
+            "desc": "התאמת החוויה שלך וספקת המלצות רלוונטיות."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "ניתוח",
+            "desc": "הבנת דפוסי שימוש ושיפור השירותים שלנו."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "הגנה",
+            "desc": "זיהוי, מניעה ותגובה להונאות, שימוש לרעה ואירועי אבטחה."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. כיצד אנו משתפים את המידע שלך",
+        "intro": "אנו עשויים לשתף את המידע שלך בנסיבות הבאות:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 ספקי שירות",
+          "intro": "אנו משתפים מידע עם ספקים חיצוניים המספקים שירותים בשמנו, כולל:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "תשתית",
+              "desc": "אחסון ענן (Vercel, Supabase), שירותי מסד נתונים"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "עיבוד תשלומים",
+              "desc": "Stripe לטיפול מאובטח בתשלומים"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "אימות",
+              "desc": "Clerk לניהול זהות"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "ניתוח נתונים",
+              "desc": "PostHog, Vercel Analytics לקבלת תובנות שימוש"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 העברות עסקיות",
+          "content": "אם אנו מעורבים ברכישה, מיזוג או מכירת נכסים, המידע שלך עשוי להיות מועבר כחלק מהעסקה."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 דרישות חוקיות",
+          "content": "אנו עשויים לחשוף מידע כפי שנדרש על פי החוק, הליך משפטי או בקשת רשות, או כדי להגן על זכויותינו, פרטיותנו, בטיחותנו או רכושנו."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. זכויותיך ובחירותיך",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 גישה וניידות",
+          "content": "אתה יכול לגשת למידע האישי שלך דרך הגדרות החשבון ולבקש עותק של הנתונים שלך בפורמט נייד."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 תיקון",
+          "content": "אתה יכול לעדכן את פרטי החשבון שלך בכל עת דרך הלוח."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 מחיקה",
+          "content": "אתה יכול לבקש מחיקת החשבון שלך והנתונים הקשורים אליו דרך ההגדרות או על ידי פנייה אלינו."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 תקשורת שיווקית",
+          "content": "אתה יכול לבטל את הרשמתך לדואר שיווקי על ידי לחיצה על \"ביטול מנוי\" בכל דואר שיווקי או עדכון ההעדפות שלך."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. אבטחת נתונים",
+        "intro": "אנו מיישמים אמצעים טכניים וארגוניים מתאימים להגנה על המידע שלך, כולל:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "הצפנת נתונים במעבר (TLS) ובמנוחה",
+          "1": "הערכות אבטחה וביצוע בדיקות חדירה באופן קבוע",
+          "2": "בקרות גישה ודרישות אימות",
+          "3": "ניטור ורישום פעילות מערכת"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. זכויות פרטיות בקליפורניה (CCPA)",
+        "intro": "אם אתה תושב קליפורניה, יש לך זכויות ספציפיות לגבי המידע האישי שלך:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "זכות לדעת",
+            "desc": "בקש חשיפת מידע שאנו אוספים, משתמשים בו ומשתפים."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "זכות למחוק",
+            "desc": "בקש מחיקה של המידע האישי שלך."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "זכות להתנגד",
+            "desc": "התנגד למכירת מידע אישי (אנו לא מוכרים את הנתונים שלך)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "זכות לשוויון",
+            "desc": "לא נפלה עליך אפליה בשל השתמשותך בזכויותיך."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. זכויות פרטיות באירופה (GDPR)",
+        "intro": "אם אתה נמצא ב-EEA, בבריטניה או בשוויץ, יש לך זכויות נוספות לפי ה-GDPR:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "בסיס משפטי",
+            "desc": "אנו מעבדים את הנתונים שלך על בסיס ביצוע חוזה, עניין לגיטימי או הסכמה."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "זכויות",
+            "desc": "גישה, תיקון, מחיקה, ניידות, הגבלה והתנגדות."
           },
           "2": {
-            "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "label": "ממונה על הגנת הנתונים",
+            "desc": "ניתן ליצור קשר עם ממונה הגנת הנתונים שלנו בכתובת dpo@nebutra.com."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
-        "company": "{brandName} Co., Ltd."
+        "title": "8. צור קשר",
+        "intro": "אם יש לך שאלות לגבי מדיניות הפרטיות הזו, אנא צור איתנו קשר:",
+        "company": "{brandName} בע\"מ."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "פרוטוקולים לאנומליות עסקה — {brandName}",
+      "description": "הגדרה מחמירה של פרמטרים מדויקים להחזר כספי במגוון מודלי מעורבות מבניים.",
+      "heading": "מסגרת ביצוע סכסוכים",
+      "effectiveDate": "תאריך יישום אכיפה",
+      "lastUpdated": "תאריך עדכון",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 בינואר 2025",
+        "updated": "1 בינואר 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "ב-{brandName}, אנחנו רוצים שתהיה מרוצה לחלוטין מהשירותים שלנו. מדיניות ההחזרים הזו מתארת את הנסיבות שבהן ניתן לקבל החזר כספי ואת התהליך לבקשתו.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "תוכניות מנוי",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "מנויים חודשיים",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "ביטול",
+              "desc": "אתה יכול לבטל את המנוי החודשי שלך בכל עת"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "החזרים פרופורציונליים",
+              "desc": "אנחנו לא מציעים החזרים פרופורציונליים עבור חודשים חלקיים"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "גישה",
+              "desc": "אתה שומר על הגישה לתכונות בתשלום עד סוף תקופת החיוב שלך"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "חדוש אוטומטי",
+              "desc": "מנויים מתחדשים באופן אוטומטי אלא אם כן מבטלים אותם"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "מנויים שנתיים",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "אחריות להחזר כספי של 14 יום",
+              "desc": "מנויים שנתיים חדשים יכולים לבקש החזר מלא תוך 14 יום מרכישתם הראשונה"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "לאחר 14 יום",
+              "desc": "החזרים כספיים בדרך כלל אינם זמינים לאחר תקופת ה-14 יום"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "ביטול",
+              "desc": "אתה יכול לבטל בכל עת, אך המנוי שלך יישאר פעיל עד לסיום התקופה השנתית"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "ללא החזרים פרופורציונליים",
+              "desc": "אנו לא מציעים החזרים חלקיים על חודשים שלא נוצלו"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "תרחישי החזר כספי זכאים",
+        "intro": "אנו נשקול בקשות להחזר כספי בנסיבות הבאות:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. בעיות שירות",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "הפסקות שירות משמעותיות המשפיעות על היכולת שלך להשתמש בתכונות ליבה",
+            "1": "בעיות טכניות שאנו לא מסוגלים לפתור בתוך פרק זמן סביר",
+            "2": "תכונות שונות משמעותית ממה שהוצג בפרסומת"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. שגיאות חיוב",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "חיובים כפולים",
+            "1": "סכומי חיוב שגויים",
+            "2": "חיובים לא מורשים (לאחר אימות)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. נסיבות חריגות",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "מקרי חירום רפואיים מתועדים",
+            "1": "אסונות טבע המשפיעים על העסק שלך",
+            "2": "נסיבות אחרות הנבחנות מקרה אחר מקרה"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "פריטים שאינם זכאים להחזר",
+        "intro": "הפריטים הבאים אינם זכאים בדרך כלל להחזר כספי:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "חיובים לפי שימוש",
+            "desc": "קריאות API, צריכת טוקנים של בינה מלאכותית או אחסון שבו נעשה שימוש"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "תוספות ושירותים נוספים",
+            "desc": "רכישות חד-פעמיות או שירותי תוספת"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "חוזי ארגונים",
+            "desc": "הסכמים מותאמים אישית כפופים לתנאים משלהם"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "ביטולים מרצון",
+            "desc": "לאחר תום תקופת הזכאות להחזר"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "הפרות תנאים",
+            "desc": "חשבונות שהושעו עקב הפרת מדיניות"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "כיצד לבקש החזר כספי",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "שלב 1: צור קשר עם התמיכה",
+          "intro": "שלח/י לנו אימייל לכתובת billing@nebutra.com עם הפרטים הבאים:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "כתובת האימייל של החשבון שלך",
+            "1": "תוכנית המנוי ותקופת החיוב",
+            "2": "סיבה לבקשת החזר כספי",
+            "3": "מסמכים רלוונטיים נוספים"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "שלב 2: תהליך בדיקה",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "נבדוק את בקשתך תוך 5 ימי עסקים",
+            "1": "ייתכן שנבקש מידע נוסף",
+            "2": "תקבל החלטה בכתב באמצעות דוא״ל"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "שלב 3: עיבוד החזר כספי",
+          "intro": "אם אושרה הבקשה:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "ההחזרים מעובדים לאותו אמצעי תשלום מקורי",
+            "1": "החזרים לכרטיסי אשראי מופיעים בדרך כלל תוך 5–10 ימי עסקים",
+            "2": "זמני עיבוד בנקאיים עשויים להשתנות"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "שינויי תוכנית",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "שדרוגים",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "שדרוגים נכנסים לתוקף מיד",
+            "1": "תחויב בהפרש הפרופורציונלי עבור שאר תקופת החיוב",
+            "2": "לא יינתן החזר כספי עבור התוכנית הקודמת"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "הורדות",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "הורדות נכנסות לתוקף בתחילת תקופת החיוב הבאה",
+            "1": "תשמור על גישה לתכונות הנוכחיות עד אז",
+            "2": "לא יינתנו החזרים חלקיים עבור התקופה הנוכחית"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "ניסיון חינם",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "ניסיונות חינם אינם דורשים פרטי תשלום",
+          "1": "לא מתבצעים חיובים במהלך תקופת הניסיון",
+          "2": "תתקבל הודעה לפני תחילת כל חיוב"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "פתרון סכסוכים",
+        "intro": "אם אינך מסכים עם החלטת ההחזר שלנו:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "ענה על דוא\"ל ההחלטה עם מידע נוסף",
+          "1": "בקש העלאה למפקח",
+          "2": "צור קשר איתנו בכתובת legal@nebutra.com לבדיקה נוספת"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
-        "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "title": "צור קשר",
+        "intro": "לבקשות החזר או שאלות לגבי מדיניות זו:",
+        "company": "{brandName} בע\"מ",
+        "billingLabel": "חשבוניות",
+        "supportLabel": "תמיכה",
+        "legalLabel": "משפטי",
+        "responseNote": "אנו שואפים להגיב לכל בקשות ההחזר תוך 5 ימי עסקים.",
+        "termsNote": "מדיניות זו היא חלק מ",
+        "termsLink": "תנאי השירות",
+        "termsAgreement": "על ידי שימוש ב-{brandName}, אתה מסכים לתנאי ההחזר אלה."
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "תנאי שירות — {brandName}",
+      "description": "תנאי השירות המסדירים את הגישה שלך ואת השימוש באתר האינטרנט, האפליקציות, ה-API והשירותים של {brandName}.",
+      "heading": "תנאי שירות",
+      "effectiveDate": "תאריך תחילה",
+      "lastUpdated": "עודכן לאחרונה",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 בינואר 2025",
+        "updated": "1 בינואר 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "ברוכים הבאים ל-{brandName}! תנאי השירות (\"התנאים\") האלה מוסדרים את הגישה שלך ל-{brandName} ואת השימוש באתר האינטרנט, באפליקציות, ב-API ובשירותים (באופן קולקטיבי, \"השירותים\") המסופקים על ידי {brandName} Co., Ltd. (\"{brandName},\" \"החברה,\" \"אנו,\" \"לנו,\" או \"שלנו\").",
+      "intro2": "על ידי גישה או שימוש בשירותים שלנו, אתה מסכים להיות כפוף לתנאים אלה ול-",
+      "intro2PrivacyLink": "מדיניות הפרטיות",
+      "intro2End": " שלנו. אם אינך מסכים לתנאים אלה, אל תשתמש בשירותים שלנו.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. קבלת התנאים",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 כשירות",
+          "intro": "כדי להשתמש בשירותים שלנו, עליך:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "להיות בן 18 לפחות או בגיל רוב משפטי במדינתך",
+            "1": "להיות בעל הסמכות לחתום על התנאים האלה בשמך או בשם הארגון שלך",
+            "2": "לא להיות אסור לך להשתמש בשירותים שלנו לפי החוק החל"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 חשבונות ארגוניים",
+          "content": "אם אתה משתמש בשירותים שלנו בשם ארגון, אתה מצהיר שיש לך סמכות לחייב את הארגון הזה בתנאים אלה."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. תיאור השירותים",
+        "intro": "{brandName} מספקת פלטפורמת SaaS הכוללת:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "תכונות מבוססות בינה מלאכותית ויצירת תוכן",
+          "1": "כלי ניהול תוכן וקהילה",
+          "2": "מערכות המלצות",
+          "3": "אינטגרציות מסחר אלקטרוני",
+          "4": "יכולות Web3",
+          "5": "ניתוח ודיווח"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. הרשמת חשבון",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 יצירת חשבון",
+          "intro": "כדי לגשת לתכונות מסוימות, עליך ליצור חשבון. אתה מסכים ל:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "לספק מידע מדויק ומלא",
+            "1": "לשמור על אבטחת פרטי הכניסה לחשבון שלך",
+            "2": "לעדכן את המידע שלך במהירות אם הוא משתנה",
+            "3": "לקבל אחריות על כל הפעילויות המתבצעות תחת החשבון שלך"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. מנוי וחשבוניות",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 מחירון",
+          "content": "השירותים שלנו מוצעים במספר תוכניות מנוי כפי שמתואר בדף המחירים שלנו. המחירים עשויים להשתנות בהודעה מוקדמת של 30 יום."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 תשלום",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "המנויים נגבים מראש על בסיס חודשי או שנתי",
+            "1": "כל העמלות אינן ניתנות להחזר, למעט כפי שצוין ב",
+            "2": "אתה מאשר לנו לחייב את אמצעי התשלום שלך בעמלות החלות",
+            "3": "אנו משתמשים ב-Stripe לעיבוד תשלומים מאובטח",
+            "1RefundLink": "מדיניות החזרים"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. שימוש מותר",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 פעולות אסורות",
+          "intro": "אתה מתחייב לא לבצע את הפעולות הבאות:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "לעבור על חוקים, תקנות או זכויות צד שלישי רלוונטיים",
+            "1": "להשתמש בשירותים להעברת תוכנות זדוניות, דואר זבל או תוכן מזיק",
+            "2": "לנסות לקבל גישה לא מורשית למערכות שלנו",
+            "3": "להפריע או לשבש את שלמות השירותים שלנו או את ביצועיהם",
+            "4": "להשתמש בכלים אוטומטיים לגניבת, העתקה או חילוץ נתונים ללא רשות",
+            "5": "לבצע הנדסה הפוכה, פירוק קוד או פירוק של השירותים שלנו",
+            "6": "להשתמש בתכונות הבינה המלאכותית שלנו ליצירת תוכן בלתי חוקי, מזיק או מטעה"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. קניין רוחני",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 הקניין הרוחני שלנו",
+          "content": "ל-{brandName} ולמחזיקי הזכויות שלה יש את כל הזכויות, הבעלות והעניין בשירותים, כולל כל התוכנה, העיצובים, סימני המסחר והתוכן שנוצרו על ידנו."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 התוכן שלך",
+          "content": "אתה שומר על הבעלות על התוכן שאתה יוצר או מעלה (\"התוכן שלך\"). על ידי שימוש בשירותים שלנו, אתה מעניק לנו רישיון עולמי, לא בלעדי וללא תמלוגים להשתמש, לאחסן, לעבד ולהציג את התוכן שלך אך ורק כדי לספק לך את השירותים."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. הכחשת אחריות",
+        "content": "השירותים מסופקים \"כפי שהם\" ו\"כפי שזמינים\" ללא אחריות מכל סוג, מפורשת או משתמעת, לרבות אך לא רק אחריות משתמעת לסחירות, ל适גות למטרה מסוימת, לבעלות ולאי-הפרה."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. הגבלת אחריות",
+        "para1": "במידה המרבית המותרת על פי החוק, NEBUTRA לא תישא באחריות לנזקים עקיפים, אקראיים, מיוחדים, תוצאתיים או עונשיים, או לאובדן רווחים, נתונים, שימוש או שווי טוב.",
+        "para2": "באף אופן לא תעלה אחריותנו הכוללת על הגדול מבין (א) הסכום ששילמת לנו ב-12 החודשים שקדמו לתביעה, או (ב) 100 דולר ארה\"ב."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. סיום",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 על ידך",
+          "content": "אתה יכול לסיים את חשבונך בכל עת דרך הגדרות החשבון. עם הסיום, תאבד את הגישה לשירותים."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 על ידנו",
+          "intro": "אנו עשויים להשעות או לסיים את חשבונך אם תעשה אחד מהבאים:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "תפר את התנאים אלה",
+            "1": "תעסוק בפעילות הונעית או בלתי חוקית",
+            "2": "לא תשלם את האגרות החלות",
+            "3": "תצור סיכון או חשיפה משפטית עבורנו"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. פתרון סכסוכים",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 פתרון לא פורמלי",
+          "content": "לפני תחילת הליכים פורמליים, אתה מסכים לפנות אלינו בכתובת legal@nebutra.com בניסיון לפתור סכסוכים באופן לא פורמלי."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 דיני מנהלין",
+          "content": "התנאים אלה כפופים לדיני מדינת דלאוור, ללא קשר לעקרונות קונפליקט של חוקים."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. צור קשר",
+        "intro": "אם יש לך שאלות לגבי התנאים אלה, אנא פנה אלינו:",
         "company": "{brandName} Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "דוא\"ל",
+        "supportLabel": "תמיכה"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "בשימוש ב-{brandName}, אתה מאשר כי קראת, הבנת ומסכים להיות כפוף לתנאי השירות אלה."
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | מערכת ההפעלה לסטארטאפ",
+    "description": "מערכת ההפעלה לסטארטאפ למייסדים שפועלים בגלובל. בסיס Next.js מוכן לייצור עם ארכיטקטורה מנוהלת, אימות, חשבוניות, סוכנים ותמיכה ב-i18n — נבנה עבור סוכני קידוד AI וצוותים ברצינות."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "טופולוגיית מערכת",
+      "title": "ארכיטקטורה שקופה, ללא קופסאות שחורות.",
+      "description": "{productName} מפותח במבנה Turborepo היפר-מודולרי, שמעניק לך שליטה מלאה על כל מחזור החיים של התוכנה שלך.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "ORM טיפוסי לחלוטין עם מדיניות Row-Level Security (RLS) מובנית באופן מקורי."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk Multi-Tenant / זהות מותאמת אישית",
+        "desc": "שער אימות מוכן ל-SOC2 התומך בהחלפת ארגונים מסוג B2B ו-RBAC."
       }
     },
     "pricing": {
@@ -1191,493 +1191,493 @@
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "שאלות נפוצes על תמחור ורישוי",
+      "description": "שאלות לגבי רמות רישוי, החזרים וזכויות שימוש מסחרי.",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "האם Sailor הוא מנוי SaaS חודשי?",
+        "a": "לא. תמחור זה מיועד לרישיונות קוד מקור של Sailor: Independent חינם, Startup מתומחר שנתי, ו-Enterprise מותאם אישית."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "האם אתם מציעים החזרים?",
+        "a": "רישיונות מסחריים של Startup כוללים חלון החזר של 14 יום לרכישות ראשוניות. תנאי Enterprise מטופלים בחוזה החתום."
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "האם אוכל להשתמש ב-Sailor לעבודה עבור לקוחות?",
+        "a": "כן. רישיון מסחרי מאפשר לצוות שלך לשחרר מוצרים סגורים ללקוחות או פנימיים במסגרת הרישיון; זכויות white-label דורשות אישור Enterprise."
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "עדיין יש שאלות? דברו עם צוות {brandName} →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "התחל עכשיו",
+      "title": "פסיקו להתאים אישית. התחילו לבנות.",
+      "description": "אתחלו ארכיטקטורת SaaS סקאלבילית מקומית באמצעות ה-CLI של {brandName}.",
+      "button": "הנחית ארכיטקטורה",
+      "license": "קוד פתוח תחת רישיון AGPL-3.0. אין צורך בכרטיס אשראי."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "יכולות ארגוניות",
+      "title": "ליבה טיפוסית ומורחבת לחלוטין.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "אבטחה ברמת שורה מקורית",
+        "desc": "כל שאילתת מסד נתונים מוגבלת באופן קפדני לפי הקשר הלקוח הנוכחי.",
+        "cta": "קרא על פילוסופיית מסד הנתונים"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "שער AI אוניברסלי",
+        "desc": "הפנה בקשות ל-OpenAI, Anthropic או מודלים בקוד פתוח בצורה חלקה.",
+        "cta": "חקור את מטפא ה-SDK של AI"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "בקרת גישה מדויקת",
+        "desc": "הגדר תפקידי מנהל, חבר וצופה עם מבנה מדיניות מובנה.",
+        "cta": "צפה בתיעוד RBAC"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "תשתית חיוב רב-ספקית",
+        "desc": "שימוש ממונה, ווב-הוקים למנויים ופורטלים עצמאיים ללקוחות.",
+        "cta": "ראה את ארכיטקטורת החיוב"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "הדגמה אינטראקטיבית",
+      "title": "חוו את מהירות הזמן האמיתי.",
+      "description": "הרגש את ממשק שורת הפקודה, מנהור ווב-הוקים של Stripe ואספקת מסד נתונים רב-לקוח מקומי.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "טלמטריה חיה",
+        "desc": "שדר נתוני שימוש מהייצור ישירות לטרמינל שלך."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "אירועי חיוב",
+        "desc": "צפה בביצוע ווב-הוקים של Stripe באמצעות מנהרה מקומית."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "אתחול מרחב עבודה",
+        "desc": "הקם מיד סכמות PostgreSQL מבודדות ל-B2B."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "מהירות",
+      "title": "מאפס לייצור בזמן שיא.",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "title": "1. שכפול",
+        "desc": "שכפל מיד את המונו-רפו של {brandName} והרץ pnpm install."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. התאמה",
+        "desc": "הגדר את Prisma, Clerk ו-Stripe באמצעות ה-CLI האינטראקטיבי תוך דקות."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. בנייה",
+        "desc": "התמקד בלוגיקת המוצר ובממשק המשתמש בעוד שהבסיס של הפלטפורמה כבר מחובר."
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. פריסה",
+        "desc": "שלח ל-Vercel ול-AWS להפצה גלובלית מיידית."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "דקות",
+        "subtitle": "זמן לשוק",
+        "comparison": "דלג על חודשים של עבודה על הפלטפורמה.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "אתחול",
+          "wire": "ליבה",
+          "ship": "פריסה",
+          "scale": "קנה מידה",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "התחל את הטיימר"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "מערכת מוגדרת מראש",
+        "message": "קונפיגורציה אחת. כל הפיצ'רים. בחר את ההגדרה המוגדרת מראש ושחרר.",
+        "detail": "הגדר פעם אחת, צור הכל — חיוב, אימות, בינה מלאכותית, i18n — מתוך קונפיגורציה מוגדרת מראש אחת.",
+        "readyStatus": "מערכת מוגדרת מראש מוכנה"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "יכולות הפלטפורמה",
+      "headlinePrefix": "כל מה שצריך כדי ",
+      "headlineHighlight": "לשחרר בביטחון.",
+      "description": "{brandName} היא פלטפורמת SaaS מלאה — AI, חשבוניות, רב-שכירות, תצפיות ואבטחה מובנים מהיום הראשון. הפסיקו לבנות מחדש את שכבת הפלטפורמה."
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
-      "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "exploreFeature": "חקור תכונה",
+      "ai_category": "AI ובינה",
+      "ai_f1_title": "השלמות צ'אט רב-מודליות",
+      "ai_f1_desc": "הפנו בקשות ל-Anthropic, OpenAI, Google או למודלים מותאמים אישית שלכם. זרימה, ראייה וקריאות פונקציה נתמכות מוכנות.",
+      "ai_f2_title": "הטמעות סמנטיות",
+      "ai_f2_desc": "צרו ואחסנו הטמעות וקטוריות עם pgvector. אפשרו חיפוש סמנטי, צינורות RAG ומנועי המלצות.",
+      "ai_f3_title": "מדידת שימוש ב-AI",
+      "ai_f3_desc": "מכסות לפי תוכנית עם מעקב שימוש — מדדו טוקנים של AI, קריאות API ואחסון מול אגרגטים בזמן אמת המבוססים על ClickHouse.",
+      "multi_category": "פלטפורמת רב-שכירות",
+      "multi_f1_title": "בידוד ברמת הארגון",
+      "multi_f1_desc": "אבטחה ברמת שורה ב-Postgres מבטיחה ששכירים לא יוכלו לגשת זה לנתוני זה — אכיפה בשכבת המסד נתונים, לא רק באפליקציה.",
+      "multi_f2_title": "אימות רב-ספקים (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth רב-ספקים (Google, GitHub וכו') בנוסף לדואר/סיסמה וקישור קסם — החליפו בין Clerk, Better Auth, NextAuth או Supabase Auth באמצעות משתנה סביבה אחד.",
+      "multi_f3_title": "אספקה אוטומטית של שכירים",
+      "multi_f3_desc": "כשארגון חדש נרשם דרך Clerk, אנחנו מייצרים אוטומטית את מפתח ה-API הראשון שלהם ושולחים דואר קבלת פנים ממותג — אפס שלבים ידניים.",
+      "dx_category": "חווית מפתח",
+      "dx_f1_title": "מפתחות API מוצפנים",
+      "dx_f1_desc": "מפתחות מוצפנים ב-SHA-256 עם תצוגת קידומת (nbtr_live_…). מוצגים בטקסט גלוי בדיוק פעם אחת בעת היצירה — אבטחה ללא חיכוך.",
+      "dx_f2_title": "מתווך אידימפוטנטיות",
+      "dx_f2_desc": "העבר כותרת Idempotency-Key וכל בקשת POST תהיה בטוחה לחזרה. מבוסס Redis, מטמון של 24 שעות, עומד בתקן IETF draft.",
+      "dx_f3_title": "API רב-פרוטוקולי (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI ל-API ציבוריים, oRPC לקריאות קליינט בטוחות טיפוסית, tRPC לתאימות עם T3-stack. כל הפרוטוקולים משתפים את אותם חוזי Zod וסטק מתווכים. הפעל לפי פרוטוקול באמצעות תצורה מוגדרת מראש.",
+      "billing_category": "חיוב ומוניטיזציה",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar וסין פיי",
+      "billing_f1_desc": "בחר ספק תשלום: Stripe לעסקים גלובליים, LemonSqueezy לפיתוח עצמאי, Polar ל-OSS, או Alipay/WeChat Pay לשוק הסיני. תשלום בלחיצה אחת ופורטל חיוב עצמאי.",
+      "billing_f2_title": "אכיפת קוטה לפי שימוש",
+      "billing_f2_desc": "מונים Redis בזמן אמת מעקבים אחר קריאות API ושימוש בטוקנים לכל שוכר. בקשות נחסמות בשער כשהגבולות מושגים.",
+      "billing_f3_title": "סנכרון מחזור חיים של Webhook",
+      "billing_f3_desc": "אירועי מנוי Stripe מעדכנים אוטומטית תוכניות ארגון במסד הנתונים שלך דרך Inngest — ללא עבודות cron, ללא פולing.",
+      "rel_category": "אמינות",
+      "rel_f1_title": "מפסק מעגל + ניסיון חוזר",
+      "rel_f1_desc": "השער ושירות ה-AI משתמשים במפסק מעגל CLOSED/OPEN/HALF_OPEN עם חזרה אקספוננציאלית ורעש — ללא כשלון מקיף.",
+      "rel_f2_title": "תור מכתבים מתים",
+      "rel_f2_desc": "מטפלי אירועים שמאזלים 3 ניסיונות חוזרים נוחתים ב-DLQ. שחזר אותם בנפרד מ-API המנהל ללא פריסה מחדש.",
+      "rel_f3_title": "התראות שיעור צריכת SLO",
+      "rel_f3_desc": "התראות רב-חלון בסגנון Google SRE מופעלות בשיעורי צריכה של 14.4×, 6× ו-3× לפני שסל השגיאות שלך נגמר.",
+      "sec_category": "אבטחה",
+      "sec_f1_title": "כותרות CSP מבוססות nonce",
+      "sec_f1_desc": "מדיניות Content Security Policy מסוג strict-dynamic עם nonce ייחודי לכל בקשה, המיוצר בתוך ה-Clerk middleware — ללא unsafe-inline בשום מקום.",
+      "sec_f2_title": "WAF של ModSecurity",
+      "sec_f2_desc": "ערכת הכללים המרכזית של OWASP במצב DetectionOnly בכל נקודת כניסה. הגבלת קצב בקשות ל-30 RPS עם סובלנות לburst באמצעות אנוטציות nginx.",
+      "sec_f3_title": "SBOM + אסמכת מוצא SLSA",
+      "sec_f3_desc": "כל שחרור מייצר רשימת חומרי תוכנה (SBOM) בפורמט CycloneDX ואסמכת מוצא SLSA, המועלים ל-GitHub Release.",
+      "obs_category": "תצפיות",
+      "obs_f1_title": "מעקב OpenTelemetry",
+      "obs_f1_desc": "עקבות מבוזרות זורמות מ-Next.js → Hono → שירותים מיקרו ב-Python דרך OTLP. מיוצאים ל-Jaeger (פיתוח) ול-Grafana Tempo (הפקה).",
+      "obs_f2_title": "לוחות בקרה של Grafana",
+      "obs_f2_desc": "תצוגת סקירה רב-לוחית של הפלטפורמה: זמינות SLO, תקציב שגיאות נותר, רוויה של HPA, הפעלות מחדש של פודים, והגבלת CPU.",
+      "obs_f3_title": "מעקב שגיאות Sentry",
+      "obs_f3_desc": "שגיאות בצד השרת ובצד הלקוח נאספות עם הקשר של השוכר, מזהה בקשה ומזהה עקבה לקורלציה בין מערכות.",
+      "data_category": "נתונים ואנליטיקה",
+      "data_f1_title": "מאגר OLAP של ClickHouse",
+      "data_f1_desc": "אירועים נוחתים ב-ClickHouse לשאילתות אנליטיות מהירות. dbt מעבד אירועים גולמיים למדדי צמיחה בשכבה המוזהבת, הנראים בלוח הבקרה.",
+      "data_f2_title": "אנליטיקת פונקיות",
+      "data_f2_desc": "מעקב אחר הרשמות → הפעלות → המרות עם שיוך ברמת קהילה. הכנסה למשתמש פעיל מחושבת מהשכבה המוזהבת.",
+      "data_f3_title": "Kafka / קליטת אירועים",
+      "data_f3_desc": "קליטת אירועים בתפוקה גבוהה דרך Inngest ל-ClickHouse ברמת הברונזה, עם הסרת כפילויות בזיכרון ואימות סכמה בקצה השער.",
+      "infra_category": "תשתית",
+      "infra_f1_title": "GitOps עם ArgoCD",
+      "infra_f1_desc": "שינויים בענף הראשי מתואמים אוטומטית לקלאסטר. תיקון עצמי מבטל עריכות ידניות ב-kubectl. חלונות סנכרון אוכפים שעות פריסה בטוחות.",
+      "infra_f2_title": "איגוד חיבורים עם PgBouncer",
+      "infra_f2_desc": "PgBouncer במצב עסקה מול Supabase מטפל ב-1,000 חיבורי אפליקציה על 20 חיבורי Postgres. זמינות גבוהה עם 2 רפליקות.",
+      "infra_f3_title": "קנה מידה אופקי ואנכי",
+      "infra_f3_desc": "HPA מקנה מידה לפי CPU/זיכרון. VPA פועל במצב Off ומספק המלצות התאמת גודל. מדדים מותאמים של KEDA מתוכננים לגרסה 2."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 בבנייה",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "אנו בונים כרגע חוויה מדהימה המונעת על ידי גיקים עבור סעיף זה. הוא יושק יחד עם עדכון צינור הארכיטקטורה הבא.",
+      "opc": "סקירה מעמיקה יותר של הפלטפורמה נמצאת בעבודה. עקבו אחר יומן השינויים ומפת הדרכים לגרסאות הקרובות.",
+      "roadmap": "מבסיס התשתית ועד סולם ארגוני — שלבי המוצר שלנו, אבני דרך בגרסאות וראיית המימון."
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "חזרה למרכז"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "מהבלוג",
+    "title": "תובנות הנדסיות",
+    "subtitle": "סקירות מעמיקות של ארכיטקטורת SaaS, תשתיות AI והנדסת ייצור.",
+    "readMore": "קרא עוד"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "תרחישים סקלביים",
+    "title": "בסיס אחד. אינסוף אפשרויות.",
+    "description": "{productName} מניע את הדור הבא של מוצרי SaaS בשווקים גלובליים.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "פעולות אגנטיות",
+      "ip": "מטריצת IP אישית",
+      "multimodal": "SaaS רב-מודאלי מבוסס AI",
+      "enterprise": "ארגון מודרני (CN)",
+      "export": "ייצוא תוכנה גלובלי",
+      "design": "מנוע מערכת עיצוב",
+      "edam": "נכסי דיגיטל ארגוניים"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "מרכז פעולות AI-Native",
+        "desc": "הפעל זרימות עבודה של אגנטים, כלי פנים וממשקי אינטגרציה על בסיס פלטפורמה מנוהלת אחיד. הרחבות מבוססות רגיסטרי, פורטלי מפעילים ותבניות ריצה חוזרות נשארות מסונכרנות ככל שהמערכת מתרחבת.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "רגיסטרי כלים וממשק אינטגרציה",
+          "f2": "פורטל מפעיל ומסוף פנימי"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "מטריצת צמיחה ותיק IP אישי",
+        "desc": "בנה נוכחות מייסד ברמה עולמית עם בלוג MDX, תיק עבודות ודפי פרופיל הממירים ביעילות. ניוזלטר, אנליטיקה ו-SEO מובנים מבטיחים שהמותג האישי שלך יצבור תאוצה.",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "בלוג MDX + מנוע ניוזלטר",
+          "f2": "מואטם ל-SEO ולרשת החברתית"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "SaaS רב-מודאלי מבוסס AI חדשני",
+        "desc": "השק מוצרי SaaS של אורקסטראציה רב-אגנטית, צ'אטבוט, טקסט-לתמונה, תמונה-לטקסט וטקסט-לסרטון עם ממשק סטרימינג מוביל UX, ניתוב מודלים חכם ומדידת שימוש.",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
+          "f1": "ממשק זרם רב-סוכנים",
           "f2": "Model Router + Usage Metering"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "אתר ארגוני מודרני (סין)",
+        "desc": "מותאם במיוחד לתרחישי עסקים בסין — CDN מקומי מהיר במיוחד, אינטגרציה עם מערכת האקו-סיסטם של WeChat, עיצוב רספונסיבי מותאם לנייד, ותאימות מקומית מוכנה מראש.",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "CDN מקומי + תאימות",
+          "f2": "מוכן למערכת האקו-סיסטם של WeChat"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "דפי נחיתה לייצוא תוכנה גלובלי",
+        "desc": "בנוי במיוחד עבור SaaS שיוצא לשווקים גלובליים. תשלום ב-Stripe במטבעות מרובים, ניתוב אוטומטי של i18n באמצעות next-intl ב-7 שפות, תאימות ל-GDPR/CCPA, ותוכן ממוקד גיאוגרפית.",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "תשלומים גלובליים במטבעות מרובים",
+          "f2": "7 שפות + מוכן ל-GDPR"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "מערכת עיצוב ומאגר רכיבים מוביל",
+        "desc": "ארכיטקטורה המונעת על ידי טוקנים ב-4 שכבות: מותג → טוקנים → ערכת נושא → ממשק. מבוסס על Radix ושכבת ה-Motion המשותפת עם ערכות נושא מרובות ב-oklch, תיעוד ב-Storybook ובדיקות רגרסיה ויזואליות.",
         "features": {
-          "f1": "4-Layer Token Governance",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f1": "ממשל טוקנים ב-4 שכבות",
+          "f2": "ערכות נושא מרובות ב-oklch + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "ניהול נכסים דיגיטליים ארגוני",
+        "desc": "אגמי נתונים מובנים וטופולוגיות לוחות בקרה מורכבות המנצלות ארכיטקטורות PostgreSQL סקאלביליות ו-RBAC גרעיני.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "אבטחה ברמת שורה",
+          "f2": "שאילתות מורכבות",
+          "f3": "ניהול תפקידים"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
-    "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
-    "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
-    "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
-    "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "badge": "מערכת עיצוב",
+    "headline": "4 שכבות של ניהול עיצוב.",
+    "subheadline": "מפרימיטיבים של מותג ועד טוקנים בזמן ריצה, מנוע רב-ערכות נושא ורכיבים מנוהלים — לא רק shadcn עם Tailwind.",
+    "flowBrand": "מותג",
+    "flowBrandDesc": "פרימיטיבי צבע, מעברי צבע, שפת תנועה",
+    "flowTokens": "טוקנים",
+    "flowTokensDesc": "משתני CSS, סולמות של 12 צעדים, מצב כהה",
+    "flowTheme": "ערכת נושא",
+    "flowThemeDesc": "רב-ערכות נושא ב- oklch, 6 הגדרות מראש, color-mix()",
+    "flowUI": "ממשק",
+    "flowUIDesc": "רכיבים, Storybook, Chromatic",
+    "card1Title": "סולמות צבע של 12 צעדים",
+    "card1Desc": "סולם סמנטי מותאם ל- Geist: רקעים (1-2), מצבים (3-5), גבולות (6-8), מילויים (9-10), טקסט (11-12).",
+    "card2Title": "רב-ערכות נושא ב- oklch",
+    "card2Desc": "6 הגדרות מראש של ערכות נושא ב- oklch עם גזירה באמצעות color-mix(). טווח צבעים רחב Display-P3 עם נפילה חזרה ל- sRGB.",
+    "card3Title": "רגרסיה ויזואלית",
+    "card3Desc": "Chromatic תופס כל שינוי פיקסל. Storybook מתעד כל רכיב. בדיקות ארכיטקטורה אכפות כיסוי סיפורים.",
+    "card4Title": "ניהול טוקנים",
+    "card4Desc": "תקציבי רצ'ט: תקרה של hex, רצפה של oklch, מגבלות על מחלקות צבע גולמיות. זיהוי סטיית מותג ב- CI.",
+    "card5Title": "תיעוד אינטראקטיבי",
+    "card5Desc": "אתר תיעוד עיצוב מלא המונע על ידי Fumadocs, עם תיעוד API דו-לשוני (EN/ZH) של רכיבים, גלריות טוקנים, מדריכי תבניות פריסה ודוגמאות קוד חיות."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "הדף לא נמצא",
+    "desc": "ייתכן שהקישור מיושן או שהדף הועבר.",
+    "home": "חזרה ל-{brandName}",
+    "docs": "פתיחת תיעוד"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "חפש גרסאות..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "הצג/הסתר תפריט"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "הצג גרסה מלאה",
+      "copyLinkToRelease": "העתק קישור לגרסה",
+      "copyLink": "העתק קישור",
+      "openInNewTab": "פתח בלשונית חדשה"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "בקרוב"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "חינם ל<hl>בנייה עליו</hl>",
+      "description": "{brandName}-Sailor לא עולה כלום לשימוש מסחרי — MIT ב-npm, FSL-1.1-ALv2 במאגר, והמרה ל-Apache-2.0 אחרי שנתיים. שכבות בתשלום מוכרות תמיכה והתחייבויות חוזיות, לעולם לא רשות."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "תמיד חינם",
+        "title": "קהילה",
+        "subtitle": "לכולם",
+        "description": "כל גודל צוות, כל הכנסה. כולל מוצרים מסחריים בקוד סגור.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "קוד מקור מלא, כל החבילות",
+          "closedSourceOk": "שימוש מסחרי בקוד סגור — ללא קופילפט",
+          "noAttribution": "ללא הרשמה, ללא צורך בשיוך",
+          "communitySupport": "תמיכת קהילה — במאמץ מרבי"
         },
-        "cta": "View on GitHub"
+        "cta": "צפה ב-GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "מ-{price}/שנה",
+        "title": "צוות",
+        "subtitle": "מנוי תמיכה",
+        "description": "לצוותים שצריכים התחייבות ולא תקווה. הקוד כבר חינם.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "ערוץ תמיכה פרטי",
+          "firstResponse": "תגובה ראשונה תוך יומיים עסקיים, מובטח",
+          "priorityTriage": "סיווג באגים בנחיתות",
+          "upgradeHelp": "סיוע בשדרוג והודעה על שינויים שוברים"
         },
-        "cta": "Get support"
+        "cta": "קבל תמיכה"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
-        "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "badge": "מ-$30,000 לשנה",
+        "title": "ארגוני",
+        "subtitle": "מוכן לרכש",
+        "description": "לארגונים שצריכים צד שכיר לביצוע בדיקות משפטיות, אבטחה או רכש.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA לתגובה — 4 שעות עסקיות, שעה אחת בהפסקת ייצור",
+          "indemnity": "פיצוי והתחייבות לתקני אבטחה",
+          "compliance": "DPA חתום, חבילת התאמה, התחייבות לרציפות",
+          "trademark": "זכויות סמל מסחרי ומיתוג לבן"
         },
-        "cta": "Contact sales"
+        "cta": "צור קשר עם המכירות"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "שאלות נפוצות",
+      "description": "גרסה קצרה: השימוש חינם. התשלום הוא כשצריך אותנו מחויבים חוזית.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "למה FSL במקום MIT או AGPL?",
+          "a": "FSL מאפשר כל שימוש מלבד מכירת תחליף ל-Sailor עצמו, וכל גרסה הופכת ל-Apache-2.0 שנתיים לאחר השקה — מתן זכות בלתי הפיך מראש. AGPL חסם אימוץ בבדיקות משפטיות ארגוניות בלי להגן על דבר שצריך היה להגן עליו."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "האם שימוש מסחרי באמת חינם?",
+          "a": "כן. ללא תשלום, ללא מפתח רישוי, ללא רישום, ללא סף הכנסות או מספר עובדים, ללא ציון מקור. אפשר לבנות מוצר מקור סגור ולמכור אותו."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "מה נחשב לשימוש מתחרה?",
+          "a": "הצעת Sailor עצמו — שירות Sailor מארח, או פלטפורמת בסיס מתחרה מחדש. בניית SaaS אנכי, כלי פנימי או פרויקטים לקוחות על Sailor אינו שימוש מתחרה. אם הדגם שלך דורש זאת, הסכם ארגוני יכול לכלול ויתור בכתב."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "מה בדיוק קונים בשכבות בתשלום?",
+          "a": "התחייבויות תמיכה, SLAs לתגובה, פיצוי, ניירת התאמה וזכויות סמל מסחרי. לעולם לא רשות להשתמש בתוכנה — זו כבר שלך."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "מה לגבי תרומות לקוד פתוח?",
+          "a": "כל התרומות דורשות חתימה על CLA. ראו CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "רישוי — {brandName}",
+      "description": "חינם לשימוש מסחרי. MIT ב-npm, FSL-1.1-ALv2 במאגר, עם מעבר ל-Apache-2.0."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "רישיון אישי חינם",
+      "opcFree": "רישיון חברה בעל יחיד",
+      "startupCommercial": "רישיון מסחרי לסטארטאפ",
+      "enterprise": "רישיון ארגוני"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "בחר אפשרות...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "יומן שינויים — {brandName}",
+    "description": "כל גרסה, עם תשומת לב קפדנית לפרטים.",
+    "versionTitleSuffix": "יומן שינויים של {brandName}"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "מפת דרכים לפלטפורמה — {brandName}",
+    "description": "מפת הדרכים לבסיס הפלטפורמה המנוהלת של {brandName}, ריצת Harness ונתיב השדרוג."
   },
   "blogMeta": {
-    "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "title": "בלוג — {brandName}",
+    "description": "תובנות הנדסיות, עדכוני מוצר וטובות המנהג של SaaS מצוות {brandName}."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "קבל את הרישיון שלך — {brandName}",
+    "description": "קבל את רישיון {brandName} וגישה לפלטפורמה תוך 2 דקות."
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "badge": "שאלות נפוצות",
+      "title": "שאלות, עם תשובות ישירות",
+      "subtitle": "הכל שצריך לדעת לפני ההשקה.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "מה בדיוק הוא {productName}?",
+          "answer": "Sailor הוא בסיס SaaS מובנה ל-Next.js + Tailwind v4 עם אימות, חיוב, ריבוי שוכרים, בינה מלאכותית, תורים, חיפוש ומייל שכבר מחוברים. מורידים, מתאימים ספקים, ושולחים — בדרך כלל תוך שבוע."
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "למי Sailor נבנה?",
+          "answer": "למייסדים ולמהנדסי מוצר שרוצים להשקיע את הזמן שלהם במה שמבדל — ולא לבנות שוב את אותה תשתית אימות/חיוב/ריבוי שוכרים בפעם החמישית."
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "זה חינם או בתשלום?",
+          "answer": "הקוד המלא מופץ תחת AGPL-3.0 — חינם לפרויקטים אישיים, כלים פנימיים ופיתוח קוד פתוח תואם AGPL. רישיון מסחרי פותח את הזכות לשלוח את Sailor ב-SaaS קנייני סגור. כל התוכנית כוללת את כלל התכונות (אימות, חיוב, ריבוי שוכרים, בינה מלאכותית, ביקורת); הרמות נבדלות בתנאי הרישוי וב-SLA לתמיכה, לא בתכונות."
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "זה עובד בסין?",
+          "answer": "כן. אנחנו משלחים תצורה מקבילה של תשתית (CDN תואם Aliyun, דומיינים תואמי ICP, אפשרות להשתמש ב-Penpot במקום Figma) כך שאותו קוד יכול להתפרס בצורה נקייה בתוך החומה הגדולה."
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "איפה אפשר להפעיל את זה?",
+          "answer": "בכל מקום שבו Node 22+ רץ. אתר המarketing מופץ ל-Vercel; הלוח, השער ושירותי Python רצים על Docker / PM2 (אנחנו מפעילים אותם היום על Aliyun ECS, עם מניפסטים מלאים של Kubernetes תחת infra/iac/k8s/ לקלאסטרים). לקוחות ארגוניים גם מפרסמים בתוך ה-VPC שלהם."
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "איך ניהול האבטחה מתבצע?",
+          "answer": "הצפנה בשכבת האפליקציה לסיסמאות (@nebutra/vault), Postgres RLS לבידוד שוכרים, RBAC/ABAC דרך CASL או OpenFGA (@nebutra/permissions), אסימונים חתומים ב-HMAC בין שירותים, ווב-הוקים יוצאים חתומים, וצינור ביקורת תואם SOC 2 (@nebutra/audit) כלול בכל תוכנית. Pro ו-Enterprise מוסיפים תמיכה באישור SOC 2, תגובה ייעודית לאירועים, ושמירה ארוכה יותר של יומני ביקורת."
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "איזו תמיכה אני מקבל?",
+          "answer": "לקוחות חינמיים מקבלים קהילת Discord + GitHub Issues. Pro מוסיף דואר אלקטרוני בעדיפות עם SLA של תגובה תוך יום עסקים אחד. Enterprise מקבל ערוץ Slack ייעודי ומهندس הטמעה."
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "אפשר להביא ספק משלך?",
+          "answer": "כן. כל אינטגרציה (אימות, תור, חיפוש, מייל, תשלומים, אחסון, חיוב) היא אגנוסטית לספק. הפקטוריה בכל חבילה בוחרת את האדפטור הנכון מתוך משתנה סביבה אחד — מחליפים את Clerk ל-Better Auth, NextAuth או Supabase Auth, את QStash ל-BullMQ, את Resend ל-SES, את Stripe ל-Polar / LemonSqueezy / ChinaPay — בלי לגעת בקוד האפליקציה."
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "מה סטק הטכנולוגיה?",
+          "answer": "Next.js 16 (App Router) על React 19, TypeScript 5.9, Tailwind v4, Prisma 7 מעל Postgres (עם pgvector + RLS), Hono כשער BFF, FastAPI לשירותי ML/כבדים, וספריית רכיבים מותאמת על Radix, רכיבי {brandName} UI, ושכבת Motion המשותפת. תכונות AI עוברות דרך Vercel AI SDK עם ניידות ספקים (OpenAI / OpenRouter / SiliconFlow / Azure / מקומי)."
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "מה הרישיון?",
+          "answer": "AGPL-3.0 עם חריג מסחרי. חינם לשימוש אישי, כלי פנימיים, ו-OSS תואם AGPL. רישיון מסחרי בתשלום מפעיל את הזכות לשלוח את Sailor כפי שהוא ב-SaaS קנייני. כל המקורות כלולים בכל תוכנית."
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "האם צריך לשלם על עדכונים?",
+          "answer": "לא. עדכוני מקור כלולים בכל רישיון מסחרי — משיכו מ-main בכל עת ו-merge את הענף שלכם. הרמה בתשלום היא הזכות להשתמש ב-Sailor בייצור מסחרי, לא הזכות לקבל קוד. כל גרסה משנית כוללת CHANGELOG ומדריך שדרוג לכל שינוי שובר."
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "למה Turborepo במקום אפליקציית Next.js סטנדרטית?",
+          "answer": "Sailor הוא 10 אפליקציות + 104 חבילות משותפות תחת packages/*/* + 4 מסלולי backend (שער Hono, FastAPI/Python, Go, Rust) — הרבה מעבר לנקודה שבה אפליקציית Next.js יחידה נשארת ניתנת לתחזוקה. Turborepo נותן לנו builds רק לרכיבים מושפעים, מטמון מרוחק שקוף, ומקור אמת אחד לטוקנים עיצוביים משותפים, אימות, חשבוניות, ו-observability — בלי לכפות על כל צוות את אותו תהליך Next.js."
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "איך מתבצעת רב-שכירות?",
+          "answer": "שתי שכבות. הקשר שכיר בטווח בקשה דרך @nebutra/tenant (AsyncLocalStorage מעביר את הארגון הפעיל דרך כל קריאת שרת, כולל שאילתות DB ו-webhooks יוצאים), ובידוד אכיפה במסד דרך מדיניות Postgres Row-Level Security (infra/data/database/policies/rls.sql) קשורה ל-app.current_tenant_id מקומי לסשן. חיבורי תפקיד שירות עוקפים RLS רק בתוך שירותים פנימיים אמורים; כל המסלולים מול משתמשים עוברים דרך הלקוח בטווח השכיר."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "האם אפשר להחליף את Clerk בספק אימות אחר?",
+          "answer": "כן. @nebutra/auth מגיע עם adapters ברמה ראשונה ל-Clerk, Better Auth, NextAuth (Auth.js v5), ו-Supabase Auth. מחליפים דרך משתנה הסביבה AUTH_PROVIDER או בוחרים בזמן ה-scaffold עם create-sailor --auth=... — פני השטח של שרת, React, ו-middleware נשארים זהים ללא קשר לספק. הוספת adapter חמישי דורשת מימוש ממשק אחד (~80 LOC); כלום בקוד הסובב לא קשור לספק ספציפי."
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "אהוב על בונים",
+      "title": "מה יזמים אומרים אחרי ששיחררו עם Sailor",
+      "subtitle": "סיפורי לקוחות מהקוהורט הבטא שלנו יגיעו בקרוב — היו בין הראשונים."
     },
     "comparison": {
       "badge": "השוואת חבילות",
@@ -1735,41 +1735,41 @@
       }
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "בנוי על סטק שבו אפשר לסמוך",
+      "logosLabel": "שותפי אינטגרציה",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "ספקי AI נתמכים"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "חבילות monorepo"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "לוקיישנים i18n מוכנים מתוך הקופסה"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "רישום ICP",
+      "publicSecurity": "אבטחה ציבורית"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "רישום ICP",
+    "publicSecurity": "רישום אבטחה ציבורית"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "מדינות ושפות",
+    "description": "בחר מדינה ושפה לאתר השיווק.",
+    "triggerAria": "בחר מדינה ושפה",
+    "searchPlaceholder": "חפש מדינות…",
+    "plannedHint": "הממשק יחזור לאנגלית עד ששפה זו תושק",
+    "noResults": "לא נמצאו מדינות תואמות",
+    "menuAria": "מדינות ושפות"
   }
 }

@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Dil",
     "ariaLabel": "Dili değiştir",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Dilleri ara…",
+    "noResults": "Eşleşen dil bulunamadı",
+    "menuAria": "Dil seç"
   },
   "compliance": {
     "icp": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, kuyruklar ve daha fazlası."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Sailor AI'yi Aç",
           "description": "Sohbet, veri veya iş akışı modunu deneyin."
         }
       }

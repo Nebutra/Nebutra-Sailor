@@ -32,7 +32,7 @@
       "loadError": "加载组织失败。",
       "columns": {
         "name": "名称",
-        "slug": "Slug",
+        "slug": "标识符",
         "plan": "套餐",
         "members": "成员",
         "created": "创建时间",
@@ -733,7 +733,7 @@
       "description": "订阅工作区事件。我们会用 endpoint 的签名密钥对每条载荷签名，便于你校验真实性。",
       "create": {
         "heading": "新建 Endpoint",
-        "urlLabel": "Endpoint URL",
+        "urlLabel": "端点 URL",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
         "eventsLegend": "事件",
         "submit": "创建 Endpoint",

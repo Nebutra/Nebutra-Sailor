@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "语言",
     "ariaLabel": "切换语言",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "搜尋語言…",
+    "noResults": "沒有符合的語言",
+    "menuAria": "選擇語言"
   },
   "compliance": {
     "icp": {
@@ -733,7 +733,7 @@
       "description": "订阅工作区事件。我们会用 endpoint 的签名密钥对每条载荷签名，便于你校验真实性。",
       "create": {
         "heading": "新建 Endpoint",
-        "urlLabel": "Endpoint URL",
+        "urlLabel": "端點 URL",
         "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
         "eventsLegend": "事件",
         "submit": "创建 Endpoint",

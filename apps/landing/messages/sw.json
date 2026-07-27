@@ -1,1151 +1,1151 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "Vipengele",
+    "solutions": "Suluhisho",
+    "pricing": "Bei",
+    "docs": "Nyaraka",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "Kuhusu Sisi",
+    "ideas": "Maana",
+    "opc": "Jukwaa",
+    "roadmap": "Ramani ya Njia",
+    "resources": "Rasilimali",
+    "signIn": "Ingia",
+    "getStarted": "Anza Safari",
+    "changelog": "Mabadiliko",
+    "news": "Habari",
+    "designDocs": "Mfumo wa Ubunifu",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "Menyu ya akaunti",
+      "loadingName": "Inapakia…",
+      "dashboard": "Dashibodi",
+      "account": "Akaunti",
+      "billing": "Malipo",
+      "docs": "Nyaraka",
+      "signOut": "Ondoka"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "Jiunge na mzunguko wa marejeleo ya mwenza {brandName}",
+    "metadataDescription": "Jiunge na orodha ya kusubiri ya {brandName}, uhifadhi uainishaji wa marejeleo, na ufungue kiungo chako cha kushiriki katika mzunguko mmoja wa bidhaa.",
+    "eyebrow": "Mzunguko wa marejeleo ya mwenza",
+    "title": "Jiunge na kikundi kinachofuata cha wenza na upate kiungo chako cha kushiriki.",
+    "description": "Ingia kwa nambari yoyote ya kurudisha au jiunge moja kwa moja. Tutahifadhi uainishaji wakati nambari ipo, kukusanya kwenye orodha ya kusubiri, na kutoa URL ya marejeleo ya siri unayoweza kushiriki mara moja.",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "Orodha ya kusubiri ya kudumu",
+      "codeDetected": "Nambari {code} imegunduliwa",
+      "direct": "Ujiandishi wa moja kwa moja"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "Barua pepe ya kazi",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "Nambari ya marejeleo",
+      "codePlaceholder": "Nambari hiari",
+      "submit": "Jiunge na orodha ya kusubiri",
+      "submitting": "Inajiunga",
+      "invalidEmail": "Ingiza barua pepe halali.",
+      "error": "Haikuweza kujiunga sasa. Tafadhali jaribu tena.",
+      "successTitle": "Uko kwenye orodha",
+      "successDescription": "Kiungo chako cha siri cha kushiriki kiko tayari.",
+      "positionLabel": "Nafasi katika mistari",
+      "referralCodeLabel": "Nambari yako",
+      "referralUrlLabel": "Kiungo chako cha kushiriki",
+      "copyLink": "Nakili kiungo",
+      "copied": "Imenakiliwa",
+      "share": "Shiriki",
+      "shareTitle": "Jiunge na mzunguko wa kuanzisha {brandName}",
+      "shareText": "Tumia kiungo changu cha kuhamasisha kujiunga na orodha ya kusubiri ya wanaanzisha {brandName}.",
+      "directMode": "Hakuna msimbo wa marejeleo unaohitajika",
+      "codeMode": "Uamuzi wa marejeleo umewashwa"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "Mzunguko wa mwanza hadi mwanza",
+        "description": "Kila usajili uliopokelewa unapokea msimbo na URL, ili marejeleo ya kufuata yanze bila uhamisho wa mkono."
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "Uamuzi wa kweli",
+        "description": "Msimbo usiojulikana unahifadhiwa kama jaribio la uamuzi, huku misimbo halali ikiongeza mrejeshaji na kuweka usajili safi."
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "Hali ya mafanikio tayari ya kushiriki",
+        "description": "Hali ya uthibitisho inaonyesha nafasi, msimbo, nakala, na vitendo vya kushiriki asili ili mzunguko ukanne ukweli kwenye ukurasa."
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "Miundombinu inayoongozwa na bidhaa",
+      "title": "Imeundwa kama miundombinu ya kudumu ya SaaS, si fomu ya kukataa.",
+      "description": "Upeo wa marejeleo unasaidiwa na pakiti ya domain, mfano wa kudumu wa Prisma, njia ya Next.js iliyobainishwa, na vipimo vya moshi vya umma vinavyoweza kufanya kazi baada ya kuweka ECS.",
       "data": {
         "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "title": "Jedwali moja la kudumu la orodha ya kusubiri",
+        "description": "Ukamilifu wa barua pepe, nafasi inayoongezeka kiotomatiki, viashiria vya msimbo wa marejeleo, metadata ya jaribio la uamuzi, na mabadiliko ya hali yako kwenye hifadhi ya data ya jukwaa."
       },
       "api": {
         "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "title": "Nda ya muunganisho iliyobainishwa",
+        "description": "Ukurasa unatuma kwa `/api/waitlist`, unasawazisha kodhi zozote, unarudisha kuingizwa kilichopo kwa upole, na hakitegemei kodhi ya mfano."
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "Mvua ya umma wakati wa kuweka",
+        "description": "Viungo vya kanuni na vya jina lingine tayari kwa ukaguzi wa kiotomatiki ili usafirishaji wa ECS ukamate mabadiliko ya njia, DNS, na afya."
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "Zindua Startup yako,",
+    "headline2": "ikiendeshwa na {brandName} Agent OS.",
+    "subheadline": "Epuka wiki za kazi ya msingi wa <highlight>msingi wa uzalishaji</highlight> wenye <highlight>muundo uliosimamiwa</highlight>, ulioundwa kwa <highlight>wakala wa AI na wanaanzisha</highlight> wanaosafiri kimataifa.",
+    "copyLabel": "Nakili Amri",
+    "copiedLabel": "Imenakiliwa",
+    "ctaGetAccess": "Anzisha Startup Yako",
+    "ctaExploreDemo": "Chunguza demo",
+    "pillCopied": "Imenakiliwa"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "Miundombinu tayari kutoka kwenye prototype hadi kiwango kikubwa.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "Miundombinu ya Programu za AI",
+      "description": "Mifumo ya Agent na injini za usimamizi wa LLM zilizojengwa ndani na kujaribiwa kwa uzalishaji. Epuka utata wa mifumo ya chini na kuunganisha moja kwa moja na API za akili zilizopangwa."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "Mstari wa Msingi wa Jukwaa Lililodhibitiwa",
+      "description": "Mstari wa msingi wa jukwaa lililodhibitiwa kwa timu zinazotoa SaaS za AI-native. Linganisha miundo, vifaa vya runtime, na nyuso za utoaji bila kuunganisha zana za ad-hoc."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "Uotomatiki wa SaaS ya Biashara",
+      "description": "Uunganisho wa kina wa stack ya teknolojia ya kisasa ya Vercel, Supabase, na Stripe. Inatoa usalama wa kiwango cha safu, utengano wa multi-tenant wa kina, na bili ya usajili wa kimataifa."
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "Uko tayari kuweka bidhaa yako inayofuata ya AI?",
+    "subheading": "Anzisha muundo kamili wa SaaS unaotegemea wavuti ndani ya kompyuta yako kwa amri moja ya terminal.",
+    "copyLabel": "Nakili Amri",
+    "copiedLabel": "Imenakiliwa",
+    "startBuilding": "Anza Kujenga"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "Safirisha Startup yako kwa Agent OS ya {brandName}. Multi-tenancy, bili, auth, na AI — tayari kwa uzalishaji tangu siku ya kwanza.",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "Bidhaa",
+      "resources": "Rasilimali",
+      "legal": "Kisheria",
+      "community": "Jamii"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
-      "blog": "Blog",
+      "product": "Bidhaa",
+      "features": "Vipengele",
+      "pricing": "Bei",
+      "about": "Kuhusu",
+      "showcase": "Onyesho",
+      "blog": "Blogu",
       "playbook": "Playbook",
       "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
+      "roadmap": "Ramani ya Njia",
+      "docs": "Nyaraka",
+      "ideas": "Maono",
+      "opc": "Jukwaa",
+      "careers": "Kazi",
+      "security": "Usalama",
       "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
-      "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "privacy": "Siri",
+      "terms": "Masharti",
+      "cookies": "Vikuki",
+      "refund": "Rudisho",
+      "licensing": "Leseni",
+      "contact": "Wasiliana",
+      "faq": "Maswali Yanayoulizwa Mara kwa Mara",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. Haki zote zimehifadhiwa.",
+    "statusOnline": "Mifumo yote inafanya kazi",
+    "newsletterTitle": "Kaa kwa sasa",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "Jisajili",
+    "newsletterSuccess": "Asante kwa kujiandikisha!",
+    "newsletterError": "Kuna kitu kilichokosea"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "IMEJENGEWA KWA STACK UNAYOPENDA."
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "MUUNGO WA TURBOREPO",
+    "title": "Programu 10. Pakiti 104. Njia 4 za backend.",
+    "description": "Msimbo wa pamoja, ujenzi sambamba, hakuna upitishaji. Aina kamili kutoka hifadha ya data hadi frontend.",
+    "metricApps": "programu",
+    "metricBackends": "njia za backend",
+    "metricPackages": "pakiti",
+    "verifiedPaths": "Njia zimehakikishwa dhidi ya eneo la kazi la sasa",
+    "cta": "Chunguza muundo wa monorepo"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "Kwa Nambari",
+    "github": "Nyota za GitHub",
+    "discord": "Wanachama wa Discord",
+    "setup": "Muda wa Kuanzisha",
+    "packages": "Vipaketi vya Monorepo",
+    "ctaStar": "Piga Nyota →",
+    "ctaJoin": "Jiunge →",
+    "ctaStart": "Anza →",
+    "ctaExplore": "Chunguza →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "Kuhusu Sisi — Jukwaa la AI Lililodhibitiwa",
+      "description": "Gundua maono ya biashara na kanuni za uhandisi nyuma ya jukwaa la AI lililodhibitiwa la {brandName}.",
+      "heading": "Ura wa Timu za Bidhaa Nyepesi",
+      "subheading": "Badilisha kazi za mara kwa mara za jukwaa kwa miundombinu iliyodhibitiwa, uotomatishaji imara, na nguvu ya uhandisi endelevu.",
+      "missionTitle": "Mpangilio Mpya Unaopigana na Uharibifu wa Utawala",
+      "missionP1": "{brandName} inajenga jukwaa la AI lililodhibitiwa kwa timu zinazohitaji miundombinu endelevu badala ya stack za kuanza za muda mfupi. Ukuaji wa kawaida mara nyingi huja na uburokrasia na entropy; tunajibu kwa utawala wa msimbo, uotomatishaji, na msingi wa jukwaa unaobaki kuweza kutathmini kadiri unavyokua.",
+      "missionP2": "Biashara bado inakumbana na mzigo wa ushirikiano, zana zilizogawanyika, na njia dhaifu za kuboresha. Tunajali kupunguza msongo huo kupitia mikataba wazi zaidi ya jukwaa, vifaa imara zaidi vya utoaji, na tabia za runtime ambazo timu zinaweza kuona na kuamini.",
+      "missionP3": "Tunakataa tabia ya kutatua matatizo ya ukubwa kwa kuongeza mzigo wa shirika. Uotomatishaji, majaribio, na utawala wanapaswa kunyonya kazi za utendaji mara kwa mara ili timu ziweze kuendelea kukusanyika kwenye bidhaa, muundo, na matokeo ya wateja.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "Nguzo Nne",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "Ukuaji Uliodhibitiwa (Falsafa)",
+          "description": "Ukuaji unapaswa kuja kutoka kwa mifumo imara zaidi, nguvu bora, na sheria wazi za utendaji — si kutoka kwa kuweka uzito mwingi wa shirika."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "Msingi wa Mjenzi (Miundombinu)",
+          "description": "Msingi wa jukwaa unaoweza kutumika tena kwa multi-tenancy, bili, auth, ushirikiano, na uunganisho wa AI ambao timu zinaweza kutathmini, kupanua, na kuwasilisha tena na tena."
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "Kanuni ya Kuboresha (Uelekezi)",
+          "description": "Mifumo yenye afya hukuwa kupitia ukaguzi wa ubadilishaji, uhamisho, na mikataba inayoonekana ya runtime badala ya drift, heroics, na uandishi upya wa mara moja."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "Msimbo ni Sheria (Shirika)",
+          "description": "Kanuni za utendaji zinapaswa kuandikwa katika majaribio, mifumo ya kazi, na sheria za utawala ili timu ziweze kuboresha jukwaa bila kutegemea siasa au kumbukumbu za taasisi."
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "Alama za Uhandisi Badala ya Shahada",
+      "jobsDescription": "Tunajali zaidi matokeo ya uhandisi yanayoweza kuthibitishwa, uwazi wa kufikiri, na hukumu ya mfumo kuliko asili au upeo wa cheo.",
+      "jobsButton": "Wasilisha Wasifu wa Github",
+      "companyInfoTitle": "Udhibiti wa Shirika",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "Usajili wa Kifalme",
+        "founded": "Tarehe ya Usajili",
+        "headquarters": "Kituo cha Operesheni za Kimataifa",
+        "jurisdiction": "Huduma ya Sheria"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "Unahitaji tathmini ya kiufundi ya kina?",
+      "ctaDescription": "Wasiliana na wataalamu wetu wa uhandisi kwa tathmini ya muunganisho wa biashara au ukague nyaraka za uwekaji.",
+      "ctaButton": "Kuanzisha Mawasiliano"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "Utafuta wa Kiufundi na wa Biashara — {brandName} Intelligence",
+      "description": "Njia maalum ya mawasiliano kwa leseni za biashara, kujikimu kwa biashara, na msaada wa kiufundi wa hali ya juu.",
+      "heading": "Kuanzisha Uunganisho wa Msaada",
+      "subheading": "Tutatumia mtaalamu wa kiufundi au mhandisi maalum kufanya tathmini ya mahitaji yako.",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "Mwenyeji wa Moja kwa Moja",
+          "description": "Njia ya mawasiliano moja kwa moja kwa usawazishaji wa kimkakati wa msingi na maswali ya kiutendaji."
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "Ushauri wa Biashara",
+          "description": "Mazungumzo ya awali kuhusu ushirikiano wa kimkakati wa ikolojia na mageuzi ya muundo wa jumla."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "Uwekaji wa Biashara",
+          "description": "Mazungumzo kuhusu leseni za chanzo kilichofungwa na maelezo yanayohusiana na uwekaji wa mazingira ya kundi binafsi."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "Msaada wa Kiufundi",
+          "description": "Mwongozo wa muundo maalum na huduma za kutatua matatizo kwa muunganisho wa biashara zinazofanya kazi na kutafuta makosa ya mfumo wa msingi."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "Sheria na Utekeleza",
+          "description": "Maswali yanayohusu ufafanuzi wa mipaka ya chanzo huru, ukaguzi wa utekeleza wa biashara, na masharti ya mkataba."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "Siri ya Kituo cha Data",
+          "description": "Uthibitisho wa kiufundi na maagizo ya utekeleza kuhusu GDPR na sheria zinazofuata za ulinzi wa data za kimataifa."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "Ufunuo wa Usalama",
+          "description": "Wasilisha ripoti za kiufundi za uundaji upya kuhusu udhaifu wa programu kwa usalama moja kwa moja kwa timu yetu ya miundombinu."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "Lango la Uwasilishaji",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "Jina la Mwasilishi",
+        "email": "Barua Pepe Rasmi",
+        "company": "Shirika linalohusishwa",
+        "category": "Eneo la Hitaji",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "Ushauri wa Biashara",
+          "sales": "Leseni na Muundo",
+          "support": "Msaada wa Mtaalamu",
+          "legal": "Mipaka ya Sheria na Utekeleza",
+          "privacy": "Sera za Usindikaji wa Data",
+          "partnership": "Ujumuishaji wa Mfumo wa Ecosistema",
+          "press": "Uhusiano na Umma"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "Muhtasari wa Tatizo Kuu",
+        "message": "Maelezo ya Kiufundi/Biashara",
+        "submit": "Tuma kwa Backend",
+        "privacyNotice": "Kutekeleza ombi hili la mtandao kunamaanisha kusoma na kukubali",
+        "privacyLink": "Miundombinu ya Faragha ya Mfumo",
+        "submitting": "Inaingia katika foleni ya kuchakata...",
+        "successMessage": "Data imetumwa kwa mafanikio. Timu inayohusika itatoa jibu la kina ndani ya siku 1-2 za biashara za kawaida."
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "Telemetria ya Uendeshaji",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "Wuxi, Jimbo la Jiangsu, China",
+      "socialMedia": "Viungo Vikuu vya Mtandao"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Sera ya Cookies — {brandName}",
+      "description": "Jinsi {brandName} inavyotumia cookies na teknolojia zinazofanana za ufuatiliaji kwenye tovuti na huduma zetu.",
+      "heading": "Sera ya Cookies",
+      "effectiveDate": "Tarehe ya Uanzishwaji",
+      "lastUpdated": "Ilisasishwa Mwisho",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Januari, 2025",
+        "updated": "1 Januari, 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "Sera hii ya Cookies inaelezea jinsi {brandName} Co., Ltd. (\"{brandName},\" \"sisi,\" \"tunayotumia,\" au \"yetu\") inavyotumia cookies na teknolojia zinazofanana za ufuatiliaji kwenye tovuti na huduma zetu.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "Cookies Ni Nini?",
+        "content": "Cookies ni faili ndogo za maandishi zinazowekwa kwenye kifaa chako unapotembelea tovuti. Zinatumiwa sana kuifanya tovuti ifanye kazi kwa ufanisi zaidi na kutoa taarifa kwa wanamiliki wa tovuti."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "Jinsi Tunavyotumia Cookies",
+        "intro": "Tunatumia cookies ili:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "Washa Vipengele Muhimu",
+            "desc": "Toa utendaji wa msingi kama uthibitisho wa mtumiaji na usalama"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "Kumbuka Mapendeleo",
+            "desc": "Hifadhi lugha yako, mandhari, na mipangilio mingine"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "Boresha Utendaji",
+            "desc": "Elewa jinsi wageni wanavyofanya kazi na huduma zetu"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "Badilisha Uzoefu",
+            "desc": "Toa maudhui na mapendekezo yanayohusika"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "Pima Masoko",
+            "desc": "Fuata ufanisi wa michezo yetu ya masoko"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "Aina za Cookies Tunazotumia",
       "tableHeaders": {
         "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "provider": "Mtoa Huduma",
+        "purpose": "Lengo",
+        "duration": "Muda"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "Cookies Muhimu Sana",
+        "description": "Cookies hizi ni muhimu kwa tovuti kufanya kazi vizuri. Haziwezi kuzimwa.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "Kipindi cha uthibitisho wa mtumiaji",
+            "duration": "Kipindi"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "Token ya uthibitishaji",
+            "duration": "Siku 7"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "Hifadhi mapendeleo ya ruhusa ya cookies",
+            "duration": "Mwaka 1"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "Cookies za Kazi",
+        "description": "Cookies hizi zinawezesha vipengele vya kibinafsi na kukumbuka mapendeleo yako.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "Hifadhi mapendeleo ya lugha",
+            "duration": "Mwaka 1"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "Hifadhi mapendeleo ya mandhari",
+            "duration": "Mwaka 1"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "Cookies za Uchambuzi",
+        "description": "Cookies hizi zinatusaidia kuelewa jinsi wageni wanavyofanya kazi na tovuti yetu.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "Tofautisha watumiaji wengine",
+            "duration": "Miaka 2"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "Uchambuzi wa bidhaa",
+            "duration": "Mwaka 1"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "Vikuki vya Masoko",
+        "description": "Vikuki hivi vinatumika kwa uuzaji wa bidhaa na kufuatilia utendaji wa kampeni za matangazo.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Kufuatilia ziara kwa matangazo ya Facebook",
+            "duration": "Miezi 3"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "Ufuatiliaji wa mabadiliko",
+            "duration": "Miezi 3"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "Kudhibiti Mapendeleo Yako ya Vikuki",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "Banari ya Idhini ya Vikuki",
+        "intro": "Unapotokea kwenye tovuti yetu kwa mara ya kwanza, utapata banari ya idhini ya vikuki inayokuruhusu ku:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "Kubali Yote",
+            "desc": "Washa makundi yote ya vikuki"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "Kataa Zote",
+            "desc": "Zima biskuti zote za hiari (biskuti zinazohitajika zinabaki)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "Badilisha",
+            "desc": "Chagua makundi maalum ya biskuti kuwezesha"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "Unaweza kubadilisha mapendeleo yako wakati wowote kwa kubofya \"Mipangilio ya Biskuti\" kwenye sehemu ya chini."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "Mipangilio ya kivinjari",
+        "intro": "Kivinjari vingi vya wavuti vinakuruhusu kudhibiti biskuti kupitia mipangilio yake:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "Mipangilio > Faragha na usalama > Biskuti"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "Mipangilio > Faragha & Usalama > Biskuti"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "Mapendeleo > Faragha > Biskuti"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "Mipangilio > Faragha, utafutaji, na huduma > Biskuti"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "Kuzuia biskuti fulani kunaweza kuathiri utendaji wa tovuti."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "Teknolojia zinazofanana",
+        "intro": "Pia na biskuti, tunaweza kutumia:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "Hifadhi ya Ndani",
+            "desc": "Kuhifadhi mapendeleo na data ya cache ndani"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "Hifadhi ya Kipindi",
+            "desc": "Kwa data ya muda wakati wa kipindi chako cha kutafuta"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "Aina za Pikseli",
+            "desc": "Picha ndogo za kufuatilia ufunguzi wa barua pepe na ziara za tovuti"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "Hatutumii fingerprinting ya kivinjari kwa ufuatiliaji."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "Sasisho za Sera Hii",
+        "content": "Tunaweza kusasisha Sera hii ya Cooki kwa wakati mwingine. Tutakuletea mabadiliko makubwa kwa kuweka sera iliyosasishwa kwenye tovuti yetu."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "Wasiliana Nasi",
+        "intro": "Ikiwa una maswali kuhusu matumizi yetu ya cooki, tafadhali wasiliana nasi:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "Kwa maelezo zaidi kuhusu jinsi tunavyokusanya na kuchakata data yako, tafadhali angalia",
+        "privacyLink": "Sera ya Faragha"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "Mwongozo wa Uhandisi & FAQ — {brandName}",
+      "description": "Uchambuzi wa kina wa muundo wa mfumo, topolojia za msingi, na mikakati ya uendeshaji wa biashara.",
+      "heading": "Uchambuzi wa Kina wa Utendaji",
+      "subheading": "Nyenzo za msaada zilizoboreshwa kwa ujumuishaji wa uhandisi wa mifumo na uamuzi wa biashara wa utendaji.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "Maelezo ya Muundo",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "Ni nini lengo la utendaji la {productName}?",
+              "a": "{productName} ni mfumo wa Next.js AI SaaS ulioandaliwa kwa uzalishaji. Unapakia bili ya kampuni, uthibitisho wa neno siri, na utenganisho wa watumiaji wengi katika msingi wa mfumo, ikiruhusu timu kujitolea kwa utekelezaji wa AI maalum."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "Jinsi gani leseni ya hazina imeundwa?",
+              "a": "Miundombinu wa msingi unatekeleza kwa ukali mkataba wa OSS AGPLv3, ukihakikisha uwazi na matumizi ya gharama sifuri. Kwa mashirika yanayohitaji upotevu wa mali na dhamana za kuandika upya zilizoinuliwa, mikataba ya biashara ya chanzo kilichofungwa inapatikana."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "Je, kasi ya tathmini ya kwanza ya biashara ni ipi?",
+              "a": "Kasi kubwa sana. Kwa kutumia zana za Node CLI zilizobinafsishwa pamoja na tafsiri ya kiufundi sahihi, mhandisi mchache anaweza kuanzisha mfano wa Minimum Viable Product (MVP) wa ndani wa kujitegemea ndani ya dakika chache."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "Shughuli za Biashara",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "Je, upungufu wa kasi ya biashara ni upana gani?",
+              "a": "Imeundwa kwa kiasi kikubwa kwenye paradimu za sehemu ndogo, uwezo wa mzigo wa muundo unachora kwa urahisi kutoka kwa Free Tiers za mahitaji sifuri hadi viwango vya Enterprise vinavyohudumia maombi ya mamilioni kwa mwezi, yote yanasanidiwa kupitia vikwazo vya dashibodi."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "Je, mabadiliko ya usajili yanavyoathiri hesabu za kawaida?",
+              "a": "Tunafanya kazi kwa kutumia uandishi wa muundo wa sekunde za rasilimali na upitishaji wa API. Vikwazo vinavyobadilika vinarekebisha papo hapo dhidi ya tabaka la hesabu—au kurudisha tofauti za prorated au kutoa mikopo ya kiotomatiki. Hakuna kipindi cha kufunga kiwango."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "Je, miundombinu gani ya kuchakata inatenganisha vekta za malipo?",
+              "a": "Upelekaji wa fedha duniani kote unasimama kwa msingi kwenye viwango vya seva za Stripe, ukihakikisha telemetry ya PCI-DSS na uadilifu wa kuchakata. Usanidi wa Enterprise unaweza kuunganisha mistari ya ukaguzi wa fedha wa kibinafsi inayodhibitiwa na dhamana za SLA maalum."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "Tabaka la Uhandisi wa Mfumo",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "Je, mifumo gani ya akili ya msingi inasaidiwa kwa asili?",
+              "a": "Mantiki kuu ya mwingiliano inasema interoperability ya asili juu ya OpenAI, Anthropic, na Gemini standard specifications. Hii inatoa uelekevu mkubwa wa kubadilisha pointi za kufikiri kwa ufanisi kupitia ramani ya vigeu bila kupungua kwa mantiki ya biashara ya juu."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "Je, hatari ya upotevu wa hifadhi ya data inavyokabiliwa?",
+              "a": "Utekelezaji wa chaguo-msingi unafanya kazi kwa asili Postgres Row-Level Security (RLS) policies zinazounganishwa kwa karibu na vigezo vya Tenant Resolution Routing vya serverless. Hii inahakikisha sehemu ngumu zinazuia kwa ufanisi uchafuzi wa data ya kiwango cha programu na mwingiliano wa utekelezaji."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "Je, kuna vikwazo vya muundo kwenye usanidi wa kujitunza?",
+              "a": "Hakuna yoyote. Topolojia imepatikana kabisa. Ikiwa mazingira inafanya kazi Node.js runtimes huru pamoja na PostgreSQL clusters zenye afya, utendaji kamili unahifadhiwa kwa asili."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "Uaminifu wa Mfumo",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "Je, viwango gani vinahukumu ulinzi wa mekaniki wa mpaka?",
+              "a": "Mifumo inafanya kazi kwa TLS encryption lazima kupitia upitishaji, algoriti za hashing za deterministic kwa ramani ya siri, na uandishi wa matukio ya mabadiliko yaliyoandikwa kwa ukali kwenye ledger za ufuatiliaji wa mfululizo wa muda wa ndani."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "Je, muundo unaheshimu sheria kuu za kimataifa za faragha?",
+              "a": "Ndiyo, kwa kina. Moduli za biashara zinatoa utekelezaji wa algoriti wa kutoka kwenye sanduku unaolenga hali za kuondoa idhini, mantiki ya kuharibu kwa nguvu, na machunguzi ya kuuza kwa kina yanayofaa kwa hali bora kwa GDPR na miundo ya udhibiti ya ndani."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "Je, nini hutekelezwa wakati wa tukio la ajabu la haraka?",
+              "a": "Sentineli za kiotomatiki huarifu kwa haraka vekta za uhandisi wa msingi ambao haweka vikwazo vya mzunguko na kutekeleza triaji ya haraka. Inaongozwa na kitabu cha ufumbuzi cha hali ya juu, Postmortems za Tukio zinazojulikana kwa uwazi zinasambazwa kwa siku 72 kamili."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "Maelekezo ya Msaada wa Kiufundi",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "Je, matatizo ya kizuizi cha utendaji yanatatuliwa vipi?",
+              "a": "Vekta za triaji za awali zinangalia matriksi ya nyaraka zilizohifadhiwa kwa makini na zilizopitishwa na wenzao na mwingiliano wa jamii uliothibitishwa. Kununua leseni ya kawaida au ya kiwango cha biashara hufungua upatikanaji wa mistari ya kasi ya kibinafsi inayatatuliwa kupitia nodi za uhandisi wa ndani moja kwa moja."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "Je, unatoa operesheni za muunganisho wa mazingira maalum au ya kimwili?",
+              "a": "Hii inakusanyika chini ya kiwango chetu cha juu cha utekelezaji wa premium kwa konglomerati za makampuni ya ngazi ya juu. Wabunifu wetu wa ngazi ya juu wanatekeleza nje ya kawaida kufanya ukaguzi wa msimbo dhidi ya muundo wa zamani, kudhibiti uhamisho wa wingu wa nyeti, na kuthibitisha sehemu za mtandao zilizotengwa sana."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "Unahitaji usawazishaji wa kiufundi mara moja?",
+      "ctaDescription": "Iwe unathibitisha schema ya tabia maalum ya API au kutekeleza makubaliano ya muunganisho wa muda mrefu, unganisha moja kwa moja na ierarikia ya uhandisi.",
+      "ctaButton": "Pokea Maelekezo ya Muunganisho",
+      "ctaEmail": "Tuma ujumbe wa moja kwa moja"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Protokoli ya Faragha na Ulinzi wa Habari — {brandName}",
+      "description": "Kuyanyesha kwa kina jinsi mekaniki za miundombinu zinavyosimamia uhuru wa mtumiaji na utenganisho wa data ya mashine.",
+      "heading": "Maelekezo ya Ulinzi wa Habari",
+      "effectiveDate": "Tarehe ya Utekelezaji",
+      "lastUpdated": "Ilisasishwa Mwisho",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "Januari 1, 2025",
+        "updated": "Januari 1, 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "Kwa {brandName} (\"Kampuni,\" \"sisi,\" \"tunao,\" au \"yetu\"), tunajitolea kulinda siri yako. Sera hii ya Siri inaeleza jinsi tunavyokusanya, kutumia, kufunua, na kulinda taarifa zako unapotumia tovuti yetu, programu, na huduma (kwa pamoja, \"Huduma\").",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. Taarifa Tunazokusanya",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 Taarifa Unazotoa",
+          "intro": "Tunakusanya taarifa unazotupa moja kwa moja, ikiwa ni pamoja na:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "Taarifa za Akaunti",
+              "desc": "Jina, barua pepe, neno siri, na maelezo ya shirika unapounda akaunti."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "Taarifa za Wasifu",
+              "desc": "Picha ya wasifu, cheo la kazi, jina la kampuni, na taarifa nyingine za hiari."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "Taarifa za Malipo",
+              "desc": "Anwani ya bili na maelezo ya njia ya malipo (inayochakuliwa kwa usalama kupitia Stripe)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "Mawasiliano",
+              "desc": "Ujumbe, maoni, na mawasiliano mengine unayotutumia."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "Mazao",
+              "desc": "Mazao yoyote unayounda, kupakia, au kuhifadhi ukionyesha Huduma zetu."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 Taarifa Inayokusanywa Kiotomatiki",
+          "intro": "Unapotumia Huduma zetu, tunakusanya kiotomatiki taarifa fulani:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "Taarifa za Kifaa",
+              "desc": "Aina ya kifaa, mfumo wa uendeshaji, aina ya kivinjari, na vidokezi vya kipekee vya kifaa."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "Taarifa za Matumizi",
+              "desc": "Ukurasa ulioangaliwa, vipengele vilivyotumika, vitendo vilivyofanywa, na muda uliopitishwa kwenye Huduma."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "Data ya Logi",
+              "desc": "Anuani ya IP, masaa ya kufikia, URL zinazorejea, na logi za shughuli za mfumo."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "Taarifa za Mahali",
+              "desc": "Mahali kwa ujumla kulingana na anuani ya IP (hatukusanyii mahali sahihi sana)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. Jinsi Tunavyotumia Taarifa zako",
+        "intro": "Tunatumia taarifa tunazokusanya ili:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "Kutoa Huduma",
+            "desc": "Kufanya kazi, kudumisha, na kuboresha Huduma zetu."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "Kusimamia Amana",
+            "desc": "Kusimamia malipo, bili, na shughuli zinazohusiana."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "Kuwasiliana",
+            "desc": "Kutumia tangazo la huduma, masasisho, na mawasiliano ya masoko (kwa idhini)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "Kubinafsisha",
+            "desc": "Kubinafsisha uzoefu wako na kutoa mapendekezo yanayohusika."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "Kuchambua",
+            "desc": "Kuelewa mifumo ya matumizi na kuboresha Huduma zetu."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "Kulinda",
+            "desc": "Kugundua, kuzuia, na kujibu udanganyifu, matumizi mabaya, na matukio ya usalama."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. Jinsi Tunavyoshiriki Taarifa zako",
+        "intro": "Tunaweza kushiriki taarifa zako katika hali zifuatazo:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 Wazawishi wa Huduma",
+          "intro": "Tunashiriki taarifa na wauzaji wa tatu ambao hutoa huduma kwa niaba yetu, ikiwa ni pamoja na:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "Miundombinu",
+              "desc": "Uhudumu wa wavuti (Vercel, Supabase), huduma za hifadhi ya data"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "Usindikaji wa Malipo",
+              "desc": "Stripe kwa usindikaji salama wa malipo"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "Uthibitishaji",
+              "desc": "Clerk kwa usimamizi wa utambulisho"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "Uchambuzi",
+              "desc": "PostHog, Vercel Analytics kwa ufahamu wa matumizi"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 Uhamisho wa Biashara",
+          "content": "Ikiwa tutashiriki katika muungano, ununuzi, au uuzaji wa mali, taarifa zako zinaweza kuhama kama sehemu ya muamala huo."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 Mahitaji ya Kisheria",
+          "content": "Tunaweza kufunua taarifa wakati inahitajika na sheria, mchakato wa kisheria, au ombi la serikali, au kulinda haki zetu, faragha, usalama, au mali."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. Haki zako na Chaguzi",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 Upatikanaji na Uhamishaji",
+          "content": "Unaweza kupata taarifa zako za kibinafsi kupitia mipangilio ya akaunti yako na kuomba nakala ya data yako katika muundo unaoweza kuhama."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 Urekebishaji",
+          "content": "Unaweza kusasisha taarifa za akaunti yako wakati wowote kupitia dashibodi."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 Ufutaji",
+          "content": "Unaweza kuomba usirishaji wa akaunti yako na data inayohusiana kupitia mipangilio au kwa kutuwasiliana nasi."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 Mawasiliano ya Masoko",
+          "content": "Unaweza kukataa barua pepe za masoko kwa kubofya \"toa usajili\" katika barua pepe yoyote ya masoko au kwa kurekebisha mapendeleo yako."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. Usalama wa Data",
+        "intro": "Tunatekeleza hatua za kiufundi na za shirika zinazofaa ili kulinda taarifa zako, ikiwa ni pamoja na:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "Ufungaji wa data inayopitishwa (TLS) na iliyohifadhiwa",
+          "1": "Tathmini za usalama na majaribio ya upenyezaji kwa kawaida",
+          "2": "Vidhibiti vya upatikanaji na mahitaji ya uthibitishaji",
+          "3": "Ufuatiliaji na kumbukumbu za shughuli za mfumo"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. Haki za Usiri wa California (CCPA)",
+        "intro": "Ikiwa wewe ni mwenyeji wa California, una haki maalum kuhusu taarifa zako za kibinafsi:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "Haki ya Kujua",
+            "desc": "Omba ufunguzi wa taarifa tunazokusanya, kutumia, na kushiriki."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "Haki ya Kufuta",
+            "desc": "Omba usirishaji wa taarifa zako za kibinafsi."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "Haki ya Kukataa",
+            "desc": "Kataa uuzaji wa taarifa za kibinafsi (hatuuze data yako)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "Haki ya Kusaidiwa Bila Utohozi",
+            "desc": "Hatutatoa tofauti dhidi yako kwa kutumia haki zako."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. Haki za Usiri wa Ulaya (GDPR)",
+        "intro": "Ikiwa uko EEA, UK, au Uswisi, una haki za ziada chini ya GDPR:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "Msingi wa Kisheria",
+            "desc": "Tunachakata data yako kulingana na utekelezaji wa mkataba, maslahi halali, au idhini."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "Haki",
+            "desc": "Upatikanaji, urekebishaji, uondoshaji, uhamishaji, ukandamizaji, na uasi."
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "Unaweza kuwasiliana na Mkuu wa Ulinzi wa Data wetu kwa dpo@nebutra.com."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. Wasiliana Nasi",
+        "intro": "Ikiwa una maswali kuhusu Sera hii ya Faragha, tafadhali wasiliana nasi:",
         "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "Mikataba ya Utohozi wa Amani — {brandName}",
+      "description": "Ufafanuzi wa kina kuhusu viwango vya kurudisha fedha kwa modeli tofauti za ushiriki wa muundo.",
+      "heading": "Mfumo wa Utekelezaji wa Tofauti",
+      "effectiveDate": "Tarehe ya Utekelezaji wa Sheria",
+      "lastUpdated": "Tarehe ya Mabadiliko",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "Januari 1, 2025",
+        "updated": "Januari 1, 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "Kwa {brandName}, tunataka uwe na furaha kamili na huduma zetu. Sera hii ya Kurudisha Fedha inaelezea hali ambazo kurudisha fedha kunapatikana na mchakato wa kuomba.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "Mipango ya Usajili",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "Usajili wa Kila Mwezi",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "Kufuta",
+              "desc": "Unaweza kufuta usajili wako wa mwele mmoja wakati wowote"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "Rudisho la Kiasi Kilichobaki",
+              "desc": "Hatutotoa rudisho la kiasi kilichobaki kwa miezi isiyokamilika"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "Upatikanaji",
+              "desc": "Unabaki na upatikanaji wa vipengele vilivyolipwa hadi mwisho wa kipindi chako cha bili"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "Ujuzi Upya wa Kiotomatiki",
+              "desc": "Usajili hujuziwa upya kiotomatiki isipokuwa ukifutwa"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "Usajili wa Mwaka",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "Ahadi ya Kurudisha Pesa za Siku 14",
+              "desc": "Wajasili wapya wa mwaka wanaweza kuomba rudisho kamili ndani ya siku 14 baada ya ununuzi wao wa kwanza"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "Baada ya Siku 14",
+              "desc": "Rudisho kwa kawaida hapatikani baada ya kipindi cha siku 14"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "Kufuta",
+              "desc": "Unaweza kufuta wakati wowote, lakini usajili wako utabaki ukiwa na nguvu hadi mwisho wa kipindi cha mwaka"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "Hakuna Rudisho la Kiasi Kilichobaki",
+              "desc": "Hatutotoa rudisho la sehemu kwa miezi isiyoitumika"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "Mazingira Yanayostahili Rudisho",
+        "intro": "Tutazingatia maombi ya rudisho katika hali zifuatazo:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. Matatizo ya Huduma",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "Kutokuwa na huduma kwa muda mrefu kinachokuzuia kutumia vipengele vya msingi",
+            "1": "Matatizo ya kiufundi ambayo hatuwezi kutatua ndani ya muda wa kufaa",
+            "2": "Vipengele tofauti sana na vilivyotangazwa"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. Hitilafu za Bililingi",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "Malipo ya ziada",
+            "1": "Kiasi kisichofaa cha bililingi",
+            "2": "Malipo yasiyoidhinishwa (baada ya uthibitisho)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. Hali za Kipekee",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "Dharura za kiafya zilizorekodiwa",
+            "1": "Maafa ya asili yanayothiri biashara yako",
+            "2": "Hali nyingine zinazohitimu kulingana na kesi kwa kesi"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "Vitu Visivyoweza Kurudishiwa",
+        "intro": "Yafuatayo kwa kawaida hayana haki ya kurudishiwa:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "Malipo kulingana na matumizi",
+            "desc": "Viitio vya API, matumizi ya AI token, au hifadhi iliyotumika"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "Viweko na huduma za ziada",
+            "desc": "Ununuzi wa mara moja au huduma za ziada"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "Miethio ya Enterprise",
+            "desc": "Mikataba maalum ina masharti yake mwenyewe"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "Kughairi kwa hiari",
+            "desc": "Baada ya kipindi cha uhakiki wa kurudishiwa pesa"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "Uvunjaji wa masharti",
+            "desc": "Akaunti zilizofutwa kwa uvunjaji wa sera"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "Jinsi ya Kuhitajia Kurudishiwa Pesa",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "Hatua 1: Wasiliana na Msaada",
+          "intro": "Tuma barua pepe kwa billing@nebutra.com na:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "Barua pepe ya akaunti yako",
+            "1": "Mpango wa usajili na kipindi cha bili",
+            "2": "Sababu ya ombi la kurudishiwa pesa",
+            "3": "Maelezo yoyote yanayohusika"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "Hatua 2: Mchakato wa Kuchunguza",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "Tutachunguza ombi lako ndani ya siku 5 za kazi",
+            "1": "Tunaweza kuomba maelezo ya ziada",
+            "2": "Utapokea uamuzi kwa maandishi kupitia barua pepe"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "Hatua 3: Mchakato wa Kurudishiwa Pesa",
+          "intro": "Ikiwa imethibitishwa:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "Kurudishiwa pesa hufanywa kwa njia ya malipo ya asili",
+            "1": "Kurudishiwa pesa kwa kadi ya mkopo kwa kawaida hujitokeza ndani ya siku 5-10 za kazi",
+            "2": "Muda wa mchakato wa benki unaweza kutofautiana"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "Mabadiliko ya Mpango",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "Maboresho",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "Maboresho hufanyika mara moja",
+            "1": "Unalipishwa tofauti iliyosawazishwa kwa muda uliobaki wa kipindi chako cha kulipia",
+            "2": "Hakuna marejesho ya fedha yanayotolewa kwa mpango wa awali"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "Kupunguzwa",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "Kupunguzwa hufanyika katika kipindi kinachofuata cha kulipia",
+            "1": "Unaendelea kupata ufikiaji wa vipengele vya sasa hadi wakati huo",
+            "2": "Hakuna marejesho ya sehemu kwa kipindi cha sasa"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "Majaribio ya Bure",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "Majaribio ya bure hayahitaji taarifa za malipo",
+          "1": "Hakuna malipo yanayotokea wakati wa kipindi cha majaribio",
+          "2": "Utahimizwa kabla ya malipo yoyote kuanza"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "Uhalisi wa Migogoro",
+        "intro": "Ikiwa hukupenda naamuzi wetu wa marejesho ya fedha:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "Jibu barua pepe ya uamuzi kwa taarifa za ziada",
+          "1": "Omba kupelekwa kwa mkuu",
+          "2": "Wasiliana nasi kwa legal@nebutra.com kwa ukaguzi zaidi"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "Wasiliana Nasi",
+        "intro": "Kwa maombi ya marejesho ya fedha au maswali kuhusu sera hii:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "Mali",
+        "supportLabel": "Msaada",
+        "legalLabel": "Sheria",
+        "responseNote": "Tunajitahidi kujibu maombi yote ya kurudishiwa pesa ndani ya siku 5 za kazi.",
+        "termsNote": "Sera hii ni sehemu ya",
+        "termsLink": "Masharti ya Huduma",
+        "termsAgreement": "Kwa kutumia {brandName}, unakubali masharti haya ya kurudishiwa pesa."
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Masharti ya Huduma — {brandName}",
+      "description": "Masharti ya Huduma yanayodhibiti upatikanaji wako na matumizi ya tovuti, programu, API, na huduma za {brandName}.",
+      "heading": "Masharti ya Huduma",
+      "effectiveDate": "Tarehe ya Uanzishaji",
+      "lastUpdated": "Ilisasishwa Mwisho",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 Januari, 2025",
+        "updated": "1 Januari, 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "Karibu {brandName}! Masharti haya ya Huduma (\"Masharti\") yanadhibiti upatikanaji wako na matumizi ya tovuti, programu, API, na huduma za {brandName} (kwa pamoja, \"Huduma\") zinazotolewa na {brandName} Co., Ltd. (\"{brandName},\" \"Kampuni,\" \"sisi,\" \"tunatoa,\" au \"yetu\").",
+      "intro2": "Kwa kupata au kutumia Huduma zetu, unakubali kuwa dhamiriwa na Masharti haya na",
+      "intro2PrivacyLink": "Sera ya Faragha",
+      "intro2End": ". Ikiwa haukubali Masharti haya, usitumie Huduma zetu.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. Kukubali Masharti",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 Uhakiki wa Ustahili",
+          "intro": "Ili kutumia Huduma zetu, lazima uwe na:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "Uwe na umri wa miaka 18 au zaidi, au umri wa kuzaliwa kwa sheria katika enzi lako la sheria",
+            "1": "Uwe na haki ya kuandika Masharti haya kwa niaba yako mwenyewe au shirika lako",
+            "2": "Usiwe na kizuizi cha kutumia Huduma zetu chini ya sheria inayotumika"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 Akaunti za Shirika",
+          "content": "Ikiwa unatumia Huduma zetu kwa niaba ya shirika, unawakilisha kwamba una haki ya kuweka shirika hilo chini ya Masharti haya."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. Maelezo ya Huduma",
+        "intro": "{brandName} inatoa jukwaa la SaaS linalojumuisha:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "Sifa za AI na uundaji wa maudhui",
+          "1": "Zana za usimamizi wa maudhui na jamii",
+          "2": "Mifumo ya mapendekezo",
+          "3": "Uunganisho wa biashara ya mtandaoni",
+          "4": "Uwezo wa Web3",
+          "5": "Uchambuzi na ripoti"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. Usajili wa Akaunti",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 Uundaji wa Akaunti",
+          "intro": "Ili kupata sifa fulani, lazima uunde akaunti. Unakubali ku:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "Toa taarifa sahihi na kamili",
+            "1": "Tunza usalama wa vidokezo vya akaunti yako",
+            "2": "Sasisha taarifa yako haraka ikiwa imebadilika",
+            "3": "Kubali jukumu la shughuli zote chini ya akaunti yako"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. Usajili na Malipo",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 Bei",
+          "content": "Huduma zetu zinapatikana chini ya mipango tofauti ya usajili kama ilivyoelezwa kwenye ukurasa wetu wa Bei. Bei zinaweza kubadilika kwa taarifa ya siku 30."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 Malipo",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "Usajili unalipwa mapema kila mwezi au kila mwaka",
+            "1": "Gharama zote hazirejeshwi isipokuwa kama ilivyoelezwa katika",
+            "2": "Unatupa ruhusa ya kulipa njia yako ya malipo kwa gharama zinazohusika",
+            "3": "Tunatumia Stripe kwa usindikaji salama wa malipo",
+            "1RefundLink": "Sera ya Kurudisha"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. Matumizi Yanayokubalika",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 Shughuli Zilizopigwa Marufuku",
+          "intro": "Unakubali KUSIOFANYA:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "Kukiuka sheria, kanuni, au haki za upande wa tatu zinazohusika",
+            "1": "Kutumia Huduma kuhamisha malware, spam, au maudhui madhara",
+            "2": "Kujaribu kupata upenyezaji usio na ruhusa kwenye mifumo yetu",
+            "3": "Kuingilia au kuharibu utulivu au utendaji wa Huduma zetu",
+            "4": "Kutumia zana za kiotomatiki kukusanya, kunakili, au kuchukua data bila ruhusa",
+            "5": "Kufanya uhandisi wa kinyume, kutenganisha, au kuvunja Huduma zetu",
+            "6": "Kutumia vipengele vya AI vya kuunda maudhui haramu, madhara, au yanayolazimisha"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. Mali ya Kibinafsi",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 Mali Yetu ya Kibinafsi",
+          "content": "{brandName} na wazawishi wake wana uhakika, mwenendo, na maslahi yote katika Huduma, ikiwa ni pamoja na programu zote, muundo, alama za biashara, na maudhui yaliyotengenezwa na sisi."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 Maudhui Yako",
+          "content": "Una uhakika wa maudhui unaotengeneza au kupakia (\"Maudhui Yako\"). Kwa kutumia Huduma zetu, unatupa ruhusa ya kimataifa, isiyo ya kipekee, bila ada kutumia, kuhifadhi, kuchakata, na kuonyesha Maudhui Yako kwa dhamana ya kutoa Huduma kwako."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. Kutokuwa na Dhamana",
+        "content": "HUDUMA ZINATOLEWA \"KAMA ZIVYO\" NA \"KAMA ZINAPATIKANA\" BILA DHAMANA YA AINA YOTE, IWE ILIYOELEZWA AU Iliyokubaliwa, IKIJUMUIA LAKINI SIYA KUMEZUIWA DHAMANA ZILIZOKUBALIWA ZA UFAFANUJI, UFAFANUJI WA Lengo LA MAALUM, MWENENDO, NA KUTOKUWA NA UVUYAJI."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. Kikomo cha Amana",
+        "para1": "KWA KIKOMO CHA KWAHARI KINACHORUHUSIWA NA SHERIA, NEBUTRA HAITAKUWA NA AMANA YA MISIMIYA, KUSAFIRISHA, MAALUM, KUFUATA, AU KUDHIBITI, AU KUPOTEA FAIDA, DATA, MATUMIZI, AU HUSUANI.",
+        "para2": "KWA HATUA YOTE, AMANA YETU YA KWAHARI HAITEGEE ZIADA YA (A) Kiasi CHA KWAHARI ULICHOTOA KWASINI MWAKA 12 ULIOPITA KABLA YA MAHALA, AU (B) $100 USD."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. Kutangaza",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 Na Wewe",
+          "content": "Unaweza kutangaza akaunti yako wakati wowote kupitia mipangilio ya akaunti yako. Baada ya kutangaza, utapoteza ufikiaji wa Huduma."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 Na Sisi",
+          "intro": "Tunaweza kusimamisha au kutangaza akaunti yako ikiwa wewe:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "Ukiukie Masharti haya",
+            "1": "Ushiriki katika shughuli za udanganyifu au haramu",
+            "2": "Usilipie ada zinazohusika",
+            "3": "Uundie hatari au uwezo wa kisheria kwetu"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. Ufumbuzi wa Migongano",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 Ufumbuzi Usio Rasmi",
+          "content": "Kabla ya kuanzisha mchakato rasmi, unakubali kututembelea kwa legal@nebutra.com kujaribu kutatua migogoro kwa njia isiyo rasmi."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 Sheria Inayosimamia",
+          "content": "Masharti haya yanastawishwa na sheria za Jimbo la Delaware, bila kujali kanuni za mgongano wa sheria."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. Tuwasiliane",
+        "intro": "Ikiwa una maswali kuhusu masharti haya, tafadhali tuwasiliane:",
         "company": "{brandName} Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "Barua Pepe",
+        "supportLabel": "Msaada"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "Kwa kutumia {brandName}, unathibitisha kuwa umesoma, kuelewa, na kukubali kuwa dhamiriwa na Masharti haya ya Huduma."
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | Agent OS ya Biashara",
+    "description": "Agent OS ya biashara kwa wanaojenga biashara zinazoenda kimataifa. Msingi wa Next.js wa tayari kwa uzalishaji wenye muundo uliosimamiwa, uthibitisho, malipo, wakala, na i18n — iliyotengenezwa kwa wakala wa kuandika AI na timu za kudumu."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "TOPOLOJIA YA MIFUMO",
+      "title": "Muundo wazi, hakuna sanduku zilizofungwa.",
+      "description": "{productName} imeundwa kwa muundo wa Turborepo wenye moduli nyingi sana, ikikuwezesha kuwa na udhibiti kamili wa mzunguko mzima wa programu yako.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "ORM iliyofafanuliwa kikamilifu yenye sera za Usalama wa Kirowo (RLS) zilizojengwa ndani."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk Multi-Tenant / Utambulisho wa Kipekee",
+        "desc": "Lango la uthibitisho la SOC2 tayari linalosaidia kubadilisha mashirika ya B2B na RBAC."
       }
     },
     "pricing": {
@@ -1191,493 +1191,493 @@
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "Maswali Yanayoulizwa Mara kwa Mara kuhusu Bei na Leseni",
+      "description": "Maswali kuhusu viwango vya leseni, kurudishwa kwa pesa, na haki za matumizi ya biashara.",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "Je, Sailor ni usajili wa SaaS wa kila mwezi?",
+        "a": "Hapana. Bei hii ni kwa leseni za chanzo cha Sailor: Independent ni bure, Startup inachukuliwa kwa mwaka, na Enterprise ni ya kipekee."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "Je, mnatoa kurudishwa kwa pesa?",
+        "a": "Leseni za biashara za Startup zinajumuisha kipindi cha siku 14 cha kurudishwa kwa pesa kwa ununuzi wa kwanza. Masharti ya Enterprise yanashughulikiwa katika mkataba uliosainiwa."
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "Je, ninaweza kutumia Sailor kwa kazi za wateja?",
+        "a": "Ndiyo. Leseni ya biashara inaruhusu timu yako kutoa bidhaa za wateja au za ndani zisizo na chanzo wazi ndani ya upeo wa leseni; haki za white-label zinahitaji idhini ya Enterprise."
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "Bado una maswali? Zungumza na timu ya {brandName} →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "Anza Sasa",
+      "title": "Acha kuweka mipangilio. Anza kujenga.",
+      "description": "Anzisha muundo wa SaaS unaoweza kupanuka ndani kwa kutumia {brandName} CLI.",
+      "button": "Weka Muundo",
+      "license": "Chanzo huria chini ya leseni ya AGPL-3.0. Hakuna kadi ya mkopo inayohitajika."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "Uwezo wa Biashara",
+      "title": "Msingi ulio na aina kamili na unaoweza kupanuliwa.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "Usalama wa Kiwango cha Safu wa Asili",
+        "desc": "Kichunguzi kila kimoja cha hifadha ya data kina mipaka kwa ukali kwa muktadha wa mtumiaji wa sasa.",
+        "cta": "Soma falsafa ya hifadha ya data"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "Lango la AI la Kila Aina",
+        "desc": "Pitisha maombi kwa urahisi hadi OpenAI, Anthropic, au mifano ya chanzo huria.",
+        "cta": "Chunguza msimamizi wa AI SDK"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "Udhibiti wa Upatikanaji wa Kina",
+        "desc": "Fafanua majukumu ya msimamizi, mwanachama, na mtazamaji kwa muundo wa sera iliyojengwa ndani.",
+        "cta": "Angalia nyaraka za RBAC"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "Miundombinu ya Bililingi ya Watoa Huduma Wengi",
+        "desc": "Matumizi yaliyopimwa, webhooks za usajili, na milango ya wateja wa kujitumikia.",
+        "cta": "Tazama muundo wa bililingi"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "Onyesho la Kuingiliana",
+      "title": "Pata uzoefu wa kasi ya wakati halisi.",
+      "description": "Pata hisia ya kioo cha mstari wa amri, upitishaji wa webhook za Stripe, na uwekaji wa hifadha ya data ya watumiaji wengi ndani ya kompyuta.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "Telemetri ya Moja kwa Moja",
+        "desc": "Sogea data ya matumizi ya uzalishaji moja kwa moja kwenye terminali yako."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "Matukio ya Bililingi",
+        "desc": "Tazama Stripe webhooks zinazotekelezwa kupitia tunneling ya ndani."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "Kuanzisha Workspace",
+        "desc": "Pata schemas za PostgreSQL za B2B zilizotengwa papo hapo."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "Kasi",
+      "title": "Kutoka sifuri hadi uzalishaji kwa muda wa rekodi.",
       "step1": {
         "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "desc": "Clone monorepo ya {brandName} papo hapo na uendeshe pnpm install."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. Weka mipangilio",
+        "desc": "Weka Prisma, Clerk, na Stripe kupitia CLI ya mwingiliano kwa dakika chache."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. Jenga",
+        "desc": "Jitolee kwa mantiki ya bidhaa na UI huku msingi wa jukwaa tayari ukiwa umewekwa."
       },
       "step4": {
         "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "desc": "Push kwa Vercel na AWS kwa usambazaji wa kimataifa papo hapo."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "dak",
+        "subtitle": "MUDA WA KUSIMAMA SOKONI",
+        "comparison": "Puuza miezi ya kazi ya jukwaa.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
+          "scaffold": "Anzisha",
+          "wire": "Msingi",
           "ship": "Deploy",
-          "scale": "Scale",
+          "scale": "Panga",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "Anza saa yako"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "Mfumo wa Kibainisho",
+        "message": "Mfumo mmoja. Kila kipengele. Chagua kibainisho chako na uwashe.",
+        "detail": "Sanidi mara moja, tengeneza kila kitu — bili, uthibitisho, AI, i18n — kutoka kwa mfumo mmoja wa kibainisho.",
+        "readyStatus": "Mfumo wa kibainisho tayari"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "Uwezo wa Jukwaa",
+      "headlinePrefix": "Kila unachohitaji ili ",
+      "headlineHighlight": "utoe kwa ujasiri.",
+      "description": "{brandName} ni jukwaa la SaaS la full-stack—AI, bili, multi-tenancy, ufuatiliaji, na usalama zimejengwa tangu siku ya kwanza. Acha kujenga tena tabaka la jukwaa."
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
+      "exploreFeature": "Chunguza kipengele",
+      "ai_category": "AI & Akili",
+      "ai_f1_title": "Makamilisho ya mazungumzo ya multi-model",
+      "ai_f1_desc": "Rusha maombi kwenda kwa Anthropic, OpenAI, Google, au modeli zako mwenyewe za fine-tuned. Streaming, vision, na function calling zinapatikana out of the box.",
       "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
+      "ai_f2_desc": "Tengeneza na uhifadhi vector embeddings kwa pgvector. Nguvu semantic search, RAG pipelines, na recommendation engines.",
       "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
+      "ai_f3_desc": "Quotas kwa kila plan na usage tracking — pima AI tokens, API calls, na storage dhidi ya ClickHouse-backed real-time aggregates.",
+      "multi_category": "Jukwaa la Multi-tenant",
+      "multi_f1_title": "Utohozi wa kiwango cha shirika",
+      "multi_f1_desc": "Usalama wa row-level katika Postgres huhakikisha tenants hawawezi kufikia data ya wengine—inafanywa katika tabaka la database, si tu programu.",
       "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, n.k.) pamoja na email/password na magic-link—badilisha kati ya Clerk, Better Auth, NextAuth, au Supabase Auth kupitia env var moja.",
       "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
+      "multi_f3_desc": "Polepole shirika jipya linajisajili kupitia Clerk, tunatengeneza API key yao ya kwanza na kutuma barua pepe ya karibisha iliyobrand—hatua za mkono sifuri.",
+      "dx_category": "Uzoefu wa Mtaalamu wa Programu",
+      "dx_f1_title": "Ufunguo za API zilizohashwa",
+      "dx_f1_desc": "Ufunguo zilizohashwa kwa SHA-256 zenye onyesho la kiambishi awali (nbtr_live_…). Zinaonyeshwa kwa maandishi wazi mara moja tu wakati wa kuundwa — usalama bila shida.",
+      "dx_f2_title": "Middleware ya Idempotency",
+      "dx_f2_desc": "Pitisha header ya Idempotency-Key na ombi lolote la POST linakuwa salama kujaribu tena. Ina msingi wa Redis, kumbukumbu ya saa 24, inafuata rasimu ya IETF.",
+      "dx_f3_title": "API ya Multi-Protocol (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI kwa API za umma, oRPC kwa simu za frontend zenye usalama wa aina, tRPC kwa urahisiano wa T3-stack. Mikataba yote ya Zod na stack ya middleware zinashirikiwa na viashiria vyote. Wezesha kwa kila kiashiria kupitia config ya preset.",
+      "billing_category": "Kubidisha na Uwekezaji wa Fedha",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
-      "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "billing_f1_desc": "Chagua mtoa huduma wa malipo: Stripe kwa biashara za kimataifa, LemonSqueezy kwa wabunifu wa kujitegemea, Polar kwa OSS, au Alipay/WeChat Pay kwa soko la China. Malipo kwa bonyezo moja na mlango wa kubidisha mwenyewe.",
+      "billing_f2_title": "Kutekeleza kiasi kulingana na matumizi",
+      "billing_f2_desc": "Visembo vya Redis vya wakati halisi vinafuatilia simu za API na matumizi ya token kwa kila mwenyeji. Ombi linazuiliwa kwenye gateway wakati mipaka inafikiwa.",
+      "billing_f3_title": "Unganisho la mzunguko wa Webhook",
+      "billing_f3_desc": "Matukio ya usajili wa Stripe hubadilisha mipango ya shirika kwenye hifadhi yako ya data kupitia Inngest — hakuna kazi za cron, hakuna polling.",
+      "rel_category": "Uaminifu",
+      "rel_f1_title": "Kibali cha mzunguko + kujaribu tena",
+      "rel_f1_desc": "Gateway na huduma ya AI zinatumia kibali cha mzunguko cha CLOSED/OPEN/HALF_OPEN na kurudi nyuma kwa kasi na jitter — hakuna kushindwa kwa mfululizo.",
+      "rel_f2_title": "Furushi la barua zilizokufa",
+      "rel_f2_desc": "Watekelezaji wa matukio ambao wameisha jaribio 3 huingia kwenye DLQ. Wajaribu tena mmoja mmoja kutoka API ya msimamizi bila kuweka upya.",
+      "rel_f3_title": "Onyo la kiwango cha kuchoma SLO",
+      "rel_f3_desc": "Onyo la Google SRE-style la dirisha nyingi hufanya kazi kwa viwango vya kuchoma 14.4×, 6×, na 3× kabla bajeti yako ya makosa haisha.",
+      "sec_category": "Usalama",
+      "sec_f1_title": "Vichacheo vya CSP vya msingi wa nonce",
+      "sec_f1_desc": "Sera ya Usalama wa Yaliyomo ya Strict-dynamic yenye nonces za kila ombi zilizotengenezwa katika middleware ya Clerk — hakuna unsafe-inline popote.",
+      "sec_f2_title": "WAF ya ModSecurity",
+      "sec_f2_desc": "Seti ya Kanuni za Msingi za OWASP katika hali ya DetectionOnly kwenye kila ingress. Kuzuia kiwango kwa 30 RPS kwa utulivu wa burst kupitia alama za nginx.",
+      "sec_f3_title": "SBOM + asili ya SLSA",
+      "sec_f3_desc": "Kila toleo hutoa orodha ya vifaa vya programu ya CycloneDX na uthibitisho wa asili ya SLSA, zilizopakiwa kwenye GitHub Release.",
+      "obs_category": "Uangalizi",
+      "obs_f1_title": "Ufuatiliaji wa OpenTelemetry",
+      "obs_f1_desc": "Ufuatiliaji wa kutawanyika hutoka Next.js → Hono → huduma ndogo za Python kupitia OTLP. Inasafirishwa kwa Jaeger (dev) na Grafana Tempo (prod).",
+      "obs_f2_title": "Dashibodi za Grafana",
+      "obs_f2_desc": "Mwonekano wa jukwaa la paneli nyingi: upatikanaji wa SLO, bajeti ya makosa iliyobaki, upeo wa HPA, marejesho ya pod, na kuzuia CPU.",
+      "obs_f3_title": "Ufuatiliaji wa makosa ya Sentry",
+      "obs_f3_desc": "Makosa ya upande wa seva na upande wa mteja yaliyokusanywa na muktadha wa mshirika, kitambulisho cha ombi, na kitambulisho cha ufuatiliaji kwa uhusiano wa kati ya mifumo.",
+      "data_category": "Data & Uchambuzi",
+      "data_f1_title": "Hifadhi ya OLAP ya ClickHouse",
+      "data_f1_desc": "Matukio huingia kwenye ClickHouse kwa maswali ya uchambuzi ya haraka. dbt hubadilisha matukio ya asili kuwa vipimo vya ukuaji wa tabaka la dhahabu vilivyoonwa kwenye dashibodi.",
+      "data_f2_title": "Uchambuzi wa funnel",
+      "data_f2_desc": "Fuata usajili → uanzishaji → ubadilishaji kwa uhusiano wa kiwango cha kikundi. Mapato kwa mtumiaji mwenye nguvu kinakokotolewa kutoka tabaka la dhahabu.",
+      "data_f3_title": "Kafka / uingizaji wa matukio",
+      "data_f3_desc": "Uingizaji wa matukio kwa kasi kubwa kupitia Inngest hadi kwenye ClickHouse bronze, na uondoshaji wa kurudisha na uthibitisho wa schema kwenye kingo ya gateway.",
+      "infra_category": "Miundombinu",
+      "infra_f1_title": "GitOps na ArgoCD",
+      "infra_f1_desc": "Mabadiliko ya tawi kuu yanarekebishwa moja kwa moja kwenye cluster. Urekebishaji wa kiotomatiki unarudisha urekebishaji wa mkono wa kubectl. Majani ya usawazishaji yanazuia saa salama za kuweka.",
+      "infra_f2_title": "Uunganisho wa PgBouncer",
+      "infra_f2_desc": "PgBouncer wa hali ya muamala mbele ya Supabase hudumisha uunganisho 1,000 wa programu kwenye uunganisho 20 wa Postgres. HA na nakala 2.",
+      "infra_f3_title": "Kupanuka kwa usawa + wima",
+      "infra_f3_desc": "HPA inapanuka kulingana na CPU/kumbukumbu. VPA inafanya kazi katika hali ya Off ikitoa mapendekezo ya ukubwa sahihi. Vipimo maalum vya KEDA vinapangwa kwa v2."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 Inayojengwa",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "Tunatengeneza sasa uzoefu wa kipekee unaosimamiwa na wataalamu wa teknolojia kwa sehemu hii. Itafunguliwa pamoja na sasisho la mstari wa mifumo wa msingi unaofuata.",
+      "opc": "Maelezo ya kina ya jukwaa yanasimama. Fuata orodha ya mabadiliko na ramani ya njia kwa toleo la baadaye.",
+      "roadmap": "Kutoka msingi wa miundombinu hadi kiwango cha biashara — hatua za bidhaa yetu, alama za toleo, na maono ya ufadhili."
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "Rudi kwenye Hub"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "KTU BLOG",
+    "title": "Mawazo ya Uhandisi",
+    "subtitle": "Uchambuzi wa kina wa muundo wa SaaS, miundombinu ya AI, na uhandisi wa uzalishaji.",
+    "readMore": "Soma zaidi"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "MISITISHO ZINAZOPANUKA",
+    "title": "Msingi mmoja. Uwezekano usio na mwisho.",
+    "description": "{productName} inasaidia kizazi kipya cha bidhaa za SaaS katika masoko ya kimataifa.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "Uendeshaji wa Agentic",
+      "ip": "Matriksi ya IP Binafsi",
+      "multimodal": "SaaS ya AI ya Multimodal",
+      "enterprise": "Biashara ya Kisasa (CN)",
+      "export": "Usafirishaji wa Programu wa Kimataifa",
+      "design": "Injini ya Mfumo wa Muundo",
+      "edam": "Asha za Kidijitali za Biashara"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "Kituo cha Uendeshaji wa AI-Native",
+        "desc": "Endesha mifumo ya kazi ya agent, zana za ndani, na uso wa ujumuishaji kwenye msingi mmoja wa programu iliyodhibitiwa. Upanuzi unaongozwa na rejista, malango ya wafanya kazi, na mifumo ya runtime inayoweza kutumika tena hupunguza tofauti kadiri mfumo unavyokua.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "Rejista ya Zana & Uso wa Ujumuishaji",
+          "f2": "Malango ya Mfanyikazi & Konsole ya Ndani"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "Ukuaji wa IP Binafsi & Matriksi ya Porofoli",
+        "desc": "Kuanzisha uwepo wa kizazi cha kwanza wa darasa la dunia kwa blogi ya MDX yenye ubadilishaji wa juu, kurasa za porofoli na wasifu. Jarida la kuingiza, uchanganuzi, na SEO zinazojengwa ndani hahakikishia kuwa alama yako ya kibinafsi inaongezeka.",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
+          "f1": "Blogi ya MDX + Injini ya Jarida",
           "f2": "SEO & Social Graph Optimized"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "SaaS ya AI ya Multimodal ya Ubunifu",
+        "desc": "Toa bidhaa za SaaS za Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, na Text-to-Video kwa UI ya streaming inayongoza UX, urambazaji wa akili wa modeli, na kipimo cha matumizi.",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
-          "f2": "Model Router + Usage Metering"
+          "f1": "UI ya Multi-Agent Streaming",
+          "f2": "Router ya Model + Upimiaji wa Matumizi"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "Tovuti ya Kisasa ya Biashara (CN)",
+        "desc": "Imeandaliwa kwa hali za biashara za China — CDN ya ndani ya kasi sana, muunganisho wa mfumo wa WeChat, muundo wa responsive unaopendelea simu, na usimamizi wa sheria za ndani tangu mwanzo.",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "CDN ya Ndani + Usimamizi wa Sheria",
+          "f2": "Tayari kwa Mfumo wa WeChat"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "Ukurasa wa Lango wa Usafirishaji wa Programu Duniani",
+        "desc": "Imeundwa kwa ajili ya SaaS zinazokwenda kimataifa. Malipo ya Stripe ya sarafu nyingi, i18n ya next-intl inayoelekeza kiotomatiki katika lugha 7, usimamizi wa GDPR/CCPA, na maudhui yanayolenga eneo.",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "Malipo ya Kimataifa ya Sarafu Nyingi",
+          "f2": "Lugha 7 + Tayari kwa GDPR"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "Mfumo wa Kazi wa Muundo & Maktaba ya Vipengele",
+        "desc": "Muundo wa viwango 4 unaosimamiwa na tokens: Brand → Tokens → Theme → UI. Imejengwa juu ya Radix + tabaka la Motion la pamoja lenye oklch multi-theme, hati za Storybook, na upimaji wa mabadiliko ya kuonekana.",
         "features": {
-          "f1": "4-Layer Token Governance",
+          "f1": "Usimamizi wa Tokens wa Viwango 4",
           "f2": "oklch Multi-Theme + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "Usimamizi wa Amana za Kidijitali wa Biashara",
+        "desc": "Ziwa la data lililoandaliwa na topolojia ngumu za dashibodi zinazotumia miundo ya PostgreSQL inayoweza kupanuka na RBAC ya kina.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "Usalama wa Kirowi",
+          "f2": "Maswali Magumu",
+          "f3": "Usimamizi wa Majukumu"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
+    "badge": "MIFUMO YA MUONEKANO",
+    "headline": "Sanaa 4 za utawala wa muonekano.",
+    "subheadline": "Kutoka kwa vigezo vya brand hadi tokens za runtime hadi injini ya multi-theme hadi vipengele vilivyodhibitiwa — si shadcn tu na Tailwind.",
     "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
+    "flowBrandDesc": "Vigezo vya rangi, gradients, lugha ya mwendo",
     "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
+    "flowTokensDesc": "Vigezo vya CSS, viwango vya hatua 12, hali ya giza",
     "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
+    "flowThemeDesc": "oklch multi-theme, presets 6, color-mix()",
     "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
+    "flowUIDesc": "Vipengele, Storybook, Chromatic",
+    "card1Title": "Viwango vya Rangi vya Hatua 12",
+    "card1Desc": "Kiwango cha maana kilicholingana na Geist: mandhari (1-2), hali (3-5), mipaka (6-8), kujaza (9-10), maandishi (11-12).",
     "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
+    "card2Desc": "Presets 6 za theme zinazotumia oklch na color-mix() derivation. Display-P3 wide-gamut na sRGB fallback.",
     "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "card3Desc": "Chromatic inakamata mabadiliko ya kila pixel. Storybook inarekodi kila kipengele. Majaribio ya muundo yanazuia coverage ya story.",
+    "card4Title": "Utawala wa Token",
+    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, mipaka ya class ya rangi ya raw. Utafutaji wa drift ya brand katika CI.",
+    "card5Title": "Nyaraka za Interactive",
+    "card5Desc": "Tukio kamili la nyaraka za muundo linalotumia Fumadocs, lenye nyaraka za API za vipengele kwa lugha mbili (EN/ZH), maktaba za alama, mwongozo wa mifumo ya mpangilio, na mifano hai ya msimbo."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "Ukurasa Haukupatikana",
+    "desc": "Kiungo kinaweza kuwa kimepita au ukurasa umehamishwa.",
+    "home": "Rudi {brandName}",
+    "docs": "Fungua nyaraka"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "Tafuta toleo..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "Geuza menyu"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "Onyesha toleo kamili",
+      "copyLinkToRelease": "Nakili kiungo cha toleo",
+      "copyLink": "Nakili kiungo",
+      "openInNewTab": "Fungua kwenye kichupo kipya"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "Inakuja hivi karibuni"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Bure kwa <hl>Kujenga Juu</hl>",
+      "description": "{brandName}-Sailor hauguste chochote kutumia biashara — MIT kwenye npm, FSL-1.1-ALv2 kwenye hazina, inabadilika kuwa Apache-2.0 baada ya miaka miwili. Viwango vilivyolipwa vinauza usaidizi na ahadi za mkataba, si ruhusa."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "Bure Daima",
+        "title": "Jamii",
+        "subtitle": "Kila Mtu",
+        "description": "Ukubwa wowote wa timu, mapato yoyote. Bidhaa za biashara za chanzo kilichofungwa zimejumuishwa.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Msimbo mzima wa chanzo, paketi zote",
+          "closedSourceOk": "Matumizi ya biashara ya chanzo kilichofungwa — hakuna copyleft",
+          "noAttribution": "Hakuna usajili, hakuna uhusiano unaohitajika",
+          "communitySupport": "Usaidizi wa jamii — juhudi bora"
         },
-        "cta": "View on GitHub"
+        "cta": "Angalia kwenye GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "Kutoka {price}/mw",
+        "title": "Timu",
+        "subtitle": "Ujiwezi wa usaidizi",
+        "description": "Kwa timu zinazohitaji ahadi badala ya tumaini. Msimbo tayari ni bure.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Kituo cha usaidizi cha siri",
+          "firstResponse": "Jibu la kwanza la siku mbili za kazi, linalohakikishiwa",
+          "priorityTriage": "Uchambuzi wa hitilafu wa kipaumbele",
+          "upgradeHelp": "Msaada wa kuboresha na taarifa ya mabadiliko makubwa"
         },
-        "cta": "Get support"
+        "cta": "Pata usaidizi"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Kutoka $30,000/mwaka",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Inayokidhi mahitaji ya ununuzi",
+        "description": "Kwa mashirika ambayo uchunguzi wa kisheria, usalama, au ununuzi unahitaji mpaka anayesaini.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA ya jibu — masaa 4 ya kazi, saa 1 wakati wa kuzima uzalishaji",
+          "indemnity": "Ulinzi wa kisheria na ahadi ya patch za usalama",
+          "compliance": "DPA iliyosainiwa, kifurushi cha kufuata sheria, ahadi ya uendelezaji",
+          "trademark": "Haki za alama ya biashara na lebo nyeupe"
         },
-        "cta": "Contact sales"
+        "cta": "Wasiliana na uuzaji"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Maswali Yanayoulizwa Mara kwa Mara",
+      "description": "Toleo fupi: kutumia ni bure. Kulipa ni wakati unapotuhitaji kisheria kuhusika.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Kwa nini FSL badala ya MIT au AGPL?",
+          "a": "FSL inaruhusu matumizi yote isipokuwa kuuza badala ya Sailor mwenyewe, na kila toleo linakuwa Apache-2.0 miaka miwili baada ya kutolewa — ruhusa inayotolewa bila kufutwa mapema. AGPL ilizuia utumiaji katika uchunguzi wa kisheria wa makampuni bila kulinda chochote tulichohitaji kulinda."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Je, matumizi ya biashara ni bure kweli?",
+          "a": "Ndiyo. Hakuna ada, hakuna ufunguo wa leseni, hakuna usajili, hakuna kizingiti cha mapato au idadi ya wafanyakazi, hakuna kuzitaja. Tengeneza bidhaa ya chanzo kilichofungwa na uiuze."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Je, nini huchukuliwa kama matumizi yanayofanana?",
+          "a": "Kutoa Sailor mwenyewe — huduma ya Sailor iliyohifadhiwa, au msingi wa jukwaa linalofanana lililopakuliwa upya. Kutengeneza SaaS ya wima, zana ya ndani, au miradi ya wateja juu ya Sailor si matumizi yanayofanana. Ikiwa mfumo wako unahitaji, mkataba wa Enterprise unaweza kujumuisha msamaha ulioandikwa."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Je, viwango vilivyolipwa vinunua nini kweli?",
+          "a": "Ahadi za usaidizi, SLAs za jibu, ulinzi wa kisheria, nyaraka za kufuata sheria, na haki za alama ya biashara. Sio ruhusa ya kutumia programu — hiyo tayari ni yako."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Je, na michango ya chanzo huru?",
+          "a": "Michango zote zinahitaji CLA. Angalia CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Leseni — {brandName}",
+      "description": "Bure kwa matumizi ya biashara. MIT kwenye npm, FSL-1.1-ALv2 kwenye hazina, ikibadilishwa kuwa Apache-2.0."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "Leseni Bure la Binafsi",
+      "opcFree": "Leseni la Kampuni ya Mwenyeji Mmoja",
+      "startupCommercial": "Leseni ya Biashara ya Startup",
+      "enterprise": "Leseni ya Enterprise"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "Chagua chaguo...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "Mabadiliko — {brandName}",
+    "description": "Kila toleo, linatolewa kwa makini sana kwa kila kina.",
+    "versionTitleSuffix": "Mabadiliko ya {brandName}"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "Ramani ya Jukwaa — {brandName}",
+    "description": "Ramani ya msingi wa jukwaa linalodhibitiwa la {brandName}, runtime ya Harness, na njia ya kuboresha."
   },
   "blogMeta": {
     "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "description": "Uchambuzi wa uhandisi, masasisho ya bidhaa, na mifano bora ya SaaS kutoka timu ya {brandName}."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "Pata Leseni Yako — {brandName}",
+    "description": "Pata leseni ya {brandName} na upatikanaji wa jukwaa kwa dakika 2."
   },
   "landing": {
     "faq": {
       "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "title": "Maswali, yaliyojibiwa moja kwa moja",
+      "subtitle": "Kila kitu unachohitaji kujua kabla ya kutoa bidhaa.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "Ni nini hasa {productName}?",
+          "answer": "Sailor ni msingi wa SaaS wa Next.js + Tailwind v4 wenye maoni, unaohifadhiwa tayari na uhalalishaji, malipo, multi-tenancy, AI, mistari ya kusubiri, utafutaji, na barua pepe tayari imewekwa. Unakopa, unaweka mipangilio ya watoa huduma, na unatoa — kawaida ndani ya wiki moja."
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "Sailor imejengwa kwa nani?",
+          "answer": "Wanaharakati na wahandisi wa bidhaa wanaotaka kutumia muda wao kwenye tofauti — si kujenga tena mifumo ile ile ya uhalalishaji/malipo/tenancy mara ya tano."
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "Je, ni bure au inalipwa?",
+          "answer": "Chanzo kamili kinatolewa chini ya AGPL-3.0 — bure kwa miradi ya kibinafsi, zana za ndani, na kazi za chanzo wazi zinazofaa na AGPL. Leseni ya biashara inafungua haki ya kutoa Sailor katika SaaS ya kibinafsi isiyo na chanzo wazi. Kila mpango unajumuisha seti kamili ya vipengele (uhalalishaji, malipo, multi-tenancy, AI, ukaguzi); viwango vinatofautiana katika masharti ya leseni na SLA ya msaada, si katika vipengele."
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "Je, inafanya kazi China?",
+          "answer": "Ndiyo. Tunatoa mipangilio ya miundombinu sambamba (CDN inayofaa na Aliyun, domain zinazofaa na ICP, Penpot wa hiari badala ya Figma) ili msingi huo huo wa msimbo utolewe kwa usafi ndani ya Great Firewall."
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "Wapi naweza kuweka?",
+          "answer": "Popote Node 22+ inafanya kazi. Tovuti ya masoko inatolewa kwa Vercel; dashibodi, gateway, na huduma za Python zinafanya kazi kwenye Docker / PM2 (tunazifanya kazi kwenye Aliyun ECS leo, na manifesiti kamili ya Kubernetes chini ya infra/iac/k8s/ kwa vikundi). Wateja wa Enterprise pia wanaweka ndani ya VPC zao wenyewe."
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "Je, usalama unashughulikiwa vipi?",
+          "answer": "Ufungaji wa envelope wa ngazi ya programu kwa siri (@nebutra/vault), Postgres RLS kwa utenganisho wa tenanti, RBAC/ABAC kupitia CASL au OpenFGA (@nebutra/permissions), alama za kati-huduma zilizosainiwa na HMAC, webhooks za nje zilizosainiwa, na mchakato wa ukaguzi unaofaa na SOC 2 (@nebutra/audit) unaojumuishwa katika kila mpango. Pro na Enterprise zinaongeza msaada wa uthibitisho wa SOC 2, msaada maalum wa matukio, na uhifadhi mrefu wa logi za ukaguzi."
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "Msaada gani ninapata?",
+          "answer": "Wateja wa bure wanapata Discord ya jamii + GitHub Issues. Pro inaongeza barua pepe ya kipaumbele na SLA ya jibu la siku 1 ya biashara. Enterprise inapata chaneli maalum ya Slack na mhandisi wa kuanzisha."
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "Je, naweza kuleta mtoa huduma wangu mwenyewe?",
+          "answer": "Ndiyo. Kila muunganisho (uhalalishaji, mistari ya kusubiri, utafutaji, barua pepe, malipo, hifadhi, bili) haitegemei mtoa huduma. Kifekete katika kila paketi kinachagua adapter sahihi kutoka kwenye kigezo kimoja cha mazingira — ubadilishe Clerk kwa Better Auth, NextAuth, au Supabase Auth, QStash kwa BullMQ, Resend kwa SES, Stripe kwa Polar / LemonSqueezy / ChinaPay — bila kugusa msimbo wa programu."
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "Je, ni nini stack ya teknolojia?",
+          "answer": "Next.js 16 (App Router) juu ya React 19, TypeScript 5.9, Tailwind v4, Prisma 7 juu ya Postgres (ikiwa na pgvector + RLS), Hono kwa gateway ya BFF, FastAPI kwa huduma za ML/zevu, na maktaba ya vipengele iliyochaguliwa juu ya Radix, vigezo vya msingi vya UI ya {brandName}, na tabaka la Motion la pamoja. Vipengele vya AI vinapita kupitia Vercel AI SDK kwa uhamishaji wa watoa huduma (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "Ni leseni gani?",
+          "answer": "AGPL-3.0 kwa Utepekelezo wa Biashara. Bure kwa matumizi binafsi, zana za ndani, na OSS zinazofaa na AGPL. Leseni ya biashara inayolipwa inafungua haki ya kutuma Sailor kama ilivyo katika SaaS ya kibinafsi. Chanzo kamili kinajumuishwa kwenye kila mpango."
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "Je, ninahitaji kulipa kwa masasisho?",
+          "answer": "Hapana. Masasisho ya chanzo yanajumuishwa na kila leseni ya biashara — chukua kutoka main wakati wowote unataka na upate tena fork yako. Kipindi kilicholipwa ni haki ya kutumia Sailor katika uzalishaji wa biashara, si haki ya kupokea msimbo. Kila toleo la kichwa hutoa CHANGELOG na mwongozo wa kuboresha kwa mabadiliko yoyote yanayovunja."
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "Kwa nini Turborepo badala ya programu ya kawaida ya Next.js?",
+          "answer": "Sailor ni programu 10 + pakiti 104 za pamoja chini ya packages/*/* + njia 4 za backend (Hono gateway, FastAPI/Python, Go, Rust) — zaidi sana ya hatua ambapo programu moja kubwa ya Next.js inabaki kuendeshwa kwa urahisi. Turborepo inatupelekea kujenga kwa athari tu, uwekaji wa mbali wa wazi, na chanzo kimoja cha ukweli kwa vigezo vya muundo, uthibitisho, malipo, na ufuatiliaji wa pamoja — bila kuwashawishi timu zote kwenye mchakato mmoja wa Next.js."
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "Jinsi multi-tenancy inavyoshughulikiwa?",
+          "answer": "Tabaka mbili. Muktadha wa mtumiaji wa ombi kupitia @nebutra/tenant (AsyncLocalStorage inasambaza shirika la sasa kupitia kila simu ya seva, ikiwa ni pamoja na maswali ya DB na webhooks za nje), na utenganisho unaodhibitiwa na hifadhi ya data kupitia sera za Row-Level Security za Postgres (infra/data/database/policies/rls.sql) zilizounganishwa na app.current_tenant_id ya kikao. Muunganisho wa jukumu la huduma unapita RLS ndani tu ya huduma za ndani zinazowezekana; njia zote zinazowasiliana na mtumiaji zinapita kupitia mteja wa muktadha wa mtumiaji."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "Je, ninaweza kubadilisha Clerk kwa mtoa huduma mwingine wa uthibitisho?",
+          "answer": "Ndiyo. @nebutra/auth inatoa adapter za darasa la kwanza kwa Clerk, Better Auth, NextAuth (Auth.js v5), na Supabase Auth. Badilisha kupitia kigezo cha mazingira AUTH_PROVIDER au uchague wakati wa scaffold na create-sailor --auth=... — uso wa seva, React, na middleware unabaki sawa bila kujali mtoa huduma. Kuongeza adapter ya tano kunamaanisha kutumia interface moja (~80 LOC); hakuna kitu katika msimbo wa mazingira kinachounganishwa na mtoa huduma maalum."
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "Inapendwa na wabunifu",
+      "title": "Majukwa ya wanaofanya kazi baada ya kutuma na Sailor",
+      "subtitle": "Hadithi za wateja kutoka kwenye kikundi chetu cha beta zinakuja hivi karibuni — uwe miongoni mwa wa kwanza."
     },
     "comparison": {
       "badge": "Linganisha viwango",
@@ -1735,41 +1735,41 @@
       }
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "Imejengwa juu ya stack unayoweza kuamini",
+      "logosLabel": "Washirika wa ujumuishaji",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "Watoa huduma wa AI wanaosaidiwa"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "pakiti za monorepo"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "lugha za i18n zinazopatikana moja kwa moja"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "Nambari ya ICP",
+      "publicSecurity": "Usalama wa umma"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "Rekodi ya ICP",
+    "publicSecurity": "Rekodi ya usalama wa umma"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "Nchi na lugha",
+    "description": "Chagua nchi na lugha kwa tovuti ya masoko.",
+    "triggerAria": "Chagua nchi na lugha",
+    "searchPlaceholder": "Tafuta nchi…",
+    "plannedHint": "Kiolesura kinakwenda kwa Kiingereza hadi lugha hii itafikishwa",
+    "noResults": "Hakuna nchi zinazolingana",
+    "menuAria": "Nchi na lugha"
   }
 }

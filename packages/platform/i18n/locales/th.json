@@ -70,27 +70,27 @@
     "system": "ตามระบบ"
   },
   "LocaleSwitcher": {
-    "label": "Language",
-    "ariaLabel": "Change language",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "label": "ภาษา",
+    "ariaLabel": "เปลี่ยนภาษา",
+    "searchPlaceholder": "ค้นหาภาษา…",
+    "noResults": "ไม่พบภาษาที่ตรงกัน",
+    "menuAria": "เลือกภาษา"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "หมายเลขจดทะเบียน ICP",
+      "publicSecurity": "การจดทะเบียนความมั่นคงสาธารณะ"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "เข้าสู่ระบบด้วย WeChat",
+      "notConfigured": "ยังไม่มีการตั้งค่าการเข้าสู่ระบบ WeChat"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "ตั้งค่าพื้นที่ทำงานของคุณ",
+    "subtitle": "สามขั้นตอนง่ายๆ ก็พร้อมใช้งาน",
     "steps": {
-      "workspace": "Workspace",
+      "workspace": "พื้นที่ทำงาน",
       "invite": "เชิญทีม",
       "plan": "เลือกแพ็กเกจ"
     },
@@ -304,13 +304,13 @@
         "notLinked": "ไม่ได้เชื่อมต่อ"
       },
       "passkeys": {
-        "title": "Passkeys",
+        "title": "รหัสผ่านแบบไม่ใช้รหัสผ่าน",
         "description": "ใช้ข้อมูลประจำตัวที่ผูกกับอุปกรณ์เพื่อเข้าสู่ระบบที่ต้านทานการฟิชชิง",
         "empty": "ยังไม่ได้ลงทะเบียน passkey",
         "addPasskey": "เพิ่ม passkey",
         "cancelAdd": "ยกเลิก",
         "cancelled": "การตั้งค่า passkey ถูกยกเลิก ไม่มีการเปลี่ยนแปลง",
-        "defaultName": "Passkey {number}",
+        "defaultName": "รหัสผ่านแบบไม่ใช้รหัสผ่าน {number}",
         "nameHelp": "ตั้งชื่อ passkey นี้ให้จดจำได้ง่ายก่อนที่เบราว์เซอร์จะขอการยืนยัน",
         "nameLabel": "ชื่อ passkey",
         "rename": "เปลี่ยนชื่อ",
@@ -392,7 +392,7 @@
       "signUpFailed": "สมัครไม่สำเร็จ"
     },
     "passkeys": {
-      "title": "Passkeys",
+      "title": "รหัสผ่านแบบไม่ใช้รหัสผ่าน",
       "description": "ใช้ Face ID, Touch ID, Windows Hello หรือ security key แทนรหัสผ่าน แต่ละอุปกรณ์จะมี passkey ของตัวเอง",
       "addButton": "เพิ่มพาสคีย์",
       "adding": "กำลังตั้งค่า…",
@@ -460,7 +460,7 @@
       "description": "เซสชันของคุณพร้อมใช้งาน เรากำลังเปิด workspace ของ Nebutra และรักษาการส่งต่ออย่างปลอดภัยจากขั้นตอนการยืนยันตัวตน",
       "session": "เซสชัน",
       "verified": "ยืนยันแล้ว",
-      "workspace": "Workspace",
+      "workspace": "พื้นที่ทำงาน",
       "preparing": "กำลังเตรียม",
       "redirecting": "กำลังเข้าสู่ workspace ใน {seconds} วินาที",
       "secureHandoff": "ส่งต่ออย่างปลอดภัย",
@@ -599,7 +599,7 @@
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
+      "title": "คีย์ API",
       "description": "สร้างและจัดการ API keys สำหรับการเข้าถึง Nebutra แบบโปรแกรม",
       "createButton": "สร้าง API key",
       "noPermission": "คุณไม่มีสิทธิ์ในการดู API keys",

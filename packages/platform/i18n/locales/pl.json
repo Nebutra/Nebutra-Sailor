@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Język",
     "ariaLabel": "Zmień język",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Szukaj języków…",
+    "noResults": "Brak pasujących języków",
+    "menuAria": "Wybierz język"
   },
   "compliance": {
     "icp": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, kolejki i inne."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Otwórz Sailor AI",
           "description": "Wypróbuj tryb czatu, danych lub przepływu pracy."
         }
       }

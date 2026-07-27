@@ -56,7 +56,7 @@
   },
   "Common": {
     "hello": "Hej Värld",
-    "dashboard": "Dashboard",
+    "dashboard": "Instrumentpanel",
     "actions": {
       "continue": "Fortsätt",
       "confirm": "Bekräfta",
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Språk",
     "ariaLabel": "Byt språk",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Sök språk…",
+    "noResults": "Inga språk matchar",
+    "menuAria": "Välj språk"
   },
   "compliance": {
     "icp": {
@@ -591,7 +591,7 @@
       "errorNotAvailableDetail": "Denna inbjudan har redan besvarats och är inte längre aktiv.",
       "role": {
         "owner": "Ägare",
-        "admin": "Admin",
+        "admin": "Administratör",
         "member": "Medlem",
         "viewer": "Åskådare"
       }
@@ -937,7 +937,7 @@
     "placeholder": "Skriv ett kommando eller sök…",
     "empty": "Inga resultat hittades.",
     "sections": {
-      "navigation": "Navigation",
+      "navigation": "Navigering",
       "actions": "Åtgärder",
       "settings": "Inställningar",
       "account": "Konto",
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, köer och mer."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Öppna Sailor AI",
           "description": "Testa chatt-, data- eller arbetsflödesläge."
         }
       }

@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Bahasa",
     "ariaLabel": "Tukar bahasa",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Cari bahasa…",
+    "noResults": "Tiada bahasa sepadan",
+    "menuAria": "Pilih bahasa"
   },
   "compliance": {
     "icp": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, queues, dan lain-lain."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Buka Sailor AI",
           "description": "Cuba mod chat, data, atau workflow."
         }
       }

@@ -1,117 +1,117 @@
 {
   "auth": {
     "signin": {
-      "title": "Welcome to Soul",
-      "subtitle": "Sign in to chat with Tseka's AI agent",
-      "github": "Continue with GitHub",
-      "google": "Continue with Google",
-      "linuxdo": "Continue with Linux DO",
-      "back": "Back to Home"
+      "title": "Chào mừng đến với Soul",
+      "subtitle": "Đăng nhập để trò chuyện với AI agent của Tseka",
+      "github": "Tiếp tục với GitHub",
+      "google": "Tiếp tục với Google",
+      "linuxdo": "Tiếp tục với Linux DO",
+      "back": "Quay lại Trang chủ"
     },
     "error": {
-      "title": "Authentication Error",
-      "subtitle": "We couldn't sign you in.",
-      "configuration": "The authentication provider is not configured properly. If you are the administrator, please check your environment variables (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, etc.) in your Vercel project settings.",
-      "access_denied": "Access was denied to your account.",
-      "default": "An unexpected error occurred during authentication.",
-      "try_again": "Try Again",
-      "back": "Back to Home"
+      "title": "Lỗi Xác thực",
+      "subtitle": "Không thể đăng nhập cho bạn.",
+      "configuration": "Nhà cung cấp xác thực chưa được cấu hình đúng. Nếu bạn là quản trị viên, vui lòng kiểm tra các biến môi trường (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, v.v.) trong cài đặt dự án Vercel của bạn.",
+      "access_denied": "Quyền truy cập bị từ chối cho tài khoản của bạn.",
+      "default": "Đã xảy ra lỗi không mong muốn trong quá trình xác thực.",
+      "try_again": "Thử lại",
+      "back": "Quay lại Trang chủ"
     }
   },
   "nav": {
-    "work": "Work",
-    "thinking": "Thinking",
-    "now": "Now",
-    "about": "About",
-    "links": "Links",
-    "soul": "Soul",
-    "uses": "Uses",
-    "guestbook": "Guestbook",
-    "contact": "Let's talk"
+    "work": "Dự án",
+    "thinking": "Góc suy nghĩ",
+    "now": "Hiện tại",
+    "about": "Giới thiệu",
+    "links": "Liên kết",
+    "soul": "Tinh thần",
+    "uses": "Công cụ",
+    "guestbook": "Sổ khách",
+    "contact": "Liên hệ"
   },
   "soul": {
-    "page_label": "/ Digital consciousness",
-    "page_headline": "Tseka's Soul",
-    "page_desc": "A digital reflection of Tseka's mind. Ask anything — about his projects, philosophy, or how he sees the world.",
-    "status": "Online",
-    "greeting_title": "Ask me anything",
-    "greeting_desc": "I'm a digital reflection of Tseka's mind — his projects, philosophy, and how he sees the world.",
-    "starter1": "What are you currently building?",
-    "starter2": "What's your \"Vibe Business\" philosophy?",
-    "starter3": "How do you think about AI agents?",
-    "placeholder": "Ask Tseka's Soul...",
+    "page_label": "/ Nhận thức kỹ thuật số",
+    "page_headline": "Soul của Tseka",
+    "page_desc": "Một phản chiếu kỹ thuật số của tâm trí Tseka. Hỏi bất cứ điều gì — về các dự án, triết lý, hoặc cách anh ấy nhìn thế giới.",
+    "status": "Trực tuyến",
+    "greeting_title": "Hỏi tôi bất cứ điều gì",
+    "greeting_desc": "Tôi là một phản chiếu kỹ thuật số của tâm trí Tseka — các dự án, triết lý, và cách anh ấy nhìn thế giới.",
+    "starter1": "Bạn đang xây dựng gì hiện nay?",
+    "starter2": "Triết lý \"Vibe Business\" của bạn là gì?",
+    "starter3": "Bạn nghĩ gì về AI agents?",
+    "placeholder": "Hỏi Soul của Tseka...",
     "powered_by": "Powered by Claude Haiku · Future: OpenClaw",
-    "error": "Something went wrong. Please try again.",
-    "auth_required": "Sign in to chat with Tseka's Soul",
-    "auth_button": "Sign in to chat",
+    "error": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "auth_required": "Đăng nhập để trò chuyện với Soul của Tseka",
+    "auth_button": "Đăng nhập để trò chuyện",
     "metadata_title": "Soul — Tseka Luk",
-    "metadata_desc": "An AI agent that thinks and responds like Tseka Luk."
+    "metadata_desc": "Một AI agent suy nghĩ và phản hồi như Tseka Luk."
   },
   "hero": {
-    "status": "Available for select collaborations",
-    "greeting": "Hi, I'm Tseka",
-    "tagline": "AI-Native Builder",
-    "description": "I design and build AI-powered products from zero to one. Focused on making complex technology feel simple, useful, and beautiful—shipping fast and iterating in public.",
-    "cta_primary": "See my work",
-    "cta_secondary": "What I'm doing now",
+    "status": "Mở cửa cho một số hợp tác",
+    "greeting": "Chào, mình là Tseka",
+    "tagline": "Người xây dựng AI-Native",
+    "description": "Mình thiết kế và xây dựng các sản phẩm AI từ con số 0. Tập trung vào việc làm cho công nghệ phức tạp trở nên đơn giản, hữu ích và đẹp mắt — phát hành nhanh và lặp lại công khai.",
+    "cta_primary": "Xem công việc của mình",
+    "cta_secondary": "Mình đang làm gì",
     "pills": {
-      "role": "Full-stack AI Engineer",
+      "role": "Kỹ sư AI Full-stack",
       "stack": "TypeScript + Python",
-      "location": "Wuxi, China",
-      "mode": "Building in Public"
+      "location": "Wuxi, Trung Quốc",
+      "mode": "Xây dựng công khai"
     },
-    "social_proof": "Trusted by collaborators across AI, design & engineering"
+    "social_proof": "Được tin tưởng bởi các cộng tác viên trong AI, thiết kế & kỹ thuật"
   },
   "focus": {
-    "label": "Mission",
-    "headline": "My focus is on robust engineering, AI-native products, and scalable systems to",
-    "headline_muted": "deliver real-world impact.",
+    "label": "Sứ mệnh",
+    "headline": "Tôi tập trung vào kỹ thuật vững chắc, sản phẩm AI-native và hệ thống có thể mở rộng để",
+    "headline_muted": "tạo ra tác động thực tế.",
     "pills": {
       "ai_agents": "AI Agents",
       "ux_engineering": "UX Engineering",
-      "fullstack_architecture": "Full-stack Architecture",
-      "systems_design": "Systems Design",
-      "open_source": "Open Source",
-      "product_strategy": "Product Strategy"
+      "fullstack_architecture": "Kiến trúc Full-stack",
+      "systems_design": "Thiết kế Hệ thống",
+      "open_source": "Mã nguồn mở",
+      "product_strategy": "Chiến lược Sản phẩm"
     }
   },
   "process": {
-    "label": "/ How I work",
-    "headline": "Path to shipped features",
-    "step1_title": "Architecture",
-    "step1_desc": "Mapping out the system constraints, data flow, and UI surface. Deciding exactly what to build and what not to build.",
-    "step2_title": "Implementation",
-    "step2_desc": "Deep focus engineering. Translating the mental model into solid Next.js and Python code with robust AI integrations.",
-    "step3_title": "Refinement",
-    "step3_desc": "Polishing the sharp edges. Adding micro-animations, optimizing performance, and listening closely to telemetry and user feedback."
+    "label": "/ Cách tôi làm việc",
+    "headline": "Lộ trình đến tính năng đã phát hành",
+    "step1_title": "Kiến trúc",
+    "step1_desc": "Lập bản đồ các ràng buộc hệ thống, luồng dữ liệu và bề mặt UI. Quyết định chính xác những gì cần xây dựng và những gì không nên xây dựng.",
+    "step2_title": "Triển khai",
+    "step2_desc": "Lập trình tập trung sâu. Chuyển mô hình tư duy thành mã Next.js và Python vững chắc với các tích hợp AI mạnh mẽ.",
+    "step3_title": "Tinh chỉnh",
+    "step3_desc": "Mài giũa các cạnh sắc. Thêm micro-animation, tối ưu hóa hiệu suất và lắng nghe sát sao telemetry cùng phản hồi người dùng."
   },
   "works": {
-    "label": "/ Selected Works",
-    "headline": "Shipped to production",
-    "view_all": "View all {count} projects"
+    "label": "/ Các Dự Án Nổi Bật",
+    "headline": "Đã Triển Khai Thực Tế",
+    "view_all": "Xem tất cả {count} dự án"
   },
   "now_preview": {
-    "headline": "What I'm doing <em>now</em>",
-    "view_all": "Full log"
+    "headline": "Việc tôi đang làm <em>hiện tại</em>",
+    "view_all": "Xem toàn bộ nhật ký"
   },
   "now": {
     "sections": {
-      "building": "Building",
-      "shipped": "Shipped",
-      "thinking": "Thinking",
-      "reading": "Reading"
+      "building": "Đang xây dựng",
+      "shipped": "Đã phát hành",
+      "thinking": "Đang suy nghĩ",
+      "reading": "Đang đọc"
     },
-    "no_updates": "No updates yet.",
-    "last_updated": "Last updated:"
+    "no_updates": "Chưa có cập nhật nào.",
+    "last_updated": "Cập nhật lần cuối:"
   },
   "pricing": {
-    "label": "/ Engagement Models",
-    "headline": "Choose how we work together",
-    "description": "Not a Swiss army knife — a studio that delivers every domain to professional standards.",
-    "recommended": "Recommended",
-    "availability": "Accepting new projects · ~2 weeks to start",
-    "capabilities_label": "/ Capabilities",
-    "radar_title": "Capability",
+    "label": "/ Mô hình hợp tác",
+    "headline": "Chọn cách chúng ta làm việc cùng nhau",
+    "description": "Không phải dao quân đội Thụy Sĩ — một studio thực hiện mọi lĩnh vực theo tiêu chuẩn chuyên nghiệp.",
+    "recommended": "Được khuyến nghị",
+    "availability": "Đang nhận dự án mới · ~2 tuần để bắt đầu",
+    "capabilities_label": "/ Năng lực",
+    "radar_title": "Năng lực",
     "stats": [
       {
         "value": 50,
@@ -137,65 +137,49 @@
     "tiers": {
       "chat": {
         "name": "Chat",
-        "price": "Free",
-        "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
-        "cta": "Talk to my Soul",
+        "price": "Miễn phí",
+        "description": "Cuộc gọi nhanh 15 phút",
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
+        "cta": "Nói chuyện với Soul của tôi",
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "Cà phê",
         "price": "¥18",
-        "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
-        "cta": "Buy me a coffee",
+        "description": "Giá trị một tách cà phê",
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
+        "cta": "Mời tôi một cà phê",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
       "hire": {
-        "name": "Hire Me",
-        "price": "Per project",
-        "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
-        "cta": "Extend an Olive Branch",
+        "name": "Thuê tôi",
+        "price": "Theo dự án",
+        "description": "Hợp tác chuyên nghiệp toàn diện",
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
+        "cta": "Gửi lời mời hợp tác",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
       "partner": {
-        "name": "Dream Partner",
-        "price": "Grow together",
-        "description": "Long-term co-creation",
+        "name": "Đối tác Dream",
+        "price": "Cùng nhau phát triển",
+        "description": "Đồng sáng tạo dài hạn",
         "features": [
           "Everything above",
           "Product co-creation",
           "Growth hacking system",
           "Equity / revenue share"
         ],
-        "cta": "Share your vision",
+        "cta": "Chia sẻ tầm nhìn của bạn",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
     },
     "services": {
       "engineering": {
-        "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "name": "Kỹ thuật sản phẩm",
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
-        "name": "AI & Automation",
+        "name": "AI & Tự động hóa",
         "items": [
           "AI Agent architecture",
           "OpenClaw workflows",
@@ -204,14 +188,11 @@
         ]
       },
       "design": {
-        "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "name": "Thiết kế & Sản phẩm",
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
-        "name": "Growth & Global",
+        "name": "Tăng trưởng & Toàn cầu",
         "items": [
           "Marketing strategy",
           "Growth hacking",
@@ -221,315 +202,307 @@
         ]
       },
       "consulting": {
-        "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "name": "Tư vấn",
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
-        "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "name": "VC & Chiến lược",
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
   "constellation": {
     "label": "/ Constellation",
-    "headline": "The people who know",
-    "description": "They've worked with him. They've seen the work. Here's what they think.",
-    "cta": "Leave a fragment",
-    "cta_hint": "Be honest.",
-    "empty": "Nothing here yet."
+    "headline": "Những người đã từng làm việc",
+    "description": "Họ đã từng làm việc với anh ấy. Họ đã chứng kiến công việc. Đây là những gì họ nghĩ.",
+    "cta": "Để lại một mảnh",
+    "cta_hint": "Hãy trung thực.",
+    "empty": "Chưa có gì ở đây."
   },
   "cta": {
-    "headline": "Let's build something",
-    "description": "I work with teams and founders who see digital presence and AI not just as a duty, but as a strategic growth driver.",
-    "email": "Start a project",
-    "calendar": "Book a call"
+    "headline": "Hãy cùng xây dựng điều gì đó",
+    "description": "Tôi hợp tác với các đội ngũ và nhà sáng lập coi sự hiện diện kỹ thuật số và AI không chỉ là nghĩa vụ, mà còn là động lực tăng trưởng chiến lược.",
+    "email": "Bắt đầu dự án",
+    "calendar": "Đặt lịch cuộc gọi"
   },
   "footer": {
-    "tagline": "Building what doesn't exist yet.",
-    "status_available": "Available for select collaborations",
-    "location": "Wuxi, China",
-    "nav_work": "Work",
-    "nav_thinking": "Thinking",
-    "nav_now": "Now",
-    "nav_about": "About",
-    "nav_soul": "Soul",
-    "nav_links": "Links",
-    "email_cta": "Start a project →",
-    "built_with": "Built with",
-    "back_to_top": "↑ Back to top",
+    "tagline": "Xây dựng những điều chưa tồn tại.",
+    "status_available": "Sẵn sàng cho các hợp tác chọn lọc",
+    "location": "Wuxi, Trung Quốc",
+    "nav_work": "Dự án",
+    "nav_thinking": "Suy nghĩ",
+    "nav_now": "Hiện tại",
+    "nav_about": "Giới thiệu",
+    "nav_soul": "Tinh thần",
+    "nav_links": "Liên kết",
+    "email_cta": "Bắt đầu dự án →",
+    "built_with": "Xây dựng bằng",
+    "back_to_top": "↑ Lên đầu trang",
     "rss_label": "RSS Feed",
     "github_label": "GitHub",
     "x_label": "X (Twitter)",
     "linkedin_label": "LinkedIn",
     "wechat_label": "WeChat",
-    "wechat_copied": "WeChat ID copied!"
+    "wechat_copied": "Đã sao chép ID WeChat!"
   },
   "pages": {
     "home": {
-      "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_title": "Tseka Luk — Người xây dựng AI-Native",
+      "metadata_desc": "CEO & Người xây dựng AI-Native tại Nebutra Intelligence. Xây dựng các hệ thống thông minh, không chỉ là sản phẩm."
     },
     "work": {
-      "label": "/ 19 shipped projects",
-      "headline": "Things I've built",
-      "description": "Shipped products, research tools, and AI experiments. Most are real projects with real users.",
-      "metadata_title": "Work — Tseka Luk",
-      "metadata_desc": "Shipped products, research tools, and AI experiments.",
-      "back": "All Projects",
-      "source_code": "Source Code",
-      "live_demo": "Live Demo"
+      "label": "/ 19 dự án đã phát hành",
+      "headline": "Những thứ tôi đã xây dựng",
+      "description": "Các sản phẩm, công cụ nghiên cứu và thí nghiệm AI đã phát hành. Hầu hết là dự án thực tế với người dùng thực tế.",
+      "metadata_title": "Dự án — Tseka Luk",
+      "metadata_desc": "Các sản phẩm, công cụ nghiên cứu và thí nghiệm AI đã phát hành.",
+      "back": "Tất cả dự án",
+      "source_code": "Mã nguồn",
+      "live_demo": "Demo trực tiếp"
     },
     "thinking": {
-      "label": "/ Essays & ideas",
-      "headline": "Thinking",
-      "metadata_title": "Thinking — Tseka Luk",
-      "metadata_desc": "Essays on building, growth, and AI.",
-      "empty_title": "Essays coming soon.",
-      "empty_subtitle": "In the meantime, ask <link>my Soul</link>."
+      "label": "/ Bài luận & ý tưởng",
+      "headline": "Suy nghĩ",
+      "metadata_title": "Suy nghĩ — Tseka Luk",
+      "metadata_desc": "Các bài luận về xây dựng, phát triển và AI.",
+      "empty_title": "Các bài luận sẽ sớm ra mắt.",
+      "empty_subtitle": "Trong lúc chờ đợi, hãy hỏi <link>linh hồn của tôi</link>."
     },
     "now": {
-      "label": "/ Updated daily",
-      "headline": "Now",
-      "description": "This page is updated daily by an AI agent that reviews my work and distills the highlights. Think of it as a living changelog for what I'm building, thinking, and shipping.",
-      "metadata_title": "Now — Tseka Luk",
-      "metadata_desc": "What I'm currently working on, thinking about, and shipping."
+      "label": "/ Cập nhật hàng ngày",
+      "headline": "Hiện tại",
+      "description": "Trang này được cập nhật hàng ngày bởi một AI agent xem xét công việc của tôi và tóm tắt những điểm nổi bật. Hãy nghĩ về nó như một nhật ký thay đổi sống động cho những gì tôi đang xây dựng, suy nghĩ và phát hành.",
+      "metadata_title": "Hiện tại — Tseka Luk",
+      "metadata_desc": "Những gì tôi đang làm, suy nghĩ và phát hành hiện tại."
     },
     "about": {
-      "metadata_title": "About — Tseka Luk",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-      "label": "/ About",
-      "headline": "Building intelligent systems,",
-      "headline_muted": "not just products.",
-      "bio_1": "I'm Tseka Luk, CEO of Nebutra Intelligence, based in Wuxi, China. I build AI-native products designed for global markets—tools that are not just technically sophisticated but genuinely useful and beautifully simple.",
-      "bio_2": "My philosophy is what I call Vibe Business: build with taste, ship with speed, and let the product speak louder than any pitch deck. Every project starts from a real itch, and every feature earns its place.",
-      "bio_3": "I think in systems, obsess over details, and believe the best way to predict the future is to build it—one commit at a time.",
+      "metadata_title": "Giới thiệu — Tseka Luk",
+      "metadata_desc": "CEO & Nhà xây dựng AI-Native tại Nebutra Intelligence. Xây dựng hệ thống thông minh, không chỉ là sản phẩm.",
+      "label": "/ Giới thiệu",
+      "headline": "Xây dựng hệ thống thông minh,",
+      "headline_muted": "không chỉ là sản phẩm.",
+      "bio_1": "Tôi là Tseka Luk, CEO của Nebutra Intelligence, tại Wuxi, Trung Quốc. Tôi xây dựng các sản phẩm AI-native được thiết kế cho thị trường toàn cầu—những công cụ không chỉ tinh vi về mặt kỹ thuật mà còn thực sự hữu ích và đơn giản một cách tinh tế.",
+      "bio_2": "Triết lý của tôi là thứ tôi gọi là Vibe Business: xây dựng với gu thẩm mỹ, phát hành với tốc độ, và để sản phẩm nói lên điều lớn lao hơn bất kỳ bản pitch deck nào. Mỗi dự án đều bắt đầu từ một nhu cầu thực tế, và mỗi tính năng đều xứng đáng có vị trí của mình.",
+      "bio_3": "Tôi tư duy theo hệ thống, ám ảnh bởi chi tiết, và tin rằng cách tốt nhất để dự đoán tương lai là xây dựng nó—một commit một lúc.",
       "photo_tag": "INTP · 4w5",
-      "photo_location": "Wuxi, China",
-      "stat_projects": "Projects",
-      "stat_awards": "Awards",
-      "stat_first_prizes": "First Prizes",
-      "stat_certs": "Certs",
-      "resume_download": "Download Resume",
-      "journey_label": "/ Journey",
-      "journey_2020": "Self-taught web development & digital marketing",
-      "journey_2022": "BSc in Information & Computing Science and BEng in Computer Science & Technology, Jiangsu Ocean University",
-      "journey_2023": "AI-native engineering, competitive programming",
-      "journey_2024": "Founded Wuxi Nebutra Intelligence Technology",
-      "journey_2025": "CEO, Nebutra Intelligence — building for global markets",
-      "journey_now": "Shipping AI-native products, one commit at a time",
-      "awards_label": "/ Things I've tried",
-      "awards_count": "10 attempts",
-      "awards_description": "Not an expert at anything — just someone who wants to try everything, and try it well.",
-      "award_1_title": "MCM/ICM Mathematical Modeling",
-      "award_1_level": "Honorable Mention",
-      "award_1_detail": "NSGA-III tourism optimizer, 8.3% prediction error vs. 28,000+ teams",
-      "award_2_title": "Lanqiao Cup C/C++ (Jiangsu)",
-      "award_2_level": "First Prize",
-      "award_2_detail": "Top 1% in provincial algorithmic programming",
-      "award_3_title": "TAM-SEM Low-Altitude Economy",
-      "award_3_level": "First Prize (Provincial)",
-      "award_3_detail": "2,609 respondents, discovered 'risk paradox' (beta=0.262, p<0.001)",
-      "award_4_title": "APMCM Mathematical Modeling",
-      "award_4_level": "First Prize",
-      "award_4_detail": "Pet industry forecast: LASSO R-squared=0.9850, predicted $52B market",
-      "award_5_title": "Shuwei Cup Math Modeling",
-      "award_5_level": "First Prize + Grand Innovation",
-      "award_5_detail": "Biomass co-pyrolysis: found 28.44% optimal ratio via LightGBM + PSO",
-      "award_6_title": "Brand Strategy Competition",
-      "award_6_level": "Second Prize (National)",
-      "award_6_detail": "1,200+ samples, Claude + Flux + Midjourney AIGC pipeline",
-      "award_7_title": "Global AI Algorithm Elite",
-      "award_7_level": "Third Prize (National Final)",
-      "award_7_detail": "Warehouse drone: 95% recognition accuracy, 3-min shelf traversal",
-      "award_8_title": "National Math Modeling (Jiangsu)",
-      "award_8_level": "Second Prize",
-      "award_8_detail": "Real estate cost prediction: Random Forest outperformed CNN-LSTM",
-      "award_9_title": "Electronic Design (TI Cup)",
-      "award_9_level": "Second Prize",
-      "award_9_detail": "Self-aiming system: adaptive PID + Kalman filter on MSPM0G3507",
-      "award_10_title": "Translation Competition",
-      "award_10_level": "Grand Prize (National Final)",
-      "award_10_detail": "Non-English major, highest national honor in bilingual translation",
-      "credentials_label": "/ Credentials",
-      "cred_1": "Columbia University — Numerical Models (Grade A)",
-      "cred_2": "Huawei HCIA-Datacom Network Engineer",
-      "cred_3": "HarmonyOS Advanced Developer",
-      "cred_4": "Utility Patent — Cable Distribution Equipment",
-      "cred_5": "3 Software Copyrights (Power Opt, OD Classify, Graph Solver)",
+      "photo_location": "Wuxi, Trung Quốc",
+      "stat_projects": "Dự án",
+      "stat_awards": "Giải thưởng",
+      "stat_first_prizes": "Giải nhất",
+      "stat_certs": "Chứng chỉ",
+      "resume_download": "Tải xuống CV",
+      "journey_label": "/ Hành trình",
+      "journey_2020": "Tự học phát triển web & marketing số",
+      "journey_2022": "Cử nhân Khoa học Thông tin & Tính toán và Kỹ sư Khoa học Máy tính & Công nghệ, Đại học Hải Dương Giang Tô",
+      "journey_2023": "Kỹ thuật AI-native, lập trình thi đấu",
+      "journey_2024": "Thành lập Wuxi Nebutra Intelligence Technology",
+      "journey_2025": "CEO, Nebutra Intelligence — xây dựng cho thị trường toàn cầu",
+      "journey_now": "Phát hành sản phẩm AI-native, từng commit một",
+      "awards_label": "/ Những thứ tôi đã thử",
+      "awards_count": "10 lần thử",
+      "awards_description": "Không chuyên sâu về bất cứ thứ gì — chỉ là người muốn thử mọi thứ, và thử cho tốt.",
+      "award_1_title": "Mô hình hóa Toán học MCM/ICM",
+      "award_1_level": "Kỷ niệm",
+      "award_1_detail": "Tối ưu hóa du lịch NSGA-III, lỗi dự đoán 8,3% so với hơn 28.000 đội",
+      "award_2_title": "Cúp Lanqiao C/C++ (Giang Tô)",
+      "award_2_level": "Giải Nhất",
+      "award_2_detail": "Top 1% trong lập trình thuật toán cấp tỉnh",
+      "award_3_title": "Kinh tế Không gian Thấp TAM-SEM",
+      "award_3_level": "Giải Nhất (Cấp tỉnh)",
+      "award_3_detail": "2.609 người phản hồi, phát hiện 'nghịch lý rủi ro' (beta=0,262, p<0,001)",
+      "award_4_title": "Mô hình hóa Toán học APMCM",
+      "award_4_level": "Giải Nhất",
+      "award_4_detail": "Dự báo ngành thú cưng: LASSO R-squared=0,9850, dự đoán thị trường 52 tỷ USD",
+      "award_5_title": "Mô hình Toán học Cúp Shuwei",
+      "award_5_level": "Giải Nhất + Giải Đổi mới Đặc biệt",
+      "award_5_detail": "Đồng nhiệt phân sinh khối: tìm được tỷ lệ tối ưu 28,44% qua LightGBM + PSO",
+      "award_6_title": "Cuộc thi Chiến lược Thương hiệu",
+      "award_6_level": "Giải nhì (Quốc gia)",
+      "award_6_detail": "Hơn 1.200 mẫu, quy trình AIGC Claude + Flux + Midjourney",
+      "award_7_title": "Tinh hoa Thuật toán AI Toàn cầu",
+      "award_7_level": "Giải ba (Vòng chung kết Quốc gia)",
+      "award_7_detail": "Drone kho hàng: độ chính xác nhận diện 95%, di chuyển qua kệ trong 3 phút",
+      "award_8_title": "Mô hình Toán học Quốc gia (Giang Tô)",
+      "award_8_level": "Giải nhì",
+      "award_8_detail": "Dự báo chi phí bất động sản: Random Forest vượt trội hơn CNN-LSTM",
+      "award_9_title": "Thiết kế Điện tử (Cúp TI)",
+      "award_9_level": "Giải nhì",
+      "award_9_detail": "Hệ thống tự ngắm: PID thích ứng + bộ lọc Kalman trên MSPM0G3507",
+      "award_10_title": "Cuộc thi Dịch thuật",
+      "award_10_level": "Giải đặc biệt (Vòng chung kết Quốc gia)",
+      "award_10_detail": "Chuyên ngành phi tiếng Anh, vinh dự cao nhất quốc gia về dịch thuật song ngữ",
+      "credentials_label": "/ Chứng chỉ",
+      "cred_1": "Đại học Columbia — Mô hình Số (Điểm A)",
+      "cred_2": "Kỹ sư Mạng Huawei HCIA-Datacom",
+      "cred_3": "Nhà phát triển HarmonyOS Nâng cao",
+      "cred_4": "Bằng sáng chế tiện ích — Thiết bị phân phối cáp",
+      "cred_5": "3 Bản quyền phần mềm (Power Opt, OD Classify, Graph Solver)",
       "cred_6": "CET-6: 543 · CET-4: 575",
-      "cred_7": "Macau UST — Innovation & Entrepreneurship",
-      "cred_8": "Prompt Engineer (Datawhale x iFLYTEK)",
-      "personality_label": "/ Personality",
+      "cred_7": "Đại học UST Macau — Đổi mới & Khởi nghiệp",
+      "cred_8": "Kỹ sư Prompt (Datawhale x iFLYTEK)",
+      "personality_label": "/ Tính cách",
       "personality_intp_name": "INTP",
-      "personality_intp_subtitle": "The Logician",
-      "personality_intp_desc": "Analytical, systematic, and driven by an insatiable curiosity about how systems really work.",
+      "personality_intp_subtitle": "Nhà logic",
+      "personality_intp_desc": "Phân tích, có hệ thống và được thúc đẩy bởi sự tò mò không ngừng về cách các hệ thống thực sự hoạt động.",
       "personality_intp_source": "16Personalities",
       "personality_4w5_name": "4w5",
-      "personality_4w5_subtitle": "The Bohemian",
-      "personality_4w5_desc": "Identity-driven depth and authentic self-expression, tempered by intellectual withdrawal.",
+      "personality_4w5_subtitle": "Người Bohemian",
+      "personality_4w5_desc": "Độ sâu định hướng bản sắc và biểu đạt bản thân chân thực, được cân bằng bởi sự rút lui trí tuệ.",
       "personality_4w5_source": "Enneagram",
-      "beliefs_label": "/ Things I believe",
-      "belief_1": "The people who are crazy enough to think they can change the world are the ones who do.",
+      "beliefs_label": "/ Những điều tôi tin",
+      "belief_1": "Những người điên rồ đến mức nghĩ rằng họ có thể thay đổi thế giới là những người thực sự làm được điều đó.",
       "belief_1_credit": "— Steve Jobs",
-      "life_label": "/ Life",
-      "life_music": "Music",
-      "life_philosophy": "Philosophy",
-      "life_games": "Games",
-      "contact_anchor_label": "/ Contact",
-      "contact_headline": "Let's build something"
+      "life_label": "/ Cuộc sống",
+      "life_music": "Âm nhạc",
+      "life_philosophy": "Triết học",
+      "life_games": "Trò chơi",
+      "contact_anchor_label": "/ Liên hệ",
+      "contact_headline": "Cùng xây dựng điều gì đó"
     },
     "uses": {
-      "label": "/ Uses",
-      "headline": "What I use to build.",
-      "description": "Hardware, software, and AI tools I actually use daily. Dogfooding included.",
+      "label": "/ Công cụ",
+      "headline": "Những gì tôi dùng để xây dựng.",
+      "description": "Phần cứng, phần mềm và công cụ AI tôi thực sự dùng hàng ngày. Bao gồm cả dogfooding.",
       "section_workstation": "/ Workstation",
       "section_editors": "/ Editors",
       "section_terminal": "/ Terminal",
       "section_ai_toolkit": "/ AI Toolkit",
-      "ai_toolkit_desc": "Tools I actively use — not a marketing list. I switch between them depending on the task.",
+      "ai_toolkit_desc": "Công cụ tôi đang dùng thực tế — không phải danh sách marketing. Tôi chuyển đổi giữa chúng tùy theo nhiệm vụ.",
       "section_dogfooding": "/ Dogfooding"
     },
     "links": {
-      "headline": "Links",
-      "description": "Find me across the internet.",
-      "international": "International",
-      "china": "China Platforms",
-      "wechat_click": "Click to see QR code",
-      "metadata_title": "Links — Tseka Luk",
-      "metadata_desc": "Find me across the internet."
+      "headline": "Liên kết",
+      "description": "Tìm tôi trên khắp internet.",
+      "international": "Quốc tế",
+      "china": "Nền tảng Trung Quốc",
+      "wechat_click": "Nhấn để xem mã QR",
+      "metadata_title": "Liên kết — Tseka Luk",
+      "metadata_desc": "Tìm tôi trên khắp internet."
     },
     "privacy": {
-      "metadata_title": "Privacy Policy — Tseka Luk",
-      "metadata_desc": "How this site handles your data.",
-      "headline": "Privacy Policy",
-      "last_updated": "Last updated: March 2026",
-      "intro": "This site is a personal portfolio. I respect your privacy and collect as little data as possible.",
-      "analytics_title": "Analytics",
-      "analytics_body": "This site uses Plausible Analytics, a privacy-friendly, cookie-free analytics tool. No personal data is collected. All data is aggregated and anonymous. No data is shared with third parties.",
-      "auth_title": "Authentication",
-      "auth_body": "If you sign in (via GitHub, Google, or Linux DO), I receive your public profile information (name, avatar, email if available). This is used solely to identify you in the Soul chat. I do not sell, share, or use this data for any other purpose. Session data is stored as an encrypted JWT cookie in your browser.",
+      "metadata_title": "Chính sách bảo mật — Tseka Luk",
+      "metadata_desc": "Cách trang web này xử lý dữ liệu của bạn.",
+      "headline": "Chính sách bảo mật",
+      "last_updated": "Cập nhật lần cuối: Tháng 3 năm 2026",
+      "intro": "Trang web này là hồ sơ cá nhân. Tôi tôn trọng quyền riêng tư của bạn và thu thập ít dữ liệu nhất có thể.",
+      "analytics_title": "Phân tích",
+      "analytics_body": "Trang web này sử dụng Plausible Analytics, một công cụ phân tích thân thiện với quyền riêng tư, không dùng cookie. Không thu thập dữ liệu cá nhân. Tất cả dữ liệu được tổng hợp và ẩn danh. Không chia sẻ dữ liệu với bên thứ ba.",
+      "auth_title": "Xác thực",
+      "auth_body": "Nếu bạn đăng nhập (qua GitHub, Google hoặc Linux DO), tôi sẽ nhận thông tin hồ sơ công khai của bạn (tên, ảnh đại diện, email nếu có). Thông tin này chỉ dùng để xác định bạn trong trò chuyện Soul. Tôi không bán, chia sẻ hoặc sử dụng dữ liệu này cho mục đích khác. Dữ liệu phiên được lưu trữ dưới dạng cookie JWT mã hóa trong trình duyệt của bạn.",
       "chat_title": "Soul Chat",
-      "chat_body": "Messages you send in the Soul chat are processed by the Anthropic API (Claude) in real time and are not stored on my servers. Conversation history exists only in your browser session.",
-      "cookies_title": "Cookies",
-      "cookies_body": "This site uses only essential cookies: a session cookie for authentication and a theme preference cookie. No tracking cookies are used.",
-      "third_party_title": "Third-party Services",
-      "third_party_body": "Plausible Analytics (privacy-friendly, EU-hosted), Anthropic API (chat processing), Vercel (hosting). No advertising or tracking services are used.",
-      "contact_title": "Contact",
-      "contact_body": "For any privacy-related questions, reach me at"
+      "chat_body": "Tin nhắn bạn gửi trong Soul chat được xử lý bởi Anthropic API (Claude) theo thời gian thực và không được lưu trữ trên máy chủ của tôi. Lịch sử trò chuyện chỉ tồn tại trong phiên trình duyệt của bạn.",
+      "cookies_title": "Cookie",
+      "cookies_body": "Trang web này chỉ sử dụng cookie thiết yếu: cookie phiên cho xác thực và cookie tùy chọn chủ đề. Không sử dụng cookie theo dõi.",
+      "third_party_title": "Dịch vụ bên thứ ba",
+      "third_party_body": "Plausible Analytics (thân thiện với quyền riêng tư, lưu trữ tại EU), Anthropic API (xử lý trò chuyện), Vercel (lưu trữ). Không sử dụng dịch vụ quảng cáo hoặc theo dõi.",
+      "contact_title": "Liên hệ",
+      "contact_body": "Để biết thêm câu hỏi liên quan đến quyền riêng tư, hãy liên hệ tôi tại"
     },
     "guestbook": {
-      "label": "/ Guestbook",
-      "metadata_title": "Guestbook — Tseka Luk",
-      "metadata_desc": "Leave a message. Say hello.",
-      "headline": "Guestbook",
-      "description": "Leave a message, say hello, or share what you're building.",
-      "sign_in_prompt": "Sign in to leave a message.",
-      "placeholder": "Say something nice...",
-      "submit": "Post",
-      "empty": "No messages yet. Be the first!"
+      "label": "/ Sổ khách",
+      "metadata_title": "Sổ khách — Tseka Luk",
+      "metadata_desc": "Để lại lời nhắn. Chào hỏi.",
+      "headline": "Sổ khách",
+      "description": "Để lại lời nhắn, chào hỏi, hoặc chia sẻ những gì bạn đang xây dựng.",
+      "sign_in_prompt": "Đăng nhập để để lại lời nhắn.",
+      "placeholder": "Nói điều gì đó hay ho...",
+      "submit": "Đăng",
+      "empty": "Chưa có lời nhắn nào. Hãy là người đầu tiên!"
     }
   },
   "projects": {
     "any2md": {
-      "tagline": "Where other converters lose 40% of context, this one keeps 93%",
-      "description": "Most converters silently drop formulas, tables, and cross-references. any2md uses a dual-engine—PyMuPDF for text + Qwen-VL for vision—then DeepSeek LLM reconstructs context via layered prompt + few-shot + CoT. Processes 68 pages/min with 85% table structuring and 90% LaTeX formula preservation. Imported 20,000+ pages into a team knowledge base in one week, cutting manual cleanup by 70%."
+      "tagline": "Khi các công cụ chuyển đổi khác làm mất 40% ngữ cảnh, công cụ này giữ lại 93%",
+      "description": "Hầu hết công cụ chuyển đổi đều âm thầm làm mất công thức, bảng và liên kết chéo. any2md sử dụng động cơ kép—PyMuPDF cho văn bản + Qwen-VL cho thị giác—sau đó DeepSeek LLM tái tạo ngữ cảnh thông qua prompt phân lớp + few-shot + CoT. Xử lý 68 trang/phút với 85% cấu trúc bảng và 90% bảo toàn công thức LaTeX. Đã nhập hơn 20.000 trang vào cơ sở kiến thức của đội trong một tuần, giảm 70% công việc dọn dẹp thủ công."
     },
     "low-altitude-economy": {
-      "tagline": "Discovered a paradox: risk perception actually increases adoption",
-      "description": "Everyone assumed perceived risk would deter UAM adoption. Our TAM–SEM model on 2,609 respondents (93.1% recovery rate, KMO=0.951) proved the opposite: risk positively drives willingness to adopt (β=0.262, p<0.001). We also mined 1,695 Bilibili comments with SnowNLP to map public sentiment. The “risk paradox” finding challenged a decade of technology adoption literature. Provincial First Prize."
+      "tagline": "Phát hiện nghịch lý: nhận thức rủi ro thực sự thúc đẩy việc áp dụng",
+      "description": "Mọi người đều cho rằng nhận thức rủi ro sẽ ngăn cản việc áp dụng UAM. Mô hình TAM–SEM của chúng tôi trên 2.609 người tham gia (tỷ lệ thu hồi 93,1%, KMO=0,951) đã chứng minh điều ngược lại: rủi ro thúc đẩy tích cực ý định áp dụng (β=0,262, p<0,001). Chúng tôi cũng khai thác 1.695 bình luận trên Bilibili bằng SnowNLP để lập bản đồ cảm xúc công chúng. Phát hiện “nghịch lý rủi ro” đã thách thức một thập kỷ tài liệu về áp dụng công nghệ. Giải Nhất cấp Tỉnh."
     },
     "nebutra-sailor": {
-      "tagline": "One monorepo, 4 production apps, 12,000+ lines of shared code",
-      "description": "Enterprise-grade monorepo powering 4 apps (marketing, dashboard, docs, studio) from 6 shared packages. Next.js 16 + React 19 + Tailwind v4, with a custom design token pipeline, 541 tree-shakable icons, and multi-theme engine supporting 6 oklch color schemes. Ships features 3x faster than separate repos."
+      "tagline": "Một monorepo, 4 ứng dụng sản xuất, hơn 12.000 dòng mã chia sẻ",
+      "description": "Monorepo cấp doanh nghiệp cung cấp năng lượng cho 4 ứng dụng (tiếp thị, bảng điều khiển, tài liệu, studio) từ 6 gói chia sẻ. Next.js 16 + React 19 + Tailwind v4, với đường ống token thiết kế tùy chỉnh, 541 biểu tượng có thể tree-shake và động cơ đa chủ đề hỗ trợ 6 lược đồ màu oklch. Phát hành tính năng nhanh gấp 3 lần so với các repo riêng biệt."
     },
     "mcm-icm": {
-      "tagline": "Optimizing tourism vs. environment with 8.3% prediction error",
-      "description": "MCM/ICM 2025 (Problem B): built a system dynamics + NSGA-III multi-objective optimizer balancing tourist flow, environmental quality, and social satisfaction. Achieved 8.3% tourist prediction error with R²>0.5 on a three-dimensional coupled model. Competed against 28,000+ teams globally. Honorable Mention."
+      "tagline": "Tối ưu hóa du lịch so với môi trường với sai số dự đoán 8,3%",
+      "description": "MCM/ICM 2025 (Bài toán B): xây dựng bộ tối ưu hóa đa mục tiêu hệ thống động lực + NSGA-III cân bằng dòng khách du lịch, chất lượng môi trường và sự hài lòng xã hội. Đạt sai số dự đoán khách du lịch 8,3% với R²>0,5 trên mô hình ghép ba chiều. Cạnh tranh với hơn 28.000 đội trên toàn cầu. Danh hiệu Đặc biệt."
     },
     "biomass-modeling": {
-      "tagline": "Found the exact 28.44% ratio—won Grand Innovation Award for it",
-      "description": "Three-model ensemble (LightGBM + Gaussian Process Regression + PSO) tested across 500+ pyrolysis data points to discover that 28.44% biomass-to-coal ratio maximizes clean energy output with R²>0.95 prediction accuracy. The entropy-weighted fuzzy evaluation framework quantified non-linear interactions between 3 yield types (gas, char, liquid). Judges praised the methodology as transferable across energy domains. First Prize + Grand Innovation Award at Shuwei Cup."
+      "tagline": "Tìm ra tỷ lệ chính xác 28,44%—giành Giải Đổi Mới Lớn vì điều này",
+      "description": "Tập hợp ba mô hình (LightGBM + Hồi quy Quá trình Gaussian + PSO) được thử nghiệm trên 500+ điểm dữ liệu pyrolysis để phát hiện rằng tỷ lệ sinh khối-than 28,44% tối đa hóa đầu ra năng lượng sạch với độ chính xác dự đoán R²>0,95. Khung đánh giá mờ trọng số entropy định lượng các tương tác phi tuyến giữa 3 loại năng suất (khí, than cốc, lỏng). Ban giám khảo ca ngợi phương pháp luận có thể chuyển giao giữa các lĩnh vực năng lượng. Giải Nhất + Giải Đổi Mới Lớn tại Cúp Shuwei."
     },
     "pet-industry": {
-      "tagline": "LASSO R²=0.9850 predicted a $52B market by 2026",
-      "description": "Built an integrated forecasting framework (ARIMAX-GARCH + VAR + LASSO + Prophet) spanning market size, pet population, and food manufacturing. LASSO regression identified key drivers with R²=0.9850. Cross-compared US/EU markets using HHI concentration index. Predicted 144.68M pets and 82.8% capacity utilization by 2026."
+      "tagline": "LASSO R²=0,9850 dự đoán thị trường 52 tỷ USD vào năm 2026",
+      "description": "Xây dựng khung dự báo tích hợp (ARIMAX-GARCH + VAR + LASSO + Prophet) bao quát quy mô thị trường, dân số thú cưng và sản xuất thực phẩm. Hồi quy LASSO xác định các yếu tố thúc đẩy chính với R²=0,9850. So sánh chéo thị trường Mỹ/EU bằng chỉ số tập trung HHI. Dự đoán 144,68 triệu thú cưng và 82,8% tỷ lệ sử dụng công suất vào năm 2026."
     },
     "cursor-export": {
-      "tagline": "86% less time on knowledge management—one-click conversation export",
-      "description": "Cursor IDE extension (7 GitHub stars) that exports AI conversations to structured Markdown. Tested on 214 conversations (1,980 messages): processing time dropped from 5.8 min to 0.8 min per conversation, code snippet loss rate under 0.5%, throughput 12.5 conversations/min. Cross-platform VSIX with >98% install success rate across Windows/macOS/Linux."
+      "tagline": "Giảm 86% thời gian quản lý kiến thức—xuất hội thoại chỉ với một cú nhấp",
+      "description": "Tiện ích mở rộng Cursor IDE (7 sao GitHub) xuất hội thoại AI sang Markdown có cấu trúc. Đã thử nghiệm trên 214 hội thoại (1.980 tin nhắn): thời gian xử lý giảm từ 5,8 phút xuống 0,8 phút mỗi hội thoại, tỷ lệ mất đoạn mã dưới 0,5%, thông lượng 12,5 hội thoại/phút. VSIX đa nền tảng với tỷ lệ cài đặt thành công >98% trên Windows/macOS/Linux."
     },
     "brand-strategy": {
-      "tagline": "1,200+ consumer samples × AIGC pipeline = 40% engagement lift",
-      "description": "Led a PEST-SWOT driven brand overhaul for Suzhou’s “林莓莓” agricultural product. Surveyed 1,200+ consumers to map purchase drivers and price sensitivity. Deployed Claude + Flux + Midjourney AIGC toolchain for brand stories and mascot concepts, cutting creative iteration from weeks to days. Projected 40%+ user engagement increase. National Second Prize."
+      "tagline": "1.200+ mẫu người tiêu dùng × đường ống AIGC = tăng 40% tương tác",
+      "description": "Dẫn dắt cuộc đại tu thương hiệu dựa trên PEST-SWOT cho sản phẩm nông nghiệp “林莓莓” của Tô Châu. Khảo sát hơn 1.200 người tiêu dùng để lập bản đồ các yếu tố thúc đẩy mua hàng và độ nhạy cảm giá. Triển khai công cụ AIGC Claude + Flux + Midjourney cho câu chuyện thương hiệu và khái niệm nhân vật, cắt giảm vòng lặp sáng tạo từ vài tuần xuống vài ngày. Dự kiến tăng tương tác người dùng hơn 40%. Giải Nhì Quốc gia."
     },
     "mineru-skill": {
-      "tagline": "Zero-config Claude Code skill—PDF to Markdown in one command",
-      "description": "Open-source Claude Code skill that wraps MinerU for layout-aware PDF/document conversion. One-command install, no API keys, 3 supported formats (PDF, DOCX, PPTX). Handles 100+ page documents with table and formula preservation. Published on Smithery marketplace, 5+ community installs in first week. Built for the Claude Code ecosystem with auto-detection of document type and intelligent chunking."
+      "tagline": "Kỹ năng Claude Code không cấu hình—PDF sang Markdown chỉ với một lệnh",
+      "description": "Kỹ năng Claude Code mã nguồn mở bao bọc MinerU cho chuyển đổi PDF/tài liệu nhận thức bố cục. Cài đặt một lệnh, không cần khóa API, hỗ trợ 3 định dạng (PDF, DOCX, PPTX). Xử lý tài liệu 100+ trang với bảo toàn bảng và công thức. Đã xuất bản trên thị trường Smithery, hơn 5 cài đặt cộng đồng trong tuần đầu. Được xây dựng cho hệ sinh thái Claude Code với tự động phát hiện loại tài liệu và phân đoạn thông minh."
     },
     "warehouse-drone": {
-      "tagline": "95% recognition accuracy, full shelf scan in under 3 minutes",
-      "description": "Multi-rotor drone system for automated warehouse stocktaking. Integrated STM32 flight controller + OpenMV vision + BLE communication for autonomous waypoint navigation and QR code scanning across 3D shelf structures. 95% barcode recognition accuracy with laser calibration, completing full inventory traversal in under 3 minutes."
+      "tagline": "Độ chính xác nhận diện 95%, quét toàn bộ kệ trong dưới 3 phút",
+      "description": "Hệ thống drone đa rotor cho kiểm kê kho tự động. Tích hợp bộ điều khiển bay STM32 + thị giác OpenMV + truyền thông BLE cho điều hướng điểm đến tự động và quét mã QR trên cấu trúc kệ 3D. Độ chính xác nhận diện mã vạch 95% với hiệu chuẩn laser, hoàn thành toàn bộ quá trình kiểm kê trong dưới 3 phút."
     },
     "cdtmp": {
-      "tagline": "Task success rate +18pp by turning prompt tricks into reusable protocol",
-      "description": "Turned ad-hoc prompt engineering into a structured agent protocol: task decomposition, state machines, retry strategies, and auditable intermediate states. Tested on 120 cross-domain tasks: success rate jumped from 63% to 81%, JSON compliance from 72% to 94%, rework rounds dropped 29%. Framework-agnostic—plugs into LangGraph, Semantic Kernel, or custom executors."
+      "tagline": "Tỷ lệ hoàn thành nhiệm vụ tăng 18pp bằng cách biến các thủ thuật prompt thành giao thức tái sử dụng",
+      "description": "Biến kỹ thuật prompt ad-hoc thành giao thức agent có cấu trúc: phân rã nhiệm vụ, máy trạng thái, chiến lược thử lại và các trạng thái trung gian có thể kiểm toán. Đã thử nghiệm trên 120 nhiệm vụ đa lĩnh vực: tỷ lệ thành công tăng từ 63% lên 81%, tuân thủ JSON từ 72% lên 94%, số vòng làm lại giảm 29%. Không phụ thuộc framework—tích hợp được với LangGraph, Semantic Kernel hoặc bộ thực thi tùy chỉnh."
     },
     "next-unicorn": {
-      "tagline": "Your codebase has 47 hand-rolled wheels—this finds them all",
-      "description": "Every codebase accumulates Vibe Coding debt: custom date formatters, DIY loggers, bespoke state machines. Next-Unicorn audits your code via Context7 MCP, identifies reinvented wheels, generates migration plans, and ships delete-code checklists. 176 tests passed with 29 property-based verifications. Published on Smithery + npm, supports 35+ AI agents including Claude Code, Cursor, and OpenCode."
+      "tagline": "Codebase của bạn có 47 bánh xe tự làm—công cụ này tìm hết tất cả",
+      "description": "Mọi codebase đều tích tụ nợ Vibe Coding: bộ định dạng ngày tùy chỉnh, logger tự làm, máy trạng thái riêng. Next-Unicorn kiểm toán code của bạn qua Context7 MCP, xác định các bánh xe được phát minh lại, tạo kế hoạch di chuyển và xuất danh sách xóa code. 176 test đã vượt qua với 29 xác minh dựa trên thuộc tính. Đã phát hành trên Smithery + npm, hỗ trợ 35+ AI agent bao gồm Claude Code, Cursor và OpenCode."
     },
     "hydrogem-web": {
-      "tagline": "Real-time water quality dashboard with 5-second refresh and alerts",
-      "description": "React + TypeScript monitoring system tracking 12 water quality parameters (pH, turbidity, dissolved oxygen, etc.) with 5-second auto-refresh and configurable alert thresholds. Built with streaming data visualization and historical trend analysis for environmental monitoring."
+      "tagline": "Dashboard chất lượng nước thời gian thực với làm mới 5 giây và cảnh báo",
+      "description": "Hệ thống giám sát React + TypeScript theo dõi 12 thông số chất lượng nước (pH, độ đục, oxy hòa tan, v.v.) với tự động làm mới 5 giây và ngưỡng cảnh báo có thể cấu hình. Xây dựng với trực quan hóa dữ liệu streaming và phân tích xu hướng lịch sử cho giám sát môi trường."
     },
     "ocr-auto": {
-      "tagline": "100% bbox accuracy on 50 element types—from 65% to 92% in 10 prompt iterations",
-      "description": "Production-grade automated annotation system for document page elements. Async 4-stage pipeline with Qwen VL models identifies 50 element types (12 code languages, 13 interaction formats, 12 content elements, 13 other tags). Three-layer fault tolerance (Retry + RateLimit + CircuitBreaker), SHA256 content-addressed cache, and real-time SSE monitoring dashboard."
+      "tagline": "Độ chính xác bbox 100% trên 50 loại phần tử—từ 65% lên 92% trong 10 lần lặp prompt",
+      "description": "Hệ thống chú thích tự động cấp độ sản xuất cho các phần tử trang tài liệu. Pipeline 4 giai đoạn async với mô hình Qwen VL xác định 50 loại phần tử (12 ngôn ngữ code, 13 định dạng tương tác, 12 phần tử nội dung, 13 thẻ khác). Ba lớp dung sai lỗi (Retry + RateLimit + CircuitBreaker), bộ nhớ đệm địa chỉ nội dung SHA256 và dashboard giám sát SSE thời gian thực."
     },
     "tiktok-pipeline": {
-      "tagline": "8-dimensional annotation across 19 prompt iterations—edge cases included",
-      "description": "Multi-modal visual search relevance labeling pipeline using LLMs. Processes image + text signals across 8 annotation dimensions (visual relevance, content relevance, query/doc drop, functional parity, category granularity, visual similarity, modal corroboration). 19 prompt versions with automated comparison and reflection analysis tools."
+      "tagline": "Chú thích 8 chiều qua 19 lần lặp prompt—bao gồm cả trường hợp biên",
+      "description": "Pipeline gán nhãn mức độ liên quan tìm kiếm đa phương thức sử dụng LLM. Xử lý tín hiệu hình ảnh + văn bản qua 8 chiều chú thích (liên quan trực quan, liên quan nội dung, giảm query/doc, tương đương chức năng, độ tinh tế danh mục, độ tương đồng trực quan, xác nhận đa phương thức). 19 phiên bản prompt với công cụ so sánh tự động và phân tích phản ánh."
     },
     "mlbb-analysis": {
-      "tagline": "5 platforms, 6 batch processors, 90%+ accuracy—from manual review to automated pipeline",
-      "description": "Multi-platform video content analysis system covering YouTube, Instagram, TikTok, VK, and Facebook. Refactored from legacy monolith to modular architecture: 5 platform fetchers, 6 batch processors, 5 video analyzers. Fast text analysis achieves 90%+ accuracy with 460x acceleration over manual review, processing 1,207+ videos across batch runs."
+      "tagline": "5 nền tảng, 6 bộ xử lý batch, độ chính xác 90%+—từ xem xét thủ công sang pipeline tự động",
+      "description": "Hệ thống phân tích nội dung video đa nền tảng bao phủ YouTube, Instagram, TikTok, VK và Facebook. Refactor từ monolith legacy sang kiến trúc module: 5 bộ lấy dữ liệu nền tảng, 6 bộ xử lý batch, 5 bộ phân tích video. Phân tích văn bản nhanh đạt độ chính xác 90%+ với tốc độ tăng 460 lần so với xem xét thủ công, xử lý 1.207+ video qua các lần chạy batch."
     },
     "synapse-quant": {
-      "tagline": "8 microservices, real-time GraphQL, TUI cockpit—from raw data to trade thesis",
-      "description": "Open-source quantitative trading copilot for crypto markets. 8 microservices + 9 infrastructure services (17 containers total) with unified TUI cockpit, 41 technical indicators, real-time market data streaming, and in-context AI copilot. TypeScript 5.7 + Python 3.11+, CI/CD with GitHub Actions."
+      "tagline": "8 microservice, GraphQL thời gian thực, cockpit TUI—từ dữ liệu thô đến luận điểm giao dịch",
+      "description": "Copilot giao dịch định lượng mã nguồn mở cho thị trường crypto. 8 microservice + 9 dịch vụ hạ tầng (17 container tổng cộng) với cockpit TUI thống nhất, 41 chỉ số kỹ thuật, streaming dữ liệu thị trường thời gian thực và AI copilot trong ngữ cảnh. TypeScript 5.7 + Python 3.11+, CI/CD với GitHub Actions."
     },
     "hm3d-eval": {
-      "tagline": "4.62/5 evaluation score across 1,000 real 3D scenes—8/8 acceptance criteria passed",
-      "description": "Comprehensive quality evaluation framework for the Habitat-Matterport 3D Research Dataset (1,000 real 3D scenes). Assessed 15+ dimensions including mesh quality, texture integrity, semantic annotation accuracy, and metadata completeness. Achieved 4.62/5 overall score with 100% acceptance pass rate (8/8 criteria). 95% requirement compliance."
+      "tagline": "Điểm đánh giá 4.62/5 trên 1.000 cảnh 3D thực tế—8/8 tiêu chí chấp nhận đã vượt qua",
+      "description": "Framework đánh giá chất lượng toàn diện cho Dataset Nghiên cứu 3D Habitat-Matterport (1.000 cảnh 3D thực tế). Đánh giá 15+ chiều bao gồm chất lượng mesh, tính toàn vẹn texture, độ chính xác chú thích ngữ nghĩa và độ hoàn chỉnh metadata. Đạt điểm tổng thể 4.62/5 với tỷ lệ vượt qua chấp nhận 100% (8/8 tiêu chí). Tuân thủ yêu cầu 95%."
     },
     "appen-dashboard": {
-      "tagline": "Enterprise SaaS for a NASDAQ data company: the B2B demo mode playbook in production",
-      "description": "Built multi-tenant reporting infrastructure for Appen (NASDAQ: APT). Next.js 16 monorepo (5 apps + 10 packages) serves TCS, ByteWorks, and DataPower dashboards with Upstash QStash async job queues and Pusher real-time. The breakthrough: a production-grade demo mode with MSW + tRPC mock interception, privacy redaction pipeline (schema validate → redact → normalize → value protocol), and 4 behavioral strategies—solving the #1 enterprise SaaS sales problem."
+      "tagline": "SaaS doanh nghiệp cho công ty dữ liệu NASDAQ: cẩm nang chế độ demo B2B trong sản xuất",
+      "description": "Xây dựng hạ tầng báo cáo đa tenant cho Appen (NASDAQ: APT). Monorepo Next.js 16 (5 ứng dụng + 10 package) phục vụ dashboard TCS, ByteWorks và DataPower với hàng đợi công việc async Upstash QStash và Pusher thời gian thực. Bước đột phá: chế độ demo cấp độ sản xuất với MSW + tRPC mock interception, pipeline xóa thông tin nhạy cảm (validate schema → redact → normalize → value protocol) và 4 chiến lược hành vi—giải quyết vấn đề bán hàng SaaS doanh nghiệp số 1."
     },
     "t2v-relabeling": {
-      "tagline": "Using better AI to fix worse AI's labeling mistakes—at the cost human reviewers can't match",
-      "description": "Meta-labeling pipeline that audits and corrects mislabeled AI-generated video training data using Gemini 2.5 Flash. Classifies 6 attributes (quality, gender, age, race, scene, season) per video with EWMA-adaptive rate limiting and HTTP/2 concurrency. Processes 60MB+ videos via Gemini Files API without local download. 3 iterative rounds with incremental merge. Human labeling: ~$1/video. This pipeline: ~$0.01/video at scale."
+      "tagline": "Sử dụng AI tốt hơn để sửa lỗi gán nhãn của AI kém hơn—với chi phí mà người xem xét thủ công không thể sánh được",
+      "description": "Pipeline meta-gán nhãn kiểm toán và sửa lỗi dữ liệu huấn luyện video do AI tạo ra bị gán nhãn sai bằng Gemini 2.5 Flash. Phân loại 6 thuộc tính (chất lượng, giới tính, độ tuổi, chủng tộc, cảnh, mùa) cho mỗi video với giới hạn tốc độ thích ứng EWMA và đồng thời HTTP/2. Xử lý video 60MB+ qua Gemini Files API mà không cần tải xuống cục bộ. 3 vòng lặp với hợp nhất tăng dần. Gán nhãn thủ công: ~$1/video. Pipeline này: ~$0.01/video ở quy mô lớn."
     },
     "url-annotation": {
-      "tagline": "The TLS fingerprint arms race: when IP blocking fails, impersonate Chrome at the handshake",
-      "description": "Production URL consistency pipeline that defeats TLS-fingerprint bot detection at zero marginal LLM cost. curl_cffi spoofs Chrome 124's full ClientHello (cipher suites, extensions, ordering)—not just User-Agent. Playwright renders JS-heavy SPAs. Local Qwen3:1.7b via Ollama compares semantics without API fees or GDPR exposure. Rotating-ad detection re-fetches 3× to flag domain changes. 30 HTTP + 5 Playwright + 5 LLM concurrent."
+      "tagline": "Cuộc chạy đua dấu vân tay TLS: khi chặn IP thất bại, hãy giả mạo Chrome ngay tại giai đoạn bắt tay",
+      "description": "Quy trình đảm bảo tính nhất quán URL trong môi trường sản xuất, đánh bại cơ chế phát hiện bot dựa trên dấu vân tay TLS mà không phát sinh chi phí LLM thêm. curl_cffi giả mạo toàn bộ ClientHello của Chrome 124 (bộ mật mã, tiện ích mở rộng, thứ tự)—không chỉ User-Agent. Playwright render các SPA nặng JS. Qwen3:1.7b cục bộ qua Ollama so sánh ngữ nghĩa mà không phát sinh phí API hay rủi ro GDPR. Cơ chế phát hiện quảng cáo xoay vòng tải lại 3 lần để đánh dấu thay đổi tên miền. 30 HTTP + 5 Playwright + 5 LLM chạy song song."
     },
     "3dgs-eval": {
-      "tagline": "3DGS had 2,000+ citations in 6 months but zero enterprise quality standards—we wrote the spec",
-      "description": "First systematic vendor evaluation framework for 3D Gaussian Splatting content production. Multi-round scored assessment across 6 dimensions: HP/LP geometry (pivot + retopology), PBR texture completeness (BaseColor/Normal/Metallic/AO), file naming conventions, semantic annotation, preview standards (8+ renders), and communication SLA. The revelation: vendors weren't technically incapable—they were operationally immature. Multi-round CSV tracker makes every revision cycle auditable."
+      "tagline": "3DGS có hơn 2.000 trích dẫn trong 6 tháng nhưng không có tiêu chuẩn chất lượng doanh nghiệp nào—chúng tôi đã viết ra bộ tiêu chuẩn đó",
+      "description": "Khung đánh giá nhà cung cấp có hệ thống đầu tiên cho sản xuất nội dung 3D Gaussian Splatting. Đánh giá có điểm số qua nhiều vòng trên 6 chiều: hình học HP/LP (pivot + retopology), độ hoàn chỉnh texture PBR (BaseColor/Normal/Metallic/AO), quy ước đặt tên tệp, chú thích ngữ nghĩa, tiêu chuẩn xem trước (8+ bản render) và SLA giao tiếp. Phát hiện quan trọng: các nhà cung cấp không hề kém về mặt kỹ thuật—họ chỉ chưa trưởng thành về mặt vận hành. Bảng theo dõi CSV đa vòng giúp mọi chu kỳ sửa đổi đều có thể kiểm toán được."
     }
   },
   "thinking": {
-    "latest_label": "Latest Thinking",
-    "latest_headline": "Recent Writings",
-    "view_all": "View All Writings"
+    "latest_label": "Suy nghĩ Mới nhất",
+    "latest_headline": "Bài viết Gần đây",
+    "view_all": "Xem Tất cả Bài viết"
   }
 }

@@ -1,117 +1,117 @@
 {
   "auth": {
     "signin": {
-      "title": "Welcome to Soul",
-      "subtitle": "Sign in to chat with Tseka's AI agent",
-      "github": "Continue with GitHub",
-      "google": "Continue with Google",
-      "linuxdo": "Continue with Linux DO",
-      "back": "Back to Home"
+      "title": "مرحبًا بك في Soul",
+      "subtitle": "سجّل الدخول للتحدث مع وكيل الذكاء الاصطناعي الخاص بـ Tseka",
+      "github": "متابعة باستخدام GitHub",
+      "google": "متابعة باستخدام Google",
+      "linuxdo": "متابعة باستخدام Linux DO",
+      "back": "العودة إلى الصفحة الرئيسية"
     },
     "error": {
-      "title": "Authentication Error",
-      "subtitle": "We couldn't sign you in.",
-      "configuration": "The authentication provider is not configured properly. If you are the administrator, please check your environment variables (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, etc.) in your Vercel project settings.",
-      "access_denied": "Access was denied to your account.",
-      "default": "An unexpected error occurred during authentication.",
-      "try_again": "Try Again",
-      "back": "Back to Home"
+      "title": "خطأ في المصادقة",
+      "subtitle": "لم نتمكن من تسجيل دخولك.",
+      "configuration": "مزود المصادقة غير مُعد بشكل صحيح. إذا كنت المسؤول، يرجى التحقق من متغيرات البيئة (AUTH_SECRET، GITHUB_ID، GITHUB_SECRET، إلخ) في إعدادات مشروع Vercel الخاص بك.",
+      "access_denied": "تم رفض الوصول إلى حسابك.",
+      "default": "حدث خطأ غير متوقع أثناء المصادقة.",
+      "try_again": "حاول مرة أخرى",
+      "back": "العودة إلى الصفحة الرئيسية"
     }
   },
   "nav": {
-    "work": "Work",
-    "thinking": "Thinking",
-    "now": "Now",
-    "about": "About",
-    "links": "Links",
-    "soul": "Soul",
-    "uses": "Uses",
-    "guestbook": "Guestbook",
-    "contact": "Let's talk"
+    "work": "الأعمال",
+    "thinking": "التفكير",
+    "now": "الآن",
+    "about": "حول",
+    "links": "الروابط",
+    "soul": "الروح",
+    "uses": "الاستخدامات",
+    "guestbook": "سجل الزوار",
+    "contact": "لنتحدث"
   },
   "soul": {
-    "page_label": "/ Digital consciousness",
-    "page_headline": "Tseka's Soul",
-    "page_desc": "A digital reflection of Tseka's mind. Ask anything — about his projects, philosophy, or how he sees the world.",
-    "status": "Online",
-    "greeting_title": "Ask me anything",
-    "greeting_desc": "I'm a digital reflection of Tseka's mind — his projects, philosophy, and how he sees the world.",
-    "starter1": "What are you currently building?",
-    "starter2": "What's your \"Vibe Business\" philosophy?",
-    "starter3": "How do you think about AI agents?",
-    "placeholder": "Ask Tseka's Soul...",
-    "powered_by": "Powered by Claude Haiku · Future: OpenClaw",
-    "error": "Something went wrong. Please try again.",
-    "auth_required": "Sign in to chat with Tseka's Soul",
-    "auth_button": "Sign in to chat",
-    "metadata_title": "Soul — Tseka Luk",
-    "metadata_desc": "An AI agent that thinks and responds like Tseka Luk."
+    "page_label": "/ الوعي الرقمي",
+    "page_headline": "روح تسكا",
+    "page_desc": "انعكاس رقمي لعقل تسكا. اسأل أي شيء — حول مشاريعه، فلسفته، أو كيف يرى العالم.",
+    "status": "متصل",
+    "greeting_title": "اسألني أي شيء",
+    "greeting_desc": "أنا انعكاس رقمي لعقل تسكا — مشاريعه، فلسفته، وكيف يرى العالم.",
+    "starter1": "ماذا تبني حالياً؟",
+    "starter2": "ما هي فلسفتك في \"أعمال الأجواء\"؟",
+    "starter3": "كيف تفكر في وكلاء الذكاء الاصطناعي؟",
+    "placeholder": "اسأل روح تسكا...",
+    "powered_by": "مدعوم من Claude Haiku · مستقبلاً: OpenClaw",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "auth_required": "سجّل الدخول للتحدث مع روح تسكا",
+    "auth_button": "سجّل الدخول للتحدث",
+    "metadata_title": "روح — تسكا لوك",
+    "metadata_desc": "وكيل ذكاء اصطناعي يفكر ويرد مثل تسكا لوك."
   },
   "hero": {
-    "status": "Available for select collaborations",
-    "greeting": "Hi, I'm Tseka",
-    "tagline": "AI-Native Builder",
-    "description": "I design and build AI-powered products from zero to one. Focused on making complex technology feel simple, useful, and beautiful—shipping fast and iterating in public.",
-    "cta_primary": "See my work",
-    "cta_secondary": "What I'm doing now",
+    "status": "متاح للتعاون في مشاريع محددة",
+    "greeting": "مرحباً، أنا تسيكا",
+    "tagline": "مُصمم مُنتجات مُتأصل بالذكاء الاصطناعي",
+    "description": "أصمم وأبني منتجات مُعززة بالذكاء الاصطناعي من الصفر. أركز على جعل التكنولوجيا المعقدة تبدو بسيطة ومُفيدة وجميلة—أُطلق بسرعة وأُطور علناً.",
+    "cta_primary": "شاهد أعمالي",
+    "cta_secondary": "ما أفعله الآن",
     "pills": {
-      "role": "Full-stack AI Engineer",
+      "role": "مهندس ذكاء اصطناعي متكامل",
       "stack": "TypeScript + Python",
-      "location": "Wuxi, China",
-      "mode": "Building in Public"
+      "location": "ووشي، الصين",
+      "mode": "أبني علناً"
     },
-    "social_proof": "Trusted by collaborators across AI, design & engineering"
+    "social_proof": "موثوق من قبل شركاء في مجالات الذكاء الاصطناعي والتصميم والهندسة"
   },
   "focus": {
-    "label": "Mission",
-    "headline": "My focus is on robust engineering, AI-native products, and scalable systems to",
-    "headline_muted": "deliver real-world impact.",
+    "label": "الرسالة",
+    "headline": "يرتكز تركيزي على الهندسة القوية والمنتجات المبنية على الذكاء الاصطناعي والأنظمة القابلة للتوسع من أجل",
+    "headline_muted": "تحقيق تأثير حقيقي في العالم.",
     "pills": {
-      "ai_agents": "AI Agents",
-      "ux_engineering": "UX Engineering",
-      "fullstack_architecture": "Full-stack Architecture",
-      "systems_design": "Systems Design",
-      "open_source": "Open Source",
-      "product_strategy": "Product Strategy"
+      "ai_agents": "وكلاء الذكاء الاصطناعي",
+      "ux_engineering": "هندسة تجربة المستخدم",
+      "fullstack_architecture": "هندسة البرمجيات الكاملة",
+      "systems_design": "تصميم الأنظمة",
+      "open_source": "المصادر المفتوحة",
+      "product_strategy": "استراتيجية المنتج"
     }
   },
   "process": {
-    "label": "/ How I work",
-    "headline": "Path to shipped features",
-    "step1_title": "Architecture",
-    "step1_desc": "Mapping out the system constraints, data flow, and UI surface. Deciding exactly what to build and what not to build.",
-    "step2_title": "Implementation",
-    "step2_desc": "Deep focus engineering. Translating the mental model into solid Next.js and Python code with robust AI integrations.",
-    "step3_title": "Refinement",
-    "step3_desc": "Polishing the sharp edges. Adding micro-animations, optimizing performance, and listening closely to telemetry and user feedback."
+    "label": "/ كيف أعمل",
+    "headline": "مسار الميزات المُشغَّلة",
+    "step1_title": "التصميم المعماري",
+    "step1_desc": "رسم خريطة لقيود النظام، وتدفق البيانات، والواجهة. تحديد ما يجب بناؤه وما لا يجب بناؤه بدقة.",
+    "step2_title": "التنفيذ",
+    "step2_desc": "هندسة بتركيز عميق. تحويل النموذج الذهني إلى كود Next.js و Python قوي مع تكاملات ذكاء اصطناعي متينة.",
+    "step3_title": "التحسين",
+    "step3_desc": "تنعيم الحواف الحادة. إضافة حركات دقيقة، وتحسين الأداء، والاستماع عن كثب إلى بيانات القياسات وملاحظات المستخدمين."
   },
   "works": {
-    "label": "/ Selected Works",
-    "headline": "Shipped to production",
-    "view_all": "View all {count} projects"
+    "label": "/ الأعمال المختارة",
+    "headline": "تم النشر في الإنتاج",
+    "view_all": "عرض جميع المشاريع {count}"
   },
   "now_preview": {
-    "headline": "What I'm doing <em>now</em>",
-    "view_all": "Full log"
+    "headline": "ما أفعله <em>الآن</em>",
+    "view_all": "السجل الكامل"
   },
   "now": {
     "sections": {
-      "building": "Building",
-      "shipped": "Shipped",
-      "thinking": "Thinking",
-      "reading": "Reading"
+      "building": "جارٍ البناء",
+      "shipped": "تم الشحن",
+      "thinking": "جارٍ التفكير",
+      "reading": "جارٍ القراءة"
     },
-    "no_updates": "No updates yet.",
-    "last_updated": "Last updated:"
+    "no_updates": "لا توجد تحديثات بعد.",
+    "last_updated": "آخر تحديث:"
   },
   "pricing": {
-    "label": "/ Engagement Models",
-    "headline": "Choose how we work together",
-    "description": "Not a Swiss army knife — a studio that delivers every domain to professional standards.",
-    "recommended": "Recommended",
-    "availability": "Accepting new projects · ~2 weeks to start",
-    "capabilities_label": "/ Capabilities",
-    "radar_title": "Capability",
+    "label": "/ نماذج التعاون",
+    "headline": "اختر كيف نعمل معًا",
+    "description": "ليس سكينًا سويسريًا متعدد الاستخدامات — بل استوديو يقدم كل مجال وفق معايير احترافية.",
+    "recommended": "موصى به",
+    "availability": "نقبل مشاريع جديدة · بدء العمل خلال أسبوعين تقريبًا",
+    "capabilities_label": "/ القدرات",
+    "radar_title": "القدرات",
     "stats": [
       {
         "value": 50,
@@ -136,66 +136,50 @@
     ],
     "tiers": {
       "chat": {
-        "name": "Chat",
-        "price": "Free",
-        "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
-        "cta": "Talk to my Soul",
+        "name": "محادثة",
+        "price": "مجاني",
+        "description": "مكالمة سريعة مدتها 15 دقيقة",
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
+        "cta": "تحدث مع روحي",
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "قهوة",
         "price": "¥18",
-        "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
-        "cta": "Buy me a coffee",
+        "description": "بقيمة فنجان قهوة",
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
+        "cta": "اشترِ لي قهوة",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
       "hire": {
-        "name": "Hire Me",
-        "price": "Per project",
-        "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
-        "cta": "Extend an Olive Branch",
+        "name": "وظّفني",
+        "price": "حسب المشروع",
+        "description": "تعاون احترافي كامل",
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
+        "cta": "أرسل غصن الزيتون",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
       "partner": {
-        "name": "Dream Partner",
-        "price": "Grow together",
-        "description": "Long-term co-creation",
+        "name": "شريك الحلم",
+        "price": "ننمو معًا",
+        "description": "الابتكار المشترك طويل الأمد",
         "features": [
           "Everything above",
           "Product co-creation",
           "Growth hacking system",
           "Equity / revenue share"
         ],
-        "cta": "Share your vision",
+        "cta": "شارك رؤيتك",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
     },
     "services": {
       "engineering": {
-        "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "name": "هندسة المنتج",
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
-        "name": "AI & Automation",
+        "name": "الذكاء الاصطناعي والأتمتة",
         "items": [
           "AI Agent architecture",
           "OpenClaw workflows",
@@ -204,14 +188,11 @@
         ]
       },
       "design": {
-        "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "name": "التصميم والمنتج",
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
-        "name": "Growth & Global",
+        "name": "النمو والعالمية",
         "items": [
           "Marketing strategy",
           "Growth hacking",
@@ -221,315 +202,307 @@
         ]
       },
       "consulting": {
-        "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "name": "الاستشارات",
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
-        "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "name": "رأس المال الاستثماري والاستراتيجية",
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
   "constellation": {
     "label": "/ Constellation",
-    "headline": "The people who know",
-    "description": "They've worked with him. They've seen the work. Here's what they think.",
-    "cta": "Leave a fragment",
-    "cta_hint": "Be honest.",
-    "empty": "Nothing here yet."
+    "headline": "الأشخاص الذين يعرفون",
+    "description": "لقد عملوا معه. لقد رأوا العمل. إليك ما يرونه.",
+    "cta": "اترك شذرة",
+    "cta_hint": "كن صادقًا.",
+    "empty": "لا شيء هنا بعد."
   },
   "cta": {
-    "headline": "Let's build something",
-    "description": "I work with teams and founders who see digital presence and AI not just as a duty, but as a strategic growth driver.",
-    "email": "Start a project",
-    "calendar": "Book a call"
+    "headline": "لنبنِ شيئًا",
+    "description": "أعمل مع فرق ومؤسسين يرون في الوجود الرقمي والذكاء الاصطناعي ليس مجرد واجب، بل محركًا استراتيجيًا للنمو.",
+    "email": "ابدأ مشروعًا",
+    "calendar": "احجز مكالمة"
   },
   "footer": {
-    "tagline": "Building what doesn't exist yet.",
-    "status_available": "Available for select collaborations",
-    "location": "Wuxi, China",
-    "nav_work": "Work",
-    "nav_thinking": "Thinking",
-    "nav_now": "Now",
-    "nav_about": "About",
-    "nav_soul": "Soul",
-    "nav_links": "Links",
-    "email_cta": "Start a project →",
-    "built_with": "Built with",
-    "back_to_top": "↑ Back to top",
-    "rss_label": "RSS Feed",
+    "tagline": "نبني ما لم يُبنَ بعد.",
+    "status_available": "متاح للتعاون في مشاريع محددة",
+    "location": "ووشي، الصين",
+    "nav_work": "أعمالي",
+    "nav_thinking": "أفكاري",
+    "nav_now": "الآن",
+    "nav_about": "نبذة",
+    "nav_soul": "روح المشروع",
+    "nav_links": "روابط",
+    "email_cta": "ابدأ مشروعًا →",
+    "built_with": "مبني باستخدام",
+    "back_to_top": "↑ العودة للأعلى",
+    "rss_label": "تغذية RSS",
     "github_label": "GitHub",
     "x_label": "X (Twitter)",
     "linkedin_label": "LinkedIn",
     "wechat_label": "WeChat",
-    "wechat_copied": "WeChat ID copied!"
+    "wechat_copied": "تم نسخ معرف WeChat!"
   },
   "pages": {
     "home": {
-      "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_title": "تسيكا لوك — مُصمِّم أصيل بالذكاء الاصطناعي",
+      "metadata_desc": "الرئيس التنفيذي ومُصمِّم أصيل بالذكاء الاصطناعي في Nebutra Intelligence. أبنِي أنظمة ذكية، لا مجرد منتجات."
     },
     "work": {
-      "label": "/ 19 shipped projects",
-      "headline": "Things I've built",
-      "description": "Shipped products, research tools, and AI experiments. Most are real projects with real users.",
-      "metadata_title": "Work — Tseka Luk",
-      "metadata_desc": "Shipped products, research tools, and AI experiments.",
-      "back": "All Projects",
-      "source_code": "Source Code",
-      "live_demo": "Live Demo"
+      "label": "/ 19 مشروعًا مُنجزًا",
+      "headline": "ما بنيتُه",
+      "description": "منتجات مُنجزَة، أدوات بحث، وتجارب ذكاء اصطناعي. معظمها مشاريع حقيقية مع مستخدمين حقيقيين.",
+      "metadata_title": "أعمالي — تسيكا لوك",
+      "metadata_desc": "منتجات مُنجزَة، أدوات بحث، وتجارب ذكاء اصطناعي.",
+      "back": "جميع المشاريع",
+      "source_code": "الكود المصدري",
+      "live_demo": "عرض مباشر"
     },
     "thinking": {
-      "label": "/ Essays & ideas",
-      "headline": "Thinking",
-      "metadata_title": "Thinking — Tseka Luk",
-      "metadata_desc": "Essays on building, growth, and AI.",
-      "empty_title": "Essays coming soon.",
-      "empty_subtitle": "In the meantime, ask <link>my Soul</link>."
+      "label": "/ مقالات وأفكار",
+      "headline": "تفكُّراتي",
+      "metadata_title": "تفكُّراتي — تسيكا لوك",
+      "metadata_desc": "مقالات عن البناء، النمو، والذكاء الاصطناعي.",
+      "empty_title": "مقالات قادمة قريبًا.",
+      "empty_subtitle": "في هذه الأثناء، اسأل <link>روحي</link>."
     },
     "now": {
-      "label": "/ Updated daily",
-      "headline": "Now",
-      "description": "This page is updated daily by an AI agent that reviews my work and distills the highlights. Think of it as a living changelog for what I'm building, thinking, and shipping.",
-      "metadata_title": "Now — Tseka Luk",
-      "metadata_desc": "What I'm currently working on, thinking about, and shipping."
+      "label": "/ تُحدَّث يوميًا",
+      "headline": "الآن",
+      "description": "تُحدَّث هذه الصفحة يوميًا بواسطة وكيل ذكاء اصطناعي يراجع عملي ويستخلص أبرز النقاط. فكِّر فيها كسجل تغييرات حي لما أبنِيه، أفكر فيه، وأُنجزه.",
+      "metadata_title": "الآن — تسيكا لوك",
+      "metadata_desc": "ما أعمل عليه حالياً، أفكر فيه، وأطلقه."
     },
     "about": {
-      "metadata_title": "About — Tseka Luk",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-      "label": "/ About",
-      "headline": "Building intelligent systems,",
-      "headline_muted": "not just products.",
-      "bio_1": "I'm Tseka Luk, CEO of Nebutra Intelligence, based in Wuxi, China. I build AI-native products designed for global markets—tools that are not just technically sophisticated but genuinely useful and beautifully simple.",
-      "bio_2": "My philosophy is what I call Vibe Business: build with taste, ship with speed, and let the product speak louder than any pitch deck. Every project starts from a real itch, and every feature earns its place.",
-      "bio_3": "I think in systems, obsess over details, and believe the best way to predict the future is to build it—one commit at a time.",
+      "metadata_title": "حول — تسكا لوك",
+      "metadata_desc": "الرئيس التنفيذي ومبني أنظمة ذكية في Nebutra Intelligence. أبني أنظمة ذكية، ليس مجرد منتجات.",
+      "label": "/ حول",
+      "headline": "أبني أنظمة ذكية،",
+      "headline_muted": "ليس مجرد منتجات.",
+      "bio_1": "أنا تسكا لوك، الرئيس التنفيذي لشركة Nebutra Intelligence، مقرّي في ووشي، الصين. أبني منتجات ذكية مصممة للأسواق العالمية — أدوات ليست متطورة تقنياً فحسب، بل مفيدة حقاً وبسيطة بشكل جميل.",
+      "bio_2": "فلسفتي هي ما أسميه الأعمال بالروح: ابنِ بذوق، أطلق بسرعة، ودع المنتج يتحدث بصوت أعلى من أي عرض تقديمي. كل مشروع يبدأ من حاجة حقيقية، وكل ميزة تكسب مكانها.",
+      "bio_3": "أفكر بالنظم، أهتم بالتفاصيل، وأؤمن بأن أفضل طريقة للتنبؤ بالمستقبل هي بناؤه — التزام واحد في كل مرة.",
       "photo_tag": "INTP · 4w5",
-      "photo_location": "Wuxi, China",
-      "stat_projects": "Projects",
-      "stat_awards": "Awards",
-      "stat_first_prizes": "First Prizes",
-      "stat_certs": "Certs",
-      "resume_download": "Download Resume",
-      "journey_label": "/ Journey",
-      "journey_2020": "Self-taught web development & digital marketing",
-      "journey_2022": "BSc in Information & Computing Science and BEng in Computer Science & Technology, Jiangsu Ocean University",
-      "journey_2023": "AI-native engineering, competitive programming",
+      "photo_location": "ووشي، الصين",
+      "stat_projects": "المشاريع",
+      "stat_awards": "الجوائز",
+      "stat_first_prizes": "المراكز الأولى",
+      "stat_certs": "الشهادات",
+      "resume_download": "تحميل السيرة الذاتية",
+      "journey_label": "/ الرحلة",
+      "journey_2020": "تعلّم ذاتي لتطوير الويب والتسويق الرقمي",
+      "journey_2022": "بكالوريوس في علوم المعلومات والحوسبة وبكالوريوس هندسة في علوم الحاسوب والتكنولوجيا، جامعة جيانغسو البحرية",
+      "journey_2023": "الهندسة الذكية والبرمجة التنافسية",
       "journey_2024": "Founded Wuxi Nebutra Intelligence Technology",
-      "journey_2025": "CEO, Nebutra Intelligence — building for global markets",
-      "journey_now": "Shipping AI-native products, one commit at a time",
-      "awards_label": "/ Things I've tried",
-      "awards_count": "10 attempts",
-      "awards_description": "Not an expert at anything — just someone who wants to try everything, and try it well.",
-      "award_1_title": "MCM/ICM Mathematical Modeling",
-      "award_1_level": "Honorable Mention",
-      "award_1_detail": "NSGA-III tourism optimizer, 8.3% prediction error vs. 28,000+ teams",
-      "award_2_title": "Lanqiao Cup C/C++ (Jiangsu)",
-      "award_2_level": "First Prize",
-      "award_2_detail": "Top 1% in provincial algorithmic programming",
-      "award_3_title": "TAM-SEM Low-Altitude Economy",
-      "award_3_level": "First Prize (Provincial)",
-      "award_3_detail": "2,609 respondents, discovered 'risk paradox' (beta=0.262, p<0.001)",
-      "award_4_title": "APMCM Mathematical Modeling",
-      "award_4_level": "First Prize",
-      "award_4_detail": "Pet industry forecast: LASSO R-squared=0.9850, predicted $52B market",
-      "award_5_title": "Shuwei Cup Math Modeling",
-      "award_5_level": "First Prize + Grand Innovation",
-      "award_5_detail": "Biomass co-pyrolysis: found 28.44% optimal ratio via LightGBM + PSO",
-      "award_6_title": "Brand Strategy Competition",
-      "award_6_level": "Second Prize (National)",
-      "award_6_detail": "1,200+ samples, Claude + Flux + Midjourney AIGC pipeline",
-      "award_7_title": "Global AI Algorithm Elite",
-      "award_7_level": "Third Prize (National Final)",
-      "award_7_detail": "Warehouse drone: 95% recognition accuracy, 3-min shelf traversal",
-      "award_8_title": "National Math Modeling (Jiangsu)",
-      "award_8_level": "Second Prize",
-      "award_8_detail": "Real estate cost prediction: Random Forest outperformed CNN-LSTM",
-      "award_9_title": "Electronic Design (TI Cup)",
-      "award_9_level": "Second Prize",
-      "award_9_detail": "Self-aiming system: adaptive PID + Kalman filter on MSPM0G3507",
-      "award_10_title": "Translation Competition",
-      "award_10_level": "Grand Prize (National Final)",
-      "award_10_detail": "Non-English major, highest national honor in bilingual translation",
-      "credentials_label": "/ Credentials",
-      "cred_1": "Columbia University — Numerical Models (Grade A)",
-      "cred_2": "Huawei HCIA-Datacom Network Engineer",
-      "cred_3": "HarmonyOS Advanced Developer",
-      "cred_4": "Utility Patent — Cable Distribution Equipment",
-      "cred_5": "3 Software Copyrights (Power Opt, OD Classify, Graph Solver)",
+      "journey_2025": "الرئيس التنفيذي، Nebutra Intelligence — نبني للأسواق العالمية",
+      "journey_now": "إطلاق منتجات أصلية بالذكاء الاصطناعي، التزام واحد تلو الآخر",
+      "awards_label": "/ تجاربي",
+      "awards_count": "10 محاولات",
+      "awards_description": "ليس خبيراً في أي شيء — مجرد شخص يريد تجربة كل شيء، وتجربته بشكل جيد.",
+      "award_1_title": "النمذجة الرياضية MCM/ICM",
+      "award_1_level": "ذكر شرف",
+      "award_1_detail": "محسّن سياحة NSGA-III، خطأ توقع 8.3% مقابل أكثر من 28,000 فريق",
+      "award_2_title": "كأس لانكيو C/C++ (جيانغسو)",
+      "award_2_level": "الجائزة الأولى",
+      "award_2_detail": "أفضل 1% في البرمجة الخوارزمية على مستوى المقاطعة",
+      "award_3_title": "اقتصاد الارتفاعات المنخفضة TAM-SEM",
+      "award_3_level": "الجائزة الأولى (المقاطعة)",
+      "award_3_detail": "2,609 مستجيب، اكتشاف 'مفارقة المخاطر' (بيتا=0.262، p<0.001)",
+      "award_4_title": "النمذجة الرياضية APMCM",
+      "award_4_level": "الجائزة الأولى",
+      "award_4_detail": "توقع صناعة الحيوانات الأليفة: LASSO R-squared=0.9850، توقع سوق بقيمة 52 مليار دولار",
+      "award_5_title": "كأس شووي للنمذجة الرياضية",
+      "award_5_level": "الجائزة الأولى + الجائزة الكبرى للابتكار",
+      "award_5_detail": "التحلل الحراري المشترك للكتلة الحيوية: تحديد النسبة المثلى بنسبة 28.44% باستخدام LightGBM + PSO",
+      "award_6_title": "مسابقة استراتيجية العلامة التجارية",
+      "award_6_level": "الجائزة الثانية (وطنية)",
+      "award_6_detail": "أكثر من 1,200 عينة، خط أنابيب AIGC باستخدام Claude + Flux + Midjourney",
+      "award_7_title": "نخبة خوارزميات الذكاء الاصطناعي العالمية",
+      "award_7_level": "الجائزة الثالثة (النهائي الوطني)",
+      "award_7_detail": "الطائرة المسيرة للمستودعات: دقة التعرف 95%، اجتياز الرفوف في 3 دقائق",
+      "award_8_title": "النمذجة الرياضية الوطنية (جيانغسو)",
+      "award_8_level": "الجائزة الثانية",
+      "award_8_detail": "تنبؤ تكاليف العقارات: تفوق Random Forest على CNN-LSTM",
+      "award_9_title": "التصميم الإلكتروني (كأس TI)",
+      "award_9_level": "الجائزة الثانية",
+      "award_9_detail": "نظام التصويب الذاتي: PID تكيفي + فلتر كالمان على MSPM0G3507",
+      "award_10_title": "مسابقة الترجمة",
+      "award_10_level": "الجائزة الكبرى (النهائي الوطني)",
+      "award_10_detail": "غير متخصص في اللغة الإنجليزية، أعلى شرف وطني في الترجمة ثنائية اللغة",
+      "credentials_label": "/ الشهادات",
+      "cred_1": "جامعة كولومبيا — النماذج العددية (درجة A)",
+      "cred_2": "مهندس شبكات Huawei HCIA-Datacom",
+      "cred_3": "مطور متقدم HarmonyOS",
+      "cred_4": "براءة اختراع وظيفية — معدات توزيع الكابلات",
+      "cred_5": "3 حقوق ملكية فكرية برمجية (Power Opt، OD Classify، Graph Solver)",
       "cred_6": "CET-6: 543 · CET-4: 575",
-      "cred_7": "Macau UST — Innovation & Entrepreneurship",
-      "cred_8": "Prompt Engineer (Datawhale x iFLYTEK)",
-      "personality_label": "/ Personality",
+      "cred_7": "جامعة ماكاو للتكنولوجيا — الابتكار وريادة الأعمال",
+      "cred_8": "مهندس الأوامر (Datawhale × iFLYTEK)",
+      "personality_label": "/ الشخصية",
       "personality_intp_name": "INTP",
-      "personality_intp_subtitle": "The Logician",
-      "personality_intp_desc": "Analytical, systematic, and driven by an insatiable curiosity about how systems really work.",
+      "personality_intp_subtitle": "المُتفلسف المنطقي",
+      "personality_intp_desc": "تحليلية ومنهجية، مدفوعة بدافع فضول لا يُشبّ لمعرفة كيفية عمل الأنظمة حقًا.",
       "personality_intp_source": "16Personalities",
       "personality_4w5_name": "4w5",
-      "personality_4w5_subtitle": "The Bohemian",
-      "personality_4w5_desc": "Identity-driven depth and authentic self-expression, tempered by intellectual withdrawal.",
+      "personality_4w5_subtitle": "المُغامر الرومانسي",
+      "personality_4w5_desc": "عمق قائم على الهوية والتعبير الأصيل عن الذات، مُعتدل بالانسحاب الفكري.",
       "personality_4w5_source": "Enneagram",
-      "beliefs_label": "/ Things I believe",
-      "belief_1": "The people who are crazy enough to think they can change the world are the ones who do.",
-      "belief_1_credit": "— Steve Jobs",
-      "life_label": "/ Life",
-      "life_music": "Music",
-      "life_philosophy": "Philosophy",
-      "life_games": "Games",
-      "contact_anchor_label": "/ Contact",
-      "contact_headline": "Let's build something"
+      "beliefs_label": "/ ما أؤمن به",
+      "belief_1": "الأشخاص المجنونون بما يكفي ليعتقدوا أنهم يستطيعون تغيير العالم هم من يفعلون ذلك.",
+      "belief_1_credit": "— ستيف جوبز",
+      "life_label": "/ الحياة",
+      "life_music": "الموسيقى",
+      "life_philosophy": "الفلسفة",
+      "life_games": "ألعاب",
+      "contact_anchor_label": "/ تواصل",
+      "contact_headline": "لنبني شيئًا معًا"
     },
     "uses": {
-      "label": "/ Uses",
-      "headline": "What I use to build.",
-      "description": "Hardware, software, and AI tools I actually use daily. Dogfooding included.",
-      "section_workstation": "/ Workstation",
-      "section_editors": "/ Editors",
-      "section_terminal": "/ Terminal",
-      "section_ai_toolkit": "/ AI Toolkit",
-      "ai_toolkit_desc": "Tools I actively use — not a marketing list. I switch between them depending on the task.",
-      "section_dogfooding": "/ Dogfooding"
+      "label": "/ الاستخدامات",
+      "headline": "ما أستخدمه للبناء.",
+      "description": "أدوات العتاد والبرمجيات والذكاء الاصطناعي التي أستخدمها فعليًا يوميًا. بما في ذلك استخدام منتجاتي ذاتيًا.",
+      "section_workstation": "/ محطة العمل",
+      "section_editors": "/ المحررات",
+      "section_terminal": "/ الطرفية",
+      "section_ai_toolkit": "/ مجموعة أدوات الذكاء الاصطناعي",
+      "ai_toolkit_desc": "أدوات أستخدمها بنشاط — ليست قائمة تسويقية. أتحول بينها حسب المهمة.",
+      "section_dogfooding": "/ الاستخدام الذاتي"
     },
     "links": {
-      "headline": "Links",
-      "description": "Find me across the internet.",
-      "international": "International",
-      "china": "China Platforms",
-      "wechat_click": "Click to see QR code",
-      "metadata_title": "Links — Tseka Luk",
-      "metadata_desc": "Find me across the internet."
+      "headline": "روابط",
+      "description": "اعثر عليّ عبر الإنترنت.",
+      "international": "دولي",
+      "china": "منصات الصين",
+      "wechat_click": "انقر لعرض رمز الاستجابة السريعة",
+      "metadata_title": "روابط — Tseka Luk",
+      "metadata_desc": "اعثر عليّ عبر الإنترنت."
     },
     "privacy": {
-      "metadata_title": "Privacy Policy — Tseka Luk",
-      "metadata_desc": "How this site handles your data.",
-      "headline": "Privacy Policy",
-      "last_updated": "Last updated: March 2026",
-      "intro": "This site is a personal portfolio. I respect your privacy and collect as little data as possible.",
-      "analytics_title": "Analytics",
-      "analytics_body": "This site uses Plausible Analytics, a privacy-friendly, cookie-free analytics tool. No personal data is collected. All data is aggregated and anonymous. No data is shared with third parties.",
-      "auth_title": "Authentication",
-      "auth_body": "If you sign in (via GitHub, Google, or Linux DO), I receive your public profile information (name, avatar, email if available). This is used solely to identify you in the Soul chat. I do not sell, share, or use this data for any other purpose. Session data is stored as an encrypted JWT cookie in your browser.",
-      "chat_title": "Soul Chat",
-      "chat_body": "Messages you send in the Soul chat are processed by the Anthropic API (Claude) in real time and are not stored on my servers. Conversation history exists only in your browser session.",
-      "cookies_title": "Cookies",
-      "cookies_body": "This site uses only essential cookies: a session cookie for authentication and a theme preference cookie. No tracking cookies are used.",
-      "third_party_title": "Third-party Services",
-      "third_party_body": "Plausible Analytics (privacy-friendly, EU-hosted), Anthropic API (chat processing), Vercel (hosting). No advertising or tracking services are used.",
-      "contact_title": "Contact",
-      "contact_body": "For any privacy-related questions, reach me at"
+      "metadata_title": "سياسة الخصوصية — Tseka Luk",
+      "metadata_desc": "كيفية تعامل هذا الموقع مع بياناتك.",
+      "headline": "سياسة الخصوصية",
+      "last_updated": "آخر تحديث: مارس 2026",
+      "intro": "هذا الموقع هو معرض أعمال شخصي. أحرص على خصوصيتك وأجمع أقل قدر ممكن من البيانات.",
+      "analytics_title": "التحليلات",
+      "analytics_body": "يستخدم هذا الموقع Plausible Analytics، أداة تحليلات تحترم الخصوصية ولا تستخدم ملفات تعريف الارتباط. لا يتم جمع أي بيانات شخصية. جميع البيانات مجمعة وغير مُعرَّفة. لا تتم مشاركة أي بيانات مع أطراف ثالثة.",
+      "auth_title": "المصادقة",
+      "auth_body": "إذا قمت بتسجيل الدخول (عبر GitHub أو Google أو Linux DO)، فأنا أتعلم معلومات ملفك الشخصي العام (الاسم، الصورة الرمزية، البريد الإلكتروني إن وُجد). تُستخدم هذه المعلومات فقط لتحديد هويتك في دردشة Soul. لا أبيع أو أشارك أو أستخدم هذه البيانات لأي غرض آخر. تُخزَّن بيانات الجلسة كملف تعريف ارتباط JWT مشفر في متصفحك.",
+      "chat_title": "دردشة Soul",
+      "chat_body": "يتم معالجة الرسائل التي ترسلها في دردشة Soul بواسطة Anthropic API (Claude) في الوقت الفعلي ولا تُخزَّن على خوادمي. تاريخ المحادثة موجود فقط في جلسة متصفحك.",
+      "cookies_title": "ملفات تعريف الارتباط",
+      "cookies_body": "يستخدم هذا الموقع ملفات تعريف ارتباط أساسية فقط: ملف تعريف ارتباط للجلسة للمصادقة وملف تعريف ارتباط لتفضيل المظهر. لا تُستخدم ملفات تعريف ارتباط للتتبع.",
+      "third_party_title": "خدمات أطراف ثالثة",
+      "third_party_body": "Plausible Analytics (تحترم الخصوصية، مُستضافة في الاتحاد الأوروبي)، Anthropic API (معالجة الدردشة)، Vercel (الاستضافة). لا تُستخدم خدمات إعلانية أو تتبع.",
+      "contact_title": "اتصل بنا",
+      "contact_body": "لأي أسئلة تتعلق بالخصوصية، تواصل معي عبر"
     },
     "guestbook": {
-      "label": "/ Guestbook",
-      "metadata_title": "Guestbook — Tseka Luk",
-      "metadata_desc": "Leave a message. Say hello.",
-      "headline": "Guestbook",
-      "description": "Leave a message, say hello, or share what you're building.",
-      "sign_in_prompt": "Sign in to leave a message.",
-      "placeholder": "Say something nice...",
-      "submit": "Post",
-      "empty": "No messages yet. Be the first!"
+      "label": "/ سجل الزوار",
+      "metadata_title": "سجل الزوار — Tseka Luk",
+      "metadata_desc": "اترك رسالة. قل مرحبًا.",
+      "headline": "سجل الزوار",
+      "description": "اترك رسالة، أو قل مرحباً، أو شارك ما تبنيه.",
+      "sign_in_prompt": "سجّل الدخول لترك رسالة.",
+      "placeholder": "قل شيئاً لطيفاً...",
+      "submit": "نشر",
+      "empty": "لا توجد رسائل بعد. كن الأول!"
     }
   },
   "projects": {
     "any2md": {
-      "tagline": "Where other converters lose 40% of context, this one keeps 93%",
-      "description": "Most converters silently drop formulas, tables, and cross-references. any2md uses a dual-engine—PyMuPDF for text + Qwen-VL for vision—then DeepSeek LLM reconstructs context via layered prompt + few-shot + CoT. Processes 68 pages/min with 85% table structuring and 90% LaTeX formula preservation. Imported 20,000+ pages into a team knowledge base in one week, cutting manual cleanup by 70%."
+      "tagline": "بينما تفقد المحولات الأخرى 40% من السياق، يحتفظ هذا بـ 93%",
+      "description": "تتجاهل معظم المحولات صامتًا المعادلات والجداول والمرجعيات المتقاطعة. يستخدم any2md محركًا مزدوجًا—PyMuPDF للنص + Qwen-VL للرؤية—ثم يعيد DeepSeek LLM بناء السياق عبر مطالبات متعددة الطبقات + أمثلة قليلة + سلسلة التفكير. يعالج 68 صفحة/دقيقة مع هيكلة 85% من الجداول والحفاظ على 90% من معادلات LaTeX. استُوردت أكثر من 20,000 صفحة إلى قاعدة معرفة الفريق في أسبوع واحد، مما قلل التنظيف اليدوي بنسبة 70%."
     },
     "low-altitude-economy": {
-      "tagline": "Discovered a paradox: risk perception actually increases adoption",
-      "description": "Everyone assumed perceived risk would deter UAM adoption. Our TAM–SEM model on 2,609 respondents (93.1% recovery rate, KMO=0.951) proved the opposite: risk positively drives willingness to adopt (β=0.262, p<0.001). We also mined 1,695 Bilibili comments with SnowNLP to map public sentiment. The “risk paradox” finding challenged a decade of technology adoption literature. Provincial First Prize."
+      "tagline": "اكتشاف مفارقة: إدراك المخاطر يزيد فعليًا من الاعتماد",
+      "description": "فترض الجميع أن إدراك المخاطر سيثني عن اعتماد UAM. أثبت نموذج TAM–SEM الخاص بنا على 2,609 مستجيب (معدل استرداد 93.1%، KMO=0.951) العكس: المخاطر تدفع إيجابيًا الرغبة في الاعتماد (β=0.262، p<0.001). كما قمنا بتعدين 1,695 تعليقًا على Bilibili باستخدام SnowNLP لرسم خريطة المشاعر العامة. وجدنا أن \"مفارقة المخاطر\" تتحدى عقدًا من أدبيات اعتماد التكنولوجيا. الجائزة الأولى على مستوى المقاطعة."
     },
     "nebutra-sailor": {
-      "tagline": "One monorepo, 4 production apps, 12,000+ lines of shared code",
-      "description": "Enterprise-grade monorepo powering 4 apps (marketing, dashboard, docs, studio) from 6 shared packages. Next.js 16 + React 19 + Tailwind v4, with a custom design token pipeline, 541 tree-shakable icons, and multi-theme engine supporting 6 oklch color schemes. Ships features 3x faster than separate repos."
+      "tagline": "مستودع أحادي واحد، 4 تطبيقات إنتاجية، أكثر من 12,000 سطر من الكود المشترك",
+      "description": "مستودع أحادي على مستوى المؤسسات يدعم 4 تطبيقات (التسويق، لوحة التحكم، الوثائق، الاستوديو) من 6 حزم مشتركة. Next.js 16 + React 19 + Tailwind v4، مع خط أنابيب مخصص لرموز التصميم، و541 أيقونة قابلة للقص، ومحرك متعدد السمات يدعم 6 مخططات ألوان oklch. ينقل الميزات بسرعة 3 أضعاف مقارنة بالمستودعات المنفصلة."
     },
     "mcm-icm": {
-      "tagline": "Optimizing tourism vs. environment with 8.3% prediction error",
-      "description": "MCM/ICM 2025 (Problem B): built a system dynamics + NSGA-III multi-objective optimizer balancing tourist flow, environmental quality, and social satisfaction. Achieved 8.3% tourist prediction error with R²>0.5 on a three-dimensional coupled model. Competed against 28,000+ teams globally. Honorable Mention."
+      "tagline": "تحسين السياحة مقابل البيئة بخطأ تنبؤ 8.3%",
+      "description": "MCM/ICM 2025 (المشكلة ب): بناء مُحسِّن متعدد الأهداف يجمع بين ديناميكيات النظام وNSGA-III لموازنة تدفق السياح وجودة البيئة والرضا الاجتماعي. حقق خطأ تنبؤ سياحي بنسبة 8.3% مع R²>0.5 على نموذج مقترن ثلاثي الأبعاد. تنافس ضد أكثر من 28,000 فريق عالميًا. ذكر شرفي."
     },
     "biomass-modeling": {
-      "tagline": "Found the exact 28.44% ratio—won Grand Innovation Award for it",
-      "description": "Three-model ensemble (LightGBM + Gaussian Process Regression + PSO) tested across 500+ pyrolysis data points to discover that 28.44% biomass-to-coal ratio maximizes clean energy output with R²>0.95 prediction accuracy. The entropy-weighted fuzzy evaluation framework quantified non-linear interactions between 3 yield types (gas, char, liquid). Judges praised the methodology as transferable across energy domains. First Prize + Grand Innovation Award at Shuwei Cup."
+      "tagline": "اكتشاف النسبة الدقيقة 28.44%—فاز بالجائزة الكبرى للابتكار عليها",
+      "description": "مجموعة من ثلاثة نماذج (LightGBM + الانحدار بالعمليات الغاوسية + PSO) اختُبرت عبر أكثر من 500 نقطة بيانات تحلل حراري لاكتشاف أن نسبة 28.44% من الكتلة الحيوية إلى الفحم تعظم إنتاج الطاقة النظيفة بدقة تنبؤ R²>0.95. إطار التقييم الضبابي المرجح بالإنتروبيا كَمَّف التفاعلات غير الخطية بين 3 أنواع من الغلة (غاز، فحم، سائل). أشاد الحكام بالمنهجية لقابليتها للنقل عبر مجالات الطاقة. الجائزة الأولى + الجائزة الكبرى للابتكار في كأس شويوي."
     },
     "pet-industry": {
-      "tagline": "LASSO R²=0.9850 predicted a $52B market by 2026",
-      "description": "Built an integrated forecasting framework (ARIMAX-GARCH + VAR + LASSO + Prophet) spanning market size, pet population, and food manufacturing. LASSO regression identified key drivers with R²=0.9850. Cross-compared US/EU markets using HHI concentration index. Predicted 144.68M pets and 82.8% capacity utilization by 2026."
+      "tagline": "LASSO R²=0.9850 تنبأ بسوق بقيمة 52 مليار دولار بحلول 2026",
+      "description": "بناء إطار تنبؤ متكامل (ARIMAX-GARCH + VAR + LASSO + Prophet) يمتد عبر حجم السوق، عدد الحيوانات الأليفة، وتصنيع الطعام. حدد الانحدار LASSO المحركات الرئيسية بـ R²=0.9850. قارن بين أسواق الولايات المتحدة/أوروبا باستخدام مؤشر تركيز HHI. تنبأ بـ 144.68 مليون حيوان أليف و82.8% استغلال للطاقة بحلول 2026."
     },
     "cursor-export": {
-      "tagline": "86% less time on knowledge management—one-click conversation export",
-      "description": "Cursor IDE extension (7 GitHub stars) that exports AI conversations to structured Markdown. Tested on 214 conversations (1,980 messages): processing time dropped from 5.8 min to 0.8 min per conversation, code snippet loss rate under 0.5%, throughput 12.5 conversations/min. Cross-platform VSIX with >98% install success rate across Windows/macOS/Linux."
+      "tagline": "86% أقل وقت في إدارة المعرفة—تصدير المحادثات بنقرة واحدة",
+      "description": "إضافة لـ Cursor IDE (7 نجوم على GitHub) تصدّر محادثات الذكاء الاصطناعي إلى Markdown مُهيكل. اختُبرت على 214 محادثة (1,980 رسالة): انخفض وقت المعالجة من 5.8 دقيقة إلى 0.8 دقيقة لكل محادثة، معدل فقدان مقاطع الكود أقل من 0.5%، الإنتاجية 12.5 محادثة/دقيقة. VSIX متعدد المنصات بمعدل نجاح تثبيت >98% عبر Windows/macOS/Linux."
     },
     "brand-strategy": {
-      "tagline": "1,200+ consumer samples × AIGC pipeline = 40% engagement lift",
-      "description": "Led a PEST-SWOT driven brand overhaul for Suzhou’s “林莓莓” agricultural product. Surveyed 1,200+ consumers to map purchase drivers and price sensitivity. Deployed Claude + Flux + Midjourney AIGC toolchain for brand stories and mascot concepts, cutting creative iteration from weeks to days. Projected 40%+ user engagement increase. National Second Prize."
+      "tagline": "أكثر من 1,200 عينة مستهلك × خط أنابيب AIGC = زيادة تفاعل 40%",
+      "description": "قيادة إعادة صياغة علامة تجارية مدفوعة بـ PEST-SWOT لمنتج زراعي \"林莓莓\" في سوتشو. استُطلعت أكثر من 1,200 مستهلك لرسم خريطة محركات الشراء وحساسية السعر. نُفذت سلسلة أدوات AIGC من Claude + Flux + Midjourney لقصص العلامة التجارية ومفاهيم الشعار، مما قلل تكرار الإبداع من أسابيع إلى أيام. توقع زيادة تفاعل المستخدمين بنسبة 40%+. الجائزة الثانية الوطنية."
     },
     "mineru-skill": {
-      "tagline": "Zero-config Claude Code skill—PDF to Markdown in one command",
-      "description": "Open-source Claude Code skill that wraps MinerU for layout-aware PDF/document conversion. One-command install, no API keys, 3 supported formats (PDF, DOCX, PPTX). Handles 100+ page documents with table and formula preservation. Published on Smithery marketplace, 5+ community installs in first week. Built for the Claude Code ecosystem with auto-detection of document type and intelligent chunking."
+      "tagline": "مهارة Claude Code بدون إعداد—PDF إلى Markdown بأمر واحد",
+      "description": "مهارة مفتوحة المصدر لـ Claude Code تغلف MinerU لتحويل المستندات/PDF مع مراعاة التخطيط. تثبيت بأمر واحد، بدون مفاتيح API، 3 صيغ مدعومة (PDF، DOCX، PPTX). يتعامل مع مستندات تزيد عن 100 صفحة مع الحفاظ على الجداول والمعادلات. نُشرت على سوق Smithery، أكثر من 5 تثبيتات مجتمعية في الأسبوع الأول. بُنيت لنظام Claude Code مع اكتشاف تلقائي لنوع المستند وتجزئة ذكية."
     },
     "warehouse-drone": {
-      "tagline": "95% recognition accuracy, full shelf scan in under 3 minutes",
-      "description": "Multi-rotor drone system for automated warehouse stocktaking. Integrated STM32 flight controller + OpenMV vision + BLE communication for autonomous waypoint navigation and QR code scanning across 3D shelf structures. 95% barcode recognition accuracy with laser calibration, completing full inventory traversal in under 3 minutes."
+      "tagline": "95% دقة التعرف، مسح كامل للرفوف في أقل من 3 دقائق",
+      "description": "نظام طائرة متعددة الدوارات للمخزون الآلي في المستودعات. دمج وحدة تحكم STM32 للطيران + رؤية OpenMV + اتصال BLE للتنقل المستقل عبر نقاط الطريق ومسح رموز QR عبر هياكل الرفوف ثلاثية الأبعاد. دقة تعرف باركود 95% مع معايرة ليزرية، إكمال اجتياز المخزون الكامل في أقل من 3 دقائق."
     },
     "cdtmp": {
-      "tagline": "Task success rate +18pp by turning prompt tricks into reusable protocol",
-      "description": "Turned ad-hoc prompt engineering into a structured agent protocol: task decomposition, state machines, retry strategies, and auditable intermediate states. Tested on 120 cross-domain tasks: success rate jumped from 63% to 81%, JSON compliance from 72% to 94%, rework rounds dropped 29%. Framework-agnostic—plugs into LangGraph, Semantic Kernel, or custom executors."
+      "tagline": "معدل نجاح المهام +18 نقطة مئوية بتحويل حيل المطالبة إلى بروتوكول قابل لإعادة الاستخدام",
+      "description": "حوّل هندسة المطالبات العشوائية إلى بروتوكول وكيل منظم: تفكيك المهام، آلات الحالة، استراتيجيات إعادة المحاولة، وحالات وسيطة قابلة للتدقيق. تم الاختبار على 120 مهمة عبر مجالات متعددة: قفز معدل النجاح من 63% إلى 81%، والامتثال لـ JSON من 72% إلى 94%، وانخفضت جولات إعادة العمل بنسبة 29%. مستقل عن الإطار—يتكامل مع LangGraph، Semantic Kernel، أو منفذين مخصصين."
     },
     "next-unicorn": {
-      "tagline": "Your codebase has 47 hand-rolled wheels—this finds them all",
-      "description": "Every codebase accumulates Vibe Coding debt: custom date formatters, DIY loggers, bespoke state machines. Next-Unicorn audits your code via Context7 MCP, identifies reinvented wheels, generates migration plans, and ships delete-code checklists. 176 tests passed with 29 property-based verifications. Published on Smithery + npm, supports 35+ AI agents including Claude Code, Cursor, and OpenCode."
+      "tagline": "كودك يحتوي على 47 عجلة مصنوعة يدوياً—هذا يجد كل واحدة منها",
+      "description": "تتراكم كل قاعدة كود ديون الترميز العاطفي: منسقات تواريخ مخصصة، مسجلات DIY، آلات حالة فريدة. Next-Unicorn يتدقق في كودك عبر Context7 MCP، يحدد العجلات المُعاد اختراعها، يولّد خطط الترحيل، ويصدر قوائم حذف الكود. 176 اختبار نجح مع 29 تحقق قائم على الخصائص. نُشر على Smithery + npm، يدعم 35+ وكيل ذكاء اصطناعي بما في ذلك Claude Code، Cursor، و OpenCode."
     },
     "hydrogem-web": {
-      "tagline": "Real-time water quality dashboard with 5-second refresh and alerts",
-      "description": "React + TypeScript monitoring system tracking 12 water quality parameters (pH, turbidity, dissolved oxygen, etc.) with 5-second auto-refresh and configurable alert thresholds. Built with streaming data visualization and historical trend analysis for environmental monitoring."
+      "tagline": "لوحة مراقبة جودة المياه في الوقت الفعلي مع تحديث كل 5 ثوانٍ وتنبيهات",
+      "description": "نظام مراقبة React + TypeScript يتتبع 12 معلمة جودة مياه (pH، العكورة، الأكسجين الذائب، إلخ) مع تحديث تلقائي كل 5 ثوانٍ وعتبات تنبيه قابلة للتكوين. بُني مع تصور بيانات متدفق وتحليل اتجاهات تاريخية للمراقبة البيئية."
     },
     "ocr-auto": {
-      "tagline": "100% bbox accuracy on 50 element types—from 65% to 92% in 10 prompt iterations",
-      "description": "Production-grade automated annotation system for document page elements. Async 4-stage pipeline with Qwen VL models identifies 50 element types (12 code languages, 13 interaction formats, 12 content elements, 13 other tags). Three-layer fault tolerance (Retry + RateLimit + CircuitBreaker), SHA256 content-addressed cache, and real-time SSE monitoring dashboard."
+      "tagline": "دقة bbox بنسبة 100% على 50 نوع عنصر—from 65% إلى 92% في 10 تكرارات مطالبة",
+      "description": "نظام تسمية تلقائي جاهز للإنتاج لعناصر صفحات المستندات. خط أنابيب غير متزامن من 4 مراحل باستخدام نماذج Qwen VL يحدد 50 نوع عنصر (12 لغة برمجة، 13 صيغة تفاعل، 12 عنصر محتوى، 13 علامة أخرى). تحمل أخطاء ثلاثي الطبقات (Retry + RateLimit + CircuitBreaker)، ذاكرة تخزين مؤقت معنونة بالمحتوى SHA256، ولوحة مراقبة SSE في الوقت الفعلي."
     },
     "tiktok-pipeline": {
-      "tagline": "8-dimensional annotation across 19 prompt iterations—edge cases included",
-      "description": "Multi-modal visual search relevance labeling pipeline using LLMs. Processes image + text signals across 8 annotation dimensions (visual relevance, content relevance, query/doc drop, functional parity, category granularity, visual similarity, modal corroboration). 19 prompt versions with automated comparison and reflection analysis tools."
+      "tagline": "تسمية ثمانية أبعاد عبر 19 تكرار مطالبة—تتضمن الحالات الحدية",
+      "description": "خط أنابيب تسمية صلة البحث البصري متعدد الوسائط باستخدام LLMs. يعالج إشارات الصورة + النص عبر 8 أبعاد تسمية (صلة بصرية، صلة محتوى، إسقاط الاستعلام/المستند، تكافؤ وظيفي، دقة الفئة، تشابه بصري، تأكيد نمطي). 19 نسخة مطالبة مع أدوات مقارنة تلقائية وتحليل انعكاس."
     },
     "mlbb-analysis": {
-      "tagline": "5 platforms, 6 batch processors, 90%+ accuracy—from manual review to automated pipeline",
-      "description": "Multi-platform video content analysis system covering YouTube, Instagram, TikTok, VK, and Facebook. Refactored from legacy monolith to modular architecture: 5 platform fetchers, 6 batch processors, 5 video analyzers. Fast text analysis achieves 90%+ accuracy with 460x acceleration over manual review, processing 1,207+ videos across batch runs."
+      "tagline": "5 منصات، 6 معالجات دفعات، دقة 90%+—من المراجعة اليدوية إلى خط أنابيب تلقائي",
+      "description": "نظام تحليل محتوى فيديو متعدد المنصات يغطي YouTube، Instagram، TikTok، VK، و Facebook. مُعاد تصميمه من أحادي قديم إلى بنية نمطية: 5 جامع منصات، 6 معالجات دفعات، 5 محللي فيديو. التحليل النصي السريع يحقق دقة 90%+ مع تسريع 460x مقارنة بالمراجعة اليدوية، معالجة 1,207+ فيديو عبر عمليات الدفعات."
     },
     "synapse-quant": {
-      "tagline": "8 microservices, real-time GraphQL, TUI cockpit—from raw data to trade thesis",
-      "description": "Open-source quantitative trading copilot for crypto markets. 8 microservices + 9 infrastructure services (17 containers total) with unified TUI cockpit, 41 technical indicators, real-time market data streaming, and in-context AI copilot. TypeScript 5.7 + Python 3.11+, CI/CD with GitHub Actions."
+      "tagline": "8 خدمات مصغرة، GraphQL في الوقت الفعلي، مقصورة TUI—from البيانات الخام إلى فرضية التداول",
+      "description": "مساعد تداول كمي مفتوح المصدر لأسواق العملات المشفرة. 8 خدمات مصغرة + 9 خدمات بنية تحتية (17 حاوية إجمالي) مع مقصورة TUI موحدة، 41 مؤشر فني، بث بيانات السوق في الوقت الفعلي، ومساعد ذكاء اصطناعي سياقي. TypeScript 5.7 + Python 3.11+، CI/CD مع GitHub Actions."
     },
     "hm3d-eval": {
-      "tagline": "4.62/5 evaluation score across 1,000 real 3D scenes—8/8 acceptance criteria passed",
-      "description": "Comprehensive quality evaluation framework for the Habitat-Matterport 3D Research Dataset (1,000 real 3D scenes). Assessed 15+ dimensions including mesh quality, texture integrity, semantic annotation accuracy, and metadata completeness. Achieved 4.62/5 overall score with 100% acceptance pass rate (8/8 criteria). 95% requirement compliance."
+      "tagline": "درجة تقييم 4.62/5 عبر 1,000 مشهد ثلاثي الأبعاد حقيقي—8/8 معايير القبول نجحت",
+      "description": "إطار تقييم جودة شامل لمجموعة بيانات Habitat-Matterport البحثية ثلاثية الأبعاد (1,000 مشهد ثلاثي الأبعاد حقيقي). قيّم 15+ بُعد بما في ذلك جودة الشبكة، سلامة الخامة، دقة التسمية الدلالية، واكتمال البيانات الوصفية. حقق درجة إجمالية 4.62/5 مع معدل قبول 100% (8/8 معايير). امتثال 95% للمتطلبات."
     },
     "appen-dashboard": {
-      "tagline": "Enterprise SaaS for a NASDAQ data company: the B2B demo mode playbook in production",
-      "description": "Built multi-tenant reporting infrastructure for Appen (NASDAQ: APT). Next.js 16 monorepo (5 apps + 10 packages) serves TCS, ByteWorks, and DataPower dashboards with Upstash QStash async job queues and Pusher real-time. The breakthrough: a production-grade demo mode with MSW + tRPC mock interception, privacy redaction pipeline (schema validate → redact → normalize → value protocol), and 4 behavioral strategies—solving the #1 enterprise SaaS sales problem."
+      "tagline": "SaaS مؤسسي لشركة بيانات NASDAQ: دليل وضع العرض التوضيحي B2B في الإنتاج",
+      "description": "بُني بنية تحتية للإبلاغ متعددة المستأجرين لـ Appen (NASDAQ: APT). مستودع Next.js 16 (5 تطبيقات + 10 حزم) يخدم لوحات TCS، ByteWorks، و DataPower مع طوابير مهام غير متزامنة Upstash QStash و Pusher في الوقت الفعلي. الاختراق: وضع عرض توضيحي جاهز للإنتاج مع اعتراض محاكاة MSW + tRPC، خط أنابيب حذف الخصوصية (التحقق من المخطط → الحذف → التطبيع → بروتوكول القيمة)، و4 استراتيجيات سلوكية—حل مشكلة مبيعات SaaS المؤسسية رقم 1."
     },
     "t2v-relabeling": {
-      "tagline": "Using better AI to fix worse AI's labeling mistakes—at the cost human reviewers can't match",
-      "description": "Meta-labeling pipeline that audits and corrects mislabeled AI-generated video training data using Gemini 2.5 Flash. Classifies 6 attributes (quality, gender, age, race, scene, season) per video with EWMA-adaptive rate limiting and HTTP/2 concurrency. Processes 60MB+ videos via Gemini Files API without local download. 3 iterative rounds with incremental merge. Human labeling: ~$1/video. This pipeline: ~$0.01/video at scale."
+      "tagline": "استخدام ذكاء اصطناعي أفضل لتصحيح أخطاء التسمية للذكاء الاصطناعي الأسوأ—بتكلفة لا يمكن للمراجعين البشر مطابقتها",
+      "description": "خط أنابيب التسمية الفوقية الذي يتدقق ويصحح بيانات تدريب الفيديو المولدة بالذكاء الاصطناعي والمُسمّاة بشكل خاطئ باستخدام Gemini 2.5 Flash. يصنف 6 سمات (الجودة، الجنس، العمر، العرق، المشهد، الموسم) لكل فيديو مع تحديد معدل تكيفي EWMA وتوازي HTTP/2. يعالج فيديوهات 60MB+ عبر Gemini Files API بدون تنزيل محلي. 3 جولات تكرارية مع دمج تدريجي. التسمية البشرية: ~$1/فيديو. هذا الخط: ~$0.01/فيديو على نطاق واسع."
     },
     "url-annotation": {
-      "tagline": "The TLS fingerprint arms race: when IP blocking fails, impersonate Chrome at the handshake",
-      "description": "Production URL consistency pipeline that defeats TLS-fingerprint bot detection at zero marginal LLM cost. curl_cffi spoofs Chrome 124's full ClientHello (cipher suites, extensions, ordering)—not just User-Agent. Playwright renders JS-heavy SPAs. Local Qwen3:1.7b via Ollama compares semantics without API fees or GDPR exposure. Rotating-ad detection re-fetches 3× to flag domain changes. 30 HTTP + 5 Playwright + 5 LLM concurrent."
+      "tagline": "سباق التسلح لبصمة TLS: عندما يفشل حظر عناوين IP، انتحل شخصية Chrome في المصافحة",
+      "description": "خط أنابيب إنتاجي لتوحيد عناوين URL يتغلب على كشف الروبوتات عبر بصمة TLS بتكلفة هامشية صفرية لنموذج LLM. يقوم curl_cffi بانتحال شخصية ClientHello الكاملة لـ Chrome 124 (مجموعات التشفير، الامتدادات، الترتيب)—وليس فقط User-Agent. يقوم Playwright بتصيير تطبيقات الصفحة الواحدة الثقيلة بالـ JS. يقارن النموذج المحلي Qwen3:1.7b عبر Ollama الدلالات دون رسوم API أو تعريض لـ GDPR. يعيد كشف الإعلانات الدوارة جلب البيانات 3 مرات للكشف عن تغييرات النطاق. 30 طلب HTTP + 5 Playwright + 5 LLM متزامنة."
     },
     "3dgs-eval": {
-      "tagline": "3DGS had 2,000+ citations in 6 months but zero enterprise quality standards—we wrote the spec",
-      "description": "First systematic vendor evaluation framework for 3D Gaussian Splatting content production. Multi-round scored assessment across 6 dimensions: HP/LP geometry (pivot + retopology), PBR texture completeness (BaseColor/Normal/Metallic/AO), file naming conventions, semantic annotation, preview standards (8+ renders), and communication SLA. The revelation: vendors weren't technically incapable—they were operationally immature. Multi-round CSV tracker makes every revision cycle auditable."
+      "tagline": "حصل 3DGS على أكثر من 2000 اقتباس في 6 أشهر لكن دون معايير جودة مؤسسية—لذا كتبنا المواصفات",
+      "description": "أول إطار عمل منهجي لتقييم الموردين في إنتاج محتوى 3D Gaussian Splatting. تقييم متعدد الجولات مُقيَّم عبر 6 أبعاد: هندسة HP/LP (محور + إعادة التوبولوجيا)، اكتمال نسيج PBR (BaseColor/Normal/Metallic/AO)، اتفاقيات تسمية الملفات، التسمية الدلالية، معايير المعاينة (8+ تصيير)، واتفاقية مستوى الخدمة للتواصل. الكشف: لم يكن الموردون غير قادرين تقنياً—بل كانوا غير ناضجين تشغيلياً. تتبع CSV متعدد الجولات يجعل كل دورة مراجعة قابلة للتدقيق."
     }
   },
   "thinking": {
-    "latest_label": "Latest Thinking",
-    "latest_headline": "Recent Writings",
-    "view_all": "View All Writings"
+    "latest_label": "آخر التفكير",
+    "latest_headline": "الكتابات الأخيرة",
+    "view_all": "عرض جميع الكتابات"
   }
 }

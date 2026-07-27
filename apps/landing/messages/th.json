@@ -1,1151 +1,1151 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "ฟีเจอร์",
+    "solutions": "โซลูชัน",
+    "pricing": "ราคา",
+    "docs": "เอกสาร",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "เกี่ยวกับเรา",
+    "ideas": "ไอเดีย",
+    "opc": "แพลตฟอร์ม",
+    "roadmap": "โรดแมป",
+    "resources": "ทรัพยากร",
+    "signIn": "เข้าสู่ระบบ",
+    "getStarted": "เริ่มต้นใช้งาน",
+    "changelog": "บันทึกการเปลี่ยนแปลง",
+    "news": "ข่าวสาร",
+    "designDocs": "ระบบการออกแบบ",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "เมนูบัญชี",
+      "loadingName": "กำลังโหลด…",
+      "dashboard": "แดชบอร์ด",
+      "account": "บัญชี",
+      "billing": "การเรียกเก็บเงิน",
+      "docs": "เอกสาร",
+      "signOut": "ออกจากระบบ"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "เข้าร่วมวงรอบแนะนำของผู้ก่อตั้ง {brandName}",
+    "metadataDescription": "เข้าร่วมรายชื่อรอ {brandName} รักษาการนับเครดิตการแนะนำ และปลดล็อกลิงก์แชร์ของคุณเองในวงรอบแบบปิดที่ขับเคลื่อนด้วยผลิตภัณฑ์",
+    "eyebrow": "วงรอบแนะนำของผู้ก่อตั้ง",
+    "title": "เข้าร่วมกลุ่มผู้ก่อตั้งชุดถัดไปและรับลิงก์แชร์ของคุณเอง",
+    "description": "เข้าด้วยรหัสเชิญใดก็ได้หรือเข้าร่วมโดยตรง เราจะรักษาการนับเครดิตเมื่อมีรหัส วางคุณในรายชื่อรอ และออก URL แนะนำส่วนตัวที่คุณสามารถแชร์ได้ทันที",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "รายชื่อรอแบบคงทน",
+      "codeDetected": "ตรวจพบรหัส {code}",
+      "direct": "ลงทะเบียนโดยตรง"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "อีเมลทำงาน",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "รหัสแนะนำ",
+      "codePlaceholder": "รหัสไม่บังคับ",
+      "submit": "เข้าร่วมรายชื่อรอ",
+      "submitting": "กำลังเข้าร่วม",
+      "invalidEmail": "กรอกอีเมลที่ถูกต้อง",
+      "error": "ไม่สามารถเข้าร่วมได้ในขณะนี้ กรุณาลองอีกครั้ง",
+      "successTitle": "คุณอยู่ในรายชื่อแล้ว",
+      "successDescription": "ลิงก์แชร์ส่วนตัวของคุณพร้อมใช้งาน",
+      "positionLabel": "ตำแหน่งในคิว",
+      "referralCodeLabel": "รหัสของคุณ",
+      "referralUrlLabel": "ลิงก์แชร์ของคุณ",
+      "copyLink": "คัดลอกลิงก์",
+      "copied": "คัดลอกแล้ว",
+      "share": "แชร์",
+      "shareTitle": "เข้าร่วมวงผู้ก่อตั้ง {brandName}",
+      "shareText": "ใช้ลิงก์เชิญของฉันเพื่อเข้าร่วมรายชื่อรอผู้ก่อตั้ง {brandName}",
+      "directMode": "ไม่จำเป็นต้องใช้โค้ดแนะนำ",
+      "codeMode": "เปิดใช้งานการระบุแหล่งที่มาของการแนะนำ"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "วงผู้ก่อตั้งสู่ผู้ก่อตั้ง",
+        "description": "ทุกการลงทะเบียนที่ได้รับการยอมรับจะได้รับโค้ดและ URL เพื่อให้การแนะนำครั้งถัดไปเริ่มต้นได้โดยไม่ต้องส่งต่อด้วยตนเอง"
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "การระบุแหล่งที่มาอย่างซื่อสัตย์",
+        "description": "โค้ดที่ไม่รู้จักจะถูกเก็บไว้เป็นการระบุแหล่งที่มาที่พยายาม ส่วนโค้ดที่ถูกต้องจะเพิ่มจำนวนผู้แนะนำและทำให้การลงทะเบียนสะอาด"
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "สถานะสำเร็จพร้อมแชร์",
+        "description": "สถานะยืนยันจะแสดงตำแหน่ง โค้ด การคัดลอก และแอ็กชันแชร์แบบเนทีฟ เพื่อให้ลูปเสร็จสมบูรณ์บนหน้า"
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "โครงสร้างพื้นฐานแบบ Product-led",
+      "title": "ออกแบบเป็นโครงสร้างพื้นฐาน SaaS ที่ทนทาน ไม่ใช่ฟอร์มชั่วคราว",
+      "description": "พื้นผิวการแนะนำได้รับการสนับสนุนจากแพ็กเกจโดเมน โมเดล Prisma แบบถาวร เส้นทาง Next.js แบบมีประเภท และการตรวจสอบ smoke สาธารณะที่สามารถทำงานได้หลังจาก ECS deploys",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "ข้อมูล",
+        "title": "ตารางรายชื่อรอที่ทนทานหนึ่งตาราง",
+        "description": "ความไม่ซ้ำกันของอีเมล ตำแหน่งที่เพิ่มอัตโนมัติ ดัชนีโค้ดแนะนำ ข้อมูลเมตาการระบุแหล่งที่มาที่พยายาม และการเปลี่ยนสถานะอยู่ในฐานข้อมูลแพลตฟอร์ม"
       },
       "api": {
         "eyebrow": "API",
         "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "description": "หน้าจะโพสต์ไปยัง `/api/waitlist` ปรับรหัสรูปแบบต่างๆ ให้เป็นมาตรฐาน ส่งคืนรายการที่มีอยู่แบบ idempotent และไม่เคยพึ่งพารหัสตัวอย่าง"
       },
       "cicd": {
         "eyebrow": "CI/CD",
         "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "description": "URL มาตรฐานและ alias พร้อมสำหรับการตรวจสอบอัตโนมัติ เพื่อให้ ECS delivery จับการถดถอยของ route, DNS และ health ได้"
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "เปิดตัว Startup ของคุณ",
+    "headline2": "ขับเคลื่อนด้วย {brandName} Agent OS",
+    "subheadline": "ข้ามงานแพลตฟอร์มหลายสัปดาห์ด้วยฐานที่ <highlight>พร้อมใช้งานจริง</highlight> พร้อม <highlight>สถาปัตยกรรมที่มีการกำกับดูแล</highlight> สร้างมาเพื่อ <highlight>AI coding agents & founders</highlight> ที่ต้องการไปทั่วโลก",
+    "copyLabel": "คัดลอกคำสั่ง",
+    "copiedLabel": "คัดลอกแล้ว",
+    "ctaGetAccess": "เปิดตัว Startup ของคุณ",
+    "ctaExploreDemo": "สำรวจเดโม",
+    "pillCopied": "คัดลอกแล้ว"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "โครงสร้างพื้นฐานพร้อมใช้งาน ตั้งแต่ต้นแบบไปจนถึงการขยาย規模",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "โครงสร้างพื้นฐานสำหรับแอปพลิเคชัน AI",
+      "description": "Agent Frameworks และ LLM orchestration engines ที่ผ่านการทดสอบในสภาพแวดล้อมจริง พร้อมใช้งานในตัว ข้ามขั้นตอนการ抽象ที่ซับซ้อนและโต้ตอบโดยตรงกับ structured intelligence APIs"
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "พื้นฐานแพลตฟอร์มที่มีการกำกับดูแล",
+      "description": "พื้นฐานแพลตฟอร์มที่มีการกำกับดูแลสำหรับทีมที่พัฒนา SaaS แบบ AI-native จัดการ scaffolding, runtime primitives และ delivery surfaces ให้สอดคล้องกันโดยไม่ต้องรวมเครื่องมือแบบ ad-hoc"
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "ระบบอัตโนมัติสำหรับ Enterprise SaaS",
+      "description": "ผสานรวมเทคโนโลยีสมัยใหม่อย่าง Vercel, Supabase และ Stripe อย่างลึกซึ้ง พร้อมใช้งาน row-level security, multi-tenant isolation ที่ซับซ้อน และระบบบิลลิ่งการสมัครสมาชิกทั่วโลก"
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "พร้อมที่จะเปิดตัวผลิตภัณฑ์ AI ตัวต่อไปของคุณหรือยัง?",
+    "subheading": "เริ่มต้นสถาปัตยกรรม SaaS แบบ cloud-native ที่สมบูรณ์บนเครื่องของคุณด้วยคำสั่งเทอร์มินัลเพียงคำสั่งเดียว",
+    "copyLabel": "คัดลอกคำสั่ง",
+    "copiedLabel": "คัดลอกแล้ว",
+    "startBuilding": "เริ่มสร้าง"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "เปิดตัว Startup ของคุณด้วย {brandName} Agent OS ระบบ Multi-tenancy การเรียกเก็บเงิน การยืนยันตัวตน และ AI พร้อมใช้งานจริงตั้งแต่วันแรก",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "ผลิตภัณฑ์",
+      "resources": "ทรัพยากร",
+      "legal": "กฎหมาย",
+      "community": "ชุมชน"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
-      "blog": "Blog",
-      "playbook": "Playbook",
-      "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
+      "product": "ผลิตภัณฑ์",
+      "features": "ฟีเจอร์",
+      "pricing": "ราคา",
+      "about": "เกี่ยวกับ",
+      "showcase": "ผลงาน",
+      "blog": "บล็อก",
+      "playbook": "คู่มือ",
+      "changelog": "บันทึกการเปลี่ยนแปลง",
+      "roadmap": "แผนงาน",
+      "docs": "เอกสาร",
+      "ideas": "ไอเดีย",
+      "opc": "แพลตฟอร์ม",
+      "careers": "ร่วมงานกับเรา",
+      "security": "ความปลอดภัย",
       "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
-      "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "privacy": "นโยบายความเป็นส่วนตัว",
+      "terms": "ข้อกำหนด",
+      "cookies": "คุกกี้",
+      "refund": "การคืนเงิน",
+      "licensing": "ใบอนุญาต",
+      "contact": "ติดต่อ",
+      "faq": "คำถามที่พบบ่อย",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. สงวนลิขสิทธิ์.",
+    "statusOnline": "ระบบทั้งหมดทำงานปกติ",
+    "newsletterTitle": "รับข้อมูลล่าสุด",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "สมัครรับ",
+    "newsletterSuccess": "ขอบคุณที่สมัครรับข้อมูล!",
+    "newsletterError": "เกิดข้อผิดพลาดบางอย่าง"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "สร้างด้วยสแต็กที่คุณรัก"
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "โครงสร้าง TURBOREPO",
+    "title": "10 แอป 104 แพ็กเกจ 4 เลนแบ็กเอนด์",
+    "description": "โค้ดร่วมกัน บิลด์ขนาน ไม่ซ้ำซ้อน การเขียนแบบ end-to-end ครบถ้วนตั้งแต่ฐานข้อมูลถึงหน้าเว็บ",
+    "metricApps": "แอป",
+    "metricBackends": "เลนแบ็กเอนด์",
+    "metricPackages": "แพ็กเกจ",
+    "verifiedPaths": "ตรวจสอบเส้นทางกับ workspace ปัจจุบัน",
+    "cta": "สำรวจสถาปัตยกรรม monorepo"
   },
   "stats": {
-    "title": "By The Numbers",
+    "title": "ในตัวเลข",
     "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "discord": "สมาชิก Discord",
+    "setup": "เวลาตั้งค่าเฉลี่ย",
+    "packages": "แพ็กเกจ Monorepo",
+    "ctaStar": "กด Star →",
+    "ctaJoin": "เข้าร่วม →",
+    "ctaStart": "เริ่มต้น →",
+    "ctaExplore": "สำรวจ →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "เกี่ยวกับเรา — แพลตฟอร์ม AI ที่มีการกำกับดูแล",
+      "description": "ค้นพบวิสัยทัศน์เชิงพาณิชย์และหลักการทางวิศวกรรมที่อยู่เบื้องหลังแพลตฟอร์ม AI ที่มีการกำกับดูแลของ {brandName}",
+      "heading": "ยุคของทีมผลิตภัณฑ์แบบลีน",
+      "subheading": "แทนที่งานแพลตฟอร์มที่ทำซ้ำด้วยโครงสร้างพื้นฐานที่มีการกำกับดูแล การอัตโนมัติที่แข็งแกร่ง และแรงคูณทางวิศวกรรมที่ยั่งยืน",
+      "missionTitle": "ระเบียบใหม่ต่อต้านการเสื่อมสลายจากการบริหาร",
+      "missionP1": "{brandName} กำลังสร้างแพลตฟอร์ม AI ที่มีการกำกับดูแลสำหรับทีมที่ต้องการโครงสร้างพื้นฐานที่ยั่งยืนแทนที่จะเป็นสแต็กเริ่มต้นที่ใช้ได้ไม่นาน การขยายขนาดแบบดั้งเดิมมักมาพร้อมกับระบบราชการและความวุ่นวาย เราตอบโต้ด้วยธรรมาภิบาลโค้ด การอัตโนมัติ และฐานแพลตฟอร์มที่ยังคงตรวจสอบได้เมื่อเติบโตขึ้น",
+      "missionP2": "การค้ายังคงประสบปัญหาจากภาระงานประสานงาน เครื่องมือที่แตกแยก และเส้นทางการอัปเกรดที่อ่อนแอ เราให้ความสำคัญกับการลดแรงเสียดทานเหล่านี้ผ่านสัญญาแพลตฟอร์มที่ชัดเจนกว่า วัตถุดิบการส่งมอบที่แข็งแกร่งกว่า และพฤติกรรมขณะทำงานที่ทีมสามารถสังเกตและไว้วางใจได้จริง",
+      "missionP3": "เราปฏิเสธนิสัยการแก้ปัญหาการขยายขนาดด้วยการเพิ่มภาระงานองค์กร การอัตโนมัติ การทดสอบ และธรรมาภิบาลควรดูดซับงานปฏิบัติการที่ทำซ้ำ เพื่อให้ทีมสามารถมุ่งเน้นที่ผลิตภัณฑ์ สถาปัตยกรรม และผลลัพธ์ของลูกค้า",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "สี่เสาหลัก",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "การขยายขนาดที่มีการกำกับดูแล (ปรัชญา)",
+          "description": "การขยายขนาดควรมาจากระบบที่แข็งแกร่งกว่า แรงคูณที่ดีกว่า และกฎการทำงานที่ชัดเจนกว่า — ไม่ใช่จากการเพิ่มภาระงานองค์กร"
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "แกนนักสร้าง (โครงสร้างพื้นฐาน)",
+          "description": "ฐานแพลตฟอร์มที่นำกลับมาใช้ใหม่ได้สำหรับการใช้งานหลายผู้เช่า การเรียกเก็บเงิน การยืนยันตัวตน การปฏิบัติตามกฎระเบียบ และการผสานรวม AI ที่ทีมสามารถตรวจสอบ ขยาย และส่งมอบซ้ำได้"
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "วินัยการอัปเกรด (การกำหนดเส้นทาง)",
+          "description": "ระบบที่มีสุขภาพดีเติบโตผ่านการตรวจสอบความเข้ากันได้ การย้ายข้อมูล และสัญญาขณะทำงานที่สังเกตได้ แทนที่จะเป็นการเบี่ยงเบน การทำงานแบบฮีโร่ และการเขียนใหม่แบบครั้งเดียว"
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "โค้ดคือกฎหมาย (องค์กร)",
+          "description": "วินัยการทำงานควรถูกเข้ารหัสไว้ใน การทดสอบ การทำงาน และกฎธรรมาภิบาล เพื่อให้ทีมสามารถปรับปรุงแพลตฟอร์มได้โดยไม่ต้องพึ่งพาการเมืองหรือความทรงจำของสถาบัน"
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "สัญญาณทางวิศวกรรมเหนือคุณสมบัติ",
+      "jobsDescription": "เราให้ความสำคัญกับผลงานทางวิศวกรรมที่สามารถตรวจสอบได้ ความชัดเจนในการคิด และการตัดสินระบบ มากกว่าประวัติหรือการบวมของตำแหน่ง",
+      "jobsButton": "ส่งโปรไฟล์ Github",
+      "companyInfoTitle": "การปฏิบัติตามข้อกำหนดขององค์กร",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "การจดทะเบียนนิติบุคคล",
+        "founded": "วันที่จดทะเบียน",
+        "headquarters": "ศูนย์ปฏิบัติการระดับโลก",
+        "jurisdiction": "เขตอำนาจศาลที่ควบคุม"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "ต้องการการประเมินทางเทคนิคเชิงลึกเพิ่มเติมหรือไม่?",
+      "ctaDescription": "ติดต่อผู้เชี่ยวชาญด้านวิศวกรรมของเราเพื่อประเมินการผสานรวมระดับองค์กร หรือศึกษาเอกสารการติดตั้ง",
+      "ctaButton": "ติดต่อเรา"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "สอบถามด้านเทคนิคและเชิงพาณิชย์ — {brandName} Intelligence",
+      "description": "ช่องทางการสื่อสารเฉพาะสำหรับใบอนุญาตเชิงพาณิชย์ การโฮสต์เองระดับองค์กร และการสนับสนุนทางเทคนิคขั้นสูง",
+      "heading": "สร้างการเชื่อมต่อสนับสนุน",
+      "subheading": "เราจะส่งผู้เชี่ยวชาญด้านเทคนิคหรือสถาปนิกเฉพาะเพื่อประเมินข้อกำหนดที่ชัดเจนของคุณ",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "ติดต่อผู้ก่อตั้งโดยตรง",
+          "description": "ช่องทางการสื่อสารโดยตรงสำหรับการจัดแนวกลยุทธ์หลักและคำถามระดับผู้บริหาร"
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "ที่ปรึกษาองค์กร",
+          "description": "การสนทนาเบื้องต้นเกี่ยวกับพันธมิตรเชิงกลยุทธ์เชิงนิเวศและการวิวัฒนาการของสถาปัตยกรรมภาพรวม"
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "การติดตั้งเชิงพาณิชย์",
+          "description": "การเจรจาเกี่ยวกับใบอนุญาตแบบปิดซอร์สและรายละเอียดที่เกี่ยวข้องกับการติดตั้งในสภาพแวดล้อมคลัสเตอร์ส่วนตัว"
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "การสนับสนุนระดับผู้เชี่ยวชาญ",
+          "description": "คำแนะนำด้านสถาปัตยกรรมและการแก้ไขปัญหาเฉพาะสำหรับการทำงานผสานรวมทางธุรกิจและการดีบักระบบหลัก"
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "กฎหมายและการปฏิบัติตามกฎระเบียบ",
+          "description": "สอบถามเกี่ยวกับขอบเขตนิยามโอเพนซอร์ส การตรวจสอบการปฏิบัติตามกฎระเบียบองค์กร และข้อกำหนดในสัญญา"
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "ความเป็นส่วนตัวของศูนย์ข้อมูล",
+          "description": "การตรวจสอบทางเทคนิคและคำสั่งปฏิบัติตามกฎระเบียบที่เกี่ยวข้องกับ GDPR และกฎหมายคุ้มครองข้อมูลระหว่างประเทศอื่นๆ"
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "การเปิดเผยด้านความปลอดภัย",
+          "description": "ส่งรายงานการจำลองทางเทคนิคเกี่ยวกับช่องโหว่ซอฟต์แวร์ที่อาจเกิดขึ้นอย่างปลอดภัยโดยตรงไปยังทีมโครงสร้างพื้นฐานของเรา"
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "ศูนย์ส่งเรื่อง",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "ชื่อผู้ส่งเรื่อง",
+        "email": "อีเมลทางการ",
+        "company": "องค์กรที่สังกัด",
+        "category": "หมวดหมู่ความต้องการ",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "คำปรึกษาองค์กร",
+          "sales": "ใบอนุญาตและสถาปัตยกรรม",
+          "support": "ความช่วยเหลือนักพัฒนา",
+          "legal": "ขอบเขตกฎหมายและการปฏิบัติตามกฎระเบียบ",
+          "privacy": "นโยบายการประมวลผลข้อมูล",
+          "partnership": "การผสานรวมระบบนิเวศ",
+          "press": "ประชาสัมพันธ์"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "สรุปประเด็นหลัก",
+        "message": "รายละเอียดทางเทคนิค/เชิงพาณิชย์",
+        "submit": "ส่งไปยังระบบหลังบ้าน",
+        "privacyNotice": "การดำเนินการคำขอเครือข่ายนี้แสดงถึงการอ่านและยินยอมต่อ",
+        "privacyLink": "โครงสร้างพื้นฐานความเป็นส่วนตัวเชิงระบบ",
+        "submitting": "กำลังเข้าสู่คิวประมวลผล...",
+        "successMessage": "ส่งข้อมูลสำเร็จ ทีมปฏิบัติการที่เกี่ยวข้องจะตอบกลับอย่างละเอียดภายใน 1-2 วันทำการ"
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "ข้อมูลการดำเนินงาน",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "เมืองอู๋ซี มณฑลเจียงซู ประเทศจีน",
+      "socialMedia": "ลิงก์เครือข่ายหลัก"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "นโยบายคุกกี้ — {brandName}",
+      "description": "วิธีที่ {brandName} ใช้คุกกี้และเทคโนโลยีการติดตามที่คล้ายกันบนเว็บไซต์และบริการของเรา",
+      "heading": "นโยบายคุกกี้",
+      "effectiveDate": "วันที่มีผลบังคับใช้",
+      "lastUpdated": "อัปเดตล่าสุด",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 มกราคม 2025",
+        "updated": "1 มกราคม 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "นโยบายคุกกี้ฉบับนี้อธิบายวิธีที่ {brandName} Co., Ltd. (\"{brandName},\" \"เรา,\" \"ของเรา\") ใช้คุกกี้และเทคโนโลยีการติดตามที่คล้ายกันบนเว็บไซต์และบริการของเรา",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "คุกกี้คืออะไร?",
+        "content": "คุกกี้คือไฟล์ข้อความขนาดเล็กที่วางบนอุปกรณ์ของคุณเมื่อคุณเยี่ยมชมเว็บไซต์ คุกกี้ถูกใช้อย่างแพร่หลายเพื่อให้เว็บไซต์ทำงานได้อย่างมีประสิทธิภาพมากขึ้นและให้ข้อมูลแก่เจ้าของเว็บไซต์"
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "วิธีที่เราใช้คุกกี้",
+        "intro": "เราใช้คุกกี้เพื่อ:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "เปิดใช้งานฟีเจอร์หลัก",
+            "desc": "ให้บริการหลัก เช่น การยืนยันตัวตนและความปลอดภัยของผู้ใช้"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "จดจำการตั้งค่า",
+            "desc": "บันทึกภาษา ธีม และการตั้งค่าอื่นๆ ของคุณ"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "ปรับปรุงประสิทธิภาพ",
+            "desc": "ทำความเข้าใจว่าผู้เยี่ยมชมมีปฏิสัมพันธ์กับบริการของเราอย่างไร"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "ปรับแต่งประสบการณ์",
+            "desc": "นำเสนอเนื้อหาและคำแนะนำที่เกี่ยวข้อง"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "วัดผลทางการตลาด",
+            "desc": "ติดตามประสิทธิภาพของแคมเปญการตลาดของเรา"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "ประเภทของคุกกี้ที่เราใช้",
       "tableHeaders": {
-        "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "cookie": "คุกกี้",
+        "provider": "ผู้ให้บริการ",
+        "purpose": "วัตถุประสงค์",
+        "duration": "ระยะเวลา"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "คุกกี้ที่จำเป็น",
+        "description": "คุกกี้เหล่านี้จำเป็นต่อการใช้งานเว็บไซต์อย่างถูกต้อง ไม่สามารถปิดใช้งานได้",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "เซสชันการยืนยันตัวตนของผู้ใช้",
+            "duration": "เซสชัน"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "โทเค็นการตรวจสอบสิทธิ์",
+            "duration": "7 วัน"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "บันทึกการตั้งค่าความยินยอมคุกกี้",
+            "duration": "1 ปี"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "คุกกี้เชิงฟังก์ชัน",
+        "description": "คุกกี้เหล่านี้เปิดใช้งานฟีเจอร์ส่วนบุคคลและจดจำการตั้งค่าของคุณ",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "บันทึกการตั้งค่าภาษา",
+            "duration": "1 ปี"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "บันทึกการตั้งค่าธีม",
+            "duration": "1 ปี"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "คุกกี้วิเคราะห์",
+        "description": "คุกกี้เหล่านี้ช่วยให้เราเข้าใจว่าผู้เยี่ยมชมมีปฏิสัมพันธ์กับเว็บไซต์ของเราอย่างไร",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "แยกแยะผู้ใช้ที่ไม่ซ้ำกัน",
+            "duration": "2 ปี"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "การวิเคราะห์ผลิตภัณฑ์",
+            "duration": "1 ปี"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "คุกกี้การตลาด",
+        "description": "คุกกี้เหล่านี้ใช้สำหรับการโฆษณาและการติดตามประสิทธิภาพของแคมเปญโฆษณา",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "ติดตามการเข้าชมสำหรับโฆษณา Facebook",
+            "duration": "3 เดือน"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "การติดตามการแปลง",
+            "duration": "3 เดือน"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "การจัดการความชอบคุกกี้ของคุณ",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "แบนเนอร์การยินยอมคุกกี้",
+        "intro": "เมื่อคุณเยี่ยมชมเว็บไซต์ของเราครั้งแรก คุณจะเห็นแบนเนอร์การยินยอมคุกกี้ที่อนุญาตให้คุณ:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "ยอมรับทั้งหมด",
+            "desc": "เปิดใช้งานหมวดหมู่คุกกี้ทั้งหมด"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "ปฏิเสธทั้งหมด",
+            "desc": "ปิดใช้งานคุกกี้เสริมทั้งหมด (คุกกี้ที่จำเป็นยังคงใช้งานอยู่)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "ปรับแต่ง",
+            "desc": "เลือกหมวดหมู่คุกกี้ที่ต้องการเปิดใช้งาน"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "คุณสามารถเปลี่ยนการตั้งค่าได้ทุกเมื่อโดยคลิก \"การตั้งค่าคุกกี้\" ที่ส่วนท้ายของหน้า"
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "การตั้งค่าเบราว์เซอร์",
+        "intro": "เบราว์เซอร์ส่วนใหญ่ช่วยให้คุณควบคุมคุกกี้ผ่านเมนูการตั้งค่าได้ดังนี้:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "การตั้งค่า > ความเป็นส่วนตัวและความปลอดภัย > คุกกี้"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "การตั้งค่า > ความเป็นส่วนตัวและความปลอดภัย > คุกกี้"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "การตั้งค่า > ความเป็นส่วนตัว > คุกกี้"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "การตั้งค่า > ความเป็นส่วนตัว การค้นหา และบริการ > คุกกี้"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "การบล็อกคุกกี้บางประเภทอาจส่งผลต่อการทำงานของเว็บไซต์"
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "เทคโนโลยีที่คล้ายกัน",
+        "intro": "นอกจากคุกกี้แล้ว เราอาจใช้เทคโนโลยีต่อไปนี้:",
         "items": {
           "0": {
             "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "desc": "เพื่อเก็บการตั้งค่าและข้อมูลแคชไว้ในเครื่องของคุณ"
           },
           "1": {
             "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "desc": "สำหรับข้อมูลชั่วคราวระหว่างเซสชันการท่องเว็บของคุณ"
           },
           "2": {
             "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "desc": "รูปภาพขนาดเล็กสำหรับติดตามการเปิดอีเมลและการเข้าชมเว็บไซต์"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "เราไม่ใช้การระบุตัวตนเบราว์เซอร์ (browser fingerprinting) เพื่อติดตาม"
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "การอัปเดตนโยบายนี้",
+        "content": "เราอาจอัปเดตนโยบายคุกกี้เป็นระยะ เราจะแจ้งการเปลี่ยนแปลงสำคัญโดยการโพสต์นโยบายที่อัปเดตบนเว็บไซต์ของเรา"
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "ติดต่อเรา",
+        "intro": "หากคุณมีคำถามเกี่ยวกับการใช้งานคุกกี้ของเรา โปรดติดต่อเรา:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "สำหรับข้อมูลเพิ่มเติมเกี่ยวกับวิธีการรวบรวมและประมวลผลข้อมูลของคุณ โปรดดู",
+        "privacyLink": "นโยบายความเป็นส่วนตัว"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "คำแนะนำด้านวิศวกรรม & FAQ — {brandName}",
+      "description": "การวิเคราะห์อย่างครอบคลุมเกี่ยวกับสถาปัตยกรรมเฟรมเวิร์ก โทโพโลยีพื้นฐาน และกลยุทธ์การนำไปใช้เชิงพาณิชย์",
+      "heading": "การเจาะลึกเชิงบริหาร",
+      "subheading": "วัสดุสนับสนุนที่ปรับให้เหมาะสมสำหรับการบูรณาการวิศวกรรมระบบและการตัดสินใจเชิงพาณิชย์ระดับบริหาร",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "ภาพรวมสถาปัตยกรรม",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "วัตถุประสงค์การทำงานที่ชัดเจนของ {productName} คืออะไร?",
+              "a": "{productName} เป็นเฟรมเวิร์ก AI SaaS ที่พร้อมใช้งานสำหรับ Next.js โครงสร้างชัดเจนและพร้อมสำหรับ production รวมระบบบิลลิ่งองค์กร การยืนยันตัวตนหลายปัจจัย และการแยก tenant หลายรายไว้ในแพลตฟอร์มพื้นฐานที่มีการควบคุม เพื่อให้ทีมสามารถมุ่งเน้นไปที่การนำ AI ไปใช้ในผลิตภัณฑ์"
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "โครงสร้างใบอนุญาตของ repository เป็นอย่างไร?",
+              "a": "โครงสร้างพื้นฐานรองรับบังคับใช้ข้อตกลง OSS AGPLv3 อย่างเคร่งครัด รับประกันความโปร่งใสและการใช้งานฟรี สำหรับองค์กรที่ต้องการการปิดบังข้อมูลเชิงพาณิชย์และข้อรับประกันการเขียนใหม่ระดับสูง มีสัญญาเชิงพาณิชย์แบบปิดแหล่งที่มาเฉพาะ"
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "ความเร็วในการประเมินเชิงพาณิชย์ครั้งแรกเป็นอย่างไร?",
+              "a": "เร็วมาก โดยใช้ชุดเครื่องมือ Node CLI ที่ปรับแต่งร่วมกับข้อกำหนดทางเทคนิคที่แม่นยำ วิศวกรระดับเริ่มต้นสามารถติดตั้งอินสแตนซ์ MVP (Minimum Viable Product) ท้องถิ่นอัตโนมัติภายในไม่กี่นาที"
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "การดำเนินงานเชิงพาณิชย์",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "ความทนทานต่อการขยายตัวเชิงพาณิชย์กว้างเพียงใด?",
+              "a": "ออกแบบมาอย่างหนักบนแนวคิดไมโครคอมโพเนนต์ ความสามารถในการรองรับภาระโครงสร้างจะปรับได้อย่างราบรื่นจาก Free Tiers ที่ไม่มีภาระงานไปจนถึงเกณฑ์ Enterprise ที่รองรับคำขอหลายล้านต่อเดือน โดยกำหนดค่าทั้งหมดผ่านข้อจำกัดในแดชบอร์ด"
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "ความผันผวนของการสมัครสมาชิกส่งผลต่อการบัญชีมาตรฐานอย่างไร?",
+              "a": "เราดำเนินการโดยใช้การบันทึกโครงสร้างทรัพยากรและปริมาณการใช้งาน API ที่แม่นยำในระดับวินาที ข้อจำกัดที่เปลี่ยนแปลงจะปรับสมดุลกับชั้นการบัญชีทันที—ไม่ว่าจะเป็นการคืนเงินส่วนต่างตามสัดส่วนหรือออกเครดิตอัตโนมัติ ไม่มีช่วงการแช่แข็งระดับใดเลย"
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "โครงสร้างพื้นฐานการประมวลผลใดแยกเวกเตอร์การชำระเงิน?",
+              "a": "การกำหนดเส้นทางเงินสดทั่วโลกจะส่งต่อไปยังอินเทอร์เฟซเซิร์ฟเวอร์ของ Stripe เป็นหลัก รับประกันการติดตาม PCI-DSS ที่เข้มงวดและความสมบูรณ์ของการประมวลผล การติดตั้งระดับ Enterprise สามารถผสานรวมท่อตรวจสอบทางการเงินส่วนตัวที่ควบคุมโดยข้อผูกพัน SLA ที่กำหนดเอง"
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "ชั้นวิศวกรรมระบบ",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "รองรับการนามธรรมของปัญญาพื้นฐานใดแบบเนทีฟ?",
+              "a": "ตรรกะการโต้ตอบหลักกำหนดการทำงานร่วมกันแบบเนทีฟผ่านข้อกำหนดมาตรฐานของ OpenAI, Anthropic และ Gemini สิ่งนี้ให้ความยืดหยุ่นมหาศาลในการสลับจุดสิ้นสุดการให้เหตุผลได้อย่างมีประสิทธิภาพผ่านการแมปตัวแปรโดยไม่มีการเสื่อมสภาพต่อตรรกะเชิงพาณิชย์ต้นทาง"
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "จัดการความเสี่ยงของการปิดบังฐานข้อมูลอย่างไร?",
+              "a": "การนำไปใช้จะติดตั้งนโยบาย Postgres Row-Level Security (RLS) โดยค่าเริ่มต้น ซึ่งเชื่อมโยงอย่างใกล้ชิดกับหลักเกณฑ์การกำหนดเส้นทาง Tenant Resolution แบบไม่มีเซิร์ฟเวอร์ของเรา สิ่งนี้ช่วยให้การแยกส่วนแบบแข็งป้องกันมลพิษข้อมูลระดับแอปพลิเคชันที่สำคัญและการทับซ้อนของการดำเนินการ"
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "มีข้อจำกัดทางสถาปัตยกรรมสำหรับการติดตั้งที่จัดการเองหรือไม่?",
+              "a": "ไม่มีเลย โครงสร้างถูกแยกออกจากกันอย่างสมบูรณ์ หากสภาพแวดล้อมดำเนินการรันไทม์ Node.js อิสระพร้อมกับคลัสเตอร์ PostgreSQL ที่แข็งแรง หน้าที่การทำงานทั้งหมดจะถูกเก็บรักษาไว้โดยธรรมชาติ"
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "ความสมบูรณ์เชิงระบบ",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "โปรโตคอลใดกำหนดการป้องกันเชิงกลของขอบเขต?",
+              "a": "กลไกดำเนินการเข้ารหัส TLS บังคับผ่านการทำธุรกรรม อัลกอริทึมแฮชแบบกำหนดได้สำหรับการแมปข้อมูลลับ และการบันทึกเหตุการณ์การเปลี่ยนแปลงที่เขียนอย่างเคร่งครัดลงในบัญชีแยกประเภทการติดตามอนุกรมเวลาภายใน"
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "โทโพโลยีเคารพกฎหมายความเป็นส่วนตัวระหว่างประเทศหลักหรือไม่?",
+              "a": "ใช่ อย่างลึกซึ้ง โมดูลธุรกิจให้การใช้งานอัลกอริทึมแบบพร้อมใช้ที่มุ่งเน้นสถานะการถอนความยินยอม ตรรกะการลบถาวร และคำสั่งส่งออกเชิงลึกที่สอดคล้องอย่างเหมาะสมกับ GDPR และกรอบกฎระเบียบเฉพาะท้องถิ่น"
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "อะไรจะเกิดขึ้นเมื่อเกิดเหตุการณ์ร้ายแรงผิดปกติ?",
+              "a": "เซนติเนลอัตโนมัติจะแจ้งเตือนเวกเตอร์วิศวกรรมหลักทันที ซึ่งจะทำให้เกิดการบล็อกวงจรและดำเนินการแยกแยะอย่างรวดเร็ว ภายใต้การกำกับดูแลด้วยคู่มือการแก้ไขขั้นสูง การวิเคราะห์เหตุการณ์หลังเกิดเหตุที่โปร่งใสอย่างเต็มที่จะถูกเผยแพร่อย่างกว้างขวางภายในกรอบเวลา 72 ชั่วโมงอย่างเด็ดขาด"
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "คำสั่งช่วยเหลือทางเทคนิค",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "การแก้ไขปัญหาจุดคอขวดในการดำเนินงานได้รับการแก้ไขอย่างไร?",
+              "a": "เวกเตอร์การแยกแยะเบื้องต้นมุ่งเน้นไปที่เมทริกซ์เอกสารที่ได้รับการบำรุงรักษาอย่างเข้มงวดและผ่านการทบทวนโดยเพื่อนร่วมวิชาชีพ รวมถึงการโต้ตอบในชุมชนที่ได้รับการยืนยัน การซื้อใบอนุญาตระดับมาตรฐานหรือระดับองค์กรจะปลดล็อกการเข้าถึงคิวการยกระดับแบบส่วนตัว ซึ่งได้รับการแก้ไขผ่านโหนดวิศวกรรมภายในโดยตรง"
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "คุณให้บริการดำเนินการผสานรวมทางกายภาพหรือสภาพแวดล้อมเฉพาะหรือไม่?",
+              "a": "สิ่งนี้อยู่ภายใต้ชั้นการดำเนินการพรีเมียมแบบเฉพาะของเราสำหรับกลุ่มบริษัทชั้นนำ สถาปนิกอาวุโสที่สุดของเราจะดำเนินการนอกสถานที่เพื่อตรวจสอบโค้ดเทียบกับสถาปัตยกรรมเดิม จัดการการย้ายคลาวด์ที่ละเอียดอ่อน และตรวจสอบการแบ่งส่วนเครือข่ายที่แยกตัวสูง"
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "ต้องการการซิงโครไนซ์ทางเทคนิคทันทีหรือไม่?",
+      "ctaDescription": "ไม่ว่าจะเป็นการตรวจสอบสคีมาพฤติกรรม API เฉพาะหรือดำเนินการข้อตกลงการผสานรวมระยะยาว ให้ติดต่อลำดับชั้นวิศวกรรมโดยตรง",
+      "ctaButton": "รับคำแนะนำการผสานรวม",
+      "ctaEmail": "ส่งข้อความโดยตรง"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "โปรโตคอลการป้องกันความเป็นส่วนตัวและข้อมูล — {brandName}",
+      "description": "บันทึกอย่างละเอียดว่ากลไกโครงสร้างพื้นฐานควบคุมความเป็นอิสระของผู้ใช้และการแยกข้อมูลเครื่องจักรอย่างไร",
+      "heading": "คำสั่งการปกป้องข้อมูล",
+      "effectiveDate": "วันที่มีผลบังคับใช้",
+      "lastUpdated": "อัปเดตล่าสุด",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 มกราคม 2025",
+        "updated": "1 มกราคม 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "ที่ {brandName} (\"บริษัท,\" \"เรา,\" \"เราทั้งสอง,\" หรือ \"ของเรา\") เรามุ่งมั่นที่จะปกป้องความเป็นส่วนตัวของคุณ นโยบายความเป็นส่วนตัวนี้อธิบายว่าเราเก็บรวบรวม ใช้ เปิดเผย และปกป้องข้อมูลของคุณอย่างไรเมื่อคุณใช้เว็บไซต์ แอปพลิเคชัน และบริการของเรา (เรียกรวมกันว่า \"บริการ\")",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. ข้อมูลที่เราเก็บรวบรวม",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 ข้อมูลที่คุณให้ไว้",
+          "intro": "เราเก็บรวบรวมข้อมูลที่คุณให้ไว้กับเราโดยตรง รวมถึง:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "ข้อมูลบัญชี",
+              "desc": "ชื่อ อีเมล รหัสผ่าน และรายละเอียดองค์กรเมื่อคุณสร้างบัญชี"
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "ข้อมูลโปรไฟล์",
+              "desc": "รูปโปรไฟล์ ตำแหน่งงาน ชื่อบริษัท และข้อมูลอื่นๆ ที่เป็นตัวเลือก"
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "ข้อมูลการชำระเงิน",
+              "desc": "ที่อยู่สำหรับเรียกเก็บเงินและรายละเอียดวิธีการชำระเงิน (ประมวลผลอย่างปลอดภัยผ่าน Stripe)"
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "การสื่อสาร",
+              "desc": "ข้อความ ข้อเสนอแนะ และการสื่อสารอื่นๆ ที่คุณส่งถึงเรา"
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "เนื้อหา",
+              "desc": "เนื้อหาใดๆ ที่คุณสร้าง อัปโหลด หรือจัดเก็บโดยใช้บริการของเรา"
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 ข้อมูลที่เก็บรวบรวมโดยอัตโนมัติ",
+          "intro": "เมื่อคุณใช้บริการของเรา เราเก็บรวบรวมข้อมูลบางอย่างโดยอัตโนมัติ:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "ข้อมูลอุปกรณ์",
+              "desc": "ประเภทอุปกรณ์ ระบบปฏิบัติการ ประเภทเบราว์เซอร์ และตัวระบุอุปกรณ์ที่ไม่ซ้ำกัน"
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "ข้อมูลการใช้งาน",
+              "desc": "หน้าที่เข้าชม ฟีเจอร์ที่ใช้ การกระทำที่ทำ และเวลาที่ใช้งานบริการ"
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "ข้อมูลล็อก",
+              "desc": "ที่อยู่ IP เวลาการเข้าถึง URL ที่ส่งต่อ และบันทึกกิจกรรมระบบ"
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "ข้อมูลตำแหน่ง",
+              "desc": "ตำแหน่งทั่วไปจากที่อยู่ IP (เราไม่เก็บข้อมูลตำแหน่งที่แม่นยำ)"
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. วิธีที่เราใช้ข้อมูลของคุณ",
+        "intro": "เราใช้ข้อมูลที่เราเก็บรวบรวมเพื่อ:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "ให้บริการ",
+            "desc": "ดำเนินการ บำรุงรักษา และปรับปรุงบริการของเรา"
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "ประมวลผลธุรกรรม",
+            "desc": "จัดการการชำระเงิน การออกใบแจ้งหนี้ และปฏิบัติการที่เกี่ยวข้อง"
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "ติดต่อสื่อสาร",
+            "desc": "ส่งประกาศบริการ อัปเดต และข้อความทางการตลาด (เมื่อได้รับความยินยอม)"
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "ปรับแต่งเฉพาะบุคคล",
+            "desc": "ปรับแต่งประสบการณ์ของคุณและให้คำแนะนำที่เกี่ยวข้อง"
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "วิเคราะห์",
+            "desc": "ทำความเข้าใจรูปแบบการใช้งานและปรับปรุงบริการของเรา"
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "ปกป้อง",
+            "desc": "ตรวจจับ ป้องกัน และตอบสนองต่อความฉ้อโกง การใช้งานผิดวัตถุประสงค์ และเหตุการณ์ด้านความปลอดภัย"
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. วิธีที่เราแชร์ข้อมูลของคุณ",
+        "intro": "เราอาจแชร์ข้อมูลของคุณในสถานการณ์ต่อไปนี้:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 ผู้ให้บริการ",
+          "intro": "เราแบ่งปันข้อมูลกับซัพพลายเออร์ภายนอกที่ให้บริการแทนเรา รวมถึง:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "โครงสร้างพื้นฐาน",
+              "desc": "การโฮสต์บนคลาวด์ (Vercel, Supabase) บริการฐานข้อมูล"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "การประมวลผลการชำระเงิน",
+              "desc": "Stripe สำหรับการจัดการการชำระเงินอย่างปลอดภัย"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "การตรวจสอบสิทธิ์",
+              "desc": "Clerk สำหรับการจัดการตัวตน"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "การวิเคราะห์",
+              "desc": "PostHog, Vercel Analytics สำหรับข้อมูลเชิงลึกการใช้งาน"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 การโอนย้ายธุรกิจ",
+          "content": "หากเราเกี่ยวข้องกับการควบรวมกิจการ การเข้าซื้อกิจการ หรือการขายทรัพย์สิน ข้อมูลของคุณอาจถูกโอนย้ายเป็นส่วนหนึ่งของธุรกรรมนั้น"
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 ข้อกำหนดทางกฎหมาย",
+          "content": "เราอาจเปิดเผยข้อมูลเมื่อถูกกฎหมาย กระบวนการทางกฎหมาย หรือคำขอจากหน่วยงานรัฐบาลกำหนด หรือเพื่อปกป้องสิทธิ์ ความเป็นส่วนตัว ความปลอดภัย หรือทรัพย์สินของเรา"
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. สิทธิ์และตัวเลือกของคุณ",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 การเข้าถึงและการพกพา",
+          "content": "คุณสามารถเข้าถึงข้อมูลส่วนบุคคลของคุณผ่านการตั้งค่าบัญชีและขอสำเนาข้อมูลของคุณในรูปแบบที่สามารถพกพาได้"
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 การแก้ไข",
+          "content": "คุณสามารถอัปเดตข้อมูลบัญชีของคุณได้ทุกเมื่อผ่านแดชบอร์ด"
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 การลบ",
+          "content": "คุณสามารถขอลบบัญชีและข้อมูลที่เกี่ยวข้องได้ผ่านหน้าการตั้งค่าหรือติดต่อเรา"
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 การสื่อสารทางการตลาด",
+          "content": "คุณสามารถยกเลิกการรับอีเมลการตลาดได้โดยคลิก \"ยกเลิกการสมัครรับข้อมูล\" ในอีเมลการตลาดใด ๆ หรืออัปเดตการตั้งค่าของคุณ"
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. ความปลอดภัยของข้อมูล",
+        "intro": "เราใช้มาตรการทางเทคนิคและองค์กรที่เหมาะสมเพื่อปกป้องข้อมูลของคุณ รวมถึง:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "การเข้ารหัสข้อมูลระหว่างการส่ง (TLS) และขณะจัดเก็บ",
+          "1": "การประเมินความปลอดภัยและการทดสอบการเจาะระบบเป็นประจำ",
+          "2": "การควบคุมการเข้าถึงและข้อกำหนดการยืนยันตัวตน",
+          "3": "การตรวจสอบและบันทึกกิจกรรมของระบบ"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. สิทธิความเป็นส่วนตัวของแคลิฟอร์เนีย (CCPA)",
+        "intro": "หากคุณเป็นผู้อยู่อาศัยในแคลิฟอร์เนีย คุณมีสิทธิเฉพาะเกี่ยวกับข้อมูลส่วนบุคคลของคุณ:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "สิทธิในการรู้",
+            "desc": "ขอเปิดเผยข้อมูลที่เราเก็บรวบรวม ใช้ และแบ่งปัน"
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "สิทธิในการลบ",
+            "desc": "ขอลบข้อมูลส่วนบุคคลของคุณ"
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "สิทธิในการเลือกไม่ขาย",
+            "desc": "เลือกไม่ขายข้อมูลส่วนบุคคล (เราไม่ขายข้อมูลของคุณ)"
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "สิทธิในการไม่ถูกเลือกปฏิบัติ",
+            "desc": "เราจะไม่เลือกปฏิบัติต่อคุณจากการใช้สิทธิของคุณ"
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. สิทธิความเป็นส่วนตัวของยุโรป (GDPR)",
+        "intro": "หากคุณอยู่ใน EEA สหราชอาณาจักร หรือสวิตเซอร์แลนด์ คุณมีสิทธิเพิ่มเติมภายใต้ GDPR:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "ฐานทางกฎหมาย",
+            "desc": "เราประมวลผลข้อมูลของคุณตามการปฏิบัติตามสัญญา ความชอบธรรมที่ชอบด้วยกฎหมาย หรือความยินยอม"
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "สิทธิ",
+            "desc": "การเข้าถึง การแก้ไข การลบ การพกพา การจำกัด และการคัดค้าน"
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "คุณสามารถติดต่อเจ้าหน้าที่คุ้มครองข้อมูลของเราได้ที่ dpo@nebutra.com"
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. ติดต่อเรา",
+        "intro": "หากคุณมีคำถามเกี่ยวกับนโยบายความเป็นส่วนตัวนี้ กรุณาติดต่อเรา:",
         "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "โปรโตคอลความผิดปกติของการทำธุรกรรม — {brandName}",
+      "description": "การกำหนดขอบเขตอย่างเข้มงวดเกี่ยวกับพารามิเตอร์การคืนเงินที่แน่นอนในโมเดลการมีส่วนร่วมเชิงโครงสร้างที่หลากหลาย",
+      "heading": "กรอบการดำเนินการข้อพิพาท",
+      "effectiveDate": "วันที่บังคับใช้",
+      "lastUpdated": "วันที่แก้ไขล่าสุด",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 มกราคม 2025",
+        "updated": "1 มกราคม 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "ที่ {brandName} เราต้องการให้คุณพอใจกับบริการของเราอย่างเต็มที่ นโยบายการคืนเงินนี้กำหนดสถานการณ์ที่สามารถขอคืนเงินได้และกระบวนการในการขอคืนเงิน",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "แผนการสมัครสมาชิก",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "การสมัครสมาชิกแบบรายเดือน",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "การยกเลิก",
+              "desc": "คุณสามารถยกเลิกการสมัครรายเดือนได้ตลอดเวลา"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "การคืนเงินตามสัดส่วน",
+              "desc": "เราไม่มีการคืนเงินตามสัดส่วนสำหรับเดือนที่ไม่ได้ใช้เต็ม"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "การเข้าถึง",
+              "desc": "คุณจะยังคงเข้าถึงฟีเจอร์แบบชำระเงินได้จนกว่าจะสิ้นสุดรอบบิลของคุณ"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "การต่ออายุอัตโนมัติ",
+              "desc": "การสมัครจะต่ออายุอัตโนมัติ เว้นแต่จะยกเลิก"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "การสมัครรายปี",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "การรับประกันคืนเงิน 14 วัน",
+              "desc": "ผู้สมัครรายปีรายใหม่สามารถขอคืนเงินเต็มจำนวนภายใน 14 วันนับจากวันที่ซื้อครั้งแรก"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "หลังจาก 14 วัน",
+              "desc": "โดยทั่วไปไม่มีการคืนเงินหลังจากครบ 14 วัน"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "การยกเลิก",
+              "desc": "คุณสามารถยกเลิกได้ตลอดเวลา แต่การสมัครของคุณจะยังคงใช้งานอยู่จนกว่าจะสิ้นสุดระยะเวลาหนึ่งปี"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "ไม่มีการคืนเงินตามสัดส่วน",
+              "desc": "เราไม่มีการคืนเงินบางส่วนสำหรับเดือนที่ไม่ได้ใช้"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "สถานการณ์ที่สามารถขอคืนเงินได้",
+        "intro": "เราจะพิจารณาการขอคืนเงินในกรณีต่อไปนี้:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. ปัญหาบริการ",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "การหยุดทำงานของบริการอย่างรุนแรงที่ส่งผลต่อความสามารถในการใช้ฟีเจอร์หลักของคุณ",
+            "1": "ปัญหาทางเทคนิคที่เราไม่สามารถแก้ไขได้ภายในระยะเวลาที่สมเหตุสมผล",
+            "2": "ฟีเจอร์ที่แตกต่างกันอย่างมีนัยสำคัญจากสิ่งที่โฆษณาไว้"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. ข้อผิดพลาดในการเรียกเก็บเงิน",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "การเรียกเก็บเงินซ้ำ",
+            "1": "จำนวนเงินเรียกเก็บที่ไม่ถูกต้อง",
+            "2": "การเรียกเก็บเงินโดยไม่ได้รับอนุญาต (หลังการตรวจสอบ)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. สถานการณ์พิเศษ",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "กรณีฉุกเฉินทางการแพทย์ที่มีเอกสารยืนยัน",
+            "1": "ภัยธรรมชาติที่ส่งผลกระทบต่อธุรกิจของคุณ",
+            "2": "สถานการณ์อื่นๆ ที่พิจารณาเป็นรายกรณี"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "รายการที่ไม่สามารถขอคืนเงินได้",
+        "intro": "รายการต่อไปนี้โดยทั่วไปไม่อยู่ในเกณฑ์ขอคืนเงิน:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "ค่าใช้จ่ายตามการใช้งาน",
+            "desc": "การเรียกใช้ API, การใช้โทเค็น AI หรือพื้นที่จัดเก็บข้อมูลที่ใช้ไป"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "บริการเสริมและรายการเพิ่มเติม",
+            "desc": "การซื้อครั้งเดียวหรือบริการเสริม"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "สัญญาองค์กร",
+            "desc": "ข้อตกลงแบบกำหนดเองมีข้อกำหนดเป็นของตัวเอง"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "การยกเลิกโดยสมัครใจ",
+            "desc": "หลังจากพ้นระยะเวลาที่ขอคืนเงินได้"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "การละเมิดข้อกำหนด",
+            "desc": "บัญชีที่ถูกปิดเนื่องจากละเมิดนโยบาย"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "วิธีการขอคืนเงิน",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "ขั้นตอนที่ 1: ติดต่อฝ่ายสนับสนุน",
+          "intro": "อีเมลหาเราที่ billing@nebutra.com พร้อมระบุข้อมูลดังนี้:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "อีเมลของบัญชีคุณ",
+            "1": "แผนการสมัครสมาชิกและรอบการเรียกเก็บเงิน",
+            "2": "เหตุผลในการขอคืนเงิน",
+            "3": "เอกสารที่เกี่ยวข้องทั้งหมด"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "ขั้นตอนที่ 2: กระบวนการพิจารณา",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "เราจะพิจารณาคำขอของคุณภายใน 5 วันทำการ",
+            "1": "เราอาจขอข้อมูลเพิ่มเติม",
+            "2": "คุณจะได้รับการตัดสินใจเป็นลายลักษณ์อักษรทางอีเมล"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "ขั้นตอนที่ 3: การดำเนินการคืนเงิน",
+          "intro": "หากได้รับการอนุมัติ:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "เงินจะถูกคืนไปยังช่องทางชำระเงินเดิม",
+            "1": "การคืนเงินผ่านบัตรเครดิตมักจะปรากฏภายใน 5-10 วันทำการ",
+            "2": "ระยะเวลาการดำเนินการของธนาคารอาจแตกต่างกัน"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "การเปลี่ยนแปลงแผน",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "อัปเกรด",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "การอัปเกรดจะมีผลทันที",
+            "1": "คุณจะถูกเรียกเก็บเงินส่วนต่างแบบอัตราส่วนสำหรับระยะเวลาที่เหลือของรอบบิล",
+            "2": "ไม่มีการคืนเงินสำหรับแผนก่อนหน้า"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "ดาวน์เกรด",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "การดาวน์เกรดจะมีผลในรอบบิลถัดไป",
+            "1": "คุณยังคงเข้าถึงฟีเจอร์ปัจจุบันได้จนกว่าจะถึงเวลานั้น",
+            "2": "ไม่มีการคืนเงินบางส่วนสำหรับรอบปัจจุบัน"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "ทดลองใช้ฟรี",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "การทดลองใช้ฟรีไม่จำเป็นต้องกรอกข้อมูลการชำระเงิน",
+          "1": "ไม่มีการเรียกเก็บเงินในช่วงทดลองใช้",
+          "2": "คุณจะได้รับการแจ้งเตือนก่อนเริ่มเรียกเก็บเงิน"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "การระงับข้อพิพาท",
+        "intro": "หากคุณไม่เห็นด้วยกับการตัดสินใจคืนเงินของเรา:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "ตอบกลับอีเมลการตัดสินใจพร้อมข้อมูลเพิ่มเติม",
+          "1": "ร้องขอให้ส่งเรื่องให้หัวหน้างาน",
+          "2": "ติดต่อเราที่ legal@nebutra.com เพื่อทบทวนเพิ่มเติม"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "ติดต่อเรา",
+        "intro": "สำหรับคำขอคืนเงินหรือคำถามเกี่ยวกับนโยบายนี้:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "การเรียกเก็บเงิน",
+        "supportLabel": "การสนับสนุน",
+        "legalLabel": "กฎหมาย",
+        "responseNote": "เราพยายามตอบกลับคำขอคืนเงินทั้งหมดภายใน 5 วันทำการ",
+        "termsNote": "นโยบายนี้เป็นส่วนหนึ่งของ",
+        "termsLink": "ข้อกำหนดการใช้งาน",
+        "termsAgreement": "การใช้ {brandName} ถือว่าคุณยอมรับข้อกำหนดการคืนเงินเหล่านี้"
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "ข้อกำหนดการใช้งาน — {brandName}",
+      "description": "ข้อกำหนดการใช้งานที่กำหนดการเข้าถึงและการใช้งานเว็บไซต์ แอปพลิเคชัน API และบริการของ {brandName}",
+      "heading": "ข้อกำหนดการใช้งาน",
+      "effectiveDate": "วันที่มีผลบังคับใช้",
+      "lastUpdated": "อัปเดตล่าสุด",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 มกราคม 2025",
+        "updated": "1 มกราคม 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "ยินดีต้อนรับสู่ {brandName}! เงื่อนไขการให้บริการ (\"Terms\") นี้ควบคุมการเข้าถึงและการใช้งานเว็บไซต์ แอปพลิเคชัน API และบริการ (เรียกรวมกันว่า \"Services\") ของ {brandName} ที่ให้บริการโดย {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"เรา,\" \"ของเรา\")",
+      "intro2": "การเข้าถึงหรือใช้บริการของเรา ถือว่าคุณยอมรับข้อกำหนดเหล่านี้และ",
+      "intro2PrivacyLink": "นโยบายความเป็นส่วนตัว",
+      "intro2End": " หากคุณไม่ยอมรับข้อกำหนดเหล่านี้ กรุณาอย่าใช้บริการของเรา",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. การยอมรับข้อกำหนด",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 คุณสมบัติ",
+          "intro": "ในการใช้บริการของเรา คุณต้อง:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "มีอายุอย่างน้อย 18 ปี หรืออายุบรรลุนิติภาวะตามกฎหมายในเขตอำนาจของคุณ",
+            "1": "มีอำนาจในการเข้าทำสัญญาตามข้อกำหนดเหล่านี้แทนตัวคุณเองหรือองค์กรของคุณ",
+            "2": "ไม่ถูกห้ามจากการใช้บริการของเราตามกฎหมายที่เกี่ยวข้อง"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 บัญชีองค์กร",
+          "content": "หากคุณใช้บริการของเราแทนองค์กร คุณยืนยันว่าคุณมีอำนาจผูกมัดองค์กรนั้นกับข้อกำหนดเหล่านี้"
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. คำอธิบายบริการ",
+        "intro": "{brandName} ให้บริการแพลตฟอร์ม SaaS ที่ประกอบด้วย:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "ฟีเจอร์และระบบสร้างเนื้อหาด้วย AI",
+          "1": "เครื่องมือจัดการเนื้อหาและชุมชน",
+          "2": "ระบบแนะนำ",
+          "3": "การผสานรวมอีคอมเมิร์ซ",
+          "4": "ความสามารถ Web3",
+          "5": "การวิเคราะห์และรายงาน"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. การลงทะเบียนบัญชี",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 การสร้างบัญชี",
+          "intro": "ในการเข้าถึงฟีเจอร์บางอย่าง คุณต้องสร้างบัญชี คุณตกลงที่จะ:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "ให้ข้อมูลที่ถูกต้องและครบถ้วน",
+            "1": "รักษาความปลอดภัยของข้อมูลเข้าสู่ระบบบัญชีของคุณ",
+            "2": "อัปเดตข้อมูลของคุณทันทีหากมีการเปลี่ยนแปลง",
+            "3": "รับผิดชอบกิจกรรมทั้งหมดภายใต้บัญชีของคุณ"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. การสมัครใช้งานและการเรียกเก็บเงิน",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 ราคา",
+          "content": "บริการของเราจัดจำหน่ายภายใต้แผนการสมัครใช้งานต่างๆ ตามที่อธิบายไว้ในหน้าราคาของเรา ราคาอาจมีการเปลี่ยนแปลงโดยแจ้งล่วงหน้า 30 วัน"
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 การชำระเงิน",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "การสมัครใช้งานจะถูกเรียกเก็บเงินล่วงหน้ารายเดือนหรือรายปี",
+            "1": "ค่าธรรมเนียมทั้งหมดไม่มีการคืนเงินยกเว้นตามที่ระบุไว้ใน",
+            "2": "คุณอนุญาตให้เราเรียกเก็บเงินจากวิธีการชำระเงินของคุณสำหรับค่าธรรมเนียมที่เกี่ยวข้อง",
+            "3": "เราใช้ Stripe สำหรับการประมวลผลชำระเงินอย่างปลอดภัย",
+            "1RefundLink": "นโยบายคืนเงิน"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. การใช้งานที่ยอมรับได้",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 กิจกรรมที่ห้ามทำ",
+          "intro": "คุณตกลงที่จะไม่ทำดังนี้:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "ละเมิดกฎหมาย ระเบียบข้อบังคับ หรือสิทธิของบุคคลที่สามใดๆ",
+            "1": "ใช้บริการเพื่อส่งมัลแวร์ สแปม หรือเนื้อหาที่เป็นอันตราย",
+            "2": "พยายามเข้าถึงระบบของเราโดยไม่ได้รับอนุญาต",
+            "3": "รบกวนหรือทำลายความสมบูรณ์หรือประสิทธิภาพของบริการของเรา",
+            "4": "ใช้เครื่องมืออัตโนมัติเพื่อขูด คัดลอก หรือดึงข้อมูลโดยไม่ได้รับอนุญาต",
+            "5": "วิศวกรรมย้อนกลับ ดิคอมไพล์ หรือแยกประกอบบริการของเรา",
+            "6": "ใช้ฟีเจอร์ AI ของเราเพื่อสร้างเนื้อหาที่ผิดกฎหมาย เป็นอันตราย หรือหลอกลวง"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. ทรัพย์สินทางปัญญา",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 ทรัพย์สินทางปัญญาของเรา",
+          "content": "{brandName} และผู้ให้สิทธิ์ของเราเป็นเจ้าของสิทธิ สิทธิกรรม และผลประโยชน์ทั้งหมดในบริการ รวมถึงซอฟต์แวร์ การออกแบบ เครื่องหมายการค้า และเนื้อหาทั้งหมดที่เราร่วมสร้าง"
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 เนื้อหาของคุณ",
+          "content": "คุณยังคงเป็นเจ้าของเนื้อหาที่คุณสร้างหรืออัปโหลด (\"เนื้อหาของคุณ\") การใช้บริการของเราถือว่าคุณให้สิทธิ์แก่เราในการใช้ เก็บ ประมวลผล และแสดงเนื้อหาของคุณทั่วโลก โดยไม่จำกัดสิทธิ์และไม่ต้องจ่ายค่าลิขสิทธิ์ เพื่อให้บริการแก่คุณเท่านั้น"
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. การปฏิเสธการรับประกัน",
+        "content": "บริการนี้ให้บริการ \"ตามสภาพที่มี\" และ \"ตามความพร้อม\" โดยไม่มีข้อรับประกันใดๆ ทั้งที่ระบุไว้ชัดแจ้งหรือโดยนัย รวมถึงแต่ไม่จำกัดเพียง ข้อรับประกันโดยนัยเกี่ยวกับความเหมาะสมในการขาย ความเหมาะสมสำหรับวัตถุประสงค์เฉพาะ สิทธิกรรม และعدمการละเมิด"
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. ข้อจำกัดความรับผิด",
+        "para1": "ในขอบเขตสูงสุดที่กฎหมายอนุญาต NEBUTRA จะไม่รับผิดชอบต่อการเสียหายทางอ้อม การเสียหายที่เกิดขึ้นตามเหตุ การเสียหายพิเศษ การเสียหายต่อเนื่อง หรือการเสียหายเชิงลงโทษ รวมถึงการสูญเสียกำไร ข้อมูล การใช้งาน หรือชื่อเสียง",
+        "para2": "ในกรณีใดๆ ความรับผิดรวมของเราจะไม่เกินจำนวนที่สูงกว่าระหว่าง (ก) จำนวนเงินที่คุณชำระให้เราในช่วง 12 เดือนก่อนหน้าการเรียกร้อง หรือ (ข) 100 ดอลลาร์สหรัฐ"
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. การยกเลิก",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 โดยคุณ",
+          "content": "คุณสามารถยกเลิกบัญชีได้ทุกเมื่อผ่านการตั้งค่าบัญชีของคุณ เมื่อมีการยกเลิก คุณจะสูญเสียการเข้าถึงบริการ"
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 โดยเรา",
+          "intro": "เราอาจระงับหรือยกเลิกบัญชีของคุณหาก:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "ละเมิดข้อกำหนดเหล่านี้",
+            "1": "กระทำการฉ้อโกงหรือผิดกฎหมาย",
+            "2": "ไม่ชำระค่าธรรมเนียมที่เกี่ยวข้อง",
+            "3": "ก่อให้เกิดความเสี่ยงหรือภาระทางกฎหมายแก่เรา"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. การระงับข้อพิพาท",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 การระงับข้อพิพาทอย่างไม่เป็นทางการ",
+          "content": "ก่อนเริ่มกระบวนการทางกฎหมายอย่างเป็นทางการ คุณตกลงที่จะติดต่อเราที่ legal@nebutra.com เพื่อพยายามระงับข้อพิพาทอย่างไม่เป็นทางการ"
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 กฎหมายที่ใช้บังคับ",
+          "content": "ข้อกำหนดเหล่านี้อยู่ภายใต้กฎหมายของรัฐเดลาแวร์ โดยไม่คำนึงถึงหลักการขัดแย้งของกฎหมาย"
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. ติดต่อเรา",
+        "intro": "หากคุณมีคำถามเกี่ยวกับข้อกำหนดเหล่านี้ กรุณาติดต่อเรา:",
         "company": "{brandName} Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "อีเมล",
+        "supportLabel": "การสนับสนุน"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "การใช้ {brandName} แสดงว่าคุณยอมรับว่าคุณได้อ่าน เข้าใจ และตกลงที่จะอยู่ภายใต้ข้อกำหนดการให้บริการเหล่านี้"
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | ระบบปฏิบัติการสำหรับสตาร์ทอัพ",
+    "description": "ระบบปฏิบัติการสำหรับสตาร์ทอัพที่พร้อมขยายไปทั่วโลก ฐาน Next.js ที่พร้อมใช้งานจริง พร้อมสถาปัตยกรรมที่ควบคุมได้ ระบบยืนยันตัวตน การเรียกเก็บเงิน เอเจนต์ และ i18n — ออกแบบมาสำหรับ AI coding agents และทีมที่จริงจัง"
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "TOPOLOGY ระบบ",
+      "title": "สถาปัตยกรรมโปร่งใส ไม่มีกล่องดำ",
+      "description": "{productName} ถูกออกแบบด้วยโครงสร้าง Turborepo แบบโมดูลาร์ขั้นสูง ให้คุณเป็นเจ้าของวงจรชีวิตซอฟต์แวร์ทั้งหมดอย่างสมบูรณ์",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "ORM แบบ Fully Typed พร้อมนโยบาย Row-Level Security (RLS) ที่ฝังอยู่ในตัว"
       },
       "auth": {
         "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "desc": "เกตเวย์การยืนยันตัวตนพร้อมมาตรฐาน SOC2 รองรับสลับองค์กรแบบ B2B และ RBAC"
       }
     },
     "pricing": {
@@ -1191,493 +1191,493 @@
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "คำถามที่พบบ่อยเกี่ยวกับราคาและใบอนุญาต",
+      "description": "คำถามเกี่ยวกับระดับใบอนุญาต การคืนเงิน และสิทธิ์การใช้งานเชิงพาณิชย์",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "Sailor เป็นบริการ SaaS รายเดือนหรือไม่",
+        "a": "ไม่ใช่ ราคาเหล่านี้เป็นสำหรับใบอนุญาตซอร์สโค้ดของ Sailor: Independent ฟรี, Startup คิดเงินรายปี และ Enterprise กำหนดเอง"
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "มีการคืนเงินหรือไม่",
+        "a": "ใบอนุญาตเชิงพาณิชย์ Startup มีหน้าต่างคืนเงิน 14 วันสำหรับการซื้อครั้งแรก เงื่อนไข Enterprise จัดการในสัญญาที่ลงนาม"
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "สามารถใช้ Sailor สำหรับงานลูกค้าได้หรือไม่",
+        "a": "ได้ ใบอนุญาตเชิงพาณิชย์ช่วยให้ทีมของคุณส่งมอบผลิตภัณฑ์ของลูกค้าหรือภายในองค์กรแบบปิดซอร์สภายในขอบเขตที่ได้รับอนุญาต สิทธิ์ white-label ต้องได้รับการอนุมัติจาก Enterprise"
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "ยังมีคำถามอยู่ไหม พูดคุยกับทีม {brandName} →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "เริ่มต้นใช้งาน",
+      "title": "หยุดการตั้งค่า เริ่มสร้าง",
+      "description": "เริ่มต้นสถาปัตยกรรม SaaS ที่ปรับขนาดได้บนเครื่องด้วย CLI ของ {brandName}",
+      "button": "ปรับใช้สถาปัตยกรรม",
+      "license": "โอเพนซอร์สภายใต้ใบอนุญาต AGPL-3.0 ไม่ต้องใช้บัตรเครดิต"
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "ความสามารถระดับองค์กร",
+      "title": "แกนกลางที่รองรับการกำหนดประเภทและขยายได้เต็มที่",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "ความปลอดภัยระดับแถวแบบเนทีฟ",
+        "desc": "ทุกการสอบถามฐานข้อมูลจะถูกกำหนดขอบเขตอย่างเข้มงวดตามบริบทของเทแนนต์ปัจจุบัน",
+        "cta": "อ่านปรัชญาฐานข้อมูล"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "เกตเวย์ AI ทั่วไป",
+        "desc": "เปลี่ยนเส้นทางพรอมต์ไปยัง OpenAI, Anthropic หรือโมเดลโอเพนซอร์สได้อย่างราบรื่น",
+        "cta": "สำรวจตัวจัดการ AI SDK"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "การควบคุมการเข้าถึงแบบละเอียด",
+        "desc": "กำหนดบทบาทผู้ดูแลระบบ สมาชิก และผู้ชม พร้อมโครงสร้างนโยบายในตัว",
+        "cta": "ดูเอกสาร RBAC"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "โครงสร้างพื้นฐานการเรียกเก็บเงินหลายผู้ให้บริการ",
+        "desc": "การใช้งานแบบวัดปริมาณ Webhook การสมัครสมาชิก และพอร์ตลูกค้าแบบบริการตนเอง",
+        "cta": "ดูสถาปัตยกรรมเรียกเก็บเงิน"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "เดโมแบบโต้ตอบ",
+      "title": "สัมผัสความเร็วแบบเรียลไทม์",
+      "description": "ลองใช้งานอินเทอร์เฟซบรรทัดคำสั่ง การส่งต่อ webhook ของ Stripe และการจัดเตรียมฐานข้อมูลหลายเทแนนต์แบบท้องถิ่น",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "เทเลเมทรีสด",
+        "desc": "สตรีมข้อมูลการใช้งานจากสภาพแวดล้อมการผลิตเข้าสู่เทอร์มินัลของคุณโดยตรง"
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "เหตุการณ์การเรียกเก็บเงิน",
+        "desc": "ดู Stripe webhooks ทำงานผ่าน local tunneling"
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "เริ่มต้น Workspace",
+        "desc": "จัดเตรียม PostgreSQL schemas แบบแยกส่วนสำหรับ B2B ได้ทันที"
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "ความเร็ว",
+      "title": "จากศูนย์สู่การผลิตในเวลาที่รวดเร็ว",
       "step1": {
         "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "desc": "Clone monorepo ของ {brandName} ทันทีและรัน pnpm install"
       },
       "step2": {
         "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "desc": "ตั้งค่า Prisma, Clerk และ Stripe ผ่าน CLI แบบโต้ตอบภายในไม่กี่นาที"
       },
       "step3": {
         "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "desc": "มุ่งเน้นที่ logic ของผลิตภัณฑ์และ UI ในขณะที่พื้นฐานของแพลตฟอร์มได้รับการเชื่อมต่อไว้แล้ว"
       },
       "step4": {
         "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "desc": "Push ไปยัง Vercel และ AWS เพื่อการกระจายทั่วโลกทันที"
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "นาที",
+        "subtitle": "เวลาสู่ตลาด",
+        "comparison": "ข้ามงานแพลตฟอร์มหลายเดือน",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
+          "scaffold": "เริ่มต้น",
+          "wire": "แกนหลัก",
           "ship": "Deploy",
-          "scale": "Scale",
+          "scale": "ปรับขนาด",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "เริ่มจับเวลา"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "ระบบ Preset",
+        "message": "คอนฟิกเดียว ฟีเจอร์ครบ เลือก preset แล้วปล่อยของ",
+        "detail": "ตั้งค่าครั้งเดียว สร้างทุกอย่าง — บิลลิ่ง, Auth, AI, i18n — จาก preset config เดียว",
+        "readyStatus": "ระบบ preset พร้อมใช้งาน"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "ความสามารถของแพลตฟอร์ม",
+      "headlinePrefix": "ทุกอย่างที่คุณต้องการเพื่อ ",
+      "headlineHighlight": "ปล่อยของด้วยความมั่นใจ",
+      "description": "{brandName} คือแพลตฟอร์ม SaaS แบบ full-stack — AI, บิลลิ่ง, multi-tenancy, observability และความปลอดภัยมาพร้อมตั้งแต่เริ่มต้น หยุดการสร้างเลเยอร์แพลตฟอร์มซ้ำ"
     },
     "sections": {
-      "exploreFeature": "Explore feature",
+      "exploreFeature": "สำรวจฟีเจอร์",
       "ai_category": "AI & Intelligence",
       "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
+      "ai_f1_desc": "Route คำขอไปยัง Anthropic, OpenAI, Google หรือโมเดล fine-tuned ของคุณเอง รองรับ Streaming, vision และ function calling ตั้งแต่เริ่มต้น",
       "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
+      "ai_f2_desc": "สร้างและเก็บ vector embeddings ด้วย pgvector รองรับ semantic search, RAG pipelines และ recommendation engines",
       "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
+      "ai_f3_desc": "โควตาตามแผนพร้อมการติดตามการใช้งาน — นับ AI tokens, API calls และ storage จาก real-time aggregates ที่ใช้ ClickHouse",
       "multi_category": "Multi-tenant Platform",
       "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
+      "multi_f1_desc": "Row-level security ใน Postgres รับประกันว่า tenant ไม่สามารถเข้าถึงข้อมูลของกันและกันได้ — บังคับใช้ที่เลเยอร์ฐานข้อมูล ไม่ใช่แค่แอปพลิเคชัน",
       "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub ฯลฯ) พร้อม email/password และ magic-link — สลับระหว่าง Clerk, Better Auth, NextAuth หรือ Supabase Auth ได้ด้วย env var เดียว",
       "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
+      "multi_f3_desc": "เมื่อ organisation ใหม่ลงทะเบียนผ่าน Clerk ระบบจะสร้าง API key แรกอัตโนมัติและส่งอีเมลต้อนรับแบบ branded — ไม่ต้องทำอะไรเอง",
       "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
+      "dx_f1_title": "คีย์ API แบบแฮช",
+      "dx_f1_desc": "คีย์แฮช SHA-256 พร้อมแสดงส่วนหัว (nbtr_live_…) แสดงเป็นข้อความธรรมดาเพียงครั้งเดียวตอนสร้าง — ปลอดภัยโดยไม่ยุ่งยาก",
+      "dx_f2_title": "มิดเดิลแวร์ Idempotency",
+      "dx_f2_desc": "ส่งเฮดเดอร์ Idempotency-Key แล้วทุกคำขอ POST จะปลอดภัยต่อการเรียกซ้ำ รองรับด้วย Redis แคช 24 ชั่วโมง มาตรฐาน IETF draft",
+      "dx_f3_title": "API หลายโปรโตคอล (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI สำหรับ API สาธารณะ oRPC สำหรับการเรียกหน้าเว็บแบบปลอดภัยเรื่องประเภทข้อมูล tRPC สำหรับความเข้ากันได้กับ T3-stack โปรโตคอลทั้งหมดใช้สัญญา Zod และสแต็กมิดเดิลแวร์เดียวกัน เปิดใช้งานตามโปรโตคอลผ่านค่ากำหนดสำเร็จรูป",
+      "billing_category": "การเรียกเก็บเงินและการสร้างรายได้",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
+      "billing_f1_desc": "เลือกผู้ให้บริการชำระเงิน: Stripe สำหรับองค์กรทั่วโลก LemonSqueezy สำหรับนักพัฒนาอิสระ Polar สำหรับ OSS หรือ Alipay/WeChat Pay สำหรับตลาดจีน ชำระเงินคลิกเดียวและพอร์ทัลเรียกเก็บเงินแบบบริการตนเอง",
+      "billing_f2_title": "การบังคับใช้โควตาตามการใช้งาน",
+      "billing_f2_desc": "ตัวนับ Redis แบบเรียลไทม์ติดตามการเรียก API และการใช้โทเค็นต่อผู้เช่า คำขอจะถูกควบคุมที่เกตเวย์เมื่อถึงขีดจำกัด",
+      "billing_f3_title": "การซิงค์วงจรชีวิต Webhook",
+      "billing_f3_desc": "เหตุการณ์การสมัครสมาชิก Stripe อัปเดตแผนองค์กรในฐานข้อมูลของคุณอัตโนมัติผ่าน Inngest — ไม่ต้องใช้ cron jobs ไม่ต้องใช้ polling",
+      "rel_category": "ความน่าเชื่อถือ",
       "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
+      "rel_f1_desc": "เกตเวย์และบริการ AI ใช้ circuit breaker แบบ CLOSED/OPEN/HALF_OPEN พร้อม exponential backoff และ jitter — ไม่มีข้อผิดพลาดแบบต่อเนื่อง",
+      "rel_f2_title": "คิว Dead letter",
+      "rel_f2_desc": "ตัวจัดการเหตุการณ์ที่ใช้การลองซ้ำครบ 3 ครั้งจะถูกส่งไปยัง DLQ เล่นซ้ำทีละรายการจาก API ผู้ดูแลระบบโดยไม่ต้องปรับใช้ใหม่",
+      "rel_f3_title": "การแจ้งเตือน SLO burn-rate",
+      "rel_f3_desc": "การแจ้งเตือนแบบหลายหน้าต่างสไตล์ Google SRE ทำงานที่อัตราการเผา 14.4× 6× และ 3× ก่อนที่งบประมาณข้อผิดพลาดของคุณจะหมดลง",
+      "sec_category": "ความปลอดภัย",
       "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy พร้อม nonce ที่สร้างต่อคำขอใน Clerk middleware — ไม่มี unsafe-inline ในที่ใด",
       "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
+      "sec_f2_desc": "OWASP Core Rule Set ในโหมด DetectionOnly ทุก ingress จำกัดอัตราที่ 30 RPS พร้อมความทนทานต่อ burst ผ่าน nginx annotations",
       "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
+      "sec_f3_desc": "ทุกการปล่อยสร้าง CycloneDX software bill of materials และ SLSA provenance attestation แล้วอัปโหลดไปยัง GitHub Release",
+      "obs_category": "การสังเกตการณ์",
       "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
+      "obs_f1_desc": "Distributed traces ไหลจาก Next.js → Hono → Python microservices ผ่าน OTLP ส่งออกสู่ Jaeger (dev) และ Grafana Tempo (prod)",
       "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
+      "obs_f2_desc": "ภาพรวมแพลตฟอร์มแบบหลายแผง: SLO availability, error budget ที่เหลืออยู่, HPA saturation, pod restarts และ CPU throttling",
       "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
+      "obs_f3_desc": "จับข้อผิดพลาดฝั่งเซิร์ฟเวอร์และไคลเอนต์พร้อม tenant context, request ID และ trace ID เพื่อการเชื่อมโยงข้ามระบบ",
+      "data_category": "ข้อมูลและการวิเคราะห์",
       "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
+      "data_f1_desc": "เหตุการณ์ลงสู่ ClickHouse สำหรับการสอบถามเชิงวิเคราะห์ที่รวดเร็ว dbt แปลงเหตุการณ์ดิบเป็นเมตริกการเติบโตชั้น gold ที่แสดงในแดชบอร์ด",
       "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
+      "data_f2_desc": "ติดตาม signups → activations → conversions พร้อมการกำหนดเครดิตระดับ cohort รายได้ต่อผู้ใช้งานที่ใช้งานคำนวณจากชั้น gold",
       "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "data_f3_desc": "รับข้อมูลเหตุการณ์ปริมาณสูงผ่าน Inngest ลง ClickHouse bronze พร้อมการกำจัดข้อมูลซ้ำในหน่วยความจำและการตรวจสอบ schema ที่ขอบ gateway",
+      "infra_category": "โครงสร้างพื้นฐาน",
+      "infra_f1_title": "GitOps ด้วย ArgoCD",
+      "infra_f1_desc": "การเปลี่ยนแปลงใน main branch จะถูกปรับให้สอดคล้องกับคลัสเตอร์โดยอัตโนมัติ การกู้คืนตัวเองจะย้อนการแก้ไขด้วย kubectl ที่ทำด้วยมือ และหน้าต่างการซิงค์จะบังคับให้ใช้งานในช่วงเวลาที่ปลอดภัย",
+      "infra_f2_title": "การรวมการเชื่อมต่อด้วย PgBouncer",
+      "infra_f2_desc": "PgBouncer โหมดธุรกรรมอยู่หน้า Supabase รองรับ 1,000 การเชื่อมต่อแอปด้วย 20 การเชื่อมต่อ Postgres พร้อม HA ด้วย 2 รีพลิคา",
+      "infra_f3_title": "การปรับขนาดอัตโนมัติแนวนอน + แนวตั้ง",
+      "infra_f3_desc": "HPA ปรับขนาดตาม CPU/หน่วยความจำ VPA ทำงานในโหมด Off ให้คำแนะนำการปรับขนาดที่เหมาะสม KEDA เมตริกแบบกำหนดเองจะพร้อมในเวอร์ชัน 2"
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 กำลังก่อสร้าง",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "เรากำลังพัฒนาประสบการณ์สุดเจ๋งสำหรับนักเทคนิคในส่วนนี้ ซึ่งจะเปิดตัวพร้อมกับการอัปเดตโครงสร้างหลักครั้งถัดไป",
+      "opc": "กำลังจัดทำภาพรวมแพลตฟอร์มอย่างละเอียด ติดตาม changelog และ roadmap เพื่อรับข้อมูลการปล่อยเวอร์ชันใหม่",
+      "roadmap": "จากโครงสร้างพื้นฐานไปจนถึงระดับองค์กร — ระยะการพัฒนาผลิตภัณฑ์ หมายสำคัญเวอร์ชัน และวิสัยทัศน์ด้านการระดมทุน"
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "กลับสู่ Hub"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "จากบล็อก",
+    "title": "มุมมองเชิงวิศวกรรม",
+    "subtitle": "เจาะลึกสถาปัตยกรรม SaaS โครงสร้างพื้นฐาน AI และวิศวกรรมระบบผลิต",
+    "readMore": "อ่านเพิ่มเติม"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "สถานการณ์ที่ปรับขนาดได้",
+    "title": "ฐานรากเดียว ความเป็นไปได้ไม่จำกัด",
+    "description": "{productName} ขับเคลื่อนผลิตภัณฑ์ SaaS รุ่นต่อไปในตลาดทั่วโลก",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "การดำเนินงานแบบเอเจนต์",
+      "ip": "เมทริกซ์ทรัพย์สินทางปัญญาส่วนบุคคล",
+      "multimodal": "SaaS AI หลายรูปแบบ",
+      "enterprise": "องค์กรสมัยใหม่ (จีน)",
+      "export": "การส่งออกซอฟต์แวร์ทั่วโลก",
+      "design": "เครื่องยนต์ระบบการออกแบบ",
+      "edam": "สินทรัพย์ดิจิทัลองค์กร"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "ศูนย์ปฏิบัติการ AI-Native",
+        "desc": "รันเวิร์กโฟลว์ของเอเจนต์ เครื่องมือภายใน และพื้นผิวการผสานรวมบนแพลตฟอร์มพื้นฐานที่มีการกำกับดูแลเดียว การขยายแบบขับเคลื่อนด้วยทะเบียน พอร์ทัลผู้ดำเนินการ และรูปแบบรันไทม์ที่นำกลับมาใช้ใหม่จะยังคงสอดคล้องกันเมื่อระบบขยายขนาด",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "ทะเบียนเครื่องมือและพื้นผิวการผสานรวม",
+          "f2": "พอร์ทัลผู้ดำเนินการและคอนโซลภายใน"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "เมทริกซ์การเติบโตและพอร์ตโฟลิโอทรัพย์สินทางปัญญาส่วนบุคคล",
+        "desc": "สร้างการปรากฏตัวของนักก่อตั้งระดับโลกด้วยบล็อก MDX พอร์ตโฟลิโอ และหน้าโปรไฟล์ที่มีการแปลงสูง นิตยสารข่าว การวิเคราะห์ และ SEO ที่ติดตั้งมาล่วงหน้าช่วยให้แบรนด์ส่วนบุคคลของคุณเติบโตอย่างต่อเนื่อง",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "บล็อก MDX + เครื่องยนต์นิตยสารข่าว",
+          "f2": "ปรับให้เหมาะสมกับ SEO และกราฟโซเชียล"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "SaaS AI หลายรูปแบบที่ล้ำสมัย",
+        "desc": "ส่งมอบผลิตภัณฑ์ SaaS การจัดออร์เคสตร้าหลายเอเจนต์ แชทบอท ข้อความเป็นภาพ ภาพเป็นข้อความ และข้อความเป็นวิดีโอ พร้อม UI แบบสตรีมมิ่งที่นำหน้าด้าน UX การกำหนดเส้นทางโมเดลอัจฉริยะ และการวัดการใช้งาน",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
-          "f2": "Model Router + Usage Metering"
+          "f1": "UI สตรีมมิ่งแบบหลายเอเจนต์",
+          "f2": "Model Router + การวัดการใช้งาน"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "เว็บไซต์องค์กรยุคใหม่ (จีน)",
+        "desc": "ออกแบบมาสำหรับธุรกิจจีนโดยเฉพาะ — CDN ภายในประเทศความเร็วสูง, การผสานกับระบบนิเวศ WeChat, การออกแบบ Responsive ที่เน้นมือถือเป็นอันดับแรก และรองรับการปฏิบัติตามกฎระเบียบท้องถิ่นตั้งแต่เริ่มต้น",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "CDN ท้องถิ่น + การปฏิบัติตามกฎระเบียบ",
+          "f2": "พร้อมใช้งานกับระบบนิเวศ WeChat"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "หน้า Landing Page สำหรับส่งออกซอฟต์แวร์ทั่วโลก",
+        "desc": "ออกแบบมาเพื่อ SaaS ที่ต้องการขยายไปทั่วโลก การชำระเงิน Stripe หลายสกุลเงิน, next-intl i18n ที่เปลี่ยนเส้นทางอัตโนมัติใน 7 ภาษา, การปฏิบัติตาม GDPR/CCPA และเนื้อหาที่เจาะจงตามภูมิภาค",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "การชำระเงินทั่วโลกหลายสกุลเงิน",
+          "f2": "7 ภาษา + พร้อม GDPR"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "ระบบการออกแบบและไลบรารีคอมโพเนนต์ชั้นนำ",
+        "desc": "สถาปัตยกรรมแบบขับเคลื่อนด้วยโทเค็น 4 ชั้น: Brand → Tokens → Theme → UI สร้างบน Radix + ชั้น Motion ร่วมด้วย oklch หลายธีม, เอกสาร Storybook และการทดสอบการถดถอยทางภาพ",
         "features": {
-          "f1": "4-Layer Token Governance",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f1": "การกำกับดูแลโทเค็น 4 ชั้น",
+          "f2": "oklch หลายธีม + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "การจัดการสินทรัพย์ดิจิทัลองค์กร",
+        "desc": "ทะเลสาบข้อมูลที่มีโครงสร้างและโทโพโลยีแดชบอร์ดที่ซับซ้อน โดยใช้สถาปัตยกรรม PostgreSQL ที่ปรับขนาดได้และ RBAC แบบละเอียด",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "ความปลอดภัยระดับแถว",
+          "f2": "การสอบถามที่ซับซ้อน",
+          "f3": "การจัดการบทบาท"
         }
       }
     }
   },
   "designSystem": {
     "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
-    "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
-    "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
-    "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
+    "headline": "4 ชั้นของการกำกับดูแลการออกแบบ",
+    "subheadline": "จากพื้นฐานแบรนด์ ไปจนถึงโทเค็นขณะทำงาน ไปจนถึงเครื่องยนต์ธีมหลายแบบ ไปจนถึงคอมโพเนนต์ที่มีการกำกับดูแล — ไม่ใช่แค่ shadcn กับ Tailwind",
+    "flowBrand": "แบรนด์",
+    "flowBrandDesc": "พื้นฐานสี, การไล่สี, ภาษาการเคลื่อนไหว",
+    "flowTokens": "โทเค็น",
+    "flowTokensDesc": "ตัวแปร CSS, สเกล 12 ขั้น, โหมดมืด",
+    "flowTheme": "ธีม",
+    "flowThemeDesc": "ธีมหลายแบบด้วย oklch, 6 ชุดค่าเริ่มต้น, color-mix()",
     "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "flowUIDesc": "คอมโพเนนต์, Storybook, Chromatic",
+    "card1Title": "สเกลสี 12 ขั้น",
+    "card1Desc": "สเกลเชิงความหมายที่สอดคล้องกับ Geist: พื้นหลัง (1-2), สถานะ (3-5), ขอบ (6-8), การเติม (9-10), ข้อความ (11-12)",
+    "card2Title": "ธีมหลายแบบด้วย oklch",
+    "card2Desc": "6 ชุดค่าเริ่มต้นธีมที่ใช้ oklch พร้อมการอนุพัทธ์ด้วย color-mix() รองรับ Display-P3 wide-gamut พร้อมค่าสำรอง sRGB",
+    "card3Title": "การถดถอยทางภาพ",
+    "card3Desc": "Chromatic จับการเปลี่ยนแปลงทุกพิกเซล Storybook บันทึกเอกสารทุกคอมโพเนนต์ การทดสอบสถาปัตยกรรมบังคับให้ครอบคลุมเรื่องราว",
+    "card4Title": "การกำกับดูแลโทเค็น",
+    "card4Desc": "งบประมาณแบบ Ratchet: ฝ้าเพดาน hex, พื้น oklch, ข้อจำกัดคลาสสีดิบ การตรวจจับการเบี่ยงเบนของแบรนด์ใน CI",
+    "card5Title": "เอกสารเชิงโต้ตอบ",
+    "card5Desc": "เว็บไซต์เอกสารดีไซน์ที่ขับเคลื่อนด้วย Fumadocs เต็มรูปแบบ พร้อมเอกสาร API ของคอมโพเนนต์สองภาษา (EN/ZH) แกลเลอรีโทเค็น คู่มือแพทเทิร์นเลย์เอาต์ และตัวอย่างโค้ดแบบเรียลไทม์"
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "ไม่พบหน้า",
+    "desc": "ลิงก์นี้อาจหมดอายุ หรือหน้าเว็บอาจถูกย้าย",
+    "home": "กลับไปยัง {brandName}",
+    "docs": "เปิดเอกสาร"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "ค้นหาเวอร์ชัน..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "สลับเมนู"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "แสดงเวอร์ชันเต็ม",
+      "copyLinkToRelease": "คัดลอกลิงก์ไปยังเวอร์ชัน",
+      "copyLink": "คัดลอกลิงก์",
+      "openInNewTab": "เปิดในแท็บใหม่"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "เร็วๆ นี้"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "ฟรีสำหรับ <hl>สร้างบน</hl>",
+      "description": "{brandName}-Sailor ใช้งานได้ฟรีเชิงพาณิชย์ — MIT บน npm, FSL-1.1-ALv2 บน repository และเปลี่ยนเป็น Apache-2.0 หลังจากสองปี แพ็กเกจเสียเงินขายการสนับสนุนและพันธะสัญญา ไม่ใช่สิทธิในการใช้งาน"
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
+        "badge": "ฟรีตลอดไป",
         "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "subtitle": "ทุกคน",
+        "description": "ทุกขนาดทีม ทุกรายได้ รวมถึงผลิตภัณฑ์เชิงพาณิชย์แบบปิดซอร์ส",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "ซอร์สโค้ดเต็มรูปแบบ ทุกแพ็กเกจ",
+          "closedSourceOk": "ใช้งานเชิงพาณิชย์แบบปิดซอร์สได้ — ไม่มี copyleft",
+          "noAttribution": "ไม่ต้องลงทะเบียน ไม่ต้องอ้างอิง",
+          "communitySupport": "การสนับสนุนจากชุมชน — ทำตามความสามารถ"
         },
-        "cta": "View on GitHub"
+        "cta": "ดูบน GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
+        "badge": "เริ่มต้น {price}/ปี",
         "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "subtitle": "การสมัครรับสนับสนุน",
+        "description": "สำหรับทีมที่ต้องการพันธะสัญญา ไม่ใช่แค่ความหวัง โค้ดใช้งานฟรีอยู่แล้ว",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "ช่องสนับสนุนส่วนตัว",
+          "firstResponse": "การตอบกลับครั้งแรกภายในสองวันทำการ รับประกัน",
+          "priorityTriage": "การตรวจสอบบั๊กแบบเร่งด่วน",
+          "upgradeHelp": "ความช่วยเหลือในการอัปเกรดและการแจ้งเตือนการเปลี่ยนแปลงที่กระทบการใช้งาน"
         },
-        "cta": "Get support"
+        "cta": "รับสนับสนุน"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "เริ่มต้น $30,000/ปี",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "พร้อมสำหรับการจัดซื้อ",
+        "description": "สำหรับองค์กรที่ต้องการคู่สัญญาที่สามารถลงนามได้ เพื่อรองรับการตรวจสอบทางกฎหมาย ความปลอดภัย หรือการจัดซื้อ",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA การตอบกลับ — 4 ชั่วโมงทำการ, 1 ชั่วโมงเมื่อระบบหยุดทำงาน",
+          "indemnity": "การชดเชยความเสียหายและคำมั่นสัญญาในการอัปเดตความปลอดภัย",
+          "compliance": "DPA ที่ลงนาม, ชุดเอกสารการปฏิบัติตามกฎระเบียบ, คำมั่นสัญญาความต่อเนื่อง",
+          "trademark": "สิทธิเครื่องหมายการค้าและสิทธิ white-label"
         },
-        "cta": "Contact sales"
+        "cta": "ติดต่อฝ่ายขาย"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "คำถามที่พบบ่อย",
+      "description": "แบบสั้น: การใช้งานฟรี การชำระเงินคือเมื่อคุณต้องการให้เราผูกพันทางสัญญา",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "ทำไมถึงใช้ FSL แทน MIT หรือ AGPL?",
+          "a": "FSL อนุญาตทุกการใช้งาน ยกเว้นการขายผลิตภัณฑ์ที่แทนที่ Sailor เอง และแต่ละเวอร์ชันจะกลายเป็น Apache-2.0 หลังจากปล่อยออกมาสองปี — สิทธิ์ที่มอบให้ล่วงหน้าอย่างถาวร AGPL กีดกันการนำไปใช้ในองค์กรเนื่องจากขั้นตอนการตรวจสอบทางกฎหมาย โดยไม่ได้ปกป้องสิ่งใดที่เราจำเป็นต้องปกป้อง"
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "การใช้งานเชิงพาณิชย์ฟรีจริงๆ หรือ?",
+          "a": "ใช่ ไม่มีค่าธรรมเนียม ไม่มีคีย์ใบอนุญาต ไม่ต้องลงทะเบียน ไม่มีเกณฑ์รายได้หรือจำนวนพนักงาน ไม่ต้องอ้างอิง สร้างผลิตภัณฑ์แบบปิดและขายได้"
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "อะไรที่ถือเป็นการใช้งานที่แข่งขันกัน?",
+          "a": "การเสนอ Sailor เอง — บริการ Sailor แบบโฮสต์ หรือแพลตฟอร์มแข่งขันที่บรรจุใหม่ การสร้าง SaaS แนวตั้ง เครื่องมือภายใน หรือโปรเจกต์ลูกค้าบน Sailor ไม่ถือเป็นการใช้งานที่แข่งขันกัน หากโมเดลของคุณต้องการ สัญญา Enterprise สามารถรวมการยกเว้นเป็นลายลักษณ์อักษรได้"
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "แพ็กเกจเสียเงินซื้ออะไรจริงๆ?",
+          "a": "คำมั่นสัญญาการสนับสนุน SLA การตอบกลับ การชดเชยความเสียหาย เอกสารการปฏิบัติตามกฎระเบียบ และสิทธิเครื่องหมายการค้า ไม่ใช่สิทธิ์ในการใช้ซอฟต์แวร์ — สิทธิ์นั้นเป็นของคุณอยู่แล้ว"
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "แล้วการมีส่วนร่วมในโอเพนซอร์สล่ะ?",
+          "a": "การมีส่วนร่วมทั้งหมดต้องใช้ CLA ดู CONTRIBUTING.md"
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "ใบอนุญาต — {brandName}",
+      "description": "ใช้ฟรีสำหรับการค้า MIT บน npm, FSL-1.1-ALv2 บน repository, เปลี่ยนเป็น Apache-2.0"
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "ใบอนุญาตฟรีสำหรับบุคคล",
+      "opcFree": "ใบอนุญาตบริษัทเจ้าของคนเดียว",
+      "startupCommercial": "ใบอนุญาตเชิงพาณิชย์สำหรับสตาร์ทอัพ",
+      "enterprise": "ใบอนุญาตองค์กร"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "เลือกตัวเลือก...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "บันทึกการเปลี่ยนแปลง — {brandName}",
+    "description": "ทุกการปล่อยเวอร์ชัน มาพร้อมความพิถีพิถันในทุกรายละเอียด",
+    "versionTitleSuffix": "บันทึกการเปลี่ยนแปลง {brandName}"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "แผนงานแพลตฟอร์ม — {brandName}",
+    "description": "แผนงานสำหรับฐานแพลตฟอร์มภายใต้การกำกับดูแลของ {brandName} รันไทม์ Harness และเส้นทางอัปเกรด"
   },
   "blogMeta": {
-    "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "title": "บล็อก — {brandName}",
+    "description": "ข้อมูลเชิงลึกด้านวิศวกรรม อัปเดตผลิตภัณฑ์ และแนวปฏิบัติที่ดีสำหรับ SaaS จากทีม {brandName}"
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "รับใบอนุญาตของคุณ — {brandName}",
+    "description": "รับใบอนุญาต {brandName} และการเข้าถึงแพลตฟอร์มภายใน 2 นาที"
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "badge": "คำถามที่พบบ่อย",
+      "title": "คำถามของคุณ มีคำตอบตรงไปตรงมา",
+      "subtitle": "ทุกสิ่งที่คุณต้องรู้ก่อนเริ่มใช้งานจริง",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "{productName} คืออะไรกันแน่?",
+          "answer": "Sailor คือฐานราก SaaS สำหรับ Next.js + Tailwind v4 ที่ออกแบบมาอย่างชัดเจน พร้อมระบบ auth, billing, multi-tenancy, AI, queues, search และ email ที่เชื่อมต่อไว้ให้แล้ว คุณแค่ clone มา ตั้งค่า providers แล้วเริ่มใช้งานจริง — โดยทั่วไปภายในหนึ่งสัปดาห์"
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "Sailor ออกแบบมาสำหรับใคร?",
+          "answer": "ผู้ก่อตั้งและวิศวกรผลิตภัณฑ์ที่ต้องการใช้เวลาไปกับสิ่งที่ทำให้ผลิตภัณฑ์ของคุณแตกต่าง — ไม่ใช่กับการสร้างระบบ auth/billing/tenancy ซ้ำๆ เป็นครั้งที่ห้า"
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "ใช้งานฟรีหรือเสียเงิน?",
+          "answer": "ซอร์สโค้ดเต็มรูปแบบเผยแพร่ภายใต้ AGPL-3.0 — ใช้งานฟรีสำหรับโปรเจกต์ส่วนตัว เครื่องมือภายใน และงานโอเพนซอร์สที่เข้ากันได้กับ AGPL ใบอนุญาตเชิงพาณิชย์เปิดสิทธิ์ให้คุณนำ Sailor ไปใช้ใน SaaS แบบปิดซอร์ส ทุกแผนรวมฟีเจอร์ครบถ้วน (auth, billing, multi-tenancy, AI, audit) ระดับแผนต่างกันที่เงื่อนไขใบอนุญาตและ SLA การสนับสนุน ไม่ใช่ที่ฟีเจอร์"
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "ใช้งานในประเทศจีนได้ไหม?",
+          "answer": "ได้ เราพร้อมใช้งานโครงสร้างพื้นฐานคู่ขนาน (CDN ที่เข้ากันได้กับ Aliyun, โดเมนที่รองรับ ICP, และ Penpot แทน Figma แบบเลือกได้) เพื่อให้โค้ดเบสเดียวกันสามารถ deploy ได้ภายใน Great Firewall อย่างราบรื่น"
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "สามารถ deploy ที่ไหนได้บ้าง?",
+          "answer": "ทุกที่ที่รัน Node 22+ ได้ เว็บไซต์ทางการ deploy บน Vercel ส่วน dashboard, gateway และบริการ Python รันบน Docker / PM2 (ปัจจุบันเรารันบน Aliyun ECS พร้อม Kubernetes manifests เต็มรูปแบบใน infra/iac/k8s/ สำหรับคลัสเตอร์) ลูกค้า Enterprise ยังสามารถ deploy ภายใน VPC ของตัวเองได้"
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "จัดการความปลอดภัยอย่างไร?",
+          "answer": "การเข้ารหัสแบบ envelope encryption ระดับแอปพลิเคชันสำหรับ secrets (@nebutra/vault), Postgres RLS สำหรับแยก tenant, RBAC/ABAC ผ่าน CASL หรือ OpenFGA (@nebutra/permissions), โทเค็นระหว่างบริการที่ลงนามด้วย HMAC, webhook ออกจากที่ลงนาม และ pipeline audit ที่สอดคล้องกับ SOC 2 (@nebutra/audit) รวมอยู่ในทุกแผน Pro และ Enterprise เพิ่มการสนับสนุนการรับรอง SOC 2, การตอบสนองต่อเหตุการณ์เฉพาะ และระยะเวลาเก็บ audit log ที่นานขึ้น"
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "ได้รับบริการสนับสนุนอย่างไร?",
+          "answer": "ลูกค้าฟรีได้รับชุมชน Discord + GitHub Issues Pro เพิ่มอีเมลลำดับความสำคัญพร้อม SLA ตอบกลับภายใน 1 วันทำการ Enterprise ได้รับช่อง Slack เฉพาะและวิศวกรสำหรับ onboarding"
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "สามารถนำ provider ของตัวเองมาใช้ได้ไหม?",
+          "answer": "ได้ ทุกการผสานรวม (auth, queue, search, email, payments, storage, billing) ไม่ผูกกับ provider ใดๆ factory ในแต่ละแพ็กเกจเลือก adapter ที่ถูกต้องจากตัวแปร env เดียว — เปลี่ยน Clerk เป็น Better Auth, NextAuth หรือ Supabase Auth, QStash เป็น BullMQ, Resend เป็น SES, Stripe เป็น Polar / LemonSqueezy / ChinaPay — โดยไม่ต้องแตะโค้ดแอปพลิเคชัน"
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "ใช้เทคโนโลยีอะไรบ้าง?",
+          "answer": "Next.js 16 (App Router) บน React 19, TypeScript 5.9, Tailwind v4, Prisma 7 บน Postgres (พร้อม pgvector + RLS), Hono สำหรับ BFF gateway, FastAPI สำหรับบริการ ML/งานหนัก และไลบรารีคอมโพเนนต์ที่คัดสรรมาบน Radix, {brandName} UI primitives และ Motion layer ร่วม AI features ทำงานผ่าน Vercel AI SDK พร้อมการเปลี่ยน provider ได้ (OpenAI / OpenRouter / SiliconFlow / Azure / local)"
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "ใบอนุญาตคืออะไร?",
+          "answer": "AGPL-3.0 พร้อม Commercial Exception ใช้งานฟรีสำหรับการใช้งานส่วนตัว เครื่องมือภายใน และ OSS ที่เข้ากันได้กับ AGPL ใบอนุญาตเชิงพาณิชย์แบบเสียเงินจะปลดล็อกสิทธิ์ในการนำ Sailor ไปใช้งานใน SaaS ทรัพย์สินส่วนตัวแบบเป็นต้นฉบับ แหล่งที่มาทั้งหมดรวมอยู่ในทุกแผน"
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "ต้องจ่ายเงินเพื่ออัปเดตหรือไม่?",
+          "answer": "ไม่ อัปเดตแหล่งที่มาจะรวมอยู่ในใบอนุญาตเชิงพาณิชย์ทุกใบ — ดึงจาก main ได้ตลอดเวลาและ rebase fork ของคุณ ชั้นเสียเงินคือสิทธิ์ในการใช้ Sailor ในเชิงพาณิชย์ ไม่ใช่สิทธิ์ในการรับโค้ด แต่ละเวอร์ชันย่อยจะออก CHANGELOG และคู่มืออัปเกรดสำหรับการเปลี่ยนแปลงที่แตกหัก"
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "ทำไมถึงใช้ Turborepo แทน Next.js app มาตรฐาน?",
+          "answer": "Sailor มี 10 apps + 104 shared packages ภายใต้ packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — เกินจุดที่ Next.js mega-app เดียวจะยังดูแลได้ Turborepo ให้เรา build เฉพาะส่วนที่เปลี่ยนแปลง, remote caching ที่โปร่งใส และแหล่งความจริงเดียวสำหรับ shared design tokens, auth, billing และ observability — โดยไม่ต้องบังคับให้ทุกทีมอยู่ใน Next.js process เดียว"
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "จัดการ multi-tenancy อย่างไร?",
+          "answer": "สองชั้น Request-scoped tenant context ผ่าน @nebutra/tenant (AsyncLocalStorage ส่งต่อ active org ผ่านทุกการเรียก server รวมถึง DB queries และ outbound webhooks) และ database-enforced isolation ผ่าน Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) ที่ผูกกับ session-local app.current_tenant_id Service-role connections ข้าม RLS ได้เฉพาะภายใน trusted internal services เท่านั้น; ทุก user-facing routes ทำงานผ่าน tenant-scoped client"
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "สามารถเปลี่ยน Clerk เป็น auth provider อื่นได้หรือไม่?",
+          "answer": "ได้ @nebutra/auth มี adapters ระดับแรกสำหรับ Clerk, Better Auth, NextAuth (Auth.js v5) และ Supabase Auth เปลี่ยนผ่าน AUTH_PROVIDER env var หรือเลือกตอน scaffold ด้วย create-sailor --auth=... — server, React และ middleware surfaces เหมือนกันไม่ว่าจะใช้ provider ใด การเพิ่ม adapter ตัวที่ห้าหมายถึงการ implement interface เดียว (~80 LOC); ไม่มีโค้ดรอบข้างที่ผูกกับ provider เฉพาะ"
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "นักพัฒนาชื่นชอบ",
+      "title": "ผู้ก่อตั้งพูดถึงอะไรหลังจากใช้งาน Sailor",
+      "subtitle": "เรื่องราวจากลูกค้ากลุ่มเบต้าจะออกเร็วๆ นี้ — เป็นหนึ่งในคนแรก"
     },
     "comparison": {
       "badge": "เปรียบเทียบแพ็กเกจ",
@@ -1735,12 +1735,12 @@
       }
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "สร้างบน stack ที่คุณไว้วางใจได้",
+      "logosLabel": "พันธมิตรการผสาน",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "AI providers ที่รองรับ"
         },
         "projects": {
           "value": "104",
@@ -1748,28 +1748,28 @@
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "i18n locales พร้อมใช้งาน"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "เลขที่ ICP",
+      "publicSecurity": "ความมั่นคงสาธารณะ"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "เลขที่ ICP",
+    "publicSecurity": "เลขที่บันทึกความมั่นคงสาธารณะ"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "ประเทศและภาษา",
+    "description": "เลือกประเทศและภาษาสำหรับเว็บไซต์การตลาด",
+    "triggerAria": "เลือกประเทศและภาษา",
+    "searchPlaceholder": "ค้นหาประเทศ…",
+    "plannedHint": "ส่วนติดต่อผู้ใช้จะกลับเป็นภาษาอังกฤษจนกว่าภาษานี้จะพร้อมใช้งาน",
+    "noResults": "ไม่พบประเทศที่ตรงกัน",
+    "menuAria": "ประเทศและภาษา"
   }
 }

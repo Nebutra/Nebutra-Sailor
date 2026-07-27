@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Idioma",
     "ariaLabel": "Cambiar idioma",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Buscar idiomas…",
+    "noResults": "No hay idiomas que coincidan",
+    "menuAria": "Seleccionar idioma"
   },
   "compliance": {
     "icp": {

@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Мова",
     "ariaLabel": "Змінити мову",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Шукати мови…",
+    "noResults": "Мови не знайдено",
+    "menuAria": "Обрати мову"
   },
   "compliance": {
     "icp": {
@@ -347,7 +347,7 @@
       },
       "providerLoading": "Перенаправлення…",
       "dividerOr": "Або увійдіть через email",
-      "emailLabel": "Email",
+      "emailLabel": "Електронна пошта",
       "emailPlaceholder": "you@example.com",
       "continue": "Продовжити",
       "back": "Назад",
@@ -953,7 +953,7 @@
         "apiKeys": "Ключі API",
         "notifications": "Сповіщення",
         "auditLog": "Журнал аудиту",
-        "webhooks": "Webhooks",
+        "webhooks": "Вебхуки",
         "admin": "Адміністрування"
       },
       "action": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, вебхуки, черги та інше."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Відкрити Sailor AI",
           "description": "Спробуйте режим чату, даних або робочого процесу."
         }
       }

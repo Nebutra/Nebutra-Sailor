@@ -29,7 +29,7 @@
   "refer": {
     "metadataTitle": "Sluit je aan bij de {brandName} founder referral loop",
     "metadataDescription": "Sluit je aan bij de {brandName} waitlist, behoud referral-attributie en ontgrendel je eigen sharelink in één gesloten product-led loop.",
-    "eyebrow": "Founder referral loop",
+    "eyebrow": "Referral-lus voor oprichters",
     "title": "Sluit je aan bij de volgende founder-cohort en krijg je eigen sharelink.",
     "description": "Ga binnen met elke invitecode of meld je direct aan. We behouden de attributie als de code bestaat, plaatsen je op de waitlist en verstrekken een private referral-URL die je direct kunt delen.",
     "signal": {
@@ -298,7 +298,7 @@
       "companyInfoTitle": "Operationele Telemetrie",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
+      "companyAddress": "Wuxi, provincie Jiangsu, China",
       "socialMedia": "Primaire netwerklinks"
     },
     "cookies": {
@@ -1315,7 +1315,7 @@
       "multi_category": "Multi-tenant platform",
       "multi_f1_title": "Isolatie op organisatie-niveau",
       "multi_f1_desc": "Row-level security in Postgres zorgt ervoor dat tenants nooit toegang hebben tot elkaars gegevens — afgedwongen op databaselayer, niet alleen in de applicatie.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_title": "Multi-provider authenticatie (Clerk / Better Auth / NextAuth / Supabase)",
       "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus e-mail/wachtwoord en magic-link — wissel tussen Clerk, Better Auth, NextAuth of Supabase Auth via één omgevingsvariabele.",
       "multi_f3_title": "Automatische tenant-provisioning",
       "multi_f3_desc": "Wanneer een nieuwe organisatie zich aanmeldt via Clerk, genereren we automatisch hun eerste API-sleutel en sturen we een branded welkomstmail — zonder handmatige stappen.",
@@ -1324,7 +1324,7 @@
       "dx_f1_desc": "SHA-256 gehashte sleutels met prefixweergave (nbtr_live_…). Slechts één keer in platte tekst getoond bij aanmaken — beveiliging zonder wrijving.",
       "dx_f2_title": "Idempotentie-middleware",
       "dx_f2_desc": "Voeg een Idempotency-Key-header toe en elke POST-aanvraag kan veilig worden herhaald. Redis-gebaseerd, 24-uurs cache, IETF-draft-conform.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
+      "dx_f3_title": "Multi-protocol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI voor openbare API's, oRPC voor type-safe frontend-aanroepen, tRPC voor T3-stack-compatibiliteit. Alle protocollen delen dezelfde Zod-contracten en middleware-stack. Schakel per protocol in via preset-configuratie.",
       "billing_category": "Facturering & Monetarisatie",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
@@ -1390,17 +1390,17 @@
     "title": "Eén basis. Oneindig veel mogelijkheden.",
     "description": "{productName} ondersteunt de volgende generatie SaaS-producten op wereldwijde markten.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
+      "opc": "Agentische Operaties",
+      "ip": "Persoonlijke IP-matrix",
+      "multimodal": "Multimodale AI SaaS",
       "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "export": "Wereldwijde Software-export",
+      "design": "Designsysteem-engine",
+      "edam": "Enterprise Digitale Activas"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
+        "title": "AI-native Operatiehub",
         "desc": "Voer agent-workflows, interne tooling en integratieoppervlakken uit op één beheerd platform. Registry-gedreven extensies, operatorportals en herbruikbare runtimepatronen blijven gesynchroniseerd naarmate het systeem groeit.",
         "features": {
           "f1": "Tool Registry & Integratieoppervlak",
@@ -1408,7 +1408,7 @@
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
+        "title": "Persoonlijke IP-groei- en Portfoliomatrix",
         "desc": "Creëer een wereldklasse founder-presence met een hoog-converterende MDX-blog, portfolio en profielpagina's. Ingebouwde nieuwsbrief, analytics en SEO zorgen dat je persoonlijke merkwaarde groeit.",
         "features": {
           "f1": "MDX Blog + Nieuwsbrief Engine",
@@ -1416,15 +1416,15 @@
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
+        "title": "Innovatieve Multimodale AI SaaS",
         "desc": "Lanceer Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text en Text-to-Video SaaS-producten met een UX-leidende streaming UI, intelligente modelrouting en gebruiksmeting.",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
+          "f1": "Multi-agent Streaming UI",
           "f2": "Model Router + Gebruiksmeting"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
+        "title": "Moderne Enterprise-website (CN)",
         "desc": "Aangepast voor Chinese zakelijke scenario's — ultrasnelle binnenlandse CDN, WeChat-ecosysteemintegratie, mobile-first responsive design en lokaal compliance out of the box.",
         "features": {
           "f1": "Lokale CDN + Compliance",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Gratis om <hl>op te bouwen</hl>",
+      "description": "{brandName}-Sailor is gratis voor commercieel gebruik — MIT op npm, FSL-1.1-ALv2 in de repository, met overstap naar Apache-2.0 na twee jaar. Betaalde niveaus bieden ondersteuning en contractuele afspraken, nooit toestemming."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
+        "badge": "Altijd gratis",
         "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "subtitle": "Iedereen",
+        "description": "Elk team, elke omzet. Gesloten-bron commerciële producten inbegrepen.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Volledige broncode, alle pakketten",
+          "closedSourceOk": "Gesloten-bron commercieel gebruik — geen copyleft",
+          "noAttribution": "Geen registratie, geen vermelding vereist",
+          "communitySupport": "Community-ondersteuning — besteffort"
         },
-        "cta": "View on GitHub"
+        "cta": "Bekijk op GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
+        "badge": "Vanaf {price}/jr",
         "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "subtitle": "Ondersteuningsabonnement",
+        "description": "Voor teams die een toezegging nodig hebben in plaats van een hoop. De code is al gratis.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Privé-ondersteuningskanaal",
+          "firstResponse": "Eerste reactie binnen twee werkdagen, gegarandeerd",
+          "priorityTriage": "Prioritaire bugtriage",
+          "upgradeHelp": "Upgrade-ondersteuning en melding van brekende wijzigingen"
         },
-        "cta": "Get support"
+        "cta": "Ondersteuning aanvragen"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Vanaf $30.000/jaar",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Klaar voor inkoop",
+        "description": "Voor organisaties waarvan de juridische, beveiligings- of inkoopreview een tegenpartij nodig heeft die tekent.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "Response-SLA — 4 werkbare uren, 1 uur bij productie-down",
+          "indemnity": "Schadevergoeding en verbintenis tot beveiligingspatches",
+          "compliance": "Ondertekende DPA, compliancepakket, continuïteitsverklaring",
+          "trademark": "Handelsmerk- en white-labelrechten"
         },
-        "cta": "Contact sales"
+        "cta": "Neem contact op met sales"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Veelgestelde vragen",
+      "description": "Kort gezegd: gebruiken is gratis. Betalen is voor wanneer je ons contractueel aanspreekbaar wilt hebben.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Waarom FSL in plaats van MIT of AGPL?",
+          "a": "FSL staat elk gebruik toe, behalve het verkopen van een vervanging voor Sailor zelf, en elke versie wordt twee jaar na release Apache-2.0 — een onherroepelijk vooraf verleende vergunning. AGPL blokkeerde adoptie bij juridische review in bedrijven zonder iets te beschermen wat we daadwerkelijk hoefden te beschermen."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Is commercieel gebruik echt gratis?",
+          "a": "Ja. Geen kosten, geen licentiekey, geen registratie, geen inkomsten- of personeelsgrens, geen attributie. Bouw een closed-source product en verkoop het."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Wat telt als concurrerend gebruik?",
+          "a": "Sailor zelf aanbieden — een gehoste Sailor-service of een herpakt concurrerend platform als basis. Een verticale SaaS, een intern hulpmiddel of klantprojecten bouwen op Sailor is geen concurrerend gebruik. Als je model het nodig heeft, kan een Enterprise-overeenkomst een schriftelijke vrijstelling bevatten."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Wat kopen de betaalde niveaus eigenlijk?",
+          "a": "Ondersteuningsverplichtingen, response-SLA's, schadevergoeding, compliance-documentatie en handelsmerkrechten. Nooit toestemming om de software te gebruiken — dat is al van jou."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "En open source-bijdragen?",
+          "a": "Alle bijdragen vereisen een CLA. Zie CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Licenties — {brandName}",
+      "description": "Gratis voor commercieel gebruik. MIT op npm, FSL-1.1-ALv2 in de repository, conversie naar Apache-2.0."
     }
   },
   "licenseWizard": {

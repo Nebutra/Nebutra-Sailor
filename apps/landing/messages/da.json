@@ -115,7 +115,7 @@
       "description": "En styret platformbasis til teams, der leverer AI-native SaaS. Sammenhæng mellem skaffolding, runtime-primitiver og leveringsflader uden at sammensætte ad-hoc værktøjer."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
+      "title": "Enterprise SaaS-automatisering",
       "description": "Dyb integration af den moderne tech stack fra Vercel, Supabase og Stripe. Leverer row-level security, kompleks multi-tenant isolation og global abonnementsafregning klar til brug."
     }
   },
@@ -184,11 +184,11 @@
   },
   "stats": {
     "title": "I tal",
-    "github": "GitHub Stars",
+    "github": "GitHub-stjerner",
     "discord": "Discord-medlemmer",
     "setup": "Gns. opsætningstid",
     "packages": "Monorepo-pakker",
-    "ctaStar": "Star →",
+    "ctaStar": "Stjern →",
     "ctaJoin": "Deltag →",
     "ctaStart": "Start →",
     "ctaExplore": "Udforsk →"
@@ -1131,12 +1131,12 @@
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | Startup Agent OS",
+    "description": "Startup Agent OS til grundlæggere, der går globalt. Produktionsklar Next.js-basis med styret arkitektur, auth, fakturering, agenter og i18n — bygget til AI-kodingagenter og seriøse teams."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
+      "badge": "SYSTEMTOPOLOGI",
       "title": "Gennemsigtig arkitektur, ingen sorte kasser.",
       "description": "{productName} er designet med en hyper-modulær Turborepo-struktur, der giver dig fuld ejerskab af hele din softwarelivscyklus.",
       "database": {
@@ -1506,87 +1506,87 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Gratis at <hl>Bygge På</hl>",
+      "description": "{brandName}-Sailor koster ingenting at bruge kommercielt — MIT på npm, FSL-1.1-ALv2 på repositoryet, konverterer til Apache-2.0 efter to år. Betalende niveauer sælger support og kontraktuelle forpligtelser, aldrig tilladelse."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
+        "badge": "Altid Gratis",
         "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "subtitle": "Alle",
+        "description": "Enhver teamstørrelse, enhver omsætning. Lukket kildekode kommercielle produkter inkluderet.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Fuld kildekode, alle pakker",
+          "closedSourceOk": "Lukket kildekode kommerciel brug — ingen copyleft",
+          "noAttribution": "Ingen registrering, ingen attributtering påkrævet",
+          "communitySupport": "Community support — bedste bestræbelser"
         },
-        "cta": "View on GitHub"
+        "cta": "Se på GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
+        "badge": "Fra {price}/år",
         "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "subtitle": "Support abonnement",
+        "description": "For teams der har brug for en forpligtelse frem for et håb. Koden er allerede gratis.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Privat support kanal",
+          "firstResponse": "Første svar inden to hverdage, garanteret",
+          "priorityTriage": "Prioriteret fejltriage",
+          "upgradeHelp": "Opgraderingshjælp og varsel om brydende ændringer"
         },
-        "cta": "Get support"
+        "cta": "Få support"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Fra $30.000/år",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Klar til indkøb",
+        "description": "Til organisationer, hvis juridiske, sikkerheds- eller indkøbsgennemgang kræver en modpart, der underskriver.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "Svar SLA — 4 forretningsdage, 1 time produktionsnedetid",
+          "indemnity": "Erstatningsansvar og forpligtelse til sikkerhedspatches",
+          "compliance": "Underskrevet DPA, compliance-pakke, kontinuitetsforpligtelse",
+          "trademark": "Varemærke- og white-label-rettigheder"
         },
-        "cta": "Contact sales"
+        "cta": "Kontakt salg"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Ofte stillede spørgsmål",
+      "description": "Kort version: det er gratis at bruge. Betaling er til, når du har brug for os kontraktmæssigt ansvarlige.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Hvorfor FSL i stedet for MIT eller AGPL?",
+          "a": "FSL tillader enhver brug undtagen at sælge en erstatning for Sailor selv, og hver version bliver Apache-2.0 to år efter udgivelse — en tilladelse givet uigenkaldeligt på forhånd. AGPL blokerede adoption ved virksomheders juridiske gennemgang uden at beskytte noget, vi faktisk havde brug for at beskytte."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Er kommerciel brug virkelig gratis?",
+          "a": "Ja. Ingen gebyr, ingen licensnøgle, ingen registrering, ingen indtægts- eller medarbejdergrænse, ingen henførelse. Byg et lukket kildekodeprodukt og sælg det."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Hvad tæller som konkurrerende brug?",
+          "a": "At tilbyde Sailor selv — en hosted Sailor-tjeneste eller en ompakket konkurrerende platformsbasis. At bygge en vertikal SaaS, et internt værktøj eller klientprojekter på Sailor er ikke konkurrerende brug. Hvis dit model kræver det, kan en Enterprise-aftale inkludere en skriftlig waiver."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Hvad køber de betalte niveauer faktisk?",
+          "a": "Supportforpligtelser, svar SLA'er, erstatningsansvar, compliance-dokumentation og varemærkerettigheder. Aldrig tilladelse til at bruge softwaren — det er allerede dit."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Hvad med open source-bidrag?",
+          "a": "Alle bidrag kræver en CLA. Se CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Licensiering — {brandName}",
+      "description": "Gratis til kommercielt brug. MIT på npm, FSL-1.1-ALv2 på lageret, konverteres til Apache-2.0."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "Gratis licens til enkeltpersoner",
+      "opcFree": "Licens til enkelt-ejede virksomheder",
+      "startupCommercial": "Kommerciel licens til startups",
+      "enterprise": "Virksomhedslicens"
     },
     "referralSource": {
       "selectPlaceholder": "Vælg en mulighed...",
@@ -1594,9 +1594,9 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
+    "title": "Ændringslog — {brandName}",
     "description": "Hver udgivelse leveres med en besættende opmærksomhed på detaljerne.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "versionTitleSuffix": "{brandName} Ændringslog"
   },
   "roadmapMeta": {
     "title": "Platform Roadmap — {brandName}",

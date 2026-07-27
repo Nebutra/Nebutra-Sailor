@@ -19,7 +19,7 @@
     "avatarMenu": {
       "ariaLabel": "Kontomeny",
       "loadingName": "Laster…",
-      "dashboard": "Dashboard",
+      "dashboard": "Dashbord",
       "account": "Konto",
       "billing": "Fakturering",
       "docs": "Dokumentasjon",
@@ -1131,12 +1131,12 @@
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
+    "title": "{brandName} Agent OS | Startup Agent OS",
     "description": "The Startup Agent OS for gründere som går globalt. Production-ready Next.js-grunnlag med styrt arkitektur, auth, fakturering, agenter og i18n — bygget for AI-kodingssagenter og seriøse team."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
+      "badge": "SYSTEMTOPOLOGI",
       "title": "Transparent arkitektur, ingen svart boks.",
       "description": "{productName} er designet med en hyper-modulær Turborepo-struktur, som gir deg full eierskap over hele din programvare-livssyklus.",
       "database": {
@@ -1327,7 +1327,7 @@
       "dx_f3_title": "Multi-protokoll-API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI for offentlige API-er, oRPC for typesikre frontend-kall, tRPC for T3-stack-kompatibilitet. Alle protokoller deler samme Zod-kontrakter og middleware-stakk. Aktiver per protokoll via forhåndsinnstilling.",
       "billing_category": "Fakturering & Monetarisering",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar og Kina-betaling",
       "billing_f1_desc": "Velg betalingsleverandør: Stripe for globalt enterprise, LemonSqueezy for indie-utviklere, Polar for OSS, eller Alipay/WeChat Pay for kinesisk marked. Én-klikks checkout og selvbetjent faktureringsportal.",
       "billing_f2_title": "Bruksbasert kvotehåndhevelse",
       "billing_f2_desc": "Sanntids Redis-tellere sporer API-kall og token-bruk per leietaker. Forespørsler blokkeres i gateway når grenser nås.",
@@ -1354,7 +1354,7 @@
       "obs_f2_desc": "Flerpaneloversikt for plattformen: SLO-tilgjengelighet, gjenværende feilbudsjett, HPA-metning, pod-omstarter og CPU-throttling.",
       "obs_f3_title": "Sentry-feilsporing",
       "obs_f3_desc": "Server- og klientfeil fanges med tenant-kontekst, forespørsels-ID og spor-ID for tverrsystemkorrelasjon.",
-      "data_category": "Data & Analytics",
+      "data_category": "Data og analyse",
       "data_f1_title": "ClickHouse OLAP-lager",
       "data_f1_desc": "Hendelser lander i ClickHouse for raske analytiske spørringer. dbt transformerer rå hendelser til gold-lags vekstmålinger som vises i dashbordet.",
       "data_f2_title": "Traktanalyse",
@@ -1464,7 +1464,7 @@
     "subheadline": "Fra merkevareprinsipper til kjøretidstokens til flertema-motor til styrte komponenter — ikke bare shadcn med Tailwind.",
     "flowBrand": "Merkevare",
     "flowBrandDesc": "Fargeprinsipper, gradienter, bevegelsesspråk",
-    "flowTokens": "Tokens",
+    "flowTokens": "Token",
     "flowTokensDesc": "CSS-variabler, 12-trinns skalaer, mørk modus",
     "flowTheme": "Tema",
     "flowThemeDesc": "oklch flertema, 6 forhåndsinnstillinger, color-mix()",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Gratis å <hl>bygge på</hl>",
+      "description": "{brandName}-Sailor koster ingenting å bruke kommersielt — MIT på npm, FSL-1.1-ALv2 på repositoryet, og konverteres til Apache-2.0 etter to år. Betalte nivåer selger støtte og kontraktuelle forpliktelser, aldri tillatelse."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
+        "badge": "Alltid gratis",
         "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "subtitle": "Alle",
+        "description": "Uansett teamstørrelse eller inntekt. Lukket kildekode for kommersielle produkter inkludert.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Full kildekode, alle pakker",
+          "closedSourceOk": "Kommersiell bruk med lukket kildekode — ingen copyleft",
+          "noAttribution": "Ingen registrering, ingen kreditering påkrevd",
+          "communitySupport": "Community-støtte — best effort"
         },
-        "cta": "View on GitHub"
+        "cta": "Se på GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
+        "badge": "Fra {price}/år",
         "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "subtitle": "Støtteabonnement",
+        "description": "For team som trenger en forpliktelse fremfor et håp. Koden er allerede gratis.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Privat støttekanal",
+          "firstResponse": "Første svar innen to virkedager, garantert",
+          "priorityTriage": "Prioritert feiltriage",
+          "upgradeHelp": "Oppgraderingshjelp og varsler om brytende endringer"
         },
-        "cta": "Get support"
+        "cta": "Få støtte"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Fra $30 000/år",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Klar for innkjøp",
+        "description": "For organisasjoner der juridisk, sikkerhets- eller innkjøpsgjennomgang krever en motpart som signerer.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "Respons-SLA — 4 forretningsdager, 1 time ved produksjonsnedetid",
+          "indemnity": "Erstatningsansvar og forpliktelse til sikkerhetsoppdateringer",
+          "compliance": "Signert DPA, compliance-pakke, kontinuitetsforpliktelse",
+          "trademark": "Varemerke- og white-label-rettigheter"
         },
-        "cta": "Contact sales"
+        "cta": "Kontakt salg"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Ofte stilte spørsmål",
+      "description": "Kort versjon: å bruke det er gratis. Betaling gjelder når du trenger oss kontraktuelt ansvarlig.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Hvorfor FSL i stedet for MIT eller AGPL?",
+          "a": "FSL tillater all bruk bortsett fra å selge en erstatning for Sailor selv, og hver versjon blir Apache-2.0 to år etter utgivelse — en rettighet gitt uopprekallelig på forhånd. AGPL blokkerte adopsjon i juridisk gjennomgang hos bedrifter uten å beskytte noe vi faktisk trengte beskyttet."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Er kommersiell bruk virkelig gratis?",
+          "a": "Ja. Ingen avgift, ingen lisensnøkkel, ingen registrering, ingen inntekts- eller ansattgrense, ingen henvisning. Bygg et lukket kildekodesprodukt og selg det."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Hva regnes som konkurrerende bruk?",
+          "a": "Å tilby Sailor selv — en vertsført Sailor-tjeneste, eller en ompakkert konkurrerende plattform. Å bygge en vertikal SaaS, et internt verktøy eller klientprosjekter på Sailor er ikke konkurrerende bruk. Hvis modellen din krever det, kan en Enterprise-avtale inkludere en skriftlig fritak."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Hva kjøper de betalte nivåene egentlig?",
+          "a": "Støtteforpliktelser, respons-SLA-er, erstatningsansvar, compliance-dokumentasjon og varemerkerettigheter. Aldri tillatelse til å bruke programvaren — det er allerede ditt."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Hva med bidrag til åpen kildekode?",
+          "a": "Alle bidrag krever en CLA. Se CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Lisensiering — {brandName}",
+      "description": "Gratis for kommersiell bruk. MIT på npm, FSL-1.1-ALv2 på lageret, konverteres til Apache-2.0."
     }
   },
   "licenseWizard": {

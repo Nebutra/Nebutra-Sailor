@@ -1,1151 +1,1151 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "Tính năng",
+    "solutions": "Giải pháp",
+    "pricing": "Bảng giá",
+    "docs": "Tài liệu",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "Về chúng tôi",
+    "ideas": "Ý tưởng",
+    "opc": "Nền tảng",
+    "roadmap": "Lộ trình",
+    "resources": "Tài nguyên",
+    "signIn": "Đăng nhập",
+    "getStarted": "Bắt đầu",
+    "changelog": "Nhật ký thay đổi",
+    "news": "Tin tức",
+    "designDocs": "Hệ thống thiết kế",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "Menu tài khoản",
+      "loadingName": "Đang tải…",
+      "dashboard": "Bảng điều khiển",
+      "account": "Tài khoản",
+      "billing": "Thanh toán",
+      "docs": "Tài liệu",
+      "signOut": "Đăng xuất"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "Tham gia vòng giới thiệu founder của {brandName}",
+    "metadataDescription": "Tham gia danh sách chờ của {brandName}, giữ lại nguồn giới thiệu và mở khóa liên kết chia sẻ riêng của bạn trong một vòng lặp sản phẩm khép kín.",
+    "eyebrow": "Vòng giới thiệu founder",
+    "title": "Tham gia nhóm founder tiếp theo và nhận liên kết chia sẻ riêng của bạn.",
+    "description": "Nhập bất kỳ mã mời nào hoặc tham gia trực tiếp. Chúng tôi sẽ giữ lại nguồn giới thiệu khi mã tồn tại, đưa bạn vào danh sách chờ và cấp một URL giới thiệu riêng tư để bạn có thể chia sẻ ngay lập tức.",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "Danh sách chờ bền vững",
+      "codeDetected": "Đã phát hiện mã {code}",
+      "direct": "Đăng ký trực tiếp"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "Email công việc",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "Mã giới thiệu",
+      "codePlaceholder": "Mã tùy chọn",
+      "submit": "Tham gia danh sách chờ",
+      "submitting": "Đang tham gia",
+      "invalidEmail": "Nhập một email hợp lệ.",
+      "error": "Không thể tham gia lúc này. Vui lòng thử lại.",
+      "successTitle": "Bạn đã có trong danh sách",
+      "successDescription": "Liên kết chia sẻ riêng của bạn đã sẵn sàng.",
+      "positionLabel": "Vị trí trong hàng chờ",
+      "referralCodeLabel": "Mã của bạn",
+      "referralUrlLabel": "Liên kết chia sẻ của bạn",
+      "copyLink": "Sao chép liên kết",
+      "copied": "Đã sao chép",
+      "share": "Chia sẻ",
+      "shareTitle": "Tham gia vòng kết nối sáng lập viên {brandName}",
+      "shareText": "Dùng liên kết mời của tôi để tham gia danh sách chờ sáng lập viên {brandName}.",
+      "directMode": "Không cần mã giới thiệu",
+      "codeMode": "Đã bật xác định nguồn giới thiệu"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "Vòng kết nối sáng lập viên",
+        "description": "Mỗi đăng ký được chấp nhận đều nhận mã và URL, nên lượt giới thiệu tiếp theo bắt đầu mà không cần chuyển giao thủ công."
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "Xác định nguồn minh bạch",
+        "description": "Mã không xác định được lưu dưới dạng xác định nguồn đã thử, trong khi mã hợp lệ sẽ tăng lượt cho người giới thiệu và giữ đăng ký sạch sẽ."
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "Trạng thái thành công sẵn sàng chia sẻ",
+        "description": "Trạng thái xác nhận hiển thị vị trí, mã, sao chép và các hành động chia sẻ gốc để hoàn tất vòng kết nối ngay trên trang."
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "Hạ tầng dẫn dắt bởi sản phẩm",
+      "title": "Thiết kế như hạ tầng SaaS bền vững, không phải mẫu đơn dùng một lần.",
+      "description": "Bề mặt giới thiệu được hỗ trợ bởi gói miền, mô hình Prisma bền vững, route Next.js có kiểu và các kiểm tra smoke công khai có thể chạy sau khi triển khai ECS.",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "Dữ liệu",
+        "title": "Một bảng danh sách chờ bền vững",
+        "description": "Tính duy nhất email, vị trí tự động tăng, chỉ mục mã giới thiệu, metadata xác định nguồn đã thử và chuyển đổi trạng thái đều nằm trong cơ sở dữ liệu nền tảng."
       },
       "api": {
         "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "title": "Điểm cuối join có kiểu",
+        "description": "Trang gửi đến `/api/waitlist`, chuẩn hóa các mã tùy ý, trả về các mục hiện có một cách idempotent, và không bao giờ phụ thuộc vào mã mẫu."
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "Kiểm tra smoke công khai khi triển khai",
+        "description": "Các URL chính thức và bí danh đã sẵn sàng cho kiểm tra tự động để ECS phát hiện các hồi quy về route, DNS và sức khỏe."
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "Phát hành Startup của bạn,",
+    "headline2": "động lực bởi {brandName} Agent OS.",
+    "subheadline": "Bỏ qua hàng tuần công việc nền tảng với nền tảng <highlight>sẵn sàng sản xuất</highlight> và <highlight>kết cấu được quản trị</highlight>, xây dựng cho <highlight>AI coding agents & founders</highlight> vươn ra toàn cầu.",
+    "copyLabel": "Sao chép lệnh",
+    "copiedLabel": "Đã sao chép",
+    "ctaGetAccess": "Khởi động Startup của bạn",
+    "ctaExploreDemo": "Khám phá bản demo",
+    "pillCopied": "Đã sao chép"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "Hạ tầng sẵn sàng ngay, từ nguyên mẫu đến quy mô lớn.",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "Hạ tầng ứng dụng AI",
+      "description": "Khung Agent và công cụ điều phối LLM tích hợp sẵn, đã được kiểm thử trong môi trường sản xuất. Bỏ qua các lớp trừu tượng phức tạp bên dưới và tương tác trực tiếp với các API trí tuệ có cấu trúc."
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "Nền tảng cơ sở được quản trị",
+      "description": "Nền tảng cơ sở được quản trị cho các đội phát triển SaaS bản địa AI. Đồng bộ hóa khung dựng, các nguyên thủy runtime và bề mặt phân phối mà không cần ghép nối các công cụ ad-hoc."
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "Tự động hóa SaaS doanh nghiệp",
+      "description": "Tích hợp sâu với bộ công nghệ hiện đại gồm Vercel, Supabase và Stripe. Cung cấp sẵn bảo mật cấp hàng, cách ly đa thuê bao phức tạp và thanh toán đăng ký toàn cầu."
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "Sẵn sàng triển khai sản phẩm AI tiếp theo của bạn?",
+    "subheading": "Khởi tạo toàn bộ kiến trúc SaaS cloud-native cục bộ chỉ với một lệnh terminal.",
+    "copyLabel": "Sao chép lệnh",
+    "copiedLabel": "Đã sao chép",
+    "startBuilding": "Bắt đầu xây dựng"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "Phát hành Startup của bạn với Agent OS {brandName}. Đa thuê bao, thanh toán, xác thực và AI — sẵn sàng sản xuất ngay từ ngày đầu.",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "Sản phẩm",
+      "resources": "Tài nguyên",
+      "legal": "Pháp lý",
+      "community": "Cộng đồng"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
+      "product": "Sản phẩm",
+      "features": "Tính năng",
+      "pricing": "Bảng giá",
+      "about": "Giới thiệu",
+      "showcase": "Trưng bày",
       "blog": "Blog",
-      "playbook": "Playbook",
-      "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
+      "playbook": "Hướng dẫn",
+      "changelog": "Nhật ký thay đổi",
+      "roadmap": "Lộ trình",
+      "docs": "Tài liệu",
+      "ideas": "Ý tưởng",
+      "opc": "Nền tảng",
+      "careers": "Tuyển dụng",
+      "security": "Bảo mật",
       "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
+      "privacy": "Chính sách bảo mật",
+      "terms": "Điều khoản",
       "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "refund": "Hoàn tiền",
+      "licensing": "Giấy phép",
+      "contact": "Liên hệ",
+      "faq": "Câu hỏi thường gặp",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. Bảo lưu mọi quyền.",
+    "statusOnline": "Tất cả hệ thống hoạt động bình thường",
+    "newsletterTitle": "Cập nhật tin tức",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "Đăng ký",
+    "newsletterSuccess": "Cảm ơn bạn đã đăng ký!",
+    "newsletterError": "Đã xảy ra lỗi"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "XÂY DỰNG VỚI BỘ CÔNG CỤ BẠN YÊU THÍCH."
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "badge": "CẤU TRÚC TURBOREPO",
+    "title": "10 ứng dụng. 104 gói. 4 luồng backend.",
+    "description": "Mã nguồn chung, xây dựng song song, không trùng lặp. Typing đầu cuối hoàn chỉnh từ cơ sở dữ liệu đến frontend.",
+    "metricApps": "ứng dụng",
+    "metricBackends": "luồng backend",
+    "metricPackages": "gói",
+    "verifiedPaths": "Đã xác thực đường dẫn với workspace hiện tại",
+    "cta": "Khám phá kiến trúc monorepo"
   },
   "stats": {
-    "title": "By The Numbers",
-    "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "title": "Con Số Nói Lên",
+    "github": "Sao GitHub",
+    "discord": "Thành viên Discord",
+    "setup": "Thời gian thiết lập trung bình",
+    "packages": "Gói Monorepo",
+    "ctaStar": "Yêu thích →",
+    "ctaJoin": "Tham gia →",
+    "ctaStart": "Bắt đầu →",
+    "ctaExplore": "Khám phá →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "Về Chúng Tôi — Nền Tảng AI Được Quản Trị",
+      "description": "Khám phá tầm nhìn thương mại và các nguyên tắc kỹ thuật đằng sau nền tảng AI được quản trị của {brandName}.",
+      "heading": "Kỷ Nguyên Của Các Đội Nhóm Sản Phẩm Tinh Gọn",
+      "subheading": "Thay thế công việc nền tảng lặp lại bằng hạ tầng được quản trị, tự động hóa mạnh mẽ và đòn bẩy kỹ thuật bền vững.",
+      "missionTitle": "Một Trật Tự Mới Chống Lại Sự Suy Thoái Hành Chính",
+      "missionP1": "{brandName} đang xây dựng một nền tảng AI được quản trị cho các đội nhóm cần hạ tầng bền vững thay vì các bộ khung khởi đầu ngắn hạn. Quy mô truyền thống thường đi kèm với quan liêu và rối loạn; chúng tôi phản ứng bằng quản trị mã nguồn, tự động hóa và một nền tảng cơ bản vẫn có thể kiểm toán khi phát triển.",
+      "missionP2": "Thương mại vẫn chịu tổn thất từ chi phí phối hợp, công cụ phân mảnh và các lộ trình nâng cấp yếu kém. Chúng tôi quan tâm đến việc giảm những ma sát này thông qua các hợp đồng nền tảng rõ ràng hơn, các nguyên thủy giao hàng mạnh mẽ hơn và hành vi thời gian chạy mà các đội nhóm thực sự có thể quan sát và tin tưởng.",
+      "missionP3": "Chúng tôi từ chối thói quen giải quyết vấn đề quy mô bằng cách tăng thêm sự cồng kềnh tổ chức. Tự động hóa, kiểm thử và quản trị nên hấp thụ công việc vận hành lặp lại để các đội nhóm có thể tập trung vào sản phẩm, kiến trúc và kết quả khách hàng.",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "Bốn Trụ Cột",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "Quy Mô Được Quản Trị (Triết Lý)",
+          "description": "Quy mô nên đến từ các hệ thống mạnh mẽ hơn, đòn bẩy tốt hơn và các quy tắc vận hành rõ ràng hơn — không phải từ việc chất chồng thêm trọng lượng tổ chức."
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "Lõi Người Xây Dựng (Hạ Tầng)",
+          "description": "Một nền tảng cơ bản có thể tái sử dụng cho đa thuê bao, thanh toán, xác thực, tuân thủ và tích hợp AI mà các đội nhóm có thể kiểm toán, mở rộng và phát hành lặp đi lặp lại."
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "Kỷ Luật Nâng Cấp (Định Tuyến)",
+          "description": "Các hệ thống lành mạnh phát triển thông qua các kiểm tra tương thích, di chuyển và các hợp đồng thời gian chạy có thể quan sát được thay vì sự lệch lạc, nỗ lực anh hùng và các bản viết lại một lần."
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "Mã Nguồn Là Pháp Luật (Tổ Chức)",
+          "description": "Kỷ luật vận hành nên được mã hóa trong các kiểm thử, quy trình làm việc và các quy tắc quản trị để các đội nhóm có thể cải thiện nền tảng mà không cần dựa vào chính trị hay ký ức tổ chức."
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "Tín Hiệu Kỹ Thuật Hơn Bằng Cấp",
+      "jobsDescription": "Chúng tôi quan tâm nhiều hơn đến kết quả kỹ thuật có thể xác minh, sự rõ ràng trong tư duy và phán đoán hệ thống hơn là xuất thân hay sự lạm phát chức danh.",
+      "jobsButton": "Gửi Hồ Sơ Github",
+      "companyInfoTitle": "Tuân thủ tổ chức",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "Đăng ký pháp nhân",
+        "founded": "Ngày đăng ký",
+        "headquarters": "Trung tâm vận hành toàn cầu",
+        "jurisdiction": "Phạm vi pháp lý điều chỉnh"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "Cần đánh giá kỹ thuật chuyên sâu hơn?",
+      "ctaDescription": "Liên hệ với các chuyên gia kỹ thuật của chúng tôi để được đánh giá tích hợp doanh nghiệp hoặc xem tài liệu triển khai.",
+      "ctaButton": "Thiết lập liên lạc"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "Yêu cầu kỹ thuật & thương mại — {brandName} Intelligence",
+      "description": "Kênh giao tiếp chuyên dụng cho cấp phép thương mại, tự lưu trữ doanh nghiệp và hỗ trợ kỹ thuật nâng cao.",
+      "heading": "Thiết lập kết nối hỗ trợ",
+      "subheading": "Chúng tôi sẽ điều động một chuyên gia kỹ thuật hoặc kiến trúc sư chuyên dụng để đánh giá các yêu cầu cụ thể của bạn.",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "Liên hệ trực tiếp Founder",
+          "description": "Kênh giao tiếp trực tiếp cho các định hướng chiến lược cốt lõi và các yêu cầu cấp điều hành."
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "Tư vấn doanh nghiệp",
+          "description": "Thảo luận sơ bộ về các đối tác chiến lược sinh thái và sự phát triển kiến trúc tổng thể."
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "Triển khai thương mại",
+          "description": "Đàm phán về cấp phép mã nguồn đóng và các chi tiết liên quan đến triển khai trong môi trường cụm riêng."
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "Hỗ trợ chuyên gia",
+          "description": "Hướng dẫn kiến trúc mục tiêu và dịch vụ khắc phục sự cố cho các tích hợp kinh doanh đang hoạt động và gỡ lỗi hệ thống cốt lõi."
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "Pháp lý & Tuân thủ",
+          "description": "Các thắc mắc liên quan đến định nghĩa ranh giới mã nguồn mở, kiểm toán tuân thủ doanh nghiệp và điều khoản hợp đồng."
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "Bảo mật Trung tâm Dữ liệu",
+          "description": "Xác minh kỹ thuật và chỉ thị tuân thủ liên quan đến GDPR và các luật bảo vệ dữ liệu quốc tế tiếp theo."
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "Tiết lộ Bảo mật",
+          "description": "Gửi an toàn các báo cáo tái hiện kỹ thuật về lỗ hổng phần mềm tiềm ẩn trực tiếp đến đội ngũ hạ tầng của chúng tôi."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "Cổng Gửi yêu cầu",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "Tên Người gửi",
+        "email": "Địa chỉ Email Chính thức",
+        "company": "Tổ chức Liên kết",
+        "category": "Lĩnh vực Yêu cầu",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "Tư vấn Doanh nghiệp",
+          "sales": "Giấy phép & Kiến trúc",
+          "support": "Hỗ trợ Nhà phát triển",
+          "legal": "Ranh giới Pháp lý & Tuân thủ",
+          "privacy": "Chính sách Xử lý Dữ liệu",
+          "partnership": "Tích hợp Hệ sinh thái",
+          "press": "Quan hệ Công chúng"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "Tóm tắt Vấn đề Cốt lõi",
+        "message": "Chi tiết Kỹ thuật/Thương mại",
+        "submit": "Gửi đến Backend",
+        "privacyNotice": "Thực hiện yêu cầu mạng này đồng nghĩa với việc bạn đã đọc và đồng ý với",
+        "privacyLink": "Hạ tầng Quyền riêng tư Hệ thống",
+        "submitting": "Đang đưa vào hàng đợi xử lý...",
+        "successMessage": "Dữ liệu đã được truyền đi thành công. Đội ngũ vận hành có trách nhiệm sẽ phản hồi chi tiết trong vòng 1-2 ngày làm việc tiêu chuẩn."
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "Telemetry Vận hành",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "Wuxi, Tỉnh Giang Tô, Trung Quốc",
+      "socialMedia": "Liên kết Mạng chính"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Chính sách Cookie — {brandName}",
+      "description": "Cách {brandName} sử dụng cookie và các công nghệ theo dõi tương tự trên trang web và dịch vụ của chúng tôi.",
+      "heading": "Chính sách Cookie",
+      "effectiveDate": "Ngày có hiệu lực",
+      "lastUpdated": "Cập nhật lần cuối",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "Chính sách Cookie này giải thích cách {brandName} Co., Ltd. (\"{brandName},\" \"chúng tôi,\" \"chúng ta,\" hoặc \"của chúng tôi\") sử dụng cookie và các công nghệ theo dõi tương tự trên trang web và dịch vụ của chúng tôi.",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "Cookie là gì?",
+        "content": "Cookie là các tệp văn bản nhỏ được đặt trên thiết bị của bạn khi bạn truy cập một trang web. Chúng được sử dụng rộng rãi để làm cho trang web hoạt động hiệu quả hơn và cung cấp thông tin cho chủ sở hữu trang web."
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "Cách chúng tôi sử dụng Cookie",
+        "intro": "Chúng tôi sử dụng cookie để:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "Bật tính năng cốt lõi",
+            "desc": "Cung cấp các chức năng cơ bản như xác thực người dùng và bảo mật"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "Ghi nhớ tùy chọn",
+            "desc": "Lưu ngôn ngữ, giao diện và các cài đặt khác của bạn"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "Tối ưu hiệu suất",
+            "desc": "Hiểu cách khách truy cập tương tác với dịch vụ của chúng tôi"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "Cá nhân hóa trải nghiệm",
+            "desc": "Cung cấp nội dung và gợi ý phù hợp"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "Đo lường tiếp thị",
+            "desc": "Theo dõi hiệu quả của các chiến dịch tiếp thị"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "Các loại cookie chúng tôi sử dụng",
       "tableHeaders": {
         "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "provider": "Nhà cung cấp",
+        "purpose": "Mục đích",
+        "duration": "Thời hạn"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "Cookie bắt buộc",
+        "description": "Những cookie này cần thiết để trang web hoạt động đúng cách. Chúng không thể bị tắt.",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "Phiên xác thực người dùng",
+            "duration": "Phiên"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "Mã xác thực",
+            "duration": "7 ngày"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "Lưu tùy chọn đồng ý cookie",
+            "duration": "1 năm"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "Cookie chức năng",
+        "description": "Những cookie này cho phép các tính năng cá nhân hóa và ghi nhớ tùy chọn của bạn.",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "Lưu tùy chọn ngôn ngữ",
+            "duration": "1 năm"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "Lưu tùy chọn giao diện",
+            "duration": "1 năm"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "Cookie phân tích",
+        "description": "Những cookie này giúp chúng tôi hiểu cách khách truy cập tương tác với trang web của chúng tôi.",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "Phân biệt người dùng duy nhất",
+            "duration": "2 năm"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "Phân tích sản phẩm",
+            "duration": "1 năm"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "Cookie Marketing",
+        "description": "Những cookie này được sử dụng cho quảng cáo và theo dõi hiệu suất chiến dịch quảng cáo.",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Theo dõi lượt truy cập cho quảng cáo Facebook",
+            "duration": "3 tháng"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "Theo dõi chuyển đổi",
+            "duration": "3 tháng"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "Quản lý Tùy chọn Cookie",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "Banner Đồng ý Cookie",
+        "intro": "Khi bạn truy cập trang web của chúng tôi lần đầu, bạn sẽ thấy một banner đồng ý cookie cho phép bạn:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "Chấp nhận Tất cả",
+            "desc": "Bật tất cả các danh mục cookie"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "Từ chối tất cả",
+            "desc": "Tắt tất cả cookie tùy chọn (cookie cần thiết vẫn được giữ)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "Tùy chỉnh",
+            "desc": "Chọn các danh mục cookie cụ thể để bật"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "Bạn có thể thay đổi tùy chọn bất cứ lúc nào bằng cách nhấp vào \"Cài đặt Cookie\" ở chân trang."
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "Cài đặt trình duyệt",
+        "intro": "Hầu hết các trình duyệt web cho phép bạn kiểm soát cookie thông qua cài đặt của chúng:",
         "browsers": {
           "0": {
             "name": "Chrome",
-            "path": "Settings > Privacy and security > Cookies"
+            "path": "Cài đặt > Quyền riêng tư và bảo mật > Cookie"
           },
           "1": {
             "name": "Firefox",
-            "path": "Settings > Privacy & Security > Cookies"
+            "path": "Cài đặt > Quyền riêng tư & Bảo mật > Cookie"
           },
           "2": {
             "name": "Safari",
-            "path": "Preferences > Privacy > Cookies"
+            "path": "Tùy chọn > Quyền riêng tư > Cookie"
           },
           "3": {
             "name": "Edge",
-            "path": "Settings > Privacy, search, and services > Cookies"
+            "path": "Cài đặt > Quyền riêng tư, tìm kiếm và dịch vụ > Cookie"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "Chặn một số cookie có thể ảnh hưởng đến chức năng của trang web."
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "Công nghệ tương tự",
+        "intro": "Ngoài cookie, chúng tôi có thể sử dụng:",
         "items": {
           "0": {
-            "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "label": "Bộ nhớ cục bộ",
+            "desc": "Để lưu trữ tùy chọn và bộ nhớ đệm dữ liệu cục bộ"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "Lưu trữ Phiên",
+            "desc": "Dùng cho dữ liệu tạm thời trong phiên duyệt của bạn"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "Thẻ Pixel",
+            "desc": "Hình ảnh nhỏ để theo dõi việc mở email và truy cập trang web"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "Chúng tôi KHÔNG sử dụng nhận dạng trình duyệt để theo dõi."
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "Cập nhật Chính sách này",
+        "content": "Chúng tôi có thể cập nhật Chính sách Cookie này định kỳ. Chúng tôi sẽ thông báo cho bạn về các thay đổi quan trọng bằng cách đăng chính sách đã cập nhật trên trang web của chúng tôi."
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
+        "title": "Liên hệ với chúng tôi",
+        "intro": "Nếu bạn có câu hỏi về việc sử dụng cookie của chúng tôi, vui lòng liên hệ:",
         "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "privacyNote": "Để biết thêm thông tin về cách chúng tôi thu thập và xử lý dữ liệu của bạn, vui lòng xem",
+        "privacyLink": "Chính sách Bảo mật"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "Hướng dẫn Kỹ thuật & FAQ — {brandName}",
+      "description": "Phân tích toàn diện về kiến trúc framework, các topology cơ bản và chiến lược triển khai thương mại.",
+      "heading": "Đi sâu vào Chi tiết",
+      "subheading": "Tài liệu hỗ trợ được tối ưu hóa cho tích hợp kỹ thuật hệ thống và ra quyết định thương mại cấp điều hành.",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "Tổng quan Kiến trúc",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "Mục đích vận hành rõ ràng của {productName} là gì?",
+              "a": "{productName} là một framework AI SaaS Next.js có cấu trúc chặt chẽ, sẵn sàng cho sản xuất. Nó gói gọn hóa đơn doanh nghiệp, xác thực đa yếu tố và cách ly đa thuê bao vào một nền tảng cơ bản được quản trị, giúp các đội tập trung vào triển khai AI cụ thể cho sản phẩm."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "Cấu trúc cấp phép của kho lưu trữ là như thế nào?",
+              "a": "Hạ tầng nền tảng tuân thủ nghiêm ngặt thỏa thuận OSS AGPLv3, đảm bảo tính minh bạch và sử dụng miễn phí. Đối với các tổ chức cần che giấu mã nguồn độc quyền và cam kết viết lại nâng cao, các hợp đồng thương mại đóng nguồn rõ ràng có sẵn."
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "Tốc độ đánh giá thương mại ban đầu là bao nhiêu?",
+              "a": "Cực kỳ nhanh. Sử dụng bộ công cụ Node CLI tùy chỉnh cùng với đặc tả kỹ thuật chính xác, một kỹ sư cấp dưới có thể triển khai một phiên bản MVP (Sản phẩm khả thi tối thiểu) cục bộ tự động trong vài phút."
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "Hoạt động Thương mại",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "Độ dung sai cho việc mở rộng thương mại là bao nhiêu?",
+              "a": "Được thiết kế dựa trên các mô hình thành phần vi mô, khả năng chịu tải cấu trúc có thể mở rộng mượt mà từ các gói Miễn phí không yêu cầu lên đến ngưỡng Doanh nghiệp phục vụ hàng triệu yêu cầu mỗi tháng, hoàn toàn được cấu hình qua các ràng buộc trên bảng điều khiển."
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "Sự biến động của gói đăng ký ảnh hưởng thế nào đến kế toán tiêu chuẩ?",
+              "a": "Chúng tôi vận hành bằng cách ghi nhật ký cấu trúc chính xác theo giây về tài nguyên và thông lượng API. Việc thay đổi ràng buộc sẽ được điều chỉnh ngay lập tức với lớp kế toán—hoặc hoàn tiền chênh lệch theo tỷ lệ hoặc phát hành tín dụng tự động. Không có thời kỳ đóng băng gói nào."
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "Hạ tầng xử lý nào cô lập các vector thanh toán?",
+              "a": "Định tuyến tiền tệ toàn cầu về cơ bản ủy thác cho các giao diện máy chủ Stripe, đảm bảo giám sát PCI-DSS nghiêm ngặt và tính toàn vẹn xử lý. Các triển khai Doanh nghiệp có thể tích hợp các đường ống kiểm toán tài chính riêng được quản lý bởi các cam kết SLA tùy chỉnh."
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "Lớp Kỹ thuật Hệ thống",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "Những trừu tượng trí tuệ cơ bản nào được hỗ trợ bản địa?",
+              "a": "Logic tương tác chính xác định khả năng tương tác bản địa qua các đặc tả tiêu chuẩn của OpenAI, Anthropic và Gemini. Điều này mang lại sự linh hoạt lớn để thay đổi nhanh các điểm cuối suy luận một cách hiệu quả thông qua ánh xạ biến mà không làm suy giảm logic thương mại nguồn."
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "Nguy cơ che giấu cơ sở dữ liệu được giải quyết như thế nào?",
+              "a": "Triển khai mặc định nội tại áp dụng các chính sách Bảo mật Cấp hàng (RLS) của Postgres được gắn chặt với các nguyên thủy Định tuyến Giải quyết Người thuê không máy chủ của chúng tôi. Điều này đảm bảo các phân vùng cứng chủ động ngăn chặn sự ô nhiễm dữ liệu và chồng chéo thực thi ở cấp ứng dụng."
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "Có hạn chế kiến trúc nào đối với các triển khai tự quản lý không?",
+              "a": "Hoàn toàn không. Kiến trúc hoàn toàn tách rời. Nếu môi trường thực thi các runtime Node.js độc lập cùng với các cụm PostgreSQL khỏe mạnh, toàn bộ chức năng sẽ được bảo toàn."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "Tính Toàn vẹn Hệ thống",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "Những giao thức nào xác định phòng thủ cơ học của biên giới?",
+              "a": "Các cơ chế thực thi mã hóa TLS bắt buộc trong quá trình truyền tải, các thuật toán băm xác định cho ánh xạ bí mật, và việc ghi lại phổ biến các sự kiện biến đổi được viết nghiêm ngặt vào các sổ theo dõi chuỗi thời gian nội bộ."
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "Kiến trúc có tuân thủ các luật bảo mật quốc tế lớn không?",
+              "a": "Có, hoàn toàn. Các module doanh nghiệp cung cấp sẵn các triển khai thuật toán hướng đến trạng thái thu hồi đồng ý, logic xóa cứng và truy vấn xuất chi tiết, tuân thủ tối ưu GDPR và các khung quy định địa phương."
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "Điều gì xảy ra khi có sự cố thảm họa bất thường?",
+              "a": "Các sentinel tự động lập tức cảnh báo các vector kỹ thuật cốt lõi, họ sẽ kích hoạt chặn mạch và triển khai phân loại nhanh. Được điều hành bởi sổ tay giải quyết tiên tiến, các Postmortem Sự cố hoàn toàn minh bạch được công bố rộng rãi trong vòng 72 giờ tuyệt đối."
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "Hướng dẫn Hỗ trợ Kỹ thuật",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "Làm thế nào để giải quyết sự cố nghẽn vận hành?",
+              "a": "Các vector phân loại ban đầu hướng đến ma trận tài liệu được duy trì nghiêm ngặt và đã được đồng nghiệp xem xét, cùng các tương tác cộng đồng đã xác minh. Mua giấy phép tiêu chuẩn hoặc cấp doanh nghiệp sẽ mở khóa truy cập vào hàng đợi leo thang riêng tư, được giải quyết thông qua các nút kỹ thuật nội bộ trực tiếp."
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "Các bạn có cung cấp các hoạt động tích hợp môi trường vật lý hoặc chuyên biệt không?",
+              "a": "Điều này thuộc gói thực thi cao cấp tùy chỉnh của chúng tôi dành cho các tập đoàn hàng đầu. Các kiến trúc sư cấp cao nhất của chúng tôi sẽ triển khai outly để thực hiện kiểm toán mã đối với kiến trúc cũ, quản lý di chuyển đám mây tinh tế và xác thực các phân vùng mạng cô lập cao độ."
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "Cần đồng bộ kỹ thuật ngay lập tức?",
+      "ctaDescription": "Dù là xác thực lược đồ hành vi API cụ thể hay thực thi các thỏa thuận tích hợp dài hạn, hãy giao diện trực tiếp với hệ thống kỹ thuật.",
+      "ctaButton": "Nhận Hướng dẫn Tích hợp",
+      "ctaEmail": "Gửi Tin nhắn Trực tiếp"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Giao thức Bảo vệ Quyền riêng tư & Thông tin — {brandName}",
+      "description": "Tài liệu hóa chi tiết cách cơ chế hạ tầng điều hành quyền tự chủ người dùng và cách ly dữ liệu máy.",
+      "heading": "Hướng dẫn Bảo vệ Thông tin",
+      "effectiveDate": "Ngày có hiệu lực",
+      "lastUpdated": "Cập nhật lần cuối",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "Tại {brandName} (\"Công ty,\" \"chúng tôi,\" \"chúng ta,\" hoặc \"của chúng tôi\"), chúng tôi cam kết bảo vệ quyền riêng tư của bạn. Chính sách Quyền riêng tư này giải thích cách chúng tôi thu thập, sử dụng, tiết lộ và bảo vệ thông tin của bạn khi bạn sử dụng trang web, ứng dụng và dịch vụ của chúng tôi (gọi chung là \"Dịch vụ\").",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. Thông tin Chúng tôi Thu thập",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 Thông tin Bạn Cung cấp",
+          "intro": "Chúng tôi thu thập thông tin mà bạn trực tiếp cung cấp cho chúng tôi, bao gồm:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "Thông tin Tài khoản",
+              "desc": "Họ tên, địa chỉ email, mật khẩu và chi tiết tổ chức khi bạn tạo tài khoản."
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "Thông tin Hồ sơ",
+              "desc": "Ảnh đại diện, chức danh, tên công ty và các thông tin tùy chọn khác."
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "Thông tin Thanh toán",
+              "desc": "Địa chỉ hóa đơn và chi tiết phương thức thanh toán (được xử lý an toàn qua Stripe)."
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "Giao tiếp",
+              "desc": "Tin nhắn, phản hồi và các giao tiếp khác bạn gửi cho chúng tôi."
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "Nội dung",
+              "desc": "Bất kỳ nội dung nào bạn tạo, tải lên hoặc lưu trữ bằng Dịch vụ của chúng tôi."
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 Thông tin Thu thập Tự động",
+          "intro": "Khi bạn sử dụng Dịch vụ của chúng tôi, chúng tôi tự động thu thập một số thông tin:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "Thông tin Thiết bị",
+              "desc": "Loại thiết bị, hệ điều hành, trình duyệt và mã định danh thiết bị duy nhất."
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "Thông tin Sử dụng",
+              "desc": "Trang đã xem, tính năng đã dùng, hành động thực hiện và thời gian sử dụng Dịch vụ."
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "Dữ liệu nhật ký",
+              "desc": "Địa chỉ IP, thời gian truy cập, URL giới thiệu và nhật ký hoạt động hệ thống."
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "Thông tin vị trí",
+              "desc": "Vị trí chung dựa trên địa chỉ IP (chúng tôi không thu thập vị trí địa lý chính xác)."
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. Cách chúng tôi sử dụng thông tin của bạn",
+        "intro": "Chúng tôi sử dụng thông tin thu thập được để:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "Cung cấp dịch vụ",
+            "desc": "Vận hành, duy trì và cải thiện Dịch vụ của chúng tôi."
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "Xử lý giao dịch",
+            "desc": "Xử lý thanh toán, hóa đơn và các hoạt động liên quan."
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "Liên lạc",
+            "desc": "Gửi thông báo dịch vụ, cập nhật và thông tin tiếp thị (với sự đồng ý)."
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "Cá nhân hóa",
+            "desc": "Tùy chỉnh trải nghiệm và cung cấp các đề xuất phù hợp."
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "Phân tích",
+            "desc": "Hiểu các mẫu sử dụng và cải thiện Dịch vụ của chúng tôi."
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "Bảo vệ",
+            "desc": "Phát hiện, ngăn chặn và xử lý gian lận, lạm dụng và sự cố bảo mật."
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. Cách chúng tôi chia sẻ thông tin của bạn",
+        "intro": "Chúng tôi có thể chia sẻ thông tin của bạn trong các trường hợp sau:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 Nhà cung cấp dịch vụ",
+          "intro": "Chúng tôi chia sẻ thông tin với các nhà cung cấp bên thứ ba thực hiện dịch vụ thay mặt chúng tôi, bao gồm:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "Hạ tầng",
+              "desc": "Lưu trữ đám mây (Vercel, Supabase), dịch vụ cơ sở dữ liệu"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "Xử lý thanh toán",
+              "desc": "Stripe để xử lý thanh toán an toàn"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "Xác thực",
+              "desc": "Clerk để quản lý danh tính"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "Phân tích",
+              "desc": "PostHog, Vercel Analytics để thu thập thông tin sử dụng"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 Chuyển giao doanh nghiệp",
+          "content": "Nếu chúng tôi tham gia vào việc sáp nhập, mua lại hoặc bán tài sản, thông tin của bạn có thể được chuyển giao như một phần của giao dịch đó."
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 Yêu cầu pháp lý",
+          "content": "Chúng tôi có thể tiết lộ thông tin khi được yêu cầu bởi luật pháp, quy trình pháp lý hoặc yêu cầu của chính phủ, hoặc để bảo vệ quyền lợi, quyền riêng tư, an toàn hoặc tài sản của chúng tôi."
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. Quyền và Lựa chọn của bạn",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 Truy cập và Khả năng di chuyển",
+          "content": "Bạn có thể truy cập thông tin cá nhân của mình qua cài đặt tài khoản và yêu cầu bản sao dữ liệu ở định dạng có thể di chuyển."
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 Sửa đổi",
+          "content": "Bạn có thể cập nhật thông tin tài khoản bất cứ lúc nào qua bảng điều khiển."
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 Xóa",
+          "content": "Bạn có thể yêu cầu xóa tài khoản và dữ liệu liên quan thông qua cài đặt hoặc liên hệ với chúng tôi."
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 Thông tin tiếp thị",
+          "content": "Bạn có thể hủy nhận email tiếp thị bằng cách nhấp \"hủy đăng ký\" trong bất kỳ email tiếp thị nào hoặc cập nhật tùy chọn của mình."
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. Bảo mật dữ liệu",
+        "intro": "Chúng tôi áp dụng các biện pháp kỹ thuật và tổ chức phù hợp để bảo vệ thông tin của bạn, bao gồm:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "Mã hóa dữ liệu khi truyền (TLS) và khi lưu trữ",
+          "1": "Đánh giá bảo mật và kiểm thử xâm nhập định kỳ",
+          "2": "Kiểm soát truy cập và yêu cầu xác thực",
+          "3": "Giám sát và ghi nhật ký hoạt động hệ thống"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. Quyền riêng tư California (CCPA)",
+        "intro": "Nếu bạn là cư dân California, bạn có các quyền cụ thể liên quan đến thông tin cá nhân của mình:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "Quyền được biết",
+            "desc": "Yêu cầu tiết lộ thông tin chúng tôi thu thập, sử dụng và chia sẻ."
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "Quyền xóa",
+            "desc": "Yêu cầu xóa thông tin cá nhân của bạn."
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "Quyền từ chối",
+            "desc": "Từ chối việc bán thông tin cá nhân (chúng tôi không bán dữ liệu của bạn)."
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "Quyền không bị phân biệt đối xử",
+            "desc": "Chúng tôi sẽ không phân biệt đối xử với bạn khi bạn thực hiện quyền của mình."
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. Quyền riêng tư châu Âu (GDPR)",
+        "intro": "Nếu bạn ở EEA, UK hoặc Thụy Sĩ, bạn có thêm quyền theo GDPR:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "Căn cứ pháp lý",
+            "desc": "Chúng tôi xử lý dữ liệu của bạn dựa trên việc thực hiện hợp đồng, lợi ích hợp pháp hoặc sự đồng ý."
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "Quyền",
+            "desc": "Truy cập, sửa đổi, xóa, di chuyển, hạn chế và phản đối."
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "Bạn có thể liên hệ với Cán bộ Bảo vệ Dữ liệu của chúng tôi tại dpo@nebutra.com."
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. Liên hệ với chúng tôi",
+        "intro": "Nếu bạn có câu hỏi về Chính sách Bảo mật này, vui lòng liên hệ với chúng tôi:",
         "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "Quy trình Xử lý Giao dịch Bất thường — {brandName}",
+      "description": "Phân định nghiêm ngặt về các thông số hoàn vốn chính xác trên các mô hình tham gia cấu trúc đa dạng.",
+      "heading": "Khung Thực thi Tranh chấp",
+      "effectiveDate": "Ngày Áp dụng Thực thi",
+      "lastUpdated": "Thời điểm Theo dõi Cập nhật",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "Tại {brandName}, chúng tôi muốn bạn hoàn toàn hài lòng với dịch vụ của chúng tôi. Chính sách Hoàn tiền này nêu rõ các trường hợp có thể hoàn tiền và quy trình yêu cầu hoàn tiền.",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "Gói Đăng ký",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "Đăng ký Hàng tháng",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "Hủy đăng ký",
+              "desc": "Bạn có thể hủy gói đăng ký hàng tháng bất cứ lúc nào"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "Hoàn tiền theo tỷ lệ",
+              "desc": "Chúng tôi không hoàn tiền theo tỷ lệ cho các tháng chưa sử dụng hết"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "Quyền truy cập",
+              "desc": "Bạn vẫn được truy cập các tính năng trả phí cho đến hết kỳ thanh toán"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "Gia hạn tự động",
+              "desc": "Gói đăng ký sẽ tự động gia hạn trừ khi bạn hủy"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "Gói đăng ký hàng năm",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "Bảo hành hoàn tiền 14 ngày",
+              "desc": "Người đăng ký hàng năm mới có thể yêu cầu hoàn tiền toàn bộ trong vòng 14 ngày kể từ ngày mua"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "Sau 14 ngày",
+              "desc": "Thông thường không hỗ trợ hoàn tiền sau khoảng thời gian 14 ngày"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "Hủy đăng ký",
+              "desc": "Bạn có thể hủy bất cứ lúc nào, nhưng gói đăng ký sẽ vẫn hoạt động cho đến hết kỳ hàng năm"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "Không hoàn tiền theo tỷ lệ",
+              "desc": "Chúng tôi không hoàn tiền một phần cho các tháng chưa sử dụng"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "Các trường hợp đủ điều kiện hoàn tiền",
+        "intro": "Chúng tôi sẽ xem xét yêu cầu hoàn tiền trong các trường hợp sau:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. Sự cố dịch vụ",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "Sự cố dịch vụ nghiêm trọng ảnh hưởng đến khả năng sử dụng các tính năng cốt lõi của bạn",
+            "1": "Vấn đề kỹ thuật mà chúng tôi không thể khắc phục trong thời gian hợp lý",
+            "2": "Các tính năng khác biệt đáng kể so với những gì đã quảng cáo"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. Lỗi thanh toán",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "Thanh toán trùng lặp",
+            "1": "Số tiền thanh toán không chính xác",
+            "2": "Thanh toán trái phép (sau khi xác minh)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. Hoàn cảnh đặc biệt",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "Khẩn cấp y tế có giấy tờ chứng minh",
+            "1": "Thiên tai ảnh hưởng đến doanh nghiệp của bạn",
+            "2": "Các hoàn cảnh khác được xem xét từng trường hợp cụ thể"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "Các mục không hoàn tiền",
+        "intro": "Các mục sau đây thường không đủ điều kiện hoàn tiền:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "Phí theo mức sử dụng",
+            "desc": "Lượt gọi API, tiêu thụ token AI hoặc dung lượng lưu trữ đã sử dụng"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "Gói bổ sung và tiện ích",
+            "desc": "Mua một lần hoặc dịch vụ bổ sung"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "Hợp đồng doanh nghiệp",
+            "desc": "Các thỏa thuận tùy chỉnh có điều khoản riêng"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "Hủy đăng ký tự nguyện",
+            "desc": "Sau khi hết thời gian đủ điều kiện hoàn tiền"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "Vi phạm điều khoản",
+            "desc": "Tài khoản bị chấm dứt do vi phạm chính sách"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "Cách Yêu Cầu Hoàn Tiền",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "Bước 1: Liên Hệ Hỗ Trợ",
+          "intro": "Gửi email cho chúng tôi tại billing@nebutra.com với nội dung:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "Địa chỉ email tài khoản của bạn",
+            "1": "Gói đăng ký và chu kỳ thanh toán",
+            "2": "Lý do yêu cầu hoàn tiền",
+            "3": "Bất kỳ tài liệu liên quan nào"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "Bước 2: Quy Trình Xem Xét",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "Chúng tôi sẽ xem xét yêu cầu của bạn trong vòng 5 ngày làm việc",
+            "1": "Chúng tôi có thể yêu cầu thêm thông tin",
+            "2": "Bạn sẽ nhận được quyết định bằng văn bản qua email"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "Bước 3: Xử Lý Hoàn Tiền",
+          "intro": "Nếu được phê duyệt:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "Hoàn tiền được xử lý về phương thức thanh toán ban đầu",
+            "1": "Hoàn tiền thẻ tín dụng thường xuất hiện trong vòng 5-10 ngày làm việc",
+            "2": "Thời gian xử lý của ngân hàng có thể khác nhau"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "Thay Đổi Gói",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "Nâng cấp",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "Nâng cấp có hiệu lực ngay lập tức",
+            "1": "Bạn sẽ được tính phí phần chênh lệch theo tỷ lệ cho thời gian còn lại của chu kỳ thanh toán",
+            "2": "Không hoàn tiền cho gói trước đó"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "Hạ cấp",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "Hạ cấp có hiệu lực từ chu kỳ thanh toán tiếp theo",
+            "1": "Bạn vẫn được sử dụng các tính năng hiện tại cho đến khi đó",
+            "2": "Không hoàn tiền một phần cho chu kỳ hiện tại"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "Dùng thử miễn phí",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "Dùng thử miễn phí không yêu cầu thông tin thanh toán",
+          "1": "Không phát sinh phí trong thời gian dùng thử",
+          "2": "Bạn sẽ được thông báo trước khi có bất kỳ khoản phí nào"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "Giải quyết tranh chấp",
+        "intro": "Nếu bạn không đồng ý với quyết định hoàn tiền của chúng tôi:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "Trả lời email quyết định kèm thông tin bổ sung",
+          "1": "Yêu cầu chuyển lên cấp quản lý",
+          "2": "Liên hệ chúng tôi qua legal@nebutra.com để xem xét thêm"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "Liên hệ",
+        "intro": "Đối với yêu cầu hoàn tiền hoặc câu hỏi về chính sách này:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "Thanh toán",
+        "supportLabel": "Hỗ trợ",
+        "legalLabel": "Pháp lý",
+        "responseNote": "Chúng tôi cam kết phản hồi mọi yêu cầu hoàn tiền trong vòng 5 ngày làm việc.",
+        "termsNote": "Chính sách này là một phần của",
+        "termsLink": "Điều khoản dịch vụ",
+        "termsAgreement": "Bằng việc sử dụng {brandName}, bạn đồng ý với các điều khoản hoàn tiền này."
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "Điều khoản dịch vụ — {brandName}",
+      "description": "Điều khoản dịch vụ điều chỉnh việc truy cập và sử dụng trang web, ứng dụng, API và dịch vụ của {brandName}.",
+      "heading": "Điều khoản dịch vụ",
+      "effectiveDate": "Ngày có hiệu lực",
+      "lastUpdated": "Cập nhật lần cuối",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "Ngày 1 tháng 1 năm 2025",
+        "updated": "Ngày 1 tháng 1 năm 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "Chào mừng bạn đến với {brandName}! Điều khoản dịch vụ này (\"Điều khoản\") điều chỉnh việc truy cập và sử dụng trang web, ứng dụng, API và dịch vụ (gọi chung là \"Dịch vụ\") của {brandName} do {brandName} Co., Ltd. (\"{brandName},\" \"Công ty,\" \"chúng tôi,\" \"bên chúng tôi,\" hoặc \"của chúng tôi\") cung cấp.",
+      "intro2": "Bằng việc truy cập hoặc sử dụng Dịch vụ của chúng tôi, bạn đồng ý tuân thủ các Điều khoản này và",
+      "intro2PrivacyLink": "Chính sách bảo mật",
+      "intro2End": " của chúng tôi. Nếu bạn không đồng ý với các Điều khoản này, vui lòng không sử dụng Dịch vụ của chúng tôi.",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. Chấp nhận điều khoản",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 Điều kiện đủ tư cách",
+          "intro": "Để sử dụng Dịch vụ của chúng tôi, bạn phải:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "Đủ 18 tuổi hoặc đủ tuổi thành niên theo pháp luật tại khu vực của bạn",
+            "1": "Có thẩm quyền ký kết các Điều khoản này thay cho bản thân hoặc tổ chức của bạn",
+            "2": "Không bị cấm sử dụng Dịch vụ của chúng tôi theo luật hiện hành"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 Tài khoản Tổ chức",
+          "content": "Nếu bạn sử dụng Dịch vụ của chúng tôi thay mặt một tổ chức, bạn xác nhận rằng bạn có thẩm quyền ràng buộc tổ chức đó với các Điều khoản này."
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. Mô tả Dịch vụ",
+        "intro": "{brandName} cung cấp nền tảng SaaS bao gồm:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "Tính năng và tạo nội dung bằng AI",
+          "1": "Công cụ quản lý nội dung và cộng đồng",
+          "2": "Hệ thống gợi ý",
+          "3": "Tích hợp thương mại điện tử",
+          "4": "Khả năng Web3",
+          "5": "Phân tích và báo cáo"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. Đăng ký Tài khoản",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 Tạo Tài khoản",
+          "intro": "Để truy cập một số tính năng, bạn phải tạo tài khoản. Bạn đồng ý:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "Cung cấp thông tin chính xác và đầy đủ",
+            "1": "Duy trì bảo mật thông tin đăng nhập tài khoản của bạn",
+            "2": "Cập nhật thông tin của bạn kịp thời nếu có thay đổi",
+            "3": "Chịu trách nhiệm cho mọi hoạt động dưới tài khoản của bạn"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. Đăng ký và Thanh toán",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 Giá cả",
+          "content": "Dịch vụ của chúng tôi được cung cấp theo các gói đăng ký khác nhau như mô tả trên trang Giá cả. Giá có thể thay đổi với thông báo trước 30 ngày."
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 Thanh toán",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "Đăng ký được thanh toán trước theo tháng hoặc năm",
+            "1": "Tất cả phí đều không hoàn lại trừ khi được nêu trong",
+            "2": "Bạn ủy quyền cho chúng tôi tính phí phương thức thanh toán của bạn cho các khoản phí áp dụng",
+            "3": "Chúng tôi sử dụng Stripe để xử lý thanh toán an toàn",
+            "1RefundLink": "Chính sách hoàn tiền"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. Sử dụng hợp lý",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 Hoạt động bị cấm",
+          "intro": "Bạn đồng ý KHÔNG được:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "Vi phạm bất kỳ luật, quy định hoặc quyền của bên thứ ba nào",
+            "1": "Sử dụng Dịch vụ để truyền tải mã độc, thư rác hoặc nội dung có hại",
+            "2": "Thử truy cập trái phép vào hệ thống của chúng tôi",
+            "3": "Can thiệp hoặc làm gián đoạn tính toàn vẹn hoặc hiệu suất của Dịch vụ",
+            "4": "Sử dụng công cụ tự động để thu thập, sao chép hoặc trích xuất dữ liệu mà không có sự cho phép",
+            "5": "Đảo ngược kỹ thuật, giải biên dịch hoặc tháo rời Dịch vụ của chúng tôi",
+            "6": "Sử dụng tính năng AI của chúng tôi để tạo nội dung bất hợp pháp, có hại hoặc lừa dối"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. Sở hữu trí tuệ",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 Sở hữu trí tuệ của chúng tôi",
+          "content": "{brandName} và các bên cấp phép của chúng tôi sở hữu mọi quyền, quyền sở hữu và lợi ích đối với Dịch vụ, bao gồm tất cả phần mềm, thiết kế, nhãn hiệu và nội dung do chúng tôi tạo ra."
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 Nội dung của bạn",
+          "content": "Bạn vẫn giữ quyền sở hữu đối với nội dung bạn tạo ra hoặc tải lên (\"Nội dung của bạn\"). Bằng cách sử dụng Dịch vụ của chúng tôi, bạn cấp cho chúng tôi một giấy phép toàn cầu, không độc quyền, miễn phí bản quyền để sử dụng, lưu trữ, xử lý và hiển thị Nội dung của bạn chỉ để cung cấp Dịch vụ cho bạn."
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. Miễn trừ bảo hành",
+        "content": "DỊCH VỤ ĐƯỢC CUNG CẤP \"NGUYÊN TRẠNG\" VÀ \"NGUYÊN TRẠNG CÓ SẴN\" MÀ KHÔNG CÓ BẢO HÀNH NÀO, DÙ LÀ RÕ RÀNG HAY NGẦM ĐỊNH, BAO GỒM NHƯNG KHÔNG GIỚI HẠN Ở CÁC BẢO HÀNH NGẦM ĐỊNH VỀ KHẢ NĂNG THƯƠNG MẠI, PHÙ HỢP VỚI MỘT MỤC ĐÍCH CỤ THỂ, QUYỀN SỞ HỮU VÀ KHÔNG XÂM PHẠM QUYỀN."
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. Giới hạn trách nhiệm",
+        "para1": "TRONG PHẠM VI TỐI ĐA ĐƯỢC PHÁP LUẬT CHO PHÉP, NEBUTRA SẼ KHÔNG CHỊU TRÁCH NHIỆM VỀ CÁC THIỆT HẠI GIÁN TIẾP, NGẪU NHIÊN, ĐẶC BIỆT, TIẾP THEO HOẶC HÌNH PHẠT, HOẶC MẤT LỢI NHUẬN, DỮ LIỆU, SỰ SỬ DỤNG HOẶC UY TÍN.",
+        "para2": "TRONG MỌI TRƯỜNG HỢP, TỔNG TRÁCH NHIỆM CỦA CHÚNG TÔI SẼ KHÔNG VƯỢT QUÁ MỨC CAO HƠN GIỮA (A) SỐ TIỀN BẠN ĐÃ THANH TOÁN CHO CHÚNG TÔI TRONG 12 THÁNG TRƯỚC KHI ĐỀ NGHỊ, HOẶC (B) 100 USD."
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. Chấm dứt",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 Do bạn",
+          "content": "Bạn có thể chấm dứt tài khoản của mình bất cứ lúc nào thông qua cài đặt tài khoản. Khi chấm dứt, bạn sẽ mất quyền truy cập vào Dịch vụ."
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 Do chúng tôi",
+          "intro": "Chúng tôi có thể tạm ngưng hoặc chấm dứt tài khoản của bạn nếu bạn:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "Vi phạm các Điều khoản này",
+            "1": "Tham gia vào hoạt động gian lận hoặc bất hợp pháp",
+            "2": "Không thanh toán các khoản phí áp dụng",
+            "3": "Tạo rủi ro hoặc phơi nhiễm pháp lý cho chúng tôi"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. Giải quyết tranh chấp",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 Giải quyết không chính thức",
+          "content": "Trước khi khởi động thủ tục chính thức, bạn đồng ý liên hệ với chúng tôi qua legal@nebutra.com để cố gắng giải quyết tranh chấp một cách không chính thức."
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 Luật điều chỉnh",
+          "content": "Các Điều khoản này được điều chỉnh bởi luật của bang Delaware, không xét đến các nguyên tắc xung đột pháp luật."
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. Liên hệ với chúng tôi",
+        "intro": "Nếu bạn có câu hỏi về các Điều khoản này, vui lòng liên hệ với chúng tôi:",
         "company": "{brandName} Co., Ltd.",
         "emailLabel": "Email",
-        "supportLabel": "Support"
+        "supportLabel": "Hỗ trợ"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "Bằng cách sử dụng {brandName}, bạn xác nhận rằng bạn đã đọc, hiểu và đồng ý bị ràng buộc bởi các Điều khoản Dịch vụ này."
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} Agent OS | Hệ điều hành Agent cho Startup",
+    "description": "Hệ điều hành Agent cho startup hướng tới toàn cầu. Nền tảng Next.js sẵn sàng sản xuất với kiến trúc được quản trị, xác thực, thanh toán, agent và i18n — xây dựng cho agent lập trình AI và các đội ngũ nghiêm túc."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "TOPOLOGY HỆ THỐNG",
+      "title": "Kiến trúc minh bạch, không hộp đen.",
+      "description": "{productName} được thiết kế với cấu trúc Turborepo siêu mô-đun, giúp bạn kiểm soát hoàn toàn toàn bộ vòng đời phần mềm.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "ORM hoàn toàn có kiểu với chính sách Row-Level Security (RLS) tích hợp sẵn."
       },
       "auth": {
         "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "desc": "Cổng xác thực chuẩn SOC2 hỗ trợ chuyển đổi tổ chức B2B và RBAC."
       }
     },
     "pricing": {
@@ -1191,493 +1191,493 @@
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "Câu hỏi thường gặp về giá & giấy phép",
+      "description": "Các câu hỏi về cấp độ giấy phép, hoàn tiền và quyền sử dụng thương mại.",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "Sailor có phải là gói đăng ký SaaS hàng tháng không?",
+        "a": "Không. Giá này dành cho giấy phép mã nguồn Sailor: Independent miễn phí, Startup tính phí hàng năm, và Enterprise tùy chỉnh."
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "Bạn có hỗ trợ hoàn tiền không?",
+        "a": "Giấy phép thương mại Startup bao gồm cửa sổ hoàn tiền 14 ngày cho lần mua đầu tiên. Điều khoản Enterprise được xử lý trong hợp đồng đã ký."
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "Tôi có thể dùng Sailor cho công việc khách hàng không?",
+        "a": "Có. Giấy phép thương mại cho phép đội ngũ bạn phát hành sản phẩm mã nguồn đóng cho khách hàng hoặc nội bộ trong phạm vi giấy phép; quyền white-label cần phê duyệt Enterprise."
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "Vẫn còn thắc mắc? Hãy liên hệ đội ngũ {brandName} →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "Bắt đầu ngay",
+      "title": "Dừng cấu hình. Bắt đầu xây dựng.",
+      "description": "Khởi tạo kiến trúc SaaS có thể mở rộng cục bộ với CLI {brandName}.",
+      "button": "Triển khai kiến trúc",
+      "license": "Mã nguồn mở theo giấy phép AGPL-3.0. Không yêu cầu thẻ tín dụng."
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "Khả năng doanh nghiệp",
+      "title": "Lõi hoàn toàn có kiểu và có thể mở rộng.",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "Bảo mật cấp hàng bản địa",
+        "desc": "Mỗi truy vấn cơ sở dữ liệu đều được giới hạn nghiêm ngặt theo ngữ cảnh tenant hiện tại.",
+        "cta": "Đọc triết lý cơ sở dữ liệu"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "Cổng AI phổ quát",
+        "desc": "Định tuyến prompt mượt mà đến OpenAI, Anthropic hoặc các mô hình mã nguồn mở.",
+        "cta": "Khám phá trình xử lý SDK AI"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "Kiểm soát truy cập chi tiết",
+        "desc": "Định nghĩa vai trò admin, thành viên và người xem với cấu trúc chính sách tích hợp sẵn.",
+        "cta": "Xem tài liệu RBAC"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "Hạ tầng thanh toán đa nhà cung cấp",
+        "desc": "Đo lường sử dụng, webhook đăng ký và cổng khách hàng tự phục vụ.",
+        "cta": "Xem kiến trúc thanh toán"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "Demo tương tác",
+      "title": "Trải nghiệm tốc độ thời gian thực.",
+      "description": "Cảm nhận giao diện dòng lệnh, đường hầm webhook Stripe và việc cấp phát cơ sở dữ liệu đa tenant cục bộ.",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "Telemetry trực tiếp",
+        "desc": "Truyền dữ liệu sử dụng sản xuất trực tiếp vào terminal của bạn."
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "Sự kiện thanh toán",
+        "desc": "Xem Stripe webhooks thực thi qua đường hầm cục bộ."
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "Khởi tạo không gian làm việc",
+        "desc": "Cung cấp ngay lập tức các lược đồ PostgreSQL B2B biệt lập."
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "Tốc độ",
+      "title": "Từ con số 0 đến sản xuất trong thời gian kỷ lục.",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "title": "1. Sao chép",
+        "desc": "Sao chép ngay lập tức monorepo {brandName} và chạy pnpm install."
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. Cấu hình",
+        "desc": "Thiết lập Prisma, Clerk và Stripe qua CLI tương tác trong vài phút."
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. Xây dựng",
+        "desc": "Tập trung vào logic sản phẩm và UI trong khi nền tảng cơ bản đã được kết nối sẵn."
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. Triển khai",
+        "desc": "Push lên Vercel và AWS để phân phối toàn cầu ngay lập tức."
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "phút",
+        "subtitle": "THỜI GIAN ĐẾN THỊ TRƯỜNG",
+        "comparison": "Bỏ qua hàng tháng công việc nền tảng.",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "Khởi tạo",
+          "wire": "Lõi",
+          "ship": "Triển khai",
+          "scale": "Mở rộng",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "Bắt đầu bộ hẹn giờ"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "Hệ thống Preset",
+        "message": "Một cấu hình. Mọi tính năng. Chọn preset và phát hành.",
+        "detail": "Cấu hình một lần, tạo mọi thứ — thanh toán, xác thực, AI, i18n — từ một cấu hình preset duy nhất.",
+        "readyStatus": "Hệ thống preset đã sẵn sàng"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "Khả năng nền tảng",
+      "headlinePrefix": "Tất cả những gì bạn cần để ",
+      "headlineHighlight": "phát hành tự tin.",
+      "description": "{brandName} là nền tảng SaaS full-stack — AI, thanh toán, đa thuê bao, quan sát và bảo mật được tích hợp ngay từ ngày đầu. Đừng xây dựng lại lớp nền tảng."
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
+      "exploreFeature": "Khám phá tính năng",
+      "ai_category": "AI & Trí tuệ",
+      "ai_f1_title": "Hoàn thành trò chuyện đa mô hình",
+      "ai_f1_desc": "Định tuyến yêu cầu đến Anthropic, OpenAI, Google hoặc các mô hình tinh chỉnh của riêng bạn. Hỗ trợ streaming, vision và function calling ngay lập tức.",
+      "ai_f2_title": "Nhúng ngữ nghĩa",
+      "ai_f2_desc": "Tạo và lưu trữ vector embeddings với pgvector. Hỗ trợ tìm kiếm ngữ nghĩa, pipeline RAG và bộ máy đề xuất.",
+      "ai_f3_title": "Đo lường sử dụng AI",
+      "ai_f3_desc": "Hạn mức theo gói với theo dõi sử dụng — đo lường token AI, cuộc gọi API và lưu trữ dựa trên tổng hợp thời gian thực từ ClickHouse.",
+      "multi_category": "Nền tảng đa thuê bao",
+      "multi_f1_title": "Cách ly cấp tổ chức",
+      "multi_f1_desc": "Bảo mật cấp hàng trong Postgres đảm bảo các thuê bao không bao giờ truy cập dữ liệu của nhau — thực thi ở lớp cơ sở dữ liệu, không chỉ ứng dụng.",
+      "multi_f2_title": "Xác thực đa nhà cung cấp (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "OAuth đa nhà cung cấp (Google, GitHub, v.v.) cùng email/mật khẩu và magic-link — chuyển đổi giữa Clerk, Better Auth, NextAuth hoặc Supabase Auth qua một biến môi trường duy nhất.",
+      "multi_f3_title": "Cung cấp thuê bao tự động",
+      "multi_f3_desc": "Khi một tổ chức mới đăng ký qua Clerk, chúng tôi tự động tạo khóa API đầu tiên và gửi email chào mừng có thương hiệu — không cần thao tác thủ công.",
+      "dx_category": "Trải nghiệm nhà phát triển",
+      "dx_f1_title": "Khóa API đã băm",
+      "dx_f1_desc": "Khóa đã băm SHA-256 với hiển thị tiền tố (nbtr_live_…). Hiển thị dạng văn bản thuần túy đúng một lần khi tạo — bảo mật mà không gây cản trở.",
+      "dx_f2_title": "Middleware idempotency",
+      "dx_f2_desc": "Truyền header Idempotency-Key và mọi yêu cầu POST đều an toàn để thử lại. Dựa trên Redis, bộ nhớ đệm 24 giờ, tuân thủ dự thảo IETF.",
+      "dx_f3_title": "API đa giao thức (REST + oRPC + tRPC)",
+      "dx_f3_desc": "REST/OpenAPI cho API công khai, oRPC cho các cuộc gọi frontend an toàn kiểu, tRPC cho khả năng tương thích T3-stack. Tất cả giao thức chia sẻ cùng hợp đồng Zod và stack middleware. Bật theo giao thức qua cấu hình preset.",
+      "billing_category": "Thanh toán & Monetisation",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
+      "billing_f1_desc": "Chọn nhà cung cấp thanh toán: Stripe cho doanh nghiệp toàn cầu, LemonSqueezy cho dev indie, Polar cho OSS, hoặc Alipay/WeChat Pay cho thị trường Trung Quốc. Thanh toán một chạm và cổng thanh toán tự phục vụ.",
+      "billing_f2_title": "Thực thi hạn ngạch theo mức sử dụng",
+      "billing_f2_desc": "Bộ đếm Redis thời gian thực theo dõi cuộc gọi API và mức sử dụng token theo tenant. Yêu cầu bị chặn tại gateway khi đạt giới hạn.",
+      "billing_f3_title": "Đồng bộ vòng đời webhook",
+      "billing_f3_desc": "Sự kiện đăng ký Stripe tự động cập nhật gói org trong cơ sở dữ liệu của bạn qua Inngest — không cần cron job, không cần polling.",
+      "rel_category": "Độ tin cậy",
       "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
-      "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
-      "sec_f2_title": "ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
-      "sec_f3_title": "SBOM + SLSA provenance",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
-      "obs_category": "Observability",
-      "obs_f1_title": "OpenTelemetry tracing",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
-      "obs_f2_title": "Grafana dashboards",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
-      "obs_f3_title": "Sentry error tracking",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
-      "data_f1_desc": "Events land in ClickHouse for fast analytical queries. dbt transforms raw events into gold-layer growth metrics visible in the dashboard.",
-      "data_f2_title": "Funnel analytics",
-      "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
-      "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "rel_f1_desc": "Gateway và dịch vụ AI sử dụng circuit breaker CLOSED/OPEN/HALF_OPEN với exponential backoff và jitter — không có lỗi lan truyền.",
+      "rel_f2_title": "Hàng đợi dead letter",
+      "rel_f2_desc": "Các handler sự kiện cạn kiệt 3 lần thử lại sẽ vào DLQ. Phát lại từng cái từ admin API mà không cần triển khai lại.",
+      "rel_f3_title": "Cảnh báo tỷ lệ đốt SLO",
+      "rel_f3_desc": "Cảnh báo đa cửa sổ theo phong cách Google SRE kích hoạt ở tỷ lệ đốt 14.4×, 6× và 3× trước khi ngân sách lỗi của bạn cạn kiệt.",
+      "sec_category": "Bảo mật",
+      "sec_f1_title": "Tiêu đề dựa trên nonce CSP",
+      "sec_f1_desc": "Chính sách bảo mật nội dung Strict-dynamic với nonce tạo theo mỗi yêu cầu trong middleware Clerk — không có unsafe-inline ở bất kỳ đâu.",
+      "sec_f2_title": "WAF ModSecurity",
+      "sec_f2_desc": "Bộ quy tắc cốt lõi OWASP ở chế độ DetectionOnly trên mọi điểm vào. Giới hạn tốc độ ở 30 RPS với khả năng chịu xung đột qua chú thích nginx.",
+      "sec_f3_title": "SBOM + nguồn gốc SLSA",
+      "sec_f3_desc": "Mỗi bản phát hành tạo hóa đơn vật liệu phần mềm CycloneDX và xác nhận nguồn gốc SLSA, tải lên bản phát hành GitHub.",
+      "obs_category": "Khả năng quan sát",
+      "obs_f1_title": "Truy vết OpenTelemetry",
+      "obs_f1_desc": "Truy vết phân tán chạy từ Next.js → Hono → microservice Python qua OTLP. Xuất ra Jaeger (dev) và Grafana Tempo (prod).",
+      "obs_f2_title": "Bảng điều khiển Grafana",
+      "obs_f2_desc": "Tổng quan nền tảng nhiều panel: khả dụng SLO, ngân sách lỗi còn lại, độ bão hòa HPA, khởi động lại pod và giới hạn CPU.",
+      "obs_f3_title": "Theo dõi lỗi Sentry",
+      "obs_f3_desc": "Lỗi phía máy chủ và phía máy khách được ghi lại với ngữ cảnh tenant, ID yêu cầu và ID truy vết để tương quan xuyên hệ thống.",
+      "data_category": "Dữ liệu & Phân tích",
+      "data_f1_title": "Kho OLAP ClickHouse",
+      "data_f1_desc": "Sự kiện được lưu vào ClickHouse để truy vấn phân tích nhanh. dbt chuyển đổi sự kiện thô thành chỉ số tăng trưởng lớp vàng hiển thị trong bảng điều khiển.",
+      "data_f2_title": "Phân tích phễu",
+      "data_f2_desc": "Theo dõi đăng ký → kích hoạt → chuyển đổi với quy kết theo nhóm. Doanh thu trên mỗi người dùng hoạt động được tính từ lớp vàng.",
+      "data_f3_title": "Tiêu thụ sự kiện Kafka",
+      "data_f3_desc": "Tiếp nhận sự kiện thông lượng cao qua Inngest vào ClickHouse bronze, với loại bỏ trùng lặp trong bộ nhớ và xác thực lược đồ tại gateway edge.",
+      "infra_category": "Hạ tầng",
+      "infra_f1_title": "GitOps với ArgoCD",
+      "infra_f1_desc": "Các thay đổi trên nhánh chính được tự động điều hòa với cụm. Tự phục hồi sẽ hoàn tác các chỉnh sửa kubectl thủ công. Cửa sổ đồng bộ thực thi giờ triển khai an toàn.",
+      "infra_f2_title": "Gộp kết nối PgBouncer",
+      "infra_f2_desc": "PgBouncer chế độ giao dịch phía trước Supabase xử lý 1.000 kết nối ứng dụng trên 20 kết nối Postgres. HA với 2 bản sao.",
+      "infra_f3_title": "Tự động mở rộng ngang + dọc",
+      "infra_f3_desc": "HPA mở rộng theo CPU/bộ nhớ. VPA chạy ở chế độ Off cung cấp đề xuất điều chỉnh kích thước. KEDA chỉ số tùy chỉnh dự kiến cho v2."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 Đang Xây Dựng",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "Chúng tôi đang xây dựng một trải nghiệm tuyệt vời dành cho giới geek trong phần này. Nó sẽ được phát hành cùng với bản cập nhật đường ống kiến trúc lớn tiếp theo.",
+      "opc": "Tổng quan nền tảng chi tiết hơn đang được thực hiện. Theo dõi nhật ký thay đổi và lộ trình cho các bản phát hành sắp tới.",
+      "roadmap": "Từ nền tảng hạ tầng đến quy mô doanh nghiệp — các giai đoạn sản phẩm, cột mốc phiên bản và tầm nhìn tài trợ của chúng tôi."
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "Quay lại Hub"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "TỪ BLOG",
+    "title": "Nhìn Nhận Kỹ Thuật",
+    "subtitle": "Đi sâu vào kiến trúc SaaS, hạ tầng AI và kỹ thuật vận hành sản phẩm.",
+    "readMore": "Đọc thêm"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "KỊCH BẢN MỞ RỘNG",
+    "title": "Một nền tảng. Vô vàn khả năng.",
+    "description": "{productName} cung cấp năng lượng cho thế hệ sản phẩm SaaS tiếp theo trên các thị trường toàn cầu.",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "Vận hành Agentic",
+      "ip": "Ma trận IP Cá nhân",
+      "multimodal": "SaaS AI Đa phương thức",
+      "enterprise": "Doanh nghiệp Hiện đại (CN)",
+      "export": "Xuất khẩu Phần mềm Toàn cầu",
+      "design": "Động cơ Hệ thống Thiết kế",
+      "edam": "Tài sản Số Doanh nghiệp"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "Trung tâm Vận hành AI-Native",
+        "desc": "Chạy các luồng công việc agent, công cụ nội bộ và bề mặt tích hợp trên một nền tảng cơ sở được quản lý. Các tiện ích mở rộng dựa trên registry, cổng người vận hành và các mẫu runtime có thể tái sử dụng luôn đồng bộ khi hệ thống mở rộng.",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "Registry Công cụ & Bề mặt Tích hợp",
+          "f2": "Cổng Người vận hành & Bảng điều khiển Nội bộ"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "Ma trận Danh mục & Phát triển IP Cá nhân",
+        "desc": "Xây dựng sự hiện diện của founder đẳng cấp thế giới với blog MDX, danh mục và trang hồ sơ có tỷ lệ chuyển đổi cao. Newsletter, phân tích và SEO tích hợp đảm bảo thương hiệu cá nhân của bạn không ngừng gia tăng.",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "Blog MDX + Động cơ Newsletter",
+          "f2": "Tối ưu SEO & Mạng xã hội"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "SaaS AI Đa phương thức Đột phá",
+        "desc": "Phát hành các sản phẩm SaaS Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text và Text-to-Video với giao diện streaming dẫn đầu về UX, định tuyến mô hình thông minh và đo lường sử dụng.",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
-          "f2": "Model Router + Usage Metering"
+          "f1": "Giao diện Streaming đa Agent",
+          "f2": "Router mô hình + Đo lường sử dụng"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "Website doanh nghiệp hiện đại (CN)",
+        "desc": "Tinh chỉnh cho các tình huống kinh doanh tại Trung Quốc — CDN trong nước siêu tốc, tích hợp hệ sinh thái WeChat, thiết kế responsive ưu tiên di động và tuân thủ bản địa hóa sẵn có.",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "CDN nội địa + Tuân thủ",
+          "f2": "Sẵn sàng hệ sinh thái WeChat"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "Trang đích xuất khẩu phần mềm toàn cầu",
+        "desc": "Xây dựng chuyên biệt cho SaaS vươn ra toàn cầu. Thanh toán Stripe đa tiền tệ, tự động định tuyến i18n next-intl qua 7 ngôn ngữ, tuân thủ GDPR/CCPA và nội dung nhắm mục tiêu theo khu vực.",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "Thanh toán toàn cầu đa tiền tệ",
+          "f2": "7 ngôn ngữ + Sẵn sàng GDPR"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "Hệ thống thiết kế & thư viện thành phần hàng đầu",
+        "desc": "Kiến trúc điều khiển bằng token 4 lớp: Thương hiệu → Token → Chủ đề → UI. Xây dựng trên Radix + lớp Motion chung với đa chủ đề oklch, tài liệu Storybook và kiểm thử hồi quy trực quan.",
         "features": {
-          "f1": "4-Layer Token Governance",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f1": "Quản trị token 4 lớp",
+          "f2": "Đa chủ đề oklch + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "Quản lý tài sản kỹ thuật số doanh nghiệp",
+        "desc": "Hồ dữ liệu có cấu trúc và các topo bảng điều khiển phức tạp sử dụng kiến trúc PostgreSQL có thể mở rộng và RBAC chi tiết.",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "Bảo mật cấp hàng",
+          "f2": "Truy vấn phức tạp",
+          "f3": "Quản lý vai trò"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
-    "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
-    "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
+    "badge": "HỆ THỐNG THIẾT KẾ",
+    "headline": "4 lớp quản trị thiết kế.",
+    "subheadline": "Từ nguyên tố thương hiệu đến token runtime, đến engine đa theme, đến component được quản trị — không chỉ là shadcn với Tailwind.",
+    "flowBrand": "Thương hiệu",
+    "flowBrandDesc": "Nguyên tố màu, gradient, ngôn ngữ chuyển động",
+    "flowTokens": "Token",
+    "flowTokensDesc": "Biến CSS, thang 12 bước, chế độ tối",
     "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
+    "flowThemeDesc": "Đa theme oklch, 6 preset, color-mix()",
     "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "flowUIDesc": "Component, Storybook, Chromatic",
+    "card1Title": "Thang Màu 12 Bước",
+    "card1Desc": "Thang ngữ nghĩa theo Geist: nền (1-2), trạng thái (3-5), viền (6-8), điền (9-10), văn bản (11-12).",
+    "card2Title": "Đa Theme oklch",
+    "card2Desc": "6 preset theme dùng oklch với dẫn xuất color-mix(). Dải màu rộng Display-P3 với fallback sRGB.",
+    "card3Title": "Hồi quy Trực quan",
+    "card3Desc": "Chromatic phát hiện mọi thay đổi pixel. Storybook tài liệu hóa mọi component. Kiểm tra kiến trúc đảm bảo độ phủ story.",
+    "card4Title": "Quản trị Token",
+    "card4Desc": "Ngân sách ratchet: trần hex, sàn oklch, giới hạn lớp màu gốc. Phát hiện lệch thương hiệu trong CI.",
+    "card5Title": "Tài liệu Tương tác",
+    "card5Desc": "Trang tài liệu thiết kế hoàn chỉnh chạy trên Fumadocs, bao gồm tài liệu API thành phần song ngữ (EN/ZH), thư viện token, hướng dẫn mẫu bố cục và ví dụ mã trực tiếp."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "Không tìm thấy trang",
+    "desc": "Liên kết có thể đã lỗi thời hoặc trang đã được di chuyển.",
+    "home": "Quay lại {brandName}",
+    "docs": "Mở tài liệu"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "Tìm kiếm bản phát hành..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "Bật/tắt menu"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "Hiển thị bản phát hành đầy đủ",
+      "copyLinkToRelease": "Sao chép liên kết bản phát hành",
+      "copyLink": "Sao chép liên kết",
+      "openInNewTab": "Mở trong tab mới"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "Sắp ra mắt"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Miễn phí để <hl>Xây Dựng Trên</hl>",
+      "description": "{brandName}-Sailor hoàn toàn miễn phí để sử dụng thương mại — MIT trên npm, FSL-1.1-ALv2 trên kho mã nguồn, chuyển sang Apache-2.0 sau hai năm. Các gói trả phí bán hỗ trợ và cam kết hợp đồng, không bao giờ bán quyền sử dụng."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "Luôn Miễn Phí",
+        "title": "Cộng Đồng",
+        "subtitle": "Dành Cho Mọi Người",
+        "description": "Mọi quy mô đội nhóm, mọi doanh thu. Bao gồm cả sản phẩm thương mại mã nguồn đóng.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Toàn bộ mã nguồn, mọi gói",
+          "closedSourceOk": "Sử dụng thương mại mã nguồn đóng — không copyleft",
+          "noAttribution": "Không cần đăng ký, không cần ghi công",
+          "communitySupport": "Hỗ trợ cộng đồng — nỗ lực tốt nhất"
         },
-        "cta": "View on GitHub"
+        "cta": "Xem trên GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "Từ {price}/năm",
+        "title": "Đội Nhóm",
+        "subtitle": "Gói hỗ trợ",
+        "description": "Dành cho các đội cần cam kết thay vì hy vọng. Mã nguồn đã miễn phí rồi.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Kênh hỗ trợ riêng",
+          "firstResponse": "Phản hồi lần đầu trong hai ngày làm việc, được đảm bảo",
+          "priorityTriage": "Ưu tiên phân loại lỗi",
+          "upgradeHelp": "Hỗ trợ nâng cấp và thông báo thay đổi không tương thích"
         },
-        "cta": "Get support"
+        "cta": "Nhận hỗ trợ"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
-        "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "badge": "Từ $30.000/năm",
+        "title": "Doanh nghiệp",
+        "subtitle": "Sẵn sàng cho mua sắm",
+        "description": "Dành cho các tổ chức mà bộ phận pháp lý, bảo mật hoặc mua sắm cần một đối tác ký kết hợp đồng.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA phản hồi — 4 giờ làm việc, 1 giờ khi sản xuất ngừng",
+          "indemnity": "Cam kết bồi thường và vá lỗi bảo mật",
+          "compliance": "DPA đã ký, bộ tài liệu tuân thủ, cam kết duy trì hoạt động",
+          "trademark": "Quyền nhãn hiệu và white-label"
         },
-        "cta": "Contact sales"
+        "cta": "Liên hệ bộ phận kinh doanh"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Câu hỏi thường gặp",
+      "description": "Phiên bản ngắn: sử dụng miễn phí. Trả phí khi bạn cần chúng tôi chịu trách nhiệm hợp đồng.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Tại sao là FSL thay vì MIT hoặc AGPL?",
+          "a": "FSL cho phép mọi mục đích sử dụng trừ việc bán một sản phẩm thay thế cho chính Sailor, và mỗi phiên bản sẽ chuyển sang Apache-2.0 sau hai năm phát hành — một quyền cấp không thể thu hồi. AGPL cản trở việc áp dụng trong kiểm duyệt pháp lý doanh nghiệp mà không bảo vệ được điều chúng tôi thực sự cần."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Sử dụng thương mại có thực sự miễn phí không?",
+          "a": "Có. Không phí, không khóa giấy phép, không đăng ký, không ngưỡng doanh thu hay số lượng nhân sự, không yêu cầu ghi công. Xây dựng sản phẩm mã nguồn đóng và bán nó."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Điều gì được coi là sử dụng cạnh tranh?",
+          "a": "Cung cấp chính Sailor — một dịch vụ Sailor được lưu trữ, hoặc một nền tảng cạnh tranh đóng gói lại. Xây dựng SaaS dọc, công cụ nội bộ, hoặc dự án khách hàng trên Sailor không phải là sử dụng cạnh tranh. Nếu mô hình của bạn cần, hợp đồng Enterprise có thể bao gồm một bản miễn trừ bằng văn bản."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Các gói trả phí thực sự mua được gì?",
+          "a": "Cam kết hỗ trợ, SLA phản hồi, bồi thường, giấy tờ tuân thủ, và quyền nhãn hiệu. Không bao giờ là quyền sử dụng phần mềm — điều đó đã thuộc về bạn."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Còn đóng góp mã nguồn mở thì sao?",
+          "a": "Tất cả các đóng góp đều yêu cầu CLA. Xem CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Giấy phép — {brandName}",
+      "description": "Miễn phí sử dụng thương mại. MIT trên npm, FSL-1.1-ALv2 trên kho lưu trữ, chuyển đổi sang Apache-2.0."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "Giấy phép cá nhân miễn phí",
+      "opcFree": "Giấy phép công ty một chủ sở hữu",
+      "startupCommercial": "Giấy phép thương mại cho startup",
+      "enterprise": "Giấy phép doanh nghiệp"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "Chọn một tùy chọn...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "Nhật ký thay đổi — {brandName}",
+    "description": "Mỗi bản phát hành đều được thực hiện với sự chú ý tỉ mỉ đến từng chi tiết.",
+    "versionTitleSuffix": "Nhật ký thay đổi {brandName}"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "Lộ trình nền tảng — {brandName}",
+    "description": "Lộ trình cho nền tảng cơ bản được quản lý của {brandName}, thời gian chạy Harness và lộ trình nâng cấp."
   },
   "blogMeta": {
     "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "description": "Nhìn nhận kỹ thuật, cập nhật sản phẩm và thực hành tốt nhất về SaaS từ đội ngũ {brandName}."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "Nhận Giấy Phép Của Bạn — {brandName}",
+    "description": "Nhận giấy phép {brandName} và quyền truy cập nền tảng trong 2 phút."
   },
   "landing": {
     "faq": {
       "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "title": "Câu hỏi, trả lời thẳng",
+      "subtitle": "Tất cả những gì bạn cần biết trước khi ra mắt.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "{productName} chính xác là gì?",
+          "answer": "Sailor là nền tảng SaaS có quan điểm rõ ràng dựa trên Next.js + Tailwind v4, đã tích hợp sẵn xác thực, thanh toán, đa thuê bao, AI, hàng đợi, tìm kiếm và email. Bạn chỉ cần clone, cấu hình nhà cung cấp và ra mắt — thường trong vòng một tuần."
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "Sailor được xây dựng cho ai?",
+          "answer": "Dành cho founder và kỹ sư sản phẩm muốn dành thời gian cho yếu tố khác biệt — thay vì phải xây dựng lại hệ thống xác thực/thanh toán/đa thuê bao lần thứ năm."
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "Có miễn phí hay phải trả phí?",
+          "answer": "Mã nguồn đầy đủ được phát hành theo AGPL-3.0 — miễn phí cho dự án cá nhân, công cụ nội bộ và các dự án mã nguồn mở tương thích AGPL. Giấy phép thương mại mở khóa quyền phát hành Sailor trong SaaS độc quyền đóng mã nguồn. Mọi gói đều bao gồm đầy đủ tính năng (xác thực, thanh toán, đa thuê bao, AI, kiểm toán); các cấp độ khác nhau về điều khoản cấp phép và SLA hỗ trợ, không phải về tính năng."
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "Có hoạt động được ở Trung Quốc không?",
+          "answer": "Có. Chúng tôi cung cấp cấu hình hạ tầng song song (CDN tương thích Aliyun, tên miền thân thiện với ICP, tùy chọn Penpot thay cho Figma) để cùng một mã nguồn có thể triển khai sạch sẽ bên trong Great Firewall."
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "Tôi có thể triển khai ở đâu?",
+          "answer": "Bất cứ nơi nào Node 22+ chạy được. Trang marketing được phát hành lên Vercel; dashboard, gateway và dịch vụ Python chạy trên Docker / PM2 (hiện chúng tôi chạy trên Aliyun ECS, với đầy đủ manifest Kubernetes trong infra/iac/k8s/ cho cụm). Khách hàng doanh nghiệp cũng có thể triển khai bên trong VPC riêng của họ."
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "Bảo mật được xử lý như thế nào?",
+          "answer": "Mã hóa envelope ở lớp ứng dụng cho bí mật (@nebutra/vault), Postgres RLS cho cách ly thuê bao, RBAC/ABAC qua CASL hoặc OpenFGA (@nebutra/permissions), token liên dịch vụ ký HMAC, webhook ra ngoài đã ký và pipeline kiểm toán theo chuẩn SOC 2 (@nebutra/audit) được bao gồm trong mọi gói. Gói Pro và Enterprise bổ sung hỗ trợ xác nhận SOC 2, phản ứng sự cố chuyên dụng và thời gian lưu trữ nhật ký kiểm toán dài hơn."
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "Tôi nhận được hỗ trợ gì?",
+          "answer": "Khách hàng miễn phí nhận được cộng đồng Discord + GitHub Issues. Gói Pro bổ sung email ưu tiên với SLA phản hồi trong 1 ngày làm việc. Gói Enterprise nhận được kênh Slack chuyên dụng và kỹ sư hướng dẫn sử dụng."
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "Tôi có thể sử dụng nhà cung cấp của riêng mình không?",
+          "answer": "Có. Mọi tích hợp (xác thực, hàng đợi, tìm kiếm, email, thanh toán, lưu trữ, hóa đơn) đều không phụ thuộc nhà cung cấp. Factory trong mỗi gói chọn adapter phù hợp từ một biến môi trường duy nhất — thay Clerk bằng Better Auth, NextAuth hoặc Supabase Auth, QStash bằng BullMQ, Resend bằng SES, Stripe bằng Polar / LemonSqueezy / ChinaPay — mà không cần chạm vào mã ứng dụng."
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "Công nghệ sử dụng là gì?",
+          "answer": "Next.js 16 (App Router) trên React 19, TypeScript 5.9, Tailwind v4, Prisma 7 trên Postgres (với pgvector + RLS), Hono cho gateway BFF, FastAPI cho dịch vụ ML/nặng, và thư viện component được tuyển chọn trên Radix, nguyên tố UI {brandName}, cùng lớp Motion chung. Tính năng AI chạy qua Vercel AI SDK với khả năng di chuyển nhà cung cấp (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "Giấy phép là gì?",
+          "answer": "AGPL-3.0 kèm Ngoại lệ Thương mại. Miễn phí cho mục đích cá nhân, công cụ nội bộ và OSS tương thích AGPL. Giấy phép thương mại trả phí mở khóa quyền phát hành Sailor nguyên bản trong SaaS độc quyền. Mã nguồn đầy đủ được bao gồm trong mọi gói."
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "Tôi có cần trả phí cho bản cập nhật không?",
+          "answer": "Không. Cập nhật mã nguồn được bao gồm trong mọi giấy phép thương mại — kéo từ nhánh main bất cứ khi nào bạn muốn và rebase fork của mình. Gói trả phí là quyền sử dụng Sailor trong sản xuất thương mại, không phải quyền nhận mã. Mỗi bản phát hành phụ đều kèm CHANGELOG và hướng dẫn nâng cấp cho bất kỳ thay đổi nào làm hỏng tương thích."
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "Tại sao dùng Turborepo thay vì ứng dụng Next.js tiêu chuẩn?",
+          "answer": "Sailor gồm 10 ứng dụng + 104 gói chung dưới packages/*/* + 4 làn đường backend (Hono gateway, FastAPI/Python, Go, Rust) — vượt xa giới hạn mà một mega-app Next.js duy nhất vẫn duy trì được. Turborepo mang lại cho chúng tôi bản dựng chỉ ảnh hưởng, bộ nhớ đệm remote minh bạch, và một nguồn sự thật duy nhất cho design token, auth, billing và observability chung — mà không ép mọi team vào cùng một tiến trình Next.js."
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "Đa thuê bao được xử lý như thế nào?",
+          "answer": "Hai lớp. Bối cảnh tenant theo phạm vi request qua @nebutra/tenant (AsyncLocalStorage truyền org đang hoạt động qua mọi cuộc gọi server, bao gồm truy vấn DB và webhook ra ngoài), và cách ly được thực thi ở cơ sở dữ liệu qua chính sách Row-Level Security của Postgres (infra/data/database/policies/rls.sql) ràng buộc với app.current_tenant_id cục bộ theo phiên. Kết nối vai trò dịch vụ bỏ qua RLS chỉ bên trong dịch vụ nội bộ đáng tin; mọi route hướng người dùng đều đi qua client theo phạm vi tenant."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "Tôi có thể thay Clerk bằng nhà cung cấp auth khác không?",
+          "answer": "Có. @nebutra/auth cung cấp adapter cấp một cho Clerk, Better Auth, NextAuth (Auth.js v5) và Supabase Auth. Chuyển đổi qua biến môi trường AUTH_PROVIDER hoặc chọn lúc scaffold với create-sailor --auth=... — bề mặt server, React và middleware giữ nguyên bất kể nhà cung cấp. Thêm adapter thứ năm chỉ cần triển khai một interface (~80 LOC); không có gì trong mã xung quanh gắn cứng với nhà cung cấp cụ thể."
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "Được các nhà xây dựng yêu thích",
+      "title": "Những gì founder nói sau khi phát hành với Sailor",
+      "subtitle": "Câu chuyện khách hàng từ nhóm beta của chúng tôi sẽ ra mắt sớm — hãy là một trong những người đầu tiên."
     },
     "comparison": {
       "badge": "So sánh các gói",
@@ -1735,41 +1735,41 @@
       }
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "Xây dựng trên stack bạn có thể tin tưởng",
+      "logosLabel": "Đối tác tích hợp",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "Nhà cung cấp AI được hỗ trợ"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "gói monorepo"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "locale i18n sẵn có"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "Số đăng ký ICP",
+      "publicSecurity": "Công an"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "Mã số ICP",
+    "publicSecurity": "Mã số công an"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "Quốc gia và ngôn ngữ",
+    "description": "Chọn quốc gia và ngôn ngữ cho trang marketing.",
+    "triggerAria": "Chọn quốc gia và ngôn ngữ",
+    "searchPlaceholder": "Tìm kiếm quốc gia…",
+    "plannedHint": "Giao diện sẽ tạm thời sử dụng tiếng Anh cho đến khi ngôn ngữ này được phát hành",
+    "noResults": "Không có quốc gia nào phù hợp",
+    "menuAria": "Quốc gia và ngôn ngữ"
   }
 }

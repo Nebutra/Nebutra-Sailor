@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Idioma",
     "ariaLabel": "Alterar idioma",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Pesquisar idiomas…",
+    "noResults": "Nenhum idioma corresponde",
+    "menuAria": "Selecionar idioma"
   },
   "compliance": {
     "icp": {
@@ -90,7 +90,7 @@
     "title": "Configure seu workspace",
     "subtitle": "Três passos rápidos e você já pode lançar.",
     "steps": {
-      "workspace": "Workspace",
+      "workspace": "Espaço de trabalho",
       "invite": "Convidar equipe",
       "plan": "Escolher plano"
     },
@@ -460,7 +460,7 @@
       "description": "Sua sessão está pronta. Estamos abrindo o workspace do Nebutra e mantendo a transferência segura do fluxo de autenticação.",
       "session": "Sessão",
       "verified": "Verificado",
-      "workspace": "Workspace",
+      "workspace": "Espaço de trabalho",
       "preparing": "Preparando",
       "redirecting": "Entrando no workspace em {seconds}s",
       "secureHandoff": "Transferência segura",
@@ -1081,7 +1081,7 @@
       "meta": {
         "snapshot": "Instantâneo",
         "cadence": "Cadência",
-        "tenant": "Tenant",
+        "tenant": "Inquilino",
         "daily": "Diário",
         "latestDay": "{day}",
         "users": "Usuários do tenant",
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, filas e mais."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Abrir Sailor AI",
           "description": "Experimente o modo de chat, dados ou fluxo de trabalho."
         }
       }

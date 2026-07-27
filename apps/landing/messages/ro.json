@@ -142,9 +142,9 @@
       "showcase": "Showcase",
       "blog": "Blog",
       "playbook": "Playbook",
-      "changelog": "Changelog",
+      "changelog": "Jurnal de modificări",
       "roadmap": "Roadmap",
-      "docs": "Docs",
+      "docs": "Documentație",
       "ideas": "Idei",
       "opc": "Platformă",
       "careers": "Carieră",
@@ -188,7 +188,7 @@
     "discord": "Membri Discord",
     "setup": "Timp mediu de configurare",
     "packages": "Pachete Monorepo",
-    "ctaStar": "Star →",
+    "ctaStar": "Dă un ⭐ →",
     "ctaJoin": "Alătură-te →",
     "ctaStart": "Începe →",
     "ctaExplore": "Explorează →"
@@ -1327,7 +1327,7 @@
       "dx_f3_title": "API Multi-Protocol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI pentru API-uri publice, oRPC pentru apeluri frontend sigure din punct de vedere al tipurilor, tRPC pentru compatibilitate cu stack-ul T3. Toate protocoalele împărtășesc aceleași contracte Zod și același stack de middleware. Activează pe protocol prin configurație presetată.",
       "billing_category": "Facturare & Monetizare",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar și China Pay",
       "billing_f1_desc": "Alege furnizorul tău de plăți: Stripe pentru enterprise global, LemonSqueezy pentru dezvoltatori indie, Polar pentru OSS sau Alipay/WeChat Pay pentru piața din China. Checkout cu un singur clic și portal de facturare self-serve.",
       "billing_f2_title": "Aplicare cotă bazată pe utilizare",
       "billing_f2_desc": "Contoare Redis în timp real urmăresc apelurile API și utilizarea tokenilor per tenant. Cererile sunt blocate la gateway când se ating limitele.",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Gratuit pentru a <hl>Construi Pe</hl>",
+      "description": "{brandName}-Sailor nu costă nimic pentru utilizare comercială — MIT pe npm, FSL-1.1-ALv2 pe repository, convertit în Apache-2.0 după doi ani. Nivelurile plătite vând suport și angajamente contractuale, niciodată permisiunea."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "Întotdeauna Gratuit",
+        "title": "Comunitate",
+        "subtitle": "Toată lumea",
+        "description": "Orice dimensiune de echipă, orice venit. Produse comerciale cu sursă închisă incluse.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Cod sursă complet, toate pachetele",
+          "closedSourceOk": "Utilizare comercială cu sursă închisă — fără copyleft",
+          "noAttribution": "Fără înregistrare, fără atribuire necesară",
+          "communitySupport": "Suport comunitate — după posibilități"
         },
-        "cta": "View on GitHub"
+        "cta": "Vezi pe GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "De la {price}/an",
+        "title": "Echipă",
+        "subtitle": "Abonament suport",
+        "description": "Pentru echipele care au nevoie de un angajament, nu de o speranță. Codul este deja gratuit.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Canal privat de suport",
+          "firstResponse": "Răspuns inițial în două zile lucrătoare, garantat",
+          "priorityTriage": "Triage prioritar pentru erori",
+          "upgradeHelp": "Asistență la upgrade și notificare pentru schimbări majore"
         },
-        "cta": "Get support"
+        "cta": "Obține suport"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "De la 30.000 USD/an",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Gata de achiziție",
+        "description": "Pentru organizațiile ale căror procese de verificare juridică, de securitate sau de achiziții necesită o parte care semnează.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA de răspuns — 4 ore lucrătoare, 1 oră în caz de întrerupere a producției",
+          "indemnity": "Indemnizare și angajament privind patch-urile de securitate",
+          "compliance": "DPA semnat, pachet de conformitate, angajament de continuitate",
+          "trademark": "Drepturi de marcă și white-label"
         },
-        "cta": "Contact sales"
+        "cta": "Contactează vânzările"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Întrebări frecvente",
+      "description": "Versiunea scurtă: utilizarea este gratuită. Plata este pentru când ai nevoie de noi contractual răspunzători.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "De ce FSL în loc de MIT sau AGPL?",
+          "a": "FSL permite orice utilizare, cu excepția vânzării unui substitut pentru Sailor însuși, iar fiecare versiune devine Apache-2.0 la doi ani după lansare — o acordare irevocabilă în avans. AGPL bloca adoptarea în revizuirile juridice corporative fără a proteja nimic ce aveam nevoie să protejăm."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Este utilizarea comercială cu adevărat gratuită?",
+          "a": "Da. Fără taxă, fără cheie de licență, fără înregistrare, fără prag de venit sau număr de angajați, fără atribuire. Construiește un produs cu sursă închisă și vinde-l."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Ce se consideră utilizare concurențială?",
+          "a": "Oferirea lui Sailor însuși — un serviciu Sailor găzduit sau o platformă concurențială repachetată. Construirea unui SaaS vertical, a unui instrument intern sau a proiectelor pentru clienți pe Sailor nu este utilizare concurențială. Dacă modelul tău o necesită, un acord Enterprise poate include o renunțare scrisă."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Ce cumpără de fapt nivelurile plătite?",
+          "a": "Angajamente de suport, SLA-uri de răspuns, indemnizare, documentație de conformitate și drepturi de marcă. Niciodată permisiunea de a utiliza software-ul — aceea este deja a ta."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Ce se întâmplă cu contribuțiile open source?",
+          "a": "Toate contribuțiile necesită un CLA. Vezi CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Licențiere — {brandName}",
+      "description": "Gratuit pentru uz comercial. MIT pe npm, FSL-1.1-ALv2 pe repository, conversie la Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1594,7 +1594,7 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
+    "title": "Jurnal de modificări — {brandName}",
     "description": "Fiecare lansare, livrată cu o atenție obsesivă la detalii.",
     "versionTitleSuffix": "Changelog {brandName}"
   },
@@ -1612,7 +1612,7 @@
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "Întrebări frecvente",
       "title": "Întrebări, răspunse direct",
       "subtitle": "Tot ce trebuie să știi înainte de a lansa.",
       "items": {

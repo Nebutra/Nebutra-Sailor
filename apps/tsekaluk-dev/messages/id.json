@@ -1,117 +1,117 @@
 {
   "auth": {
     "signin": {
-      "title": "Welcome to Soul",
-      "subtitle": "Sign in to chat with Tseka's AI agent",
-      "github": "Continue with GitHub",
-      "google": "Continue with Google",
-      "linuxdo": "Continue with Linux DO",
-      "back": "Back to Home"
+      "title": "Selamat Datang di Soul",
+      "subtitle": "Masuk untuk mengobrol dengan agen AI Tseka",
+      "github": "Lanjutkan dengan GitHub",
+      "google": "Lanjutkan dengan Google",
+      "linuxdo": "Lanjutkan dengan Linux DO",
+      "back": "Kembali ke Beranda"
     },
     "error": {
-      "title": "Authentication Error",
-      "subtitle": "We couldn't sign you in.",
-      "configuration": "The authentication provider is not configured properly. If you are the administrator, please check your environment variables (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, etc.) in your Vercel project settings.",
-      "access_denied": "Access was denied to your account.",
-      "default": "An unexpected error occurred during authentication.",
-      "try_again": "Try Again",
-      "back": "Back to Home"
+      "title": "Kesalahan Autentikasi",
+      "subtitle": "Kami tidak dapat masuk ke akun Anda.",
+      "configuration": "Penyedia autentikasi tidak dikonfigurasi dengan benar. Jika Anda adalah administrator, silakan periksa variabel lingkungan Anda (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, dll.) di pengaturan proyek Vercel Anda.",
+      "access_denied": "Akses ditolak untuk akun Anda.",
+      "default": "Terjadi kesalahan yang tidak terduga selama autentikasi.",
+      "try_again": "Coba Lagi",
+      "back": "Kembali ke Beranda"
     }
   },
   "nav": {
-    "work": "Work",
-    "thinking": "Thinking",
-    "now": "Now",
-    "about": "About",
-    "links": "Links",
-    "soul": "Soul",
-    "uses": "Uses",
-    "guestbook": "Guestbook",
-    "contact": "Let's talk"
+    "work": "Karya",
+    "thinking": "Pemikiran",
+    "now": "Saat Ini",
+    "about": "Tentang",
+    "links": "Tautan",
+    "soul": "Jiwa",
+    "uses": "Penggunaan",
+    "guestbook": "Buku Tamu",
+    "contact": "Mari Berdiskusi"
   },
   "soul": {
-    "page_label": "/ Digital consciousness",
-    "page_headline": "Tseka's Soul",
-    "page_desc": "A digital reflection of Tseka's mind. Ask anything — about his projects, philosophy, or how he sees the world.",
+    "page_label": "/ Kesadaran digital",
+    "page_headline": "Jiwa Tseka",
+    "page_desc": "Cerminan digital dari pikiran Tseka. Tanyakan apa saja — tentang proyeknya, filosofi, atau cara pandang terhadap dunia.",
     "status": "Online",
-    "greeting_title": "Ask me anything",
-    "greeting_desc": "I'm a digital reflection of Tseka's mind — his projects, philosophy, and how he sees the world.",
-    "starter1": "What are you currently building?",
-    "starter2": "What's your \"Vibe Business\" philosophy?",
-    "starter3": "How do you think about AI agents?",
-    "placeholder": "Ask Tseka's Soul...",
-    "powered_by": "Powered by Claude Haiku · Future: OpenClaw",
-    "error": "Something went wrong. Please try again.",
-    "auth_required": "Sign in to chat with Tseka's Soul",
-    "auth_button": "Sign in to chat",
-    "metadata_title": "Soul — Tseka Luk",
-    "metadata_desc": "An AI agent that thinks and responds like Tseka Luk."
+    "greeting_title": "Tanyakan apa saja",
+    "greeting_desc": "Saya adalah cerminan digital dari pikiran Tseka — proyeknya, filosofi, dan cara pandang terhadap dunia.",
+    "starter1": "Apa yang sedang kamu bangun?",
+    "starter2": "Apa filosofi \"Vibe Business\" kamu?",
+    "starter3": "Bagaimana kamu memandang AI agents?",
+    "placeholder": "Tanyakan pada Jiwa Tseka...",
+    "powered_by": "Ditenagai oleh Claude Haiku · Masa Depan: OpenClaw",
+    "error": "Terjadi kesalahan. Silakan coba lagi.",
+    "auth_required": "Masuk untuk mengobrol dengan Jiwa Tseka",
+    "auth_button": "Masuk untuk mengobrol",
+    "metadata_title": "Jiwa — Tseka Luk",
+    "metadata_desc": "Agen AI yang berpikir dan merespons seperti Tseka Luk."
   },
   "hero": {
-    "status": "Available for select collaborations",
-    "greeting": "Hi, I'm Tseka",
-    "tagline": "AI-Native Builder",
-    "description": "I design and build AI-powered products from zero to one. Focused on making complex technology feel simple, useful, and beautiful—shipping fast and iterating in public.",
-    "cta_primary": "See my work",
-    "cta_secondary": "What I'm doing now",
+    "status": "Tersedia untuk kolaborasi pilihan",
+    "greeting": "Hai, saya Tseka",
+    "tagline": "Pembangun Berbasis AI",
+    "description": "Saya merancang dan membangun produk berbasis AI dari nol hingga satu. Fokus pada membuat teknologi kompleks terasa sederhana, berguna, dan indah—meluncurkan dengan cepat dan beriterasi secara publik.",
+    "cta_primary": "Lihat karya saya",
+    "cta_secondary": "Apa yang sedang saya kerjakan",
     "pills": {
-      "role": "Full-stack AI Engineer",
+      "role": "Insinyur AI Full-stack",
       "stack": "TypeScript + Python",
-      "location": "Wuxi, China",
-      "mode": "Building in Public"
+      "location": "Wuxi, Tiongkok",
+      "mode": "Membangun Secara Publik"
     },
-    "social_proof": "Trusted by collaborators across AI, design & engineering"
+    "social_proof": "Dipercaya oleh kolaborator di bidang AI, desain & teknik"
   },
   "focus": {
-    "label": "Mission",
-    "headline": "My focus is on robust engineering, AI-native products, and scalable systems to",
-    "headline_muted": "deliver real-world impact.",
+    "label": "Misi",
+    "headline": "Fokus saya pada rekayasa yang kokoh, produk berbasis AI, dan sistem yang dapat diskalakan untuk",
+    "headline_muted": "memberikan dampak nyata.",
     "pills": {
       "ai_agents": "AI Agents",
       "ux_engineering": "UX Engineering",
-      "fullstack_architecture": "Full-stack Architecture",
-      "systems_design": "Systems Design",
+      "fullstack_architecture": "Arsitektur Full-stack",
+      "systems_design": "Desain Sistem",
       "open_source": "Open Source",
-      "product_strategy": "Product Strategy"
+      "product_strategy": "Strategi Produk"
     }
   },
   "process": {
-    "label": "/ How I work",
-    "headline": "Path to shipped features",
-    "step1_title": "Architecture",
-    "step1_desc": "Mapping out the system constraints, data flow, and UI surface. Deciding exactly what to build and what not to build.",
-    "step2_title": "Implementation",
-    "step2_desc": "Deep focus engineering. Translating the mental model into solid Next.js and Python code with robust AI integrations.",
-    "step3_title": "Refinement",
-    "step3_desc": "Polishing the sharp edges. Adding micro-animations, optimizing performance, and listening closely to telemetry and user feedback."
+    "label": "/ Cara Kerja Saya",
+    "headline": "Jalur Menuju Fitur yang Diluncurkan",
+    "step1_title": "Arsitektur",
+    "step1_desc": "Memetakan batasan sistem, alur data, dan permukaan UI. Menentukan secara tepat apa yang harus dibangun dan apa yang tidak.",
+    "step2_title": "Implementasi",
+    "step2_desc": "Rekayasa dengan fokus mendalam. Menerjemahkan model mental menjadi kode Next.js dan Python yang solid dengan integrasi AI yang kuat.",
+    "step3_title": "Penyempurnaan",
+    "step3_desc": "Menghaluskan bagian yang tajam. Menambahkan mikro-animasi, mengoptimalkan performa, dan mendengarkan telemetri serta umpan balik pengguna dengan saksama."
   },
   "works": {
-    "label": "/ Selected Works",
-    "headline": "Shipped to production",
-    "view_all": "View all {count} projects"
+    "label": "/ Karya Terpilih",
+    "headline": "Telah diluncurkan ke produksi",
+    "view_all": "Lihat semua {count} proyek"
   },
   "now_preview": {
-    "headline": "What I'm doing <em>now</em>",
-    "view_all": "Full log"
+    "headline": "Apa yang sedang saya lakukan <em>saat ini</em>",
+    "view_all": "Log lengkap"
   },
   "now": {
     "sections": {
-      "building": "Building",
-      "shipped": "Shipped",
-      "thinking": "Thinking",
-      "reading": "Reading"
+      "building": "Membangun",
+      "shipped": "Dikirim",
+      "thinking": "Berpikir",
+      "reading": "Membaca"
     },
-    "no_updates": "No updates yet.",
-    "last_updated": "Last updated:"
+    "no_updates": "Belum ada pembaruan.",
+    "last_updated": "Terakhir diperbarui:"
   },
   "pricing": {
-    "label": "/ Engagement Models",
-    "headline": "Choose how we work together",
-    "description": "Not a Swiss army knife — a studio that delivers every domain to professional standards.",
-    "recommended": "Recommended",
-    "availability": "Accepting new projects · ~2 weeks to start",
-    "capabilities_label": "/ Capabilities",
-    "radar_title": "Capability",
+    "label": "/ Model Keterlibatan",
+    "headline": "Pilih cara kita bekerja sama",
+    "description": "Bukan pisau lipat serbaguna — sebuah studio yang menghadirkan setiap domain sesuai standar profesional.",
+    "recommended": "Direkomendasikan",
+    "availability": "Menerima proyek baru · ~2 minggu untuk memulai",
+    "capabilities_label": "/ Kemampuan",
+    "radar_title": "Kemampuan",
     "stats": [
       {
         "value": 50,
@@ -137,62 +137,46 @@
     "tiers": {
       "chat": {
         "name": "Chat",
-        "price": "Free",
-        "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
-        "cta": "Talk to my Soul",
+        "price": "Gratis",
+        "description": "Panggilan singkat 15 menit",
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
+        "cta": "Bicara dengan Soul saya",
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "Kopi",
         "price": "¥18",
-        "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
-        "cta": "Buy me a coffee",
+        "description": "Seharga secangkir kopi",
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
+        "cta": "Traktir saya kopi",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
       "hire": {
-        "name": "Hire Me",
-        "price": "Per project",
-        "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
-        "cta": "Extend an Olive Branch",
+        "name": "Jadikan Saya",
+        "price": "Per proyek",
+        "description": "Keterlibatan profesional penuh",
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
+        "cta": "Ajak Bekerja Sama",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
       "partner": {
         "name": "Dream Partner",
-        "price": "Grow together",
-        "description": "Long-term co-creation",
+        "price": "Berkembang Bersama",
+        "description": "Kreasi bersama jangka panjang",
         "features": [
           "Everything above",
           "Product co-creation",
           "Growth hacking system",
           "Equity / revenue share"
         ],
-        "cta": "Share your vision",
+        "cta": "Bagikan Visi Anda",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
     },
     "services": {
       "engineering": {
         "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
         "name": "AI & Automation",
@@ -205,10 +189,7 @@
       },
       "design": {
         "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
         "name": "Growth & Global",
@@ -221,315 +202,307 @@
         ]
       },
       "consulting": {
-        "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "name": "Konsultasi",
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
         "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
   "constellation": {
     "label": "/ Constellation",
-    "headline": "The people who know",
-    "description": "They've worked with him. They've seen the work. Here's what they think.",
-    "cta": "Leave a fragment",
-    "cta_hint": "Be honest.",
-    "empty": "Nothing here yet."
+    "headline": "Orang-orang yang tahu",
+    "description": "Mereka pernah bekerja dengannya. Mereka melihat karyanya. Ini pendapat mereka.",
+    "cta": "Tinggalkan fragmen",
+    "cta_hint": "Jujur saja.",
+    "empty": "Belum ada apa-apa di sini."
   },
   "cta": {
-    "headline": "Let's build something",
-    "description": "I work with teams and founders who see digital presence and AI not just as a duty, but as a strategic growth driver.",
-    "email": "Start a project",
-    "calendar": "Book a call"
+    "headline": "Mari bangun sesuatu",
+    "description": "Saya bekerja sama dengan tim dan pendiri yang melihat kehadiran digital dan AI bukan sekadar kewajiban, melainkan penggerak pertumbuhan strategis.",
+    "email": "Mulai proyek",
+    "calendar": "Jadwalkan panggilan"
   },
   "footer": {
-    "tagline": "Building what doesn't exist yet.",
-    "status_available": "Available for select collaborations",
-    "location": "Wuxi, China",
-    "nav_work": "Work",
-    "nav_thinking": "Thinking",
-    "nav_now": "Now",
-    "nav_about": "About",
-    "nav_soul": "Soul",
-    "nav_links": "Links",
-    "email_cta": "Start a project →",
-    "built_with": "Built with",
-    "back_to_top": "↑ Back to top",
-    "rss_label": "RSS Feed",
+    "tagline": "Membangun apa yang belum ada.",
+    "status_available": "Tersedia untuk kolaborasi tertentu",
+    "location": "Wuxi, Tiongkok",
+    "nav_work": "Karya",
+    "nav_thinking": "Pemikiran",
+    "nav_now": "Saat Ini",
+    "nav_about": "Tentang",
+    "nav_soul": "Jiwa",
+    "nav_links": "Tautan",
+    "email_cta": "Mulai proyek →",
+    "built_with": "Dibangun dengan",
+    "back_to_top": "↑ Kembali ke atas",
+    "rss_label": "Feed RSS",
     "github_label": "GitHub",
     "x_label": "X (Twitter)",
     "linkedin_label": "LinkedIn",
     "wechat_label": "WeChat",
-    "wechat_copied": "WeChat ID copied!"
+    "wechat_copied": "ID WeChat disalin!"
   },
   "pages": {
     "home": {
-      "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_title": "Tseka Luk — Pembangun AI-Native",
+      "metadata_desc": "CEO & Pembangun AI-Native di Nebutra Intelligence. Membangun sistem cerdas, bukan sekadar produk."
     },
     "work": {
-      "label": "/ 19 shipped projects",
-      "headline": "Things I've built",
-      "description": "Shipped products, research tools, and AI experiments. Most are real projects with real users.",
-      "metadata_title": "Work — Tseka Luk",
-      "metadata_desc": "Shipped products, research tools, and AI experiments.",
-      "back": "All Projects",
-      "source_code": "Source Code",
-      "live_demo": "Live Demo"
+      "label": "/ 19 proyek yang dirilis",
+      "headline": "Hal yang telah saya bangun",
+      "description": "Produk yang dirilis, alat riset, dan eksperimen AI. Sebagian besar adalah proyek nyata dengan pengguna nyata.",
+      "metadata_title": "Karya — Tseka Luk",
+      "metadata_desc": "Produk yang dirilis, alat riset, dan eksperimen AI.",
+      "back": "Semua Proyek",
+      "source_code": "Kode Sumber",
+      "live_demo": "Demo Langsung"
     },
     "thinking": {
-      "label": "/ Essays & ideas",
-      "headline": "Thinking",
-      "metadata_title": "Thinking — Tseka Luk",
-      "metadata_desc": "Essays on building, growth, and AI.",
-      "empty_title": "Essays coming soon.",
-      "empty_subtitle": "In the meantime, ask <link>my Soul</link>."
+      "label": "/ Esai & ide",
+      "headline": "Pemikiran",
+      "metadata_title": "Pemikiran — Tseka Luk",
+      "metadata_desc": "Esai tentang membangun, pertumbuhan, dan AI.",
+      "empty_title": "Esai akan segera hadir.",
+      "empty_subtitle": "Sementara itu, tanyakan pada <link>Soul saya</link>."
     },
     "now": {
-      "label": "/ Updated daily",
-      "headline": "Now",
-      "description": "This page is updated daily by an AI agent that reviews my work and distills the highlights. Think of it as a living changelog for what I'm building, thinking, and shipping.",
-      "metadata_title": "Now — Tseka Luk",
-      "metadata_desc": "What I'm currently working on, thinking about, and shipping."
+      "label": "/ Diperbarui setiap hari",
+      "headline": "Saat Ini",
+      "description": "Halaman ini diperbarui setiap hari oleh agen AI yang meninjau pekerjaan saya dan merangkum sorotannya. Anggaplah ini sebagai changelog hidup untuk apa yang saya bangun, pikirkan, dan rilis.",
+      "metadata_title": "Saat Ini — Tseka Luk",
+      "metadata_desc": "Apa yang sedang saya kerjakan, pikirkan, dan rilis."
     },
     "about": {
-      "metadata_title": "About — Tseka Luk",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-      "label": "/ About",
-      "headline": "Building intelligent systems,",
-      "headline_muted": "not just products.",
-      "bio_1": "I'm Tseka Luk, CEO of Nebutra Intelligence, based in Wuxi, China. I build AI-native products designed for global markets—tools that are not just technically sophisticated but genuinely useful and beautifully simple.",
-      "bio_2": "My philosophy is what I call Vibe Business: build with taste, ship with speed, and let the product speak louder than any pitch deck. Every project starts from a real itch, and every feature earns its place.",
-      "bio_3": "I think in systems, obsess over details, and believe the best way to predict the future is to build it—one commit at a time.",
+      "metadata_title": "Tentang — Tseka Luk",
+      "metadata_desc": "CEO & Pembangun AI-Native di Nebutra Intelligence. Membangun sistem cerdas, bukan sekadar produk.",
+      "label": "/ Tentang",
+      "headline": "Membangun sistem cerdas,",
+      "headline_muted": "bukan sekadar produk.",
+      "bio_1": "Saya Tseka Luk, CEO Nebutra Intelligence, berbasis di Wuxi, Tiongkok. Saya membangun produk AI-native yang dirancang untuk pasar global—alat yang tidak hanya canggih secara teknis, tetapi benar-benar berguna dan sederhana dengan indah.",
+      "bio_2": "Filosofi saya adalah apa yang saya sebut Bisnis Vibe: bangun dengan selera, rilis dengan kecepatan, dan biarkan produk berbicara lebih keras daripada pitch deck apa pun. Setiap proyek dimulai dari kebutuhan nyata, dan setiap fitur harus membuktikan keberadaannya.",
+      "bio_3": "Saya berpikir dalam sistem, terobsesi pada detail, dan percaya cara terbaik untuk memprediksi masa depan adalah dengan membangunnya—satu commit pada satu waktu.",
       "photo_tag": "INTP · 4w5",
-      "photo_location": "Wuxi, China",
-      "stat_projects": "Projects",
-      "stat_awards": "Awards",
-      "stat_first_prizes": "First Prizes",
-      "stat_certs": "Certs",
-      "resume_download": "Download Resume",
-      "journey_label": "/ Journey",
-      "journey_2020": "Self-taught web development & digital marketing",
-      "journey_2022": "BSc in Information & Computing Science and BEng in Computer Science & Technology, Jiangsu Ocean University",
-      "journey_2023": "AI-native engineering, competitive programming",
-      "journey_2024": "Founded Wuxi Nebutra Intelligence Technology",
-      "journey_2025": "CEO, Nebutra Intelligence — building for global markets",
-      "journey_now": "Shipping AI-native products, one commit at a time",
-      "awards_label": "/ Things I've tried",
-      "awards_count": "10 attempts",
-      "awards_description": "Not an expert at anything — just someone who wants to try everything, and try it well.",
-      "award_1_title": "MCM/ICM Mathematical Modeling",
+      "photo_location": "Wuxi, Tiongkok",
+      "stat_projects": "Proyek",
+      "stat_awards": "Penghargaan",
+      "stat_first_prizes": "Juara Pertama",
+      "stat_certs": "Sertifikat",
+      "resume_download": "Unduh CV",
+      "journey_label": "/ Perjalanan",
+      "journey_2020": "Belajar mandiri pengembangan web & pemasaran digital",
+      "journey_2022": "Sarjana Sains Informasi & Komputasi dan Sarjana Teknik Ilmu Komputer & Teknologi, Universitas Jiangsu Ocean",
+      "journey_2023": "Rekayasa AI-native, pemrograman kompetitif",
+      "journey_2024": "Mendirikan Wuxi Nebutra Intelligence Technology",
+      "journey_2025": "CEO, Nebutra Intelligence — membangun untuk pasar global",
+      "journey_now": "Meluncurkan produk AI-native, satu commit dalam satu waktu",
+      "awards_label": "/ Hal yang pernah saya coba",
+      "awards_count": "10 percobaan",
+      "awards_description": "Bukan ahli di bidang apa pun — hanya seseorang yang ingin mencoba segala hal, dan melakukannya dengan baik.",
+      "award_1_title": "Pemodelan Matematika MCM/ICM",
       "award_1_level": "Honorable Mention",
-      "award_1_detail": "NSGA-III tourism optimizer, 8.3% prediction error vs. 28,000+ teams",
-      "award_2_title": "Lanqiao Cup C/C++ (Jiangsu)",
-      "award_2_level": "First Prize",
-      "award_2_detail": "Top 1% in provincial algorithmic programming",
-      "award_3_title": "TAM-SEM Low-Altitude Economy",
-      "award_3_level": "First Prize (Provincial)",
-      "award_3_detail": "2,609 respondents, discovered 'risk paradox' (beta=0.262, p<0.001)",
-      "award_4_title": "APMCM Mathematical Modeling",
-      "award_4_level": "First Prize",
-      "award_4_detail": "Pet industry forecast: LASSO R-squared=0.9850, predicted $52B market",
-      "award_5_title": "Shuwei Cup Math Modeling",
-      "award_5_level": "First Prize + Grand Innovation",
-      "award_5_detail": "Biomass co-pyrolysis: found 28.44% optimal ratio via LightGBM + PSO",
-      "award_6_title": "Brand Strategy Competition",
-      "award_6_level": "Second Prize (National)",
-      "award_6_detail": "1,200+ samples, Claude + Flux + Midjourney AIGC pipeline",
-      "award_7_title": "Global AI Algorithm Elite",
-      "award_7_level": "Third Prize (National Final)",
-      "award_7_detail": "Warehouse drone: 95% recognition accuracy, 3-min shelf traversal",
-      "award_8_title": "National Math Modeling (Jiangsu)",
-      "award_8_level": "Second Prize",
-      "award_8_detail": "Real estate cost prediction: Random Forest outperformed CNN-LSTM",
-      "award_9_title": "Electronic Design (TI Cup)",
-      "award_9_level": "Second Prize",
-      "award_9_detail": "Self-aiming system: adaptive PID + Kalman filter on MSPM0G3507",
-      "award_10_title": "Translation Competition",
-      "award_10_level": "Grand Prize (National Final)",
-      "award_10_detail": "Non-English major, highest national honor in bilingual translation",
-      "credentials_label": "/ Credentials",
-      "cred_1": "Columbia University — Numerical Models (Grade A)",
-      "cred_2": "Huawei HCIA-Datacom Network Engineer",
-      "cred_3": "HarmonyOS Advanced Developer",
-      "cred_4": "Utility Patent — Cable Distribution Equipment",
-      "cred_5": "3 Software Copyrights (Power Opt, OD Classify, Graph Solver)",
+      "award_1_detail": "Optimiser pariwisata NSGA-III, kesalahan prediksi 8,3% vs. 28.000+ tim",
+      "award_2_title": "Lomba Lanqiao C/C++ (Jiangsu)",
+      "award_2_level": "Juara Pertama",
+      "award_2_detail": "Top 1% dalam pemrograman algoritmik tingkat provinsi",
+      "award_3_title": "Ekonomi Udara Rendah TAM-SEM",
+      "award_3_level": "Juara Pertama (Tingkat Provinsi)",
+      "award_3_detail": "2.609 responden, menemukan 'paradoks risiko' (beta=0,262, p<0,001)",
+      "award_4_title": "Pemodelan Matematika APMCM",
+      "award_4_level": "Juara Pertama",
+      "award_4_detail": "Prakiraan industri hewan peliharaan: LASSO R-squared=0,9850, memprediksi pasar $52M",
+      "award_5_title": "Pemodelan Matematika Piala Shuwei",
+      "award_5_level": "Juara Pertama + Inovasi Besar",
+      "award_5_detail": "Ko-pirolysis biomassa: menemukan rasio optimal 28,44% melalui LightGBM + PSO",
+      "award_6_title": "Kompetisi Strategi Merek",
+      "award_6_level": "Juara Kedua (Nasional)",
+      "award_6_detail": "1.200+ sampel, pipeline AIGC Claude + Flux + Midjourney",
+      "award_7_title": "Elite Algoritma AI Global",
+      "award_7_level": "Juara Ketiga (Final Nasional)",
+      "award_7_detail": "Drone gudang: akurasi pengenalan 95%, traversal rak 3 menit",
+      "award_8_title": "Pemodelan Matematika Nasional (Jiangsu)",
+      "award_8_level": "Juara Kedua",
+      "award_8_detail": "Prediksi biaya real estat: Random Forest lebih unggul dari CNN-LSTM",
+      "award_9_title": "Desain Elektronik (Cup TI)",
+      "award_9_level": "Juara Kedua",
+      "award_9_detail": "Sistem penargetan otomatis: PID adaptif + filter Kalman pada MSPM0G3507",
+      "award_10_title": "Kompetisi Terjemahan",
+      "award_10_level": "Juara Utama (Final Nasional)",
+      "award_10_detail": "Non-jurusan bahasa Inggris, penghargaan nasional tertinggi dalam terjemahan dwibahasa",
+      "credentials_label": "/ Kredensial",
+      "cred_1": "Columbia University — Model Numerik (Nilai A)",
+      "cred_2": "Insinyur Jaringan Huawei HCIA-Datacom",
+      "cred_3": "Pengembang Lanjutan HarmonyOS",
+      "cred_4": "Paten Utilitas — Peralatan Distribusi Kabel",
+      "cred_5": "3 Hak Cipta Perangkat Lunak (Power Opt, OD Classify, Graph Solver)",
       "cred_6": "CET-6: 543 · CET-4: 575",
-      "cred_7": "Macau UST — Innovation & Entrepreneurship",
+      "cred_7": "Macau UST — Inovasi & Kewirausahaan",
       "cred_8": "Prompt Engineer (Datawhale x iFLYTEK)",
-      "personality_label": "/ Personality",
+      "personality_label": "/ Kepribadian",
       "personality_intp_name": "INTP",
       "personality_intp_subtitle": "The Logician",
-      "personality_intp_desc": "Analytical, systematic, and driven by an insatiable curiosity about how systems really work.",
+      "personality_intp_desc": "Analitis, sistematis, dan digerakkan oleh rasa ingin tahu yang tak pernah puas tentang cara kerja sistem.",
       "personality_intp_source": "16Personalities",
       "personality_4w5_name": "4w5",
       "personality_4w5_subtitle": "The Bohemian",
-      "personality_4w5_desc": "Identity-driven depth and authentic self-expression, tempered by intellectual withdrawal.",
+      "personality_4w5_desc": "Kedalaman yang digerakkan oleh identitas dan ekspresi diri yang autentik, diimbangi oleh penarikan diri intelektual.",
       "personality_4w5_source": "Enneagram",
-      "beliefs_label": "/ Things I believe",
-      "belief_1": "The people who are crazy enough to think they can change the world are the ones who do.",
+      "beliefs_label": "/ Hal yang saya yakini",
+      "belief_1": "Orang-orang yang cukup gila untuk berpikir mereka bisa mengubah dunia adalah orang-orang yang melakukannya.",
       "belief_1_credit": "— Steve Jobs",
-      "life_label": "/ Life",
-      "life_music": "Music",
-      "life_philosophy": "Philosophy",
-      "life_games": "Games",
-      "contact_anchor_label": "/ Contact",
-      "contact_headline": "Let's build something"
+      "life_label": "/ Kehidupan",
+      "life_music": "Musik",
+      "life_philosophy": "Filsafat",
+      "life_games": "Permainan",
+      "contact_anchor_label": "/ Kontak",
+      "contact_headline": "Mari membangun sesuatu"
     },
     "uses": {
-      "label": "/ Uses",
-      "headline": "What I use to build.",
-      "description": "Hardware, software, and AI tools I actually use daily. Dogfooding included.",
+      "label": "/ Penggunaan",
+      "headline": "Yang saya gunakan untuk membangun.",
+      "description": "Perangkat keras, perangkat lunak, dan alat AI yang benar-benar saya gunakan sehari-hari. Termasuk dogfooding.",
       "section_workstation": "/ Workstation",
-      "section_editors": "/ Editors",
+      "section_editors": "/ Editor",
       "section_terminal": "/ Terminal",
-      "section_ai_toolkit": "/ AI Toolkit",
-      "ai_toolkit_desc": "Tools I actively use — not a marketing list. I switch between them depending on the task.",
+      "section_ai_toolkit": "/ Toolkit AI",
+      "ai_toolkit_desc": "Alat yang saya gunakan secara aktif — bukan daftar pemasaran. Saya beralih di antaranya tergantung tugas.",
       "section_dogfooding": "/ Dogfooding"
     },
     "links": {
-      "headline": "Links",
-      "description": "Find me across the internet.",
-      "international": "International",
-      "china": "China Platforms",
-      "wechat_click": "Click to see QR code",
-      "metadata_title": "Links — Tseka Luk",
-      "metadata_desc": "Find me across the internet."
+      "headline": "Tautan",
+      "description": "Temukan saya di seluruh internet.",
+      "international": "Internasional",
+      "china": "Platform Tiongkok",
+      "wechat_click": "Klik untuk melihat kode QR",
+      "metadata_title": "Tautan — Tseka Luk",
+      "metadata_desc": "Temukan saya di seluruh internet."
     },
     "privacy": {
-      "metadata_title": "Privacy Policy — Tseka Luk",
-      "metadata_desc": "How this site handles your data.",
-      "headline": "Privacy Policy",
-      "last_updated": "Last updated: March 2026",
-      "intro": "This site is a personal portfolio. I respect your privacy and collect as little data as possible.",
-      "analytics_title": "Analytics",
-      "analytics_body": "This site uses Plausible Analytics, a privacy-friendly, cookie-free analytics tool. No personal data is collected. All data is aggregated and anonymous. No data is shared with third parties.",
-      "auth_title": "Authentication",
-      "auth_body": "If you sign in (via GitHub, Google, or Linux DO), I receive your public profile information (name, avatar, email if available). This is used solely to identify you in the Soul chat. I do not sell, share, or use this data for any other purpose. Session data is stored as an encrypted JWT cookie in your browser.",
+      "metadata_title": "Kebijakan Privasi — Tseka Luk",
+      "metadata_desc": "Cara situs ini menangani data Anda.",
+      "headline": "Kebijakan Privasi",
+      "last_updated": "Terakhir diperbarui: Maret 2026",
+      "intro": "Situs ini adalah portofolio pribadi. Saya menghormati privasi Anda dan mengumpulkan data seminimal mungkin.",
+      "analytics_title": "Analitik",
+      "analytics_body": "Situs ini menggunakan Plausible Analytics, alat analitik yang ramah privasi dan bebas cookie. Tidak ada data pribadi yang dikumpulkan. Semua data bersifat agregat dan anonim. Tidak ada data yang dibagikan kepada pihak ketiga.",
+      "auth_title": "Autentikasi",
+      "auth_body": "Jika Anda masuk (melalui GitHub, Google, atau Linux DO), saya menerima informasi profil publik Anda (nama, avatar, email jika tersedia). Ini hanya digunakan untuk mengidentifikasi Anda di chat Soul. Saya tidak menjual, membagikan, atau menggunakan data ini untuk tujuan lain. Data sesi disimpan sebagai cookie JWT terenkripsi di browser Anda.",
       "chat_title": "Soul Chat",
-      "chat_body": "Messages you send in the Soul chat are processed by the Anthropic API (Claude) in real time and are not stored on my servers. Conversation history exists only in your browser session.",
-      "cookies_title": "Cookies",
-      "cookies_body": "This site uses only essential cookies: a session cookie for authentication and a theme preference cookie. No tracking cookies are used.",
-      "third_party_title": "Third-party Services",
-      "third_party_body": "Plausible Analytics (privacy-friendly, EU-hosted), Anthropic API (chat processing), Vercel (hosting). No advertising or tracking services are used.",
-      "contact_title": "Contact",
-      "contact_body": "For any privacy-related questions, reach me at"
+      "chat_body": "Pesan yang Anda kirim di chat Soul diproses oleh API Anthropic (Claude) secara real-time dan tidak disimpan di server saya. Riwayat percakapan hanya ada di sesi browser Anda.",
+      "cookies_title": "Cookie",
+      "cookies_body": "Situs ini hanya menggunakan cookie esensial: cookie sesi untuk autentikasi dan cookie preferensi tema. Tidak ada cookie pelacakan yang digunakan.",
+      "third_party_title": "Layanan Pihak Ketiga",
+      "third_party_body": "Plausible Analytics (ramah privasi, di-hosting di UE), API Anthropic (pemrosesan chat), Vercel (hosting). Tidak ada layanan iklan atau pelacakan yang digunakan.",
+      "contact_title": "Kontak",
+      "contact_body": "Untuk pertanyaan terkait privasi, hubungi saya di"
     },
     "guestbook": {
-      "label": "/ Guestbook",
-      "metadata_title": "Guestbook — Tseka Luk",
-      "metadata_desc": "Leave a message. Say hello.",
-      "headline": "Guestbook",
-      "description": "Leave a message, say hello, or share what you're building.",
-      "sign_in_prompt": "Sign in to leave a message.",
-      "placeholder": "Say something nice...",
-      "submit": "Post",
-      "empty": "No messages yet. Be the first!"
+      "label": "/ Buku Tamu",
+      "metadata_title": "Buku Tamu — Tseka Luk",
+      "metadata_desc": "Tinggalkan pesan. Sapa saya.",
+      "headline": "Buku Tamu",
+      "description": "Tinggalkan pesan, ucapkan salam, atau bagikan apa yang sedang Anda bangun.",
+      "sign_in_prompt": "Masuk untuk meninggalkan pesan.",
+      "placeholder": "Katakan sesuatu yang baik...",
+      "submit": "Kirim",
+      "empty": "Belum ada pesan. Jadilah yang pertama!"
     }
   },
   "projects": {
     "any2md": {
-      "tagline": "Where other converters lose 40% of context, this one keeps 93%",
-      "description": "Most converters silently drop formulas, tables, and cross-references. any2md uses a dual-engine—PyMuPDF for text + Qwen-VL for vision—then DeepSeek LLM reconstructs context via layered prompt + few-shot + CoT. Processes 68 pages/min with 85% table structuring and 90% LaTeX formula preservation. Imported 20,000+ pages into a team knowledge base in one week, cutting manual cleanup by 70%."
+      "tagline": "Saat konverter lain kehilangan 40% konteks, yang ini mempertahankan 93%",
+      "description": "Sebagian besar konverter secara diam-diam membuang rumus, tabel, dan referensi silang. any2md menggunakan dual-engine—PyMuPDF untuk teks + Qwen-VL untuk visi—kemudian DeepSeek LLM merekonstruksi konteks melalui prompt berlapis + few-shot + CoT. Memproses 68 halaman/menit dengan 85% struktur tabel dan 90% preservasi rumus LaTeX. Mengimpor 20.000+ halaman ke basis pengetahuan tim dalam satu minggu, mengurangi pembersihan manual sebesar 70%."
     },
     "low-altitude-economy": {
-      "tagline": "Discovered a paradox: risk perception actually increases adoption",
-      "description": "Everyone assumed perceived risk would deter UAM adoption. Our TAM–SEM model on 2,609 respondents (93.1% recovery rate, KMO=0.951) proved the opposite: risk positively drives willingness to adopt (β=0.262, p<0.001). We also mined 1,695 Bilibili comments with SnowNLP to map public sentiment. The “risk paradox” finding challenged a decade of technology adoption literature. Provincial First Prize."
+      "tagline": "Menemukan paradoks: persepsi risiko justru meningkatkan adopsi",
+      "description": "Semua orang mengasumsikan persepsi risiko akan menghalangi adopsi UAM. Model TAM–SEM kami pada 2.609 responden (tingkat pemulihan 93,1%, KMO=0,951) membuktikan sebaliknya: risiko secara positif mendorong kemauan untuk mengadopsi (β=0,262, p<0,001). Kami juga menggali 1.695 komentar Bilibili dengan SnowNLP untuk memetakan sentimen publik. Temuan “paradoks risiko” ini menantang literatur adopsi teknologi selama satu dekade. Juara Pertama Tingkat Provinsi."
     },
     "nebutra-sailor": {
-      "tagline": "One monorepo, 4 production apps, 12,000+ lines of shared code",
-      "description": "Enterprise-grade monorepo powering 4 apps (marketing, dashboard, docs, studio) from 6 shared packages. Next.js 16 + React 19 + Tailwind v4, with a custom design token pipeline, 541 tree-shakable icons, and multi-theme engine supporting 6 oklch color schemes. Ships features 3x faster than separate repos."
+      "tagline": "Satu monorepo, 4 aplikasi produksi, 12.000+ baris kode bersama",
+      "description": "Monorepo kelas enterprise yang menggerakkan 4 aplikasi (marketing, dashboard, docs, studio) dari 6 paket bersama. Next.js 16 + React 19 + Tailwind v4, dengan pipeline token desain kustom, 541 ikon tree-shakable, dan mesin multi-tema yang mendukung 6 skema warna oklch. Mengirim fitur 3x lebih cepat daripada repo terpisah."
     },
     "mcm-icm": {
-      "tagline": "Optimizing tourism vs. environment with 8.3% prediction error",
-      "description": "MCM/ICM 2025 (Problem B): built a system dynamics + NSGA-III multi-objective optimizer balancing tourist flow, environmental quality, and social satisfaction. Achieved 8.3% tourist prediction error with R²>0.5 on a three-dimensional coupled model. Competed against 28,000+ teams globally. Honorable Mention."
+      "tagline": "Mengoptimalkan pariwisata vs. lingkungan dengan kesalahan prediksi 8,3%",
+      "description": "MCM/ICM 2025 (Masalah B): membangun optimizer multi-objektif sistem dinamika + NSGA-III yang menyeimbangkan arus wisatawan, kualitas lingkungan, dan kepuasan sosial. Mencapai kesalahan prediksi wisatawan 8,3% dengan R²>0,5 pada model terkopel tiga dimensi. Bersaing melawan 28.000+ tim secara global. Honorable Mention."
     },
     "biomass-modeling": {
-      "tagline": "Found the exact 28.44% ratio—won Grand Innovation Award for it",
-      "description": "Three-model ensemble (LightGBM + Gaussian Process Regression + PSO) tested across 500+ pyrolysis data points to discover that 28.44% biomass-to-coal ratio maximizes clean energy output with R²>0.95 prediction accuracy. The entropy-weighted fuzzy evaluation framework quantified non-linear interactions between 3 yield types (gas, char, liquid). Judges praised the methodology as transferable across energy domains. First Prize + Grand Innovation Award at Shuwei Cup."
+      "tagline": "Menemukan rasio 28,44% yang tepat—menang Grand Innovation Award karenanya",
+      "description": "Ensemble tiga model (LightGBM + Gaussian Process Regression + PSO) diuji pada 500+ titik data pirolisis untuk menemukan bahwa rasio biomassa-ke-batu bara 28,44% memaksimalkan output energi bersih dengan akurasi prediksi R²>0,95. Kerangka evaluasi fuzzy berbobot entropi mengkuantifikasi interaksi non-linier antara 3 jenis hasil (gas, char, liquid). Juri memuji metodologi sebagai transferable lintas domain energi. Juara Pertama + Grand Innovation Award di Shuwei Cup."
     },
     "pet-industry": {
-      "tagline": "LASSO R²=0.9850 predicted a $52B market by 2026",
-      "description": "Built an integrated forecasting framework (ARIMAX-GARCH + VAR + LASSO + Prophet) spanning market size, pet population, and food manufacturing. LASSO regression identified key drivers with R²=0.9850. Cross-compared US/EU markets using HHI concentration index. Predicted 144.68M pets and 82.8% capacity utilization by 2026."
+      "tagline": "LASSO R²=0,9850 memprediksi pasar $52B pada 2026",
+      "description": "Membangun kerangka peramalan terintegrasi (ARIMAX-GARCH + VAR + LASSO + Prophet) yang mencakup ukuran pasar, populasi hewan peliharaan, dan manufaktur makanan. Regresi LASSO mengidentifikasi penggerak kunci dengan R²=0,9850. Membandingkan silang pasar AS/EU menggunakan indeks konsentrasi HHI. Memprediksi 144,68 juta hewan peliharaan dan utilisasi kapasitas 82,8% pada 2026."
     },
     "cursor-export": {
-      "tagline": "86% less time on knowledge management—one-click conversation export",
-      "description": "Cursor IDE extension (7 GitHub stars) that exports AI conversations to structured Markdown. Tested on 214 conversations (1,980 messages): processing time dropped from 5.8 min to 0.8 min per conversation, code snippet loss rate under 0.5%, throughput 12.5 conversations/min. Cross-platform VSIX with >98% install success rate across Windows/macOS/Linux."
+      "tagline": "86% lebih sedikit waktu untuk manajemen pengetahuan—ekspor percakapan satu klik",
+      "description": "Ekstensi Cursor IDE (7 bintang GitHub) yang mengekspor percakapan AI ke Markdown terstruktur. Diuji pada 214 percakapan (1.980 pesan): waktu pemrosesan turun dari 5,8 menit menjadi 0,8 menit per percakapan, tingkat kehilangan snippet kode di bawah 0,5%, throughput 12,5 percakapan/menit. VSIX lintas platform dengan tingkat keberhasilan instalasi >98% di Windows/macOS/Linux."
     },
     "brand-strategy": {
-      "tagline": "1,200+ consumer samples × AIGC pipeline = 40% engagement lift",
-      "description": "Led a PEST-SWOT driven brand overhaul for Suzhou’s “林莓莓” agricultural product. Surveyed 1,200+ consumers to map purchase drivers and price sensitivity. Deployed Claude + Flux + Midjourney AIGC toolchain for brand stories and mascot concepts, cutting creative iteration from weeks to days. Projected 40%+ user engagement increase. National Second Prize."
+      "tagline": "1.200+ sampel konsumen × pipeline AIGC = peningkatan engagement 40%",
+      "description": "Memimpin perombakan merek berbasis PEST-SWOT untuk produk pertanian “林莓莓” Suzhou. Menyurvei 1.200+ konsumen untuk memetakan penggerak pembelian dan sensitivitas harga. Menerapkan toolchain AIGC Claude + Flux + Midjourney untuk cerita merek dan konsep maskot, memotong iterasi kreatif dari berminggu-minggu menjadi berhari-hari. Diproyeksikan peningkatan engagement pengguna 40%+. Juara Kedua Nasional."
     },
     "mineru-skill": {
-      "tagline": "Zero-config Claude Code skill—PDF to Markdown in one command",
-      "description": "Open-source Claude Code skill that wraps MinerU for layout-aware PDF/document conversion. One-command install, no API keys, 3 supported formats (PDF, DOCX, PPTX). Handles 100+ page documents with table and formula preservation. Published on Smithery marketplace, 5+ community installs in first week. Built for the Claude Code ecosystem with auto-detection of document type and intelligent chunking."
+      "tagline": "Skill Claude Code tanpa konfigurasi—PDF ke Markdown dalam satu perintah",
+      "description": "Skill Claude Code open-source yang membungkus MinerU untuk konversi PDF/dokumen berbasis layout. Instal satu perintah, tanpa kunci API, 3 format didukung (PDF, DOCX, PPTX). Menangani dokumen 100+ halaman dengan preservasi tabel dan rumus. Dipublikasikan di marketplace Smithery, 5+ instalasi komunitas dalam minggu pertama. Dibangun untuk ekosistem Claude Code dengan auto-deteksi tipe dokumen dan chunking cerdas."
     },
     "warehouse-drone": {
-      "tagline": "95% recognition accuracy, full shelf scan in under 3 minutes",
-      "description": "Multi-rotor drone system for automated warehouse stocktaking. Integrated STM32 flight controller + OpenMV vision + BLE communication for autonomous waypoint navigation and QR code scanning across 3D shelf structures. 95% barcode recognition accuracy with laser calibration, completing full inventory traversal in under 3 minutes."
+      "tagline": "Akurasi pengenalan 95%, pemindaian rak penuh dalam kurang dari 3 menit",
+      "description": "Sistem drone multi-rotor untuk stoktaking gudang otomatis. Mengintegrasikan kontroler penerbangan STM32 + visi OpenMV + komunikasi BLE untuk navigasi waypoint otonom dan pemindaian kode QR melintasi struktur rak 3D. Akurasi pengenalan barcode 95% dengan kalibrasi laser, menyelesaikan traversal inventaris penuh dalam kurang dari 3 menit."
     },
     "cdtmp": {
-      "tagline": "Task success rate +18pp by turning prompt tricks into reusable protocol",
-      "description": "Turned ad-hoc prompt engineering into a structured agent protocol: task decomposition, state machines, retry strategies, and auditable intermediate states. Tested on 120 cross-domain tasks: success rate jumped from 63% to 81%, JSON compliance from 72% to 94%, rework rounds dropped 29%. Framework-agnostic—plugs into LangGraph, Semantic Kernel, or custom executors."
+      "tagline": "Tingkat keberhasilan tugas +18pp dengan mengubah trik prompt menjadi protokol yang dapat digunakan kembali",
+      "description": "Mengubah rekayasa prompt ad-hoc menjadi protokol agen terstruktur: dekomposisi tugas, mesin keadaan, strategi ulang, dan keadaan menengah yang dapat diaudit. Diuji pada 120 tugas lintas domain: tingkat keberhasilan melonjak dari 63% menjadi 81%, kepatuhan JSON dari 72% menjadi 94%, putaran pengerjaan ulang turun 29%. Agnostik framework—terintegrasi dengan LangGraph, Semantic Kernel, atau eksekutor kustom."
     },
     "next-unicorn": {
-      "tagline": "Your codebase has 47 hand-rolled wheels—this finds them all",
-      "description": "Every codebase accumulates Vibe Coding debt: custom date formatters, DIY loggers, bespoke state machines. Next-Unicorn audits your code via Context7 MCP, identifies reinvented wheels, generates migration plans, and ships delete-code checklists. 176 tests passed with 29 property-based verifications. Published on Smithery + npm, supports 35+ AI agents including Claude Code, Cursor, and OpenCode."
+      "tagline": "Kode Anda memiliki 47 roda buatan sendiri—ini menemukan semuanya",
+      "description": "Setiap basis kode menumpuk utang Vibe Coding: pemformat tanggal kustom, logger DIY, mesin keadaan khusus. Next-Unicorn mengaudit kode Anda melalui Context7 MCP, mengidentifikasi roda yang dibuat ulang, menghasilkan rencana migrasi, dan mengirimkan daftar periksa hapus kode. 176 tes lulus dengan 29 verifikasi berbasis properti. Dipublikasikan di Smithery + npm, mendukung 35+ agen AI termasuk Claude Code, Cursor, dan OpenCode."
     },
     "hydrogem-web": {
-      "tagline": "Real-time water quality dashboard with 5-second refresh and alerts",
-      "description": "React + TypeScript monitoring system tracking 12 water quality parameters (pH, turbidity, dissolved oxygen, etc.) with 5-second auto-refresh and configurable alert thresholds. Built with streaming data visualization and historical trend analysis for environmental monitoring."
+      "tagline": "Dasbor kualitas air real-time dengan penyegaran 5 detik dan peringatan",
+      "description": "Sistem pemantauan React + TypeScript yang melacak 12 parameter kualitas air (pH, kekeruhan, oksigen terlarut, dll.) dengan penyegaran otomatis 5 detik dan ambang batas peringatan yang dapat dikonfigurasi. Dibangun dengan visualisasi data streaming dan analisis tren historis untuk pemantauan lingkungan."
     },
     "ocr-auto": {
-      "tagline": "100% bbox accuracy on 50 element types—from 65% to 92% in 10 prompt iterations",
-      "description": "Production-grade automated annotation system for document page elements. Async 4-stage pipeline with Qwen VL models identifies 50 element types (12 code languages, 13 interaction formats, 12 content elements, 13 other tags). Three-layer fault tolerance (Retry + RateLimit + CircuitBreaker), SHA256 content-addressed cache, and real-time SSE monitoring dashboard."
+      "tagline": "Akurasi bbox 100% pada 50 jenis elemen—dari 65% menjadi 92% dalam 10 iterasi prompt",
+      "description": "Sistem anotasi otomatis tingkat produksi untuk elemen halaman dokumen. Pipeline 4 tahap asinkron dengan model Qwen VL mengidentifikasi 50 jenis elemen (12 bahasa kode, 13 format interaksi, 12 elemen konten, 13 tag lainnya). Toleransi kesalahan tiga lapis (Retry + RateLimit + CircuitBreaker), cache berbasis alamat konten SHA256, dan dasbor pemantauan SSE real-time."
     },
     "tiktok-pipeline": {
-      "tagline": "8-dimensional annotation across 19 prompt iterations—edge cases included",
-      "description": "Multi-modal visual search relevance labeling pipeline using LLMs. Processes image + text signals across 8 annotation dimensions (visual relevance, content relevance, query/doc drop, functional parity, category granularity, visual similarity, modal corroboration). 19 prompt versions with automated comparison and reflection analysis tools."
+      "tagline": "Anotasi 8 dimensi melintasi 19 iterasi prompt—termasuk kasus tepi",
+      "description": "Pipeline pelabelan relevansi pencarian visual multimodal menggunakan LLM. Memproses sinyal gambar + teks melintasi 8 dimensi anotasi (relevansi visual, relevansi konten, drop query/doc, paritas fungsional, granularitas kategori, kesamaan visual, konfirmasi modal). 19 versi prompt dengan alat perbandingan otomatis dan analisis refleksi."
     },
     "mlbb-analysis": {
-      "tagline": "5 platforms, 6 batch processors, 90%+ accuracy—from manual review to automated pipeline",
-      "description": "Multi-platform video content analysis system covering YouTube, Instagram, TikTok, VK, and Facebook. Refactored from legacy monolith to modular architecture: 5 platform fetchers, 6 batch processors, 5 video analyzers. Fast text analysis achieves 90%+ accuracy with 460x acceleration over manual review, processing 1,207+ videos across batch runs."
+      "tagline": "5 platform, 6 pemroses batch, akurasi 90%+—dari tinjauan manual ke pipeline otomatis",
+      "description": "Sistem analisis konten video multi-platform yang mencakup YouTube, Instagram, TikTok, VK, dan Facebook. Direfaktorisasi dari monolit warisan ke arsitektur modular: 5 pengambil platform, 6 pemroses batch, 5 analyzer video. Analisis teks cepat mencapai akurasi 90%+ dengan akselerasi 460x dibandingkan tinjauan manual, memproses 1.207+ video melintasi menjalankan batch."
     },
     "synapse-quant": {
-      "tagline": "8 microservices, real-time GraphQL, TUI cockpit—from raw data to trade thesis",
-      "description": "Open-source quantitative trading copilot for crypto markets. 8 microservices + 9 infrastructure services (17 containers total) with unified TUI cockpit, 41 technical indicators, real-time market data streaming, and in-context AI copilot. TypeScript 5.7 + Python 3.11+, CI/CD with GitHub Actions."
+      "tagline": "8 mikro layanan, GraphQL real-time, kokpit TUI—dari data mentah ke tesis perdagangan",
+      "description": "Copilot perdagangan kuantitatif sumber terbuka untuk pasar kripto. 8 mikro layanan + 9 layanan infrastruktur (17 kontainer total) dengan kokpit TUI terpadu, 41 indikator teknis, streaming data pasar real-time, dan copilot AI dalam konteks. TypeScript 5.7 + Python 3.11+, CI/CD dengan GitHub Actions."
     },
     "hm3d-eval": {
-      "tagline": "4.62/5 evaluation score across 1,000 real 3D scenes—8/8 acceptance criteria passed",
-      "description": "Comprehensive quality evaluation framework for the Habitat-Matterport 3D Research Dataset (1,000 real 3D scenes). Assessed 15+ dimensions including mesh quality, texture integrity, semantic annotation accuracy, and metadata completeness. Achieved 4.62/5 overall score with 100% acceptance pass rate (8/8 criteria). 95% requirement compliance."
+      "tagline": "Skor evaluasi 4.62/5 melintasi 1.000 adegan 3D nyata—8/8 kriteria penerimaan lulus",
+      "description": "Framework evaluasi kualitas komprehensif untuk Dataset Riset Habitat-Matterport 3D (1.000 adegan 3D nyata). Menilai 15+ dimensi termasuk kualitas mesh, integritas tekstur, akurasi anotasi semantik, dan kelengkapan metadata. Mencapai skor keseluruhan 4.62/5 dengan tingkat kelulusan penerimaan 100% (8/8 kriteria). Kepatuhan persyaratan 95%."
     },
     "appen-dashboard": {
-      "tagline": "Enterprise SaaS for a NASDAQ data company: the B2B demo mode playbook in production",
-      "description": "Built multi-tenant reporting infrastructure for Appen (NASDAQ: APT). Next.js 16 monorepo (5 apps + 10 packages) serves TCS, ByteWorks, and DataPower dashboards with Upstash QStash async job queues and Pusher real-time. The breakthrough: a production-grade demo mode with MSW + tRPC mock interception, privacy redaction pipeline (schema validate → redact → normalize → value protocol), and 4 behavioral strategies—solving the #1 enterprise SaaS sales problem."
+      "tagline": "SaaS perusahaan untuk perusahaan data NASDAQ: buku panduan mode demo B2B dalam produksi",
+      "description": "Membangun infrastruktur pelaporan multi-tenant untuk Appen (NASDAQ: APT). Monorepo Next.js 16 (5 aplikasi + 10 paket) melayani dasbor TCS, ByteWorks, dan DataPower dengan antrean tugas asinkron Upstash QStash dan real-time Pusher. Terobosannya: mode demo tingkat produksi dengan perampasan mock MSW + tRPC, pipeline redaksi privasi (validasi skema → redaksi → normalisasi → protokol nilai), dan 4 strategi perilaku—memecahkan masalah penjualan SaaS perusahaan #1."
     },
     "t2v-relabeling": {
-      "tagline": "Using better AI to fix worse AI's labeling mistakes—at the cost human reviewers can't match",
-      "description": "Meta-labeling pipeline that audits and corrects mislabeled AI-generated video training data using Gemini 2.5 Flash. Classifies 6 attributes (quality, gender, age, race, scene, season) per video with EWMA-adaptive rate limiting and HTTP/2 concurrency. Processes 60MB+ videos via Gemini Files API without local download. 3 iterative rounds with incremental merge. Human labeling: ~$1/video. This pipeline: ~$0.01/video at scale."
+      "tagline": "Menggunakan AI yang lebih baik untuk memperbaiki kesalahan pelabelan AI yang lebih buruk—dengan biaya yang tidak dapat ditandingi peninjau manusia",
+      "description": "Pipeline meta-pelabelan yang mengaudit dan memperbaiki data pelatihan video yang dibuat AI dan salah dilabeli menggunakan Gemini 2.5 Flash. Mengklasifikasikan 6 atribut (kualitas, gender, usia, ras, adegan, musim) per video dengan pembatasan laju adaptif EWMA dan konkurensi HTTP/2. Memproses video 60MB+ melalui API File Gemini tanpa unduhan lokal. 3 putaran iteratif dengan penggabungan inkremental. Pelabelan manusia: ~$1/video. Pipeline ini: ~$0.01/video dalam skala besar."
     },
     "url-annotation": {
-      "tagline": "The TLS fingerprint arms race: when IP blocking fails, impersonate Chrome at the handshake",
-      "description": "Production URL consistency pipeline that defeats TLS-fingerprint bot detection at zero marginal LLM cost. curl_cffi spoofs Chrome 124's full ClientHello (cipher suites, extensions, ordering)—not just User-Agent. Playwright renders JS-heavy SPAs. Local Qwen3:1.7b via Ollama compares semantics without API fees or GDPR exposure. Rotating-ad detection re-fetches 3× to flag domain changes. 30 HTTP + 5 Playwright + 5 LLM concurrent."
+      "tagline": "Perlombaan senjata sidik jari TLS: saat pemblokiran IP gagal, tiru Chrome pada handshake",
+      "description": "Pipeline konsistensi URL produksi yang mengalahkan deteksi bot sidik jari TLS dengan biaya LLM marjinal nol. curl_cffi meniru ClientHello lengkap Chrome 124 (suite cipher, ekstensi, pengurutan)—bukan hanya User-Agent. Playwright merender SPA berat JS. Qwen3:1.7b lokal via Ollama membandingkan semantik tanpa biaya API atau paparan GDPR. Deteksi iklan berputar mengambil ulang 3× untuk menandai perubahan domain. 30 HTTP + 5 Playwright + 5 LLM konkuren."
     },
     "3dgs-eval": {
-      "tagline": "3DGS had 2,000+ citations in 6 months but zero enterprise quality standards—we wrote the spec",
-      "description": "First systematic vendor evaluation framework for 3D Gaussian Splatting content production. Multi-round scored assessment across 6 dimensions: HP/LP geometry (pivot + retopology), PBR texture completeness (BaseColor/Normal/Metallic/AO), file naming conventions, semantic annotation, preview standards (8+ renders), and communication SLA. The revelation: vendors weren't technically incapable—they were operationally immature. Multi-round CSV tracker makes every revision cycle auditable."
+      "tagline": "3DGS mendapat 2.000+ sitasi dalam 6 bulan tapi nol standar kualitas perusahaan—kami menulis spesifikasinya",
+      "description": "Kerangka evaluasi vendor sistematis pertama untuk produksi konten 3D Gaussian Splatting. Penilaian berputar berganda di 6 dimensi: geometri HP/LP (pivot + retopologi), kelengkapan tekstur PBR (BaseColor/Normal/Metallic/AO), konvensi penamaan file, anotasi semantik, standar pratinjau (8+ render), dan SLA komunikasi. Temuan: vendor tidak tidak mampu secara teknis—mereka belum matang secara operasional. Pelacak CSV berputar berganda membuat setiap siklus revisi dapat diaudit."
     }
   },
   "thinking": {
-    "latest_label": "Latest Thinking",
-    "latest_headline": "Recent Writings",
-    "view_all": "View All Writings"
+    "latest_label": "Pemikiran Terbaru",
+    "latest_headline": "Tulisan Terbaru",
+    "view_all": "Lihat Semua Tulisan"
   }
 }

@@ -1,117 +1,117 @@
 {
   "auth": {
     "signin": {
-      "title": "Welcome to Soul",
-      "subtitle": "Sign in to chat with Tseka's AI agent",
-      "github": "Continue with GitHub",
-      "google": "Continue with Google",
-      "linuxdo": "Continue with Linux DO",
-      "back": "Back to Home"
+      "title": "Vítejte v Soul",
+      "subtitle": "Přihlaste se pro chatování s AI agentem Tseka",
+      "github": "Pokračovat přes GitHub",
+      "google": "Pokračovat přes Google",
+      "linuxdo": "Pokračovat přes Linux DO",
+      "back": "Zpět na domovskou stránku"
     },
     "error": {
-      "title": "Authentication Error",
-      "subtitle": "We couldn't sign you in.",
-      "configuration": "The authentication provider is not configured properly. If you are the administrator, please check your environment variables (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, etc.) in your Vercel project settings.",
-      "access_denied": "Access was denied to your account.",
-      "default": "An unexpected error occurred during authentication.",
-      "try_again": "Try Again",
-      "back": "Back to Home"
+      "title": "Chyba ověřování",
+      "subtitle": "Nepodařilo se vás přihlásit.",
+      "configuration": "Poskytovatel ověřování není správně nakonfigurován. Pokud jste správce, zkontrolujte proměnné prostředí (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET atd.) v nastavení projektu Vercel.",
+      "access_denied": "Přístup k vašemu účtu byl odepřen.",
+      "default": "Během ověřování došlo k neočekávané chybě.",
+      "try_again": "Zkusit znovu",
+      "back": "Zpět na domovskou stránku"
     }
   },
   "nav": {
-    "work": "Work",
-    "thinking": "Thinking",
-    "now": "Now",
-    "about": "About",
-    "links": "Links",
-    "soul": "Soul",
-    "uses": "Uses",
-    "guestbook": "Guestbook",
-    "contact": "Let's talk"
+    "work": "Práce",
+    "thinking": "Přemýšlení",
+    "now": "Nyní",
+    "about": "O mně",
+    "links": "Odkazy",
+    "soul": "Duše",
+    "uses": "Používám",
+    "guestbook": "Hostovní kniha",
+    "contact": "Pojďme si popovídat"
   },
   "soul": {
-    "page_label": "/ Digital consciousness",
-    "page_headline": "Tseka's Soul",
-    "page_desc": "A digital reflection of Tseka's mind. Ask anything — about his projects, philosophy, or how he sees the world.",
+    "page_label": "/ Digitální vědomí",
+    "page_headline": "Duše Tseka",
+    "page_desc": "Digitální odraz Tsekaovy mysli. Zeptejte se na cokoliv — o jeho projektech, filozofii nebo o tom, jak vidí svět.",
     "status": "Online",
-    "greeting_title": "Ask me anything",
-    "greeting_desc": "I'm a digital reflection of Tseka's mind — his projects, philosophy, and how he sees the world.",
-    "starter1": "What are you currently building?",
-    "starter2": "What's your \"Vibe Business\" philosophy?",
-    "starter3": "How do you think about AI agents?",
-    "placeholder": "Ask Tseka's Soul...",
-    "powered_by": "Powered by Claude Haiku · Future: OpenClaw",
-    "error": "Something went wrong. Please try again.",
-    "auth_required": "Sign in to chat with Tseka's Soul",
-    "auth_button": "Sign in to chat",
-    "metadata_title": "Soul — Tseka Luk",
-    "metadata_desc": "An AI agent that thinks and responds like Tseka Luk."
+    "greeting_title": "Zeptejte se mě na cokoliv",
+    "greeting_desc": "Jsem digitální odraz Tsekaovy mysli — jeho projekty, filozofie a to, jak vidí svět.",
+    "starter1": "Na čem právě pracujete?",
+    "starter2": "Jaká je vaše filozofie \"Vibe Business\"?",
+    "starter3": "Jak přemýšlíte o AI agenty?",
+    "placeholder": "Zeptejte se Duše Tseka...",
+    "powered_by": "Poháněno Claude Haiku · Budoucnost: OpenClaw",
+    "error": "Něco se pokazilo. Zkuste to prosím znovu.",
+    "auth_required": "Přihlaste se pro chat s Duší Tseka",
+    "auth_button": "Přihlásit se k chatu",
+    "metadata_title": "Duše — Tseka Luk",
+    "metadata_desc": "AI agent, který přemýšlí a odpovídá jako Tseka Luk."
   },
   "hero": {
-    "status": "Available for select collaborations",
-    "greeting": "Hi, I'm Tseka",
-    "tagline": "AI-Native Builder",
-    "description": "I design and build AI-powered products from zero to one. Focused on making complex technology feel simple, useful, and beautiful—shipping fast and iterating in public.",
-    "cta_primary": "See my work",
-    "cta_secondary": "What I'm doing now",
+    "status": "K dispozici pro vybrané spolupráce",
+    "greeting": "Ahoj, jsem Tseka",
+    "tagline": "AI-Nativní tvůrce",
+    "description": "Navrhuji a tvořím AI produkty od nuly k jedné. Zaměřuji se na to, aby složitá technologie působila jednoduše, užitečně a krásně – rychle dodávám a iteruji veřejně.",
+    "cta_primary": "Podívejte se na mé práce",
+    "cta_secondary": "Na čem teď pracuji",
     "pills": {
-      "role": "Full-stack AI Engineer",
+      "role": "Full-stack AI inženýr",
       "stack": "TypeScript + Python",
-      "location": "Wuxi, China",
-      "mode": "Building in Public"
+      "location": "Wuxi, Čína",
+      "mode": "Tvořím veřejně"
     },
-    "social_proof": "Trusted by collaborators across AI, design & engineering"
+    "social_proof": "Důvěřují mi spolupracovníci z oblasti AI, designu a inženýrství"
   },
   "focus": {
-    "label": "Mission",
-    "headline": "My focus is on robust engineering, AI-native products, and scalable systems to",
-    "headline_muted": "deliver real-world impact.",
+    "label": "Mise",
+    "headline": "Mým zaměřením je robustní inženýrství, AI-native produkty a škálovatelné systémy pro",
+    "headline_muted": "přinášení skutečného dopadu.",
     "pills": {
-      "ai_agents": "AI Agents",
-      "ux_engineering": "UX Engineering",
-      "fullstack_architecture": "Full-stack Architecture",
-      "systems_design": "Systems Design",
-      "open_source": "Open Source",
-      "product_strategy": "Product Strategy"
+      "ai_agents": "AI agenti",
+      "ux_engineering": "UX inženýrství",
+      "fullstack_architecture": "Full-stack architektura",
+      "systems_design": "Návrh systémů",
+      "open_source": "Open source",
+      "product_strategy": "Produktová strategie"
     }
   },
   "process": {
-    "label": "/ How I work",
-    "headline": "Path to shipped features",
-    "step1_title": "Architecture",
-    "step1_desc": "Mapping out the system constraints, data flow, and UI surface. Deciding exactly what to build and what not to build.",
-    "step2_title": "Implementation",
-    "step2_desc": "Deep focus engineering. Translating the mental model into solid Next.js and Python code with robust AI integrations.",
-    "step3_title": "Refinement",
-    "step3_desc": "Polishing the sharp edges. Adding micro-animations, optimizing performance, and listening closely to telemetry and user feedback."
+    "label": "/ Jak pracuji",
+    "headline": "Cesta k dodaným funkcím",
+    "step1_title": "Architektura",
+    "step1_desc": "Mapování systémových omezení, toku dat a uživatelského rozhraní. Přesné rozhodnutí, co budovat a co ne.",
+    "step2_title": "Implementace",
+    "step2_desc": "Hluboký inženýrský fokus. Převod mentálního modelu na pevný kód v Next.js a Pythonu s robustními AI integracemi.",
+    "step3_title": "Dolaďování",
+    "step3_desc": "Broušení ostrých hran. Přidávání mikroanimací, optimalizace výkonu a pečlivé naslouchání telemetrii a zpětné vazbě uživatelů."
   },
   "works": {
-    "label": "/ Selected Works",
-    "headline": "Shipped to production",
-    "view_all": "View all {count} projects"
+    "label": "/ Vybrané práce",
+    "headline": "Nasazeno do produkce",
+    "view_all": "Zobrazit všech {count} projektů"
   },
   "now_preview": {
-    "headline": "What I'm doing <em>now</em>",
-    "view_all": "Full log"
+    "headline": "Co dělám <em>právě teď</em>",
+    "view_all": "Celý záznam"
   },
   "now": {
     "sections": {
-      "building": "Building",
-      "shipped": "Shipped",
-      "thinking": "Thinking",
-      "reading": "Reading"
+      "building": "Vytváření",
+      "shipped": "Doručeno",
+      "thinking": "Přemýšlení",
+      "reading": "Čtení"
     },
-    "no_updates": "No updates yet.",
-    "last_updated": "Last updated:"
+    "no_updates": "Zatím žádné aktualizace.",
+    "last_updated": "Naposledy aktualizováno:"
   },
   "pricing": {
-    "label": "/ Engagement Models",
-    "headline": "Choose how we work together",
-    "description": "Not a Swiss army knife — a studio that delivers every domain to professional standards.",
-    "recommended": "Recommended",
-    "availability": "Accepting new projects · ~2 weeks to start",
-    "capabilities_label": "/ Capabilities",
-    "radar_title": "Capability",
+    "label": "/ Modely spolupráce",
+    "headline": "Vyberte si, jak budeme spolupracovat",
+    "description": "Ne švýcarský nůž na všechno — studio, které dodává každou oblast na profesionální úrovni.",
+    "recommended": "Doporučeno",
+    "availability": "Přijímáme nové projekty · start cca za 2 týdny",
+    "capabilities_label": "/ Schopnosti",
+    "radar_title": "Schopnost",
     "stats": [
       {
         "value": 50,
@@ -137,65 +137,49 @@
     "tiers": {
       "chat": {
         "name": "Chat",
-        "price": "Free",
-        "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
-        "cta": "Talk to my Soul",
+        "price": "Zdarma",
+        "description": "15minutový rychlý hovor",
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
+        "cta": "Promluv si s mou duší",
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "Káva",
         "price": "¥18",
-        "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
-        "cta": "Buy me a coffee",
+        "description": "Za cenu šálku kávy",
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
+        "cta": "Kupte mi kávu",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
       "hire": {
-        "name": "Hire Me",
-        "price": "Per project",
-        "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
-        "cta": "Extend an Olive Branch",
+        "name": "Najměte mě",
+        "price": "Podle projektu",
+        "description": "Plné profesionální zapojení",
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
+        "cta": "Nabídněte mi olivovou ratolest",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
       "partner": {
         "name": "Dream Partner",
-        "price": "Grow together",
-        "description": "Long-term co-creation",
+        "price": "Růst společně",
+        "description": "Dlouhodobá spolupráce",
         "features": [
           "Everything above",
           "Product co-creation",
           "Growth hacking system",
           "Equity / revenue share"
         ],
-        "cta": "Share your vision",
+        "cta": "Sdílejte svou vizi",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
     },
     "services": {
       "engineering": {
-        "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "name": "Produktové inženýrství",
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
-        "name": "AI & Automation",
+        "name": "AI a automatizace",
         "items": [
           "AI Agent architecture",
           "OpenClaw workflows",
@@ -204,14 +188,11 @@
         ]
       },
       "design": {
-        "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "name": "Design a produkt",
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
-        "name": "Growth & Global",
+        "name": "Růst a globalizace",
         "items": [
           "Marketing strategy",
           "Growth hacking",
@@ -221,315 +202,307 @@
         ]
       },
       "consulting": {
-        "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "name": "Poradenství",
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
-        "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "name": "VC a strategie",
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
   "constellation": {
-    "label": "/ Constellation",
-    "headline": "The people who know",
-    "description": "They've worked with him. They've seen the work. Here's what they think.",
-    "cta": "Leave a fragment",
-    "cta_hint": "Be honest.",
-    "empty": "Nothing here yet."
+    "label": "/ Konstelace",
+    "headline": "Lidé, kteří to znají",
+    "description": "Pracovali s ním. Viděli práci. Tady je jejich názor.",
+    "cta": "Zanechat fragment",
+    "cta_hint": "Buďte upřímní.",
+    "empty": "Zatim nic není."
   },
   "cta": {
-    "headline": "Let's build something",
-    "description": "I work with teams and founders who see digital presence and AI not just as a duty, but as a strategic growth driver.",
-    "email": "Start a project",
-    "calendar": "Book a call"
+    "headline": "Pojďme něco vytvořit",
+    "description": "Spolupracuji s týmy a zakladateli, kteří vnímají digitální přítomnost a AI nejen jako povinnost, ale jako strategický hnací motor růstu.",
+    "email": "Zahájit projekt",
+    "calendar": "Objednat si hovor"
   },
   "footer": {
-    "tagline": "Building what doesn't exist yet.",
-    "status_available": "Available for select collaborations",
-    "location": "Wuxi, China",
-    "nav_work": "Work",
-    "nav_thinking": "Thinking",
-    "nav_now": "Now",
-    "nav_about": "About",
-    "nav_soul": "Soul",
-    "nav_links": "Links",
-    "email_cta": "Start a project →",
-    "built_with": "Built with",
-    "back_to_top": "↑ Back to top",
-    "rss_label": "RSS Feed",
+    "tagline": "Vytváříme to, co ještě neexistuje.",
+    "status_available": "K dispozici pro vybrané spolupráce",
+    "location": "Wuxi, Čína",
+    "nav_work": "Práce",
+    "nav_thinking": "Zemyslení",
+    "nav_now": "Nyní",
+    "nav_about": "O mně",
+    "nav_soul": "Duše",
+    "nav_links": "Odkazy",
+    "email_cta": "Začněte projekt →",
+    "built_with": "Vytvořeno s",
+    "back_to_top": "↑ Zpět nahoru",
+    "rss_label": "RSS kanál",
     "github_label": "GitHub",
     "x_label": "X (Twitter)",
     "linkedin_label": "LinkedIn",
     "wechat_label": "WeChat",
-    "wechat_copied": "WeChat ID copied!"
+    "wechat_copied": "WeChat ID zkopírováno!"
   },
   "pages": {
     "home": {
       "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_desc": "CEO a AI-Native Builder v Nebutra Intelligence. Tvořím inteligentní systémy, ne jen produkty."
     },
     "work": {
-      "label": "/ 19 shipped projects",
-      "headline": "Things I've built",
-      "description": "Shipped products, research tools, and AI experiments. Most are real projects with real users.",
-      "metadata_title": "Work — Tseka Luk",
-      "metadata_desc": "Shipped products, research tools, and AI experiments.",
-      "back": "All Projects",
-      "source_code": "Source Code",
-      "live_demo": "Live Demo"
+      "label": "/ 19 dokončených projektů",
+      "headline": "Co jsem vytvořil",
+      "description": "Dokončené produkty, výzkumné nástroje a AI experimenty. Většina jsou skutečné projekty se skutečnými uživateli.",
+      "metadata_title": "Práce — Tseka Luk",
+      "metadata_desc": "Dokončené produkty, výzkumné nástroje a AI experimenty.",
+      "back": "Všechny projekty",
+      "source_code": "Zdrojový kód",
+      "live_demo": "Živá ukázka"
     },
     "thinking": {
-      "label": "/ Essays & ideas",
-      "headline": "Thinking",
-      "metadata_title": "Thinking — Tseka Luk",
-      "metadata_desc": "Essays on building, growth, and AI.",
-      "empty_title": "Essays coming soon.",
-      "empty_subtitle": "In the meantime, ask <link>my Soul</link>."
+      "label": "/ Eseje a myšlenky",
+      "headline": "Myšlenky",
+      "metadata_title": "Myšlenky — Tseka Luk",
+      "metadata_desc": "Eseje o tvorbě, růstu a AI.",
+      "empty_title": "Eseje brzy přijdou.",
+      "empty_subtitle": "Mezitím se zeptejte <link>moje Soul</link>."
     },
     "now": {
-      "label": "/ Updated daily",
-      "headline": "Now",
-      "description": "This page is updated daily by an AI agent that reviews my work and distills the highlights. Think of it as a living changelog for what I'm building, thinking, and shipping.",
-      "metadata_title": "Now — Tseka Luk",
-      "metadata_desc": "What I'm currently working on, thinking about, and shipping."
+      "label": "/ Aktualizováno denně",
+      "headline": "Právě teď",
+      "description": "Tato stránka se aktualizuje denně pomocí AI agenta, který hodnotí mou práci a shrnuje hlavní body. Představte si to jako živý changelog toho, na čem pracuji, o čem přemýšlím a co vydávám.",
+      "metadata_title": "Právě teď — Tseka Luk",
+      "metadata_desc": "Na čem právě pracuji, o čem přemýšlím a co vydávám."
     },
     "about": {
-      "metadata_title": "About — Tseka Luk",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-      "label": "/ About",
-      "headline": "Building intelligent systems,",
-      "headline_muted": "not just products.",
-      "bio_1": "I'm Tseka Luk, CEO of Nebutra Intelligence, based in Wuxi, China. I build AI-native products designed for global markets—tools that are not just technically sophisticated but genuinely useful and beautifully simple.",
-      "bio_2": "My philosophy is what I call Vibe Business: build with taste, ship with speed, and let the product speak louder than any pitch deck. Every project starts from a real itch, and every feature earns its place.",
-      "bio_3": "I think in systems, obsess over details, and believe the best way to predict the future is to build it—one commit at a time.",
+      "metadata_title": "O mně — Tseka Luk",
+      "metadata_desc": "CEO a tvůrce AI-native řešení v Nebutra Intelligence. Stavím inteligentní systémy, ne jen produkty.",
+      "label": "/ O mně",
+      "headline": "Stavím inteligentní systémy,",
+      "headline_muted": "ne jen produkty.",
+      "bio_1": "Jsem Tseka Luk, CEO společnosti Nebutra Intelligence se sídlem v Wu-si, Čína. Vytvářím AI-native produkty určené pro globální trhy — nástroje, které nejsou jen technicky vyspělé, ale skutečně užitečné a krásně jednoduché.",
+      "bio_2": "Mým filozofickým přístupem je to, čemu říkám Vibe Business: stavět s vkusem, vydávat rychle a nechat produkt mluvit hlasitěji než jakýkoli pitch deck. Každý projekt začíná skutečnou potřebou a každá funkce si své místo zaslouží.",
+      "bio_3": "Myslím systémy, posedávám detaily a věřím, že nejlepší způsob, jak předpovědět budoucnost, je stavět ji — commit po commitu.",
       "photo_tag": "INTP · 4w5",
-      "photo_location": "Wuxi, China",
-      "stat_projects": "Projects",
-      "stat_awards": "Awards",
-      "stat_first_prizes": "First Prizes",
-      "stat_certs": "Certs",
-      "resume_download": "Download Resume",
-      "journey_label": "/ Journey",
-      "journey_2020": "Self-taught web development & digital marketing",
-      "journey_2022": "BSc in Information & Computing Science and BEng in Computer Science & Technology, Jiangsu Ocean University",
-      "journey_2023": "AI-native engineering, competitive programming",
-      "journey_2024": "Founded Wuxi Nebutra Intelligence Technology",
-      "journey_2025": "CEO, Nebutra Intelligence — building for global markets",
-      "journey_now": "Shipping AI-native products, one commit at a time",
-      "awards_label": "/ Things I've tried",
-      "awards_count": "10 attempts",
-      "awards_description": "Not an expert at anything — just someone who wants to try everything, and try it well.",
-      "award_1_title": "MCM/ICM Mathematical Modeling",
-      "award_1_level": "Honorable Mention",
-      "award_1_detail": "NSGA-III tourism optimizer, 8.3% prediction error vs. 28,000+ teams",
+      "photo_location": "Wu-si, Čína",
+      "stat_projects": "Projekty",
+      "stat_awards": "Ocenění",
+      "stat_first_prizes": "První ceny",
+      "stat_certs": "Certifikáty",
+      "resume_download": "Stáhnout životopis",
+      "journey_label": "/ Cesta",
+      "journey_2020": "Samosvícený vývoj webu a digitální marketing",
+      "journey_2022": "BSc v informatice a výpočetní vědě a BEng v informatice a technologii, Jiangsu Ocean University",
+      "journey_2023": "AI-native inženýrství, soutěžní programování",
+      "journey_2024": "Založena společnost Wuxi Nebutra Intelligence Technology",
+      "journey_2025": "CEO společnosti Nebutra Intelligence — budování pro globální trhy",
+      "journey_now": "Vydáváme AI-native produkty, commit po commitu",
+      "awards_label": "/ Věci, které jsem vyzkoušel",
+      "awards_count": "10 pokusů",
+      "awards_description": "Nejsem expert na nic — jen někdo, kdo chce vyzkoušet všechno a dělat to dobře.",
+      "award_1_title": "MCM/ICM Matematické modelování",
+      "award_1_level": "Výborné hodnocení",
+      "award_1_detail": "NSGA-III optimalizátor pro cestovní ruch, chyba predikce 8,3 % oproti 28 000+ týmům",
       "award_2_title": "Lanqiao Cup C/C++ (Jiangsu)",
-      "award_2_level": "First Prize",
-      "award_2_detail": "Top 1% in provincial algorithmic programming",
-      "award_3_title": "TAM-SEM Low-Altitude Economy",
-      "award_3_level": "First Prize (Provincial)",
-      "award_3_detail": "2,609 respondents, discovered 'risk paradox' (beta=0.262, p<0.001)",
-      "award_4_title": "APMCM Mathematical Modeling",
-      "award_4_level": "First Prize",
-      "award_4_detail": "Pet industry forecast: LASSO R-squared=0.9850, predicted $52B market",
-      "award_5_title": "Shuwei Cup Math Modeling",
-      "award_5_level": "First Prize + Grand Innovation",
-      "award_5_detail": "Biomass co-pyrolysis: found 28.44% optimal ratio via LightGBM + PSO",
-      "award_6_title": "Brand Strategy Competition",
-      "award_6_level": "Second Prize (National)",
-      "award_6_detail": "1,200+ samples, Claude + Flux + Midjourney AIGC pipeline",
-      "award_7_title": "Global AI Algorithm Elite",
-      "award_7_level": "Third Prize (National Final)",
-      "award_7_detail": "Warehouse drone: 95% recognition accuracy, 3-min shelf traversal",
-      "award_8_title": "National Math Modeling (Jiangsu)",
-      "award_8_level": "Second Prize",
-      "award_8_detail": "Real estate cost prediction: Random Forest outperformed CNN-LSTM",
-      "award_9_title": "Electronic Design (TI Cup)",
-      "award_9_level": "Second Prize",
-      "award_9_detail": "Self-aiming system: adaptive PID + Kalman filter on MSPM0G3507",
-      "award_10_title": "Translation Competition",
-      "award_10_level": "Grand Prize (National Final)",
-      "award_10_detail": "Non-English major, highest national honor in bilingual translation",
-      "credentials_label": "/ Credentials",
-      "cred_1": "Columbia University — Numerical Models (Grade A)",
-      "cred_2": "Huawei HCIA-Datacom Network Engineer",
-      "cred_3": "HarmonyOS Advanced Developer",
-      "cred_4": "Utility Patent — Cable Distribution Equipment",
-      "cred_5": "3 Software Copyrights (Power Opt, OD Classify, Graph Solver)",
+      "award_2_level": "První cena",
+      "award_2_detail": "Top 1 % v provincijním algoritmickém programování",
+      "award_3_title": "TAM-SEM Nízká výška ekonomiky",
+      "award_3_level": "První cena (provincijní)",
+      "award_3_detail": "2 609 respondentů, objeven 'paradox rizika' (beta=0,262, p<0,001)",
+      "award_4_title": "APMCM Matematické modelování",
+      "award_4_level": "První cena",
+      "award_4_detail": "Predikce trhu s domácími mazlíčky: LASSO R-kvadrát=0,9850, predikce trhu 52 miliard USD",
+      "award_5_title": "Shuwei Cup Matematické modelování",
+      "award_5_level": "První cena + Velká inovace",
+      "award_5_detail": "Spolupyrolýza biomasy: nalezeno optimální poměry 28,44 % pomocí LightGBM + PSO",
+      "award_6_title": "Soutěž v brandové strategii",
+      "award_6_level": "Druhá cena (celostátní)",
+      "award_6_detail": "Více než 1 200 vzorků, pipeline AIGC Claude + Flux + Midjourney",
+      "award_7_title": "Globální elitní algoritmy AI",
+      "award_7_level": "Třetí cena (celostátní finále)",
+      "award_7_detail": "Skladový dron: přesnost rozpoznání 95 %, průchod regálem za 3 minuty",
+      "award_8_title": "Celostátní matematické modelování (Jiangsu)",
+      "award_8_level": "Druhá cena",
+      "award_8_detail": "Predikce nákladů na nemovitosti: Random Forest překonal CNN-LSTM",
+      "award_9_title": "Elektronický design (TI Cup)",
+      "award_9_level": "Druhá cena",
+      "award_9_detail": "Systém samostatného míření: adaptivní PID + Kalmanův filtr na MSPM0G3507",
+      "award_10_title": "Překladatelská soutěž",
+      "award_10_level": "Velká cena (celostátní finále)",
+      "award_10_detail": "Neprofesionální anglista, nejvyšší celostátní ocenění v bilingválním překladu",
+      "credentials_label": "/ Osvědčení",
+      "cred_1": "Columbia University — Numerické modely (hodnocení A)",
+      "cred_2": "Huawei HCIA-Datacom síťový inženýr",
+      "cred_3": "Pokročilý vývojář HarmonyOS",
+      "cred_4": "Užitné patenty — Zařízení pro rozvod kabelů",
+      "cred_5": "3 autorská práva k softwaru (Power Opt, OD Classify, Graph Solver)",
       "cred_6": "CET-6: 543 · CET-4: 575",
-      "cred_7": "Macau UST — Innovation & Entrepreneurship",
+      "cred_7": "Macau UST — Inovace a podnikání",
       "cred_8": "Prompt Engineer (Datawhale x iFLYTEK)",
-      "personality_label": "/ Personality",
+      "personality_label": "/ Osobnost",
       "personality_intp_name": "INTP",
-      "personality_intp_subtitle": "The Logician",
-      "personality_intp_desc": "Analytical, systematic, and driven by an insatiable curiosity about how systems really work.",
+      "personality_intp_subtitle": "Logik",
+      "personality_intp_desc": "Analytický, systematický a poháněný neustálou zvědavostí, jak systémy skutečně fungují.",
       "personality_intp_source": "16Personalities",
       "personality_4w5_name": "4w5",
-      "personality_4w5_subtitle": "The Bohemian",
-      "personality_4w5_desc": "Identity-driven depth and authentic self-expression, tempered by intellectual withdrawal.",
+      "personality_4w5_subtitle": "Bohémský typ",
+      "personality_4w5_desc": "Hloubka řízená identitou a autentický projev sebe sama, zmírněná intelektuálním stažením.",
       "personality_4w5_source": "Enneagram",
-      "beliefs_label": "/ Things I believe",
-      "belief_1": "The people who are crazy enough to think they can change the world are the ones who do.",
+      "beliefs_label": "/ Ve co věřím",
+      "belief_1": "Lidé, kteří jsou dost blázni na to, aby si mysleli, že mohou změnit svět, jsou ti, kteří to udělají.",
       "belief_1_credit": "— Steve Jobs",
-      "life_label": "/ Life",
-      "life_music": "Music",
-      "life_philosophy": "Philosophy",
-      "life_games": "Games",
-      "contact_anchor_label": "/ Contact",
-      "contact_headline": "Let's build something"
+      "life_label": "/ Život",
+      "life_music": "Hudba",
+      "life_philosophy": "Filozofie",
+      "life_games": "Hry",
+      "contact_anchor_label": "/ Kontakt",
+      "contact_headline": "Pojďme něco vytvořit"
     },
     "uses": {
-      "label": "/ Uses",
-      "headline": "What I use to build.",
-      "description": "Hardware, software, and AI tools I actually use daily. Dogfooding included.",
-      "section_workstation": "/ Workstation",
-      "section_editors": "/ Editors",
-      "section_terminal": "/ Terminal",
-      "section_ai_toolkit": "/ AI Toolkit",
-      "ai_toolkit_desc": "Tools I actively use — not a marketing list. I switch between them depending on the task.",
+      "label": "/ Použití",
+      "headline": "Co používám k tvorbě.",
+      "description": "Hardware, software a AI nástroje, které skutečně používám denně. Dogfooding included.",
+      "section_workstation": "/ Pracovní stanice",
+      "section_editors": "/ Editory",
+      "section_terminal": "/ Terminál",
+      "section_ai_toolkit": "/ AI nástroje",
+      "ai_toolkit_desc": "Nástroje, které aktivně používám — ne marketingový seznam. Přepínám mezi nimi podle úkolu.",
       "section_dogfooding": "/ Dogfooding"
     },
     "links": {
-      "headline": "Links",
-      "description": "Find me across the internet.",
-      "international": "International",
-      "china": "China Platforms",
-      "wechat_click": "Click to see QR code",
-      "metadata_title": "Links — Tseka Luk",
-      "metadata_desc": "Find me across the internet."
+      "headline": "Odkazy",
+      "description": "Najděte mě na internetu.",
+      "international": "Mezinárodní",
+      "china": "Čínské platformy",
+      "wechat_click": "Klikněte pro zobrazení QR kódu",
+      "metadata_title": "Odkazy — Tseka Luk",
+      "metadata_desc": "Najděte mě na internetu."
     },
     "privacy": {
-      "metadata_title": "Privacy Policy — Tseka Luk",
-      "metadata_desc": "How this site handles your data.",
-      "headline": "Privacy Policy",
-      "last_updated": "Last updated: March 2026",
-      "intro": "This site is a personal portfolio. I respect your privacy and collect as little data as possible.",
-      "analytics_title": "Analytics",
-      "analytics_body": "This site uses Plausible Analytics, a privacy-friendly, cookie-free analytics tool. No personal data is collected. All data is aggregated and anonymous. No data is shared with third parties.",
-      "auth_title": "Authentication",
-      "auth_body": "If you sign in (via GitHub, Google, or Linux DO), I receive your public profile information (name, avatar, email if available). This is used solely to identify you in the Soul chat. I do not sell, share, or use this data for any other purpose. Session data is stored as an encrypted JWT cookie in your browser.",
+      "metadata_title": "Zásady ochrany osobních údajů — Tseka Luk",
+      "metadata_desc": "Jak tento web zpracovává vaše data.",
+      "headline": "Zásady ochrany osobních údajů",
+      "last_updated": "Naposledy aktualizováno: březen 2026",
+      "intro": "Tento web je osobní portfolio. Respektuji vaše soukromí a sbírám co nejméně dat.",
+      "analytics_title": "Analytika",
+      "analytics_body": "Tento web používá Plausible Analytics, nástroj pro analýku šetrný k soukromí bez cookies. Nesbírá se žádná osobní data. Všechna data jsou agregovaná a anonymní. Data se nesdílejí s třetími stranami.",
+      "auth_title": "Autentizace",
+      "auth_body": "Pokud se přihlásíte (přes GitHub, Google nebo Linux DO), obdržím vaše veřejné profilové informace (jméno, avatar, e-mail, pokud je k dispozici). Používají se výhradně k vaší identifikaci v chatu Soul. Tato data neprodávám, nesdíleji ani nepoužívám pro žádný jiný účel. Sessionová data jsou uložena jako šifrovaný JWT cookie ve vašem prohlížeči.",
       "chat_title": "Soul Chat",
-      "chat_body": "Messages you send in the Soul chat are processed by the Anthropic API (Claude) in real time and are not stored on my servers. Conversation history exists only in your browser session.",
+      "chat_body": "Zprávy, které odešlete v chatu Soul, jsou zpracovávány rozhraním Anthropic API (Claude) v reálném čase a nejsou ukládány na mých serverech. Historie konverzace existuje pouze ve vaší relaci prohlížeče.",
       "cookies_title": "Cookies",
-      "cookies_body": "This site uses only essential cookies: a session cookie for authentication and a theme preference cookie. No tracking cookies are used.",
-      "third_party_title": "Third-party Services",
-      "third_party_body": "Plausible Analytics (privacy-friendly, EU-hosted), Anthropic API (chat processing), Vercel (hosting). No advertising or tracking services are used.",
-      "contact_title": "Contact",
-      "contact_body": "For any privacy-related questions, reach me at"
+      "cookies_body": "Tento web používá pouze nezbytné cookies: session cookie pro autentizaci a cookie pro preferenci motivu. Nepoužívají se žádné sledovací cookies.",
+      "third_party_title": "Služby třetích stran",
+      "third_party_body": "Plausible Analytics (šetrné k soukromí, hostované v EU), Anthropic API (zpracování chatu), Vercel (hosting). Nepoužívají se žádné reklamní ani sledovací služby.",
+      "contact_title": "Kontakt",
+      "contact_body": "Pro jakékoli dotazy týkající se soukromí mě kontaktujte na"
     },
     "guestbook": {
-      "label": "/ Guestbook",
-      "metadata_title": "Guestbook — Tseka Luk",
-      "metadata_desc": "Leave a message. Say hello.",
-      "headline": "Guestbook",
-      "description": "Leave a message, say hello, or share what you're building.",
-      "sign_in_prompt": "Sign in to leave a message.",
-      "placeholder": "Say something nice...",
-      "submit": "Post",
-      "empty": "No messages yet. Be the first!"
+      "label": "/ Hosté",
+      "metadata_title": "Hosté — Tseka Luk",
+      "metadata_desc": "Zanechte zprávu. Pozdravte.",
+      "headline": "Hosté",
+      "description": "Napište zprávu, pozdravte se nebo sdílejte, na čem pracujete.",
+      "sign_in_prompt": "Přihlaste se pro odeslání zprávy.",
+      "placeholder": "Napište něco hezkého...",
+      "submit": "Odeslat",
+      "empty": "Zatim žádné zprávy. Buďte první!"
     }
   },
   "projects": {
     "any2md": {
-      "tagline": "Where other converters lose 40% of context, this one keeps 93%",
-      "description": "Most converters silently drop formulas, tables, and cross-references. any2md uses a dual-engine—PyMuPDF for text + Qwen-VL for vision—then DeepSeek LLM reconstructs context via layered prompt + few-shot + CoT. Processes 68 pages/min with 85% table structuring and 90% LaTeX formula preservation. Imported 20,000+ pages into a team knowledge base in one week, cutting manual cleanup by 70%."
+      "tagline": "Kde jiné konvertory ztratí 40 % kontextu, tenhle zachová 93 %",
+      "description": "Většina konvertorů tichou cestou zahazuje vzorce, tabulky a křížové odkazy. any2md používá duální engine — PyMuPDF pro text + Qwen-VL pro vizuální analýzu — a následně DeepSeek LLM rekonstruuje kontext prostřednictvím vrstveného promptu + few-shot + CoT. Zpracuje 68 stran/min s 85 % strukturací tabulek a 90 % zachováním LaTeXových vzorců. Do týmové znalostní báze bylo během jednoho týdne importováno 20 000+ stran, což snížilo manuální úklid o 70 %."
     },
     "low-altitude-economy": {
-      "tagline": "Discovered a paradox: risk perception actually increases adoption",
-      "description": "Everyone assumed perceived risk would deter UAM adoption. Our TAM–SEM model on 2,609 respondents (93.1% recovery rate, KMO=0.951) proved the opposite: risk positively drives willingness to adopt (β=0.262, p<0.001). We also mined 1,695 Bilibili comments with SnowNLP to map public sentiment. The “risk paradox” finding challenged a decade of technology adoption literature. Provincial First Prize."
+      "tagline": "Objevili jsme paradox: vnímání rizika skutečně zvyšuje adopci",
+      "description": "Všichni předpokládali, že vnímané riziko odradí od adopce UAM. Náš model TAM–SEM na 2 609 respondentech (93,1 % míra návratnosti, KMO=0,951) prokázal opak: riziko pozitivně ovlivňuje ochotu přijmout technologii (β=0,262, p<0,001). Také jsme analyzovali 1 695 komentářů z Bilibili pomocí SnowNLP pro mapování veřejného sentimentu. Zjištění „paradoxu rizika“ vyvrátilo desetiletou literaturu o adopci technologií. Provincijní první cena."
     },
     "nebutra-sailor": {
-      "tagline": "One monorepo, 4 production apps, 12,000+ lines of shared code",
-      "description": "Enterprise-grade monorepo powering 4 apps (marketing, dashboard, docs, studio) from 6 shared packages. Next.js 16 + React 19 + Tailwind v4, with a custom design token pipeline, 541 tree-shakable icons, and multi-theme engine supporting 6 oklch color schemes. Ships features 3x faster than separate repos."
+      "tagline": "Jeden monorepo, 4 produkční aplikace, 12 000+ řádků sdíleného kódu",
+      "description": "Monorepo podnikové úrovně pohánějící 4 aplikace (marketing, dashboard, dokumentace, studio) ze 6 sdílených balíčků. Next.js 16 + React 19 + Tailwind v4 s vlastním pipeline design tokenů, 541 tree-shakable ikonami a multi-theme enginem podporujícím 6 oklch barevných schémat. Nasazuje funkce 3× rychleji než samostatné repozitáře."
     },
     "mcm-icm": {
-      "tagline": "Optimizing tourism vs. environment with 8.3% prediction error",
-      "description": "MCM/ICM 2025 (Problem B): built a system dynamics + NSGA-III multi-objective optimizer balancing tourist flow, environmental quality, and social satisfaction. Achieved 8.3% tourist prediction error with R²>0.5 on a three-dimensional coupled model. Competed against 28,000+ teams globally. Honorable Mention."
+      "tagline": "Optimalizace turistiky vs. životního prostředí s chybou predikce 8,3 %",
+      "description": "MCM/ICM 2025 (Problém B): vytvořili jsme systém dynamiky + multiobjektivní optimalizátor NSGA-III vyvažující tok turistů, kvalitu životního prostředí a sociální spokojenost. Dosáhli jsme chyby predikce turistů 8,3 % s R²>0,5 na třídílném spjatém modelu. Soutěžili jsme proti 28 000+ týmům po celém světě. Čestné uznání."
     },
     "biomass-modeling": {
-      "tagline": "Found the exact 28.44% ratio—won Grand Innovation Award for it",
-      "description": "Three-model ensemble (LightGBM + Gaussian Process Regression + PSO) tested across 500+ pyrolysis data points to discover that 28.44% biomass-to-coal ratio maximizes clean energy output with R²>0.95 prediction accuracy. The entropy-weighted fuzzy evaluation framework quantified non-linear interactions between 3 yield types (gas, char, liquid). Judges praised the methodology as transferable across energy domains. First Prize + Grand Innovation Award at Shuwei Cup."
+      "tagline": "Našli jsme přesný poměr 28,44 % — za to jsme získali Grand Innovation Award",
+      "description": "Ensemble tří modelů (LightGBM + Gaussian Process Regression + PSO) testovaný na 500+ datech pyrolyzy odhalil, že poměr biomasy k uhli 28,44 % maximalizuje výstup čisté energie s přesností predikce R²>0,95. Entropicky vážený fuzzy evaluační rámec kvantifikoval nelineární interakce mezi 3 typy výnosů (plyn, char, kapalina). Porota ocenila metodologii jako přenositelnou napříč energetickými doménami. První cena + Grand Innovation Award na soutěži Shuwei Cup."
     },
     "pet-industry": {
-      "tagline": "LASSO R²=0.9850 predicted a $52B market by 2026",
-      "description": "Built an integrated forecasting framework (ARIMAX-GARCH + VAR + LASSO + Prophet) spanning market size, pet population, and food manufacturing. LASSO regression identified key drivers with R²=0.9850. Cross-compared US/EU markets using HHI concentration index. Predicted 144.68M pets and 82.8% capacity utilization by 2026."
+      "tagline": "LASSO R²=0,9850 predikoval trh v hodnote 52 miliard dolarů do roku 2026",
+      "description": "Vytvořili jsme integrovaný predikční rámec (ARIMAX-GARCH + VAR + LASSO + Prophet) pokrývající velikost trhu, populaci mazlíčků a výrobu krmiv. LASSO regrese identifikovala klíčové faktory s R²=0,9850. Porovnali jsme trhy USA/EU pomocí indexu koncentrace HHI. Predikovali jsme 144,68 milionu mazlíčků a 82,8 % využití kapacity do roku 2026."
     },
     "cursor-export": {
-      "tagline": "86% less time on knowledge management—one-click conversation export",
-      "description": "Cursor IDE extension (7 GitHub stars) that exports AI conversations to structured Markdown. Tested on 214 conversations (1,980 messages): processing time dropped from 5.8 min to 0.8 min per conversation, code snippet loss rate under 0.5%, throughput 12.5 conversations/min. Cross-platform VSIX with >98% install success rate across Windows/macOS/Linux."
+      "tagline": "O 86 % méně času na knowledge management — export konverzací jedním kliknutím",
+      "description": "Rozšíření pro Cursor IDE (7 hvězd na GitHubu), které exportuje AI konverzace do strukturovaného Markdownu. Testováno na 214 konverzacích (1 980 zpráv): doba zpracování klesla z 5,8 min na 0,8 min na konverzaci, míra ztráty kódových úryvků pod 0,5 %, throughput 12,5 konverzace/min. Cross-platform VSIX s úspěšností instalace >98 % napříč Windows/macOS/Linux."
     },
     "brand-strategy": {
-      "tagline": "1,200+ consumer samples × AIGC pipeline = 40% engagement lift",
-      "description": "Led a PEST-SWOT driven brand overhaul for Suzhou’s “林莓莓” agricultural product. Surveyed 1,200+ consumers to map purchase drivers and price sensitivity. Deployed Claude + Flux + Midjourney AIGC toolchain for brand stories and mascot concepts, cutting creative iteration from weeks to days. Projected 40%+ user engagement increase. National Second Prize."
+      "tagline": "1 200+ vzorků spotřebitelů × AIGC pipeline = nárůst engagementu o 40 %",
+      "description": "Vedli jsme kompletní přestavbu značky pro sučouský zemědělský produkt „林莓莓“ řízenou analýzou PEST-SWOT. Průzkumem 1 200+ spotřebitelů jsme mapovali faktory nákupu a cenovou citlivost. Nasadili jsme AIGC nástrojovou řetězec Claude + Flux + Midjourney pro příběh značky a koncepty maskotů, čímž jsme zkrátili kreativní iterace z týdnů na dny. Predikovaný nárůst engagementu uživatelů o 40 %+. Národní druhá cena."
     },
     "mineru-skill": {
-      "tagline": "Zero-config Claude Code skill—PDF to Markdown in one command",
-      "description": "Open-source Claude Code skill that wraps MinerU for layout-aware PDF/document conversion. One-command install, no API keys, 3 supported formats (PDF, DOCX, PPTX). Handles 100+ page documents with table and formula preservation. Published on Smithery marketplace, 5+ community installs in first week. Built for the Claude Code ecosystem with auto-detection of document type and intelligent chunking."
+      "tagline": "Skill pro Claude Code bez konfigurace — PDF na Markdown jedním příkazem",
+      "description": "Open-source skill pro Claude Code, který obaluje MinerU pro převod PDF/dokumentů s ohledem na rozložení. Instalace jedním příkazem, žádné API klíče, 3 podporované formáty (PDF, DOCX, PPTX). Zvládá dokumenty s 100+ stranami s zachováním tabulek a vzorců. Publikováno na tržišti Smithery, 5+ komunitních instalací v prvním týdnu. Vytvořeno pro ekosystém Claude Code s automatickým detekováním typu dokumentu a inteligentním chunkováním."
     },
     "warehouse-drone": {
-      "tagline": "95% recognition accuracy, full shelf scan in under 3 minutes",
-      "description": "Multi-rotor drone system for automated warehouse stocktaking. Integrated STM32 flight controller + OpenMV vision + BLE communication for autonomous waypoint navigation and QR code scanning across 3D shelf structures. 95% barcode recognition accuracy with laser calibration, completing full inventory traversal in under 3 minutes."
+      "tagline": "95 % přesnost rozpoznání, kompletní sken police za méně než 3 minuty",
+      "description": "Systém vícevrtulového dronu pro automatizované skladové inventury. Integrovaný řídicí systém STM32 + OpenMV vision + BLE komunikace pro autonomní navigaci po waypointech a skenování QR kódů napříč 3D police. 95 % přesnost rozpoznání čárových kódů s laserovou kalibrací, kompletní průchod inventurou za méně než 3 minuty."
     },
     "cdtmp": {
-      "tagline": "Task success rate +18pp by turning prompt tricks into reusable protocol",
-      "description": "Turned ad-hoc prompt engineering into a structured agent protocol: task decomposition, state machines, retry strategies, and auditable intermediate states. Tested on 120 cross-domain tasks: success rate jumped from 63% to 81%, JSON compliance from 72% to 94%, rework rounds dropped 29%. Framework-agnostic—plugs into LangGraph, Semantic Kernel, or custom executors."
+      "tagline": "Míra úspěšnosti úkolů +18pp díky převodu triků s prompty na opakovaně použitelný protokol",
+      "description": "Přeměnil ad-hoc inženýrství promptů na strukturovaný protokol agenta: dekompozice úkolů, stavové automaty, strategie opakování a auditovatelné mezistavy. Testováno na 120 mezidoménových úkolech: míra úspěšnosti skočila z 63 % na 81 %, soulad s JSON z 72 % na 94 %, kolo přepracování kleslo o 29 %. Nezávislé na frameworku – napojí se na LangGraph, Semantic Kernel nebo vlastní exekutory."
     },
     "next-unicorn": {
-      "tagline": "Your codebase has 47 hand-rolled wheels—this finds them all",
-      "description": "Every codebase accumulates Vibe Coding debt: custom date formatters, DIY loggers, bespoke state machines. Next-Unicorn audits your code via Context7 MCP, identifies reinvented wheels, generates migration plans, and ships delete-code checklists. 176 tests passed with 29 property-based verifications. Published on Smithery + npm, supports 35+ AI agents including Claude Code, Cursor, and OpenCode."
+      "tagline": "Váš kód má 47 ručně vyrobených koleček – tohle je najde všechna",
+      "description": "Každý kódový základ hromadí dluh z Vibe Codingu: vlastní formátovače dat, DIY loggery, šité stavové automaty. Next-Unicorn audituje váš kód přes Context7 MCP, identifikuje znovuobjevená kola, generuje plány migrace a dodává kontrolní seznamy pro smazání kódu. 176 testů prošlo s 29 vlastnostmi založenými na ověřování. Zveřejněno na Smithery + npm, podporuje 35+ AI agentů včetně Claude Code, Cursor a OpenCode."
     },
     "hydrogem-web": {
-      "tagline": "Real-time water quality dashboard with 5-second refresh and alerts",
-      "description": "React + TypeScript monitoring system tracking 12 water quality parameters (pH, turbidity, dissolved oxygen, etc.) with 5-second auto-refresh and configurable alert thresholds. Built with streaming data visualization and historical trend analysis for environmental monitoring."
+      "tagline": "Dashboard kvality vody v reálném čase s obnovou každých 5 sekund a upozorněními",
+      "description": "Monitorovací systém React + TypeScript sledující 12 parametrů kvality vody (pH, zákal, rozpuštěný kyslík atd.) s automatickou obnovou každých 5 sekund a konfigurovatelnými prahy upozornění. Vytvořeno s vizualizací streamovacích dat a analýzou historických trendů pro environmentální monitorování."
     },
     "ocr-auto": {
-      "tagline": "100% bbox accuracy on 50 element types—from 65% to 92% in 10 prompt iterations",
-      "description": "Production-grade automated annotation system for document page elements. Async 4-stage pipeline with Qwen VL models identifies 50 element types (12 code languages, 13 interaction formats, 12 content elements, 13 other tags). Three-layer fault tolerance (Retry + RateLimit + CircuitBreaker), SHA256 content-addressed cache, and real-time SSE monitoring dashboard."
+      "tagline": "100% přesnost bbox na 50 typech prvků – z 65 % na 92 % za 10 iterací promptů",
+      "description": "Produkcni systém automatické anotace pro prvky stránky dokumentu. Asynchronní 4stupňové potrubí s modely Qwen VL identifikuje 50 typů prvků (12 programovacích jazyků, 13 formátů interakce, 12 obsahových prvků, 13 dalších značek). Třívrstvá tolerance chyb (Retry + RateLimit + CircuitBreaker), cache adresovaná obsahem SHA256 a dashboard monitorování SSE v reálném čase."
     },
     "tiktok-pipeline": {
-      "tagline": "8-dimensional annotation across 19 prompt iterations—edge cases included",
-      "description": "Multi-modal visual search relevance labeling pipeline using LLMs. Processes image + text signals across 8 annotation dimensions (visual relevance, content relevance, query/doc drop, functional parity, category granularity, visual similarity, modal corroboration). 19 prompt versions with automated comparison and reflection analysis tools."
+      "tagline": "8rozměrná anotace přes 19 iterací promptů – včetně okrajových případů",
+      "description": "Multimodální potrubí pro označování relevance vizuálního vyhledávání pomocí LLM. Zpracovává signály obrázků + textu přes 8 rozměrů anotace (vizuální relevance, obsahová relevance, pád dotazu/dokumentu, funkční ekvivalence, granularita kategorie, vizuální podobnost, modální potvrzení). 19 verzí promptů s automatizovanými nástroji pro srovnání a analýzu reflexe."
     },
     "mlbb-analysis": {
-      "tagline": "5 platforms, 6 batch processors, 90%+ accuracy—from manual review to automated pipeline",
-      "description": "Multi-platform video content analysis system covering YouTube, Instagram, TikTok, VK, and Facebook. Refactored from legacy monolith to modular architecture: 5 platform fetchers, 6 batch processors, 5 video analyzers. Fast text analysis achieves 90%+ accuracy with 460x acceleration over manual review, processing 1,207+ videos across batch runs."
+      "tagline": "5 platforem, 6 dávkových procesorů, přesnost 90 %+ – od manuální revize k automatizovanému potrubí",
+      "description": "Systém analýzy video obsahu napříč platformami pokrývající YouTube, Instagram, TikTok, VK a Facebook. Refaktorováno z legacy monolitu na modulární architekturu: 5 fetcherů platforem, 6 dávkových procesorů, 5 analyzátorů videa. Rychlá textová analýza dosahuje přesnosti 90 %+ s 460násobným zrychlením oproti manuální revizi, zpracovává 1 207+ videí napříč dávkovými běhy."
     },
     "synapse-quant": {
-      "tagline": "8 microservices, real-time GraphQL, TUI cockpit—from raw data to trade thesis",
-      "description": "Open-source quantitative trading copilot for crypto markets. 8 microservices + 9 infrastructure services (17 containers total) with unified TUI cockpit, 41 technical indicators, real-time market data streaming, and in-context AI copilot. TypeScript 5.7 + Python 3.11+, CI/CD with GitHub Actions."
+      "tagline": "8 mikroservisů, GraphQL v reálném čase, TUI kokpit – od surových dat k obchodní tezi",
+      "description": "Open-source kvantitativní obchodní copilot pro kryptoměnové trhy. 8 mikroservisů + 9 infrastrukturálních servisů (celkem 17 kontejnerů) s unifikovaným TUI kokpitom, 41 technickými indikátory, streamováním tržních dat v reálném čase a AI copilotem v kontextu. TypeScript 5.7 + Python 3.11+, CI/CD s GitHub Actions."
     },
     "hm3d-eval": {
-      "tagline": "4.62/5 evaluation score across 1,000 real 3D scenes—8/8 acceptance criteria passed",
-      "description": "Comprehensive quality evaluation framework for the Habitat-Matterport 3D Research Dataset (1,000 real 3D scenes). Assessed 15+ dimensions including mesh quality, texture integrity, semantic annotation accuracy, and metadata completeness. Achieved 4.62/5 overall score with 100% acceptance pass rate (8/8 criteria). 95% requirement compliance."
+      "tagline": "Skóre hodnocení 4,62/5 napříč 1 000 skutečných 3D scén – splněno 8/8 kritérií přijetí",
+      "description": "Komplexní rámec hodnocení kvality pro výzkumnou sadu Habitat-Matterport 3D (1 000 skutečných 3D scén). Hodnoceno 15+ rozměrů včetně kvality mesh, integrity textur, přesnosti sémantické anotace a úplnosti metadat. Dosáhlo celkového skóre 4,62/5 s 100% mírou úspěšnosti přijetí (8/8 kritérií). 95% soulad s požadavky."
     },
     "appen-dashboard": {
-      "tagline": "Enterprise SaaS for a NASDAQ data company: the B2B demo mode playbook in production",
-      "description": "Built multi-tenant reporting infrastructure for Appen (NASDAQ: APT). Next.js 16 monorepo (5 apps + 10 packages) serves TCS, ByteWorks, and DataPower dashboards with Upstash QStash async job queues and Pusher real-time. The breakthrough: a production-grade demo mode with MSW + tRPC mock interception, privacy redaction pipeline (schema validate → redact → normalize → value protocol), and 4 behavioral strategies—solving the #1 enterprise SaaS sales problem."
+      "tagline": "Enterprise SaaS pro datovou společnost NASDAQ: příručka režimu B2B demo v produkci",
+      "description": "Vytvořena vícepronajímací reportovací infrastruktura pro Appen (NASDAQ: APT). Next.js 16 monorepo (5 aplikací + 10 balíčků) slouží dashboardům TCS, ByteWorks a DataPower s asynchronními frontami úkolů Upstash QStash a Pusher v reálném čase. Průlom: produkční režim demo s MSW + tRPC mock interceptem, pipeline redakce soukromí (validace schématu → redakce → normalizace → protokol hodnot) a 4 chováním strategiemi – řešení #1 problému enterprise SaaS prodeje."
     },
     "t2v-relabeling": {
-      "tagline": "Using better AI to fix worse AI's labeling mistakes—at the cost human reviewers can't match",
-      "description": "Meta-labeling pipeline that audits and corrects mislabeled AI-generated video training data using Gemini 2.5 Flash. Classifies 6 attributes (quality, gender, age, race, scene, season) per video with EWMA-adaptive rate limiting and HTTP/2 concurrency. Processes 60MB+ videos via Gemini Files API without local download. 3 iterative rounds with incremental merge. Human labeling: ~$1/video. This pipeline: ~$0.01/video at scale."
+      "tagline": "Použití lepší AI k opravě chyb v označování horší AI – za cenu, kterou lidské recenzenti nemohou konkurovat",
+      "description": "Meta-označovací potrubí, které audituje a opravuje špatně označená tréninková video data generovaná AI pomocí Gemini 2.5 Flash. Klasifikuje 6 atributů (kvalita, pohlaví, věk, rasa, scéna, sezóna) na video s EWMA-adaptivním omezováním rychlosti a konkurencí HTTP/2. Zpracovává videa 60 MB+ přes Gemini Files API bez místního stažení. 3 iterativní kola s inkrementálním sloučením. Lidské označování: ~1 USD/video. Toto potrubí: ~0,01 USD/video ve velkém měřítku."
     },
     "url-annotation": {
-      "tagline": "The TLS fingerprint arms race: when IP blocking fails, impersonate Chrome at the handshake",
-      "description": "Production URL consistency pipeline that defeats TLS-fingerprint bot detection at zero marginal LLM cost. curl_cffi spoofs Chrome 124's full ClientHello (cipher suites, extensions, ordering)—not just User-Agent. Playwright renders JS-heavy SPAs. Local Qwen3:1.7b via Ollama compares semantics without API fees or GDPR exposure. Rotating-ad detection re-fetches 3× to flag domain changes. 30 HTTP + 5 Playwright + 5 LLM concurrent."
+      "tagline": "Závod ve zbrojení TLS otisků: když selže blokování IP, vydávejte se za Chrome při handshake",
+      "description": "Produkční pipeline konzistence URL, která poráží detekci botů založenou na TLS otiscích bez dodatečných nákladů na LLM. curl_cffi napodobuje kompletní ClientHello Chrome 124 (sady šifrování, rozšíření, pořadí) – nejen User-Agent. Playwright renderuje JS-náročné SPA. Lokální Qwen3:1.7b přes Ollama porovnává sémantiku bez poplatků za API ani rizika GDPR. Detekce rotujících reklam znovu načítá 3× pro označení změn domény. 30 HTTP + 5 Playwright + 5 LLM současně."
     },
     "3dgs-eval": {
-      "tagline": "3DGS had 2,000+ citations in 6 months but zero enterprise quality standards—we wrote the spec",
-      "description": "First systematic vendor evaluation framework for 3D Gaussian Splatting content production. Multi-round scored assessment across 6 dimensions: HP/LP geometry (pivot + retopology), PBR texture completeness (BaseColor/Normal/Metallic/AO), file naming conventions, semantic annotation, preview standards (8+ renders), and communication SLA. The revelation: vendors weren't technically incapable—they were operationally immature. Multi-round CSV tracker makes every revision cycle auditable."
+      "tagline": "3DGS mělo za 6 měsíců 2 000+ citací, ale žádné podnikové standardy kvality – my jsme napsali specifikaci",
+      "description": "První systematický rámec hodnocení dodavatelů pro produkci obsahu 3D Gaussian Splatting. Hodnocení v několika kolech přes 6 dimenzí: geometrie HP/LP (pivot + retopologie), kompletnost PBR textur (BaseColor/Normal/Metallic/AO), konvence pojmenování souborů, sémantická anotace, standardy náhledů (8+ renderů) a komunikační SLA. Zjevení: dodavatelé nebyli technicky neschopní – byli provozně nezralí. Vícekolový CSV tracker činí každý cyklus revize auditovatelným."
     }
   },
   "thinking": {
-    "latest_label": "Latest Thinking",
-    "latest_headline": "Recent Writings",
-    "view_all": "View All Writings"
+    "latest_label": "Nejnovější myšlenky",
+    "latest_headline": "Nedávné zápisky",
+    "view_all": "Zobrazit všechny zápisky"
   }
 }

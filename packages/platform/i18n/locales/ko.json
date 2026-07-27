@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "언어",
     "ariaLabel": "언어 변경",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "언어 검색…",
+    "noResults": "일치하는 언어가 없습니다",
+    "menuAria": "언어 선택"
   },
   "compliance": {
     "icp": {

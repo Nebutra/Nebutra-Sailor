@@ -156,7 +156,7 @@
       "refund": "Повернення коштів",
       "licensing": "Ліцензування",
       "contact": "Зв'язатися",
-      "faq": "FAQ",
+      "faq": "ЧаПи",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
@@ -1468,7 +1468,7 @@
     "flowTokensDesc": "CSS-змінні, 12-ступеневі шкали, темний режим",
     "flowTheme": "Тема",
     "flowThemeDesc": "oklch багатотемність, 6 пресетів, color-mix()",
-    "flowUI": "UI",
+    "flowUI": "Інтерфейс",
     "flowUIDesc": "Компоненти, Storybook, Chromatic",
     "card1Title": "12-ступеневі кольорові шкали",
     "card1Desc": "Семантична шкала, узгоджена з Geist: фони (1-2), стани (3-5), межі (6-8), заповнення (9-10), текст (11-12).",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Безкоштовно <hl>будувати на</hl>",
+      "description": "{brandName}-Sailor не коштує нічого для комерційного використання — MIT на npm, FSL-1.1-ALv2 у репозиторії, перехід на Apache-2.0 після двох років. Платні тарифи продають підтримку та договірні зобов’язання, ніколи не дозволення."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
+        "badge": "Завжди безкоштовно",
         "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "subtitle": "Для всіх",
+        "description": "Будь-який розмір команди, будь-який дохід. Включно з закритими комерційними продуктами.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Повний вихідний код, усі пакети",
+          "closedSourceOk": "Закрите комерційне використання — без copyleft",
+          "noAttribution": "Без реєстрації, без вимоги вказувати авторство",
+          "communitySupport": "Спільнотна підтримка — наскільки можливо"
         },
-        "cta": "View on GitHub"
+        "cta": "Переглянути на GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
+        "badge": "Від {price}/рік",
         "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "subtitle": "Підписка на підтримку",
+        "description": "Для команд, яким потрібне зобов’язання, а не надія. Код уже безкоштовний.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Приватний канал підтримки",
+          "firstResponse": "Гарантована перша відповідь протягом двох робочих днів",
+          "priorityTriage": "Пріоритетна класифікація багів",
+          "upgradeHelp": "Допомога з оновленням та повідомлення про критичні зміни"
         },
-        "cta": "Get support"
+        "cta": "Отримати підтримку"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Від $30 000/рік",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Готовий до закупівель",
+        "description": "Для організацій, яким у процесі юридичного, безпекового чи закупівельного огляду потрібен контрагент, що підписує документи.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA реакції — 4 робочі години, 1 година при збої в продакшені",
+          "indemnity": "Відшкодування та зобов’язання щодо патчів безпеки",
+          "compliance": "Підписаний DPA, пакет комплаєнсу, зобов’язання щодо безперебійності",
+          "trademark": "Права на торговельну марку та white-label"
         },
-        "cta": "Contact sales"
+        "cta": "Зв’язатися з відділом продажів"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Часті запитання",
+      "description": "Коротко: користуватися безкоштовно. Платити треба, коли вам потрібно, щоб ми були юридично відповідальними.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Чому FSL, а не MIT чи AGPL?",
+          "a": "FSL дозволяє будь-яке використання, крім продажу заміни самого Sailor, і кожна версія стає Apache-2.0 через два роки після випуску — це незворотна заздалегідь надана ліцензія. AGPL блокувала впровадження на рівні корпоративного юридичного огляду, не захищаючи нічого, що нам дійсно потрібно було захищати."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Чи дійсно комерційне використання безкоштовне?",
+          "a": "Так. Безкоштовно, без ліцензійного ключа, без реєстрації, без порогів доходу чи кількості співробітників, без вказівки авторства. Створюйте закритий продукт і продавайте його."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Що вважається конкуруючим використанням?",
+          "a": "Пропозиція самого Sailor — хостована послуга Sailor або перепакована конкуруюча базова платформа. Побудова вертикального SaaS, внутрішнього інструменту чи клієнтських проєктів на Sailor не є конкуруючим використанням. Якщо вашій моделі це потрібно, угода Enterprise може включати письмовий відмовник."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Що саме дають платні тарифи?",
+          "a": "Зобов’язання щодо підтримки, SLA реакції, відшкодування, комплаєнс-документацію та права на торговельну марку. Ніколи — дозвіл на використання програмного забезпечення: він уже у вас є."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "А як щодо внесків у відкритий код?",
+          "a": "Усі внески потребують підписання CLA. Див. CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Ліцензування — {brandName}",
+      "description": "Безкоштовно для комерційного використання. MIT на npm, FSL-1.1-ALv2 у репозиторії, з переходом на Apache-2.0."
     }
   },
   "licenseWizard": {

@@ -10,7 +10,7 @@
     "tools": "Herramientas",
     "wallet": "Billetera",
     "api": "API",
-    "routerAria": "{brandName} Router",
+    "routerAria": "Router de {brandName}",
     "categoriesAria": "Categorías de herramientas",
     "languageAria": "Cambiar idioma"
   },

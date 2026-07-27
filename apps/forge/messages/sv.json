@@ -53,7 +53,7 @@
   },
   "categories": {
     "codec": {
-      "label": "Codecs",
+      "label": "Kodningar",
       "hint": "Base64 · URL · JWT · Unicode"
     },
     "cn": {

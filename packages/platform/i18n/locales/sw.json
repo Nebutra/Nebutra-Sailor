@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Lugha",
     "ariaLabel": "Badilisha lugha",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Tafuta lugha…",
+    "noResults": "Hakuna lugha zinazolingana",
+    "menuAria": "Chagua lugha"
   },
   "compliance": {
     "icp": {
@@ -613,9 +613,9 @@
       },
       "columns": {
         "name": "Jina",
-        "prefix": "Prefix",
+        "prefix": "Kiambishi",
         "lastUsed": "Iliitumika Mwisho",
-        "scopes": "Scopes",
+        "scopes": "Masafa",
         "created": "Imetengenezwa",
         "actions": "Vitendo",
         "never": "Hakuna"
@@ -833,8 +833,8 @@
           "blue": "Bluu",
           "cyan": "Saiyani",
           "violet": "Violeti",
-          "pink": "Pink",
-          "amber": "Amber",
+          "pink": "Uwekundu",
+          "amber": "Kijani-kahubwa",
           "green": "Kijani",
           "red": "Nyekundu"
         }
@@ -990,270 +990,270 @@
         "description": "Zinazohitajika ili tovuti ifanye kazi. Haziwezi kuzimwa."
       },
       "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
+        "label": "Fanksheni",
+        "description": "Kumbuka mapendeleo yako (lugha, mandhari, mpangilio)."
       },
       "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
+        "label": "Uchambuzi",
+        "description": "Data ya matumizi isiyo na jina ili tuweze kuboresha bidhaa."
       },
       "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
+        "label": "Masoko",
+        "description": "Uangazaji wa kibinafsi na kurudisha lengo kwenye majukwaa ya wengine."
       }
     }
   },
   "notifications": {
     "page": {
-      "title": "Notifications",
-      "description": "All your notifications in one place.",
+      "title": "Arifa",
+      "description": "Arifa zako zote katika mahali pamoja.",
       "filter": {
-        "all": "All",
-        "unread": "Unread"
+        "all": "Zote",
+        "unread": "Zisizosomwa"
       },
       "actions": {
-        "markAllRead": "Mark all as read",
-        "markRead": "Mark as read",
-        "archive": "Archive",
-        "loadMore": "Load more",
-        "loading": "Loading...",
-        "selected": "{count} selected"
+        "markAllRead": "Alama zote kama zimesomwa",
+        "markRead": "Alama kama imesomwa",
+        "archive": "Hifadhi",
+        "loadMore": "Pakia zaidi",
+        "loading": "Inapakia...",
+        "selected": "{count} zimechaguliwa"
       },
       "empty": {
-        "all": "You're all caught up.",
-        "unread": "No unread notifications."
+        "all": "Uko sawa kabisa.",
+        "unread": "Hakuna arifa zisizosomwa."
       },
       "errors": {
-        "load": "Failed to load notifications.",
-        "network": "Network error. Please try again.",
-        "markRead": "Failed to mark notification as read.",
-        "archive": "Failed to archive notification.",
-        "bulkMarkRead": "Some notifications could not be marked as read."
+        "load": "Imeshindwa kupakia arifa.",
+        "network": "Hitilafu ya mtandao. Tafadhali jaribu tena.",
+        "markRead": "Imeshindwa kuweka arifa kama imesomwa.",
+        "archive": "Imeshindwa kuhifadhi arifa.",
+        "bulkMarkRead": "Baadhi ya arifa hazikuweza kuwekwa kama zimesomwa."
       },
       "inbox": {
-        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
-        "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "Changelog updates will show up here."
+        "noBackend": "Sanduku la barua linahitaji mfumo wa kudumu wa arifa. Angalia usanidi wa mtoa huduma yako.",
+        "emptyCaughtUp": "Sanduku la barua ni safi.",
+        "emptyChangelog": "Masasisho ya ripoti ya mabadiliko yataonyesha hapa."
       }
     }
   },
   "dashboard": {
     "greeting": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "evening": "Good evening"
+      "morning": "Habari za asubuhi",
+      "afternoon": "Habari za mchana",
+      "evening": "Habari za jioni"
     },
     "home": {
-      "connectorsPill": "Power your app with connectors",
-      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
-      "promptPlaceholder": "What's on your mind?",
+      "connectorsPill": "Nunua programu yako kwa viunganishi",
+      "subtitle": "Poa prompt, bonyeza ⌘K kutoka popote, au ingia moja kwa moja kwenye uso wa eneo la kazi.",
+      "promptPlaceholder": "Unafikiri nini?",
       "actions": {
-        "connect": "Connect an integration",
-        "theme": "Theme Playground",
-        "audit": "Audit log",
-        "billing": "Billing"
+        "connect": "Unganisha muunganisho",
+        "theme": "Uwanja wa Mandhari",
+        "audit": "Logi ya ukaguzi",
+        "billing": "Malipo"
       }
     },
     "commandSurface": {
-      "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
+      "noAuth": "Uthibitishaji haujasanifiwa kwa mtumaji uliochaguliwa. Weka siri za mtumaji ili kuwezesha misaada ya mtumiaji."
     },
     "commandCenter": {
-      "description": "Start with one action: ask Sailor, inspect workspace signals, or route work into an automation surface.",
-      "openSailor": "Open Sailor AI",
-      "viewAnalytics": "View Analytics"
+      "description": "Anza kwa hatua moja: uliza Sailor, angalia ishara za eneo la kazi, au uepusha kazi kwenye uso wa utendaji wa kiotomatiki.",
+      "openSailor": "Fungua Sailor AI",
+      "viewAnalytics": "Angalia Uchambuzi"
     },
     "workspaceSnapshot": {
-      "title": "Workspace Snapshot",
-      "description": "Latest warehouse day · {day}",
-      "viewAnalytics": "View analytics →",
+      "title": "Picha ya Eneo la Kazi",
+      "description": "Siku ya hifadhi ya hivi karibuni · {day}",
+      "viewAnalytics": "Angalia uchambuzi →",
       "metrics": {
-        "activeUsers": "Active Users",
-        "totalEvents": "Total Events",
-        "conversions": "Conversions",
-        "revenue": "Revenue"
+        "activeUsers": "Watumiaji Wanaofanya Kazi",
+        "totalEvents": "Matukio Yote",
+        "conversions": "Ubadilishaji",
+        "revenue": "Mapato"
       },
       "details": {
-        "activeUsers": "Signed-in users",
-        "totalEvents": "Captured events",
-        "conversions": "Qualified actions",
-        "revenue": "Recognized revenue"
+        "activeUsers": "Watumiaji wanaosajiliwa",
+        "totalEvents": "Matukio yaliyorekodiwa",
+        "conversions": "Vitendo vya kufaa",
+        "revenue": "Mapato yaliyotambuliwa"
       },
       "meta": {
-        "snapshot": "Snapshot",
-        "cadence": "Cadence",
-        "tenant": "Tenant",
-        "daily": "Daily",
+        "snapshot": "Picha ya hali",
+        "cadence": "Mzunguko",
+        "tenant": "Mkazi",
+        "daily": "Kila siku",
         "latestDay": "{day}",
-        "users": "Tenant users",
-        "events": "Event stream",
+        "users": "Watumiaji wa mkazi",
+        "events": "Mtiririko wa matukio",
         "funnel": "Funnel",
-        "billing": "Billing"
+        "billing": "Malipo"
       }
     },
     "documentPipeline": {
-      "title": "Document pipeline",
-      "description": "Send source files into the origin task queue.",
-      "intakeTitle": "Document intake",
-      "intakeDescription": "PDF, Markdown, text, or Word document",
-      "chooseDocument": "Choose document",
-      "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
-      "taskError": "Task error",
-      "updatedAt": "Updated"
+      "title": "Mfumo wa hati",
+      "description": "Tuma faili za chanzo kwenye foleni ya kazi ya asili.",
+      "intakeTitle": "Uingizaji wa hati",
+      "intakeDescription": "PDF, Markdown, maandishi, au hati ya Word",
+      "chooseDocument": "Chagua hati",
+      "startParseTask": "Anzisha kazi ya kuchanganua",
+      "queued": "Imewekwa kwenye foleni",
+      "fileInputLabel": "Faili la hati",
+      "fallbackError": "Kazi ya hati imekua.",
+      "taskStatus": "Hali ya kazi",
+      "progressLabel": "Maendeleo ya kazi",
+      "refreshStatus": "Sasisha",
+      "cancelTask": "Ghairi",
+      "statusError": "Imeshindwa kusasisha hali ya kazi.",
+      "cancelError": "Imeshindwa kuighairi kazi.",
+      "statusQueued": "Imewekwa kwenye foleni",
+      "statusRunning": "Inaendelea",
+      "statusSucceeded": "Imekamilika",
+      "statusFailed": "Imeshindwa",
+      "statusCancelled": "Imeghairiwa",
+      "resultReady": "Matokeo tayari",
+      "taskError": "Hitilafu ya kazi",
+      "updatedAt": "Imesasishwa"
     },
     "recentSessions": {
-      "title": "Continue where you left off",
-      "subtitle": "{count, plural, =0 {No sessions} =1 {1 recent session} other {# recent sessions}}",
-      "viewAll": "View all →",
-      "newChat": "New chat",
-      "untitled": "Untitled session",
-      "messageCount": "{count, plural, =1 {1 message} other {# messages}}"
+      "title": "Endelea ambapo ulikuwa",
+      "subtitle": "{count, plural, =0 {Hakuna misimamo} =1 {Msimo wa hivi karibuni 1} other {Msimamo wa hivi karibuni #}}",
+      "viewAll": "Angalia yote →",
+      "newChat": "Mazungumzo mpya",
+      "untitled": "Kikao kisichojulikana",
+      "messageCount": "{count, plural, =1 {Ujumbe 1} other {Ujumbe #}}"
     },
     "gettingStarted": {
-      "title": "Getting Started",
-      "description": "{done} of {total} complete · finish setup to unlock the full workspace",
-      "progressLabel": "Setup progress",
+      "title": "Kuanza",
+      "description": "{done} ya {total} imekamilika · maliza usanidi ili ufungue enzi la kazi kamili",
+      "progressLabel": "Maendeleo ya usanidi",
       "tasks": {
         "team": {
-          "label": "Invite a teammate",
-          "description": "Bring at least one collaborator into your workspace."
+          "label": "Pakana mshirika wa timu",
+          "description": "Kulea angalau mshirika mmoja ndani ya enzi lako la kazi."
         },
         "api": {
-          "label": "Generate an API key",
-          "description": "Programmatic access to your workspace endpoints."
+          "label": "Tengeneza ufunguo wa API",
+          "description": "Ufikiaji wa programu kwa pointi zako za enzi la kazi."
         },
         "integration": {
-          "label": "Connect an integration",
-          "description": "Stripe, Slack, webhooks, queues, and more."
+          "label": "Unganisha muunganisho",
+          "description": "Stripe, Slack, webhooks, mistari, na zaidi."
         },
         "ai": {
-          "label": "Open Sailor AI",
-          "description": "Try chat, data, or workflow mode."
+          "label": "Fungua Sailor AI",
+          "description": "Jaribu hali ya mazungumzo, data, au mchakato."
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
-    "sortAlphabetical": "Alphabetical",
-    "sortCreated": "Date created",
-    "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "projects": "Miradi",
+    "noThreads": "Hakuna majaribio",
+    "expandAll": "Panua yote",
+    "collapseAll": "Kunja yote",
+    "sectionMore": "Chaguzi zaidi",
+    "newProject": "Mradi mpya",
+    "restoredGroups": "Vikundi vilivyopanuliwa hapo awali vimerudishwa",
+    "newProjectPlaceholder": "Jina la mradi",
+    "newProjectDefault": "Bila jina",
+    "newProjectSuccess": "Mradi umetengenezwa",
+    "newProjectError": "Haikuweza kutengeneza mradi",
+    "sortBy": "Panga kwa",
+    "sortRecent": "Imeandaliwa hivi karibuni",
+    "sortAlphabetical": "Alfabeti",
+    "sortCreated": "Tarehe iliyoundwa",
+    "archiveAll": "Hifadhi yote",
+    "comingV2": "Inakuja katika v2"
   },
   "startupOs": {
     "milestone": {
-      "firstRoom": "The first room is ready.",
-      "firstFolder": "Many companies begin as a folder.",
-      "firstTable": "The first table has a second seat.",
-      "firstSignal": "The real world has started talking.",
-      "firstShip": "The world sees it for the first time.",
-      "firstBeliever": "From today, you are no longer building only for yourself.",
-      "firstRevenue": "The dream has cash flow now.",
-      "firstReturn": "Returning matters more than visiting.",
-      "firstTeam": "Three people can begin to form a company.",
-      "firstCrowd": "The first table is getting crowded.",
-      "firstReset": "A restart is a more honest beginning.",
-      "firstPublic": "Put a piece of the future in public.",
-      "firstDemo": "This is not a show. It is a test.",
-      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+      "firstRoom": "Chumba cha kwanza kimeandaliwa.",
+      "firstFolder": "Kampuni nyingi huanza kama folda.",
+      "firstTable": "Meza ya kwanza ina kiti cha pili.",
+      "firstSignal": "Ulimwengu halisi umeanza kuzungumza.",
+      "firstShip": "Ulimwengu unaiona kwa mara ya kwanza.",
+      "firstBeliever": "Kutoka leo, sio tena unajenga kwa ajili yako peke yako.",
+      "firstRevenue": "Lala lina mtiririko wa fedha sasa.",
+      "firstReturn": "Kurudi ni muhimu zaidi kuliko kutembelea.",
+      "firstTeam": "Watu watatu wanaweza kuanza kuunda kampuni.",
+      "firstCrowd": "Meza ya kwanza inajaa watu.",
+      "firstReset": "Kuanza upya ni mwanzo wa kweli zaidi.",
+      "firstPublic": "Weka sehemu ya mustakabali hadharani.",
+      "firstDemo": "Hii sionyesho. Ni jaribio.",
+      "graduation": "Umezidi msingi. Njia inayofuata inahitaji zana zenye nguvu zaidi."
     },
     "emptyState": {
-      "default": "Many companies begin as a folder.",
-      "integrations": "No connectors configured.",
-      "creditActivity": "Credit activity will appear after your first request.",
-      "usageData": "Usage data will appear once your organization starts making requests.",
-      "apiKeys": "No keys yet.",
-      "apiKeysCta": "Create your first key",
-      "teamMembers": "One can start. A few can build.",
-      "cofounders": "The first person who believes in you has not appeared yet.",
-      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
-      "cofoundersAction": "Find cofounders",
-      "growthChart": "Trend data will appear once activity begins.",
-      "revenueChart": "Revenue data will appear once transactions begin.",
-      "webhookDeliveries": "Deliveries will appear here after the first event.",
-      "webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "accessInvites": "No invite codes issued."
+      "default": "Kampuni nyingi huanza kama folda.",
+      "integrations": "Hakuna viunganishi vilivyowekwa.",
+      "creditActivity": "Shughuli za kridi zitajionyesha baada ya ombi lako la kwanza.",
+      "usageData": "Data ya matumizi itajionyesha mara tu shirika lako litapochora ombi.",
+      "apiKeys": "Hakuna ufunguo bado.",
+      "apiKeysCta": "Unda ufunguo wako wa kwanza",
+      "teamMembers": "Mtu mmoja anaweza kuanza. Wachezi wachache wanaweza kujenga.",
+      "cofounders": "Mtu wa kwanza anayekiamini bado hajakutokea.",
+      "cofoundersDescription": "Unapopambana na mwenzi wengine wa kuanzisha na kushiriki nia, atajitokeza hapa.",
+      "cofoundersAction": "Pata wanachama wa kuanzisha",
+      "growthChart": "Data ya mtiririko itajitokeza baada ya shughuli kuanza.",
+      "revenueChart": "Data ya mapato itajitokeza baada ya mikamilisho kuanza.",
+      "webhookDeliveries": "Usafirishaji utajitokeza hapa baada ya tukio la kwanza.",
+      "webhookEndpoints": "Ongeza mwisho wa huduma hapo juu ili uanze kupokea matukio.",
+      "accessInvites": "Hakuna nambari za upeke zilizotolewa."
     },
-    "success": "The first room is ready.",
-    "failure": "A restart is a more honest beginning.",
+    "success": "Chumba cha kwanza kimeandaliwa.",
+    "failure": "Kuanzisha tena ni mwanzo wa kweli zaidi.",
     "errors": {
-      "loadMatches": "Matches could not be loaded.",
-      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
-      "loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "replayWebhookDelivery": "Replay did not go through.",
-      "loadWebhookEndpoints": "Endpoints could not be loaded."
+      "loadMatches": "Makutano hayakuweza kupakuliwa.",
+      "loadMatchesDescription": "Hitilafu imetokea upande wetu. Onyesha tena kujaribu tena.",
+      "loadWebhookDeliveries": "Usafirishaji haukuweza kupakuliwa.",
+      "replayWebhookDelivery": "Upigaji tena haukufika.",
+      "loadWebhookEndpoints": "Mwisho wa huduma haukuweza kupakuliwa."
     },
-    "team": "One can start. A few can build.",
-    "revenue": "The dream has cash flow now.",
-    "growth": "The signal is getting stronger.",
+    "team": "Mtu mmoja anaweza kuanza. Wachezi wachache wanaweza kujenga.",
+    "revenue": "Ndoto sasa ina mtiririko wa fedha.",
+    "growth": "Ishara inakuwa imara zaidi.",
     "deployment": {
-      "primary": "The world sees it for the first time.",
-      "echo": "It finally left localhost."
+      "primary": "Ulimwengu unaiona kwa mara ya kwanza.",
+      "echo": "Hatimaye imeondoka localhost."
     },
-    "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "onboarding": "Hauhitaji kuwa tayari. Unahitaji kuanza.",
+    "graduation": "Umezidi msingi. Jaribu {tool} kwa njia inayokuja.",
     "company": {
-      "emptyTitle": "Your first context tower starts here.",
-      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
-      "emptyAction": "Open Startup OS",
+      "emptyTitle": "Mnara wako wa kwanza wa muktadha unaanza hapa.",
+      "emptyDescription": "Unda kampuni katika Startup OS ili kuona na kuhariri mnara wake wa muktadha.",
+      "emptyAction": "Fungua Startup OS",
       "notice": {
-        "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation didn't finish.",
-        "saveFailed": "Your changes weren't saved."
+        "needsProvider": "Unganisha ufunguo wa mtumaji wa AI ili kujaza sehemu moja kwa moja.",
+        "generateFailed": "Uzalishaji haukuisha.",
+        "saveFailed": "Mabadiliko yako hayakuhifadhiwa."
       },
       "action": {
-        "save": "Save",
-        "saving": "Saving…",
-        "cancel": "Cancel",
-        "open": "Open Startup OS"
+        "save": "Hifadhi",
+        "saving": "Inahifadhi…",
+        "cancel": "Ghairi",
+        "open": "Fungua Startup OS"
       }
     },
     "execution": {
-      "noBets": "No bets yet.",
-      "noRuns": "No active runs."
+      "noBets": "Hakuna bahati bado.",
+      "noRuns": "Hakuna miradi inayofanywa."
     },
     "fileTree": {
-      "empty": "This project has no files yet."
+      "empty": "Mradi huu bado hauna faili."
     }
   },
   "selectOrg": {
     "invitation": {
-      "emptyTitle": "The workspace is on its way.",
-      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+      "emptyTitle": "Kazi inafanywa.",
+      "emptyDescription": "Mwito unaweza bado kuwa unasawazishwa. Onyesha upya ukurasa huu au uunde eneo la kazi tofauti."
     },
     "billing": {
-      "emptyTitle": "Create a workspace before billing.",
-      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+      "emptyTitle": "Unda eneo la kazi kabla ya bili.",
+      "emptyDescription": "Vitendo vya bili vinahitaji eneo la kazi la kazi. Unda kwanza, kisha rudi kwa bili."
     },
     "default": {
-      "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to begin."
+      "emptyTitle": "Eneo la kazi la kwanza linaanza hapa.",
+      "emptyDescription": "Unda eneo la kazi kuanza."
     }
   }
 }

@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "言語",
     "ariaLabel": "言語を変更",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "言語を検索…",
+    "noResults": "該当する言語がありません",
+    "menuAria": "言語を選択"
   },
   "compliance": {
     "icp": {

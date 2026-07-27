@@ -46,7 +46,7 @@
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "بحث: عدد الكلمات، base64，json، timestamp…",
+    "placeholder": "بحث: عدد الكلمات، base64، json، timestamp…",
     "aria": "البحث في الأدوات",
     "emptyTitle": "لا توجد أدوات مطابقة لـ “{query}”",
     "emptyHint": "جرب كلمة مفتاحية أخرى، أو اختر أداة من الفئات أدناه."

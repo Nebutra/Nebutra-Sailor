@@ -191,6 +191,21 @@ checksums:
     landing/comparison/plan/team: ac848fa228f49ba2b8a5fbd76596817d
     landing/comparison/subtitle: 426b939f73bca2730fbad51bdab57910
     landing/comparison/title: 2e21b2e8d381060be81127a51ece3733
+    landing/comparison/value/bestEffort: e006f6b3847b0f15d92a5b5125a41412
+    landing/comparison/value/contractual: 4af295ec178cb1fd4c2e372294fc82f6
+    landing/comparison/value/fourBusinessHours: 0e5c14dfe9aaa7cb976ddcb888e5309c
+    landing/comparison/value/included: 984ceac16fab685fc50b8d8a5eabf7de
+    landing/comparison/value/licenseIds: a787e574d1aee6bf8ef09011e1f1b426
+    landing/comparison/value/namedContact: e56caf2800282790a986145c532fff4e
+    landing/comparison/value/notIncluded: 4bc8b4ce0c74999ac10508fff58bdeaa
+    landing/comparison/value/notRequired: 6fd5e95dc0bce8329da87e1152677b48
+    landing/comparison/value/privateChannel: 6f0abc6d4b37ce5f611a15dcf52822e8
+    landing/comparison/value/publicChannels: 919ee47e246439f201a604587725623d
+    landing/comparison/value/twoBusinessDays: 0551b16b20a2ea2cd0f67f06af5fa315
+    landing/comparison/value/unlimited: 545f6c2f382c04810103b3e5e6f7d841
+    landing/comparison/value/unlimitedPlusLts: 27ed05ac91f73ffa0c8d114172a597f8
+    landing/comparison/value/unlimitedPlusNotice: 0e13992194a09d5b1701b61d6a68ab34
+    landing/comparison/value/whiteLabelRights: 1926c466d3425aa99d90f478a0411e48
     landing/faq/badge: 1fe917b01f9a3f87fa2d7d3b7643fac1
     landing/faq/items/byo-provider/answer: 5713cea62574e24d1a395226aeaf4981
     landing/faq/items/byo-provider/question: bcf9d417fc57b4f667036d8176f3989e

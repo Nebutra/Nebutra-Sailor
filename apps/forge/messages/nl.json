@@ -1,12 +1,12 @@
 {
   "meta": {
-    "titleDefault": "{brandName} Forge — Online tool station",
+    "titleDefault": "{brandName} Forge — Online hulpmiddelenstation",
     "titleTemplate": "%s | {brandName} Forge",
     "description": "Codecs, tekst, hashing, documenten en beeldtools online."
   },
   "nav": {
     "main": "Hoofdnavigatie",
-    "homeAria": "{brandName} Forge home",
+    "homeAria": "{brandName} Forge startpagina",
     "tools": "Tools",
     "wallet": "Wallet",
     "api": "API",

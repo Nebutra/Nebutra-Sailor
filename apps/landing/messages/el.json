@@ -483,7 +483,7 @@
             "desc": "Για προσωρινά δεδομένα κατά τη διάρκεια της συνεδρίας περιήγησής σας"
           },
           "2": {
-            "label": "Pixel Tags",
+            "label": "Σήματα εικονοστοιχείων",
             "desc": "Μικρές εικόνες για παρακολούθηση ανοιγμάτων email και επισκέψεων ιστοσελίδων"
           }
         },
@@ -727,7 +727,7 @@
           "content": "Μπορείτε να accédez aux informations personnelles via les paramètres de votre compte et à demander une copie de vos données dans un format portable."
         },
         "correction": {
-          "title": "4.2 Correction",
+          "title": "4.2 Διόρθωση",
           "content": "Μπορείτε να ενημερώσετε τις πληροφορίες του λογαριασμού σας ανά πάσα στιγμή μέσω του πίνακα ελέγχου."
         },
         "deletion": {
@@ -1131,12 +1131,12 @@
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
+    "title": "{brandName} Agent OS | Το Startup Agent OS",
     "description": "Το Startup Agent OS για founders που στοχεύουν στο εξωτερικό. Production-ready βάση Next.js με governed architecture, auth, billing, agents και i18n — σχεδιασμένο για AI coding agents και σοβαρές ομάδες."
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
+      "badge": "ΤΟΠΟΛΟΓΙΑ ΣΥΣΤΗΜΑΤΟΣ",
       "title": "Διαφανής αρχιτεκτονική, χωρίς black boxes.",
       "description": "Το {productName} είναι σχεδιασμένο με υπερ-modular δομή Turborepo, δίνοντάς σας πλήρη έλεγχο σε όλο τον κύκλο ζωής του λογισμικού σας.",
       "database": {
@@ -1144,7 +1144,7 @@
         "desc": "Πλήρως typed ORM με πολιτικές Row-Level Security (RLS) ενσωματωμένες native."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Clerk Multi-Tenant / Προσαρμοσμένη Ταυτότητα",
         "desc": "Γέφυρα αυθεντικοποίησης SOC2-ready που υποστηρίζει εναλλαγή B2B οργανισμών και RBAC."
       }
     },
@@ -1315,7 +1315,7 @@
       "multi_category": "Πλατφόρμα Multi-tenant",
       "multi_f1_title": "Απομόνωση σε επίπεδο οργανισμού",
       "multi_f1_desc": "Η ασφάλεια σε επίπεδο γραμμής στο Postgres εξασφαλίζει ότι οι ενοικιαστές δεν μπορούν ποτέ να έχουν πρόσβαση στα δεδομένα του άλλου — επιβάλλεται στο επίπεδο της βάσης δεδομένων, όχι μόνο της εφαρμογής.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_title": "Ενδοχέτης πολυπρόσθετων παρόχων (Clerk / Better Auth / NextAuth / Supabase)",
       "multi_f2_desc": "Multi-provider OAuth (Google, GitHub κ.λπ.) plus email/password και magic-link — εναλλαγή μεταξύ Clerk, Better Auth, NextAuth ή Supabase Auth μέσω μιας μόνο μεταβλητής περιβάλλοντος.",
       "multi_f3_title": "Αυτόματη προμήθεια ενοικιαστών",
       "multi_f3_desc": "Όταν ένας νέος οργανισμός εγγραφεί μέσω Clerk, δημιουργούμε αυτόματα το πρώτο API key τους και στέλνουμε ένα email καλωσορίσματος με το brand σας — μηδενικά χειροκίνητα βήματα.",
@@ -1334,9 +1334,9 @@
       "billing_f3_title": "Σύγχρονη ζωή webhook",
       "billing_f3_desc": "Τα events συνδρομής Stripe ενημερώνουν αυτόματα τα σχέδια org στη βάση σας μέσω Inngest — χωρίς cron jobs, χωρίς polling.",
       "rel_category": "Αξιοπιστία",
-      "rel_f1_title": "Circuit breaker + retry",
+      "rel_f1_title": "Ασφάλεια κυκλώματος + επανάληψη",
       "rel_f1_desc": "Το gateway και η υπηρεσία AI χρησιμοποιούν circuit breaker CLOSED/OPEN/HALF_OPEN με εκθετικό backoff και jitter — χωρίς καταρρέουσες αποτυχίες.",
-      "rel_f2_title": "Dead letter queue",
+      "rel_f2_title": "Σειρά νεκρού γράμματος",
       "rel_f2_desc": "Οι χειριστές events που εξαντλούν 3 προσπάθειες retry καταλήγουν στο DLQ. Αναπαράγετέ τους ατομικά από το admin API χωρίς επανακάθαρση.",
       "rel_f3_title": "Ειδοποιήσεις ρυθμού κατανάλωσης SLO",
       "rel_f3_desc": "Ειδοποιήσεις τύπου Google SRE με πολλαπλά παράθυρα ενεργοποιούνται σε ρυθμούς κατανάλωσης 14.4×, 6× και 3× πριν εξαντληθεί ο προϋπολογισμός σφαλμάτων σας.",
@@ -1462,14 +1462,14 @@
     "badge": "ΣΥΣΤΗΜΑ ΣΧΕΔΙΑΣΗΣ",
     "headline": "4 επίπεδα διακυβέρνησης σχεδίασης.",
     "subheadline": "Από πρωτόγονα στοιχεία brand σε runtime tokens, σε μηχανισμό multi-theme και ελεγχόμενα components — όχι απλά shadcn με Tailwind.",
-    "flowBrand": "Brand",
+    "flowBrand": "Εμπορικό σήμα",
     "flowBrandDesc": "Πρωτόγονα χρώματα, gradients, γλώσσα κίνησης",
     "flowTokens": "Tokens",
     "flowTokensDesc": "CSS variables, κλίμακες 12 βημάτων, dark mode",
-    "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
+    "flowTheme": "Θέμα",
+    "flowThemeDesc": "oklch multi-theme, 6 προεπιλογές, color-mix()",
     "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
+    "flowUIDesc": "Συστατικά, Storybook, Chromatic",
     "card1Title": "Κλίμακες Χρώματος 12 Βημάτων",
     "card1Desc": "Σημασιολογική κλίμακα ευθυγραμμισμένη με το Geist: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
     "card2Title": "oklch Multi-Theme",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Δωρεάν για να <hl>Κτίσεις Επάνω</hl>",
+      "description": "Το {brandName}-Sailor δεν κοστίζει τίποτα για εμπορική χρήση — MIT στο npm, FSL-1.1-ALv2 στο αποθετήριο, μετατρέπεται σε Apache-2.0 μετά από δύο χρόνια. Τα επί πληρωμή επίπεδα πουλούν υποστήριξη και συμβατικές δεσμεύσεις, ποτέ άδεια."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "Πάντα Δωρεάν",
+        "title": "Κοινότητα",
+        "subtitle": "Όλοι",
+        "description": "Οποιοδήποτε μέγεθος ομάδας, οποιοδήποτε έσοδο. Περιλαμβάνονται κλειστοπρότυπα εμπορικά προϊόντα.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Πλήρης πηγαίος κώδικας, όλα τα πακέτα",
+          "closedSourceOk": "Κλειστοπρότυπη εμπορική χρήση — χωρίς copyleft",
+          "noAttribution": "Χωρίς εγγραφή, χωρίς απαίτηση αναφοράς",
+          "communitySupport": "Υποστήριξη κοινότητας — με καλύτερη προσπάθεια"
         },
-        "cta": "View on GitHub"
+        "cta": "Προβολή στο GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "Από {price}/έτος",
+        "title": "Ομάδα",
+        "subtitle": "Συμβόλαιο υποστήριξης",
+        "description": "Για ομάδες που χρειάζονται δέσμευση αντί για ελπίδα. Ο κώδικας είναι ήδη δωρεάν.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Ιδιωτικός κανάλι υποστήριξης",
+          "firstResponse": "Απάντηση εντός δύο εργάσιμων ημερών, εγγυημένη",
+          "priorityTriage": "Προτεραιότητα στην ταξινόμηση σφαλμάτων",
+          "upgradeHelp": "Βοήθεια αναβάθμισης και ειδοποίηση για αλλαγές που σπάνε τη συμβατότητα"
         },
-        "cta": "Get support"
+        "cta": "Λήψη υποστήριξης"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Από $30.000/έτος",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Έτοιμο για προμήθειες",
+        "description": "Για οργανισμούς των οποίων η νομική, ασφαλιστική ή διαδικασία προμηθειών απαιτεί αντισυμβαλλόμενο που υπογράφει.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA απόκρισης — 4 ώρες εργασίας, 1 ώρα για διακοπή παραγωγής",
+          "indemnity": "Αποζημίωση και δέσμευση για ενημερώσεις ασφαλείας",
+          "compliance": "Υπογεγραμμένο DPA, πακέτο συμμόρφωσης, δέσμευση συνέχειας",
+          "trademark": "Δικαιώματα εμπορικού σήματος και white-label"
         },
-        "cta": "Contact sales"
+        "cta": "Επικοινωνία με τις πωλήσεις"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Συχνές Ερωτήσεις",
+      "description": "Σύντομη εκδοχή: η χρήση είναι δωρεάν. Η πληρωμή αφορά περιπτώσεις που χρειάζεστε εμάς συμβατικά υπεύθυνους.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Γιατί FSL αντί για MIT ή AGPL;",
+          "a": "Το FSL επιτρέπει κάθε χρήση εκτός από την πώληση υποκατάστατου του Sailor, και κάθε έκδοση γίνεται Apache-2.0 δύο έτη μετά την κυκλοφορία της — μια άδεια που χορηγείται ανεπιστρεπτί εκ των προτέρων. Το AGPL εμπόδιζε την υιοθέτηση σε εταιρική νομική ανασκόπηση χωρίς να προστατεύει κάτι που πραγματικά χρειαζόμασταν να προστατεύσουμε."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Είναι η εμπορική χρήση πραγματικά δωρεάν;",
+          "a": "Ναι. Χωρίς χρέωση, χωρίς κλειδί άδειας, χωρίς εγγραφή, χωρίς όριο εσόδων ή προσωπικού, χωρίς αναφορά. Δημιουργήστε ένα προϊόν κλειστού κώδικα και πουλήστε το."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Τι θεωρείται ανταγωνιστική χρήση;",
+          "a": "Η προσφορά του ίδιου του Sailor — μια φιλοξενούμενη υπηρεσία Sailor ή μια επανασυσκευασμένη ανταγωνιστική πλατφόρμα. Η δημιουργία κάθετης SaaS, εσωτερικού εργαλείου ή έργων πελατών με βάση το Sailor δεν θεωρείται ανταγωνιστική χρήση. Εάν το μοντέλο σας το απαιτεί, μια συμφωνία Enterprise μπορεί να περιλαμβάνει γραπτή απαλλαγή."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Τι αγοράζουν ακριβώς τα πληρωμένα επίπεδα;",
+          "a": "Δεσμεύσεις υποστήριξης, SLA απόκρισης, αποζημίωση, έγγραφα συμμόρφωσης και δικαιώματα εμπορικού σήματος. Ποτέ άδεια χρήσης του λογισμικού — αυτή είναι ήδη δική σας."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Τι γίνεται με τις συνεισφορές ανοιχτού κώδικα;",
+          "a": "Όλες οι συνεισφορές απαιτούν CLA. Δείτε το CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Άδεια χρήσης — {brandName}",
+      "description": "Δωρεάν για εμπορική χρήση. MIT στο npm, FSL-1.1-ALv2 στο αποθετήριο, με μετατροπή σε Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1596,10 +1596,10 @@
   "changelogMeta": {
     "title": "Αρχείο Αλλαγών — {brandName}",
     "description": "Κάθε έκδοση, με εμμονή στη λεπτομέρεια.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "versionTitleSuffix": "Ιστορικό αλλαγών {brandName}"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
+    "title": "Χάρτης Διαδρομής Πλατφόρμας — {brandName}",
     "description": "Ο χάρτης διαδρομής για τη διαχειριζόμενη πλατφόρμα {brandName}, το runtime Harness και τη διαδρομή αναβάθμισης."
   },
   "blogMeta": {
@@ -1607,12 +1607,12 @@
     "description": "Επισκόπηση μηχανικής, ενημερώσεις προϊόντος και βέλτιστες πρακτικές SaaS από την ομάδα της {brandName}."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
+    "title": "Λάβετε την άδειά σας — {brandName}",
     "description": "Αποκτήστε την άδεια {brandName} και την πρόσβαση στην πλατφόρμα σε 2 λεπτά."
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "Συχνές Ερωτήσεις",
       "title": "Ερωτήσεις, απαντήσεις ευθέως",
       "subtitle": "Ό,τι χρειάζεται να ξέρετε πριν την εκπομπή.",
       "items": {
@@ -1686,7 +1686,7 @@
       "plan": {
         "community": "Κοινότητα",
         "team": "Ομάδα",
-        "enterprise": "Enterprise"
+        "enterprise": "Επιχείρηση"
       },
       "feature": {
         "license": {

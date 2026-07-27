@@ -1,117 +1,117 @@
 {
   "auth": {
     "signin": {
-      "title": "Welcome to Soul",
-      "subtitle": "Sign in to chat with Tseka's AI agent",
-      "github": "Continue with GitHub",
-      "google": "Continue with Google",
-      "linuxdo": "Continue with Linux DO",
-      "back": "Back to Home"
+      "title": "Bine ai venit pe Soul",
+      "subtitle": "Autentifică-te pentru a discuta cu agentul AI Tseka",
+      "github": "Continuă cu GitHub",
+      "google": "Continuă cu Google",
+      "linuxdo": "Continuă cu Linux DO",
+      "back": "Înapoi la Acasă"
     },
     "error": {
-      "title": "Authentication Error",
-      "subtitle": "We couldn't sign you in.",
-      "configuration": "The authentication provider is not configured properly. If you are the administrator, please check your environment variables (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, etc.) in your Vercel project settings.",
-      "access_denied": "Access was denied to your account.",
-      "default": "An unexpected error occurred during authentication.",
-      "try_again": "Try Again",
-      "back": "Back to Home"
+      "title": "Eroare de autentificare",
+      "subtitle": "Nu te-am putut autentifica.",
+      "configuration": "Furnizorul de autentificare nu este configurat corect. Dacă ești administrator, verifică variabilele de mediu (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET etc.) din setările proiectului tău Vercel.",
+      "access_denied": "Accesul la contul tău a fost refuzat.",
+      "default": "A apărut o eroare neașteptată în timpul autentificării.",
+      "try_again": "Încearcă din nou",
+      "back": "Înapoi la Acasă"
     }
   },
   "nav": {
-    "work": "Work",
-    "thinking": "Thinking",
-    "now": "Now",
-    "about": "About",
-    "links": "Links",
-    "soul": "Soul",
-    "uses": "Uses",
-    "guestbook": "Guestbook",
-    "contact": "Let's talk"
+    "work": "Lucrări",
+    "thinking": "Gânduri",
+    "now": "Acum",
+    "about": "Despre",
+    "links": "Legături",
+    "soul": "Suflet",
+    "uses": "Utilizări",
+    "guestbook": "Cartea de vizită",
+    "contact": "Hai să vorbim"
   },
   "soul": {
-    "page_label": "/ Digital consciousness",
-    "page_headline": "Tseka's Soul",
-    "page_desc": "A digital reflection of Tseka's mind. Ask anything — about his projects, philosophy, or how he sees the world.",
+    "page_label": "/ Conștiință digitală",
+    "page_headline": "Sufletul lui Tseka",
+    "page_desc": "O reflexie digitală a minții lui Tseka. Întreabă orice — despre proiectele sale, filozofie sau modul în care vede lumea.",
     "status": "Online",
-    "greeting_title": "Ask me anything",
-    "greeting_desc": "I'm a digital reflection of Tseka's mind — his projects, philosophy, and how he sees the world.",
-    "starter1": "What are you currently building?",
-    "starter2": "What's your \"Vibe Business\" philosophy?",
-    "starter3": "How do you think about AI agents?",
-    "placeholder": "Ask Tseka's Soul...",
-    "powered_by": "Powered by Claude Haiku · Future: OpenClaw",
-    "error": "Something went wrong. Please try again.",
-    "auth_required": "Sign in to chat with Tseka's Soul",
-    "auth_button": "Sign in to chat",
-    "metadata_title": "Soul — Tseka Luk",
-    "metadata_desc": "An AI agent that thinks and responds like Tseka Luk."
+    "greeting_title": "Întreabă-mă orice",
+    "greeting_desc": "Sunt o reflexie digitală a minții lui Tseka — proiectele sale, filozofia și modul în care vede lumea.",
+    "starter1": "La ce lucrezi în prezent?",
+    "starter2": "Care este filozofia ta despre \"Vibe Business\"?",
+    "starter3": "Cum te gândești la agenții AI?",
+    "placeholder": "Întreabă Sufletul lui Tseka...",
+    "powered_by": "Propulsat de Claude Haiku · Viitor: OpenClaw",
+    "error": "Ceva nu a mers bine. Te rugăm să încerci din nou.",
+    "auth_required": "Autentifică-te pentru a discuta cu Sufletul lui Tseka",
+    "auth_button": "Autentifică-te pentru a discuta",
+    "metadata_title": "Suflet — Tseka Luk",
+    "metadata_desc": "Un agent AI care gândește și răspunde ca Tseka Luk."
   },
   "hero": {
-    "status": "Available for select collaborations",
-    "greeting": "Hi, I'm Tseka",
-    "tagline": "AI-Native Builder",
-    "description": "I design and build AI-powered products from zero to one. Focused on making complex technology feel simple, useful, and beautiful—shipping fast and iterating in public.",
-    "cta_primary": "See my work",
-    "cta_secondary": "What I'm doing now",
+    "status": "Disponibil pentru colaborări selectate",
+    "greeting": "Salut, sunt Tseka",
+    "tagline": "Constructor AI-Native",
+    "description": "Proiectez și construiesc produse alimentate de AI de la zero la unu. Mă concentrez pe a face tehnologia complexă să pară simplă, utilă și frumoasă — livrare rapidă și iterații publice.",
+    "cta_primary": "Vezi proiectele mele",
+    "cta_secondary": "Ce fac acum",
     "pills": {
-      "role": "Full-stack AI Engineer",
+      "role": "Inginer AI Full-stack",
       "stack": "TypeScript + Python",
       "location": "Wuxi, China",
-      "mode": "Building in Public"
+      "mode": "Construiesc în Public"
     },
-    "social_proof": "Trusted by collaborators across AI, design & engineering"
+    "social_proof": "Aprobat de colaboratori din AI, design și inginerie"
   },
   "focus": {
-    "label": "Mission",
-    "headline": "My focus is on robust engineering, AI-native products, and scalable systems to",
-    "headline_muted": "deliver real-world impact.",
+    "label": "Misiune",
+    "headline": "Mă concentrez pe inginerie robustă, produse native AI și sisteme scalabile pentru a",
+    "headline_muted": "genera impact real.",
     "pills": {
-      "ai_agents": "AI Agents",
-      "ux_engineering": "UX Engineering",
-      "fullstack_architecture": "Full-stack Architecture",
-      "systems_design": "Systems Design",
+      "ai_agents": "Agenți AI",
+      "ux_engineering": "Inginerie UX",
+      "fullstack_architecture": "Arhitectură Full-stack",
+      "systems_design": "Design de Sisteme",
       "open_source": "Open Source",
-      "product_strategy": "Product Strategy"
+      "product_strategy": "Strategie de Produs"
     }
   },
   "process": {
-    "label": "/ How I work",
-    "headline": "Path to shipped features",
-    "step1_title": "Architecture",
-    "step1_desc": "Mapping out the system constraints, data flow, and UI surface. Deciding exactly what to build and what not to build.",
-    "step2_title": "Implementation",
-    "step2_desc": "Deep focus engineering. Translating the mental model into solid Next.js and Python code with robust AI integrations.",
-    "step3_title": "Refinement",
-    "step3_desc": "Polishing the sharp edges. Adding micro-animations, optimizing performance, and listening closely to telemetry and user feedback."
+    "label": "/ Cum lucrez",
+    "headline": "Calea către funcționalități livrate",
+    "step1_title": "Arhitectură",
+    "step1_desc": "Definirea constrângerilor sistemului, a fluxului de date și a interfeței UI. Deciderea exactă a ceea ce trebuie construit și a ceea ce nu.",
+    "step2_title": "Implementare",
+    "step2_desc": "Inginerie cu focus profund. Traducerea modelului mental în cod solid Next.js și Python cu integrări robuste AI.",
+    "step3_title": "Rafinare",
+    "step3_desc": "Lustruirea detaliilor. Adăugarea micro-aniomațiilor, optimizarea performanței și ascultarea atentă a telemetriei și feedback-ului utilizatorilor."
   },
   "works": {
-    "label": "/ Selected Works",
-    "headline": "Shipped to production",
-    "view_all": "View all {count} projects"
+    "label": "/ Lucrări Selectate",
+    "headline": "Lansate în producție",
+    "view_all": "Vezi toate cele {count} proiecte"
   },
   "now_preview": {
-    "headline": "What I'm doing <em>now</em>",
-    "view_all": "Full log"
+    "headline": "Ce fac <em>acum</em>",
+    "view_all": "Jurnal complet"
   },
   "now": {
     "sections": {
-      "building": "Building",
-      "shipped": "Shipped",
-      "thinking": "Thinking",
-      "reading": "Reading"
+      "building": "Construire",
+      "shipped": "Lansat",
+      "thinking": "Gândire",
+      "reading": "Citire"
     },
-    "no_updates": "No updates yet.",
-    "last_updated": "Last updated:"
+    "no_updates": "Niciun update încă.",
+    "last_updated": "Ultima actualizare:"
   },
   "pricing": {
-    "label": "/ Engagement Models",
-    "headline": "Choose how we work together",
-    "description": "Not a Swiss army knife — a studio that delivers every domain to professional standards.",
-    "recommended": "Recommended",
-    "availability": "Accepting new projects · ~2 weeks to start",
-    "capabilities_label": "/ Capabilities",
-    "radar_title": "Capability",
+    "label": "/ Modele de colaborare",
+    "headline": "Alege cum să lucrăm împreună",
+    "description": "Nu un cuțit elvețian — un studio care livrează fiecare domeniu la standarde profesionale.",
+    "recommended": "Recomandat",
+    "availability": "Acceptăm proiecte noi · ~2 săptămâni până la start",
+    "capabilities_label": "/ Capacități",
+    "radar_title": "Capacitate",
     "stats": [
       {
         "value": 50,
@@ -137,65 +137,49 @@
     "tiers": {
       "chat": {
         "name": "Chat",
-        "price": "Free",
-        "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
-        "cta": "Talk to my Soul",
+        "price": "Gratuit",
+        "description": "Call rapid de 15 min",
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
+        "cta": "Vorbește cu Soul-ul meu",
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "Cafea",
         "price": "¥18",
-        "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
-        "cta": "Buy me a coffee",
+        "description": "Valoarea unei cafele",
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
+        "cta": "Cumpără-mi o cafea",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
       "hire": {
-        "name": "Hire Me",
-        "price": "Per project",
-        "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
-        "cta": "Extend an Olive Branch",
+        "name": "Angajează-mă",
+        "price": "Per proiect",
+        "description": "Colaborare profesională completă",
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
+        "cta": "Îndreaptă-mi o ramură de măsline",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
       "partner": {
-        "name": "Dream Partner",
-        "price": "Grow together",
-        "description": "Long-term co-creation",
+        "name": "Partener de Visare",
+        "price": "Creșteți împreună",
+        "description": "Co-creare pe termen lung",
         "features": [
           "Everything above",
           "Product co-creation",
           "Growth hacking system",
           "Equity / revenue share"
         ],
-        "cta": "Share your vision",
+        "cta": "Împărtășiți-vă viziunea",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
     },
     "services": {
       "engineering": {
-        "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "name": "Inginerie de Produs",
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
-        "name": "AI & Automation",
+        "name": "AI și Automatizare",
         "items": [
           "AI Agent architecture",
           "OpenClaw workflows",
@@ -204,14 +188,11 @@
         ]
       },
       "design": {
-        "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "name": "Design și Produs",
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
-        "name": "Growth & Global",
+        "name": "Creștere și Globalizare",
         "items": [
           "Marketing strategy",
           "Growth hacking",
@@ -221,315 +202,307 @@
         ]
       },
       "consulting": {
-        "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "name": "Consultanță",
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
-        "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "name": "VC și Strategie",
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
   "constellation": {
     "label": "/ Constellation",
-    "headline": "The people who know",
-    "description": "They've worked with him. They've seen the work. Here's what they think.",
-    "cta": "Leave a fragment",
-    "cta_hint": "Be honest.",
-    "empty": "Nothing here yet."
+    "headline": "Oamenii care știu",
+    "description": "Au lucrat cu el. Au văzut munca. Iată ce cred ei.",
+    "cta": "Lasă un fragment",
+    "cta_hint": "Fii sincer.",
+    "empty": "Încă nimic aici."
   },
   "cta": {
-    "headline": "Let's build something",
-    "description": "I work with teams and founders who see digital presence and AI not just as a duty, but as a strategic growth driver.",
-    "email": "Start a project",
-    "calendar": "Book a call"
+    "headline": "Hai să construim ceva",
+    "description": "Colaborez cu echipe și fondatori care văd prezența digitală și AI nu doar ca pe o obligație, ci ca pe un motor strategic de creștere.",
+    "email": "Începe un proiect",
+    "calendar": "Programează un apel"
   },
   "footer": {
-    "tagline": "Building what doesn't exist yet.",
-    "status_available": "Available for select collaborations",
+    "tagline": "Construim ceea ce încă nu există.",
+    "status_available": "Disponibil pentru colaborări selectate",
     "location": "Wuxi, China",
-    "nav_work": "Work",
-    "nav_thinking": "Thinking",
-    "nav_now": "Now",
-    "nav_about": "About",
-    "nav_soul": "Soul",
-    "nav_links": "Links",
-    "email_cta": "Start a project →",
-    "built_with": "Built with",
-    "back_to_top": "↑ Back to top",
-    "rss_label": "RSS Feed",
+    "nav_work": "Proiecte",
+    "nav_thinking": "Reflecții",
+    "nav_now": "Acum",
+    "nav_about": "Despre",
+    "nav_soul": "Suflet",
+    "nav_links": "Linkuri",
+    "email_cta": "Începe un proiect →",
+    "built_with": "Realizat cu",
+    "back_to_top": "↑ Înapoi sus",
+    "rss_label": "Flux RSS",
     "github_label": "GitHub",
     "x_label": "X (Twitter)",
     "linkedin_label": "LinkedIn",
     "wechat_label": "WeChat",
-    "wechat_copied": "WeChat ID copied!"
+    "wechat_copied": "ID-ul WeChat a fost copiat!"
   },
   "pages": {
     "home": {
-      "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_title": "Tseka Luk — Creator Nativ AI",
+      "metadata_desc": "CEO și Creator Nativ AI la Nebutra Intelligence. Construiesc sisteme inteligente, nu doar produse."
     },
     "work": {
-      "label": "/ 19 shipped projects",
-      "headline": "Things I've built",
-      "description": "Shipped products, research tools, and AI experiments. Most are real projects with real users.",
-      "metadata_title": "Work — Tseka Luk",
-      "metadata_desc": "Shipped products, research tools, and AI experiments.",
-      "back": "All Projects",
-      "source_code": "Source Code",
-      "live_demo": "Live Demo"
+      "label": "/ 19 proiecte livrate",
+      "headline": "Lucruri pe care le-am construit",
+      "description": "Produse livrate, instrumente de cercetare și experimente AI. Majoritatea sunt proiecte reale cu utilizatori reali.",
+      "metadata_title": "Proiecte — Tseka Luk",
+      "metadata_desc": "Produse livrate, instrumente de cercetare și experimente AI.",
+      "back": "Toate Proiectele",
+      "source_code": "Cod Sursă",
+      "live_demo": "Demo Live"
     },
     "thinking": {
-      "label": "/ Essays & ideas",
-      "headline": "Thinking",
-      "metadata_title": "Thinking — Tseka Luk",
-      "metadata_desc": "Essays on building, growth, and AI.",
-      "empty_title": "Essays coming soon.",
-      "empty_subtitle": "In the meantime, ask <link>my Soul</link>."
+      "label": "/ Eseuri și idei",
+      "headline": "Reflecții",
+      "metadata_title": "Reflecții — Tseka Luk",
+      "metadata_desc": "Eseuri despre construcție, creștere și AI.",
+      "empty_title": "Eseuri în curând.",
+      "empty_subtitle": "Până atunci, întreabă <link>Sufletul meu</link>."
     },
     "now": {
-      "label": "/ Updated daily",
-      "headline": "Now",
-      "description": "This page is updated daily by an AI agent that reviews my work and distills the highlights. Think of it as a living changelog for what I'm building, thinking, and shipping.",
-      "metadata_title": "Now — Tseka Luk",
-      "metadata_desc": "What I'm currently working on, thinking about, and shipping."
+      "label": "/ Actualizat zilnic",
+      "headline": "Acum",
+      "description": "Această pagină este actualizată zilnic de un agent AI care analizează munca mea și sintetizează aspectele importante. Gândește-te la ea ca la un jurnal de schimbări viu pentru ceea ce construiesc, gândesc și livrez.",
+      "metadata_title": "Acum — Tseka Luk",
+      "metadata_desc": "La ce lucrez acum, la ce mă gândesc și ce lansez."
     },
     "about": {
-      "metadata_title": "About — Tseka Luk",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-      "label": "/ About",
-      "headline": "Building intelligent systems,",
-      "headline_muted": "not just products.",
-      "bio_1": "I'm Tseka Luk, CEO of Nebutra Intelligence, based in Wuxi, China. I build AI-native products designed for global markets—tools that are not just technically sophisticated but genuinely useful and beautifully simple.",
-      "bio_2": "My philosophy is what I call Vibe Business: build with taste, ship with speed, and let the product speak louder than any pitch deck. Every project starts from a real itch, and every feature earns its place.",
-      "bio_3": "I think in systems, obsess over details, and believe the best way to predict the future is to build it—one commit at a time.",
+      "metadata_title": "Despre — Tseka Luk",
+      "metadata_desc": "CEO și constructor AI-Native la Nebutra Intelligence. Construiesc sisteme inteligente, nu doar produse.",
+      "label": "/ Despre",
+      "headline": "Construiesc sisteme inteligente,",
+      "headline_muted": "nu doar produse.",
+      "bio_1": "Sunt Tseka Luk, CEO al Nebutra Intelligence, cu sediul în Wuxi, China. Construiesc produse AI-native concepute pentru piețele globale — instrumente care nu sunt doar sofisticate din punct de vedere tehnic, ci cu adevărat utile și frumos simple.",
+      "bio_2": "Filozofia mea este ceea ce numesc Vibe Business: construiește cu gust, lansează cu viteză și lasă produsul să vorbească mai tare decât orice prezentare. Fiecare proiect începe de la o nevoie reală, iar fiecare funcționalitate își câștigă locul.",
+      "bio_3": "Gândesc în sisteme, sunt obsedat de detalii și cred că cel mai bun mod de a prezice viitorul este să-l construiești — un commit la un moment dat.",
       "photo_tag": "INTP · 4w5",
       "photo_location": "Wuxi, China",
-      "stat_projects": "Projects",
-      "stat_awards": "Awards",
-      "stat_first_prizes": "First Prizes",
-      "stat_certs": "Certs",
-      "resume_download": "Download Resume",
-      "journey_label": "/ Journey",
-      "journey_2020": "Self-taught web development & digital marketing",
-      "journey_2022": "BSc in Information & Computing Science and BEng in Computer Science & Technology, Jiangsu Ocean University",
-      "journey_2023": "AI-native engineering, competitive programming",
-      "journey_2024": "Founded Wuxi Nebutra Intelligence Technology",
-      "journey_2025": "CEO, Nebutra Intelligence — building for global markets",
-      "journey_now": "Shipping AI-native products, one commit at a time",
-      "awards_label": "/ Things I've tried",
-      "awards_count": "10 attempts",
-      "awards_description": "Not an expert at anything — just someone who wants to try everything, and try it well.",
-      "award_1_title": "MCM/ICM Mathematical Modeling",
-      "award_1_level": "Honorable Mention",
-      "award_1_detail": "NSGA-III tourism optimizer, 8.3% prediction error vs. 28,000+ teams",
-      "award_2_title": "Lanqiao Cup C/C++ (Jiangsu)",
-      "award_2_level": "First Prize",
-      "award_2_detail": "Top 1% in provincial algorithmic programming",
-      "award_3_title": "TAM-SEM Low-Altitude Economy",
-      "award_3_level": "First Prize (Provincial)",
-      "award_3_detail": "2,609 respondents, discovered 'risk paradox' (beta=0.262, p<0.001)",
-      "award_4_title": "APMCM Mathematical Modeling",
-      "award_4_level": "First Prize",
-      "award_4_detail": "Pet industry forecast: LASSO R-squared=0.9850, predicted $52B market",
-      "award_5_title": "Shuwei Cup Math Modeling",
-      "award_5_level": "First Prize + Grand Innovation",
-      "award_5_detail": "Biomass co-pyrolysis: found 28.44% optimal ratio via LightGBM + PSO",
-      "award_6_title": "Brand Strategy Competition",
-      "award_6_level": "Second Prize (National)",
-      "award_6_detail": "1,200+ samples, Claude + Flux + Midjourney AIGC pipeline",
-      "award_7_title": "Global AI Algorithm Elite",
-      "award_7_level": "Third Prize (National Final)",
-      "award_7_detail": "Warehouse drone: 95% recognition accuracy, 3-min shelf traversal",
-      "award_8_title": "National Math Modeling (Jiangsu)",
-      "award_8_level": "Second Prize",
-      "award_8_detail": "Real estate cost prediction: Random Forest outperformed CNN-LSTM",
-      "award_9_title": "Electronic Design (TI Cup)",
-      "award_9_level": "Second Prize",
-      "award_9_detail": "Self-aiming system: adaptive PID + Kalman filter on MSPM0G3507",
-      "award_10_title": "Translation Competition",
-      "award_10_level": "Grand Prize (National Final)",
-      "award_10_detail": "Non-English major, highest national honor in bilingual translation",
-      "credentials_label": "/ Credentials",
-      "cred_1": "Columbia University — Numerical Models (Grade A)",
-      "cred_2": "Huawei HCIA-Datacom Network Engineer",
-      "cred_3": "HarmonyOS Advanced Developer",
-      "cred_4": "Utility Patent — Cable Distribution Equipment",
-      "cred_5": "3 Software Copyrights (Power Opt, OD Classify, Graph Solver)",
+      "stat_projects": "Proiecte",
+      "stat_awards": "Premii",
+      "stat_first_prizes": "Premii I",
+      "stat_certs": "Certificări",
+      "resume_download": "Descarcă CV",
+      "journey_label": "/ Parcurs",
+      "journey_2020": "Dezvoltare web și marketing digital autodidact",
+      "journey_2022": "Licență în Informatică și Știința Calculatoarelor și Inginerie în Informatică și Tehnologie, Universitatea Jiangsu Ocean",
+      "journey_2023": "Inginerie AI-native, programare competitivă",
+      "journey_2024": "Am fondat Wuxi Nebutra Intelligence Technology",
+      "journey_2025": "CEO, Nebutra Intelligence — construind pentru piețele globale",
+      "journey_now": "Lansăm produse native AI, câte un commit pe rând",
+      "awards_label": "/ Lucruri pe care le-am încercat",
+      "awards_count": "10 încercări",
+      "awards_description": "Nu sunt expert în nimic — doar cineva care vrea să încerce totul și să o facă bine.",
+      "award_1_title": "Modelare Matematică MCM/ICM",
+      "award_1_level": "Mențiune de Onoare",
+      "award_1_detail": "Optimizator turistic NSGA-III, eroare de predicție de 8,3% față de peste 28.000 de echipe",
+      "award_2_title": "Cupa Lanqiao C/C++ (Jiangsu)",
+      "award_2_level": "Premiul I",
+      "award_2_detail": "Top 1% în programare algoritmică la nivel provincial",
+      "award_3_title": "Economia Aeriană de Joasă Altitudine TAM-SEM",
+      "award_3_level": "Premiul I (Provincial)",
+      "award_3_detail": "2.609 respondenți, am descoperit 'paradoxul riscului' (beta=0,262, p<0,001)",
+      "award_4_title": "Modelare Matematică APMCM",
+      "award_4_level": "Premiul I",
+      "award_4_detail": "Prognoza industriei animalelor de companie: LASSO R-squared=0,9850, piață prezisă de 52 miliarde $",
+      "award_5_title": "Modelare Matematică Cupa Shuwei",
+      "award_5_level": "Premiul I + Marele Premiu pentru Inovație",
+      "award_5_detail": "Copirolyza biomasei: raport optim 28,44% prin LightGBM + PSO",
+      "award_6_title": "Competiție Strategie de Brand",
+      "award_6_level": "Premiul II (Național)",
+      "award_6_detail": "1.200+ eșantioane, pipeline AIGC Claude + Flux + Midjourney",
+      "award_7_title": "Elite Algoritmi AI Global",
+      "award_7_level": "Premiul III (Finala Națională)",
+      "award_7_detail": "Drone depozit: acuratețe recunoaștere 95%, parcurgere raft 3 min",
+      "award_8_title": "Modelare Matematică Națională (Jiangsu)",
+      "award_8_level": "Premiul II",
+      "award_8_detail": "Predicție cost imobiliar: Random Forest a depășit CNN-LSTM",
+      "award_9_title": "Design Electronic (Cupa TI)",
+      "award_9_level": "Premiul II",
+      "award_9_detail": "Sistem auto-ghidare: PID adaptiv + filtru Kalman pe MSPM0G3507",
+      "award_10_title": "Competiție de Traducere",
+      "award_10_level": "Premiul Mare (Finala Națională)",
+      "award_10_detail": "Non-licențiat în limbi străine, cea mai înaltă onoare națională în traducere bilingvă",
+      "credentials_label": "/ Credentiale",
+      "cred_1": "Columbia University — Modele Numerice (Nota A)",
+      "cred_2": "Inginer Rețea Huawei HCIA-Datacom",
+      "cred_3": "Dezvoltator Avansat HarmonyOS",
+      "cred_4": "Brevet de utilitate — Echipamente de distribuție a cablurilor",
+      "cred_5": "3 drepturi de autor software (Power Opt, OD Classify, Graph Solver)",
       "cred_6": "CET-6: 543 · CET-4: 575",
-      "cred_7": "Macau UST — Innovation & Entrepreneurship",
-      "cred_8": "Prompt Engineer (Datawhale x iFLYTEK)",
-      "personality_label": "/ Personality",
+      "cred_7": "Macau UST — Inovație și antreprenoriat",
+      "cred_8": "Inginer de prompt (Datawhale x iFLYTEK)",
+      "personality_label": "/ Personalitate",
       "personality_intp_name": "INTP",
-      "personality_intp_subtitle": "The Logician",
-      "personality_intp_desc": "Analytical, systematic, and driven by an insatiable curiosity about how systems really work.",
+      "personality_intp_subtitle": "Logicianul",
+      "personality_intp_desc": "Analitic, sistematic și condus de o curiozitate insațiabilă despre modul în care funcționează cu adevărat sistemele.",
       "personality_intp_source": "16Personalities",
       "personality_4w5_name": "4w5",
-      "personality_4w5_subtitle": "The Bohemian",
-      "personality_4w5_desc": "Identity-driven depth and authentic self-expression, tempered by intellectual withdrawal.",
+      "personality_4w5_subtitle": "Boemul",
+      "personality_4w5_desc": "Profundime condusă de identitate și expresie autentică a sinelui, temperată de retragere intelectuală.",
       "personality_4w5_source": "Enneagram",
-      "beliefs_label": "/ Things I believe",
-      "belief_1": "The people who are crazy enough to think they can change the world are the ones who do.",
+      "beliefs_label": "/ Lucruri în care cred",
+      "belief_1": "Oamenii care sunt suficient de nebuni să creadă că pot schimba lumea sunt cei care o fac.",
       "belief_1_credit": "— Steve Jobs",
-      "life_label": "/ Life",
-      "life_music": "Music",
-      "life_philosophy": "Philosophy",
-      "life_games": "Games",
+      "life_label": "/ Viață",
+      "life_music": "Muzică",
+      "life_philosophy": "Filozofie",
+      "life_games": "Jocuri",
       "contact_anchor_label": "/ Contact",
-      "contact_headline": "Let's build something"
+      "contact_headline": "Hai să construim ceva"
     },
     "uses": {
-      "label": "/ Uses",
-      "headline": "What I use to build.",
-      "description": "Hardware, software, and AI tools I actually use daily. Dogfooding included.",
+      "label": "/ Utilizări",
+      "headline": "Ce folosesc pentru a construi.",
+      "description": "Hardware, software și instrumente AI pe care le folosesc efectiv zilnic. Dogfooding inclus.",
       "section_workstation": "/ Workstation",
-      "section_editors": "/ Editors",
+      "section_editors": "/ Editoare",
       "section_terminal": "/ Terminal",
-      "section_ai_toolkit": "/ AI Toolkit",
-      "ai_toolkit_desc": "Tools I actively use — not a marketing list. I switch between them depending on the task.",
+      "section_ai_toolkit": "/ Kit de instrumente AI",
+      "ai_toolkit_desc": "Instrumente pe care le folosesc activ — nu o listă de marketing. Le schimb în funcție de sarcină.",
       "section_dogfooding": "/ Dogfooding"
     },
     "links": {
-      "headline": "Links",
-      "description": "Find me across the internet.",
-      "international": "International",
-      "china": "China Platforms",
-      "wechat_click": "Click to see QR code",
-      "metadata_title": "Links — Tseka Luk",
-      "metadata_desc": "Find me across the internet."
+      "headline": "Linkuri",
+      "description": "Găsește-mă pe internet.",
+      "international": "Internațional",
+      "china": "Platforme din China",
+      "wechat_click": "Apasă pentru a vedea codul QR",
+      "metadata_title": "Linkuri — Tseka Luk",
+      "metadata_desc": "Găsește-mă pe internet."
     },
     "privacy": {
-      "metadata_title": "Privacy Policy — Tseka Luk",
-      "metadata_desc": "How this site handles your data.",
-      "headline": "Privacy Policy",
-      "last_updated": "Last updated: March 2026",
-      "intro": "This site is a personal portfolio. I respect your privacy and collect as little data as possible.",
-      "analytics_title": "Analytics",
-      "analytics_body": "This site uses Plausible Analytics, a privacy-friendly, cookie-free analytics tool. No personal data is collected. All data is aggregated and anonymous. No data is shared with third parties.",
-      "auth_title": "Authentication",
-      "auth_body": "If you sign in (via GitHub, Google, or Linux DO), I receive your public profile information (name, avatar, email if available). This is used solely to identify you in the Soul chat. I do not sell, share, or use this data for any other purpose. Session data is stored as an encrypted JWT cookie in your browser.",
+      "metadata_title": "Politica de confidențialitate — Tseka Luk",
+      "metadata_desc": "Cum gestionează acest site datele tale.",
+      "headline": "Politica de confidențialitate",
+      "last_updated": "Ultima actualizare: martie 2026",
+      "intro": "Acest site este un portofoliu personal. Respect confidențialitatea ta și colectez cât mai puține date posibil.",
+      "analytics_title": "Analitică",
+      "analytics_body": "Acest site folosește Plausible Analytics, un instrument de analitică prietenos cu confidențialitatea și fără cookie-uri. Nu sunt colectate date personale. Toate datele sunt agregate și anonime. Nu sunt partajate date cu terți.",
+      "auth_title": "Autentificare",
+      "auth_body": "Dacă te autentifici (prin GitHub, Google sau Linux DO), primesc informațiile publice din profilul tău (nume, avatar, email dacă este disponibil). Acestea sunt folosite exclusiv pentru a te identifica în chat-ul Soul. Nu vând, nu partajez și nu folosesc aceste date în niciun alt scop. Datele sesiunii sunt stocate ca un cookie JWT criptat în browserul tău.",
       "chat_title": "Soul Chat",
-      "chat_body": "Messages you send in the Soul chat are processed by the Anthropic API (Claude) in real time and are not stored on my servers. Conversation history exists only in your browser session.",
-      "cookies_title": "Cookies",
-      "cookies_body": "This site uses only essential cookies: a session cookie for authentication and a theme preference cookie. No tracking cookies are used.",
-      "third_party_title": "Third-party Services",
-      "third_party_body": "Plausible Analytics (privacy-friendly, EU-hosted), Anthropic API (chat processing), Vercel (hosting). No advertising or tracking services are used.",
+      "chat_body": "Mesajele pe care le trimiți în chat-ul Soul sunt procesate în timp real de API-ul Anthropic (Claude) și nu sunt stocate pe serverele mele. Istoricul conversațiilor există doar în sesiunea browserului tău.",
+      "cookies_title": "Cookie-uri",
+      "cookies_body": "Acest site folosește doar cookie-uri esențiale: un cookie de sesiune pentru autentificare și un cookie pentru preferința de temă. Nu sunt folosite cookie-uri de urmărire.",
+      "third_party_title": "Servicii terțe",
+      "third_party_body": "Plausible Analytics (prietenos cu confidențialitatea, găzduit în UE), API-ul Anthropic (procesare chat), Vercel (găzduire). Nu sunt folosite servicii de publicitate sau urmărire.",
       "contact_title": "Contact",
-      "contact_body": "For any privacy-related questions, reach me at"
+      "contact_body": "Pentru orice întrebări legate de confidențialitate, mă poți contacta la"
     },
     "guestbook": {
-      "label": "/ Guestbook",
-      "metadata_title": "Guestbook — Tseka Luk",
-      "metadata_desc": "Leave a message. Say hello.",
-      "headline": "Guestbook",
-      "description": "Leave a message, say hello, or share what you're building.",
-      "sign_in_prompt": "Sign in to leave a message.",
-      "placeholder": "Say something nice...",
-      "submit": "Post",
-      "empty": "No messages yet. Be the first!"
+      "label": "/ Oaspeți",
+      "metadata_title": "Oaspeți — Tseka Luk",
+      "metadata_desc": "Lasă un mesaj. Spune salut.",
+      "headline": "Oaspeți",
+      "description": "Lasă un mesaj, salută sau spune ce construiești.",
+      "sign_in_prompt": "Autentifică-te pentru a lăsa un mesaj.",
+      "placeholder": "Spune ceva drăguț...",
+      "submit": "Publică",
+      "empty": "Încă nu sunt mesaje. Fii primul!"
     }
   },
   "projects": {
     "any2md": {
-      "tagline": "Where other converters lose 40% of context, this one keeps 93%",
-      "description": "Most converters silently drop formulas, tables, and cross-references. any2md uses a dual-engine—PyMuPDF for text + Qwen-VL for vision—then DeepSeek LLM reconstructs context via layered prompt + few-shot + CoT. Processes 68 pages/min with 85% table structuring and 90% LaTeX formula preservation. Imported 20,000+ pages into a team knowledge base in one week, cutting manual cleanup by 70%."
+      "tagline": "În timp ce alți convertori pierd 40% din context, acesta păstrează 93%",
+      "description": "Majoritatea convertorilor elimină tăcut formulele, tabelele și referințele încrucișate. any2md folosește un motor dual—PyMuPDF pentru text + Qwen-VL pentru viziune—apoi DeepSeek LLM reconstruiește contextul prin prompt stratificat + few-shot + CoT. Procesează 68 de pagini/min cu 85% structurare tabele și 90% păstrare formule LaTeX. Importate 20.000+ pagini într-o bază de cunoștințe de echipă într-o săptămână, reducând curățarea manuală cu 70%."
     },
     "low-altitude-economy": {
-      "tagline": "Discovered a paradox: risk perception actually increases adoption",
-      "description": "Everyone assumed perceived risk would deter UAM adoption. Our TAM–SEM model on 2,609 respondents (93.1% recovery rate, KMO=0.951) proved the opposite: risk positively drives willingness to adopt (β=0.262, p<0.001). We also mined 1,695 Bilibili comments with SnowNLP to map public sentiment. The “risk paradox” finding challenged a decade of technology adoption literature. Provincial First Prize."
+      "tagline": "Am descoperit un paradox: percepția riscului crește de fapt adoptarea",
+      "description": "Toată lumea presupunea că riscul perceput ar descuraja adoptarea UAM. Modelul nostru TAM–SEM pe 2.609 respondenți (93,1% rată de recuperare, KMO=0,951) a demonstrat contrariu: riscul stimulează pozitiv disponibilitatea de adoptare (β=0,262, p<0,001). Am analizat și 1.695 comentarii Bilibili cu SnowNLP pentru a mapa sentimentul public. Descoperirea „paradoxului riscului” a contestat o decadă de literatură despre adoptarea tehnologiei. Premiul I la nivel provincial."
     },
     "nebutra-sailor": {
-      "tagline": "One monorepo, 4 production apps, 12,000+ lines of shared code",
-      "description": "Enterprise-grade monorepo powering 4 apps (marketing, dashboard, docs, studio) from 6 shared packages. Next.js 16 + React 19 + Tailwind v4, with a custom design token pipeline, 541 tree-shakable icons, and multi-theme engine supporting 6 oklch color schemes. Ships features 3x faster than separate repos."
+      "tagline": "Un singur monorepo, 4 aplicații de producție, 12.000+ linii de cod partajat",
+      "description": "Monorepo de nivel enterprise care alimentează 4 aplicații (marketing, dashboard, docs, studio) din 6 pachete partajate. Next.js 16 + React 19 + Tailwind v4, cu un pipeline personalizat de design token, 541 de iconuri tree-shakable și un motor multi-temă care suportă 6 scheme de culori oklch. Livrează funcționalități de 3 ori mai rapid decât repo-uri separate."
     },
     "mcm-icm": {
-      "tagline": "Optimizing tourism vs. environment with 8.3% prediction error",
-      "description": "MCM/ICM 2025 (Problem B): built a system dynamics + NSGA-III multi-objective optimizer balancing tourist flow, environmental quality, and social satisfaction. Achieved 8.3% tourist prediction error with R²>0.5 on a three-dimensional coupled model. Competed against 28,000+ teams globally. Honorable Mention."
+      "tagline": "Optimizarea turismului vs. mediul cu eroare de predicție de 8,3%",
+      "description": "MCM/ICM 2025 (Problemă B): am construit un optimizer multi-obiectiv sistem dynamics + NSGA-III care echilibrează fluxul turiștilor, calitatea mediului și satisfacția socială. Am obținut o eroare de predicție a turiștilor de 8,3% cu R²>0,5 pe un model cuplat tridimensional. Am concurat împotriva 28.000+ echipe la nivel global. Mențiune de onoare."
     },
     "biomass-modeling": {
-      "tagline": "Found the exact 28.44% ratio—won Grand Innovation Award for it",
-      "description": "Three-model ensemble (LightGBM + Gaussian Process Regression + PSO) tested across 500+ pyrolysis data points to discover that 28.44% biomass-to-coal ratio maximizes clean energy output with R²>0.95 prediction accuracy. The entropy-weighted fuzzy evaluation framework quantified non-linear interactions between 3 yield types (gas, char, liquid). Judges praised the methodology as transferable across energy domains. First Prize + Grand Innovation Award at Shuwei Cup."
+      "tagline": "Am găsit raportul exact de 28,44%—am câștigat Premiul Grand Innovation pentru asta",
+      "description": "Ensemble de trei modele (LightGBM + Gaussian Process Regression + PSO) testat pe 500+ puncte de date de piroliză pentru a descoperi că raportul de 28,44% biomasa-cărbune maximizează producția de energie curată cu acuratețe de predicție R²>0,95. Cadrul de evaluare fuzzy cu ponderi entropice a cuantificat interacțiunile neliniare între 3 tipuri de randament (gaz, cărbune, lichid). Juriul a lăudat metodologia ca fiind transferabilă între domenii energetice. Premiul I + Grand Innovation Award la Shuwei Cup."
     },
     "pet-industry": {
-      "tagline": "LASSO R²=0.9850 predicted a $52B market by 2026",
-      "description": "Built an integrated forecasting framework (ARIMAX-GARCH + VAR + LASSO + Prophet) spanning market size, pet population, and food manufacturing. LASSO regression identified key drivers with R²=0.9850. Cross-compared US/EU markets using HHI concentration index. Predicted 144.68M pets and 82.8% capacity utilization by 2026."
+      "tagline": "LASSO R²=0,9850 a prezis o piață de 52 miliarde $ până în 2026",
+      "description": "Am construit un cadru integrat de prognozare (ARIMAX-GARCH + VAR + LASSO + Prophet) care acoperă dimensiunea pieței, populația animalelor de companie și fabricarea hranei. Regresia LASSO a identificat factorii cheie cu R²=0,9850. Am comparat piețele SUA/UE folosind indicele de concentrație HHI. Am prezis 144,68 milioane animale de companie și 82,8% utilizare capacitate până în 2026."
     },
     "cursor-export": {
-      "tagline": "86% less time on knowledge management—one-click conversation export",
-      "description": "Cursor IDE extension (7 GitHub stars) that exports AI conversations to structured Markdown. Tested on 214 conversations (1,980 messages): processing time dropped from 5.8 min to 0.8 min per conversation, code snippet loss rate under 0.5%, throughput 12.5 conversations/min. Cross-platform VSIX with >98% install success rate across Windows/macOS/Linux."
+      "tagline": "86% mai puțin timp pe managementul cunoștințelor—export conversații cu un singur click",
+      "description": "Extensie Cursor IDE (7 stele GitHub) care exportă conversațiile AI în Markdown structurat. Testată pe 214 conversații (1.980 mesaje): timpul de procesare a scăzut de la 5,8 min la 0,8 min per conversație, rata de pierdere snippet-uri cod sub 0,5%, throughput 12,5 conversații/min. VSIX cross-platform cu >98% rată de succes instalare pe Windows/macOS/Linux."
     },
     "brand-strategy": {
-      "tagline": "1,200+ consumer samples × AIGC pipeline = 40% engagement lift",
-      "description": "Led a PEST-SWOT driven brand overhaul for Suzhou’s “林莓莓” agricultural product. Surveyed 1,200+ consumers to map purchase drivers and price sensitivity. Deployed Claude + Flux + Midjourney AIGC toolchain for brand stories and mascot concepts, cutting creative iteration from weeks to days. Projected 40%+ user engagement increase. National Second Prize."
+      "tagline": "1.200+ eșantioane consumatori × pipeline AIGC = creștere engagement 40%",
+      "description": "Am condus o rebrandare bazată pe PEST-SWOT pentru produsul agricol „林莓莓” din Suzhou. Am sondat 1.200+ consumatori pentru a mapa factorii de achiziție și sensibilitatea la preț. Am implementat toolchain AIGC Claude + Flux + Midjourney pentru povești de brand și concepte mascotă, reducând iterația creativă de la săptămâni la zile. Proiectată creștere engagement utilizatori 40%+. Premiul II la nivel național."
     },
     "mineru-skill": {
-      "tagline": "Zero-config Claude Code skill—PDF to Markdown in one command",
-      "description": "Open-source Claude Code skill that wraps MinerU for layout-aware PDF/document conversion. One-command install, no API keys, 3 supported formats (PDF, DOCX, PPTX). Handles 100+ page documents with table and formula preservation. Published on Smithery marketplace, 5+ community installs in first week. Built for the Claude Code ecosystem with auto-detection of document type and intelligent chunking."
+      "tagline": "Skill Claude Code fără configurare—PDF în Markdown cu o singură comandă",
+      "description": "Skill open-source Claude Code care înfășoară MinerU pentru conversia PDF/documente cu recunoaștere layout. Instalare cu o singură comandă, fără chei API, 3 formate suportate (PDF, DOCX, PPTX). Gestionează documente de 100+ pagini cu păstrare tabele și formule. Publicat pe marketplace Smithery, 5+ instalări comunitare în prima săptămână. Construit pentru ecosistemul Claude Code cu auto-detectare tip document și chunking inteligent."
     },
     "warehouse-drone": {
-      "tagline": "95% recognition accuracy, full shelf scan in under 3 minutes",
-      "description": "Multi-rotor drone system for automated warehouse stocktaking. Integrated STM32 flight controller + OpenMV vision + BLE communication for autonomous waypoint navigation and QR code scanning across 3D shelf structures. 95% barcode recognition accuracy with laser calibration, completing full inventory traversal in under 3 minutes."
+      "tagline": "95% acuratețe recunoaștere, scanare completă raft în sub 3 minute",
+      "description": "Sistem multi-rotor pentru inventariere automatizată depozit. Integrat controller zbor STM32 + viziune OpenMV + comunicare BLE pentru navigare autonomă puncte de reper și scanare coduri QR pe structuri raft 3D. 95% acuratețe recunoaștere coduri de bare cu calibrare laser, completând traversarea completă inventar în sub 3 minute."
     },
     "cdtmp": {
-      "tagline": "Task success rate +18pp by turning prompt tricks into reusable protocol",
-      "description": "Turned ad-hoc prompt engineering into a structured agent protocol: task decomposition, state machines, retry strategies, and auditable intermediate states. Tested on 120 cross-domain tasks: success rate jumped from 63% to 81%, JSON compliance from 72% to 94%, rework rounds dropped 29%. Framework-agnostic—plugs into LangGraph, Semantic Kernel, or custom executors."
+      "tagline": "Rata de succes a sarcinilor +18pp prin transformarea trucurilor de prompt în protocol reutilizabil",
+      "description": "Am transformat ingineria ad-hoc de prompt-uri într-un protocol structurat de agenți: descompunerea sarcinilor, mașini de stare, strategii de reîncercare și stări intermediare auditabile. Testat pe 120 de sarcini cross-domain: rata de succes a crescut de la 63% la 81%, conformitatea JSON de la 72% la 94%, runde de rework scăzute cu 29%. Agnostic la framework—se integrează cu LangGraph, Semantic Kernel sau executori custom."
     },
     "next-unicorn": {
-      "tagline": "Your codebase has 47 hand-rolled wheels—this finds them all",
-      "description": "Every codebase accumulates Vibe Coding debt: custom date formatters, DIY loggers, bespoke state machines. Next-Unicorn audits your code via Context7 MCP, identifies reinvented wheels, generates migration plans, and ships delete-code checklists. 176 tests passed with 29 property-based verifications. Published on Smithery + npm, supports 35+ AI agents including Claude Code, Cursor, and OpenCode."
+      "tagline": "Codul tău are 47 de roți reinventate—acesta le găsește pe toate",
+      "description": "Orice cod acumulează datorii de Vibe Coding: formatori de date custom, logeri DIY, mașini de stare bespoke. Next-Unicorn audită codul tău prin Context7 MCP, identifică roțile reinventate, generează planuri de migrare și livrează checklist-uri de ștergere a codului. 176 de teste trecute cu 29 de verificări bazate pe proprietăți. Publicat pe Smithery + npm, suportă 35+ agenți AI inclusiv Claude Code, Cursor și OpenCode."
     },
     "hydrogem-web": {
-      "tagline": "Real-time water quality dashboard with 5-second refresh and alerts",
-      "description": "React + TypeScript monitoring system tracking 12 water quality parameters (pH, turbidity, dissolved oxygen, etc.) with 5-second auto-refresh and configurable alert thresholds. Built with streaming data visualization and historical trend analysis for environmental monitoring."
+      "tagline": "Dashboard în timp real pentru calitatea apei cu refresh la 5 secunde și alerte",
+      "description": "Sistem de monitorizare React + TypeScript care urmărește 12 parametri de calitate a apei (pH, turbiditate, oxigen dizolvat etc.) cu auto-refresh la 5 secunde și praguri de alertă configurabile. Construit cu vizualizare de date streaming și analiză a tendințelor istorice pentru monitorizarea mediului."
     },
     "ocr-auto": {
-      "tagline": "100% bbox accuracy on 50 element types—from 65% to 92% in 10 prompt iterations",
-      "description": "Production-grade automated annotation system for document page elements. Async 4-stage pipeline with Qwen VL models identifies 50 element types (12 code languages, 13 interaction formats, 12 content elements, 13 other tags). Three-layer fault tolerance (Retry + RateLimit + CircuitBreaker), SHA256 content-addressed cache, and real-time SSE monitoring dashboard."
+      "tagline": "Acuratețe bbox 100% pe 50 de tipuri de elemente—de la 65% la 92% în 10 iterații de prompt",
+      "description": "Sistem de anotare automatizată de calitate producție pentru elemente de pagină din documente. Pipeline async în 4 etape cu modele Qwen VL identifică 50 de tipuri de elemente (12 limbaje de cod, 13 formate de interacțiune, 12 elemente de conținut, 13 alte tag-uri). Toleranță la erori în trei straturi (Retry + RateLimit + CircuitBreaker), cache adresat prin conținut SHA256 și dashboard de monitorizare SSE în timp real."
     },
     "tiktok-pipeline": {
-      "tagline": "8-dimensional annotation across 19 prompt iterations—edge cases included",
-      "description": "Multi-modal visual search relevance labeling pipeline using LLMs. Processes image + text signals across 8 annotation dimensions (visual relevance, content relevance, query/doc drop, functional parity, category granularity, visual similarity, modal corroboration). 19 prompt versions with automated comparison and reflection analysis tools."
+      "tagline": "Anotare pe 8 dimensiuni în 19 iterații de prompt—inclusiv cazuri limită",
+      "description": "Pipeline de etichetare a relevanței căutării vizuale multi-modale folosind LLM-uri. Procesează semnale imagine + text pe 8 dimensiuni de anotare (relevanță vizuală, relevanță conținut, drop query/doc, paritate funcțională, granularitate categorie, similaritate vizuală, corroborare modală). 19 versiuni de prompt cu instrumente automate de comparație și analiză de reflecție."
     },
     "mlbb-analysis": {
-      "tagline": "5 platforms, 6 batch processors, 90%+ accuracy—from manual review to automated pipeline",
-      "description": "Multi-platform video content analysis system covering YouTube, Instagram, TikTok, VK, and Facebook. Refactored from legacy monolith to modular architecture: 5 platform fetchers, 6 batch processors, 5 video analyzers. Fast text analysis achieves 90%+ accuracy with 460x acceleration over manual review, processing 1,207+ videos across batch runs."
+      "tagline": "5 platforme, 6 procesori batch, acuratețe 90%+—de la revizuire manuală la pipeline automatizat",
+      "description": "Sistem de analiză a conținutului video multi-platformă care acoperă YouTube, Instagram, TikTok, VK și Facebook. Refactorat din monolit legacy în arhitectură modulară: 5 fetcheri de platformă, 6 procesori batch, 5 analizori video. Analiza rapidă de text atinge acuratețe 90%+ cu accelerare 460x față de revizuirea manuală, procesând 1.207+ videoclipuri în rulări batch."
     },
     "synapse-quant": {
-      "tagline": "8 microservices, real-time GraphQL, TUI cockpit—from raw data to trade thesis",
-      "description": "Open-source quantitative trading copilot for crypto markets. 8 microservices + 9 infrastructure services (17 containers total) with unified TUI cockpit, 41 technical indicators, real-time market data streaming, and in-context AI copilot. TypeScript 5.7 + Python 3.11+, CI/CD with GitHub Actions."
+      "tagline": "8 microservicii, GraphQL în timp real, cockpit TUI—de la date brute la teza de tranzacționare",
+      "description": "Copilot open-source de tranzacționare cuantică pentru piețele crypto. 8 microservicii + 9 servicii de infrastructură (17 containere total) cu cockpit TUI unificat, 41 indicatori tehnici, streaming de date de piață în timp real și copilot AI in-context. TypeScript 5.7 + Python 3.11+, CI/CD cu GitHub Actions."
     },
     "hm3d-eval": {
-      "tagline": "4.62/5 evaluation score across 1,000 real 3D scenes—8/8 acceptance criteria passed",
-      "description": "Comprehensive quality evaluation framework for the Habitat-Matterport 3D Research Dataset (1,000 real 3D scenes). Assessed 15+ dimensions including mesh quality, texture integrity, semantic annotation accuracy, and metadata completeness. Achieved 4.62/5 overall score with 100% acceptance pass rate (8/8 criteria). 95% requirement compliance."
+      "tagline": "Scor de evaluare 4.62/5 pe 1.000 de scene 3D reale—8/8 criterii de acceptare trecute",
+      "description": "Framework comprehensiv de evaluare a calității pentru Habitat-Matterport 3D Research Dataset (1.000 de scene 3D reale). Evaluat 15+ dimensiuni inclusiv calitate mesh, integritate textură, acuratețe anotare semantică și completitudine metadata. Scor general 4.62/5 cu rată de trecere 100% la acceptare (8/8 criterii). Conformitate cerințe 95%."
     },
     "appen-dashboard": {
-      "tagline": "Enterprise SaaS for a NASDAQ data company: the B2B demo mode playbook in production",
-      "description": "Built multi-tenant reporting infrastructure for Appen (NASDAQ: APT). Next.js 16 monorepo (5 apps + 10 packages) serves TCS, ByteWorks, and DataPower dashboards with Upstash QStash async job queues and Pusher real-time. The breakthrough: a production-grade demo mode with MSW + tRPC mock interception, privacy redaction pipeline (schema validate → redact → normalize → value protocol), and 4 behavioral strategies—solving the #1 enterprise SaaS sales problem."
+      "tagline": "SaaS enterprise pentru o companie de date NASDAQ: playbook-ul modului demo B2B în producție",
+      "description": "Am construit infrastructură de raportare multi-tenant pentru Appen (NASDAQ: APT). Monorepo Next.js 16 (5 aplicații + 10 pachete) servește dashboard-uri TCS, ByteWorks și DataPower cu cozi de job-uri async Upstash QStash și Pusher real-time. Breakthrough-ul: un mod demo de calitate producție cu interceptare mock MSW + tRPC, pipeline de redactare confidențialitate (validare schema → redactare → normalizare → protocol valoare) și 4 strategii comportamentale—rezolvând problema #1 de vânzări SaaS enterprise."
     },
     "t2v-relabeling": {
-      "tagline": "Using better AI to fix worse AI's labeling mistakes—at the cost human reviewers can't match",
-      "description": "Meta-labeling pipeline that audits and corrects mislabeled AI-generated video training data using Gemini 2.5 Flash. Classifies 6 attributes (quality, gender, age, race, scene, season) per video with EWMA-adaptive rate limiting and HTTP/2 concurrency. Processes 60MB+ videos via Gemini Files API without local download. 3 iterative rounds with incremental merge. Human labeling: ~$1/video. This pipeline: ~$0.01/video at scale."
+      "tagline": "Folosind AI mai bun pentru a corecta greșelile de etichetare ale AI-ului mai slab—la un cost pe care reviewerii umani nu-l pot egala",
+      "description": "Pipeline de meta-etalonare care audită și corectează datele de antrenament video generate de AI etichetate greșit folosind Gemini 2.5 Flash. Clasifică 6 atribute (calitate, gen, vârstă, rasă, scenă, sezon) per video cu limitare de rată adaptivă EWMA și concurență HTTP/2. Procesează videoclipuri 60MB+ prin Gemini Files API fără descărcare locală. 3 runde iterative cu merge incremental. Etichetare umană: ~$1/video. Acest pipeline: ~$0.01/video la scară."
     },
     "url-annotation": {
-      "tagline": "The TLS fingerprint arms race: when IP blocking fails, impersonate Chrome at the handshake",
-      "description": "Production URL consistency pipeline that defeats TLS-fingerprint bot detection at zero marginal LLM cost. curl_cffi spoofs Chrome 124's full ClientHello (cipher suites, extensions, ordering)—not just User-Agent. Playwright renders JS-heavy SPAs. Local Qwen3:1.7b via Ollama compares semantics without API fees or GDPR exposure. Rotating-ad detection re-fetches 3× to flag domain changes. 30 HTTP + 5 Playwright + 5 LLM concurrent."
+      "tagline": "Cursa înarmării amprentelor TLS: când blocarea IP-urilor eșuează, imită Chrome la handshake",
+      "description": "Pipeline de consistență URL pentru producție care învinge detecția bot-urilor bazată pe amprenta TLS, fără costuri marginale suplimentare pentru LLM. curl_cffi falsifică ClientHello-ul complet din Chrome 124 (suites de cifră, extensii, ordonare)—nu doar User-Agent. Playwright randează SPAs cu mult JS. Qwen3:1.7b local prin Ollama compară semantica fără taxe API sau expunere GDPR. Detecția reclamelor rotative refăce fetch-ul de 3× pentru a marca schimbările de domeniu. 30 HTTP + 5 Playwright + 5 LLM concurente."
     },
     "3dgs-eval": {
-      "tagline": "3DGS had 2,000+ citations in 6 months but zero enterprise quality standards—we wrote the spec",
-      "description": "First systematic vendor evaluation framework for 3D Gaussian Splatting content production. Multi-round scored assessment across 6 dimensions: HP/LP geometry (pivot + retopology), PBR texture completeness (BaseColor/Normal/Metallic/AO), file naming conventions, semantic annotation, preview standards (8+ renders), and communication SLA. The revelation: vendors weren't technically incapable—they were operationally immature. Multi-round CSV tracker makes every revision cycle auditable."
+      "tagline": "3DGS a avut peste 2.000 de citări în 6 luni, dar zero standarde de calitate enterprise—noi am scris specificația",
+      "description": "Primul cadru sistematic de evaluare a furnizorilor pentru producția de conținut 3D Gaussian Splatting. Evaluare scorată pe mai multe runde pe 6 dimensiuni: geometrie HP/LP (pivot + retopologie), completitudine texturi PBR (BaseColor/Normal/Metallic/AO), convenții de denumire fișiere, anotație semantică, standarde preview (8+ randări) și SLA de comunicare. Revelația: furnizorii nu erau tehnic incapabili—erau operațional imaturi. Tracker CSV pe mai multe runde face fiecare ciclu de revizie auditabil."
     }
   },
   "thinking": {
-    "latest_label": "Latest Thinking",
-    "latest_headline": "Recent Writings",
-    "view_all": "View All Writings"
+    "latest_label": "Cel mai recent gând",
+    "latest_headline": "Scrieri recente",
+    "view_all": "Vezi toate scrierile"
   }
 }

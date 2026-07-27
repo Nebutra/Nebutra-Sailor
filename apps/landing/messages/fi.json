@@ -78,7 +78,7 @@
       "title": "Suunniteltu kestävänä SaaS-infrastruktuurina, ei kertakäyttöisenä lomakkeena.",
       "description": "Suosituspinta on tuettu domain-paketilla, pysyvällä Prisma-mallilla, tyypitettyllä Next.js-reitillä ja julkisilla smoke-tarkistuksilla, jotka voivat suorittaa ECS-julkaisujen jälkeen.",
       "data": {
-        "eyebrow": "Data",
+        "eyebrow": "Tiedot",
         "title": "Yksi kestävä odotusluettelotaulukko",
         "description": "Sähköpostin yksikäsitteisyys, automaattisesti kasvava sijainti, suosituskoodien indeksit, yrityksen attribuointimetatiedot ja tilansiirtymät ovat alustan tietokannassa."
       },
@@ -1153,7 +1153,7 @@
       "description": "Kaupallisen tuotteen rakentaminen {brandName}-pohjalle ei maksa mitään — ei maksuja, ei lisenssiavainta, ei rekisteröitymistä, ei copyleftiä. Maksulliset tasot myyvät tukea, SLA-tasoja, vastuunkantoa ja tavaramerkkioikeuksia, eivät koskaan käyttölupaa.",
       "socialProofText": "MIT npm:ssä · FSL-1.1-ALv2 repositoriossa, muuttuu Apache-2.0:ksi kahden vuoden kuluttua · kaupallinen käyttö ilmaista kaikissa kokoluokissa.",
       "community": {
-        "badge": "COMMUNITY",
+        "badge": "YHTEISÖ",
         "price": "Ilmainen",
         "period": "ikuisesti",
         "desc": "Kaikille. Mikä tahansa tiimin koko, mikä tahansa liikevaihto. Suljetun lähdekoodin kaupallinen käyttö sisältyy, ilman rekisteröitymistä ja ilman mainintavelvoitetta.",
@@ -1177,7 +1177,7 @@
         "f5": "Kaikki Community-tasolta"
       },
       "enterprise": {
-        "badge": "ENTERPRISE",
+        "badge": "YRITYS",
         "price": "Alkaen 30 000 $",
         "period": "/ vuosi",
         "desc": "Organisaatioille, joiden hankinta, lakiasiat tai tietoturva-arviointi edellyttää sopimuskumppania, joka allekirjoittaa.",
@@ -1327,7 +1327,7 @@
       "dx_f3_title": "Moniprotokollainen API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI julkisille API:ille, oRPC tyypiltään turvallisiin frontend-kutsuihin ja tRPC T3-stack-yhteensopivuuteen. Kaikki protokollat käyttävät samoja Zod-sopimuksia ja välittäjäpinoa. Ota käyttöön protokollakohtaisesti valmiilla määrityksellä.",
       "billing_category": "Laskutus & Monetalisointi",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar ja Kiinan maksut",
       "billing_f1_desc": "Valitse maksupalveluntarjoaja: Stripe globaaleille yrityksille, LemonSqueezy itsenäisille kehittäjille, Polar avoimen lähdekoodin projekteille tai Alipay/WeChat Pay Kiinan markkinoille. Yhden napsautuksen kassaprosessi ja itsepalvelulaskutusportaali.",
       "billing_f2_title": "Käyttöön perustuva kiintiönvalvonta",
       "billing_f2_desc": "Reaaliaikaiset Redis-laskurit seuraavat API-kutsuja ja token-käyttöä jokaista vuokra-asiakasta kohti. Pyyntöjen käsittely keskeytetään portissa, kun rajat ylittyvät.",
@@ -1354,7 +1354,7 @@
       "obs_f2_desc": "Monipaneelinen alustakatsaus: SLO-käytettävyys, jäljellä oleva virhebudjetti, HPA-kylläisyys, podien uudelleenkäynnistykset ja CPU-tukahdutus.",
       "obs_f3_title": "Sentry-virheiden seuranta",
       "obs_f3_desc": "Palvelin- ja asiakassivun virheet tallennetaan tenanttikonstein, pyyntö-ID:n ja jäljitys-ID:n kanssa järjestelmien väliseen korrelaatioon.",
-      "data_category": "Data & Analytics",
+      "data_category": "Data ja analytiikka",
       "data_f1_title": "ClickHouse OLAP-arkisto",
       "data_f1_desc": "Tapahtumat saapuvat ClickHouseen nopeita analytiikkakyselyitä varten. dbt muuntaa raakatapahtumat kultakerroksen kasvumittareiksi, jotka näkyvät dashboardissa.",
       "data_f2_title": "Tunnelianalytiikka",
@@ -1390,7 +1390,7 @@
     "title": "Yksi perusta. Äärettömät mahdollisuudet.",
     "description": "{productName} voimistaa seuraavan sukupolven SaaS-tuotteita globaaleilla markkinoilla.",
     "tabs": {
-      "opc": "Agentic Operations",
+      "opc": "Agentic-toiminnallisuus",
       "ip": "Henkilökohtainen IP-matriisi",
       "multimodal": "Monimodaalinen tekoäly-SaaS",
       "enterprise": "Moderni yritys (CN)",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Ilmainen <hl>kehitettäväksi</hl>",
+      "description": "{brandName}-Sailor on kaupalliseen käyttöön ilmainen — MIT npm:ssä, FSL-1.1-ALv2 varastossa, muuttuu Apache-2.0:ksi kahden vuoden jälkeen. Maksulliset tasot myyvät tukea ja sopimusvelvoitteita, ei käyttöoikeutta."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "Aina ilmainen",
+        "title": "Yhteisö",
+        "subtitle": "Kaikille",
+        "description": "Minkä kokoiselle tahansa tiimille, minkä tulojen tahansa. Suljettu lähdekoodi kaupallisissa tuotteissa sallittu.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Koko lähdekoodi, kaikki paketit",
+          "closedSourceOk": "Suljettu lähdekoodi kaupallisessa käytössä — ei copyleftiä",
+          "noAttribution": "Ei rekisteröitymistä, ei lähdeviittausta",
+          "communitySupport": "Yhteisötuki — parhaan mahdollisen ponnistuksen mukainen"
         },
-        "cta": "View on GitHub"
+        "cta": "Näytä GitHubissa"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "Alkaen {price}/v",
+        "title": "Tiimi",
+        "subtitle": "Tukipaketti",
+        "description": "Tiimeille, jotka tarvitsevat sitoumuksen, ei toiveen. Koodi on jo ilmainen.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Yksityinen tukikanava",
+          "firstResponse": "Kaksi arkipäivää ensimmäiseen vastaukseen, taattu",
+          "priorityTriage": "Priorisoitu vikojen käsittely",
+          "upgradeHelp": "Päivitysapu ja katkeamattomuusvaroitus"
         },
-        "cta": "Get support"
+        "cta": "Hanki tuki"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Alkaen 30 000 €/vuosi",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Hankintavalmis",
+        "description": "Organisaatioille, joiden oikeudellinen, turvallisuudellinen tai hankintakatsaus vaatii vastapuolen, joka allekirjoittaa.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "Vastaus-SLA — 4 liiketoimintatuntia, 1 tunti tuotannon pysähtyessä",
+          "indemnity": "Vastuunotto ja tietoturvakorjausvelvoite",
+          "compliance": "Allekirjoitettu DPA, compliance-paketti, jatkuvuuspakottaminen",
+          "trademark": "Tavaramerkki- ja valkoleimaoikeudet"
         },
-        "cta": "Contact sales"
+        "cta": "Ota yhteyttä myyntiin"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Usein kysytyt kysymykset",
+      "description": "Lyhyesti: käyttö on ilmaista. Maksaminen on silloin, kun tarvitset meidät sopimuksellisesti vastuussa.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Miksi FSL eikä MIT tai AGPL?",
+          "a": "FSL sallii kaiken käytön paitsi Sailorin itsensä korvaajan myymisen, ja jokainen versio muuttuu Apache-2.0:ksi kaksi vuotta julkaisun jälkeen — peruuttamaton etukäteisluovutus. AGPL esti käyttöönottoa yritysten oikeudellisessa tarkastuksessa ilman, että suojasimme mitään, mitä oikeasti tarvitsimme suojata."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Onko kaupallinen käyttö todella ilmaista?",
+          "a": "Kyllä. Ei maksua, ei lisenssivälikeyttä, ei rekisteröitymistä, ei tulo- tai henkilömääräraja-arvoa, ei viittausta. Rakenna suljettu lähdekoodituote ja myy sitä."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Mitä pidetään kilpailevana käytönä?",
+          "a": "Sailorin itsensä tarjoaminen — isännöity Sailor-palvelu tai uudelleenpaketoitu kilpaileva alustapohja. Vertikaalisen SaaS:n, sisäisen työkalun tai asiakasprojektit Sailorin päälle rakentaminen ei ole kilpailevaa käyttöä. Jos mallisi tarvitsee sen, Enterprise-sopimus voi sisältää kirjallisen vapautuksen."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Mitä maksulliset tasot oikeasti ostavat?",
+          "a": "Tukivelvoitteet, vastaus-SLAt, vastuunotto, compliance-dokumentit ja tavaramerkkioikeudet. Ei koskaan lupaa käyttää ohjelmistoa — se on jo sinulla."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Mitä mieltä olemme avoimen lähdekoodin panostuksista?",
+          "a": "Kaikki panokset vaativat CLAn. Katso CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Lisenssit — {brandName}",
+      "description": "Ilmainen kaupalliseen käyttöön. MIT npm:ssä, FSL-1.1-ALv2 varastossa, siirtyy Apache-2.0:aan."
     }
   },
   "licenseWizard": {
@@ -1684,9 +1684,9 @@
       "title": "Kaikki on ilmaista. Valitse, kuinka paljon sitoumusta tarvitset.",
       "subtitle": "Jokainen taso sisältää koko lähdekoodin ja sallii suljetun lähdekoodin kaupallisen käytön maksutta. Erot ovat tuessa, sopimussitoumuksissa ja tavaramerkkioikeuksissa.",
       "plan": {
-        "community": "Community",
+        "community": "Yhteisö",
         "team": "Tiimi",
-        "enterprise": "Enterprise"
+        "enterprise": "Yritys"
       },
       "feature": {
         "license": {

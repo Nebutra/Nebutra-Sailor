@@ -105,19 +105,19 @@
     },
     "academic": {
       "label": "शैक्षणिक",
-      "chips": "PDF toolkit · AI patent search"
+      "chips": "PDF टूलकिट · AI पेटेंट खोज"
     },
     "image": {
-      "label": "Image tools",
-      "chips": "3D studio · Canvas"
+      "label": "छवि उपकरण",
+      "chips": "3D स्टूडियो · कैनवास"
     },
     "audio": {
-      "label": "Audio",
-      "chips": "Speech · AI music"
+      "label": "ऑडियो",
+      "chips": "बोलचाल · AI संगीत"
     },
     "code": {
-      "label": "Code",
-      "chips": "Web generator · Forge"
+      "label": "कोड",
+      "chips": "वेब जनरेटर · Forge"
     }
   },
   "shortcuts": {

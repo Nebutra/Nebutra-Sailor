@@ -161,7 +161,20 @@ export function glossaryTermsPresent(source, translated, glossary = DEFAULT_GLOS
  * Validate a single translated leaf.
  * @returns {{ ok: true } | { ok: false, reason: string }}
  */
-export function validateTranslation(source, translated, { glossary = DEFAULT_GLOSSARY } = {}) {
+/**
+ * Locales that legitimately use CJK full-width punctuation. Everything else
+ * gets it only when the model bleeds its Chinese training register into
+ * another script — which it did across ar/bn/fa/hi/ur, 160 marks in one run.
+ * "داده‌ها，استفاده" is not a typo a human would make.
+ */
+const CJK_PUNCT_LOCALES = new Set(["zh", "zh-Hans", "zh-Hant", "zh-CN", "zh-TW", "ja", "ko"]);
+const CJK_PUNCT = /[\u3001\u3002\uFF0C\uFF1B\uFF1A\uFF1F\uFF01\uFF08\uFF09]/;
+
+export function validateTranslation(
+  source,
+  translated,
+  { glossary = DEFAULT_GLOSSARY, locale } = {},
+) {
   if (typeof translated !== "string" || !translated.trim()) {
     return { ok: false, reason: "empty" };
   }
@@ -176,6 +189,13 @@ export function validateTranslation(source, translated, { glossary = DEFAULT_GLO
   }
   if (/^\s*```/.test(translated)) {
     return { ok: false, reason: "markdown fence leaked" };
+  }
+  // Only flag punctuation the model introduced — if the English source itself
+  // carries a full-width mark, keeping it is correct.
+  if (locale && !CJK_PUNCT_LOCALES.has(locale) && CJK_PUNCT.test(translated)) {
+    if (!CJK_PUNCT.test(source)) {
+      return { ok: false, reason: `CJK punctuation leaked into ${locale}` };
+    }
   }
   return { ok: true };
 }
@@ -373,8 +393,21 @@ export function parseTranslateModels({
   return [...defaults];
 }
 
-/** Hard plan/billing quota — model should leave the pool for this run. */
-export function isHardQuotaError(_status, bodyText = "") {
+/**
+ * Hard plan/billing quota — model should leave the pool for this run.
+ *
+ * MUST be gated on an error status. This classifier pattern-matches the
+ * response body, and the body of a *successful* translation call contains
+ * arbitrary product copy — the catalogs carry 61 occurrences of the word
+ * "billing" alone ("Billing", "Open full billing", "Could not load your
+ * billing status"). Before the status gate, every 200 that happened to
+ * translate one of those strings evicted the model from the pool for the rest
+ * of the run. Two of three models would be gone within minutes and the run
+ * collapsed with tens of thousands of "failures" against a completely healthy
+ * quota.
+ */
+export function isHardQuotaError(status, bodyText = "") {
+  if (typeof status === "number" && status < 400) return false;
   const t = String(bodyText).toLowerCase();
   return (
     t.includes("insufficient_quota") ||

@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Taal",
     "ariaLabel": "Taal wijzigen",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Zoek talen…",
+    "noResults": "Geen talen gevonden",
+    "menuAria": "Selecteer taal"
   },
   "compliance": {
     "icp": {
@@ -648,7 +648,7 @@
       "forbidden": "Je hebt beheerdersrechten nodig om het auditlogboek te bekijken.",
       "columns": {
         "when": "Wanneer",
-        "actor": "Actor",
+        "actor": "Acteur",
         "action": "Actie",
         "entity": "Entiteit",
         "outcome": "Uitslag",

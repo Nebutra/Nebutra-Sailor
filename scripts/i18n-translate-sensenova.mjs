@@ -307,7 +307,9 @@ async function translateBatchOnce(targetLocale, entries) {
         content = content.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
       }
       const parsed = JSON.parse(content);
-      const { accepted, rejected } = acceptBatchResults(entries, parsed);
+      const { accepted, rejected } = acceptBatchResults(entries, parsed, {
+        locale: targetLocale,
+      });
       if (accepted.size === 0) {
         const reason = rejected[0]?.[2] ?? "empty";
         throw new Error(`[${model}] 0 accepted leaves (${reason})`);

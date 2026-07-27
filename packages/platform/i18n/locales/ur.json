@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "زبان",
     "ariaLabel": "زبان تبدیل کریں",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "زبان تلاش کریں…",
+    "noResults": "کوئی زبان نہیں ملی",
+    "menuAria": "زبان منتخب کریں"
   },
   "compliance": {
     "icp": {
@@ -339,10 +339,10 @@
       "continueWith": "اس کے ساتھ جاری رکھیں",
       "continueWithProvider": "{provider} کے ساتھ جاری رکھیں",
       "providers": {
-        "google": "Google",
+        "google": "گوگل",
         "github": "GitHub",
-        "apple": "Apple",
-        "microsoft": "Microsoft",
+        "apple": "ایپل",
+        "microsoft": "مائیکروسافٹ",
         "feishu": "Feishu"
       },
       "providerLoading": "ری ڈائریکٹ ہو رہا ہے…",
@@ -599,7 +599,7 @@
   },
   "settings": {
     "apiKeys": {
-      "title": "API Keys",
+      "title": "API کیز",
       "description": "Nebutra تک پروگرامیٹک رسائی کے لیے API keys بنائیں اور ان کا انتظام کریں۔",
       "createButton": "API key بنائیں",
       "noPermission": "آپ کے پاس API keys دیکھنے کی اجازت نہیں ہے۔",
@@ -632,25 +632,25 @@
       "dialog": {
         "title": "API کی بنائیں",
         "description": "API keys allow external systems to communicate with Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
-        "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "nameLabel": "نام",
+        "namePlaceholder": "جیسے پروڈکشن بیک اینڈ",
+        "scopesLabel": "سکوپس",
+        "successWarning": "یہ کی صرف ایک بار نظر آئے گی۔ بند کرنے سے پہلے اسے محفوظ کریں۔",
+        "confirmClose": "بند کرنے سے یہ کی ہمیشہ کے لیے چھپ جائے گی۔ یقینی بنائیں کہ یہ محفوظ ہو چکی ہے۔"
       }
     },
     "auditLog": {
-      "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "title": "آڈٹ لاگ",
+      "description": "اپنے ورک اسپیس میں ہر انتظامی عمل کی نگرانی کریں۔ اداکار، عمل، انٹیٹی، یا وقت کی حد کے لحاظ سے فلٹر کریں۔",
+      "empty": "ابھی تک کوئی آڈٹ ایونٹ نہیں",
+      "loadMore": "مزید لوڈ کریں",
+      "loading": "لوڈ ہو رہا ہے…",
+      "forbidden": "آڈٹ لاگ دیکھنے کے لیے آپ کو ایڈمن رسائی درکار ہے۔",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
+        "when": "کب",
+        "actor": "اداکار",
+        "action": "عمل",
+        "entity": "انٹیٹی",
         "outcome": "نتیجہ",
         "ip": "آئی پی"
       },
@@ -1141,7 +1141,7 @@
           "description": "Stripe، Slack، webhooks، queues، اور مزید۔"
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Sailor AI کھولیں",
           "description": "چٹ، ڈیٹا، یا ورک فلو موڈ آزمائیں۔"
         }
       }
@@ -1195,7 +1195,7 @@
       "cofoundersDescription": "جب آپ اور دوسرا بانی دونوں دلچسپی ظاہر کریں گے، وہ یہاں نظر آئیں گے۔",
       "cofoundersAction": "کو-بانی تلاش کریں",
       "growthChart": "جیسے ہی ایکٹیوٹی شروع ہوگی، رجحان کا ڈیٹا نظر آئے گا۔",
-      "revenueChart": "جیسے ہی لین دین شروع ہوگی، آمدنی کا ڈیٹا نظر آئے گا。",
+      "revenueChart": "جیسے ہی لین دین شروع ہوگی، آمدنی کا ڈیٹا نظر آئے گا.",
       "webhookDeliveries": "پہلے ایونٹ کے بعد ڈیلیوری یہاں نظر آئیں گی۔",
       "webhookEndpoints": "ایونٹس وصولنا شروع کرنے کے لیے اوپر ایک اینڈ پوائنٹ شامل کریں۔",
       "accessInvites": "کوئی دعوت نامے جاری نہیں ہوئے۔"
@@ -1245,7 +1245,7 @@
   "selectOrg": {
     "invitation": {
       "emptyTitle": "Workspace تیار ہو رہا ہے۔",
-      "emptyDescription": "Invitation ابھی بھی sync ہو رہی ہو سکتی ہے۔ اس صفحے کو refresh کریں یا ایک الگ workspace بنائیں。"
+      "emptyDescription": "Invitation ابھی بھی sync ہو رہی ہو سکتی ہے۔ اس صفحے کو refresh کریں یا ایک الگ workspace بنائیں."
     },
     "billing": {
       "emptyTitle": "Billing سے پہلے ایک workspace بنائیں۔",

@@ -1,117 +1,117 @@
 {
   "auth": {
     "signin": {
-      "title": "Welcome to Soul",
-      "subtitle": "Sign in to chat with Tseka's AI agent",
-      "github": "Continue with GitHub",
-      "google": "Continue with Google",
-      "linuxdo": "Continue with Linux DO",
-      "back": "Back to Home"
+      "title": "Üdvözöljük a Soulban",
+      "subtitle": "Jelentkezzen be, hogy beszéljen Tseka AI ügynökével",
+      "github": "Folytatás GitHubmal",
+      "google": "Folytatás Google-lal",
+      "linuxdo": "Folytatás Linux DO-val",
+      "back": "Vissza a kezdőlapra"
     },
     "error": {
-      "title": "Authentication Error",
-      "subtitle": "We couldn't sign you in.",
-      "configuration": "The authentication provider is not configured properly. If you are the administrator, please check your environment variables (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, etc.) in your Vercel project settings.",
-      "access_denied": "Access was denied to your account.",
-      "default": "An unexpected error occurred during authentication.",
-      "try_again": "Try Again",
-      "back": "Back to Home"
+      "title": "Hitelesítési hiba",
+      "subtitle": "Nem tudtunk bejelentkezni.",
+      "configuration": "A hitelesítési szolgáltató nincs megfelelően konfigurálva. Ha Ön az adminisztrátor, kérjük, ellenőrizze a környezetváltozóit (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET stb.) a Vercel projektbeállításaiban.",
+      "access_denied": "A hozzáférést megtagadták a fiókjához.",
+      "default": "Váratlan hiba történt a hitelesítés során.",
+      "try_again": "Próbálja újra",
+      "back": "Vissza a kezdőlapra"
     }
   },
   "nav": {
-    "work": "Work",
-    "thinking": "Thinking",
-    "now": "Now",
-    "about": "About",
-    "links": "Links",
-    "soul": "Soul",
-    "uses": "Uses",
-    "guestbook": "Guestbook",
-    "contact": "Let's talk"
+    "work": "Munkák",
+    "thinking": "Gondolatok",
+    "now": "Jelenleg",
+    "about": "Rólam",
+    "links": "Linkek",
+    "soul": "Lélek",
+    "uses": "Használat",
+    "guestbook": "Vendégkönyv",
+    "contact": "Lépjünk kapcsolatba"
   },
   "soul": {
-    "page_label": "/ Digital consciousness",
-    "page_headline": "Tseka's Soul",
-    "page_desc": "A digital reflection of Tseka's mind. Ask anything — about his projects, philosophy, or how he sees the world.",
+    "page_label": "/ Digitális tudat",
+    "page_headline": "Tseka lelke",
+    "page_desc": "Tseka elméjének digitális tükre. Kérdezz bármit – a projektjeiről, filozófiájáról vagy arról, hogyan látja a világot.",
     "status": "Online",
-    "greeting_title": "Ask me anything",
-    "greeting_desc": "I'm a digital reflection of Tseka's mind — his projects, philosophy, and how he sees the world.",
-    "starter1": "What are you currently building?",
-    "starter2": "What's your \"Vibe Business\" philosophy?",
-    "starter3": "How do you think about AI agents?",
-    "placeholder": "Ask Tseka's Soul...",
-    "powered_by": "Powered by Claude Haiku · Future: OpenClaw",
-    "error": "Something went wrong. Please try again.",
-    "auth_required": "Sign in to chat with Tseka's Soul",
-    "auth_button": "Sign in to chat",
-    "metadata_title": "Soul — Tseka Luk",
-    "metadata_desc": "An AI agent that thinks and responds like Tseka Luk."
+    "greeting_title": "Kérdezz bármit",
+    "greeting_desc": "Tseka elméjének digitális tükre vagyok – a projektjei, filozófiája és a világképéről.",
+    "starter1": "Mit építesz éppen?",
+    "starter2": "Mi a \"Vibe Business\" filozófiád?",
+    "starter3": "Hogyan gondolkodsz az AI ügynökökről?",
+    "placeholder": "Kérdezd meg Tseka lelkét...",
+    "powered_by": "Claude Haiku hajtja · Jövő: OpenClaw",
+    "error": "Valami hiba történt. Kérjük, próbáld újra.",
+    "auth_required": "Jelentkezz be, hogy beszélj Tseka lelkével",
+    "auth_button": "Bejelentkezés a csevegéshez",
+    "metadata_title": "Lelk – Tseka Luk",
+    "metadata_desc": "Egy AI ügynök, amely úgy gondolkodik és válaszol, mint Tseka Luk."
   },
   "hero": {
-    "status": "Available for select collaborations",
-    "greeting": "Hi, I'm Tseka",
-    "tagline": "AI-Native Builder",
-    "description": "I design and build AI-powered products from zero to one. Focused on making complex technology feel simple, useful, and beautiful—shipping fast and iterating in public.",
-    "cta_primary": "See my work",
-    "cta_secondary": "What I'm doing now",
+    "status": "Kiválasztott együttműködésekhez elérhető",
+    "greeting": "Szia, Tseka vagyok",
+    "tagline": "AI-Native Építő",
+    "description": "AI-alapú termékeket tervezek és építek nulláról. A komplex technológia egyszerű, hasznos és szép élménnyé alakítására fókuszálok – gyorsan szállítok és nyilvánosan iterálok.",
+    "cta_primary": "Munkáim megtekintése",
+    "cta_secondary": "Jelenlegi tevékenységem",
     "pills": {
-      "role": "Full-stack AI Engineer",
+      "role": "Full-stack AI mérnök",
       "stack": "TypeScript + Python",
-      "location": "Wuxi, China",
-      "mode": "Building in Public"
+      "location": "Wuxi, Kína",
+      "mode": "Nyilvános építés"
     },
-    "social_proof": "Trusted by collaborators across AI, design & engineering"
+    "social_proof": "AI, design és mérnöki együttműködők bíznak bennem"
   },
   "focus": {
-    "label": "Mission",
-    "headline": "My focus is on robust engineering, AI-native products, and scalable systems to",
-    "headline_muted": "deliver real-world impact.",
+    "label": "Fókusz",
+    "headline": "A fókuszom a robusztus mérnöki megoldásokra, az AI-alapú termékekre és a skálázható rendszerekre irányul, hogy",
+    "headline_muted": "valós hatást érjek el.",
     "pills": {
-      "ai_agents": "AI Agents",
-      "ux_engineering": "UX Engineering",
-      "fullstack_architecture": "Full-stack Architecture",
-      "systems_design": "Systems Design",
-      "open_source": "Open Source",
-      "product_strategy": "Product Strategy"
+      "ai_agents": "AI Ügynökök",
+      "ux_engineering": "UX Mérnöki",
+      "fullstack_architecture": "Full-stack Architektúra",
+      "systems_design": "Rendszertervezés",
+      "open_source": "Nyílt Forráskód",
+      "product_strategy": "Termékstratégia"
     }
   },
   "process": {
-    "label": "/ How I work",
-    "headline": "Path to shipped features",
-    "step1_title": "Architecture",
-    "step1_desc": "Mapping out the system constraints, data flow, and UI surface. Deciding exactly what to build and what not to build.",
-    "step2_title": "Implementation",
-    "step2_desc": "Deep focus engineering. Translating the mental model into solid Next.js and Python code with robust AI integrations.",
-    "step3_title": "Refinement",
-    "step3_desc": "Polishing the sharp edges. Adding micro-animations, optimizing performance, and listening closely to telemetry and user feedback."
+    "label": "/ Hogyan dolgozom",
+    "headline": "Út az elkészült funkciókhoz",
+    "step1_title": "Tervezés",
+    "step1_desc": "A rendszer korlátainak, az adatfolyamnak és a felhasználói felületnek a feltérképezése. Pontosan eldönteni, mit építünk meg és mit nem.",
+    "step2_title": "Implementálás",
+    "step2_desc": "Fókuszált mérnöki munka. A mentális modell átváltása szilárd Next.js és Python kódba, robusztus AI integrációkkal.",
+    "step3_title": "Finomhangolás",
+    "step3_desc": "A hegyes élek csiszolása. Mikroanimációk hozzáadása, teljesítmény optimalizálása, valamint a telemetria és a felhasználói visszajelzések figyelése."
   },
   "works": {
-    "label": "/ Selected Works",
-    "headline": "Shipped to production",
-    "view_all": "View all {count} projects"
+    "label": "/ Kiválasztott munkák",
+    "headline": "Éles környezetben üzemel",
+    "view_all": "Összes {count} projekt megtekintése"
   },
   "now_preview": {
-    "headline": "What I'm doing <em>now</em>",
-    "view_all": "Full log"
+    "headline": "Mit <em>most</em> csinálok",
+    "view_all": "Teljes napló"
   },
   "now": {
     "sections": {
-      "building": "Building",
-      "shipped": "Shipped",
-      "thinking": "Thinking",
-      "reading": "Reading"
+      "building": "Építés",
+      "shipped": "Kiszállítva",
+      "thinking": "Gondolkodás",
+      "reading": "Olvasás"
     },
-    "no_updates": "No updates yet.",
-    "last_updated": "Last updated:"
+    "no_updates": "Még nincsenek frissítések.",
+    "last_updated": "Utoljára frissítve:"
   },
   "pricing": {
-    "label": "/ Engagement Models",
-    "headline": "Choose how we work together",
-    "description": "Not a Swiss army knife — a studio that delivers every domain to professional standards.",
-    "recommended": "Recommended",
-    "availability": "Accepting new projects · ~2 weeks to start",
-    "capabilities_label": "/ Capabilities",
-    "radar_title": "Capability",
+    "label": "/ Munkakapcsolati Modellek",
+    "headline": "Válaszd ki, hogyan dolgozzunk együtt",
+    "description": "Nem svájci bicska — egy stúdió, amely minden területen professzionális színvonalat biztosít.",
+    "recommended": "Ajánlott",
+    "availability": "Új projekteket fogadunk · ~2 hét indulásig",
+    "capabilities_label": "/ Képességek",
+    "radar_title": "Képesség",
     "stats": [
       {
         "value": 50,
@@ -137,65 +137,49 @@
     "tiers": {
       "chat": {
         "name": "Chat",
-        "price": "Free",
-        "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
-        "cta": "Talk to my Soul",
+        "price": "Ingyenes",
+        "description": "15 perces gyors hívás",
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
+        "cta": "Beszélj a Soulommal",
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "Kávé",
         "price": "¥18",
-        "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
-        "cta": "Buy me a coffee",
+        "description": "Egy kávé ára",
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
+        "cta": "Vegyél nekem egy kávét",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
       "hire": {
-        "name": "Hire Me",
-        "price": "Per project",
-        "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
-        "cta": "Extend an Olive Branch",
+        "name": "Alkalmazz",
+        "price": "Projektenként",
+        "description": "Teljes professzionális együttműködés",
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
+        "cta": "Nyújts olajágat",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
       "partner": {
         "name": "Dream Partner",
-        "price": "Grow together",
-        "description": "Long-term co-creation",
+        "price": "Növekedj együtt",
+        "description": "Hosszú távú együttműködés",
         "features": [
           "Everything above",
           "Product co-creation",
           "Growth hacking system",
           "Equity / revenue share"
         ],
-        "cta": "Share your vision",
+        "cta": "Oszd meg a víziódat",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
     },
     "services": {
       "engineering": {
-        "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "name": "Termékfejlesztés",
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
-        "name": "AI & Automation",
+        "name": "AI és automatizálás",
         "items": [
           "AI Agent architecture",
           "OpenClaw workflows",
@@ -204,14 +188,11 @@
         ]
       },
       "design": {
-        "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "name": "Design és termék",
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
-        "name": "Growth & Global",
+        "name": "Növekedés és globális",
         "items": [
           "Marketing strategy",
           "Growth hacking",
@@ -221,315 +202,307 @@
         ]
       },
       "consulting": {
-        "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "name": "Konzultáció",
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
-        "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "name": "VC és stratégia",
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
   "constellation": {
     "label": "/ Constellation",
-    "headline": "The people who know",
-    "description": "They've worked with him. They've seen the work. Here's what they think.",
-    "cta": "Leave a fragment",
-    "cta_hint": "Be honest.",
-    "empty": "Nothing here yet."
+    "headline": "Aki ismeri",
+    "description": "Ők már dolgoztak vele. Ők látták a munkát. Íme, mit gondolnak.",
+    "cta": "Hagyj egy fragmentumot",
+    "cta_hint": "Légy őszinte.",
+    "empty": "Még nincs itt semmi."
   },
   "cta": {
-    "headline": "Let's build something",
-    "description": "I work with teams and founders who see digital presence and AI not just as a duty, but as a strategic growth driver.",
-    "email": "Start a project",
-    "calendar": "Book a call"
+    "headline": "Hozzunk létre valami nagyot",
+    "description": "Olyan csapatokkal és alapítókkal dolgozom, akik a digitális jelenlétet és az AI-t nem csak kötelességnek, hanem stratégiai növekedési hajtóerőnek tekintik.",
+    "email": "Projekt indítása",
+    "calendar": "Időpontfoglalás"
   },
   "footer": {
-    "tagline": "Building what doesn't exist yet.",
-    "status_available": "Available for select collaborations",
-    "location": "Wuxi, China",
-    "nav_work": "Work",
-    "nav_thinking": "Thinking",
-    "nav_now": "Now",
-    "nav_about": "About",
-    "nav_soul": "Soul",
-    "nav_links": "Links",
-    "email_cta": "Start a project →",
-    "built_with": "Built with",
-    "back_to_top": "↑ Back to top",
-    "rss_label": "RSS Feed",
+    "tagline": "A létezőt túlmutató dolgokat építünk.",
+    "status_available": "Válogatott együttműködésekre elérhető",
+    "location": "Wuxi, Kína",
+    "nav_work": "Munkák",
+    "nav_thinking": "Gondolatok",
+    "nav_now": "Most",
+    "nav_about": "Rólunk",
+    "nav_soul": "Lélek",
+    "nav_links": "Linkek",
+    "email_cta": "Projekt indítása →",
+    "built_with": "Ezzel építve",
+    "back_to_top": "↑ Vissza az elejére",
+    "rss_label": "RSS hírfolyam",
     "github_label": "GitHub",
     "x_label": "X (Twitter)",
     "linkedin_label": "LinkedIn",
     "wechat_label": "WeChat",
-    "wechat_copied": "WeChat ID copied!"
+    "wechat_copied": "WeChat ID másolva!"
   },
   "pages": {
     "home": {
       "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_desc": "CEO és AI-Native Builder a Nebutra Intelligence-nál. Intelligens rendszereket épít, nem csak termékeket."
     },
     "work": {
-      "label": "/ 19 shipped projects",
-      "headline": "Things I've built",
-      "description": "Shipped products, research tools, and AI experiments. Most are real projects with real users.",
-      "metadata_title": "Work — Tseka Luk",
-      "metadata_desc": "Shipped products, research tools, and AI experiments.",
-      "back": "All Projects",
-      "source_code": "Source Code",
-      "live_demo": "Live Demo"
+      "label": "/ 19 elkészült projekt",
+      "headline": "Amit építettem",
+      "description": "Elkészült termékek, kutatási eszközök és AI kísérletek. A legtöbb valós projekt valós felhasználókkal.",
+      "metadata_title": "Munkák — Tseka Luk",
+      "metadata_desc": "Elkészült termékek, kutatási eszközök és AI kísérletek.",
+      "back": "Minden projekt",
+      "source_code": "Forráskód",
+      "live_demo": "Élő demó"
     },
     "thinking": {
-      "label": "/ Essays & ideas",
-      "headline": "Thinking",
-      "metadata_title": "Thinking — Tseka Luk",
-      "metadata_desc": "Essays on building, growth, and AI.",
-      "empty_title": "Essays coming soon.",
-      "empty_subtitle": "In the meantime, ask <link>my Soul</link>."
+      "label": "/ Esszék és ötletek",
+      "headline": "Gondolatok",
+      "metadata_title": "Gondolatok — Tseka Luk",
+      "metadata_desc": "Esszék az építésről, a növekedésről és az AI-ról.",
+      "empty_title": "Hamarosan esszék.",
+      "empty_subtitle": "Addig kérdezd meg <link>a Soulomat</link>."
     },
     "now": {
-      "label": "/ Updated daily",
-      "headline": "Now",
-      "description": "This page is updated daily by an AI agent that reviews my work and distills the highlights. Think of it as a living changelog for what I'm building, thinking, and shipping.",
-      "metadata_title": "Now — Tseka Luk",
-      "metadata_desc": "What I'm currently working on, thinking about, and shipping."
+      "label": "/ Naponta frissítve",
+      "headline": "Most",
+      "description": "Ezt az oldalt naponta frissíti egy AI ügynök, amely áttekinti a munkámat és kiemeli a legfontosabbakat. Tekintheted élő változásnaplónak arról, amit építek, gondolok és szállítok.",
+      "metadata_title": "Most — Tseka Luk",
+      "metadata_desc": "Amit éppen csinálunk, amiről gondolkodunk és amit kiadunk."
     },
     "about": {
-      "metadata_title": "About — Tseka Luk",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-      "label": "/ About",
-      "headline": "Building intelligent systems,",
-      "headline_muted": "not just products.",
-      "bio_1": "I'm Tseka Luk, CEO of Nebutra Intelligence, based in Wuxi, China. I build AI-native products designed for global markets—tools that are not just technically sophisticated but genuinely useful and beautifully simple.",
-      "bio_2": "My philosophy is what I call Vibe Business: build with taste, ship with speed, and let the product speak louder than any pitch deck. Every project starts from a real itch, and every feature earns its place.",
-      "bio_3": "I think in systems, obsess over details, and believe the best way to predict the future is to build it—one commit at a time.",
+      "metadata_title": "Rólunk — Tseka Luk",
+      "metadata_desc": "CEO és AI-native fejlesztő a Nebutra Intelligence-nél. Intelligens rendszereket építünk, nem csak termékeket.",
+      "label": "/ Rólunk",
+      "headline": "Intelligens rendszereket építünk,",
+      "headline_muted": "nem csak termékeket.",
+      "bio_1": "Tseka Luk vagyok, a Nebutra Intelligence CEO-ja, Wuxi-ban, Kínában. AI-native termékeket építek, amelyeket a globális piacokra tervezünk – eszközöket, amelyek nemcsak technikailag kifinomultak, hanem valóban hasznosak és gyönyörűen egyszerűek.",
+      "bio_2": "A filozófiám az, amit Vibe Business-nek nevezek: ízléssel építeni, sebességgel kiadni, és hagyni, hogy a termék hangosabb legyen, mint bármely pitch deck. Minden projekt egy valódi igényből indul, és minden funkció megérdemli a helyét.",
+      "bio_3": "Rendszerekben gondolkodom, a részletekre vagyok obszesszív, és úgy hiszem, a jövő legjobb előrejelzési módja az, hogy megépítjük – egy commit-onként.",
       "photo_tag": "INTP · 4w5",
-      "photo_location": "Wuxi, China",
-      "stat_projects": "Projects",
-      "stat_awards": "Awards",
-      "stat_first_prizes": "First Prizes",
-      "stat_certs": "Certs",
-      "resume_download": "Download Resume",
-      "journey_label": "/ Journey",
-      "journey_2020": "Self-taught web development & digital marketing",
-      "journey_2022": "BSc in Information & Computing Science and BEng in Computer Science & Technology, Jiangsu Ocean University",
-      "journey_2023": "AI-native engineering, competitive programming",
-      "journey_2024": "Founded Wuxi Nebutra Intelligence Technology",
-      "journey_2025": "CEO, Nebutra Intelligence — building for global markets",
-      "journey_now": "Shipping AI-native products, one commit at a time",
-      "awards_label": "/ Things I've tried",
-      "awards_count": "10 attempts",
-      "awards_description": "Not an expert at anything — just someone who wants to try everything, and try it well.",
-      "award_1_title": "MCM/ICM Mathematical Modeling",
-      "award_1_level": "Honorable Mention",
-      "award_1_detail": "NSGA-III tourism optimizer, 8.3% prediction error vs. 28,000+ teams",
+      "photo_location": "Wuxi, Kína",
+      "stat_projects": "Projektek",
+      "stat_awards": "Díjak",
+      "stat_first_prizes": "Első díjak",
+      "stat_certs": "Tanúsítványok",
+      "resume_download": "Önéletrajz letöltése",
+      "journey_label": "/ Út",
+      "journey_2020": "Önvédelmes webfejlesztés és digitális marketing",
+      "journey_2022": "BSc az Információs és Számítástechnikai Tudományokból és BEng a Számítástechnika és Technológia területén, Jiangsu Ocean University",
+      "journey_2023": "AI-native mérnöki munka, versenyprogramozás",
+      "journey_2024": "Alapítva a Wuxi Nebutra Intelligence Technology",
+      "journey_2025": "CEO, Nebutra Intelligence — globális piacokért épít",
+      "journey_now": "AI-native termékeket szállítunk, egy commit-onként",
+      "awards_label": "/ Amit kipróbáltam",
+      "awards_count": "10 kísérlet",
+      "awards_description": "Nem vagyok szakértő semmiben — csak valaki, aki mindent kipróbálni szeretne, és jól.",
+      "award_1_title": "MCM/ICM Matematikai Modellépítés",
+      "award_1_level": "Emlékérem",
+      "award_1_detail": "NSGA-III turisztikai optimalizáló, 8,3% előrejelzési hiba 28 000+ csapat közül",
       "award_2_title": "Lanqiao Cup C/C++ (Jiangsu)",
-      "award_2_level": "First Prize",
-      "award_2_detail": "Top 1% in provincial algorithmic programming",
-      "award_3_title": "TAM-SEM Low-Altitude Economy",
-      "award_3_level": "First Prize (Provincial)",
-      "award_3_detail": "2,609 respondents, discovered 'risk paradox' (beta=0.262, p<0.001)",
-      "award_4_title": "APMCM Mathematical Modeling",
-      "award_4_level": "First Prize",
-      "award_4_detail": "Pet industry forecast: LASSO R-squared=0.9850, predicted $52B market",
-      "award_5_title": "Shuwei Cup Math Modeling",
-      "award_5_level": "First Prize + Grand Innovation",
-      "award_5_detail": "Biomass co-pyrolysis: found 28.44% optimal ratio via LightGBM + PSO",
-      "award_6_title": "Brand Strategy Competition",
-      "award_6_level": "Second Prize (National)",
-      "award_6_detail": "1,200+ samples, Claude + Flux + Midjourney AIGC pipeline",
-      "award_7_title": "Global AI Algorithm Elite",
-      "award_7_level": "Third Prize (National Final)",
-      "award_7_detail": "Warehouse drone: 95% recognition accuracy, 3-min shelf traversal",
-      "award_8_title": "National Math Modeling (Jiangsu)",
-      "award_8_level": "Second Prize",
-      "award_8_detail": "Real estate cost prediction: Random Forest outperformed CNN-LSTM",
-      "award_9_title": "Electronic Design (TI Cup)",
-      "award_9_level": "Second Prize",
-      "award_9_detail": "Self-aiming system: adaptive PID + Kalman filter on MSPM0G3507",
-      "award_10_title": "Translation Competition",
-      "award_10_level": "Grand Prize (National Final)",
-      "award_10_detail": "Non-English major, highest national honor in bilingual translation",
-      "credentials_label": "/ Credentials",
-      "cred_1": "Columbia University — Numerical Models (Grade A)",
-      "cred_2": "Huawei HCIA-Datacom Network Engineer",
-      "cred_3": "HarmonyOS Advanced Developer",
-      "cred_4": "Utility Patent — Cable Distribution Equipment",
-      "cred_5": "3 Software Copyrights (Power Opt, OD Classify, Graph Solver)",
+      "award_2_level": "Első díj",
+      "award_2_detail": "Az első 1% a tartományi algoritmikus programozásban",
+      "award_3_title": "TAM-SEM Alacsony Magasságú Gazdaság",
+      "award_3_level": "Első díj (Tartományi)",
+      "award_3_detail": "2 609 válaszadó, felfedezte a 'kockázat-paradoxont' (beta=0,262, p<0,001)",
+      "award_4_title": "APMCM Matematikai Modellépítés",
+      "award_4_level": "Első díj",
+      "award_4_detail": "Háziállat-ipar előrejelzés: LASSO R-négyzet=0,9850, 52 milliárd USD piacot jósolt",
+      "award_5_title": "Shuwei Cup Matematikai Modellépítés",
+      "award_5_level": "Első díj + Nagy Innováció",
+      "award_5_detail": "Biomass együttes-pirolyzise: 28,44%-os optimális arányt találtunk LightGBM + PSO segítségével",
+      "award_6_title": "Márkastratégiai Verseny",
+      "award_6_level": "Második díj (Országos)",
+      "award_6_detail": "1200+ minta, Claude + Flux + Midjourney AIGC folyamat",
+      "award_7_title": "Globális AI Algoritmus Élite",
+      "award_7_level": "Harmadik díj (Országos Döntő)",
+      "award_7_detail": "Raktári drón: 95%-os felismerési pontosság, 3 percnyi polcbejárás",
+      "award_8_title": "Országos Matematikai Modellverseny (Jiangsu)",
+      "award_8_level": "Második díj",
+      "award_8_detail": "Ingatlan költségbecslés: a Random Forest felülmúlta a CNN-LSTM-et",
+      "award_9_title": "Elektronikai Tervezés (TI Kupa)",
+      "award_9_level": "Második díj",
+      "award_9_detail": "Önvezérlő rendszer: adaptív PID + Kalman-szűrő MSPM0G3507-en",
+      "award_10_title": "Fordítási Verseny",
+      "award_10_level": "Nagydíj (Országos Döntő)",
+      "award_10_detail": "Nem angol szakos, a kétnyelvű fordítás legmagasabb országos elismerése",
+      "credentials_label": "/ Tanúsítványok",
+      "cred_1": "Columbia Egyetem — Numerikus Modellek (A osztály)",
+      "cred_2": "Huawei HCIA-Datacom hálózati mérnök",
+      "cred_3": "HarmonyOS haladó fejlesztő",
+      "cred_4": "Használati minta — Kábelosztó berendezés",
+      "cred_5": "3 szoftver szerzői jog (Power Opt, OD Classify, Graph Solver)",
       "cred_6": "CET-6: 543 · CET-4: 575",
-      "cred_7": "Macau UST — Innovation & Entrepreneurship",
-      "cred_8": "Prompt Engineer (Datawhale x iFLYTEK)",
-      "personality_label": "/ Personality",
+      "cred_7": "Macau UST — Innováció és vállalkozás",
+      "cred_8": "Prompt mérnök (Datawhale x iFLYTEK)",
+      "personality_label": "/ Személyiség",
       "personality_intp_name": "INTP",
-      "personality_intp_subtitle": "The Logician",
-      "personality_intp_desc": "Analytical, systematic, and driven by an insatiable curiosity about how systems really work.",
+      "personality_intp_subtitle": "A logikus",
+      "personality_intp_desc": "Elemző, rendszerszintű, és egy kielégíthetetlen kíváncsiság hajtja arra vonatkozóan, hogy a rendszerek hogyan működnek valójában.",
       "personality_intp_source": "16Personalities",
       "personality_4w5_name": "4w5",
-      "personality_4w5_subtitle": "The Bohemian",
-      "personality_4w5_desc": "Identity-driven depth and authentic self-expression, tempered by intellectual withdrawal.",
+      "personality_4w5_subtitle": "A bohém",
+      "personality_4w5_desc": "Identitásvezérelt mélység és hiteles önkifejezés, amelyet az intellektuális visszahúzódás mérsékel.",
       "personality_4w5_source": "Enneagram",
-      "beliefs_label": "/ Things I believe",
-      "belief_1": "The people who are crazy enough to think they can change the world are the ones who do.",
+      "beliefs_label": "/ Amit hiszek",
+      "belief_1": "Azt a világot megváltoztatni képesnek tartó őrültek azok, akik valóban meg is változtatják.",
       "belief_1_credit": "— Steve Jobs",
-      "life_label": "/ Life",
-      "life_music": "Music",
-      "life_philosophy": "Philosophy",
-      "life_games": "Games",
-      "contact_anchor_label": "/ Contact",
-      "contact_headline": "Let's build something"
+      "life_label": "/ Élet",
+      "life_music": "Zene",
+      "life_philosophy": "Filozófia",
+      "life_games": "Játékok",
+      "contact_anchor_label": "/ Kapcsolat",
+      "contact_headline": "Készítsünk valami nagyot"
     },
     "uses": {
-      "label": "/ Uses",
-      "headline": "What I use to build.",
-      "description": "Hardware, software, and AI tools I actually use daily. Dogfooding included.",
-      "section_workstation": "/ Workstation",
-      "section_editors": "/ Editors",
-      "section_terminal": "/ Terminal",
-      "section_ai_toolkit": "/ AI Toolkit",
-      "ai_toolkit_desc": "Tools I actively use — not a marketing list. I switch between them depending on the task.",
+      "label": "/ Használat",
+      "headline": "Amivel dolgozom.",
+      "description": "Hardverek, szoftverek és AI eszközök, amelyeket nap mint nap használok. Dogfooding is beletartozik.",
+      "section_workstation": "/ Munkaállomás",
+      "section_editors": "/ Szerkesztők",
+      "section_terminal": "/ Terminál",
+      "section_ai_toolkit": "/ AI Eszközök",
+      "ai_toolkit_desc": "Eszközök, amelyeket ténylegesen használok – nem marketing lista. A feladattól függően váltok közöttük.",
       "section_dogfooding": "/ Dogfooding"
     },
     "links": {
-      "headline": "Links",
-      "description": "Find me across the internet.",
-      "international": "International",
-      "china": "China Platforms",
-      "wechat_click": "Click to see QR code",
-      "metadata_title": "Links — Tseka Luk",
-      "metadata_desc": "Find me across the internet."
+      "headline": "Linkek",
+      "description": "Találj meg az interneten.",
+      "international": "Nemzetközi",
+      "china": "Kínai platformok",
+      "wechat_click": "Kattints a QR-kód megtekintéséhez",
+      "metadata_title": "Linkek — Tseka Luk",
+      "metadata_desc": "Találj meg az interneten."
     },
     "privacy": {
-      "metadata_title": "Privacy Policy — Tseka Luk",
-      "metadata_desc": "How this site handles your data.",
-      "headline": "Privacy Policy",
-      "last_updated": "Last updated: March 2026",
-      "intro": "This site is a personal portfolio. I respect your privacy and collect as little data as possible.",
-      "analytics_title": "Analytics",
-      "analytics_body": "This site uses Plausible Analytics, a privacy-friendly, cookie-free analytics tool. No personal data is collected. All data is aggregated and anonymous. No data is shared with third parties.",
-      "auth_title": "Authentication",
-      "auth_body": "If you sign in (via GitHub, Google, or Linux DO), I receive your public profile information (name, avatar, email if available). This is used solely to identify you in the Soul chat. I do not sell, share, or use this data for any other purpose. Session data is stored as an encrypted JWT cookie in your browser.",
+      "metadata_title": "Adatvédelmi irányelvek — Tseka Luk",
+      "metadata_desc": "Hogyan kezeli ez az oldal az adataidat.",
+      "headline": "Adatvédelmi nyilatkozat",
+      "last_updated": "Utoljára frissítve: 2026. március",
+      "intro": "Ez az oldal egy személyes portfólió. Tiszteletben tartom az adataidat, és csak a lehető legkevesebb adatot gyűjtöm.",
+      "analytics_title": "Analitika",
+      "analytics_body": "Ez az oldal a Plausible Analytics-t használja, egy adatvédelmi szempontból barátságos, sütik nélküli analitikai eszközt. Nem gyűjtünk személyes adatokat. Minden adat aggregált és névtelen. Az adatokat nem osztjuk meg harmadik felekkel.",
+      "auth_title": "Hitelesítés",
+      "auth_body": "Ha bejelentkezel (GitHub, Google vagy Linux DO segítségével), megkapom a nyilvános profilled adatait (név, avatar, e-mail, ha elérhető). Ezt kizárólag azonosításra használom a Soul chatben. Nem adom el, nem osztom meg és nem használom más célra ezt az adatot. A munkamenet adatait titkosított JWT sütiként tárolom a böngésződben.",
       "chat_title": "Soul Chat",
-      "chat_body": "Messages you send in the Soul chat are processed by the Anthropic API (Claude) in real time and are not stored on my servers. Conversation history exists only in your browser session.",
-      "cookies_title": "Cookies",
-      "cookies_body": "This site uses only essential cookies: a session cookie for authentication and a theme preference cookie. No tracking cookies are used.",
-      "third_party_title": "Third-party Services",
-      "third_party_body": "Plausible Analytics (privacy-friendly, EU-hosted), Anthropic API (chat processing), Vercel (hosting). No advertising or tracking services are used.",
-      "contact_title": "Contact",
-      "contact_body": "For any privacy-related questions, reach me at"
+      "chat_body": "A Soul chatben küldött üzeneteidet az Anthropic API (Claude) dolgozza fel valós időben, és nem tárolom őket a szervereimen. A beszélgetés előzményei csak a böngésző munkamenetedben léteznek.",
+      "cookies_title": "Sütik",
+      "cookies_body": "Ez az oldal csak alapvető sütiket használ: egy hitelesítési munkamenet-sütit és egy témaválasztási sütit. Nem használunk nyomkövető sütiket.",
+      "third_party_title": "Harmadik féltől származó szolgáltatások",
+      "third_party_body": "Plausible Analytics (adatvédelmi szempontból barátságos, EU-s szerveren hosztolt), Anthropic API (chat feldolgozás), Vercel (hosztolás). Nem használunk hirdetési vagy nyomkövető szolgáltatásokat.",
+      "contact_title": "Kapcsolat",
+      "contact_body": "Adatvédelmi kérdésekkel fordulj hozzám a következő címen:"
     },
     "guestbook": {
-      "label": "/ Guestbook",
-      "metadata_title": "Guestbook — Tseka Luk",
-      "metadata_desc": "Leave a message. Say hello.",
-      "headline": "Guestbook",
-      "description": "Leave a message, say hello, or share what you're building.",
-      "sign_in_prompt": "Sign in to leave a message.",
-      "placeholder": "Say something nice...",
-      "submit": "Post",
-      "empty": "No messages yet. Be the first!"
+      "label": "/ Vendégkönyv",
+      "metadata_title": "Vendégkönyv — Tseka Luk",
+      "metadata_desc": "Hagyj üzenetet. Mondj egy sziasztót.",
+      "headline": "Vendégkönyv",
+      "description": "Hagyj üzenetet, köszönj, vagy oszd meg, mit építesz.",
+      "sign_in_prompt": "Jelentkezz be üzenet küldéséhez.",
+      "placeholder": "Írj valami kedveset...",
+      "submit": "Közzétesz",
+      "empty": "Még nincsenek üzenetek. Légy az első!"
     }
   },
   "projects": {
     "any2md": {
-      "tagline": "Where other converters lose 40% of context, this one keeps 93%",
-      "description": "Most converters silently drop formulas, tables, and cross-references. any2md uses a dual-engine—PyMuPDF for text + Qwen-VL for vision—then DeepSeek LLM reconstructs context via layered prompt + few-shot + CoT. Processes 68 pages/min with 85% table structuring and 90% LaTeX formula preservation. Imported 20,000+ pages into a team knowledge base in one week, cutting manual cleanup by 70%."
+      "tagline": "Míg más konverterek 40%-át elveszítik a kontextusból, ez az 93%-ot megőrzi",
+      "description": "A legtöbb konverter csendben eldobja a képleteket, táblázatokat és kereszt-hivatkozásokat. Az any2md kettős motorral működik – PyMuPDF szöveghez + Qwen-VL látáshoz –, majd a DeepSeek LLM rétegzett prompttal, few-shot és CoT módszerrel rekonstruálja a kontextust. 68 oldalt/perc sebességgel dolgozza fel, 85%-os táblázat-strukturálással és 90%-os LaTeX-képlet-megőrzéssel. Egy hét alatt 20 000+ oldalt importált egy csapat tudásbázisba, 70%-kal csökkentve a manuális tisztítást."
     },
     "low-altitude-economy": {
-      "tagline": "Discovered a paradox: risk perception actually increases adoption",
-      "description": "Everyone assumed perceived risk would deter UAM adoption. Our TAM–SEM model on 2,609 respondents (93.1% recovery rate, KMO=0.951) proved the opposite: risk positively drives willingness to adopt (β=0.262, p<0.001). We also mined 1,695 Bilibili comments with SnowNLP to map public sentiment. The “risk paradox” finding challenged a decade of technology adoption literature. Provincial First Prize."
+      "tagline": "Felfedeztük a paradoxont: a kockázatérzékelés valójában növeli az elfogadást",
+      "description": "Mindenki úgy vélte, hogy a kockázatérzékelés visszatartja a UAM-elfogadást. 2 609 válaszadóval végzett TAM–SEM modellünk (93,1%-os visszaszerzési arány, KMO=0,951) az ellenkezőjét bizonyította: a kockázat pozitívan hajtja az elfogadási hajlandóságot (β=0,262, p<0,001). A SnowNLP segítségével 1 695 Bilibili-hozzászólást is elemeztünk a nyilvános hangulat feltérképezésére. A „kockázat-paradoxon” felfedezés egy évtizedes technológia-elfogadási irodalmat vitatott meg. Tartományi első díj."
     },
     "nebutra-sailor": {
-      "tagline": "One monorepo, 4 production apps, 12,000+ lines of shared code",
-      "description": "Enterprise-grade monorepo powering 4 apps (marketing, dashboard, docs, studio) from 6 shared packages. Next.js 16 + React 19 + Tailwind v4, with a custom design token pipeline, 541 tree-shakable icons, and multi-theme engine supporting 6 oklch color schemes. Ships features 3x faster than separate repos."
+      "tagline": "Egy monorepo, 4 produkciós alkalmazás, 12 000+ sor megosztott kód",
+      "description": "Vállalati szintű monorepo, amely 4 alkalmazást (marketing, dashboard, dokumentáció, stúdió) hajt 6 megosztott csomagból. Next.js 16 + React 19 + Tailwind v4, egyedi design token pipeline-nal, 541 tree-shakable ikonnal és több témát támogató motorral, amely 6 oklch színrendszert támogat. 3x gyorsabban szállít funkciókat, mint külön repo-k."
     },
     "mcm-icm": {
-      "tagline": "Optimizing tourism vs. environment with 8.3% prediction error",
-      "description": "MCM/ICM 2025 (Problem B): built a system dynamics + NSGA-III multi-objective optimizer balancing tourist flow, environmental quality, and social satisfaction. Achieved 8.3% tourist prediction error with R²>0.5 on a three-dimensional coupled model. Competed against 28,000+ teams globally. Honorable Mention."
+      "tagline": "Turizmus vs. környezet optimalizálása 8,3%-os előrejelzési hibával",
+      "description": "MCM/ICM 2025 (B probléma): rendszerdinamika + NSGA-III többcélú optimalizáló rendszer építése a turistaforgalom, környezeti minőség és társadalmi elégedettség egyensúlyára. 8,3%-os turistaelőrejelzési hibát értünk el R²>0,5-ös háromdimenziós csatolt modellen. 28 000+ csapat ellen versenyeztünk globálisan. Emlékezetes említés."
     },
     "biomass-modeling": {
-      "tagline": "Found the exact 28.44% ratio—won Grand Innovation Award for it",
-      "description": "Three-model ensemble (LightGBM + Gaussian Process Regression + PSO) tested across 500+ pyrolysis data points to discover that 28.44% biomass-to-coal ratio maximizes clean energy output with R²>0.95 prediction accuracy. The entropy-weighted fuzzy evaluation framework quantified non-linear interactions between 3 yield types (gas, char, liquid). Judges praised the methodology as transferable across energy domains. First Prize + Grand Innovation Award at Shuwei Cup."
+      "tagline": "Megtaláltuk a pontos 28,44%-os arányt – Grand Innovation Awardot nyertünk érte",
+      "description": "Három modellből álló ensemble (LightGBM + Gaussian Process Regression + PSO) 500+ pirólízis adatponton tesztelve, hogy felfedezzük: a 28,44%-os biomassza-szén arány maximalizálja a tiszta energia kimenetet R²>0,95-ös előrejelzési pontossággal. A entrópia-súlyozott fuzzy értékelési keretrendszer kvantifikálta a 3 hozam típus (gáz, szén, folyadék) nem-lineáris kölcsönhatásait. A bírák a módszertant átvihetőnek tartották az energia területeken. Első díj + Grand Innovation Award a Shuwei Cup-on."
     },
     "pet-industry": {
-      "tagline": "LASSO R²=0.9850 predicted a $52B market by 2026",
-      "description": "Built an integrated forecasting framework (ARIMAX-GARCH + VAR + LASSO + Prophet) spanning market size, pet population, and food manufacturing. LASSO regression identified key drivers with R²=0.9850. Cross-compared US/EU markets using HHI concentration index. Predicted 144.68M pets and 82.8% capacity utilization by 2026."
+      "tagline": "LASSO R²=0,9850 előrejelzett egy 52 milliárd dolláros piacot 2026-ra",
+      "description": "Integrált előrejelzési keretrendszer építése (ARIMAX-GARCH + VAR + LASSO + Prophet) a piaci méret, háziállat-populáció és élelmiszer-gyártás terén. A LASSO regresszió azonosította a kulcsfontosságú hajtóereket R²=0,9850-vel. Amerikai/európai piacok összehasonlítása HHI koncentrációs indexszel. 144,68 millió háziállatot és 82,8%-os kapacitáskihasználást jósoltunk 2026-ra."
     },
     "cursor-export": {
-      "tagline": "86% less time on knowledge management—one-click conversation export",
-      "description": "Cursor IDE extension (7 GitHub stars) that exports AI conversations to structured Markdown. Tested on 214 conversations (1,980 messages): processing time dropped from 5.8 min to 0.8 min per conversation, code snippet loss rate under 0.5%, throughput 12.5 conversations/min. Cross-platform VSIX with >98% install success rate across Windows/macOS/Linux."
+      "tagline": "86%-kal kevesebb idő a tudásmenedzsmentre – egy kattintásos beszélgetés-export",
+      "description": "Cursor IDE bővítmény (7 GitHub csillag), amely AI-beszélgetéseket strukturált Markdownba exportál. 214 beszélgetésen (1 980 üzenet) tesztelve: a feldolgozási idő 5,8 percről 0,8 percre csökkent beszélgetésenként, a kód részletvesztési arány 0,5% alatt, áteresztőképesség 12,5 beszélgetés/perc. Cross-platform VSIX >98%-os telepítési sikerességgel Windows/macOS/Linux rendszereken."
     },
     "brand-strategy": {
-      "tagline": "1,200+ consumer samples × AIGC pipeline = 40% engagement lift",
-      "description": "Led a PEST-SWOT driven brand overhaul for Suzhou’s “林莓莓” agricultural product. Surveyed 1,200+ consumers to map purchase drivers and price sensitivity. Deployed Claude + Flux + Midjourney AIGC toolchain for brand stories and mascot concepts, cutting creative iteration from weeks to days. Projected 40%+ user engagement increase. National Second Prize."
+      "tagline": "1 200+ fogyasztói minta × AIGC pipeline = 40%-os engagement növekedés",
+      "description": "PEST-SWOT vezérelt márkaátalakítást vezettünk Szucsou „林莓莓” mezőgazdasági termékéhez. 1 200+ fogyasztót kérdeztünk fel a vásárlási hajtóerők és árérzékenység feltérképezésére. Claude + Flux + Midjourney AIGC eszközláncot telepítettünk márka történetekhez és mottó koncepciókhoz, csökkentve a kreatív iterációt hetekről napokra. 40%+ felhasználói engagement növekedést jósoltunk. Országos második díj."
     },
     "mineru-skill": {
-      "tagline": "Zero-config Claude Code skill—PDF to Markdown in one command",
-      "description": "Open-source Claude Code skill that wraps MinerU for layout-aware PDF/document conversion. One-command install, no API keys, 3 supported formats (PDF, DOCX, PPTX). Handles 100+ page documents with table and formula preservation. Published on Smithery marketplace, 5+ community installs in first week. Built for the Claude Code ecosystem with auto-detection of document type and intelligent chunking."
+      "tagline": "Zero-config Claude Code skill – PDF-ről Markdownra egy paranccsal",
+      "description": "Nyílt forráskódú Claude Code skill, amely a MinerU-t csomagolja layout-aware PDF/dokumentum konverzióhoz. Egy parancsú telepítés, nincs API kulcs, 3 támogatott formátum (PDF, DOCX, PPTX). 100+ oldalas dokumentumokat kezel táblázat és képlet megőrzéssel. Smithery piacon publikálva, 5+ közösségi telepítés az első héten. Claude Code ökoszisztémához építve dokumentumtípus automatikus felismeréssel és intelligens darabolással."
     },
     "warehouse-drone": {
-      "tagline": "95% recognition accuracy, full shelf scan in under 3 minutes",
-      "description": "Multi-rotor drone system for automated warehouse stocktaking. Integrated STM32 flight controller + OpenMV vision + BLE communication for autonomous waypoint navigation and QR code scanning across 3D shelf structures. 95% barcode recognition accuracy with laser calibration, completing full inventory traversal in under 3 minutes."
+      "tagline": "95%-os felismerési pontosság, teljes polc szkennelés 3 perc alatt",
+      "description": "Többrotoros drónrendszer automatizált raktárkészlet-számláláshoz. Integrált STM32 repülésszabályozó + OpenMV látás + BLE kommunikáció autonóm waypoint navigációhoz és QR-kód szkenneléshez 3D polcstruktúrákon. 95%-os vonalkód-felismerési pontosság lézeres kalibrálással, teljes készlet átvizsgálása 3 perc alatt."
     },
     "cdtmp": {
-      "tagline": "Task success rate +18pp by turning prompt tricks into reusable protocol",
-      "description": "Turned ad-hoc prompt engineering into a structured agent protocol: task decomposition, state machines, retry strategies, and auditable intermediate states. Tested on 120 cross-domain tasks: success rate jumped from 63% to 81%, JSON compliance from 72% to 94%, rework rounds dropped 29%. Framework-agnostic—plugs into LangGraph, Semantic Kernel, or custom executors."
+      "tagline": "A feladat-sikerarány +18pp-rel nőtt a prompt-trükkök újrahasználható protokollá alakításával",
+      "description": "Az ad-hoc prompt engineeringet strukturált ügynök-protokollá alakította: feladatbontás, állapotgépek, újrapróbálási stratégiák és auditálható köztes állapotok. 120 kereszt-domén feladaton tesztelve: a sikerarány 63%-ról 81%-ra ugrott, a JSON-megfelelés 72%-ról 94%-ra, az újrafeldolgozási körök 29%-kal csökkentek. Keretrendszer-független – csatlakoztatható LangGraphhoz, Semantic Kernelhez vagy egyedi végrehajtókhoz."
     },
     "next-unicorn": {
-      "tagline": "Your codebase has 47 hand-rolled wheels—this finds them all",
-      "description": "Every codebase accumulates Vibe Coding debt: custom date formatters, DIY loggers, bespoke state machines. Next-Unicorn audits your code via Context7 MCP, identifies reinvented wheels, generates migration plans, and ships delete-code checklists. 176 tests passed with 29 property-based verifications. Published on Smithery + npm, supports 35+ AI agents including Claude Code, Cursor, and OpenCode."
+      "tagline": "A kódodban 47 kézzel gyúrt kerék van – ez mindet megtalálja",
+      "description": "Minden kódbázis felhalmozza a Vibe Coding adósságot: egyedi dátumformázók, DIY naplózók, testreszabott állapotgépek. A Next-Unicorn a Context7 MCP-n keresztül auditálja a kódodat, azonosítja az újrafeltalált kerekeket, generál migrációs terveket és szállít törlési ellenőrzőlistákat. 176 teszt sikeresen lefutott 29 tulajdonság-alapú ellenőrzéssel. Smithery + npm-en publikálva, támogatja a 35+ AI ügynököt, beleértve a Claude Code-ot, Cursor-t és OpenCode-ot."
     },
     "hydrogem-web": {
-      "tagline": "Real-time water quality dashboard with 5-second refresh and alerts",
-      "description": "React + TypeScript monitoring system tracking 12 water quality parameters (pH, turbidity, dissolved oxygen, etc.) with 5-second auto-refresh and configurable alert thresholds. Built with streaming data visualization and historical trend analysis for environmental monitoring."
+      "tagline": "Valós idejű vízminőségi irányítópult 5 másodperces frissítéssel és figyelmeztetésekkel",
+      "description": "React + TypeScript monitorozó rendszer, amely 12 vízminőségi paramétert követ nyomon (pH, zavarosság, oldott oxigén stb.) 5 másodperces automatikus frissítéssel és konfigurálható figyelmeztetési küszöbértékekkel. Streamelt adatvizualizációval és történelmi trendelemzéssel építve a környezetvédelmi monitorozáshoz."
     },
     "ocr-auto": {
-      "tagline": "100% bbox accuracy on 50 element types—from 65% to 92% in 10 prompt iterations",
-      "description": "Production-grade automated annotation system for document page elements. Async 4-stage pipeline with Qwen VL models identifies 50 element types (12 code languages, 13 interaction formats, 12 content elements, 13 other tags). Three-layer fault tolerance (Retry + RateLimit + CircuitBreaker), SHA256 content-addressed cache, and real-time SSE monitoring dashboard."
+      "tagline": "100% bbox pontosság 50 elem típusán – 65%-ról 92%-ra 10 prompt iteráció alatt",
+      "description": "Gyártási szintű automatizált annotációs rendszer dokumentum-oldal elemekhez. Aszinkron 4 szakaszból álló folyamat a Qwen VL modellekkel azonosítja a 50 elem típust (12 kódnyelv, 13 interakciós formátum, 12 tartalom elem, 13 egyéb címke). Háromrétegű hibatűrés (Retry + RateLimit + CircuitBreaker), SHA256 tartalom-címzett gyorsítótár és valós idejű SSE monitorozó irányítópult."
     },
     "tiktok-pipeline": {
-      "tagline": "8-dimensional annotation across 19 prompt iterations—edge cases included",
-      "description": "Multi-modal visual search relevance labeling pipeline using LLMs. Processes image + text signals across 8 annotation dimensions (visual relevance, content relevance, query/doc drop, functional parity, category granularity, visual similarity, modal corroboration). 19 prompt versions with automated comparison and reflection analysis tools."
+      "tagline": "8 dimenziós annotáció 19 prompt iteráción keresztül – szélső esetek is benne",
+      "description": "Többmódusú vizuális keresési relevancia címkéző folyamat LLM-ekkel. Kép + szöveg jeleket dolgoz fel 8 annotációs dimenzióban (vizuális relevancia, tartalom relevancia, lekérdezés/dokumentum kiesés, funkcionális egyenérték, kategória szemcsézettség, vizuális hasonlóság, módus megerősítés). 19 prompt verzió automatizált összehasonlítással és reflexió elemző eszközökkel."
     },
     "mlbb-analysis": {
-      "tagline": "5 platforms, 6 batch processors, 90%+ accuracy—from manual review to automated pipeline",
-      "description": "Multi-platform video content analysis system covering YouTube, Instagram, TikTok, VK, and Facebook. Refactored from legacy monolith to modular architecture: 5 platform fetchers, 6 batch processors, 5 video analyzers. Fast text analysis achieves 90%+ accuracy with 460x acceleration over manual review, processing 1,207+ videos across batch runs."
+      "tagline": "5 platform, 6 kötegelt feldolgozó, 90%+ pontosság – manuális áttekintéstől az automatizált folyamatig",
+      "description": "Többplatformos videó tartalom elemző rendszer, amely lefedi a YouTube-ot, Instagramot, TikTokot, VK-t és Facebookot. Refaktorálva a legacy monolitból moduláris architektúrára: 5 platform lekérdező, 6 kötegelt feldolgozó, 5 videó elemző. A gyors szöveg elemzés 90%+ pontosságot ér el 460x gyorsítással a manuális áttekintéshez képest, 1,207+ videó feldolgozásával kötegelt futások során."
     },
     "synapse-quant": {
-      "tagline": "8 microservices, real-time GraphQL, TUI cockpit—from raw data to trade thesis",
-      "description": "Open-source quantitative trading copilot for crypto markets. 8 microservices + 9 infrastructure services (17 containers total) with unified TUI cockpit, 41 technical indicators, real-time market data streaming, and in-context AI copilot. TypeScript 5.7 + Python 3.11+, CI/CD with GitHub Actions."
+      "tagline": "8 mikroszolgáltatás, valós idejű GraphQL, TUI irányítópult – nyers adatoktól a kereskedési tételig",
+      "description": "Nyílt forráskódú kvantitatív kereskedési copilot kriptopiacokhoz. 8 mikroszolgáltatás + 9 infrastruktúra szolgáltatás (összesen 17 konténer) egységes TUI irányítópulttal, 41 technikai indikátorral, valós idejű piaci adat streameléssel és kontextusbeli AI copilot-tal. TypeScript 5.7 + Python 3.11+, CI/CD GitHub Actions-szal."
     },
     "hm3d-eval": {
-      "tagline": "4.62/5 evaluation score across 1,000 real 3D scenes—8/8 acceptance criteria passed",
-      "description": "Comprehensive quality evaluation framework for the Habitat-Matterport 3D Research Dataset (1,000 real 3D scenes). Assessed 15+ dimensions including mesh quality, texture integrity, semantic annotation accuracy, and metadata completeness. Achieved 4.62/5 overall score with 100% acceptance pass rate (8/8 criteria). 95% requirement compliance."
+      "tagline": "4.62/5 értékelési pontszám 1,000 valós 3D jeleneten – 8/8 elfogadási kritérium teljesítve",
+      "description": "Átfogó minőségi értékelési keretrendszer a Habitat-Matterport 3D Kutatási Adatbázishoz (1,000 valós 3D jelenet). 15+ dimenziót értékeltek, beleértve a hálózat minőségét, textúra integritást, szemantikai annotáció pontosságát és metaadat teljességet. 4.62/5 általános pontszámot értek el 100% elfogadási aránnyal (8/8 kritérium). 95% követelmény-megfelelés."
     },
     "appen-dashboard": {
-      "tagline": "Enterprise SaaS for a NASDAQ data company: the B2B demo mode playbook in production",
-      "description": "Built multi-tenant reporting infrastructure for Appen (NASDAQ: APT). Next.js 16 monorepo (5 apps + 10 packages) serves TCS, ByteWorks, and DataPower dashboards with Upstash QStash async job queues and Pusher real-time. The breakthrough: a production-grade demo mode with MSW + tRPC mock interception, privacy redaction pipeline (schema validate → redact → normalize → value protocol), and 4 behavioral strategies—solving the #1 enterprise SaaS sales problem."
+      "tagline": "Vállalati SaaS egy NASDAQ adatcégnak: a B2B demó mód playbookja éles környezetben",
+      "description": "Többbérletű jelentési infrastruktúrát épített az Appen-nek (NASDAQ: APT). A Next.js 16 monorepo (5 app + 10 csomag) szolgálja a TCS, ByteWorks és DataPower irányítópultokat Upstash QStash aszinkron feladat sorokkal és Pusher valós idejű funkciókkal. Az áttörés: egy gyártási szintű demó mód MSW + tRPC mock átfogással, adatvédelmi törlési folyamat (séma validálás → törlés → normalizálás → érték protokoll) és 4 viselkedési stratégiával – megoldva az #1 vállalati SaaS értékesítési problémát."
     },
     "t2v-relabeling": {
-      "tagline": "Using better AI to fix worse AI's labeling mistakes—at the cost human reviewers can't match",
-      "description": "Meta-labeling pipeline that audits and corrects mislabeled AI-generated video training data using Gemini 2.5 Flash. Classifies 6 attributes (quality, gender, age, race, scene, season) per video with EWMA-adaptive rate limiting and HTTP/2 concurrency. Processes 60MB+ videos via Gemini Files API without local download. 3 iterative rounds with incremental merge. Human labeling: ~$1/video. This pipeline: ~$0.01/video at scale."
+      "tagline": "Jobb AI-val javítjuk a rosszabb AI címkézési hibáit – olyan költséggel, amit az emberi átnézők nem tudnak megütni",
+      "description": "Meta-címkéző folyamat, amely auditálja és javítja a rosszul címkézett AI által generált videó tanítási adatokat Gemini 2.5 Flash-szal. 6 attribútumot osztályoz (minőség, nem, életkor, faj, jelenet, évszak) videóonként EWMA-alkalmazkodó sebességkorlátozással és HTTP/2 konkurenciával. 60MB+ videókat dolgoz fel a Gemini Files API-n keresztül helyi letöltés nélkül. 3 iteratív kör inkrementális egyesítéssel. Emberi címkézés: ~$1/videó. Ez a folyamat: ~$0.01/videó nagy volumenben."
     },
     "url-annotation": {
-      "tagline": "The TLS fingerprint arms race: when IP blocking fails, impersonate Chrome at the handshake",
-      "description": "Production URL consistency pipeline that defeats TLS-fingerprint bot detection at zero marginal LLM cost. curl_cffi spoofs Chrome 124's full ClientHello (cipher suites, extensions, ordering)—not just User-Agent. Playwright renders JS-heavy SPAs. Local Qwen3:1.7b via Ollama compares semantics without API fees or GDPR exposure. Rotating-ad detection re-fetches 3× to flag domain changes. 30 HTTP + 5 Playwright + 5 LLM concurrent."
+      "tagline": "A TLS-ujjlenyomat-fegyverkezési verseny: amikor az IP-címek letiltása nem működik, Chrome-ot imitálj a kézfogásnál",
+      "description": "Éles környezetben működő URL-konzisztencia-pipeline, amely legyőzi a TLS-ujjlenyomat-alapú bot-észlelést nulla marginális LLM-költséggel. A curl_cffi a Chrome 124 teljes ClientHello-ját hamisítja meg (titkosítási szettek, kiterjesztések, sorrend) – nem csak a User-Agentet. A Playwright rendereli a JS-nehéz SPA-kat. A helyi Qwen3:1.7b az Ollama-n keresztül összehasonlítja a szemantikát API-díjak és GDPR-kitettségek nélkül. A forgó hirdetések észlelése 3×-es újrafelvétellel jelzi a domain-változásokat. 30 HTTP + 5 Playwright + 5 LLM párhuzamosan."
     },
     "3dgs-eval": {
-      "tagline": "3DGS had 2,000+ citations in 6 months but zero enterprise quality standards—we wrote the spec",
-      "description": "First systematic vendor evaluation framework for 3D Gaussian Splatting content production. Multi-round scored assessment across 6 dimensions: HP/LP geometry (pivot + retopology), PBR texture completeness (BaseColor/Normal/Metallic/AO), file naming conventions, semantic annotation, preview standards (8+ renders), and communication SLA. The revelation: vendors weren't technically incapable—they were operationally immature. Multi-round CSV tracker makes every revision cycle auditable."
+      "tagline": "A 3DGS 6 hónap alatt 2000+ idézetet kapott, de nulla vállalati minőségi szabvánnyal – mi írtuk meg a specifikációt",
+      "description": "Az első szisztematikus szolgáltató-értékelési keretrendszer a 3D Gaussian Splatting tartalomgyártáshoz. Több körös, pontozott értékelés 6 dimenzióban: HP/LP geometria (pivot + retopológia), PBR textúra-teljesség (BaseColor/Normal/Metallic/AO), fájlnév-konvenciók, szemantikus annotáció, előnézeti szabványok (8+ render), és kommunikációs SLA. A felfedezés: a szolgáltatók nem voltak technikailag képtelenek – üzemeltetési szempontból voltak éretlenek. A több körös CSV-nyilvántartó minden revíziós ciklust ellenőrizhetővé tesz."
     }
   },
   "thinking": {
-    "latest_label": "Latest Thinking",
-    "latest_headline": "Recent Writings",
-    "view_all": "View All Writings"
+    "latest_label": "Legfrissebb gondolatok",
+    "latest_headline": "Legutóbbi írások",
+    "view_all": "Összes írás megtekintése"
   }
 }

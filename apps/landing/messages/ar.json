@@ -131,7 +131,7 @@
     "columns": {
       "product": "المنتج",
       "resources": "الموارد",
-      "legal": "Legal",
+      "legal": "قانوني",
       "community": "المجتمع"
     },
     "links": {
@@ -781,7 +781,7 @@
           },
           "1": {
             "label": "الحقوق",
-            "desc": "الوصول، التصحيح， الحذف، قابلية النقل، التقييد، والاعتراض."
+            "desc": "الوصول، التصحيح، الحذف، قابلية النقل، التقييد، والاعتراض."
           },
           "2": {
             "label": "مسؤول حماية البيانات",
@@ -1089,7 +1089,7 @@
       },
       "liability": {
         "title": "8. تحديد المسؤولية",
-        "para1": "إلى أقصى حد مسموح به بموجب القانون، لا تتحمل NEBUTRA أي مسؤولية عن الأضرار غير المباشرة، العرضية، الخاصة، التبعية، أو العقابية، أو عن فقدان الأرباح، البيانات， الاستخدام، أو السمعة.",
+        "para1": "إلى أقصى حد مسموح به بموجب القانون، لا تتحمل NEBUTRA أي مسؤولية عن الأضرار غير المباشرة، العرضية، الخاصة، التبعية، أو العقابية، أو عن فقدان الأرباح، البيانات، الاستخدام، أو السمعة.",
         "para2": "في أي حال من الأحوال، لن تتجاوز مسؤوليتنا الإجمالية أكبر مبلغ من بين (أ) المبلغ الذي دفعته لنا خلال الـ 12 شهراً السابقة للمطالبة، أو (ب) 100 دولار أمريكي."
       },
       "termination": {
@@ -1299,7 +1299,7 @@
   "featuresPage": {
     "hero": {
       "badge": "قدرات المنصة",
-      "headlinePrefix": "كل ما تحتاجه لـ ",
+      "headlinePrefix": "كل ما تحتاجه لـ",
       "headlineHighlight": "النشر بثقة.",
       "description": "{brandName} هي منصة SaaS متكاملة — الذكاء الاصطناعي، الفوترة، تعدد المستأجرين، المراقبة، والأمان مدمجة منذ اليوم الأول. توقف عن إعادة بناء طبقة المنصة."
     },
@@ -1335,25 +1335,25 @@
       "billing_f3_desc": "تحديث خطط المنظمات في قاعدة بياناتك تلقائياً عبر أحداث اشتراكات Stripe باستخدام Inngest — بدون مهام cron أو استعلامات متكررة.",
       "rel_category": "الموثوقية",
       "rel_f1_title": "قاطع الدائرة + إعادة المحاولة",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
+      "rel_f1_desc": "تستخدم البوابة وخدمة الذكاء الاصطناعي قاطع دائرة من نوع CLOSED/OPEN/HALF_OPEN مع إرجاع أسي (exponential backoff) واضطراب (jitter) — دون أعطال متتالية.",
       "rel_f2_title": "طابور الرسائل الميتة",
       "rel_f2_desc": "تنتقل معالجات الأحداث التي تستنفد 3 محاولات إعادة إلى طابور الرسائل الميتة (DLQ). أعد تشغيلها فردياً من واجهة الإدارة دون إعادة النشر.",
       "rel_f3_title": "تنبيهات معدل استهلاك SLO",
       "rel_f3_desc": "تنبيهات متعددة النوافذ على غرار Google SRE تُطلق عند معدلات استهلاك 14.4× و6× و3× قبل نفاذ ميزانية الأخطاء الخاصة بك.",
       "sec_category": "الأمان",
       "sec_f1_title": "عناوين CSP مبنية على nonce",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "sec_f1_desc": "سياسة أمان محتوى صارمة ديناميكية مع رموز غير قابلة للتكرار لكل طلب تُنشأ في وسيط Clerk — دون استخدام unsafe-inline في أي مكان.",
       "sec_f2_title": "جدار الحماية ModSecurity WAF",
-      "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
+      "sec_f2_desc": "مجموعة قواعد OWASP الأساسية في وضع DetectionOnly على كل مدخل. تحديد معدل الطلبات عند 30 طلباً في الثانية مع تسامح للاندفاع عبر ملاحظات nginx.",
       "sec_f3_title": "SBOM + أصل SLSA",
-      "sec_f3_desc": "Every release generates a CycloneDX software bill of materials and SLSA provenance attestation, uploaded to the GitHub Release.",
+      "sec_f3_desc": "تولّد كل إصدار قائمة مواد برمجية بصيغة CycloneDX وإثبات منشأ SLSA، تُرفع إلى إصدار GitHub.",
       "obs_category": "الرؤية المراقبة",
       "obs_f1_title": "تتبع OpenTelemetry",
-      "obs_f1_desc": "Distributed traces flow from Next.js → Hono → Python microservices via OTLP. Exported to Jaeger (dev) and Grafana Tempo (prod).",
+      "obs_f1_desc": "تتدفق التتبعات الموزعة من Next.js → Hono → الخدمات المصغرة بلغة Python عبر OTLP. تُصدّر إلى Jaeger (بيئة التطوير) وGrafana Tempo (بيئة الإنتاج).",
       "obs_f2_title": "لوحات Grafana",
-      "obs_f2_desc": "Multi-panel platform overview: SLO availability, error budget remaining, HPA saturation, pod restarts, and CPU throttling.",
+      "obs_f2_desc": "نظرة عامة متعددة اللوحات على المنصة: توافر SLO، ميزانية الأخطاء المتبقية، إشباع HPA، إعادة تشغيل الحاويات، وكبح وحدة المعالجة المركزية.",
       "obs_f3_title": "تتبع أخطاء Sentry",
-      "obs_f3_desc": "Server-side and client-side errors captured with tenant context, request ID, and trace ID for cross-system correlation.",
+      "obs_f3_desc": "يتم التقاط أخطاء الخادم والعميل مع سياق المستأجر ومعرف الطلب ومعرف التتبع للتوافق عبر الأنظمة.",
       "data_category": "البيانات والتحليلات",
       "data_f1_title": "مستودع ClickHouse OLAP",
       "data_f1_desc": "تصل الأحداث إلى ClickHouse لاستعلامات تحليلية سريعة. يقوم dbt بتحويل الأحداث الخام إلى مقاييس نمو من الطبقة الذهبية المرئية في لوحة التحكم.",
@@ -1469,9 +1469,9 @@
     "flowTheme": "السمة",
     "flowThemeDesc": "سمات متعددة باستخدام oklch، 6 قوالب جاهزة، color-mix()",
     "flowUI": "واجهة المستخدم",
-    "flowUIDesc": "مكونات، Storybook，Chromatic",
+    "flowUIDesc": "مكونات، Storybook، Chromatic",
     "card1Title": "مقاييس لونية من 12 خطوة",
-    "card1Desc": "مقياس دلالي متوافق مع Geist: الخلفيات (1-2)، الحالات (3-5)، الحدود (6-8)，الملء (9-10)، النص (11-12).",
+    "card1Desc": "مقياس دلالي متوافق مع Geist: الخلفيات (1-2)، الحالات (3-5)، الحدود (6-8)، الملء (9-10)، النص (11-12).",
     "card2Title": "سمات متعددة باستخدام oklch",
     "card2Desc": "6 قوالب سمات باستخدام oklch مع اشتقاق color-mix(). نطاق عرض Display-P3 مع بديل sRGB.",
     "card3Title": "الانحدار البصري",
@@ -1506,178 +1506,178 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "مجاني لبناء <hl>عليه</hl>",
+      "description": "{brandName}-Sailor مجاني للاستخدام التجاري — MIT على npm، FSL-1.1-ALv2 على المستودع، يتحول إلى Apache-2.0 بعد عامين. تبيع الطبقات المدفوعة الدعم والالتزامات التعاقدية، وليس الإذن."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "مجاني دائماً",
+        "title": "المجتمع",
+        "subtitle": "الجميع",
+        "description": "أي حجم فريق، أي إيرادات. المنتجات التجارية مغلقة المصدر مشمولة.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "الكود المصدري الكامل، جميع الحزم",
+          "closedSourceOk": "الاستخدام التجاري مغلقة المصدر — بدون copyleft",
+          "noAttribution": "لا تسجيل، لا حاجة للإسناد",
+          "communitySupport": "دعم المجتمع — بأقصى جهد"
         },
-        "cta": "View on GitHub"
+        "cta": "عرض على GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "من {price}/سنة",
+        "title": "الفريق",
+        "subtitle": "اشتراك الدعم",
+        "description": "للفرق التي تحتاج التزاماً وليس أملاً. الكود مجاني بالفعل.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "قناة دعم خاصة",
+          "firstResponse": "استجابة أولى خلال يومين عمل، مضمونة",
+          "priorityTriage": "تصنيف أولوية للأخطاء",
+          "upgradeHelp": "مساعدة في الترقية وإشعار بالتغييرات الجذرية"
         },
-        "cta": "Get support"
+        "cta": "احصل على الدعم"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
-        "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "badge": "ابتداءً من 30,000 دولار/سنة",
+        "title": "المؤسسات",
+        "subtitle": "جاهز للشراء المؤسسي",
+        "description": "للمنظمات التي تحتاج إلى طرف يوقع عند مراجعة الشؤون القانونية أو الأمنية أو عمليات الشراء.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "اتفاقية مستوى الاستجابة — 4 ساعات عمل، ساعة واحدة عند توقف الإنتاج",
+          "indemnity": "التعويض والتزام بتحديثات الأمان",
+          "compliance": "اتفاقية معالجة البيانات الموقعة، حزمة الامتثال، والتعهد بالاستمرارية",
+          "trademark": "حقوق العلامة التجارية والتسمية البيضاء"
         },
-        "cta": "Contact sales"
+        "cta": "تواصل مع المبيعات"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "الأسئلة الشائعة",
+      "description": "النسخة المختصرة: الاستخدام مجاني. الدفع مطلوب عندما تحتاج إلينا بشكل تعاقدي.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "لماذا FSL بدلاً من MIT أو AGPL؟",
+          "a": "يسمح FSL بكل الاستخدامات باستثناء بيع بديل لـ Sailor نفسه، وتصبح كل نسخة Apache-2.0 بعد عامين من الإصدار — منح لا رجعة فيه مقدمًا. كان AGPL يعيق الاعتماد في المراجعة القانونية المؤسسية دون حماية أي شيء نحتاج فعليًا إلى حمايته."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "هل الاستخدام التجاري مجاني حقًا؟",
+          "a": "نعم. لا رسوم، ولا مفتاح ترخيص، ولا تسجيل، ولا حد للإيرادات أو عدد الموظفين، ولا نسب. ابنِ منتجًا مغلق المصدر وبيعه."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "ماذا يُعد استخدامًا منافسًا؟",
+          "a": "تقديم Sailor نفسه — خدمة Sailor مُستضافة، أو منصة منافسة مُعاد تعبئتها. بناء SaaS متخصص، أو أداة داخلية، أو مشاريع للعملاء على Sailor لا يُعد استخدامًا منافسًا. إذا كان نموذجك يحتاج ذلك، يمكن أن يتضمن اتفاق المؤسسات إعفاءً كتابيًا."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "ماذا تشتري بالضبط من خلال المستويات المدفوعة؟",
+          "a": "التزامات الدعم، اتفاقيات مستوى الاستجابة، التعويض، أوراق الامتثال، وحقوق العلامة التجارية. أبدًا إذن باستخدام البرنامج — فهو بالفعل ملكك."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "ماذا عن المساهمات مفتوحة المصدر؟",
+          "a": "تتطلب جميع المساهمات اتفاقية CLA. راجع CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "التراخيص — {brandName}",
+      "description": "مجاني للاستخدام التجاري. MIT على npm، وFSL-1.1-ALv2 على المستودع، مع التحويل إلى Apache-2.0."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "رخصة فردية مجانية",
+      "opcFree": "رخصة شركة بمالك واحد",
+      "startupCommercial": "رخصة تجارية للشركات الناشئة",
+      "enterprise": "رخصة المؤسسات"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
+      "selectPlaceholder": "اختر خيارًا...",
       "productHunt": "Product Hunt"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "سجل التغييرات — {brandName}",
+    "description": "كل إصدار يُنشر بعناية فائقة في التفاصيل.",
+    "versionTitleSuffix": "سجل تغييرات {brandName}"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "خارطة طريق المنصة — {brandName}",
+    "description": "خارطة الطريق للقاعدة الأساسية للمنصة المُدارة من {brandName}، وبيئة تشغيل Harness، ومسار الترقية."
   },
   "blogMeta": {
-    "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "title": "المدونة — {brandName}",
+    "description": "رؤى هندسية وتحديثات المنتج وأفضل ممارسات SaaS من فريق {brandName}."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "احصل على ترخيصك — {brandName}",
+    "description": "احصل على ترخيص {brandName} وإمكانية الوصول إلى المنصة في دقيقتين."
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "badge": "الأسئلة الشائعة",
+      "title": "أسئلتك، مُجابة مباشرة",
+      "subtitle": "كل ما تحتاج معرفته قبل الإطلاق.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "ما هو {productName} بالضبط؟",
+          "answer": "Sailor هو أساس SaaS مُصمم مسبقاً مبني على Next.js + Tailwind v4، يتضمن المصادقة، والفوترة، والمتعددية، والذكاء الاصطناعي، والصفوف، والبحث، والبريد الإلكتروني جاهزة مسبقاً. قم بنسخه، واعدد المزودين، وأطلق — عادةً خلال أسبوع."
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "لمن صُمم Sailor؟",
+          "answer": "للمؤسسين ومهندسي المنتجات الذين يريدون قضاء وقتهم على ما يميّزهم — وليس إعادة بناء نفس أنظمة المصادقة والفوترة والمتعددية للمرة الخامسة."
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "هل هو مجاني أم مدفوع؟",
+          "answer": "المصدر الكامل يُنشر تحت AGPL-3.0 — مجاني للمشاريع الشخصية، والأدوات الداخلية، والأعمال مفتوحة المصدر المتوافقة مع AGPL. ترخيص تجاري يفتح الحق في إطلاق Sailor في SaaS خاص مغلق المصدر. كل خطة تتضمن مجموعة الميزات الكاملة (المصادقة، الفوترة، المتعددية، الذكاء الاصطناعي، التدقيق)؛ المستويات تختلف في شروط الترخيص ودعم SLA، وليس في الميزات."
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "هل يعمل في الصين؟",
+          "answer": "نعم. نُصدر إعدادات بنية تحتية موازية (CDN متوافق مع Aliyun، نطاقات متوافقة مع ICP، Penpot اختياري بدلاً من Figma) بحيث يمكن نشر نفس قاعدة الكود بسهولة داخل الجدار العظيم."
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "أين يمكنني نشره؟",
+          "answer": "في أي مكان يعمل فيه Node 22+. الموقع التسويقي يُنشر على Vercel؛ لوحة التحكم، والبوابة، وخدمات Python تعمل على Docker / PM2 (نُشغلها على Aliyun ECS حالياً، مع ملفات Kubernetes كاملة تحت infra/iac/k8s/ للusters). العملاء المؤسسيون يُنظرون أيضاً داخل شبكات VPC الخاصة بهم."
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "كيف تُدار الأمان؟",
+          "answer": "تشفير غلاف على مستوى التطبيق للأسرار (@nebutra/vault)، Postgres RLS لعزل المستأجرين، RBAC/ABAC عبر CASL أو OpenFGA (@nebutra/permissions)، رموز بين الخدمات موقعة HMAC، webhooks صادرة موقعة، وخط تدقيق متوافق مع SOC 2 (@nebutra/audit) مُضمن في كل خطة. Pro وEnterprise يضيفان دعم شهادة SOC 2، استجابة حوادث مخصصة، واحتفاظ أطول بسجلات التدقيق."
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "ما الدعم الذي أحصل عليه؟",
+          "answer": "العملاء المجانيون يحصلون على مجتمع Discord + GitHub Issues. Pro يضيف بريد إلكتروني ذو أولوية مع SLA استجابة خلال يوم عمل واحد. Enterprise يحصل على قناة Slack مخصصة ومهندس تهيئة."
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "هل يمكنني إحضار مزودي الخاص؟",
+          "answer": "نعم. كل تكامل (المصادقة، الصفوف، البحث، البريد الإلكتروني، المدفوعات، التخزين، الفوترة) غير مرتبط بمزود. المصنع في كل حزمة يختار المُكيّف الصحيح من متغير بيئة واحد — استبدل Clerk بـ Better Auth، NextAuth، أو Supabase Auth، QStash بـ BullMQ، Resend بـ SES، Stripe بـ Polar / LemonSqueezy / ChinaPay — دون لمس كود التطبيق."
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "ما هي مجموعة التقنيات؟",
+          "answer": "Next.js 16 (App Router) على React 19، TypeScript 5.9، Tailwind v4، Prisma 7 فوق Postgres (مع pgvector + RLS)، Hono لبوابة BFF، FastAPI لخدمات ML/الثقيلة، ومكتبة مكونات مُنتقاة على Radix، بدائيات واجهة {brandName}، وطبقة Motion المشتركة. تمر ميزات الذكاء الاصطناعي عبر Vercel AI SDK مع قابلية تبديل المزود (OpenAI / OpenRouter / SiliconFlow / Azure / محلي)."
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "ما هو الترخيص؟",
+          "answer": "AGPL-3.0 مع استثناء تجاري. مجاني للاستخدام الشخصي، والأدوات الداخلية، ومشاريع OSS المتوافقة مع AGPL. يفتح الترخيص التجاري المدفوع الحق في نشر Sailor كما هو في SaaS خاص. المصدر الكامل مُدرج في كل خطة."
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "هل أحتاج للدفع مقابل التحديثات؟",
+          "answer": "لا. تحديثات المصدر مُدرجة مع كل ترخيص تجاري — اسحب من main متى تشاء وأعد تفرعك. المستوى المدفوع هو الحق في استخدام Sailor في الإنتاج التجاري، وليس الحق في تلقي الكود. كل إصدار ثانوي يُصدر CHANGELOG ودليل ترقية لأي تغيير كسر التوافق."
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "لماذا Turborepo بدلاً من تطبيق Next.js قياسي؟",
+          "answer": "Sailor هو 10 تطبيقات + 104 حزم مشتركة تحت packages/*/* + 4 مسارات خلفية (بوابة Hono، FastAPI/Python، Go، Rust) — أبعد بكثير من النقطة التي يبقى فيها تطبيق Next.js الضخم قابلاً للصيانة. يمنحنا Turborepo بناءً للوحدات المتأثرة فقط، تخزين مؤقت بعيد شفاف، ومصدر واحد للحقيقة لرموز التصميم المشتركة، والمصادقة، والفوترة، والرصد — دون إجبار كل فريق على نفس عملية Next.js."
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "كيف تتم معالجة تعدد المستأجرين؟",
+          "answer": "طبقتان. سياق المستأجر النطاق الطلب عبر @nebutra/tenant (AsyncLocalStorage ينشر المنظمة النشطة عبر كل استدعاء خادم، بما في ذلك استعلامات قاعدة البيانات وwebhooks الخارجة)، وعزل مُفروض بقاعدة البيانات عبر سياسات Postgres Row-Level Security (infra/data/database/policies/rls.sql) مرتبطة بـ app.current_tenant_id المحلي للجلسة. تتجاوز اتصالات دور الخدمة RLS فقط داخل الخدمات الداخلية الموثوقة؛ كل المسارات المواجهة للمستخدم تمر عبر العميل النطاق المستأجر."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "هل يمكنني استبدال Clerk بمزود مصادقة آخر؟",
+          "answer": "نعم. @nebutra/auth يُصدر محولات من الدرجة الأولى لـ Clerk، Better Auth، NextAuth (Auth.js v5)، وSupabase Auth. التبديل عبر متغير البيئة AUTH_PROVIDER أو الاختيار عند التوليد بـ create-sailor --auth=... — تظل أسطح الخادم، وReact، وmiddleware متطابقة بغض النظر عن المزود. إضافة محوّل خامس تعني تنفيذ واجهة واحدة (~80 LOC)؛ لا شيء في الكود المحيط يقترن بمزود محدد."
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "محبوب من المبدعين",
+      "title": "ماذا يقول المؤسسون بعد النشر مع Sailor",
+      "subtitle": "قريباً ستصل قصص العملاء من دفعة بيتا لدينا — كن من أوائل المتابعين."
     },
     "comparison": {
       "badge": "قارن الباقات",
@@ -1735,41 +1735,41 @@
       }
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "مبني على مجموعة أدوات يمكنك الوثوق بها",
+      "logosLabel": "شركاء التكامل",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "مزودي الذكاء الاصطناعي المدعومون"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "حزم monorepo"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "لغات i18n جاهزة"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "سجل ICP",
+      "publicSecurity": "الأمن العام"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "سجل ICP",
+    "publicSecurity": "سجل الأمن العام"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "الدول واللغات",
+    "description": "اختر دولة ولغة لموقع التسويق.",
+    "triggerAria": "اختر الدولة واللغة",
+    "searchPlaceholder": "ابحث عن دول…",
+    "plannedHint": "سيتم الرجوع إلى اللغة الإنجليزية حتى يتم إصدار هذه اللغة",
+    "noResults": "لا توجد دول مطابقة",
+    "menuAria": "الدول واللغات"
   }
 }

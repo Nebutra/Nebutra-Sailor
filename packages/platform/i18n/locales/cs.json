@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Jazyk",
     "ariaLabel": "Změnit jazyk",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Hledat jazyky…",
+    "noResults": "Žádné jazyky neodpovídají",
+    "menuAria": "Vybrat jazyk"
   },
   "compliance": {
     "icp": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, fronta a další."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Otevřít Sailor AI",
           "description": "Vyzkoušejte režim chatu, dat nebo workflow."
         }
       }

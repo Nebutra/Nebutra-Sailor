@@ -1,6 +1,6 @@
 {
   "admin": {
-    "title": "Admin",
+    "title": "Administration",
     "description": "Panneau super administrateur — gérez les utilisateurs, organisations et l'état du système.",
     "nav": {
       "overview": "Aperçu",
@@ -33,7 +33,7 @@
       "columns": {
         "name": "Nom",
         "slug": "Slug",
-        "plan": "Plan",
+        "plan": "Forfait",
         "members": "Membres",
         "created": "Créé",
         "actions": "Actions"
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Langue",
     "ariaLabel": "Changer la langue",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Rechercher des langues…",
+    "noResults": "Aucune langue correspondante",
+    "menuAria": "Sélectionner la langue"
   },
   "compliance": {
     "icp": {
@@ -591,7 +591,7 @@
       "errorNotAvailableDetail": "Cette invitation a déjà été traitée et n'est plus active.",
       "role": {
         "owner": "Propriétaire",
-        "admin": "Admin",
+        "admin": "Administrateur",
         "member": "Membre",
         "viewer": "Visualiseur"
       }
@@ -941,7 +941,7 @@
       "actions": "Actions",
       "settings": "Paramètres",
       "account": "Compte",
-      "admin": "Admin",
+      "admin": "Administration",
       "help": "Aide"
     },
     "commands": {
@@ -954,7 +954,7 @@
         "notifications": "Notifications",
         "auditLog": "Journal d'audit",
         "webhooks": "Webhooks",
-        "admin": "Admin"
+        "admin": "Administration"
       },
       "action": {
         "inviteMember": "Inviter un membre de l'équipe",

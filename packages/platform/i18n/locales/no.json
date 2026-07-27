@@ -56,7 +56,7 @@
   },
   "Common": {
     "hello": "Hei verden",
-    "dashboard": "Dashboard",
+    "dashboard": "Dashbord",
     "actions": {
       "continue": "Fortsett",
       "confirm": "Bekreft",
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Språk",
     "ariaLabel": "Endre språk",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Søk etter språk…",
+    "noResults": "Ingen språk matcher",
+    "menuAria": "Velg språk"
   },
   "compliance": {
     "icp": {
@@ -1097,21 +1097,21 @@
       "intakeDescription": "PDF, Markdown, tekst eller Word-dokument",
       "chooseDocument": "Velg dokument",
       "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
+      "queued": "Køet",
+      "fileInputLabel": "Dokumentfil",
+      "fallbackError": "Dokumentoppgaven mislyktes.",
+      "taskStatus": "Oppgavestatus",
+      "progressLabel": "Oppgavefremgang",
+      "refreshStatus": "Oppdater",
+      "cancelTask": "Avbryt",
+      "statusError": "Kunne ikke oppdatere oppgavestatus.",
+      "cancelError": "Kunne ikke avbryte oppgaven.",
+      "statusQueued": "Køet",
+      "statusRunning": "Kjører",
+      "statusSucceeded": "Fullført",
+      "statusFailed": "Mislyktes",
+      "statusCancelled": "Avbrutt",
+      "resultReady": "Resultat klart",
       "taskError": "Oppgavefeil",
       "updatedAt": "Oppdatert"
     },

@@ -32,7 +32,7 @@
       "loadError": "Не удалось загрузить организации.",
       "columns": {
         "name": "Название",
-        "slug": "Slug",
+        "slug": "Слаг",
         "plan": "Тариф",
         "members": "Участники",
         "created": "Создано",
@@ -55,7 +55,7 @@
     }
   },
   "Common": {
-    "hello": "Hello World",
+    "hello": "Привет, мир",
     "dashboard": "Панель управления",
     "actions": {
       "continue": "Продолжить",
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Язык",
     "ariaLabel": "Изменить язык",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Поиск языков…",
+    "noResults": "Языки не найдены",
+    "menuAria": "Выберите язык"
   },
   "compliance": {
     "icp": {
@@ -953,7 +953,7 @@
         "apiKeys": "Ключи API",
         "notifications": "Уведомления",
         "auditLog": "Журнал аудита",
-        "webhooks": "Webhooks",
+        "webhooks": "Вебхуки",
         "admin": "Администрирование"
       },
       "action": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, вебхуки, очереди и многое другое."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Открыть Sailor AI",
           "description": "Попробуйте режим чата, данных или рабочих процессов."
         }
       }

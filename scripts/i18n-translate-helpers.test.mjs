@@ -126,6 +126,25 @@ describe("parseTranslateModels", () => {
 });
 
 describe("quota / rate-limit classification", () => {
+  /**
+   * Regression: this classifier reads the response BODY, and the body of a
+   * successful translation is product copy. The catalogs contain 61 instances
+   * of "billing". Without a status gate, every 200 that translated one of them
+   * evicted the model from the pool for the rest of the run — two of three
+   * models died within minutes and ~21,000 leaves "failed" against a quota
+   * that was 97%/100%/71% unused.
+   */
+  it("never treats a successful response as hard quota, whatever it contains", () => {
+    const ok = JSON.stringify({
+      choices: [{ message: { content: '{"a":"Billing","b":"Open full billing"}' } }],
+    });
+    expect(isHardQuotaError(200, ok)).toBe(false);
+    expect(isQuotaOrRateLimitError(200, ok)).toBe(false);
+    // The words only mean quota exhaustion on an error response.
+    expect(isHardQuotaError(402, '{"error":"billing quota exceeded"}')).toBe(true);
+    expect(isHardQuotaError(429, '{"code":"insufficient_quota"}')).toBe(true);
+  });
+
   it("splits hard quota vs soft 429", () => {
     expect(isHardQuotaError(429, '{"code":"insufficient_quota"}')).toBe(true);
     expect(isSoftRateLimitError(429, '{"code":"insufficient_quota"}')).toBe(false);
@@ -183,6 +202,31 @@ describe("glossary + validateTranslation", () => {
     expect(validateTranslation("Hi {n}", "你好 {x}").ok).toBe(false);
     expect(validateTranslation("Open Stripe", "打开支付").ok).toBe(false);
     expect(validateTranslation("Open Stripe", "打开 Stripe").ok).toBe(true);
+  });
+});
+
+describe("CJK punctuation guard", () => {
+  it("rejects full-width punctuation the model invented for a non-CJK locale", () => {
+    const r = validateTranslation("Data, usage or goodwill.", "داده‌ها，استفاده یا اعتبار.", {
+      locale: "fa",
+    });
+    expect(r.ok).toBe(false);
+    expect(r.reason).toMatch(/CJK punctuation/);
+  });
+
+  it("allows it where it belongs", () => {
+    expect(validateTranslation("Data, usage.", "数据，使用。", { locale: "zh-Hans" }).ok).toBe(
+      true,
+    );
+    expect(validateTranslation("Data, usage.", "データ、使用。", { locale: "ja" }).ok).toBe(true);
+  });
+
+  it("does not flag marks that came from the source itself", () => {
+    expect(validateTranslation("前缀：value", "Präfix：value", { locale: "de" }).ok).toBe(true);
+  });
+
+  it("is inert when no locale is supplied", () => {
+    expect(validateTranslation("Data, usage.", "داده‌ها，استفاده.").ok).toBe(true);
   });
 });
 

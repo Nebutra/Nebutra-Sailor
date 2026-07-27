@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "שפה",
     "ariaLabel": "שנה שפה",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "חפש שפות…",
+    "noResults": "אין שפות תואמות",
+    "menuAria": "בחר שפה"
   },
   "compliance": {
     "icp": {
@@ -953,7 +953,7 @@
         "apiKeys": "מפתחות API",
         "notifications": "התראות",
         "auditLog": "יומן ביקורת",
-        "webhooks": "Webhooks",
+        "webhooks": "וווב-הוקים",
         "admin": "ניהול"
       },
       "action": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, queues, ועוד."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "פתח את Sailor AI",
           "description": "נסה מצב צ'אט, נתונים או זרימת עבודה."
         }
       }

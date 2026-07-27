@@ -1468,7 +1468,7 @@
     "flowTokensDesc": "CSS-переменные, 12-ступенчатые шкалы, тёмная тема",
     "flowTheme": "Тема",
     "flowThemeDesc": "oklch мульти-темы, 6 пресетов, color-mix()",
-    "flowUI": "UI",
+    "flowUI": "Интерфейс",
     "flowUIDesc": "Компоненты, Storybook, Chromatic",
     "card1Title": "12-ступенчатые цветовые шкалы",
     "card1Desc": "Семантическая шкала в стиле Geist: фоны (1-2), состояния (3-5), границы (6-8), заливки (9-10), текст (11-12).",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Бесплатно <hl>строить на</hl>",
+      "description": "{brandName}-Sailor не стоит ничего для коммерческого использования — MIT на npm, FSL-1.1-ALv2 в репозитории, переход на Apache-2.0 через два года. Платные тарифы продают поддержку и договорные обязательства, никогда не разрешение."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
+        "badge": "Всегда бесплатно",
         "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "subtitle": "Для всех",
+        "description": "Любой размер команды, любой доход. Включая проприетарные коммерческие продукты.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Полный исходный код, все пакеты",
+          "closedSourceOk": "Проприетарное коммерческое использование — без копилефта",
+          "noAttribution": "Без регистрации, без указания авторства",
+          "communitySupport": "Поддержка сообщества — по возможности"
         },
-        "cta": "View on GitHub"
+        "cta": "Посмотреть на GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
+        "badge": "От {price}/год",
         "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "subtitle": "Подписка на поддержку",
+        "description": "Для команд, которым нужны обязательства, а не надежды. Код уже бесплатный.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Приватный канал поддержки",
+          "firstResponse": "Первый ответ в течение двух рабочих дней, гарантировано",
+          "priorityTriage": "Приоритетное расследование багов",
+          "upgradeHelp": "Помощь с обновлением и уведомления о несовместимых изменениях"
         },
-        "cta": "Get support"
+        "cta": "Получить поддержку"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "от 30 000 $/год",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Готово для закупок",
+        "description": "Для организаций, которым для юридической, информационной или закупочной проверки нужен контрагент, готовый подписать документы.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA реакции — 4 рабочих часа, 1 час при простое продакшена",
+          "indemnity": "Компенсация убытков и обязательство по патчам безопасности",
+          "compliance": "Подписанный DPA, пакет соответствия, обязательство непрерывности",
+          "trademark": "Право на товарный знак и white-label"
         },
-        "cta": "Contact sales"
+        "cta": "Связаться с отделом продаж"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Часто задаваемые вопросы",
+      "description": "Коротко: использовать бесплатно. Платить нужно, когда вам требуется наша юридическая ответственность по договору.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Почему FSL, а не MIT или AGPL?",
+          "a": "FSL разрешает любое использование, кроме продажи замены самого Sailor, и каждая версия становится Apache-2.0 через два года после выпуска — это безотзывное предварительное разрешение. AGPL блокировала внедрение на юридической проверке в компаниях, не защищая ничего из того, что нам действительно нужно было защитить."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Действительно ли коммерческое использование бесплатно?",
+          "a": "Да. Без платы, ключа лицензии, регистрации, порога по выручке или числу сотрудников, без указания авторства. Создавайте закрытое ПО и продавайте его."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Что считается конкурирующим использованием?",
+          "a": "Предложение самого Sailor — хостинг Sailor или переупакованная конкурирующая платформа. Создание вертикального SaaS, внутреннего инструмента или клиентских проектов на Sailor не считается конкурирующим использованием. Если вашей модели это нужно, в Enterprise-договор можно включить письменное освобождение."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Что именно дают платные тарифы?",
+          "a": "Обязательства по поддержке, SLA реакции, компенсацию убытков, документы по соответствию и права на товарный знак. Никогда не разрешение на использование ПО — оно у вас уже есть."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "А как насчёт вкладов в open source?",
+          "a": "Все вклады требуют подписания CLA. См. CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Лицензирование — {brandName}",
+      "description": "Бесплатно для коммерческого использования. MIT на npm, FSL-1.1-ALv2 в репозитории, конвертация в Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1686,7 +1686,7 @@
       "plan": {
         "community": "Сообщество",
         "team": "Команда",
-        "enterprise": "Enterprise"
+        "enterprise": "Корпоративный"
       },
       "feature": {
         "license": {

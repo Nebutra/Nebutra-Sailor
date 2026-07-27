@@ -1,117 +1,117 @@
 {
   "auth": {
     "signin": {
-      "title": "Welcome to Soul",
-      "subtitle": "Sign in to chat with Tseka's AI agent",
-      "github": "Continue with GitHub",
-      "google": "Continue with Google",
-      "linuxdo": "Continue with Linux DO",
-      "back": "Back to Home"
+      "title": "Ласкаво просимо до Soul",
+      "subtitle": "Увійдіть, щоб спілкуватися з AI-агентом Tseka",
+      "github": "Продовжити через GitHub",
+      "google": "Продовжити через Google",
+      "linuxdo": "Продовжити через Linux DO",
+      "back": "Назад на головну"
     },
     "error": {
-      "title": "Authentication Error",
-      "subtitle": "We couldn't sign you in.",
-      "configuration": "The authentication provider is not configured properly. If you are the administrator, please check your environment variables (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, etc.) in your Vercel project settings.",
-      "access_denied": "Access was denied to your account.",
-      "default": "An unexpected error occurred during authentication.",
-      "try_again": "Try Again",
-      "back": "Back to Home"
+      "title": "Помилка автентифікації",
+      "subtitle": "Не вдалося увійти у ваш акаунт.",
+      "configuration": "Постачальник автентифікації налаштований некоректно. Якщо ви адміністратор, перевірте змінні середовища (AUTH_SECRET, GITHUB_ID, GITHUB_SECRET тощо) у налаштуваннях вашого проєкту Vercel.",
+      "access_denied": "Доступ до вашого акаунту було відхилено.",
+      "default": "Під час автентифікації сталася неочікувана помилка.",
+      "try_again": "Спробувати ще раз",
+      "back": "Назад на головну"
     }
   },
   "nav": {
-    "work": "Work",
-    "thinking": "Thinking",
-    "now": "Now",
-    "about": "About",
-    "links": "Links",
-    "soul": "Soul",
-    "uses": "Uses",
-    "guestbook": "Guestbook",
-    "contact": "Let's talk"
+    "work": "Робота",
+    "thinking": "Думки",
+    "now": "Зараз",
+    "about": "Про мене",
+    "links": "Посилання",
+    "soul": "Душа",
+    "uses": "Інструменти",
+    "guestbook": "Книга відвідувачів",
+    "contact": "Давайте поговоримо"
   },
   "soul": {
-    "page_label": "/ Digital consciousness",
-    "page_headline": "Tseka's Soul",
-    "page_desc": "A digital reflection of Tseka's mind. Ask anything — about his projects, philosophy, or how he sees the world.",
-    "status": "Online",
-    "greeting_title": "Ask me anything",
-    "greeting_desc": "I'm a digital reflection of Tseka's mind — his projects, philosophy, and how he sees the world.",
-    "starter1": "What are you currently building?",
-    "starter2": "What's your \"Vibe Business\" philosophy?",
-    "starter3": "How do you think about AI agents?",
-    "placeholder": "Ask Tseka's Soul...",
-    "powered_by": "Powered by Claude Haiku · Future: OpenClaw",
-    "error": "Something went wrong. Please try again.",
-    "auth_required": "Sign in to chat with Tseka's Soul",
-    "auth_button": "Sign in to chat",
-    "metadata_title": "Soul — Tseka Luk",
-    "metadata_desc": "An AI agent that thinks and responds like Tseka Luk."
+    "page_label": "/ Цифрова свідомість",
+    "page_headline": "Душа Тсеки",
+    "page_desc": "Цифрове відображення розуму Тсеки. Запитайте будь-що — про його проєкти, філософію або те, як він бачить світ.",
+    "status": "Онлайн",
+    "greeting_title": "Запитайте мене будь-що",
+    "greeting_desc": "Я — цифрове відображення розуму Тсеки: його проєкти, філософія та те, як він бачить світ.",
+    "starter1": "Над чим ви зараз працюєте?",
+    "starter2": "У чому полягає ваша філософія «Vibe Business»?",
+    "starter3": "Як ви розглядаєте AI-агентів?",
+    "placeholder": "Запитайте Душу Тсеки...",
+    "powered_by": "Працює на Claude Haiku · Майбутнє: OpenClaw",
+    "error": "Щось пішло не так. Спробуйте ще раз.",
+    "auth_required": "Увійдіть, щоб спілкуватися з Душою Тсеки",
+    "auth_button": "Увійти для чату",
+    "metadata_title": "Душа — Тсека Лук",
+    "metadata_desc": "AI-агент, який думає та відповідає як Тсека Лук."
   },
   "hero": {
-    "status": "Available for select collaborations",
-    "greeting": "Hi, I'm Tseka",
-    "tagline": "AI-Native Builder",
-    "description": "I design and build AI-powered products from zero to one. Focused on making complex technology feel simple, useful, and beautiful—shipping fast and iterating in public.",
-    "cta_primary": "See my work",
-    "cta_secondary": "What I'm doing now",
+    "status": "Доступний для вибраних співпраць",
+    "greeting": "Привіт, я Тсека",
+    "tagline": "Будівельник AI-продуктів",
+    "description": "Я проєктую та створюю продукти на базі ШІ з нуля. Зосереджений на тому, щоб складні технології були простими, корисними та красивими — швидко випускаю та ітерував публічно.",
+    "cta_primary": "Поглянути на роботи",
+    "cta_secondary": "Чим займаюсь зараз",
     "pills": {
-      "role": "Full-stack AI Engineer",
+      "role": "Full-stack AI інженер",
       "stack": "TypeScript + Python",
-      "location": "Wuxi, China",
-      "mode": "Building in Public"
+      "location": "Усі, Китай",
+      "mode": "Будую публічно"
     },
-    "social_proof": "Trusted by collaborators across AI, design & engineering"
+    "social_proof": "Довіряють співрозмовники з AI, дизайну та інженерії"
   },
   "focus": {
-    "label": "Mission",
-    "headline": "My focus is on robust engineering, AI-native products, and scalable systems to",
-    "headline_muted": "deliver real-world impact.",
+    "label": "Місія",
+    "headline": "Мій фокус — надійна інженерія, продукти з AI-ядером та масштабовані системи для",
+    "headline_muted": "створення реального впливу.",
     "pills": {
-      "ai_agents": "AI Agents",
-      "ux_engineering": "UX Engineering",
-      "fullstack_architecture": "Full-stack Architecture",
-      "systems_design": "Systems Design",
+      "ai_agents": "AI-агенти",
+      "ux_engineering": "UX-інженерія",
+      "fullstack_architecture": "Full-stack архітектура",
+      "systems_design": "Проектування систем",
       "open_source": "Open Source",
-      "product_strategy": "Product Strategy"
+      "product_strategy": "Продуктова стратегія"
     }
   },
   "process": {
-    "label": "/ How I work",
-    "headline": "Path to shipped features",
-    "step1_title": "Architecture",
-    "step1_desc": "Mapping out the system constraints, data flow, and UI surface. Deciding exactly what to build and what not to build.",
-    "step2_title": "Implementation",
-    "step2_desc": "Deep focus engineering. Translating the mental model into solid Next.js and Python code with robust AI integrations.",
-    "step3_title": "Refinement",
-    "step3_desc": "Polishing the sharp edges. Adding micro-animations, optimizing performance, and listening closely to telemetry and user feedback."
+    "label": "/ Як я працюю",
+    "headline": "Шлях до готових функцій",
+    "step1_title": "Архітектура",
+    "step1_desc": "Визначення обмежень системи, потоку даних та інтерфейсу. Чітке рішення, що саме будувати, а що — ні.",
+    "step2_title": "Реалізація",
+    "step2_desc": "Глибока інженерна робота. Перетворення ментальної моделі на надійний код на Next.js та Python із потужними інтеграціями ШІ.",
+    "step3_title": "Удосконалення",
+    "step3_desc": "Полірування деталей. Додавання мікроанімацій, оптимізація продуктивності та уважне слухання телеметрії та відгуків користувачів."
   },
   "works": {
-    "label": "/ Selected Works",
-    "headline": "Shipped to production",
-    "view_all": "View all {count} projects"
+    "label": "/ Вибрані роботи",
+    "headline": "Випущено в продакшн",
+    "view_all": "Переглянути всі {count} проєкти"
   },
   "now_preview": {
-    "headline": "What I'm doing <em>now</em>",
-    "view_all": "Full log"
+    "headline": "Що я роблю <em>зараз</em>",
+    "view_all": "Повний журнал"
   },
   "now": {
     "sections": {
-      "building": "Building",
-      "shipped": "Shipped",
-      "thinking": "Thinking",
-      "reading": "Reading"
+      "building": "Створення",
+      "shipped": "Опубліковано",
+      "thinking": "Думки",
+      "reading": "Читаємо"
     },
-    "no_updates": "No updates yet.",
-    "last_updated": "Last updated:"
+    "no_updates": "Ще немає оновлень.",
+    "last_updated": "Останнє оновлення:"
   },
   "pricing": {
-    "label": "/ Engagement Models",
-    "headline": "Choose how we work together",
-    "description": "Not a Swiss army knife — a studio that delivers every domain to professional standards.",
-    "recommended": "Recommended",
-    "availability": "Accepting new projects · ~2 weeks to start",
-    "capabilities_label": "/ Capabilities",
-    "radar_title": "Capability",
+    "label": "/ Моделі співпраці",
+    "headline": "Оберіть, як ми будемо працювати разом",
+    "description": "Не швейцарський ніж — студія, яка виконує кожну задачу на професійному рівні.",
+    "recommended": "Рекомендовано",
+    "availability": "Приймаємо нові проєкти · старт за ~2 тижні",
+    "capabilities_label": "/ Можливості",
+    "radar_title": "Можливість",
     "stats": [
       {
         "value": 50,
@@ -136,66 +136,50 @@
     ],
     "tiers": {
       "chat": {
-        "name": "Chat",
-        "price": "Free",
-        "description": "15-min quick call",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
-        "cta": "Talk to my Soul",
+        "name": "Чат",
+        "price": "Безкоштовно",
+        "description": "15-хвилинна швидка розмова",
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
+        "cta": "Поговорити з моїм Soul",
         "href": "/soul"
       },
       "coffee": {
-        "name": "Coffee",
+        "name": "Кава",
         "price": "¥18",
-        "description": "A cup of coffee's worth",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
-        "cta": "Buy me a coffee",
+        "description": "Ціна чашки кави",
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
+        "cta": "Купити мені каву",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
       "hire": {
-        "name": "Hire Me",
-        "price": "Per project",
-        "description": "Full professional engagement",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
-        "cta": "Extend an Olive Branch",
+        "name": "Заняти мене",
+        "price": "За проєктом",
+        "description": "Повноцінна професійна співпраця",
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
+        "cta": "Подати оливкову гілку",
         "href": "mailto:contact@tsekaluk.dev?subject=Hire"
       },
       "partner": {
         "name": "Dream Partner",
-        "price": "Grow together",
-        "description": "Long-term co-creation",
+        "price": "Развивайтеся разом",
+        "description": "Довгострокова співпраця",
         "features": [
           "Everything above",
           "Product co-creation",
           "Growth hacking system",
           "Equity / revenue share"
         ],
-        "cta": "Share your vision",
+        "cta": "Поділіться своєю ідеєю",
         "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
       }
     },
     "services": {
       "engineering": {
-        "name": "Product Engineering",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "name": "Розробка продукту",
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
-        "name": "AI & Automation",
+        "name": "ШІ та автоматизація",
         "items": [
           "AI Agent architecture",
           "OpenClaw workflows",
@@ -204,14 +188,11 @@
         ]
       },
       "design": {
-        "name": "Design & Product",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "name": "Дизайн та продукт",
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
-        "name": "Growth & Global",
+        "name": "Ріст та глобалізація",
         "items": [
           "Marketing strategy",
           "Growth hacking",
@@ -221,315 +202,307 @@
         ]
       },
       "consulting": {
-        "name": "Consulting",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "name": "Консалтинг",
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
-        "name": "VC & Strategy",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "name": "ВК та стратегія",
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
   "constellation": {
-    "label": "/ Constellation",
-    "headline": "The people who know",
-    "description": "They've worked with him. They've seen the work. Here's what they think.",
-    "cta": "Leave a fragment",
-    "cta_hint": "Be honest.",
-    "empty": "Nothing here yet."
+    "label": "/ Сузір'я",
+    "headline": "Люди, які знають",
+    "description": "Вони працювали з ним. Вони бачили роботу. Ось що вони думають.",
+    "cta": "Залишити фрагмент",
+    "cta_hint": "Будьте щирими.",
+    "empty": "Тут ще нічого немає."
   },
   "cta": {
-    "headline": "Let's build something",
-    "description": "I work with teams and founders who see digital presence and AI not just as a duty, but as a strategic growth driver.",
-    "email": "Start a project",
-    "calendar": "Book a call"
+    "headline": "Давайте створимо щось",
+    "description": "Я працюю з командами та засновниками, які сприймають цифрову присутність та ШІ не як обов’язок, а як стратегічний драйвер росту.",
+    "email": "Почати проєкт",
+    "calendar": "Записатися на дзвінок"
   },
   "footer": {
-    "tagline": "Building what doesn't exist yet.",
-    "status_available": "Available for select collaborations",
-    "location": "Wuxi, China",
-    "nav_work": "Work",
-    "nav_thinking": "Thinking",
-    "nav_now": "Now",
-    "nav_about": "About",
-    "nav_soul": "Soul",
-    "nav_links": "Links",
-    "email_cta": "Start a project →",
-    "built_with": "Built with",
-    "back_to_top": "↑ Back to top",
-    "rss_label": "RSS Feed",
+    "tagline": "Створюємо те, чого ще не існує.",
+    "status_available": "Відкритий до вибраних співпраць",
+    "location": "Усі, Китай",
+    "nav_work": "Робота",
+    "nav_thinking": "Думки",
+    "nav_now": "Зараз",
+    "nav_about": "Про мене",
+    "nav_soul": "Душа",
+    "nav_links": "Посилання",
+    "email_cta": "Почати проєкт →",
+    "built_with": "Створено за допомогою",
+    "back_to_top": "↑ Наверх",
+    "rss_label": "RSS-канал",
     "github_label": "GitHub",
     "x_label": "X (Twitter)",
     "linkedin_label": "LinkedIn",
     "wechat_label": "WeChat",
-    "wechat_copied": "WeChat ID copied!"
+    "wechat_copied": "WeChat ID скопійовано!"
   },
   "pages": {
     "home": {
       "metadata_title": "Tseka Luk — AI-Native Builder",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products."
+      "metadata_desc": "CEO та AI-Native Builder у Nebutra Intelligence. Будуємо інтелектуальні системи, а не просто продукти."
     },
     "work": {
-      "label": "/ 19 shipped projects",
-      "headline": "Things I've built",
-      "description": "Shipped products, research tools, and AI experiments. Most are real projects with real users.",
-      "metadata_title": "Work — Tseka Luk",
-      "metadata_desc": "Shipped products, research tools, and AI experiments.",
-      "back": "All Projects",
-      "source_code": "Source Code",
-      "live_demo": "Live Demo"
+      "label": "/ 19 завершені проєкти",
+      "headline": "Те, що я створив",
+      "description": "Завершені продукти, дослідницькі інструменти та AI-експерименти. Більшість із них — реальні проєкти з реальними користувачами.",
+      "metadata_title": "Робота — Tseka Luk",
+      "metadata_desc": "Завершені продукти, дослідницькі інструменти та AI-експерименти.",
+      "back": "Усі проєкти",
+      "source_code": "Вихідний код",
+      "live_demo": "Демо онлайн"
     },
     "thinking": {
-      "label": "/ Essays & ideas",
-      "headline": "Thinking",
-      "metadata_title": "Thinking — Tseka Luk",
-      "metadata_desc": "Essays on building, growth, and AI.",
-      "empty_title": "Essays coming soon.",
-      "empty_subtitle": "In the meantime, ask <link>my Soul</link>."
+      "label": "/ Есе та ідеї",
+      "headline": "Думки",
+      "metadata_title": "Думки — Tseka Luk",
+      "metadata_desc": "Есе про створення, ріст та AI.",
+      "empty_title": "Есе незабаром.",
+      "empty_subtitle": "А поки що запитайте <link>мою Душу</link>."
     },
     "now": {
-      "label": "/ Updated daily",
-      "headline": "Now",
-      "description": "This page is updated daily by an AI agent that reviews my work and distills the highlights. Think of it as a living changelog for what I'm building, thinking, and shipping.",
-      "metadata_title": "Now — Tseka Luk",
-      "metadata_desc": "What I'm currently working on, thinking about, and shipping."
+      "label": "/ Оновлюється щодня",
+      "headline": "Зараз",
+      "description": "Цю сторінку щодня оновлює AI-агент, який аналізує мою роботу та виділяє головне. Уявіть це як живий журнал змін того, що я створюю, обмірковую та випускаю.",
+      "metadata_title": "Зараз — Tseka Luk",
+      "metadata_desc": "Над чим я зараз працюю, що обмірковую та випускаю."
     },
     "about": {
-      "metadata_title": "About — Tseka Luk",
-      "metadata_desc": "CEO & AI-Native Builder at Nebutra Intelligence. Building intelligent systems, not just products.",
-      "label": "/ About",
-      "headline": "Building intelligent systems,",
-      "headline_muted": "not just products.",
-      "bio_1": "I'm Tseka Luk, CEO of Nebutra Intelligence, based in Wuxi, China. I build AI-native products designed for global markets—tools that are not just technically sophisticated but genuinely useful and beautifully simple.",
-      "bio_2": "My philosophy is what I call Vibe Business: build with taste, ship with speed, and let the product speak louder than any pitch deck. Every project starts from a real itch, and every feature earns its place.",
-      "bio_3": "I think in systems, obsess over details, and believe the best way to predict the future is to build it—one commit at a time.",
+      "metadata_title": "Про мене — Tseka Luk",
+      "metadata_desc": "CEO та AI-native розробник у Nebutra Intelligence. Будуємо інтелектуальні системи, а не просто продукти.",
+      "label": "/ Про мене",
+      "headline": "Будуємо інтелектуальні системи,",
+      "headline_muted": "а не просто продукти.",
+      "bio_1": "Я Tseka Luk, CEO Nebutra Intelligence, базуюсь у Усі, Китай. Розробляю AI-native продукти для глобальних ринків — інструменти, які не лише технічно досконалі, але й справді корисні та елегантно прості.",
+      "bio_2": "Моя філософія — те, що я називаю Vibe Business: будуй зі смаком, випускай швидко і дозволь продукту говорити голосніше за будь-який пітч-дек. Кожен проєкт починається з реальної потреби, і кожна функція заслуговує на своє місце.",
+      "bio_3": "Я думаю системами, одержимий деталями і вірю, що найкращий спосіб передбачити майбутнє — це будувати його, коміт за комітом.",
       "photo_tag": "INTP · 4w5",
-      "photo_location": "Wuxi, China",
-      "stat_projects": "Projects",
-      "stat_awards": "Awards",
-      "stat_first_prizes": "First Prizes",
-      "stat_certs": "Certs",
-      "resume_download": "Download Resume",
-      "journey_label": "/ Journey",
-      "journey_2020": "Self-taught web development & digital marketing",
-      "journey_2022": "BSc in Information & Computing Science and BEng in Computer Science & Technology, Jiangsu Ocean University",
-      "journey_2023": "AI-native engineering, competitive programming",
-      "journey_2024": "Founded Wuxi Nebutra Intelligence Technology",
-      "journey_2025": "CEO, Nebutra Intelligence — building for global markets",
-      "journey_now": "Shipping AI-native products, one commit at a time",
-      "awards_label": "/ Things I've tried",
-      "awards_count": "10 attempts",
-      "awards_description": "Not an expert at anything — just someone who wants to try everything, and try it well.",
-      "award_1_title": "MCM/ICM Mathematical Modeling",
-      "award_1_level": "Honorable Mention",
-      "award_1_detail": "NSGA-III tourism optimizer, 8.3% prediction error vs. 28,000+ teams",
-      "award_2_title": "Lanqiao Cup C/C++ (Jiangsu)",
-      "award_2_level": "First Prize",
-      "award_2_detail": "Top 1% in provincial algorithmic programming",
-      "award_3_title": "TAM-SEM Low-Altitude Economy",
-      "award_3_level": "First Prize (Provincial)",
-      "award_3_detail": "2,609 respondents, discovered 'risk paradox' (beta=0.262, p<0.001)",
-      "award_4_title": "APMCM Mathematical Modeling",
-      "award_4_level": "First Prize",
-      "award_4_detail": "Pet industry forecast: LASSO R-squared=0.9850, predicted $52B market",
-      "award_5_title": "Shuwei Cup Math Modeling",
-      "award_5_level": "First Prize + Grand Innovation",
-      "award_5_detail": "Biomass co-pyrolysis: found 28.44% optimal ratio via LightGBM + PSO",
-      "award_6_title": "Brand Strategy Competition",
-      "award_6_level": "Second Prize (National)",
-      "award_6_detail": "1,200+ samples, Claude + Flux + Midjourney AIGC pipeline",
-      "award_7_title": "Global AI Algorithm Elite",
-      "award_7_level": "Third Prize (National Final)",
-      "award_7_detail": "Warehouse drone: 95% recognition accuracy, 3-min shelf traversal",
-      "award_8_title": "National Math Modeling (Jiangsu)",
-      "award_8_level": "Second Prize",
-      "award_8_detail": "Real estate cost prediction: Random Forest outperformed CNN-LSTM",
-      "award_9_title": "Electronic Design (TI Cup)",
-      "award_9_level": "Second Prize",
-      "award_9_detail": "Self-aiming system: adaptive PID + Kalman filter on MSPM0G3507",
-      "award_10_title": "Translation Competition",
-      "award_10_level": "Grand Prize (National Final)",
-      "award_10_detail": "Non-English major, highest national honor in bilingual translation",
-      "credentials_label": "/ Credentials",
-      "cred_1": "Columbia University — Numerical Models (Grade A)",
-      "cred_2": "Huawei HCIA-Datacom Network Engineer",
-      "cred_3": "HarmonyOS Advanced Developer",
-      "cred_4": "Utility Patent — Cable Distribution Equipment",
-      "cred_5": "3 Software Copyrights (Power Opt, OD Classify, Graph Solver)",
+      "photo_location": "Усі, Китай",
+      "stat_projects": "Проєкти",
+      "stat_awards": "Нагороди",
+      "stat_first_prizes": "Перші місця",
+      "stat_certs": "Сертифікати",
+      "resume_download": "Завантажити резюме",
+      "journey_label": "/ Шлях",
+      "journey_2020": "Самостійно вивчив веб-розробку та цифровий маркетинг",
+      "journey_2022": "Бакалавр інформаційних та обчислювальних наук і бакалавр комп’ютерних наук і технологій, Університет Янцзян Океан",
+      "journey_2023": "AI-native інжиніринг, змагальне програмування",
+      "journey_2024": "Заснував Wuxi Nebutra Intelligence Technology",
+      "journey_2025": "CEO, Nebutra Intelligence — будуємо для глобальних ринків",
+      "journey_now": "Випускаємо AI-нативні продукти, по одному коміту за раз",
+      "awards_label": "/ Те, що я спробував",
+      "awards_count": "10 спроб",
+      "awards_description": "Не експерт ні в чому — просто людина, яка хоче спробувати все і зробити це добре.",
+      "award_1_title": "Математичне моделювання MCM/ICM",
+      "award_1_level": "Відзнака",
+      "award_1_detail": "Оптимізатор туризму NSGA-III, похибка прогнозу 8,3% проти 28 000+ команд",
+      "award_2_title": "Кубок Lanqiao C/C++ (Цзянсу)",
+      "award_2_level": "Перша премія",
+      "award_2_detail": "Топ 1% у провінційному алгоритмічному програмуванні",
+      "award_3_title": "TAM-SEM економіка низької висоти",
+      "award_3_level": "Перша премія (провінційна)",
+      "award_3_detail": "2 609 респондентів, виявлено «парадокс ризику» (бета=0,262, p<0,001)",
+      "award_4_title": "Математичне моделювання APMCM",
+      "award_4_level": "Перша премія",
+      "award_4_detail": "Прогноз ринку тварин: LASSO R-квадрат=0,9850, передбачений ринок $52 млрд",
+      "award_5_title": "Математичне моделювання Кубок Shuwei",
+      "award_5_level": "Перша премія + Велика інновація",
+      "award_5_detail": "Спільна піроліз біомаси: знайдено оптимальне співвідношення 28,44% через LightGBM + PSO",
+      "award_6_title": "Конкурс з брендової стратегії",
+      "award_6_level": "Друга премія (національний рівень)",
+      "award_6_detail": "1200+ зразків, AIGC-ланцюжок Claude + Flux + Midjourney",
+      "award_7_title": "Глобальний елітний алгоритмічний AI-турнір",
+      "award_7_level": "Третя премія (національний фінал)",
+      "award_7_detail": "Складський дрон: 95% точність розпізнавання, 3-хвилинний обхід полиць",
+      "award_8_title": "Національний математичний моделювання (Цзянсу)",
+      "award_8_level": "Друга премія",
+      "award_8_detail": "Прогнозування вартості нерухомості: Random Forest перевершив CNN-LSTM",
+      "award_9_title": "Електронний дизайн (TI Cup)",
+      "award_9_level": "Друга премія",
+      "award_9_detail": "Система самонаведення: адаптивний PID + фільтр Калмана на MSPM0G3507",
+      "award_10_title": "Конкурс з перекладу",
+      "award_10_level": "Гран-прі (національний фінал)",
+      "award_10_detail": "Неанглійська спеціальність, найвища національна нагорода за двомовний переклад",
+      "credentials_label": "/ Кваліфікації",
+      "cred_1": "Колумбійський університет — Числові моделі (оцінка A)",
+      "cred_2": "Інженер мереж Huawei HCIA-Datacom",
+      "cred_3": "Розробник HarmonyOS (просунутий рівень)",
+      "cred_4": "Корисна патентна заявка — обладнання для розподілу кабелів",
+      "cred_5": "3 авторські права на програмне забезпечення (Power Opt, OD Classify, Graph Solver)",
       "cred_6": "CET-6: 543 · CET-4: 575",
-      "cred_7": "Macau UST — Innovation & Entrepreneurship",
-      "cred_8": "Prompt Engineer (Datawhale x iFLYTEK)",
-      "personality_label": "/ Personality",
+      "cred_7": "Університет науки та технологій Макао — інновації та підприємництво",
+      "cred_8": "Інженер промптів (Datawhale x iFLYTEK)",
+      "personality_label": "/ Особистість",
       "personality_intp_name": "INTP",
-      "personality_intp_subtitle": "The Logician",
-      "personality_intp_desc": "Analytical, systematic, and driven by an insatiable curiosity about how systems really work.",
+      "personality_intp_subtitle": "Логік",
+      "personality_intp_desc": "Аналітичний, системний, з нестримною цікавістю до того, як насправді працюють системи.",
       "personality_intp_source": "16Personalities",
       "personality_4w5_name": "4w5",
-      "personality_4w5_subtitle": "The Bohemian",
-      "personality_4w5_desc": "Identity-driven depth and authentic self-expression, tempered by intellectual withdrawal.",
-      "personality_4w5_source": "Enneagram",
-      "beliefs_label": "/ Things I believe",
-      "belief_1": "The people who are crazy enough to think they can change the world are the ones who do.",
-      "belief_1_credit": "— Steve Jobs",
-      "life_label": "/ Life",
-      "life_music": "Music",
-      "life_philosophy": "Philosophy",
-      "life_games": "Games",
-      "contact_anchor_label": "/ Contact",
-      "contact_headline": "Let's build something"
+      "personality_4w5_subtitle": "Богем",
+      "personality_4w5_desc": "Глибина, зумовлена пошуком ідентичності, та автентичний самовираження, пом'якшені інтелектуальною замкненістю.",
+      "personality_4w5_source": "Енеаграма",
+      "beliefs_label": "/ У що я вірю",
+      "belief_1": "Ті, хто достатньо божевільний, щоб думати, що можуть змінити світ, — саме вони це й роблять.",
+      "belief_1_credit": "— Стив Джобс",
+      "life_label": "/ Життя",
+      "life_music": "Музика",
+      "life_philosophy": "Філософія",
+      "life_games": "Ігри",
+      "contact_anchor_label": "/ Зв'язок",
+      "contact_headline": "Давайте створимо щось"
     },
     "uses": {
-      "label": "/ Uses",
-      "headline": "What I use to build.",
-      "description": "Hardware, software, and AI tools I actually use daily. Dogfooding included.",
-      "section_workstation": "/ Workstation",
-      "section_editors": "/ Editors",
-      "section_terminal": "/ Terminal",
-      "section_ai_toolkit": "/ AI Toolkit",
-      "ai_toolkit_desc": "Tools I actively use — not a marketing list. I switch between them depending on the task.",
-      "section_dogfooding": "/ Dogfooding"
+      "label": "/ Використання",
+      "headline": "Чим я користуюся для розробки.",
+      "description": "Апаратне забезпечення, програмне забезпечення та ШІ-інструменти, якими я дійсно користуюся щодня. Включно з власними продуктами.",
+      "section_workstation": "/ Робоча станція",
+      "section_editors": "/ Редактори",
+      "section_terminal": "/ Термінал",
+      "section_ai_toolkit": "/ ШІ-інструменти",
+      "ai_toolkit_desc": "Інструменти, якими я активно користуюся — не маркетинговий список. Я перемикаюся між ними залежно від завдання.",
+      "section_dogfooding": "/ Власні продукти"
     },
     "links": {
-      "headline": "Links",
-      "description": "Find me across the internet.",
-      "international": "International",
-      "china": "China Platforms",
-      "wechat_click": "Click to see QR code",
-      "metadata_title": "Links — Tseka Luk",
-      "metadata_desc": "Find me across the internet."
+      "headline": "Посилання",
+      "description": "Знайдіть мене в інтернеті.",
+      "international": "Міжнародні",
+      "china": "Платформи Китаю",
+      "wechat_click": "Натисніть, щоб побачити QR-код",
+      "metadata_title": "Посилання — Tseka Luk",
+      "metadata_desc": "Знайдіть мене в інтернеті."
     },
     "privacy": {
-      "metadata_title": "Privacy Policy — Tseka Luk",
-      "metadata_desc": "How this site handles your data.",
-      "headline": "Privacy Policy",
-      "last_updated": "Last updated: March 2026",
-      "intro": "This site is a personal portfolio. I respect your privacy and collect as little data as possible.",
-      "analytics_title": "Analytics",
-      "analytics_body": "This site uses Plausible Analytics, a privacy-friendly, cookie-free analytics tool. No personal data is collected. All data is aggregated and anonymous. No data is shared with third parties.",
-      "auth_title": "Authentication",
-      "auth_body": "If you sign in (via GitHub, Google, or Linux DO), I receive your public profile information (name, avatar, email if available). This is used solely to identify you in the Soul chat. I do not sell, share, or use this data for any other purpose. Session data is stored as an encrypted JWT cookie in your browser.",
-      "chat_title": "Soul Chat",
-      "chat_body": "Messages you send in the Soul chat are processed by the Anthropic API (Claude) in real time and are not stored on my servers. Conversation history exists only in your browser session.",
-      "cookies_title": "Cookies",
-      "cookies_body": "This site uses only essential cookies: a session cookie for authentication and a theme preference cookie. No tracking cookies are used.",
-      "third_party_title": "Third-party Services",
-      "third_party_body": "Plausible Analytics (privacy-friendly, EU-hosted), Anthropic API (chat processing), Vercel (hosting). No advertising or tracking services are used.",
-      "contact_title": "Contact",
-      "contact_body": "For any privacy-related questions, reach me at"
+      "metadata_title": "Політика конфіденційності — Tseka Luk",
+      "metadata_desc": "Як цей сайт обробляє ваші дані.",
+      "headline": "Політика конфіденційності",
+      "last_updated": "Останнє оновлення: березень 2026",
+      "intro": "Цей сайт — особистий портфоліо. Я поважаю вашу конфіденційність і збираю мінімум даних.",
+      "analytics_title": "Аналітика",
+      "analytics_body": "Цей сайт використовує Plausible Analytics — інструмент аналітики, що поважає конфіденційність і не використовує файли cookie. Особисті дані не збираються. Усі дані агреговані та анонімні. Дані не передаються третім сторонам.",
+      "auth_title": "Автентифікація",
+      "auth_body": "Якщо ви увійдете в систему (через GitHub, Google або Linux DO), я отримаю інформацію з вашого публічного профілю (ім'я, аватар, електронну пошту, якщо вона доступна). Це використовується виключно для ідентифікації вас у чаті Soul. Я не продаю, не передаю та не використовую ці дані для інших цілей. Дані сесії зберігаються у вигляді зашифрованого JWT-файлу cookie у вашому браузері.",
+      "chat_title": "Чат Soul",
+      "chat_body": "Повідомлення, які ви надсилаєте в чаті Soul, обробляються API Anthropic (Claude) у реальному часі і не зберігаються на моїх серверах. Історія розмов існує лише у вашій сесії браузера.",
+      "cookies_title": "Файли cookie",
+      "cookies_body": "Цей сайт використовує лише необхідні файли cookie: файл cookie сесії для автентифікації та файл cookie для збереження налаштувань теми. Файли cookie для відстеження не використовуються.",
+      "third_party_title": "Служби третіх сторін",
+      "third_party_body": "Plausible Analytics (повага до конфіденційності, розміщено в ЄС), API Anthropic (обробка чату), Vercel (хостинг). Рекламні або відстежувальні служби не використовуються.",
+      "contact_title": "Контакти",
+      "contact_body": "Щодо питань, пов'язаних із конфіденційністю, звертайтеся до мене за адресою"
     },
     "guestbook": {
-      "label": "/ Guestbook",
-      "metadata_title": "Guestbook — Tseka Luk",
-      "metadata_desc": "Leave a message. Say hello.",
-      "headline": "Guestbook",
-      "description": "Leave a message, say hello, or share what you're building.",
-      "sign_in_prompt": "Sign in to leave a message.",
-      "placeholder": "Say something nice...",
-      "submit": "Post",
-      "empty": "No messages yet. Be the first!"
+      "label": "/ Гостьова книга",
+      "metadata_title": "Гостьова книга — Tseka Luk",
+      "metadata_desc": "Залиште повідомлення. Привітайтеся.",
+      "headline": "Гостьова книга",
+      "description": "Залиште повідомлення, привітайтеся або поділіться тим, над чим працюєте.",
+      "sign_in_prompt": "Увійдіть, щоб залишити повідомлення.",
+      "placeholder": "Напишіть щось приємне...",
+      "submit": "Опублікувати",
+      "empty": "Ще немає повідомлень. Будьте першим!"
     }
   },
   "projects": {
     "any2md": {
-      "tagline": "Where other converters lose 40% of context, this one keeps 93%",
-      "description": "Most converters silently drop formulas, tables, and cross-references. any2md uses a dual-engine—PyMuPDF for text + Qwen-VL for vision—then DeepSeek LLM reconstructs context via layered prompt + few-shot + CoT. Processes 68 pages/min with 85% table structuring and 90% LaTeX formula preservation. Imported 20,000+ pages into a team knowledge base in one week, cutting manual cleanup by 70%."
+      "tagline": "Де інші конвертери втрачають 40% контексту, цей зберігає 93%",
+      "description": "Більшість конвертерів мовчки видаляють формули, таблиці та перехресні посилання. any2md використовує подвійний рушій — PyMuPDF для тексту + Qwen-VL для зору — а потім DeepSeek LLM відновлює контекст через шаруватий промпт + few-shot + CoT. Обробляє 68 сторінок/хв з 85% структурованими таблицями та 90% збереженими формулами LaTeX. Імпортовано 20 000+ сторінок у базу знань команди за один тиждень, скоротивши ручне очищення на 70%."
     },
     "low-altitude-economy": {
-      "tagline": "Discovered a paradox: risk perception actually increases adoption",
-      "description": "Everyone assumed perceived risk would deter UAM adoption. Our TAM–SEM model on 2,609 respondents (93.1% recovery rate, KMO=0.951) proved the opposite: risk positively drives willingness to adopt (β=0.262, p<0.001). We also mined 1,695 Bilibili comments with SnowNLP to map public sentiment. The “risk paradox” finding challenged a decade of technology adoption literature. Provincial First Prize."
+      "tagline": "Виявлено парадокс: сприйняття ризику фактично збільшує впровадження",
+      "description": "Усі припускали, що сприйнятий ризик стримуватиме впровадження UAM. Наша модель TAM–SEM на 2 609 респондентах (93,1% коефіцієнт відновлення, KMO=0,951) довела протилежне: ризик позитивно впливає на готовність до впровадження (β=0,262, p<0,001). Ми також проаналізували 1 695 коментарів Bilibili за допомогою SnowNLP, щоб відобразити громадські настрої. Відкриття «парадоксу ризику» поставило під сумнів десятиліття літератури про впровадження технологій. Провінційна перша премія."
     },
     "nebutra-sailor": {
-      "tagline": "One monorepo, 4 production apps, 12,000+ lines of shared code",
-      "description": "Enterprise-grade monorepo powering 4 apps (marketing, dashboard, docs, studio) from 6 shared packages. Next.js 16 + React 19 + Tailwind v4, with a custom design token pipeline, 541 tree-shakable icons, and multi-theme engine supporting 6 oklch color schemes. Ships features 3x faster than separate repos."
+      "tagline": "Один монорепозиторій, 4 продакшн-додатки, 12 000+ рядків спільного коду",
+      "description": "Монорепозиторій підприємницького рівня, що забезпечує роботу 4 додатків (маркетинг, панель керування, документація, студія) з 6 спільних пакетів. Next.js 16 + React 19 + Tailwind v4, з власним конвеєром дизайн-токенів, 541 іконкою, придатною для tree-shaking, та багатотемним рушієм, що підтримує 6 кольорових схем oklch. Запускає функції в 3 рази швидше, ніж окремі репозиторії."
     },
     "mcm-icm": {
-      "tagline": "Optimizing tourism vs. environment with 8.3% prediction error",
-      "description": "MCM/ICM 2025 (Problem B): built a system dynamics + NSGA-III multi-objective optimizer balancing tourist flow, environmental quality, and social satisfaction. Achieved 8.3% tourist prediction error with R²>0.5 on a three-dimensional coupled model. Competed against 28,000+ teams globally. Honorable Mention."
+      "tagline": "Оптимізація туризму проти довкілля з похибкою прогнозу 8,3%",
+      "description": "MCM/ICM 2025 (Problem B): побудовано оптимізатор багатокритеріальної системи динаміки + NSGA-III, що балансує потік туристів, якість довкілля та соціальну задоволеність. Досягнуто похибку прогнозу туристів 8,3% з R²>0,5 на тривимірній зв'язаній моделі. Конкуренція з 28 000+ команд по всьому світу. Почесна згадка."
     },
     "biomass-modeling": {
-      "tagline": "Found the exact 28.44% ratio—won Grand Innovation Award for it",
-      "description": "Three-model ensemble (LightGBM + Gaussian Process Regression + PSO) tested across 500+ pyrolysis data points to discover that 28.44% biomass-to-coal ratio maximizes clean energy output with R²>0.95 prediction accuracy. The entropy-weighted fuzzy evaluation framework quantified non-linear interactions between 3 yield types (gas, char, liquid). Judges praised the methodology as transferable across energy domains. First Prize + Grand Innovation Award at Shuwei Cup."
+      "tagline": "Знайдено точне співвідношення 28,44% — виграно Гранд-пріз за інновації",
+      "description": "Ансамбль з трьох моделей (LightGBM + гауссовий процес регресії + PSO) протестовано на 500+ точках піролізу, щоб виявити, що співвідношення біомаси до вугілля 28,44% максимізує вихід чистої енергії з точністю прогнозу R²>0,95. Ентропійно-зважена нечітка оцінка кількісно визначила нелінійні взаємодії між 3 типами виходу (газ, кокс, рідина). Судді високо оцінили методологію як переносну між енергетичними галузями. Перша премія + Гранд-пріз за інновації на Кубку Shuwei."
     },
     "pet-industry": {
-      "tagline": "LASSO R²=0.9850 predicted a $52B market by 2026",
-      "description": "Built an integrated forecasting framework (ARIMAX-GARCH + VAR + LASSO + Prophet) spanning market size, pet population, and food manufacturing. LASSO regression identified key drivers with R²=0.9850. Cross-compared US/EU markets using HHI concentration index. Predicted 144.68M pets and 82.8% capacity utilization by 2026."
+      "tagline": "LASSO R²=0,9850 передбачив ринок у $52 млрд до 2026 року",
+      "description": "Побудовано інтегрований прогнозний фреймворк (ARIMAX-GARCH + VAR + LASSO + Prophet), що охоплює розмір ринку, популяцію домашніх тварин та виробництво кормів. Регресія LASSO визначила ключові драйвери з R²=0,9850. Порівняно ринки США/ЄС за індексом концентрації HHI. Передбачено 144,68 млн домашніх тварин та 82,8% використання потужностей до 2026 року."
     },
     "cursor-export": {
-      "tagline": "86% less time on knowledge management—one-click conversation export",
-      "description": "Cursor IDE extension (7 GitHub stars) that exports AI conversations to structured Markdown. Tested on 214 conversations (1,980 messages): processing time dropped from 5.8 min to 0.8 min per conversation, code snippet loss rate under 0.5%, throughput 12.5 conversations/min. Cross-platform VSIX with >98% install success rate across Windows/macOS/Linux."
+      "tagline": "На 86% менше часу на управління знаннями — експорт розмов в один клік",
+      "description": "Розширення Cursor IDE (7 зірок GitHub), яке експортує AI-розмови у структурований Markdown. Протестовано на 214 розмовах (1 980 повідомлень): час обробки скоротився з 5,8 хв до 0,8 хв на розмову, втрата фрагментів коду менше 0,5%, пропускна здатність 12,5 розмов/хв. Кросплатформний VSIX з >98% успішністю встановлення на Windows/macOS/Linux."
     },
     "brand-strategy": {
-      "tagline": "1,200+ consumer samples × AIGC pipeline = 40% engagement lift",
-      "description": "Led a PEST-SWOT driven brand overhaul for Suzhou’s “林莓莓” agricultural product. Surveyed 1,200+ consumers to map purchase drivers and price sensitivity. Deployed Claude + Flux + Midjourney AIGC toolchain for brand stories and mascot concepts, cutting creative iteration from weeks to days. Projected 40%+ user engagement increase. National Second Prize."
+      "tagline": "1 200+ зразків споживачів × конвеєр AIGC = зростання залучення на 40%",
+      "description": "Керував повним оновленням бренду, що базується на PEST-SWOT, для сільськогосподарського продукту «林莓莓» з Сучжоу. Опитував 1 200+ споживачів, щоб відобразити драйвери покупок та цінову чутливість. Впровадив AIGC-ланцюжок Claude + Flux + Midjourney для бренд-історій та концепцій талісманів, скоротивши креативну ітерацію з тижнів до днів. Передбачено зростання залучення користувачів на 40%+. Національна друга премія."
     },
     "mineru-skill": {
-      "tagline": "Zero-config Claude Code skill—PDF to Markdown in one command",
-      "description": "Open-source Claude Code skill that wraps MinerU for layout-aware PDF/document conversion. One-command install, no API keys, 3 supported formats (PDF, DOCX, PPTX). Handles 100+ page documents with table and formula preservation. Published on Smithery marketplace, 5+ community installs in first week. Built for the Claude Code ecosystem with auto-detection of document type and intelligent chunking."
+      "tagline": "Навичка Claude Code без налаштувань — PDF у Markdown однією командою",
+      "description": "Відкритий навичка Claude Code, що інкапсулює MinerU для конвертації PDF/документів із урахуванням макету. Встановлення однією командою, без API-ключів, 3 підтримувані формати (PDF, DOCX, PPTX). Обробляє документи на 100+ сторінках зі збереженням таблиць та формул. Опубліковано на маркетплейсі Smithery, 5+ встановлень спільноти за перший тиждень. Створено для екосистеми Claude Code з автоматичним визначенням типу документа та інтелектуальним розбиттям на шматки."
     },
     "warehouse-drone": {
-      "tagline": "95% recognition accuracy, full shelf scan in under 3 minutes",
-      "description": "Multi-rotor drone system for automated warehouse stocktaking. Integrated STM32 flight controller + OpenMV vision + BLE communication for autonomous waypoint navigation and QR code scanning across 3D shelf structures. 95% barcode recognition accuracy with laser calibration, completing full inventory traversal in under 3 minutes."
+      "tagline": "95% точність розпізнавання, повне сканування полиць за менше ніж 3 хвилини",
+      "description": "Система багатороторного дрона для автоматизованого складського інвентаризаційного обліку. Інтегровано контролер польоту STM32 + OpenMV зір + BLE-комунікацію для автономної навігації по точках та сканування QR-кодів по 3D-структурах полиць. 95% точність розпізнавання штрих-кодів з лазерною калібруванням, повне інвентаризаційне проходження за менше ніж 3 хвилини."
     },
     "cdtmp": {
-      "tagline": "Task success rate +18pp by turning prompt tricks into reusable protocol",
-      "description": "Turned ad-hoc prompt engineering into a structured agent protocol: task decomposition, state machines, retry strategies, and auditable intermediate states. Tested on 120 cross-domain tasks: success rate jumped from 63% to 81%, JSON compliance from 72% to 94%, rework rounds dropped 29%. Framework-agnostic—plugs into LangGraph, Semantic Kernel, or custom executors."
+      "tagline": "Підвищення успішності завдань на +18 п.п. завдяки перетворенню підходів до промптів на багаторазовий протокол",
+      "description": "Перетворив імпровізоване промпт-інжиніринг на структурований протокол агентів: розкладання завдань, скінченні автомати, стратегії повторних спроб та аудитовані проміжні стани. Протестовано на 120 крос-доменних завданнях: успішність зросла з 63% до 81%, відповідність JSON — з 72% до 94%, кількість ітерацій переробки зменшилася на 29%. Незалежно від фреймворку — інтегрується з LangGraph, Semantic Kernel або власними виконавцями."
     },
     "next-unicorn": {
-      "tagline": "Your codebase has 47 hand-rolled wheels—this finds them all",
-      "description": "Every codebase accumulates Vibe Coding debt: custom date formatters, DIY loggers, bespoke state machines. Next-Unicorn audits your code via Context7 MCP, identifies reinvented wheels, generates migration plans, and ships delete-code checklists. 176 tests passed with 29 property-based verifications. Published on Smithery + npm, supports 35+ AI agents including Claude Code, Cursor, and OpenCode."
+      "tagline": "У вашій кодовій базі 47 саморобних рішень — це знайде їх усі",
+      "description": "Кожна кодова база накопичує борг Vibe Coding: кастомні форматування дат, саморобні логери, унікальні скінченні автомати. Next-Unicorn аудитує ваш код через Context7 MCP, виявляє винайдені велосипеди, генерує плани міграції та надає чек-листи для видалення коду. 176 тестів пройшли з 29 верифікаціями на основі властивостей. Опубліковано на Smithery + npm, підтримує 35+ AI-агентів, включаючи Claude Code, Cursor та OpenCode."
     },
     "hydrogem-web": {
-      "tagline": "Real-time water quality dashboard with 5-second refresh and alerts",
-      "description": "React + TypeScript monitoring system tracking 12 water quality parameters (pH, turbidity, dissolved oxygen, etc.) with 5-second auto-refresh and configurable alert thresholds. Built with streaming data visualization and historical trend analysis for environmental monitoring."
+      "tagline": "Дашборд якості води в реальному часі з оновленням кожні 5 секунд та сповіщеннями",
+      "description": "Система моніторингу на React + TypeScript, що відстежує 12 параметрів якості води (pH, каламутність, розчинений кисень тощо) з автоматичним оновленням кожні 5 секунд та налаштовуваними порогами сповіщень. Побудована з візуалізацією потокових даних та аналізом історичних трендів для екологічного моніторингу."
     },
     "ocr-auto": {
-      "tagline": "100% bbox accuracy on 50 element types—from 65% to 92% in 10 prompt iterations",
-      "description": "Production-grade automated annotation system for document page elements. Async 4-stage pipeline with Qwen VL models identifies 50 element types (12 code languages, 13 interaction formats, 12 content elements, 13 other tags). Three-layer fault tolerance (Retry + RateLimit + CircuitBreaker), SHA256 content-addressed cache, and real-time SSE monitoring dashboard."
+      "tagline": "100% точність bbox для 50 типів елементів — з 65% до 92% за 10 ітерацій промптів",
+      "description": "Система автоматичної анотації елементів сторінок документів виробничого рівня. Асинхронний 4-етапний конвеєр з моделями Qwen VL ідентифікує 50 типів елементів (12 мов програмування, 13 форматів взаємодії, 12 елементів контенту, 13 інших тегів). Тривієвневий захист від помилок (Retry + RateLimit + CircuitBreaker), кеш з адресною схемою SHA256 та дашборд моніторингу SSE в реальному часі."
     },
     "tiktok-pipeline": {
-      "tagline": "8-dimensional annotation across 19 prompt iterations—edge cases included",
-      "description": "Multi-modal visual search relevance labeling pipeline using LLMs. Processes image + text signals across 8 annotation dimensions (visual relevance, content relevance, query/doc drop, functional parity, category granularity, visual similarity, modal corroboration). 19 prompt versions with automated comparison and reflection analysis tools."
+      "tagline": "8-вимірна анотація протягом 19 ітерацій промптів — включно з граничними випадками",
+      "description": "Конвеєр мітки релевантності мультимодального візуального пошуку з використанням LLM. Обробляє зображення + текстові сигнали по 8 вимірах анотації (візуальна релевантність, релевантність контенту, відкидання запиту/документа, функціональна еквівалентність, гранулярність категорій, візуальна схожість, модальна підтвердження). 19 версій промптів з автоматизованими інструментами порівняння та аналізу рефлексії."
     },
     "mlbb-analysis": {
-      "tagline": "5 platforms, 6 batch processors, 90%+ accuracy—from manual review to automated pipeline",
-      "description": "Multi-platform video content analysis system covering YouTube, Instagram, TikTok, VK, and Facebook. Refactored from legacy monolith to modular architecture: 5 platform fetchers, 6 batch processors, 5 video analyzers. Fast text analysis achieves 90%+ accuracy with 460x acceleration over manual review, processing 1,207+ videos across batch runs."
+      "tagline": "5 платформ, 6 пакетних процесорів, 90%+ точність — від ручного перегляду до автоматизованого конвеєра",
+      "description": "Система аналізу відеоконтенту для кількох платформ, що охоплює YouTube, Instagram, TikTok, VK та Facebook. Рефакторинг з легасі-моноліту на модульну архітектуру: 5 платформ-збирачів, 6 пакетних процесорів, 5 аналізаторів відео. Швидкий текстовий аналіз досягає 90%+ точності з прискоренням у 460 разів порівняно з ручним переглядом, обробляючи 1,207+ відео в пакетних запусках."
     },
     "synapse-quant": {
-      "tagline": "8 microservices, real-time GraphQL, TUI cockpit—from raw data to trade thesis",
-      "description": "Open-source quantitative trading copilot for crypto markets. 8 microservices + 9 infrastructure services (17 containers total) with unified TUI cockpit, 41 technical indicators, real-time market data streaming, and in-context AI copilot. TypeScript 5.7 + Python 3.11+, CI/CD with GitHub Actions."
+      "tagline": "8 мікросервісів, GraphQL у реальному часі, TUI-кабіна — від сирих даних до торговельної тези",
+      "description": "Відкритий квантовий торговий копілот для криптовалютних ринків. 8 мікросервісів + 9 інфраструктурних сервісів (17 контейнерів загалом) з уніфікованою TUI-кабіною, 41 технічним індикатором, потоковою передачею ринкових даних у реальному часі та AI-копілотом у контексті. TypeScript 5.7 + Python 3.11+, CI/CD з GitHub Actions."
     },
     "hm3d-eval": {
-      "tagline": "4.62/5 evaluation score across 1,000 real 3D scenes—8/8 acceptance criteria passed",
-      "description": "Comprehensive quality evaluation framework for the Habitat-Matterport 3D Research Dataset (1,000 real 3D scenes). Assessed 15+ dimensions including mesh quality, texture integrity, semantic annotation accuracy, and metadata completeness. Achieved 4.62/5 overall score with 100% acceptance pass rate (8/8 criteria). 95% requirement compliance."
+      "tagline": "Оцінка 4.62/5 по 1,000 реальних 3D-сценах — 8/8 критеріїв прийняття пройдені",
+      "description": "Комплексна рамка оцінки якості для дослідницького датасету Habitat-Matterport 3D (1,000 реальних 3D-сцен). Оцінено 15+ вимірів, включаючи якість мешу, цілісність текстур, точність семантичної анотації та повноту метаданих. Досягнуто загальної оцінки 4.62/5 з 100% проходження критеріїв прийняття (8/8). 95% відповідності вимогам."
     },
     "appen-dashboard": {
-      "tagline": "Enterprise SaaS for a NASDAQ data company: the B2B demo mode playbook in production",
-      "description": "Built multi-tenant reporting infrastructure for Appen (NASDAQ: APT). Next.js 16 monorepo (5 apps + 10 packages) serves TCS, ByteWorks, and DataPower dashboards with Upstash QStash async job queues and Pusher real-time. The breakthrough: a production-grade demo mode with MSW + tRPC mock interception, privacy redaction pipeline (schema validate → redact → normalize → value protocol), and 4 behavioral strategies—solving the #1 enterprise SaaS sales problem."
+      "tagline": "Enterprise SaaS для компанії з NASDAQ: плейбук демо-режиму B2B у продакшені",
+      "description": "Побудовано інфраструктуру багатокористувацької звітності для Appen (NASDAQ: APT). Next.js 16 монорепо (5 додатків + 10 пакетів) обслуговує дашборди TCS, ByteWorks та DataPower з асинхронними чергами завдань Upstash QStash та Pusher у реальному часі. Прорив: демо-режим виробничого рівня з перехопленням MSW + tRPC mock, конвеєром приховування конфіденційності (валідація схеми → приховування → нормалізація → протокол значень) та 4 поведінковими стратегіями — вирішення головної проблеми продажів enterprise SaaS."
     },
     "t2v-relabeling": {
-      "tagline": "Using better AI to fix worse AI's labeling mistakes—at the cost human reviewers can't match",
-      "description": "Meta-labeling pipeline that audits and corrects mislabeled AI-generated video training data using Gemini 2.5 Flash. Classifies 6 attributes (quality, gender, age, race, scene, season) per video with EWMA-adaptive rate limiting and HTTP/2 concurrency. Processes 60MB+ videos via Gemini Files API without local download. 3 iterative rounds with incremental merge. Human labeling: ~$1/video. This pipeline: ~$0.01/video at scale."
+      "tagline": "Використання кращого AI для виправлення помилок маркування гіршого AI — за вартість, яку не можуть досягти люди-ревюери",
+      "description": "Конвеєр мета-маркування, який аудитує та виправляє неправильно позначені дані для тренування відео, згенеровані AI, з використанням Gemini 2.5 Flash. Класифікує 6 атрибутів (якість, стать, вік, раса, сцена, сезон) на відео з адаптивним обмеженням швидкості EWMA та конкурентністю HTTP/2. Обробляє відео 60 МБ+ через Gemini Files API без локального завантаження. 3 ітеративні раунди з інкрементальним злиттям. Ручне маркування: ~$1/відео. Цей конвеєр: ~$0.01/відео у масштабі."
     },
     "url-annotation": {
-      "tagline": "The TLS fingerprint arms race: when IP blocking fails, impersonate Chrome at the handshake",
-      "description": "Production URL consistency pipeline that defeats TLS-fingerprint bot detection at zero marginal LLM cost. curl_cffi spoofs Chrome 124's full ClientHello (cipher suites, extensions, ordering)—not just User-Agent. Playwright renders JS-heavy SPAs. Local Qwen3:1.7b via Ollama compares semantics without API fees or GDPR exposure. Rotating-ad detection re-fetches 3× to flag domain changes. 30 HTTP + 5 Playwright + 5 LLM concurrent."
+      "tagline": "Гонка озброєнь TLS-відбитків: коли блокування IP не працює, імітуйте Chrome під час рукопожаття",
+      "description": "Продакшн-пайплайн узгодженості URL, який обходить детекцію ботів за TLS-відбитком без додаткових витрат на LLM. curl_cffi імітує повний ClientHello Chrome 124 (набори шифрів, розширення, порядок) — не лише User-Agent. Playwright рендерить SPA з важким JS. Локальний Qwen3:1.7b через Ollama порівнює семантику без API-зборів та ризиків GDPR. Детекція ротуючих оголошень перезавантажує сторінку 3× для фіксації змін домену. 30 HTTP + 5 Playwright + 5 LLM одночасно."
     },
     "3dgs-eval": {
-      "tagline": "3DGS had 2,000+ citations in 6 months but zero enterprise quality standards—we wrote the spec",
-      "description": "First systematic vendor evaluation framework for 3D Gaussian Splatting content production. Multi-round scored assessment across 6 dimensions: HP/LP geometry (pivot + retopology), PBR texture completeness (BaseColor/Normal/Metallic/AO), file naming conventions, semantic annotation, preview standards (8+ renders), and communication SLA. The revelation: vendors weren't technically incapable—they were operationally immature. Multi-round CSV tracker makes every revision cycle auditable."
+      "tagline": "3DGS отримав 2000+ цитувань за 6 місяців, але не мав жодного корпоративного стандарту якості — ми написали специфікацію",
+      "description": "Перша системна рамка оцінки вендорів для виробництва контенту 3D Gaussian Splatting. Багаторазова оцінка з балами за 6 вимірами: геометрія HP/LP (піво + ретопологія), повнота PBR-текстур (BaseColor/Normal/Metallic/AO), конвенції іменування файлів, семантична аотація, стандарти прев'ю (8+ рендерів) та SLA комунікації. Відкриття: вендори не були технічно неспроможними — вони були операційно незрілими. Багаторазовий CSV-трекер робить кожен цикл ревізій аудитуваним."
     }
   },
   "thinking": {
-    "latest_label": "Latest Thinking",
-    "latest_headline": "Recent Writings",
-    "view_all": "View All Writings"
+    "latest_label": "Останні думки",
+    "latest_headline": "Нещодавні записи",
+    "view_all": "Переглянути всі записи"
   }
 }

@@ -496,7 +496,7 @@
       "contactUs": {
         "title": "お問い合わせ",
         "intro": "Cookie の使用に関するご質問はこちらまでご連絡ください：",
-        "company": "{brandName} Co., Ltd.",
+        "company": "{brandName} 株式会社",
         "privacyNote": "個人データの収集・処理方法の詳細については、当社の",
         "privacyLink": "プライバシーポリシー"
       }
@@ -792,7 +792,7 @@
       "contactUs": {
         "title": "8. お問い合わせ",
         "intro": "このプライバシーポリシーについてご質問がある場合はお問い合わせください：",
-        "company": "{brandName} Co., Ltd."
+        "company": "{brandName} 株式会社"
       }
     },
     "refund": {
@@ -974,7 +974,7 @@
       "contactUs": {
         "title": "お問い合わせ",
         "intro": "返金リクエストまたはこのポリシーに関するお問い合わせ：",
-        "company": "{brandName} Co., Ltd.",
+        "company": "{brandName} 株式会社",
         "billingLabel": "請求",
         "supportLabel": "サポート",
         "legalLabel": "法務",
@@ -1123,7 +1123,7 @@
       "contactUs": {
         "title": "11. お問い合わせ",
         "intro": "本規約についてご質問がある場合はお問い合わせください：",
-        "company": "{brandName} Co., Ltd.",
+        "company": "{brandName} 株式会社",
         "emailLabel": "メール",
         "supportLabel": "サポート"
       },
@@ -1256,34 +1256,34 @@
       }
     },
     "workflow": {
-      "badge": "Velocity",
+      "badge": "速度",
       "title": "ゼロから本番環境へ、記録的なスピードで。",
       "step1": {
-        "title": "1. Clone",
+        "title": "1. クローン",
         "desc": "{brandName} モノレポを即座にクローンし、pnpm install を実行します。"
       },
       "step2": {
-        "title": "2. Configure",
+        "title": "2. 設定",
         "desc": "インタラクティブ CLI で Prisma、Clerk、Stripe を数分でセットアップ。"
       },
       "step3": {
-        "title": "3. Build",
+        "title": "3. ビルド",
         "desc": "プラットフォームの基盤はすでに接続済み。プロダクトロジックと UI に集中できます。"
       },
       "step4": {
-        "title": "4. Deploy",
+        "title": "4. デプロイ",
         "desc": "Vercel と AWS にプッシュして、即座にグローバル配信を実現します。"
       },
       "speedometer": {
         "number": "10",
         "unit": "分",
-        "subtitle": "TIME TO MARKET",
+        "subtitle": "市場投入までの時間",
         "comparison": "数ヶ月分のプラットフォーム作業をスキップ。",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "初期化",
+          "wire": "コア",
+          "ship": "デプロイ",
+          "scale": "スケール",
           "ongoing": "∞"
         },
         "cta": "タイマーを開始"

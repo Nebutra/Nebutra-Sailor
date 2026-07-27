@@ -139,11 +139,7 @@
         "name": "チャット",
         "price": "無料",
         "description": "15分のクイックコール",
-        "features": [
-          "Direction advice",
-          "Tech stack recommendations",
-          "Quick Q&A"
-        ],
+        "features": ["Direction advice", "Tech stack recommendations", "Quick Q&A"],
         "cta": "ソウルに話す",
         "href": "/soul"
       },
@@ -151,12 +147,7 @@
         "name": "コーヒー",
         "price": "¥18",
         "description": "コーヒー一杯分",
-        "features": [
-          "Everything above",
-          "Code Review",
-          "UX quick audit",
-          "Growth strategy tips"
-        ],
+        "features": ["Everything above", "Code Review", "UX quick audit", "Growth strategy tips"],
         "cta": "コーヒーを奢る",
         "href": "https://buymeacoffee.com/tsekaluk"
       },
@@ -164,13 +155,9 @@
         "name": "採用",
         "price": "プロジェクト制",
         "description": "フルプロフェッショナル契約",
-        "features": [
-          "Everything above",
-          "All 6 service lines unlocked",
-          "Custom scope & delivery"
-        ],
+        "features": ["Everything above", "All 6 service lines unlocked", "Custom scope & delivery"],
         "cta": "連絡する",
-        "href": "mailto:contact@tsekaluk.dev?subject=Hire"
+        "href": "mailto:contact@tsekaluk.dev?subject=採用"
       },
       "partner": {
         "name": "ドリームパートナー",
@@ -183,16 +170,13 @@
           "Equity / revenue share"
         ],
         "cta": "ビジョンを共有する",
-        "href": "mailto:contact@tsekaluk.dev?subject=Partnership"
+        "href": "mailto:contact@tsekaluk.dev?subject=パートナーシップ"
       }
     },
     "services": {
       "engineering": {
         "name": "プロダクトエンジニアリング",
-        "items": [
-          "Next.js full-stack",
-          "React frontend architecture"
-        ]
+        "items": ["Next.js full-stack", "React frontend architecture"]
       },
       "ai": {
         "name": "AI＆オートメーション",
@@ -205,10 +189,7 @@
       },
       "design": {
         "name": "デザイン＆プロダクト",
-        "items": [
-          "UI/UX design",
-          "Product R&D"
-        ]
+        "items": ["UI/UX design", "Product R&D"]
       },
       "growth": {
         "name": "グロース＆グローバル",
@@ -222,19 +203,11 @@
       },
       "consulting": {
         "name": "コンサルティング",
-        "items": [
-          "Mathematical modeling",
-          "Business English",
-          "IT project management"
-        ]
+        "items": ["Mathematical modeling", "Business English", "IT project management"]
       },
       "strategy": {
         "name": "VC＆戦略",
-        "items": [
-          "Venture research",
-          "YC-ready startup planning",
-          "Unicorn-level product thinking"
-        ]
+        "items": ["Venture research", "YC-ready startup planning", "Unicorn-level product thinking"]
       }
     }
   },
@@ -263,7 +236,7 @@
     "nav_soul": "ソウル",
     "nav_links": "リンク",
     "email_cta": "プロジェクトを始める →",
-    "built_with": "Built with",
+    "built_with": "提供元",
     "back_to_top": "↑ トップへ",
     "rss_label": "RSSフィード",
     "github_label": "GitHub",
@@ -329,7 +302,7 @@
       "awards_count": "10回の挑戦",
       "awards_description": "何かのエキスパートではなく——すべてを試したい、そして上手く試したい人。",
       "award_1_title": "MCM/ICM 数理モデリング",
-      "award_1_level": "Honorable Mention",
+      "award_1_level": "佳作",
       "award_1_detail": "NSGA-III観光最適化、28,000+チームに対し予測誤差8.3%",
       "award_2_title": "藍橋杯 C/C++（江蘇省）",
       "award_2_level": "一等賞",

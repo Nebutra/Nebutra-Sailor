@@ -15,7 +15,7 @@
       "empty": "Ingen brugere fundet.",
       "loadError": "Kunne ikke indlæse brugere.",
       "columns": {
-        "email": "Email",
+        "email": "E-mail",
         "name": "Navn",
         "created": "Oprettet",
         "activeOrgs": "Aktive orgs",
@@ -44,37 +44,37 @@
       "trigger": "Udfør som",
       "starting": "Starter…",
       "stop": "Stop impersonation",
-      "confirm": "Impersonate {label}? You will see the app as this user until you stop.",
-      "error": "Failed to start impersonation.",
-      "stopError": "Failed to stop impersonation."
+      "confirm": "Antag identitet som {label}? Du vil se appen som denne bruger, indtil du stopper.",
+      "error": "Kunne ikke starte identitetsantagelse.",
+      "stopError": "Kunne ikke stoppe identitetsantagelse."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "previous": "Forrige",
+      "next": "Næste",
+      "pageOf": "Side {page} af {total}"
     }
   },
   "Common": {
-    "hello": "Hello World",
+    "hello": "Hej Verden",
     "dashboard": "Dashboard",
     "actions": {
-      "continue": "Continue",
-      "confirm": "Confirm",
-      "done": "Done",
-      "cancel": "Cancel"
+      "continue": "Fortsæt",
+      "confirm": "Bekræft",
+      "done": "Udført",
+      "cancel": "Annuller"
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
+    "light": "Lys",
+    "dark": "Mørk",
     "system": "System"
   },
   "LocaleSwitcher": {
     "label": "Sprog",
     "ariaLabel": "Skift sprog",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Søg efter sprog…",
+    "noResults": "Ingen sprog matcher",
+    "menuAria": "Vælg sprog"
   },
   "compliance": {
     "icp": {
@@ -1097,21 +1097,21 @@
       "intakeDescription": "PDF, Markdown, tekst eller Word-dokument",
       "chooseDocument": "Vælg dokument",
       "startParseTask": "Start parse task",
-      "queued": "Queued",
-      "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed.",
-      "taskStatus": "Task status",
-      "progressLabel": "Task progress",
-      "refreshStatus": "Refresh",
-      "cancelTask": "Cancel",
-      "statusError": "Could not refresh task status.",
-      "cancelError": "Could not cancel the task.",
-      "statusQueued": "Queued",
-      "statusRunning": "Running",
-      "statusSucceeded": "Succeeded",
-      "statusFailed": "Failed",
-      "statusCancelled": "Cancelled",
-      "resultReady": "Result ready",
+      "queued": "I kø",
+      "fileInputLabel": "Dokumentfil",
+      "fallbackError": "Dokumentopgaven fejlede.",
+      "taskStatus": "Opgavestatus",
+      "progressLabel": "Opgavefremgang",
+      "refreshStatus": "Opdater",
+      "cancelTask": "Annuller",
+      "statusError": "Kunne ikke opdatere opgavestatus.",
+      "cancelError": "Kunne ikke annullere opgaven.",
+      "statusQueued": "I kø",
+      "statusRunning": "Kører",
+      "statusSucceeded": "Lykkedes",
+      "statusFailed": "Fejlede",
+      "statusCancelled": "Annulleret",
+      "resultReady": "Resultat klar",
       "taskError": "Opgavefejl",
       "updatedAt": "Opdateret"
     },
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, køer og mere."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Åbn Sailor AI",
           "description": "Prøv chat-, data- eller workflow-tilstand."
         }
       }

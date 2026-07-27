@@ -55,8 +55,8 @@
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "नमस्ते दुनिया",
+    "dashboard": "डैशबोर्ड",
     "actions": {
       "continue": "जारी रखें",
       "confirm": "पुष्टि करें",
@@ -65,32 +65,32 @@
     }
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "लाइट",
+    "dark": "डार्क",
+    "system": "सिस्टम"
   },
   "LocaleSwitcher": {
-    "label": "Language",
-    "ariaLabel": "Change language",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "label": "भाषा",
+    "ariaLabel": "भाषा बदलें",
+    "searchPlaceholder": "भाषाएँ खोजें…",
+    "noResults": "कोई भाषा मेल नहीं खाती",
+    "menuAria": "भाषा चुनें"
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record number",
-      "publicSecurity": "Public security record"
+      "recordNumber": "ICP रिकॉर्ड नंबर",
+      "publicSecurity": "सार्वजनिक सुरक्षा रिकॉर्ड"
     },
     "wechat": {
-      "signIn": "Sign in with WeChat",
-      "notConfigured": "WeChat login not configured"
+      "signIn": "WeChat से साइन इन करें",
+      "notConfigured": "WeChat लॉगिन कॉन्फ़िगर नहीं किया गया है"
     }
   },
   "onboarding": {
-    "title": "Set up your workspace",
-    "subtitle": "Three quick steps and you're ready to ship.",
+    "title": "अपना वर्कस्पेस सेट अप करें",
+    "subtitle": "तीन तेज़ कदम और आप शिप करने के लिए तैयार हैं।",
     "steps": {
-      "workspace": "Workspace",
+      "workspace": "वर्कस्पेस",
       "invite": "टीम को आमंत्रित करें",
       "plan": "प्लान चुनें"
     },
@@ -233,7 +233,7 @@
     "governance_description": "Proof of Work और वास्तविक व्यापारिक परिणामों पर आधारित एल्गोरिदमिक शासन, अस्पष्ट ब्यूरोकेरासी को बदलना।",
     "environment_title": "पर्यावरण",
     "environment_headline": "डिजिटल न्यूनतमवाद",
-    "environment_description": "अत्यधिक SaaS एकीकरण और संसाधन दक्षता के माध्यम से क्लाउड फुटप्रिंट में कमी लाना。"
+    "environment_description": "अत्यधिक SaaS एकीकरण और संसाधन दक्षता के माध्यम से क्लाउड फुटप्रिंट में कमी लाना."
   },
   "auth": {
     "security": {
@@ -369,7 +369,7 @@
       "passkeyError": "पासकी साइन-इन विफल रहा। कोई अन्य विधि आज़माएं।",
       "ssoTitle": "एंटरप्राइज़ SSO के साथ जारी रखें",
       "ssoDescription": "आपको {email} के लिए {provider} पर रीडायरेक्ट किया जा रहा है।",
-      "ssoError": "एंटरप्राइज़ SSO शुरू नहीं हो सका। कोई अन्य विधि आज़माएं。",
+      "ssoError": "एंटरप्राइज़ SSO शुरू नहीं हो सका। कोई अन्य विधि आज़माएं.",
       "ssoRetry": "फिर से आज़माएं",
       "newToProduct": "Nebutra में नए हैं?",
       "signUpLink": "साइन अप करें",
@@ -478,7 +478,7 @@
       "samePassword": "नया पासवर्ड आपके वर्तमान पासवर्ड से अलग होना चाहिए।",
       "invalidEmail": "ईमेल पता वैध नहीं है।",
       "emailNotVerified": "कृपया पहले अपना ईमेल पता सत्यापित करें।",
-      "sessionExpired": "आपकी सत्र समाप्त हो गई है। कृपया फिर से साइन इन करें。",
+      "sessionExpired": "आपकी सत्र समाप्त हो गई है। कृपया फिर से साइन इन करें.",
       "twoFactorRequired": "दो-कारक सत्यापन आवश्यक है।",
       "invalidVerificationCode": "सत्यापन कोड गलत या समाप्त हो गया है।",
       "twoFactorAlreadyEnabled": "दो-कारक प्रमाणीकरण पहले से सक्षम है।",
@@ -632,22 +632,22 @@
       "dialog": {
         "title": "API key बनाएं",
         "description": "API keys allow external systems to communicate with Nebutra on your behalf. Treat them like passwords.",
-        "nameLabel": "Name",
-        "namePlaceholder": "e.g. Production backend",
+        "nameLabel": "नाम",
+        "namePlaceholder": "जैसे Production backend",
         "scopesLabel": "Scopes",
-        "successWarning": "This key appears once. Store it before closing.",
-        "confirmClose": "Closing hides this key forever. Make sure it is stored."
+        "successWarning": "यह key एक बार दिखता है। बंद करने से पहले इसे सुरक्षित करें।",
+        "confirmClose": "बंद करने पर यह key हमेशा के लिए छिप जाएगा। सुनिश्चित करें कि यह सुरक्षित है।"
       }
     },
     "auditLog": {
       "title": "Audit Log",
-      "description": "Track every administrative action in your workspace. Filter by actor, action, entity, or time range.",
-      "empty": "No audit events yet",
-      "loadMore": "Load more",
-      "loading": "Loading…",
-      "forbidden": "You need admin access to view the audit log.",
+      "description": "अपने workspace में हर प्रशासनिक क्रिया का ट्रैक रखें। Actor, action, entity या समय सीमा के आधार पर फ़िल्टर करें।",
+      "empty": "अभी तक कोई audit events नहीं",
+      "loadMore": "और लोड करें",
+      "loading": "लोड हो रहा है…",
+      "forbidden": "Audit log देखने के लिए आपको admin access चाहिए।",
       "columns": {
-        "when": "When",
+        "when": "कब",
         "actor": "Actor",
         "action": "Action",
         "entity": "Entity",
@@ -1031,7 +1031,7 @@
         "bulkMarkRead": "कुछ सूचनाओं को पढ़ा गया चिह्नित नहीं किया जा सका।"
       },
       "inbox": {
-        "noBackend": "इनबॉक्स के लिए एक स्थायी सूचना बैकएंड की आवश्यकता होती है। अपने प्रदाता कॉन्फ़िगरेशन की जाँच करें。",
+        "noBackend": "इनबॉक्स के लिए एक स्थायी सूचना बैकएंड की आवश्यकता होती है। अपने प्रदाता कॉन्फ़िगरेशन की जाँच करें.",
         "emptyCaughtUp": "इनबॉक्स साफ़ है।",
         "emptyChangelog": "चेंजलॉग अपडेट यहाँ दिखेंगे।"
       }
@@ -1141,26 +1141,26 @@
           "description": "Stripe, Slack, webhooks, queues, और अधिक।"
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Sailor AI खोलें",
           "description": "Chat, data, या workflow mode आज़माएं।"
         }
       }
     }
   },
   "Sidebar": {
-    "projects": "Projects",
-    "noThreads": "No threads",
-    "expandAll": "Expand all",
-    "collapseAll": "Collapse all",
-    "sectionMore": "More options",
-    "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups",
-    "newProjectPlaceholder": "Project name",
-    "newProjectDefault": "Untitled",
-    "newProjectSuccess": "Project created",
-    "newProjectError": "Could not create project",
-    "sortBy": "Sort by",
-    "sortRecent": "Recently active",
+    "projects": "परियोजनाएँ",
+    "noThreads": "कोई थ्रेड नहीं",
+    "expandAll": "सभी विस्तारित करें",
+    "collapseAll": "सभी संक्षिप्त करें",
+    "sectionMore": "अधिक विकल्प",
+    "newProject": "नई परियोजना",
+    "restoredGroups": "पिछले विस्तारित समूहों को पुनर्स्थापित किया गया",
+    "newProjectPlaceholder": "परियोजना का नाम",
+    "newProjectDefault": "शीर्षकहीन",
+    "newProjectSuccess": "परियोजना बनाई गई",
+    "newProjectError": "परियोजना नहीं बनाई जा सकी",
+    "sortBy": "क्रमबद्ध करें",
+    "sortRecent": "हाल में सक्रिय",
     "sortAlphabetical": "वर्णानुक्रम",
     "sortCreated": "निर्माण तिथि",
     "archiveAll": "सभी को आर्काइव करें",
@@ -1171,14 +1171,14 @@
       "firstRoom": "पहला कमरा तैयार है।",
       "firstFolder": "बहुत सी कंपनियाँ एक फ़ोल्डर से शुरू होती हैं।",
       "firstTable": "पहली टेबल पर दूसरा सीट है।",
-      "firstSignal": "वास्तविक दुनिया बोलना शुरू कर चुकी है。",
+      "firstSignal": "वास्तविक दुनिया बोलना शुरू कर चुकी है.",
       "firstShip": "दुनिया इसे पहली बार देख रही है।",
       "firstBeliever": "आज से, आप अब केवल अपने लिए नहीं बना रहे हैं।",
       "firstRevenue": "सपने में अब नकद प्रवाह है।",
       "firstReturn": "वापसी आने का महत्व बस आने से ज़्यादा है।",
       "firstTeam": "तीन लोग मिलकर कंपनी बनाना शुरू कर सकते हैं।",
       "firstCrowd": "पहली टेबल भीड़भाड़ वाली हो रही है।",
-      "firstReset": "दोबारा शुरू करना एक अधिक ईमानदार शुरुआत है。",
+      "firstReset": "दोबारा शुरू करना एक अधिक ईमानदार शुरुआत है.",
       "firstPublic": "भविष्य का एक टुकड़ा सार्वजनिक रूप से रखें।",
       "firstDemo": "यह कोई शो नहीं है। यह एक टेस्ट है।",
       "graduation": "आपने बेसिक्स से आगे निकल गए हैं। आगे की राह के लिए मजबूत टूल्स की ज़रूरत है।"
@@ -1190,12 +1190,12 @@
       "usageData": "जब आपकी ऑर्गनाइज़ेशन रिक्वेस्ट्स भेजना शुरू करेगी, तब यूज़ेज डेटा दिखेगा।",
       "apiKeys": "अभी तक कोई की नहीं।",
       "apiKeysCta": "अपनी पहली की बनाएँ",
-      "teamMembers": "एक शुरू कर सकता है। कुछ मिलकर बिल्ड कर सकते हैं。",
+      "teamMembers": "एक शुरू कर सकता है। कुछ मिलकर बिल्ड कर सकते हैं.",
       "cofounders": "वह पहला व्यक्ति जो आप पर विश्वास करे, अभी तक नहीं आया है।",
       "cofoundersDescription": "जब आप और एक और फाउंडर दोनों इंटरेस्ट सिग्नल करेंगे, तो वे यहाँ दिखेंगे।",
       "cofoundersAction": "को-फाउंडर्स खोजें",
       "growthChart": "एक्टिविटी शुरू होने पर ट्रेंड डेटा दिखेगा।",
-      "revenueChart": "ट्रांज़ैक्शन शुरू होने पर रेवेन्यू डेटा दिखेगा。",
+      "revenueChart": "ट्रांज़ैक्शन शुरू होने पर रेवेन्यू डेटा दिखेगा.",
       "webhookDeliveries": "पहले इवेंट के बाद डिलीवरीज़ यहाँ दिखेंगी।",
       "webhookEndpoints": "इवेंट्स पाना शुरू करने के लिए ऊपर एक एंडपॉइंट जोड़ें।",
       "accessInvites": "कोई आमंत्रण कोड जारी नहीं किया गया।"
@@ -1209,14 +1209,14 @@
       "replayWebhookDelivery": "रीप्ले पूरा नहीं हो सका।",
       "loadWebhookEndpoints": "एंडपॉइंट्स लोड नहीं किए जा सके।"
     },
-    "team": "एक शुरू कर सकता है। कुछ लोग बना सकते हैं。",
+    "team": "एक शुरू कर सकता है। कुछ लोग बना सकते हैं.",
     "revenue": "सपने को अब कैश फ़्लो मिला है।",
     "growth": "सिग्नल मज़बूत हो रहा है।",
     "deployment": {
       "primary": "दुनिया इसे पहली बार देख रही है।",
       "echo": "अंततः यह localhost से बाहर आ गया।"
     },
-    "onboarding": "आपको तैयार होने की ज़रूरत नहीं है। आपको शुरू करने की ज़रूरत है。",
+    "onboarding": "आपको तैयार होने की ज़रूरत नहीं है। आपको शुरू करने की ज़रूरत है.",
     "graduation": "आपने बुनियादी बातों से आगे निकल गए हैं। आगे की राह के लिए {tool} आज़माएं।",
     "company": {
       "emptyTitle": "आपका पहला कॉन्टेक्स्ट टावर यहीं से शुरू होता है।",
@@ -1249,7 +1249,7 @@
     },
     "billing": {
       "emptyTitle": "बिलिंग से पहले एक वर्कस्पेस बनाएं।",
-      "emptyDescription": "बिलिंग एक्शन के लिए एक सक्रिय वर्कस्पेस की जरूरत होती है。पहले एक बनाएं, फिर बिलिंग पर वापस आएं।"
+      "emptyDescription": "बिलिंग एक्शन के लिए एक सक्रिय वर्कस्पेस की जरूरत होती है. पहले एक बनाएं, फिर बिलिंग पर वापस आएं।"
     },
     "default": {
       "emptyTitle": "पहला वर्कस्पेस यहीं से शुरू होता है।",

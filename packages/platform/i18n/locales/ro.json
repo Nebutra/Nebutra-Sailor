@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Limbă",
     "ariaLabel": "Schimbă limba",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Caută limbi…",
+    "noResults": "Nicio limbă nu corespunde",
+    "menuAria": "Selectează limba"
   },
   "compliance": {
     "icp": {
@@ -1049,7 +1049,7 @@
       "promptPlaceholder": "Ce ai pe minte?",
       "actions": {
         "connect": "Conectează o integrare",
-        "theme": "Theme Playground",
+        "theme": "Jocul cu Teme",
         "audit": "Jurnal de audit",
         "billing": "Facturare"
       }
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, cozi și multe altele."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Deschide Sailor AI",
           "description": "Încearcă modul chat, date sau workflow."
         }
       }

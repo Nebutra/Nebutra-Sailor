@@ -1280,7 +1280,7 @@
         "subtitle": "DÉLAI DE MISE SUR LE MARCHÉ",
         "comparison": "Gagnez des mois de travail d'infrastructure.",
         "phases": {
-          "scaffold": "Init",
+          "scaffold": "Initialisation",
           "wire": "Cœur",
           "ship": "Déployer",
           "scale": "Scaler",
@@ -1327,7 +1327,7 @@
       "dx_f3_title": "API multi-protocoles (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI pour les API publiques, oRPC pour les appels frontend typés, tRPC pour la compatibilité T3-stack. Tous les protocoles partagent les mêmes contrats Zod et la même pile de middleware. Activez par protocole via la config de préréglage.",
       "billing_category": "Facturation & Monétisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
+      "billing_f1_title": "Stripe, LemonSqueezy, Polar et paiements en Chine",
       "billing_f1_desc": "Choisissez votre fournisseur de paiement : Stripe pour l'enterprise mondial, LemonSqueezy pour les développeurs indépendants, Polar pour l'OSS, ou Alipay/WeChat Pay pour le marché chinois. Paiement en un clic et portail de facturation en libre-service.",
       "billing_f2_title": "Application des quotas basée sur l'utilisation",
       "billing_f2_desc": "Les compteurs Redis en temps réel suivent les appels API et l'utilisation des tokens par tenant. Les requêtes sont bloquées à la passerelle lorsque les limites sont atteintes.",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Gratuit pour <hl>Construire</hl>",
+      "description": "{brandName}-Sailor ne coûte rien en usage commercial — MIT sur npm, FSL-1.1-ALv2 sur le dépôt, conversion vers Apache-2.0 après deux ans. Les offres payantes vendent du support et des engagements contractuels, jamais des permissions."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "Toujours gratuit",
+        "title": "Communauté",
+        "subtitle": "Tout le monde",
+        "description": "Toutes tailles d'équipe, tous revenus. Produits commerciaux propriétaires inclus.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Code source complet, tous les paquets",
+          "closedSourceOk": "Usage commercial propriétaire — pas de copyleft",
+          "noAttribution": "Pas d'inscription, pas d'attribution requise",
+          "communitySupport": "Support communautaire — au mieux"
         },
-        "cta": "View on GitHub"
+        "cta": "Voir sur GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "À partir de {price}/an",
+        "title": "Équipe",
+        "subtitle": "Abonnement support",
+        "description": "Pour les équipes qui ont besoin d'un engagement plutôt que d'un espoir. Le code est déjà gratuit.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Canal de support privé",
+          "firstResponse": "Première réponse sous deux jours ouvrés, garantie",
+          "priorityTriage": "Triage prioritaire des bugs",
+          "upgradeHelp": "Assistance à la mise à jour et notification des changements majeurs"
         },
-        "cta": "Get support"
+        "cta": "Obtenir du support"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
-        "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "badge": "À partir de 30 000 $/an",
+        "title": "Entreprise",
+        "subtitle": "Prêt pour les achats",
+        "description": "Pour les organisations dont les services juridiques, de sécurité ou d'achats ont besoin d'une contrepartie signataire.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA de réponse — 4 heures ouvrées, 1 heure en cas d'arrêt de production",
+          "indemnity": "Garantie d'indemnisation et engagement de correctifs de sécurité",
+          "compliance": "DPA signé, pack de conformité, engagement de continuité",
+          "trademark": "Droits de marque et de marque blanche"
         },
-        "cta": "Contact sales"
+        "cta": "Contacter les ventes"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Questions fréquentes",
+      "description": "En bref : l'utilisation est gratuite. Payer est nécessaire quand vous avez besoin de nous contractuellement.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Pourquoi FSL plutôt que MIT ou AGPL ?",
+          "a": "FSL autorise toute utilisation sauf la vente d'un substitut à Sailor lui-même, et chaque version devient Apache-2.0 deux ans après sa sortie — une concession faite irrévocablement à l'avance. AGPL bloquait l'adoption lors des examens juridiques d'entreprise sans protéger ce que nous avions réellement besoin de protéger."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "L'utilisation commerciale est-elle vraiment gratuite ?",
+          "a": "Oui. Pas de frais, pas de clé de licence, pas d'inscription, pas de seuil de revenus ou d'effectifs, pas d'attribution. Créez un produit propriétaire et vendez-le."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Qu'est-ce qui est considéré comme une utilisation concurrente ?",
+          "a": "Proposer Sailor lui-même — un service Sailor hébergé, ou une plateforme concurrente reconditionnée. Construire un SaaS vertical, un outil interne ou des projets clients sur Sailor n'est pas une utilisation concurrente. Si votre modèle le nécessite, un contrat Enterprise peut inclure une dérogation écrite."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Qu'apportent réellement les niveaux payants ?",
+          "a": "Des engagements de support, des SLA de réponse, une indemnisation, des documents de conformité et des droits de marque. Jamais l'autorisation d'utiliser le logiciel — celle-ci vous appartient déjà."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Qu'en est-il des contributions open source ?",
+          "a": "Toutes les contributions nécessitent un CLA. Voir CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Licences — {brandName}",
+      "description": "Gratuit pour usage commercial. MIT sur npm, FSL-1.1-ALv2 dans le dépôt, converti en Apache-2.0."
     }
   },
   "licenseWizard": {

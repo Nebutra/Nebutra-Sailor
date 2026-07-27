@@ -55,8 +55,8 @@
     }
   },
   "Common": {
-    "hello": "Hello World",
-    "dashboard": "Dashboard",
+    "hello": "Halo Dunia",
+    "dashboard": "Dasbor",
     "actions": {
       "continue": "Lanjutkan",
       "confirm": "Konfirmasi",
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Bahasa",
     "ariaLabel": "Ubah bahasa",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Cari bahasa…",
+    "noResults": "Tidak ada bahasa yang cocok",
+    "menuAria": "Pilih bahasa"
   },
   "compliance": {
     "icp": {
@@ -90,7 +90,7 @@
     "title": "Atur workspace Anda",
     "subtitle": "Tiga langkah cepat dan Anda siap meluncurkan.",
     "steps": {
-      "workspace": "Workspace",
+      "workspace": "Ruang Kerja",
       "invite": "Undang tim",
       "plan": "Pilih paket"
     },
@@ -672,36 +672,36 @@
         "range7d": "7 hari terakhir",
         "range30d": "30 hari terakhir",
         "reset": "Reset",
-        "all": "All"
+        "all": "Semua"
       }
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Choose how Nebutra reaches you for each event type, on each delivery channel.",
+      "title": "Notifikasi",
+      "description": "Pilih cara Nebutra menghubungi Anda untuk setiap jenis peristiwa, di setiap saluran pengiriman.",
       "actions": {
-        "resetAll": "Reset to defaults",
-        "save": "Save"
+        "resetAll": "Reset ke default",
+        "save": "Simpan"
       },
       "status": {
-        "saving": "Saving…",
-        "saved": "Saved",
-        "error": "Save failed. Please try again."
+        "saving": "Menyimpan…",
+        "saved": "Tersimpan",
+        "error": "Gagal menyimpan. Silakan coba lagi."
       },
       "eventTypes": {
         "security": {
-          "label": "Security alerts",
-          "description": "Sign-in alerts, password changes, two-factor changes."
+          "label": "Peringatan keamanan",
+          "description": "Peringatan masuk, perubahan kata sandi, perubahan dua faktor."
         },
         "billing": {
-          "label": "Billing",
-          "description": "Invoices, payment failures, and subscription changes."
+          "label": "Tagihan",
+          "description": "Invoice, kegagalan pembayaran, dan perubahan langganan."
         },
         "invitation": {
-          "label": "Team invitations",
-          "description": "Invites to join an organization, accepted or declined."
+          "label": "Undangan tim",
+          "description": "Undangan untuk bergabung dengan organisasi, diterima atau ditolak."
         },
         "activity": {
-          "label": "Team activity",
+          "label": "Aktivitas tim",
           "description": "Anggota bergabung, perubahan peran, dan aktivitas workspace lainnya."
         },
         "updates": {
@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "Webhooks",
+      "title": "Webhook",
       "description": "Berlangganan peristiwa yang dipancarkan oleh workspace Anda. Kami menandatangani setiap payload dengan rahasia endpoint Anda agar Anda dapat memverifikasi keasliannya.",
       "create": {
         "heading": "Endpoint baru",
@@ -762,25 +762,25 @@
         },
         "actions": {
           "edit": "Edit",
-          "enable": "Enable",
-          "disable": "Disable",
-          "viewDeliveries": "View deliveries",
-          "delete": "Delete"
+          "enable": "Aktifkan",
+          "disable": "Nonaktifkan",
+          "viewDeliveries": "Lihat pengiriman",
+          "delete": "Hapus"
         }
       },
       "deliveries": {
-        "heading": "Recent deliveries",
-        "close": "Close",
-        "loading": "Loading…",
-        "loadFailed": "Failed to load deliveries",
-        "empty": "No deliveries yet.",
-        "viewPayload": "View payload",
-        "hidePayload": "Hide payload",
-        "replay": "Replay",
-        "replaying": "Replaying…",
+        "heading": "Pengiriman terbaru",
+        "close": "Tutup",
+        "loading": "Memuat…",
+        "loadFailed": "Gagal memuat pengiriman",
+        "empty": "Belum ada pengiriman.",
+        "viewPayload": "Lihat payload",
+        "hidePayload": "Sembunyikan payload",
+        "replay": "Putar ulang",
+        "replaying": "Memutar ulang…",
         "status": {
-          "success": "success",
-          "failed": "failed",
+          "success": "berhasil",
+          "failed": "gagal",
           "retrying": "mencoba lagi"
         }
       }
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhook, antrean, dan lainnya."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Buka Sailor AI",
           "description": "Coba mode chat, data, atau alur kerja."
         }
       }

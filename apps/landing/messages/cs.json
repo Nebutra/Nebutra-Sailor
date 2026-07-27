@@ -19,7 +19,7 @@
     "avatarMenu": {
       "ariaLabel": "Nabídka účtu",
       "loadingName": "Načítání…",
-      "dashboard": "Dashboard",
+      "dashboard": "Přehled",
       "account": "Účet",
       "billing": "Fakturace",
       "docs": "Dokumentace",
@@ -1336,7 +1336,7 @@
       "rel_category": "Spolehlivost",
       "rel_f1_title": "Circuit breaker + opakování",
       "rel_f1_desc": "Gateway a AI služba používají circuit breaker v režimu CLOSED/OPEN/HALF_OPEN s exponenciálním backoffem a jitterem — žádné kaskádové selhání.",
-      "rel_f2_title": "Dead letter queue",
+      "rel_f2_title": "Fronta mrtvé pošty",
       "rel_f2_desc": "Obsluha událostí, která vyčerpá 3 pokusy o opakování, se dostane do DLQ. Přehrajte je jednotlivě přes admin API bez opětovného nasazení.",
       "rel_f3_title": "Upozornění na rychlost spotřeby SLO",
       "rel_f3_desc": "Víceokenná upozornění ve stylu Google SRE se spouštějí při rychlosti spotřeby 14,4×, 6× a 3× před vyčerpáním rozpočtu chyb.",
@@ -1354,24 +1354,24 @@
       "obs_f2_desc": "Přehled platformy s více panely: dostupnost SLO, zbývající rozpočet chyb, saturace HPA, restarty podů a omezování CPU.",
       "obs_f3_title": "Sledování chyb Sentry",
       "obs_f3_desc": "Chyby na straně serveru i klienta se zachytávají s kontextem nájemce, ID požadavku a ID stopy pro korelaci napříč systémy.",
-      "data_category": "Data & Analytics",
-      "data_f1_title": "ClickHouse OLAP warehouse",
+      "data_category": "Data a analýza",
+      "data_f1_title": "ClickHouse OLAP sklad",
       "data_f1_desc": "Události přistávají v ClickHouse pro rychlé analytické dotazy. dbt transformuje surové události na metriky růstu gold vrstvy viditelné v dashboardu.",
-      "data_f2_title": "Funnel analytics",
+      "data_f2_title": "Analýza trychtýřů",
       "data_f2_desc": "Sledujte registrace → aktivace → konverze s atribucí na úrovni kohort. Příjmy na aktivního uživatele se počítají z gold vrstvy.",
-      "data_f3_title": "Kafka / event ingestion",
+      "data_f3_title": "Kafka / příjem událostí",
       "data_f3_desc": "Vysokoprovozní ingest událostí přes Inngest do ClickHouse bronze, s deduplikací v paměti a validací schématu na okraji gateway.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
+      "infra_category": "Infrastruktura",
+      "infra_f1_title": "GitOps s ArgoCD",
       "infra_f1_desc": "Změny v hlavní větvi se automaticky synchronizují do clusteru. Self-heal vrací ruční úpravy kubectl. Sync windows vynucují bezpečné hodiny nasazení.",
-      "infra_f2_title": "PgBouncer connection pooling",
+      "infra_f2_title": "PgBouncer sdílení připojení",
       "infra_f2_desc": "PgBouncer v transakčním režimu před Supabase zvládne 1 000 připojení aplikace na 20 připojení Postgres. HA s 2 replikami.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
+      "infra_f3_title": "Horizontální a vertikální autoskalování",
       "infra_f3_desc": "HPA škáluje podle CPU/paměti. VPA běží v režimu Off a poskytuje doporučení pro right-sizing. KEDA custom metrics plánováno pro v2."
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 V přípravě",
     "description": {
       "ideas": "Právě tvoříme úžasný geek-driven zážitek pro tuto sekci. Spustíme ji spolu s další velkou aktualizací architektury pipeline.",
       "opc": "Podrobnější přehled platformy je v přípravě. Sledujte changelog a roadmap pro nadcházející vydání.",
@@ -1448,7 +1448,7 @@
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
+        "title": "Správa digitálních aktiv pro podniky",
         "desc": "Strukturovaná data lakes a komplexní topologie dashboardů využívající škálovatelné architektury PostgreSQL a granularní RBAC.",
         "features": {
           "f1": "Bezpečnost na úrovni řádků",
@@ -1462,7 +1462,7 @@
     "badge": "DESIGN SYSTEM",
     "headline": "4 vrstvy designové správy.",
     "subheadline": "Od brandových prvků přes runtime tokeny až po multi-theme engine a řízené komponenty — nejen shadcn s Tailwindem.",
-    "flowBrand": "Brand",
+    "flowBrand": "Značka",
     "flowBrandDesc": "Barevné prvky, gradienty, jazyk pohybu",
     "flowTokens": "Tokeny",
     "flowTokensDesc": "CSS proměnné, 12stupňové škály, tmavý režim",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Zdarma <hl>vyvíjet na</hl>",
+      "description": "{brandName}-Sailor je zdarma i pro komerční použití — MIT na npm, FSL-1.1-ALv2 v repozitáři, po dvou letech přechází na Apache-2.0. Placené úrovně prodávají podporu a smluvní závazky, nikdy povolení."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "Vždy zdarma",
+        "title": "Komunita",
+        "subtitle": "Pro každého",
+        "description": "Libovolná velikost týmu, libovolný obrat. Včetně uzavřených komerčních produktů.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Celý zdrojový kód, všechny balíčky",
+          "closedSourceOk": "Uzavřené komerční použití — bez copyleftu",
+          "noAttribution": "Žádná registrace, žádná nutnost uvádět zdroj",
+          "communitySupport": "Podpora komunity — co nejlépe"
         },
-        "cta": "View on GitHub"
+        "cta": "Zobrazit na GitHubu"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "Od {price}/rok",
+        "title": "Tým",
+        "subtitle": "Předplatné podpory",
+        "description": "Pro týmy, které potřebují závazek, ne naději. Kód je už teď zdarma.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Soukromý kanál podpory",
+          "firstResponse": "První odpověď do dvou pracovních dnů, zaručeno",
+          "priorityTriage": "Prioritní třídění chyb",
+          "upgradeHelp": "Asistence při aktualizaci a upozornění na breaking changes"
         },
-        "cta": "Get support"
+        "cta": "Získat podporu"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Od 30 000 USD/rok",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Připraveno pro nákupní proces",
+        "description": "Pro organizace, jejichž právní, bezpečnostní nebo nákupní revize vyžaduje protistranu, která podepisuje.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "SLA odezvy — 4 pracovní hodiny, 1 hodina při výpadku produkce",
+          "indemnity": "Ochrana před škodami a závazek k bezpečnostním záplatám",
+          "compliance": "Podepsaný DPA, balíček pro dodržování předpisů, závazek k kontinuitě",
+          "trademark": "Práva k ochranné známce a white-label"
         },
-        "cta": "Contact sales"
+        "cta": "Kontaktujte prodej"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Často kladené otázky",
+      "description": "Stručná verze: používání je zdarma. Platba je pro případ, kdy nás potřebujete smluvně zavázat.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Proč FSL místo MIT nebo AGPL?",
+          "a": "FSL umožňuje každé použití kromě prodeje náhrady za Sailor samotný a každá verze se stává Apache-2.0 dva roky po vydání — oprávnění udělené nevratně předem. AGPL bránila adopci při korporátní právní revizi, aniž by chránila cokoliv, co jsme skutečně potřebovali chránit."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Je komerční použití skutečně zdarma?",
+          "a": "Ano. Žádný poplatek, žádný licenční klíč, žádná registrace, žádný práh příjmu nebo počtu zaměstnanců, žádné připisování. Vytvořte produkt s uzavřeným zdrojovým kódem a prodávejte ho."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Co se počítá jako konkurenční použití?",
+          "a": "Nabízení Sailor samotného — hostované služby Sailor nebo pře-balívaná konkurenční základna platformy. Budování vertikálního SaaS, interního nástroje nebo projektů pro klienty na Sailor se nepočítá jako konkurenční použití. Pokud váš model potřebuje, může Enterprise smlouva zahrnovat písemné prominutí."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Co vlastně platné úrovně kupují?",
+          "a": "Závazky podpory, SLA odezvy, ochrana před škodami, dokumentace pro dodržování předpisů a práva k ochranné známce. Nikdy povolení k používání softwaru — to už máte."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Co na to příspěvky do open source?",
+          "a": "Všechny příspěvky vyžadují CLA. Viz CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Licencování — {brandName}",
+      "description": "Zdarma pro komerční použití. MIT na npm, FSL-1.1-ALv2 v repozitáři, převod na Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1594,12 +1594,12 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
+    "title": "Přehled změn — {brandName}",
     "description": "Každé vydání dodáváme s obsesivní péčí o detaily.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "versionTitleSuffix": "Přehled změn {brandName}"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
+    "title": "Plán rozvoje platformy — {brandName}",
     "description": "Roadmap pro řízenou základnu platformy {brandName}, Harness runtime a cestu k aktualizaci."
   },
   "blogMeta": {

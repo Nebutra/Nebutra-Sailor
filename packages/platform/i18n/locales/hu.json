@@ -55,7 +55,7 @@
     }
   },
   "Common": {
-    "hello": "Hello World",
+    "hello": "Szia, világ",
     "dashboard": "Vezérlőpult",
     "actions": {
       "continue": "Folytatás",
@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "Nyelv",
     "ariaLabel": "Nyelv módosítása",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "Nyelvek keresése…",
+    "noResults": "Nincs találat",
+    "menuAria": "Nyelv kiválasztása"
   },
   "compliance": {
     "icp": {
@@ -941,7 +941,7 @@
       "actions": "Műveletek",
       "settings": "Beállítások",
       "account": "Fiók",
-      "admin": "Admin",
+      "admin": "Adminisztráció",
       "help": "Súgó"
     },
     "commands": {
@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, queues és még sok más."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Sailor AI megnyitása",
           "description": "Próbáld ki a chat, adat vagy munkafolyamat módot."
         }
       }

@@ -1,455 +1,455 @@
 {
   "nav": {
-    "features": "Features",
-    "solutions": "Solutions",
-    "pricing": "Pricing",
-    "docs": "Documentation",
+    "features": "خصوصیات",
+    "solutions": "حل",
+    "pricing": "قیمت مقرر",
+    "docs": "دستاویزات",
     "github": "GitHub",
     "npm": "npm",
-    "about": "About Us",
-    "ideas": "Ideas",
-    "opc": "Platform",
-    "roadmap": "Roadmap",
-    "resources": "Resources",
-    "signIn": "Sign In",
-    "getStarted": "Get Sailed",
-    "changelog": "Changelog",
-    "news": "News",
-    "designDocs": "Design System",
+    "about": "ہمارے بارے میں",
+    "ideas": "افکار",
+    "opc": "پلیٹ فارم",
+    "roadmap": "راڈ میپ",
+    "resources": "وسائل",
+    "signIn": "سائن ان",
+    "getStarted": "سفر شروع کریں",
+    "changelog": "تبدیلیوں کی فہرست",
+    "news": "خبریں",
+    "designDocs": "ڈیزائن سسٹم",
     "avatarMenu": {
-      "ariaLabel": "Account menu",
-      "loadingName": "Loading…",
-      "dashboard": "Dashboard",
-      "account": "Account",
-      "billing": "Billing",
-      "docs": "Documentation",
-      "signOut": "Sign out"
+      "ariaLabel": "اکاؤنٹ مینو",
+      "loadingName": "لوڈ ہو رہا ہے…",
+      "dashboard": "ڈیش بورڈ",
+      "account": "اکاؤنٹ",
+      "billing": "بلنگ",
+      "docs": "دستاویزات",
+      "signOut": "سائن آؤٹ"
     }
   },
   "refer": {
-    "metadataTitle": "Join the {brandName} founder referral loop",
-    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
-    "eyebrow": "Founder referral loop",
-    "title": "Join the next founder cohort and get your own share link.",
-    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "metadataTitle": "{brandName} کے بانی ریفرل لوپ میں شامل ہوں",
+    "metadataDescription": "{brandName} کی وٹ لسٹ میں شامل ہوں، ریفرل ایٹریبیوشن برقرار رکھیں، اور ایک بند پروڈکٹ لیڈ لوپ میں اپنا شیئر لنک کھولیں۔",
+    "eyebrow": "بانی ریفرل لوپ",
+    "title": "اگلی بانی کورٹ میں شامل ہوں اور اپنا شیئر لنک حاصل کریں۔",
+    "description": "کسی بھی انوائٹ کوڈ کے ساتھ داخل ہوں یا براہ راست شامل ہوں۔ ہم کوڈ موجود ہونے پر ایٹریبیوشن برقرار رکھیں گے، آپ کو وٹ لسٹ پر رکھیں گے، اور ایک نجی ریفرل یو آر ایل جاری کریں گے جسے آپ فوراً شیئر کر سکتے ہیں۔",
     "signal": {
-      "waitlist": "Durable waitlist",
-      "codeDetected": "Code {code} detected",
-      "direct": "Direct signup"
+      "waitlist": "پائیدار وٹ لسٹ",
+      "codeDetected": "کوڈ {code} دریافت ہوا",
+      "direct": "براہ راست سائن اپ"
     },
     "form": {
-      "emailLabel": "Work email",
+      "emailLabel": "کام کا ای میل",
       "emailPlaceholder": "you@example.com",
-      "codeLabel": "Referral code",
-      "codePlaceholder": "Optional code",
-      "submit": "Join waitlist",
-      "submitting": "Joining",
-      "invalidEmail": "Enter a valid email.",
-      "error": "Could not join right now. Please try again.",
-      "successTitle": "You are on the list",
-      "successDescription": "Your private share link is ready.",
-      "positionLabel": "Queue position",
-      "referralCodeLabel": "Your code",
-      "referralUrlLabel": "Your share link",
-      "copyLink": "Copy link",
-      "copied": "Copied",
-      "share": "Share",
-      "shareTitle": "Join the {brandName} founding loop",
-      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
-      "directMode": "No referral code needed",
-      "codeMode": "Referral attribution enabled"
+      "codeLabel": "ریفرل کوڈ",
+      "codePlaceholder": "اختیاری کوڈ",
+      "submit": "وٹ لسٹ میں شامل ہوں",
+      "submitting": "شامل ہو رہے ہیں",
+      "invalidEmail": "ایک درست ای میل درج کریں۔",
+      "error": "فی الحال شامل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔",
+      "successTitle": "آپ لسٹ میں ہیں",
+      "successDescription": "آپ کا نجی شیئر لنک تیار ہے۔",
+      "positionLabel": "کيو پوزیشن",
+      "referralCodeLabel": "آپ کا کوڈ",
+      "referralUrlLabel": "آپ کا شیئر لنک",
+      "copyLink": "لنک کاپی کریں",
+      "copied": "کاپی ہو گیا",
+      "share": "شیئر کریں",
+      "shareTitle": "{brandName} کے بانی لوپ میں شامل ہوں",
+      "shareText": "{brandName} کے بانی ویٹ لسٹ میں شامل ہونے کے لیے میرا دعوت لینک استعمال کریں۔",
+      "directMode": "کوئی حوالہ کوڈ درکار نہیں",
+      "codeMode": "حوالہ منسوبیت فعال"
     },
     "proof": {
       "peerLoop": {
-        "title": "Founder-to-founder loop",
-        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+        "title": "بانی سے بانی لوپ",
+        "description": "ہر قبول شدہ سائن اپ کو کوڈ اور یو آر ایل ملتا ہے، تاکہ اگلا حوالہ بغیر دستی منتقلی کے شروع ہو سکے۔"
       },
       "attribution": {
-        "title": "Honest attribution",
-        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+        "title": "صاف منسوبیت",
+        "description": "نامعلوم کوڈز کوشش شدہ منسوبیت کے طور پر محفوظ ہوتے ہیں، جبکہ درست کوڈز حوالہ دینے والے کو بڑھاتے ہیں اور سائن اپ کو صاف رکھتے ہیں۔"
       },
       "shareLink": {
-        "title": "Share-ready success state",
-        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+        "title": "شیئر کے لیے تیار کامیابی کی حالت",
+        "description": "تصدیق کی حالت پوزیشن، کوڈ، کاپی اور مقامی شیئر ایکشنز ظاہر کرتی ہے تاکہ لوپ صفحے پر مکمل ہو سکے۔"
       }
     },
     "infrastructure": {
-      "eyebrow": "Product-led infrastructure",
-      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
-      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "eyebrow": "پروڈکٹ لڈ انفراسٹرکچر",
+      "title": "پائیدار SaaS انفراسٹرکچر کے طور پر ڈیزائن کیا گیا، ایک پھینکنے والے فارم نہیں۔",
+      "description": "حوالہ سطح کو ڈومین پیکیج، مستقل Prisma ماڈل، ٹائپڈ Next.js روٹ اور عوامی سموک چیکس کی پشت پناہی حاصل ہے جو ECS ڈپلائز کے بعد چل سکتے ہیں۔",
       "data": {
-        "eyebrow": "Data",
-        "title": "One durable waitlist table",
-        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+        "eyebrow": "ڈیٹا",
+        "title": "ایک پائیدار ویٹ لسٹ ٹیبل",
+        "description": "ای میل کی منفردیت، خودکار بڑھتی ہوئی پوزیشن، حوالہ کوڈ انڈیکس، کوشش شدہ منسوبیت میٹا ڈیٹا اور حالت کی تبدیلیاں پلیٹ فارم ڈیٹا بیس میں رہتی ہیں۔"
       },
       "api": {
         "eyebrow": "API",
-        "title": "Typed join endpoint",
-        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+        "title": "ٹائپڈ جوائن اینڈ پوائنٹ",
+        "description": "صفحہ `/api/waitlist` پر پوسٹ کرتا ہے، مختلف کوڈز کو نارملائز کرتا ہے، موجودہ اندراجات کو آئیڈیمپوٹنٹلی واپس کرتا ہے، اور کبھی بھی کسی نمونے کوڈ پر انحصار نہیں کرتا۔"
       },
       "cicd": {
         "eyebrow": "CI/CD",
-        "title": "Deploy-time public smoke",
-        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+        "title": "ڈپلائمنٹ کے وقت پبلک سموک",
+        "description": "کینونیکل اور ایلیاس یو آر ایلز خودکار چیکس کے لیے تیار ہیں تاکہ ای سی ایس ڈیلیوری روٹ، ڈی این ایس، اور ہیلتھ ریگریشنز کو پکڑ سکے۔"
       }
     }
   },
   "hero": {
-    "headline1": "Ship your Startup,",
-    "headline2": "powered by {brandName} Agent OS.",
-    "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "ctaGetAccess": "Launch Your Startup",
-    "ctaExploreDemo": "Explore demo",
-    "pillCopied": "Copied"
+    "headline1": "اپنی اسٹارٹ اپ لانچ کریں،",
+    "headline2": "{brandName} ایجنٹ او ایس کی طاقت سے۔",
+    "subheadline": "<highlight>پروڈکشن ریدی</highlight> بنیاد پر ہفتوں کی پلیٹ فارم کی محنت سے بچیں، جس میں <highlight>گورنڈ آرکیٹیکچر</highlight> شامل ہے، جو <highlight>AI کوڈنگ ایجنٹس اور بانیوں</highlight> کے لیے عالمی سطح پر تیار کیا گیا ہے۔",
+    "copyLabel": "کمانڈ کاپی کریں",
+    "copiedLabel": "کاپی ہو گیا",
+    "ctaGetAccess": "اپنی اسٹارٹ اپ لانچ کریں",
+    "ctaExploreDemo": "ڈیمو دیکھیں",
+    "pillCopied": "کاپی ہو گیا"
   },
   "features": {
-    "sectionTitle": "Out-of-the-box infrastructure, from prototype to scale.",
+    "sectionTitle": "پروٹو ٹائپ سے اسکیل تک، تیار شدہ انفراسٹرکچر۔",
     "item0": {
-      "title": "AI Application Infrastructure",
-      "description": "Built-in, production-tested Agent Frameworks and LLM orchestration engines. Bypass complex underlying abstractions and interact directly with structured intelligence APIs."
+      "title": "AI ایپلیکیشن انفراسٹرکچر",
+      "description": "بلٹ ان، پروڈکشن ٹیسٹڈ ایجنٹ فریم ورکس اور LLM آرکیسٹریشن انجنز۔ پیچیدہ بنیادی ابسٹریکشنز کو بے اثر کریں اور ڈھال شدہ انٹیلی جنس API سے براہ راست تعامل کریں۔"
     },
     "item1": {
-      "title": "Governed Platform Baseline",
-      "description": "A governed platform baseline for teams shipping AI-native SaaS. Align scaffolding, runtime primitives, and delivery surfaces without stitching together ad-hoc tooling."
+      "title": "حکمران پلیٹ فارم بیس لائن",
+      "description": "AI نیٹو SaaS لانچ کرنے والی ٹیموں کے لیے ایک حکمران پلیٹ فارم بیس لائن۔ ایڈ ہاک ٹولنگ کو جوڑے بغیر سکافولڈنگ، رن ٹائم پرائمرٹوز، اور ڈیلیوری سطح کو ہم آہنگ کریں۔"
     },
     "item2": {
-      "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "title": "انٹرپرائز SaaS خودکار کاری",
+      "description": "Vercel، Supabase، اور Stripe کی جدید ٹیک اسٹیک کا گہرا انضمام۔ تیار شدہ قطار سطح کی سیکیورٹی، پیچیدہ ملٹی ٹیننٹ انسولیشن، اور عالمی سبسکرپشن بلنگ فراہم کرتا ہے۔"
     }
   },
   "cta": {
-    "heading": "Ready to deploy your next AI product?",
-    "subheading": "Initialize a complete, cloud-native SaaS architecture locally with a single terminal command.",
-    "copyLabel": "Copy Command",
-    "copiedLabel": "Copied",
-    "startBuilding": "Start Building"
+    "heading": "اپنے اگلے AI پروڈکٹ کو ڈپلوی کرنے کے لیے تیار ہیں؟",
+    "subheading": "ایک ہی ٹرمینل کمانڈ کے ساتھ مقامی طور پر مکمل، کلاؤڈ نیٹو SaaS آرکیٹیکچر شروع کریں۔",
+    "copyLabel": "کمانڈ کاپی کریں",
+    "copiedLabel": "کاپی ہو گیا",
+    "startBuilding": "بنانا شروع کریں"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "اپنی اسٹارٹ اپ کو {brandName} ایجنٹ او ایس کے ساتھ لانچ کریں۔ ملٹی ٹیننسی، بلنگ، اتھ اور اے آئی — پہلے دن سے پروڈکشن کے لیے تیار۔",
     "columns": {
-      "product": "Product",
-      "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "product": "پروڈکٹ",
+      "resources": "وسائل",
+      "legal": "قانونی",
+      "community": "کمیونٹی"
     },
     "links": {
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "about": "About",
-      "showcase": "Showcase",
-      "blog": "Blog",
-      "playbook": "Playbook",
-      "changelog": "Changelog",
-      "roadmap": "Roadmap",
-      "docs": "Docs",
-      "ideas": "Ideas",
-      "opc": "Platform",
-      "careers": "Careers",
-      "security": "Security",
-      "dpa": "DPA",
-      "privacy": "Privacy",
-      "terms": "Terms",
-      "cookies": "Cookies",
-      "refund": "Refund",
-      "licensing": "Licensing",
-      "contact": "Contact",
-      "faq": "FAQ",
+      "product": "پروڈکٹ",
+      "features": "خصوصیات",
+      "pricing": "قیمتیں",
+      "about": "ہمارے بارے میں",
+      "showcase": "شوکیس",
+      "blog": "بلاگ",
+      "playbook": "پلے بک",
+      "changelog": "تبدیلیوں کی فہرست",
+      "roadmap": "راڈ میپ",
+      "docs": "دستاویزات",
+      "ideas": "آئیڈیاز",
+      "opc": "پلیٹ فارم",
+      "careers": "کیریئر",
+      "security": "سیکیورٹی",
+      "dpa": "ڈی پی اے",
+      "privacy": "رازداری",
+      "terms": "شرائط",
+      "cookies": "کوکیز",
+      "refund": "واپسی رقم",
+      "licensing": "لائسنسنگ",
+      "contact": "رابطہ",
+      "faq": "عمومی سوالات",
       "github": "GitHub",
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
-    "statusOnline": "All systems operational",
-    "newsletterTitle": "Stay up to date",
+    "copyright": "© 2026 {brandName} Intelligence. تمام حقوق محفوظ ہیں۔",
+    "statusOnline": "تمام نظامات فعال ہیں",
+    "newsletterTitle": "تازہ ترین معلومات حاصل کریں",
     "newsletterPlaceholder": "you@example.com",
-    "newsletterSubscribe": "Subscribe",
-    "newsletterSuccess": "Thanks for subscribing!",
-    "newsletterError": "Something went wrong"
+    "newsletterSubscribe": "سبسکرائب کریں",
+    "newsletterSuccess": "سبسکرپشن کا شکریہ!",
+    "newsletterError": "کوئی مسئلہ پیش آیا"
   },
   "logoStrip": {
-    "tagline": "BUILT WITH THE STACK YOU LOVE."
+    "tagline": "آپ کی پسندیدہ اسٹیک کے ساتھ بنایا گیا۔"
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 104 packages. 4 backend lanes.",
-    "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
-    "metricApps": "apps",
-    "metricBackends": "backend lanes",
-    "metricPackages": "packages",
-    "verifiedPaths": "Path-verified against the current workspace",
-    "cta": "Explore the monorepo architecture"
+    "title": "10 ایپس۔ 104 پیکیجز۔ 4 بیک اینڈ لینز۔",
+    "description": "مشترکہ کوڈ، متوازی بلڈز، صفر دہرائی۔ ڈیٹا بیس سے فرنٹ اینڈ تک مکمل اینڈ ٹو اینڈ ٹائپنگ۔",
+    "metricApps": "ایپس",
+    "metricBackends": "بیک اینڈ لینز",
+    "metricPackages": "پیکیجز",
+    "verifiedPaths": "موجودہ ورک اسپیس کے خلاف راستے کی تصدیق شدہ",
+    "cta": "مونو ریپو آرکیٹیکچر کا جائزہ لیں"
   },
   "stats": {
-    "title": "By The Numbers",
+    "title": "اعداد و ارقام میں",
     "github": "GitHub Stars",
-    "discord": "Discord Members",
-    "setup": "Avg Setup Time",
-    "packages": "Monorepo Packages",
-    "ctaStar": "Star →",
-    "ctaJoin": "Join →",
-    "ctaStart": "Start →",
-    "ctaExplore": "Explore →"
+    "discord": "ڈسکارڈ ممبران",
+    "setup": "اوسط سیٹ اپ کا وقت",
+    "packages": "مونو ریپو پیکیجز",
+    "ctaStar": "ستارہ →",
+    "ctaJoin": "شامل ہوں →",
+    "ctaStart": "شروع کریں →",
+    "ctaExplore": "تلاش کریں →"
   },
   "legalPages": {
     "about": {
-      "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
-      "heading": "The Era of Lean Product Teams",
-      "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
-      "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
-      "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
-      "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
+      "title": "ہمارے بارے میں — گورنڈ AI پلیٹ فارم",
+      "description": "{brandName} کے گورنڈ AI پلیٹ فارم کے پیچھے موجود تجارتی ویژن اور انجینئرنگ اصول دریافت کریں۔",
+      "heading": "لین پروڈکٹ ٹیمز کا دور",
+      "subheading": "دہرائے جانے والے پلیٹ فارم کام کو گورنڈ انفراسٹرکچر، مضبوط خودکار کاری، اور پائیدار انجینئرنگ لوریج سے تبدیل کریں۔",
+      "missionTitle": "انتظامی زوال کا مقابلہ کرنے والا نیا نظام",
+      "missionP1": "{brandName} ان ٹیمز کے لیے گورنڈ AI پلیٹ فارم بنا رہا ہے جنہیں مختصر مدت کے اسٹارٹر اسٹیکس کے بجائے پائیدار انفراسٹرکچر کی ضرورت ہے۔ روایتی اسکیل اکثر بوروکریسی اور اینٹروپی کے ساتھ آتا ہے؛ ہم کوڈ گورننس، خودکار کاری، اور ایک ایسے پلیٹ فارم بیس لائن کے ساتھ جواب دیتے ہیں جو بڑھتے ہوئے بھی آڈیٹ ایبل رہتا ہے۔",
+      "missionP2": "تجارت اب بھی ہم آہنگی کی زیادہ تر کوششوں، ٹوٹے ہوئے ٹولنگ، اور کمزور اپ گریڈ راستوں سے متاثر ہے۔ ہم واضح پلیٹ فارم معاہدوں، مضبوط ڈیلیوری پرائمریٹوز، اور رن ٹائم رویے کے ذریعے ان رکاوٹوں کو کم کرنے کی فکر کرتے ہیں جسے ٹیمز درحقیقت دیکھ سکیں اور اعتماد کر سکیں۔",
+      "missionP3": "ہم اس عادت کو مسترد کرتے ہیں کہ اسکیل کے مسائل کا حل زیادہ تنظیمی بوجھ سے نکالا جائے۔ خودکار کاری، ٹیسٹس، اور گورننس کو دہرائے جانے والے آپریشنل کام کو جذب کرنا چاہیے تاکہ ٹیمز پروڈکٹ، آرکیٹیکچر، اور کسٹمر نتائج پر توجہ مرکوز رکھ سکیں۔",
       "missionP4": "",
-      "valuesTitle": "The Four Pillars",
+      "valuesTitle": "چار ستون",
       "values": {
         "0": {
-          "title": "Governed Scale (Philosophy)",
-          "description": "Scale should come from stronger systems, better leverage, and clearer operating rules — not from piling on more organizational weight."
+          "title": "گورنڈ اسکیل (فلسفہ)",
+          "description": "اسکیل مضبوط نظاموں، بہتر لوریج، اور واضح آپریٹنگ قواعد سے آنا چاہیے — زیادہ تنظیمی بوجھ ڈالنے سے نہیں۔"
         },
         "1": {
-          "title": "The Builder Core (Infrastructure)",
-          "description": "A reusable platform baseline for multi-tenancy, billing, auth, compliance, and AI integrations that teams can audit, extend, and ship on repeatedly."
+          "title": "بیلڈر کور (انفراسٹرکچر)",
+          "description": "ملٹی ٹیننسی، بلنگ، اتھ، کمپلائنس، اور AI انٹیگریشنز کے لیے ایک دوبارہ استعمال ہونے والا پلیٹ فارم بیس لائن جسے ٹیمز بار بار آڈیٹ، توسیع، اور شپ کر سکیں۔"
         },
         "2": {
-          "title": "Upgrade Discipline (Routing)",
-          "description": "Healthy systems grow through compatibility checks, migrations, and observable runtime contracts instead of drift, heroics, and one-off rewrites."
+          "title": "اپ گریڈ ڈسپلن (راؤٹنگ)",
+          "description": "صحت مند نظام مطابقت کی جانچ، مائگریشنز، اور قابل مشاہدہ رن ٹائم معاہدوں کے ذریعے بڑھتے ہیں — ڈرفٹ، ہیروکس، اور ایک بار کے دوبارہ لکھنے کے ذریعے نہیں۔"
         },
         "3": {
-          "title": "Code is Law (Organization)",
-          "description": "Operational discipline should be encoded in tests, workflows, and governance rules so teams can improve the platform without relying on politics or institutional memory."
+          "title": "کوڈ قانون ہے (تنظیم)",
+          "description": "آپریشنل ڈسپلن کو ٹیسٹس، ورک فلو، اور گورننس قواعد میں کوڈ کیا جانا چاہیے تاکہ ٹیمز پلیٹ فارم کو سیاست یا ادارتی یادداشت پر انحصار کیے بغیر بہتر بنا سکیں۔"
         }
       },
-      "jobsTitle": "Engineering Signals over Credentials",
-      "jobsDescription": "We care more about verifiable engineering output, clarity of thinking, and system judgment than pedigree or title inflation.",
-      "jobsButton": "Submit Github Profile",
-      "companyInfoTitle": "Organizational Compliance",
+      "jobsTitle": "کوالیفیکیشنز کے بجائے انجینئرنگ سگنلز",
+      "jobsDescription": "ہم پیدائش یا عہدے کی پھولنے کے بجائے تصدیق شدہ انجینئرنگ آؤٹ پٹ، سوچ کی وضاحت، اور نظام کے فیصلے کی زیادہ فکر کرتے ہیں۔",
+      "jobsButton": "GitHub پروفائل جمع کریں",
+      "companyInfoTitle": "تنظیمی مطابقت",
       "companyInfo": {
-        "legalName": "Legal Entity Registration",
-        "founded": "Registration Date",
-        "headquarters": "Global Operations Center",
-        "jurisdiction": "Governing Jurisdiction"
+        "legalName": "قانونی ادارے کی رجسٹریشن",
+        "founded": "رجسٹریشن کی تاریخ",
+        "headquarters": "عالمی آپریشنز سینٹر",
+        "jurisdiction": "حاکم دائرہ اختیار"
       },
-      "ctaHeading": "Require deeper technical evaluation?",
-      "ctaDescription": "Contact our engineering specialists for an enterprise integration assessment or review the deployment documentation.",
-      "ctaButton": "Establish Contact"
+      "ctaHeading": "کیا آپ کو گہری تکنیکی تشخیص کی ضرورت ہے؟",
+      "ctaDescription": "انٹرپرائز انٹیگریشن کی تشخیص یا ڈپلوئمنٹ دستاویزات کا جائزہ لینے کے لیے ہمارے انجینئرنگ ماہرین سے رابطہ کریں۔",
+      "ctaButton": "رابطہ قائم کریں"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
-      "heading": "Establish Support Connection",
-      "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
+      "title": "تکنیکی اور تجارتی استفسار — {brandName} انٹیلی جنس",
+      "description": "تجارتی لائسنسنگ، انٹرپرائز خود میزبانی، اور جدید تکنیکی سپورٹ کے لیے مخصوص مواصلاتی چینل۔",
+      "heading": "سپورٹ کنکشن قائم کریں",
+      "subheading": "ہم آپ کی واضح ضروریات کا جائزہ لینے کے لیے ایک مخصوص تکنیکی ماہر یا آرکیٹیکٹ کو بھیجیں گے۔",
       "contacts": {
         "founder": {
-          "title": "Founder Direct",
-          "description": "Direct communication channel for core strategic alignments and executive-level inquiries."
+          "title": "بانی براہ راست",
+          "description": "بنیادی حکمت عملی ہم آہنگی اور اعلیٰ سطح کے استفسارات کے لیے براہ راست مواصلاتی چینل۔"
         },
         "general": {
-          "title": "Enterprise Consultation",
-          "description": "Preliminary discussions concerning ecological strategic partnerships and overarching architectural evolution."
+          "title": "انٹرپرائز مشاورت",
+          "description": "ماحولیاتی حکمت عملی شراکت داریوں اور وسیع آرکیٹیکچرل ارتقاء سے متعلق ابتدائی بحث۔"
         },
         "sales": {
-          "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "title": "تجارتی ڈپلوئمنٹ",
+          "description": "بند ذرائع لائسنسنگ اور نجی کلسٹر ماحول ڈپلوئمنٹ سے متعلق تفصیلات پر مباحثہ۔"
         },
         "support": {
-          "title": "Expert-Level Support",
-          "description": "Targeted architectural guidance and troubleshooting services for active business integrations and core system debugging."
+          "title": "ماہرین کی سطح کی سپورٹ",
+          "description": "فعال کاروباری انٹیگریشنز اور بنیادی سسٹم ڈیبگنگ کے لیے مخصوص آرکیٹیکچرل رہنمائی اور ٹربل شوٹنگ خدمات۔"
         },
         "legal": {
-          "title": "Legal & Compliance",
-          "description": "Inquiries related to open-source boundary definitions, enterprise compliance audits, and contract terms."
+          "title": "قانونی اور مطابقت",
+          "description": "کھلی سورس کی حدود کی تعریف، انٹرپرائز مطابقت کی جانچ، اور معاہدے کی شرائط سے متعلق استفسارات۔"
         },
         "privacy": {
-          "title": "Data Center Privacy",
-          "description": "Technical verification and compliance directives regarding GDPR and subsequent international data protection laws."
+          "title": "ڈیٹا سینٹر کی نجی زندگی",
+          "description": "GDPR اور بعد کے بین الاقوامی ڈیٹا تحفظ قوانین کے حوالے سے تکنیکی تصدیق اور مطابقت کے احکامات۔"
         },
         "security": {
-          "title": "Security Disclosures",
-          "description": "Securely submit technical reproduction reports concerning potential software vulnerabilities directly to our infrastructure team."
+          "title": "سیکیورٹی افشاں",
+          "description": "ممکنہ سافٹ ویئر کمزوریوں کے بارے میں تکنیکی دوبارہ پیداوار رپورٹس کو محفوظ طریقے سے براہ راست ہماری انفراسٹرکچر ٹیم کو جمع کرائیں۔"
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "جمع کرائیں پورٹل",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "جمع کرائے والے کا نام",
+        "email": "سرکاری ای میل ایڈریس",
+        "company": "منسلک تنظیم",
+        "category": "ضرورت کا شعبہ",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "کارپوریٹ مشاورت",
+          "sales": "لائسنسنگ اور آرکیٹیکچر",
+          "support": "ڈویلپر معاونت",
+          "legal": "قانونی اور مطابقت کی حدود",
+          "privacy": "ڈیٹا پروسیسنگ پالیسیاں",
+          "partnership": "ایکوسیستم انٹیگریشنز",
+          "press": "پبلک ریلیشنز"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
-        "submit": "Transmit to Backend",
-        "privacyNotice": "Executing this network request signifies reading and consenting to our",
-        "privacyLink": "Systemic Privacy Infrastructure",
-        "submitting": "Entering processing queue...",
-        "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
+        "subject": "مرکزی مسئلے کا خلاصہ",
+        "message": "تفصیلی تکنیکی/تجارتی وضاحتیں",
+        "submit": "بیک اینڈ کو بھیجیں",
+        "privacyNotice": "اس نیٹ ورک درخواست کو چلانا ہماری پرائیویسی پالیسی کو پڑھنے اور اس سے اتفاق کرنے کی علامت ہے",
+        "privacyLink": "سسٹمک پرائیویسی انفراسٹرکچر",
+        "submitting": "پروسیسنگ کی قطار میں داخل ہو رہا ہے...",
+        "successMessage": "ڈیٹا کامیابی سے منتقل ہو گیا۔ ذمہ دار آپریشنل ٹیم 1-2 معیاری کاروباری دنوں میں تفصیلی جواب جاری کرے گی۔"
       },
-      "companyInfoTitle": "Operational Telemetry",
+      "companyInfoTitle": "آپریشنل ٹیلی میٹری",
       "companyNameChinese": "{companyLegal}",
       "companyNameEnglish": "{companyLegalEn}",
-      "companyAddress": "Wuxi, Jiangsu Province, China",
-      "socialMedia": "Primary Network Links"
+      "companyAddress": "ووہی، جیانگ سو صوبہ، چین",
+      "socialMedia": "بنیادی نیٹ ورک لنکس"
     },
     "cookies": {
-      "title": "Cookie Policy — {brandName}",
-      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
-      "heading": "Cookie Policy",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "کوکی پالیسی — {brandName}",
+      "description": "{brandName} کیسے کوکیز اور اسی طرح کی ٹریکنگ ٹیکنالوجیز کو ہماری ویب سائٹ اور خدمات پر استعمال کرتی ہے۔",
+      "heading": "کوکی پالیسی",
+      "effectiveDate": "اثر میں آنے کی تاریخ",
+      "lastUpdated": "آخری اپ ڈیٹ",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 جنوری، 2025",
+        "updated": "1 جنوری، 2025"
       },
-      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "یہ کوکی پالیسی وضاحت کرتی ہے کہ {brandName} Co., Ltd. (\"{brandName},\" \"ہم،\" \"ہماری،\" یا \"ہمارا\") کیسے کوکیز اور اسی طرح کی ٹریکنگ ٹیکنالوجیز کو ہماری ویب سائٹ اور خدمات پر استعمال کرتی ہے۔",
       "whatAreCookies": {
-        "title": "What Are Cookies?",
-        "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
+        "title": "کوکیز کیا ہیں؟",
+        "content": "کوکیز چھوٹے ٹیکسٹ فائلز ہیں جو آپ کے ڈیوائس پر رکھی جاتی ہیں جب آپ کسی ویب سائٹ پر جاتے ہیں۔ وہ ویب سائٹس کو زیادہ مؤثر طریقے سے چلانے اور ویب سائٹ کے مالکان کو معلومات فراہم کرنے کے لیے وسیع پیمانے پر استعمال ہوتی ہیں۔"
       },
       "howWeUse": {
-        "title": "How We Use Cookies",
-        "intro": "We use cookies to:",
+        "title": "ہم کوکیز کیسے استعمال کرتے ہیں",
+        "intro": "ہم کوکیز کا استعمال اس لیے کرتے ہیں:",
         "items": {
           "0": {
-            "label": "Enable Essential Features",
-            "desc": "Provide core functionality like user authentication and security"
+            "label": "بنیادی خصوصیات فعال کریں",
+            "desc": "صارف کی تصدیق اور سیکیورٹی جیسی بنیادی فعالیت فراہم کریں"
           },
           "1": {
-            "label": "Remember Preferences",
-            "desc": "Store your language, theme, and other settings"
+            "label": "ترجیحات یاد رکھیں",
+            "desc": "آپ کی زبان، تھیم، اور دیگر ترتیبات محفوظ کریں"
           },
           "2": {
-            "label": "Improve Performance",
-            "desc": "Understand how visitors interact with our services"
+            "label": "کارکردگی بہتر بنائیں",
+            "desc": "سمجھیں کہ مہمان ہمارے خدمات کے ساتھ کیسے تعامل کرتے ہیں"
           },
           "3": {
-            "label": "Personalize Experience",
-            "desc": "Deliver relevant content and recommendations"
+            "label": "تجربے کو ذاتی بنائیں",
+            "desc": "مناسب مواد اور تجاویز فراہم کریں"
           },
           "4": {
-            "label": "Measure Marketing",
-            "desc": "Track the effectiveness of our marketing campaigns"
+            "label": "مارکیٹنگ کی پیمائش کریں",
+            "desc": "ہمارے مارکیٹنگ مہمات کی مؤثریت کا پتہ لگائیں"
           }
         }
       },
-      "typesTitle": "Types of Cookies We Use",
+      "typesTitle": "کوکیز کی اقسام جو ہم استعمال کرتے ہیں",
       "tableHeaders": {
-        "cookie": "Cookie",
-        "provider": "Provider",
-        "purpose": "Purpose",
-        "duration": "Duration"
+        "cookie": "کوکیز",
+        "provider": "پرووائیڈر",
+        "purpose": "مقصد",
+        "duration": "مدت"
       },
       "necessary": {
-        "title": "Strictly Necessary Cookies",
-        "description": "These cookies are essential for the website to function properly. They cannot be disabled.",
+        "title": "بالکل ضروری کوکیز",
+        "description": "یہ کوکیز ویب سائٹ کے صحیح طریقے سے کام کرنے کے لیے ضروری ہیں۔ انہیں غیر فعال نہیں کیا جا سکتا۔",
         "cookies": {
           "0": {
             "name": "__session",
             "provider": "{brandName}",
-            "purpose": "User authentication session",
-            "duration": "Session"
+            "purpose": "صارف کی تصدیق کا سیشن",
+            "duration": "سیشن"
           },
           "1": {
             "name": "__clerk_db_jwt",
             "provider": "Clerk",
-            "purpose": "Authentication token",
-            "duration": "7 days"
+            "purpose": "تصدیق شناخت کا ٹوکن",
+            "duration": "7 دن"
           },
           "2": {
             "name": "cookie_consent",
             "provider": "{brandName}",
-            "purpose": "Stores cookie consent preferences",
-            "duration": "1 year"
+            "purpose": "کوکی رضامندی کی ترجیحات محفوظ کرتا ہے",
+            "duration": "1 سال"
           }
         }
       },
       "functional": {
-        "title": "Functional Cookies",
-        "description": "These cookies enable personalized features and remember your preferences.",
+        "title": "فنکشنل کوکیاں",
+        "description": "یہ کوکیاں ذاتی نوعیت کی خصوصیات کو فعال کرتی ہیں اور آپ کی ترجیحات کو یاد رکھتی ہیں۔",
         "cookies": {
           "0": {
             "name": "locale",
             "provider": "{brandName}",
-            "purpose": "Stores language preference",
-            "duration": "1 year"
+            "purpose": "زبان کی ترجیح محفوظ کرتا ہے",
+            "duration": "1 سال"
           },
           "1": {
             "name": "theme",
             "provider": "{brandName}",
-            "purpose": "Stores theme preference",
-            "duration": "1 year"
+            "purpose": "تھیم کی ترجیح محفوظ کرتا ہے",
+            "duration": "1 سال"
           }
         }
       },
       "analyticsType": {
-        "title": "Analytics Cookies",
-        "description": "These cookies help us understand how visitors interact with our website.",
+        "title": "تجزیاتی کوکیاں",
+        "description": "یہ کوکیاں ہمیں سمجھنے میں مدد دیتی ہیں کہ وزیٹرز ہماری ویب سائٹ کے ساتھ کیسے تعامل کرتے ہیں۔",
         "cookies": {
           "0": {
             "name": "_ga",
             "provider": "Google Analytics",
-            "purpose": "Distinguishes unique users",
-            "duration": "2 years"
+            "purpose": "منفرد صارفین میں تمیز کرتا ہے",
+            "duration": "2 سال"
           },
           "1": {
             "name": "ph_*",
             "provider": "PostHog",
-            "purpose": "Product analytics",
-            "duration": "1 year"
+            "purpose": "پروڈکٹ تجزیات",
+            "duration": "1 سال"
           }
         }
       },
       "marketingType": {
-        "title": "Marketing Cookies",
-        "description": "These cookies are used for advertising and tracking ad campaign performance.",
+        "title": "مارکیٹنگ کوکیز",
+        "description": "یہ کوکیز اشتہارات اور اشتہاری مہمات کی کارکردگی کی نگرانی کے لیے استعمال ہوتی ہیں۔",
         "cookies": {
           "0": {
             "name": "_fbp",
             "provider": "Facebook",
-            "purpose": "Tracks visits for Facebook ads",
-            "duration": "3 months"
+            "purpose": "Facebook اشتہارات کے لیے وزیٹس کی نگرانی",
+            "duration": "3 مہینے"
           },
           "1": {
             "name": "_gcl_au",
             "provider": "Google Ads",
-            "purpose": "Conversion tracking",
-            "duration": "3 months"
+            "purpose": "تبدیلی کی نگرانی",
+            "duration": "3 مہینے"
           }
         }
       },
-      "managingTitle": "Managing Your Cookie Preferences",
+      "managingTitle": "آپ کی کوکی ترجیحات کا انتظام",
       "consentBanner": {
-        "title": "Cookie Consent Banner",
-        "intro": "When you first visit our website, you will see a cookie consent banner that allows you to:",
+        "title": "کوکی رضامندی بینر",
+        "intro": "جب آپ پہلی بار ہماری ویب سائٹ پر آتے ہیں، تو آپ کو ایک کوکی رضامندی بینر نظر آئے گا جو آپ کو یہ اجازت دیتا ہے کہ آپ:",
         "items": {
           "0": {
-            "label": "Accept All",
-            "desc": "Enable all cookie categories"
+            "label": "سب قبول کریں",
+            "desc": "تمام کوکی کیٹیگریز فعال کریں"
           },
           "1": {
-            "label": "Reject All",
-            "desc": "Disable all optional cookies (necessary cookies remain)"
+            "label": "سب مسترد کریں",
+            "desc": "سب اختیاری کوکیز غیر فعال کریں (ضروری کوکیز برقرار رہیں گی)"
           },
           "2": {
-            "label": "Customize",
-            "desc": "Choose specific cookie categories to enable"
+            "label": "حسب ضرورت",
+            "desc": "کوکیز کی مخصوص زمرہ جات منتخب کریں تاکہ فعال کی جا سکیں"
           }
         },
-        "changeNote": "You can change your preferences at any time by clicking \"Cookie Settings\" in the footer."
+        "changeNote": "آپ فوٹر میں \"کوکی سیٹنگز\" پر کلک کر کے کسی بھی وقت اپنی ترجیحات تبدیل کر سکتے ہیں۔"
       },
       "browserSettings": {
-        "title": "Browser Settings",
-        "intro": "Most web browsers allow you to control cookies through their settings:",
+        "title": "براؤزر سیٹنگز",
+        "intro": "زیادہ تر ویب براؤزر آپ کو ان کی سیٹنگز کے ذریعے کوکیز پر کنٹرول کرنے کی اجازت دیتے ہیں:",
         "browsers": {
           "0": {
             "name": "Chrome",
@@ -468,684 +468,684 @@
             "path": "Settings > Privacy, search, and services > Cookies"
           }
         },
-        "note": "Blocking certain cookies may impact website functionality."
+        "note": "کچھ کوکیز کو بلاک کرنے سے ویب سائٹ کی فعالیت متاثر ہو سکتی ہے۔"
       },
       "similarTech": {
-        "title": "Similar Technologies",
-        "intro": "In addition to cookies, we may use:",
+        "title": "مشابہ ٹیکنالوجیز",
+        "intro": "کوکیز کے علاوہ، ہم استعمال کر سکتے ہیں:",
         "items": {
           "0": {
             "label": "Local Storage",
-            "desc": "To store preferences and cache data locally"
+            "desc": "ترجیحات اور کیچ ڈیٹا مقامی طور پر محفوظ کرنے کے لیے"
           },
           "1": {
-            "label": "Session Storage",
-            "desc": "For temporary data during your browsing session"
+            "label": "سیشن اسٹوریج",
+            "desc": "آپ کی براؤزنگ سیشن کے دوران عارضی ڈیٹا کے لیے"
           },
           "2": {
-            "label": "Pixel Tags",
-            "desc": "Small images to track email opens and website visits"
+            "label": "پکسل ٹیگز",
+            "desc": "ای میل کھلنے اور ویب سائٹ وزٹس کو ٹریک کرنے کے لیے چھوٹی تصاویر"
           }
         },
-        "noFingerprinting": "We do NOT use browser fingerprinting for tracking."
+        "noFingerprinting": "ہم ٹریکنگ کے لیے براؤزر فنگر پرنٹنگ کا استعمال نہیں کرتے۔"
       },
       "updates": {
-        "title": "Updates to This Policy",
-        "content": "We may update this Cookie Policy from time to time. We will notify you of material changes by posting the updated policy on our website."
+        "title": "اس پالیسی میں تازہ کاریاں",
+        "content": "ہم اس کوکی پالیسی کو وقتاً فوقتاً اپ ڈیٹ کر سکتے ہیں۔ ہم آپ کو اہم تبدیلیوں کی اطلاع دیں گے جب ہم اپ ڈیٹ شدہ پالیسی کو اپنی ویب سائٹ پر شائع کریں گے۔"
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "If you have questions about our use of cookies, please contact us:",
-        "company": "{brandName} Co., Ltd.",
-        "privacyNote": "For more information about how we collect and process your data, please see our",
-        "privacyLink": "Privacy Policy"
+        "title": "ہم سے رابطہ کریں",
+        "intro": "اگر آپ کو ہماری کوکیوں کے استعمال کے بارے میں کوئی سوال ہے، تو براہ کرم ہم سے رابطہ کریں:",
+        "company": "{brandName} کمپنی، لمیٹڈ۔",
+        "privacyNote": "ہم آپ کا ڈیٹا کیسے جمع اور پروسیس کرتے ہیں، اس کے بارے میں مزید معلومات کے لیے براہ کرم ہماری",
+        "privacyLink": "پرائیویسی پالیسی"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
-      "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
-      "heading": "Executive Deep Dive",
-      "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
+      "title": "انجینئرنگ گائیڈنس اور عام سوالات — {brandName}",
+      "description": "فریم ورک آرکیٹیکچر، بیس لائن ٹوپولوجیز، اور تجارتی ڈپلوئمنٹ حکمت عملیوں کا جامع تجزیہ۔",
+      "heading": "ایگزیکٹو گہرائی میں جائزہ",
+      "subheading": "سسٹمز انجینئرنگ انٹیگریشن اور ایگزیکٹو تجارتی فیصلہ سازی کے لیے بہتر بنایا گیا معاون مواد۔",
       "categories": {
         "0": {
-          "name": "Architectural Overview",
+          "name": "آرکیٹیکچرل جائزہ",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of {productName}?",
-              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "{productName} کا واضح آپریشنل مقصد کیا ہے؟",
+              "a": "{productName} ایک انتہائی منظم، پروڈکشن کے لیے تیار Next.js AI SaaS فریم ورک ہے۔ یہ کارپوریٹ بلنگ، ملٹی فیکٹر اتھنٹیکیشن، اور ملٹی ٹیننٹ انیسولیشن کو ایک گورنڈ پلیٹ فارم بیس لائن میں شامل کرتا ہے، تاکہ ٹیمیں پروڈکٹ مخصوص AI امپلیمنٹیشن پر توجہ مرکوز کر سکیں۔"
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "q": "ریپوزٹری لائسنسنگ کیسے ڈھانچہ بندی کی گئی ہے؟",
+              "a": "بنیادی انفراسٹرکچر سختی سے OSS AGPLv3 معاہدے کی پابندی کرتا ہے، شفافیت اور صفر لاگت استعمال کی ضمانت دیتا ہے۔ ان اداروں کے لیے جنہیں پرائیویٹ ابسکریشن اور بلند معیار کی رائیٹ گارنٹی کی ضرورت ہو، واضح بند ذرائع تجارتی معاہدے دستیاب ہیں۔"
             },
             "2": {
-              "q": "What is the speed of initial commercial evaluation?",
-              "a": "Extremely high-velocity. Using our customized Node CLI toolchain alongside the precise technical specification, a junior engineer can stand up an autonomous local Minimum Viable Product (MVP) instance within single-digit minutes."
+              "q": "ابتدائی تجارتی تشخیص کی رفتار کیا ہے؟",
+              "a": "انتہائی تیز رفتار۔ ہمارے حسب ضرورت Node CLI ٹول چین اور درست تکنیکی وضاحت کے ساتھ، ایک جونیئر انجینئر چند منٹوں میں خودکار مقامی کم از کم قابل عمل پروڈکٹ (MVP) انسٹنس قائم کر سکتا ہے۔"
             }
           }
         },
         "1": {
-          "name": "Commercial Operations",
+          "name": "تجارتی آپریشنز",
           "questions": {
             "0": {
-              "q": "How wide is the tolerance for commercial scaling?",
-              "a": "Designed heavily on micro-component paradigms, structural load capacity maps seamlessly from zero-demand Free Tiers dynamically up to Enterprise thresholds serving multi-million monthly requests, entirely configured via dashboard constraints."
+              "q": "تجارتی اسکیلنگ کے لیے برداشت کی حد کتنی وسیع ہے؟",
+              "a": "مائیکرو کمپوننٹ پیراڈائمز پر بھرپور ڈیزائن کیا گیا ہے، ساختی بوجھ کی گنجائش صفر طلب فری ٹیرز سے شروع ہو کر ملینوں ماہانہ درخواستوں کو خدمات فراہم کرنے والے انٹرپرائز تھری شولڈز تک مکمل طور پر ڈیش بورڈ پابندیوں کے ذریعے ترتیب دی جاتی ہے۔"
             },
             "1": {
-              "q": "How does subscription volatility affect standard accounting?",
-              "a": "We operate utilizing precise, second-level structural logging of resources and API throughput. Shifting constraints instantly reconciles against the accounting layer—either refunding prorated differentials or issuing automatic credits. There is absolutely no tier-freeze period."
+              "q": "سبسکرپشن کی عدم استحکام معیاری اکاؤنٹنگ کو کیسے متاثر کرتا ہے؟",
+              "a": "ہم وسائل اور API ٹھروٹ پٹ کی درست، سیکنڈ سطح کی ساختی لاگنگ استعمال کرتے ہوئے کام کرتے ہیں۔ پابندیوں میں تبدیلی فوری طور پر اکاؤنٹنگ لیئر کے خلاف حل ہو جاتی ہے—یا پرو ریٹڈ فرق کی واپسی کرتی ہے یا خودکار کریڈٹ جاری کرتی ہے۔ کوئی بھی ٹیر فریز مدت بالکل نہیں ہے۔"
             },
             "2": {
-              "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "q": "کون سی پروسیسنگ انفراسٹرکچر ادائیگی کے ویکٹرز کو الگ کرتی ہے؟",
+              "a": "عالمی نقد روتنگ بنیادی طور پر Stripe سرور انٹرفیسز کو ترجیح دیتی ہے، سخت PCI-DSS ٹیلی میٹری اور پروسیسنگ یکجہتی کی ضمانت دیتی ہے۔ انٹرپرائز ڈپلائمنٹس ذاتی مالی آڈٹ پائپ لائنز کو حسب ضرورت SLA عہدوں کے تحت یکجا کر سکتے ہیں۔"
             }
           }
         },
         "2": {
-          "name": "System Engineering Layer",
+          "name": "سسٹم انجینئرنگ لیئر",
           "questions": {
             "0": {
-              "q": "Which fundamental intelligence abstractions are supported natively?",
-              "a": "The primary interaction logic dictates native interoperability over OpenAI, Anthropic, and Gemini standard specifications. This yields massive flexibility to hot-swap reasoning endpoints efficiently via variable mapping with zero degradation to the upstream commercial logic."
+              "q": "کون سی بنیادی انٹیلی جنس ابسٹریکشنز مقامی طور پر سپورٹ کی جاتی ہیں؟",
+              "a": "بنیادی تعامل منطق OpenAI، Anthropic، اور Gemini معیاری وضاحتوں پر مقامی انٹروپریبلٹی کا حکم دیتی ہے۔ یہ متغیر میپنگ کے ذریعے تجزیاتی اینڈ پوائنٹس کو مؤثر طریقے سے گرمی سے تبدیل کرنے کی بڑی لچک فراہم کرتا ہے، اپ سٹریم تجارتی منطق میں کوئی بھی خرابی کے بغیر۔"
             },
             "1": {
-              "q": "How is the risk of database obfuscation addressed?",
-              "a": "Implementation defaults intrinsically deploy Postgres Row-Level Security (RLS) policies tightly coupled with our serverless Tenant Resolution Routing primitives. This ensures hard partitions actively prevent critical application-level data contamination and execution overlap."
+              "q": "ڈیٹا بیس ابسکریشن کے خطرے کا کیسے حل کیا جاتا ہے؟",
+              "a": "تعارف کی ڈیفالٹس اندرونی طور پر Postgres Row-Level Security (RLS) پالیسیوں کو ہمارے سرور لیس ٹیننٹ ریزولوشن روتنگ پرائمرٹوز کے ساتھ سختی سے جوڑتے ہیں۔ یہ یقینی بناتا ہے کہ سخت پارٹیشنز اہم ایپلی کیشن سطح کی ڈیٹا آلودگی اور ایکشن اوور لیپ کو فعال طور پر روکتی ہیں۔"
             },
             "2": {
-              "q": "Are there architectural restrictions on self-managed deployments?",
-              "a": "Absolutely none. The topology is fully decoupled. If the environment executes independent Node.js runtimes alongside healthy PostgreSQL clusters, full functionality is inherently preserved."
+              "q": "خود مینیجڈ ڈپلائمنٹس پر کوئی آرکیٹیکچرل پابندیاں ہیں؟",
+              "a": "بالکل نہیں۔ ٹوپولوجی مکمل طور پر الگ ہے۔ اگر ماحول صحت مند PostgreSQL کلسٹرز کے ساتھ آزاد Node.js رن ٹائمز کو چلاتا ہے، تو مکمل فعالیت اندرونی طور پر محفوظ رہتی ہے."
             }
           }
         },
         "3": {
-          "name": "Systematic Integrity",
+          "name": "سسٹمیٹک یکجہتی",
           "questions": {
             "0": {
-              "q": "What protocols determine the perimeter's mechanical defense?",
-              "a": "Mechanisms execute mandatory TLS encryption through transmission, deterministic hashing algorithms for secrets mapping, and the ubiquitous recording of mutation events written strictly into internal time-series tracking ledgers."
+              "q": "کن پروٹوکولز کا تعین پیریمیٹر کی میکانکی دفاع کرتے ہیں؟",
+              "a": "مکینزمز ٹرانسمیشن کے دوران لازمی TLS انکرپشن، رازوں کی میپنگ کے لیے ڈیٹرمینسٹک ہیشنگ الگورتھمز، اور تبدیلی کے واقعات کی عام ریکارڈنگ کو لازمی طور پر اندرونی ٹائم سیریز ٹریکنگ لیجرز میں لکھتے ہیں۔"
             },
             "1": {
-              "q": "Does the topology respect major international privacy statutes?",
-              "a": "Yes, profoundly. Business modules supply out-of-the-box algorithmic implementations targeting consent withdrawal states, hard-deletion logic, and deep export queries conforming optimally to the GDPR and localized regulatory frameworks."
+              "q": "کیا ٹوپولوجی بڑے بین الاقوامی پرائیویسی قوانین کا احترام کرتی ہے؟",
+              "a": "جی ہاں، بہت گہرائی سے۔ بزنس ماڈیولز کنزینٹ وڈرائیو اسٹیٹس، ہارڈ ڈیلیشن لاجک، اور گہرے ایکسپورٹ کویریز کے لیے آؤٹ آف دی باکس الگورتھمک امپلیمنٹیشنز فراہم کرتے ہیں جو GDPR اور مقامی ریگولیٹری فریم ورکس کے مطابق بہترین مطابقت رکھتے ہیں۔"
             },
             "2": {
-              "q": "What executes upon an anomalous catastrophic incident?",
-              "a": "Automated sentinels instantly alert core engineering vectors who force circuit blocks and implement swift triage. Governed by an advanced resolution handbook, fully transparent Incident Postmortems are universally disseminated within an absolute 72-hour window."
+              "q": "کسی غیر معمولی تباہ کن واقعے پر کیا عمل ہوتا ہے؟",
+              "a": "خودکار سینٹینلز فوری طور پر کور انجینئرنگ ویکٹرز کو الرٹ کرتے ہیں جو سرکٹ بلاکس لگاتے ہیں اور تیز ٹریجیج نافذ کرتے ہیں۔ ایک جدید ریزولیوشن ہینڈ بک کے تحت، مکمل شفاف Incident Postmortems 72 گھنٹوں کے مطلق کھڑے میں عالمی سطح پر پھیلائے جاتے ہیں۔"
             }
           }
         },
         "4": {
-          "name": "Technical Assistance Directives",
+          "name": "تکنیکی معاونت ہدایات",
           "questions": {
             "0": {
-              "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "q": "آپریشنل بوتل نکک ٹربل شوٹنگ کیسے حل ہوتی ہے؟",
+              "a": "ابتدائی ٹریجیج ویکٹرز سختی سے برقرار اور پیئر ریویوڈ ڈاکیومینٹیشن میٹرکس اور تصدیق شدہ کمیونٹی تعاملات کو نشانہ بناتے ہیں۔ معیاری یا انٹرپرائز لیول لائسنس حاصل کرنے سے نجی ایسکلیشن کوئوز تک رسائی کھلتی ہے جو براہ راست اندرونی انجینئرنگ نوڈز کے ذریعے حل ہوتی ہے۔"
             },
             "1": {
-              "q": "Do you extend physical or specialized environmental integration operations?",
-              "a": "This falls under our bespoke premium execution tier for upper-echelon corporate conglomerates. Our most senior architects deploy outly to perform code auditing against legacy architecture, manage delicate cloud relocations, and validate highly isolated network partitions."
+              "q": "کیا آپ جسمانی یا مخصوص ماحولیاتی انٹیگریشن آپریشنز فراہم کرتے ہیں؟",
+              "a": "یہ ہمارے بیکسپو پریمیم ایگزیکشن ٹیر کے تحت آتا ہے جو اوپر ایچیلن کارپوریٹ کانگلومریٹس کے لیے ہے۔ ہمارے سب سے سینئر آرکیٹیکٹس آؤٹ لائی ڈپلوائے کرتے ہیں تاکہ لیگسی آرکیٹیکچر کے خلاف کوڈ آڈٹنگ کریں، نازک کلاؤڈ ری لوکیشنز کا انتظام کریں، اور انتہائی الگ نیٹ ورک پارٹیشنز کی توثیق کریں۔"
             }
           }
         }
       },
-      "ctaHeading": "Require immediate technical synchronization?",
-      "ctaDescription": "Whether validating a specific API behavior schema or executing long-term integration agreements, interface directly with the engineering hierarchy.",
-      "ctaButton": "Receive Integration Instructions",
-      "ctaEmail": "Transmit Direct Message"
+      "ctaHeading": "فوری تکنیکی ہم آہنگی کی ضرورت ہے؟",
+      "ctaDescription": "چاہے مخصوص API برتاؤ اسکیما کی توثیق ہو یا طویل مدتی انٹیگریشن معاہدوں کا نفاذ، انجینئرنگ ہیرارکی کے ساتھ براہ راست رابطہ کریں۔",
+      "ctaButton": "انٹیگریشن ہدایات حاصل کریں",
+      "ctaEmail": "براہ راست پیغام بھیجیں"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — {brandName}",
-      "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
-      "heading": "Information Protection Directives",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "پرائیویسی اور معلوماتی دفاع پروٹوکول — {brandName}",
+      "description": "تفصیلی طور پر دستاویز کیا گیا ہے کہ انفرا اسٹرکچر میکانکس صارف خود مختاری اور مشین ڈیٹا انسولیشن کو کیسے کنٹرول کرتے ہیں۔",
+      "heading": "معلوماتی تحفظ ہدایات",
+      "effectiveDate": "مؤثر تاریخ",
+      "lastUpdated": "آخری اپ ڈیٹ",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 جنوری 2025",
+        "updated": "1 جنوری 2025"
       },
-      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "{brandName} (\"کمپنی،\" \"ہم،\" \"ہمیں،\" یا \"ہمارا\") میں، ہم آپ کی پرائیویسی کی حفاظت کے لیے پرعزم ہیں۔ یہ پرائیویسی پالیسی وضاحت کرتی ہے کہ جب آپ ہمارے ویب سائٹ، ایپلیکیشنز اور سروسز (مجموعی طور پر \"سروسز\") استعمال کرتے ہیں تو ہم آپ کی معلومات کیسے جمع کرتے ہیں، استعمال کرتے ہیں، ظاہر کرتے ہیں اور محفوظ رکھتے ہیں۔",
       "infoWeCollect": {
-        "title": "1. Information We Collect",
+        "title": "1. معلومات جو ہم جمع کرتے ہیں",
         "youProvide": {
-          "title": "1.1 Information You Provide",
-          "intro": "We collect information you directly provide to us, including:",
+          "title": "1.1 معلومات جو آپ فراہم کرتے ہیں",
+          "intro": "ہم وہ معلومات جمع کرتے ہیں جو آپ براہ راست ہمیں فراہم کرتے ہیں، بشمول:",
           "items": {
             "0": {
-              "label": "Account Information",
-              "desc": "Name, email address, password, and organization details when you create an account."
+              "label": "اکاؤنٹ کی معلومات",
+              "desc": "نام، ای میل ایڈریس، پاس ورڈ، اور اکاؤنٹ بناتے وقت تنظیم کی تفصیلات۔"
             },
             "1": {
-              "label": "Profile Information",
-              "desc": "Profile picture, job title, company name, and other optional information."
+              "label": "پروفائل کی معلومات",
+              "desc": "پروفائل تصویر، نوکری کا عنوان، کمپنی کا نام، اور دیگر اختیاری معلومات۔"
             },
             "2": {
-              "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "label": "ادائیگی کی معلومات",
+              "desc": "بلنگ ایڈریس اور ادائیگی کے طریقے کی تفصیلات (Stripe کے ذریعے محفوظ طریقے سے پروسیس کی جاتی ہیں)۔"
             },
             "3": {
-              "label": "Communications",
-              "desc": "Messages, feedback, and other communications you send to us."
+              "label": "مواصلات",
+              "desc": "پیغامات، فیڈ بیک، اور دیگر مواصلات جو آپ ہمیں بھیجتے ہیں۔"
             },
             "4": {
-              "label": "Content",
-              "desc": "Any content you create, upload, or store using our Services."
+              "label": "مواد",
+              "desc": "کسی بھی مواد جو آپ ہمارے سروسز کا استعمال کرتے ہوئے بناتے ہیں، اپ لوڈ کرتے ہیں، یا محفوظ کرتے ہیں۔"
             }
           }
         },
         "automatic": {
-          "title": "1.2 Information Collected Automatically",
-          "intro": "When you use our Services, we automatically collect certain information:",
+          "title": "1.2 خودکار طور پر جمع کی گئی معلومات",
+          "intro": "جب آپ ہمارے سروسز استعمال کرتے ہیں، تو ہم خودکار طور پر کچھ معلومات جمع کرتے ہیں:",
           "items": {
             "0": {
-              "label": "Device Information",
-              "desc": "Device type, operating system, browser type, and unique device identifiers."
+              "label": "ڈیوائس کی معلومات",
+              "desc": "ڈیوائس کی قسم، آپریٹنگ سسٹم، براؤزر کی قسم، اور منفرد ڈیوائس شناختی نمبر۔"
             },
             "1": {
-              "label": "Usage Information",
-              "desc": "Pages viewed, features used, actions taken, and time spent on Services."
+              "label": "استعمال کی معلومات",
+              "desc": "دیکھے گئے صفحات، استعمال شدہ خصوصیات، کی گئی کارروائیاں، اور سروسز پر گزاری گئی وقت۔"
             },
             "2": {
-              "label": "Log Data",
-              "desc": "IP address, access times, referring URLs, and system activity logs."
+              "label": "لاگ ڈیٹا",
+              "desc": "آئی پی ایڈریس، رسائی کے اوقات، حوالہ دینے والے یو آر ایلز، اور سسٹم ایکٹیویٹی لاگز۔"
             },
             "3": {
-              "label": "Location Information",
-              "desc": "General location based on IP address (we do not collect precise geolocation)."
+              "label": "مقام کی معلومات",
+              "desc": "آئی پی ایڈریس کی بنیاد پر عمومی مقام (ہم درست جیو لوکیشن جمع نہیں کرتے)۔"
             }
           }
         }
       },
       "howWeUse": {
-        "title": "2. How We Use Your Information",
-        "intro": "We use the information we collect to:",
+        "title": "2. ہم آپ کی معلومات کا استعمال کیسے کرتے ہیں",
+        "intro": "ہم جمع کردہ معلومات کا استعمال اس مقصد کے لیے کرتے ہیں کہ:",
         "items": {
           "0": {
-            "label": "Provide Services",
-            "desc": "Operate, maintain, and improve our Services."
+            "label": "خدمات فراہم کریں",
+            "desc": "ہماری خدمات کو چلائیں، برقرار رکھیں، اور بہتر بنائیں۔"
           },
           "1": {
-            "label": "Process Transactions",
-            "desc": "Handle payments, billing, and related operations."
+            "label": "لین دین پروسیس کریں",
+            "desc": "ادائیگیاں، بلنگ، اور متعلقہ آپریشنز سنبھالیں۔"
           },
           "2": {
-            "label": "Communicate",
-            "desc": "Send service announcements, updates, and marketing communications (with consent)."
+            "label": "رابطہ کریں",
+            "desc": "سروس کے اعلانات، اپ ڈیٹس، اور مارکیٹنگ مواصلات بھیجیں (اجازت کے ساتھ)۔"
           },
           "3": {
-            "label": "Personalize",
-            "desc": "Customize your experience and provide relevant recommendations."
+            "label": "شخصی نوعیت دیں",
+            "desc": "آپ کے تجربے کو حسب ضرورت بنائیں اور متعلقہ تجاویز فراہم کریں۔"
           },
           "4": {
-            "label": "Analyze",
-            "desc": "Understand usage patterns and improve our Services."
+            "label": "تجزیہ کریں",
+            "desc": "استعمال کے نمونوں کو سمجھیں اور ہماری خدمات کو بہتر بنائیں۔"
           },
           "5": {
-            "label": "Protect",
-            "desc": "Detect, prevent, and respond to fraud, abuse, and security incidents."
+            "label": "محفوظ کریں",
+            "desc": "دھوکہ دہی، غلط استعمال، اور سیکیورٹی واقعات کا پتہ لگائیں، روکیں، اور ان کا جواب دیں۔"
           }
         }
       },
       "howWeShare": {
-        "title": "3. How We Share Your Information",
-        "intro": "We may share your information in the following circumstances:",
+        "title": "3. ہم آپ کی معلومات کا اشتراک کیسے کرتے ہیں",
+        "intro": "ہم درج ذیل حالات میں آپ کی معلومات کا اشتراک کر سکتے ہیں:",
         "serviceProviders": {
-          "title": "3.1 Service Providers",
-          "intro": "We share information with third-party vendors who provide services on our behalf, including:",
+          "title": "3.1 سروس پرووائیڈرز",
+          "intro": "ہم تیسرے فریق کے وینڈرز کے ساتھ معلومات شیئر کرتے ہیں جو ہمارے نام پر خدمات فراہم کرتے ہیں، بشمول:",
           "items": {
             "0": {
-              "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "label": "انفراسٹرکچر",
+              "desc": "کلاؤڈ ہوسٹنگ (Vercel, Supabase)، ڈیٹا بیس سروسز"
             },
             "1": {
-              "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "label": "پیمنٹ پروسیسنگ",
+              "desc": "محفوظ ادائیگی کے انتظام کے لیے Stripe"
             },
             "2": {
-              "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "label": "تصدیق",
+              "desc": "شناخت کے انتظام کے لیے Clerk"
             },
             "3": {
-              "label": "Analytics",
-              "desc": "PostHog, Vercel Analytics for usage insights"
+              "label": "تجزیات",
+              "desc": "استعمال کی بصیرت کے لیے PostHog، Vercel Analytics"
             }
           }
         },
         "businessTransfers": {
-          "title": "3.2 Business Transfers",
-          "content": "If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction."
+          "title": "3.2 کاروباری منتقلیاں",
+          "content": "اگر ہم کسی ملازمت، حصول، یا اثاثوں کی فروخت میں شامل ہوں، تو آپ کی معلومات اس لین دین کا حصہ بن کر منتقل ہو سکتی ہیں۔"
         },
         "legalRequirements": {
-          "title": "3.3 Legal Requirements",
-          "content": "We may disclose information when required by law, legal process, or government request, or to protect our rights, privacy, safety, or property."
+          "title": "3.3 قانونی تقاضے",
+          "content": "ہم قانون، قانونی عمل، یا حکومتی درخواست کی ضرورت ہونے پر، یا اپنے حقوق، پرائیویسی، حفاظت، یا جائیداد کی حفاظت کے لیے معلومات ظاہر کر سکتے ہیں۔"
         }
       },
       "yourRights": {
-        "title": "4. Your Rights and Choices",
+        "title": "4. آپ کے حقوق اور انتخاب",
         "accessPortability": {
-          "title": "4.1 Access and Portability",
-          "content": "You can access your personal information through your account settings and request a copy of your data in a portable format."
+          "title": "4.1 رسائی اور منتقلی",
+          "content": "آپ اپنے اکاؤنٹ کی ترتیبات کے ذریعے اپنی ذاتی معلومات تک رسائی حاصل کر سکتے ہیں اور اپنے ڈیٹا کی کاپی پورٹیبل فارمیٹ میں طلب کر سکتے ہیں۔"
         },
         "correction": {
-          "title": "4.2 Correction",
-          "content": "You can update your account information at any time through the dashboard."
+          "title": "4.2 اصلاح",
+          "content": "آپ ڈیش بورڈ کے ذریعے کسی بھی وقت اپنے اکاؤنٹ کی معلومات اپ ڈیٹ کر سکتے ہیں۔"
         },
         "deletion": {
-          "title": "4.3 Deletion",
-          "content": "You can request deletion of your account and associated data through settings or by contacting us."
+          "title": "4.3 حذف کرنا",
+          "content": "آپ سیٹنگز کے ذریعے یا ہم سے رابطہ کر کے اپنے اکاؤنٹ اور متعلقہ ڈیٹا کی حذف کرنے کی درخواست کر سکتے ہیں۔"
         },
         "marketing": {
-          "title": "4.4 Marketing Communications",
-          "content": "You can opt out of marketing emails by clicking \"unsubscribe\" in any marketing email or updating your preferences."
+          "title": "4.4 مارکیٹنگ مواصلات",
+          "content": "آپ کسی بھی مارکیٹنگ ای میل میں \"ان سبسکرائب\" پر کلک کر کے یا اپنی ترجیحات کو اپ ڈیٹ کر کے مارکیٹنگ ای میلز سے مستثنیٰ ہو سکتے ہیں۔"
         }
       },
       "dataSecurity": {
-        "title": "5. Data Security",
-        "intro": "We implement appropriate technical and organizational measures to protect your information, including:",
+        "title": "5. ڈیٹا سیکیورٹی",
+        "intro": "ہم آپ کی معلومات کی حفاظت کے لیے مناسب تکنیکی اور تنظیمی اقدامات نافذ کرتے ہیں، جن میں شامل ہیں:",
         "items": {
-          "0": "Encryption of data in transit (TLS) and at rest",
-          "1": "Regular security assessments and penetration testing",
-          "2": "Access controls and authentication requirements",
-          "3": "Monitoring and logging of system activity"
+          "0": "ٹرانزٹ میں ڈیٹا کی انکرپشن (TLS) اور آرام میں",
+          "1": "باقاعدہ سیکیورٹی کی تشخیص اور پینٹریشن ٹیسٹنگ",
+          "2": "رسائی کے کنٹرولز اور تصدیق کی ضروریات",
+          "3": "سسٹم کی سرگرمی کی نگرانی اور لاگنگ"
         }
       },
       "ccpa": {
-        "title": "6. California Privacy Rights (CCPA)",
-        "intro": "If you are a California resident, you have specific rights regarding your personal information:",
+        "title": "6. کیلیفورنیا پرائیویسی حقوق (CCPA)",
+        "intro": "اگر آپ کیلیفورنیا کے رہائشی ہیں، تو آپ کو اپنی ذاتی معلومات کے بارے میں مخصوص حقوق حاصل ہیں:",
         "items": {
           "0": {
-            "label": "Right to Know",
-            "desc": "Request disclosure of information we collect, use, and share."
+            "label": "جاننے کا حق",
+            "desc": "ہماری جمع کی گئی، استعمال کی گئی اور شیئر کی گئی معلومات کی افشاگی کی درخواست کریں۔"
           },
           "1": {
-            "label": "Right to Delete",
-            "desc": "Request deletion of your personal information."
+            "label": "حذف کرنے کا حق",
+            "desc": "اپنی ذاتی معلومات کی حذف کرنے کی درخواست کریں۔"
           },
           "2": {
-            "label": "Right to Opt-Out",
-            "desc": "Opt out of the sale of personal information (we do not sell your data)."
+            "label": "مستثنیٰ ہونے کا حق",
+            "desc": "ذاتی معلومات کی فروخت سے مستثنیٰ ہوں (ہم آپ کا ڈیٹا نہیں بیچتے)۔"
           },
           "3": {
-            "label": "Right to Non-Discrimination",
-            "desc": "We will not discriminate against you for exercising your rights."
+            "label": "غیر امتیازی سلوک کا حق",
+            "desc": "ہم آپ کے حقوق کے استعمال پر آپ کے ساتھ امتیازی سلوک نہیں کریں گے۔"
           }
         }
       },
       "gdpr": {
-        "title": "7. European Privacy Rights (GDPR)",
-        "intro": "If you are in the EEA, UK, or Switzerland, you have additional rights under GDPR:",
+        "title": "7. یورپی پرائیویسی حقوق (GDPR)",
+        "intro": "اگر آپ EEA، UK، یا Switzerland میں ہیں، تو آپ کے پاس GDPR کے تحت اضافی حقوق ہیں:",
         "items": {
           "0": {
-            "label": "Legal Basis",
-            "desc": "We process your data based on contract performance, legitimate interests, or consent."
+            "label": "قانونی بنیاد",
+            "desc": "ہم آپ کا ڈیٹا معاہدے کی کارکردگی، جائز دلچسپیوں، یا رضامندی کی بنیاد پر پروسیس کرتے ہیں۔"
           },
           "1": {
-            "label": "Rights",
-            "desc": "Access, rectification, erasure, portability, restriction, and objection."
+            "label": "حقوق",
+            "desc": "دستیابی، اصلاح، حذف، منتقلی، پابندی، اور اعتراض۔"
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "آپ ہمارے ڈیٹا پروٹیکشن آفیسر سے dpo@nebutra.com پر رابطہ کر سکتے ہیں۔"
           }
         }
       },
       "contactUs": {
-        "title": "8. Contact Us",
-        "intro": "If you have questions about this Privacy Policy, please contact us:",
+        "title": "8. ہم سے رابطہ کریں",
+        "intro": "اگر آپ کو اس پرائیویسی پالیسی کے بارے میں کوئی سوال ہے، تو براہ کرم ہم سے رابطہ کریں:",
         "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
-      "heading": "Dispute Execution Framework",
-      "effectiveDate": "Enforcement Implementation Date",
-      "lastUpdated": "Revision Tracing Epoch",
+      "title": "ٹرانزیکشن انومالی پروٹوکولز — {brandName}",
+      "description": "مختلف ساختی انگیجمنٹ ماڈلز میں درست کیپیٹل رول بیک پیرامیٹرز کے بارے میں سخت تعریف۔",
+      "heading": "مخاصمہ اطلاق فریم ورک",
+      "effectiveDate": "اطلاق نفاذ کی تاریخ",
+      "lastUpdated": "ترمیم ٹریسنگ ایپوک",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 جنوری 2025",
+        "updated": "1 جنوری 2025"
       },
-      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "{brandName} میں، ہم چاہتے ہیں کہ آپ ہمارے خدمات سے مکمل طور پر مطمئن ہوں۔ یہ ری فنڈ پالیسی ان حالات کی وضاحت کرتی ہے جن میں ری فنڈ دستیاب ہیں اور ان کی درخواست کا عمل۔",
       "subscriptionPlans": {
-        "title": "Subscription Plans",
+        "title": "سبسکرپشن پلانز",
         "monthly": {
-          "title": "Monthly Subscriptions",
+          "title": "ماہانہ سبسکرپشنز",
           "items": {
             "0": {
-              "label": "Cancellation",
-              "desc": "You may cancel your monthly subscription at any time"
+              "label": "منسوخیت",
+              "desc": "آپ اپنی ماہانہ سبسکرپشن کسی بھی وقت منسوخ کر سکتے ہیں"
             },
             "1": {
-              "label": "Pro-rata Refunds",
-              "desc": "We do not offer pro-rata refunds for partial months"
+              "label": "پرو ریٹا ری فنڈز",
+              "desc": "ہم جزوی مہینوں کے لیے پرو ریٹا ری فنڈز فراہم نہیں کرتے"
             },
             "2": {
-              "label": "Access",
-              "desc": "You retain access to paid features until the end of your billing period"
+              "label": "رسائی",
+              "desc": "آپ کو اپنے بلنگ پیریڈ کے اختتام تک ادائیگی شدہ خصوصیات تک رسائی برقرار رہتی ہے"
             },
             "3": {
-              "label": "Automatic Renewal",
-              "desc": "Subscriptions automatically renew unless cancelled"
+              "label": "خودکار تجدید",
+              "desc": "سبسکرپشنز خودکار طور پر تجدید ہوتی ہیں جب تک کہ منسوخ نہ کی جائیں"
             }
           }
         },
         "annual": {
-          "title": "Annual Subscriptions",
+          "title": "سالانہ سبسکرپشنز",
           "items": {
             "0": {
-              "label": "14-Day Money-Back Guarantee",
-              "desc": "New annual subscribers may request a full refund within 14 days of their initial purchase"
+              "label": "14 دن کی پیسے واپسی کی گارنٹی",
+              "desc": "نئے سالانہ سبسکرائبرز اپنی ابتدائی خریداری کے 14 دن کے اندر مکمل ری فنڈ کی درخواست کر سکتے ہیں"
             },
             "1": {
-              "label": "After 14 Days",
-              "desc": "Refunds are generally not available after the 14-day period"
+              "label": "14 دن کے بعد",
+              "desc": "ری فنڈز عام طور پر 14 دن کے عرصے کے بعد دستیاب نہیں ہوتے"
             },
             "2": {
-              "label": "Cancellation",
-              "desc": "You may cancel at any time, but your subscription will remain active until the end of the annual term"
+              "label": "منسوخیت",
+              "desc": "آپ کسی بھی وقت منسوخ کر سکتے ہیں، لیکن آپ کی سبسکرپشن سالانہ مدت کے اختتام تک فعال رہے گی"
             },
             "3": {
-              "label": "No Pro-rata Refunds",
-              "desc": "We do not offer partial refunds for unused months"
+              "label": "کوئی پرو ریٹا ری فنڈز نہیں",
+              "desc": "ہم استعمال نہ ہونے والے مہینوں کے لیے جزوی ری فنڈز فراہم نہیں کرتے"
             }
           }
         }
       },
       "eligibleScenarios": {
-        "title": "Eligible Refund Scenarios",
-        "intro": "We will consider refund requests in the following circumstances:",
+        "title": "ری فنڈ کے قابل منظرنامے",
+        "intro": "ہم مندرجہ ذیل حالات میں ری فنڈ کی درخواستوں پر غور کریں گے:",
         "serviceIssues": {
-          "title": "1. Service Issues",
+          "title": "1. سروس کے مسائل",
           "items": {
-            "0": "Significant service outages affecting your ability to use core features",
-            "1": "Technical issues that we are unable to resolve within a reasonable timeframe",
-            "2": "Features significantly different from what was advertised"
+            "0": "اہم سروس کے بند ہونے کی وجہ سے آپ کو بنیادی خصوصیات استعمال کرنے میں رکاوٹ",
+            "1": "تکنیکی مسائل جو ہم معقول وقت کے اندر حل نہیں کر سکتے",
+            "2": "خصوصیات جو اشتہار شدہ چیزوں سے نمایاں طور پر مختلف ہوں"
           }
         },
         "billingErrors": {
-          "title": "2. Billing Errors",
+          "title": "2. بلنگ کی غلطیاں",
           "items": {
-            "0": "Duplicate charges",
-            "1": "Incorrect billing amounts",
-            "2": "Unauthorized charges (after verification)"
+            "0": "دوبارہ چارجز",
+            "1": "غلط بلنگ کی رقمیں",
+            "2": "غیر مجاز چارجز (تصدیق کے بعد)"
           }
         },
         "exceptionalCircumstances": {
-          "title": "3. Exceptional Circumstances",
+          "title": "3. غیر معمولی حالات",
           "items": {
-            "0": "Documented medical emergencies",
-            "1": "Natural disasters affecting your business",
-            "2": "Other circumstances evaluated on a case-by-case basis"
+            "0": "دستاویزی طبی ہنگامی حالات",
+            "1": "فطرت کے آفات جو آپ کے کاروبار کو متاثر کریں",
+            "2": "دیگر حالات جو کیس بای کیس بنیاد پر جائزے میں لائے جائیں گے"
           }
         }
       },
       "nonRefundable": {
-        "title": "Non-Refundable Items",
-        "intro": "The following are generally not eligible for refunds:",
+        "title": "غیر واپس کرنے والی اشیاء",
+        "intro": "مندرجہ ذیل عام طور پر واپسی کے لیے اہل نہیں ہیں:",
         "items": {
           "0": {
-            "label": "Usage-based charges",
-            "desc": "API calls, AI token consumption, or storage used"
+            "label": "استعمال کی بنیاد پر چارجز",
+            "desc": "API کالز، AI ٹوکن کا استعمال، یا استعمال شدہ اسٹوریج"
           },
           "1": {
-            "label": "Add-ons and extras",
-            "desc": "One-time purchases or add-on services"
+            "label": "اضافی اور اضافی خدمات",
+            "desc": "ایک بار خریداری یا اضافی خدمات"
           },
           "2": {
-            "label": "Enterprise contracts",
-            "desc": "Custom agreements have their own terms"
+            "label": "انٹرپرائز معاہدے",
+            "desc": "حسب ضرورت معاہدوں کی اپنی شرائط ہوتی ہیں"
           },
           "3": {
-            "label": "Voluntary cancellations",
-            "desc": "After the refund eligibility period"
+            "label": "خود مختار منسوخی",
+            "desc": "ری فنڈ کی اہلیت کی مدت کے بعد"
           },
           "4": {
-            "label": "Terms violations",
-            "desc": "Accounts terminated for policy violations"
+            "label": "شرائط کی خلاف ورزی",
+            "desc": "پالیسی کی خلاف ورزی کی وجہ سے بند کیے گئے اکاؤنٹس"
           }
         }
       },
       "howToRequest": {
-        "title": "How to Request a Refund",
+        "title": "ری فنڈ کیسے مانگیں",
         "step1": {
-          "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "title": "مرحلہ 1: سپورٹ سے رابطہ کریں",
+          "intro": "ہمیں billing@nebutra.com پر ای میل کریں جس میں شامل ہو:",
           "items": {
-            "0": "Your account email address",
-            "1": "Subscription plan and billing period",
-            "2": "Reason for refund request",
-            "3": "Any relevant documentation"
+            "0": "آپ کا اکاؤنٹ ای میل ایڈریس",
+            "1": "سبسکرپشن پلان اور بلنگ کی مدت",
+            "2": "ری فنڈ کی درخواست کی وجہ",
+            "3": "کوئی بھی متعلقہ دستاویزات"
           }
         },
         "step2": {
-          "title": "Step 2: Review Process",
+          "title": "مرحلہ 2: جائزہ کا عمل",
           "items": {
-            "0": "We will review your request within 5 business days",
-            "1": "We may ask for additional information",
-            "2": "You will receive a written decision via email"
+            "0": "ہم آپ کی درخواست کا جائزہ 5 کاروباری دنوں میں کریں گے",
+            "1": "ہم اضافی معلومات کی درخواست کر سکتے ہیں",
+            "2": "آپ کو ای میل کے ذریعے تحریری فیصلہ موصول ہوگا"
           }
         },
         "step3": {
-          "title": "Step 3: Refund Processing",
-          "intro": "If approved:",
+          "title": "مرحلہ 3: ری فنڈ پروسیسنگ",
+          "intro": "اگر منظور ہو جائے تو:",
           "items": {
-            "0": "Refunds are processed to the original payment method",
-            "1": "Credit card refunds typically appear within 5-10 business days",
-            "2": "Bank processing times may vary"
+            "0": "ری فنڈ اصل ادائیگی کے طریقے پر پروسیس کیے جاتے ہیں",
+            "1": "کریڈٹ کارڈ ری فنڈ عام طور پر 5-10 کاروباری دنوں میں ظاہر ہوتے ہیں",
+            "2": "بینک پروسیسنگ کا وقت مختلف ہو سکتا ہے"
           }
         }
       },
       "planChanges": {
-        "title": "Plan Changes",
+        "title": "پلان کی تبدیلیاں",
         "upgrades": {
-          "title": "Upgrades",
+          "title": "اپ گریڈز",
           "items": {
-            "0": "Upgrades take effect immediately",
-            "1": "You are charged the pro-rated difference for the remainder of your billing period",
-            "2": "No refund is provided for the previous plan"
+            "0": "اپ گریڈز فوری طور پر نافذ ہوتے ہیں",
+            "1": "آپ کو بلنگ پیریڈ کے باقی حصے کے لیے پرو ریٹڈ فرق کی فیس ادا کرنی ہوگی",
+            "2": "پچھلے پلان کے لیے کوئی واپسی نہیں دی جاتی"
           }
         },
         "downgrades": {
-          "title": "Downgrades",
+          "title": "ڈاؤن گریڈز",
           "items": {
-            "0": "Downgrades take effect at the next billing period",
-            "1": "You retain access to current features until then",
-            "2": "No partial refunds for the current period"
+            "0": "ڈاؤن گریڈز اگلے بلنگ پیریڈ میں نافذ ہوتے ہیں",
+            "1": "اس وقت تک آپ کو موجودہ خصوصیات تک رسائی برقرار رہے گی",
+            "2": "موجودہ پیریڈ کے لیے کوئی جزوی واپسی نہیں"
           }
         }
       },
       "freeTrial": {
-        "title": "Free Trial",
+        "title": "فری ٹرائل",
         "items": {
-          "0": "Free trials do not require payment information",
-          "1": "No charges occur during the trial period",
-          "2": "You will be notified before any charges begin"
+          "0": "فری ٹرائلز کے لیے ادائیگی کی معلومات کی ضرورت نہیں",
+          "1": "ٹرائل پیریڈ کے دوران کوئی چارجز نہیں ہوتے",
+          "2": "کسی بھی چارجز شروع ہونے سے پہلے آپ کو مطلع کیا جائے گا"
         }
       },
       "disputeResolution": {
-        "title": "Dispute Resolution",
-        "intro": "If you disagree with our refund decision:",
+        "title": "مخالفہ کا حل",
+        "intro": "اگر آپ ہمارے واپسی کے فیصلے سے متفق نہیں ہیں تو:",
         "steps": {
-          "0": "Reply to the decision email with additional information",
-          "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "0": "اضافی معلومات کے ساتھ فیصلے والی ای میل کا جواب دیں",
+          "1": "سپر وائزر کو اپ گریڈ کرنے کی درخواست کریں",
+          "2": "مزید جائزے کے لیے legal@nebutra.com پر ہم سے رابطہ کریں"
         }
       },
       "contactUs": {
-        "title": "Contact Us",
-        "intro": "For refund requests or questions about this policy:",
+        "title": "ہم سے رابطہ کریں",
+        "intro": "واپسی کی درخواستوں یا اس پالیسی کے بارے میں سوالات کے لیے:",
         "company": "{brandName} Co., Ltd.",
-        "billingLabel": "Billing",
-        "supportLabel": "Support",
-        "legalLabel": "Legal",
-        "responseNote": "We aim to respond to all refund requests within 5 business days.",
-        "termsNote": "This policy is part of our",
-        "termsLink": "Terms of Service",
-        "termsAgreement": "By using {brandName}, you agree to these refund terms."
+        "billingLabel": "بلنگ",
+        "supportLabel": "سپورٹ",
+        "legalLabel": "قانونی",
+        "responseNote": "ہم تمام واپسی کی درخواستوں کا جواب 5 کاروباری دنوں میں دینے کی کوشش کرتے ہیں۔",
+        "termsNote": "یہ پالیسی ہمارے",
+        "termsLink": "سروس کی شرائط",
+        "termsAgreement": "{brandName} استعمال کرنے سے، آپ ان واپسی کی شرائط سے متفق ہیں۔"
       }
     },
     "terms": {
-      "title": "Terms of Service — {brandName}",
-      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
-      "heading": "Terms of Service",
-      "effectiveDate": "Effective Date",
-      "lastUpdated": "Last Updated",
+      "title": "سروس کی شرائط — {brandName}",
+      "description": "{brandName} کی ویب سائٹ، ایپلیکیشنز، APIs، اور سروسز تک رسائی اور استعمال کو کنٹرول کرنے والی سروس کی شرائط۔",
+      "heading": "سروس کی شرائط",
+      "effectiveDate": "مؤثر تاریخ",
+      "lastUpdated": "آخری اپڈیٹ",
       "dates": {
-        "effective": "January 1, 2025",
-        "updated": "January 1, 2025"
+        "effective": "1 جنوری 2025",
+        "updated": "1 جنوری 2025"
       },
-      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
-      "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
-      "intro2PrivacyLink": "Privacy Policy",
-      "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "intro1": "{brandName} میں خوش آمدید! یہ سروس کی شرائط (\"شرائط\") آپ کی {brandName} کی ویب سائٹ، ایپلیکیشنز، APIs، اور سروسز (مجموعی طور پر \"سروسز\") تک رسائی اور استعمال کو کنٹرول کرتی ہیں جو {brandName} Co., Ltd. (\"{brandName},\" \"کمپنی,\" \"ہم,\" \"ہماری,\" یا \"ہمارے\") فراہم کرتی ہیں۔",
+      "intro2": "ہماری سروسز تک رسائی یا استعمال کرنے سے، آپ ان شرائط اور ہماری",
+      "intro2PrivacyLink": "پرائیویسی پالیسی",
+      "intro2End": "سے متفق ہیں۔ اگر آپ ان شرائط سے متفق نہیں ہیں، تو ہماری سروسز استعمال نہ کریں۔",
       "acceptance": {
-        "title": "1. Acceptance of Terms",
+        "title": "1. شرائط کی قبولیت",
         "eligibility": {
-          "title": "1.1 Eligibility",
-          "intro": "To use our Services, you must:",
+          "title": "1.1 اہلیت",
+          "intro": "ہمارے سروسز استعمال کرنے کے لیے، آپ کو درج ذیل ضروری ہے:",
           "items": {
-            "0": "Be at least 18 years old or the age of legal majority in your jurisdiction",
-            "1": "Have the authority to enter into these Terms on behalf of yourself or your organization",
-            "2": "Not be prohibited from using our Services under applicable law"
+            "0": "کم از کم 18 سال کی عمر ہونا یا آپ کے علاقے میں قانونی بڑی عمر کی حد تک پہنچنا",
+            "1": "خود یا اپنی تنظیم کی طرف سے ان شرائط پر دستخط کرنے کا اختیار رکھنا",
+            "2": "لاگو ہونے والے قانون کے تحت ہمارے سروسز استعمال کرنے سے ممنوع نہ ہونا"
           }
         },
         "orgAccounts": {
-          "title": "1.2 Organization Accounts",
-          "content": "If you use our Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms."
+          "title": "1.2 تنظیمی اکاؤنٹس",
+          "content": "اگر آپ کسی تنظیم کی طرف سے ہمارے سروسز استعمال کرتے ہیں، تو آپ کی جانب سے یہ بیان کیا جاتا ہے کہ آپ کے پاس اس تنظیم کو ان شرائط سے منسلک کرنے کا اختیار ہے۔"
         }
       },
       "services": {
-        "title": "2. Description of Services",
-        "intro": "{brandName} provides a SaaS platform that includes:",
+        "title": "2. سروسز کی تفصیل",
+        "intro": "{brandName} ایک SaaS پلیٹ فارم فراہم کرتا ہے جس میں شامل ہیں:",
         "items": {
-          "0": "AI-powered features and content generation",
-          "1": "Content management and community tools",
-          "2": "Recommendation systems",
-          "3": "E-commerce integrations",
-          "4": "Web3 capabilities",
-          "5": "Analytics and reporting"
+          "0": "AI سے چلنے والی خصوصیات اور مواد کی تخلیق",
+          "1": "مواد کا انتظام اور کمیونٹی ٹولز",
+          "2": "تجویز کے نظام",
+          "3": "ای کامرس انٹیگریشنز",
+          "4": "Web3 کی صلاحیتیں",
+          "5": "تجزیاتی اور رپورٹنگ"
         }
       },
       "account": {
-        "title": "3. Account Registration",
+        "title": "3. اکاؤنٹ رجسٹریشن",
         "creation": {
-          "title": "3.1 Account Creation",
-          "intro": "To access certain features, you must create an account. You agree to:",
+          "title": "3.1 اکاؤنٹ کی تخلیق",
+          "intro": "کچھ خصوصیات تک رسائی کے لیے، آپ کو اکاؤنٹ بنانا ہوگا۔ آپ مندرجہ ذیل پر رضامند ہیں:",
           "items": {
-            "0": "Provide accurate and complete information",
-            "1": "Maintain the security of your account credentials",
-            "2": "Promptly update your information if it changes",
-            "3": "Accept responsibility for all activities under your account"
+            "0": "درست اور مکمل معلومات فراہم کرنا",
+            "1": "اپنے اکاؤنٹ کی تصدیقی معلومات کی حفاظت برقرار رکھنا",
+            "2": "اگر معلومات میں تبدیلی آئے تو فوری طور پر اپنی معلومات اپ ڈیٹ کرنا",
+            "3": "اپنے اکاؤنٹ کے تحت تمام سرگرمیوں کی ذمہ داری قبول کریں"
           }
         }
       },
       "billing": {
-        "title": "4. Subscription and Billing",
+        "title": "4. سبسکرپشن اور بلنگ",
         "pricing": {
-          "title": "4.1 Pricing",
-          "content": "Our Services are offered under various subscription plans as described on our Pricing page. Prices are subject to change with 30 days' notice."
+          "title": "4.1 قیمتیں",
+          "content": "ہماری خدمات ہماری قیمتوں والی صفحے پر بیان کردہ مختلف سبسکرپشن پلانز کے تحت پیش کی جاتی ہیں۔ قیمتیں 30 دن کی نوٹس کے ساتھ تبدیل ہو سکتی ہیں۔"
         },
         "payment": {
-          "title": "4.2 Payment",
+          "title": "4.2 ادائیگی",
           "items": {
-            "0": "Subscriptions are billed in advance on a monthly or annual basis",
-            "1": "All fees are non-refundable except as stated in our",
-            "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
-            "1RefundLink": "Refund Policy"
+            "0": "سبسکرپشن ماہانہ یا سالانہ بنیاد پر پہلے سے بل کی جاتی ہیں",
+            "1": "تمام فیسز غیر واپس ہیں سوائے اس کے جو ہماری میں بیان کیا گیا ہے",
+            "2": "آپ ہمیں لاگو فیسز کے لیے اپنی ادائیگی کے طریقے پر چارج کرنے کی اجازت دیتے ہیں",
+            "3": "ہم محفوظ ادائیگی پروسیسنگ کے لیے Stripe استعمال کرتے ہیں",
+            "1RefundLink": "واپسی کی پالیسی"
           }
         }
       },
       "acceptableUse": {
-        "title": "5. Acceptable Use",
+        "title": "5. قابل قبول استعمال",
         "prohibited": {
-          "title": "5.1 Prohibited Activities",
-          "intro": "You agree NOT to:",
+          "title": "5.1 ممنوع سرگرمیاں",
+          "intro": "آپ متفق ہیں کہ آپ نہیں کریں گے:",
           "items": {
-            "0": "Violate any applicable laws, regulations, or third-party rights",
-            "1": "Use the Services to transmit malware, spam, or harmful content",
-            "2": "Attempt to gain unauthorized access to our systems",
-            "3": "Interfere with or disrupt the integrity or performance of our Services",
-            "4": "Use automated tools to scrape, copy, or extract data without permission",
-            "5": "Reverse engineer, decompile, or disassemble our Services",
-            "6": "Use our AI features to generate illegal, harmful, or deceptive content"
+            "0": "کوئی بھی لاگو قانون، ضابطہ، یا تھرڈ پارٹی حقوق کی خلاف ورزی",
+            "1": "مالویئر، اسپیم، یا نقصان دہ مواد بھیجنے کے لیے خدمات کا استعمال",
+            "2": "ہمارے نظاموں تک غیر مجاز رسائی حاصل کرنے کی کوشش",
+            "3": "ہماری خدمات کی سالمیت یا کارکردگی میں مداخلت یا خلل",
+            "4": "اجازت کے بغیر ڈیٹا اسکریپ، کاپی، یا نکالنے کے لیے خودکار ٹولز کا استعمال",
+            "5": "ہماری خدمات کا ریورس انجینئرنگ، ڈی کمپائل، یا ڈس اسمبل",
+            "6": "غیر قانونی، نقصان دہ، یا دھوکہ دینے والے مواد بنانے کے لیے ہماری AI خصوصیات کا استعمال"
           }
         }
       },
       "ip": {
-        "title": "6. Intellectual Property",
+        "title": "6. فکری ملکیت",
         "ours": {
-          "title": "6.1 Our Intellectual Property",
-          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "title": "6.1 ہماری فکری ملکیت",
+          "content": "{brandName} اور اس کے لائسنس دینے والے خدمات کی تمام حقوق، ملکیت اور دلچسپی کے مالک ہیں، بشمول تمام سافٹ ویئر، ڈیزائنز، ٹریڈ مارکس اور مواد جو ہم نے تیار کیا ہے۔"
         },
         "yours": {
-          "title": "6.2 Your Content",
-          "content": "You retain ownership of content you create or upload (\"Your Content\"). By using our Services, you grant us a worldwide, non-exclusive, royalty-free license to use, store, process, and display Your Content solely to provide the Services to you."
+          "title": "6.2 آپ کا مواد",
+          "content": "آپ اس مواد کی ملکیت برقرار رکھتے ہیں جو آپ تیار کرتے ہیں یا اپ لوڈ کرتے ہیں (\"آپ کا مواد\")۔ ہماری خدمات استعمال کر کے، آپ ہمیں آپ کے مواد کو استعمال کرنے، ذخیرہ کرنے، پروسیس کرنے اور دکھانے کے لیے عالمی، غیر انحصاری، رائلٹی فری لائسنس دیتے ہیں، صرف آپ کو خدمات فراہم کرنے کے لیے۔"
         }
       },
       "warranties": {
-        "title": "7. Disclaimer of Warranties",
-        "content": "THE SERVICES ARE PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT."
+        "title": "7. وارنٹیوں کا انکار",
+        "content": "خدمات \"جیسی ہیں\" اور \"جیسی دستیاب ہیں\" فراہم کی جاتی ہیں، کسی قسم کی وارنٹی کے بغیر، خواہ ظاہری ہو یا ضمنی، بشمول لیکن محدود نہیں، تجارتی موزونیت، مخصوص مقصد کے لیے موزونیت، ملکیت اور غیر خلاف ورزی کی ضمنی وارنٹیاں۔"
       },
       "liability": {
-        "title": "8. Limitation of Liability",
-        "para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEBUTRA SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, DATA, USE, OR GOODWILL.",
-        "para2": "IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD."
+        "title": "8. ذمہ داری کی حد",
+        "para1": "قانون کی اجازت دینے والی زیادہ سے زیادہ حد تک، NEBUTRA غیر براہ راست، اتفاقی، خاص، نتیجہ خیز یا سزا دینے والے نقصانات، یا منافع، ڈیٹا، استعمال یا گڈ وِل کے نقصان کے لیے ذمہ دار نہیں ہوگی۔",
+        "para2": "کوئی بھی صورت میں ہماری کل ذمہ داری (الف) دعویٰ سے پہلے کے 12 مہینوں میں آپ کی جانب سے ادا کی گئی رقم، یا (ب) 100 امریکی ڈالر، میں سے زیادہ رقم سے تجاوز نہیں کرے گی۔"
       },
       "termination": {
-        "title": "9. Termination",
+        "title": "9. ختم کرنا",
         "byYou": {
-          "title": "9.1 By You",
-          "content": "You may terminate your account at any time through your account settings. Upon termination, you will lose access to the Services."
+          "title": "9.1 آپ کی جانب سے",
+          "content": "آپ اپنے اکاؤنٹ کو کسی بھی وقت اپنے اکاؤنٹ سیٹنگز کے ذریعے ختم کر سکتے ہیں۔ ختم ہونے پر، آپ کو خدمات تک رسائی کھو جائے گی۔"
         },
         "byUs": {
-          "title": "9.2 By Us",
-          "intro": "We may suspend or terminate your account if you:",
+          "title": "9.2 ہماری جانب سے",
+          "intro": "ہم آپ کا اکاؤنٹ معطل یا ختم کر سکتے ہیں اگر آپ:",
           "items": {
-            "0": "Violate these Terms",
-            "1": "Engage in fraudulent or illegal activity",
-            "2": "Fail to pay applicable fees",
-            "3": "Create risk or legal exposure for us"
+            "0": "ان شرائط کی خلاف ورزی کریں",
+            "1": "دھوکہ دہی یا غیر قانونی سرگرمی میں ملوث ہوں",
+            "2": "لاگو فیسز ادا کرنے میں ناکام رہیں",
+            "3": "ہم کے لیے خطرہ یا قانونی رسک پیدا کریں"
           }
         }
       },
       "disputes": {
-        "title": "10. Dispute Resolution",
+        "title": "10. تنازعات کا حل",
         "informal": {
-          "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "title": "10.1 غیر رسمی حل و فصل",
+          "content": "رسمی کارروائی شروع کرنے سے پہلے، آپ متفق ہیں کہ تنازعات کو غیر رسمی طور پر حل کرنے کی کوشش کرنے کے لیے ہم سے legal@nebutra.com پر رابطہ کریں گے۔"
         },
         "governingLaw": {
-          "title": "10.2 Governing Law",
-          "content": "These Terms are governed by the laws of the State of Delaware, without regard to conflict of law principles."
+          "title": "10.2 نافذ قانون",
+          "content": "یہ شرائط ڈیلاویئر کی ریاست کے قوانین کے تحت ہیں، قانون کے تصادم کے اصولوں کی پرواہ کیے بغیر۔"
         }
       },
       "contactUs": {
-        "title": "11. Contact Us",
-        "intro": "If you have questions about these Terms, please contact us:",
+        "title": "11. ہم سے رابطہ کریں",
+        "intro": "اگر آپ کو ان شرائط کے بارے میں کوئی سوال ہے، تو براہ کرم ہم سے رابطہ کریں:",
         "company": "{brandName} Co., Ltd.",
-        "emailLabel": "Email",
-        "supportLabel": "Support"
+        "emailLabel": "ای میل",
+        "supportLabel": "سپورٹ"
       },
-      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "{brandName} استعمال کر کے، آپ تسلیم کرتے ہیں کہ آپ نے ان سروس کی شرائط کو پڑھا ہے، سمجھا ہے، اور ان کے تابع ہونے پر متفق ہیں۔"
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
-    "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
+    "title": "{brandName} ایجنٹ او ایس | اسٹارٹ اپ ایجنٹ او ایس",
+    "description": "گلوبل بڑھنے والے بانیوں کے لیے اسٹارٹ اپ ایجنٹ او ایس۔ پروڈکشن رڈی نکسٹ جی ایس فاؤنڈیشن جس میں گورنڈ آرکیٹیکچر، اتھ، بلنگ، ایجنٹس اور آئی 18 این شامل ہے — اے آئی کوڈنگ ایجنٹس اور سنجیدہ ٹیموں کے لیے بنایا گیا۔"
   },
   "microLanding": {
     "architecture": {
-      "badge": "SYSTEM TOPOLOGY",
-      "title": "Transparent architecture, no black boxes.",
-      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "badge": "سسٹم ٹوپولوجی",
+      "title": "شفاف آرکیٹیکچر، کوئی بلیک باکس نہیں۔",
+      "description": "{productName} ایک ہائپر ماڈیولر ٹربوریپو ڈھانچے کے ساتھ انجینئر کیا گیا ہے، جس سے آپ کو اپنے مکمل سافٹ ویئر لائف سائیکل پر مکمل ملکیت ملتی ہے۔",
       "database": {
         "title": "PostgreSQL + Prisma v7",
-        "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
+        "desc": "مکمل ٹائپڈ ORM جس میں رو لیول سیکیورٹی (RLS) پالیسیاں قدرتی طور پر شامل ہیں۔"
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
-        "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
+        "title": "Clerk ملٹی ٹیننٹ / کسٹم آئیڈینٹیٹی",
+        "desc": "SOC2 تیار شدہ تصدیق گیٹ وے جو B2B تنظیم کی تبدیلی اور RBAC کی حمایت کرتی ہے۔"
       }
     },
     "pricing": {
@@ -1191,156 +1191,156 @@
       }
     },
     "faq": {
-      "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "title": "پرائسنگ اور لائسنسنگ کے بارے میں عام سوالات",
+      "description": "لائسنس کی سطح، واپسی، اور تجارتی استعمال کے حقوق کے بارے میں سوالات۔",
       "q1": {
-        "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "q": "کیا Sailor ماہانہ SaaS سبسکرپشن ہے؟",
+        "a": "نہیں۔ یہ Sailor سورس کوڈ لائسنسز کے لیے پرائسنگ ہے: انڈیپنڈنٹ مفت ہے، اسٹارٹ اپ سالانہ بلنگ پر ہے، اور انٹرپرائز کسٹم ہے۔"
       },
       "q2": {
-        "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "q": "کیا آپ واپسی کی پیشکش کرتے ہیں؟",
+        "a": "اسٹارٹ اپ تجارتی لائسنسز میں ابتدائی خریداری کے لیے 14 دن کی واپسی کی کھڑکی شامل ہے۔ انٹرپرائز شرائط دستخط شدہ معاہدے میں ہینڈل کی جاتی ہیں۔"
       },
       "q3": {
-        "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "q": "کیا میں Sailor کو کلائنٹ کام کے لیے استعمال کر سکتا ہوں؟",
+        "a": "جی ہاں۔ ایک تجارتی لائسنس آپ کی ٹیم کو لائسنس شدہ دائرہ کار کے اندر بند سورس کلائنٹ یا اندرونی مصنوعات لانچ کرنے کی اجازت دیتا ہے؛ وائٹ لیبل حقوق کے لیے انٹرپرائز کی منظوری درکار ہے۔"
       },
-      "contactNudge": "Still have questions? Talk to the {brandName} team →"
+      "contactNudge": "ابھی بھی سوالات ہیں؟ {brandName} ٹیم سے بات کریں →"
     },
     "cta": {
-      "eyebrow": "Get Started",
-      "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "eyebrow": "شروع کریں",
+      "title": "کنفیگریشن بند کریں۔ بنانا شروع کریں۔",
+      "description": "{brandName} CLI کے ساتھ مقامی طور پر ایک پیمانے پذیر SaaS آرکیٹیکچر شروع کریں۔",
+      "button": "آرکیٹیکچر ڈپلائن کریں",
+      "license": "AGPL-3.0 لائسنس کے تحت اوپن سورس۔ کریڈٹ کارڈ کی ضرورت نہیں۔"
     },
     "capability": {
-      "badge": "Enterprise Capabilities",
-      "title": "A fully typed, extensible core.",
+      "badge": "انٹرپرائز صلاحیتیں",
+      "title": "مکمل ٹائپڈ، قابل توسیع کور۔",
       "multiTenant": {
-        "title": "Native Row-Level Security",
-        "desc": "Every database query is strictly scoped by the current tenant context.",
-        "cta": "Read database philosophy"
+        "title": "نیٹو رو لیول سیکیورٹی",
+        "desc": "ہر ڈیٹا بیس کوری کو موجودہ ٹیننٹ سیاق و سباق کے ذریعے سختی سے محدود کیا جاتا ہے۔",
+        "cta": "ڈیٹا بیس فلسفہ پڑھیں"
       },
       "aiGateway": {
-        "title": "Universal AI Gateway",
-        "desc": "Seamlessly route prompts to OpenAI, Anthropic, or open-source models.",
-        "cta": "Explore the AI SDK handler"
+        "title": "یونیورسل AI گیٹ وے",
+        "desc": "پرومپٹس کو OpenAI، Anthropic، یا اوپن سورس ماڈلز تک بغیر رکاوٹ راستہ دیں۔",
+        "cta": "AI SDK ہینڈلر دریافت کریں"
       },
       "rbac": {
-        "title": "Granular Access Control",
-        "desc": "Define admin, member, and viewer roles with built-in policy structure.",
-        "cta": "View RBAC documentation"
+        "title": "باریک رسائی کنٹرول",
+        "desc": "بلٹ ان پالیسی ڈھانچے کے ساتھ ایڈمن، ممبر، اور ویور کرداروں کی تعریف کریں۔",
+        "cta": "RBAC دستاویزات دیکھیں"
       },
       "billing": {
-        "title": "Multi-Provider Billing Infrastructure",
-        "desc": "Metered usage, subscription webhooks, and self-serve customer portals.",
-        "cta": "See billing architecture"
+        "title": "ملٹی پرووائیڈر بلنگ انفراسٹرکچر",
+        "desc": "میٹرڈ استعمال، سبسکرپشن ویب ہُکس، اور خودکار کسٹمر پورٹلز۔",
+        "cta": "بلنگ آرکیٹیکچر دیکھیں"
       }
     },
     "productDemo": {
-      "badge": "Interactive Demo",
-      "title": "Experience the real-time velocity.",
-      "description": "Get a feel for the command-line interface, Stripe webhook tunneling, and local multi-tenant database provisioning.",
+      "badge": "انٹرایکٹو ڈیمو",
+      "title": "ریل ٹائم رفتار کا تجربہ کریں۔",
+      "description": "کمانڈ لائن انٹرفیس، Stripe ویب ہُک ٹنلنگ، اور مقامی ملٹی ٹیننٹ ڈیٹا بیس پرووائیڈنگ کا احساس حاصل کریں۔",
       "analytics": {
-        "label": "Live Telemetry",
-        "desc": "Stream production usage data straight into your terminal."
+        "label": "لائیو ٹیلی میٹری",
+        "desc": "پروڈکشن استعمال کے ڈیٹا کو براہ راست اپنے ٹرمینل میں اسٹریم کریں۔"
       },
       "billing": {
-        "label": "Billing Events",
-        "desc": "Watch Stripe webhooks execute via local tunneling."
+        "label": "بلنگ ایونٹس",
+        "desc": "لوکل ٹنلنگ کے ذریعے Stripe ویب ہُکس کی ایکزیکوشن دیکھیں۔"
       },
       "workspaces": {
-        "label": "Workspace Init",
-        "desc": "Provision isolated B2B PostgreSQL schemas instantly."
+        "label": "ورک اسپیس انٹ",
+        "desc": "بے فوری طور پر الگ تھلگ B2B PostgreSQL اسکیماس پرووائیڈ کریں۔"
       }
     },
     "workflow": {
-      "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "badge": "رفتار",
+      "title": "ریکارڈ وقت میں صفر سے پروڈکشن تک۔",
       "step1": {
-        "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "title": "1. کلون",
+        "desc": "فوری طور پر {brandName} مونو ریپو کلون کریں اور pnpm install چلائیں۔"
       },
       "step2": {
-        "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "title": "2. کنفیگر",
+        "desc": "منٹوں میں انٹرایکٹو CLI کے ذریعے Prisma، Clerk، اور Stripe سیٹ اپ کریں۔"
       },
       "step3": {
-        "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "title": "3. بلڈ",
+        "desc": "پروڈکٹ لاجک اور UI پر توجہ دیں جبکہ پلیٹ فارم بیس لائن پہلے ہی وائرڈ ہے۔"
       },
       "step4": {
-        "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "title": "4. ڈیپلوی",
+        "desc": "فوری عالمی تقسیم کے لیے Vercel اور AWS پر پش کریں۔"
       },
       "speedometer": {
         "number": "10",
-        "unit": "mins",
-        "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "unit": "منٹ",
+        "subtitle": "مارکیٹ تک وقت",
+        "comparison": "پلیٹ فارم ورک کے مہینوں سے بچیں۔",
         "phases": {
-          "scaffold": "Init",
-          "wire": "Core",
-          "ship": "Deploy",
-          "scale": "Scale",
+          "scaffold": "انٹ",
+          "wire": "کور",
+          "ship": "ڈیپلوی",
+          "scale": "پیمانہ بڑھائیں",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "اپنا ٹائمر شروع کریں"
       },
       "presetHint": {
-        "badge": "Preset System",
-        "message": "One config. Every feature. Pick your preset and ship.",
-        "detail": "Configure once, generate everything — billing, auth, AI, i18n — from a single preset config.",
-        "readyStatus": "Preset system ready"
+        "badge": "پری سیٹ سسٹم",
+        "message": "ایک کنفیگریشن۔ ہر فیچر۔ اپنا پری سیٹ منتخب کریں اور شپ کریں۔",
+        "detail": "ایک بار کنفیگر کریں، سب کچھ جنریٹ کریں — بلنگ، اتھ، AI، i18n — ایک ہی پری سیٹ کنفیگریشن سے۔",
+        "readyStatus": "پری سیٹ سسٹم تیار ہے"
       }
     }
   },
   "featuresPage": {
     "hero": {
-      "badge": "Platform Capabilities",
-      "headlinePrefix": "Everything you need to ",
-      "headlineHighlight": "ship with confidence.",
-      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "badge": "پلیٹ فارم کی صلاحیتیں",
+      "headlinePrefix": "جس چیز کی آپ کو ضرورت ہے",
+      "headlineHighlight": "اعتماد کے ساتھ شپ کریں۔",
+      "description": "{brandName} ایک مکمل اسٹیک SaaS پلیٹ فارم ہے — AI، بلنگ، ملٹی ٹیننسی، آبزرو ایبلٹی اور سیکیورٹی پہلے دن سے ہی شامل ہیں۔ پلیٹ فارم لیئر دوبارہ بنانا بند کریں۔"
     },
     "sections": {
-      "exploreFeature": "Explore feature",
-      "ai_category": "AI & Intelligence",
-      "ai_f1_title": "Multi-model chat completions",
-      "ai_f1_desc": "Route requests to Anthropic, OpenAI, Google, or your own fine-tuned models. Streaming, vision, and function calling supported out of the box.",
-      "ai_f2_title": "Semantic embeddings",
-      "ai_f2_desc": "Generate and store vector embeddings with pgvector. Power semantic search, RAG pipelines, and recommendation engines.",
-      "ai_f3_title": "AI usage metering",
-      "ai_f3_desc": "Per-plan quotas with usage tracking — meter AI tokens, API calls, and storage against ClickHouse-backed real-time aggregates.",
-      "multi_category": "Multi-tenant Platform",
-      "multi_f1_title": "Organisation-level isolation",
-      "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
-      "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
-      "dx_category": "Developer Experience",
-      "dx_f1_title": "Hashed API keys",
-      "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
-      "dx_f2_title": "Idempotency middleware",
-      "dx_f2_desc": "Pass an Idempotency-Key header and any POST request becomes safe to retry. Redis-backed, 24-hour cache, IETF draft compliant.",
-      "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
-      "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
-      "billing_category": "Billing & Monetisation",
+      "exploreFeature": "فیچر دیکھیں",
+      "ai_category": "AI اور انٹیلی جنس",
+      "ai_f1_title": "ملٹی ماڈل چیٹ کمپلیشنز",
+      "ai_f1_desc": "درخواستوں کو Anthropic، OpenAI، Google یا اپنے فائن ٹیونڈ ماڈلز پر رُٹ کریں۔ اسٹریمنگ، ویژن اور فنکشن کالنگ آؤٹ آف دی باکس سپورٹڈ ہیں۔",
+      "ai_f2_title": "سمینٹک ایمبیڈنگز",
+      "ai_f2_desc": "pgvector کے ساتھ ویکٹر ایمبیڈنگز جنریٹ اور اسٹور کریں۔ سمینٹک سرچ، RAG پائپ لائنز اور ری کمنڈیشن انجنز کو طاقت دیں۔",
+      "ai_f3_title": "AI استعمال کی میٹرنگ",
+      "ai_f3_desc": "ہر پلان کے لیے کوٹے استعمال کی ٹریکنگ کے ساتھ — AI ٹوکنز، API کالز اور اسٹوریج کو ClickHouse پر مبنی ریئل ٹائم ایگریگیٹس کے خلاف میٹر کریں۔",
+      "multi_category": "ملٹی ٹیننٹ پلیٹ فارم",
+      "multi_f1_title": "تنظیم کی سطح کی انسولیشن",
+      "multi_f1_desc": "Postgres میں رو لیول سیکیورٹی یقینی بناتی ہے کہ ٹیننٹس ایک دوسرے کا ڈیٹا کبھی نہیں دیکھ سکتے — ڈیٹا بیس لیئر پر نافذ، صرف ایپلی کیشن پر نہیں۔",
+      "multi_f2_title": "ملٹی پرووائیڈر آتھ (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_desc": "ملٹی پرووائیڈر OAuth (Google، GitHub وغیرہ) کے ساتھ ساتھ ای میل/پاس ورڈ اور میجک لنک — Clerk، Better Auth، NextAuth یا Supabase Auth کے درمیان ایک ہی env var کے ذریعے سوئچ کریں۔",
+      "multi_f3_title": "خودکار ٹیننٹ پرووائیڈنگ",
+      "multi_f3_desc": "جب کوئی نئی تنظیم Clerk کے ذریعے سائن اپ کرتی ہے، تو ہم ان کا پہلا API کی خودکار بناتے ہیں اور برانڈڈ ویلکم ای میل بھیجتے ہیں — صفر مینوئل اسٹیپس۔",
+      "dx_category": "ڈویلپر تجربہ",
+      "dx_f1_title": "ہیشڈ API کیز",
+      "dx_f1_desc": "SHA-256 ہیشڈ کیز جن میں پریفکس دکھایا جاتا ہے (nbtr_live_…)۔ انہیں صرف ایک بار تخلیق کے وقت پلین ٹیکسٹ میں دکھایا جاتا ہے — بغیر رکاوٹ کے سیکیورٹی۔",
+      "dx_f2_title": "آئیڈیمپوٹنسی مڈل ویئر",
+      "dx_f2_desc": "ایک Idempotency-Key ہیڈر پاس کریں اور کوئی بھی POST درخواست دوبارہ کرنے کے لیے محفوظ ہو جائے گی۔ Redis پر مبنی، 24 گھنٹے کی کیش، IETF ڈرافٹ کے مطابق۔",
+      "dx_f3_title": "ملٹی پروٹوکول API (REST + oRPC + tRPC)",
+      "dx_f3_desc": "عوامی APIs کے لیے REST/OpenAPI، ٹائپ سیف فرنٹ اینڈ کالز کے لیے oRPC، اور T3 اسٹیک مطابقت کے لیے tRPC۔ تمام پروٹوکول ایک ہی Zod معاہدوں اور مڈل ویئر اسٹیک کا اشتراک کرتے ہیں۔ پری سیٹ کنفیگریشن کے ذریعے پروٹوکول کے لحاظ سے فعال کریں۔",
+      "billing_category": "بلنگ اور منیٹائزیشن",
       "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
-      "billing_f2_title": "Usage-based quota enforcement",
-      "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
-      "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
-      "sec_category": "Security",
+      "billing_f1_desc": "اپنا پیمنٹ پرووائیڈر منتخب کریں: عالمی انٹرپرائز کے لیے Stripe، انڈی ڈیولپرز کے لیے LemonSqueezy، OSS کے لیے Polar، یا چین مارکیٹ کے لیے Alipay/WeChat Pay۔ ایک کلک چیک آؤٹ اور خودکار بلنگ پورٹل۔",
+      "billing_f2_title": "استعمال پر مبنی کوٹا نافذ",
+      "billing_f2_desc": "ریئل ٹائم Redis کاؤنٹرز ہر ٹیننٹ کے لیے API کالز اور ٹوکن استعمال کا تعاقب کرتے ہیں۔ حدیں پوری ہونے پر درخواستیں گیٹ وے پر بند ہو جاتی ہیں۔",
+      "billing_f3_title": "ویب ہک لائف سائیکل سنک",
+      "billing_f3_desc": "Stripe سبسکرپشن ایونٹس خودکار طور پر Inngest کے ذریعے آپ کی ڈیٹا بیس میں آرگ پلانز اپ ڈیٹ کرتے ہیں — کوئی cron جاب نہیں، کوئی پولنگ نہیں۔",
+      "rel_category": "قابل اعتمادی",
+      "rel_f1_title": "سرکٹ بریکر + ری ٹرائی",
+      "rel_f1_desc": "گیٹ وے اور AI سروس CLOSED/OPEN/HALF_OPEN سرکٹ بریکر استعمال کرتے ہیں جس میں ایکسپونینشل بیک آف اور جیٹر ہے — کوئی کاسکیڈنگ ناکامیاں نہیں۔",
+      "rel_f2_title": "ڈیڈ لیٹر کوئو",
+      "rel_f2_desc": "ایونٹ ہینڈلرز جو 3 ری ٹرائی کوششیں مکمل کر لیتے ہیں وہ DLQ میں آ جاتے ہیں۔ انہیں ایڈمن API سے دوبارہ چلائیں بغیر دوبارہ ڈپلوائی کے۔",
+      "rel_f3_title": "SLO برن ریٹ الرٹس",
+      "rel_f3_desc": "ملٹی ونڈو گوگل SRE انداز کے الرٹس 14.4×، 6×، اور 3× برن ریٹس پر فائر ہوتے ہیں جب آپ کا ایرر بجٹ ختم ہونے والا ہو۔",
+      "sec_category": "سیکیورٹی",
       "sec_f1_title": "CSP nonce-based headers",
       "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
       "sec_f2_title": "ModSecurity WAF",
@@ -1360,324 +1360,324 @@
       "data_f2_title": "Funnel analytics",
       "data_f2_desc": "Track signups → activations → conversions with cohort-level attribution. Revenue per active user calculated from the gold layer.",
       "data_f3_title": "Kafka / event ingestion",
-      "data_f3_desc": "High-throughput event ingestion via Inngest into ClickHouse bronze, with in-memory dedup and schema validation at the gateway edge.",
-      "infra_category": "Infrastructure",
-      "infra_f1_title": "GitOps with ArgoCD",
-      "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
-      "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
-      "infra_f3_title": "Horizontal + vertical autoscaling",
-      "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
+      "data_f3_desc": "Inngest کے ذریعے ClickHouse bronze میں ہائی تھرو پٹ ایونٹ ان گیشن، گیٹ وے ایج پر ان-میموری ڈی ڈپ اور اسکیما ویلیڈیشن کے ساتھ۔",
+      "infra_category": "انفراسٹرکچر",
+      "infra_f1_title": "ArgoCD کے ساتھ GitOps",
+      "infra_f1_desc": "مین برانچ کی تبدیلیاں خودکار طور پر کلسٹر میں ری کنسل ہوتی ہیں۔ سیلف ہیال مینوئل kubectl ایڈٹس کو واپس لے لیتا ہے۔ سنک ونڈوز محفوظ ڈپلوائی گھنٹوں کو نافذ کرتے ہیں۔",
+      "infra_f2_title": "PgBouncer کنکشن پولنگ",
+      "infra_f2_desc": "Supabase کے سامنے ٹرانزیکشن موڈ PgBouncer 20 Postgres کنکشنز پر 1,000 ایپ کنکشنز کو ہینڈل کرتا ہے۔ 2 ریپلیکاز کے ساتھ HA۔",
+      "infra_f3_title": "افقی + عمودی آٹو اسکیلنگ",
+      "infra_f3_desc": "HPA CPU/میموری پر اسکیل کرتا ہے۔ VPA Off موڈ میں چلتا ہے اور رائٹ سائزنگ تجاویز فراہم کرتا ہے. KEDA کسٹم میٹرکس v2 کے لیے منصوبہ بند ہیں۔"
     }
   },
   "comingSoon": {
-    "badge": "🚧 Under Construction",
+    "badge": "🚧 تعمیر جاری ہے",
     "description": {
-      "ideas": "We are currently crafting an incredible geek-driven experience for this section. It will be launched alongside the next major architecture pipeline update.",
-      "opc": "A deeper platform overview is in progress. Follow the changelog and roadmap for upcoming releases.",
-      "roadmap": "From infrastructure foundation to enterprise scale — our product phases, version milestones, and funding vision."
+      "ideas": "ہم فی الحال اس سیکشن کے لیے ایک شاندار جیک ڈرائیون تجربہ تیار کر رہے ہیں۔ یہ اگلے بڑے آرکیٹیکچر پائپ لائن اپ ڈیٹ کے ساتھ لانچ ہوگا۔",
+      "opc": "پلیٹ فارم کا گہرا جائزہ جاری ہے۔ آنے والے ریلیزز کے لیے چینج لاگ اور روڈ میپ فالو کریں۔",
+      "roadmap": "انفراسٹرکچر کی بنیاد سے لے کر انٹرپرائز اسکیل تک — ہمارے پروڈکٹ فیزز، ورژن مائیل اسٹونز، اور فنڈنگ ویژن۔"
     },
-    "returnBtn": "Return to Hub"
+    "returnBtn": "ہب پر واپس جائیں"
   },
   "blogShowcase": {
-    "badge": "FROM THE BLOG",
-    "title": "Engineering Insights",
-    "subtitle": "Deep dives into SaaS architecture, AI infrastructure, and production engineering.",
-    "readMore": "Read more"
+    "badge": "بلاگ سے",
+    "title": "انجینئرنگ بصیرتیں",
+    "subtitle": "SaaS آرکیٹیکچر، AI انفراسٹرکچر، اور پروڈکشن انجینئرنگ میں گہرائی سے جائزے۔",
+    "readMore": "مزید پڑھیں"
   },
   "useCases": {
-    "badge": "SCALABLE SCENARIOS",
-    "title": "One foundation. Infinite possibilities.",
-    "description": "{productName} powers the next generation of SaaS products across global markets.",
+    "badge": "پائیدار منظرے",
+    "title": "ایک بنیاد۔ لامحدود امکانات۔",
+    "description": "{productName} عالمی مارکیٹوں میں اگلی نسل کے SaaS پروڈکٹس کو طاقت دیتا ہے۔",
     "tabs": {
-      "opc": "Agentic Operations",
-      "ip": "Personal IP Matrix",
-      "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
-      "export": "Global Software Export",
-      "design": "Design System Engine",
-      "edam": "Enterprise Digital Assets"
+      "opc": "ایجنٹ آپریشنز",
+      "ip": "ذاتی IP میٹرکس",
+      "multimodal": "ملٹی ماڈل AI SaaS",
+      "enterprise": "جدید انٹرپرائز (CN)",
+      "export": "عالمی سافٹ ویئر برآمد",
+      "design": "ڈیزائن سسٹم انجن",
+      "edam": "انٹرپرائز ڈیجیٹل اثاثے"
     },
     "content": {
       "opc": {
-        "title": "AI-Native Operations Hub",
-        "desc": "Run agent workflows, internal tooling, and integration surfaces on one governed platform baseline. Registry-driven extensions, operator portals, and reusable runtime patterns stay aligned as the system scales.",
+        "title": "AI-Native آپریشنز ہب",
+        "desc": "ایک گورنڈ پلیٹ فارم بنیاد پر ایجنٹ ورک فلو، اندرونی ٹولنگ اور انٹیگریشن سطح چلائیں۔ رجسٹری سے چلنے والے توسیعات، آپریٹر پورٹلز اور دوبارہ استعمال ہونے والے رن ٹائم پیٹرن سسٹم کے پیمانے کے ساتھ ہم آہنگ رہتے ہیں۔",
         "features": {
-          "f1": "Tool Registry & Integration Surface",
-          "f2": "Operator Portal & Internal Console"
+          "f1": "ٹول رجسٹری اور انٹیگریشن سطح",
+          "f2": "آپریٹر پورٹل اور اندرونی کنسول"
         }
       },
       "ip": {
-        "title": "Personal IP Growth & Portfolio Matrix",
-        "desc": "Establish a world-class founder presence with high-conversion MDX blog, portfolio, and profile pages. Built-in newsletter, analytics, and SEO ensure your personal brand compounds.",
+        "title": "ذاتی IP ترقی اور پورٹ فولیو میٹرکس",
+        "desc": "اعلیٰ تبدیلی والے MDX بلاگ، پورٹ فولیو اور پروفائل صفحات کے ساتھ عالمی معیار کے بانی کی موجودگی قائم کریں۔ بلٹ ان نیوز لیٹر، تجزیات اور SEO آپ کی ذاتی برانڈ کو مرکوز کرتے ہیں۔",
         "features": {
-          "f1": "MDX Blog + Newsletter Engine",
-          "f2": "SEO & Social Graph Optimized"
+          "f1": "MDX بلاگ + نیوز لیٹر انجن",
+          "f2": "SEO اور سوشل گراف بہتر"
         }
       },
       "multimodal": {
-        "title": "Innovative Multimodal AI SaaS",
-        "desc": "Ship Multi-Agent orchestration, Chatbot, Text-to-Image, Image-to-Text, and Text-to-Video SaaS products with UX-leading streaming UI, intelligent model routing, and usage metering.",
+        "title": "جدت پسند ملٹی ماڈل AI SaaS",
+        "desc": "ملٹی ایجنٹ آرکیسٹریشن، چیٹ بوٹ، ٹیکسٹ ٹو امیج، امیج ٹو ٹیکسٹ اور ٹیکسٹ ٹو ویڈیو SaaS پروڈکٹس کو UX لیڈنگ اسٹریمنگ UI، ذہین ماڈل روٹنگ اور استعمال کی پیمائش کے ساتھ شپ کریں۔",
         "features": {
-          "f1": "Multi-Agent Streaming UI",
+          "f1": "ملٹی ایجنٹ اسٹریمنگ UI",
           "f2": "Model Router + Usage Metering"
         }
       },
       "enterprise": {
-        "title": "Modern Enterprise Website (CN)",
-        "desc": "Tailored for China business scenarios — ultra-fast domestic CDN, WeChat ecosystem integration, mobile-first responsive design, and localized compliance out of the box.",
+        "title": "جدید انٹرپرائز ویب سائٹ (CN)",
+        "desc": "چین کے کاروباری منظر ناموں کے لیے تیار کردہ — انتہائی تیز مقامی CDN، وی چیٹ ایکوسسٹم انٹیگریشن، موبائل فرسٹ ریسپانسو ڈیزائن، اور مقامی مطابقت۔",
         "features": {
-          "f1": "Local CDN + Compliance",
-          "f2": "WeChat Ecosystem Ready"
+          "f1": "مقامی CDN + مطابقت",
+          "f2": "وی چیٹ ایکوسسٹم کے لیے تیار"
         }
       },
       "export": {
-        "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "title": "عالمی سافٹ ویئر ایکسپورٹ لینڈنگ پیجز",
+        "desc": "SaaS کے عالمی سطح پر پھیلاؤ کے لیے خاص طور پر بنایا گیا۔ ملٹی کرنسی Stripe چیک آؤٹ، 7 زبانوں میں next-intl i18n خودکار راؤٹنگ، GDPR/CCPA مطابقت، اور جیو ٹارگٹڈ مواد۔",
         "features": {
-          "f1": "Multi-Currency Global Payments",
-          "f2": "7 Languages + GDPR Ready"
+          "f1": "ملٹی کرنسی عالمی ادائیگیاں",
+          "f2": "7 زبانیں + GDPR کے لیے تیار"
         }
       },
       "design": {
-        "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "title": "پیشرو ڈیزائن سسٹم اور کمپوننٹ لائبریری",
+        "desc": "4 تہوں پر مشتمل ٹوکن ڈرائیون آرکیٹیکچر: برانڈ → ٹوکنز → تھیم → UI۔ Radix اور مشترکہ Motion لیئر پر بنایا گیا، oklch ملٹی تھیم، Storybook دستاویزات، اور بصری ریگریشن ٹیسٹنگ کے ساتھ۔",
         "features": {
-          "f1": "4-Layer Token Governance",
-          "f2": "oklch Multi-Theme + Storybook"
+          "f1": "4 تہوں پر مشتمل ٹوکن گورننس",
+          "f2": "oklch ملٹی تھیم + Storybook"
         }
       },
       "edam": {
-        "title": "Enterprise Digital Asset Management",
-        "desc": "Structured data lakes and complex dashboard topologies utilizing scalable PostgreSQL architectures and granular RBAC.",
+        "title": "انٹرپرائز ڈیجیٹل اثاثہ مینجمنٹ",
+        "desc": "پیمانے کے قابل PostgreSQL آرکیٹیکچرز اور باریک RBAC کا استعمال کرتے ہوئے منظم ڈیٹا لیکس اور پیچیدہ ڈیش بورڈ ٹوپولوجیز۔",
         "features": {
-          "f1": "Row-Level Security",
-          "f2": "Complex Queries",
-          "f3": "Role Management"
+          "f1": "قطاری سطح کی سیکیورٹی",
+          "f2": "پیچیدہ کویریز",
+          "f3": "رول مینجمنٹ"
         }
       }
     }
   },
   "designSystem": {
-    "badge": "DESIGN SYSTEM",
-    "headline": "4 layers of design governance.",
-    "subheadline": "From brand primitives to runtime tokens to multi-theme engine to governed components — not just shadcn with Tailwind.",
-    "flowBrand": "Brand",
-    "flowBrandDesc": "Color primitives, gradients, motion language",
-    "flowTokens": "Tokens",
-    "flowTokensDesc": "CSS variables, 12-step scales, dark mode",
-    "flowTheme": "Theme",
-    "flowThemeDesc": "oklch multi-theme, 6 presets, color-mix()",
+    "badge": "ڈیزائن سسٹم",
+    "headline": "ڈیزائن گورننس کے 4 تہے۔",
+    "subheadline": "برانڈ پرائمریوز سے رن ٹائم ٹوکنز تک، ملٹی تھیم انجن سے گورنڈ کمپوننٹس تک — صرف Tailwind کے ساتھ shadcn نہیں۔",
+    "flowBrand": "برانڈ",
+    "flowBrandDesc": "رنگ پرائمریوز، گریڈینٹس، موشن لینگویج",
+    "flowTokens": "ٹوکنز",
+    "flowTokensDesc": "CSS متغیرات، 12-مرحلے کی پیمانے، ڈارک موڈ",
+    "flowTheme": "تھیم",
+    "flowThemeDesc": "oklch ملٹی تھیم، 6 پری سیٹس، color-mix()",
     "flowUI": "UI",
-    "flowUIDesc": "Components, Storybook, Chromatic",
-    "card1Title": "12-Step Color Scales",
-    "card1Desc": "Geist-aligned semantic scale: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
-    "card2Desc": "6 theme presets using oklch with color-mix() derivation. Display-P3 wide-gamut with sRGB fallback.",
-    "card3Title": "Visual Regression",
-    "card3Desc": "Chromatic catches every pixel change. Storybook documents every component. Architecture tests enforce story coverage.",
-    "card4Title": "Token Governance",
-    "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, raw color class limits. Brand drift detection in CI.",
-    "card5Title": "Interactive Documentation",
-    "card5Desc": "Full Fumadocs-powered design docs site with bilingual (EN/ZH) component API docs, token galleries, layout pattern guides, and live code examples."
+    "flowUIDesc": "کمپوننٹس، Storybook، Chromatic",
+    "card1Title": "12-مرحلے کی رنگ پیمانے",
+    "card1Desc": "Geist-متوازی معنوی پیمانہ: پس منظر (1-2)، حالتیں (3-5)، سرحدیں (6-8)، بھرائی (9-10)، متن (11-12).",
+    "card2Title": "oklch ملٹی تھیم",
+    "card2Desc": "oklch کے ساتھ color-mix() اخذ پر مبنی 6 تھیم پری سیٹس۔ Display-P3 وسیع گیمٹ کے ساتھ sRGB فیل بیک۔",
+    "card3Title": "بصری ریگریشن",
+    "card3Desc": "Chromatic ہر پکسل تبدیلی پکڑتا ہے۔ Storybook ہر کمپوننٹ کی دستاویز کرتا ہے۔ آرکیٹیکچر ٹیسٹس اسٹوری کوریج کو نافذ کرتے ہیں۔",
+    "card4Title": "ٹوکن گورننس",
+    "card4Desc": "ریچٹ بجٹس: hex چھت، oklch فرش، خام رنگ کلاس حدیں۔ CI میں برانڈ ڈرفٹ ڈیٹیکشن۔",
+    "card5Title": "انٹرایکٹو دستاویزات",
+    "card5Desc": "مکمل فوماڈاکس پر مبنی ڈیزائن ڈاکس سائٹ جس میں دو زبانوں (انگریزی/چینی) میں کمپوننٹ API ڈاکس، ٹوکن گیلریز، لے آؤٹ پیٹرن گائیڈز، اور لائیو کوڈ مثالیں شامل ہیں۔"
   },
   "notFound": {
-    "title": "Page Not Found",
-    "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to {brandName}",
-    "docs": "Open docs"
+    "title": "صفحہ نہیں ملا",
+    "desc": "لنک پرانا ہو سکتا ہے، یا صفحہ منتقل ہو گیا ہو سکتا ہے۔",
+    "home": "{brandName} پر واپس جائیں",
+    "docs": "دستاویزات کھولیں"
   },
   "ui": {
     "search": {
-      "placeholder": "Search releases..."
+      "placeholder": "ریلیز تلاش کریں..."
     },
     "nav": {
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "مینو ٹوگل کریں"
     },
     "actions": {
-      "showFullRelease": "Show full release",
-      "copyLinkToRelease": "Copy link to release",
-      "copyLink": "Copy link",
-      "openInNewTab": "Open in new tab"
+      "showFullRelease": "مکمل ریلیز دکھائیں",
+      "copyLinkToRelease": "ریلیز کا لنک کاپی کریں",
+      "copyLink": "لنک کاپی کریں",
+      "openInNewTab": "نئے ٹیب میں کھولیں"
     },
     "status": {
-      "comingSoon": "Coming soon"
+      "comingSoon": "جلد آرہا ہے"
     }
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "<hl>بنانے</hl> کے لیے مفت",
+      "description": "{brandName}-Sailor کا تجارتی استعمال بالکل مفت ہے — npm پر MIT، ریپوزٹری پر FSL-1.1-ALv2، اور دو سال بعد Apache-2.0 میں تبدیل۔ پیڈ ٹائیرز سپورٹ اور معاہداتی ذمہ داریاں بیچتے ہیں، اجازت نہیں۔"
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
-        "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "badge": "ہمیشہ مفت",
+        "title": "کمیونٹی",
+        "subtitle": "سب کے لیے",
+        "description": "کسی بھی ٹیم کا سائز، کسی بھی آمدنی۔ بند سورس تجارتی مصنوعات بھی شامل ہیں۔",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "مکمل سورس کوڈ، تمام پیکیجز",
+          "closedSourceOk": "بند سورس تجارتی استعمال — کوئی کاپی لفٹ نہیں",
+          "noAttribution": "کوئی رجسٹریشن نہیں، کوئی منسوب کرنے کی ضرورت نہیں",
+          "communitySupport": "کمیونٹی سپورٹ — بہترین کوشش"
         },
-        "cta": "View on GitHub"
+        "cta": "GitHub پر دیکھیں"
       },
       "team": {
-        "badge": "From {price}/yr",
-        "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "badge": "{price}/سال سے شروع",
+        "title": "ٹیم",
+        "subtitle": "سپورٹ سبسکرپشن",
+        "description": "ان ٹیمز کے لیے جنہیں امید کے بجائے عہد کی ضرورت ہے۔ کوڈ پہلے ہی مفت ہے۔",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "پرائیویٹ سپورٹ چینل",
+          "firstResponse": "دو کاروباری دنوں میں پہلا جواب، گارنٹی شدہ",
+          "priorityTriage": "پرائیورٹی بگ ٹریج",
+          "upgradeHelp": "اپ گریڈ میں مدد اور بریکنگ چینج نوٹس"
         },
-        "cta": "Get support"
+        "cta": "سپورٹ حاصل کریں"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
-        "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "badge": "$30,000/سال سے شروع",
+        "title": "انٹرپرائز",
+        "subtitle": "خریداری کے لیے تیار",
+        "description": "ان اداروں کے لیے جن کی قانونی، سیکیورٹی یا خریداری کی جانچ کے لیے ایک ایسا پارٹی درکار ہو جو دستخط کرے۔",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "ردعمل SLA — 4 کاروباری گھنٹے، پروڈکشن بند ہونے پر 1 گھنٹہ",
+          "indemnity": "تلافی اور سیکیورٹی پیچ کی ذمہ داری",
+          "compliance": "دستخط شدہ DPA، مطابقت پیک، تسلسل کی ذمہ داری",
+          "trademark": "ٹریڈ مارک اور وائٹ لیبل حقوق"
         },
-        "cta": "Contact sales"
+        "cta": "سیلز سے رابطہ کریں"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "اکثر پوچھے جانے والے سوالات",
+      "description": "مختصر جواب: استعمال مفت ہے۔ ادائیگی اس وقت کی جاتی ہے جب آپ کو ہماری معاہداتی ذمہ داری درکار ہو۔",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "MIT یا AGPL کی بجائے FSL کیوں؟",
+          "a": "FSL Sailor خود کی جگہ فروخت کرنے کے علاوہ ہر استعمال کی اجازت دیتا ہے، اور ہر ورژن ریلیز کے دو سال بعد Apache-2.0 بن جاتا ہے — ایک ایسی اجازت جو پہلے سے غیر منسوخ شدہ ہے۔ AGPL نے ہمیں درکار چیزوں کی حفاظت کے بغیر کارپوریٹ قانونی جائزے میں اپناتے رکھا۔"
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "کیا تجارتی استعمال واقعی مفت ہے؟",
+          "a": "جی ہاں۔ کوئی فیس نہیں، کوئی لائسنس کی نہیں، کوئی رجسٹریشن نہیں، کوئی آمدنی یا ملازمین کی حد نہیں، کوئی منسوب نہیں۔ بند ذرائع پروڈکٹ بنائیں اور بیچیں۔"
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "مقابلہ کرنے والا استعمال کیا سمجھا جاتا ہے؟",
+          "a": "Sailor خود پیش کرنا — ایک میزبان Sailor سروس، یا دوبارہ پیک شدہ مقابلہ کرنے والی پلیٹ فارم بنیاد۔ Sailor پر عمودی SaaS، اندرونی ٹول، یا کلائنٹ پروجیکٹس بنانا مقابلہ کرنے والا استعمال نہیں ہے۔ اگر آپ کے ماڈل کو درکار ہو، تو انٹرپرائز معاہدے میں تحریری معافی شامل ہو سکتی ہے۔"
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "ادائیگی والے ٹائر دراصل کیا خریدتے ہیں؟",
+          "a": "سپورٹ کی ذمہ داریاں، ردعمل SLAs، تلافی، مطابقت کا کاغذی کار، اور ٹریڈ مارک حقوق۔ سافٹ ویئر استعمال کرنے کی اجازت کبھی نہیں — وہ پہلے ہی آپ کی ہے۔"
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "اوپن سورس تعاون کے بارے میں کیا؟",
+          "a": "تمام تعاون کے لیے CLA درکار ہے۔ CONTRIBUTING.md دیکھیں۔"
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "لائسنسنگ — {brandName}",
+      "description": "تجارتی استعمال کے لیے مفت۔ npm پر MIT، ریپوزٹری پر FSL-1.1-ALv2، Apache-2.0 میں تبدیل ہو رہا ہے۔"
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "انفرادی مفت لائسنس",
+      "opcFree": "سنگل اوونر کمپنی لائسنس",
+      "startupCommercial": "اسٹارٹ اپ کمرشل لائسنس",
+      "enterprise": "انٹرپرائز لائسنس"
     },
     "referralSource": {
-      "selectPlaceholder": "Select an option...",
-      "productHunt": "Product Hunt"
+      "selectPlaceholder": "ایک آپشن منتخب کریں...",
+      "productHunt": "پروڈکٹ ہنٹ"
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
-    "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "title": "تبدیلیات — {brandName}",
+    "description": "ہر ریلیز، تفصیلات کی انتہائی توجہ کے ساتھ جاری کی گئی۔",
+    "versionTitleSuffix": "{brandName} تبدیلیات"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — {brandName}",
-    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
+    "title": "پلیٹ فارم روڈ میپ — {brandName}",
+    "description": "{brandName} کے گورنڈ پلیٹ فارم بیس لائن، ہارنس رن ٹائم، اور اپ گریڈ پاتھ کے لیے روڈ میپ۔"
   },
   "blogMeta": {
-    "title": "Blog — {brandName}",
-    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
+    "title": "بلاگ — {brandName}",
+    "description": "انجینئرنگ ان سائٹس، پروڈکٹ اپ ڈیٹس اور SaaS بہترین طریقے {brandName} ٹیم سے۔"
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "اپنی لائسنس حاصل کریں — {brandName}",
+    "description": "2 منٹ میں اپنی {brandName} لائسنس اور پلیٹ فارم تک رسائی حاصل کریں۔"
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
-      "title": "Questions, answered straight",
-      "subtitle": "Everything you need to know before shipping.",
+      "badge": "سوالات عام",
+      "title": "سوالات، سیدھے جواب",
+      "subtitle": "شپنگ سے پہلے جاننے کے لیے سب کچھ۔",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is {productName}?",
-          "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
+          "question": "{productName} بالکل کیا ہے؟",
+          "answer": "Sailor ایک رائے دار Next.js + Tailwind v4 SaaS بنیاد ہے جس میں auth، billing، multi-tenancy، AI، queues، search، اور email پہلے سے وائرڈ ہیں۔ آپ اسے clone کریں، providers configure کریں، اور شپ کریں — عام طور پر ایک ہفتے کے اندر۔"
         },
         "who-is-it-for": {
-          "question": "Who is Sailor built for?",
-          "answer": "Founders and product engineers who want to spend their time on the differentiator — not on rebuilding the same auth/billing/tenancy plumbing for the fifth time."
+          "question": "Sailor کس کے لیے بنایا گیا ہے؟",
+          "answer": "وہ founders اور product engineers جو اپنا وقت differentiator پر صرف کرنا چاہتے ہیں — نہ کہ auth/billing/tenancy plumbing کو پانچویں بار دوبارہ بنانے پر۔"
         },
         "free-or-paid": {
-          "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "question": "کیا یہ مفت ہے یا پیڈ؟",
+          "answer": "مکمل source AGPL-3.0 کے تحت شپ ہوتا ہے — ذاتی projects، internal tooling، اور AGPL-compatibile open-source کام کے لیے مفت۔ ایک commercial license Sailor کو closed-source proprietary SaaS میں شپ کرنے کا حق کھولتا ہے۔ ہر plan میں مکمل feature set شامل ہے (auth، billing، multi-tenancy، AI، audit)؛ tiers licensing terms اور support SLA میں مختلف ہیں، features میں نہیں۔"
         },
         "china-friendly": {
-          "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "question": "کیا یہ چین میں کام کرتا ہے؟",
+          "answer": "جی ہاں۔ ہم ایک parallel infra config شپ کرتے ہیں (Aliyun-compatible CDN، ICP-friendly domains، Figma کی جگہ optional Penpot) تاکہ وہی codebase Great Firewall کے اندر صاف صاف deploy ہو سکے۔"
         },
         "deployment": {
-          "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "question": "میں اسے کہاں deploy کر سکتا ہوں؟",
+          "answer": "جہاں کہیں Node 22+ چلتا ہے۔ Marketing site Vercel پر شپ ہوتا ہے؛ dashboard، gateway، اور Python services Docker / PM2 پر چلتی ہیں (ہم آج انہیں Aliyun ECS پر چلاتے ہیں، clusters کے لیے infra/iac/k8s/ کے تحت مکمل Kubernetes manifests کے ساتھ)۔ Enterprise customers اپنے own VPCs کے اندر بھی deploy کرتے ہیں۔"
         },
         "security": {
-          "question": "How is security handled?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), Postgres RLS for tenant isolation, RBAC/ABAC via CASL or OpenFGA (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks, and a SOC 2-aligned audit pipeline (@nebutra/audit) included in every plan. Pro and Enterprise add SOC 2 attestation support, dedicated incident response, and longer audit-log retention."
+          "question": "Security کیسے handle کی جاتی ہے؟",
+          "answer": "Secrets کے لیے application-layer envelope encryption (@nebutra/vault)؛ tenant isolation کے لیے Postgres RLS؛ CASL یا OpenFGA کے ذریعے RBAC/ABAC (@nebutra/permissions)؛ inter-service tokens HMAC-signed؛ signed outbound webhooks؛ اور ہر plan میں SOC 2-aligned audit pipeline (@nebutra/audit) شامل ہے۔ Pro اور Enterprise میں SOC 2 attestation support، dedicated incident response، اور لمبی audit-log retention شامل ہے۔"
         },
         "support": {
-          "question": "What support do I get?",
-          "answer": "Free customers get community Discord + GitHub Issues. Pro adds priority email with a 1-business-day response SLA. Enterprise gets a dedicated Slack channel and an onboarding engineer."
+          "question": "مجھے کیا support ملتا ہے؟",
+          "answer": "مفت customers کو community Discord + GitHub Issues ملتے ہیں۔ Pro میں priority email شامل ہے جس کا 1-business-day response SLA ہے۔ Enterprise کو ایک dedicated Slack channel اور ایک onboarding engineer ملتا ہے۔"
         },
         "byo-provider": {
-          "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "question": "کیا میں اپنا own provider لے سکتا ہوں؟",
+          "answer": "جی ہاں۔ ہر integration (auth، queue، search، email، payments، storage، billing) provider-agnostic ہے۔ ہر package میں factory ایک single env var سے right adapter pick کرتا ہے — Clerk کو Better Auth، NextAuth، یا Supabase Auth سے swap کریں، QStash کو BullMQ سے، Resend کو SES سے، Stripe کو Polar / LemonSqueezy / ChinaPay سے — application code کو چھوئے بغیر۔"
         },
         "tech-stack": {
-          "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "question": "Tech stack کیا ہے؟",
+          "answer": "React 19 پر Next.js 16 (App Router)، TypeScript 5.9، Tailwind v4، Postgres پر Prisma 7 (pgvector + RLS کے ساتھ)، BFF گیٹ وے کے لیے Hono، ML/بھاری سروسز کے لیے FastAPI، اور Radix، {brandName} UI پرائمریٹوز، اور مشترک Motion لیئر پر مبنی ایک منتخب کمپوننٹ لائبریری۔ AI فیچرز Vercel AI SDK کے ذریعے چلتے ہیں جس میں پرووائیڈر پورٹیبلٹی (OpenAI / OpenRouter / SiliconFlow / Azure / local) شامل ہے۔"
         },
         "license": {
-          "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "question": "لائسنس کیا ہے؟",
+          "answer": "AGPL-3.0 جس میں Commercial Exception شامل ہے۔ ذاتی استعمال، اندرونی ٹولنگ، اور AGPL-مطابق OSS کے لیے مفت۔ ایک ادائیگی والا تجارتی لائسنس Sailor کو پروپرائیٹری SaaS میں جیسا ہے ویسا ہی شپ کرنے کا حق کھولتا ہے۔ ہر پلان پر مکمل سورس شامل ہے۔"
         },
         "paid-updates": {
-          "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "question": "کیا مجھے اپ ڈیٹس کے لیے ادائیگی کرنی ہوگی؟",
+          "answer": "نہیں۔ سورس اپ ڈیٹس ہر تجارتی لائسنس کے ساتھ شامل ہیں — جب چاہیں main سے pull کریں اور اپنی فورک کو دوبارہ بیس کریں۔ ادائیگی والا ٹائر Sailor کو تجارتی پروڈکشن میں استعمال کرنے کا حق ہے، کوڈ وصول کرنے کا حق نہیں۔ ہر مائنر ریلیز میں CHANGELOG اور کسی بھی بریکنگ تبدیلی کے لیے اپ گریڈ گائیڈ شامل ہوتا ہے۔"
         },
         "why-turborepo": {
-          "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "question": "معیاری Next.js ایپ کے مقابلے میں Turborepo کیوں؟",
+          "answer": "Sailor میں 10 ایپس + 104 مشترک پیکجز packages/*/* کے تحت + 4 بیک اینڈ لینز (Hono گیٹ وے، FastAPI/Python، Go، Rust) ہیں — یہ اس حد سے کہیں آگے ہے جہاں ایک واحد Next.js میگا ایپ قابلِ دیکھ بھال رہ سکتی ہے۔ Turborepo ہمیں affected-only بلڈز، شفاف ریموٹ کیشنگ، اور مشترک ڈیزائن ٹوکنز، auth، بلنگ، اور observability کے لیے ایک واحد حقیقت کا ذریعہ دیتا ہے — بغیر ہر ٹیم کو ایک ہی Next.js پروسیس میں مجبور کیے۔"
         },
         "multi-tenancy": {
-          "question": "How is multi-tenancy handled?",
-          "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
+          "question": "ملٹی ٹیننسی کیسے ہینڈل کی جاتی ہے؟",
+          "answer": "دو لیئرز۔ @nebutra/tenant کے ذریعے request-scoped ٹیننٹ کنٹیکسٹ (AsyncLocalStorage ہر سرور کال میں فعال org کو پروپیگیٹ کرتا ہے، بشمول DB کویریز اور آؤٹ باؤنڈ ویب ہکس)، اور Postgres Row-Level Security پالیسیوں کے ذریعے ڈیٹا بیس پر مجبور کردہ انسو لیشن (infra/data/database/policies/rls.sql) جو session-local app.current_tenant_id سے بندھی ہوئی ہیں۔ سروس-رول کنکشنز صرف مستند اندرونی سروسز کے اندر RLS کو بای پاس کرتے ہیں؛ تمام صارف-روبرو روٹس ٹیننٹ-scoped کلائنٹ کے ذریعے جاتے ہیں۔"
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "کیا میں Clerk کو کسی دوسرے auth پرووائیڈر سے بدل سکتا ہوں؟",
+          "answer": "جی ہاں۔ @nebutra/auth Clerk، Better Auth، NextAuth (Auth.js v5)، اور Supabase Auth کے لیے first-class ایڈاپٹرز لے کر آتا ہے۔ AUTH_PROVIDER env var کے ذریعے سوئچ کریں یا scaffold وقت پر create-sailor --auth=... کے ساتھ منتخب کریں — پرووائیڈر سے قطع نظر سرور، React، اور middleware سطحوں یکساں رہتی ہیں۔ پانچواں ایڈاپٹر شامل کرنے کا مطلب ایک واحد انٹرفیس (~80 LOC) پر عمل کرنا ہے؛ گھیرنے والے کوڈ میں کچھ بھی کسی مخصوص پرووائیڈر سے جڑا نہیں ہے۔"
         }
       }
     },
     "testimonials": {
-      "badge": "Loved by builders",
-      "title": "What founders say after shipping with Sailor",
-      "subtitle": "Customer stories from our beta cohort are landing soon — be among the first."
+      "badge": "بلڈرز کی پسندیدہ",
+      "title": "سازندے Sailor کے ساتھ شپ کرنے کے بعد کیا کہتے ہیں",
+      "subtitle": "ہمارے بیٹا کوہورٹ سے کسٹمر کہانیاں جلدی ہی آ رہی ہیں — پہلے ہونے والوں میں شامل ہوں۔"
     },
     "comparison": {
       "badge": "درجات کا موازنہ",
@@ -1735,41 +1735,41 @@
       }
     },
     "socialProof": {
-      "title": "Built on a stack you can trust",
-      "logosLabel": "Integration partners",
+      "title": "ایک اسٹیک پر بنایا گیا جس پر آپ بھروسہ کر سکتے ہیں",
+      "logosLabel": "انٹیگریشن پارٹنرز",
       "metrics": {
         "developers": {
           "value": "47+",
-          "label": "AI providers supported"
+          "label": "AI پرووائیڈرز سپورٹڈ"
         },
         "projects": {
           "value": "104",
-          "label": "monorepo packages"
+          "label": "مونو ریپو پیکجز"
         },
         "uptime": {
           "value": "7",
-          "label": "i18n locales out of the box"
+          "label": "آؤٹ آف دی باکس i18n لوکیلز"
         }
       }
     }
   },
   "compliance": {
     "icp": {
-      "recordNumber": "ICP record",
-      "publicSecurity": "Public security"
+      "recordNumber": "آئی سی پی ریکارڈ",
+      "publicSecurity": "عوامی سیکیورٹی"
     }
   },
   "icpFooter": {
-    "recordNumber": "ICP record",
-    "publicSecurity": "Public security record"
+    "recordNumber": "آئی سی پی ریکارڈ",
+    "publicSecurity": "عوامی سیکیورٹی ریکارڈ"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
-    "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "title": "ممالک اور زبانیں",
+    "description": "مارکیٹنگ سائٹ کے لیے ایک ملک اور زبان منتخب کریں۔",
+    "triggerAria": "ملک اور زبان منتخب کریں",
+    "searchPlaceholder": "ممالک تلاش کریں…",
+    "plannedHint": "اس زبان کی شپمنٹ تک انٹرفیس انگریزی پر واپس آ جائے گا",
+    "noResults": "کوئی ملک نہیں ملا",
+    "menuAria": "ممالک اور زبانیں"
   }
 }

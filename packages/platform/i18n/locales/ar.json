@@ -72,9 +72,9 @@
   "LocaleSwitcher": {
     "label": "اللغة",
     "ariaLabel": "تغيير اللغة",
-    "searchPlaceholder": "Search languages…",
-    "noResults": "No languages match",
-    "menuAria": "Select language"
+    "searchPlaceholder": "ابحث عن اللغات…",
+    "noResults": "لا توجد لغات مطابقة",
+    "menuAria": "اختر اللغة"
   },
   "compliance": {
     "icp": {
@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "Webhooks",
+      "title": "الخطافات",
       "description": "اشترك في الأحداث التي تصدرها مساحة عملك. نوقّع كل حمولة باستخدام السرية الخاصة بنقطة النهاية الخاصة بك حتى تتمكن من التحقق من أصالتها.",
       "create": {
         "heading": "نقطة نهاية جديدة",
@@ -1141,7 +1141,7 @@
           "description": "Stripe و Slack و webhooks و queues والمزيد."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "فتح Sailor AI",
           "description": "جرب وضع الدردشة أو البيانات أو سير العمل."
         }
       }

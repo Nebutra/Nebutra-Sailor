@@ -46,7 +46,7 @@
     "apiMcp": "API / MCP"
   },
   "search": {
-    "placeholder": "جستجو: شمارش کلمات، base64，json، timestamp…",
+    "placeholder": "جستجو: شمارش کلمات، base64، json، timestamp…",
     "aria": "جستجوی ابزارها",
     "emptyTitle": "هیچ ابزاری با “{query}” مطابقت ندارد",
     "emptyHint": "یک کلمه کلیدی دیگر امتحان کنید یا از دسته‌های زیر یک ابزار انتخاب کنید."

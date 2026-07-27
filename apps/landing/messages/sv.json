@@ -1131,7 +1131,7 @@
     }
   },
   "metadata": {
-    "title": "{brandName} Agent OS | The Startup Agent OS",
+    "title": "{brandName} Agent OS | Startup Agent OS",
     "description": "The Startup Agent OS för grundare som går globalt. Produktionsklar Next.js-bas med styrda arkitekturer, auth, fakturering, agenter och i18n — byggd för AI-kodningsagenter och seriösa team."
   },
   "microLanding": {
@@ -1390,10 +1390,10 @@
     "title": "En grund. Oändliga möjligheter.",
     "description": "{productName} driver nästa generation SaaS-produkter över hela världen.",
     "tabs": {
-      "opc": "Agentic Operations",
+      "opc": "Agentbaserad drift",
       "ip": "Personlig IP-matris",
       "multimodal": "Multimodal AI SaaS",
-      "enterprise": "Modern Enterprise (CN)",
+      "enterprise": "Modern enterprise (CN)",
       "export": "Global mjukvaruexport",
       "design": "Designsystemmotor",
       "edam": "Företagets digitala tillgångar"
@@ -1464,7 +1464,7 @@
     "subheadline": "Från varumärkesprimitiver till runtime-tokens till multi-theme-motor till styrda komponenter — inte bara shadcn med Tailwind.",
     "flowBrand": "Varumärke",
     "flowBrandDesc": "Färgprimitiver, gradienter, rörelsespråk",
-    "flowTokens": "Tokens",
+    "flowTokens": "Token",
     "flowTokensDesc": "CSS-variabler, 12-stegs-skala, mörkt läge",
     "flowTheme": "Tema",
     "flowThemeDesc": "oklch multi-tema, 6 förinställningar, color-mix()",
@@ -1506,79 +1506,79 @@
   },
   "licensing": {
     "hero": {
-      "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "title": "Gratis att <hl>bygga på</hl>",
+      "description": "{brandName}-Sailor kostar ingenting att använda kommersiellt — MIT på npm, FSL-1.1-ALv2 i arkivet, och övergår till Apache-2.0 efter två år. Betalplaner säljer support och avtalsmässiga åtaganden, aldrig tillstånd."
     },
     "plans": {
       "community": {
-        "badge": "Always Free",
+        "badge": "Alltid gratis",
         "title": "Community",
-        "subtitle": "Everyone",
-        "description": "Any team size, any revenue. Closed-source commercial products included.",
+        "subtitle": "För alla",
+        "description": "Alla teamstorlekar, all omsättning. Stängda källkodsprodukter i kommersiell användning ingår.",
         "features": {
-          "fullSource": "Full source code, all packages",
-          "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
-          "communitySupport": "Community support — best-effort"
+          "fullSource": "Fullständig källkod, alla paket",
+          "closedSourceOk": "Kommersiell användning med stängd källkod — inget copyleft",
+          "noAttribution": "Ingen registrering, inget krav på källhänvisning",
+          "communitySupport": "Community-support — bästa möjliga ansträngning"
         },
-        "cta": "View on GitHub"
+        "cta": "Visa på GitHub"
       },
       "team": {
-        "badge": "From {price}/yr",
+        "badge": "Från {price}/år",
         "title": "Team",
-        "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "subtitle": "Supportprenumeration",
+        "description": "För team som behöver ett åtagande snarare än en förhoppning. Koden är redan gratis.",
         "features": {
-          "privateChannel": "Private support channel",
-          "firstResponse": "Two business-day first response, guaranteed",
-          "priorityTriage": "Priority bug triage",
-          "upgradeHelp": "Upgrade assistance and breaking-change notice"
+          "privateChannel": "Privat supportkanal",
+          "firstResponse": "Första svar inom två arbetsdagar, garanterat",
+          "priorityTriage": "Prioriterad felsortering",
+          "upgradeHelp": "Uppgraderingshjälp och avisering om brytande ändringar"
         },
-        "cta": "Get support"
+        "cta": "Få support"
       },
       "enterprise": {
-        "badge": "From $30,000/yr",
+        "badge": "Från $30 000/år",
         "title": "Enterprise",
-        "subtitle": "Procurement-ready",
-        "description": "For organisations whose legal, security, or procurement review needs a counterparty who signs.",
+        "subtitle": "Redo för inköp",
+        "description": "För organisationer vars juridiska, säkerhets- eller inköpsgranskning kräver en motpart som skriver under.",
         "features": {
-          "sla": "Response SLA — 4 business hours, 1 hour production-down",
-          "indemnity": "Indemnification and security-patch commitment",
-          "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "sla": "Svarssla — 4 arbetstimmar, 1 timme vid driftstopp",
+          "indemnity": "Skadeståndsansvar och åtagande för säkerhetspatchar",
+          "compliance": "Undertecknat DPA, compliance-paket, kontinuitetsåtagande",
+          "trademark": "Varumärkes- och white-label-rättigheter"
         },
-        "cta": "Contact sales"
+        "cta": "Kontakta försäljning"
       }
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
+      "title": "Vanliga frågor",
+      "description": "Kort version: att använda det är gratis. Betalning gäller när du behöver oss kontraktually ansvariga.",
       "items": {
         "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "q": "Varför FSL istället för MIT eller AGPL?",
+          "a": "FSL tillåter alla användningar utom att sälja en ersättning för Sailor i sig, och varje version blir Apache-2.0 två år efter utgivning — ett tillstånd som givits oåterkalleligt i förväg. AGPL blockerade adoption vid företagsjuridisk granskning utan att skydda något vi faktiskt behövde skydda."
         },
         "reallyFree": {
-          "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "q": "Är kommersiell användning verkligen gratis?",
+          "a": "Ja. Ingen avgift, inget licensnyckel, ingen registrering, ingen tröskel för intäkter eller antal anställda, ingen attribution. Bygg en closed-source-produkt och sälj den."
         },
         "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+          "q": "Vad räknas som konkurrerande användning?",
+          "a": "Att erbjuda Sailor i sig — en hosted Sailor-tjänst eller en ompackagerad konkurrerande plattformsbas. Att bygga en vertikal SaaS, ett internt verktyg eller kundprojekt på Sailor är inte konkurrerande användning. Om din modell kräver det kan ett Enterprise-avtal inkludera ett skriftligt undantag."
         },
         "upgrade": {
-          "q": "What do the paid tiers actually buy?",
-          "a": "Support commitments, response SLAs, indemnification, compliance paperwork, and trademark rights. Never permission to use the software — that is already yours."
+          "q": "Vad köper de betalande nivåerna egentligen?",
+          "a": "Supportåtaganden, svarssla, skadeståndsansvar, compliance-dokumentation och varumärkesrättigheter. Aldrig tillstånd att använda mjukvaran — det är redan ditt."
         },
         "contributions": {
-          "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "q": "Vad gäller open source-bidrag?",
+          "a": "Alla bidrag kräver ett CLA. Se CONTRIBUTING.md."
         }
       }
     },
     "meta": {
-      "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "title": "Licensiering — {brandName}",
+      "description": "Gratis för kommersiell användning. MIT på npm, FSL-1.1-ALv2 i arkivet, med övergång till Apache-2.0."
     }
   },
   "licenseWizard": {
@@ -1596,7 +1596,7 @@
   "changelogMeta": {
     "title": "Ändringslogg — {brandName}",
     "description": "Varje release levereras med noggrann detaljstyrning.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "versionTitleSuffix": "{brandName} ändringslogg"
   },
   "roadmapMeta": {
     "title": "Plattformens Roadmap — {brandName}",
