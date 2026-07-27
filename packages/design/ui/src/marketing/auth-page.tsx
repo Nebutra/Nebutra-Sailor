@@ -1,6 +1,7 @@
 "use client";
 
 import { useSignIn, useSignUp } from "@clerk/nextjs";
+import { brand } from "@nebutra/brand/metadata";
 import {
   Email as AtSignIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -146,12 +147,12 @@ export interface AuthPageProps {
 }
 
 export function AuthPage({
-  brandName = "Nebutra",
+  brandName = brand.name,
   brandIcon = <Sailboat className="size-6" />,
-  testimonialQuote = "Nebutra Sailor helped us ship our SaaS 5x faster. The monorepo architecture and pre-built integrations saved months of development time.",
-  testimonialAuthor = "Alex Chen, CTO at TechCorp",
+  testimonialQuote,
+  testimonialAuthor,
   title = "Sign In or Get Started",
-  subtitle = "Login or create your Nebutra account.",
+  subtitle = `Login or create your ${brand.name} account.`,
   homeHref = "/",
   termsHref = "/terms",
   privacyHref = "/privacy",
@@ -252,13 +253,19 @@ export function AuthPage({
           <p className="text-xl font-semibold">{brandName}</p>
         </div>
 
-        {/* Testimonial */}
-        <div className="z-10 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-xl">&ldquo;{testimonialQuote}&rdquo;</p>
-            <footer className="font-mono text-sm font-semibold">~ {testimonialAuthor}</footer>
-          </blockquote>
-        </div>
+        {/* Rendered only when the consumer supplies a real one. This used to
+            default to an invented quote from an invented person, which every
+            downstream brand shipped verbatim unless they noticed. */}
+        {testimonialQuote ? (
+          <div className="z-10 mt-auto">
+            <blockquote className="space-y-2">
+              <p className="text-xl">&ldquo;{testimonialQuote}&rdquo;</p>
+              {testimonialAuthor ? (
+                <footer className="font-mono text-sm font-semibold">~ {testimonialAuthor}</footer>
+              ) : null}
+            </blockquote>
+          </div>
+        ) : null}
 
         {/* Decorative floating paths (artistic element - exempt from Primer) */}
         <div className="absolute inset-0" aria-hidden="true">

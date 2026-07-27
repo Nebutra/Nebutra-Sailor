@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import {
   ArrowRight,
   Message as Discord,
@@ -17,7 +18,7 @@ import type { FooterProps } from "./types";
 
 const EMPTY_FOOTER_SECTIONS: NonNullable<FooterProps["sections"]> = [];
 const EMPTY_SOCIAL_LINKS: NonNullable<FooterProps["social"]> = [];
-const DEFAULT_COPYRIGHT = `© ${new Date().getFullYear()} Nebutra. All rights reserved.`;
+const DEFAULT_COPYRIGHT = `© ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
 
 const footerVariants = cva("w-full bg-background border-t border-border", {
   variants: {
@@ -78,14 +79,15 @@ export function Footer({
               >
                 {/* Generic Standard Logo Placeholder */}
                 <div className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-lg)] bg-[hsl(var(--primary))] text-white font-bold">
-                  N
+                  {brand.name.charAt(0)}
                 </div>
-                <span className="text-xl font-bold tracking-tight text-foreground">Nebutra</span>
+                <span className="text-xl font-bold tracking-tight text-foreground">
+                  {brand.name}
+                </span>
               </Link>
 
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground max-w-sm">
-                Building the future of AI-native SaaS. A premium, high-fidelity monorepo
-                architecture engineered for 2026 SV Best Practices.
+                {brand.description}
               </p>
 
               {social.length > 0 && (

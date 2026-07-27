@@ -7,6 +7,7 @@
 
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Bell, ChevronDown, Menu, Cross as X } from "@nebutra/icons";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
@@ -179,9 +180,13 @@ export function Navbar({
             >
               {/* Simple logo placeholder - swap with actual Logo module */}
               <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
-                <span className="text-white font-bold text-lg leading-none">N</span>
+                <span className="text-white font-bold text-lg leading-none">
+                  {brand.name.charAt(0)}
+                </span>
               </div>
-              <span className="font-semibold text-lg tracking-tight text-foreground">Nebutra</span>
+              <span className="font-semibold text-lg tracking-tight text-foreground">
+                {brand.name}
+              </span>
             </Link>
 
             {/* Desktop Navigation Links */}
@@ -286,10 +291,12 @@ export function Navbar({
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center">
-                      <span className="text-white font-bold text-lg leading-none">N</span>
+                      <span className="text-white font-bold text-lg leading-none">
+                        {brand.name.charAt(0)}
+                      </span>
                     </div>
                     <span className="font-semibold text-xl tracking-tight text-foreground">
-                      Nebutra
+                      {brand.name}
                     </span>
                   </Link>
                   <button
