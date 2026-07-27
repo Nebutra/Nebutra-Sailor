@@ -227,7 +227,9 @@ export function createLocaleSwitcher<TLocale extends string>(
               disabled={isPending}
               aria-label={ariaLabel}
               className={cn(
-                "inline-flex min-h-9 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1.5",
+                // min-h-11 = 44px, the WCAG touch-target floor. min-h-9 (36px) shipped here
+                // for six apps while the landing picker next to it used 44px.
+                "inline-flex min-h-11 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1.5",
                 "text-sm font-medium text-neutral-11 shadow-sm transition-[background-color,border-color,color,box-shadow]",
                 "hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
@@ -252,13 +254,20 @@ export function createLocaleSwitcher<TLocale extends string>(
             side="bottom"
             sideOffset={8}
             aria-label={menuAriaLabel}
-            className="w-[min(100vw-2rem,18rem)] overflow-hidden p-0 shadow-xl"
+            // Opaque, not the DS frosted default. `bg-popover/95 + backdrop-blur`
+            // reads fine over ordinary content but bleeds through over a large
+            // high-contrast headline — the language list is a reading surface,
+            // so it gets a solid background.
+            className="w-[min(100vw-2rem,18rem)] overflow-hidden border-neutral-7 bg-neutral-1 p-0 shadow-xl backdrop-blur-none"
           >
             <Command className="rounded-[inherit] border-0 bg-transparent shadow-none">
               {showSearch ? (
                 <CommandInput placeholder={searchPlaceholder} className="h-10" />
               ) : null}
-              <CommandList className="max-h-72">
+              {/* overscroll-contain stops the wheel chaining to the document
+                  once the list hits its end — without it the whole page scrolls
+                  underneath an open picker. */}
+              <CommandList className="max-h-72 overscroll-contain">
                 <CommandEmpty className="py-8 text-sm text-muted-foreground">
                   {noResultsLabel}
                 </CommandEmpty>

@@ -67,12 +67,21 @@ const newsletterFormSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/NewsletterForm.tsx"),
   "utf8",
 );
-const localeSwitcherSource = readFileSync(
-  path.join(process.cwd(), "src/components/ui/locale-switcher.tsx"),
-  "utf8",
-);
 const marketLocalePickerSource = readFileSync(
   path.join(process.cwd(), "src/components/ui/market-locale-picker.tsx"),
+  "utf8",
+);
+/**
+ * Touch-target classes live in the shared package, not the app-level binding —
+ * the app files are three-line `createX(...)` wrappers. Asserting against the
+ * wrapper passed only while a copy of the markup still existed in the app.
+ */
+const sharedPickerMarkupSource = readFileSync(
+  path.join(process.cwd(), "../../packages/platform/i18n/src/market-locale-picker.tsx"),
+  "utf8",
+);
+const sharedLocaleSwitcherSource = readFileSync(
+  path.join(process.cwd(), "../../packages/platform/i18n/src/locale-switcher.tsx"),
   "utf8",
 );
 const themeSwitcherSource = readFileSync(
@@ -178,7 +187,8 @@ describe("landing UI governance", () => {
   it("keeps mobile navigation and hero controls at touch-safe target sizes", () => {
     expect(heroInstallPillSource).toContain("size-11");
     expect(mobileDrawerSource).toContain("size-11");
-    expect(localeSwitcherSource).toContain("min-h-11");
+    expect(sharedPickerMarkupSource).toContain("min-h-11");
+    expect(sharedLocaleSwitcherSource).toContain("min-h-11");
     expect(themeSwitcherSource).toContain("size-11");
     expect(newsletterFormSource).toContain("min-h-11");
     expect(newsletterFormSource).toContain('type="submit"');
@@ -229,7 +239,7 @@ describe("landing UI governance", () => {
 });
 
 describe("market locale governance", () => {
-  it("uses Hirona-style market locale picker in Navbar", () => {
+  it("uses the country-plus-language market picker in Navbar, not the plain language switcher", () => {
     expect(navbarSource).toContain("MarketLocalePicker");
     expect(navbarSource).not.toContain("<LocaleSwitcher");
     expect(marketLocalePickerSource).toContain("createMarketLocalePicker");
