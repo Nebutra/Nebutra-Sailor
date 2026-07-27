@@ -1,20 +1,8 @@
 "use client";
 
-import { Check, ChevronDown, Globe } from "@nebutra/icons";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@nebutra/ui/primitives";
+import { Check, Globe } from "@nebutra/icons";
 import { useLocale } from "next-intl";
-import { useCallback, useMemo, useState, useTransition } from "react";
+import { useCallback, useMemo, useTransition } from "react";
 import { setLocaleCookie } from "./cookies";
 import {
   compactLanguageTriggerLabel,
@@ -22,6 +10,7 @@ import {
   type ProductLanguage,
   productLanguageEndonymLabels,
 } from "./languages";
+import { LocalePanel } from "./locale-panel";
 import { canonicalizeLocale, canonicalizeLocaleOrDefault, toMessageLocale } from "./locales";
 import { pinScrollPosition } from "./scroll-pin";
 
@@ -109,8 +98,11 @@ export function defaultCompactTrigger(locale: string): string {
  * Unified language switcher for all product apps.
  * Scroll-preserving, cookie or path mode, searchable full wheel.
  *
- * Presentation: DS Popover + Command (portal, keyboard, search chrome).
- * Do not reintroduce hand-rolled absolute menus + native type=search.
+ * Presentation: the shared LocalePanel — the same solid, header-anchored
+ * surface the marketing market picker uses. Do not move this back onto the DS
+ * Popover: that surface is translucent (`bg-popover/95 + backdrop-blur`) and
+ * portals to <body>, which is what made the panel bleed the hero headline
+ * through and let the wheel chain to the document.
  */
 export function createLocaleSwitcher<TLocale extends string>(
   hooks: LocaleSwitcherHooks,
@@ -166,7 +158,6 @@ export function createLocaleSwitcher<TLocale extends string>(
     const router = useRouter();
     const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
-    const [open, setOpen] = useState(false);
 
     const showSearch = searchThreshold === 0 || locales.length > searchThreshold;
 
@@ -188,24 +179,12 @@ export function createLocaleSwitcher<TLocale extends string>(
       }
     }, [locale, locales, mode, pathname, router]);
 
-    const handleOpenChange = useCallback(
-      (next: boolean) => {
-        setOpen(next);
-        if (next) prefetchOthers();
-      },
-      [prefetchOthers],
-    );
-
     const handleSelect = useCallback(
       (next: TLocale) => {
-        if (next === locale) {
-          setOpen(false);
-          return;
-        }
+        if (next === locale) return;
         // Cookie mode: always persist canonical BCP-47 so request.ts matches.
         const cookieValue = mode === "cookie" ? canonicalizeLocaleOrDefault(next) : next;
         setLocaleCookie(cookieValue);
-        setOpen(false);
         pinScrollPosition();
         if (mode === "cookie") {
           startTransition(() => {
@@ -220,106 +199,83 @@ export function createLocaleSwitcher<TLocale extends string>(
       [locale, pathname, router, mode],
     );
 
-    const renderItem = (l: TLocale, opts?: { pinned?: boolean }) => {
+    const matches = (l: TLocale, query: string) =>
+      !query || `${labels[l] ?? ""} ${toMessageLocale(l)} ${l}`.toLowerCase().includes(query);
+
+    const renderItem = (l: TLocale, close: () => void) => {
       const isActive = l === locale;
       const label = labels[l] ?? String(l);
       // Compact message key (de, zh-Hans) — not full BCP-47 — for scannable rails
       const code = toMessageLocale(l);
       return (
-        <CommandItem
+        <button
           key={l}
-          value={`${label} ${code} ${l}`}
-          data-checked={isActive ? "true" : undefined}
-          onSelect={() => handleSelect(l)}
+          type="button"
+          aria-current={isActive ? "true" : undefined}
+          onClick={() => {
+            close();
+            handleSelect(l);
+          }}
           className={cn(
-            "flex cursor-pointer items-center gap-2 px-2.5 py-2 text-sm",
-            isActive && "bg-accent/60 font-medium text-accent-foreground",
-            opts?.pinned && "aria-[selected=false]:bg-accent/40",
+            "flex w-full cursor-pointer items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-sm transition-colors",
+            isActive
+              ? "bg-neutral-3 font-medium text-neutral-12"
+              : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",
           )}
         >
           <span className="min-w-0 flex-1 truncate text-start">{label}</span>
-          <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">{code}</span>
+          <span className="shrink-0 text-[11px] tabular-nums text-neutral-9">{code}</span>
           <Check
-            className={cn(
-              "h-3.5 w-3.5 shrink-0 text-primary",
-              isActive ? "opacity-100" : "opacity-0",
-            )}
+            className={cn("h-3.5 w-3.5 shrink-0", isActive ? "opacity-100" : "opacity-0")}
             aria-hidden
           />
-        </CommandItem>
+        </button>
       );
     };
 
     return (
-      <div className={cn("inline-flex", className)}>
-        <Popover open={open} onOpenChange={handleOpenChange}>
-          <PopoverTrigger asChild>
-            <button
-              type="button"
-              disabled={isPending}
-              aria-label={ariaLabel}
-              className={cn(
-                // min-h-11 = 44px, the WCAG touch-target floor. min-h-9 (36px) shipped here
-                // for six apps while the landing picker next to it used 44px.
-                "inline-flex min-h-11 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1.5",
-                "text-sm font-medium text-neutral-11 shadow-sm transition-[background-color,border-color,color,box-shadow]",
-                "hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
-                "disabled:pointer-events-none disabled:opacity-50",
-                open && "border-neutral-8 bg-neutral-2 text-neutral-12",
-              )}
-            >
-              <Globe className="h-4 w-4 shrink-0 opacity-80" aria-hidden />
-              <span className="max-w-[6.5rem] truncate tracking-wide">{displayLocale(locale)}</span>
-              <ChevronDown
-                className={cn(
-                  "h-3.5 w-3.5 shrink-0 text-neutral-10 transition-transform duration-200",
-                  open && "rotate-180",
-                )}
-                aria-hidden
-              />
-            </button>
-          </PopoverTrigger>
-
-          <PopoverContent
-            align="end"
-            side="bottom"
-            sideOffset={8}
-            aria-label={menuAriaLabel}
-            // Opaque, not the DS frosted default. `bg-popover/95 + backdrop-blur`
-            // reads fine over ordinary content but bleeds through over a large
-            // high-contrast headline — the language list is a reading surface,
-            // so it gets a solid background.
-            className="w-[min(100vw-2rem,18rem)] overflow-hidden border-neutral-7 bg-neutral-1 p-0 shadow-xl backdrop-blur-none"
-          >
-            <Command className="rounded-[inherit] border-0 bg-transparent shadow-none">
-              {showSearch ? (
-                <CommandInput placeholder={searchPlaceholder} className="h-10" />
+      <LocalePanel
+        className={className}
+        disabled={isPending}
+        showSearch={showSearch}
+        onOpen={prefetchOthers}
+        copy={{
+          triggerAria: ariaLabel,
+          menuAria: menuAriaLabel,
+          searchPlaceholder,
+          noResults: noResultsLabel,
+          closeAria: ariaLabel,
+        }}
+        trigger={
+          <>
+            <Globe className="h-4 w-4 shrink-0" aria-hidden />
+            <span className="truncate text-left normal-case tracking-normal text-neutral-12">
+              {displayLocale(locale)}
+            </span>
+          </>
+        }
+      >
+        {(query, close) => {
+          const pinned = activeLocale && matches(activeLocale, query) ? activeLocale : undefined;
+          const rest = otherLocales.filter((l) => matches(l, query));
+          if (!pinned && rest.length === 0) {
+            return (
+              <p className="px-2 py-6 text-center text-sm text-neutral-11">{noResultsLabel}</p>
+            );
+          }
+          return (
+            <>
+              {pinned ? renderItem(pinned, close) : null}
+              {pinned && rest.length > 0 ? (
+                <p className="px-2.5 pb-1 pt-3 text-[11px] font-medium uppercase tracking-wide text-neutral-9">
+                  {allLanguagesLabel}
+                </p>
               ) : null}
-              {/* overscroll-contain stops the wheel chaining to the document
-                  once the list hits its end — without it the whole page scrolls
-                  underneath an open picker. */}
-              <CommandList className="max-h-72 overscroll-contain">
-                <CommandEmpty className="py-8 text-sm text-muted-foreground">
-                  {noResultsLabel}
-                </CommandEmpty>
-
-                {activeLocale ? (
-                  <CommandGroup>{renderItem(activeLocale, { pinned: true })}</CommandGroup>
-                ) : null}
-
-                {activeLocale && otherLocales.length > 0 ? <CommandSeparator /> : null}
-
-                {otherLocales.length > 0 ? (
-                  <CommandGroup heading={activeLocale ? allLanguagesLabel : undefined}>
-                    {otherLocales.map((l) => renderItem(l))}
-                  </CommandGroup>
-                ) : null}
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-      </div>
+              {rest.map((l) => renderItem(l, close))}
+            </>
+          );
+        }}
+      </LocalePanel>
     );
   }
 

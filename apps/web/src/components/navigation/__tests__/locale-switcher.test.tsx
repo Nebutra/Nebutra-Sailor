@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const refreshMock = vi.fn();
@@ -75,6 +75,10 @@ describe("Navigation LocaleSwitcher", () => {
   });
 
   afterEach(() => {
+    // Explicit — Testing Library only auto-cleans when vitest runs with
+    // `globals: true`. Without this every render stacked in the same document
+    // and the second test onward hit "found multiple elements".
+    cleanup();
     vi.restoreAllMocks();
   });
 
