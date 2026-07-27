@@ -1,6 +1,6 @@
-import { LogoEnSVG } from "@nebutra/brand";
-// Official VI horizontal logo (multi-path gradient mark + wordmark) — not mono.
-import logoHorizontalEn from "@nebutra/brand/assets/logo/logo-horizontal-en.svg";
+// Decoupled nav logo: VI color mark (light) / mono mark (dark) + independent wordmark.
+import { LogomarkSVG, WordmarkEnSVG } from "@nebutra/brand";
+import logoColorMark from "@nebutra/brand/assets/logo/logo-color.svg";
 import { brand } from "@nebutra/brand/metadata";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { Banner } from "fumadocs-ui/components/banner";
@@ -17,10 +17,8 @@ import { htmlLangForLanguage, i18n } from "@/lib/i18n";
 import { source } from "@/lib/source";
 import "../globals.css";
 
-const logoHorizontalEnSrc =
-  typeof logoHorizontalEn === "string"
-    ? logoHorizontalEn
-    : (logoHorizontalEn as { src: string }).src;
+const logoColorMarkSrc =
+  typeof logoColorMark === "string" ? logoColorMark : (logoColorMark as { src: string }).src;
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // Matches the Precision Stack used across apps/web and apps/landing
@@ -123,24 +121,33 @@ export default async function RootLayout({
                 title: (
                   <div className="flex items-center gap-2">
                     {/*
-                      Light: official VI 正标 logo-horizontal-en.svg (real multi-path
-                      color mark — not mono path + fake gradient).
-                      Dark: LogoEnSVG mono pure white 反白.
+                      图形 / 文字解耦 (VI):
+                      - Mark: logo-color.svg multi-path VI color (light) | LogomarkSVG mono white (dark)
+                      - Wordmark: WordmarkEnSVG currentColor — independent of mark fills
+                      Never one baked horizontal SVG that locks mark+wordmark together.
                     */}
-                    <span className="inline-flex h-6 items-center">
+                    <span
+                      className="inline-flex h-6 items-center gap-2"
+                      aria-label={`${brand.name} Sailor Docs`}
+                    >
                       <Image
-                        src={logoHorizontalEnSrc}
-                        alt={`${brand.name} Sailor Docs`}
-                        width={140}
-                        height={27}
+                        src={logoColorMarkSrc}
+                        alt=""
+                        width={26}
+                        height={24}
                         className="h-6 w-auto dark:hidden"
                         priority
                         unoptimized
+                        aria-hidden
                       />
-                      <LogoEnSVG
-                        width={140}
-                        className="hidden h-6 w-auto !text-white dark:block"
-                        aria-label={`${brand.name} Sailor Docs`}
+                      <LogomarkSVG
+                        width={24}
+                        height={24}
+                        className="hidden h-6 w-6 shrink-0 !text-white dark:block"
+                      />
+                      <WordmarkEnSVG
+                        width={100}
+                        className="h-[1.125rem] w-auto !text-[var(--neutral-12)] dark:!text-white"
                       />
                     </span>
                   </div>
