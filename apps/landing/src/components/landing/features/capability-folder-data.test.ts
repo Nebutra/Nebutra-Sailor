@@ -51,15 +51,34 @@ describe("capability folder showcase data", () => {
     }
   });
 
+  /**
+   * These numbers are generated, not hand-maintained — the landing page
+   * advertises them as real repository metrics, so drift is a factual claim
+   * going stale. Do NOT fix a failure here by editing the constants: run
+   * `pnpm gen:capability-stats`, which derives them with these exact rules.
+   */
   it("keeps source metrics grounded in the current repository", () => {
+    const stale: string[] = [];
+
     for (const folder of CAPABILITY_FOLDERS) {
-      expect(sourceStatsFor(folder.sourcePath), folder.id).toEqual({
+      const actual = sourceStatsFor(folder.sourcePath);
+      const declared = {
         readmes: folder.sourceStats.readmes,
         sourceFiles: folder.sourceStats.sourceFiles,
         testFiles: folder.sourceStats.testFiles,
         unitCount: folder.sourceStats.unitCount,
-      });
+      };
+
+      for (const [key, value] of Object.entries(actual) as [keyof typeof actual, number][]) {
+        if (declared[key] !== value) {
+          stale.push(`${folder.id}.${key}: declared ${declared[key]}, repository has ${value}`);
+        }
+      }
     }
+
+    // Report every drifted field at once. Failing on the first folder hid how
+    // wide the drift was the last time these numbers went stale.
+    expect(stale, "run `pnpm gen:capability-stats` to regenerate").toEqual([]);
   });
 
   it("keeps landing tree jump links aligned with features page capability modules", () => {

@@ -117,6 +117,8 @@
     "build:dashboard": "turbo run build --filter=@nebutra/web --filter=@nebutra/admin --filter=@nebutra/gateway",
     "preset:env": "tsx packages/ops/preset/src/cli.ts",
     "generate:api-types": "tsx scripts/generate-api-types.ts",
+    "gen:capability-stats": "node scripts/generate-capability-stats.mjs",
+    "gen:capability-stats:check": "node scripts/generate-capability-stats.mjs --check",
     "gen:route-lastmod": "node scripts/generate-route-lastmod.mjs",
     "gen:route-lastmod:check": "node scripts/generate-route-lastmod.mjs --check",
     "size": "size-limit",
