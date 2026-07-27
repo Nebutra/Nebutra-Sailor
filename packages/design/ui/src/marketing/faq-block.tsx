@@ -24,49 +24,16 @@ export interface FAQItem {
   answer: string;
 }
 
-// Default Nebutra-specific FAQs
-const DEFAULT_FAQS: FAQItem[] = [
-  {
-    question: "What is Nebutra Sailor?",
-    answer:
-      "Nebutra Sailor is an enterprise-grade SaaS monorepo architecture supporting multi-tenant systems, AI-native features, and production-ready infrastructure.",
-  },
-  {
-    question: "How does multi-tenant authentication work?",
-    answer:
-      "We use Clerk for authentication with organization-based multi-tenancy. Tenant context flows through the BFF layer to Supabase with Row-Level Security for data isolation.",
-  },
-  {
-    question: "What AI features are included?",
-    answer:
-      "The platform includes Vercel AI SDK integration, a Python FastAPI AI microservice for LLM/embeddings, MCP protocol support for agent tool calling, and pgvector for semantic search.",
-  },
-  {
-    question: "How do I deploy to production?",
-    answer:
-      "Apps deploy to Vercel automatically via CI/CD. Microservices deploy to Railway or Kubernetes. Use `pnpm build` to build all packages and `turbo run deploy` for deployments.",
-  },
-  {
-    question: "Is there a free tier?",
-    answer:
-      "Yes! The open-source monorepo is free. Hosted services have a generous free tier with 10k API calls/month, 3 team members, and basic AI features.",
-  },
-  {
-    question: "How do I add custom integrations?",
-    answer:
-      "Add new microservices in the `services/` directory following our FastAPI template. For frontend integrations, create packages in `packages/` and import them in your apps.",
-  },
-  {
-    question: "What databases are supported?",
-    answer:
-      "Primary database is Supabase (Postgres 15 with pgvector). Redis (Upstash) handles caching. The Prisma schema is in `packages/platform/db/` for type-safe queries.",
-  },
-  {
-    question: "How do background jobs work?",
-    answer:
-      "We use Inngest for serverless workflows and cron jobs. Define workflows in `workflows/inngest/` - they handle retries, scheduling, and event-driven processing automatically.",
-  },
-];
+/**
+ * Empty by design. This shipped with Nebutra Sailor's own FAQ — questions
+ * about Clerk, Supabase and `pnpm build` — as the fallback for every product
+ * built on this package, so a downstream brand that rendered <FAQBlock />
+ * without props published our documentation as theirs.
+ *
+ * There is no correct generic default for FAQ copy. The empty state below
+ * already handles this case.
+ */
+const DEFAULT_FAQS: FAQItem[] = [];
 
 export interface FAQBlockProps {
   /** FAQ items to display */
@@ -94,7 +61,7 @@ export interface FAQBlockProps {
 export default function FAQBlock({
   faqs = DEFAULT_FAQS,
   title = "Frequently Asked Questions",
-  description = "Find answers to common questions about Nebutra Sailor.",
+  description = "Find answers to common questions.",
   showSearch = true,
   showAiAssistant = true,
   showFeedback = true,

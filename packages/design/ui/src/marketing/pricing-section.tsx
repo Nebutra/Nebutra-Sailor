@@ -252,7 +252,8 @@ export function BorderTrail({
     </div>
   );
 }
-// Default plans for Nebutra
+// Illustrative plan shapes. Consumers pass their own; these exist so the
+// component renders in isolation, not as anyone's real pricing.
 export const DEFAULT_PRICING_PLANS: PricingPlan[] = [
   {
     name: "Free",

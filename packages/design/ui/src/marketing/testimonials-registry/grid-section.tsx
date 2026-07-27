@@ -6,90 +6,22 @@ import { cn } from "../../utils/cn";
 import { GridPattern } from "../grid-pattern";
 import type { TestimonialsCommonProps } from "./types";
 
-// Default testimonials for Nebutra SaaS
-const defaultTestimonials = [
-  {
-    quote:
-      "Nebutra transformed how we handle multi-tenant SaaS operations. The architecture is clean, scalable, and production-ready.",
-    name: "Sarah Chen",
-    role: "Engineering Lead",
-    company: "CloudScale Inc",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "The AI-native features and recommendation system integration saved us months of development time. Highly impressed.",
-    name: "Marcus Johnson",
-    role: "CTO",
-    company: "DataFlow Labs",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "Event-driven architecture with Inngest workflows made our background jobs reliable and easy to maintain.",
-    name: "Emily Rodriguez",
-    role: "Senior Developer",
-    company: "TechVenture",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "The white-label system is incredibly flexible. We deployed multiple branded instances in just days.",
-    name: "David Park",
-    role: "Product Manager",
-    company: "BrandForge",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "Supabase + Prisma combo with Row-Level Security gave us enterprise-grade data isolation out of the box.",
-    name: "Lisa Wang",
-    role: "Backend Architect",
-    company: "SecureStack",
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "The MCP integration for AI agent tool calling is next-level. Perfect for building AI-powered features.",
-    name: "Alex Turner",
-    role: "AI Engineer",
-    company: "NeuralPath",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "From Stripe billing to Shopify sync, the microservices architecture handles everything seamlessly.",
-    name: "Rachel Kim",
-    role: "Full-Stack Developer",
-    company: "CommerceHub",
-    image:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "The observability setup with OpenTelemetry and Sentry made debugging production issues effortless.",
-    name: "James Mitchell",
-    role: "DevOps Lead",
-    company: "InfraCore",
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    quote:
-      "Clean monorepo structure with Turborepo. Finally, a SaaS template that scales with your team.",
-    name: "Nina Patel",
-    role: "Tech Lead",
-    company: "ScaleUp Studios",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face",
-  },
-];
+/**
+ * Deliberately empty.
+ *
+ * This held invented testimonials attributed to invented people ("Sarah Chen,
+ * Engineering Lead at CloudScale Inc") illustrated with Unsplash photographs of
+ * real, unrelated people — and the section description claimed they were "real
+ * stories, real impact". Any brand rendering <GridTestimonials /> without items
+ * published that as its own social proof.
+ */
+const defaultTestimonials: {
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+  image: string;
+}[] = [];
 
 export interface GridTestimonialsProps extends TestimonialsCommonProps {
   title?: string;
@@ -101,10 +33,12 @@ export function GridTestimonials({
   items,
   className,
   title = "What Developers Are Saying",
-  description = "See how teams are building faster with Nebutra — real stories, real impact, real growth.",
+  description = "What teams say after building on the platform.",
   showHeader = true,
 }: GridTestimonialsProps) {
   const shouldReduceMotion = useReducedMotion();
+  // No fabricated fallback exists any more, so an empty list means render nothing.
+  if (items.length === 0) return null;
   // Map TestimonialItem to internal format, or use defaults
   const testimonials =
     items.length > 0
@@ -113,9 +47,7 @@ export function GridTestimonials({
           role: item.title || "",
           company: item.company || "",
           quote: item.quote,
-          image:
-            item.avatarUrl ||
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+          image: item.avatarUrl ?? "",
         }))
       : defaultTestimonials;
 
@@ -172,14 +104,24 @@ export function GridTestimonials({
                 </div>
               </div>
 
-              {/* Avatar */}
-              <Image
-                alt={name}
-                src={image}
-                className="size-9 rounded-full object-cover"
-                width={400}
-                height={400}
-              />
+              {/* Avatar — omitted rather than substituted. The fallback used to
+                  be a stock photograph of an unrelated person. */}
+              {image ? (
+                <Image
+                  alt={name}
+                  src={image}
+                  className="size-9 rounded-full object-cover"
+                  width={400}
+                  height={400}
+                />
+              ) : (
+                <div
+                  aria-hidden
+                  className="flex size-9 items-center justify-center rounded-full bg-muted text-sm font-medium text-muted-foreground"
+                >
+                  {name.charAt(0)}
+                </div>
+              )}
 
               {/* Content */}
               <div>

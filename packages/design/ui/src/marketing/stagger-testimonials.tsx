@@ -8,79 +8,19 @@ import { cn } from "../utils/cn";
 
 const SQRT_5000 = Math.sqrt(5000);
 
-// Repo-specific mock data for Nebutra-Sailor
-const defaultTestimonials = [
-  {
-    tempId: 0,
-    testimonial: "We ship 5x faster with Nebutra Sailor's monorepo and Turborepo pipelines.",
-    by: "Alex, CEO at TechCorp",
-    imgSrc:
-      "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 1,
-    testimonial: "Multi-tenant auth with Clerk Orgs + Supabase RLS worked out of the box.",
-    by: "Dan, CTO at SecureNet",
-    imgSrc:
-      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 2,
-    testimonial: "Design system with Primer tokens keeps all our apps perfectly consistent.",
-    by: "Stephanie, COO at InnovateCo",
-    imgSrc:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 3,
-    testimonial: "Inngest workflows replaced our cron zoo—deploys are finally predictable.",
-    by: "Marie, CFO at FuturePlanning",
-    imgSrc:
-      "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 4,
-    testimonial: "Stripe billing integration took days, not weeks.",
-    by: "Andre, Head of Design at CreativeSolutions",
-    imgSrc:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 5,
-    testimonial: "Rate limiting + cache packages saved us months of infra work.",
-    by: "Jeremy, Product Manager at TimeWise",
-    imgSrc:
-      "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 6,
-    testimonial: "Vercel AI SDK + our Python AI service made building AI-native features trivial.",
-    by: "Pam, Marketing Director at BrandBuilders",
-    imgSrc:
-      "https://images.unsplash.com/photo-1541753866388-0b3c701627d3?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 7,
-    testimonial: "Observability with Sentry + OpenTelemetry is wired from day one.",
-    by: "Daniel, Data Scientist at AnalyticsPro",
-    imgSrc:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 8,
-    testimonial: "shadcn structure made our marketing pages fly.",
-    by: "Fernando, UX Designer at UserFirst",
-    imgSrc:
-      "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=150&q=60",
-  },
-  {
-    tempId: 9,
-    testimonial: "We migrated 5 years ago and never looked back.",
-    by: "Andy, DevOps Engineer at CloudMasters",
-    imgSrc:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=60",
-  },
-];
+/**
+ * Deliberately empty.
+ *
+ * This held 15 invented testimonials attributed to invented people ("Alex, CEO
+ * at TechCorp"), each illustrated with an Unsplash photograph of a real,
+ * unrelated person. Any product built on this package that rendered
+ * <StaggerTestimonials /> without props published fabricated endorsements —
+ * with strangers' faces attached — as its own social proof.
+ *
+ * There is no honest generic default for a testimonial. Supply real ones or
+ * render nothing.
+ */
+const defaultTestimonials: StaggerTestimonialItem[] = [];
 
 export type StaggerTestimonialItem = {
   tempId: number;
@@ -137,16 +77,26 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           height: 2,
         }}
       />
-      <Image
-        src={testimonial.imgSrc}
-        alt={`${testimonial.by.split(",")[0]}`}
-        className="mb-4 h-14 w-12 bg-muted object-cover object-top"
-        style={{
-          boxShadow: "3px 3px 0px hsl(var(--background))",
-        }}
-        width={400}
-        height={400}
-      />
+      {testimonial.imgSrc ? (
+        <Image
+          src={testimonial.imgSrc}
+          alt={`${testimonial.by.split(",")[0]}`}
+          className="mb-4 h-14 w-12 bg-muted object-cover object-top"
+          style={{
+            boxShadow: "3px 3px 0px hsl(var(--background))",
+          }}
+          width={400}
+          height={400}
+        />
+      ) : (
+        <div
+          aria-hidden
+          className="mb-4 flex h-14 w-12 items-center justify-center bg-muted text-lg font-medium text-muted-foreground"
+          style={{ boxShadow: "3px 3px 0px hsl(var(--background))" }}
+        >
+          {testimonial.by.charAt(0)}
+        </div>
+      )}
       <h3
         className={cn(
           "text-base sm:text-xl font-medium",
@@ -221,6 +171,10 @@ export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({
       setTestimonialsList(items.map((t, i) => ({ ...t, tempId: t.tempId ?? i })));
     }
   }, [items]);
+
+  // Nothing to show is a valid state now that there is no fabricated fallback —
+  // rendering the carousel chrome around zero cards would just look broken.
+  if (testimonialsList.length === 0) return null;
 
   return (
     <div

@@ -187,7 +187,7 @@ export function UseCases(props: UseCasesProps) {
     locale: _locale = "en",
     layout = "tabs",
     title = "Built for every workflow",
-    subtitle = "Discover how Nebutra adapts to your specific engineering and operational requirements.",
+    subtitle = "See how the platform adapts to your engineering and operational requirements.",
     className,
     id,
     density = "normal",

@@ -64,7 +64,8 @@ function VerticalMarquee({
   );
 }
 
-// Default items for Nebutra SaaS
+// Neutral defaults. Naming a product here would ship one brand's copy as
+// every downstream brand's fallback.
 const defaultMarqueeItems = [
   "Enterprise Teams",
   "Startup Founders",
@@ -101,7 +102,7 @@ export interface CTAWithVerticalMarqueeProps {
 }
 
 export default function CTAWithVerticalMarquee({
-  title = "Ship Faster with Nebutra",
+  title = "Ship faster",
   description = "The enterprise-grade SaaS monorepo with multi-tenant support, AI-native features, and production-ready architecture. Start building in minutes.",
   primaryButtonText = "GET STARTED FREE",
   onPrimaryClick,

@@ -18,9 +18,9 @@ export function StaggerTestimonialsAdapter({
           x.title || x.company
             ? `${x.author}${x.title ? `, ${x.title}` : ""}${x.company ? ` at ${x.company}` : ""}`
             : x.author,
-        imgSrc:
-          x.avatarUrl ??
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=60",
+        // No stock-photo fallback: a real testimonial without an avatar must
+        // not borrow an unrelated person's face.
+        imgSrc: x.avatarUrl ?? "",
       })),
     [items],
   );
