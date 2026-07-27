@@ -231,11 +231,12 @@ export function createMarketLocalePicker(
                 <input
                   ref={searchRef}
                   data-allow-native
-                  type="search"
+                  type="text"
+                  inputMode="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={copy.searchPlaceholder}
-                  className="w-full bg-transparent text-sm text-neutral-12 outline-none placeholder:text-neutral-9"
+                  className="min-w-0 flex-1 appearance-none border-0 bg-transparent text-sm text-neutral-12 outline-none placeholder:text-neutral-9"
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck={false}

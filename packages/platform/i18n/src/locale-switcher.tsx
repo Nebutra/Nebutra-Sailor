@@ -248,35 +248,41 @@ export function createLocaleSwitcher<TLocale extends string>(
             className="absolute end-0 top-full z-50 mt-1 flex w-[min(100vw-2rem,16rem)] flex-col overflow-hidden rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 shadow-lg"
           >
             {showSearch ? (
-              <div className="border-b border-neutral-6 p-1.5">
-                <label htmlFor={searchId} className="sr-only">
-                  {searchPlaceholder}
-                </label>
-                <div className="relative">
-                  <MagnifyingGlass
-                    className="pointer-events-none absolute start-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-10"
-                    aria-hidden
-                  />
+              <div className="shrink-0 border-b border-neutral-6 p-1.5">
+                {/*
+                  Flex row (icon sibling + text input) — not absolute-icon + type=search.
+                  Absolute icon + WebKit search cancel (×) + placeholder stacked in h-8
+                  and looked like icon/text overlap on product shells (forge/router).
+                */}
+                <label
+                  htmlFor={searchId}
+                  className="flex h-8 w-full items-center gap-2 rounded-[var(--radius-sm)] border border-neutral-6 bg-neutral-1 px-2.5 focus-within:border-neutral-8"
+                >
+                  <MagnifyingGlass className="h-3.5 w-3.5 shrink-0 text-neutral-10" aria-hidden />
+                  <span className="sr-only">{searchPlaceholder}</span>
                   <input
                     ref={searchRef}
                     id={searchId}
                     data-allow-native
-                    type="search"
+                    type="text"
+                    inputMode="search"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder={searchPlaceholder}
                     autoComplete="off"
-                    className="h-8 w-full rounded-[var(--radius-sm)] border border-neutral-6 bg-neutral-1 pe-2 ps-7 text-sm text-neutral-12 outline-none placeholder:text-neutral-9 focus:border-neutral-8"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className="min-w-0 flex-1 appearance-none border-0 bg-transparent text-sm text-neutral-12 outline-none placeholder:text-neutral-9"
                     onKeyDown={(e) => {
                       // Prevent menu from stealing first character focus quirks
                       e.stopPropagation();
                     }}
                   />
-                </div>
+                </label>
               </div>
             ) : null}
 
-            <div className="max-h-72 overflow-y-auto p-1">
+            <div className="max-h-72 min-h-0 overflow-y-auto overscroll-contain p-1">
               {filtered.length === 0 ? (
                 <p className="px-3 py-2 text-sm text-neutral-10">{noResultsLabel}</p>
               ) : (
