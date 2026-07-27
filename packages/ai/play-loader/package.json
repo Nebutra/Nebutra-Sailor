@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/play-loader",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Declarative SKILL.md play loader and dependency planner",
   "private": false,
   "license": "MIT",

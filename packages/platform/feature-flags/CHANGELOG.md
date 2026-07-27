@@ -1,5 +1,13 @@
 # @nebutra/feature-flags
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/cache@0.0.3
+  - @nebutra/db@0.1.2
+
 ## 0.1.2
 
 ### Patch Changes

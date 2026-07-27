@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/3d-pipeline",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "BrandContext-first mesh generation, export manifests, and previews",
   "private": false,
   "license": "MIT",

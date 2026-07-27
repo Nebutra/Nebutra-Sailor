@@ -1,5 +1,12 @@
 # create-sailor
 
+## 1.8.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@0.1.2
+
 ## 1.8.3
 
 ### Patch Changes

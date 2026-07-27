@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/admin-tooling",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Thin contract layer for external admin tools (Retool, Forest Admin, Appsmith) to safely access internal Nebutra-Sailor data with audit trails",
   "type": "module",

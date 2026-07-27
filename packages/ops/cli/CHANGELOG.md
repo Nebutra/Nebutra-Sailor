@@ -1,5 +1,12 @@
 # nebutra
 
+## 0.3.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@0.1.2
+
 ## 0.3.7
 
 ### Patch Changes

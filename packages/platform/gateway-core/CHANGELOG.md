@@ -1,5 +1,18 @@
 # @nebutra/gateway-core
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/billing@0.1.3
+  - @nebutra/metering@0.1.2
+  - @nebutra/cache@0.0.3
+  - @nebutra/queue@0.1.3
+  - @nebutra/errors@0.1.2
+  - @nebutra/logger@0.1.2
+  - @nebutra/db@0.1.2
+
 ## 0.1.2
 
 ### Patch Changes

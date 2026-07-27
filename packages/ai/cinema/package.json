@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/cinema",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Agentic film-production IP: acyclic camera-continuity tree, consistency-ranked best-frame selection, novel→scene/event segmentation, film-director composition. Pure + dependency-injected; sits on reel/agents/graph-model.",
   "private": false,
   "license": "MIT",

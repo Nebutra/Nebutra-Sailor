@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/generation-context",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Shared BrandContext and generated-asset metadata contracts for multimodal pipelines",
   "private": false,
   "license": "MIT",

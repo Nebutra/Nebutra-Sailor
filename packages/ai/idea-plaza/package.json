@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/idea-plaza",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Explicit opt-in idea publishing, lineage, and fork surface over Nebutra company artifacts",
   "private": false,
   "license": "MIT",

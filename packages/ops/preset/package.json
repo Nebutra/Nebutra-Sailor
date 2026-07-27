@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/preset",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "description": "Scenario preset system — defines which apps, features, and themes each scenario enables",

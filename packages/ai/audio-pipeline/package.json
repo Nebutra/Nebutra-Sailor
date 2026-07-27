@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/audio-pipeline",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "BrandContext-first audio generation, license metadata, and loudness utilities",
   "private": false,
   "license": "MIT",

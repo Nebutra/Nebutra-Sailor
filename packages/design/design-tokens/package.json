@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/design-tokens",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "W3C DTCG ($value/$type) tokens — SSOT, Style Dictionary 4 pipeline. Coexists with @nebutra/tokens; not a replacement.",
   "private": false,
   "license": "MIT",
