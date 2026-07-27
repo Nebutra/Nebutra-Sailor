@@ -32,7 +32,8 @@ export function SiteHeader() {
           aria-label={t("homeAria", { brandName: brand.name })}
         >
           <BrandLogo variant="mark" className="h-8 w-8 sm:hidden" />
-          <BrandLogo variant="horizontal" className="hidden h-[26px] w-auto sm:block" />
+          {/* sm:inline-flex — not sm:block (block stacks mark above wordmark) */}
+          <BrandLogo variant="horizontal" className="hidden h-[26px] w-auto sm:inline-flex" />
           <span className="hidden h-4 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
           <ForgeMark className="h-6 w-6 sm:h-7 sm:w-7" />
           <span className="sr-only">Forge</span>
