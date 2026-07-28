@@ -8,7 +8,7 @@ export const buttonVariants = cva(
     "rounded-[var(--btn-default-radius,var(--radius-md))]",
     "text-[length:var(--control-font-size-md,0.875rem)] font-[number:var(--font-weight-medium,500)]",
     "transition-colors duration-micro ease-out",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+    "focus-visible:outline-none",
     "disabled:pointer-events-none disabled:opacity-50",
     "aria-busy:cursor-wait",
   ].join(" "),

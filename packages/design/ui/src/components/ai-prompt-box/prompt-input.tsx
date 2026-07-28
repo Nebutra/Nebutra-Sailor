@@ -170,7 +170,7 @@ const PromptInputTextarea: React.FC<
       onKeyDown={handleKeyDown}
       rows={1}
       style={{ "--textarea-min-height": "2rem", ...style } as PromptTextareaStyle}
-      className={cn("resize-none border-0 shadow-none focus-visible:ring-0", className)}
+      className={cn("resize-none border-0 shadow-none", className)}
       disabled={disabled}
       placeholder={placeholder}
       {...props}

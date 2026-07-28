@@ -62,7 +62,7 @@ const AccordionTrigger = ({
     <RadixTrigger
       ref={ref}
       className={cn(
-        "font-medium flex flex-1 items-center justify-between transition-[color,box-shadow] duration-flow ease-out hover:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none [&[data-panel-open]>svg]:rotate-45",
+        "font-medium flex flex-1 items-center justify-between transition-[color,box-shadow] duration-flow ease-out hover:text-muted-foreground focus-visible:outline-none [&[data-panel-open]>svg]:rotate-45",
         size === "small" ? "py-2.5 text-sm" : "py-4 text-[15px]",
         className,
       )}

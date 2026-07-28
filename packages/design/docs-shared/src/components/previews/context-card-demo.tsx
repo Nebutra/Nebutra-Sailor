@@ -25,7 +25,7 @@ export function ContextCardDemo() {
     >
       <button
         type="button"
-        className="cursor-default underline decoration-dotted underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="cursor-default underline decoration-dotted underline-offset-4 focus-visible:outline-none"
       >
         Nebula Console
       </button>

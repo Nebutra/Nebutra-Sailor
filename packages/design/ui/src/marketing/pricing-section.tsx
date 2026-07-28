@@ -89,7 +89,7 @@ export function PricingFrequencyToggle({
           type="button"
           key={freq}
           onClick={() => setFrequency(freq)}
-          className="relative px-4 py-1 text-sm capitalize focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full"
+          className="relative px-4 py-1 text-sm capitalize focus-visible:outline-none rounded-full"
           role="radio"
           aria-checked={frequency === freq}
         >

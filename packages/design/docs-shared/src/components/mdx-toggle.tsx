@@ -55,7 +55,7 @@ const ToggleGroupContext = createContext<ToggleGroupContextValue | null>(null);
 
 function getToggleClassName(variant: ToggleVariant, size: ToggleSize) {
   return cn(
-    "inline-flex items-center justify-center rounded-md border text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex items-center justify-center rounded-md border text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
     variant === "outline"
       ? "border-border bg-background hover:bg-accent hover:text-accent-foreground"
       : "border-transparent bg-muted hover:bg-muted/80",

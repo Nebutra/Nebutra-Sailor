@@ -250,7 +250,7 @@ function ScrollerButton({
         "absolute z-20 grid size-[var(--scroller-button-size)] place-items-center rounded-[var(--scroller-button-radius)]",
         "border border-border bg-background text-muted-foreground shadow-[var(--scroller-button-shadow)]",
         "transition-[background-color,border-color,color,opacity,transform] duration-[var(--scroller-duration)] ease-[var(--scroller-easing)]",
-        "hover:border-ring hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "hover:border-ring hover:text-foreground focus-visible:outline-none",
         "disabled:pointer-events-none disabled:opacity-0 motion-reduce:transition-none",
         axis === "x" &&
           direction === "previous" &&
@@ -366,7 +366,7 @@ export function Scroller({
         onScroll={updateEdgeState}
         className={cn(
           "h-[var(--scroller-height)] rounded-[var(--scroller-radius)] outline-none",
-          "scroll-smooth overscroll-contain focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:scroll-auto",
+          "scroll-smooth overscroll-contain motion-reduce:scroll-auto",
           resolveScrollClasses(overflow),
         )}
       >

@@ -92,7 +92,7 @@ export function ExpandableTabs({
         const isSelected = selected === index;
         const tabClassName = cn(
           "relative rounded-[var(--radius-xl)] py-2 text-sm font-medium transition-colors duration-300",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "focus-visible:outline-none",
           isSelected
             ? cn("bg-muted", activeColor)
             : "text-muted-foreground hover:bg-muted hover:text-foreground",

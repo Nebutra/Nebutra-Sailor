@@ -83,7 +83,7 @@ export function ReactionChip({
         const btnClassName = cn(
           "rounded-full p-1 text-base leading-none",
           "transition-transform duration-150 ease-out",
-          "hover:scale-110 focus-visible:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+          "hover:scale-110 focus-visible:scale-110 focus-visible:outline-none",
           isActive && "bg-muted ring-1 ring-border dark:bg-muted/70",
         );
         const handleMouseDown = (evt: React.MouseEvent) => evt.preventDefault();

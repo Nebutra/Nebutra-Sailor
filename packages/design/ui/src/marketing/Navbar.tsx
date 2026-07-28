@@ -133,7 +133,7 @@ export function Navbar({
               transition={
                 shouldReduceMotion ? { duration: 0 } : { duration: 0.3, ease: "easeInOut" }
               }
-              className="relative flex items-center justify-center bg-[var(--brand-9)] px-4 py-2.5 text-sm font-medium text-white sm:px-6 lg:px-8"
+              className="relative flex items-center justify-center bg-primary px-4 py-2.5 text-sm font-medium text-white sm:px-6 lg:px-8"
             >
               <div className="flex items-center gap-2 text-center">
                 <Bell className="h-4 w-4 shrink-0" />
@@ -142,7 +142,7 @@ export function Navbar({
                   {activeAnnouncement.href && (
                     <a
                       href={activeAnnouncement.href}
-                      className="inline-block underline underline-offset-2 font-semibold hover:text-[var(--brand-3)] transition-colors"
+                      className="inline-block underline underline-offset-2 font-semibold hover:text-[var(--blue-3)] transition-colors"
                     >
                       Learn more &rarr;
                     </a>
@@ -152,7 +152,7 @@ export function Navbar({
               {activeAnnouncement.dismissible !== false && (
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-[var(--radius-md)] p-1.5 hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-[var(--radius-md)] p-1.5 hover:bg-white/20 transition-colors focus:outline-none"
                   onClick={dismissAnnouncement}
                   aria-label="Dismiss announcement"
                 >
@@ -176,10 +176,10 @@ export function Navbar({
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)] rounded-[var(--radius-md)]"
+              className="flex items-center gap-2 group focus:outline-none rounded-[var(--radius-md)]"
             >
               {/* Simple logo placeholder - swap with actual Logo module */}
-              <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
+              <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-primary to-[var(--blue-5)] shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
                 <span className="text-white font-bold text-lg leading-none">
                   {brand.name.charAt(0)}
                 </span>
@@ -195,14 +195,14 @@ export function Navbar({
                 <div key={link.href} className="relative group">
                   <a
                     href={link.href}
-                    className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)] rounded-[var(--radius-md)] px-2 py-1"
+                    className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors focus:outline-none rounded-[var(--radius-md)] px-2 py-1"
                   >
                     {link.label}
                     {link.children && (
                       <ChevronDown className="h-3.5 w-3.5 text-muted-foreground group-hover:text-muted-foreground transition-colors" />
                     )}
                     {link.badge && (
-                      <span className="ml-1 inline-flex items-center rounded-full bg-[var(--brand-3)] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[var(--brand-11)] border border-[var(--brand-5)] uppercase">
+                      <span className="ml-1 inline-flex items-center rounded-full bg-[var(--blue-3)] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[var(--blue-11)] border border-[var(--blue-5)] uppercase">
                         {link.badge}
                       </span>
                     )}
@@ -229,10 +229,10 @@ export function Navbar({
               <a
                 href={cta.href}
                 className={cn(
-                  "inline-flex h-9 items-center justify-center rounded-[var(--radius-md)] px-4 text-sm font-medium shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--brand-9)] focus:ring-offset-2",
+                  "inline-flex h-9 items-center justify-center rounded-[var(--radius-md)] px-4 text-sm font-medium shadow-sm transition-colors focus:outline-none",
                   cta.variant === "outline"
                     ? "border border-[var(--neutral-5)] bg-transparent text-foreground hover:bg-muted"
-                    : "bg-[var(--brand-9)] text-white hover:bg-[var(--brand-10)]",
+                    : "bg-primary text-white hover:bg-primary/90",
                 )}
               >
                 {cta.text}
@@ -245,7 +245,7 @@ export function Navbar({
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 text-muted-foreground hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--brand-9)] transition-colors"
+              className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 text-muted-foreground hover:bg-muted hover:text-foreground focus:outline-none transition-colors"
               aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -290,7 +290,7 @@ export function Navbar({
                     className="flex items-center gap-2"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center">
+                    <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-primary to-[var(--blue-5)] shadow-sm flex items-center justify-center">
                       <span className="text-white font-bold text-lg leading-none">
                         {brand.name.charAt(0)}
                       </span>
@@ -320,7 +320,7 @@ export function Navbar({
                       >
                         {link.label}
                         {link.badge && (
-                          <span className="ml-2 inline-flex items-center rounded-full bg-[var(--brand-3)] px-2 py-0.5 text-[10px] font-semibold text-[var(--brand-11)]">
+                          <span className="ml-2 inline-flex items-center rounded-full bg-[var(--blue-3)] px-2 py-0.5 text-[10px] font-semibold text-[var(--blue-11)]">
                             {link.badge}
                           </span>
                         )}
@@ -348,7 +348,7 @@ export function Navbar({
                           "flex w-full items-center justify-center rounded-[var(--radius-md)] px-4 py-3 text-base font-medium shadow-sm transition-colors",
                           cta.variant === "outline"
                             ? "border border-[var(--neutral-5)] bg-transparent text-foreground"
-                            : "bg-[var(--brand-9)] text-white",
+                            : "bg-primary text-white",
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >

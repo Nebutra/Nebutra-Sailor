@@ -109,7 +109,7 @@ export function Banner({
                 href={learnMoreUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground underline transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-sm)]"
+                className="text-muted-foreground underline transition-colors hover:text-foreground rounded-[var(--radius-sm)]"
               >
                 Learn more
               </a>
@@ -120,7 +120,7 @@ export function Banner({
       <div className="flex items-center sm:-my-1">
         <button
           type="button"
-          className="whitespace-nowrap rounded-[var(--radius-md)] border border-emerald-700/50 px-3 py-1 text-sm text-foreground transition-colors hover:bg-emerald-500/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-emerald-500/50 dark:hover:bg-emerald-500/20"
+          className="whitespace-nowrap rounded-[var(--radius-md)] border border-emerald-700/50 px-3 py-1 text-sm text-foreground transition-colors hover:bg-emerald-500/10 dark:border-emerald-500/50 dark:hover:bg-emerald-500/20"
           onClick={action.onClick}
         >
           {action.label}
@@ -128,7 +128,7 @@ export function Banner({
       </div>
       <button
         type="button"
-        className="absolute inset-y-0 right-2.5 p-1 text-sm text-emerald-700 transition-colors hover:text-emerald-900 dark:text-emerald-400 dark:hover:text-emerald-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-sm)]"
+        className="absolute inset-y-0 right-2.5 p-1 text-sm text-emerald-700 transition-colors hover:text-emerald-900 dark:text-emerald-400 dark:hover:text-emerald-200 rounded-[var(--radius-sm)]"
         onClick={onHide}
         aria-label="Dismiss banner"
       >

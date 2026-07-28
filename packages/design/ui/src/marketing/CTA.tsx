@@ -105,10 +105,10 @@ export function CTA({
                     <a
                       href={primaryCTA.href}
                       className={cn(
-                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium transition-[background-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium transition-[background-color,box-shadow,color,transform] focus-visible:outline-none",
                         isDarkCanvas
-                          ? "bg-background text-foreground hover:bg-muted focus-visible:ring-white"
-                          : "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] focus-visible:ring-[var(--neutral-12)]",
+                          ? "bg-background text-foreground hover:bg-muted"
+                          : "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]",
                       )}
                       data-analytics="footer-cta-primary"
                     >
@@ -119,10 +119,10 @@ export function CTA({
                     <a
                       href={secondaryCTA.href}
                       className={cn(
-                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium border transition-[background-color,border-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium border transition-[background-color,border-color,box-shadow,color,transform] focus-visible:outline-none",
                         isDarkCanvas
-                          ? "border-white/20 text-white hover:bg-white/10 focus-visible:ring-white"
-                          : "border-border text-foreground hover:bg-muted focus-visible:ring-[var(--neutral-12)]",
+                          ? "border-white/20 text-white hover:bg-white/10"
+                          : "border-border text-foreground hover:bg-muted",
                       )}
                       data-analytics="footer-cta-secondary"
                     >

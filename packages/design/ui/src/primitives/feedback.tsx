@@ -347,7 +347,7 @@ function FeedbackDefault({
           <h2 className="font-medium text-foreground text-sm">{label}</h2>
           <button
             aria-label="Close feedback"
-            className="inline-flex size-7 items-center justify-center rounded-[var(--feedback-radius)] text-muted-foreground transition-[background-color,color] duration-[var(--feedback-duration)] ease-[var(--feedback-easing)] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="inline-flex size-7 items-center justify-center rounded-[var(--feedback-radius)] text-muted-foreground transition-[background-color,color] duration-[var(--feedback-duration)] ease-[var(--feedback-easing)] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none"
             onClick={closeAndReturnFocus}
             type="button"
           >

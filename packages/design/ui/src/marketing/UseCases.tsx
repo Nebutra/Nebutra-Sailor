@@ -70,12 +70,12 @@ function UseCaseCard({ item, className }: UseCaseCardProps) {
       )}
     >
       {item.icon && (
-        <div className="mb-6 inline-flex size-12 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--brand-3)] text-[var(--brand-11)] ring-1 ring-[var(--brand-5)]">
+        <div className="mb-6 inline-flex size-12 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--blue-3)] text-[var(--blue-11)] ring-1 ring-[var(--blue-5)]">
           <div className="size-5 rounded-full bg-current" />
         </div>
       )}
       <h3 className="mb-2 text-xl font-semibold text-foreground">{item.title}</h3>
-      <p className="mb-4 text-sm font-medium text-[var(--brand-11)]">{item.audience}</p>
+      <p className="mb-4 text-sm font-medium text-[var(--blue-11)]">{item.audience}</p>
       <p className="mb-6 flex-1 text-base leading-relaxed text-muted-foreground">
         {item.description}
       </p>
@@ -87,7 +87,7 @@ function UseCaseCard({ item, className }: UseCaseCardProps) {
               key={getBenefitKey(item.id, benefit)}
               className="flex items-start gap-3 text-sm text-muted-foreground"
             >
-              <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--brand-9)]" />
+              <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
               <span>{benefit}</span>
             </li>
           ))}
@@ -97,7 +97,7 @@ function UseCaseCard({ item, className }: UseCaseCardProps) {
       {item.href && (
         <a
           href={item.href}
-          className="group mt-auto inline-flex items-center gap-2 text-sm font-medium text-[var(--brand-11)] transition-colors hover:text-[var(--brand-12)]"
+          className="group mt-auto inline-flex items-center gap-2 text-sm font-medium text-[var(--blue-11)] transition-colors hover:text-[var(--blue-12)]"
         >
           View {item.title} details
           <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -118,9 +118,9 @@ function UseCaseTabsNav({ items, selectedTab, onSelect }: UseCaseTabsNavProps) {
             key={caseItem.id}
             onClick={() => onSelect(caseItem.id)}
             className={cn(
-              "relative flex flex-col items-start px-6 py-4 rounded-[var(--radius-xl)] text-left transition-colors whitespace-nowrap lg:whitespace-normal outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]",
+              "relative flex flex-col items-start px-6 py-4 rounded-[var(--radius-xl)] text-left transition-colors whitespace-nowrap lg:whitespace-normal outline-none",
               isActive
-                ? "text-[var(--brand-12)]"
+                ? "text-[var(--blue-12)]"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
@@ -149,7 +149,7 @@ function UseCaseBenefits({ item }: UseCaseBenefitsProps) {
     <div className="grid sm:grid-cols-2 gap-4 mb-10">
       {item.benefits.map((benefit) => (
         <div key={getBenefitKey(item.id, benefit)} className="flex items-start gap-3">
-          <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--brand-9)] mt-0.5" />
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-primary mt-0.5" />
           <span className="text-foreground font-medium leading-snug">{benefit}</span>
         </div>
       ))}
@@ -256,13 +256,13 @@ export function UseCases(props: UseCasesProps) {
                   >
                     <div className="flex items-center gap-4 mb-6">
                       {activeCase.icon && (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--brand-9)] text-white shadow-sm ring-4 ring-[var(--brand-3)]">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-lg)] bg-primary text-white shadow-sm ring-4 ring-[var(--blue-3)]">
                           <div className="h-5 w-5 rounded-[var(--radius-sm)] bg-white/80" />
                         </div>
                       )}
                       <div>
                         <h3 className="text-2xl font-bold text-foreground">{activeCase.title}</h3>
-                        <p className="text-sm font-medium text-[var(--brand-11)]">
+                        <p className="text-sm font-medium text-[var(--blue-11)]">
                           {activeCase.audience}
                         </p>
                       </div>
@@ -311,7 +311,7 @@ export function UseCases(props: UseCasesProps) {
               <div className="flex justify-center gap-3 mt-4">
                 <button
                   type="button"
-                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-muted text-muted-foreground hover:text-foreground hover:border-border transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
+                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-muted text-muted-foreground hover:text-foreground hover:border-border transition-colors shadow-sm focus:outline-none"
                   onClick={() => scrollCarousel("previous")}
                   aria-label="Previous slide"
                 >
@@ -319,7 +319,7 @@ export function UseCases(props: UseCasesProps) {
                 </button>
                 <button
                   type="button"
-                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-muted text-muted-foreground hover:text-foreground hover:border-border transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
+                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-muted text-muted-foreground hover:text-foreground hover:border-border transition-colors shadow-sm focus:outline-none"
                   onClick={() => scrollCarousel("next")}
                   aria-label="Next slide"
                 >

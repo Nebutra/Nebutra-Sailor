@@ -239,7 +239,7 @@ export const Slider = ({
         onBlur={onBlur}
         className={cn(
           "h-[var(--slider-height)] w-full cursor-pointer appearance-none rounded-[var(--slider-radius)] bg-[linear-gradient(to_right,var(--slider-track-fill)_0,var(--slider-track-fill)_var(--slider-progress),var(--slider-track-background)_var(--slider-progress),var(--slider-track-background)_100%)] bg-[length:100%_var(--slider-track-height)] bg-center bg-no-repeat outline-none",
-          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          "disabled:cursor-not-allowed disabled:opacity-50",
           "[&::-moz-range-thumb]:size-[var(--slider-thumb-size)] [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-border [&::-moz-range-thumb]:bg-[var(--slider-thumb-background)] [&::-moz-range-thumb]:shadow-[var(--slider-thumb-shadow)]",
           "[&::-webkit-slider-thumb]:size-[var(--slider-thumb-size)] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-[var(--slider-thumb-background)] [&::-webkit-slider-thumb]:shadow-[var(--slider-thumb-shadow)]",
           "[&::-moz-range-thumb]:transition-transform [&::-moz-range-thumb]:duration-[var(--slider-duration)] [&::-moz-range-thumb]:ease-[var(--slider-easing)]",

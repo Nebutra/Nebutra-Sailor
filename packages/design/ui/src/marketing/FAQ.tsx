@@ -92,7 +92,7 @@ export function FAQ({
               type="button"
               onClick={() => setActiveCategory(null)}
               className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none",
                 activeCategory === null
                   ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
                   : "bg-muted text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -106,7 +106,7 @@ export function FAQ({
                 type="button"
                 onClick={() => setActiveCategory(category)}
                 className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  "px-4 py-2 rounded-full text-sm font-medium transition-colors outline-none",
                   activeCategory === category
                     ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
                     : "bg-muted text-muted-foreground hover:bg-muted hover:text-foreground",

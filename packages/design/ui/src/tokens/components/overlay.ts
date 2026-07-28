@@ -10,8 +10,7 @@
 import { primitiveRadius, primitiveTransition } from "../primitive";
 import { shadowClasses } from "../shadows";
 
-const overlayFocusRingClassName =
-  "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+const overlayFocusRingClassName = "outline-none";
 
 export const overlayZIndex = {
   backdrop: 1040,

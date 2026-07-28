@@ -384,7 +384,7 @@ export function SidebarNav({
                               aria-label={action.label}
                               title={action.label}
                               onClick={action.onClick}
-                              className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                              className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none"
                             >
                               <ActionIcon className="size-3" />
                             </button>

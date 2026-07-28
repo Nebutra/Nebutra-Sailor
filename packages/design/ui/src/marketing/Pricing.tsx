@@ -85,7 +85,7 @@ export function Pricing({
               <button
                 type="button"
                 className={cn(
-                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10",
+                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none z-10",
                   billingCycle === "monthly"
                     ? "text-foreground bg-background shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
@@ -97,7 +97,7 @@ export function Pricing({
               <button
                 type="button"
                 className={cn(
-                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10",
+                  "relative w-32 py-2 text-sm font-medium rounded-full transition-colors focus-visible:outline-none z-10",
                   billingCycle === "yearly"
                     ? "text-foreground bg-background shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
@@ -166,7 +166,7 @@ export function Pricing({
                     href={plan.cta.href}
                     data-analytics={`pricing-cta-${plan.id}`}
                     className={cn(
-                      "w-full inline-flex justify-center items-center px-4 py-3 text-sm font-semibold rounded-[var(--radius-xl)] transition-[background-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] mb-8",
+                      "w-full inline-flex justify-center items-center px-4 py-3 text-sm font-semibold rounded-[var(--radius-xl)] transition-[background-color,box-shadow,color,transform] focus-visible:outline-none mb-8",
                       plan.popular
                         ? "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] shadow-md hover:shadow-lg"
                         : "bg-muted text-foreground hover:bg-muted border border-border",

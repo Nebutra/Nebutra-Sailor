@@ -177,7 +177,7 @@ export default function CTAWithVerticalMarquee({
               <PrimaryButton
                 {...(primaryHref ? { href: primaryHref } : {})}
                 onClick={onPrimaryClick}
-                className="group relative px-6 py-3 bg-foreground text-background rounded-[var(--radius-md)] font-medium overflow-hidden transition-[background-color,box-shadow,color,transform] duration-300 hover:scale-105 hover:shadow-lg motion-reduce:hover:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="group relative px-6 py-3 bg-foreground text-background rounded-[var(--radius-md)] font-medium overflow-hidden transition-[background-color,box-shadow,color,transform] duration-300 hover:scale-105 hover:shadow-lg motion-reduce:hover:scale-100 focus-visible:outline-none"
               >
                 <span className="relative z-10">{primaryButtonText}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
@@ -185,7 +185,7 @@ export default function CTAWithVerticalMarquee({
               <SecondaryButton
                 {...(secondaryHref ? { href: secondaryHref } : {})}
                 onClick={onSecondaryClick}
-                className="group relative px-6 py-3 bg-secondary text-secondary-foreground rounded-[var(--radius-md)] font-medium overflow-hidden transition-[background-color,border-color,box-shadow,color,transform] duration-300 hover:scale-105 hover:shadow-lg motion-reduce:hover:scale-100 border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="group relative px-6 py-3 bg-secondary text-secondary-foreground rounded-[var(--radius-md)] font-medium overflow-hidden transition-[background-color,border-color,box-shadow,color,transform] duration-300 hover:scale-105 hover:shadow-lg motion-reduce:hover:scale-100 border border-border focus-visible:outline-none"
               >
                 <span className="relative z-10">{secondaryButtonText}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700"></div>

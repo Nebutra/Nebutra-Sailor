@@ -203,7 +203,7 @@ export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({
           className={cn(
             "flex h-14 w-14 items-center justify-center text-2xl transition-colors",
             "bg-background border-2 border-border hover:bg-primary hover:text-primary-foreground",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "focus-visible:outline-none",
           )}
           aria-label="Previous testimonial"
         >
@@ -215,7 +215,7 @@ export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({
           className={cn(
             "flex h-14 w-14 items-center justify-center text-2xl transition-colors",
             "bg-background border-2 border-border hover:bg-primary hover:text-primary-foreground",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "focus-visible:outline-none",
           )}
           aria-label="Next testimonial"
         >

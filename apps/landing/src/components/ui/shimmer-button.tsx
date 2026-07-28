@@ -27,7 +27,10 @@ export const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonPr
     ref,
   ) => {
     return (
+      // Defaults to "button" so the shimmer CTA never submits a surrounding
+      // form by accident; `...props` below still lets a caller override it.
       <button
+        type="button"
         style={
           {
             "--spread": "90deg",

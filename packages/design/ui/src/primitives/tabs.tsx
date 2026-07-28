@@ -114,7 +114,7 @@ const tabsListVariants = cva(
 );
 
 const tabsTriggerVariants = cva(
-  "relative inline-flex h-[calc(var(--tabs-height)-var(--tabs-padding)*2)] min-w-[var(--tabs-trigger-min-width)] shrink-0 cursor-pointer items-center justify-center gap-[var(--tabs-trigger-gap)] whitespace-nowrap rounded-[var(--tabs-trigger-radius)] px-[var(--tabs-trigger-padding-x)] font-medium text-[length:var(--tabs-font-size)] outline-none transition-[background-color,border-color,box-shadow,color,opacity] duration-[var(--tabs-duration)] ease-[var(--tabs-easing)] focus-visible:ring-[length:var(--tabs-focus-ring-width)] focus-visible:ring-ring focus-visible:ring-offset-[length:var(--tabs-focus-ring-offset)] focus-visible:ring-offset-background disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 [&_svg]:size-[var(--tabs-icon-size)] [&_svg]:shrink-0",
+  "relative inline-flex h-[calc(var(--tabs-height)-var(--tabs-padding)*2)] min-w-[var(--tabs-trigger-min-width)] shrink-0 cursor-pointer items-center justify-center gap-[var(--tabs-trigger-gap)] whitespace-nowrap rounded-[var(--tabs-trigger-radius)] px-[var(--tabs-trigger-padding-x)] font-medium text-[length:var(--tabs-font-size)] outline-none transition-[background-color,border-color,box-shadow,color,opacity] duration-[var(--tabs-duration)] ease-[var(--tabs-easing)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 [&_svg]:size-[var(--tabs-icon-size)] [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -155,7 +155,7 @@ const tabsIndicatorVariants = cva(
 );
 
 const tabsContentVariants = cva(
-  "mt-[var(--tabs-panel-gap)] text-[length:var(--tabs-font-size)] text-muted-foreground focus-visible:outline-none focus-visible:ring-[length:var(--tabs-focus-ring-width)] focus-visible:ring-ring focus-visible:ring-offset-[length:var(--tabs-focus-ring-offset)] focus-visible:ring-offset-background",
+  "mt-[var(--tabs-panel-gap)] text-[length:var(--tabs-font-size)] text-muted-foreground focus-visible:outline-none",
   {
     variants: {
       variant: {

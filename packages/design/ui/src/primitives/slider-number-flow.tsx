@@ -23,7 +23,7 @@ export const SliderNumberFlow = ({
       <BaseSlider.Indicator className="absolute h-full rounded-full bg-primary" />
     </BaseSlider.Track>
     <BaseSlider.Thumb
-      className="relative block h-5 w-5 rounded-full border border-border bg-background shadow-xs ring-1 ring-border/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+      className="relative block h-5 w-5 rounded-full border border-border bg-background shadow-xs ring-1 ring-border/40 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
       aria-label="Slider Value"
     >
       {(Array.isArray(value) ? value[0] : value) != null && (

@@ -247,7 +247,7 @@ export const MultiSelectTrigger = ({
         "gap-[var(--multi-select-trigger-gap)] rounded-[var(--multi-select-trigger-radius)] border border-input bg-background",
         "px-[var(--multi-select-trigger-padding-x)] text-left text-[length:var(--multi-select-trigger-font-size)] text-foreground shadow-xs",
         "transition-[background-color,border-color,box-shadow,color] duration-[var(--multi-select-duration)] ease-[var(--multi-select-easing)]",
-        "hover:bg-accent/60 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "hover:bg-accent/60 focus-visible:border-ring focus-visible:outline-none",
         "disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
@@ -472,7 +472,7 @@ export const MultiSelectRow = ({
             "peer size-[var(--multi-select-checkbox-size)] appearance-none rounded-[var(--radius-sm)] border border-input bg-background",
             "transition-[background-color,border-color,box-shadow] duration-[var(--multi-select-duration)] ease-[var(--multi-select-easing)]",
             "hover:border-ring checked:border-primary checked:bg-primary",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "focus-visible:outline-none",
           )}
         />
         <Check
@@ -506,7 +506,7 @@ export const MultiSelectRow = ({
         className={cn(
           "min-w-[var(--multi-select-action-min-width)] shrink-0 rounded-[var(--radius-sm)] px-2 py-1 text-right text-[length:var(--multi-select-row-description-size)] font-medium text-muted-foreground",
           "opacity-0 transition-[background-color,color,opacity] duration-[var(--multi-select-duration)] ease-[var(--multi-select-easing)]",
-          "hover:bg-background hover:text-foreground focus-visible:bg-background focus-visible:text-foreground focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "hover:bg-background hover:text-foreground focus-visible:bg-background focus-visible:text-foreground focus-visible:opacity-100 focus-visible:outline-none",
           "group-hover:opacity-100 group-focus-within:opacity-100",
         )}
       >

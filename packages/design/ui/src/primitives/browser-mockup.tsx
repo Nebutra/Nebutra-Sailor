@@ -176,7 +176,7 @@ export function Browser(props: BrowserProps) {
                 type="button"
                 onClick={handleCopy}
                 aria-label={copied ? "Address copied" : "Copy address"}
-                className="flex-shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex-shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none"
               >
                 {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
               </button>

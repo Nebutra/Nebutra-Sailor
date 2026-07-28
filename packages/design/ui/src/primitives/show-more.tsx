@@ -150,7 +150,7 @@ export const ShowMore = ({
             "h-[var(--show-more-trigger-height)] rounded-[var(--show-more-radius)] px-[var(--show-more-trigger-padding-x)]",
             "transition-[background-color,border-color,color] duration-[var(--show-more-duration)] ease-[var(--show-more-easing)]",
             "hover:border-border hover:bg-muted",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            "focus-visible:outline-none",
             "disabled:pointer-events-none disabled:opacity-50",
             "motion-reduce:transition-none",
             buttonClassName,

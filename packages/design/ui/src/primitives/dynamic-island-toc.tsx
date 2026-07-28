@@ -255,7 +255,7 @@ function TocClosedPill({
           : { ...islandTween, delay: isExpanded ? 0 : motionDurationSec.micro }
       }
       className={cn(
-        "absolute inset-0 flex w-full items-center gap-4 border-0 bg-transparent px-4 text-left text-foreground outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 sm:px-5",
+        "absolute inset-0 flex w-full items-center gap-4 border-0 bg-transparent px-4 text-left text-foreground outline-none sm:px-5",
         isExpanded && "pointer-events-none",
       )}
     >
@@ -403,7 +403,7 @@ function TocMenuItem({
       style={{ paddingLeft: `${paddingLeft}px` }}
       className={cn(
         "group flex w-full shrink-0 cursor-pointer items-center rounded-[var(--radius-lg)] border-none py-2 pr-3 text-left text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-out",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40",
+        "focus-visible:outline-none",
         isActive && "bg-foreground/10 font-medium text-foreground",
         !isActive && isHovered && "bg-foreground/5 text-foreground/85",
         !isActive && !isHovered && "bg-transparent text-foreground/45",

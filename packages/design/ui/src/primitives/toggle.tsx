@@ -175,7 +175,7 @@ const Toggle = ({
           "border-[var(--toggle-track-border)] transition-[background-color,border-color] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
           "peer-checked:bg-[var(--toggle-track-on)]",
           "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",
-          "peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background",
+          "",
           "peer-disabled:cursor-not-allowed peer-disabled:opacity-60",
           "motion-reduce:transition-none",
         )}

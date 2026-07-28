@@ -106,7 +106,7 @@ export function UpgradeBanner({
           <div className="relative flex h-9 items-center gap-1 rounded-[var(--radius-md)] border border-primary/20 bg-primary/5 pl-2.5 pr-1 text-sm">
             <button
               type="button"
-              className="my-[-1px] cursor-pointer rounded-[var(--radius-sm)] border-none bg-transparent px-0 py-1 text-[13px] font-medium text-foreground underline decoration-primary/30 underline-offset-4 outline-none transition-colors hover:text-primary hover:decoration-primary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="my-[-1px] cursor-pointer rounded-[var(--radius-sm)] border-none bg-transparent px-0 py-1 text-[13px] font-medium text-foreground underline decoration-primary/30 underline-offset-4 outline-none transition-colors hover:text-primary hover:decoration-primary/50"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onClick={onClick}
@@ -119,7 +119,7 @@ export function UpgradeBanner({
               <button
                 type="button"
                 onClick={onClose}
-                className="m-0 flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded border-0 bg-transparent p-0 text-primary transition-colors hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="m-0 flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded border-0 bg-transparent p-0 text-primary transition-colors hover:bg-primary/10"
                 aria-label="Close banner"
               >
                 <X size={16} aria-hidden="true" />

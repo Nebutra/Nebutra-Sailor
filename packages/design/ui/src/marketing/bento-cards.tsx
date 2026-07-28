@@ -154,7 +154,7 @@ export const PlusCard: React.FC<PlusCardProps> = ({
           href={href}
           target={target}
           rel={target === "_blank" ? "noopener noreferrer" : undefined}
-          className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="block focus-visible:outline-none"
         >
           <CornerPlusIcons />
           {content}

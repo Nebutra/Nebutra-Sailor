@@ -24,7 +24,7 @@ export function ConfettiDemo() {
               origin: { y: 0.6 },
             })
           }
-          className="px-6 py-3 text-sm font-semibold rounded-lg bg-primary text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
+          className="px-6 py-3 text-sm font-semibold rounded-lg bg-primary text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none"
         >
           Fire Confetti via Ref!
         </button>

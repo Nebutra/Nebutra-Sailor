@@ -126,7 +126,7 @@ const cardClassName = cn(
   "group relative block rounded-[var(--radius-xl)] border border-border bg-card text-card-foreground p-5 text-left",
   "transition-[border-color,box-shadow,transform] duration-150 motion-reduce:transition-none motion-reduce:transform-none",
   "hover:border-neutral-7 hover:shadow-sm hover:-translate-y-px motion-reduce:hover:translate-y-0",
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+  "focus-visible:outline-none",
 );
 
 // ─── Subcomponents ────────────────────────────────────────────────────────────
@@ -158,7 +158,7 @@ function GalleryCardActionsMenu({ actions, title }: GalleryCardActionsMenuProps)
                 "inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)]",
                 "text-muted-foreground transition-colors",
                 "hover:bg-accent hover:text-accent-foreground",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+                "focus-visible:outline-none",
               )}
             >
               <MoreHorizontal className="h-4 w-4" />

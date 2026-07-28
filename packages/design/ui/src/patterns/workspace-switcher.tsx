@@ -133,7 +133,7 @@ function TriggerButton({
         className={cn(
           "inline-flex items-center gap-1 rounded-[var(--radius-md)] p-1 outline-none transition-colors",
           "hover:bg-accent hover:text-accent-foreground",
-          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+          "",
           "disabled:cursor-not-allowed disabled:opacity-50",
           className,
         )}
@@ -153,7 +153,7 @@ function TriggerButton({
       className={cn(
         "inline-flex w-full items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background px-2 py-1 text-left outline-none transition-colors",
         "hover:bg-accent hover:text-accent-foreground",
-        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+        "",
         "disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}

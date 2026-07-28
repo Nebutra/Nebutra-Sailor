@@ -85,7 +85,7 @@ function EntityRoot<T extends React.ElementType = "div">({
         "flex w-full items-center gap-3 px-4 py-3 text-left",
         // Clickable rows get hover + focus-visible affordance.
         isButton &&
-          "cursor-pointer transition-colors hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
+          "cursor-pointer transition-colors hover:bg-accent/40 focus-visible:outline-none",
         className,
       )}
       {...buttonDefaults}

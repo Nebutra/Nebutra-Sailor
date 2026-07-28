@@ -410,14 +410,14 @@ export function AuthPage({
             By clicking continue, you agree to our{" "}
             <a
               href={termsHref}
-              className="hover:text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="hover:text-primary underline underline-offset-4 focus-visible:outline-none"
             >
               Terms of Service
             </a>{" "}
             and{" "}
             <a
               href={privacyHref}
-              className="hover:text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="hover:text-primary underline underline-offset-4 focus-visible:outline-none"
             >
               Privacy Policy
             </a>

@@ -207,7 +207,7 @@ const ContextCardTrigger = ({
               "transition-[opacity,transform,display] duration-[var(--context-card-duration)] ease-[var(--context-card-easing)]",
               "data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-ending-style:scale-[0.98]",
               "motion-reduce:transition-none motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:scale-100",
-              "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              "",
               "data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom",
               className,
             )}

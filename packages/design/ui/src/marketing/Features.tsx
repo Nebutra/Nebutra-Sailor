@@ -118,7 +118,7 @@ export function Features({
                       <div className="mt-auto pt-4">
                         <a
                           href={feature.href}
-                          className="inline-flex items-center text-sm font-medium text-foreground hover:text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-md)]"
+                          className="inline-flex items-center text-sm font-medium text-foreground hover:text-muted-foreground transition-colors focus-visible:outline-none rounded-[var(--radius-md)]"
                         >
                           Learn more
                           <span className="ml-1 transition-transform group-hover:translate-x-1">

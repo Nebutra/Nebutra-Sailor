@@ -49,12 +49,12 @@ export const baseButtonVariants = cva(
         circle: "rounded-full",
       },
       mode: {
-        default: "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        icon: "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        default: "",
+        icon: "",
         link: "text-primary h-auto p-0 bg-transparent rounded-none hover:bg-transparent data-[state=open]:bg-transparent",
         input: `
             justify-start font-normal hover:bg-background [&_svg]:transition-colors [&_svg]:hover:text-foreground data-[state=open]:bg-background
-            focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30
+            focus-visible:border-ring focus-visible:outline-none 
             [[data-state=open]>&]:border-ring [[data-state=open]>&]:outline-none [[data-state=open]>&]:ring-[3px]
             [[data-state=open]>&]:ring-ring/30
             aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10 dark:aria-invalid:border-destructive dark:aria-invalid:ring-destructive/20

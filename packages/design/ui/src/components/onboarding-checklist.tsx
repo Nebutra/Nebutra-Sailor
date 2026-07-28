@@ -158,7 +158,7 @@ export function OnboardingChecklist({
                     {item.helperText}{" "}
                     <a
                       href={item.helperLink.href}
-                      className="text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-sm)]"
+                      className="text-primary underline-offset-4 hover:underline focus-visible:outline-none rounded-[var(--radius-sm)]"
                     >
                       {item.helperLink.text}
                     </a>
@@ -178,7 +178,7 @@ export function OnboardingChecklist({
             <DialogTrigger asChild>
               <button
                 type="button"
-                className="w-full h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-lg)]"
+                className="w-full h-full focus-visible:outline-none rounded-[var(--radius-lg)]"
               >
                 <Image
                   src={videoThumbnailUrl}

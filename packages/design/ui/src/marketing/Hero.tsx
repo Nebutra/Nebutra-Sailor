@@ -38,11 +38,11 @@ function HeroBackground({ backgroundType }: { backgroundType: HeroProps["backgro
     default:
       return (
         <div className="pointer-events-none absolute inset-0 -z-10 isolate flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 bg-[var(--brand-1)] dark:bg-background" />
+          <div className="absolute inset-0 bg-[var(--blue-1)] dark:bg-background" />
           {/* Mesh gradient approximation */}
-          <div className="absolute -top-1/4 -left-1/4 size-[50rem] rounded-full bg-[var(--brand-6)]/20 blur-[100px] opacity-70" />
-          <div className="absolute top-1/2 -right-1/4 size-[40rem] rounded-full bg-[var(--brand-9)]/10 blur-[120px] opacity-50" />
-          <div className="absolute bottom-0 left-1/3 size-[60rem] rounded-full bg-[var(--brand-5)]/10 blur-[150px] opacity-60" />
+          <div className="absolute -top-1/4 -left-1/4 size-[50rem] rounded-full bg-[var(--blue-6)]/20 blur-[100px] opacity-70" />
+          <div className="absolute top-1/2 -right-1/4 size-[40rem] rounded-full bg-primary/10 blur-[120px] opacity-50" />
+          <div className="absolute bottom-0 left-1/3 size-[60rem] rounded-full bg-[var(--blue-5)]/10 blur-[150px] opacity-60" />
           <GridPattern className="[mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
         </div>
       );
@@ -101,7 +101,7 @@ export function Hero({
                   {headline || (
                     <span>
                       Build faster with{" "}
-                      <span className="text-[var(--brand-11)]">Agentic Precision</span>
+                      <span className="text-[var(--blue-11)]">Agentic Precision</span>
                     </span>
                   )}
                 </h1>
@@ -130,7 +130,7 @@ export function Hero({
                 >
                   <a
                     href={primaryCTA?.href || "/signup"}
-                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--brand-9)] px-8 text-base font-semibold text-white shadow-lg shadow-[var(--brand-9)]/20 hover:bg-[var(--brand-10)] transition-[background-color,box-shadow,transform] hover:scale-105 active:scale-95 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 group"
+                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] bg-primary px-8 text-base font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-[background-color,box-shadow,transform] hover:scale-105 active:scale-95 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 group"
                   >
                     {primaryCTA?.text || "Start Free Trial"}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -208,7 +208,7 @@ export function Hero({
                 <div className="w-full h-full bg-gradient-to-br from-[var(--neutral-3)] to-[var(--neutral-2)] flex items-center justify-center overflow-hidden">
                   {/* 3D Placeholder or generic fallback */}
                   <div className="w-3/4 h-3/4 bg-white/50 dark:bg-background/70 backdrop-blur border border-white/20 rounded-[var(--radius-xl)] shadow-[0_0_80px_rgba(0,0,0,0.1)] flex items-center justify-center -rotate-3 hover:rotate-0 transition-transform duration-700 cursor-pointer group">
-                    <Play className="h-16 w-16 text-[var(--brand-9)] group-hover:scale-110 transition-transform" />
+                    <Play className="h-16 w-16 text-primary group-hover:scale-110 transition-transform" />
                   </div>
                 </div>
               )}

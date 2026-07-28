@@ -185,7 +185,7 @@ export const HighlightCard = React.forwardRef<HTMLDivElement, HighlightCardProps
             <motion.button
               variants={itemMotionVariants}
               onClick={onButtonClick}
-              className="rounded-full bg-white/30 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+              className="rounded-full bg-white/30 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/40 focus-visible:outline-none"
               aria-label={buttonText}
             >
               {buttonText}

@@ -149,7 +149,7 @@ export function AppShell({
               className={cn(
                 "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
                 "hover:bg-muted hover:text-foreground md:hidden",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1",
+                "focus-visible:outline-none",
               )}
             >
               <Menu className="size-4" aria-hidden="true" />
@@ -168,7 +168,7 @@ export function AppShell({
               className={cn(
                 "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
                 "hover:bg-muted hover:text-foreground",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1",
+                "focus-visible:outline-none",
               )}
             >
               <Menu className="size-4" aria-hidden="true" />

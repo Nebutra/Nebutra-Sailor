@@ -75,7 +75,7 @@ export function Footer({
               {/* Brand Logo */}
               <Link
                 href={`/${locale}`}
-                className="inline-flex items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] rounded-[var(--radius-md)]"
+                className="inline-flex items-center gap-2 outline-none rounded-[var(--radius-md)]"
               >
                 {/* Generic Standard Logo Placeholder */}
                 <div className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-lg)] bg-[hsl(var(--primary))] text-white font-bold">
@@ -98,7 +98,7 @@ export function Footer({
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-[hsl(var(--primary))] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-md)]"
+                      className="text-muted-foreground hover:text-[hsl(var(--primary))] transition-colors outline-none rounded-[var(--radius-md)]"
                       aria-label={link.platform}
                     >
                       <SocialIcon platform={link.platform} />
@@ -125,7 +125,7 @@ export function Footer({
                             href={link.href}
                             target={link.external ? "_blank" : undefined}
                             rel={link.external ? "noopener noreferrer" : undefined}
-                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
+                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
                           >
                             {link.label}
                             {link.badge && (
@@ -137,7 +137,7 @@ export function Footer({
                         ) : (
                           <Link
                             href={link.href}
-                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
+                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
                           >
                             {link.label}
                             {link.badge && (
@@ -176,7 +176,7 @@ export function Footer({
                       />
                       <button
                         type="button"
-                        className="absolute right-1 p-1.5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--neutral-8)]"
+                        className="absolute right-1 p-1.5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-colors focus:outline-none"
                         aria-label="Submit newsletter subscription"
                       >
                         <ArrowRight className="w-4 h-4" />
@@ -200,13 +200,13 @@ export function Footer({
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <Link
                   href={`/${locale}/privacy`}
-                  className="hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
+                  className="hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
                 >
                   Privacy Policy
                 </Link>
                 <Link
                   href={`/${locale}/terms`}
-                  className="hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[var(--radius-sm)]"
+                  className="hover:text-foreground transition-colors outline-none rounded-[var(--radius-sm)]"
                 >
                   Terms of Service
                 </Link>
