@@ -65,8 +65,6 @@
     "--tabs-badge-padding-x",
     "--tabs-duration",
     "--tabs-easing",
-    "--tabs-focus-ring-offset",
-    "--tabs-focus-ring-width",
     "--tabs-font-size",
     "--tabs-gap",
     "--tabs-height",
