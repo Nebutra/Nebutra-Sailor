@@ -18,7 +18,10 @@ vi.mock("@nebutra/gateway-core", async () => {
         id: "key_1",
         organizationId: "org_1",
         userId: "user_1",
-        scopes: ["chat:completions"],
+        // "models:*" — the scope the chat-completions route actually checks.
+        // "chat:completions" is not in the API_SCOPES vocabulary at all; this
+        // fixture predates the scope model and made every request 403.
+        scopes: ["models:*"],
         rateLimitRps: 100,
         plan: "PRO",
       });

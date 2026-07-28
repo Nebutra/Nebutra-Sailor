@@ -34,7 +34,7 @@ const mockResolvedKey: ResolvedApiKey = {
   id: "key_001",
   organizationId: "org_123",
   userId: "user_456",
-  scopes: ["chat:completions"],
+  scopes: ["models:*"],
   rateLimitRps: 100,
   plan: "PRO",
 };
