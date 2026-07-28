@@ -13,6 +13,7 @@
     "dist",
     "src/**/*.test.ts",
     "src/**/__tests__/**",
-    "src/generated/prisma/internal/**/*"
+    "src/generated/prisma/internal/**/*",
+    "src/generated/prisma-workerd/internal/**/*"
   ]
 }

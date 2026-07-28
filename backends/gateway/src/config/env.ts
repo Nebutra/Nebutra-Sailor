@@ -229,4 +229,29 @@ export function validateEnv(): Env {
   return result.data;
 }
 
-export const env = validateEnv();
+/**
+ * Validated lazily, on first property access.
+ *
+ * Validating at module scope runs during the Worker's startup validation,
+ * before any handler — and before secrets are bound to the isolate — so the
+ * gateway failed to deploy with "Invalid environment variables" no matter
+ * which secrets were actually set. A Proxy keeps every `env.FOO` call site
+ * unchanged while moving the check to the first read, which happens inside a
+ * request. On Node nothing observable changes: the first access is still long
+ * before any traffic is served.
+ */
+type ValidatedEnv = ReturnType<typeof validateEnv>;
+
+let validated: ValidatedEnv | null = null;
+
+function resolveEnv(): ValidatedEnv {
+  if (validated === null) validated = validateEnv();
+  return validated;
+}
+
+export const env = new Proxy({} as ValidatedEnv, {
+  get: (_target, prop) => resolveEnv()[prop as keyof ValidatedEnv],
+  has: (_target, prop) => prop in resolveEnv(),
+  ownKeys: () => Reflect.ownKeys(resolveEnv()),
+  getOwnPropertyDescriptor: (_target, prop) => Object.getOwnPropertyDescriptor(resolveEnv(), prop),
+});

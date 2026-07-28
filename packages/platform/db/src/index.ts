@@ -5,7 +5,7 @@
 //   - getSystemDb()                — ESCAPE HATCH, no tenant filter
 //
 // See `./client.ts` for the rationale and usage guidance.
-export { getSystemDb, getTenantDb, type PrismaClient } from "./client";
+
 // Re-export all Prisma types for convenience
 export type {
   AIProvider,
@@ -56,5 +56,9 @@ export type {
   WorkflowRun,
   WorkflowRunStatus,
   WorkflowStatus,
-} from "./generated/prisma/client";
-export { Prisma } from "./generated/prisma/client";
+} from "#prisma-client";
+// Runtime export, not a type — a direct path here bakes the Node client into
+// the Workers bundle even though nothing on that path is used there. Goes
+// through the "#prisma-client" condition like the client itself.
+export { Prisma } from "#prisma-client";
+export { getSystemDb, getTenantDb, type PrismaClient } from "./client";

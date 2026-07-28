@@ -4,6 +4,21 @@ generator client {
   previewFeatures = ["postgresqlExtensions"]
 }
 
+// Second client, generated for the Workers runtime.
+//
+// The default client resolves `@prisma/client/runtime/client.mjs`, which calls
+// fileURLToPath at module load. On workerd that argument is undefined and the
+// Worker fails its startup validation before serving a request — the gateway
+// could not be deployed at all. Switching the single generator to workerd
+// would fix the Worker and break ECS Origin and every Next.js app, so both
+// runtimes get their own build and package exports pick between them.
+generator clientWorkerd {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma-workerd"
+  runtime         = "workerd"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
 datasource db {
   provider   = "postgresql"
   extensions = [vector, uuid_ossp(map: "uuid-ossp")]

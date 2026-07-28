@@ -83,6 +83,7 @@ export function recordUsage(input: RecordUsageInput): void {
   }
 
   // Add to buffer
+  ensureFlushTimer();
   const key = input.organizationId;
   const buffer = usageBuffer.get(key) || [];
   buffer.push(record);
@@ -368,11 +369,26 @@ export function formatUsage(quantity: bigint, type: UsageType): string {
   return `${quantity.toLocaleString()} ${pricing.unitName}s`;
 }
 
-// Start periodic buffer flush
-if (typeof setInterval !== "undefined") {
-  setInterval(() => {
+/**
+ * Start the periodic flush on first use rather than at import.
+ *
+ * Cloudflare Workers forbid timers, fetch, and randomness in global scope, so
+ * a module-level setInterval fails the Worker's startup validation and the
+ * whole gateway becomes undeployable — the `typeof setInterval !== "undefined"`
+ * guard does not help, because the function exists there, it just cannot be
+ * called until a handler is running. Starting it from the first recorded usage
+ * puts the call inside a request, which is legal on Workers and equivalent on
+ * Node, where nothing flushes before there is something to flush anyway.
+ */
+let flushTimer: ReturnType<typeof setInterval> | null = null;
+
+function ensureFlushTimer(): void {
+  if (flushTimer !== null || typeof setInterval === "undefined") return;
+  flushTimer = setInterval(() => {
     flushUsageBuffer().catch((err: unknown) => logger.error("Usage buffer flush failed", err));
   }, BUFFER_FLUSH_INTERVAL);
+  // Do not hold the process open for a buffer that may never fill again.
+  (flushTimer as { unref?: () => void }).unref?.();
 }
 
 if (typeof process !== "undefined") {

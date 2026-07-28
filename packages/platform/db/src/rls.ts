@@ -19,7 +19,7 @@
  * no risk of context leaking across requests.
  */
 
-import type { PrismaClient } from "./generated/prisma/client";
+import type { PrismaClient } from "#prisma-client";
 
 // Optional non-bypassrls role to assume for tenant-scoped transactions — e.g.
 // "app_user" on Supabase, whose `postgres` connection role bypasses RLS. Env-driven

@@ -160,6 +160,7 @@ export function createRateLimiter(plan: string): TokenBucket {
 const rateLimiters: Map<string, TokenBucket> = new Map();
 
 export function getRateLimiter(plan: string): TokenBucket {
+  ensureCleanupTimer();
   if (!rateLimiters.has(plan)) {
     rateLimiters.set(plan, createRateLimiter(plan));
   }
@@ -265,15 +266,26 @@ export function createRedisRateLimiter(
 // Purge stale per-tenant buckets every 30 minutes.
 // Buckets idle for >1 hour are removed; this prevents unbounded memory growth
 // in long-running Node processes with many unique tenant keys.
+//
+// Started on first use, not at import: Cloudflare Workers reject a timer
+// created in global scope, which made the whole gateway fail startup
+// validation. `typeof setInterval !== "undefined"` does not catch that — the
+// function exists on Workers, it just cannot be called until a handler runs.
+// There is also nothing to purge before the first limiter exists.
 /* v8 ignore start */
-if (typeof setInterval !== "undefined") {
-  setInterval(
+let cleanupTimer: ReturnType<typeof setInterval> | null = null;
+
+function ensureCleanupTimer(): void {
+  if (cleanupTimer !== null || typeof setInterval === "undefined") return;
+  cleanupTimer = setInterval(
     () => {
       for (const limiter of rateLimiters.values()) {
         limiter.cleanup(3_600_000); // 1 hour idle threshold
       }
     },
     30 * 60 * 1000, // every 30 minutes
-  ).unref?.(); // don't keep the Node process alive for cleanup alone
+  );
+  // don't keep the Node process alive for cleanup alone
+  (cleanupTimer as { unref?: () => void }).unref?.();
 }
 /* v8 ignore stop */

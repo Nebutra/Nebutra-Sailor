@@ -1,8 +1,12 @@
 import { logger } from "@nebutra/logger";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
+// Resolved by the "#prisma-client" condition in package.json: workerd gets the
+// wasm-compiler-edge build, everything else gets the Node one. A direct
+// relative import here would bake the Node runtime into the Workers bundle,
+// where it calls fileURLToPath at load and fails startup validation.
+import { PrismaClient } from "#prisma-client";
 import { decryptRecordsWithLimit } from "./decrypt-concurrency";
-import { PrismaClient } from "./generated/prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
