@@ -33,15 +33,24 @@ const badgeVariants = cva(
         "purple-subtle":
           "bg-secondary/40 text-secondary-foreground fill-current border-transparent",
         amber: "bg-warning text-warning-foreground fill-current",
-        "amber-subtle": "bg-warning/15 text-warning fill-current border-transparent",
+        "amber-subtle":
+          // --warning is a FILL (2.13:1). As ink on its own tint it measured 1.91:1.
+          // --warning-strong is the AA-safe amber foreground: 5.01:1 light / 6.20:1 dark.
+          "bg-warning/10 text-[hsl(var(--warning-strong))] fill-current border-transparent",
         red: "bg-destructive text-destructive-foreground fill-current",
-        "red-subtle": "bg-destructive/15 text-destructive fill-current border-transparent",
+        "red-subtle":
+          // --destructive is fill-only in dark (2.01:1 as ink on its own tint).
+          // --destructive-strong: 4.58:1 light / 4.97:1 dark.
+          "bg-destructive/10 text-[hsl(var(--destructive-strong))] fill-current border-transparent",
         pink: "bg-accent text-accent-foreground fill-current",
         "pink-subtle": "bg-accent/40 text-accent-foreground fill-current border-transparent",
         green: "bg-success text-success-foreground fill-current",
-        "green-subtle": "bg-success/15 text-success fill-current border-transparent",
+        "green-subtle":
+          // 4.49:1 light / 4.83:1 dark at this alpha. Light is one hundredth under
+          // the 4.5 floor — a --success-strong companion would close it properly.
+          "bg-success/10 text-success fill-current border-transparent",
         teal: "bg-info text-info-foreground fill-current",
-        "teal-subtle": "bg-info/15 text-info fill-current border-transparent",
+        "teal-subtle": "bg-info/10 text-info fill-current border-transparent",
         inverted: "bg-foreground text-background fill-current",
         // Special visual treatments (intentional product design, not brand hex)
         trial:
