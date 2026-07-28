@@ -19,6 +19,12 @@ export interface GatewayRedisAdapter {
   get: (key: string) => Promise<string | null>;
   set: (key: string, value: string, opts?: { ex?: number }) => Promise<unknown>;
   del: (key: string) => Promise<unknown>;
+  /**
+   * Passed through so the balance guard can reserve credit atomically. Without
+   * it the guard degrades to read-then-compare, which admits every concurrent
+   * request inside the balance cache window on the same remaining cent.
+   */
+  eval: (script: string, keys: string[], args: Array<string | number>) => Promise<unknown>;
 }
 
 export interface GatewayDeps {
@@ -55,6 +61,7 @@ export async function buildGatewayDeps(): Promise<GatewayDeps> {
       return redis.set(key, value);
     },
     del: async (key) => redis.del(key),
+    eval: async (script, keys, args) => redis.eval(script, keys, args),
   };
 
   const queue = await getQueue();

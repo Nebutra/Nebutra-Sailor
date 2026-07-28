@@ -9,7 +9,7 @@ import { createStreamingUsageExtractor, extractUsageFromJson } from "./metering/
 import { type EnqueueDeps, enqueueCompletion } from "./worker/completion-event";
 
 export { resolveApiKey } from "./auth/api-key-resolver";
-export { checkBalance, invalidateBalanceCache } from "./auth/balance-guard";
+export { admitSpend, checkBalance, invalidateBalanceCache } from "./auth/balance-guard";
 export {
   calculateCost,
   DEFAULT_PRICING,

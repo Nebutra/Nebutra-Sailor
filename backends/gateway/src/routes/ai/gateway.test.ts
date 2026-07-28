@@ -51,6 +51,9 @@ function createDeps(): GatewayDeps {
       get: vi.fn(async () => null),
       set: vi.fn(async () => "OK"),
       del: vi.fn(async () => 1),
+      // Present so the balance guard takes its atomic path; these tests do not
+      // exercise admission, so returning 1 means "admitted".
+      eval: vi.fn(async () => 1),
     },
     prisma: {} as GatewayDeps["prisma"],
     queue: { enqueue: vi.fn(async () => undefined) } as unknown as GatewayDeps["queue"],

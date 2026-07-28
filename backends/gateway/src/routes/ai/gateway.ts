@@ -12,12 +12,15 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { findOversizedPropertyName, OPENAI_MAX_PROPERTY_NAME_LENGTH } from "@nebutra/agents";
 import {
+  admitSpend,
+  calculateCost,
   createGatewayPipelineMiddleware,
   createStreamingUsageExtractor,
   enqueueCompletion,
   estimateUsage,
   extractUsageFromJson,
   type GatewayContextVars,
+  getModelPricing,
   type ResolvedApiKey,
 } from "@nebutra/gateway-core";
 import { logger } from "@nebutra/logger";
@@ -34,23 +37,65 @@ const ChatMessageSchema = z.object({
   content: z.string(),
 });
 
+/**
+ * Per-request ceilings.
+ *
+ * The balance guard admits a request when the tenant's balance is above zero.
+ * It does not ask how much the request could cost, so a balance of one cent
+ * admits a request that bills fifty dollars — a million-token context with an
+ * unbounded completion. These bound the worst case for a single request.
+ *
+ * Set well above real traffic: a long chat is a few thousand output tokens
+ * and tens of thousands of input characters. Nothing normal comes near these,
+ * which is the point — they bound the failure, not the success. Tunable by env
+ * so raising one does not need a deploy.
+ */
+function positiveIntFromEnv(name: string, fallback: number): number {
+  const parsed = Number.parseInt(process.env[name] ?? "", 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+const MAX_COMPLETION_TOKENS = positiveIntFromEnv("AI_MAX_COMPLETION_TOKENS", 32_768);
+const MAX_PROMPT_CHARS = positiveIntFromEnv("AI_MAX_PROMPT_CHARS", 1_000_000);
+const MAX_MESSAGES = positiveIntFromEnv("AI_MAX_MESSAGES", 500);
+
+// Only used to price the worst case for a reservation, never to bill. Matches
+// the heuristic in gateway-core's tiktoken fallback; being slightly wrong here
+// costs a slightly wrong reservation, which is released either way.
+const CHARS_PER_TOKEN_ESTIMATE = 3.5;
+
 const ChatCompletionRequestSchema = z
   .object({
     model: z.string(),
-    messages: z.array(ChatMessageSchema),
+    messages: z.array(ChatMessageSchema).max(MAX_MESSAGES),
     stream: z.boolean().optional().default(false),
     temperature: z.number().optional(),
-    max_tokens: z.number().optional(),
+    max_tokens: z.number().int().positive().max(MAX_COMPLETION_TOKENS).optional(),
   })
   .catchall(z.any())
   .superRefine((value, ctx) => {
     const issue = findOversizedPropertyName(value);
-    if (!issue) return;
+    if (issue) {
+      ctx.addIssue({
+        code: "custom",
+        message: `JSON object property name at ${issue.path} is ${issue.length} characters long; maximum is ${OPENAI_MAX_PROPERTY_NAME_LENGTH}. Put generated text in a string value instead of using it as a JSON key.`,
+      });
+    }
 
-    ctx.addIssue({
-      code: "custom",
-      message: `JSON object property name at ${issue.path} is ${issue.length} characters long; maximum is ${OPENAI_MAX_PROPERTY_NAME_LENGTH}. Put generated text in a string value instead of using it as a JSON key.`,
-    });
+    // Measured across all messages, not per message: ten thousand small
+    // messages cost the same as one enormous one, and only the total is
+    // charged for.
+    const promptChars = value.messages.reduce(
+      (sum: number, m: { content: string }) => sum + m.content.length,
+      0,
+    );
+    if (promptChars > MAX_PROMPT_CHARS) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["messages"],
+        message: `Prompt is ${promptChars} characters; maximum is ${MAX_PROMPT_CHARS}.`,
+      });
+    }
   });
 
 const ErrorResponseSchema = z.object({
@@ -348,6 +393,12 @@ function isRetryableUpstreamStatus(status: number): boolean {
 function buildUpstreamBody(body: UpstreamRequestBody, apiKey: ResolvedApiKey): UpstreamRequestBody {
   return {
     ...withIncludeUsage(body),
+    // Schema validation caps max_tokens when the caller sends one, but omitting
+    // it is the common case and leaves the ceiling to whatever the upstream
+    // defaults to — which for current frontier models is large enough that one
+    // request can bill more than a month of normal traffic. Send the ceiling
+    // explicitly so the bound holds either way.
+    max_tokens: body.max_tokens ?? MAX_COMPLETION_TOKENS,
     user: apiKey.userId ?? apiKey.organizationId,
   };
 }
@@ -451,6 +502,41 @@ export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRoute
 
     if (!hasScope(apiKey.scopes, API_SCOPES.MODELS_ALL)) {
       return c.json({ error: "API key missing models:* scope" }, 403);
+    }
+
+    // Reserve this request's worst case against the tenant's balance before
+    // calling upstream. The middleware already rejected a zero balance, but
+    // that check reads a 30s cache and so admits every concurrent request on
+    // the same remaining cent. Reserving moves a shared counter atomically, so
+    // only requests that actually fit get through.
+    //
+    // Worst case is priced from the real model pricing rather than a flat
+    // ceiling: over-estimating would reject requests that were always going to
+    // be affordable, which is a worse outcome than the hole being slightly
+    // wider. If pricing is unknown the reservation is skipped and behaviour is
+    // unchanged.
+    try {
+      const pricing = await getModelPricing(body.model, deps as never).catch(() => null);
+      if (pricing) {
+        const promptChars = body.messages.reduce((sum, m) => sum + m.content.length, 0);
+        const promptTokens = Math.ceil(promptChars / CHARS_PER_TOKEN_ESTIMATE);
+        const completionTokens = body.max_tokens ?? MAX_COMPLETION_TOKENS;
+        const worstCase = calculateCost(
+          {
+            promptTokens,
+            completionTokens,
+            totalTokens: promptTokens + completionTokens,
+            model: body.model,
+          },
+          pricing,
+        );
+        await admitSpend(apiKey.organizationId, worstCase, deps.redis, deps.getCreditBalance);
+      }
+    } catch (err) {
+      return c.json(
+        { error: err instanceof Error ? err.message : "Insufficient credit balance" },
+        402,
+      );
     }
 
     log.info("Gateway chat request", {
