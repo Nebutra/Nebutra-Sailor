@@ -5,17 +5,23 @@ compatibility_flags = ["nodejs_compat"]
 
 # Edge connection pool in front of Postgres. Without it every Worker isolate
 # opens its own connection and the database runs out of slots long before the
-# Worker runs out of capacity. `localConnectionString` is what `wrangler dev`
-# uses, so local development still talks to a local/Supabase database directly.
+# Worker runs out of capacity.
 #
-# `id` is filled in per environment by `wrangler hyperdrive create` — see
-# docs/ops/postgres-to-planetscale-via-cloudflare.md. Left empty here so a
-# missing binding fails loudly at deploy rather than silently pointing a
-# production Worker at someone else's database.
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = ""
-localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
+# Commented out until the database exists. `id` must name a real Hyperdrive
+# config, and deploy-gateway.yml fires automatically on a green CI — an
+# unresolvable id here would take down a deploy path that otherwise works,
+# in exchange for a binding nothing is using yet.
+#
+# Enable it as the last step of provisioning:
+#   wrangler hyperdrive create nebutra-prod --connection-string="<admin url>"
+# then uncomment with the returned id. src/worker.ts already reads the binding
+# and falls through to DATABASE_URL while it is absent, so nothing else moves.
+# See docs/ops/postgres-to-planetscale-via-cloudflare.md.
+#
+# [[hyperdrive]]
+# binding = "HYPERDRIVE"
+# id = "<from wrangler hyperdrive create>"
+# localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
 
 [observability]
 enabled = true

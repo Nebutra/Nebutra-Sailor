@@ -88,16 +88,21 @@ This sequence was validated end to end on a virgin PostgreSQL 17.8 with
 
 ## Cut over
 
-1. `wrangler hyperdrive create nebutra-prod --connection-string="<admin url>"`,
-   then put the returned id into `backends/gateway/wrangler.toml`. It is empty
-   in the repo on purpose, so a missing binding fails at deploy instead of
-   silently pointing a production Worker at whatever `DATABASE_URL` holds.
-2. Deploy the gateway.
+1. `wrangler hyperdrive create nebutra-prod --connection-string="<admin url>"`.
+2. Uncomment the `[[hyperdrive]]` block in `backends/gateway/wrangler.toml` and
+   fill in the returned id. It ships commented out because `deploy-gateway.yml`
+   fires automatically on a green CI, and an id naming a Hyperdrive config that
+   does not exist yet would fail a deploy path that otherwise works.
+   `src/worker.ts` already reads the binding and falls through to
+   `DATABASE_URL` while it is absent, so nothing else has to change.
 3. Set `DATABASE_URL` (application role) and `APP_DB_ROLE` on ECS Origin.
-4. Because the new database starts empty, the old Supabase project is the only
-   place anything historical lives. Leave it running until you are sure you do
-   not want it — this cutover has no rollback that recovers data written to the
-   new database.
+4. Push to main, or run the Deploy Gateway workflow by hand. It needs
+   `DEPLOY_TARGET_GATEWAY=cloudflare-workers` (already set) plus the
+   `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` / `SERVICE_SECRET` /
+   `GATEWAY_SHARED_SECRET` secrets the workflow validates up front.
+5. The new database starts empty, so the old Supabase project holds everything
+   historical. Leave it running — this cutover has no rollback that recovers
+   data written to the new database.
 
 ## Out of scope
 
