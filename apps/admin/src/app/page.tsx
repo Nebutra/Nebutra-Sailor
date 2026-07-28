@@ -43,8 +43,10 @@ function TargetCell({ row }: { row: FleetRow }) {
   return (
     <span className="inline-flex flex-wrap items-center gap-2">
       <span className="font-mono text-neutral-11 text-xs">{row.deployTarget}</span>
+      {/* Amber tint as the surface, --warning-strong as the ink: raw
+          --status-warning is 2.05:1 on a light background and unreadable. */}
       {row.targetMatchesRuntime === false ? (
-        <span className="rounded-[var(--radius-sm)] bg-[color:var(--status-warning)]/12 px-1.5 py-0.5 text-[11px] text-[color:var(--status-warning)]">
+        <span className="rounded-[var(--radius-sm)] bg-[hsl(var(--warning))]/12 px-1.5 py-0.5 text-[11px] text-[hsl(var(--warning-strong))]">
           differs from runtime
         </span>
       ) : null}
