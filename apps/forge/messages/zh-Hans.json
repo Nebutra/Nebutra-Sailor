@@ -108,5 +108,282 @@
       "label": "单位",
       "hint": "长度 · 重量 · 温度 · 数据量"
     }
+  },
+  "runners": {
+    "common": {
+      "run": "运行",
+      "running": "运行中…",
+      "copy": "复制",
+      "copied": "已复制",
+      "sameAsApi": "与 API 同一 invoke 路径 · OSS 引擎",
+      "mustBeNumber": "{label} 需为数字",
+      "base64Loaded": "已加载 Base64 载荷",
+      "workspaceMissing": "未配置工作台：{slug}",
+      "yes": "是",
+      "no": "否",
+      "text": "文本",
+      "outputPreview": "输出预览",
+      "mode": "模式",
+      "encode": "编码",
+      "decode": "解码"
+    },
+    "lorem": {
+      "paragraphs": "段落数",
+      "wordsPerParagraph": "每段词数",
+      "startWithLorem": "以 Lorem ipsum 开头",
+      "note": "Lorem 生成器 · pure"
+    },
+    "emailValidate": {
+      "note": "邮箱校验 · 仅格式（不做 MX 查询）"
+    },
+    "creditCardLuhn": {
+      "number": "卡号",
+      "note": "Luhn 校验 · 离线、不存储"
+    },
+    "jsonMinify": {
+      "json": "JSON",
+      "note": "JSON 压缩 · JSON.parse/stringify"
+    },
+    "cssMinify": {
+      "css": "CSS",
+      "note": "CSS 压缩 · 轻量（边缘安全）"
+    },
+    "hashCompare": {
+      "a": "哈希 A",
+      "b": "哈希 B",
+      "ignoreCase": "忽略大小写",
+      "note": "哈希比对 · 等长常量时间比较"
+    },
+    "jsonDiff": {
+      "left": "JSON A",
+      "right": "JSON B",
+      "note": "JSON 对比 · 路径级差异 · 分色行 · 双栏",
+      "equal": "完全一致",
+      "differs": "{count} 处差异",
+      "colPath": "路径",
+      "colKind": "类型",
+      "colLeft": "左侧",
+      "colRight": "右侧",
+      "filtersAria": "按变更类型筛选",
+      "filterAll": "全部 ({count})",
+      "filterAdd": "新增 ({count})",
+      "filterRemove": "删除 ({count})",
+      "filterChange": "修改 ({count})",
+      "filterType": "类型 ({count})"
+    },
+    "yamlFormat": {
+      "yaml": "YAML",
+      "mode": "模式",
+      "pretty": "美化",
+      "compact": "紧凑",
+      "indent": "缩进",
+      "note": "YAML 格式化 · js-yaml"
+    },
+    "tomlFormat": {
+      "toml": "TOML",
+      "note": "TOML 格式化 · smol-toml"
+    },
+    "xmlMinify": {
+      "xml": "XML",
+      "note": "XML 压缩 · fast-xml-parser"
+    },
+    "urlValidate": {
+      "note": "URL 校验 · WHATWG URL（不联网）"
+    },
+    "ipValidate": {
+      "note": "IP 校验 · IPv4/IPv6 离线"
+    },
+    "uuidValidate": {
+      "note": "UUID 校验 · RFC 4122 形态"
+    },
+    "htmlMinify": {
+      "html": "HTML",
+      "note": "HTML 压缩 · 轻量（边缘安全）"
+    },
+    "randomString": {
+      "length": "长度",
+      "count": "数量",
+      "charset": "字符集",
+      "alphanumeric": "字母数字",
+      "symbols": "字母数字 + 符号",
+      "hex": "十六进制",
+      "base64url": "Base64URL",
+      "note": "随机字符串 · node:crypto randomInt"
+    },
+    "readingTime": {
+      "note": "阅读时间 · 中英混排启发式"
+    },
+    "markdownToc": {
+      "markdown": "Markdown",
+      "maxLevel": "最大标题层级",
+      "note": "Markdown 目录 · ATX 标题"
+    },
+    "pdfInfo": {
+      "file": "PDF 文件",
+      "note": "PDF 信息 · pdf-lib（页数 + 元数据）"
+    },
+    "rot13": {
+      "shift": "位移（13 = ROT13）",
+      "note": "ROT13 / 凯撒 · pure"
+    },
+    "morse": {
+      "note": "摩斯电码 · ITU · pure"
+    },
+    "textBinary": {
+      "toBinary": "文本 → 二进制",
+      "fromBinary": "二进制 → 文本",
+      "note": "文本 ⇄ 二进制 · UTF-8 bits"
+    },
+    "base32": {
+      "note": "Base32 · RFC 4648"
+    },
+    "multiHash": {
+      "encoding": "摘要编码",
+      "note": "多算法哈希 · MD5 + SHA-1/256/512 · node:crypto"
+    },
+    "cssFormat": {
+      "note": "CSS 美化 · 轻量"
+    },
+    "htmlFormat": {
+      "note": "HTML 美化 · 轻量"
+    },
+    "stringSimilarity": {
+      "a": "字符串 A",
+      "b": "字符串 B",
+      "note": "字符串相似度 · Levenshtein"
+    },
+    "roman": {
+      "toRoman": "数字 → 罗马",
+      "fromRoman": "罗马 → 数字",
+      "note": "罗马数字 · 1–3999"
+    },
+    "age": {
+      "birthDate": "出生日期 (YYYY-MM-DD)",
+      "asOf": "截至日期（可选）",
+      "note": "年龄计算 · 精确年/月/日"
+    },
+    "tip": {
+      "bill": "账单金额",
+      "percent": "小费 %",
+      "people": "人数",
+      "note": "小费计算 · 支持分摊"
+    },
+    "aspect": {
+      "width": "宽",
+      "height": "高",
+      "note": "宽高比 · GCD 化简"
+    },
+    "mime": {
+      "note": "MIME 查询 · 常见 Web 类型"
+    },
+    "ua": {
+      "note": "UA 解析 · 启发式（离线）"
+    },
+    "imageMeta": {
+      "file": "图片文件",
+      "note": "图片元数据 · sharp（EXIF 缓冲长度）"
+    },
+    "wordFreq": {
+      "top": "Top N",
+      "note": "词频统计 · 中英混排"
+    },
+    "jsonXml": {
+      "note": "JSON ⇄ XML · fast-xml-parser"
+    },
+    "sqlMinify": {
+      "note": "SQL 压缩 · 注释与空白"
+    },
+    "lineNum": {
+      "start": "起始行号",
+      "note": "添加行号 · pure"
+    },
+    "uniqueWords": {
+      "note": "单词去重 · 保序"
+    },
+    "epoch": {
+      "value": "值",
+      "msToIso": "毫秒 → ISO",
+      "isoToMs": "ISO → 毫秒",
+      "note": "Epoch 毫秒 · Date"
+    },
+    "passwordEntropy": {
+      "password": "密码",
+      "note": "密码熵 · 字符集启发式"
+    },
+    "contrast": {
+      "fg": "前景色 (#hex)",
+      "bg": "背景色 (#hex)",
+      "note": "颜色对比度 · WCAG 2.x"
+    },
+    "exif": {
+      "file": "图片文件",
+      "note": "EXIF 查看 · exifr + JPEG 回落"
+    },
+    "regex": {
+      "pattern": "正则",
+      "replacement": "替换为",
+      "flags": "标志",
+      "note": "正则查找替换 · ECMAScript"
+    },
+    "jwt": {
+      "payload": "Payload JSON",
+      "secret": "密钥",
+      "exp": "过期（秒）",
+      "note": "JWT 生成 · HS256（仅开发/测试）"
+    },
+    "rand": {
+      "min": "最小",
+      "max": "最大",
+      "count": "数量",
+      "note": "随机数 · crypto.randomInt"
+    },
+    "dice": {
+      "sides": "面数",
+      "count": "骰子数",
+      "note": "掷骰子 · 密码学随机"
+    },
+    "hexRgb": {
+      "note": "HEX ⇄ RGB · pure"
+    },
+    "base64url": {
+      "note": "Base64URL · JWT 风格"
+    },
+    "hmac": {
+      "message": "消息",
+      "secret": "密钥",
+      "signature": "签名",
+      "note": "HMAC 校验 · SHA-256"
+    },
+    "secret": {
+      "bytes": "字节数",
+      "count": "数量",
+      "note": "密钥生成 · randomBytes"
+    },
+    "pdfOptimize": {
+      "file": "PDF 文件",
+      "note": "PDF 轻量优化 · pdf-lib 重写（非图片重压缩）"
+    },
+    "pdfCompress": {
+      "file": "PDF 文件",
+      "quality": "质量",
+      "engine": "引擎",
+      "qStructural": "结构压缩（qpdf，无损流）",
+      "qScreen": "屏幕（最小，Ghostscript）",
+      "qEbook": "电子书（均衡，Ghostscript）",
+      "qPrinter": "打印（更高质量，Ghostscript）",
+      "eAuto": "自动（qpdf → Ghostscript → pdf-lib）",
+      "download": "下载 PDF",
+      "needFile": "请先选择 PDF 文件",
+      "in": "输入",
+      "out": "输出",
+      "saved": "节省",
+      "note": "PDF 压缩 · 宿主 qpdf / Ghostscript · pdf-lib 回落"
+    }
+  },
+  "roots": {
+    "hubLabel": "按意图",
+    "tools": "个工具",
+    "dualSurface": "人类页面 + Agent API · 同一引擎",
+    "otherRoots": "其他需求根"
   }
 }
