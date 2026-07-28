@@ -45,6 +45,14 @@ CREATE OR REPLACE FUNCTION public.purge_expired_rows(
 )
 RETURNS TABLE(purged_table text, rows_deleted bigint)
 LANGUAGE plpgsql
+-- SECURITY DEFINER so the purge works when the caller is the application role.
+-- The connection the scheduled Worker uses is deliberately a role that cannot
+-- bypass RLS; without this the DELETEs would see no rows and silently purge
+-- nothing while reporting success. search_path is pinned because a DEFINER
+-- function that resolves objects through the caller's path is a privilege
+-- escalation.
+SECURITY DEFINER
+SET search_path = public, pg_temp
 AS $$
 DECLARE
   policy   record;
@@ -106,10 +114,15 @@ $$;
 -- The purge role needs DELETE on the governed tables. The application role
 -- already has it; grant EXECUTE so a scheduled job can run as the app rather
 -- than needing admin credentials in CI.
+-- Only the application role may call it. REVOKE from PUBLIC first: a
+-- SECURITY DEFINER function is executable by everyone by default, which would
+-- hand any role the ability to delete across every tenant.
+REVOKE ALL ON FUNCTION public.purge_expired_rows(integer, integer) FROM PUBLIC;
 DO $$
 DECLARE r text;
 BEGIN
-  FOR r IN SELECT rolname FROM pg_roles WHERE rolname = current_setting('app.purge_role', true)
+  FOR r IN SELECT rolname FROM pg_roles
+           WHERE rolname = coalesce(current_setting('app.purge_role', true), 'app_user')
   LOOP
     EXECUTE format('GRANT EXECUTE ON FUNCTION public.purge_expired_rows(integer, integer) TO %I', r);
   END LOOP;
