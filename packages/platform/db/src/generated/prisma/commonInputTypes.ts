@@ -1014,6 +1014,40 @@ export type EnumProductStageWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
 }
 
+export type EnumPebbleDiagnosticStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleDiagnosticStatus | Prisma.EnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel> | $Enums.PebbleDiagnosticStatus
+}
+
+export type EnumPebbleDiagnosticStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleDiagnosticStatus | Prisma.EnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleDiagnosticStatusWithAggregatesFilter<$PrismaModel> | $Enums.PebbleDiagnosticStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel>
+}
+
+export type EnumPebbleFeedbackKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleFeedbackKind | Prisma.EnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel> | $Enums.PebbleFeedbackKind
+}
+
+export type EnumPebbleFeedbackKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleFeedbackKind | Prisma.EnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleFeedbackKindWithAggregatesFilter<$PrismaModel> | $Enums.PebbleFeedbackKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1971,6 +2005,40 @@ export type NestedEnumProductStageWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
+}
+
+export type NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleDiagnosticStatus | Prisma.EnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel> | $Enums.PebbleDiagnosticStatus
+}
+
+export type NestedEnumPebbleDiagnosticStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleDiagnosticStatus | Prisma.EnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleDiagnosticStatusWithAggregatesFilter<$PrismaModel> | $Enums.PebbleDiagnosticStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumPebbleFeedbackKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleFeedbackKind | Prisma.EnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel> | $Enums.PebbleFeedbackKind
+}
+
+export type NestedEnumPebbleFeedbackKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PebbleFeedbackKind | Prisma.EnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  in?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PebbleFeedbackKind[] | Prisma.ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPebbleFeedbackKindWithAggregatesFilter<$PrismaModel> | $Enums.PebbleFeedbackKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
 }
 
 

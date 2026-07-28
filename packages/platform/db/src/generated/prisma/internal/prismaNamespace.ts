@@ -467,7 +467,9 @@ export const ModelName = {
   BAInvitation: 'BAInvitation',
   BAPasskey: 'BAPasskey',
   AtelierCanvas: 'AtelierCanvas',
-  AgentRolloutLine: 'AgentRolloutLine'
+  AgentRolloutLine: 'AgentRolloutLine',
+  PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
+  PebbleFeedback: 'PebbleFeedback'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -483,7 +485,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6687,6 +6689,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PebbleDiagnosticTicket: {
+      payload: Prisma.$PebbleDiagnosticTicketPayload<ExtArgs>
+      fields: Prisma.PebbleDiagnosticTicketFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PebbleDiagnosticTicketFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PebbleDiagnosticTicketFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>
+        }
+        findFirst: {
+          args: Prisma.PebbleDiagnosticTicketFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PebbleDiagnosticTicketFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>
+        }
+        findMany: {
+          args: Prisma.PebbleDiagnosticTicketFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>[]
+        }
+        create: {
+          args: Prisma.PebbleDiagnosticTicketCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>
+        }
+        createMany: {
+          args: Prisma.PebbleDiagnosticTicketCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PebbleDiagnosticTicketCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>[]
+        }
+        delete: {
+          args: Prisma.PebbleDiagnosticTicketDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>
+        }
+        update: {
+          args: Prisma.PebbleDiagnosticTicketUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>
+        }
+        deleteMany: {
+          args: Prisma.PebbleDiagnosticTicketDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PebbleDiagnosticTicketUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PebbleDiagnosticTicketUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>[]
+        }
+        upsert: {
+          args: Prisma.PebbleDiagnosticTicketUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleDiagnosticTicketPayload>
+        }
+        aggregate: {
+          args: Prisma.PebbleDiagnosticTicketAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePebbleDiagnosticTicket>
+        }
+        groupBy: {
+          args: Prisma.PebbleDiagnosticTicketGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PebbleDiagnosticTicketGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PebbleDiagnosticTicketCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PebbleDiagnosticTicketCountAggregateOutputType> | number
+        }
+      }
+    }
+    PebbleFeedback: {
+      payload: Prisma.$PebbleFeedbackPayload<ExtArgs>
+      fields: Prisma.PebbleFeedbackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PebbleFeedbackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PebbleFeedbackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>
+        }
+        findFirst: {
+          args: Prisma.PebbleFeedbackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PebbleFeedbackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>
+        }
+        findMany: {
+          args: Prisma.PebbleFeedbackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>[]
+        }
+        create: {
+          args: Prisma.PebbleFeedbackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>
+        }
+        createMany: {
+          args: Prisma.PebbleFeedbackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PebbleFeedbackCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>[]
+        }
+        delete: {
+          args: Prisma.PebbleFeedbackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>
+        }
+        update: {
+          args: Prisma.PebbleFeedbackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>
+        }
+        deleteMany: {
+          args: Prisma.PebbleFeedbackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PebbleFeedbackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PebbleFeedbackUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>[]
+        }
+        upsert: {
+          args: Prisma.PebbleFeedbackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PebbleFeedbackPayload>
+        }
+        aggregate: {
+          args: Prisma.PebbleFeedbackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePebbleFeedback>
+        }
+        groupBy: {
+          args: Prisma.PebbleFeedbackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PebbleFeedbackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PebbleFeedbackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PebbleFeedbackCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -8158,6 +8308,42 @@ export const AgentRolloutLineScalarFieldEnum = {
 export type AgentRolloutLineScalarFieldEnum = (typeof AgentRolloutLineScalarFieldEnum)[keyof typeof AgentRolloutLineScalarFieldEnum]
 
 
+export const PebbleDiagnosticTicketScalarFieldEnum = {
+  id: 'id',
+  bundleSubmissionId: 'bundleSubmissionId',
+  status: 'status',
+  declaredBytes: 'declaredBytes',
+  storedBytes: 'storedBytes',
+  bucket: 'bucket',
+  objectKey: 'objectKey',
+  checksumSha256: 'checksumSha256',
+  appVersion: 'appVersion',
+  platform: 'platform',
+  expiresAt: 'expiresAt',
+  storedAt: 'storedAt',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PebbleDiagnosticTicketScalarFieldEnum = (typeof PebbleDiagnosticTicketScalarFieldEnum)[keyof typeof PebbleDiagnosticTicketScalarFieldEnum]
+
+
+export const PebbleFeedbackScalarFieldEnum = {
+  id: 'id',
+  submissionId: 'submissionId',
+  kind: 'kind',
+  message: 'message',
+  contactEmail: 'contactEmail',
+  appVersion: 'appVersion',
+  platform: 'platform',
+  locale: 'locale',
+  createdAt: 'createdAt'
+} as const
+
+export type PebbleFeedbackScalarFieldEnum = (typeof PebbleFeedbackScalarFieldEnum)[keyof typeof PebbleFeedbackScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -8822,6 +9008,34 @@ export type ListEnumProductStageFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'PebbleDiagnosticStatus'
+ */
+export type EnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PebbleDiagnosticStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PebbleDiagnosticStatus[]'
+ */
+export type ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PebbleDiagnosticStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PebbleFeedbackKind'
+ */
+export type EnumPebbleFeedbackKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PebbleFeedbackKind'>
+    
+
+
+/**
+ * Reference to a field of type 'PebbleFeedbackKind[]'
+ */
+export type ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PebbleFeedbackKind[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -9013,6 +9227,8 @@ export type GlobalOmitConfig = {
   bAPasskey?: Prisma.BAPasskeyOmit
   atelierCanvas?: Prisma.AtelierCanvasOmit
   agentRolloutLine?: Prisma.AgentRolloutLineOmit
+  pebbleDiagnosticTicket?: Prisma.PebbleDiagnosticTicketOmit
+  pebbleFeedback?: Prisma.PebbleFeedbackOmit
 }
 
 /* Types for Logging */

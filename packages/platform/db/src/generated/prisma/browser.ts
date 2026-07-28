@@ -447,3 +447,13 @@ export type AtelierCanvas = Prisma.AtelierCanvasModel
  * 
  */
 export type AgentRolloutLine = Prisma.AgentRolloutLineModel
+/**
+ * Model PebbleDiagnosticTicket
+ * 
+ */
+export type PebbleDiagnosticTicket = Prisma.PebbleDiagnosticTicketModel
+/**
+ * Model PebbleFeedback
+ * 
+ */
+export type PebbleFeedback = Prisma.PebbleFeedbackModel

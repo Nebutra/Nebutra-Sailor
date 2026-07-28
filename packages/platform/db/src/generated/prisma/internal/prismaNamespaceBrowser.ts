@@ -134,7 +134,9 @@ export const ModelName = {
   BAInvitation: 'BAInvitation',
   BAPasskey: 'BAPasskey',
   AtelierCanvas: 'AtelierCanvas',
-  AgentRolloutLine: 'AgentRolloutLine'
+  AgentRolloutLine: 'AgentRolloutLine',
+  PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
+  PebbleFeedback: 'PebbleFeedback'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1583,6 +1585,42 @@ export const AgentRolloutLineScalarFieldEnum = {
 } as const
 
 export type AgentRolloutLineScalarFieldEnum = (typeof AgentRolloutLineScalarFieldEnum)[keyof typeof AgentRolloutLineScalarFieldEnum]
+
+
+export const PebbleDiagnosticTicketScalarFieldEnum = {
+  id: 'id',
+  bundleSubmissionId: 'bundleSubmissionId',
+  status: 'status',
+  declaredBytes: 'declaredBytes',
+  storedBytes: 'storedBytes',
+  bucket: 'bucket',
+  objectKey: 'objectKey',
+  checksumSha256: 'checksumSha256',
+  appVersion: 'appVersion',
+  platform: 'platform',
+  expiresAt: 'expiresAt',
+  storedAt: 'storedAt',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PebbleDiagnosticTicketScalarFieldEnum = (typeof PebbleDiagnosticTicketScalarFieldEnum)[keyof typeof PebbleDiagnosticTicketScalarFieldEnum]
+
+
+export const PebbleFeedbackScalarFieldEnum = {
+  id: 'id',
+  submissionId: 'submissionId',
+  kind: 'kind',
+  message: 'message',
+  contactEmail: 'contactEmail',
+  appVersion: 'appVersion',
+  platform: 'platform',
+  locale: 'locale',
+  createdAt: 'createdAt'
+} as const
+
+export type PebbleFeedbackScalarFieldEnum = (typeof PebbleFeedbackScalarFieldEnum)[keyof typeof PebbleFeedbackScalarFieldEnum]
 
 
 export const SortOrder = {

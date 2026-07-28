@@ -375,3 +375,20 @@ export const LicenseType = {
 } as const
 
 export type LicenseType = (typeof LicenseType)[keyof typeof LicenseType]
+
+
+export const PebbleDiagnosticStatus = {
+  PENDING_UPLOAD: 'PENDING_UPLOAD',
+  STORED: 'STORED',
+  DELETED: 'DELETED'
+} as const
+
+export type PebbleDiagnosticStatus = (typeof PebbleDiagnosticStatus)[keyof typeof PebbleDiagnosticStatus]
+
+
+export const PebbleFeedbackKind = {
+  FEEDBACK: 'FEEDBACK',
+  CRASH: 'CRASH'
+} as const
+
+export type PebbleFeedbackKind = (typeof PebbleFeedbackKind)[keyof typeof PebbleFeedbackKind]
