@@ -196,12 +196,18 @@ jobs:
 
       # Fixed branch name → updates the same PR on subsequent en pushes (async).
       # delete-branch: true → remove branch after the PR is merged/closed (no zombies).
+      # Author must be github-actions[bot] so CLA allowlist matches. Without this,
+      # peter-evans attributes commits to the workflow actor (human) and CLA fails.
+      # Labels i18n + automated also skip CLA via .github/workflows/cla.yml.
       - name: Open or update async locale PR
         uses: peter-evans/create-pull-request@v7
         continue-on-error: true
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore(i18n): global auto-translate via SenseNova flash-lite"
+          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          signoff: false
           branch: chore/i18n-auto-translate
           delete-branch: true
           title: "chore(i18n): global auto-translate (PRODUCT_LANGUAGES wheel)"
@@ -230,7 +236,10 @@ jobs:
             - Deterministic glossary post-process (legal entity, product tokens)
             - Same branch is **updated** on each en-source push (`chore/i18n-auto-translate`)
             - Branch is deleted after this PR is merged/closed
+            - **CLA:** labels `i18n` + `automated` skip CLA (see `.github/workflows/cla.yml`)
 
             Review tip: skim critical locales (zh-Hans, ja) + brand/legal strings.
             If PR creation is blocked by org policy, merge `chore/i18n-auto-translate` manually.
-          labels: i18n, automated
+          labels: |
+            i18n
+            automated

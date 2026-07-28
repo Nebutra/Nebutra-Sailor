@@ -7,15 +7,18 @@
 # so the main branch stays clean. The action creates the branch + file on
 # first run; you do not need to provision it manually.
 #
-# To onboard a new contributor:
+# Do NOT delete the `cla-signatures` branch — it is the signature ledger.
+#
+# Exemptions (still report a green required check):
+#   - Bot accounts in `allowlist` (dependabot, github-actions, *bot, …)
+#   - PRs labeled BOTH `i18n` AND `automated` (SenseNova locale machine PRs)
+#
+# To onboard a human contributor:
 #   1. They open a PR.
 #   2. This workflow comments with a sign-CLA link.
-#   3. They click, sign once (their GitHub identity is bound to the signature).
-#   4. They re-comment "I have read the CLA Document and I hereby sign the CLA"
+#   3. They re-comment "I have read the CLA Document and I hereby sign the CLA"
 #      and the workflow flips their PR check to green.
-#   5. Every future PR from that account is unblocked automatically.
-#
-# Bots in the whitelist are never asked to sign.
+#   4. Every future PR from that account is unblocked automatically.
 
 name: "CLA Assistant"
 
@@ -23,7 +26,7 @@ on:
   issue_comment:
     types: [created]
   pull_request_target:
-    types: [opened, closed, synchronize]
+    types: [opened, closed, synchronize, labeled, unlabeled, reopened]
 
 # Token permissions required by cla-assistant/github-action — keep tight.
 permissions: read-all
@@ -41,7 +44,38 @@ jobs:
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, 'I have read the CLA Document and I hereby sign the CLA')) ||
       (github.event_name == 'pull_request_target')
     steps:
+      - name: Detect CLA exemption
+        id: exempt
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          # Empty string when not a PR event.
+          PR_LABELS: ${{ github.event_name == 'pull_request_target' && join(github.event.pull_request.labels.*.name, ',') || '' }}
+        run: |
+          set -euo pipefail
+          echo "event=${EVENT_NAME}"
+          echo "labels=${PR_LABELS}"
+
+          # SenseNova / machine i18n PRs: both labels required (defense in depth —
+          # a lone "i18n" label on a human PR still requires CLA).
+          if [ "$EVENT_NAME" = "pull_request_target" ]; then
+            labels=",${PR_LABELS},"
+            if [[ "$labels" == *",i18n,"* && "$labels" == *",automated,"* ]]; then
+              echo "exempt=true" >> "$GITHUB_OUTPUT"
+              echo "Exempt: PR has labels i18n + automated"
+              exit 0
+            fi
+          fi
+
+          echo "exempt=false" >> "$GITHUB_OUTPUT"
+
+      - name: CLA not required (i18n + automated)
+        if: steps.exempt.outputs.exempt == 'true'
+        run: |
+          echo "::notice::CLA check skipped for machine i18n PR (labels: i18n + automated)."
+          echo "In-repo SenseNova / create-pull-request output — no human CLA needed."
+
       - name: "CLA Assistant"
+        if: steps.exempt.outputs.exempt != 'true'
         uses: cla-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -70,11 +104,16 @@ jobs:
           custom-allsigned-prcomment: |
             All committers have signed the CLA. Thanks for contributing to Nebutra-Sailor!
           # Bot accounts that should never be asked to sign.
+          # Patterns: exact login, or trailing *bot / [bot] accounts.
+          # Note: create-pull-request may still attribute commits to the
+          # workflow actor unless commit-user/email are set to github-actions.
           allowlist: |
             dependabot[bot]
             github-actions[bot]
             renovate[bot]
             lefthook-bot
+            web-flow
             *bot
+            *[bot]
           # Suppress the action when the PR is closed (cleanup only).
           lock-pullrequest-aftermerge: false
