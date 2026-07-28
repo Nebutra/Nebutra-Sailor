@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
+      "run": "Rulează",
+      "running": "Se rulează…",
+      "copy": "Copiază",
+      "copied": "Copiat",
+      "sameAsApi": "Aceeași cale ca API · motor OSS",
+      "mustBeNumber": "{label} trebuie să fie un număr",
+      "base64Loaded": "Payload Base64 încărcat",
+      "workspaceMissing": "Spațiul de lucru nu este configurat: {slug}",
+      "yes": "Da",
+      "no": "Nu",
       "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "outputPreview": "Previzualizare ieșire",
+      "mode": "Mod",
+      "encode": "Codificare",
+      "decode": "Decodificare"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Paragrafe",
+      "wordsPerParagraph": "Cuvinte pe paragraf",
+      "startWithLorem": "Începe cu „Lorem ipsum”",
+      "note": "Generator Lorem Ipsum · pur"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "Validator email · doar format (fără căutare MX)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Număr card",
+      "note": "Verificator Luhn · offline, nu se stochează"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "Minifier JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "Minifier CSS · ușor (sigur pentru edge)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Ignoră majusculele",
+      "note": "Comparator Hash · timp constant pentru lungimi egale"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "note": "Diferență JSON · operații la nivel de cale · rânduri colorate după tip · alăturat",
+      "equal": "Identice",
+      "differs": "{count} modificare(i)",
+      "colPath": "Cale",
+      "colKind": "Tip",
+      "colLeft": "Stânga",
+      "colRight": "Dreapta",
+      "filtersAria": "Filtrează după tipul modificării",
+      "filterAll": "Toate ({count})",
+      "filterAdd": "Adaugă ({count})",
+      "filterRemove": "Elimină ({count})",
+      "filterChange": "Modifică ({count})",
+      "filterType": "Tip ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
+      "mode": "Mod",
+      "pretty": "Formatat",
       "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "indent": "Indentare",
+      "note": "Formatator YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "Formatator TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "Minificator XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "Validator URL · WHATWG URL (fără rețea)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "Validator IP · IPv4/IPv6 offline"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "Validator UUID · format RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "Minificator HTML · ușor (sigur la margine)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Lungime",
+      "count": "Număr",
+      "charset": "Set de caractere",
+      "alphanumeric": "Alfanumeric",
+      "symbols": "Alfanumeric + simboluri",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Șir aleator · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Timp de lectură · heuristică CJK + Latină"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Nivel maxim titlu",
+      "note": "TOC Markdown · titluri ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "Fișier PDF",
+      "note": "Info PDF · pdf-lib (pagini + metadate)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Deplasare (13 = ROT13)",
+      "note": "ROT13 / Caesar · pur"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Cod Morse · ITU · pur"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Text → binar",
+      "fromBinary": "Binar → text",
+      "note": "Text ↔ Binar · biți UTF-8"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Codificare digest",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "Beautifier CSS · ușor"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML Beautifier · ușor"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "Șir A",
+      "b": "Șir B",
+      "note": "Similaritate șiruri · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Număr → Roman",
+      "fromRoman": "Roman → Număr",
+      "note": "Numere romane · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Data nașterii (AAAA-LL-ZZ)",
+      "asOf": "Până la (opțional)",
+      "note": "Calculator vârstă · exact A/L/Z"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Suma facturii",
+      "percent": "Bacșiș %",
+      "people": "Persoane",
+      "note": "Calculator bacșiș · împărțire prietenoasă"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Lățime",
+      "height": "Înălțime",
+      "note": "Raport de aspect · simplificare CMMDC"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "Căutare MIME · tipuri web comune"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "Parser User-Agent · euristic (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Fișier imagine",
+      "note": "Metadate imagine · sharp (dimensiune buffer EXIF)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Frecvență cuvinte · CJK + Latin"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "Minimizator SQL · comentarii + spații albe"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Număr de start",
+      "note": "Adaugă numere de linie · pur"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Cuvinte unice · ordinea apariției"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Valoare",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Milisecunde Epoch · Dată"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Parolă",
+      "note": "Entropie parolă · heuristică charset"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Prim-plan (#hex)",
+      "bg": "Fundal (#hex)",
+      "note": "Contrast de culoare · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Fișier imagine",
+      "note": "Vizualizator EXIF · exifr + fallback JPEG"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Model",
+      "replacement": "Înlocuire",
+      "flags": "Indicatori",
+      "note": "Căutare și înlocuire cu regex · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
       "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "exp": "Expiră (secunde)",
+      "note": "Generare JWT · HS256 (doar pentru dezvoltare/testare)"
     },
     "rand": {
       "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "max": "Maxim",
+      "count": "Număr",
+      "note": "Număr aleatoriu · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Fețe",
+      "count": "Număr zaruri",
+      "note": "Aruncare zaruri · RNG cripto"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · pur"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · stil JWT"
     },
     "hmac": {
-      "message": "Message",
+      "message": "Mesaj",
       "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "signature": "Semnătură",
+      "note": "Verificare HMAC · SHA-256"
     },
     "secret": {
       "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "count": "Număr",
+      "note": "Generator cheie secretă · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "Fișier PDF",
+      "note": "Optimizare ușoară PDF · rescriere pdf-lib (fără recomprimare imagini)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
+      "file": "Fișier PDF",
+      "quality": "Calitate",
+      "engine": "Motor",
+      "qStructural": "Structural (qpdf, fluxuri fără pierderi)",
+      "qScreen": "Ecran (cel mai mic, Ghostscript)",
+      "qEbook": "Ebook (echilibrat, Ghostscript)",
+      "qPrinter": "Imprimantă (calitate mai mare, Ghostscript)",
       "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "download": "Descarcă PDF",
+      "needFile": "Alege mai întâi un fișier PDF",
+      "in": "Intrare",
+      "out": "Ieșire",
+      "saved": "Salvat",
+      "note": "Comprimare PDF · qpdf / Ghostscript pe gazdă · pdf-lib ca rezervă"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "După intenție",
+    "tools": "unelte",
+    "dualSurface": "Pagina umană + API Agent · același motor",
+    "otherRoots": "Alte rădăcini de cerere"
   }
 }

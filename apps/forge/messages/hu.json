@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "Futtatás",
+      "running": "Futtatás…",
+      "copy": "Másolás",
+      "copied": "Másolva",
+      "sameAsApi": "Ugyanaz az út, mint az API-nak · OSS motor",
+      "mustBeNumber": "A(z) {label} szám kell legyen",
+      "base64Loaded": "Base64 terhelet betöltve",
+      "workspaceMissing": "Munkaterület nincs beállítva: {slug}",
+      "yes": "Igen",
+      "no": "Nem",
+      "text": "Szöveg",
+      "outputPreview": "Kimenet előnézet",
+      "mode": "Mód",
+      "encode": "Kódolás",
+      "decode": "Dekódolás"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Bekezdések",
+      "wordsPerParagraph": "Szó bekezdésenként",
+      "startWithLorem": "Kezdés „Lorem ipsum” szöveggel",
+      "note": "Lorem Ipsum generátor · tiszta"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "E-mail érvényesítő · csak formátum (nincs MX lekérdezés)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Kártyaszám",
+      "note": "Luhn ellenőrző · offline, soha nem tárolva"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "JSON tömörítő · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "CSS Minifier · könnyűsúlyú (edge-biztonságos)"
     },
     "hashCompare": {
-      "a": "Hash A",
-      "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "a": "A hash",
+      "b": "B hash",
+      "ignoreCase": "Kis- és nagybetűk figyelmen kívül hagyása",
+      "note": "Hash-összehasonlító · állandó idő azonos hosszúság esetén"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "note": "JSON Diff · útvonalszintű műveletek · színezett sorok · egymás mellett",
+      "equal": "Megegyezik",
+      "differs": "{count} változás",
+      "colPath": "Útvonal",
+      "colKind": "Típus",
+      "colLeft": "Bal",
+      "colRight": "Jobb",
+      "filtersAria": "Szűrés módosítástípus szerint",
+      "filterAll": "Összes ({count})",
+      "filterAdd": "Hozzáadás ({count})",
+      "filterRemove": "Eltávolítás ({count})",
+      "filterChange": "Módosítás ({count})",
+      "filterType": "Típus ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "Mód",
+      "pretty": "Formázott",
+      "compact": "Tömör",
+      "indent": "Behúzás",
+      "note": "YAML formázó · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "TOML formázó · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "XML tömörítő · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "URL érvényesítő · WHATWG URL (nincs hálózati lekérés)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "IP érvényesítő · IPv4/IPv6 offline"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "UUID érvényesítő · RFC 4122 alakzat"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "HTML tömörítő · könnyűsúlyú (edge-biztonságos)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Hossz",
+      "count": "Mennyiség",
+      "charset": "Karakterkészlet",
+      "alphanumeric": "Alfanumerikus",
+      "symbols": "Alfanumerikus + szimbólumok",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Véletlenszerű sztring · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Olvasási idő · CJK + latin heurisztika"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Max. címszint",
+      "note": "Markdown tartalomjegyzék · ATX-címsorok"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "PDF fájl",
+      "note": "PDF Info · pdf-lib (oldalak + metaadatok)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Eltolás (13 = ROT13)",
+      "note": "ROT13 / Caesar · tiszta"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Morse-kód · ITU · tiszta"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Szöveg → bináris",
+      "fromBinary": "Bináris → szöveg",
+      "note": "Szöveg ↔ Bináris · UTF-8 bitek"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Összevonás kódolása",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "CSS formázó · könnyűsúlyú"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML formázó · könnyűsúlyú"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "A karakterlánc",
+      "b": "B karakterlánc",
+      "note": "Karakterlánc-hasonlóság · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Szám → Római",
+      "fromRoman": "Római → Szám",
+      "note": "Római számok · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Születési dátum (ÉÉÉÉ-HH-NN)",
+      "asOf": "Dátum szerint (opcionális)",
+      "note": "Életkor kalkulátor · pontos év/hó/nap"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Számla összege",
+      "percent": "Borravaló %",
+      "people": "Személyek",
+      "note": "Borravaló kalkulátor · osztozkodás barát"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Szélesség",
+      "height": "Magasság",
+      "note": "Képarány · LNKO egyszerűsítés"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "MIME kereső · gyakori webes típusok"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "User-Agent elemző · heurisztikus (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Képfájl",
+      "note": "Kép metaadatok · sharp (EXIF puffer méret)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Szógyakoriság · CJK + Latin"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL tömörítő · megjegyzések + szóközök"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Kezdő szám",
+      "note": "Sorszámok hozzáadása · tiszta"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Egyedi szavak · első megjelenés sorrendje"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Érték",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Epoch milliszekundum · dátum"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Jelszó",
+      "note": "Jelszó entrópia · karakterkészlet heurisztika"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Előtér (#hex)",
+      "bg": "Háttér (#hex)",
+      "note": "Színkontraszt · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Képfájl",
+      "note": "EXIF-megjelenítő · exifr + JPEG tartalék"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Minta",
+      "replacement": "Csere",
+      "flags": "Jelzők",
+      "note": "Regex keresés és csere · ECMAScript"
     },
     "jwt": {
-      "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "payload": "Hasznos adat JSON",
+      "secret": "Titkos kulcs",
+      "exp": "Lejárat (másodperc)",
+      "note": "JWT generálás · HS256 (csak fejlesztés/teszt)"
     },
     "rand": {
-      "min": "Min",
+      "min": "Minimum",
       "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "count": "Darab",
+      "note": "Véletlenszám · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Oldalak",
+      "count": "Kockák száma",
+      "note": "Kockadobó · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · tiszta"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · JWT-stílus"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Üzenet",
+      "secret": "Titok",
+      "signature": "Aláírás",
+      "note": "HMAC Ellenőrzés · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "Bájtok",
+      "count": "Darabszám",
+      "note": "Titkos kulcs generátor · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "PDF fájl",
+      "note": "PDF könnyítés · pdf-lib újraírás (nem képtömörítés)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "PDF fájl",
+      "quality": "Minőség",
+      "engine": "Motor",
+      "qStructural": "Strukturális (qpdf, veszteségmentes adatfolyamok)",
+      "qScreen": "Képernyő (legkisebb, Ghostscript)",
+      "qEbook": "E-könyv (kiegyensúlyozott, Ghostscript)",
+      "qPrinter": "Nyomtató (jobb minőség, Ghostscript)",
+      "eAuto": "Automatikus (qpdf → Ghostscript → pdf-lib)",
+      "download": "PDF letöltése",
+      "needFile": "Először válassz egy PDF fájlt",
+      "in": "Bemenet",
+      "out": "Kimenet",
+      "saved": "Mentve",
+      "note": "PDF tömörítés · qpdf / Ghostscript a hosztján · pdf-lib tartalék"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Szándék szerint",
+    "tools": "eszközök",
+    "dualSurface": "Emberi oldal + Ügynök API · ugyanaz a motor",
+    "otherRoots": "Egyéb keresleti gyökerek"
   }
 }

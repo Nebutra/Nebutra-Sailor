@@ -1464,7 +1464,7 @@
     "subheadline": "Kutoka kwa vigezo vya brand hadi tokens za runtime hadi injini ya multi-theme hadi vipengele vilivyodhibitiwa — si shadcn tu na Tailwind.",
     "flowBrand": "Chapa",
     "flowBrandDesc": "Vigezo vya rangi, gradients, lugha ya mwendo",
-    "flowTokens": "Tokens",
+    "flowTokens": "Alama",
     "flowTokensDesc": "Vigezo vya CSS, viwango vya hatua 12, hali ya giza",
     "flowTheme": "Mandhari",
     "flowThemeDesc": "oklch multi-theme, presets 6, color-mix()",

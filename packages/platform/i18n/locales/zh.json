@@ -943,7 +943,7 @@
         "apiKeys": "API 密钥",
         "notifications": "通知",
         "auditLog": "审计日志",
-        "webhooks": "Webhook",
+        "webhooks": "Webhooks",
         "admin": "管理后台"
       },
       "action": {

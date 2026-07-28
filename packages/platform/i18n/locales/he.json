@@ -953,7 +953,7 @@
         "apiKeys": "מפתחות API",
         "notifications": "התראות",
         "auditLog": "יומן ביקורת",
-        "webhooks": "וווב-הוקים",
+        "webhooks": "Webhooks",
         "admin": "ניהול"
       },
       "action": {

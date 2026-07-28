@@ -792,7 +792,7 @@
       "contactUs": {
         "title": "8. تواصل معنا",
         "intro": "إذا كانت لديك أسئلة حول سياسة الخصوصية هذه، يرجى التواصل معنا:",
-        "company": "شركة {brandName} المحدودة"
+        "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
@@ -1123,7 +1123,7 @@
       "contactUs": {
         "title": "11. تواصل معنا",
         "intro": "إذا كانت لديك أسئلة حول هذه الشروط، يرجى التواصل معنا:",
-        "company": "شركة {brandName} المحدودة.",
+        "company": "{brandName} Co., Ltd.",
         "emailLabel": "البريد الإلكتروني",
         "supportLabel": "الدعم"
       },

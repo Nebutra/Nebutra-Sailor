@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "ウェブフック",
+      "title": "Webhooks",
       "description": "ワークスペースから出力されたイベントをサブスクライブします。すべてのペイロードにエンドポイントのシークレットで署名するため、真正性を検証できます。",
       "create": {
         "heading": "新規エンドポイント",
@@ -953,7 +953,7 @@
         "apiKeys": "API キー",
         "notifications": "通知",
         "auditLog": "監査ログ",
-        "webhooks": "ウェブフック",
+        "webhooks": "Webhooks",
         "admin": "管理"
       },
       "action": {

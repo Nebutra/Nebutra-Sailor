@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "웹훅",
+      "title": "Webhooks",
       "description": "워크스페이스에서 내보낸 이벤트를 구독합니다. 모든 페이로드에 엔드포인트의 시크릿으로 서명하므로 진정성을 확인할 수 있습니다.",
       "create": {
         "heading": "새 엔드포인트",
@@ -953,7 +953,7 @@
         "apiKeys": "API 키",
         "notifications": "알림",
         "auditLog": "감사 로그",
-        "webhooks": "웹훅",
+        "webhooks": "Webhooks",
         "admin": "관리자"
       },
       "action": {

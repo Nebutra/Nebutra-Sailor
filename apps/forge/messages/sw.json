@@ -111,72 +111,72 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "Fanya",
+      "running": "Inafanya kazi…",
+      "copy": "Nakili",
+      "copied": "Imenakiliwa",
+      "sameAsApi": "Njia ileile kama API · injini ya OSS",
+      "mustBeNumber": "{label} lazima iwe namba",
+      "base64Loaded": "Mazao ya Base64 yamepakiwa",
+      "workspaceMissing": "Kazi haijasanifiwa: {slug}",
+      "yes": "Ndiyo",
+      "no": "Hapana",
+      "text": "Nakala",
+      "outputPreview": "Onyesho la matokeo",
+      "mode": "Hali",
+      "encode": "Panga",
+      "decode": "Futa"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Aya",
+      "wordsPerParagraph": "Maneno kwa kila aya",
+      "startWithLorem": "Anza na “Lorem ipsum”",
+      "note": "Kizalishaji Lorem Ipsum · safi"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "Kithibitisho cha Barua Pepe · muundo tu (hakuna utafutaji wa MX)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Nambari ya kadi",
+      "note": "Kikagua Luhn · nje ya mtandao, haihifadhiwi"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "Kipunguzi cha JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "CSS Minifier · nyepesi (salama kwa edge)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Puuza kesi",
+      "note": "Hash Comparator · muda wa kudumu kwa urefu sawa"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "note": "JSON Diff · operesheni za kiwango cha njia · mistari ya rangi ya aina · upande kwa upande",
+      "equal": "Sawa",
+      "differs": "mabadiliko {count}",
+      "colPath": "Njia",
+      "colKind": "Aina",
+      "colLeft": "Kushoto",
+      "colRight": "Kulia",
+      "filtersAria": "Chuja kwa aina ya mabadiliko",
+      "filterAll": "Zote ({count})",
+      "filterAdd": "Ongeza ({count})",
+      "filterRemove": "Ondoa ({count})",
+      "filterChange": "Badilisha ({count})",
+      "filterType": "Aina ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
+      "mode": "Hali",
+      "pretty": "Nzuri",
+      "compact": "Kufunga",
+      "indent": "Kutenganisha",
       "note": "YAML Formatter · js-yaml"
     },
     "tomlFormat": {
@@ -188,64 +188,64 @@
       "note": "XML Minifier · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "URL Validator · WHATWG URL (hakuna kunakiliwa mtandao)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "IP Validator · IPv4/IPv6 nje ya mtandao"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "UUID Validator · muundo wa RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "HTML Minifier · nyepesi (salama kwa edge)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Urefu",
+      "count": "Idadi",
+      "charset": "Seti ya herufi",
+      "alphanumeric": "Alfanumeriki",
+      "symbols": "Alfanumeriki + alama",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Nukuu ya nasibu · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Muda wa kusoma · heuristiki ya CJK + Latin"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Kiwango cha juu cha kichwa",
+      "note": "Markdown TOC · vichwa vya ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "Faili ya PDF",
+      "note": "Taarifa za PDF · pdf-lib (majina + metadata)"
     },
     "rot13": {
       "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "note": "ROT13 / Caesar · safi"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Msimbo wa Morse · ITU · safi"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Mandhari → binary",
+      "fromBinary": "Binary → mandhari",
+      "note": "Mandhari ↔ Binary · UTF-8 bits"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Uandishi wa Digest",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "CSS Beautifier · nyepesi"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML Beautifier · nyepesi"
     },
     "stringSimilarity": {
       "a": "String A",
@@ -253,34 +253,34 @@
       "note": "String Similarity · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
+      "toRoman": "Namba → Roman",
+      "fromRoman": "Roman → Namba",
       "note": "Roman Numerals · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Tarehe ya kuzaliwa (YYYY-MM-DD)",
+      "asOf": "Kutoka (hiari)",
+      "note": "Age Calculator · Y/M/D sahihi"
     },
     "tip": {
-      "bill": "Bill amount",
+      "bill": "Kiasi cha bili",
       "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "people": "Watu",
+      "note": "Kikokotozi cha Tips · gawanya kwa urahisi"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Upana",
+      "height": "Urefu",
+      "note": "Ratio ya Aspect · GCD simplify"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "MIME Lookup · aina za kawaida za wavuti"
     },
     "ua": {
       "note": "User-Agent Parser · heuristic (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
+      "file": "Faili la picha",
       "note": "Image Metadata · sharp (EXIF buffer size)"
     },
     "wordFreq": {
@@ -291,99 +291,99 @@
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL Minifier · maoni + nafasi tupu"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Namba ya kuanza",
+      "note": "Ongeza Namba za Mstari · safi"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Maneno ya Kipekee · mpangilio wa kuonekana kwanza"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Thamani",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Epoch Milliseconds · Tarehe"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Nywila",
+      "note": "Entropy ya Nywila · heuristiki ya charset"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Mbele (#hex)",
+      "bg": "Mabano (#hex)",
+      "note": "Tofauti ya Rangi · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Faili ya picha",
+      "note": "Kiongozi wa EXIF · exifr + JPEG fallback"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Mchoro",
+      "replacement": "Badilisho",
+      "flags": "Bendera",
+      "note": "Regex Tafuta na Badilisha · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "secret": "Siri",
+      "exp": "Inaisha (sekunde)",
+      "note": "JWT Tengeneza · HS256 (maendeleo/ujaribio tu)"
     },
     "rand": {
-      "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "min": "Kiwango cha chini",
+      "max": "Upeo",
+      "count": "Idadi",
+      "note": "Nambari Nasibu · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Pande",
+      "count": "Idadi ya kete",
+      "note": "Kiviringisha Kete · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · safi"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · mtindo wa JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Ujumbe",
+      "secret": "Siri",
+      "signature": "Sahihi",
+      "note": "Thibitisha HMAC · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "Baiti",
+      "count": "Idadi",
+      "note": "Kizalishaji cha Ufunguo wa Siri · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "Faili ya PDF",
+      "note": "Bora PDF Nyeupe · kuandika upya kwa pdf-lib (si kukomaa picha)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "Faili ya PDF",
+      "quality": "Ubora",
+      "engine": "Injini",
+      "qStructural": "Muundo (qpdf, mitiririko isiyo na upotevu)",
+      "qScreen": "Skrini (ndogo zaidi, Ghostscript)",
+      "qEbook": "Kitabu (sawa, Ghostscript)",
+      "qPrinter": "Chapisho (ubora wa juu, Ghostscript)",
+      "eAuto": "Otomatiki (qpdf → Ghostscript → pdf-lib)",
+      "download": "Pakua PDF",
+      "needFile": "Chagua faili la PDF kwanza",
+      "in": "Ingizo",
+      "out": "Tokeo",
+      "saved": "Imehifadhiwa",
+      "note": "PDF Compress · qpdf / Ghostscript kwenye mwenyeji · pdf-lib mbadala"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Kulingana na nia",
+    "tools": "zana",
+    "dualSurface": "Ukurasa wa binadamu + API ya Agent · injini moja",
+    "otherRoots": "Mizizi mingine ya mahitaji"
   }
 }

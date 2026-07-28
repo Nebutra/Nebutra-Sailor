@@ -111,33 +111,33 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
+      "run": "Jalankan",
+      "running": "Sedang berjalan…",
+      "copy": "Salin",
+      "copied": "Tersalin",
+      "sameAsApi": "Sama dengan jalur API · Mesin OSS",
+      "mustBeNumber": "{label} harus berupa angka",
+      "base64Loaded": "Payload Base64 dimuat",
+      "workspaceMissing": "Workspace belum dikonfigurasi: {slug}",
+      "yes": "Ya",
+      "no": "Tidak",
+      "text": "Teks",
+      "outputPreview": "Pratinjau output",
       "mode": "Mode",
       "encode": "Encode",
       "decode": "Decode"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
+      "paragraphs": "Paragraf",
+      "wordsPerParagraph": "Kata per paragraf",
+      "startWithLorem": "Mulai dengan “Lorem ipsum”",
       "note": "Lorem Ipsum Generator · pure"
     },
     "emailValidate": {
       "note": "Email Validator · format only (no MX lookup)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
+      "number": "Nomor kartu",
       "note": "Luhn Checker · offline, never stored"
     },
     "jsonMinify": {
@@ -146,106 +146,106 @@
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "CSS Minifier · ringan (aman di edge)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Abaikan huruf besar/kecil",
+      "note": "Hash Comparator · waktu konstan untuk panjang sama"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
+      "note": "JSON Diff · operasi level path · baris berwarna jenis · berdampingan",
+      "equal": "Identik",
+      "differs": "{count} perubahan",
       "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "colKind": "Jenis",
+      "colLeft": "Kiri",
+      "colRight": "Kanan",
+      "filtersAria": "Filter berdasarkan jenis perubahan",
+      "filterAll": "Semua ({count})",
+      "filterAdd": "Tambah ({count})",
+      "filterRemove": "Hapus ({count})",
+      "filterChange": "Ubah ({count})",
+      "filterType": "Tipe ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
       "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "pretty": "Rapi",
+      "compact": "Padat",
+      "indent": "Indentasi",
+      "note": "Formatter YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "Formatter TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "Minifier XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "Validator URL · WHATWG URL (tanpa pengambilan jaringan)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "Validator IP · IPv4/IPv6 offline"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "Validator UUID · bentuk RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "Minifier HTML · ringan (aman di edge)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
+      "length": "Panjang",
+      "count": "Jumlah",
       "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "alphanumeric": "Alfanumerik",
+      "symbols": "Alfanumerik + simbol",
       "hex": "Hex",
       "base64url": "Base64URL",
       "note": "Random String · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Waktu baca · heuristik CJK + Latin"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Level heading maksimum",
+      "note": "Markdown TOC · heading ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "File PDF",
+      "note": "Info PDF · pdf-lib (halaman + metadata)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Geser (13 = ROT13)",
+      "note": "ROT13 / Caesar · murni"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Kode Morse · ITU · murni"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Teks → biner",
+      "fromBinary": "Biner → teks",
+      "note": "Teks ↔ Biner · bit UTF-8"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Enkripsi digest",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "CSS Beautifier · ringan"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML Beautifier · ringan"
     },
     "stringSimilarity": {
       "a": "String A",
@@ -253,137 +253,137 @@
       "note": "String Similarity · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Angka → Romawi",
+      "fromRoman": "Romawi → Angka",
+      "note": "Angka Romawi · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Tanggal lahir (YYYY-MM-DD)",
+      "asOf": "Per (opsional)",
+      "note": "Kalkulator Umur · Y/B/H tepat"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Jumlah tagihan",
+      "percent": "Tips %",
+      "people": "Orang",
+      "note": "Kalkulator Tips · bagi adil"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Lebar",
+      "height": "Tinggi",
+      "note": "Rasio Aspek · sederhanakan GCD"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "Cari MIME · tipe web umum"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "Parser User-Agent · heuristik (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "File gambar",
+      "note": "Metadata Gambar · sharp (ukuran buffer EXIF)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Frekuensi Kata · CJK + Latin"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL Minifier · komentar + spasi"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Nomor awal",
+      "note": "Tambah Nomor Baris · murni"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Kata Unik · urutan pertama muncul"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Nilai",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Epoch Milidetik · Tanggal"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Kata Sandi",
+      "note": "Entropi Kata Sandi · heuristik charset"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Latar Depan (#hex)",
+      "bg": "Latar Belakang (#hex)",
+      "note": "Kontras Warna · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "File gambar",
+      "note": "Penampil EXIF · exifr + JPEG fallback"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Pola",
+      "replacement": "Pengganti",
+      "flags": "Bendera",
+      "note": "Cari & Ganti Regex · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "secret": "Rahasia",
+      "exp": "Kadaluarsa (detik)",
+      "note": "Generate JWT · HS256 (hanya dev/test)"
     },
     "rand": {
       "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "max": "Maks",
+      "count": "Jumlah",
+      "note": "Angka Acak · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Sisi",
+      "count": "Jumlah dadu",
+      "note": "Pengocok Dadu · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · murni"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · gaya JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Pesan",
+      "secret": "Rahasia",
+      "signature": "Tanda Tangan",
+      "note": "Verifikasi HMAC · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "Byte",
+      "count": "Jumlah",
+      "note": "Generator Kunci Rahasia · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "File PDF",
+      "note": "Optimasi Ringan PDF · penulisan ulang pdf-lib (bukan kompresi ulang gambar)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "File PDF",
+      "quality": "Kualitas",
+      "engine": "Mesin",
+      "qStructural": "Struktural (qpdf, aliran tanpa kehilangan)",
+      "qScreen": "Layar (terkecil, Ghostscript)",
+      "qEbook": "Ebook (seimbang, Ghostscript)",
+      "qPrinter": "Printer (kualitas lebih tinggi, Ghostscript)",
+      "eAuto": "Otomatis (qpdf → Ghostscript → pdf-lib)",
+      "download": "Unduh PDF",
+      "needFile": "Pilih file PDF terlebih dahulu",
+      "in": "Masukan",
+      "out": "Keluaran",
+      "saved": "Tersimpan",
+      "note": "Kompres PDF · qpdf / Ghostscript di host · pdf-lib cadangan"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Berdasarkan niat",
+    "tools": "alat",
+    "dualSurface": "Halaman manusia + API Agen · mesin yang sama",
+    "otherRoots": "Akar permintaan lainnya"
   }
 }

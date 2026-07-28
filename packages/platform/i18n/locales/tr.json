@@ -953,7 +953,7 @@
         "apiKeys": "API Anahtarları",
         "notifications": "Bildirimler",
         "auditLog": "Denetim Günlüğü",
-        "webhooks": "Webhook'lar",
+        "webhooks": "Webhooks",
         "admin": "Yönetici"
       },
       "action": {

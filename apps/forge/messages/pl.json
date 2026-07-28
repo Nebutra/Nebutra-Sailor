@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "Uruchom",
+      "running": "Uruchamianie…",
+      "copy": "Kopiuj",
+      "copied": "Skopiowano",
+      "sameAsApi": "Ta sama ścieżka co API · silnik OSS",
+      "mustBeNumber": "{label} musi być liczbą",
+      "base64Loaded": "Obciążenie Base64 załadowane",
+      "workspaceMissing": "Przestrzeń robocza nie jest skonfigurowana: {slug}",
+      "yes": "Tak",
+      "no": "Nie",
+      "text": "Tekst",
+      "outputPreview": "Podgląd wyniku",
+      "mode": "Tryb",
+      "encode": "Koduj",
+      "decode": "Dekoduj"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Akapity",
+      "wordsPerParagraph": "Słowa na akapit",
+      "startWithLorem": "Zacznij od „Lorem ipsum”",
+      "note": "Generator Lorem Ipsum · czysty"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "Weryfikator e-mail · tylko format (bez zapytania MX)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Numer karty",
+      "note": "Sprawdzanie Luhn · offline, nigdy nie zapisywane"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "Minifikator JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "Minifikator CSS · lekki (bezpieczny na krawędzi)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Ignoruj wielkość liter",
+      "note": "Porównywacz hashy · stały czas dla równej długości"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "note": "Różnice JSON · operacje na poziomie ścieżki · kolorowane wiersze · obok siebie",
+      "equal": "Identyczne",
+      "differs": "{count} zmiana(e)",
+      "colPath": "Ścieżka",
+      "colKind": "Rodzaj",
+      "colLeft": "Lewa",
+      "colRight": "Prawa",
+      "filtersAria": "Filtruj według rodzaju zmiany",
+      "filterAll": "Wszystkie ({count})",
+      "filterAdd": "Dodane ({count})",
+      "filterRemove": "Usunięte ({count})",
+      "filterChange": "Zmiany ({count})",
+      "filterType": "Typ ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "Tryb",
+      "pretty": "Czytelny",
+      "compact": "Zwięzły",
+      "indent": "Wcięcie",
+      "note": "Formatowanie YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "Formatowanie TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "Minifikacja XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "Weryfikacja URL · WHATWG URL (bez pobierania sieciowego)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "Weryfikacja IP · IPv4/IPv6 offline"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "Weryfikacja UUID · kształt RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "Minifikacja HTML · lekka (bezpieczna dla edge)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Długość",
+      "count": "Liczba",
+      "charset": "Zestaw znaków",
+      "alphanumeric": "Alfanumeryczne",
+      "symbols": "Alfanumeryczne + symbole",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Losowy ciąg · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Czas czytania · heurystyka CJK + łacińska"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Maksymalny poziom nagłówka",
+      "note": "Spis treści Markdown · nagłówki ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "Plik PDF",
+      "note": "Informacje o PDF · pdf-lib (strony + metadane)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Przesunięcie (13 = ROT13)",
+      "note": "ROT13 / Cezar · czysty"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Kod Morse'a · ITU · czysty"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Tekst → binarny",
+      "fromBinary": "Binarny → tekst",
+      "note": "Tekst ↔ Binarny · bity UTF-8"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Kodowanie skrótu",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "Formatowanie CSS · lekkie"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "Formatowanie HTML · lekki"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "Ciąg A",
+      "b": "Ciąg B",
+      "note": "Podobieństwo ciągów · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Liczba → Rzymska",
+      "fromRoman": "Rzymska → Liczba",
+      "note": "Cyfry rzymskie · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Data urodzenia (RRRR-MM-DD)",
+      "asOf": "Na dzień (opcjonalnie)",
+      "note": "Kalkulator wieku · dokładnie L/M/D"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Kwota rachunku",
+      "percent": "Napiwek %",
+      "people": "Osoby",
+      "note": "Kalkulator napiwków · łatwe dzielenie"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Szerokość",
+      "height": "Wysokość",
+      "note": "Proporcje · uproszczenie NWD"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "Wyszukiwanie MIME · popularne typy webowe"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "Parser User-Agent · heurystyczny (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Plik obrazu",
+      "note": "Metadane obrazu · sharp (rozmiar bufora EXIF)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Częstotliwość słów · CJK + łacina"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "Minifikator SQL · komentarze + białe znaki"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Numer początkowy",
+      "note": "Dodaj numery wierszy · czysty"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Unikalne słowa · kolejność pierwszego wystąpienia"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Wartość",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Milisekundy epoki · Data"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Hasło",
+      "note": "Entropia hasła · heurystyka zestawu znaków"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Pierwszy plan (#hex)",
+      "bg": "Tło (#hex)",
+      "note": "Kontrast kolorów · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Plik obrazu",
+      "note": "Podgląd EXIF · exifr + awaryjny JPEG"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Wzorzec",
+      "replacement": "Zastąpienie",
+      "flags": "Flagi",
+      "note": "Szukaj i zamień regex · ECMAScript"
     },
     "jwt": {
-      "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "payload": "Obciążenie JSON",
+      "secret": "Tajny klucz",
+      "exp": "Wygaśnięcie (sekundy)",
+      "note": "Generowanie JWT · HS256 (tylko dev/test)"
     },
     "rand": {
       "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "max": "Maks.",
+      "count": "Liczba",
+      "note": "Liczba losowa · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Ściany",
+      "count": "Liczba kości",
+      "note": "Rzut kośćmi · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · czysty"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · styl JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Wiadomość",
+      "secret": "Sekret",
+      "signature": "Podpis",
+      "note": "Weryfikacja HMAC · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "Bajty",
+      "count": "Liczba",
+      "note": "Generator klucza tajnego · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "Plik PDF",
+      "note": "Optymalizacja PDF Light · przepisanie pdf-lib (bez ponownego kompresowania obrazów)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
+      "file": "Plik PDF",
+      "quality": "Jakość",
+      "engine": "Silnik",
+      "qStructural": "Strukturalna (qpdf, strumienie bezstratne)",
+      "qScreen": "Ekrany (najmniejszy rozmiar, Ghostscript)",
+      "qEbook": "Ebook (zbalansowana, Ghostscript)",
+      "qPrinter": "Drukarka (wyższa jakość, Ghostscript)",
       "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "download": "Pobierz PDF",
+      "needFile": "Najpierw wybierz plik PDF",
+      "in": "Wejście",
+      "out": "Wyjście",
+      "saved": "Zapisano",
+      "note": "Kompresja PDF · qpdf / Ghostscript na hoście · pdf-lib jako rezerwa"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Według intencji",
+    "tools": "narzędzia",
+    "dualSurface": "Strona użytkownika + API agenta · ten sam silnik",
+    "otherRoots": "Inne źródła popytu"
   }
 }

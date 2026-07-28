@@ -953,7 +953,7 @@
         "apiKeys": "คีย์ API",
         "notifications": "การแจ้งเตือน",
         "auditLog": "บันทึกการตรวจสอบ",
-        "webhooks": "เว็บฮุค",
+        "webhooks": "Webhooks",
         "admin": "ผู้ดูแลระบบ"
       },
       "action": {

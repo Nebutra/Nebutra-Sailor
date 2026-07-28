@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "Webhook",
+      "title": "Webhooks",
       "description": "Berlangganan peristiwa yang dipancarkan oleh workspace Anda. Kami menandatangani setiap payload dengan rahasia endpoint Anda agar Anda dapat memverifikasi keasliannya.",
       "create": {
         "heading": "Endpoint baru",
@@ -953,7 +953,7 @@
         "apiKeys": "Kunci API",
         "notifications": "Notifikasi",
         "auditLog": "Log Audit",
-        "webhooks": "Webhook",
+        "webhooks": "Webhooks",
         "admin": "Admin"
       },
       "action": {

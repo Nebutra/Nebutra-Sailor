@@ -792,7 +792,7 @@
       "contactUs": {
         "title": "8. 문의처",
         "intro": "본 개인정보 처리방침에 관한 문의사항이 있으시면 다음으로 연락해 주십시오:",
-        "company": "{brandName} 주식회사"
+        "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
@@ -974,7 +974,7 @@
       "contactUs": {
         "title": "문의처",
         "intro": "환불 요청 또는 본 정책에 관한 문의:",
-        "company": "{brandName} 주식회사",
+        "company": "{brandName} Co., Ltd.",
         "billingLabel": "결제",
         "supportLabel": "지원",
         "legalLabel": "법무",
@@ -1123,7 +1123,7 @@
       "contactUs": {
         "title": "11. 문의처",
         "intro": "본 약관에 관한 문의사항이 있으시면 다음으로 연락해 주십시오:",
-        "company": "{brandName} 주식회사",
+        "company": "{brandName} Co., Ltd.",
         "emailLabel": "이메일",
         "supportLabel": "지원"
       },

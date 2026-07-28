@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "Webhooki",
+      "title": "Webhooks",
       "description": "Subskrybuj zdarzenia emitowane przez Twoją przestrzeń roboczą. Każde ładunek podpisujemy tajnym kluczem Twojego punktu końcowea, aby można było zweryfikować jego autentyczność.",
       "create": {
         "heading": "Nowy punkt końcowy",
@@ -953,7 +953,7 @@
         "apiKeys": "Klucze API",
         "notifications": "Powiadomienia",
         "auditLog": "Dziennik audytu",
-        "webhooks": "Webhooki",
+        "webhooks": "Webhooks",
         "admin": "Admin"
       },
       "action": {

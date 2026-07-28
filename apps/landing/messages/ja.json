@@ -159,7 +159,7 @@
       "faq": "よくある質問",
       "github": "GitHub",
       "discord": "Discord",
-      "twitter": "X（Twitter）"
+      "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {brandName} Intelligence. 無断複写・転載を禁じます。",
     "statusOnline": "全システム正常稼働中",
@@ -496,7 +496,7 @@
       "contactUs": {
         "title": "お問い合わせ",
         "intro": "Cookie の使用に関するご質問はこちらまでご連絡ください：",
-        "company": "{brandName} 株式会社",
+        "company": "{brandName} Co., Ltd.",
         "privacyNote": "個人データの収集・処理方法の詳細については、当社の",
         "privacyLink": "プライバシーポリシー"
       }
@@ -792,7 +792,7 @@
       "contactUs": {
         "title": "8. お問い合わせ",
         "intro": "このプライバシーポリシーについてご質問がある場合はお問い合わせください：",
-        "company": "{brandName} 株式会社"
+        "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
@@ -974,7 +974,7 @@
       "contactUs": {
         "title": "お問い合わせ",
         "intro": "返金リクエストまたはこのポリシーに関するお問い合わせ：",
-        "company": "{brandName} 株式会社",
+        "company": "{brandName} Co., Ltd.",
         "billingLabel": "請求",
         "supportLabel": "サポート",
         "legalLabel": "法務",
@@ -1123,7 +1123,7 @@
       "contactUs": {
         "title": "11. お問い合わせ",
         "intro": "本規約についてご質問がある場合はお問い合わせください：",
-        "company": "{brandName} 株式会社",
+        "company": "{brandName} Co., Ltd.",
         "emailLabel": "メール",
         "supportLabel": "サポート"
       },

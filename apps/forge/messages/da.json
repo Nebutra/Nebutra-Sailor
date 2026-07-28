@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "Kør",
+      "running": "Kører…",
+      "copy": "Kopiér",
+      "copied": "Kopieret",
+      "sameAsApi": "Samme sti som API · OSS-motor",
+      "mustBeNumber": "{label} skal være et tal",
+      "base64Loaded": "Base64-payload indlæst",
+      "workspaceMissing": "Arbejdsområde ikke konfigureret: {slug}",
+      "yes": "Ja",
+      "no": "Nej",
+      "text": "Tekst",
+      "outputPreview": "Udskriftsforhåndsvisning",
+      "mode": "Tilstand",
+      "encode": "Kodér",
+      "decode": "Dekodér"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Afsnit",
+      "wordsPerParagraph": "Ord pr. afsnit",
+      "startWithLorem": "Start med “Lorem ipsum”",
+      "note": "Lorem Ipsum-generator · ren"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "E-mail-validering · kun format (uden MX-lookup)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Kortnummer",
+      "note": "Luhn-tjek · offline, aldrig gemt"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "JSON-minimering · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "CSS-minimer · letvægt (edge-sikker)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Ignorer store/små bogstaver",
+      "note": "Hash-sammenligner · konstant tid for samme længde"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
+      "note": "JSON Diff · sti-niveau ops · farvekodede rækker · side ved side",
+      "equal": "Identisk",
+      "differs": "{count} ændring(er)",
+      "colPath": "Sti",
+      "colKind": "Type",
+      "colLeft": "Venstre",
+      "colRight": "Højre",
+      "filtersAria": "Filtrer efter ændringstype",
+      "filterAll": "Alle ({count})",
+      "filterAdd": "Tilføj ({count})",
+      "filterRemove": "Fjern ({count})",
+      "filterChange": "Ændring ({count})",
       "filterType": "Type ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "Tilstand",
+      "pretty": "Pæn",
+      "compact": "Kompakt",
+      "indent": "Indryk",
+      "note": "YAML-formatter · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "TOML-formatter · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "XML-minimer · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "URL-valider · WHATWG URL (uden netværksfetch)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "IP-valider · IPv4/IPv6 offline"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "UUID-valider · RFC 4122-format"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "HTML-minimer · letvægts (edge-sikker)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Længde",
+      "count": "Antal",
+      "charset": "Tegnsæt",
+      "alphanumeric": "Alfanumerisk",
+      "symbols": "Alfanumerisk + symboler",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Tilfældig streng · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Læsetid · CJK + Latin heuristik"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Maks. overskriftsniveau",
+      "note": "Markdown TOC · ATX-overskrifter"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "PDF-fil",
+      "note": "PDF-info · pdf-lib (sider + metadata)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Skift (13 = ROT13)",
+      "note": "ROT13 / Caesar · ren"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Morsekode · ITU · ren"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Tekst → binær",
+      "fromBinary": "Binær → tekst",
+      "note": "Tekst ↔ Binær · UTF-8-bits"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Digest-kodning",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "CSS-beautifier · letvægts"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML-Formatter · letvægt"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "Streng A",
+      "b": "Streng B",
+      "note": "Strenglighed · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Tal → Romersk",
+      "fromRoman": "Romersk → Tal",
+      "note": "Romerske tal · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Fødselsdato (ÅÅÅÅ-MM-DD)",
+      "asOf": "Pr. dato (valgfrit)",
+      "note": "Aldersberegner · præcis Å/M/D"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Regningsbeløb",
+      "percent": "Drikkepenge %",
+      "people": "Personer",
+      "note": "Tipberegner · nem opdeling"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Bredde",
+      "height": "Højde",
+      "note": "Billedformat · GCD-forenkling"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "MIME-opslag · almindelige webtyper"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "User-Agent-parser · heuristisk (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Billedfil",
+      "note": "Billedmetadata · sharp (EXIF-bufferstørrelse)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Ordfrekvens · CJK + Latin"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL Minifier · kommentarer + mellemrum"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Startnummer",
+      "note": "Tilføj linjenumre · ren"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Unikke ord · første-seen rækkefølge"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Værdi",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Epoch millisekunder · dato"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Adgangskode",
+      "note": "Adgangskode-entropi · charset-heuristik"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Forgrund (#hex)",
+      "bg": "Baggrund (#hex)",
+      "note": "Farvekontrast · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Billedfil",
+      "note": "EXIF-viser · exifr + JPEG-fallback"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
+      "pattern": "Mønster",
+      "replacement": "Erstatning",
       "flags": "Flags",
       "note": "Regex Find & Replace · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "secret": "Hemmelighed",
+      "exp": "Udløber (sekunder)",
+      "note": "JWT-generering · HS256 (kun udvikling/test)"
     },
     "rand": {
       "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "max": "Maks",
+      "count": "Antal",
+      "note": "Tilfældigt tal · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Sider",
+      "count": "Antal terninger",
+      "note": "Terningetriller · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · ren"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · JWT-stil"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Besked",
+      "secret": "Hemmelighed",
+      "signature": "Signatur",
+      "note": "HMAC-verificering · SHA-256"
     },
     "secret": {
       "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "count": "Antal",
+      "note": "Hemmelig nøgle-generator · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "PDF-fil",
+      "note": "PDF Light Optimize · pdf-lib omskrivning (ikke billedkomprimering)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
+      "file": "PDF-fil",
+      "quality": "Kvalitet",
+      "engine": "Motor",
+      "qStructural": "Strukturel (qpdf, lossless streams)",
+      "qScreen": "Skærm (mindst, Ghostscript)",
+      "qEbook": "E-bog (afbalanceret, Ghostscript)",
+      "qPrinter": "Printer (højere kvalitet, Ghostscript)",
       "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
       "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
+      "needFile": "Vælg en PDF-fil først",
       "in": "Input",
       "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "saved": "Gemt",
+      "note": "PDF Compress · qpdf / Ghostscript på host · pdf-lib fallback"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Efter hensigt",
+    "tools": "værktøjer",
+    "dualSurface": "Menneske-side + Agent API · samme motor",
+    "otherRoots": "Andre behovsrodder"
   }
 }

@@ -792,7 +792,7 @@
       "contactUs": {
         "title": "8. צור קשר",
         "intro": "אם יש לך שאלות לגבי מדיניות הפרטיות הזו, אנא צור איתנו קשר:",
-        "company": "{brandName} בע\"מ."
+        "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
@@ -974,7 +974,7 @@
       "contactUs": {
         "title": "צור קשר",
         "intro": "לבקשות החזר או שאלות לגבי מדיניות זו:",
-        "company": "{brandName} בע\"מ",
+        "company": "{brandName} Co., Ltd.",
         "billingLabel": "חשבוניות",
         "supportLabel": "תמיכה",
         "legalLabel": "משפטי",
@@ -1420,7 +1420,7 @@
         "desc": "השק מוצרי SaaS של אורקסטראציה רב-אגנטית, צ'אטבוט, טקסט-לתמונה, תמונה-לטקסט וטקסט-לסרטון עם ממשק סטרימינג מוביל UX, ניתוב מודלים חכם ומדידת שימוש.",
         "features": {
           "f1": "ממשק זרם רב-סוכנים",
-          "f2": "Model Router + Usage Metering"
+          "f2": "Model Router + מדידת שימוש"
         }
       },
       "enterprise": {

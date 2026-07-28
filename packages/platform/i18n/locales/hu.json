@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "Webhookok",
+      "title": "Webhooks",
       "description": "Iratkozz fel a munkaterület által kibocsátott eseményekre. Minden adatcsomagot az végpont titkos kulcsával írunk alá, így ellenőrizheted az eredetiségét.",
       "create": {
         "heading": "Új végpont",
@@ -953,7 +953,7 @@
         "apiKeys": "API-kulcsok",
         "notifications": "Értesítések",
         "auditLog": "Audit napló",
-        "webhooks": "Webhookok",
+        "webhooks": "Webhooks",
         "admin": "Adminisztráció"
       },
       "action": {
