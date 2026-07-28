@@ -98,7 +98,6 @@ export * from "./canvas-reveal-effect";
 export * from "./card";
 export * from "./card-spotlight";
 export * from "./carousel";
-// export * from "./change-password-form";
 /**
  * @registry https://ui.nebutra.com/r/chart.json
  * @distribution dual-track (npm + shadcn registry) until 2026-11-09.
@@ -149,6 +148,7 @@ export * from "./confirm-dialog";
 export * from "./context-card";
 export * from "./context-menu";
 export * from "./copy-button";
+export * from "./data-list";
 export * from "./description";
 export {
   Dialog,
