@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   cloudflare-workers:
-    name: Cloudflare Workers gateway
+    name: Cloudflare Workers edge gateway
     runs-on: ubuntu-latest
     if: >-
       (github.event_name == 'workflow_dispatch' && inputs.deploy_target == 'cloudflare-workers') ||
@@ -53,25 +53,28 @@ jobs:
         run: |
           [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
           [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
-          [ -n "${{ vars.AI_SERVICE_URL }}" ] || { echo "::error::AI_SERVICE_URL repository variable is not set"; exit 1; }
-          [ -n "${{ secrets.SERVICE_SECRET }}" ] || { echo "::error::SERVICE_SECRET secret is not set"; exit 1; }
-          [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
+          # The edge Worker carries no business logic, so it needs none of the
+          # gateway's service credentials. Upstash is the one exception: the
+          # per-IP flood limit counts there so every colo shares one budget.
+          [ -n "${{ secrets.UPSTASH_REDIS_REST_URL }}" ] || { echo "::error::UPSTASH_REDIS_REST_URL secret is not set"; exit 1; }
+          [ -n "${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" ] || { echo "::error::UPSTASH_REDIS_REST_TOKEN secret is not set"; exit 1; }
 
       - name: Prepare Worker runtime bindings
         env:
-          AI_SERVICE_URL: ${{ vars.AI_SERVICE_URL }}
-          SERVICE_SECRET: ${{ secrets.SERVICE_SECRET }}
-          GATEWAY_SHARED_SECRET: ${{ secrets.GATEWAY_SHARED_SECRET }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
         run: |
           node <<'EOF'
           const fs = require("node:fs");
 
+          // Only what the edge actually reads. ORIGIN_URL and the IP limit are
+          // vars in wrangler.edge.toml, not secrets — a hostname and a number
+          // belong in config where they are visible.
           fs.writeFileSync(
             "backends/gateway/.wrangler-secrets.json",
             JSON.stringify({
-              AI_SERVICE_URL: process.env.AI_SERVICE_URL,
-              SERVICE_SECRET: process.env.SERVICE_SECRET,
-              GATEWAY_SHARED_SECRET: process.env.GATEWAY_SHARED_SECRET,
+              UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+              UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
             }),
           );
           EOF
@@ -82,7 +85,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: backends/gateway
-          command: secret bulk .wrangler-secrets.json --config wrangler.toml
+          command: secret bulk .wrangler-secrets.json --config wrangler.edge.toml
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
@@ -90,4 +93,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: backends/gateway
-          command: deploy --config wrangler.toml
+          command: deploy --config wrangler.edge.toml

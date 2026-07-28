@@ -1,3 +1,14 @@
+# NOT DEPLOYED. The Worker this describes (nebutra-gateway) was deleted on
+# 2026-07-28: its bundle is the whole Node backend, 25MB and 457ms of startup
+# CPU against a ~400ms budget, so it could not be deployed after 2026-07-22 and
+# no fix could reach it. api.nebutra.com is served by nebutra-gateway-edge —
+# see wrangler.edge.toml — which forwards to ECS Origin.
+#
+# Kept because it still documents the Hyperdrive binding, the retention Cron
+# Trigger and the vars the full gateway expects, and because DEPLOY_TARGET_GATEWAY
+# can select cloudflare-workers again once the entry is small enough to start.
+# Deploying this file as-is will fail at startup validation.
+
 name = "nebutra-gateway"
 main = "src/worker.ts"
 compatibility_date = "2026-06-04"
@@ -19,7 +30,7 @@ compatibility_flags = ["nodejs_compat"]
 # still talks to a local database directly.
 [[hyperdrive]]
 binding = "HYPERDRIVE"
-id = "53fe5b8781d04f9899c7c647e585c73e"
+id = "8a0e4251ae014472879ae3b2a57276cb"
 localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
 
 # Retention purge. On Cloudflare rather than a scheduled GitHub Action: the

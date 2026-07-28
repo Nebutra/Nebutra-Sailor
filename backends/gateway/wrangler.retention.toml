@@ -1,0 +1,30 @@
+# Retention purge. One binding, one job, no route.
+#
+# Separate from nebutra-gateway-edge on purpose: that Worker serves
+# api.nebutra.com and forwards every authenticated decision to the origin
+# precisely so it holds nothing worth stealing. Giving it a database
+# connection to save a file would undo that.
+#
+# workers_dev stays off — nothing here should be reachable over HTTP.
+
+name = "nebutra-retention"
+main = "src/worker-retention.ts"
+compatibility_date = "2026-06-04"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = false
+
+# Connects as app_user, which cannot bypass RLS. purge_expired_rows is
+# SECURITY DEFINER so the DELETEs still see every tenant's rows; without that
+# it would delete nothing and report success.
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "8a0e4251ae014472879ae3b2a57276cb"
+localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
+
+# 18:17 UTC = 02:17 Asia/Shanghai. Off-peak for ap-southeast-2.
+[triggers]
+crons = ["17 18 * * *"]
+
+[observability]
+enabled = true
+head_sampling_rate = 1
