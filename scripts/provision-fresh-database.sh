@@ -102,9 +102,13 @@ say "Verifying isolation as $APP_ROLE"
 psql "$DB_URL" -v ON_ERROR_STOP=1 -q <<'SQL'
 INSERT INTO tenants(id, kind) VALUES ('__probe_a','ORGANIZATION'), ('__probe_b','ORGANIZATION')
   ON CONFLICT DO NOTHING;
+-- Distinct key_hash per row: the column is UNIQUE, so identical values make
+-- the second INSERT a no-op and leave exactly one tenant with data. The check
+-- below would then pass trivially without ever proving that another tenant's
+-- rows are hidden — which is the only thing it exists to prove.
 INSERT INTO api_keys(id,name,key_hash,key_prefix,tenant_id,created_at,updated_at,rate_limit_rps)
-VALUES ('__probe_ka','probe','h','p','__probe_a',now(),now(),1),
-       ('__probe_kb','probe','h','p','__probe_b',now(),now(),1)
+VALUES ('__probe_ka','probe','__probe_hash_a','pa','__probe_a',now(),now(),1),
+       ('__probe_kb','probe','__probe_hash_b','pb','__probe_b',now(),now(),1)
   ON CONFLICT DO NOTHING;
 SQL
 
@@ -127,8 +131,17 @@ UNSCOPED=$(psql "$APP_URL" -tA -c \
   "BEGIN; SELECT set_config('app.current_tenant_id','',true);
    SELECT count(*) FROM api_keys; COMMIT;" | sed -n '3p')
 
+# Confirm the fixture itself is sound before trusting what it proves: two
+# tenants must actually have rows, or "sees only its own" means nothing.
+SEEDED=$(psql "$DB_URL" -tA -c \
+  "SELECT count(DISTINCT tenant_id) FROM api_keys WHERE id LIKE '\\_\\_probe%'")
+if [[ "$SEEDED" != "2" ]]; then
+  echo "  fixture              → $SEEDED tenant(s) seeded, expected 2 ✗"; FAIL=1
+else
+  echo "  fixture              → 2 tenants seeded ✓"
+fi
 if [[ "$SCOPED" == "__probe_a" ]]; then
-  echo "  scoped to a tenant  → sees only that tenant ✓"
+  echo "  scoped to a tenant  → sees only that tenant, not the other ✓"
 else
   echo "  scoped to a tenant  → saw '$SCOPED', expected '__probe_a' ✗"; FAIL=1
 fi
