@@ -1,6 +1,14 @@
 name: i18n Translate (SenseNova)
 
-# Global concurrent localization for ALL product message catalogs.
+# Async localization worker — NEVER part of the main CI gate.
+#
+# Architecture:
+#   Main CI / pre-push → structure only (i18n:check keys/placeholders)
+#   This workflow      → fill missing leaves via SenseNova, then open/update a PR
+#
+# Triggers: event-driven (en source on main) + manual dispatch.
+# No heavy cron of full re-translate. Weekly orphan *report* is a separate light job.
+#
 # Language wheel SSOT: packages/platform/i18n PRODUCT_LANGUAGES (~34 langs).
 # Chinese is CLDR script-split: zh-Hans + zh-Hant (never bare zh catalogs).
 #
@@ -12,20 +20,16 @@ name: i18n Translate (SenseNova)
 #
 # Provider: SenseNova Token Plan (multi-model rotation)
 #   Base:  https://token.sensenova.cn/v1
-#   Models: sensenova-6.7-flash-lite → sensenova-u1-fast → deepseek-v4-flash
-#           (round-robin; rotate on 429/quota; thinking.disabled)
-#   Docs:  https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
-#
 # Secrets: SENSENOVA_API_KEY
 #
 # Concurrency knobs (workflow_dispatch overridable):
-#   CATALOG_CONCURRENCY=3  LOCALE_CONCURRENCY=6  CONCURRENCY=24  BATCH_SIZE=20
+#   CATALOG_CONCURRENCY / LOCALE_CONCURRENCY / CONCURRENCY / BATCH_SIZE
 
 on:
   workflow_dispatch:
     inputs:
       force:
-        description: "Re-translate all strings"
+        description: "Re-translate all strings (expensive — avoid for routine runs)"
         required: false
         default: "false"
       catalog:
@@ -49,6 +53,8 @@ on:
       - "apps/router/messages/en.json"
       - "scripts/i18n-translate-sensenova.mjs"
       - "scripts/i18n-seed-product-locales.mjs"
+      - "scripts/i18n-glossary-postprocess.mjs"
+      - "scripts/i18n-translate-helpers.mjs"
       - ".github/workflows/i18n-translate.yml"
 
 permissions:
@@ -174,6 +180,11 @@ jobs:
             node scripts/i18n-translate-sensenova.mjs "${EXTRA[@]}"
           fi
 
+      # Deterministic, no API — undoes known model over-translations (legal entity,
+      # Webhooks/Discord/Tokens exact leaves, etc.) before any PR is opened.
+      - name: Glossary post-process (deterministic)
+        run: node scripts/i18n-glossary-postprocess.mjs
+
       - name: Enable pnpm + install for i18n verify
         run: |
           corepack enable
@@ -183,17 +194,26 @@ jobs:
       - name: Verify landing i18n integrity
         run: pnpm --filter @nebutra/landing check:i18n
 
-      - name: Push locale updates (branch + best-effort PR)
+      # Fixed branch name → updates the same PR on subsequent en pushes (async).
+      # delete-branch: true → remove branch after the PR is merged/closed (no zombies).
+      - name: Open or update async locale PR
         uses: peter-evans/create-pull-request@v7
         continue-on-error: true
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore(i18n): global auto-translate via SenseNova flash-lite"
           branch: chore/i18n-auto-translate
-          delete-branch: false
+          delete-branch: true
           title: "chore(i18n): global auto-translate (PRODUCT_LANGUAGES wheel)"
+          add-paths: |
+            apps/landing/messages/**
+            packages/platform/i18n/locales/**
+            apps/forge/messages/**
+            apps/router/messages/**
+            packages/platform/i18n/src/product-locales.generated.ts
+            i18n-confirmed-identical.json
           body: |
-            Automated **global** localization across product message catalogs.
+            Automated **async** localization (not on the main CI critical path).
 
             Language wheel SSOT: `@nebutra/i18n` `PRODUCT_LANGUAGES` (~34 locales).
             Chinese: **zh-Hans** + **zh-Hant** (CLDR multi-script; never bare `zh`).
@@ -202,13 +222,15 @@ jobs:
             |---|---|
             | landing | `apps/landing/messages` |
             | web | `packages/platform/i18n/locales` |
-                        | forge | `apps/forge/messages` |
+            | forge | `apps/forge/messages` |
             | router | `apps/router/messages` |
 
             - Provider: SenseNova Token Plan (`https://token.sensenova.cn/v1`)
-            - Models (rotate): `sensenova-u1-fast` → `deepseek-v4-flash` → `sensenova-6.7-flash-lite` (`thinking.disabled`)
-            - Runner: concurrent `scripts/i18n-translate-sensenova.mjs`
-              (`CATALOG_CONCURRENCY` × `LOCALE_CONCURRENCY` × `CONCURRENCY` × `BATCH_SIZE`)
-            - Docs: https://github.com/OpenSenseNova/SenseNova6.7/blob/main/API_CN.md
-            - If PR creation is blocked by org policy, merge branch `chore/i18n-auto-translate` manually.
+            - Incremental leaves + `i18n-confirmed-identical.json` cache
+            - Deterministic glossary post-process (legal entity, product tokens)
+            - Same branch is **updated** on each en-source push (`chore/i18n-auto-translate`)
+            - Branch is deleted after this PR is merged/closed
+
+            Review tip: skim critical locales (zh-Hans, ja) + brand/legal strings.
+            If PR creation is blocked by org policy, merge `chore/i18n-auto-translate` manually.
           labels: i18n, automated

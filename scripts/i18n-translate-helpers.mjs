@@ -21,6 +21,12 @@ export const DEFAULT_GLOSSARY = Object.freeze([
   "OpenAI",
   "GitHub",
   "SenseNova",
+  "Discord",
+  "Inngest",
+  "LemonSqueezy",
+  "Polar",
+  "Webhooks",
+  "Webhook",
   "MCP",
   "API",
   "UUID",
@@ -54,6 +60,49 @@ export const DEFAULT_GLOSSARY = Object.freeze([
   "Apache-2.0",
   "AGPL-3.0",
   "SPDX",
+]);
+
+/**
+ * Exact English leaves that must stay English in every locale.
+ * Brand / protocol / product names only — not generic UI words like Theme/FAQ
+ * (those legitimately localize to 主题 / Preguntas frecuentes / …).
+ */
+export const EXACT_LEAF_KEEP = Object.freeze([
+  "Discord",
+  "Webhooks",
+  "Webhook",
+  "X (Twitter)",
+  "GitHub",
+  "Stripe",
+  "Clerk",
+  "MCP",
+  "JSON",
+  "YAML",
+  "OpenAI",
+  "Vercel",
+  "SaaS",
+  "OAuth",
+  "SSO",
+  "JWT",
+  "UUID",
+  "Nebutra",
+  "Forge",
+  "Router",
+  "Sailor",
+  "Inngest",
+  "LemonSqueezy",
+  "Polar",
+  "SenseNova",
+  "ClickHouse",
+  "Prisma",
+  "Supabase",
+  "Cloudflare",
+  "GraphQL",
+  "OpenAPI",
+  "OpenFGA",
+  "FSL-1.1-ALv2",
+  "Apache-2.0",
+  "AGPL-3.0",
 ]);
 
 export function shouldSkipValue(value) {

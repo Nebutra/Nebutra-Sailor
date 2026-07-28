@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { postprocessLeaf, restoreLegalEntity } from "./i18n-glossary-postprocess.mjs";
 import {
   acceptBatchResults,
   chunk,
   chunkByNamespace,
   collectWork,
   createModelPool,
+  EXACT_LEAF_KEEP,
   extractPlaceholders,
   flatten,
   formatGlossaryForPrompt,
@@ -310,6 +312,38 @@ describe("glossary + validateTranslation", () => {
     expect(validateTranslation("Hi {n}", "你好 {x}").ok).toBe(false);
     expect(validateTranslation("Open Stripe", "打开支付").ok).toBe(false);
     expect(validateTranslation("Open Stripe", "打开 Stripe").ok).toBe(true);
+  });
+
+  it("treats Webhooks / Discord as glossary terms", () => {
+    expect(glossaryTermsPresent("Configure Webhooks", "配置 Webhooks")).toBe(true);
+    expect(glossaryTermsPresent("Configure Webhooks", "配置 الخطافات")).toBe(false);
+    expect(glossaryTermsPresent("Join Discord", "加入 Discord")).toBe(true);
+  });
+});
+
+describe("glossary postprocess", () => {
+  it("restores exact-keep leaves", () => {
+    expect(EXACT_LEAF_KEEP).toContain("Webhooks");
+    expect(postprocessLeaf("Webhooks", "الخطافات")).toEqual({
+      value: "Webhooks",
+      reasons: ["exact-keep:Webhooks"],
+    });
+    expect(postprocessLeaf("Tokens", "Διακριτικά").value).toBe("Tokens");
+  });
+
+  it("restores legal entity Co., Ltd.", () => {
+    expect(restoreLegalEntity("{brandName} Co., Ltd.", "{brandName} S.r.l.")).toBe(
+      "{brandName} Co., Ltd.",
+    );
+    expect(
+      restoreLegalEntity(
+        "Contact {brandName} Co., Ltd. for help.",
+        "Contact {brandName} B.V. for help.",
+      ),
+    ).toContain("Co., Ltd.");
+    expect(restoreLegalEntity("{brandName} Co., Ltd.", "{brandName} Co., Ltd.")).toBe(
+      "{brandName} Co., Ltd.",
+    );
   });
 });
 
