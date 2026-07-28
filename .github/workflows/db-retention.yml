@@ -1,0 +1,66 @@
+name: DB Retention
+
+# Storage is the bill nobody notices: no alert fires, the number just grows.
+# This runs the purge defined by public.retention_policies, which is data —
+# change a window by updating that table, not this workflow.
+#
+# Daily and off-peak. The purge deletes in bounded batches so it never holds a
+# long lock, and it is safe to run concurrently with traffic.
+
+on:
+  schedule:
+    - cron: "17 18 * * *" # 02:17 Asia/Shanghai — off-peak for ap-southeast-2
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Report what would be deleted without deleting it"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-retention
+  cancel-in-progress: false
+
+jobs:
+  purge:
+    name: Purge expired rows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Require the admin connection string
+        run: |
+          [ -n "${{ secrets.DATABASE_ADMIN_URL }}" ] || {
+            echo "::error::DATABASE_ADMIN_URL secret is not set"; exit 1; }
+
+      - name: Install psql
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends postgresql-client
+
+      - name: Report what is past its window
+        env:
+          PGURL: ${{ secrets.DATABASE_ADMIN_URL }}
+        run: |
+          psql "$PGURL" -v ON_ERROR_STOP=1 -c "
+            SELECT p.table_name, p.keep_days, p.enabled
+            FROM public.retention_policies p
+            ORDER BY p.table_name;"
+
+      - name: Purge
+        if: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}
+        env:
+          PGURL: ${{ secrets.DATABASE_ADMIN_URL }}
+        run: |
+          psql "$PGURL" -v ON_ERROR_STOP=1 -c "SELECT * FROM public.purge_expired_rows();"
+
+      - name: Size after
+        env:
+          PGURL: ${{ secrets.DATABASE_ADMIN_URL }}
+        run: |
+          psql "$PGURL" -tA -c \
+            "SELECT 'database size: ' || pg_size_pretty(pg_database_size(current_database()))"
