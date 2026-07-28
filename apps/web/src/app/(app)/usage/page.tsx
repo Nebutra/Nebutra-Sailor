@@ -103,9 +103,12 @@ function UsageGauge({
   const isWarning = percent >= 80;
   const isCritical = percent >= 95;
 
-  const barColor = isCritical ? "bg-red-9" : isWarning ? "bg-amber-9" : "bg-primary";
+  const barColor = isCritical ? "bg-red-900" : isWarning ? "bg-amber-900" : "bg-primary";
 
-  const statusColor = isCritical ? "text-red-11" : isWarning ? "text-amber-11" : "text-green-11";
+  // Meter fill and its percentage label must read as one object, so both sides
+  // of the pair come from the same registered ramp. The -900 step is AA in both
+  // themes (red 5.32/5.84, amber 5.60/8.14, green 5.22/8.30 on the card).
+  const statusColor = isCritical ? "text-red-900" : isWarning ? "text-amber-900" : "text-green-900";
 
   return (
     <Card className="p-4 sm:p-6">
@@ -137,12 +140,12 @@ function UsageGauge({
 
       {/* Warning */}
       {isCritical && (
-        <div className="mt-3 rounded-[var(--radius-lg)] border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-red-700/30 bg-red-200 px-3 py-2 text-xs text-red-900">
           Quota nearly exhausted. Upgrade your plan to avoid service interruption.
         </div>
       )}
       {isWarning && !isCritical && (
-        <div className="mt-3 rounded-[var(--radius-lg)] border border-amber-6 bg-amber-2 px-3 py-2 text-xs text-amber-11">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-amber-700/30 bg-amber-200 px-3 py-2 text-xs text-amber-900">
           Approaching quota limit. Consider upgrading to avoid disruptions.
         </div>
       )}
@@ -278,7 +281,7 @@ function CreditSummarySection({
 
                   <span
                     className={`text-sm font-semibold ${
-                      transaction.amount >= 0 ? "text-green-11" : "text-neutral-12"
+                      transaction.amount >= 0 ? "text-success" : "text-neutral-12"
                     }`}
                   >
                     {formatSignedCredits(transaction.amount)}

@@ -29,17 +29,26 @@ const stateCopy: Record<
   },
 };
 
+/**
+ * A public status badge is a signal the reader acts on, so these are semantic
+ * tokens, not the decorative ramps. Foregrounds are the AA-safe steps in both
+ * themes: --success 5.11 light / 6.14 dark, --warning-strong 5.40 / 8.08.
+ * Outage text uses the registered red-900 ramp (5.32 light / 5.84 dark) rather
+ * than `text-destructive`, because --destructive in dark mode is 2.36:1 — a
+ * fill-only value. TODO: switch to `text-[hsl(var(--destructive-strong))]` once
+ * that token lands in @nebutra/tokens (mirror of --warning-strong).
+ */
 const stateClassName: Record<ServiceState, string> = {
-  operational: "bg-[color:var(--green-3)] text-[color:var(--green-11)] ring-[color:var(--green-7)]",
-  degraded: "bg-[color:var(--amber-3)] text-[color:var(--amber-11)] ring-[color:var(--amber-7)]",
-  outage: "bg-[color:var(--red-3)] text-[color:var(--red-11)] ring-[color:var(--red-7)]",
+  operational: "bg-success/10 text-success ring-success/25",
+  degraded: "bg-warning/12 text-[hsl(var(--warning-strong))] ring-warning/30",
+  outage: "bg-destructive/10 text-[hsl(var(--destructive-strong))] ring-destructive/30",
   unknown: "bg-muted text-muted-foreground ring-[color:hsl(var(--border))]",
 };
 
 const dotClassName: Record<ServiceState, string> = {
-  operational: "bg-[color:var(--green-9)]",
-  degraded: "bg-[color:var(--amber-9)]",
-  outage: "bg-[color:var(--red-9)]",
+  operational: "bg-success",
+  degraded: "bg-warning",
+  outage: "bg-destructive",
   unknown: "bg-[color:hsl(var(--muted-foreground))]",
 };
 
@@ -213,7 +222,7 @@ async function StatusPageContent() {
             Incident history
           </p>
           <div className="mt-5 flex items-start gap-4">
-            <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[color:var(--green-9)]" />
+            <span className="mt-1 h-2.5 w-2.5 rounded-full bg-success" />
             <div>
               <h2 className="text-lg font-bold tracking-[-0.03em]">No active incident record.</h2>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">

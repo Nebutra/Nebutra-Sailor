@@ -126,7 +126,7 @@ export function ReferWaitlistForm({
         className="w-full rounded-[var(--radius-lg)] border border-border bg-background p-4 shadow-sm md:p-6"
       >
         <div role="status" className="flex items-start gap-3">
-          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--green-3)] text-[color:var(--green-11)] ring-1 ring-[color:var(--green-6)]">
+          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-success/12 text-success ring-1 ring-success/25">
             <Check aria-hidden="true" className="h-4 w-4" />
           </span>
           <div>
@@ -182,7 +182,7 @@ export function ReferWaitlistForm({
         <p className="text-sm font-medium text-foreground">
           {code ? copy.codeMode : copy.directMode}
         </p>
-        <span className="h-2 w-2 rounded-full bg-[color:var(--green-9)]" aria-hidden="true" />
+        <span className="h-2 w-2 rounded-full bg-success" aria-hidden="true" />
       </div>
 
       <div className="mt-4 grid gap-4 md:mt-5">
@@ -226,8 +226,11 @@ export function ReferWaitlistForm({
         <ArrowRight aria-hidden="true" className="h-4 w-4" />
       </Button>
 
+      {/* red-900 ramp, not `text-destructive`: --destructive is 2.36:1 in dark
+          mode (fill-only), the ramp is 5.32 light / 5.84 dark.
+          TODO: use --destructive-strong once @nebutra/tokens defines it. */}
       {status === "error" && (
-        <p role="alert" className="mt-3 text-sm text-[color:var(--red-10)]">
+        <p role="alert" className="mt-3 text-sm text-[hsl(var(--destructive-strong))]">
           {errorMessage}
         </p>
       )}

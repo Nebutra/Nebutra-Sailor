@@ -88,7 +88,7 @@ export function WaitlistGlyph({ locale }: SubpackageGlyphProps) {
               +{ADDED_TODAY} {copy.addedToday}
             </span>
           </Badge>
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-9)]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
         </div>
       </div>
     </div>

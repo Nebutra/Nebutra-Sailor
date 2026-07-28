@@ -92,7 +92,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
           </div>
         ) : error ? (
           <div className="text-center">
-            <p className="mb-4 rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-sm text-red-11">
+            <p className="mb-4 rounded-[var(--radius-md)] border border-red-700/30 bg-red-200 px-3 py-2 text-sm text-red-900">
               {error}
             </p>
             <Link href={copy.emptyActionHref}>

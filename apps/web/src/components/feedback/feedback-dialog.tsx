@@ -226,7 +226,7 @@ export function FeedbackDialog() {
                     <span
                       className={`tabular-nums ${
                         descLength < MIN_DESCRIPTION || descLength > MAX_DESCRIPTION
-                          ? "text-red-11"
+                          ? "text-red-900"
                           : "text-neutral-10"
                       }`}
                     >

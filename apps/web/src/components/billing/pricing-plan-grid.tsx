@@ -229,7 +229,7 @@ export function PricingPlanGrid({
       {checkoutError && (
         <div
           role="alert"
-          className="mb-4 rounded-[var(--radius-2xl)] border border-[color:var(--amber-7)] bg-[color:var(--amber-2)] px-4 py-3 text-[color:var(--amber-11)] text-sm"
+          className="mb-4 rounded-[var(--radius-2xl)] border border-amber-700/30 bg-amber-200 px-4 py-3 text-amber-900 text-sm"
         >
           {checkoutError} You can retry checkout or contact support if the provider setup is still
           unavailable.

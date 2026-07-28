@@ -42,10 +42,14 @@ export function ContactForm() {
 
   return (
     <form action={action} className="space-y-6">
+      {/* Tinted fill carries the error, so the dark: overrides are gone — the
+          alpha tint and the red-900 ramp are both theme-aware. red-900 is
+          5.32:1 light / 5.84:1 dark; `text-destructive` would be 2.36:1 in
+          dark. TODO: --destructive-strong once that token lands. */}
       {state.status === "error" && (
         <div
           role="alert"
-          className="rounded-[var(--radius-lg)] border border-[color:var(--red-8)]/40 bg-[color:var(--red-2)] px-4 py-3 text-sm text-[color:var(--red-11)] dark:border-[color:var(--red-7)]/40 dark:bg-[color:var(--red-2)] dark:text-[color:var(--red-9)]"
+          className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-[hsl(var(--destructive-strong))]"
         >
           {state.message}
         </div>

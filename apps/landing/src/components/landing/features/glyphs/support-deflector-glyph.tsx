@@ -44,7 +44,7 @@ export function SupportDeflectorGlyph({ locale }: SubpackageGlyphProps) {
               key={ticket.question}
               className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-muted px-1.5 py-1"
             >
-              <Check className="h-2.5 w-2.5 shrink-0 text-[var(--green-9)]" />
+              <Check className="h-2.5 w-2.5 shrink-0 text-green-900" />
               <code className="truncate font-mono text-[9px] text-foreground">
                 {ticket.question}
               </code>

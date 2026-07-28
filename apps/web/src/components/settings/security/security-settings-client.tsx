@@ -144,7 +144,7 @@ export function SecuritySettingsClient() {
       </section>
 
       {error && (
-        <section className="rounded-[var(--radius-lg)] border border-red-6 bg-red-2 p-4 text-sm text-red-11">
+        <section className="rounded-[var(--radius-lg)] border border-red-700/30 bg-red-200 p-4 text-sm text-red-900">
           {error}
         </section>
       )}

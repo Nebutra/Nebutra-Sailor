@@ -117,9 +117,9 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
           id={`${inputId}-message`}
           className={`mt-2 text-xs ${
             state === "success"
-              ? "text-green-11 dark:text-green-9"
+              ? "text-success"
               : state === "error"
-                ? "text-red-11"
+                ? "text-red-900"
                 : "text-neutral-11"
           }`}
           role={state === "error" ? "alert" : "status"}

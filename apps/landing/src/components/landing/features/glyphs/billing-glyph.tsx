@@ -63,7 +63,7 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
             <CreditCard className="h-3 w-3" />
             {copy.provider} · {copy.status}
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-9)]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
         </div>
       </div>
     </div>

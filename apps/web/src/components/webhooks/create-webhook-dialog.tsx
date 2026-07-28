@@ -205,7 +205,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
         />
 
         {rootError && (
-          <p role="alert" className="text-sm text-red-11">
+          <p role="alert" className="text-sm text-red-900">
             {rootError}
           </p>
         )}

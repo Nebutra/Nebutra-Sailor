@@ -180,7 +180,7 @@ export default function IntegrationsPage() {
                     <div className="absolute right-4 top-4">
                       <span
                         className={`inline-block h-2.5 w-2.5 rounded-full ${
-                          integration.isActive ? "bg-green-9" : "bg-neutral-8"
+                          integration.isActive ? "bg-success" : "bg-neutral-8"
                         }`}
                       />
                     </div>
@@ -210,8 +210,8 @@ export default function IntegrationsPage() {
                         onClick={() => handleToggle(integration.id, integration.isActive)}
                         className={`flex items-center gap-1 rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors ${
                           integration.isActive
-                            ? "bg-amber-3 text-amber-11 hover:bg-amber-4"
-                            : "bg-green-3 text-green-11 hover:bg-green-4"
+                            ? "bg-amber-200 text-amber-900 hover:bg-amber-200/70"
+                            : "bg-green-200 text-green-900 hover:bg-green-200/70"
                         }`}
                       >
                         {integration.isActive ? (
@@ -227,7 +227,7 @@ export default function IntegrationsPage() {
                       <button
                         type="button"
                         onClick={() => handleDisconnect(integration.id)}
-                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-red-3 px-2.5 py-1.5 text-xs font-medium text-red-11 transition-colors hover:bg-red-4"
+                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-red-200 px-2.5 py-1.5 text-xs font-medium text-red-900 transition-colors hover:bg-red-200/70"
                       >
                         <X className="h-3 w-3" /> Disconnect
                       </button>
@@ -271,7 +271,7 @@ export default function IntegrationsPage() {
                 <Card
                   className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
                     isConnected
-                      ? "border-green-7 opacity-60"
+                      ? "border-green-700/40 opacity-60"
                       : "hover:border-[var(--blue-7)] hover:shadow-md"
                   }`}
                 >
@@ -292,7 +292,7 @@ export default function IntegrationsPage() {
 
                   <div className="mt-4 flex items-center gap-2">
                     {isConnected ? (
-                      <span className="flex items-center gap-1 text-xs font-medium text-green-11">
+                      <span className="flex items-center gap-1 text-xs font-medium text-success">
                         <Check className="h-3.5 w-3.5" /> Connected
                       </span>
                     ) : (

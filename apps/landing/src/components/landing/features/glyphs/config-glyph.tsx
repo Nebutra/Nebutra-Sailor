@@ -75,7 +75,7 @@ export function ConfigGlyph(_props: SubpackageGlyphProps) {
         <Badge
           variant="secondary"
           size="sm"
-          className="bg-[var(--green-3)] px-1 py-0 font-mono text-[9px] text-[var(--green-11)]"
+          className="bg-green-200 px-1 py-0 font-mono text-[9px] text-green-900"
         >
           <Check className="h-2.5 w-2.5" />
         </Badge>

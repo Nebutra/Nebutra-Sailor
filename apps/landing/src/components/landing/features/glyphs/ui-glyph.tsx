@@ -32,13 +32,13 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
           </Badge>
           <Badge
             variant="outline"
-            className="h-4 border-[var(--purple-6)] bg-[var(--purple-3)] px-1.5 text-[9px] font-medium text-[var(--purple-11)]"
+            className="h-4 border-purple-700/40 bg-purple-200 px-1.5 text-[9px] font-medium text-purple-900"
           >
             Beta
           </Badge>
           <Badge
             variant="outline"
-            className="h-4 border-[var(--green-6)] bg-[var(--green-3)] px-1.5 text-[9px] font-medium text-[var(--green-11)]"
+            className="h-4 border-green-700/40 bg-green-200 px-1.5 text-[9px] font-medium text-green-900"
           >
             Stable
           </Badge>

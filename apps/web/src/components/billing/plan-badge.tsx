@@ -75,10 +75,9 @@ export async function PlanBadge() {
   const planLabel = formatPlanLabel(plan);
 
   // Dot color reflects usage pressure when quota is known. Use semantic
-  // tokens — bg-red-9 / bg-amber-9 / bg-green-9 are NOT defined in our
-  // token system (only blue/cyan/neutral 12-step scales exist), so the
-  // old classes rendered as an invisible 6×6 spacer which threw the
-  // pill off-center.
+  // tokens: only neutral/blue/cyan have 12-step scales, so a numbered
+  // step on any other hue resolves to nothing and the dot rendered as an
+  // invisible 6×6 spacer that threw the pill off-center.
   const dotClass = quota
     ? quota.percent >= 90
       ? "bg-destructive"

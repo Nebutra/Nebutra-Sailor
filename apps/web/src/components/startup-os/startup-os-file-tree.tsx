@@ -218,7 +218,7 @@ function ExplorerRows({ level, nodes, parentPath, selectedPath }: ExplorerRowsPr
           <TreeIcon
             className={
               isFolder
-                ? "mr-2 size-4 shrink-0 text-amber-9 dark:text-amber-5/80"
+                ? "mr-2 size-4 shrink-0 text-amber-900"
                 : `mr-2 size-4 shrink-0 ${isSelected ? "text-neutral-11" : "text-neutral-8"}`
             }
             hasChildren={hasChildren}

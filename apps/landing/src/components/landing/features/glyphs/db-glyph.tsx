@@ -62,7 +62,7 @@ export function DbGlyph({ locale }: SubpackageGlyphProps) {
                 {blocked ? (
                   <Cross className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
                 ) : (
-                  <Check className="h-3 w-3 shrink-0 text-[var(--green-9)]" aria-hidden="true" />
+                  <Check className="h-3 w-3 shrink-0 text-green-900" aria-hidden="true" />
                 )}
                 <span
                   className={`truncate font-mono text-[10px] ${

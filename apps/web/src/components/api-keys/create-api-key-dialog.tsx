@@ -159,12 +159,10 @@ export function CreateApiKeyDialog({
 
         {created ? (
           <div className="space-y-4">
-            <div className="rounded-[var(--radius-md)] border border-[var(--amber-6)] bg-[var(--amber-2)] p-4">
-              <p className="mb-2 text-sm font-medium text-[var(--amber-12)]">
-                {text.successWarning}
-              </p>
+            <div className="rounded-[var(--radius-md)] border border-amber-700/30 bg-amber-200 p-4">
+              <p className="mb-2 text-sm font-medium text-amber-900">{text.successWarning}</p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 break-all rounded bg-background px-3 py-2 font-mono text-[var(--amber-12)] text-xs shadow-inner">
+                <code className="flex-1 break-all rounded bg-background px-3 py-2 font-mono text-amber-900 text-xs shadow-inner">
                   {created.key}
                 </code>
                 <Button
@@ -172,7 +170,7 @@ export function CreateApiKeyDialog({
                   variant="outline"
                   size="sm"
                   onClick={handleCopy}
-                  className="border-[var(--amber-7)] text-[var(--amber-12)] hover:bg-[var(--amber-3)]"
+                  className="border-amber-700/40 text-amber-900 hover:bg-amber-200/70"
                 >
                   {copied ? text.copied : text.copy}
                 </Button>
@@ -245,7 +243,7 @@ export function CreateApiKeyDialog({
                 )}
               />
 
-              {rootError ? <p className="text-sm text-red-11">{rootError}</p> : null}
+              {rootError ? <p className="text-sm text-red-900">{rootError}</p> : null}
 
               <DialogFooter>
                 <Button

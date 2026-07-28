@@ -60,8 +60,8 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
                         step.tone === "blue-subtle"
                           ? "hsl(var(--primary))"
                           : step.tone === "amber-subtle"
-                            ? "var(--amber-9)"
-                            : "var(--green-9)",
+                            ? "var(--ds-amber-900)"
+                            : "var(--ds-green-900)",
                     }}
                   />
                 )}
@@ -84,7 +84,7 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
             <Lightning className="h-2.5 w-2.5" />
             {copy.footer}
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-9)]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button, DataList, type DataListColumn, type DataListStatus } from "@nebutra/ui/primitives";
 import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -18,8 +19,22 @@ interface ApiKeysListProps {
   keys: ApiKey[];
   onCreate: () => void;
   onRevoke: (id: string) => void | Promise<void>;
-  emptyTitle?: string;
-  emptyCta?: string;
+  emptyTitle?: string | undefined;
+  emptyCta?: string | undefined;
+  /**
+   * Explicit list state. Omitted → derived by DataList (error > empty > rows),
+   * which is exactly the previous behaviour of this screen.
+   */
+  status?: DataListStatus | undefined;
+  /**
+   * A background refetch or a settling optimistic revoke. Deliberately not
+   * `status="loading"`: the caller revokes optimistically, and the mounted rows
+   * must survive the refetch that follows.
+   */
+  isRefreshing?: boolean | undefined;
+  /** Load failure copy. Presence alone puts the list into its error state. */
+  error?: string | null | undefined;
+  onRetry?: (() => void) | undefined;
   columnLabels?: {
     name?: string;
     prefix?: string;
@@ -30,6 +45,14 @@ interface ApiKeysListProps {
     revoke?: string;
     revoking?: string;
     never?: string;
+    /** Accessible name for the table itself. */
+    table?: string;
+    /** Heading shown on the error body. */
+    errorTitle?: string;
+    /** Retry affordance on the error body. */
+    retry?: string;
+    /** Supporting line under the empty title. */
+    emptyDescription?: string;
   };
 }
 
@@ -56,14 +79,20 @@ function RevokeButton({
   }
 
   return (
-    <button
+    <Button
       type="button"
-      disabled={pending}
+      variant="ghost"
+      size="sm"
+      loading={pending}
       onClick={handleClick}
-      className="text-xs font-medium text-red-11 transition-colors hover:text-red-12 disabled:opacity-50"
+      // --destructive is fill-only in dark (2.13:1 on the card). Only neutral,
+      // blue and cyan have 12-step scales, so red-11/red-3 resolve to nothing —
+      // the registered red ramp is the AA-safe step that carries text (5.32 light
+      // / 5.27 dark).
+      className="px-2 text-xs font-medium text-red-900 hover:bg-red-200 hover:text-red-900/80"
     >
       {pending ? revokingLabel : revokeLabel}
-    </button>
+    </Button>
   );
 }
 
@@ -73,6 +102,10 @@ export function ApiKeysList({
   onRevoke,
   emptyTitle,
   emptyCta,
+  status,
+  isRefreshing = false,
+  error,
+  onRetry,
   columnLabels = {},
 }: ApiKeysListProps) {
   const format = useFormatter();
@@ -97,75 +130,95 @@ export function ApiKeysList({
     revoke: columnLabels.revoke ?? "Revoke",
     revoking: columnLabels.revoking ?? "Revoking…",
     never: columnLabels.never ?? "Never",
+    table: columnLabels.table ?? "API keys",
+    errorTitle: columnLabels.errorTitle ?? "We couldn't load your API keys",
+    retry: columnLabels.retry ?? "Try again",
+    emptyDescription:
+      columnLabels.emptyDescription ?? "A key lets your own code call the API on your behalf.",
   };
 
-  if (keys.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-border bg-muted py-10 text-center">
-        <p className="mb-3 text-sm text-muted-foreground">{resolvedEmptyTitle}</p>
-        <button
-          type="button"
-          onClick={onCreate}
-          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-          style={{ background: "hsl(var(--primary))" }}
-        >
-          {resolvedEmptyCta}
-        </button>
-      </div>
-    );
-  }
+  const columns: readonly DataListColumn<ApiKey>[] = [
+    {
+      id: "name",
+      header: labels.name,
+      cell: (k) => <span className="truncate font-medium text-foreground">{k.name}</span>,
+      loadingWidth: "45%",
+    },
+    {
+      id: "prefix",
+      header: labels.prefix,
+      cell: (k) => <span className="font-mono text-xs text-muted-foreground">{k.keyPrefix}…</span>,
+      loadingWidth: "70%",
+    },
+    {
+      id: "lastUsed",
+      header: labels.lastUsed,
+      cell: (k) => (
+        <span className="text-xs text-muted-foreground">
+          {formatDate(k.lastUsedAt, labels.never)}
+        </span>
+      ),
+      loadingWidth: "55%",
+    },
+    {
+      id: "scopes",
+      header: labels.scopes,
+      cell: (k) => (
+        <span className="truncate text-xs text-muted-foreground">
+          {k.scopes.length > 0 ? k.scopes.join(", ") : "—"}
+        </span>
+      ),
+      loadingWidth: "50%",
+    },
+    {
+      id: "created",
+      header: labels.created,
+      cell: (k) => (
+        <span className="text-xs text-muted-foreground">
+          {formatDate(k.createdAt, labels.never)}
+        </span>
+      ),
+      loadingWidth: "55%",
+    },
+    {
+      id: "actions",
+      header: labels.actions,
+      align: "end",
+      cell: (k) => (
+        <RevokeButton
+          keyId={k.id}
+          onRevoke={onRevoke}
+          revokeLabel={labels.revoke}
+          revokingLabel={labels.revoking}
+        />
+      ),
+      loadingWidth: 56,
+    },
+  ];
 
   return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-border">
-      <table className="w-full text-sm">
-        <thead className="bg-muted text-left text-xs font-medium text-muted-foreground">
-          <tr>
-            <th scope="col" className="px-4 py-2.5">
-              {labels.name}
-            </th>
-            <th scope="col" className="px-4 py-2.5">
-              {labels.prefix}
-            </th>
-            <th scope="col" className="px-4 py-2.5">
-              {labels.lastUsed}
-            </th>
-            <th scope="col" className="px-4 py-2.5">
-              {labels.scopes}
-            </th>
-            <th scope="col" className="px-4 py-2.5">
-              {labels.created}
-            </th>
-            <th scope="col" className="px-4 py-2.5 text-right">
-              {labels.actions}
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border bg-background">
-          {keys.map((k) => (
-            <tr key={k.id}>
-              <td className="px-4 py-3 font-medium text-foreground">{k.name}</td>
-              <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{k.keyPrefix}…</td>
-              <td className="px-4 py-3 text-xs text-muted-foreground">
-                {formatDate(k.lastUsedAt, labels.never)}
-              </td>
-              <td className="px-4 py-3 text-xs text-muted-foreground">
-                {k.scopes.length > 0 ? k.scopes.join(", ") : "—"}
-              </td>
-              <td className="px-4 py-3 text-xs text-muted-foreground">
-                {formatDate(k.createdAt, labels.never)}
-              </td>
-              <td className="px-4 py-3 text-right">
-                <RevokeButton
-                  keyId={k.id}
-                  onRevoke={onRevoke}
-                  revokeLabel={labels.revoke}
-                  revokingLabel={labels.revoking}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    // Card surface, no rule: the panel is set apart by a tonal shift plus its
+    // own padding rather than the border this screen used to draw.
+    <div className="rounded-[var(--radius-lg)] bg-card p-2" data-testid="api-keys-list">
+      <DataList<ApiKey>
+        columns={columns}
+        rows={keys}
+        getRowKey={(k) => k.id}
+        label={labels.table}
+        {...(status === undefined ? {} : { status })}
+        isRefreshing={isRefreshing}
+        {...(error ? { error } : {})}
+        errorTitle={labels.errorTitle}
+        {...(onRetry === undefined ? {} : { onRetry })}
+        retryLabel={labels.retry}
+        emptyTitle={resolvedEmptyTitle}
+        emptyDescription={labels.emptyDescription}
+        emptyAction={
+          <Button type="button" onClick={onCreate}>
+            {resolvedEmptyCta}
+          </Button>
+        }
+      />
     </div>
   );
 }

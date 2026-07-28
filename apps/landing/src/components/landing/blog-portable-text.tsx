@@ -109,10 +109,7 @@ function renderTableCellMark(
 
   if (mark === "highlight") {
     return (
-      <mark
-        key={key}
-        className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-foreground"
-      >
+      <mark key={key} className="rounded-[var(--radius-sm)] bg-amber-200 px-1 text-foreground">
         {children}
       </mark>
     );
@@ -343,8 +340,8 @@ function BlogCalloutBlock({ value }: { value: PortableTextBlock }) {
   const toneClass = {
     insight: "border-[var(--blue-7)] bg-[var(--blue-2)] text-[var(--blue-12)]",
     note: "border-border bg-muted text-foreground",
-    success: "border-[var(--green-7)] bg-[var(--green-2)] text-[var(--green-12)]",
-    warning: "border-[var(--amber-7)] bg-[var(--amber-2)] text-[var(--amber-12)]",
+    success: "border-green-700/35 bg-green-200 text-green-900",
+    warning: "border-amber-700/40 bg-amber-200 text-amber-900",
   }[tone];
   const label = value.title ?? (tone === "insight" ? "Field note" : tone);
 
@@ -891,7 +888,7 @@ function createPortableTextComponents(
       ),
       em: ({ children }) => <em className="italic text-foreground">{children}</em>,
       highlight: ({ children }) => (
-        <mark className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-foreground">
+        <mark className="rounded-[var(--radius-sm)] bg-amber-200 px-1 text-foreground">
           {children}
         </mark>
       ),
@@ -1057,10 +1054,10 @@ export async function BlogPortableText({
           background: color-mix(in oklch, var(--blue-3) 74%, transparent);
         }
         .blog-code-html .line[data-diff="add"] {
-          background: color-mix(in oklch, var(--green-3) 74%, transparent);
+          background: color-mix(in oklch, var(--color-green-200) 74%, transparent);
         }
         .blog-code-html .line[data-diff="remove"] {
-          background: color-mix(in oklch, var(--red-3) 74%, transparent);
+          background: color-mix(in oklch, var(--color-red-200) 74%, transparent);
         }
         :is(.dark .blog-code-html) .shiki,
         :is(.dark .blog-code-html) .shiki span {

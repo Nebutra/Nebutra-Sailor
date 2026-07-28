@@ -226,7 +226,7 @@ export function CreateProviderKeyDialog({
               )}
             />
 
-            {rootError ? <p className="text-sm text-red-11">{rootError}</p> : null}
+            {rootError ? <p className="text-sm text-red-900">{rootError}</p> : null}
 
             <DialogFooter>
               <Button

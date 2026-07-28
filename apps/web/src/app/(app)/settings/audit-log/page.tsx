@@ -80,7 +80,7 @@ export default function AuditLogPage() {
         <AuditLogFilters onChange={setFilters} />
 
         {error ? (
-          <div className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 p-3 text-sm text-red-11">
+          <div className="rounded-[var(--radius-md)] border border-red-700/30 bg-red-200 p-3 text-sm text-red-900">
             {error}
           </div>
         ) : null}

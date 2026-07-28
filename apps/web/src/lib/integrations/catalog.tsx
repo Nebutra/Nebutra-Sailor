@@ -35,8 +35,8 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     name: "Shopify",
     description: "Sync products, orders, and customers from your Shopify store.",
     icon: ShoppingBag,
-    color: "text-green-10",
-    bgColor: "bg-green-3 dark:bg-green-9/20",
+    color: "text-green-900",
+    bgColor: "bg-green-200",
     docUrl: `${getBrandOrigin("docs")}/integrations/shopify`,
   },
   {
@@ -53,8 +53,8 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     name: "Stripe",
     description: "Synchronize payment data, invoices, and subscription events.",
     icon: Zap,
-    color: "text-purple-10",
-    bgColor: "bg-purple-3 dark:bg-purple-9/20",
+    color: "text-purple-900",
+    bgColor: "bg-purple-200",
     docUrl: `${getBrandOrigin("docs")}/integrations/stripe`,
   },
   {
@@ -62,8 +62,8 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     name: "Custom Webhook",
     description: "Send and receive events via custom HTTP webhooks.",
     icon: Activity,
-    color: "text-amber-10",
-    bgColor: "bg-amber-3 dark:bg-amber-9/20",
+    color: "text-amber-900",
+    bgColor: "bg-amber-200",
     docUrl: `${getBrandOrigin("docs")}/integrations/webhooks`,
   },
 ];

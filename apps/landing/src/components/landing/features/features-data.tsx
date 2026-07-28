@@ -49,7 +49,7 @@ export const LARGE_FEATURES = [
     categoryKey: "ai_category",
     href: createPublicDocsUrl("ai/overview"),
     icon: Cpu,
-    color: "var(--purple-9)",
+    color: "var(--ds-purple-900)",
     mockup: AIMockup,
     features: [
       { titleKey: "ai_f1_title", descKey: "ai_f1_desc" },
@@ -61,7 +61,7 @@ export const LARGE_FEATURES = [
     categoryKey: "dx_category",
     href: createPublicDocsUrl("development/project-structure"),
     icon: TerminalSquare,
-    color: "var(--emerald-9)",
+    color: "var(--ds-teal-900)",
     mockup: DXMockup,
     features: [
       { titleKey: "dx_f1_title", descKey: "dx_f1_desc" },
@@ -73,7 +73,7 @@ export const LARGE_FEATURES = [
     categoryKey: "sec_category",
     href: createPublicDocsUrl("concepts/permissions"),
     icon: Shield,
-    color: "var(--red-9)",
+    color: "var(--ds-red-900)",
     mockup: SecurityMockup,
     features: [
       { titleKey: "sec_f1_title", descKey: "sec_f1_desc" },

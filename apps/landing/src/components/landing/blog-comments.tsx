@@ -168,7 +168,7 @@ function ReactionButton({
       className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:cursor-wait disabled:opacity-60"
     >
       <Icon
-        className={active ? "size-4 text-[var(--accent-11)]" : "size-4 text-muted-foreground"}
+        className={active ? "size-4 text-primary" : "size-4 text-muted-foreground"}
         aria-hidden
       />
       <span>{count}</span>

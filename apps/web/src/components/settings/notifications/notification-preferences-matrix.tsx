@@ -213,7 +213,7 @@ export function NotificationPreferencesMatrix({
 
       {loadError ? (
         <div
-          className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11"
+          className="rounded-[var(--radius-md)] border border-red-700/30 bg-red-200 px-3 py-2 text-xs text-red-900"
           role="alert"
         >
           {loadError}

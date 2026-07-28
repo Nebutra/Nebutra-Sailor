@@ -123,7 +123,7 @@ export function RoomView({ profileId }: { profileId: string }) {
               compiled company carries over and your cofounder is invited as an equal founder.
             </p>
             {formState === "formed" ? (
-              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-green-7 bg-green-2 px-4 py-2 text-sm font-semibold text-green-11 dark:bg-green-9/20">
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-green-700/30 bg-green-200 px-4 py-2 text-sm font-semibold text-green-900">
                 <Sparkles className="size-4" aria-hidden="true" />
                 Team forming — invitation sent
               </div>

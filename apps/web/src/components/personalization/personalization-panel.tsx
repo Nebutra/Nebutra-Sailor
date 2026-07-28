@@ -310,7 +310,7 @@ function FieldHeader({ id, label, hint, overLimit }: FieldHeaderProps) {
       </FormLabel>
       {hint && (
         <span
-          className={`text-[10px] tabular-nums ${overLimit ? "text-red-11" : "text-neutral-10"}`}
+          className={`text-[10px] tabular-nums ${overLimit ? "text-red-900" : "text-neutral-10"}`}
         >
           {hint}
         </span>

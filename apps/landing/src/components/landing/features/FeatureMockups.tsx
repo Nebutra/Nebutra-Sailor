@@ -43,7 +43,7 @@ export function MultiTenantMockup() {
         </div>
         <div className="pl-4 mt-1">where: {`{`}</div>
         {/* Glow highlight for tenant enforcement */}
-        <div className="my-1 border-l-[3px] border-[var(--green-8)] bg-[var(--green-3)] px-2 py-1 pl-8 font-bold text-[var(--green-11)]">
+        <div className="my-1 border-l-[3px] border-green-700 bg-green-200 px-2 py-1 pl-8 font-bold text-green-900">
           tenantId: ctx.tenant.id
         </div>
         <div className="pl-4">{`}`}</div>
@@ -154,7 +154,7 @@ export function BillingMockup() {
       className="relative top-4 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-border bg-background transition-[top] duration-700 group-hover:top-2 motion-reduce:transition-none dark:bg-background"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
-      <div className="border-b border-border/60 bg-gradient-to-b from-[var(--green-2)] to-transparent p-6 pb-8">
+      <div className="border-b border-border/60 bg-gradient-to-b from-green-200/60 to-transparent p-6 pb-8">
         <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground dark:text-muted-foreground">
           Monthly Recurring Revenue
         </div>
@@ -163,7 +163,7 @@ export function BillingMockup() {
           style={{ letterSpacing: "var(--tracking-tight)" }}
         >
           $12,400
-          <span className="ml-2 rounded border border-[var(--green-8)]/20 bg-[var(--green-3)] px-2 py-0.5 align-middle text-sm font-bold text-[var(--green-11)]">
+          <span className="ml-2 rounded border border-green-700/20 bg-green-200 px-2 py-0.5 align-middle text-sm font-bold text-green-900">
             +12%
           </span>
         </div>
@@ -198,7 +198,7 @@ export function DXMockup() {
       <div className="p-6 text-foreground dark:text-muted-foreground">
         <span className="text-[hsl(var(--primary))]">import</span> {`{ Hono }`}{" "}
         <span className="text-[hsl(var(--primary))]">from</span>{" "}
-        <span className="text-[var(--green-11)]">{"'hono';"}</span>
+        <span className="text-green-900">{"'hono';"}</span>
         <div className="mt-4 text-muted-foreground dark:text-muted-foreground">
           {"// Fully typed edge-ready RPC"}
         </div>
@@ -206,10 +206,10 @@ export function DXMockup() {
           <span className="text-[hsl(var(--primary))]">const</span> app ={" "}
           <span className="text-[hsl(var(--primary))]">new</span>{" "}
           <span className="text-[var(--brand-tertiary)]">Hono</span>().
-          <span className="text-[var(--amber-11)]">get</span>(
+          <span className="text-amber-900">get</span>(
         </div>
         <div className="pl-4 pt-1">
-          <span className="text-[var(--green-11)]">'/'</span>, (c){" "}
+          <span className="text-green-900">'/'</span>, (c){" "}
           <span className="text-[hsl(var(--primary))]">=&gt;</span> c.json({`{ ok: `}
           <span className="text-[hsl(var(--primary))]">true</span> {`}`})
         </div>

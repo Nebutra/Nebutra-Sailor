@@ -60,7 +60,7 @@ export function VideoPipelineGlyph(_props: SubpackageGlyphProps) {
                   <StatusIcon
                     className={[
                       "ml-auto h-2.5 w-2.5 shrink-0",
-                      stage.active ? "text-primary" : "text-[var(--green-11)]",
+                      stage.active ? "text-primary" : "text-green-900",
                     ].join(" ")}
                   />
                 </div>

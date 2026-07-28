@@ -149,14 +149,11 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground">
-                  <CheckCircle
-                    aria-hidden="true"
-                    className="h-4 w-4 text-[color:var(--green-10)]"
-                  />
+                  <CheckCircle aria-hidden="true" className="h-4 w-4 text-green-900" />
                   {t("signal.waitlist")}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground">
-                  <ArrowRight aria-hidden="true" className="h-4 w-4 text-[color:var(--amber-10)]" />
+                  <ArrowRight aria-hidden="true" className="h-4 w-4 text-amber-900" />
                   {initialCode
                     ? t("signal.codeDetected", { code: initialCode })
                     : t("signal.direct")}

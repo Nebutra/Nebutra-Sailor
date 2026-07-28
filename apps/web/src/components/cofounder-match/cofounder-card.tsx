@@ -43,7 +43,7 @@ export function CofounderCard({
           {data.archetype ?? "Founder"}
         </span>
         {data.trustVerified ? (
-          <span className="inline-flex items-center gap-1 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-green-10 backdrop-blur">
+          <span className="inline-flex items-center gap-1 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-success backdrop-blur">
             <ShieldCheck className="size-3.5" aria-hidden="true" />
             Compiled company
           </span>

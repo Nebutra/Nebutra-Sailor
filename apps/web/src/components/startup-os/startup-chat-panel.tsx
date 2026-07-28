@@ -518,7 +518,7 @@ function UserMessage({
           className="flex size-7 items-center justify-center rounded-md text-neutral-9 transition-colors hover:bg-neutral-3"
         >
           {copied ? (
-            <Check className="size-3.5 text-green-10" aria-hidden="true" />
+            <Check className="size-3.5 text-success" aria-hidden="true" />
           ) : (
             <Copy className="size-3.5" aria-hidden="true" />
           )}
@@ -640,7 +640,7 @@ function SummaryCard({
         <div className="mt-2 flex flex-wrap items-center gap-1 pl-6">
           <ToolbarButton label={copied ? "Copied" : "Copy"} onClick={() => void copy()}>
             {copied ? (
-              <Check className="size-3.5 text-green-10" aria-hidden="true" />
+              <Check className="size-3.5 text-success" aria-hidden="true" />
             ) : (
               <Copy className="size-3.5" aria-hidden="true" />
             )}
@@ -652,7 +652,7 @@ function SummaryCard({
             onClick={() => void sendVote("up")}
           >
             <ThumbUp
-              className={`size-3.5 ${vote === "up" ? "text-green-10" : ""}`}
+              className={`size-3.5 ${vote === "up" ? "text-success" : ""}`}
               aria-hidden="true"
             />
           </ToolbarButton>

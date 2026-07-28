@@ -16,9 +16,9 @@ import { db } from "@/lib/db";
 const MODE_META: Record<string, { label: string; icon: LucideIcon; accent: string }> = {
   chat: { label: "Chat", icon: MessageSquare, accent: "text-primary dark:text-primary" },
   data: { label: "Data", icon: Database, accent: "text-cyan-11 dark:text-cyan-9" },
-  workflow: { label: "Workflow", icon: Workflow, accent: "text-green-11 dark:text-green-9" },
+  workflow: { label: "Workflow", icon: Workflow, accent: "text-green-900" },
   search: { label: "Search", icon: Search, accent: "text-neutral-11" },
-  code: { label: "Code", icon: Code2, accent: "text-amber-11 dark:text-amber-9" },
+  code: { label: "Code", icon: Code2, accent: "text-amber-900" },
 };
 
 function formatSessionTime(date: Date, locale: string): string {

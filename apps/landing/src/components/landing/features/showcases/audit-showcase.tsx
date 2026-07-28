@@ -151,16 +151,16 @@ const COPY: Record<"en" | "zh", Copy> = {
 
 const statusTone: Record<ActionStatus, string> = {
   info: "border-primary/30 bg-primary/10 text-primary",
-  warning: "border-[var(--amber-8)]/30 bg-[var(--amber-3)] text-[var(--amber-11)]",
-  success: "border-[var(--green-8)]/30 bg-[var(--green-3)] text-[var(--green-11)]",
-  error: "border-[var(--red-8)]/30 bg-[var(--red-3)] text-[var(--red-11)]",
+  warning: "border-amber-700/30 bg-amber-200 text-amber-900",
+  success: "border-green-700/30 bg-green-200 text-green-900",
+  error: "border-red-700/30 bg-red-200 text-red-900",
 };
 
 const avatarTone: Record<ActionStatus, string> = {
   info: "bg-primary/10 text-primary",
-  warning: "bg-[var(--amber-3)] text-[var(--amber-11)]",
-  success: "bg-[var(--green-3)] text-[var(--green-11)]",
-  error: "bg-[var(--red-3)] text-[var(--red-11)]",
+  warning: "bg-amber-200 text-amber-900",
+  success: "bg-green-200 text-green-900",
+  error: "bg-red-200 text-red-900",
 };
 
 function ActionChip({ label, status }: { label: string; status: ActionStatus }) {

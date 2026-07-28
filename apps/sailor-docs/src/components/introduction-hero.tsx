@@ -27,7 +27,7 @@ export function IntroductionHero() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-start gap-6 px-8 py-16 md:px-12 md:py-20 lg:py-24 max-w-4xl mx-auto text-center md:text-left md:mx-0">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/50 backdrop-blur-md px-3 py-1 text-sm font-medium text-muted-foreground shadow-sm">
-          <span className="flex h-2 w-2 rounded-full bg-[var(--brand-cyan)] animate-pulse" />
+          <span className="flex h-2 w-2 rounded-full bg-[var(--brand-accent)] animate-pulse" />
           Version 2.0 (Next-Gen)
         </div>
 

@@ -46,7 +46,7 @@ const SPANS: readonly Span[] = [
     indent: 1,
     widthPct: 25,
     ms: "62ms",
-    color: "var(--amber-9)",
+    color: "var(--ds-amber-900)",
     offsetPct: 56,
   },
   {
@@ -54,7 +54,7 @@ const SPANS: readonly Span[] = [
     indent: 1,
     widthPct: 15,
     ms: "37ms",
-    color: "var(--green-9)",
+    color: "var(--ds-green-900)",
     offsetPct: 82,
   },
 ] as const;
@@ -114,7 +114,7 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
             <Lightning className="h-2.5 w-2.5" />
             {copy.footer}
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-9)]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
         </div>
       </div>
     </div>

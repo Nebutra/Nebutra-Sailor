@@ -140,10 +140,12 @@ export default async function RootLayout({
                       <LogomarkSVG
                         width={24}
                         height={24}
+                        aria-label="Nebutra"
                         className="hidden h-6 w-6 shrink-0 !text-white dark:block"
                       />
                       <WordmarkEnSVG
                         width={100}
+                        height={18}
                         className="h-[1.125rem] w-auto !text-[var(--neutral-12)] dark:!text-white"
                         aria-label={`${brand.name} Sailor Docs`}
                       />

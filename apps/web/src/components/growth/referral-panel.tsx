@@ -77,7 +77,7 @@ function CopyButton({ value, label }: { value: string; label: string }) {
     >
       {copied ? (
         <>
-          <Check className="h-3 w-3 text-green-9" />
+          <Check className="h-3 w-3 text-success" />
           Copied
         </>
       ) : (

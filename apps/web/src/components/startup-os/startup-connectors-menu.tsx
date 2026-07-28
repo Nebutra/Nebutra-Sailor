@@ -88,7 +88,7 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
                 {entry.name}
               </span>
               {connected ? (
-                <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-green-10">
+                <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-success">
                   <CheckCircle className="size-3.5" aria-hidden="true" />
                   Connected
                 </span>
