@@ -87,6 +87,13 @@ psql "$DB_URL" -v ON_ERROR_STOP=1 -q -f "$RLS_SQL"
 POLICIES=$(psql "$DB_URL" -tA -c "select count(*) from pg_policies where schemaname='public'")
 echo "  $POLICIES policies"
 
+say "Applying cost guardrails"
+# Role-level, not call-site level: @nebutra/db sets statement_timeout inside
+# getTenantDb, but a raw client or a future code path that forgets inherits
+# nothing. Defaults on the role cover every session it opens.
+psql "$DB_URL" -v ON_ERROR_STOP=1 -q -v role="$APP_ROLE" \
+  -f "$REPO_ROOT/infra/data/database/policies/cost-guardrails.sql"
+
 say "Verifying isolation as $APP_ROLE"
 # Two tenants, one row each. Then read as the application role: scoped to a
 # tenant it must see only that tenant, and with no tenant set it must see
