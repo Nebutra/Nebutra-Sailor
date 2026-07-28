@@ -953,7 +953,7 @@
         "apiKeys": "Khóa API",
         "notifications": "Thông báo",
         "auditLog": "Nhật ký kiểm toán",
-        "webhooks": "Webhook",
+        "webhooks": "Webhooks",
         "admin": "Quản trị"
       },
       "action": {

@@ -729,7 +729,7 @@
       }
     },
     "webhooks": {
-      "title": "Webhooky",
+      "title": "Webhooks",
       "description": "Přihlaste se k odběru událostí z vašeho pracovního prostoru. Každou zátěž podepisujeme pomocí tajného klíče vašeho koncového bodu, takže můžete ověřit její pravost.",
       "create": {
         "heading": "Nový koncový bod",
@@ -953,7 +953,7 @@
         "apiKeys": "Klíče API",
         "notifications": "Oznámení",
         "auditLog": "Protokol auditu",
-        "webhooks": "Webhooky",
+        "webhooks": "Webhooks",
         "admin": "Administrace"
       },
       "action": {

@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "Suorita",
+      "running": "Suorittaa…",
+      "copy": "Kopioi",
+      "copied": "Kopioitu",
+      "sameAsApi": "Sama polku kuin API:ssä · OSS-moottori",
+      "mustBeNumber": "{label}n on oltava numero",
+      "base64Loaded": "Base64-payload ladattu",
+      "workspaceMissing": "Työtilaa ei ole määritetty: {slug}",
+      "yes": "Kyllä",
+      "no": "Ei",
+      "text": "Teksti",
+      "outputPreview": "Lähtöarvon esikatselu",
+      "mode": "Tila",
+      "encode": "Koodaa",
+      "decode": "Koodaa purku"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Kappaleet",
+      "wordsPerParagraph": "Sanoja kappaleessa",
+      "startWithLorem": "Aloita ”Lorem ipsum” -tekstistä",
+      "note": "Lorem Ipsum -generaattori · puhtaasti"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "Sähköpostin validointi · vain muoto (ei MX-hakua)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Kortin numero",
+      "note": "Luhn-tarkistus · offline, ei tallenneta"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "JSON-pienennys · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "CSS-pienennin · kevyt (reunan turvallinen)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Älä huomioi kirjainkokoa",
+      "note": "Hash-vertailija · vakioaika saman pituisille"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "note": "JSON-ero · polkutaso-operaatiot · lajiväritetyt rivit · vierekkäin",
+      "equal": "Identtinen",
+      "differs": "{count} muutos",
+      "colPath": "Polku",
+      "colKind": "Tyyppi",
+      "colLeft": "Vasen",
+      "colRight": "Oikea",
+      "filtersAria": "Suodata muutostyyppien mukaan",
+      "filterAll": "Kaikki ({count})",
+      "filterAdd": "Lisää ({count})",
+      "filterRemove": "Poista ({count})",
+      "filterChange": "Muuta ({count})",
+      "filterType": "Tyyppi ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "Tila",
+      "pretty": "Siisti",
+      "compact": "Tiivis",
+      "indent": "Sisennys",
+      "note": "YAML-muotoilija · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "TOML-muotoilija · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "XML-pienennin · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "URL-validaattori · WHATWG URL (ilman verkkohakua)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "IP-validaattori · IPv4/IPv6 offline"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "UUID-validaattori · RFC 4122 -muoto"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "HTML-pienennin · kevyt (reuna turvallinen)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Pituus",
+      "count": "Määrä",
+      "charset": "Merkistö",
+      "alphanumeric": "Kirjaimet ja numerot",
+      "symbols": "Kirjaimet, numerot ja symbolit",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Satunnainen merkkijono · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Lukuaika · CJK + Latin -heuristiikka"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Maksimiotsikon taso",
+      "note": "Markdown TOC · ATX-otsikot"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "PDF-tiedosto",
+      "note": "PDF-tiedot · pdf-lib (sivut + metatiedot)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Siirto (13 = ROT13)",
+      "note": "ROT13 / Caesar · puhtaana"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Morse-koodi · ITU · puhtaana"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Teksti → binääri",
+      "fromBinary": "Binääri → teksti",
+      "note": "Teksti ↔ Binääri · UTF-8-bittit"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
-      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
+      "encoding": "Tiivisteen koodaus",
+      "note": "Monitiivistys · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "CSS-kaunistaja · kevyt"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML-kaunistaja · kevyt"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "Merkkijono A",
+      "b": "Merkkijono B",
+      "note": "Merkkijonojen samankaltaisuus · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Luku → roomalainen",
+      "fromRoman": "Roomalainen → luku",
+      "note": "Roomalaiset numerot · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Syntymäaika (VVVV-KK-PP)",
+      "asOf": "Päivämäärä (valinnainen)",
+      "note": "Ikälaskuri · tarkka V/K/P"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Laskun summa",
+      "percent": "Vinkki %",
+      "people": "Henkilöitä",
+      "note": "Vinkkilaskuri · jaettavaksi"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Leveys",
+      "height": "Korkeus",
+      "note": "Kuvansuhde · GCD-yksinkertaistus"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "MIME-haku · yleiset verkkotyypit"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "User-Agent-tulkitsija · heuristinen (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Kuvatiedosto",
+      "note": "Kuvan metatiedot · sharp (EXIF-puskurin koko)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Sanojen esiintymistiheys · CJK + latinalainen"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL-pienennin · kommentit + välilyönnit"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Aloitenumero",
+      "note": "Lisää rivinumerot · puhtaasti"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Uniikit sanat · ensimmäisenä nähty järjestyksessä"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Arvo",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Epoch-millisekunteja · Päivämäärä"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Salasana",
+      "note": "Salasanan entropia · meristöheuristiikka"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Etualusta (#hex)",
+      "bg": "Tausta (#hex)",
+      "note": "Värikontrasti · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Kuvatiedosto",
+      "note": "EXIF-katselin · exifr + JPEG-varavaihtoehto"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Kuvio",
+      "replacement": "Korvaus",
+      "flags": "Liput",
+      "note": "Regex Etsi ja Korvaa · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "secret": "Salasana",
+      "exp": "Vanhenee (sekuntia)",
+      "note": "JWT Generointi · HS256 (vain kehitys/testaus)"
     },
     "rand": {
       "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "max": "Maksimi",
+      "count": "Määrä",
+      "note": "Satunnaisluku · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Sivut",
+      "count": "Noppamäärä",
+      "note": "Noppapelaaja · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · puhtaana"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · JWT-tyylinen"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Viesti",
+      "secret": "Salasana",
+      "signature": "Allekirjoitus",
+      "note": "HMAC-varmennus · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "Bitejä",
+      "count": "Määrä",
+      "note": "Salaisenen avaimen generointi · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "PDF-tiedosto",
+      "note": "PDF Light Optimize · pdf-lib uudelleenkirjoitus (ei kuvien uudelleenpakkausta)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "PDF-tiedosto",
+      "quality": "Laatu",
+      "engine": "Moottori",
+      "qStructural": "Rakenne (qpdf, häviöttömät virtaukset)",
+      "qScreen": "Näyttö (pienin, Ghostscript)",
+      "qEbook": "E-kirja (tasapainoinen, Ghostscript)",
+      "qPrinter": "Tulostin (korkeampi laatu, Ghostscript)",
+      "eAuto": "Automaattinen (qpdf → Ghostscript → pdf-lib)",
+      "download": "Lataa PDF",
+      "needFile": "Valitse ensin PDF-tiedosto",
+      "in": "Syöte",
+      "out": "Tulos",
+      "saved": "Tallennettu",
+      "note": "PDF-pakkaus · qpdf / Ghostscript isäntäkonetta · pdf-lib-varjostus"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Tarkoituksen mukaan",
+    "tools": "työkalut",
+    "dualSurface": "Ihmisille tarkoitettu sivu + Agent API · sama moottori",
+    "otherRoots": "Muut kysyntäjuuret"
   }
 }

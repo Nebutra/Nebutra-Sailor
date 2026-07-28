@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
+      "run": "Spustit",
+      "running": "Spouští se…",
+      "copy": "Kopírovat",
+      "copied": "Zkopírováno",
+      "sameAsApi": "Stejná cesta jako API · OSS engine",
+      "mustBeNumber": "{label} musí být číslo",
+      "base64Loaded": "Base64 payload načten",
+      "workspaceMissing": "Pracovní prostor není nakonfigurován: {slug}",
+      "yes": "Ano",
+      "no": "Ne",
       "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "outputPreview": "Náhled výstupu",
+      "mode": "Režim",
+      "encode": "Kódovat",
+      "decode": "Dekódovat"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Odstavce",
+      "wordsPerParagraph": "Slova na odstavec",
+      "startWithLorem": "Začít s „Lorem ipsum“",
+      "note": "Generátor Lorem Ipsum · čistý"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "Ověřovač e-mailu · pouze formát (bez MX lookupu)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Číslo karty",
+      "note": "Kontrola Luhn · offline, nikdy neukládáno"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "Minifikátor JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "Minifikátor CSS · lehký (bezpečný pro edge)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Ignorovat velikost písmen",
+      "note": "Porovnávač hashů · konstantní čas pro stejnou délku"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "note": "JSON Diff · operace na úrovni cest · barevně odlišené řádky · vedle sebe",
+      "equal": "Shodné",
+      "differs": "{count} změna(y)",
+      "colPath": "Cesta",
+      "colKind": "Druh",
+      "colLeft": "Levá",
+      "colRight": "Pravá",
+      "filtersAria": "Filtrovat podle druhu změny",
+      "filterAll": "Vše ({count})",
+      "filterAdd": "Přidáno ({count})",
+      "filterRemove": "Odebráno ({count})",
+      "filterChange": "Změna ({count})",
+      "filterType": "Typ ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "Režim",
+      "pretty": "Pěkný",
+      "compact": "Kompaktní",
+      "indent": "Odsadit",
+      "note": "Formátovač YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "Formátovač TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "Minifikátor XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "Validátor URL · WHATWG URL (bez síťového dotazu)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "Validátor IP · IPv4/IPv6 offline"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "Validátor UUID · tvar dle RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "Minifikátor HTML · lehký (bezpečný pro edge)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Délka",
+      "count": "Počet",
+      "charset": "Znaková sada",
+      "alphanumeric": "Alfanumerické",
+      "symbols": "Alfanumerické + symboly",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Náhodný řetězec · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Čas čtení · heuristika CJK + latinka"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Max. úroveň nadpisu",
+      "note": "Obsah Markdownu · nadpisy ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "PDF soubor",
+      "note": "PDF Info · pdf-lib (stránky + metadata)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Posun (13 = ROT13)",
+      "note": "ROT13 / Caesar · čistý"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Morseova abeceda · ITU · čistý"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Text → binární",
+      "fromBinary": "Binární → text",
+      "note": "Text ↔ Binární · UTF-8 bity"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Kódování digestu",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "CSS Beautifier · lehký"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML Beautifier · lehký"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "Řetězec A",
+      "b": "Řetězec B",
+      "note": "Podobnost řetězců · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Číslo → Římské",
+      "fromRoman": "Římské → Číslo",
+      "note": "Římské číslice · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Datum narození (RRRR-MM-DD)",
+      "asOf": "K datu (volitelné)",
+      "note": "Kalkulačka věku · přesně R/M/D"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Částka účtu",
+      "percent": "Spropitné %",
+      "people": "Lidé",
+      "note": "Kalkulačka spropitného · snadné rozdělení"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Šířka",
+      "height": "Výška",
+      "note": "Poměr stran · zjednodušení GCD"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "Vyhledávání MIME · běžné webové typy"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "Parser User-Agent · heuristický (offline)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Soubor obrázku",
+      "note": "Metadata obrázku · sharp (velikost EXIF bufferu)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Frekvence slov · CJK + latinka"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL Minifier · komentáře + mezery"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Počáteční číslo",
+      "note": "Přidat čísla řádků · čistě"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Unikátní slova · pořadí prvního výskytu"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Hodnota",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Epoch milisekundy · datum"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Heslo",
+      "note": "Entropie hesla · heuristika znakové sady"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Popředí (#hex)",
+      "bg": "Pozadí (#hex)",
+      "note": "Barevný kontrast · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Soubor obrázku",
+      "note": "Prohlížeč EXIF · exifr + JPEG fallback"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Vzor",
+      "replacement": "Nahrazení",
+      "flags": "Příznaky",
+      "note": "Regex Najít a nahradit · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "secret": "Tajný klíč",
+      "exp": "Vyprší (sekundy)",
+      "note": "Generování JWT · HS256 (pouze pro vývoj/testování)"
     },
     "rand": {
       "min": "Min",
       "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "count": "Počet",
+      "note": "Náhodné číslo · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Stěny",
+      "count": "Počet kostek",
+      "note": "Hod kostkou · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · čistý"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · styl JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Zpráva",
+      "secret": "Tajný klíč",
+      "signature": "Podpis",
+      "note": "Ověření HMAC · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "Bajty",
+      "count": "Počet",
+      "note": "Generátor tajných klíčů · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "PDF soubor",
+      "note": "Lehká optimalizace PDF · přepis pomocí pdf-lib (bez rekomprese obrázků)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
+      "file": "PDF soubor",
+      "quality": "Kvalita",
       "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "qStructural": "Strukturální (qpdf, bezztrátové streamy)",
+      "qScreen": "Obrazovka (nejmenší, Ghostscript)",
+      "qEbook": "E-kniha (vyvážené, Ghostscript)",
+      "qPrinter": "Tiskárna (vyšší kvalita, Ghostscript)",
+      "eAuto": "Automaticky (qpdf → Ghostscript → pdf-lib)",
+      "download": "Stáhnout PDF",
+      "needFile": "Nejprve vyberte PDF soubor",
+      "in": "Vstup",
+      "out": "Výstup",
+      "saved": "Uloženo",
+      "note": "Komprese PDF · qpdf / Ghostscript na hostiteli · pdf-lib záložní řešení"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Podle záměru",
+    "tools": "nástroje",
+    "dualSurface": "Stránka pro lidi + Agent API · stejný engine",
+    "otherRoots": "Ostatní kořeny poptávky"
   }
 }

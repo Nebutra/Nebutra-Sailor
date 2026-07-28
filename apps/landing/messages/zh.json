@@ -4,7 +4,7 @@
     "solutions": "解决方案",
     "pricing": "定价",
     "docs": "开发文档",
-    "github": "开源社区",
+    "github": "GitHub",
     "npm": "npm",
     "about": "关于我们",
     "ideas": "点子广场",
@@ -496,7 +496,7 @@
       "contactUs": {
         "title": "联系我们",
         "intro": "如果您对我们使用 Cookie 有任何疑问，请联系我们：",
-        "company": "{companyLegal}",
+        "company": "{brandName} Co., Ltd.",
         "privacyNote": "如需了解更多关于我们如何收集和处理您的数据的信息，请参阅我们的",
         "privacyLink": "隐私政策"
       }
@@ -792,7 +792,7 @@
       "contactUs": {
         "title": "八、联系我们",
         "intro": "若您对本隐私政策有任何疑问，请通过以下方式联系我们：",
-        "company": "{companyLegal}"
+        "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {

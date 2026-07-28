@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "Εκτέλεση",
+      "running": "Εκτελείται…",
+      "copy": "Αντιγραφή",
+      "copied": "Αντιγράφηκε",
+      "sameAsApi": "Ίδια διαδρομή με το API · OSS engine",
+      "mustBeNumber": "Το {label} πρέπει να είναι αριθμός",
+      "base64Loaded": "Φορτώθηκε το Base64 payload",
+      "workspaceMissing": "Ο χώρος εργασίας δεν έχει ρυθμιστεί: {slug}",
+      "yes": "Ναι",
+      "no": "Όχι",
+      "text": "Κείμενο",
+      "outputPreview": "Προεπισκόπηση εξόδου",
+      "mode": "Λειτουργία",
+      "encode": "Κωδικοποίηση",
+      "decode": "Αποκωδικοποίηση"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Παράγραφοι",
+      "wordsPerParagraph": "Λέξεις ανά παράγραφο",
+      "startWithLorem": "Έναρξη με “Lorem ipsum”",
+      "note": "Γεννήτρια Lorem Ipsum · καθαρή"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "Επαληθευτής Email · μόνο μορφή (χωρίς έλεγχο MX)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Αριθμός κάρτας",
+      "note": "Έλεγχος Luhn · εκτός σύνδεσης, ποτέ αποθηκευμένο"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "Συμπιεστής JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "CSS Minifier · ελαφρύ (ασφαλές για edge)"
     },
     "hashCompare": {
       "a": "Hash A",
       "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "ignoreCase": "Αγνόηση πεζών/κεφαλαίων",
+      "note": "Hash Comparator · σταθερού χρόνου για ίσο μήκος"
     },
     "jsonDiff": {
       "left": "JSON A",
       "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "note": "JSON Diff · λειτουργίες σε επίπεδο διαδρομής · χρωματισμένες γραμμές ανά τύπο · δίπλα-δίπλα",
+      "equal": "Ίδια",
+      "differs": "{count} αλλαγή/ες",
+      "colPath": "Διαδρομή",
+      "colKind": "Είδος",
+      "colLeft": "Αριστερά",
+      "colRight": "Δεξιά",
+      "filtersAria": "Φιλτράρισμα ανά είδος αλλαγής",
+      "filterAll": "Όλα ({count})",
+      "filterAdd": "Προσθήκη ({count})",
+      "filterRemove": "Αφαίρεση ({count})",
+      "filterChange": "Αλλαγή ({count})",
+      "filterType": "Τύπος ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "Λειτουργία",
+      "pretty": "Όμορφη",
+      "compact": "Συμπαγές",
+      "indent": "Εσοχή",
+      "note": "Διαμορφωτής YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "Διαμορφωτής TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "Συμπιεστής XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "Επαληθευτής URL · WHATWG URL (χωρίς ανάκτηση δικτύου)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "Επαληθευτής IP · IPv4/IPv6 εκτός σύνδεσης"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "Επαληθευτής UUID · σχήμα RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "Συμπιεστής HTML · ελαφρύς (ασφαλής για edge)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Μήκος",
+      "count": "Αριθμός",
+      "charset": "Σύνολο χαρακτήρων",
+      "alphanumeric": "Αλφαριθμητικά",
+      "symbols": "Αλφαριθμητικά + σύμβολα",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Τυχαία συμβολοσειρά · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Χρόνος ανάγνωσης · εuristic CJK + Latin"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Μέγιστο επίπεδο επικεφαλίδας",
+      "note": "Markdown TOC · επικεφαλίδες ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "Αρχείο PDF",
+      "note": "Πληροφορίες PDF · pdf-lib (σελίδες + μεταδεδομένα)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Μετατόπιση (13 = ROT13)",
+      "note": "ROT13 / Caesar · καθαρό"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Κώδικας Μορς · ITU · καθαρό"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Κείμενο → δυαδικό",
+      "fromBinary": "Δυαδικό → κείμενο",
+      "note": "Κείμενο ↔ Δυαδικό · UTF-8 bits"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Κωδικοποίηση σύνοψης",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "CSS Beautifier · ελαφρύ"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "HTML Beautifier · ελαφρύ"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "Συμβολοσειρά Α",
+      "b": "Συμβολοσειρά Β",
+      "note": "Ομοιότητα Συμβολοσειρών · Levenshtein"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Αριθμός → Ρωμαϊκός",
+      "fromRoman": "Ρωμαϊκός → Αριθμός",
+      "note": "Ρωμαϊκοί Αριθμοί · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Ημερομηνία γέννησης (YYYY-MM-DD)",
+      "asOf": "Έως (προαιρετικό)",
+      "note": "Υπολογιστής Ηλικίας · ακριβής Ε/Μ/Η"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Ποσό λογαριασμού",
+      "percent": "Φόρος %",
+      "people": "Άτομα",
+      "note": "Υπολογιστής φιλοδωρήματος · φιλικό για διαμοιρασμό"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Πλάτος",
+      "height": "Ύψος",
+      "note": "Λόγος διαστάσεων · απλοποίηση GCD"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "Αναζήτηση MIME · κοινοί τύποι ιστού"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "Ανάλυση User-Agent · ευρετική (εκτός σύνδεσης)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Αρχείο εικόνας",
+      "note": "Μεταδεδομένα εικόνας · sharp (μέγεθος buffer EXIF)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "Συχνότητα λέξεων · CJK + Λατινικά"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL Minifier · σχόλια + κενά"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Αριθμός εκκίνησης",
+      "note": "Προσθήκη Αριθμών Γραμμών · καθαρή"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Μοναδικές Λέξεις · σειρά πρώτης εμφάνισης"
     },
     "epoch": {
-      "value": "Value",
+      "value": "Τιμή",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "Epoch Milliseconds · Ημερομηνία"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Κωδικός",
+      "note": "Εντροπία Κωδικού · εuristic σετ χαρακτήρων"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Πρόσθιο (#hex)",
+      "bg": "Υπόβαθρο (#hex)",
+      "note": "Αντίθεση Χρωμάτων · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Αρχείο εικόνας",
+      "note": "Προβολέας EXIF · exifr + JPEG fallback"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
+      "pattern": "Σχέδιο",
+      "replacement": "Αντικατάσταση",
+      "flags": "Σημαίες",
       "note": "Regex Find & Replace · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "secret": "Μυστικό",
+      "exp": "Λήξη (δευτερόλεπτα)",
+      "note": "Δημιουργία JWT · HS256 (μόνο για dev/test)"
     },
     "rand": {
-      "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "min": "Ελάχιστο",
+      "max": "Μέγιστο",
+      "count": "Αριθμός",
+      "note": "Τυχαίος Αριθμός · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Έδρες",
+      "count": "Αριθμός ζαριών",
+      "note": "Ζάρια · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · καθαρό"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · στυλ JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Μήνυμα",
+      "secret": "Μυστικό",
+      "signature": "Υπογραφή",
+      "note": "Επαλήθευση HMAC · SHA-256"
     },
     "secret": {
       "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "count": "Αριθμός",
+      "note": "Γεννήτρια Μυστικού Κλειδιού · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "Αρχείο PDF",
+      "note": "PDF Light Optimize · ξαναγραφή με pdf-lib (όχι επανασυμπίεση εικόνας)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "Αρχείο PDF",
+      "quality": "Ποιότητα",
+      "engine": "Κινητήρας",
+      "qStructural": "Δομική (qpdf, απώλειες streams)",
+      "qScreen": "Οθόνη (μικρότερο, Ghostscript)",
+      "qEbook": "Ebook (ισορροπημένο, Ghostscript)",
+      "qPrinter": "Εκτυπωτής (υψηλότερη ποιότητα, Ghostscript)",
+      "eAuto": "Αυτόματο (qpdf → Ghostscript → pdf-lib)",
+      "download": "Λήψη PDF",
+      "needFile": "Επιλέξτε αρχικά ένα αρχείο PDF",
+      "in": "Είσοδος",
+      "out": "Έξοδος",
+      "saved": "Αποθηκεύτηκε",
+      "note": "Συμπίεση PDF · qpdf / Ghostscript στον υπολογιστή · pdf-lib ως εναλλακτική"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "Κατά πρόθεση",
+    "tools": "εργαλεία",
+    "dualSurface": "Ανθρώπινη σελίδα + Agent API · ίδια μηχανή",
+    "otherRoots": "Άλλες ρίζες ζήτησης"
   }
 }

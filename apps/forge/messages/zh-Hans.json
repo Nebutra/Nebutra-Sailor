@@ -326,7 +326,7 @@
       "note": "正则查找替换 · ECMAScript"
     },
     "jwt": {
-      "payload": "Payload JSON",
+      "payload": "负载 JSON",
       "secret": "密钥",
       "exp": "过期（秒）",
       "note": "JWT 生成 · HS256（仅开发/测试）"

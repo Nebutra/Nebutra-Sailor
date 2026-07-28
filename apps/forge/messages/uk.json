@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "Запустити",
+      "running": "Виконується…",
+      "copy": "Копіювати",
+      "copied": "Скопійовано",
+      "sameAsApi": "Те ж саме, що й у API · OSS рушій",
+      "mustBeNumber": "{label} має бути числом",
+      "base64Loaded": "Навантажено Base64-навантаження",
+      "workspaceMissing": "Робочу область не налаштовано: {slug}",
+      "yes": "Так",
+      "no": "Ні",
+      "text": "Текст",
+      "outputPreview": "Попередній перегляд результату",
+      "mode": "Режим",
+      "encode": "Кодувати",
+      "decode": "Декодувати"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "Абзаци",
+      "wordsPerParagraph": "Слів на абзац",
+      "startWithLorem": "Починати з «Lorem ipsum»",
+      "note": "Генератор Lorem Ipsum · чистий"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "Перевірка електронної пошти · лише формат (без пошуку MX)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "Номер картки",
+      "note": "Перевірка за алгоритмом Луна · офлайн, ніколи не зберігається"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "Мініфікатор JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "Мініфікатор CSS · легкий (безпечний для edge)"
     },
     "hashCompare": {
-      "a": "Hash A",
-      "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "a": "Хеш А",
+      "b": "Хеш Б",
+      "ignoreCase": "Ігнорувати регістр",
+      "note": "Порівняння хешів · постійний час для однакової довжини"
     },
     "jsonDiff": {
-      "left": "JSON A",
-      "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "left": "JSON А",
+      "right": "JSON Б",
+      "note": "Різниця JSON · операції на рівні шляхів · кольорові рядки за типом · поруч",
+      "equal": "Ідентичні",
+      "differs": "{count} зміна(и)",
+      "colPath": "Шлях",
+      "colKind": "Тип",
+      "colLeft": "Ліво",
+      "colRight": "Право",
+      "filtersAria": "Фільтр за типом зміни",
+      "filterAll": "Усі ({count})",
+      "filterAdd": "Додано ({count})",
+      "filterRemove": "Видалено ({count})",
+      "filterChange": "Змінено ({count})",
+      "filterType": "Тип ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "Режим",
+      "pretty": "Оформлений",
+      "compact": "Компактний",
+      "indent": "Відступ",
+      "note": "Формувальник YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "Формувальник TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "Мініфікатор XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "Перевірка URL · WHATWG URL (без мережі)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "Перевірка IP · IPv4/IPv6 офлайн"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "Перевірка UUID · формат RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "Мініфікатор HTML · легкий (безпечний для edge)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
+      "length": "Довжина",
+      "count": "Кількість",
+      "charset": "Набір символів",
+      "alphanumeric": "Літери та цифри",
+      "symbols": "Літери, цифри та символи",
       "hex": "Hex",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "Випадковий рядок · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "Час читання · CJK + латинська евристика"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "Макс. рівень заголовка",
+      "note": "Markdown TOC · заголовки ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "Файл PDF",
+      "note": "Інформація PDF · pdf-lib (сторінки + метадані)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "Зсув (13 = ROT13)",
+      "note": "ROT13 / Цезар · чистий"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "Код Морзе · ITU · чистий"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "Текст → бінарний",
+      "fromBinary": "Бінарний → текст",
+      "note": "Текст ↔ Бінарний · біти UTF-8"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "Кодування дайджесту",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "Форматувач CSS · легкий"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "Форматування HTML · легкий інструмент"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "Рядок A",
+      "b": "Рядок B",
+      "note": "Подібність рядків · Левенштейн"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "Число → Римська",
+      "fromRoman": "Римська → Число",
+      "note": "Римські числа · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "Дата народження (РРРР-ММ-ДД)",
+      "asOf": "Станом на (необов’язково)",
+      "note": "Калькулятор віку · точний Р/М/Д"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "Сума рахунку",
+      "percent": "Чапка %",
+      "people": "Люди",
+      "note": "Калькулятор чайових · зручний розподіл"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "Ширина",
+      "height": "Висота",
+      "note": "Співвідношення сторін · спрощення НСД"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "Пошук MIME · поширені веб-типи"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "Парсер User-Agent · евристичний (офлайн)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "Файл зображення",
+      "note": "Метадані зображення · sharp (розмір буфера EXIF)"
     },
     "wordFreq": {
-      "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "top": "Топ N",
+      "note": "Частотність слів · CJK + латиниця"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "SQL Minifier · коментарі + пробіли"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "Стартовий номер",
+      "note": "Додати номери рядків · чисто"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "Унікальні слова · порядок першого з'явлення"
     },
     "epoch": {
-      "value": "Value",
-      "msToIso": "ms → ISO",
-      "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "value": "Значення",
+      "msToIso": "мс → ISO",
+      "isoToMs": "ISO → мс",
+      "note": "Епоха мілісекунди · Дата"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "Пароль",
+      "note": "Ентропія пароля · евристика набору символів"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "Текст (#hex)",
+      "bg": "Фон (#hex)",
+      "note": "Контраст кольорів · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "Файл зображення",
+      "note": "Переглядач EXIF · exifr + резервний JPEG"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "Шаблон",
+      "replacement": "Заміна",
+      "flags": "Прапорці",
+      "note": "Пошук та заміна регулярними виразами · ECMAScript"
     },
     "jwt": {
-      "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "payload": "Навантаження JSON",
+      "secret": "Секрет",
+      "exp": "Термін дії (секунди)",
+      "note": "Генерація JWT · HS256 (тільки для розробки/тестування)"
     },
     "rand": {
-      "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "min": "Мін.",
+      "max": "Макс.",
+      "count": "Кількість",
+      "note": "Випадкове число · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "Грані",
+      "count": "Кількість кісток",
+      "note": "Бросання кісток · криптографічний ГСЧ"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · чистий"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · у стилі JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "Повідомлення",
+      "secret": "Секрет",
+      "signature": "Підпис",
+      "note": "Перевірка HMAC · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "Байти",
+      "count": "Кількість",
+      "note": "Генератор секретного ключа · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "Файл PDF",
+      "note": "Оптимізація PDF Light · переписування pdf-lib (без стиснення зображень)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "Файл PDF",
+      "quality": "Якість",
+      "engine": "Рушій",
+      "qStructural": "Структурна (qpdf, без втрат)",
+      "qScreen": "Екран (мінімальний розмір, Ghostscript)",
+      "qEbook": "Електронна книга (збалансовано, Ghostscript)",
+      "qPrinter": "Друк (висока якість, Ghostscript)",
+      "eAuto": "Авто (qpdf → Ghostscript → pdf-lib)",
+      "download": "Завантажити PDF",
+      "needFile": "Спочатку виберіть PDF-файл",
+      "in": "Вхід",
+      "out": "Вихід",
+      "saved": "Збережено",
+      "note": "PDF Compress · qpdf / Ghostscript на хості · pdf-lib як резерв"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "За наміром",
+    "tools": "інструменти",
+    "dualSurface": "Сторінка користувача + API агента · той самий рушій",
+    "otherRoots": "Інші корені попиту"
   }
 }

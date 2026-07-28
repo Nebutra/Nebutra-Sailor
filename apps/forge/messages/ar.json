@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "تشغيل",
+      "running": "جارٍ التشغيل…",
+      "copy": "نسخ",
+      "copied": "تم النسخ",
+      "sameAsApi": "نفس مسار الـ API · محرك مفتوح المصدر",
+      "mustBeNumber": "يجب أن يكون {label} رقمًا",
+      "base64Loaded": "تم تحميل حمولة Base64",
+      "workspaceMissing": "لم يتم تكوين مساحة العمل: {slug}",
+      "yes": "نعم",
+      "no": "لا",
+      "text": "نص",
+      "outputPreview": "معاينة الإخراج",
+      "mode": "الوضع",
+      "encode": "ترميز",
+      "decode": "فك الترميز"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "الفقرات",
+      "wordsPerParagraph": "الكلمات في الفقرة",
+      "startWithLorem": "ابدأ بـ \"Lorem ipsum\"",
+      "note": "مولّد Lorem Ipsum · نقي"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "مُحقّق البريد الإلكتروني · التنسيق فقط (بدون بحث MX)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "رقم البطاقة",
+      "note": "فاحص Luhn · غير متصل، لا يُحفظ"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "مُصغّر JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "مُصغّر CSS · خفيف (آمن للحواف)"
     },
     "hashCompare": {
-      "a": "Hash A",
-      "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "a": "التجزئة أ",
+      "b": "التجزئة ب",
+      "ignoreCase": "تجاهل حالة الأحرف",
+      "note": "مقارن التجزئة · زمن ثابت للطول المتساوي"
     },
     "jsonDiff": {
-      "left": "JSON A",
-      "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "left": "JSON أ",
+      "right": "JSON ب",
+      "note": "اختلاف JSON · عمليات على مستوى المسار · صفوف ملونة حسب النوع · جنبًا إلى جنب",
+      "equal": "متطابق",
+      "differs": "{count} تغيير(ات)",
+      "colPath": "المسار",
+      "colKind": "النوع",
+      "colLeft": "اليسار",
+      "colRight": "اليمين",
+      "filtersAria": "تصفية حسب نوع التغيير",
+      "filterAll": "الكل ({count})",
+      "filterAdd": "إضافة ({count})",
+      "filterRemove": "إزالة ({count})",
+      "filterChange": "تغيير ({count})",
+      "filterType": "النوع ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "الوضع",
+      "pretty": "منسق",
+      "compact": "مضغوط",
+      "indent": "مسافة بادئة",
+      "note": "منسق YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "منسق TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "مُصغّر XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "مدقق URL · WHATWG URL (بدون جلب شبكة)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "مدقق IP · IPv4/IPv6 دون اتصال"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "مدقق UUID · شكل RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "مُصغّر HTML · خفيف (آمن للحواف)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
-      "hex": "Hex",
+      "length": "الطول",
+      "count": "العدد",
+      "charset": "مجموعة الأحرف",
+      "alphanumeric": "أحرف وأرقام",
+      "symbols": "أحرف وأرقام + رموز",
+      "hex": "سداسي عشري",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "سلسلة عشوائية · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "وقت القراءة · قاعدة تقريبية لـ CJK + اللاتينية"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "أقصى مستوى للعنوان",
+      "note": "فهرس Markdown · عناوين ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "ملف PDF",
+      "note": "معلومات PDF · pdf-lib (الصفحات + البيانات الوصفية)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "الإزاحة (13 = ROT13)",
+      "note": "ROT13 / قيصر · نقي"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "شفرة مورس · ITU · نقي"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "نص → ثنائي",
+      "fromBinary": "ثنائي → نص",
+      "note": "نص ↔ ثنائي · بتات UTF-8"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
+      "encoding": "ترميز التلخيص",
       "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "منسق CSS · خفيف"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "منسق HTML · خفيف"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "النص أ",
+      "b": "النص ب",
+      "note": "تشابه النصوص · ليفنشتاين"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "رقم → روماني",
+      "fromRoman": "روماني → رقم",
+      "note": "الأرقام الرومانية · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "تاريخ الميلاد (YYYY-MM-DD)",
+      "asOf": "حتى تاريخ (اختياري)",
+      "note": "حاسبة العمر · سنوات/أشهر/أيام بالضبط"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "مبلغ الفاتورة",
+      "percent": "نسبة البقشيش %",
+      "people": "الأشخاص",
+      "note": "حاسبة الإكرامية · تقسيم سهل"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "العرض",
+      "height": "الارتفاع",
+      "note": "نسبة العرض إلى الارتفاع · تبسيط القاسم المشترك الأكبر"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "البحث عن MIME · الأنواع الشائعة للويب"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "محلل User-Agent · استدلالي (دون اتصال)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "ملف الصورة",
+      "note": "بيانات الصورة الوصفية · sharp (حجم مخزن EXIF)"
     },
     "wordFreq": {
-      "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "top": "أعلى N",
+      "note": "تكرار الكلمات · CJK + لاتيني"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "مُصغّر SQL · التعليقات + المسافات البيضاء"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "رقم البداية",
+      "note": "إضافة أرقام الأسطر · نقي"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "كلمات فريدة · ترتيب أول ظهور"
     },
     "epoch": {
-      "value": "Value",
-      "msToIso": "ms → ISO",
-      "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "value": "القيمة",
+      "msToIso": "مللي ثانية → ISO",
+      "isoToMs": "ISO → مللي ثانية",
+      "note": "مللي ثوان Epoch · التاريخ"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "كلمة المرور",
+      "note": "إنتروبيا كلمة المرور · استنتاج مجموعة الأحرف"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "اللون الأمامي (#hex)",
+      "bg": "اللون الخلفي (#hex)",
+      "note": "تباين الألوان · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "ملف الصورة",
+      "note": "عارض EXIF · exifr + JPEG fallback"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "النمط",
+      "replacement": "الاستبدال",
+      "flags": "العلامات",
+      "note": "البحث والاستبدال بالنمط · ECMAScript"
     },
     "jwt": {
-      "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "payload": "حمولة JSON",
+      "secret": "السر",
+      "exp": "تاريخ الانتهاء (بالثواني)",
+      "note": "إنشاء JWT · HS256 (للتطوير والاختبار فقط)"
     },
     "rand": {
-      "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "min": "الحد الأدنى",
+      "max": "الحد الأقصى",
+      "count": "العدد",
+      "note": "رقم عشوائي · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "الأوجه",
+      "count": "عدد النرد",
+      "note": "مرح النرد · مولد أرقام عشوائية"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · نقي"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · نمط JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "الرسالة",
+      "secret": "السر",
+      "signature": "التوقيع",
+      "note": "التحقق من HMAC · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "بايت",
+      "count": "العدد",
+      "note": "مولّد المفتاح السري · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "ملف PDF",
+      "note": "تحسين PDF خفيف · إعادة كتابة pdf-lib (بدون ضغط صور)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "ملف PDF",
+      "quality": "الجودة",
+      "engine": "المحرك",
+      "qStructural": "هيكلية (qpdf، تيارات بدون فقدان)",
+      "qScreen": "شاشة (الأصغر، Ghostscript)",
+      "qEbook": "كتاب إلكتروني (متوازن، Ghostscript)",
+      "qPrinter": "طابعة (جودة أعلى، Ghostscript)",
+      "eAuto": "تلقائي (qpdf → Ghostscript → pdf-lib)",
+      "download": "تحميل PDF",
+      "needFile": "اختر ملف PDF أولاً",
+      "in": "الإدخال",
+      "out": "الإخراج",
+      "saved": "تم الحفظ",
+      "note": "ضغط PDF · qpdf / Ghostscript على المضيف · pdf-lib كخيار بديل"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
+    "hubLabel": "حسب النية",
+    "tools": "أدوات",
     "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "otherRoots": "جذور الطلب الأخرى"
   }
 }

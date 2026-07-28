@@ -111,279 +111,279 @@
   },
   "runners": {
     "common": {
-      "run": "Run",
-      "running": "Running…",
-      "copy": "Copy",
-      "copied": "Copied",
-      "sameAsApi": "Same path as API · OSS engine",
-      "mustBeNumber": "{label} must be a number",
-      "base64Loaded": "Base64 payload loaded",
-      "workspaceMissing": "Workspace not configured: {slug}",
-      "yes": "Yes",
-      "no": "No",
-      "text": "Text",
-      "outputPreview": "Output preview",
-      "mode": "Mode",
-      "encode": "Encode",
-      "decode": "Decode"
+      "run": "הפעל",
+      "running": "מפעיל…",
+      "copy": "העתק",
+      "copied": "הועתק",
+      "sameAsApi": "אותו נתיב כמו API · מנוע OSS",
+      "mustBeNumber": "{label} חייב להיות מספר",
+      "base64Loaded": "נתוני Base64 נטענו",
+      "workspaceMissing": "מרחב העבודה לא מוגדר: {slug}",
+      "yes": "כן",
+      "no": "לא",
+      "text": "טקסט",
+      "outputPreview": "תצוגה מקדימה של פלט",
+      "mode": "מצב",
+      "encode": "קודד",
+      "decode": "פענח"
     },
     "lorem": {
-      "paragraphs": "Paragraphs",
-      "wordsPerParagraph": "Words per paragraph",
-      "startWithLorem": "Start with “Lorem ipsum”",
-      "note": "Lorem Ipsum Generator · pure"
+      "paragraphs": "פסקאות",
+      "wordsPerParagraph": "מילים לפסקה",
+      "startWithLorem": "התחל עם \"Lorem ipsum\"",
+      "note": "מחולל Lorem Ipsum · טהור"
     },
     "emailValidate": {
-      "note": "Email Validator · format only (no MX lookup)"
+      "note": "מאמת דוא\"ל · בדיקת פורמט בלבד (ללא בדיקת MX)"
     },
     "creditCardLuhn": {
-      "number": "Card number",
-      "note": "Luhn Checker · offline, never stored"
+      "number": "מספר כרטיס",
+      "note": "בודק Luhn · לא מקוון, לא מאוחסן"
     },
     "jsonMinify": {
       "json": "JSON",
-      "note": "JSON Minifier · JSON.parse/stringify"
+      "note": "מכווץ JSON · JSON.parse/stringify"
     },
     "cssMinify": {
       "css": "CSS",
-      "note": "CSS Minifier · lightweight (edge-safe)"
+      "note": "מכווץ CSS · קל משקל (בטוח לשוליים)"
     },
     "hashCompare": {
-      "a": "Hash A",
-      "b": "Hash B",
-      "ignoreCase": "Ignore case",
-      "note": "Hash Comparator · constant-time for equal length"
+      "a": "האש א",
+      "b": "האש ב",
+      "ignoreCase": "התעלם מרישיות",
+      "note": "מקבל האשים · זמן קבוע לאותו אורך"
     },
     "jsonDiff": {
-      "left": "JSON A",
-      "right": "JSON B",
-      "note": "JSON Diff · path-level ops · kind-colored rows · side-by-side",
-      "equal": "Identical",
-      "differs": "{count} change(s)",
-      "colPath": "Path",
-      "colKind": "Kind",
-      "colLeft": "Left",
-      "colRight": "Right",
-      "filtersAria": "Filter by change kind",
-      "filterAll": "All ({count})",
-      "filterAdd": "Add ({count})",
-      "filterRemove": "Remove ({count})",
-      "filterChange": "Change ({count})",
-      "filterType": "Type ({count})"
+      "left": "JSON א",
+      "right": "JSON ב",
+      "note": "הבדלי JSON · פעולות ברמת נתיב · שורות צבעויות לפי סוג · צד לצד",
+      "equal": "זהים",
+      "differs": "{count} שינויים",
+      "colPath": "נתיב",
+      "colKind": "סוג",
+      "colLeft": "שמאל",
+      "colRight": "ימין",
+      "filtersAria": "סינון לפי סוג שינוי",
+      "filterAll": "הכל ({count})",
+      "filterAdd": "הוספה ({count})",
+      "filterRemove": "הסרה ({count})",
+      "filterChange": "שינוי ({count})",
+      "filterType": "סוג ({count})"
     },
     "yamlFormat": {
       "yaml": "YAML",
-      "mode": "Mode",
-      "pretty": "Pretty",
-      "compact": "Compact",
-      "indent": "Indent",
-      "note": "YAML Formatter · js-yaml"
+      "mode": "מצב",
+      "pretty": "מסודר",
+      "compact": "קומפקטי",
+      "indent": "שורה חדשה",
+      "note": "מסדר YAML · js-yaml"
     },
     "tomlFormat": {
       "toml": "TOML",
-      "note": "TOML Formatter · smol-toml"
+      "note": "מסדר TOML · smol-toml"
     },
     "xmlMinify": {
       "xml": "XML",
-      "note": "XML Minifier · fast-xml-parser"
+      "note": "מכווץ XML · fast-xml-parser"
     },
     "urlValidate": {
-      "note": "URL Validator · WHATWG URL (no network fetch)"
+      "note": "מאמת כתובות · WHATWG URL (ללא גישה לרשת)"
     },
     "ipValidate": {
-      "note": "IP Validator · IPv4/IPv6 offline"
+      "note": "מאמת כתובות IP · IPv4/IPv6 לא מקוון"
     },
     "uuidValidate": {
-      "note": "UUID Validator · RFC 4122 shape"
+      "note": "מאמת UUID · מבנה לפי RFC 4122"
     },
     "htmlMinify": {
       "html": "HTML",
-      "note": "HTML Minifier · lightweight (edge-safe)"
+      "note": "מכווץ HTML · קל משקל (בטוח ל־edge)"
     },
     "randomString": {
-      "length": "Length",
-      "count": "Count",
-      "charset": "Charset",
-      "alphanumeric": "Alphanumeric",
-      "symbols": "Alphanumeric + symbols",
-      "hex": "Hex",
+      "length": "אורך",
+      "count": "כמות",
+      "charset": "סט תווים",
+      "alphanumeric": "אלפא-נומרי",
+      "symbols": "אלפא-נומרי + סמלים",
+      "hex": "הקסדצימלי",
       "base64url": "Base64URL",
-      "note": "Random String · node:crypto randomInt"
+      "note": "מחרוזת אקראית · node:crypto randomInt"
     },
     "readingTime": {
-      "note": "Reading time · CJK + Latin heuristic"
+      "note": "זמן קריאה · היוריסטיקה ל-CJK וללטיני"
     },
     "markdownToc": {
       "markdown": "Markdown",
-      "maxLevel": "Max heading level",
-      "note": "Markdown TOC · ATX headings"
+      "maxLevel": "רמת כותרת מקסימלית",
+      "note": "תוכן עניינים ב-Markdown · כותרות ATX"
     },
     "pdfInfo": {
-      "file": "PDF file",
-      "note": "PDF Info · pdf-lib (pages + metadata)"
+      "file": "קובץ PDF",
+      "note": "מידע PDF · pdf-lib (עמודים + מטא-נתונים)"
     },
     "rot13": {
-      "shift": "Shift (13 = ROT13)",
-      "note": "ROT13 / Caesar · pure"
+      "shift": "הזזה (13 = ROT13)",
+      "note": "ROT13 / קיסר · טהור"
     },
     "morse": {
-      "note": "Morse Code · ITU · pure"
+      "note": "קוד מורס · ITU · טהור"
     },
     "textBinary": {
-      "toBinary": "Text → binary",
-      "fromBinary": "Binary → text",
-      "note": "Text ↔ Binary · UTF-8 bits"
+      "toBinary": "טקסט → בינארי",
+      "fromBinary": "בינארי → טקסט",
+      "note": "טקסט ↔ בינארי · סיביות UTF-8"
     },
     "base32": {
       "note": "Base32 · RFC 4648"
     },
     "multiHash": {
-      "encoding": "Digest encoding",
-      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
+      "encoding": "קידוד עיכול",
+      "note": "ריבוי-האש · MD5 + SHA-1/256/512 · node:crypto"
     },
     "cssFormat": {
-      "note": "CSS Beautifier · lightweight"
+      "note": "מסדר CSS · קל משקל"
     },
     "htmlFormat": {
-      "note": "HTML Beautifier · lightweight"
+      "note": "מְעַצֵּב HTML · קל משקל"
     },
     "stringSimilarity": {
-      "a": "String A",
-      "b": "String B",
-      "note": "String Similarity · Levenshtein"
+      "a": "מחרוזת א׳",
+      "b": "מחרוזת ב׳",
+      "note": "דמיון מחרוזות · לֶבֶנְשְׁטַיְן"
     },
     "roman": {
-      "toRoman": "Number → Roman",
-      "fromRoman": "Roman → Number",
-      "note": "Roman Numerals · 1–3999"
+      "toRoman": "מספר → רומי",
+      "fromRoman": "רומי → מספר",
+      "note": "ספרות רומיות · 1–3999"
     },
     "age": {
-      "birthDate": "Birth date (YYYY-MM-DD)",
-      "asOf": "As of (optional)",
-      "note": "Age Calculator · exact Y/M/D"
+      "birthDate": "תאריך לידה (YYYY-MM-DD)",
+      "asOf": "נכון ל־ (אופציונלי)",
+      "note": "מחשבון גיל · שנים/חודשים/ימים מדויקים"
     },
     "tip": {
-      "bill": "Bill amount",
-      "percent": "Tip %",
-      "people": "People",
-      "note": "Tip Calculator · split friendly"
+      "bill": "סכום החשבון",
+      "percent": "טיפ %",
+      "people": "אנשים",
+      "note": "מחשבון טיפים · חלוקה נוחה"
     },
     "aspect": {
-      "width": "Width",
-      "height": "Height",
-      "note": "Aspect Ratio · GCD simplify"
+      "width": "רוחב",
+      "height": "גובה",
+      "note": "יחס תצוגה · פישוט GCD"
     },
     "mime": {
-      "note": "MIME Lookup · common web types"
+      "note": "חיפוש MIME · סוגי אינטרנט נפוצים"
     },
     "ua": {
-      "note": "User-Agent Parser · heuristic (offline)"
+      "note": "מנתח User-Agent · היוריסטי (אופליין)"
     },
     "imageMeta": {
-      "file": "Image file",
-      "note": "Image Metadata · sharp (EXIF buffer size)"
+      "file": "קובץ תמונה",
+      "note": "מטא-נתוני תמונה · sharp (גודל באפר EXIF)"
     },
     "wordFreq": {
       "top": "Top N",
-      "note": "Word Frequency · CJK + Latin"
+      "note": "תדירות מילים · CJK + לטיני"
     },
     "jsonXml": {
       "note": "JSON ↔ XML · fast-xml-parser"
     },
     "sqlMinify": {
-      "note": "SQL Minifier · comments + whitespace"
+      "note": "מקטין SQL · הערות + רווחים"
     },
     "lineNum": {
-      "start": "Start number",
-      "note": "Add Line Numbers · pure"
+      "start": "מספר התחלה",
+      "note": "הוסף מספרי שורה · טהור"
     },
     "uniqueWords": {
-      "note": "Unique Words · first-seen order"
+      "note": "מילים ייחודיות · סדר מופע ראשון"
     },
     "epoch": {
-      "value": "Value",
+      "value": "ערך",
       "msToIso": "ms → ISO",
       "isoToMs": "ISO → ms",
-      "note": "Epoch Milliseconds · Date"
+      "note": "אלפיות עידן · תאריך"
     },
     "passwordEntropy": {
-      "password": "Password",
-      "note": "Password Entropy · charset heuristic"
+      "password": "סיסמה",
+      "note": "אנטרופיית סיסמה · היוריסטיקת מערך תווים"
     },
     "contrast": {
-      "fg": "Foreground (#hex)",
-      "bg": "Background (#hex)",
-      "note": "Color Contrast · WCAG 2.x"
+      "fg": "טקסט (#hex)",
+      "bg": "רקע (#hex)",
+      "note": "ניגודיות צבעים · WCAG 2.x"
     },
     "exif": {
-      "file": "Image file",
-      "note": "EXIF Viewer · exifr + JPEG fallback"
+      "file": "קובץ תמונה",
+      "note": "צופה EXIF · exifr + גיבוי JPEG"
     },
     "regex": {
-      "pattern": "Pattern",
-      "replacement": "Replacement",
-      "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "pattern": "תבנית",
+      "replacement": "החלפה",
+      "flags": "דגלים",
+      "note": "חיפוש והחלפה ב-Regex · ECMAScript"
     },
     "jwt": {
       "payload": "Payload JSON",
-      "secret": "Secret",
-      "exp": "Expires (seconds)",
-      "note": "JWT Generate · HS256 (dev/test only)"
+      "secret": "סוד",
+      "exp": "פג תוקף (שניות)",
+      "note": "יצירת JWT · HS256 (לפיתוח/בדיקות בלבד)"
     },
     "rand": {
-      "min": "Min",
-      "max": "Max",
-      "count": "Count",
-      "note": "Random Number · crypto.randomInt"
+      "min": "מינימום",
+      "max": "מקסימום",
+      "count": "כמות",
+      "note": "מספר אקראי · crypto.randomInt"
     },
     "dice": {
-      "sides": "Sides",
-      "count": "Dice count",
-      "note": "Dice Roller · crypto RNG"
+      "sides": "צדדים",
+      "count": "מספר קוביות",
+      "note": "זורק קוביות · crypto RNG"
     },
     "hexRgb": {
-      "note": "HEX ↔ RGB · pure"
+      "note": "HEX ↔ RGB · טהור"
     },
     "base64url": {
-      "note": "Base64URL · JWT-style"
+      "note": "Base64URL · בסגנון JWT"
     },
     "hmac": {
-      "message": "Message",
-      "secret": "Secret",
-      "signature": "Signature",
-      "note": "HMAC Verify · SHA-256"
+      "message": "הודעה",
+      "secret": "סוד",
+      "signature": "חתימה",
+      "note": "אימות HMAC · SHA-256"
     },
     "secret": {
-      "bytes": "Bytes",
-      "count": "Count",
-      "note": "Secret Key Generator · randomBytes"
+      "bytes": "בתים",
+      "count": "ספירה",
+      "note": "מחולל מפתח סודי · randomBytes"
     },
     "pdfOptimize": {
-      "file": "PDF file",
-      "note": "PDF Light Optimize · pdf-lib rewrite (not image recompress)"
+      "file": "קובץ PDF",
+      "note": "PDF Light Optimize · כתיבה מחדש עם pdf-lib (לא דחיסה מחדש של תמונות)"
     },
     "pdfCompress": {
-      "file": "PDF file",
-      "quality": "Quality",
-      "engine": "Engine",
-      "qStructural": "Structural (qpdf, lossless streams)",
-      "qScreen": "Screen (smallest, Ghostscript)",
-      "qEbook": "Ebook (balanced, Ghostscript)",
-      "qPrinter": "Printer (higher quality, Ghostscript)",
-      "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
-      "download": "Download PDF",
-      "needFile": "Choose a PDF file first",
-      "in": "Input",
-      "out": "Output",
-      "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "file": "קובץ PDF",
+      "quality": "איכות",
+      "engine": "מנוע",
+      "qStructural": "מבני (qpdf, זרמים ללא אובדן)",
+      "qScreen": "מסך (קטן ביותר, Ghostscript)",
+      "qEbook": "ספר אלקטרוני (מאוזן, Ghostscript)",
+      "qPrinter": "מדפסת (איכות גבוהה יותר, Ghostscript)",
+      "eAuto": "אוטומטי (qpdf → Ghostscript → pdf-lib)",
+      "download": "הורד PDF",
+      "needFile": "בחר קובץ PDF תחילה",
+      "in": "קלט",
+      "out": "פלט",
+      "saved": "נשמר",
+      "note": "PDF Compress · qpdf / Ghostscript על המארח · pdf-lib כגיבוי"
     }
   },
   "roots": {
-    "hubLabel": "By intent",
-    "tools": "tools",
-    "dualSurface": "Human page + Agent API · same engine",
-    "otherRoots": "Other demand roots"
+    "hubLabel": "על פי כוונה",
+    "tools": "כלים",
+    "dualSurface": "דף אנושי + ממשק API לסוכן · אותו מנוע",
+    "otherRoots": "שורשי ביקוש אחרים"
   }
 }
