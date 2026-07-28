@@ -20,7 +20,7 @@ Animation Architecture
 
 - Product Motion: `packages/design/ui/src/shared/animation/motion`
 - CSS animation utilities: `packages/design/ui/src/shared/animation/css`
-- App import facade: `apps/{web,landing,design-docs,sailor-docs,tsekaluk-dev}/src/shared/motion.ts`
+- App import facade: `apps/{web,landing,design-docs,sailor-docs}/src/shared/motion.ts`
 - Marketing GSAP: `apps/landing/src/shared/animation/gsap`
 - Governance script: `scripts/verify-animation-governance.mjs`
 - Command: `pnpm animation:governance`

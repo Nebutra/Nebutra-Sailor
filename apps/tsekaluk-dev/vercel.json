@@ -1,8 +1,0 @@
-{
-  "framework": "nextjs",
-  "buildCommand": "pnpm --filter @nebutra/brand sync && pnpm turbo build --filter=@nebutra/tsekaluk-dev",
-  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/tsekaluk-dev",
-  "installCommand": "pnpm install --frozen-lockfile",
-  "outputDirectory": ".next",
-  "regions": ["iad1"]
-}

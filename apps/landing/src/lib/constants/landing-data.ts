@@ -16,7 +16,6 @@ import {
   LogoGithub,
   Envelope as Mail,
   Notification as Megaphone,
-  DeviceDesktop as MonitorDot,
   Box as Package,
   BlendMode as Palette,
   Pen as PenTool,
@@ -265,13 +264,6 @@ export const TREE_DATA: FileNode[] = [
         path: "apps/studio",
         description: "- Sanity Studio CMS v5",
         icon: React.createElement(PenTool, { className: "h-4 w-4 text-red-500" }),
-      },
-      {
-        id: "apps-tsekaluk-dev",
-        label: "tsekaluk-dev",
-        path: "apps/tsekaluk-dev",
-        description: "- Portfolio and growth sandbox app",
-        icon: React.createElement(MonitorDot, { className: "h-4 w-4 text-slate-500" }),
       },
       {
         id: "apps-web",

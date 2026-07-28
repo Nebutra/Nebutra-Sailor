@@ -130,7 +130,7 @@ fails at deploy rather than silently pointing a production Worker at whatever
 
 ## Out of scope
 
-- `apps/tsekaluk-dev` runs on its own Neon database and is decoupled from this
+- Personal portfolio `tsekaluk-dev` (separate repo) runs on its own Neon and is decoupled from this
   monorepo. It is not part of this migration.
 - `packages/ops/supabase` (realtime client) is a provider option, not the data
   path. It keeps working against a Supabase project if one is still around,

@@ -176,7 +176,8 @@ describe("per-app robots posture", () => {
    * the dynamic one, so the static file was both stale and already losing; it
    * was deleted rather than the route.
    */
-  const INDEXABLE = ["landing", "sailor-docs", "tsekaluk-dev", "forge", "router"];
+  // tsekaluk-dev extracted 2026-07-27 → github.com/TsekaLuk/tsekaluk-dev
+  const INDEXABLE = ["landing", "sailor-docs", "forge", "router"];
 
   /** Everything else: internal tooling or authenticated product surfaces. */
   const DISALLOWED = [
@@ -256,7 +257,7 @@ describe("sitemap lastmod honesty", () => {
       .map((app) => join(APPS_DIR, app, "src/app/sitemap.ts"))
       .filter((file) => existsSync(file));
 
-    // Non-vacuity: landing, sailor-docs and tsekaluk-dev each own a sitemap.
+    // Non-vacuity: landing + sailor-docs + forge/router own sitemaps.
     expect(sitemaps.length).toBeGreaterThanOrEqual(3);
 
     const offenders = sitemaps

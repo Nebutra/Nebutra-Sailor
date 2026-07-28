@@ -16,15 +16,7 @@ const brandRoot = resolve(__dirname, "..");
 const monorepoRoot = resolve(brandRoot, "../../..");
 
 // Apps to sync brand assets to
-const apps = [
-  "apps/landing",
-  "apps/web",
-  "apps/auth",
-  "apps/studio",
-  "apps/tsekaluk-dev",
-  "apps/forge",
-  "apps/router",
-];
+const apps = ["apps/landing", "apps/web", "apps/auth", "apps/studio", "apps/forge", "apps/router"];
 
 // Assets to sync
 const assetMappings = [

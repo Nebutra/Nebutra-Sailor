@@ -540,7 +540,6 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
 │   ├── storybook/         # 组件 Playground
 │   ├── mail-preview/      # 邮件模板预览
 │   ├── sleptons/          # Sleptons 配套应用
-│   └── tsekaluk-dev/      # 作者开发场地
 ├── packages/                  # 共享 TS 库（W3b 已分类）
 │   ├── ai/                # 3 个 — agents、ai-providers、mcp
 │   ├── commerce/          # 7 个 — billing、contracts、marketing、metering、license、legal、waitlist

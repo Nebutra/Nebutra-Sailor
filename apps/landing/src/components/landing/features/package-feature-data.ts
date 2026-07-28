@@ -197,8 +197,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "License key 生成、校验、吊销;Ed25519 签名、可离线验证、内建席位与有效期约束。",
   },
   marketing: {
-    en: "Shared marketing-site primitives — hero blocks, pricing tables, FAQ accordions — reused by landing and tsekaluk-dev with the brand tokens already wired.",
-    zh: "营销站点共用原语 — Hero、Pricing、FAQ — landing 与 tsekaluk-dev 复用，brand tokens 已接入。",
+    en: "Shared marketing-site primitives — hero blocks, pricing tables, FAQ accordions — reused by landing and product marketing surfaces with the brand tokens already wired.",
+    zh: "营销站点共用原语 — Hero、Pricing、FAQ — landing 与产品营销面复用，brand tokens 已接入。",
   },
   metering: {
     en: "Usage metering on ClickHouse — sub-second ingestion, per-tenant quota lookup, ready to feed Stripe metered billing or in-product limits.",

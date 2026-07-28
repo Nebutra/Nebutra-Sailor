@@ -42,11 +42,11 @@ Local proof (2026-07-22): `pnpm --filter @nebutra/web run build:next` emits
 - Plan: **Hobby** — `api-deployments-free-per-day` **100**,
   `concurrentBuilds: 1`.
 - On 2026-07-22 the daily quota was exhausted mainly by
-  `nebutra-sailor-landing` + `tsekaluk-dev` auto-deploys on every main
+  `nebutra-sailor-landing` auto-deploys on every main
   push (ignore step still creates a deployment slot).
 - Mitigations applied: dashboard buildCommand → `build:next`; deploy hooks
   `manual-main` on web/auth; **auto-deploy disabled** on non-cutover
-  projects (landing, tsekaluk-dev, studio, persona-blindbox) so web/auth
+  projects (landing, studio, persona-blindbox) so web/auth
   can use the next day's quota.
 - Re-enable auto-deploy on marketing apps after cutover, or upgrade the
   team off Hobby if monorepo velocity needs more than ~100 deploys/day.

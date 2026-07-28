@@ -534,7 +534,6 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 │   ├── storybook/         # Component playground
 │   ├── mail-preview/      # Email template preview
 │   ├── sleptons/          # Sleptons companion app
-│   └── tsekaluk-dev/      # Author dev playground
 ├── packages/                  # Shared TS libraries (categorized in W3b)
 │   ├── ai/                # 3 pkgs — agents, ai-providers, mcp
 │   ├── commerce/          # 7 pkgs — billing, contracts, marketing, metering, license, legal, waitlist
