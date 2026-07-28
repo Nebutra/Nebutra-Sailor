@@ -678,7 +678,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           role="alert"
           aria-live="polite"
           className={cn(
-            "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-amber-100",
+            "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-[hsl(var(--warning-strong))] dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-amber-100",
             isWorkspaceHomeRoute
               ? // Home main has p-0; banner already runs edge-to-edge, no
                 // negative margin needed. relative+z keeps it above gradient.
@@ -689,7 +689,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
           <span>
             DEV AUTH ACTIVE: synthetic "Dev User", no DB writes. Set{" "}
-            <code className="rounded bg-amber-200/50 px-1 font-mono text-[10px] text-amber-950 dark:bg-amber-500/30 dark:text-amber-50">
+            <code className="rounded bg-warning/10/50 px-1 font-mono text-[10px] text-amber-950 dark:bg-amber-500/30 dark:text-amber-50">
               NEXT_PUBLIC_AUTH_PROVIDER
             </code>{" "}
             to a real provider to disable.

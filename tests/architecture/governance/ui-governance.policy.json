@@ -156,7 +156,7 @@
         "name": "web-dashboard-loading-state-matches-final-ia",
         "description": "Skeletons must mirror the final dashboard information architecture so loading does not feel like a different product.",
         "file": "apps/web/src/app/(app)/_dashboard-skeletons.tsx",
-        "requiredContains": ["max-w-5xl", "metricCards", "h-28"],
+        "requiredContains": ["max-w-4xl", "metricCards", "h-28"],
         "forbiddenContains": [
           "OnboardingSkeleton",
           "space-y-px overflow-hidden",

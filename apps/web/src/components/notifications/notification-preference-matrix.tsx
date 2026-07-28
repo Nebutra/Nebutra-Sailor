@@ -26,7 +26,7 @@ function getCellButtonClasses(enabled: boolean, editable: boolean): string {
   }
 
   if (enabled) {
-    return "border-green-700/30 bg-green-200/70 text-green-900 hover:bg-green-200 hover:text-green-900";
+    return "border-success/30 bg-success/10/70 text-[hsl(var(--success-strong))] hover:bg-success/10 hover:text-[hsl(var(--success-strong))]";
   }
 
   return "";
@@ -53,8 +53,8 @@ export function NotificationPreferenceMatrix({
         <div
           className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium ${
             runtime.canManagePreferences
-              ? "bg-green-200 text-green-900"
-              : "bg-amber-200 text-amber-900"
+              ? "bg-success/10 text-[hsl(var(--success-strong))]"
+              : "bg-warning/10 text-[hsl(var(--warning-strong))]"
           }`}
         >
           {runtime.canManagePreferences ? (
@@ -67,7 +67,7 @@ export function NotificationPreferenceMatrix({
       </div>
 
       {!runtime.canManagePreferences ? (
-        <div className="mt-4 rounded-[var(--radius-lg)] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="mt-4 rounded-[var(--radius-lg)] border border-warning/20 bg-amber-50 px-4 py-3 text-sm text-amber-800">
           Changes are disabled here because the current notification runtime does not expose durable
           preference storage yet.
         </div>

@@ -103,12 +103,16 @@ function UsageGauge({
   const isWarning = percent >= 80;
   const isCritical = percent >= 95;
 
-  const barColor = isCritical ? "bg-red-900" : isWarning ? "bg-amber-900" : "bg-primary";
+  const barColor = isCritical ? "bg-destructive" : isWarning ? "bg-warning" : "bg-primary";
 
   // Meter fill and its percentage label must read as one object, so both sides
   // of the pair come from the same registered ramp. The -900 step is AA in both
   // themes (red 5.32/5.84, amber 5.60/8.14, green 5.22/8.30 on the card).
-  const statusColor = isCritical ? "text-red-900" : isWarning ? "text-amber-900" : "text-green-900";
+  const statusColor = isCritical
+    ? "text-[hsl(var(--destructive-strong))]"
+    : isWarning
+      ? "text-[hsl(var(--warning-strong))]"
+      : "text-[hsl(var(--success-strong))]";
 
   return (
     <Card className="p-4 sm:p-6">
@@ -140,12 +144,12 @@ function UsageGauge({
 
       {/* Warning */}
       {isCritical && (
-        <div className="mt-3 rounded-[var(--radius-lg)] border border-red-700/30 bg-red-200 px-3 py-2 text-xs text-red-900">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-[hsl(var(--destructive-strong))]">
           Quota nearly exhausted. Upgrade your plan to avoid service interruption.
         </div>
       )}
       {isWarning && !isCritical && (
-        <div className="mt-3 rounded-[var(--radius-lg)] border border-amber-700/30 bg-amber-200 px-3 py-2 text-xs text-amber-900">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-[hsl(var(--warning-strong))]">
           Approaching quota limit. Consider upgrading to avoid disruptions.
         </div>
       )}

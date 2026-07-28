@@ -25,7 +25,7 @@ export default async function SettingsPage() {
         </p>
         <button
           type="button"
-          className="rounded-[var(--radius-md)] border border-red-700/40 px-4 py-2 text-sm font-medium text-red-900 transition-colors hover:bg-red-200"
+          className="rounded-[var(--radius-md)] border border-destructive/40 px-4 py-2 text-sm font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:bg-destructive/10"
         >
           Delete Organization
         </button>

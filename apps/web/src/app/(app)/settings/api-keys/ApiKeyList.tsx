@@ -31,7 +31,7 @@ function RevokeButton({ keyId, orgId }: { keyId: string; orgId: string }) {
       <button
         type="submit"
         disabled={isPending}
-        className="text-xs text-red-900 hover:text-red-900/80 disabled:opacity-50"
+        className="text-xs text-[hsl(var(--destructive-strong))] hover:text-[hsl(var(--destructive-strong))]/80 disabled:opacity-50"
       >
         {isPending ? "Revoking…" : "Revoke"}
       </button>
@@ -62,7 +62,7 @@ export function ApiKeyList({ orgId, keys = [] }: Props) {
           </div>
 
           {k.revokedAt ? (
-            <span className="rounded-full border border-red-700/30 bg-red-200 px-2 py-0.5 text-xs font-medium text-red-900">
+            <span className="rounded-full border border-destructive/30 bg-destructive/10 px-2 py-0.5 text-xs font-medium text-[hsl(var(--destructive-strong))]">
               Revoked
             </span>
           ) : (

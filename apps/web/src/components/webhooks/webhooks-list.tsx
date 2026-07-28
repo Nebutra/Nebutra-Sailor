@@ -207,7 +207,7 @@ export function WebhooksList({
             <button
               type="button"
               onClick={() => handleDelete(endpoint)}
-              className="text-red-900 hover:text-red-900/80"
+              className="text-[hsl(var(--destructive-strong))] hover:text-[hsl(var(--destructive-strong))]/80"
             >
               Delete
             </button>

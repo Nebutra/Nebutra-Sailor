@@ -35,8 +35,8 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     name: "Shopify",
     description: "Sync products, orders, and customers from your Shopify store.",
     icon: ShoppingBag,
-    color: "text-green-900",
-    bgColor: "bg-green-200",
+    color: "text-[hsl(var(--success-strong))]",
+    bgColor: "bg-success/10",
     docUrl: `${getBrandOrigin("docs")}/integrations/shopify`,
   },
   {
@@ -62,8 +62,8 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     name: "Custom Webhook",
     description: "Send and receive events via custom HTTP webhooks.",
     icon: Activity,
-    color: "text-amber-900",
-    bgColor: "bg-amber-200",
+    color: "text-[hsl(var(--warning-strong))]",
+    bgColor: "bg-warning/10",
     docUrl: `${getBrandOrigin("docs")}/integrations/webhooks`,
   },
 ];

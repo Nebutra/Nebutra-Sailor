@@ -120,7 +120,7 @@ export function ApiKeysPageClient() {
       </div>
 
       {error ? (
-        <p className="rounded-[var(--radius-md)] border border-red-700/30 bg-red-200 px-3 py-2 text-sm text-red-900">
+        <p className="rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-[hsl(var(--destructive-strong))]">
           {error}
         </p>
       ) : null}

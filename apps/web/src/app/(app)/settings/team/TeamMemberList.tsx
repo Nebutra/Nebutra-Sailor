@@ -343,7 +343,7 @@ export function TeamMemberList({ orgId }: Props) {
                       type="button"
                       disabled={!canRemove}
                       onClick={() => handleRemoveMember(member)}
-                      className="rounded px-2 py-1 text-xs font-medium text-red-900 hover:text-red-900/80 disabled:cursor-not-allowed disabled:text-muted-foreground"
+                      className="rounded px-2 py-1 text-xs font-medium text-[hsl(var(--destructive-strong))] hover:text-[hsl(var(--destructive-strong))]/80 disabled:cursor-not-allowed disabled:text-muted-foreground"
                       aria-label={
                         isSelf
                           ? "Leave organization"

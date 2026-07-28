@@ -210,8 +210,8 @@ export default function IntegrationsPage() {
                         onClick={() => handleToggle(integration.id, integration.isActive)}
                         className={`flex items-center gap-1 rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors ${
                           integration.isActive
-                            ? "bg-amber-200 text-amber-900 hover:bg-amber-200/70"
-                            : "bg-green-200 text-green-900 hover:bg-green-200/70"
+                            ? "bg-warning/10 text-[hsl(var(--warning-strong))] hover:bg-warning/10/70"
+                            : "bg-success/10 text-[hsl(var(--success-strong))] hover:bg-success/10/70"
                         }`}
                       >
                         {integration.isActive ? (
@@ -227,7 +227,7 @@ export default function IntegrationsPage() {
                       <button
                         type="button"
                         onClick={() => handleDisconnect(integration.id)}
-                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-red-200 px-2.5 py-1.5 text-xs font-medium text-red-900 transition-colors hover:bg-red-200/70"
+                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:bg-destructive/10/70"
                       >
                         <X className="h-3 w-3" /> Disconnect
                       </button>
@@ -271,7 +271,7 @@ export default function IntegrationsPage() {
                 <Card
                   className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
                     isConnected
-                      ? "border-green-700/40 opacity-60"
+                      ? "border-success/40 opacity-60"
                       : "hover:border-[var(--blue-7)] hover:shadow-md"
                   }`}
                 >

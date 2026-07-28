@@ -137,12 +137,14 @@ export async function GettingStarted() {
                   task.done ? `${task.label} (complete)` : `${task.label} — ${task.description}`
                 }
                 className={`group flex items-start gap-3 px-3 py-3 transition-colors duration-150 ${
-                  task.done ? "bg-green-200/50 hover:bg-green-200/80" : "hover:bg-neutral-3/70"
+                  task.done ? "bg-success/10/50 hover:bg-success/10/80" : "hover:bg-neutral-3/70"
                 }`}
               >
                 <div
                   className={`flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] ${
-                    task.done ? "bg-green-200 text-green-900" : "bg-neutral-2 text-neutral-11"
+                    task.done
+                      ? "bg-success/10 text-[hsl(var(--success-strong))]"
+                      : "bg-neutral-2 text-neutral-11"
                   }`}
                 >
                   {task.done ? (
@@ -155,14 +157,14 @@ export async function GettingStarted() {
                   <div className="flex items-center justify-between gap-2">
                     <p
                       className={`truncate text-sm font-medium ${
-                        task.done ? "text-green-900" : "text-neutral-12"
+                        task.done ? "text-[hsl(var(--success-strong))]" : "text-neutral-12"
                       }`}
                     >
                       {task.label}
                     </p>
                     <ArrowRight
                       className={`size-3.5 shrink-0 opacity-0 transition-[opacity,transform] duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 motion-reduce:group-hover:translate-x-0 ${
-                        task.done ? "text-green-900" : "text-neutral-11"
+                        task.done ? "text-[hsl(var(--success-strong))]" : "text-neutral-11"
                       }`}
                       aria-hidden="true"
                     />

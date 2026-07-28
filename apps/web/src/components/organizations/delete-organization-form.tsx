@@ -91,7 +91,7 @@ export function DeleteOrganizationForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-red-700/30 bg-red-200/60 p-6">
+    <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10/60 p-6">
       <div className="mb-4">
         {/* text-[hsl(var(--destructive-strong))] rather than text-destructive: --destructive is 5.42:1 on
             white but only 2.13:1 on the dark card, so it is a fill-only token.

@@ -47,8 +47,8 @@ const TYPE_LABELS: Record<ConnectorType, string> = {
 const TYPE_ACCENT: Record<ConnectorType, string> = {
   mcp: "text-primary bg-primary/10 dark:text-primary dark:bg-primary/15",
   api: "text-cyan-11 bg-cyan-3 dark:text-cyan-9 dark:bg-cyan-9/20",
-  oauth_app: "text-green-900 bg-green-200",
-  webhook: "text-amber-900 bg-amber-200",
+  oauth_app: "text-[hsl(var(--success-strong))] bg-success/10",
+  webhook: "text-[hsl(var(--warning-strong))] bg-warning/10",
 };
 
 interface Props {
@@ -187,7 +187,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
                   onClick={() => setPendingRemove(connector)}
                   disabled={isBusy}
                   aria-label={`Remove ${connector.name}`}
-                  className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-[background-color,color,opacity] duration-150 group-hover:opacity-100 hover:bg-red-200 hover:text-red-900 focus-visible:opacity-100 disabled:cursor-not-allowed"
+                  className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-[background-color,color,opacity] duration-150 group-hover:opacity-100 hover:bg-destructive/10 hover:text-[hsl(var(--destructive-strong))] focus-visible:opacity-100 disabled:cursor-not-allowed"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>

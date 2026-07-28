@@ -16,8 +16,8 @@ export function CreateApiKeyForm({ orgId }: Props) {
 
   if (state.status === "success") {
     return (
-      <div className="rounded-[var(--radius-md)] border border-amber-200/60 bg-amber-50 p-4">
-        <p className="mb-2 text-sm font-medium text-amber-900">
+      <div className="rounded-[var(--radius-md)] border border-warning/60 bg-amber-50 p-4">
+        <p className="mb-2 text-sm font-medium text-[hsl(var(--warning-strong))]">
           This key appears once. Store it before closing.
         </p>
         <div className="flex items-center gap-2">
@@ -56,7 +56,7 @@ export function CreateApiKeyForm({ orgId }: Props) {
       </button>
 
       {state.status === "error" && (
-        <p className="self-center text-sm text-red-900">{state.message}</p>
+        <p className="self-center text-sm text-[hsl(var(--destructive-strong))]">{state.message}</p>
       )}
     </form>
   );

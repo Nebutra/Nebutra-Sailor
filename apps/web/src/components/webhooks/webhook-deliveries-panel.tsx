@@ -51,9 +51,9 @@ async function defaultReplay(endpointId: string, deliveryId: string): Promise<vo
 
 function StatusPill({ status }: { status: WebhookDeliveryView["status"] }) {
   const styles: Record<WebhookDeliveryView["status"], string> = {
-    success: "bg-green-200 text-green-900",
-    failed: "bg-red-200 text-red-900",
-    retrying: "bg-amber-200 text-amber-900",
+    success: "bg-success/10 text-[hsl(var(--success-strong))]",
+    failed: "bg-destructive/10 text-[hsl(var(--destructive-strong))]",
+    retrying: "bg-warning/10 text-[hsl(var(--warning-strong))]",
   };
   return (
     <span
@@ -137,7 +137,7 @@ export function WebhookDeliveriesPanel({
         </p>
       )}
       {error && (
-        <p role="alert" className="text-sm text-red-900">
+        <p role="alert" className="text-sm text-[hsl(var(--destructive-strong))]">
           {error}
         </p>
       )}

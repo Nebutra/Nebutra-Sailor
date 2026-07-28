@@ -119,7 +119,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
             state === "success"
               ? "text-success"
               : state === "error"
-                ? "text-red-900"
+                ? "text-[hsl(var(--destructive-strong))]"
                 : "text-neutral-11"
           }`}
           role={state === "error" ? "alert" : "status"}

@@ -54,7 +54,7 @@ export const ACCENT_ACTIVE_CLASSES: Record<ModeAccent, string> = {
   blue: "border-primary/30 bg-primary/5 text-primary shadow-[0_0_0_3px_hsl(var(--primary) / 0.12)] dark:border-primary/40 dark:bg-primary/10 dark:text-primary dark:shadow-[0_0_0_3px_hsl(var(--primary) / 0.12)]",
   cyan: "border-cyan-7 bg-cyan-2 text-cyan-11 shadow-[0_0_0_3px_var(--cyan-3)] dark:border-cyan-7/60 dark:bg-cyan-2/25 dark:text-cyan-9 dark:shadow-[0_0_0_3px_rgba(11,241,195,0.12)]",
   green:
-    "border-green-700/40 bg-green-200 text-green-900 shadow-[0_0_0_3px_var(--color-green-200)]",
+    "border-success/40 bg-success/10 text-[hsl(var(--success-strong))] shadow-[0_0_0_3px_var(--color-green-200)]",
   neutral:
     "border-neutral-8 bg-neutral-2 text-neutral-12 shadow-[0_0_0_3px_hsl(var(--muted))] dark:shadow-[0_0_0_3px_rgba(255,255,255,0.06)]",
 };
@@ -62,7 +62,7 @@ export const ACCENT_ACTIVE_CLASSES: Record<ModeAccent, string> = {
 export const ACCENT_ICON_CLASSES: Record<ModeAccent, string> = {
   blue: "text-primary",
   cyan: "text-cyan-9",
-  green: "text-green-900",
+  green: "text-[hsl(var(--success-strong))]",
   neutral: "text-neutral-11",
 };
 

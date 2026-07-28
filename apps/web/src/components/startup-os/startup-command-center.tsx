@@ -814,7 +814,7 @@ export function StartupCommandCenter() {
   return (
     <div className="relative h-[100dvh] min-h-0 overflow-hidden">
       {lastError ? (
-        <div className="absolute left-4 top-4 z-20 rounded-full bg-red-200 px-3 py-1.5 text-xs font-medium text-red-900 shadow-sm">
+        <div className="absolute left-4 top-4 z-20 rounded-full bg-destructive/10 px-3 py-1.5 text-xs font-medium text-[hsl(var(--destructive-strong))] shadow-sm">
           {lastError}
         </div>
       ) : null}
@@ -1829,10 +1829,10 @@ function CanvasNodeButton({
   const toneClass = {
     context:
       "border-primary/40 bg-primary/10 text-primary shadow-lg dark:border-primary/40 dark:bg-primary/15 dark:text-primary",
-    failed: "border-red-700/35 bg-red-200 text-red-900",
+    failed: "border-destructive/35 bg-destructive/10 text-[hsl(var(--destructive-strong))]",
     planned: "border-neutral-6 bg-neutral-1 text-neutral-12",
-    ready: "border-green-700/35 bg-green-200 text-green-900",
-    review: "border-amber-700/35 bg-amber-200 text-amber-900",
+    ready: "border-success/35 bg-success/10 text-[hsl(var(--success-strong))]",
+    review: "border-warning/35 bg-warning/10 text-[hsl(var(--warning-strong))]",
   }[tone];
 
   return (

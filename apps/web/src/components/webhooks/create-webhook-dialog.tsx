@@ -115,7 +115,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
     return (
       <div
         role="alert"
-        className="rounded-[var(--radius-md)] border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900"
+        className="rounded-[var(--radius-md)] border border-warning/20 bg-amber-50 p-4 text-sm text-[hsl(var(--warning-strong))]"
       >
         <p className="mb-2 font-medium">Endpoint created. The signing secret appears once.</p>
         <p className="mb-3 text-xs">
@@ -205,7 +205,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
         />
 
         {rootError && (
-          <p role="alert" className="text-sm text-red-900">
+          <p role="alert" className="text-sm text-[hsl(var(--destructive-strong))]">
             {rootError}
           </p>
         )}

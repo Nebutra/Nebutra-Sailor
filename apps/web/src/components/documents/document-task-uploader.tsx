@@ -254,7 +254,7 @@ export function DocumentTaskUploader({
         {taskQuery.isError ? (
           <p
             role="alert"
-            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-amber-700/30 bg-amber-200 px-3 py-2 text-amber-900 text-xs"
+            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-warning/30 bg-warning/10 px-3 py-2 text-[hsl(var(--warning-strong))] text-xs"
           >
             <Warning className="size-3.5 shrink-0" aria-hidden={true} />
             {text.statusError}
@@ -264,7 +264,7 @@ export function DocumentTaskUploader({
         {error ? (
           <p
             role="alert"
-            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-red-700/30 bg-red-200 px-3 py-2 text-red-900 text-xs"
+            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-[hsl(var(--destructive-strong))] text-xs"
           >
             <Warning className="size-3.5 shrink-0" aria-hidden={true} />
             {error}
@@ -482,9 +482,9 @@ function getProgressType(status: TaskRecord["status"]) {
 function getTaskPanelTone(status: TaskRecord["status"]) {
   switch (status) {
     case "succeeded":
-      return "border-green-700/30 bg-green-200 text-green-900";
+      return "border-success/30 bg-success/10 text-[hsl(var(--success-strong))]";
     case "failed":
-      return "border-red-700/30 bg-red-200 text-red-900";
+      return "border-destructive/30 bg-destructive/10 text-[hsl(var(--destructive-strong))]";
     case "cancelled":
       return "border-border bg-muted text-foreground";
     case "queued":
