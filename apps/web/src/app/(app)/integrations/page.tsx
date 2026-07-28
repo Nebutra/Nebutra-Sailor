@@ -272,7 +272,7 @@ export default function IntegrationsPage() {
                   className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
                     isConnected
                       ? "border-green-7 opacity-60"
-                      : "hover:border-[var(--brand-7)] hover:shadow-md"
+                      : "hover:border-[var(--blue-7)] hover:shadow-md"
                   }`}
                 >
                   <div className="flex items-start gap-3">
@@ -300,7 +300,7 @@ export default function IntegrationsPage() {
                         type="button"
                         disabled={isConnecting_}
                         onClick={() => handleConnect(item.type, item.name)}
-                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--brand-9)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--brand-10)] disabled:opacity-50"
+                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-primary px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-primary/90 disabled:opacity-50"
                       >
                         {isConnecting_ ? (
                           <Loader2 className="h-3 w-3 animate-spin" />
