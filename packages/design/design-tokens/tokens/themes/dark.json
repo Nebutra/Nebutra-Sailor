@@ -100,6 +100,11 @@
     "success-foreground": { "$value": "222 14% 9%", "$type": "string" },
     "warning": { "$value": "38 80% 52%", "$type": "string" },
     "warning-foreground": { "$value": "222 14% 9%", "$type": "string" },
+    "warning-strong": {
+      "$value": "38 80% 52%",
+      "$type": "string",
+      "$description": "Amber as foreground on a dark surface. Unlike light mode this needs no adjustment — 38 80% 52% is already 7.98:1 against --neutral-1 — so it deliberately equals --warning. The token exists in both themes so consumers can reference one name."
+    },
     "info": { "$value": "228 95% 72%", "$type": "string" },
     "info-foreground": { "$value": "222 14% 9%", "$type": "string" },
     "border": { "$value": "220 8% 22%", "$type": "string" },
