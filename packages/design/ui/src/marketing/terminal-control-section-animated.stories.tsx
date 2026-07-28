@@ -31,7 +31,7 @@ export const SingleItem: Story = {
 export const DiffOnly: StoryObj<typeof CodeDiff> = {
   render: () => (
     <div className="mx-auto max-w-3xl p-10">
-      <CodeDiff diff={DEFAULT_TERMINAL_ITEMS[0].diff} />
+      {DEFAULT_TERMINAL_ITEMS[0] ? <CodeDiff diff={DEFAULT_TERMINAL_ITEMS[0].diff} /> : null}
     </div>
   ),
 };

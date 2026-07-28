@@ -36,8 +36,6 @@ const links = [
 
 export const Default: Story = { args: { links } };
 
-export const Outline: Story = { args: { links, variant: "outline" } };
-
 export const WithAnnouncement: Story = {
   args: {
     links,

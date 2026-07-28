@@ -27,7 +27,8 @@ export const WithLearnMore: Story = {
     show: true,
     onHide: noop,
     title: "Scheduled maintenance on Sunday 02:00 UTC",
-    action: { label: "Details", onClick: noop, learnMoreUrl: "#" },
+    action: { label: "Details", onClick: noop },
+    learnMoreUrl: "#",
   },
 };
 

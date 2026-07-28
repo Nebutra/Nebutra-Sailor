@@ -1,0 +1,24 @@
+{
+  "//": [
+    "Full-coverage typecheck for @nebutra/ui.",
+    "",
+    "tsconfig.json's `include` covers only index/components/layout/icons/theme/agent/",
+    "primitives-index/typography/utils, and excludes every *.stories.tsx. src/marketing,",
+    "src/patterns, src/layouts and src/hooks are outside the program entirely, so nothing",
+    "in them has ever been typechecked. Two probes on 2026-07-28 confirmed it: a deliberate",
+    "`const x: number = \"string\"` in src/marketing/Hero.tsx and in a story both passed",
+    "`tsc --noEmit` untouched.",
+    "",
+    "That blind spot is why src/patterns/data-table ships importing @tanstack/react-table",
+    "and @tanstack/react-virtual, neither of which is in package.json, and uses a free",
+    "identifier `t` that resolves to nothing.",
+    "",
+    "This config typechecks everything. It currently reports ~365 errors, so it is NOT the",
+    "gate — `pnpm typecheck` still uses tsconfig.json. Run `pnpm typecheck:full` and drive",
+    "the number down; when it reaches zero, fold these globs into tsconfig.json and delete",
+    "this file. The number may only shrink."
+  ],
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
+}
