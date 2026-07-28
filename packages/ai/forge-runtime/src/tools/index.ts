@@ -30,6 +30,26 @@ import { unitConvertTools } from "./unit-convert";
 import { unixTimestampTool } from "./unix-timestamp";
 import { urlCodecTool } from "./url-codec";
 import { uuidTool } from "./uuid";
+import { w3CsvDiffTools } from "./w3-csv-diff";
+import { w3DockerfileStarterTools } from "./w3-dockerfile-starter";
+import { w3EanUpcGtinTools } from "./w3-ean-upc-gtin";
+import { editorconfigGeneratorTools } from "./w3-editorconfig-generator";
+import { w3EncodingDetectTools } from "./w3-encoding-detect";
+import { w3EnvDiffTools } from "./w3-env-diff";
+import { w3FileTypeDetectTools } from "./w3-file-type-detect";
+import { w3GitignoreGeneratorTools } from "./w3-gitignore-generator";
+import { w3IbanTools } from "./w3-iban";
+import { w3IsbnTools } from "./w3-isbn";
+import { w3LanguageDetectTools } from "./w3-language-detect";
+import { w3LicenseChooserTools } from "./w3-license-chooser";
+import { w3LineEndingDetectTools } from "./w3-line-ending-detect";
+import { w3ListSetCompareTools } from "./w3-list-set-compare";
+import { w3ReadmeSkeletonGeneratorTools } from "./w3-readme-skeleton-generator";
+import { w3RobotsTxtGeneratorTools } from "./w3-robots-txt-generator";
+import { w3SecretScanTools } from "./w3-secret-scan";
+import { w3UnifiedSocialCreditCodeTools } from "./w3-unified-social-credit-code";
+import { w3VinTools } from "./w3-vin";
+import { w3YamlDiffTools } from "./w3-yaml-diff";
 import { wave2DemandTools } from "./wave2-demand";
 import { wave2bMatrixTools } from "./wave2b-matrix";
 import { wave3StapleTools } from "./wave3-staples";
@@ -95,6 +115,27 @@ export const F0_BATCH1_TOOLS: readonly AnyForgeToolDefinition[] = [
   ...docxTextTools,
   ...xlsxTextTools,
   ...pptxTextTools,
+  // W3 — opened Template + Detector roots, deepened Verifier + Comparator (docs §6.7.2a)
+  ...w3CsvDiffTools,
+  ...w3DockerfileStarterTools,
+  ...w3EanUpcGtinTools,
+  ...editorconfigGeneratorTools,
+  ...w3EncodingDetectTools,
+  ...w3EnvDiffTools,
+  ...w3FileTypeDetectTools,
+  ...w3GitignoreGeneratorTools,
+  ...w3IbanTools,
+  ...w3IsbnTools,
+  ...w3LanguageDetectTools,
+  ...w3LicenseChooserTools,
+  ...w3LineEndingDetectTools,
+  ...w3ListSetCompareTools,
+  ...w3ReadmeSkeletonGeneratorTools,
+  ...w3RobotsTxtGeneratorTools,
+  ...w3SecretScanTools,
+  ...w3UnifiedSocialCreditCodeTools,
+  ...w3VinTools,
+  ...w3YamlDiffTools,
 ];
 
 export {
@@ -105,6 +146,7 @@ export {
   dataFormatTools,
   devExtraTools,
   docxTextTools,
+  editorconfigGeneratorTools,
   htmlEntitiesTool,
   imageTools,
   jsonFormatTool,
@@ -129,6 +171,25 @@ export {
   unixTimestampTool,
   urlCodecTool,
   uuidTool,
+  w3CsvDiffTools,
+  w3DockerfileStarterTools,
+  w3EanUpcGtinTools,
+  w3EncodingDetectTools,
+  w3EnvDiffTools,
+  w3FileTypeDetectTools,
+  w3GitignoreGeneratorTools,
+  w3IbanTools,
+  w3IsbnTools,
+  w3LanguageDetectTools,
+  w3LicenseChooserTools,
+  w3LineEndingDetectTools,
+  w3ListSetCompareTools,
+  w3ReadmeSkeletonGeneratorTools,
+  w3RobotsTxtGeneratorTools,
+  w3SecretScanTools,
+  w3UnifiedSocialCreditCodeTools,
+  w3VinTools,
+  w3YamlDiffTools,
   wave2bMatrixTools,
   wave2DemandTools,
   wave3StapleTools,

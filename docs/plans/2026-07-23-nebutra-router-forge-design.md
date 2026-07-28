@@ -313,6 +313,8 @@ A tool is not “done” until:
 | 8 | Privacy note: client-only vs uploaded; retention |
 | 9 | Decl/ads: intent title, unique value, related tools — not doorway spam |
 | 10 | Decl engine metadata: upstream SOTA name + version |
+| 11 | **Competitor teardown on file** — brief with named competitors, journey map, captured layout (§6.7.10). No teardown, no ship |
+| 12 | **Journey archetype chosen deliberately** (§6.7.10) — the generic form runner is a *fallback*, never the default |
 
 **Tiering**
 
@@ -480,8 +482,18 @@ Counts are read from the registry (`ForgeRegistry.openDefault()`, 147 tools; the
 product host adds `doc/md-to-pdf` → 148). A root's count is the number of tools
 carrying that tag, so a tool with two roots is counted under both.
 
-**Verdict: 18 of the 51 entries are in scope for Forge. 10 are covered at
-density, 4 are thin, 4 are empty. The other 33 are deliberately out.**
+**Verdict at the 2026-07-28 audit: 18 of the 51 entries in scope — 10 dense,
+4 thin, 4 empty; the other 33 deliberately out.**
+
+**Updated after W3 landed (same day, 147 → 169 tools):** the four W3 targets all
+cleared their bar — Comparator 4 → 8, Verifier 4 → 9, and the two empty roots
+opened: Template 0 → 8, Detector 0 → 5. Editor (3) and Simulator (2) remain thin
+and were not in W3 scope. Root 01 Translator stays empty on the tag, though a
+Router deep-link shell (`llm/router-translate`, `external`) exists tagged
+`converter`; it hands off rather than translating, so opening the root honestly
+still waits on the §6.7.8 gate. Processor (10) now has a design brief
+(`docs/plans/tools/_processor-batch-surface.md`) but no tools — by intent: it is
+a shape, and the shape is the batch surface.
 
 | # | Root | Status | Tools | Note |
 |---|------|--------|-------|------|
@@ -629,11 +641,11 @@ missing verbs and the async/external shapes*, not padding the Converter column.
 
 | Metric | Target | Actual 2026-07-28 |
 |--------|--------|-------------------|
-| Registered tools | 79 → **120** (W2) → **150+** (W3) | **148** (147 default + host `md-to-pdf`) |
-| In-scope roots opened | 18/18 of the 51 | **14/18** — Translator, Processor, Template, Detector still empty |
-| S-root density | **≥5 tools each** | **9 of 11** — Verifier 4, Comparator 4 |
+| Registered tools | 79 → **120** (W2) → **150+** (W3) | **170** (169 default + host `md-to-pdf`) |
+| In-scope roots opened | 18/18 of the 51 | **16/18** — Template and Detector opened in W3; Translator (gated, §6.7.8) and Processor (a shape, designed not populated) remain |
+| S-root density | **≥5 tools each** | **11 of 11** — Verifier 9, Comparator 8 after W3 |
 | Tools on MCP + tools.json + OpenAPI | **100%** | **100%** — schemas derived from Zod, no hand-written duplicate |
-| `pure` share | ≥85% (reproducible agent steps) | **99.3%** (146/147) |
+| `pure` share | ≥85% (reproducible agent steps) | **99.4%** (168/169) |
 | Tier X tools in default agent catalog | **0** | **0** |
 | LLM-backed tools without Router meter | **0** | **0** — no LLM-backed tool ships yet |
 
@@ -727,16 +739,48 @@ one blade. On any single tool they usually hold the domain know-how and we do
 not. That gap is closed by research, and research is only real if it is written
 down where the next person will hit it.
 
+**Research precedes code. Every tool, no exceptions.** A tool built without a
+teardown may be technically clean and still point the wrong way — wrong journey,
+missing the one feature users actually came for, or awkward in a way the user
+cannot name but feels. Polishing the engine cannot recover from that. On
+household-name categories (PDF, image, JSON) we are entering markets where the
+incumbents are genuinely good; going in blind is how you ship a worse copy.
+
 **Required in every tool brief** (`docs/plans/tools/<slug>.md`, the artifact
 that already exists — extended, not replaced by a new mechanism):
 
 | Field | Content |
 |-------|---------|
-| **Named competitors** | 2–3 actual URLs, not "various online tools" |
-| **What they do better** | The specific interaction or edge case they handle and we do not |
+| **Named competitors** | 3–5 real products, chosen by *actual reach* — what ranks for the keyword, what the dev community reaches for — not the first three search hits |
+| **Feature inventory** | What each one actually does. Which capability is their core strength, and which features exist only as upsell |
+| **Journey map** | Step by step: what the user sees on arrival, what they touch first, how the result appears, how they get it out. Note where the journey has *no* button because it runs live |
+| **Layout** | How the page is organised — input/output placement, options density, what is above the fold. **Full-page screenshots captured to `docs/research/forge/<slug>/`** via `scripts/research-screenshot.mjs` — that directory is **gitignored**: captures are local reference material, the brief is the committed deliverable, and anyone can regenerate them from the URLs the brief names |
 | **Their debt** | Ad density, dark patterns, upload-required-for-local-work, dead UI, no API |
 | **Domain know-how** | The non-obvious rules of this problem — the things that make a naive implementation wrong |
 | **Our differentiator** | What a user gets here that they cannot get there |
+| **Chosen archetype** | Which journey archetype below, and why |
+
+**取其精华，去其糟粕.** Copy the journey, not the chrome. An ugly competitor may
+still have the right sequence of steps; a beautiful one may have a bad one. Judge
+the flow separately from the styling, and never import their ad density,
+upload-gating, or upsell interruptions.
+
+**Journey archetypes — a tool station is not one template repeated.**
+Picking "form + button + output" for everything is the fastest way to make 150
+tools feel like one mediocre tool. Choose deliberately, and record the choice:
+
+| Archetype | Shape | Fits |
+|-----------|-------|------|
+| **Instant transform** | Paste → live result, **no run button**; the button is a step tax when compute is trivial | base64, case convert, url encode, formatters |
+| **Configure-then-generate** | The options *are* the product; output regenerates as they change | .gitignore by stack, password rules, QR |
+| **Decision wizard** | The user does not yet know what they want; the tool narrows by asking | LICENSE chooser, unit family pickers |
+| **Drop-and-verdict** | File in → one clear answer, detail on demand | file-type detect, checksum, EXIF |
+| **Two-pane compare** | Side-by-side inputs, synchronized structured output | diff family, comparators |
+| **Inspect-and-drill** | One input → a structure the user explores | JWT decode, JSONPath, CSV preview |
+| **Batch queue** | Many inputs, visible progress, download-all | job-tier media tools |
+
+A tool whose archetype is "form + button" should be able to say why the other
+six were wrong for it.
 
 **Where our edge actually is.** Not per-tool depth — a single-point competitor
 will usually match or beat us there, and we should expect to spend real effort

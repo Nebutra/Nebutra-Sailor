@@ -112,3 +112,8 @@ apps/*/.source/
 
 # Brainstorm visual companion scratch
 .superpowers/
+
+# Competitor teardown captures — local research artifacts, not source.
+# Briefs in docs/plans/tools/ are the committed deliverable; regenerate the
+# captures with scripts/research-screenshot.mjs.
+docs/research/

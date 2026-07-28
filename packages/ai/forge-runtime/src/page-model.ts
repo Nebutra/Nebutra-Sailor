@@ -17,6 +17,9 @@ export const DEMAND_ROOTS = [
   "simulator",
   "verifier",
   "editor",
+  // W3 opened these two (docs §6.7.2a): both were empty roots on the 51-root audit.
+  "template",
+  "detector",
 ] as const;
 
 export type DemandRoot = (typeof DEMAND_ROOTS)[number];
@@ -35,6 +38,8 @@ const ROOT_COPY: Record<string, LocalizedString> = {
   simulator: { zh: "模拟器", en: "Simulators" },
   verifier: { zh: "验证器", en: "Verifiers" },
   editor: { zh: "编辑器", en: "Editors" },
+  template: { zh: "模板", en: "Templates" },
+  detector: { zh: "检测器", en: "Detectors" },
 };
 
 /**

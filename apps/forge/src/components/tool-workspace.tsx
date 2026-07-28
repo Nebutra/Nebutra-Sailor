@@ -76,6 +76,26 @@ import { pickResult, TextTransformRunner } from "@/components/text-transform-run
 import { TimestampRunner } from "@/components/timestamp-runner";
 import { TokenCountRunner } from "@/components/token-count-runner";
 import { UuidRunner } from "@/components/uuid-runner";
+import { W3CsvDiffRunner } from "@/components/w3-csv-diff-runner";
+import { W3DockerfileStarterRunner } from "@/components/w3-dockerfile-starter-runner";
+import { W3EanUpcGtinRunner } from "@/components/w3-ean-upc-gtin-runner";
+import { W3EditorconfigGeneratorRunner } from "@/components/w3-editorconfig-generator-runner";
+import { W3EncodingDetectRunner } from "@/components/w3-encoding-detect-runner";
+import { W3EnvDiffRunner } from "@/components/w3-env-diff-runner";
+import { W3FileTypeDetectRunner } from "@/components/w3-file-type-detect-runner";
+import { W3GitignoreGeneratorRunner } from "@/components/w3-gitignore-generator-runner";
+import { W3IbanRunner } from "@/components/w3-iban-runner";
+import { W3IsbnRunner } from "@/components/w3-isbn-runner";
+import { W3LanguageDetectRunner } from "@/components/w3-language-detect-runner";
+import { W3LicenseChooserRunner } from "@/components/w3-license-chooser-runner";
+import { W3LineEndingDetectRunner } from "@/components/w3-line-ending-detect-runner";
+import { W3ListSetCompareRunner } from "@/components/w3-list-set-compare-runner";
+import { W3ReadmeSkeletonGeneratorRunner } from "@/components/w3-readme-skeleton-generator-runner";
+import { W3RobotsTxtGeneratorRunner } from "@/components/w3-robots-txt-generator-runner";
+import { W3SecretScanRunner } from "@/components/w3-secret-scan-runner";
+import { W3UnifiedSocialCreditCodeRunner } from "@/components/w3-unified-social-credit-code-runner";
+import { W3VinRunner } from "@/components/w3-vin-runner";
+import { W3YamlDiffRunner } from "@/components/w3-yaml-diff-runner";
 import { WordCountRunner } from "@/components/word-count-runner";
 
 function titleCase(text: string): string {
@@ -496,6 +516,51 @@ export function ToolWorkspace({
       return <ImageToolRunner toolId={toolId} mode="resize" />;
     case "image-convert":
       return <ImageToolRunner toolId={toolId} mode="convert" />;
+
+    case "csv-diff":
+      return <W3CsvDiffRunner toolId={toolId} />;
+    case "dockerfile-starter":
+      return <W3DockerfileStarterRunner toolId={toolId} />;
+    case "ean-upc-gtin":
+      return <W3EanUpcGtinRunner toolId={toolId} />;
+    case "editorconfig-generator":
+      return <W3EditorconfigGeneratorRunner toolId={toolId} />;
+    case "encoding-detect":
+      return <W3EncodingDetectRunner toolId={toolId} />;
+    case "env-diff":
+      return <W3EnvDiffRunner toolId={toolId} />;
+    case "file-type-detect":
+      return <W3FileTypeDetectRunner toolId={toolId} />;
+    case "gitignore-generator":
+      return <W3GitignoreGeneratorRunner toolId={toolId} />;
+    case "gitignore-stacks":
+      return <W3GitignoreGeneratorRunner toolId={toolId} />;
+    case "iban":
+      return <W3IbanRunner toolId={toolId} />;
+    case "isbn":
+      return <W3IsbnRunner toolId={toolId} />;
+    case "language-detect":
+      return <W3LanguageDetectRunner toolId={toolId} />;
+    case "license-recommend":
+      return <W3LicenseChooserRunner toolId={toolId} />;
+    case "license-generate":
+      return <W3LicenseChooserRunner toolId={toolId} />;
+    case "line-ending-detect":
+      return <W3LineEndingDetectRunner toolId={toolId} />;
+    case "list-set-compare":
+      return <W3ListSetCompareRunner toolId={toolId} />;
+    case "readme-skeleton-generator":
+      return <W3ReadmeSkeletonGeneratorRunner toolId={toolId} />;
+    case "robots-txt-generator":
+      return <W3RobotsTxtGeneratorRunner toolId={toolId} />;
+    case "secret-scan":
+      return <W3SecretScanRunner toolId={toolId} />;
+    case "unified-social-credit-code":
+      return <W3UnifiedSocialCreditCodeRunner toolId={toolId} />;
+    case "vin":
+      return <W3VinRunner toolId={toolId} />;
+    case "yaml-diff":
+      return <W3YamlDiffRunner toolId={toolId} />;
 
     default:
       return (

@@ -22,7 +22,12 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./pdf": "./src/tools/md-to-pdf.ts"
+    "./pdf": "./src/tools/md-to-pdf.ts",
+    "./vin": "./src/tools/w3-vin.ts",
+    "./secret-scan": "./src/tools/w3-secret-scan.ts",
+    "./yaml-diff": "./src/tools/w3-yaml-diff.ts",
+    "./env-diff": "./src/tools/w3-env-diff.ts",
+    "./list-set-compare": "./src/tools/w3-list-set-compare.ts"
   },
   "scripts": {
     "test": "vitest run",

@@ -25,6 +25,35 @@ describe("tool input JSON Schema", () => {
   });
 });
 
+/**
+ * The id prefix is the API namespace (`/api/v1/tools/invoke/<id>`); the category
+ * is the human drawer. When they disagree a tool is filed in one place and
+ * callable from another — `finance/iban` shipped filed under `life` for exactly
+ * one afternoon.
+ *
+ * These five predate the convention and place a tool in a drawer that reads
+ * better for humans than its namespace does. Shrink-only: fix on touch, never
+ * add. A new entry here means a new tool was filed wrong.
+ */
+const KNOWN_NAMESPACE_DRIFT = [
+  "finance/credit-card-luhn",
+  "finance/rmb-uppercase",
+  "security/password-generate",
+  "security/password-strength",
+  "security/secret-generate",
+];
+
+describe("registry invariants", () => {
+  it("keeps the id namespace and the category in agreement", () => {
+    const drift = registry
+      .list()
+      .filter((t) => t.id.split("/")[0] !== t.category)
+      .filter((t) => !KNOWN_NAMESPACE_DRIFT.includes(t.id))
+      .map((t) => `${t.id} filed under ${t.category}`);
+    expect(drift).toEqual([]);
+  });
+});
+
 describe("MCP descriptors", () => {
   it("exposes the derived schema and roots", () => {
     const tools = listMcpTools(registry);
