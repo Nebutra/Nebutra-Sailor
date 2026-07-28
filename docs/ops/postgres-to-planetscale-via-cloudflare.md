@@ -39,94 +39,65 @@ builds its `pg.Pool` lazily from that variable and bindings do not appear on
 `process.env`. Off Workers the binding is absent and `DATABASE_URL` is used
 unchanged — ECS Origin and local development are untouched.
 
-## Pre-flight
+## Provisioning a fresh database
+
+There is no data to carry over, so this is a create-and-go, not a migration.
+One command does schema, role, RLS, and an isolation self-check:
 
 ```bash
-# 1. Confirm the source is reachable and note its size
-psql "$SUPABASE_DATABASE_URL" -c "\l+" | grep nebutra
-
-# 2. Confirm nothing Supabase-specific crept into the policies since this doc
-rg -c "service_role|authenticated|anon|supabase" infra/data/database/policies/rls.sql   # expect 0
+export APP_DB_PASSWORD="$(openssl rand -base64 24)"   # keep this; it is the app credential
+scripts/provision-fresh-database.sh "<PlanetScale admin url>"
 ```
 
-## 1. Provision
+It refuses to run against a database that already has tables, and it exits
+non-zero if the isolation check fails — see below for why that check is the
+whole point.
 
-Create the Postgres database from the Cloudflare dashboard (Storage &
-Databases → PlanetScale). Then create the non-superuser application role — RLS
-is bypassed by any role holding `SUPERUSER` or `BYPASSRLS`, so this role is
-what makes tenant isolation real rather than decorative:
+### Do not use `prisma migrate deploy` for this
 
-```sql
-CREATE ROLE app_user LOGIN PASSWORD '<generated>' NOSUPERUSER NOBYPASSRLS;
-GRANT USAGE ON SCHEMA public, better_auth TO app_user;
-```
+`prisma/migrations` has no baseline. The earliest entry,
+`20260313000000_enable_rls`, ALTERs tables that no migration in the folder ever
+creates, so replaying the folder onto an empty database dies immediately on
+`relation "organizations" does not exist`. Verified against a virgin
+PostgreSQL 17.8: `migrate deploy` fails on migration 5 of 28.
 
-Set `APP_DB_ROLE=app_user` in the gateway environment — `@nebutra/db` issues
-`SET LOCAL ROLE` with it inside every tenant transaction.
+The schema of record is `schema.prisma`. The script builds from it with
+`prisma migrate diff --from-empty --to-schema`, which produces all 86 tables
+cleanly. The migrations folder remains meaningful only for databases that
+already carry the pre-2026-03 baseline — i.e. the existing Supabase one.
 
-## 2. Extensions
+### What the script does, and why each step matters
 
-```sql
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS vector;   -- needs superuser; use the admin role
-```
+1. **Schemas + extensions** — `public`, `better_auth`, plus `uuid-ossp` and
+   `vector`. `vector` needs superuser on managed providers, so run the script
+   with an admin role, not the application role it creates.
+2. **Schema** — 86 tables from a from-empty diff.
+3. **Application role** — `CREATE ROLE app_user … NOSUPERUSER NOBYPASSRLS`.
+   Neither attribute is cosmetic: either one makes every policy below a no-op
+   and tenant isolation silently ceases to exist.
+4. **RLS** — all 80 policies from `infra/data/database/policies/rls.sql`.
+   They reference exactly one role, `app_user`, and nothing Supabase-specific.
+5. **Isolation self-check** — inserts two probe tenants, then reads back *as
+   the application role*: scoped to one tenant it must see only that tenant;
+   with no tenant set it must see zero rows. A non-zero count there means the
+   policies did not attach or the role bypasses them. That is a data leak, not
+   a warning, so the script exits non-zero and deletes the probes either way.
 
-## 3. Move the data
+This sequence was validated end to end on a virgin PostgreSQL 17.8 with
+`vector 0.8.1` — the same extension version PlanetScale ships.
 
-Schema and data separately, so the RLS policies land after the tables exist
-and before the application can reach them.
+## Cut over
 
-```bash
-export SOURCE_URL="<Supabase session pooler URL>"
-export TARGET_URL="<PlanetScale direct URL, not the Hyperdrive one>"
-
-pg_dump "$SOURCE_URL" --schema-only  --no-owner --no-privileges -f schema.sql
-pg_dump "$SOURCE_URL" --data-only    --no-owner --disable-triggers -f data.sql
-
-psql "$TARGET_URL" -v ON_ERROR_STOP=1 -f schema.sql
-psql "$TARGET_URL" -v ON_ERROR_STOP=1 -f data.sql
-psql "$TARGET_URL" -v ON_ERROR_STOP=1 -f infra/data/database/policies/rls.sql
-```
-
-Use the **direct** connection string for the restore. Hyperdrive caches
-queries and is built for request traffic, not bulk load.
-
-## 4. Verify isolation before cutting over
-
-The migration is only correct if RLS still bites. Connect **as `app_user`**,
-not as the admin role:
-
-```sql
-SET LOCAL ROLE app_user;
-SELECT set_config('app.current_tenant_id', '<tenant-a-id>', true);
-SELECT count(*) FROM api_keys;                       -- only tenant A's rows
-SELECT set_config('app.current_tenant_id', '', true);
-SELECT count(*) FROM api_keys;                       -- expect 0, not everything
-```
-
-A non-zero count on the second query means the policies did not apply or the
-role bypasses them. Stop and fix before cutting over — this is the check that
-distinguishes a migration from a data leak.
-
-## 5. Wire Hyperdrive
-
-```bash
-wrangler hyperdrive create nebutra-prod --connection-string="$TARGET_URL"
-```
-
-Put the returned id into `backends/gateway/wrangler.toml` under
-`[[hyperdrive]]`. It is intentionally empty in the repo so a missing binding
-fails at deploy rather than silently pointing a production Worker at whatever
-`DATABASE_URL` happens to be set.
-
-## 6. Cut over
-
-1. Deploy the gateway with the Hyperdrive binding.
-2. Point ECS Origin's `DATABASE_URL` at the PlanetScale direct URL.
-3. Watch error rates and connection counts for one traffic peak.
-4. Keep Supabase running, read-only, until you are satisfied — the rollback is
-   swapping `DATABASE_URL` back, and it stops being available the moment you
-   delete the project.
+1. `wrangler hyperdrive create nebutra-prod --connection-string="<admin url>"`,
+   then put the returned id into `backends/gateway/wrangler.toml`. It is empty
+   in the repo on purpose, so a missing binding fails at deploy instead of
+   silently pointing a production Worker at whatever `DATABASE_URL` holds.
+2. Deploy the gateway.
+3. Set `DATABASE_URL` (application role) and `APP_DB_ROLE` on ECS Origin.
+4. Because the new database starts empty, the old Supabase project is the only
+   place anything historical lives. Leave it running until you are sure you do
+   not want it — this cutover has no rollback that recovers data written to the
+   new database.
 
 ## Out of scope
 
