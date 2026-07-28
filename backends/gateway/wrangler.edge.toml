@@ -13,6 +13,23 @@ name = "nebutra-gateway-edge"
 main = "src/worker-edge.ts"
 compatibility_date = "2026-06-04"
 
+# Takes api.nebutra.com in front of ECS Origin. The hostname is already proxied
+# by Cloudflare, so this changes only what runs before the origin fetch — no DNS
+# change, no cutover window, and removing the route puts traffic straight back
+# on the origin.
+#
+# ORIGIN_URL below has to stay grey-cloud. Once this route exists, pointing it
+# at a proxied hostname would send each forward back into this Worker.
+routes = [
+  { pattern = "api.nebutra.com/*", zone_name = "nebutra.com" },
+]
+
+# Kept on alongside the route. Declaring `routes` makes wrangler disable the
+# workers.dev subdomain by default, which removes the only way to exercise this
+# Worker without sending production traffic at it — and if the route fails to
+# apply, that leaves no way to reach it at all.
+workers_dev = true
+
 [observability]
 enabled = true
 head_sampling_rate = 1
