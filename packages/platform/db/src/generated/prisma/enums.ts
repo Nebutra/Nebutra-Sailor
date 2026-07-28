@@ -392,3 +392,13 @@ export const PebbleFeedbackKind = {
 } as const
 
 export type PebbleFeedbackKind = (typeof PebbleFeedbackKind)[keyof typeof PebbleFeedbackKind]
+
+
+export const PlatformStaffRole = {
+  PLATFORM_OWNER: 'PLATFORM_OWNER',
+  PLATFORM_OPERATOR: 'PLATFORM_OPERATOR',
+  PLATFORM_SUPPORT: 'PLATFORM_SUPPORT',
+  PLATFORM_READONLY: 'PLATFORM_READONLY'
+} as const
+
+export type PlatformStaffRole = (typeof PlatformStaffRole)[keyof typeof PlatformStaffRole]

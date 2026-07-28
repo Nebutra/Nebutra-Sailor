@@ -481,3 +481,8 @@ export type PebbleDiagnosticTicket = Prisma.PebbleDiagnosticTicketModel
  * 
  */
 export type PebbleFeedback = Prisma.PebbleFeedbackModel
+/**
+ * Model PlatformStaff
+ * 
+ */
+export type PlatformStaff = Prisma.PlatformStaffModel

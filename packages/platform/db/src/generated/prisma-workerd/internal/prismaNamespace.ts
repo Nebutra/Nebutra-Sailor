@@ -469,7 +469,8 @@ export const ModelName = {
   AtelierCanvas: 'AtelierCanvas',
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
-  PebbleFeedback: 'PebbleFeedback'
+  PebbleFeedback: 'PebbleFeedback',
+  PlatformStaff: 'PlatformStaff'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -485,7 +486,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6837,6 +6838,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PlatformStaff: {
+      payload: Prisma.$PlatformStaffPayload<ExtArgs>
+      fields: Prisma.PlatformStaffFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlatformStaffFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlatformStaffFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>
+        }
+        findFirst: {
+          args: Prisma.PlatformStaffFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlatformStaffFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>
+        }
+        findMany: {
+          args: Prisma.PlatformStaffFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>[]
+        }
+        create: {
+          args: Prisma.PlatformStaffCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>
+        }
+        createMany: {
+          args: Prisma.PlatformStaffCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlatformStaffCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>[]
+        }
+        delete: {
+          args: Prisma.PlatformStaffDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>
+        }
+        update: {
+          args: Prisma.PlatformStaffUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlatformStaffDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlatformStaffUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlatformStaffUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>[]
+        }
+        upsert: {
+          args: Prisma.PlatformStaffUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformStaffPayload>
+        }
+        aggregate: {
+          args: Prisma.PlatformStaffAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlatformStaff>
+        }
+        groupBy: {
+          args: Prisma.PlatformStaffGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlatformStaffGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlatformStaffCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlatformStaffCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -8344,6 +8419,18 @@ export const PebbleFeedbackScalarFieldEnum = {
 export type PebbleFeedbackScalarFieldEnum = (typeof PebbleFeedbackScalarFieldEnum)[keyof typeof PebbleFeedbackScalarFieldEnum]
 
 
+export const PlatformStaffScalarFieldEnum = {
+  userId: 'userId',
+  role: 'role',
+  grantedById: 'grantedById',
+  grantedAt: 'grantedAt',
+  revokedAt: 'revokedAt',
+  note: 'note'
+} as const
+
+export type PlatformStaffScalarFieldEnum = (typeof PlatformStaffScalarFieldEnum)[keyof typeof PlatformStaffScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -9036,6 +9123,20 @@ export type ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'PlatformStaffRole'
+ */
+export type EnumPlatformStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformStaffRole'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformStaffRole[]'
+ */
+export type ListEnumPlatformStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformStaffRole[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -9229,6 +9330,7 @@ export type GlobalOmitConfig = {
   agentRolloutLine?: Prisma.AgentRolloutLineOmit
   pebbleDiagnosticTicket?: Prisma.PebbleDiagnosticTicketOmit
   pebbleFeedback?: Prisma.PebbleFeedbackOmit
+  platformStaff?: Prisma.PlatformStaffOmit
 }
 
 /* Types for Logging */

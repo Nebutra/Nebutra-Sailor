@@ -136,7 +136,8 @@ export const ModelName = {
   AtelierCanvas: 'AtelierCanvas',
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
-  PebbleFeedback: 'PebbleFeedback'
+  PebbleFeedback: 'PebbleFeedback',
+  PlatformStaff: 'PlatformStaff'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1621,6 +1622,18 @@ export const PebbleFeedbackScalarFieldEnum = {
 } as const
 
 export type PebbleFeedbackScalarFieldEnum = (typeof PebbleFeedbackScalarFieldEnum)[keyof typeof PebbleFeedbackScalarFieldEnum]
+
+
+export const PlatformStaffScalarFieldEnum = {
+  userId: 'userId',
+  role: 'role',
+  grantedById: 'grantedById',
+  grantedAt: 'grantedAt',
+  revokedAt: 'revokedAt',
+  note: 'note'
+} as const
+
+export type PlatformStaffScalarFieldEnum = (typeof PlatformStaffScalarFieldEnum)[keyof typeof PlatformStaffScalarFieldEnum]
 
 
 export const SortOrder = {
