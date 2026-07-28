@@ -85,6 +85,30 @@ export default ${variables.componentName};
  * Some SVGs encode P3 wide-gamut colors as: fill: "#hex"; fill: color(display-p3 ...)
  * SVGR preserves both, producing duplicate object keys. Keep the last occurrence.
  */
+/**
+ * Upstream Geist SVGs reference the full `--ds-<hue>-<step>` ramp, but
+ * @nebutra/tokens registers only three steps per hue (200/700/900, and
+ * 300/700/900 for teal and pink). A step we do not register resolves to
+ * nothing, so the path renders with no colour at all — the same silent-
+ * transparency failure that shipped an invisible hero CTA.
+ *
+ * Map the strays onto the nearest registered step at generation time so the
+ * output cannot reintroduce them.
+ */
+const DS_STEP_FALLBACKS: Record<string, string> = {
+  "--ds-blue-600": "--ds-blue-700",
+  "--ds-teal-600": "--ds-teal-700",
+  "--ds-amber-800": "--ds-amber-900",
+};
+
+function normalizeDsColorSteps(code: string): string {
+  let out = code;
+  for (const [from, to] of Object.entries(DS_STEP_FALLBACKS)) {
+    out = out.split(`var(${from})`).join(`var(${to})`);
+  }
+  return out;
+}
+
 function removeDuplicateStyleKeys(code: string): string {
   const lines = code.split("\n");
   const result: string[] = [];
@@ -123,6 +147,7 @@ async function main() {
         filePath: join(SVG_DIR, file),
       });
       code = removeDuplicateStyleKeys(code);
+      code = normalizeDsColorSteps(code);
     } catch (_err) {
       skipped++;
       continue;

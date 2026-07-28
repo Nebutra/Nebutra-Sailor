@@ -24,7 +24,7 @@ const FaceSmile = forwardRef<SVGSVGElement, IconProps>(
         clipRule="evenodd"
       />
       <path
-        fill="var(--ds-amber-800)"
+        fill="var(--ds-amber-900)"
         fillRule="evenodd"
         d="M6.153 4.92 5.375 3.5l-.778 1.42L3 5.22l1.116 1.176L3.907 8l1.468-.694L6.843 8l-.21-1.605L7.75 5.219zm5.25 0-.778-1.42-.778 1.42-1.597.299 1.116 1.176L9.157 8l1.468-.694L12.093 8l-.21-1.605L13 5.219z"
         clipRule="evenodd"

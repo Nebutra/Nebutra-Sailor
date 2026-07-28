@@ -204,6 +204,7 @@
   --destructive-strong: 0 84% 45%; /** Red as FOREGROUND. In light mode --destructive already passes (5.42:1 on white), so this equals it; the token exists so consumers reference one name across themes. In DARK, --destructive is 0 63% 38% = 2.15:1 on --card, unreadable as text — see dark.json. Mirrors --warning-strong. */
   --success: 142 71% 29%;
   --success-foreground: 0 0% 100%;
+  --success-strong: 142 71% 27%; /** Green as FOREGROUND. --success (142 71% 29%) is 5.15:1 on white but only 4.49:1 as ink on its own 10% tint — one hundredth under AA, which is where badge green-subtle sat. Darkened two points: 5.71:1 on white, 4.99:1 on the tint, alongside --warning-strong (5.40) and --destructive-strong (5.42) so the three status foregrounds read with the same weight. Completes the trio; use --success for fills with --success-foreground on top. */
   --warning: 38 92% 50%;
   --warning-foreground: 222 47% 11%;
   --warning-strong: 38 92% 30%; /** Amber as FOREGROUND on a light surface. --warning is a fill: at 38 92% 50% it is 2.04:1 against --neutral-2, so it is unreadable as text or as an icon stroke. This darkened step is 5.17:1, which sits between --success (4.92) and --destructive (5.19) so the three status colours read with the same weight. Use --warning for fills with --warning-foreground on top; use this for amber text and icons. Destructive and success need no equivalent — they already pass AA as foreground. */
@@ -503,6 +504,7 @@
   --destructive-strong: 0 80% 66%; /** Red as FOREGROUND on a dark surface. --destructive (0 63% 38%) is 2.15:1 on --card here — a fill only. Lightened to 5.18:1 on --card / 5.61:1 on --neutral-1, which sits alongside the light-mode 5.42:1 so red reads with the same weight in both themes. Use --destructive for fills with --destructive-foreground on top; use this for red text and icons. */
   --success: 142 60% 42%;
   --success-foreground: 222 14% 9%;
+  --success-strong: 142 60% 42%; /** Green as foreground on a dark surface. Needs no adjustment — 142 60% 42% is already 4.83:1 as ink on its own 10% tint — so it deliberately equals --success, matching how --warning-strong behaves in this theme. */
   --warning: 38 80% 52%;
   --warning-foreground: 222 14% 9%;
   --warning-strong: 38 80% 52%; /** Amber as foreground on a dark surface. Unlike light mode this needs no adjustment — 38 80% 52% is already 7.98:1 against --neutral-1 — so it deliberately equals --warning. The token exists in both themes so consumers can reference one name. */

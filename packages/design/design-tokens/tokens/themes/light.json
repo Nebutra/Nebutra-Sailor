@@ -162,6 +162,11 @@
     },
     "success": { "$value": "142 71% 29%", "$type": "string" },
     "success-foreground": { "$value": "0 0% 100%", "$type": "string" },
+    "success-strong": {
+      "$value": "142 71% 27%",
+      "$type": "string",
+      "$description": "Green as FOREGROUND. --success (142 71% 29%) is 5.15:1 on white but only 4.49:1 as ink on its own 10% tint — one hundredth under AA, which is where badge green-subtle sat. Darkened two points: 5.71:1 on white, 4.99:1 on the tint, alongside --warning-strong (5.40) and --destructive-strong (5.42) so the three status foregrounds read with the same weight. Completes the trio; use --success for fills with --success-foreground on top."
+    },
     "warning": { "$value": "38 92% 50%", "$type": "string" },
     "warning-foreground": { "$value": "222 47% 11%", "$type": "string" },
     "warning-strong": {

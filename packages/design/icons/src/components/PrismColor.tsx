@@ -18,8 +18,8 @@ const PrismColor = forwardRef<SVGSVGElement, IconProps>(
       {...props}
     >
       <path stroke="var(--ds-red-700)" strokeWidth={1.5} d="m9 7 3.5-4.5" />
-      <path stroke="var(--ds-blue-600)" strokeWidth={1.5} d="m10.5 9.5 5.25 1" />
-      <path stroke="var(--ds-teal-600)" strokeWidth={1.5} d="m10 8 5.75-2" />
+      <path stroke="var(--ds-blue-700)" strokeWidth={1.5} d="m10.5 9.5 5.25 1" />
+      <path stroke="var(--ds-teal-700)" strokeWidth={1.5} d="m10 8 5.75-2" />
       <path
         fill="currentColor"
         fillRule="evenodd"

@@ -46,9 +46,8 @@ const badgeVariants = cva(
         "pink-subtle": "bg-accent/40 text-accent-foreground fill-current border-transparent",
         green: "bg-success text-success-foreground fill-current",
         "green-subtle":
-          // 4.49:1 light / 4.83:1 dark at this alpha. Light is one hundredth under
-          // the 4.5 floor — a --success-strong companion would close it properly.
-          "bg-success/10 text-success fill-current border-transparent",
+          // --success-strong closes the 4.49:1 light gap: 4.99:1 light / 4.83:1 dark.
+          "bg-success/10 text-[hsl(var(--success-strong))] fill-current border-transparent",
         teal: "bg-info text-info-foreground fill-current",
         "teal-subtle": "bg-info/10 text-info fill-current border-transparent",
         inverted: "bg-foreground text-background fill-current",

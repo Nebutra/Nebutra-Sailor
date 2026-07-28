@@ -148,6 +148,11 @@
     },
     "success": { "$value": "142 60% 42%", "$type": "string" },
     "success-foreground": { "$value": "222 14% 9%", "$type": "string" },
+    "success-strong": {
+      "$value": "142 60% 42%",
+      "$type": "string",
+      "$description": "Green as foreground on a dark surface. Needs no adjustment — 142 60% 42% is already 4.83:1 as ink on its own 10% tint — so it deliberately equals --success, matching how --warning-strong behaves in this theme."
+    },
     "warning": { "$value": "38 80% 52%", "$type": "string" },
     "warning-foreground": { "$value": "222 14% 9%", "$type": "string" },
     "warning-strong": {
