@@ -25,8 +25,10 @@ pre-push:
       # and actually typechecks packages touched in the unpushed commits.
       run: npm_config_verify_deps_before_run=false ./node_modules/.bin/turbo typecheck --filter="...[origin/main]"
     i18n-check:
-      # Only runs when landing locale files are part of the push.
-      glob: "apps/landing/messages/*.json"
+      # Every catalog in scripts/i18n-catalogs.mjs, not just landing. The gate
+      # used to watch one app while translation covered four, so a catalog
+      # could be filled automatically and still drift silently.
+      glob: "{apps/landing/messages,apps/forge/messages,apps/router/messages,packages/platform/i18n/locales}/*.json"
       # Bypass pnpm verify-deps noise in agent shells that flip injected-deps config.
       run: npm_config_verify_deps_before_run=false pnpm i18n:check
 

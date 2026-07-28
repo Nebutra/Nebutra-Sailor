@@ -36,9 +36,15 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { CATALOGS, catalogById, ENFORCED_LOCALES } from "./i18n-catalogs.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const MESSAGES_DIR = resolve(__dirname, "..", "messages");
+const REPO_ROOT = resolve(__dirname, "..");
+
+// Set per catalog by run(); the checks below read whichever catalog is active.
+let MESSAGES_DIR = "";
+let CRITICAL_CONTENT_NAMESPACES = new Set();
+let ADVISORY_CONTENT_NAMESPACES = new Set();
 const CANONICAL_LOCALE = "en";
 const REPORT_LIMIT = 20;
 
@@ -51,41 +57,9 @@ const JSON_OUT = ARGS.has("--json");
 // Excludes `nav` and `footer` because those are dominated by short link
 // labels (Blog, FAQ, npm, DPA, Docs, Dashboard) that B2B SaaS commonly
 // keeps in English across locales by convention.
-const CRITICAL_CONTENT_NAMESPACES = new Set([
-  "hero",
-  "cta",
-  "logoStrip",
-  "monorepoTree",
-  "stats",
-  "metadata",
-  "features",
-  "comingSoon",
-]);
 
 // Namespaces where identical-to-EN is reported as Tier 2 advisory (not
 // blocking by default — promoted to blocking under --strict).
-const ADVISORY_CONTENT_NAMESPACES = new Set([
-  "nav",
-  "footer",
-  "landing",
-  "legal",
-  "legalPages",
-  "marketing",
-  "microLanding",
-  "featuresPage",
-  "useCases",
-  "licensing",
-  "licenseWizard",
-  "changelogMeta",
-  "roadmapMeta",
-  "blogMeta",
-  "getLicenseMeta",
-  "designSystem",
-  "cookieConsent",
-  "compliance",
-  "icpFooter",
-  "error",
-]);
 
 // Strings that legitimately read the same in every locale: brand names,
 // product names, tech stack tokens, version numbers, emails. Maintained
@@ -335,16 +309,7 @@ const ADVISORY_CEILINGS = {
  * auto-translate lands — key/placeholder parity still blocks, but
  * critical-identical-to-EN does not (would always fail on pure seeds).
  */
-const CRITICAL_IDENTICAL_ENFORCED = new Set([
-  "de",
-  "es",
-  "fr",
-  "ja",
-  "ko",
-  "zh-Hans",
-  "zh-Hant",
-  "zh", // legacy stem if still present
-]);
+const CRITICAL_IDENTICAL_ENFORCED = new Set(ENFORCED_LOCALES);
 
 // ICU placeholder pattern. Matches `{name}`, `{count, number}`, `{n, plural, one {...}}`, etc.
 const PLACEHOLDER_RE = /\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
@@ -497,10 +462,14 @@ function formatList(keys, limit) {
   return lines.join("\n");
 }
 
-function main() {
+function runCatalog(catalog) {
+  MESSAGES_DIR = join(REPO_ROOT, catalog.messagesDir);
+  CRITICAL_CONTENT_NAMESPACES = new Set(catalog.criticalNamespaces ?? []);
+  ADVISORY_CONTENT_NAMESPACES = new Set(catalog.advisoryNamespaces ?? []);
   const log = JSON_OUT ? () => {} : (s) => process.stdout.write(s);
+  log(`[i18n-verify] catalog: ${catalog.id} — ${catalog.description}\n`);
   log(`[i18n-verify] canonical source: ${CANONICAL_LOCALE}.json\n`);
-  log(`[i18n-verify] messages dir: ${MESSAGES_DIR}\n`);
+  log(`[i18n-verify] messages dir: ${catalog.messagesDir}\n`);
   log(`[i18n-verify] mode: ${STRICT ? "strict (advisory promoted to blocking)" : "default"}\n\n`);
 
   const locales = discoverLocales();
@@ -628,6 +597,55 @@ function flattenToRecord(obj, prefix = "", acc = {}) {
     }
   }
   return acc;
+}
+
+/**
+ * The pre-push hook selects this gate with a glob, and lefthook.yml is YAML —
+ * it cannot import the catalog registry. That leaves one unavoidable second
+ * copy of the catalog list, so the gate polices its own trigger: add a catalog
+ * without widening the hook and this fails, instead of the catalog quietly
+ * never being checked on push.
+ */
+function verifyHookCoverage() {
+  let hook;
+  try {
+    hook = readFileSync(join(REPO_ROOT, "lefthook.yml"), "utf8");
+  } catch {
+    return []; // no hook file in this checkout — nothing to keep in sync
+  }
+  const i18nBlock = hook.slice(hook.indexOf("i18n-check:"));
+  const globLine = i18nBlock.split("\n").find((l) => l.trim().startsWith("glob:")) ?? "";
+  return CATALOGS.filter((c) => !globLine.includes(c.messagesDir)).map((c) => c.messagesDir);
+}
+
+function main() {
+  const uncovered = verifyHookCoverage();
+  if (uncovered.length > 0) {
+    process.stderr.write(
+      `[i18n-verify] lefthook.yml i18n-check glob does not cover: ${uncovered.join(", ")}\n` +
+        "[i18n-verify] add them to the glob so a push touching those files runs this gate.\n",
+    );
+    return 1;
+  }
+
+  const argv = process.argv.slice(2);
+  const idx = argv.indexOf("--catalog");
+  const selected = idx !== -1 && argv[idx + 1] ? [catalogById(argv[idx + 1])] : CATALOGS;
+  let worst = 0;
+  for (const catalog of selected) {
+    // A catalog that has not been created yet is not a failure — it is a
+    // catalog that does not exist. Missing translations in one that DOES
+    // exist is what this gate is for.
+    try {
+      readdirSync(join(REPO_ROOT, catalog.messagesDir));
+    } catch {
+      if (!JSON_OUT)
+        process.stdout.write(`[i18n-verify] catalog: ${catalog.id} — skipped, no messages dir\n\n`);
+      continue;
+    }
+    worst = Math.max(worst, runCatalog(catalog));
+  }
+  return worst;
 }
 
 try {

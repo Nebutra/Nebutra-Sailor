@@ -42,6 +42,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { CATALOGS } from "./i18n-catalogs.mjs";
 import {
   acceptBatchResults,
   chunkByNamespace,
@@ -101,37 +102,6 @@ const GLOBAL_TARGETS = [
   "id",
   "ms",
   "sw",
-];
-
-const CATALOGS = [
-  {
-    id: "landing",
-    messagesDir: "apps/landing/messages",
-    source: "en",
-    targets: GLOBAL_TARGETS,
-    description: "Public marketing site",
-  },
-  {
-    id: "web",
-    messagesDir: "packages/platform/i18n/locales",
-    source: "en",
-    targets: GLOBAL_TARGETS,
-    description: "Dashboard / authenticated product (shared @nebutra/i18n)",
-  },
-  {
-    id: "forge",
-    messagesDir: "apps/forge/messages",
-    source: "en",
-    targets: GLOBAL_TARGETS,
-    description: "Forge online tool station",
-  },
-  {
-    id: "router",
-    messagesDir: "apps/router/messages",
-    source: "en",
-    targets: GLOBAL_TARGETS,
-    description: "Router API marketplace",
-  },
 ];
 
 const API_BASE = (process.env.SENSENOVA_BASE_URL || "https://token.sensenova.cn/v1").replace(

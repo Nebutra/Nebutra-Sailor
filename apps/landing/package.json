@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "biome check .",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
-    "check:i18n": "node scripts/verify-i18n-keys.mjs",
+    "check:i18n": "node ../../scripts/verify-i18n-keys.mjs --catalog landing",
     "gen:ai-showcase": "tsx scripts/gen-ai-showcase.ts",
     "search:index": "pagefind --site .next/server/app --output public/pagefind --glob \"**/*.html\"",
     "translate": "node ../../scripts/i18n-translate-sensenova.mjs --catalog landing",
