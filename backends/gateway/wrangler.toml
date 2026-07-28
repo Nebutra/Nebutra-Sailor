@@ -36,3 +36,10 @@ head_sampling_rate = 1
 
 [vars]
 DEPLOY_TARGET_GATEWAY = "cloudflare-workers"
+
+# @nebutra/db issues `SET LOCAL ROLE` with this inside every tenant
+# transaction. Not a secret — a role name — so it belongs in config where it is
+# visible and auditable rather than hidden in the secret store. If it is unset
+# or wrong the SET fails and the query runs as whatever the connection is,
+# which is the one thing tenant isolation cannot afford to get wrong.
+APP_DB_ROLE = "app_user"
