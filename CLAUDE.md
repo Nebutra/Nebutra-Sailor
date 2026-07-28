@@ -18,7 +18,7 @@ apps/                  # User-facing apps (Next.js / Hono)
   design-docs/         # Internal design docs (Next.js + Fumadocs)
   studio/              # Sanity Studio v4 — content management
   docs/                # Public product docs (Mintlify)
-  sleptons/  idp/  mail-preview/  sailor-docs/  tsekaluk-dev/
+  sleptons/  idp/  mail-preview/  sailor-docs/
 
 backends/              # No-UI backends (split by language à la vercel/vercel)
   gateway/             # TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing — DEFAULT for new backend work
@@ -289,7 +289,7 @@ const ALL = "__all__";
 
 Escape hatch only with `// allow-os-select: <reason>` on the preceding line (lint still documents it; avoid).
 
-CI guard: `scripts/lint-no-raw-inputs.mjs` (wired into `pnpm lint`). Whitelist: storybook stories, design-docs/sailor-docs previews, tsekaluk-dev's own `ui/`, test files, all `packages/**/primitives/**`.
+CI guard: `scripts/lint-no-raw-inputs.mjs` (wired into `pnpm lint`). Whitelist: storybook stories, design-docs/sailor-docs previews, test files, all `packages/**/primitives/**`.
 
 ```tsx
 // ✅ Accessible icon button — no focus classes needed

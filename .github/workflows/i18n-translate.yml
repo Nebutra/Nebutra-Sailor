@@ -7,7 +7,6 @@ name: i18n Translate (SenseNova)
 # Catalogs:
 #   - apps/landing/messages
 #   - packages/platform/i18n/locales
-#   - apps/tsekaluk-dev/messages
 #   - apps/forge/messages
 #   - apps/router/messages
 #
@@ -30,7 +29,7 @@ on:
         required: false
         default: "false"
       catalog:
-        description: "Catalog filter (landing|web|tsekaluk-dev|forge|router|all)"
+        description: "Catalog filter (landing|web|forge|router|all)"
         required: false
         default: "all"
       concurrency:
@@ -46,7 +45,6 @@ on:
     paths:
       - "apps/landing/messages/en.json"
       - "packages/platform/i18n/locales/en.json"
-      - "apps/tsekaluk-dev/messages/en.json"
       - "apps/forge/messages/en.json"
       - "apps/router/messages/en.json"
       - "scripts/i18n-translate-sensenova.mjs"
@@ -171,7 +169,7 @@ jobs:
           # Prefer product shell catalogs first when running "all"
           if [ "$CAT" = "all" ] || [ -z "$CAT" ]; then
             node scripts/i18n-translate-sensenova.mjs --catalog forge --catalog router "${EXTRA[@]}" || true
-            node scripts/i18n-translate-sensenova.mjs --catalog web --catalog tsekaluk-dev --catalog landing "${EXTRA[@]}" || true
+            node scripts/i18n-translate-sensenova.mjs --catalog web --catalog landing "${EXTRA[@]}" || true
           else
             node scripts/i18n-translate-sensenova.mjs "${EXTRA[@]}"
           fi
@@ -204,8 +202,7 @@ jobs:
             |---|---|
             | landing | `apps/landing/messages` |
             | web | `packages/platform/i18n/locales` |
-            | tsekaluk-dev | `apps/tsekaluk-dev/messages` |
-            | forge | `apps/forge/messages` |
+                        | forge | `apps/forge/messages` |
             | router | `apps/router/messages` |
 
             - Provider: SenseNova Token Plan (`https://token.sensenova.cn/v1`)

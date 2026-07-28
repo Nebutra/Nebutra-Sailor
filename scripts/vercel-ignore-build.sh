@@ -143,21 +143,6 @@ apps/studio
 packages/ops/sanity
 EOF
       ;;
-    apps/tsekaluk-dev)
-      cat <<'EOF'
-apps/tsekaluk-dev
-packages/ai/agents
-packages/platform/analytics
-packages/design/brand
-packages/platform/db
-packages/design/icons
-packages/platform/logger
-packages/commerce/marketing
-packages/design/tokens
-packages/design/ui
-packages/design/design-tokens
-EOF
-      ;;
     apps/auth)
       cat <<'EOF'
 apps/auth

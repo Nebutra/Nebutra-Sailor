@@ -94,7 +94,7 @@ describe("auth provider boundary", () => {
      * Product apps must go through the package surface.
      *
      * Intentional standalone apps (NOT product debt — permanent exception):
-     *   - tsekaluk-dev: personal portfolio with self-contained better-auth
+     *   - tsekaluk-dev: extracted to github.com/TsekaLuk/tsekaluk-dev
      *   - sleptons: demo shell with direct Clerk (not a Sailor product app)
      *
      * Product apps (web/auth/etc.) must go through @nebutra/auth only.
@@ -106,7 +106,7 @@ describe("auth provider boundary", () => {
       /from\s+["'](@clerk\/|better-auth|better-auth\/|next-auth|next-auth\/|@supabase\/supabase-js)/;
 
     /** Permanent standalone-app exceptions (not shrink-only product debt). */
-    const STANDALONE_APP_PATH_SNIPPETS = ["/tsekaluk-dev/", "/sleptons/"];
+    const STANDALONE_APP_PATH_SNIPPETS = ["/sleptons/"];
 
     async function* walk(dir: string): AsyncGenerator<string> {
       const entries = await readdir(dir, { withFileTypes: true });

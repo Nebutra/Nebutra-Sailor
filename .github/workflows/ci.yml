@@ -377,7 +377,7 @@ jobs:
       - name: Build (affected)
         run: |
           filters=(--filter="...[${TURBO_BASE_REF}]...")
-          for app in apps/design-docs apps/sailor-docs apps/storybook apps/studio apps/tsekaluk-dev; do
+          for app in apps/design-docs apps/sailor-docs apps/storybook apps/studio; do
             if [ -d "$app" ]; then
               filters+=(--filter="!./$app")
             fi

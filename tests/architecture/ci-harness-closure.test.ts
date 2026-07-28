@@ -132,9 +132,7 @@ describe("ci harness dependency closure", () => {
 
     expect(workflow).toContain(`filters=(--filter="...[${turboBaseRef}]...")`);
     // Path-glob filters (tolerate stripped apps in the template build).
-    expect(workflow).toContain(
-      "apps/design-docs apps/sailor-docs apps/storybook apps/studio apps/tsekaluk-dev",
-    );
+    expect(workflow).toContain("apps/design-docs apps/sailor-docs apps/storybook apps/studio");
     expect(workflow).toContain('filters+=(--filter="!./$app")');
     expect(workflow).toContain(`pnpm turbo build "\${filters[@]}"`);
   });

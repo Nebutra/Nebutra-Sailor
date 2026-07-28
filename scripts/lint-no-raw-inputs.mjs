@@ -17,7 +17,6 @@
 //   • storybook/src/stories/**           — demos of native HTML behavior
 //   • design-docs/src/components/previews/**, sailor-docs/src/components/previews/**
 //                                        — registry preview demos
-//   • apps/tsekaluk-dev/src/components/ui/** — independent app's own primitives
 //   • packages/design/ui/src/primitives/** — DS wrappers (not under apps/)
 //   • test files
 //
@@ -31,7 +30,7 @@ const WHITELIST = [
   /\/storybook\/src\/stories\//,
   /\/design-docs\/src\/components\/previews\//,
   /\/sailor-docs\/src\/components\/previews\//,
-  /\/tsekaluk-dev\/src\/components\/ui\//,
+
   /\.test\.tsx?$/,
   /\/__tests__\//,
 ];

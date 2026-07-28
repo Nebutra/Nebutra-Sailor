@@ -5,7 +5,6 @@
  * Covers every product message catalog that ships UI strings for global locales:
  *   - apps/landing/messages              (marketing — PRODUCT_LANGUAGES wheel)
  *   - packages/platform/i18n/locales     (dashboard/web shared — full wheel)
- *   - apps/tsekaluk-dev/messages         (portfolio — full wheel)
  *   - apps/forge/messages                (online tools — full wheel)
  *   - apps/router/messages               (API marketplace — full wheel)
  *
@@ -118,13 +117,6 @@ const CATALOGS = [
     source: "en",
     targets: GLOBAL_TARGETS,
     description: "Dashboard / authenticated product (shared @nebutra/i18n)",
-  },
-  {
-    id: "tsekaluk-dev",
-    messagesDir: "apps/tsekaluk-dev/messages",
-    source: "en",
-    targets: GLOBAL_TARGETS,
-    description: "Portfolio / personal site",
   },
   {
     id: "forge",

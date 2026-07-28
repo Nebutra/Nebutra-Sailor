@@ -64,7 +64,6 @@ const TARGETS = [
 const CATALOGS = [
   "packages/platform/i18n/locales",
   "apps/landing/messages",
-  "apps/tsekaluk-dev/messages",
   "apps/forge/messages",
   "apps/router/messages",
 ];

@@ -35,7 +35,7 @@ my-app/ contains only the reusable skeleton
 - **Legal pages** — `apps/landing/src/app/[lang]/(legal)/*`
 - **Nebutra landing components** — `apps/landing/src/components/landing/`
 - **Dashboard business pages** — admin, billing, tenants, chat, etc.
-- **Nebutra-owned apps** — `apps/sleptons`, `apps/tsekaluk-dev`, `apps/studio`,
+- **Nebutra-owned apps** — `apps/sleptons`, `apps/studio`,
   content from `apps/design-docs` and `apps/docs`
 - **Press / PR** — `marketing/`, `changelog/`
 - **Internal planning / governance** — `docs/plans/`, `governance/*.current.json`
