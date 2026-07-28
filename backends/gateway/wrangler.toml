@@ -7,21 +7,28 @@ compatibility_flags = ["nodejs_compat"]
 # opens its own connection and the database runs out of slots long before the
 # Worker runs out of capacity.
 #
-# Commented out until the database exists. `id` must name a real Hyperdrive
-# config, and deploy-gateway.yml fires automatically on a green CI — an
-# unresolvable id here would take down a deploy path that otherwise works,
-# in exchange for a binding nothing is using yet.
+# Query caching is disabled on this config. Cloudflare's own guidance is to
+# disable it for authentication, sessions, permissions and billing reads —
+# which is most of what this database holds. It also could not have helped:
+# @nebutra/db wraps every query in a transaction to set the tenant, and only
+# plain read queries are cacheable. Leaving it on would have been risk without
+# benefit, since row visibility here depends on a session variable the cache
+# key does not include.
 #
-# Enable it as the last step of provisioning:
-#   wrangler hyperdrive create nebutra-prod --connection-string="<admin url>"
-# then uncomment with the returned id. src/worker.ts already reads the binding
-# and falls through to DATABASE_URL while it is absent, so nothing else moves.
-# See docs/ops/postgres-to-planetscale-via-cloudflare.md.
-#
-# [[hyperdrive]]
-# binding = "HYPERDRIVE"
-# id = "<from wrangler hyperdrive create>"
-# localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
+# `localConnectionString` is what `wrangler dev` uses, so local development
+# still talks to a local database directly.
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "53fe5b8781d04f9899c7c647e585c73e"
+localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
+
+# Retention purge. On Cloudflare rather than a scheduled GitHub Action: the
+# Worker already reaches Postgres through the binding above, so this adds no
+# new place for a production database credential to live, and Cron Triggers
+# are scheduled where Actions cron is best-effort.
+# 18:17 UTC = 02:17 Asia/Shanghai.
+[triggers]
+crons = ["17 18 * * *"]
 
 [observability]
 enabled = true
