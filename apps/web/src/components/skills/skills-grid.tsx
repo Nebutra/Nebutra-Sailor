@@ -16,10 +16,10 @@ import { useMemo, useState } from "react";
  *
  * Currently not wired to live data. The `Skill` + `UserSkill` Prisma models
  * exist. Activation path:
- *   1. GET /api/skills (list catalogue, joined with current user's UserSkill)
- *   2. PATCH /api/skills/:id/installation { enabled }
- *   3. Wire `<SkillsGrid skills={data} onToggle={mutate}>` in /settings/skills
- *   4. Read enabled skills in /api/chat to extend tools/system prompt
+ * 1. GET /api/skills (list catalogue, joined with current user's UserSkill)
+ * 2. PATCH /api/skills/:id/installation { enabled }
+ * 3. Wire `<SkillsGrid skills={data} onToggle={mutate}>` in /settings/skills
+ * 4. Read enabled skills in /api/chat to extend tools/system prompt
  *
  * Seeded skills go into `@nebutra/db` seed script. Custom skills can also be
  * authored — surface an "Add custom skill" entry that opens a wizard.
@@ -237,7 +237,7 @@ function Toggle({ checked, onChange, disabled, label }: ToggleProps) {
       aria-label={label}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
         checked ? "bg-primary" : "bg-neutral-6"
       }`}
     >

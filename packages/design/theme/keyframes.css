@@ -1,14 +1,18 @@
 /**
- * @nebutra/theme — keyframes.css
- *
- * Multi-mood oklch catalog REMOVED (2026.07).
- * Design languages: @import "@nebutra/theme/skins.css" + html[data-brand].
- * Product chrome SSOT: @nebutra/tokens/styles.css + recipe.css.
- *
- * Shared keyframe animations only. Design languages: skins.css + data-brand.
+ * @nebutra/theme — keyframes.css (via themes.generated.css)
+ * AUTO-GENERATED — multi-mood oklch catalog removed.
+ * Product chrome SSOT: @nebutra/tokens. Design languages: @nebutra/theme/skins.css.
+ * This file: shared keyframes only.
+ */
+
+/* ─── Shared Keyframe Animations ─── */
+/*
+ * These keyframes are shared across all apps that import this file.
+ * App-specific keyframes (marquee, shimmer-slide, accordion, etc.) stay in each app's globals.css.
  */
 
 @theme inline {
+  /* Loader / status animations */
   @keyframes typing {
     0%,
     100% {
@@ -116,6 +120,8 @@
       opacity: 1;
     }
   }
+
+  /* SnippetStatus copy animations */
   @keyframes snippet-fade-in {
     from {
       opacity: 0;

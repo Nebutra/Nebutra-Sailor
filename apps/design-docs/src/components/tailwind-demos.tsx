@@ -61,7 +61,7 @@ function Swatch({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={`group relative flex h-24 w-full flex-col items-start justify-between p-3 text-left transition-transform hover:z-10 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:scale-105 motion-reduce:hover:scale-100 rounded-md mx-0.5 ${className} ${contrastClass}`}
+          className={`group relative flex h-24 w-full flex-col items-start justify-between p-3 text-left transition-transform hover:z-10 focus-visible:z-10 hover:scale-105 motion-reduce:hover:scale-100 rounded-md mx-0.5 ${className} ${contrastClass}`}
           style={{ backgroundColor: hex }}
         >
           <div className="font-mono text-[10px] font-medium opacity-60 transition-opacity group-hover:opacity-100 uppercase">

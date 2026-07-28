@@ -34,7 +34,7 @@ export function HexGridDemo() {
             <HexGrid
               filled
               size={32}
-              color="#0BF1C3"
+              color="var(--brand-accent)"
               opacity={0.15}
               className="[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]"
             />

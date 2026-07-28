@@ -121,7 +121,7 @@ export function NotificationsDialog() {
         onClick={() => setOpen(true)}
         aria-label="Open notifications"
         title="Notifications"
-        className="relative inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        className="relative inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
       >
         <Bell className="size-4" aria-hidden="true" />
         {unreadBadge ? (
@@ -137,7 +137,7 @@ export function NotificationsDialog() {
           aria-label="通知"
         >
           {/* Header — centered title. DialogContent already provides its own
-              top-right close button; do NOT add another. */}
+ top-right close button; do NOT add another. */}
           <div className="border-b border-border px-6 pt-6 pb-4">
             <h2 className="text-center text-lg font-semibold text-foreground">通知</h2>
 

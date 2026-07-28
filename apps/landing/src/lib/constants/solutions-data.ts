@@ -15,8 +15,6 @@
  * change here.
  */
 
-import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import {
   Analytics,
   Brain,
@@ -87,13 +85,13 @@ export const SOLUTION_GROUPS: SolutionGroup[] = [
   {
     id: "go-to-market",
     label: { en: "Go-to-Market", zh: "出海与增长" },
-    auroraColors: ["hsl(var(--primary))", "#0BF1C3", "#06b6d4", "#38bdf8"],
+    auroraColors: ["hsl(var(--primary))", "var(--brand-accent)", "#06b6d4", "#38bdf8"],
     solutionSlugs: ["go-global", "growth"],
   },
   {
     id: "build-govern",
     label: { en: "Build & Govern", zh: "工程与治理" },
-    auroraColors: ["#6366f1", "#8b5cf6", "#3b82f6", "#a855f7"],
+    auroraColors: ["#6366f1", "var(--brand-tertiary)", "#3b82f6", "#a855f7"],
     solutionSlugs: ["architecture", "tech-stack", "dx"],
   },
   {
@@ -105,7 +103,7 @@ export const SOLUTION_GROUPS: SolutionGroup[] = [
   {
     id: "founder",
     label: { en: "Founder", zh: "创业" },
-    auroraColors: ["#10b981", "#f59e0b", "#34d399", "#fbbf24"],
+    auroraColors: ["var(--status-success)", "var(--status-warning)", "#34d399", "#fbbf24"],
     solutionSlugs: ["china-vc", "global-vc", "fundraising", "product-insights"],
   },
 ];

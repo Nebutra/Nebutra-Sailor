@@ -12,11 +12,11 @@ import {
  * Mode pills — WAI-ARIA radiogroup with full keyboard support.
  *
  * Keyboard model (matches WAI-ARIA radio pattern):
- *   ←/↑    move to previous mode (wraps)
- *   →/↓    move to next mode (wraps)
- *   Home   first mode
- *   End    last mode
- *   Space  activate current focused mode (Enter also fires onClick natively)
+ * ←/↑ move to previous mode (wraps)
+ * →/↓ move to next mode (wraps)
+ * Home first mode
+ * End last mode
+ * Space activate current focused mode (Enter also fires onClick natively)
  *
  * The `tabIndex={isActive ? 0 : -1}` roving tab-index focuses only the
  * currently-selected pill — Tab into the group lands on the active one.
@@ -87,7 +87,7 @@ export function ModePills() {
               title={meta.description}
               onClick={() => setMode(meta.id)}
               onKeyDown={(event) => handleKeyDown(event, index)}
-              className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-medium transition-[background-color,border-color,box-shadow,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+              className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-medium transition-[background-color,border-color,box-shadow,color] duration-150 ${
                 isActive
                   ? ACCENT_ACTIVE_CLASSES[meta.accent]
                   : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12"

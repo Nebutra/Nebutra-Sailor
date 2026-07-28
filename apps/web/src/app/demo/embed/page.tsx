@@ -44,7 +44,7 @@ export default async function DemoEmbedPage({
 
   return (
     <main className="min-h-screen bg-muted p-4 text-foreground dark:bg-background">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-4xl">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-[0.12em] text-primary uppercase">

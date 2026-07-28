@@ -53,7 +53,7 @@ export function SiteFooter() {
           <div className="flex max-w-xs flex-col gap-5">
             <Link
               href="/"
-              className="inline-flex w-fit rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-12)] focus-visible:ring-offset-2"
+              className="inline-flex w-fit rounded-[var(--radius-md)] outline-none"
               aria-label={`${brand.name} Forge`}
             >
               <BrandLogo variant="horizontal" className="h-6 w-auto" />

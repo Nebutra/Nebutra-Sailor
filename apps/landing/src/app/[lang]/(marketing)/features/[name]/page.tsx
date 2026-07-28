@@ -150,7 +150,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       />
 
       {/* GOVERNANCE — small below-hero strip giving the package's
-          stability, scope, and boundary at a glance. */}
+ stability, scope, and boundary at a glance. */}
       <section className="relative z-10 mx-auto -mt-6 max-w-[1400px] px-4 pb-10 sm:px-6 lg:px-8">
         <AnimateIn preset="fade" inView delay={0.05}>
           <dl className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border/40 pt-5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.22em]">
@@ -277,7 +277,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                 <Link
                   key={child}
                   href={`/${lang}/features/${child}`}
-                  className="group/sub block rounded-[var(--radius-card)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                  className="group/sub block rounded-[var(--radius-card)]"
                 >
                   <MagicCard
                     className="h-full rounded-[var(--radius-card)] overflow-hidden"
@@ -356,7 +356,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                 <Link
                   key={sibling.slug}
                   href={`/${lang}/features/${sibling.slug}`}
-                  className="group/sib block rounded-[var(--radius-card)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                  className="group/sib block rounded-[var(--radius-card)]"
                 >
                   <MagicCard
                     className="h-full rounded-[var(--radius-card)] p-5"

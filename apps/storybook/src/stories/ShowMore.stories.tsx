@@ -53,7 +53,7 @@ function ActivityList({
             key={item}
             ref={index === 5 ? firstRevealedRef : undefined}
             tabIndex={index === 5 ? -1 : undefined}
-            className="rounded-[var(--radius-md)] border border-[hsl(var(--border))] bg-[hsl(var(--muted))] px-3 py-2 text-[hsl(var(--foreground))] text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="rounded-[var(--radius-md)] border border-[hsl(var(--border))] bg-[hsl(var(--muted))] px-3 py-2 text-[hsl(var(--foreground))] text-sm outline-none"
           >
             {item}
           </li>

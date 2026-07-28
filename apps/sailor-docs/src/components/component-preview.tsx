@@ -51,7 +51,7 @@ ${code}
 
 Key integration notes:
 - Import UI primitives from \`@nebutra/ui/primitives\`
-- Import icons from \`@nebutra/icons\` (Geist) or \`lucide-react\` (generic)
+- Import icons from \`@nebutra/icons\` (Geist) only
 - Use \`cn()\` from \`@nebutra/ui/utils\` for class merging
 - Use CSS variable tokens for colors: \`hsl(var(--background))\`, \`hsl(var(--primary))\`, \`hsl(var(--primary))\`
 - Add \`"use client"\` directive for interactive components

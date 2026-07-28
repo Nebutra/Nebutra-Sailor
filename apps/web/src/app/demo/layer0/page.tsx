@@ -30,7 +30,7 @@ export default async function Layer0DemoPage() {
 
   return (
     <main className="min-h-screen bg-muted p-8 text-foreground">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6">
+      <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
           <h1 className="font-semibold text-2xl">Layer 0 capability loop</h1>
           <p className="mt-1 text-muted-foreground text-sm">

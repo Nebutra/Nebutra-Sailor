@@ -61,7 +61,7 @@ export function FocusRingDemo() {
           </div>
           <button
             type="button"
-            className="rounded-md border border-fd-border p-3 text-sm focus:outline-none"
+            className="rounded-md border border-fd-border p-3 text-sm"
             style={focusRing as React.CSSProperties}
           >
             Custom element (Tab to me)
@@ -139,7 +139,7 @@ export function AriaPatternsDemo() {
           </p>
           <Input
             defaultValue="wrong-email@"
-            className="border-red-500 focus-visible:ring-red-500"
+            className="border-red-500"
             {...ariaPatterns.invalid("Please enter a valid email address")}
             {...ariaPatterns.required}
           />

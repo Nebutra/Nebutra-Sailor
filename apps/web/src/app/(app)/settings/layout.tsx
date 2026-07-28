@@ -4,7 +4,7 @@ import { SettingsNav } from "./settings-nav";
 
 export default function SettingsLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-4xl">
       <PageHeader title="Settings" description="Manage your organization and account settings" />
 
       <div className="mt-8 flex gap-8">

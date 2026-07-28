@@ -181,7 +181,7 @@ export function Feedback({
               aria-label="Page feedback"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none outline-none transition-[border-color,box-shadow] focus-visible:border-fd-ring focus-visible:ring-2 focus-visible:ring-fd-ring/30 placeholder:text-fd-muted-foreground"
+              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none outline-none transition-[border-color,box-shadow] focus-visible:border-fd-ring placeholder:text-fd-muted-foreground"
               placeholder="Leave your feedback..."
               onKeyDown={(e) => {
                 if (!e.shiftKey && e.key === "Enter") {
@@ -329,7 +329,7 @@ export function FeedbackBlock({
               aria-label="Block feedback"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none outline-none transition-[border-color,box-shadow] focus-visible:border-fd-ring focus-visible:ring-2 focus-visible:ring-fd-ring/30 placeholder:text-fd-muted-foreground"
+              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none outline-none transition-[border-color,box-shadow] focus-visible:border-fd-ring placeholder:text-fd-muted-foreground"
               placeholder="Leave your feedback..."
               onKeyDown={(e) => {
                 if (!e.shiftKey && e.key === "Enter") {

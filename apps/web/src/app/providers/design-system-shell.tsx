@@ -514,7 +514,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
             onClick={toggle}
             aria-label={webBrandLabels.expandSidebar}
             title={webBrandLabels.expandSidebar}
-            className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+            className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none"
           >
             <span className="flex items-center justify-center transition-opacity duration-150 group-hover/sidebar:opacity-0">
               <BrandLogo variant="mark" className="size-7" tenantLogoUrl={tenantLogoUrl} />
@@ -530,7 +530,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
             <ViewTransitionLink
               href="/workspace"
               aria-label={webBrandLabels.homeLink}
-              className="inline-flex min-w-0 items-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+              className="inline-flex min-w-0 items-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)]"
             >
               <BrandLogo
                 variant="horizontal"
@@ -543,7 +543,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
               onClick={toggle}
               aria-label={webBrandLabels.collapseSidebar}
               title={webBrandLabels.collapseSidebar}
-              className="inline-flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring group-hover/sidebar:opacity-100"
+              className="inline-flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 group-hover/sidebar:opacity-100"
             >
               <SidebarLeft className="size-4" aria-hidden="true" />
             </button>

@@ -57,12 +57,12 @@ export function FAQSection() {
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     onClick={() => setOpenId((prev) => (prev === entry.id ? null : entry.id))}
-                    className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-base font-semibold text-foreground transition-colors hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--primary))] focus-visible:ring-offset-1 md:px-8 md:py-6 md:text-lg"
+                    className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-base font-semibold text-foreground transition-colors hover:bg-muted md:px-8 md:py-6 md:text-lg"
                   >
                     <span>
                       {/* next-intl's strict key typing cannot prove the
-                          dynamic id is part of the union — the ids list is
-                          kept in sync with the i18n bundle by lib/landing/faqs. */}
+ dynamic id is part of the union — the ids list is
+ kept in sync with the i18n bundle by lib/landing/faqs. */}
                       {t(
                         // biome-ignore lint/suspicious/noExplicitAny: dynamic i18n key, ids tracked in lib/landing/faqs
                         `items.${entry.id}.question` as any,

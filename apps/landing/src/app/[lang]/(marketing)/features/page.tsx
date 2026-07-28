@@ -13,7 +13,7 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 // detail heroes which use their group-specific tokens.
 const indexHeroTokens = {
   ...DEFAULT_GROUP_TOKENS,
-  auroraColors: ["hsl(var(--primary))", "#0BF1C3", "#8b5cf6", "#06b6d4"],
+  auroraColors: ["hsl(var(--primary))", "var(--brand-accent)", "var(--brand-tertiary)", "#06b6d4"],
   ambient: "subtle" as const,
 };
 

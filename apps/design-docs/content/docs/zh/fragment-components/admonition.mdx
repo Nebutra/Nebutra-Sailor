@@ -29,7 +29,7 @@ description: "用于突出重要内容的信息、警告和错误 callout 区块
   <Tab title="Success">
     ```tsx
     <Admonition type="success" title="Deployment complete">
-      Your changes are live at <code>app.nebutra.io</code>.
+      Your changes are live at <code>app.nebutra.com</code>.
     </Admonition>
     ```
   </Tab>
@@ -89,7 +89,7 @@ const [visible, setVisible] = useState(true);
 ### 自定义图标
 
 ```tsx
-import { ShieldAlert } from "lucide-react";
+import { ShieldOff as ShieldAlert } from "@nebutra/icons";
 
 <Admonition
   type="warning"

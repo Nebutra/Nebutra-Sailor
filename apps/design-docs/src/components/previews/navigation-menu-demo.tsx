@@ -61,7 +61,7 @@ export function NavigationMenuDemo() {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="p-6 flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted no-underline outline-none select-none focus-visible:shadow-md focus-visible:ring-2 focus-visible:ring-ring/40"
+                        className="p-6 flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted no-underline outline-none select-none focus-visible:shadow-md"
                         href="/"
                       >
                         <div className="mb-2 mt-4 text-lg font-medium">Nebutra UI</div>
@@ -119,7 +119,7 @@ function ListItem({ className, title, children, ref, ...props }: ListItemProps) 
         <a
           ref={ref}
           className={cn(
-            "space-y-1 p-3 block rounded-md leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40",
+            "space-y-1 p-3 block rounded-md leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground ",
             className,
           )}
           {...props}

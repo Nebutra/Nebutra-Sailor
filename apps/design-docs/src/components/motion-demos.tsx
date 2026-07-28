@@ -65,7 +65,7 @@ export function MotionDemos() {
                   },
                 }}
               >
-                <Database className="w-5 h-5 text-[hsl(var(--primary))] dark:text-[#0BF1C3]" />
+                <Database className="w-5 h-5 text-[hsl(var(--primary))] dark:text-[var(--brand-accent)]" />
               </motion.div>
 
               <AnimatedList delay={800} className="w-full relative z-10">
@@ -153,7 +153,7 @@ export function MotionDemos() {
                 pathWidth={2}
                 pathOpacity={0.15}
                 gradientStartColor="hsl(var(--primary))"
-                gradientStopColor="#0BF1C3"
+                gradientStopColor="var(--brand-accent)"
                 duration={2}
               />
             </div>
@@ -190,14 +190,14 @@ export function MotionDemos() {
         <MagicCard
           className="h-full p-0 rounded-3xl border-zinc-800 flex flex-col overflow-hidden bg-[#0A0A0A] shadow-sm lg:col-span-2 xl:col-span-1"
           gradientColor="#1a1a1a"
-          gradientFrom="#0BF1C3"
+          gradientFrom="var(--brand-accent)"
           gradientTo="hsl(var(--primary))"
         >
           <div className="h-64 w-full bg-[#050505] relative flex flex-col items-center justify-center p-8 border-b border-zinc-800 overflow-hidden">
             {/* High-tech Flickering Grid Background */}
             <div className="absolute inset-0 z-0">
               <FlickeringGrid
-                color="#0BF1C3"
+                color="var(--brand-accent)"
                 maxOpacity={0.15}
                 flickerChance={0.1}
                 squareSize={3}
@@ -210,7 +210,7 @@ export function MotionDemos() {
             <div className="relative z-10 flex items-center justify-center">
               {/* Inner Glow Map Wrapper */}
               <motion.div
-                className="absolute inset-0 rounded-full bg-[#0BF1C3] blur-2xl opacity-20"
+                className="absolute inset-0 rounded-full bg-[var(--brand-accent)] blur-2xl opacity-20"
                 animate={
                   shouldReduceMotion
                     ? { opacity: 0.2, scale: 1 }
@@ -244,14 +244,14 @@ export function MotionDemos() {
                       }
                 }
               >
-                <Network className="w-6 h-6 text-[#0BF1C3]" />
+                <Network className="w-6 h-6 text-[var(--brand-accent)]" />
               </motion.div>
             </div>
 
             {/* Status Label */}
             <div className="absolute bottom-6 flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-800 bg-black/50 backdrop-blur-md z-10 shadow-lg">
               <motion.div
-                className="w-1.5 h-1.5 rounded-full bg-[#0BF1C3]"
+                className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)]"
                 animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [1, 0.3, 1] }}
                 transition={
                   shouldReduceMotion

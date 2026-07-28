@@ -23,7 +23,7 @@ import { StatusBadge } from "@nebutra/ui/primitives";
 ### Basic
 
 ```tsx
-import { ShieldCheck, XCircle } from "lucide-react";
+import { ShieldCheck, CrossCircle as XCircle } from "@nebutra/icons";
 
 <StatusBadge
   leftIcon={ShieldCheck}
@@ -37,7 +37,7 @@ import { ShieldCheck, XCircle } from "lucide-react";
 ### Multiple statuses
 
 ```tsx
-import { CheckCircle2, AlertCircle, XCircle } from "lucide-react";
+import { CheckCircle as CheckCircle2, Warning as AlertCircle, CrossCircle as XCircle } from "@nebutra/icons";
 
 <div className="flex gap-2 flex-wrap">
   <StatusBadge leftIcon={CheckCircle2} leftLabel="Live" rightLabel="v2.1.0" status="success" />

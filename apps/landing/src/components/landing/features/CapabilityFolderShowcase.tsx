@@ -45,7 +45,7 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
             <Link
               aria-label={`${title} feature page`}
               href={featureHref}
-              className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-border bg-background/60 transition-colors hover:border-foreground/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-border bg-background/60 transition-colors hover:border-foreground/40"
             >
               <Icon className="size-4" />
             </Link>

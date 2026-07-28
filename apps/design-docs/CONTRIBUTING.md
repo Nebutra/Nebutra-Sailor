@@ -200,9 +200,7 @@ import { Button, Input, Card } from "@nebutra/ui/primitives"
 import { Search, Settings } from "@nebutra/icons"
 
 // Lucide icons (for generic or illustrative icons only)
-import { ChevronRight, ExternalLink } from "lucide-react"
-
-// Class merging
+import { ChevronRight, External as ExternalLink } from "@nebutra/icons";// Class merging
 import { cn } from "@nebutra/ui/utils"
 
 // Entrance animations
@@ -410,7 +408,7 @@ Before opening a pull request, verify:
 
 - [ ] Filename follows `{component}-demo.tsx` kebab-case convention
 - [ ] All exports follow `{Component}Demo` PascalCase convention
-- [ ] Imports use `@nebutra/ui/primitives`, `@nebutra/icons`, and `lucide-react` — no internal paths
+- [ ] Imports use `@nebutra/ui/primitives`, `@nebutra/icons` (Geist) — no internal paths
 - [ ] No `console.log` statements
 - [ ] No hardcoded hex colors or pixel values for brand tokens
 - [ ] `"use client"` directive present if the demo uses state or browser APIs

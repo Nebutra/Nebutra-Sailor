@@ -19,7 +19,7 @@ export function PageFrame({
   className?: string;
   as?: "div" | "section" | "article";
 }) {
-  const max = width === "wide" ? "max-w-[1400px]" : width === "content" ? "max-w-5xl" : "max-w-3xl";
+  const max = width === "wide" ? "max-w-[1400px]" : width === "content" ? "max-w-6xl" : "max-w-3xl";
 
   const classes = ["mx-auto w-full px-6", max, className].filter(Boolean).join(" ");
 

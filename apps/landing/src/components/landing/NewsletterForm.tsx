@@ -17,6 +17,11 @@ export function NewsletterForm() {
 
   async function submitNewsletter() {
     if (!formRef.current?.reportValidity()) return;
+    const hp = formRef.current.querySelector<HTMLInputElement>('input[name="website"]');
+    if (hp?.value) {
+      setStatus("success"); // silent drop for bots
+      return;
+    }
     if (!emailSchema.safeParse(email.trim()).success) {
       setStatus("error");
       return;
@@ -60,8 +65,19 @@ export function NewsletterForm() {
       data-status={status}
       data-testid="newsletter-form"
       onSubmit={handleSubmit}
-      className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
+      className="flex w-full max-w-md flex-col gap-2 sm:max-w-none sm:w-auto sm:flex-row sm:items-center"
     >
+      {/* G27 honeypot — bots fill hidden fields; humans never see it */}
+      <input
+        data-allow-native
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+        defaultValue=""
+      />
       <Input
         type="email"
         size="sm"
@@ -70,13 +86,26 @@ export function NewsletterForm() {
         placeholder={t("newsletterPlaceholder")}
         aria-label={t("newsletterPlaceholder")}
         required
-        className="min-h-11 sm:w-48"
+        className="min-h-11 w-full sm:w-48 sm:shrink-0"
       />
-      <Button type="submit" size="sm" disabled={status === "loading"} className="min-h-11">
+      {/*
+        Use ink (solid neutral-12 fill) — not default btn-brand-default.
+        Brand default paints via background-image + primary-foreground text; when
+        the gradient fails to paint, the CTA becomes white-on-white and "only the
+        email field" is visible (footer newsletter regression).
+        Ink matches the navbar Loslegen high-contrast pattern.
+      */}
+      <Button
+        type="submit"
+        size="sm"
+        variant="ink"
+        disabled={status === "loading"}
+        className="min-h-11 w-full shrink-0 sm:w-auto"
+      >
         {status === "loading" ? "…" : t("newsletterSubscribe")}
       </Button>
       {status === "error" && (
-        <p role="alert" className="self-center text-xs text-red-500">
+        <p role="alert" className="self-center text-xs text-red-500 sm:ms-0">
           {t("newsletterError")}
         </p>
       )}

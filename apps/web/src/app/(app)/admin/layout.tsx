@@ -14,7 +14,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-[1400px] px-4 py-8">
       <PageHeader
         title="Admin"
         description="Minimal internal dashboard — high-leverage signals only"

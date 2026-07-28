@@ -1,5 +1,5 @@
 /**
  * @deprecated Import `@nebutra/theme/keyframes.css` instead.
- * themes.css kept as a compatibility alias (keyframes only — no color moods).
+ * themes.css is a compatibility alias (keyframes only — no color moods).
  */
 @import "./keyframes.css";

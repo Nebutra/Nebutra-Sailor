@@ -38,7 +38,7 @@ export function HeroInstallPill({ command, copiedLabel }: HeroInstallPillProps) 
         type="button"
         onClick={handleCopy}
         aria-label={copied ? copiedLabel : `Copy: ${command}`}
-        className="flex size-11 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/5 hover:text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1 dark:text-zinc-400"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/5 hover:text-zinc-900 dark:text-zinc-400"
       >
         {copied ? (
           <Check className="size-3.5" aria-hidden="true" />

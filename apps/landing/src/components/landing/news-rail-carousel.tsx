@@ -65,7 +65,7 @@ export function NewsRailCarousel({ slides, isZh }: { slides: NewsRailSlide[]; is
         <Link
           href={current.href}
           aria-label={current.title}
-          className="group relative block aspect-[3/4] overflow-hidden rounded-[var(--radius-xl)] border border-border bg-muted outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
+          className="group relative block aspect-[3/4] overflow-hidden rounded-[var(--radius-xl)] border border-border bg-muted outline-none"
         >
           {slides.map((slide, index) => (
             <div

@@ -152,7 +152,7 @@ export function NotificationCenter({
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="relative flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1"
+        className="relative flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
       >
         <Bell className="size-4" aria-hidden />
         {unreadBadge ? (

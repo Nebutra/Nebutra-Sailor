@@ -250,8 +250,7 @@ export function MarketHome({
     typeof document !== "undefined" && hoverRow && flyoutPos
       ? createPortal(
           // biome-ignore lint/a11y/noStaticElementInteractions: portal flyout hover bridge
-          <div
-            role="dialog"
+          <section
             aria-label={hoverRow.label}
             className="fixed z-[200] hidden w-[min(520px,calc(100vw-240px))] lg:block"
             style={{ top: flyoutPos.top, left: flyoutPos.left }}
@@ -259,7 +258,7 @@ export function MarketHome({
             onMouseLeave={scheduleClose}
           >
             <CategoryFlyout row={hoverRow} />
-          </div>,
+          </section>,
           document.body,
         )
       : null;

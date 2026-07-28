@@ -146,7 +146,7 @@ export default function IntegrationsPage() {
   const connectedTypes = new Set(integrations.map((i) => i.type));
 
   return (
-    <section className="mx-auto w-full max-w-7xl" aria-label="Integrations">
+    <section className="mx-auto w-full max-w-[1400px]" aria-label="Integrations">
       <AnimateIn preset="fadeUp">
         <PageHeader
           title="Integrations"

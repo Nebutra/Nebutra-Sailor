@@ -87,7 +87,7 @@ function ChatShell({
             value={inputValue}
             placeholder="Type a message…"
             disabled={inputDisabled}
-            className="flex-1 rounded-lg border border-neutral-7 bg-neutral-2 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] focus:outline-none disabled:opacity-50"
+            className="flex-1 rounded-lg border border-neutral-7 bg-neutral-2 px-3 py-2 text-sm text-neutral-12 placeholder:text-neutral-10 focus:border-[hsl(var(--ring))] disabled:opacity-50"
           />
           <button
             type="button"

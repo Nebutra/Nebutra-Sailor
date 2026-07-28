@@ -31,7 +31,7 @@ function RevokeButton({ keyId, orgId }: { keyId: string; orgId: string }) {
       <button
         type="submit"
         disabled={isPending}
-        className="text-xs text-red-11 hover:text-red-12 focus:outline-none disabled:opacity-50"
+        className="text-xs text-red-11 hover:text-red-12 disabled:opacity-50"
       >
         {isPending ? "Revoking…" : "Revoke"}
       </button>

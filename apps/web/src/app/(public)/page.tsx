@@ -159,7 +159,7 @@ export default async function PublicDashboardPage() {
           <Link
             href={localizedHref("/")}
             aria-label={webBrandLabels.homeLink}
-            className="inline-flex min-w-0 items-center rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex min-w-0 items-center rounded-[var(--radius-md)]"
           >
             <BrandLogo variant="horizontal" colorScheme="light" className="h-6 w-[8.5rem]" />
           </Link>

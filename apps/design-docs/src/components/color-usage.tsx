@@ -103,7 +103,7 @@ export function ColorUsageDemos() {
           <div className="flex gap-6">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border-2 border-[#91a7ff] text-[#0021ab] hover:bg-[#f0f4ff] hover:border-[#5c7cfa] h-10 py-2 px-6"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none ring-offset-background border-2 border-[#91a7ff] text-[#0021ab] hover:bg-[#f0f4ff] hover:border-[#5c7cfa] h-10 py-2 px-6"
             >
               Outlined Action
             </button>
@@ -136,7 +136,7 @@ export function ColorUsageDemos() {
           <div className="flex gap-6">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none bg-[hsl(var(--primary))] text-white hover:bg-[#002ad4] h-10 py-2 px-6"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium shadow transition-colors disabled:opacity-50 disabled:pointer-events-none bg-[hsl(var(--primary))] text-white hover:bg-[#002ad4] h-10 py-2 px-6"
             >
               Primary Button
             </button>

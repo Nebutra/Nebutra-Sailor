@@ -4,7 +4,7 @@ const DASHBOARD_SKELETON_SURFACE =
 export function CommandSkeleton() {
   return (
     <div className={DASHBOARD_SKELETON_SURFACE}>
-      <div className="max-w-5xl space-y-3">
+      <div className="max-w-4xl space-y-3">
         <div className="h-3 w-32 animate-pulse rounded bg-neutral-3" />
         <div className="h-8 w-60 animate-pulse rounded bg-neutral-3" />
         <div className="h-3.5 w-full max-w-2xl animate-pulse rounded bg-neutral-2" />

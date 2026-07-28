@@ -183,7 +183,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
                   href={topic.href}
                   onFocus={() => setActiveTopicIndex(index)}
                   onPointerEnter={() => setActiveTopicIndex(index)}
-                  className="group relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
+                  className="group relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 outline-none"
                 >
                   <span
                     className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-[1.05] text-foreground transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
@@ -235,7 +235,7 @@ function BlogRailPostCard({
         aria-hidden={isVisualDuplicate || undefined}
         onFocus={() => setActivePostId(post.id)}
         onPointerEnter={() => setActivePostId(post.id)}
-        className="group block h-full rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
+        className="group block h-full rounded-[var(--radius-md)] outline-none"
       >
         <p className="text-xs font-medium text-muted-foreground">{post.dateLabel ?? "Undated"}</p>
         <h2 className="mt-3 line-clamp-3 text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-[hsl(var(--primary))]">

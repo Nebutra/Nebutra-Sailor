@@ -383,7 +383,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
       </section>
 
       {/* FAQ Section */}
-      <section className="relative z-10 mx-auto max-w-5xl px-4 pb-32 sm:px-6 lg:px-8">
+      <section className="relative z-10 mx-auto max-w-4xl px-4 pb-32 sm:px-6 lg:px-8">
         <div className="border-t border-border pt-14">
           <AnimateIn preset="emerge" inView>
             <div className="mx-auto max-w-2xl text-center">

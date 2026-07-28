@@ -232,8 +232,8 @@ import { Button, Input, Card, Dialog, Tabs } from "@nebutra/ui/components";
 import { PageHeader, EmptyState, Section, Container } from "@nebutra/ui/layout";
 import { Hero, Pricing, Features, FAQ, Footer, Navbar } from "@nebutra/ui/marketing";
 import { cn } from "@nebutra/ui/utils";
-import { Search, Settings } from "@nebutra/icons";
-import { ChevronRight } from "lucide-react"; // only when no Geist equivalent
+import { MagnifyingGlass, SettingsGear, ChevronRight } from "@nebutra/icons";
+// lucide-react is banned — use @nebutra/icons (Geist) only
 ```
 
 ### 5.2 Adding a new component

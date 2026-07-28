@@ -263,7 +263,7 @@ export function ActiveSessionsBlock({
 
       {state.error && <p className="mb-4 text-sm text-[hsl(var(--destructive))]">{state.error}</p>}
       {state.successMessage && (
-        <p className="mb-4 text-sm text-[var(--status-success,_#10b981)]" role="status">
+        <p className="mb-4 text-sm text-[var(--status-success)]" role="status">
           {state.successMessage}
         </p>
       )}

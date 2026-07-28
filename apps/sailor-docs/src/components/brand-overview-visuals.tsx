@@ -38,7 +38,7 @@ export function LogoShowcase() {
             className="p-0 rounded border-zinc-800 flex flex-col overflow-hidden"
             gradientColor="#1a1a1a"
             gradientFrom="hsl(var(--primary))"
-            gradientTo="#0BF1C3"
+            gradientTo="var(--brand-accent)"
           >
             <div className="h-40 w-full flex items-center justify-center p-8 bg-[#0a0a0a] relative">
               <Image
@@ -244,7 +244,7 @@ export function LogoShowcase() {
               <LogomarkSVG
                 width={48}
                 height={48}
-                className="text-[hsl(var(--primary))] dark:text-[#0BF1C3]"
+                className="text-[hsl(var(--primary))] dark:text-[var(--brand-accent)]"
                 aria-label="Nebutra logomark"
               />
               <div className="flex items-center gap-4 opacity-60">
@@ -269,7 +269,7 @@ export function LogoShowcase() {
                 <LogomarkSVG
                   width={16}
                   height={16}
-                  className="text-[#0BF1C3]"
+                  className="text-[var(--brand-accent)]"
                   aria-label="Cyan Nebutra logomark"
                 />
               </div>
@@ -357,10 +357,10 @@ export function BrandPhilosophyVisual() {
           gradientColor="hsl(var(--muted))"
         >
           {/* Subtle gradient orb */}
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[linear-gradient(135deg,hsl(var(--primary))_0%,#0BF1C3_100%)] opacity-10 dark:opacity-20 blur-[50px] rounded-full pointer-events-none" />
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[image:var(--brand-gradient-logo)] opacity-10 dark:opacity-20 blur-[50px] rounded-full pointer-events-none" />
 
           <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[hsl(var(--primary))]/20 bg-[hsl(var(--primary))]/5 shadow-sm mb-2 relative z-10">
-            <Sparkles className="h-6 w-6 text-[hsl(var(--primary))] dark:text-[#0BF1C3]" />
+            <Sparkles className="h-6 w-6 text-[hsl(var(--primary))] dark:text-[var(--brand-accent)]" />
           </div>
           <h4 className="text-xl font-semibold text-foreground relative z-10">Gradient Sign</h4>
           <p className="text-muted-foreground leading-relaxed text-base relative z-10">

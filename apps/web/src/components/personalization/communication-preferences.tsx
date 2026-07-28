@@ -15,10 +15,10 @@ import { useCallback, useState } from "react";
  *
  * Currently not wired to a live endpoint. Stored under `UserProfile.preferences`
  * JSONB (key namespace: `communication`). Activation path:
- *   1. GET /api/me/profile returns preferences.communication
- *   2. PATCH /api/me/profile with new preferences subtree
- *   3. Honor `taskAlerts` in /api/queue handler when enqueuing notifications
- *   4. Honor `productUpdates` / `ads` in marketing email worker
+ * 1. GET /api/me/profile returns preferences.communication
+ * 2. PATCH /api/me/profile with new preferences subtree
+ * 3. Honor `taskAlerts` in /api/queue handler when enqueuing notifications
+ * 4. Honor `productUpdates` / `ads` in marketing email worker
  *
  * Each row is a soft-typed key — adding a new preference does NOT require
  * a migration.
@@ -145,7 +145,7 @@ export function CommunicationPreferences({
                   aria-label={`Toggle ${row.label}`}
                   disabled={isBusy}
                   onClick={() => void handleToggle(row.key)}
-                  className={`relative mt-0.5 inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+                  className={`relative mt-0.5 inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
                     checked ? "bg-primary" : "bg-neutral-6"
                   }`}
                 >

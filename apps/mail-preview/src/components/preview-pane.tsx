@@ -168,7 +168,6 @@ function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
             onClick={() => onChange(t.id)}
             className={[
               "rounded-t-md px-3 py-2 text-sm transition-colors",
-              "focus:outline-none focus:ring-2 focus:ring-offset-1",
               active
                 ? "border-b-2 border-[hsl(var(--primary))] font-medium text-foreground"
                 : "border-b-2 border-transparent text-muted-foreground hover:text-foreground",

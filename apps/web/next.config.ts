@@ -13,8 +13,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 // Security headers applied to every route in the authenticated dashboard.
-// The dashboard uses stricter values than the landing page (e.g. X-Frame-Options
-// is DENY rather than SAMEORIGIN).
+// X-Frame-Options is DENY across apps (aligned with CSP frame-ancestors 'none').
 //
 // NOTE: Content-Security-Policy is NOT listed here — it is set dynamically by
 // the middleware (src/middleware.ts) with a per-request nonce so that we can

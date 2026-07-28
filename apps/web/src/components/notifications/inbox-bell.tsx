@@ -258,8 +258,7 @@ export function InboxBell({
       </button>
 
       {open ? (
-        <div
-          role="dialog"
+        <section
           aria-label="Notifications"
           data-testid="inbox-bell-panel"
           className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background shadow-lg sm:w-96"
@@ -289,7 +288,7 @@ export function InboxBell({
               View all
             </Link>
           </div>
-        </div>
+        </section>
       ) : null}
     </div>
   );

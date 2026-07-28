@@ -75,7 +75,7 @@ export function ProductDemoSection() {
                     key={tab.id}
                     aria-pressed={isActive}
                     onClick={() => setActiveId(tab.id)}
-                    className={`group relative flex items-start text-left py-6 transition-opacity duration-500 motion-reduce:duration-0 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
+                    className={`group relative flex items-start text-left py-6 transition-opacity duration-500 motion-reduce:duration-0 outline-none w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
                   >
                     {/* Step Node */}
                     <div className="relative z-10 mr-6 hidden size-14 shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none md:flex">

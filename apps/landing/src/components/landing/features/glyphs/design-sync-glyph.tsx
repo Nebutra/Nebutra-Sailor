@@ -10,10 +10,10 @@ const NODE_TONE_STYLES: Record<
   { bg: string; border: string; text: string; iconColor: string }
 > = {
   purple: {
-    bg: "color-mix(in oklab, #8b5cf6 12%, transparent)",
-    border: "color-mix(in oklab, #8b5cf6 35%, transparent)",
+    bg: "color-mix(in oklab, var(--brand-tertiary) 12%, transparent)",
+    border: "color-mix(in oklab, var(--brand-tertiary) 35%, transparent)",
     text: "hsl(var(--foreground))",
-    iconColor: "#8b5cf6",
+    iconColor: "var(--brand-tertiary)",
   },
   gray: {
     bg: "hsl(var(--muted))",

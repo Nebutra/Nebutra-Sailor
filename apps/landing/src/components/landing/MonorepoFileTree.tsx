@@ -72,7 +72,7 @@ function TreeNodes({
           {node.icon && featureHref ? (
             <Link
               aria-label={`${node.label} feature page`}
-              className="rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="rounded-[var(--radius-sm)]"
               href={featureHref}
               onClick={(event) => event.stopPropagation()}
             >
@@ -104,7 +104,7 @@ function TreeNodes({
           {featureHref && (
             <Link
               aria-label={`${node.label} feature detail`}
-              className="ml-2 flex size-6 shrink-0 items-center justify-center rounded-full border border-border bg-background/70 text-muted-foreground opacity-0 transition-[opacity,color,border-color] group-hover/trigger:opacity-100 hover:border-primary/50 hover:text-primary focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="ml-2 flex size-6 shrink-0 items-center justify-center rounded-full border border-border bg-background/70 text-muted-foreground opacity-0 transition-[opacity,color,border-color] group-hover/trigger:opacity-100 hover:border-primary/50 hover:text-primary focus-visible:opacity-100"
               href={featureHref}
               onClick={(event) => event.stopPropagation()}
             >
@@ -251,7 +251,7 @@ export function MonorepoFileTree() {
 
         <Link
           href={createPublicDocsUrl("development/project-structure")}
-          className="group/link mt-6 inline-flex w-fit items-center gap-2 rounded-full p-1 font-semibold text-muted-foreground text-sm transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+          className="group/link mt-6 inline-flex w-fit items-center gap-2 rounded-full p-1 font-semibold text-muted-foreground text-sm transition-colors hover:text-primary"
         >
           {t("cta")}
           <span className="text-primary transition-transform group-hover/link:translate-x-1">

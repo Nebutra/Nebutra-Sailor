@@ -30,7 +30,7 @@ description: "Info, warning, and error callout blocks that draw attention to imp
   <Tab title="Success">
     ```tsx
     <Admonition type="success" title="Deployment complete">
-      Your changes are live at <code>app.nebutra.io</code>.
+      Your changes are live at <code>app.nebutra.com</code>.
     </Admonition>
     ```
   </Tab>
@@ -92,7 +92,7 @@ const [visible, setVisible] = useState(true);
 ### Custom icon
 
 ```tsx
-import { ShieldAlert } from "lucide-react";
+import { ShieldOff as ShieldAlert } from "@nebutra/icons";
 
 <Admonition
   type="warning"

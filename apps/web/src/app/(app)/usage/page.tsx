@@ -401,7 +401,7 @@ async function UsageContent() {
 
 export default async function UsagePage() {
   return (
-    <section className="mx-auto w-full max-w-7xl" aria-label="Usage & Metering">
+    <section className="mx-auto w-full max-w-[1400px]" aria-label="Usage & Metering">
       <Suspense fallback={<LoadingState message="Loading usage metrics..." />}>
         <UsageContent />
       </Suspense>

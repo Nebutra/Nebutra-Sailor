@@ -44,7 +44,8 @@ interface BrandLogoProps {
 
 export function BrandLogo({
   className,
-  colorScheme = "auto",
+  // Retained for API stability; tone is token-driven and auto-flips via data-theme.
+  colorScheme: _colorScheme = "auto",
   imgClassName,
   variant = "horizontal",
   tenantLogoUrl,
@@ -69,9 +70,9 @@ export function BrandLogo({
     );
   }
 
-  // Inline SVG: fill=currentColor + text-brand-mark. Dark surfaces use
-  // text-white via parent chrome; no separate inverse asset file required.
-  const tone = colorScheme === "light" ? "text-brand-mark" : "text-brand-mark dark:text-white";
+  // Inline SVG: fill=currentColor + text-brand-mark (auto-flips under [data-theme="dark"]).
+  // Never reintroduce a manual dark-mode white text override — the token already flips.
+  const tone = "text-brand-mark";
 
   return (
     <span

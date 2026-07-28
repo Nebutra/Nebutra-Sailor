@@ -147,7 +147,7 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center gap-2 rounded-[var(--radius-md)] px-1.5 py-1 text-left text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1"
+        className="flex w-full items-center gap-2 rounded-[var(--radius-md)] px-1.5 py-1 text-left text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
       >
         <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2">
           {avatarNode}

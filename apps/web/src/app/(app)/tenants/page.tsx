@@ -94,7 +94,7 @@ async function TenantsContent() {
 
 export default async function TenantsPage() {
   return (
-    <section className="mx-auto w-full max-w-7xl" aria-label="Tenants">
+    <section className="mx-auto w-full max-w-[1400px]" aria-label="Tenants">
       <Suspense fallback={<LoadingState message="Loading tenant health..." />}>
         <TenantsContent />
       </Suspense>

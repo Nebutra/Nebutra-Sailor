@@ -922,7 +922,7 @@ function StartupBuilderHome({
           className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-10 blur-3xl"
           style={{ background: "hsl(var(--primary))" }}
         />
-        <div className="relative mx-auto flex w-full max-w-5xl flex-col px-5 py-16 sm:px-8">
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col px-5 py-16 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
               <Lightning className="size-3.5 text-primary" aria-hidden="true" />
@@ -946,10 +946,10 @@ function StartupBuilderHome({
 
             <div className="mx-auto mt-8 overflow-hidden rounded-3xl border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5">
               {/* Chromeless native textarea: the @nebutra/ui Textarea primitive is a
-                  bordered "field" (own border/shadow + inline radius) that leaves a
-                  seam inside this unified box. data-allow-native is the sanctioned
-                  opt-out for a genuinely seamless prompt surface (same as the file
-                  input above). */}
+ bordered "field" (own border/shadow + inline radius) that leaves a
+ seam inside this unified box. data-allow-native is the sanctioned
+ opt-out for a genuinely seamless prompt surface (same as the file
+ input above). */}
               <textarea
                 data-allow-native
                 aria-label="Startup proposition"
@@ -957,7 +957,7 @@ function StartupBuilderHome({
                 onChange={(event) => onThesisChange(event.target.value)}
                 disabled={disabled || isLoading}
                 placeholder="Describe the startup proposition to compile into a tenant-scoped company workspace..."
-                className="block min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 outline-none placeholder:text-neutral-9 focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
+                className="block min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
               />
               <div className="flex flex-col gap-3 px-4 pb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2">
@@ -1181,7 +1181,7 @@ function StartupBuilderWorkspace({
           <p className="text-xs font-semibold tracking-tight text-neutral-12">{item.title}</p>
           <p className="mt-1 text-xs leading-5 text-neutral-10">{item.body}</p>
           {/* Governed-run actions stay attached to the selected-run card — they
-              are real API calls (approve gate / execute run), not chrome. */}
+ are real API calls (approve gate / execute run), not chrome. */}
           {item.title.startsWith("Selected run") && selectedRun ? (
             <div className="mt-3 flex items-center justify-between gap-2">
               <Badge
@@ -1229,14 +1229,14 @@ function StartupBuilderWorkspace({
   return (
     <AnimateIn preset="fadeUp" className="h-[100dvh] min-h-0">
       {/* Fixed full-height app shell (Lovable-style): the workspace is exactly the
-          viewport, so the OUTER container never scrolls — only the inner panels
-          (thread list, code, preview) scroll within their own min-h-0 regions.
-          `h-full` percentage doesn't resolve through AppShell's overflow-y-auto
-          block <main>, so the dynamic-viewport height is pinned here instead. */}
+ viewport, so the OUTER container never scrolls — only the inner panels
+ (thread list, code, preview) scroll within their own min-h-0 regions.
+ `h-full` percentage doesn't resolve through AppShell's overflow-y-auto
+ block <main>, so the dynamic-viewport height is pinned here instead. */}
       <section className="h-[100dvh] min-h-0 overflow-hidden bg-neutral-1 text-neutral-12">
         <div className="grid h-full xl:grid-cols-[360px_minmax(0,1fr)]">
           {/* Unified conversational column: logo-toggle + company name header,
-              then the thread history + live plan + composer (one column). */}
+ then the thread history + live plan + composer (one column). */}
           <aside className="flex min-h-0 flex-col bg-neutral-2/40">
             <div className="flex min-w-0 items-center gap-2 px-4 py-3">
               <Button
@@ -1296,7 +1296,7 @@ function StartupBuilderWorkspace({
 
           <main className="flex min-h-0 min-w-0 flex-col bg-neutral-1">
             {/* Single unified top bar: project switcher dropdown + status on the
-                left, working-surface tabs on the right. */}
+ left, working-surface tabs on the right. */}
             <div className="flex h-14 items-center justify-end gap-3 px-4">
               <Tabs
                 value={activeSurface}

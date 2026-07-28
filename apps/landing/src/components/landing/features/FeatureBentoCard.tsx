@@ -46,7 +46,7 @@ export function FeatureBentoCard({
             href={href}
             target="_blank"
             rel="noreferrer"
-            className="group/link mt-8 flex w-fit items-center gap-3 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="group/link mt-8 flex w-fit items-center gap-3 rounded-full"
             aria-label={`${ctaLabel}: ${title}`}
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground transition-colors group-hover/link:border-foreground/80 group-hover/link:text-foreground dark:border-border/50 dark:group-hover/link:border-foreground/60">
