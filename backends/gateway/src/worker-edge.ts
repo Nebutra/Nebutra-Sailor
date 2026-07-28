@@ -129,10 +129,18 @@ export default {
   async fetch(request: Request, env: EdgeEnv): Promise<Response> {
     const url = new URL(request.url);
 
-    // Answered here, not forwarded: a health check that round-trips to the
-    // origin reports the origin's health, which the origin's own endpoint
-    // already does. This one says the edge is up.
-    if (url.pathname === "/misc/health" || url.pathname === "/api/misc/health") {
+    // Deliberately its own path, and deliberately NOT /api/misc/health.
+    //
+    // Answering the origin's health path here shadows it: monitoring pointed
+    // at api.nebutra.com/api/misc/health gets 200 from the edge even when the
+    // origin is entirely down, which is worse than having no check at all.
+    // That is not hypothetical — it is what hid a real outage, where every
+    // forwarded request was coming back as the marketing site while the health
+    // endpoint kept reporting ok.
+    //
+    // /api/misc/health now forwards like everything else, so it means what it
+    // says. This one answers only for the edge itself.
+    if (url.pathname === "/__edge/health") {
       return json({ status: "ok", layer: "edge" }, 200);
     }
 
