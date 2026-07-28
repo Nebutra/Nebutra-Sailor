@@ -24,6 +24,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import StyleDictionary from "style-dictionary";
+import { assertLadder, deriveBorderTier } from "./scripts/derive-border-tier.mjs";
 
 // Multi-mood oklch catalog removed (2026.07). Only light/dark modes remain.
 // Design-language swap lives in @nebutra/theme (Brand Packages / skins.css).
@@ -292,6 +293,29 @@ function registerLayeredNameTransform({ name, sources, nameForPath }) {
   return name;
 }
 
+/**
+ * Border-tier derivation.
+ *
+ * core.json ships 11 primitive stops; the functional layer needs 12 steps. The
+ * gap used to be closed by aliasing 6/7/8 to the same primitives as 3/4/5,
+ * which made the border tier identical to the component-background tier. Steps
+ * 6/7/8 are now computed from the scale's own 5 and 9 (or 10, for bright
+ * scales) in OKLab. See scripts/derive-border-tier.mjs for the rule.
+ *
+ * This runs as a global preprocessor, so it sees the merged core + semantic +
+ * theme tree and can resolve the `{color.…}` references the anchors point at.
+ * Deriving here rather than authoring literals in core.json is what makes the
+ * fix survive `scripts/brand-apply.ts`, which rewrites the three brand palettes
+ * wholesale over a fixed 11-stop list on every rebrand.
+ */
+StyleDictionary.registerPreprocessor({
+  name: "nebutra/derive-border-tier",
+  preprocessor: (tokens) => {
+    deriveBorderTier(tokens);
+    return tokens;
+  },
+});
+
 StyleDictionary.registerTransform({
   name: "color/nebutra/passthrough",
   type: "value",
@@ -330,7 +354,7 @@ const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/
 
   return {
     log: { verbosity: "default", warnings: "error" },
-    preprocessors: ["tokens-studio"],
+    preprocessors: ["tokens-studio", "nebutra/derive-border-tier"],
     include: sources.slice(0, -1),
     source: sources.slice(-1),
     platforms: {
@@ -446,6 +470,35 @@ for (const cfg of configs) {
   const sd = new StyleDictionary(cfg);
   await sd.hasInitialized;
   await sd.buildAllPlatforms();
+}
+
+// ─── Ladder invariant ────────────────────────────────────────────────────────
+//
+// Fail the build if the 12-step scales regress to the state this package was
+// fixed out of: duplicated steps, or a ramp (1…8) that is not monotonic in
+// OKLab lightness. Step 9 is exempt from monotonicity — on bright scales the
+// solid accent legitimately sits off the ramp.
+//
+// This is the guard that makes the derivation load-bearing rather than
+// decorative: if the preprocessor ever stops running, the placeholder `$value`
+// aliases collapse 6/7/8 onto step 5 and this throws instead of shipping.
+for (const mode of ["light", "dark"]) {
+  const css = await readFile(`build/css/${mode}.css`, "utf8");
+  const scales = new Map();
+  for (const [, scaleName, step, value] of css.matchAll(
+    /--(neutral|blue|cyan)-(\d{1,2}):\s*(#[0-9a-f]{6})\s*;/giu,
+  )) {
+    const key = scaleName.toLowerCase();
+    if (!scales.has(key)) scales.set(key, {});
+    scales.get(key)[step] = value;
+  }
+
+  const problems = [...scales].flatMap(([name, values]) => assertLadder(`${mode} ${name}`, values));
+  if (problems.length > 0) {
+    throw new Error(
+      `[design-tokens] 12-step scale ladder invariant violated:\n  ${problems.join("\n  ")}`,
+    );
+  }
 }
 
 const tsIndex = `${tsExportModes

@@ -42,9 +42,24 @@
       "3": { "$value": "{color.nebutra-neutral.800}", "$type": "color" },
       "4": { "$value": "{color.nebutra-neutral.700}", "$type": "color" },
       "5": { "$value": "{color.nebutra-neutral.600}", "$type": "color" },
-      "6": { "$value": "{color.nebutra-gray.900}", "$type": "color" },
-      "7": { "$value": "{color.nebutra-gray.800}", "$type": "color" },
-      "8": { "$value": "{color.nebutra-gray.700}", "$type": "color" },
+      "6": {
+        "$value": "{scale.neutral.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25, chroma forced to 0. The achromatic result is deliberate and preserves the documented intent of color.nebutra-gray ('used where blue undertone clashes — primarily dark-mode borders, dividers, elevation hairlines'). What was broken was the LIGHTNESS: gray-900/800/700 are darker than the slate background tier they sit above, so the border read as a hole rather than a hairline.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border", "chroma": 0 } }
+      },
+      "7": {
+        "$value": "{scale.neutral.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50, chroma 0.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border", "chroma": 0 } }
+      },
+      "8": {
+        "$value": "{scale.neutral.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75, chroma 0.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border", "chroma": 0 } }
+      },
       "9": { "$value": "{color.nebutra-neutral.400}", "$type": "color" },
       "10": { "$value": "{color.nebutra-neutral.300}", "$type": "color" },
       "11": { "$value": "{color.nebutra-neutral.200}", "$type": "color" },
@@ -56,9 +71,24 @@
       "3": { "$value": "{color.nebutra-blue.800}", "$type": "color" },
       "4": { "$value": "{color.nebutra-blue.700}", "$type": "color" },
       "5": { "$value": "{color.nebutra-blue.600}", "$type": "color" },
-      "6": { "$value": "{color.nebutra-blue.800}", "$type": "color" },
-      "7": { "$value": "{color.nebutra-blue.700}", "$type": "color" },
-      "8": { "$value": "{color.nebutra-blue.600}", "$type": "color" },
+      "6": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "7": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "8": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
       "9": { "$value": "{color.nebutra-blue.400}", "$type": "color" },
       "10": { "$value": "{color.nebutra-blue.300}", "$type": "color" },
       "11": { "$value": "{color.nebutra-blue.200}", "$type": "color" },
@@ -70,9 +100,24 @@
       "3": { "$value": "{color.nebutra-cyan.800}", "$type": "color" },
       "4": { "$value": "{color.nebutra-cyan.700}", "$type": "color" },
       "5": { "$value": "{color.nebutra-cyan.600}", "$type": "color" },
-      "6": { "$value": "{color.nebutra-cyan.800}", "$type": "color" },
-      "7": { "$value": "{color.nebutra-cyan.700}", "$type": "color" },
-      "8": { "$value": "{color.nebutra-cyan.600}", "$type": "color" },
+      "6": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "7": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "8": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
       "9": { "$value": "{color.nebutra-cyan.400}", "$type": "color" },
       "10": { "$value": "{color.nebutra-cyan.300}", "$type": "color" },
       "11": { "$value": "{color.nebutra-cyan.200}", "$type": "color" },
@@ -96,6 +141,11 @@
     "accent-foreground": { "$value": "228 95% 80%", "$type": "string" },
     "destructive": { "$value": "0 63% 38%", "$type": "string" },
     "destructive-foreground": { "$value": "210 18% 96%", "$type": "string" },
+    "destructive-strong": {
+      "$value": "0 80% 66%",
+      "$type": "string",
+      "$description": "Red as FOREGROUND on a dark surface. --destructive (0 63% 38%) is 2.15:1 on --card here — a fill only. Lightened to 5.18:1 on --card / 5.61:1 on --neutral-1, which sits alongside the light-mode 5.42:1 so red reads with the same weight in both themes. Use --destructive for fills with --destructive-foreground on top; use this for red text and icons."
+    },
     "success": { "$value": "142 60% 42%", "$type": "string" },
     "success-foreground": { "$value": "222 14% 9%", "$type": "string" },
     "warning": { "$value": "38 80% 52%", "$type": "string" },

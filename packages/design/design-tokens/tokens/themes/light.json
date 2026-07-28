@@ -25,19 +25,22 @@
         "$description": "component bg active"
       },
       "6": {
-        "$value": "{color.nebutra-neutral.200}",
+        "$value": "{scale.neutral.5}",
         "$type": "color",
-        "$description": "subtle border"
+        "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp step5 → step9 at t=0.25. The $value here is a placeholder anchor only; the preprocessor overwrites it.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
       },
       "7": {
-        "$value": "{color.nebutra-neutral.300}",
+        "$value": "{scale.neutral.5}",
         "$type": "color",
-        "$description": "default border"
+        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
       },
       "8": {
-        "$value": "{color.nebutra-neutral.400}",
+        "$value": "{scale.neutral.5}",
         "$type": "color",
-        "$description": "hovered border"
+        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
       },
       "9": {
         "$value": "{color.nebutra-neutral.500}",
@@ -66,9 +69,24 @@
       "3": { "$value": "{color.nebutra-blue.200}", "$type": "color" },
       "4": { "$value": "{color.nebutra-blue.300}", "$type": "color" },
       "5": { "$value": "{color.nebutra-blue.400}", "$type": "color" },
-      "6": { "$value": "{color.nebutra-blue.200}", "$type": "color" },
-      "7": { "$value": "{color.nebutra-blue.300}", "$type": "color" },
-      "8": { "$value": "{color.nebutra-blue.400}", "$type": "color" },
+      "6": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "7": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "8": {
+        "$value": "{scale.blue.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
       "9": {
         "$value": "{color.nebutra-blue.500}",
         "$type": "color",
@@ -84,9 +102,24 @@
       "3": { "$value": "{color.nebutra-cyan.200}", "$type": "color" },
       "4": { "$value": "{color.nebutra-cyan.300}", "$type": "color" },
       "5": { "$value": "{color.nebutra-cyan.400}", "$type": "color" },
-      "6": { "$value": "{color.nebutra-cyan.200}", "$type": "color" },
-      "7": { "$value": "{color.nebutra-cyan.300}", "$type": "color" },
-      "8": { "$value": "{color.nebutra-cyan.400}", "$type": "color" },
+      "6": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "subtle border — DERIVED: bright-scale fallback (|L9−L5| = 0.017 < 0.06), so the anchor is step 10, not step 9. OKLab lerp step5 → step10 at t=0.25.",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "7": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "default border — DERIVED: OKLab lerp step5 → step10 at t=0.50 (bright-scale fallback).",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
+      "8": {
+        "$value": "{scale.cyan.5}",
+        "$type": "color",
+        "$description": "hovered border — DERIVED: OKLab lerp step5 → step10 at t=0.75 (bright-scale fallback).",
+        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+      },
       "9": { "$value": "{color.nebutra-cyan.500}", "$type": "color" },
       "10": { "$value": "{color.nebutra-cyan.600}", "$type": "color" },
       "11": { "$value": "{color.nebutra-cyan.700}", "$type": "color" },
@@ -122,6 +155,11 @@
     },
     "destructive": { "$value": "0 84% 45%", "$type": "string" },
     "destructive-foreground": { "$value": "0 0% 100%", "$type": "string" },
+    "destructive-strong": {
+      "$value": "0 84% 45%",
+      "$type": "string",
+      "$description": "Red as FOREGROUND. In light mode --destructive already passes (5.42:1 on white), so this equals it; the token exists so consumers reference one name across themes. In DARK, --destructive is 0 63% 38% = 2.15:1 on --card, unreadable as text — see dark.json. Mirrors --warning-strong."
+    },
     "success": { "$value": "142 71% 29%", "$type": "string" },
     "success-foreground": { "$value": "0 0% 100%", "$type": "string" },
     "warning": { "$value": "38 92% 50%", "$type": "string" },

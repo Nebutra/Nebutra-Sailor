@@ -154,9 +154,9 @@
   --neutral-3: #f1f5f9; /** component bg default */
   --neutral-4: #e2e8f0; /** component bg hover */
   --neutral-5: #cbd5e1; /** component bg active */
-  --neutral-6: #e2e8f0; /** subtle border */
-  --neutral-7: #cbd5e1; /** default border */
-  --neutral-8: #94a3b8; /** hovered border */
+  --neutral-6: #b0bccb; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp step5 → step9 at t=0.25. The $value here is a placeholder anchor only; the preprocessor overwrites it. */
+  --neutral-7: #96a3b5; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
+  --neutral-8: #7d8ba0; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
   --neutral-9: #64748b; /** solid fill */
   --neutral-10: #475569; /** solid fill hover */
   --neutral-11: #334155; /** secondary text */
@@ -166,9 +166,9 @@
   --blue-3: #bac8ff;
   --blue-4: #91a7ff;
   --blue-5: #5c7cfa;
-  --blue-6: #bac8ff;
-  --blue-7: #91a7ff;
-  --blue-8: #5c7cfa;
+  --blue-6: #476efb; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25. */
+  --blue-7: #325efd; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
+  --blue-8: #1b4bfd; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
   --blue-9: #0033fe; /** solid fill — main brand */
   --blue-10: #002ad4;
   --blue-11: #0021ab;
@@ -178,9 +178,9 @@
   --cyan-3: #80ffe0;
   --cyan-4: #4dfcd4;
   --cyan-5: #1af7c8;
-  --cyan-6: #80ffe0;
-  --cyan-7: #4dfcd4;
-  --cyan-8: #1af7c8;
+  --cyan-6: #16ebbf; /** subtle border — DERIVED: bright-scale fallback (|L9−L5| = 0.017 < 0.06), so the anchor is step 10, not step 9. OKLab lerp step5 → step10 at t=0.25. */
+  --cyan-7: #12e0b5; /** default border — DERIVED: OKLab lerp step5 → step10 at t=0.50 (bright-scale fallback). */
+  --cyan-8: #0ed4ac; /** hovered border — DERIVED: OKLab lerp step5 → step10 at t=0.75 (bright-scale fallback). */
   --cyan-9: #0bf1c3;
   --cyan-10: #09c9a3;
   --cyan-11: #07a183;
@@ -201,6 +201,7 @@
   --accent-foreground: 228 85% 56%; /** Softer brand blue — desaturated to match --primary, avoids 100% saturation glare on focus/accent */
   --destructive: 0 84% 45%;
   --destructive-foreground: 0 0% 100%;
+  --destructive-strong: 0 84% 45%; /** Red as FOREGROUND. In light mode --destructive already passes (5.42:1 on white), so this equals it; the token exists so consumers reference one name across themes. In DARK, --destructive is 0 63% 38% = 2.15:1 on --card, unreadable as text — see dark.json. Mirrors --warning-strong. */
   --success: 142 71% 29%;
   --success-foreground: 0 0% 100%;
   --warning: 38 92% 50%;
@@ -452,9 +453,9 @@
   --neutral-3: #1e293b;
   --neutral-4: #334155;
   --neutral-5: #475569;
-  --neutral-6: #171717;
-  --neutral-7: #262626;
-  --neutral-8: #404040;
+  --neutral-6: #666666; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25, chroma forced to 0. The achromatic result is deliberate and preserves the documented intent of color.nebutra-gray ('used where blue undertone clashes — primarily dark-mode borders, dividers, elevation hairlines'). What was broken was the LIGHTNESS: gray-900/800/700 are darker than the slate background tier they sit above, so the border read as a hole rather than a hairline. */
+  --neutral-7: #7a7a7a; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50, chroma 0. */
+  --neutral-8: #8d8d8d; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75, chroma 0. */
   --neutral-9: #94a3b8;
   --neutral-10: #cbd5e1;
   --neutral-11: #e2e8f0;
@@ -464,9 +465,9 @@
   --blue-3: #001882;
   --blue-4: #0021ab;
   --blue-5: #002ad4;
-  --blue-6: #001882;
-  --blue-7: #0021ab;
-  --blue-8: #002ad4;
+  --blue-6: #1943de; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25. */
+  --blue-7: #3058e7; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
+  --blue-8: #466af1; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
   --blue-9: #5c7cfa;
   --blue-10: #91a7ff;
   --blue-11: #bac8ff;
@@ -476,9 +477,9 @@
   --cyan-3: #057963;
   --cyan-4: #07a183;
   --cyan-5: #09c9a3;
-  --cyan-6: #057963;
-  --cyan-7: #07a183;
-  --cyan-8: #09c9a3;
+  --cyan-6: #0ed4ac; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25. */
+  --cyan-7: #12e0b5; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
+  --cyan-8: #16ebbf; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
   --cyan-9: #1af7c8;
   --cyan-10: #4dfcd4;
   --cyan-11: #80ffe0;
@@ -499,6 +500,7 @@
   --accent-foreground: 228 95% 80%;
   --destructive: 0 63% 38%;
   --destructive-foreground: 210 18% 96%;
+  --destructive-strong: 0 80% 66%; /** Red as FOREGROUND on a dark surface. --destructive (0 63% 38%) is 2.15:1 on --card here — a fill only. Lightened to 5.18:1 on --card / 5.61:1 on --neutral-1, which sits alongside the light-mode 5.42:1 so red reads with the same weight in both themes. Use --destructive for fills with --destructive-foreground on top; use this for red text and icons. */
   --success: 142 60% 42%;
   --success-foreground: 222 14% 9%;
   --warning: 38 80% 52%;
