@@ -32,7 +32,7 @@ export function FeaturedDashboardSection({
 }: FeaturedDashboardSectionProps) {
   return (
     <section className={cn("bg-background py-24", className)}>
-      <div className="mx-auto grid max-w-7xl grid-cols-1 px-6 md:grid-cols-2 md:grid-rows-2">
+      <div className="mx-auto grid max-w-[var(--container-wide)] grid-cols-1 px-6 md:grid-cols-2 md:grid-rows-2">
         {/* Top Left */}
         <div className="overflow-hidden rounded-none border bg-muted p-4">{topLeft}</div>
 

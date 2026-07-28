@@ -158,7 +158,7 @@ export default function CTAWithVerticalMarquee({
         className,
       )}
     >
-      <div className="w-full max-w-7xl animate-fade-in-up">
+      <div className="w-full max-w-[var(--container-wide)] animate-fade-in-up">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           {/* Left Content */}
           <div className="space-y-8 max-w-xl">

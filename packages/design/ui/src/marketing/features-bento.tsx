@@ -85,7 +85,7 @@ export function FeaturesBentoSection({
 
   return (
     <section className={cn("bg-muted/30 py-16 md:py-32 dark:bg-transparent", className)}>
-      <div className="mx-auto max-w-3xl px-6 lg:max-w-5xl">
+      <div className="mx-auto max-w-3xl px-6 lg:max-w-[var(--container-content)]">
         <div className="relative">
           <div className="relative z-10 grid grid-cols-6 gap-3">
             {/* Stat Card */}

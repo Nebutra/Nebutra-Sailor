@@ -177,7 +177,7 @@ export function TeamChat({
   return (
     <div
       className={cn(
-        "w-full max-w-5xl mx-auto p-6 bg-white dark:bg-black rounded-[var(--radius-3xl)] shadow-lg flex flex-col h-[550px] border border-border",
+        "w-full max-w-[var(--container-content)] mx-auto p-6 bg-white dark:bg-black rounded-[var(--radius-3xl)] shadow-lg flex flex-col h-[550px] border border-border",
         className,
       )}
     >

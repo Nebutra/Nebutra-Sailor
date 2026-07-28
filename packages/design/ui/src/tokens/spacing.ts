@@ -46,10 +46,17 @@ export const semanticSpacing = {
 /**
  * Container width tokens
  */
+/**
+ * Points at the container contract in @nebutra/tokens rather than restating a
+ * second scale in Tailwind steps. Before 2026-07-28 these were `max-w-5xl`
+ * (1024px) and `max-w-7xl` (1280px), which contradicted the documented
+ * contract (text 896 / content 1152 / wide 1400) that every consumer was
+ * told to follow.
+ */
 export const containerWidths = {
-  narrow: "max-w-3xl", // 768px - FAQ, focused content
-  medium: "max-w-5xl", // 1024px - Architecture, Pricing
-  wide: "max-w-7xl", // 1280px - Full layouts, Bento
+  narrow: "max-w-[var(--container-text)]", // 896px - FAQ, focused reading
+  medium: "max-w-[var(--container-content)]", // 1152px - Architecture, Pricing
+  wide: "max-w-[var(--container-wide)]", // 1400px - Full layouts, Bento
   full: "max-w-full",
 } as const;
 

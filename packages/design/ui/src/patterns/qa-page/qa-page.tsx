@@ -146,7 +146,7 @@ export function QAPage({
   }, [answers]);
 
   return (
-    <div className={cn("mx-auto w-full max-w-5xl p-4 md:p-6", className)}>
+    <div className={cn("mx-auto w-full max-w-[var(--container-content)] p-4 md:p-6", className)}>
       {/* ── Header ────────────────────────────────────────────────────── */}
       <header className="mb-6">
         <h1 className="mb-4 font-bold text-2xl leading-tight text-foreground">{question.title}</h1>

@@ -3,7 +3,7 @@ import { MagicCard } from "@nebutra/ui/primitives";
 
 export function MagicCardDemo() {
   return (
-    <div className="md:grid-cols-3 gap-6 max-w-5xl p-4 md:p-8 mx-auto grid w-full grid-cols-1">
+    <div className="md:grid-cols-3 gap-6 max-w-[var(--container-content)] p-4 md:p-8 mx-auto grid w-full grid-cols-1">
       <MagicCard className="p-8 h-64 flex cursor-pointer flex-col justify-between border">
         <div>
           <Sparkles className="h-8 w-8 text-blue-500 mb-4" />

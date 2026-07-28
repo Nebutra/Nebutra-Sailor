@@ -76,7 +76,7 @@ export function Hero({
 
         <div
           className={cn(
-            "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full",
+            "mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 lg:px-8 relative z-10 w-full",
             variant === "split"
               ? "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center"
               : "flex flex-col items-center",

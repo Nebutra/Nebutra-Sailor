@@ -60,7 +60,7 @@ export function GridTestimonials({
         <div className="bg-[radial-gradient(50%_50%_at_50%_50%,hsl(var(--foreground)/0.04)_0,hsl(var(--foreground)/0.01)_80%,transparent_100%)] absolute top-0 left-0 h-[320px] w-[60px] -translate-y-[87.5px] -rotate-45 rounded-full" />
       </div>
 
-      <div className="mx-auto max-w-5xl space-y-8">
+      <div className="mx-auto max-w-[var(--container-content)] space-y-8">
         {showHeader && (
           <div className="flex flex-col gap-2">
             <h2 className="text-3xl font-bold tracking-wide text-balance md:text-4xl lg:text-5xl">

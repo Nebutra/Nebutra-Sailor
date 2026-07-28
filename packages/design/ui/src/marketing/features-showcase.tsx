@@ -52,7 +52,7 @@ export function FeaturesShowcase({
 }: FeaturesShowcaseProps) {
   return (
     <section className={cn("py-16 md:py-32", className)}>
-      <div className="mx-auto max-w-5xl space-y-12 px-6">
+      <div className="mx-auto max-w-[var(--container-content)] space-y-12 px-6">
         {/* Header */}
         <div className="relative z-10 grid items-center gap-4 md:grid-cols-2 md:gap-12">
           <h2 className="text-4xl font-semibold">{title}</h2>

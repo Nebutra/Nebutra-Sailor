@@ -88,7 +88,7 @@ export interface FeatureCardsSectionProps {
 export function FeatureCardsSection({ cards, className }: FeatureCardsSectionProps) {
   return (
     <section className={cn("bg-muted py-16 dark:bg-transparent md:py-32", className)}>
-      <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl">
+      <div className="mx-auto max-w-2xl px-6 lg:max-w-[var(--container-content)]">
         <div className="mx-auto grid gap-4 lg:grid-cols-2">
           {cards.map((card, index) => (
             <FeatureCard key={index} className={cn(card.fullWidth && "p-6 lg:col-span-2")}>

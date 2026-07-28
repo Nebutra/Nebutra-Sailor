@@ -23,11 +23,16 @@ import { cn } from "../utils/cn";
 type SectionSize = "sm" | "md" | "lg" | "xl" | "full";
 type SectionSpacing = "sm" | "md" | "lg" | "xl";
 
+/**
+ * Sizes resolve to the container contract in @nebutra/tokens. `lg` keeps its
+ * 1152px width (max-w-6xl was already the content width); `md` and `xl` moved
+ * off max-w-5xl / max-w-7xl, which the contract forbids.
+ */
 const maxWidthMap: Record<SectionSize, string> = {
-  sm: "max-w-3xl",
-  md: "max-w-5xl",
-  lg: "max-w-6xl",
-  xl: "max-w-7xl",
+  sm: "max-w-3xl", // 768px
+  md: "max-w-[var(--container-text)]", // 896px
+  lg: "max-w-[var(--container-content)]", // 1152px
+  xl: "max-w-[var(--container-wide)]", // 1400px
   full: "max-w-none",
 };
 

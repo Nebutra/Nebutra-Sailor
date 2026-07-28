@@ -66,7 +66,7 @@ export function Footer({
 }: FooterProps) {
   return (
     <footer id={id} className={cn(footerVariants({ density }), className)}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 xl:gap-12 mb-16 md:mb-24">
           {/* Brand & Social Column */}

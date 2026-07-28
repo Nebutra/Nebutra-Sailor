@@ -53,7 +53,7 @@ export function CTA({
   return (
     <section
       id={id}
-      className={cn(className, "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}
+      className={cn(className, "w-full max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 lg:px-8")}
       data-density={density}
     >
       <AnimateIn preset="scale">

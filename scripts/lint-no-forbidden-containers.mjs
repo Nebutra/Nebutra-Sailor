@@ -16,7 +16,25 @@
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
+/**
+ * Scanned trees. `packages/design` joined on 2026-07-28: the library shipped
+ * both forbidden widths in 24 places — including its own container scales in
+ * tokens/spacing.ts and layouts/SectionContainer.tsx — while app code had none.
+ * A width baked into a DS section container reaches every page that uses it.
+ */
+const SCAN_ROOTS = ["apps", "packages/design"];
+
+/**
+ * Files that legitimately contain the forbidden strings because they *state the
+ * rule* rather than apply it: the design-sync prose that tells a design tool
+ * what not to emit, and the test asserting that prose.
+ */
+const ALLOWLIST = [/\/serialize\/to-design-md\.prose\.ts$/, /\/__tests__\/to-design-md\.test\.ts$/];
+
 const BAD_RE = /\bmax-w-(?:5xl|7xl)\b/;
+
+/** Line comments and JSDoc/block-comment bodies. */
+const COMMENT_RE = /^\s*(?:\/\/|\/\*|\*)/;
 
 let filesRaw = "";
 try {
@@ -25,12 +43,13 @@ try {
       "rg -l --glob '*.{tsx,ts,jsx,js}' --glob '!**/node_modules/**' " +
         "--glob '!**/.next/**' --glob '!**/.open-next/**' --glob '!**/.turbo/**' " +
         "--glob '!**/dist/**' --glob '!**/build/**' " +
-        "'max-w-(5xl|7xl)' apps",
+        `'max-w-(5xl|7xl)' ${SCAN_ROOTS.join(" ")}`,
       { encoding: "utf-8" },
     ).trim();
   } catch {
     filesRaw = execSync(
-      "grep -rlE 'max-w-(5xl|7xl)' --include='*.tsx' --include='*.ts' --include='*.jsx' --include='*.js' apps 2>/dev/null " +
+      "grep -rlE 'max-w-(5xl|7xl)' --include='*.tsx' --include='*.ts' --include='*.jsx' --include='*.js' " +
+        `${SCAN_ROOTS.join(" ")} 2>/dev/null ` +
         "| grep -v node_modules | grep -v '/.next/' | grep -v '/.open-next/' " +
         "| grep -v '/dist/' | grep -v '/build/'",
       { encoding: "utf-8" },
@@ -40,12 +59,19 @@ try {
   filesRaw = "";
 }
 
-const files = filesRaw.split("\n").filter(Boolean);
+const files = filesRaw
+  .split("\n")
+  .filter(Boolean)
+  .filter((f) => !ALLOWLIST.some((re) => re.test(f)));
 const violations = [];
 
 for (const file of files) {
   const lines = readFileSync(file, "utf-8").split("\n");
   lines.forEach((line, i) => {
+    // Skip comment lines. A migration note that names the forbidden width in
+    // order to explain what it replaced is documentation, not a violation —
+    // flagging it teaches people to delete the explanation.
+    if (COMMENT_RE.test(line)) return;
     if (BAD_RE.test(line)) {
       violations.push({ file, line: i + 1, text: line.trim().slice(0, 200) });
     }
@@ -53,7 +79,9 @@ for (const file of files) {
 }
 
 if (violations.length === 0) {
-  process.stdout.write("✅ No forbidden max-w-5xl / max-w-7xl containers in apps/**.\n");
+  process.stdout.write(
+    `✅ No forbidden max-w-5xl / max-w-7xl containers in ${SCAN_ROOTS.map((r) => `${r}/**`).join(" + ")}.\n`,
+  );
   process.exit(0);
 }
 

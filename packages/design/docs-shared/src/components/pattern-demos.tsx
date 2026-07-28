@@ -215,7 +215,7 @@ export function GlassmorphismDemo({ lang = "en" }: { lang?: string }) {
         />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center gap-12 p-12 max-w-5xl w-full mx-auto">
+      <div className="relative z-10 flex flex-col items-center gap-12 p-12 max-w-[var(--container-content)] w-full mx-auto">
         <div className="flex flex-col items-center gap-4 text-center">
           <h2 className="text-3xl font-medium tracking-tight text-white">{texts.heading}</h2>
           <p className="text-zinc-400 max-w-md">{texts.subheading}</p>

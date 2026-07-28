@@ -19,8 +19,8 @@ const faqVariants = cva("w-full mx-auto", {
   variants: {
     layout: {
       accordion: "max-w-3xl flex flex-col",
-      "two-column": "grid md:grid-cols-2 gap-8 max-w-5xl",
-      cards: "grid sm:grid-cols-2 gap-6 max-w-5xl",
+      "two-column": "grid md:grid-cols-2 gap-8 max-w-[var(--container-content)]",
+      cards: "grid sm:grid-cols-2 gap-6 max-w-[var(--container-content)]",
     },
     density: {
       compact: "mt-8 gap-4",

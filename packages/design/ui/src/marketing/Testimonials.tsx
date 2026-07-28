@@ -9,18 +9,21 @@ import type { Testimonial, TestimonialsProps } from "./types";
 const EMPTY_TESTIMONIALS: Testimonial[] = [];
 const RATING_STARS = [1, 2, 3, 4, 5] as const;
 
-const testimonialsVariants = cva("w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", {
-  variants: {
-    density: {
-      compact: "py-12",
-      normal: "py-16 md:py-24",
-      spacious: "py-24 md:py-32",
+const testimonialsVariants = cva(
+  "w-full mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 lg:px-8",
+  {
+    variants: {
+      density: {
+        compact: "py-12",
+        normal: "py-16 md:py-24",
+        spacious: "py-24 md:py-32",
+      },
+    },
+    defaultVariants: {
+      density: "normal",
     },
   },
-  defaultVariants: {
-    density: "normal",
-  },
-});
+);
 
 const cardVariants = cva(
   "relative flex flex-col p-6 md:p-8 rounded-[var(--radius-3xl)] transition-[background-color,border-color,box-shadow,transform] h-full",

@@ -22,18 +22,21 @@ function getPricingFeatureKey(planId: string, feature: PricingFeature) {
   return `${planId}-${feature.included ? "included" : "excluded"}-${feature.text}`;
 }
 
-const pricingVariants = cva("w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", {
-  variants: {
-    density: {
-      compact: "py-12",
-      normal: "py-16 md:py-24",
-      spacious: "py-24 md:py-32",
+const pricingVariants = cva(
+  "w-full mx-auto max-w-[var(--container-content)] px-4 sm:px-6 lg:px-8",
+  {
+    variants: {
+      density: {
+        compact: "py-12",
+        normal: "py-16 md:py-24",
+        spacious: "py-24 md:py-32",
+      },
+    },
+    defaultVariants: {
+      density: "normal",
     },
   },
-  defaultVariants: {
-    density: "normal",
-  },
-});
+);
 
 const cardVariants = cva(
   "relative flex flex-col p-8 rounded-[var(--radius-3xl)] border transition-[background-color,border-color,box-shadow,transform] h-full bg-background",
@@ -231,7 +234,7 @@ export function Pricing({
             </div>
           </AnimateIn>
           {/* Comparison table can be implemented as a separate component */}
-          <div className="max-w-5xl mx-auto border border-border rounded-[var(--radius-2xl)] p-8 bg-muted flex items-center justify-center min-h-[200px] text-muted-foreground text-sm">
+          <div className="max-w-[var(--container-content)] mx-auto border border-border rounded-[var(--radius-2xl)] p-8 bg-muted flex items-center justify-center min-h-[200px] text-muted-foreground text-sm">
             Detailed comparison matrix coming soon.
           </div>
         </div>

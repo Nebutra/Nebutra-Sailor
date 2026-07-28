@@ -63,7 +63,7 @@ export function Globe({
   return (
     <div
       className={cn(
-        "relative w-full max-w-5xl mx-auto overflow-hidden rounded-[var(--radius-3xl)] p-8 md:p-12 border backdrop-blur",
+        "relative w-full max-w-[var(--container-content)] mx-auto overflow-hidden rounded-[var(--radius-3xl)] p-8 md:p-12 border backdrop-blur",
         // Light mode
         "bg-white/90 border-neutral-200 text-black",
         // Dark mode

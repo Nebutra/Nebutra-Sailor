@@ -56,7 +56,12 @@ export interface BentoGridProps {
  */
 export function BentoGrid({ items, className }: BentoGridProps) {
   return (
-    <div className={cn("grid grid-cols-1 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto", className)}>
+    <div
+      className={cn(
+        "grid grid-cols-1 md:grid-cols-3 gap-3 p-4 max-w-[var(--container-wide)] mx-auto",
+        className,
+      )}
+    >
       {items.map((item, index) => (
         <BentoCard key={index} item={item} />
       ))}

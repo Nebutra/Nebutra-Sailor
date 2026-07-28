@@ -39,7 +39,7 @@ export interface FeaturesGridProps {
 export function FeaturesGrid({ features, gridSize = 20, className }: FeaturesGridProps) {
   return (
     <div className={cn("py-20 lg:py-40", className)}>
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-[var(--container-wide)] grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-2 lg:grid-cols-4">
         {features.map((feature) => (
           <div
             key={feature.title}
