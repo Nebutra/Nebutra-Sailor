@@ -264,31 +264,31 @@
           "description": "Pertanyaan terkait definisi batas open-source, audit kepatuhan perusahaan, dan ketentuan kontrak."
         },
         "privacy": {
-          "title": "Data Center Privacy",
+          "title": "Privasi Pusat Data",
           "description": "Verifikasi teknis dan arahan kepatuhan terkait GDPR serta undang-undang perlindungan data internasional berikutnya."
         },
         "security": {
-          "title": "Security Disclosures",
+          "title": "Pengungkapan Keamanan",
           "description": "Kirim laporan reproduksi teknis mengenai kerentanan perangkat lunak potensial secara aman langsung ke tim infrastruktur kami."
         }
       },
-      "formTitle": "Submission Portal",
+      "formTitle": "Portal Pengajuan",
       "form": {
-        "name": "Submitter Designation",
-        "email": "Official Email Address",
-        "company": "Affiliated Organization",
-        "category": "Domain of Requirement",
+        "name": "Jabatan Pengaju",
+        "email": "Alamat Email Resmi",
+        "company": "Organisasi Terkait",
+        "category": "Bidang Kebutuhan",
         "categories": {
-          "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
-          "support": "Developer Assistance",
-          "legal": "Legal & Compliance Boundaries",
-          "privacy": "Data Processing Policies",
-          "partnership": "Ecosystem Integrations",
-          "press": "Public Relations"
+          "general": "Konsultasi Perusahaan",
+          "sales": "Lisensi & Arsitektur",
+          "support": "Bantuan Pengembang",
+          "legal": "Batas Legal & Kepatuhan",
+          "privacy": "Kebijakan Pemrosesan Data",
+          "partnership": "Integrasi Ekosistem",
+          "press": "Hubungan Publik"
         },
-        "subject": "Core Issue Summary",
-        "message": "Detailed Technical/Commercial Specifications",
+        "subject": "Ringkasan Masalah Utama",
+        "message": "Spesifikasi Teknis/Komersial Detail",
         "submit": "Kirim ke Backend",
         "privacyNotice": "Melakukan permintaan jaringan ini menandakan telah membaca dan menyetujui",
         "privacyLink": "Infrastruktur Privasi Sistemik",

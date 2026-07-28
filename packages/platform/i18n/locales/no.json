@@ -1141,7 +1141,7 @@
           "description": "Stripe, Slack, webhooks, køer og mer."
         },
         "ai": {
-          "label": "Open Sailor AI",
+          "label": "Åpne Sailor AI",
           "description": "Prøv chat, data eller arbeidsflytmodus."
         }
       }

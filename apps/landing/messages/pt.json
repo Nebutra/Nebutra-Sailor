@@ -15,7 +15,7 @@
     "getStarted": "Começar",
     "changelog": "Changelog",
     "news": "Notícias",
-    "designDocs": "Design System",
+    "designDocs": "Sistema de Design",
     "avatarMenu": {
       "ariaLabel": "Menu da conta",
       "loadingName": "Carregando…",
@@ -1468,7 +1468,7 @@
     "flowTokensDesc": "Variáveis CSS, escalas de 12 passos, modo escuro",
     "flowTheme": "Tema",
     "flowThemeDesc": "Multi-tema oklch, 6 predefinições, color-mix()",
-    "flowUI": "UI",
+    "flowUI": "IU",
     "flowUIDesc": "Componentes, Storybook, Chromatic",
     "card1Title": "Escalas de Cor de 12 Passos",
     "card1Desc": "Escala semântica alinhada ao Geist: fundos (1-2), estados (3-5), bordas (6-8), preenchimentos (9-10), texto (11-12).",
@@ -1612,7 +1612,7 @@
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "Perguntas frequentes",
       "title": "Perguntas, respondidas direto ao ponto",
       "subtitle": "Tudo o que você precisa saber antes de lançar.",
       "items": {

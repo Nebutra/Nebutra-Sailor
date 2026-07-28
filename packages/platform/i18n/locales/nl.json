@@ -1,6 +1,6 @@
 {
   "admin": {
-    "title": "Admin",
+    "title": "Beheer",
     "description": "Superadminpaneel — beheer gebruikers, organisaties en systeemstatus.",
     "nav": {
       "overview": "Overzicht",

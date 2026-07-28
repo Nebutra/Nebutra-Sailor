@@ -1,6 +1,6 @@
 {
   "admin": {
-    "title": "Admin",
+    "title": "Administrace",
     "description": "Panel superadmina — spravujte uživatele, organizace a stav systému.",
     "nav": {
       "overview": "Přehled",

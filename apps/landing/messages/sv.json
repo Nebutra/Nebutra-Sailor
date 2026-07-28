@@ -1144,7 +1144,7 @@
         "desc": "Fullt typad ORM med Row-Level Security (RLS)-policyer inbakade nativt."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Clerk Multi-Tenant / Egna identiteter",
         "desc": "SOC2-klar autentiseringsgateway som stöder B2B-organisationsskift och RBAC."
       }
     },

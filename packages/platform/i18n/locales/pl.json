@@ -912,7 +912,7 @@
         "title": "Zmniejsz ruchy",
         "description": "Zmniejsz animacje lub dopasuj do preferencji systemu.",
         "label": "Preferencje ruchu",
-        "system": "System",
+        "system": "Systemowy",
         "on": "Włączone",
         "off": "Wyłączone"
       },

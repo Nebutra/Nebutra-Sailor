@@ -1466,9 +1466,9 @@
     "flowBrandDesc": "Nguyên tố màu, gradient, ngôn ngữ chuyển động",
     "flowTokens": "Token",
     "flowTokensDesc": "Biến CSS, thang 12 bước, chế độ tối",
-    "flowTheme": "Theme",
+    "flowTheme": "Giao diện",
     "flowThemeDesc": "Đa theme oklch, 6 preset, color-mix()",
-    "flowUI": "UI",
+    "flowUI": "Giao diện người dùng",
     "flowUIDesc": "Component, Storybook, Chromatic",
     "card1Title": "Thang Màu 12 Bước",
     "card1Desc": "Thang ngữ nghĩa theo Geist: nền (1-2), trạng thái (3-5), viền (6-8), điền (9-10), văn bản (11-12).",
@@ -1612,7 +1612,7 @@
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "Câu hỏi thường gặp",
       "title": "Câu hỏi, trả lời thẳng",
       "subtitle": "Tất cả những gì bạn cần biết trước khi ra mắt.",
       "items": {

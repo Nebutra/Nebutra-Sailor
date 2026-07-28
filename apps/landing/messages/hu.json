@@ -344,7 +344,7 @@
       },
       "typesTitle": "A használt cookie-k típusai",
       "tableHeaders": {
-        "cookie": "Cookie",
+        "cookie": "Süti",
         "provider": "Szolgáltató",
         "purpose": "Cél",
         "duration": "Időtartam"
@@ -797,7 +797,7 @@
     },
     "refund": {
       "title": "Tranzakciós rendellenességi protokollok — {brandName}",
-      "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
+      "description": "Részletes szabályok a pontos tőke-visszafizetési paraméterekre vonatkozóan a különböző szerkezeti együttműködési modellek esetén.",
       "heading": "Vitatott ügyek végrehajtási keretrendszere",
       "effectiveDate": "Érvénybe lépés dátuma",
       "lastUpdated": "Utolsó frissítés dátuma",
@@ -1538,7 +1538,7 @@
       },
       "enterprise": {
         "badge": "Évi 30 000 USD-től",
-        "title": "Enterprise",
+        "title": "Vállalati",
         "subtitle": "Beszerzésre kész",
         "description": "Szervezeteknek, amelyeknek jogi, biztonsági vagy beszerzési felülvizsgálata aláírásképes felet igényel.",
         "features": {

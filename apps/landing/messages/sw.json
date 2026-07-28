@@ -141,7 +141,7 @@
       "about": "Kuhusu",
       "showcase": "Onyesho",
       "blog": "Blogu",
-      "playbook": "Playbook",
+      "playbook": "Kitabu cha Mwongozo",
       "changelog": "Changelog",
       "roadmap": "Ramani ya Njia",
       "docs": "Nyaraka",
@@ -344,7 +344,7 @@
       },
       "typesTitle": "Aina za Cookies Tunazotumia",
       "tableHeaders": {
-        "cookie": "Cookie",
+        "cookie": "Kuki",
         "provider": "Mtoa Huduma",
         "purpose": "Lengo",
         "duration": "Muda"
@@ -1308,16 +1308,16 @@
       "ai_category": "AI & Akili",
       "ai_f1_title": "Makamilisho ya mazungumzo ya multi-model",
       "ai_f1_desc": "Rusha maombi kwenda kwa Anthropic, OpenAI, Google, au modeli zako mwenyewe za fine-tuned. Streaming, vision, na function calling zinapatikana out of the box.",
-      "ai_f2_title": "Semantic embeddings",
+      "ai_f2_title": "Uingizo wa maana (semantic embeddings)",
       "ai_f2_desc": "Tengeneza na uhifadhi vector embeddings kwa pgvector. Nguvu semantic search, RAG pipelines, na recommendation engines.",
-      "ai_f3_title": "AI usage metering",
+      "ai_f3_title": "Kipimo cha matumizi ya AI",
       "ai_f3_desc": "Quotas kwa kila plan na usage tracking — pima AI tokens, API calls, na storage dhidi ya ClickHouse-backed real-time aggregates.",
       "multi_category": "Jukwaa la Multi-tenant",
       "multi_f1_title": "Utohozi wa kiwango cha shirika",
       "multi_f1_desc": "Usalama wa row-level katika Postgres huhakikisha tenants hawawezi kufikia data ya wengine—inafanywa katika tabaka la database, si tu programu.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
+      "multi_f2_title": "Uthibitisho wa watoa huduma wengi (Clerk / Better Auth / NextAuth / Supabase)",
       "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, n.k.) pamoja na email/password na magic-link—badilisha kati ya Clerk, Better Auth, NextAuth, au Supabase Auth kupitia env var moja.",
-      "multi_f3_title": "Automatic tenant provisioning",
+      "multi_f3_title": "Uandishi wa kodi wa wafadhili kwa utaratibu",
       "multi_f3_desc": "Polepole shirika jipya linajisajili kupitia Clerk, tunatengeneza API key yao ya kwanza na kutuma barua pepe ya karibisha iliyobrand—hatua za mkono sifuri.",
       "dx_category": "Uzoefu wa Mtaalamu wa Programu",
       "dx_f1_title": "Ufunguo za API zilizohashwa",
@@ -1462,19 +1462,19 @@
     "badge": "MIFUMO YA MUONEKANO",
     "headline": "Sanaa 4 za utawala wa muonekano.",
     "subheadline": "Kutoka kwa vigezo vya brand hadi tokens za runtime hadi injini ya multi-theme hadi vipengele vilivyodhibitiwa — si shadcn tu na Tailwind.",
-    "flowBrand": "Brand",
+    "flowBrand": "Chapa",
     "flowBrandDesc": "Vigezo vya rangi, gradients, lugha ya mwendo",
     "flowTokens": "Tokens",
     "flowTokensDesc": "Vigezo vya CSS, viwango vya hatua 12, hali ya giza",
-    "flowTheme": "Theme",
+    "flowTheme": "Mandhari",
     "flowThemeDesc": "oklch multi-theme, presets 6, color-mix()",
-    "flowUI": "UI",
+    "flowUI": "Kiolesura",
     "flowUIDesc": "Vipengele, Storybook, Chromatic",
     "card1Title": "Viwango vya Rangi vya Hatua 12",
     "card1Desc": "Kiwango cha maana kilicholingana na Geist: mandhari (1-2), hali (3-5), mipaka (6-8), kujaza (9-10), maandishi (11-12).",
-    "card2Title": "oklch Multi-Theme",
+    "card2Title": "oklch Mandhari Mbalimbali",
     "card2Desc": "Presets 6 za theme zinazotumia oklch na color-mix() derivation. Display-P3 wide-gamut na sRGB fallback.",
-    "card3Title": "Visual Regression",
+    "card3Title": "Urejeshaji wa Visual",
     "card3Desc": "Chromatic inakamata mabadiliko ya kila pixel. Storybook inarekodi kila kipengele. Majaribio ya muundo yanazuia coverage ya story.",
     "card4Title": "Utawala wa Token",
     "card4Desc": "Ratchet budgets: hex ceiling, oklch floor, mipaka ya class ya rangi ya raw. Utafutaji wa drift ya brand katika CI.",
@@ -1538,7 +1538,7 @@
       },
       "enterprise": {
         "badge": "Kutoka $30,000/mwaka",
-        "title": "Enterprise",
+        "title": "Kampuni",
         "subtitle": "Inayokidhi mahitaji ya ununuzi",
         "description": "Kwa mashirika ambayo uchunguzi wa kisheria, usalama, au ununuzi unahitaji mpaka anayesaini.",
         "features": {
@@ -1603,7 +1603,7 @@
     "description": "Ramani ya msingi wa jukwaa linalodhibitiwa la {brandName}, runtime ya Harness, na njia ya kuboresha."
   },
   "blogMeta": {
-    "title": "Blog — {brandName}",
+    "title": "Blogi — {brandName}",
     "description": "Uchambuzi wa uhandisi, masasisho ya bidhaa, na mifano bora ya SaaS kutoka timu ya {brandName}."
   },
   "getLicenseMeta": {
@@ -1612,7 +1612,7 @@
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "Maswali Yanayoulizwa Mara kwa Mara",
       "title": "Maswali, yaliyojibiwa moja kwa moja",
       "subtitle": "Kila kitu unachohitaji kujua kabla ya kutoa bidhaa.",
       "items": {

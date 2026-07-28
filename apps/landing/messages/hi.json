@@ -173,7 +173,7 @@
     "tagline": "आपके पसंदीदा स्टैक से बनी।"
   },
   "monorepoTree": {
-    "badge": "TURBOREPO STRUCTURE",
+    "badge": "TURBOREPO संरचना",
     "title": "10 ऐप्स। 104 पैकेज। 4 बैकएंड लेन।",
     "description": "शेअर कोड, पारALLEL बिल्ड, शून्य डुप्लिकेशन। डेटाबेस से फ्रंटएंड तक पूर्ण एंड-टू-एंड टाइपिंग।",
     "metricApps": "ऐप्स",
@@ -1332,14 +1332,14 @@
       "billing_f2_title": "Usage-based quota enforcement",
       "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
       "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
-      "rel_category": "Reliability",
-      "rel_f1_title": "Circuit breaker + retry",
-      "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
-      "rel_f2_title": "Dead letter queue",
-      "rel_f2_desc": "Event handlers that exhaust 3 retry attempts land in the DLQ. Replay them individually from the admin API without redeploying.",
-      "rel_f3_title": "SLO burn-rate alerts",
-      "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
+      "billing_f3_desc": "Stripe सब्सक्रिप्शन इवेंट्स Inngest के माध्यम से आपके डेटाबेस में ऑर्ग प्लान्स को स्वचालित रूप से अपडेट करते हैं — कोई cron जॉब नहीं, कोई पोलिंग नहीं।",
+      "rel_category": "विश्वसनीयता",
+      "rel_f1_title": "सर्किट ब्रेकर + रीट्राई",
+      "rel_f1_desc": "गेटवे और AI सर्विस CLOSED/OPEN/HALF_OPEN सर्किट ब्रेकर का उपयोग करते हैं जिसमें exponential backoff और jitter है — कोई cascading failures नहीं।",
+      "rel_f2_title": "डेड लेटर क्यू",
+      "rel_f2_desc": "3 रीट्राई प्रयास खत्म करने वाले इवेंट हैंडलर DLQ में जाते हैं। उन्हें रीडिप्लॉय किए बिना एडमिन API से व्यक्तिगत रूप से रीप्ले करें।",
+      "rel_f3_title": "SLO बर्न-रेट अलर्ट्स",
+      "rel_f3_desc": "मल्टी-विंडो Google SRE-शैली अलर्ट्स आपके एरर बजेट खत्म होने से पहले 14.4×, 6×, और 3× बर्न रेट्स पर फायर होते हैं।",
       "sec_category": "सुरक्षा",
       "sec_f1_title": "CSP nonce-आधारित हेडर",
       "sec_f1_desc": "Clerk मीडियवेयर में प्रति-अनुरोध नॉन्स उत्पन्न करने वाले Strict-dynamic Content Security Policy के साथ — कहीं भी unsafe-inline नहीं।",
@@ -1612,7 +1612,7 @@
   },
   "landing": {
     "faq": {
-      "badge": "FAQ",
+      "badge": "सामान्य प्रश्न",
       "title": "सवालों के सीधे जवाब",
       "subtitle": "शिप करने से पहले आपको जो कुछ जानना है, वो सब यहाँ है।",
       "items": {

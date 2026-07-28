@@ -502,7 +502,7 @@
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — {brandName}",
+      "title": "Technische Richtlijnen & FAQ — {brandName}",
       "description": "Uitgebreide analyse van frameworkarchitectuur, basistopologieën en commerciële implementatiestrategieën.",
       "heading": "Executive Deep Dive",
       "subheading": "Ondersteunend materiaal geoptimaliseerd voor systeemintegratie en uitvoerende commerciële besluitvorming.",
@@ -1594,9 +1594,9 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
+    "title": "Wijzigingslogboek — {brandName}",
     "description": "Elke release, geleverd met obsessieve aandacht voor detail.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "versionTitleSuffix": "{brandName} Wijzigingslogboek"
   },
   "roadmapMeta": {
     "title": "Platform Roadmap — {brandName}",
@@ -1703,7 +1703,7 @@
           "update-window": "Updates"
         },
         "support": {
-          "label": "Support",
+          "label": "Ondersteuning",
           "channel": "Supportkanaal",
           "first-response": "Gegarandeerde eerste reactie",
           "security-patch": "Toezegging securitypatches"

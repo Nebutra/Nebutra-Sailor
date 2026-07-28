@@ -1,6 +1,6 @@
 {
   "admin": {
-    "title": "Admin",
+    "title": "Adminisztráció",
     "description": "Super admin panel — kezelje a felhasználókat, szervezeteket és a rendszer állapotát.",
     "nav": {
       "overview": "Áttekintés",

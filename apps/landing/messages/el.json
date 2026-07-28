@@ -1472,7 +1472,7 @@
     "flowUIDesc": "Συστατικά, Storybook, Chromatic",
     "card1Title": "Κλίμακες Χρώματος 12 Βημάτων",
     "card1Desc": "Σημασιολογική κλίμακα ευθυγραμμισμένη με το Geist: backgrounds (1-2), states (3-5), borders (6-8), fills (9-10), text (11-12).",
-    "card2Title": "oklch Multi-Theme",
+    "card2Title": "oklch Πολυ-Θεματικό",
     "card2Desc": "6 presets θεμάτων με oklch και παραγωγή μέσω color-mix(). Display-P3 wide-gamut με fallback σε sRGB.",
     "card3Title": "Οπτική Παλινδρόμηση",
     "card3Desc": "Το Chromatic εντοπίζει κάθε αλλαγή pixel. Το Storybook τεκμηριώνει κάθε component. Τα architecture tests επιβάλλουν story coverage.",
@@ -1538,7 +1538,7 @@
       },
       "enterprise": {
         "badge": "Από $30.000/έτος",
-        "title": "Enterprise",
+        "title": "Επιχείρηση",
         "subtitle": "Έτοιμο για προμήθειες",
         "description": "Για οργανισμούς των οποίων η νομική, ασφαλιστική ή διαδικασία προμηθειών απαιτεί αντισυμβαλλόμενο που υπογράφει.",
         "features": {

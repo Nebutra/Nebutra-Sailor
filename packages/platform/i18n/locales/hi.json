@@ -950,10 +950,10 @@
         "settings": "सेटिंग्स",
         "billing": "बिलिंग",
         "team": "टीम",
-        "apiKeys": "API Keys",
+        "apiKeys": "API कुंजियाँ",
         "notifications": "सूचनाएं",
         "auditLog": "ऑडिट लॉग",
-        "webhooks": "Webhooks",
+        "webhooks": "वेबहुक्स",
         "admin": "एडमिन"
       },
       "action": {

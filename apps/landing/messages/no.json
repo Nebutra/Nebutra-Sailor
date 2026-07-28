@@ -1125,7 +1125,7 @@
         "intro": "Hvis du har spørsmål om disse vilkårene, vennligst kontakt oss:",
         "company": "{brandName} Co., Ltd.",
         "emailLabel": "E-post",
-        "supportLabel": "Support"
+        "supportLabel": "Støtte"
       },
       "acknowledgement": "Ved å bruke {brandName} bekrefter du at du har lest, forstått og er enig i å være bundet av disse tjenestevilkårene."
     }
@@ -1427,7 +1427,7 @@
         "title": "Modern Enterprise Website (CN)",
         "desc": "Tilpasset for kinesiske forretningsmiljøer — ultra-rask lokal CDN, WeChat-økosystem-integrasjon, mobile-first responsivt design og lokalisert compliance fra start.",
         "features": {
-          "f1": "Local CDN + Compliance",
+          "f1": "Lokal CDN + samsvar",
           "f2": "Klar for WeChat-økosystemet"
         }
       },
