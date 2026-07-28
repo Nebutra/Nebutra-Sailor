@@ -3,9 +3,12 @@ import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { StructuredData } from "@/components/seo/structured-data";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { getSiteUrl } from "@/lib/seo/site-routes";
+import { buildFaqPageSchema } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({
   params,
@@ -41,8 +44,16 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
     { cat: 4 as const, questions: [0, 1] as const },
   ];
 
+  const faqEntries = faqStructure.flatMap(({ cat, questions }) =>
+    questions.map((qIdx) => ({
+      question: t(`faq.categories.${cat}.questions.${qIdx}.q` as Parameters<typeof t>[0]),
+      answer: t(`faq.categories.${cat}.questions.${qIdx}.a` as Parameters<typeof t>[0]),
+    })),
+  );
+
   return (
     <div className="space-y-12">
+      <StructuredData data={buildFaqPageSchema(faqEntries)} id="faq-jsonld" />
       {/* Header */}
       <section className="text-center">
         <h1 className="text-4xl font-bold tracking-tight text-foreground">{t("faq.heading")}</h1>

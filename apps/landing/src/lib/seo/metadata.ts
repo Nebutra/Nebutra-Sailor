@@ -118,8 +118,23 @@ export function buildPageMetadata(opts: BuildPageMetadataOptions): Metadata {
       title: opts.title,
       description: opts.description,
       images: [imageUrl],
-      ...(opts.twitterHandle ? { creator: `@${opts.twitterHandle}` } : {}),
+      // G14: always emit brand SSOT creator/site when caller omits handle
+      creator: `@${opts.twitterHandle ?? brand.social.twitter.replace(/^https?:\/\/(twitter|x)\.com\//, "").replace(/^@/, "")}`,
+      site: `@${brand.social.twitter.replace(/^https?:\/\/(twitter|x)\.com\//, "").replace(/^@/, "")}`,
     },
     metadataBase: new URL(baseUrl),
+    // G3: optional Search Console / Bing meta from env (DNS preferred — see docs)
+    verification: {
+      ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+        ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+        : {}),
+      ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+        ? {
+            other: {
+              "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
+            },
+          }
+        : {}),
+    },
   };
 }

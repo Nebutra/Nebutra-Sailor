@@ -53,8 +53,18 @@ const securityHeaders = [
     value: "on",
   },
   {
+    // Align with CSP frame-ancestors 'none', proxy.ts DENY, and vercel.json DENY.
+    // SAMEORIGIN here previously conflicted with edge/proxy DENY (visibility G35).
     key: "X-Frame-Options",
-    value: "SAMEORIGIN",
+    value: "DENY",
+  },
+  {
+    key: "Cross-Origin-Opener-Policy",
+    value: "same-origin-allow-popups",
+  },
+  {
+    key: "Cross-Origin-Resource-Policy",
+    value: "same-site",
   },
   {
     key: "X-Content-Type-Options",

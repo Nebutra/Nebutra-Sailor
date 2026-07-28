@@ -32,6 +32,7 @@ import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { BlogShareActions } from "@/components/landing/blog-share-actions";
+import { StructuredData } from "@/components/seo/structured-data";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   getAllPosts,
@@ -44,6 +45,7 @@ import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { localesForPath } from "@/lib/seo/route-registry";
 import { getSiteUrl, type PublicationSet } from "@/lib/seo/site-routes";
+import { buildArticleSchema, buildBreadcrumbListSchema } from "@/lib/seo/structured-data";
 
 type Params = { lang: string; slug: string };
 
@@ -210,7 +212,7 @@ function BlogArticleFooter({
   posts: BlogPostWithSource[];
 }) {
   return (
-    <section className="mx-auto mt-16 max-w-5xl border-y border-border py-10">
+    <section className="mx-auto mt-16 max-w-4xl border-y border-border py-10">
       <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
         <div>
           <div className="flex items-center justify-between gap-4">
@@ -363,12 +365,32 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
       ? relatedPosts
       : allPosts.filter((candidate) => candidate.slug !== post.slug).slice(0, 2);
 
+  const articleLd = buildArticleSchema({
+    headline: post.title,
+    description: post.excerpt || post.title,
+    url: canonicalUrl,
+    image: imageUrl ?? undefined,
+    datePublished: post.date ?? new Date().toISOString(),
+    dateModified: post.updatedAt ?? post.date,
+    author: authorName ? { name: authorName } : undefined,
+    publisher: {
+      name: "Nebutra",
+      logo: `${getSiteUrl()}/icon.png`,
+    },
+  });
+  const breadcrumbLd = buildBreadcrumbListSchema([
+    { name: "Home", url: `${getSiteUrl()}/${lang}` },
+    { name: "Blog", url: `${getSiteUrl()}${localizedPostHref(lang)}` },
+    { name: post.title, url: canonicalUrl },
+  ]);
+
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
+      <StructuredData data={[articleLd, breadcrumbLd]} id="blog-article-jsonld" />
       <Navbar />
 
       <article className="px-4 pt-24 pb-16 sm:px-6 sm:py-20 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-4xl">
           <AnimateIn preset="fade" inView>
             <Link
               href={localizedPostHref(lang)}
@@ -468,7 +490,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
 
         {/* Hero image */}
         <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-4xl">
             <div
               className="relative mt-8 aspect-[16/7] min-h-60 w-full overflow-hidden rounded-[var(--radius-lg)] bg-muted sm:min-h-80"
               style={{ viewTransitionName: getBlogViewTransitionName(post.id) }}

@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "name": "Nebutra",
+  "description": "AI-native multi-tenant SaaS platform and Agent OS",
+  "surfaces": [
+    {
+      "id": "marketing",
+      "url": "https://nebutra.com",
+      "llms": "https://nebutra.com/llms.txt"
+    },
+    {
+      "id": "docs",
+      "url": "https://docs.nebutra.com",
+      "llms": "https://docs.nebutra.com/llms.txt"
+    },
+    {
+      "id": "forge",
+      "url": "https://forge.nebutra.com",
+      "tools": "https://forge.nebutra.com/api/tools.json"
+    },
+    {
+      "id": "router",
+      "url": "https://router.nebutra.com",
+      "openapi": "https://router.nebutra.com/api/openapi.json"
+    },
+    {
+      "id": "api-gateway",
+      "url": "https://api.nebutra.com",
+      "health": "https://api.nebutra.com/system/status"
+    }
+  ],
+  "capabilities": [
+    "multi-tenancy",
+    "billing",
+    "auth",
+    "rbac",
+    "ai-agents",
+    "metering",
+    "webhooks",
+    "search",
+    "notifications",
+    "vault"
+  ]
+}

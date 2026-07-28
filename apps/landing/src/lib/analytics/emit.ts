@@ -27,6 +27,17 @@ function isTelemetryDisabled(opts: EmitOptions = {}): boolean {
     const envValue = process.env.NEXT_PUBLIC_NEBUTRA_TELEMETRY;
     if (envValue === "0" || envValue === "false") return true;
   }
+  // G40/G56: never fire non-essential analytics without browser consent.
+  if (typeof window !== "undefined") {
+    try {
+      const raw = window.localStorage.getItem("nebutra_consent_v1");
+      if (!raw) return true;
+      const parsed = JSON.parse(raw) as { analytics?: boolean };
+      if (parsed.analytics !== true) return true;
+    } catch {
+      return true;
+    }
+  }
   return false;
 }
 

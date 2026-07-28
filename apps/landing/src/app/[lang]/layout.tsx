@@ -5,8 +5,6 @@ import {
 } from "@nebutra/brand/metadata-helpers";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { Toaster } from "@nebutra/ui/primitives";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
@@ -14,6 +12,8 @@ import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
+import { ConsentGatedTelemetry } from "@/components/consent-gated-telemetry";
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { IcpFooter } from "@/components/icp-footer";
 import RouteSkeleton from "@/components/ui/route-skeleton";
@@ -94,8 +94,6 @@ const jsonLd = [
 function toSafeJsonLd(value: unknown): string {
   return JSON.stringify(value).replace(/</g, "\\u003c");
 }
-
-const ENABLE_VERCEL_TELEMETRY = process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -221,15 +219,11 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
               ) : null}
               {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
               <Toaster />
+              <CookieConsentBanner />
             </NextIntlClientProvider>
           </ErrorBoundary>
         </Providers>
-        {ENABLE_VERCEL_TELEMETRY && (
-          <>
-            <SpeedInsights />
-            <Analytics />
-          </>
-        )}
+        <ConsentGatedTelemetry />
       </body>
     </html>
   );

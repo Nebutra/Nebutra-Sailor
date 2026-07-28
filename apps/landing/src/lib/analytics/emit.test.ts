@@ -10,6 +10,29 @@ describe("emitBrowserEvent", () => {
     vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_test");
     vi.stubEnv("NEXT_PUBLIC_POSTHOG_HOST", "https://analytics.example");
     window.sessionStorage.clear();
+    // G40: analytics requires consent
+    try {
+      window.localStorage?.removeItem?.("nebutra_consent_v1");
+    } catch {
+      /* jsdom storage may be partial */
+    }
+    const store = new Map<string, string>();
+    Object.defineProperty(window, "localStorage", {
+      configurable: true,
+      value: {
+        getItem: (k: string) => store.get(k) ?? null,
+        setItem: (k: string, v: string) => {
+          store.set(k, v);
+        },
+        removeItem: (k: string) => {
+          store.delete(k);
+        },
+      },
+    });
+    window.localStorage.setItem(
+      "nebutra_consent_v1",
+      JSON.stringify({ decidedAt: new Date().toISOString(), analytics: true, necessary: true }),
+    );
     sendBeacon.mockReturnValue(true);
     Object.defineProperty(window.navigator, "sendBeacon", {
       configurable: true,

@@ -20,14 +20,22 @@ export default function robots(): MetadataRoute.Robots {
       // marketing /docs only 308s to the docs origin (see src/lib/docs-routing.ts),
       // so naming it here advertises a redirect-only path. Docs crawling is
       // declared on the origin that serves them: apps/sailor-docs/src/app/robots.ts.
-      {
-        userAgent: "GPTBot",
-        allow: ["/", "/blog/", "/features", "/features/", "/pricing"],
-      },
-      {
-        userAgent: "ClaudeBot",
-        allow: ["/", "/blog/", "/features", "/features/", "/pricing"],
-      },
+      // Named AI / answer-engine bots — narrow allow list (see docs/seo/bot-policy-matrix.md).
+      // They do not inherit the full `*` surface: product + blog only.
+      ...(
+        [
+          "GPTBot",
+          "ClaudeBot",
+          "Google-Extended",
+          "Applebot-Extended",
+          "CCBot",
+          "Bytespider",
+        ] as const
+      ).map((userAgent) => ({
+        userAgent,
+        allow: ["/", "/blog/", "/features", "/features/", "/pricing", "/llms.txt"],
+        disallow: ["/api/", "/_next/", "/sign-in", "/sign-up", "/admin/", "/settings/"],
+      })),
     ],
     // Sharded sitemap. Next serves the shards at /sitemap/<locale>.xml and
     // emits no index of its own, so /sitemap.xml is the hand-written
