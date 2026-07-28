@@ -181,6 +181,7 @@ describe("per-app robots posture", () => {
 
   /** Everything else: internal tooling or authenticated product surfaces. */
   const DISALLOWED = [
+    "admin",
     "auth",
     "design-docs",
     "idp",

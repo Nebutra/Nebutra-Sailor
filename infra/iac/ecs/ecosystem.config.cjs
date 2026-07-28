@@ -11,6 +11,7 @@
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/router/current/apps/router/server.js            (Next standalone)
 //   $DEPLOY_ROOT/forge/current/apps/forge/server.js              (Next standalone)
+//   $DEPLOY_ROOT/admin/current/apps/admin/server.js              (Next standalone control plane)
 //
 // The workflow renders this file on the VM with DEPLOY_ROOT substituted in
 // via envsubst at apply time (see ecs-deploy-remote.sh).
@@ -162,6 +163,29 @@ module.exports = {
         ENV_FILE: "/var/www/nebutra/router/.env",
       },
       max_memory_restart: "450M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
+      // Internal ecosystem control plane. Staff-only, low traffic — sized well
+      // below the product apps. Fronted by Cloudflare Access; nginx must not
+      // expose it without that policy in place.
+      name: "admin",
+      cwd: "/var/www/nebutra/admin/current",
+      script: "/var/www/nebutra/node-with-env.sh",
+      interpreter: "bash",
+      args: "apps/admin/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3108,
+        HOSTNAME: "127.0.0.1",
+        ENV_FILE: "/var/www/nebutra/admin/.env",
+      },
+      max_memory_restart: "350M",
       instances: 1,
       exec_mode: "fork",
       autorestart: true,

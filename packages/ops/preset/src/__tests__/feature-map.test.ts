@@ -37,8 +37,13 @@ const mockConfig: ResolvedConfig = {
   deployTargets: {
     web: "vercel",
     landing: "vercel",
+    auth: "vercel",
+    admin: "vercel",
     "design-docs": "vercel",
     "sailor-docs": "vercel",
+    router: "vercel",
+    forge: "vercel",
+    typelens: "vercel",
     gateway: "cloudflare-workers",
     "python-ai": "ecs-docker",
   },

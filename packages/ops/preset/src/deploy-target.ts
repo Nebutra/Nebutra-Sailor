@@ -24,8 +24,13 @@ export type DeployTarget =
 export const DEPLOYABLE_SERVICES = [
   "web",
   "landing",
+  "auth",
+  "admin",
   "design-docs",
   "sailor-docs",
+  "router",
+  "forge",
+  "typelens",
   "gateway",
   "python-ai",
 ] as const;
@@ -35,8 +40,15 @@ export type DeployableService = (typeof DEPLOYABLE_SERVICES)[number];
 const SERVICE_SURFACES = {
   web: "frontend",
   landing: "frontend",
+  auth: "frontend",
+  // Internal control plane. A frontend by shape, but it never goes to a
+  // provider without staff auth in front of it — see the admin PRD.
+  admin: "frontend",
   "design-docs": "frontend",
   "sailor-docs": "frontend",
+  router: "frontend",
+  forge: "frontend",
+  typelens: "frontend",
   gateway: "edgeGateway",
   "python-ai": "originBackend",
 } as const satisfies Record<DeployableService, DeploySurface>;

@@ -9,7 +9,18 @@ export {
   type RequirePermissionOptions,
   requirePermission,
 } from "./middleware";
-
+export {
+  canPlatform,
+  isPlatformStaffRole,
+  normalizePlatformStaffRole,
+  PLATFORM_STAFF_ROLES,
+  type PlatformAbility,
+  type PlatformAction,
+  type PlatformResource,
+  type PlatformStaffRole,
+  platformAbilityFor,
+  platformRoleHierarchy,
+} from "./platform";
 export {
   buildAbilityFor,
   CASLProvider,
@@ -17,7 +28,6 @@ export {
   createPrismaAbility,
   getPrismaQuery,
 } from "./providers/casl";
-
 export {
   createOpenFGAProvider,
   type OpenFGACheckRequest,

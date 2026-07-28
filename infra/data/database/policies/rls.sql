@@ -335,3 +335,14 @@ ALTER TABLE "public"."uploads" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "uploads_rls" ON "public"."uploads";
 CREATE POLICY "uploads_rls" ON "public"."uploads" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
 
+
+-- ── platform_staff: deny-all for app_user (no policy on purpose) ─────────────
+-- Platform staff grants authorize the admin.nebutra.com control plane to read
+-- ACROSS tenants. A tenant session must never see, let alone write, this table.
+-- The `ensure_rls` event trigger already enables RLS on new public tables, which
+-- makes an un-policied table deny-all — this block states that intent
+-- explicitly so a future "add the missing policy" sweep does not helpfully
+-- grant app_user access. The control plane reads it through the BYPASSRLS
+-- service role after OIDC + staff authorization, never through getTenantDb().
+ALTER TABLE "public"."platform_staff" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "platform_staff_rls" ON "public"."platform_staff";

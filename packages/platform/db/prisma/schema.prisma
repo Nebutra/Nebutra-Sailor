@@ -325,6 +325,7 @@ model User {
   oauthAuthorizations OAuthAuthorization[]
   threads             Thread[]
   tenant              Tenant?
+  platformStaff       PlatformStaff?
 
   @@map("users")
   @@schema("public")
@@ -2623,5 +2624,49 @@ model PebbleFeedback {
 
   @@index([kind, createdAt(sort: Desc)])
   @@map("pebble_feedback")
+  @@schema("public")
+}
+
+// ============================================
+// Platform staff (ecosystem control plane)
+// ============================================
+// AUDIT(no-tenant): platform staff are Nebutra operators, not tenant members.
+// This table is deliberately tenant-less and cross-tenant by definition — it
+// is what authorizes the `admin.nebutra.com` control plane to read across every
+// tenant. It must never be joined into a tenant-scoped ability check.
+//
+// Orthogonal to `Role` / `OrganizationMember`: tenant roles grant nothing here,
+// and a staff role grants nothing inside a tenant. See
+// docs/plans/2026-07-28-nebutra-admin-control-plane-design.md §6.
+
+enum PlatformStaffRole {
+  // Release + feature flags + staff grants.
+  PLATFORM_OWNER
+  // Supply, queues, tenant suspension.
+  PLATFORM_OPERATOR
+  // Customer support: tenant lookup, impersonation, invites.
+  PLATFORM_SUPPORT
+  // Dashboards only, no writes.
+  PLATFORM_READONLY
+
+  @@schema("public")
+}
+
+model PlatformStaff {
+  userId String            @id @map("user_id")
+  role   PlatformStaffRole
+
+  // Grants are never hard-deleted — revocation is a tombstone so the audit
+  // trail can still explain an action taken while the grant was live.
+  grantedById String?   @map("granted_by_id")
+  grantedAt   DateTime  @default(now()) @map("granted_at")
+  revokedAt   DateTime? @map("revoked_at")
+  // Why this person has this role (ticket, rotation, on-call handover).
+  note        String?   @db.Text
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([role, revokedAt])
+  @@map("platform_staff")
   @@schema("public")
 }

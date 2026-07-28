@@ -234,6 +234,13 @@ export interface BrandConfig {
     forge: string;
     design: string;
     status: string;
+    /**
+     * Internal ecosystem control plane (`apps/admin`). Staff-only: OIDC against
+     * the `sso` host plus a platform-staff role, behind Cloudflare Access. Never
+     * carries tenant-visible functionality. See
+     * docs/plans/2026-07-28-nebutra-admin-control-plane-design.md.
+     */
+    admin: string;
     /** Product analytics / PostHog host. */
     analytics: string;
     /**
@@ -353,6 +360,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     forge: "forge.nebutra.com",
     design: "design.nebutra.com",
     status: "status.nebutra.com",
+    admin: "admin.nebutra.com",
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",
   },

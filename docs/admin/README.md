@@ -1,5 +1,20 @@
 # Admin Stack — Philosophy & Map
 
+> **Scope update (2026-07-28) — read this first.** This document is about the
+> **per-tenant product admin**: user CRUD, refunds, plan changes, content ops,
+> BI. For those, everything below still holds — rent the tools.
+>
+> It does **not** cover the **ecosystem control plane**, which is now first-party
+> at `admin.nebutra.com` (`apps/admin`): fleet health and release state across 13
+> apps and 3 runtimes, Router supply, Forge queues, cross-tenant operations with
+> staff-attributed audit. That work is scoped in
+> [../plans/2026-07-28-nebutra-admin-control-plane-design.md](../plans/2026-07-28-nebutra-admin-control-plane-design.md),
+> whose §2 explains why the "rent it" argument does not extend to it. The line:
+> **a table a SQL tool can render → rent it; the ecosystem's own topology → own it.**
+>
+> Metabase / Hex / Retool keep layers 1, 2, 4 and stay the home of ad-hoc SQL and
+> analyst self-service. They are no longer the operator entry point.
+
 > **TL;DR:** Sailor deliberately ships a thin self-built `/admin` (KPI dashboard + impersonate). For user CRUD, customer support, content ops, and BI, connect external best-of-breed tools (Metabase/Hex, Retool, Sanity, Sentry/PostHog). This is exactly what Stripe, Linear, Vercel, Brex, and Mercury do internally — the more successful the company, the *less* they self-build their admin.
 
 ---

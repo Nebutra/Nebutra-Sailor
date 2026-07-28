@@ -16,6 +16,14 @@ describe("deploy-target selector", () => {
     expect(resolveDeployTarget("python-ai", {})).toBe("ecs-docker");
   });
 
+  it("treats the admin control plane as a frontend that ships to the ECS origin today", () => {
+    expect(resolveDeployTarget("admin", {})).toBe("vercel");
+    expect(resolveDeployTarget("admin", { DEPLOY_TARGET_ADMIN: "standalone" })).toBe("standalone");
+    expect(() => resolveDeployTarget("admin", { DEPLOY_TARGET_ADMIN: "ecs-docker" })).toThrow(
+      /not allowed/,
+    );
+  });
+
   it("keeps packages out of the deployment surface", () => {
     expect(() => resolveDeployTarget("@nebutra/db", {})).toThrow(/Unknown deploy service/);
     expect(() => resolveDeployTarget("packages/platform/db", {})).toThrow(/Unknown deploy service/);
@@ -49,8 +57,13 @@ describe("deploy-target selector", () => {
     expect(DEPLOYABLE_SERVICES).toEqual([
       "web",
       "landing",
+      "auth",
+      "admin",
       "design-docs",
       "sailor-docs",
+      "router",
+      "forge",
+      "typelens",
       "gateway",
       "python-ai",
     ]);
@@ -78,6 +91,8 @@ describe("deploy-target selector", () => {
     ]);
     expect(deployTargetEnvKey("landing")).toBe("DEPLOY_TARGET_LANDING");
     expect(deployTargetEnvKey("python-ai")).toBe("DEPLOY_TARGET_PYTHON_AI");
+    expect(deployTargetEnvKey("admin")).toBe("DEPLOY_TARGET_ADMIN");
+    expect(deployTargetEnvKey("sailor-docs")).toBe("DEPLOY_TARGET_SAILOR_DOCS");
   });
 
   it("resolves a complete target map for every deployable service", () => {

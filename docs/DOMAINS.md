@@ -16,6 +16,7 @@
 | `studio.nebutra.com` | studio | Optional branded Studio alias |
 | `router.nebutra.com` | router | **Nebutra Router** — model fabric / OpenAI-compatible product edge (ECS PM2) |
 | `forge.nebutra.com` | forge | **Nebutra Forge** — tool station + Agent tool API (Vercel; ECS PM2 fallback :3105) |
+| `admin.nebutra.com` | admin | **Ecosystem control plane** — staff-only (Cloudflare Access + `sso` OIDC + platform-staff role). Never tenant-visible. See [PRD](./plans/2026-07-28-nebutra-admin-control-plane-design.md) |
 | `pebble.nebutra.com` | (external repo `Nebutra/pebble`) | **Pebble brand front** — landing / download / docs redirect only. No backend of its own. |
 
 > Router/Forge: product hosts; supply engines (New-API, Sub2API) stay **internal** — see `infra/nebutra-router/`.
@@ -64,6 +65,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `sso.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `idp` | **Permanent OIDC issuer** — do not move lightly |
 | `router.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `router` | Product edge :3106; Vercel project `nebutra-router` exists for future cutover |
 | `forge.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `forge` | Product edge :3105; Vercel project `nebutra-forge` exists (Hobby deploy cap) |
+| `admin.nebutra.com` | **not yet created** | **ECS PM2** `admin` :3108 (PM2 slot reserved, not deployed) | Blocked on the Cloudflare Access policy + OIDC gate — do not create the DNS record before both exist. No Vercel project by design |
 
 ### Topology layers
 
@@ -84,6 +86,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `DEPLOY_TARGET_SAILOR_DOCS` | `cloudflare-workers` | Primary deploy path (Vercel fallback when CF unavailable) |
 | `DEPLOY_TARGET_WEB` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
 | `DEPLOY_TARGET_AUTH` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
+| `DEPLOY_TARGET_ADMIN` | `standalone` | Control plane — ECS origin only; a Vercel project would create a second origin outside Cloudflare Access |
 | `DEPLOY_TARGET_GATEWAY` | `cloudflare-workers` | Edge API |
 | `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` | Login center origin |
 | `ECS_HOST` | `106.15.4.31` | Cloud VM origin |
@@ -108,6 +111,7 @@ A       api       106.15.4.31              ✅           ECS
 A       sso       106.15.4.31              ✅           ECS permanent issuer
 A       router    106.15.4.31              ✅           ECS PM2 @nebutra/router
 A       forge     106.15.4.31              ✅           ECS PM2 @nebutra/forge
+A       admin     106.15.4.31              ✅           ECS PM2 @nebutra/admin — create ONLY together with the Cloudflare Access policy
 CNAME   docs      nebutra-sailor-docs.nebutra.workers.dev  ✅  # OpenNext Worker; Vercel grey-cloud is fallback only
 CNAME   pebble    cname.vercel-dns.com     ✅           Pebble brand front (landing/download); no backend
 ```
@@ -159,7 +163,7 @@ Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.n
 
 Cloudflare Origin Certificate on ECS must include at least:
 
-`*.nebutra.com`, `nebutra.com`, `app`, `auth`, `api`, `sso`, `docs`, `status`, `design`, `www`
+`*.nebutra.com`, `nebutra.com`, `app`, `auth`, `api`, `sso`, `docs`, `status`, `design`, `admin`, `www`
 
 Path on VM: `/etc/ssl/nebutra/fullchain.pem` + `privkey.pem`.
 
