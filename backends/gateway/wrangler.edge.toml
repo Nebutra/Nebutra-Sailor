@@ -18,6 +18,12 @@ enabled = true
 head_sampling_rate = 1
 
 [vars]
+# Origin hostname. A hostname, not a credential — it belongs in config where it
+# is visible, and if it is wrong every forwarded request fails loudly rather
+# than leaking anything. Must be grey-cloud (DNS only): pointing it at a
+# proxied hostname sends the request back through this Worker.
+ORIGIN_URL = "https://origin.nebutra.com"
+
 # Requests per minute per IP before shedding. Set far above real usage — this
 # sheds floods, it is not the per-key limit, which stays at the origin where
 # the plan is known.
