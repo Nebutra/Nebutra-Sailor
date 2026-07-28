@@ -2,6 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   Form,
   FormControl,
   FormField,
@@ -14,6 +21,7 @@ import {
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
 export interface CreatedApiKey {
   key: string;
   id: string;
@@ -74,17 +82,12 @@ export function CreateApiKeyDialog({
   const [created, setCreated] = useState<CreatedApiKey | null>(null);
   const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
 
-  // Reset internal state when the dialog re-opens
   useEffect(() => {
     if (open) {
       form.reset({ name: "", scopes: [] });
       setCreated(null);
-      // Note: copied state from useCopyToClipboard auto-resets after 2000ms;
-      // a manual reset is not available from the hook.
     }
   }, [open, form]);
-
-  if (!open) return null;
 
   const text = {
     title: labels.title ?? "Create API key",
@@ -136,20 +139,23 @@ export function CreateApiKeyDialog({
     onOpenChange(false);
   }
 
+  function handleOpenChange(next: boolean) {
+    if (!next) {
+      attemptClose();
+      return;
+    }
+    onOpenChange(true);
+  }
+
   const rootError = form.formState.errors.root?.message;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="create-api-key-title"
-    >
-      <div className="w-full max-w-lg rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-xl">
-        <h2 id="create-api-key-title" className="mb-1 text-base font-semibold text-foreground">
-          {text.title}
-        </h2>
-        <p className="mb-4 text-sm text-muted-foreground">{text.description}</p>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>{text.title}</DialogTitle>
+          <DialogDescription>{text.description}</DialogDescription>
+        </DialogHeader>
 
         {created ? (
           <div className="space-y-4">
@@ -161,24 +167,22 @@ export function CreateApiKeyDialog({
                 <code className="flex-1 break-all rounded bg-background px-3 py-2 font-mono text-[var(--amber-12)] text-xs shadow-inner">
                   {created.key}
                 </code>
-                <button
+                <Button
                   type="button"
+                  variant="outline"
+                  size="sm"
                   onClick={handleCopy}
-                  className="rounded-[var(--radius-md)] border border-[var(--amber-7)] px-3 py-2 text-[var(--amber-12)] text-xs font-medium transition-colors hover:bg-[var(--amber-3)] focus:outline-none focus:ring-2 focus:ring-[var(--amber-8)] focus:ring-offset-1"
+                  className="border-[var(--amber-7)] text-[var(--amber-12)] hover:bg-[var(--amber-3)]"
                 >
                   {copied ? text.copied : text.copy}
-                </button>
+                </Button>
               </div>
             </div>
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={attemptClose}
-                className="rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-              >
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={attemptClose}>
                 {text.close}
-              </button>
-            </div>
+              </Button>
+            </DialogFooter>
           </div>
         ) : (
           <Form {...form}>
@@ -243,28 +247,23 @@ export function CreateApiKeyDialog({
 
               {rootError ? <p className="text-sm text-red-11">{rootError}</p> : null}
 
-              <div className="flex items-center justify-end gap-2">
-                <button
+              <DialogFooter>
+                <Button
                   type="button"
+                  variant="outline"
                   onClick={attemptClose}
                   disabled={submitting}
-                  className="rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50"
                 >
                   {text.close}
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-                  style={{ background: "hsl(var(--primary))" }}
-                >
+                </Button>
+                <Button type="submit" variant="ink" disabled={submitting}>
                   {submitting ? text.submitting : text.submit}
-                </button>
-              </div>
+                </Button>
+              </DialogFooter>
             </form>
           </Form>
         )}
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

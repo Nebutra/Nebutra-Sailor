@@ -2,6 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   Form,
   FormControl,
   FormField,
@@ -62,8 +69,6 @@ export function CreateProviderKeyDialog({
     }
   }, [open, form]);
 
-  if (!open) return null;
-
   const submitting = form.formState.isSubmitting;
   const provider = form.watch("provider");
   const rootError = form.formState.errors.root?.message;
@@ -86,20 +91,15 @@ export function CreateProviderKeyDialog({
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="create-provider-key-title"
-    >
-      <div className="w-full max-w-lg rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-xl">
-        <h2 id="create-provider-key-title" className="mb-1 text-base font-semibold text-foreground">
-          Add provider key
-        </h2>
-        <p className="mb-4 text-sm text-muted-foreground">
-          Bring your own AI provider key. It is encrypted at rest and used in preference to the
-          platform key for matching models.
-        </p>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Add provider key</DialogTitle>
+          <DialogDescription>
+            Bring your own AI provider key. It is encrypted at rest and used in preference to the
+            platform key for matching models.
+          </DialogDescription>
+        </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
@@ -228,27 +228,22 @@ export function CreateProviderKeyDialog({
 
             {rootError ? <p className="text-sm text-red-11">{rootError}</p> : null}
 
-            <div className="flex items-center justify-end gap-2">
-              <button
+            <DialogFooter>
+              <Button
                 type="button"
+                variant="outline"
                 onClick={() => onOpenChange(false)}
                 disabled={submitting}
-                className="rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-50"
               >
                 Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-                style={{ background: "hsl(var(--primary))" }}
-              >
+              </Button>
+              <Button type="submit" variant="ink" disabled={submitting}>
                 {submitting ? "Saving…" : "Save key"}
-              </button>
-            </div>
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

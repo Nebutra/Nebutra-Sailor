@@ -25,6 +25,7 @@
 import { Trash as Trash2 } from "@nebutra/icons";
 import { AnimateIn, Button } from "@nebutra/ui/components";
 import {
+  ConfirmDialog,
   Select,
   SelectContent,
   SelectItem,
@@ -33,7 +34,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
 import { InviteDialog } from "./invite-dialog";
 
@@ -103,7 +104,6 @@ export function MembersClient({ orgId }: MembersClientProps) {
   const t = useTranslations("settings.organization.members");
   const tInvite = useTranslations("settings.organization.invite");
   const format = useFormatter();
-  const confirmDialogId = useId();
   const queryClient = useQueryClient();
   const listKey = queryKeys.orgMembers.list(orgId);
 
@@ -329,32 +329,19 @@ export function MembersClient({ orgId }: MembersClientProps) {
           }}
         />
 
-        {confirmRemoveId && (
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={confirmDialogId}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
-          >
-            <div className="w-full max-w-sm rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl">
-              <h2 id={confirmDialogId} className="text-sm font-semibold text-neutral-12">
-                {t("confirmRemove")}
-              </h2>
-              <div className="mt-4 flex justify-end gap-2">
-                <Button htmlType="button" onClick={() => setConfirmRemoveId(null)}>
-                  {t("cancel")}
-                </Button>
-                <Button
-                  htmlType="button"
-                  onClick={() => handleConfirmRemove(confirmRemoveId)}
-                  disabled={pendingMemberId === confirmRemoveId}
-                >
-                  {t("confirm")}
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
+        <ConfirmDialog
+          open={confirmRemoveId !== null}
+          onOpenChange={(open) => {
+            if (!open) setConfirmRemoveId(null);
+          }}
+          title={t("confirmRemove")}
+          confirmText={t("confirm")}
+          cancelText={t("cancel")}
+          loading={pendingMemberId === confirmRemoveId}
+          onConfirm={() => {
+            if (confirmRemoveId) handleConfirmRemove(confirmRemoveId);
+          }}
+        />
       </div>
     </AnimateIn>
   );

@@ -3,18 +3,22 @@
 /**
  * Invite-member dialog — phase 2.5.
  *
- * Lightweight modal for inviting a new member to the active organization.
- * Posts to `/api/organizations/[orgId]/members` (existing route). Kept as a
- * simple dialog (no Radix Portal) to stay test-friendly and avoid pulling in
- * a heavier component for a single use site; can be migrated later.
+ * Posts to `/api/organizations/[orgId]/members`. Uses DS Dialog for focus trap,
+ * Escape handling, and overlay a11y (UI-03).
  */
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Cross as X } from "@nebutra/icons";
-import { Button, Input } from "@nebutra/ui/components";
 import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   Form,
   FormField,
+  Input,
   Select,
   SelectContent,
   SelectItem,
@@ -61,8 +65,6 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
     }
   }, [open, reset]);
 
-  if (!open) return null;
-
   async function onSubmit(values: InviteValues) {
     clearErrors("root");
 
@@ -85,26 +87,17 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
   }
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) onClose();
+      }}
     >
-      <div className="w-full max-w-md rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl">
-        <div className="mb-4 flex items-start justify-between gap-3">
-          <h2 id={titleId} className="text-base font-semibold text-neutral-12">
-            {t("title")}
-          </h2>
-          <button
-            type="button"
-            aria-label={t("title")}
-            onClick={onClose}
-            className="rounded-[var(--radius-md)] p-1 text-neutral-11 transition-colors hover:bg-neutral-2"
-          >
-            <X className="h-4 w-4" aria-hidden />
-          </button>
-        </div>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle id={titleId}>{t("title")}</DialogTitle>
+          <DialogDescription className="sr-only">{t("title")}</DialogDescription>
+        </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -169,20 +162,26 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
               </p>
             )}
 
-            <div className="flex justify-end gap-2">
-              <Button htmlType="button" onClick={onClose} disabled={formState.isSubmitting}>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+                disabled={formState.isSubmitting}
+              >
                 Cancel
               </Button>
               <Button
-                htmlType="submit"
+                type="submit"
+                variant="ink"
                 disabled={formState.isSubmitting || emailValue.trim().length === 0}
               >
                 {t("send")}
               </Button>
-            </div>
+            </DialogFooter>
           </form>
         </Form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

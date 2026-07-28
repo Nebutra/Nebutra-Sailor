@@ -2,10 +2,10 @@
 
 import { useAuth } from "@nebutra/auth/client";
 import { useTheme } from "@nebutra/tokens";
-import { Command } from "cmdk";
+import { CommandMenu } from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { usePermission } from "@/hooks/usePermission";
 import { useCommandPalette } from "./command-palette-provider";
@@ -43,9 +43,7 @@ export function CommandPalette({
   const { can } = usePermission();
   const router = useRouter();
   const t = useTranslations("commandPalette");
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // Build the imperative context handlers receive when invoked.
   const ctx = useMemo<CommandContext>(
     () => ({
       navigate: (href: string) => {
@@ -68,7 +66,6 @@ export function CommandPalette({
           onSwitchOrganization();
           return;
         }
-        // Default fallback: navigate to org settings.
         router.push("/settings/organization");
       },
       openFeedback,
@@ -76,7 +73,6 @@ export function CommandPalette({
     [onNavigate, onSignOut, onSwitchOrganization, openFeedback, router, setTheme, signOut],
   );
 
-  // Visible commands respect permissions; recompute when permissions change.
   const visibleByPermission = useMemo(() => filterCommandsByPermission(COMMANDS, can), [can]);
 
   const grouped = useMemo(() => groupBySection(visibleByPermission), [visibleByPermission]);
@@ -86,6 +82,8 @@ export function CommandPalette({
       try {
         command.handler(ctx);
       } catch (error) {
+        // Prefer structured logger in app code; console.error is allowed for
+        // unexpected handler failures in the palette (Biome).
         console.error("Command palette handler failed", error);
       } finally {
         setOpen(false);
@@ -94,109 +92,59 @@ export function CommandPalette({
     [ctx, setOpen],
   );
 
-  // Close on ESC at the top level so we don't depend on focus location.
+  const sectionLabel = (section: CommandSection) => t(`sections.${section}`);
+
+  // Escape at window level — independent of Dialog focus (a11y + existing tests).
   useEffect(() => {
     if (!open) return;
-    const handler = (event: KeyboardEvent) => {
+    const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
         setOpen(false);
       }
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, setOpen]);
 
-  // Focus the input when palette opens.
-  useEffect(() => {
-    if (open) {
-      // Defer to next tick so cmdk has mounted the input.
-      const timer = setTimeout(() => inputRef.current?.focus(), 0);
-      return () => clearTimeout(timer);
-    }
-  }, [open]);
-
+  // Keep closed state unmounted so tests and consumers can assert absence.
+  // CommandMenu.Root still needs open/setOpen for internal Dialog control.
   if (!open) return null;
 
-  const sectionLabel = (section: CommandSection) => t(`sections.${section}`);
-
   return (
-    <div
-      data-testid="command-palette-overlay"
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 pt-[15vh] backdrop-blur-sm"
-      role="presentation"
-      // Click-outside to close
-      onClick={(event) => {
-        if (event.target === event.currentTarget) {
-          setOpen(false);
-        }
-      }}
-    >
-      <Command
-        // biome-ignore lint/a11y/useSemanticElements: cmdk renders its own dialog semantics
-        role="dialog"
-        aria-label={t("ariaLabel")}
-        aria-modal="true"
-        label={t("ariaLabel")}
-        loop
-        className="w-full max-w-xl overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 shadow-2xl dark:bg-neutral-2"
-      >
-        <div className="border-b border-neutral-7 px-4">
-          <Command.Input
-            ref={inputRef}
-            placeholder={t("placeholder")}
-            className="h-12 w-full bg-transparent text-sm text-neutral-12 placeholder:text-neutral-10 focus:outline-none"
-          />
-        </div>
-
-        <Command.List className="max-h-[60vh] overflow-y-auto p-2">
-          <Command.Empty className="px-4 py-6 text-center text-sm text-neutral-11">
-            {t("empty")}
-          </Command.Empty>
-
+    <div data-testid="command-palette-overlay">
+      <CommandMenu.Root open={open} setOpen={setOpen} label={t("ariaLabel")}>
+        <CommandMenu.Input placeholder={t("placeholder")} />
+        <CommandMenu.List>
+          <CommandMenu.Empty>{t("empty")}</CommandMenu.Empty>
           {SECTION_ORDER.map((section) => {
             const items = grouped[section];
             if (items.length === 0) return null;
             return (
-              <Command.Group
-                key={section}
-                heading={sectionLabel(section)}
-                className="px-1 py-1 text-xs font-medium text-neutral-10 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wide"
-              >
+              <CommandMenu.Group key={section} heading={sectionLabel(section)}>
                 {items.map((command) => {
                   const Icon = command.icon;
                   const title = t(`commands.${command.titleKey}`);
-                  const keywords = [title, ...(command.tags ?? []), section].filter(Boolean);
                   return (
-                    <Command.Item
+                    <CommandMenu.Item
                       key={command.id}
                       value={command.id}
-                      keywords={keywords}
-                      onSelect={() => handleSelect(command)}
-                      className="flex cursor-pointer items-center gap-3 rounded-[var(--radius-md)] px-2 py-2 text-sm text-neutral-12 aria-selected:bg-neutral-3 aria-selected:text-neutral-12"
+                      keywords={[title, ...(command.tags ?? []), section].filter(Boolean)}
+                      callback={() => handleSelect(command)}
                     >
                       <Icon className="h-4 w-4 shrink-0 text-neutral-11" aria-hidden />
                       <span className="flex-1">{title}</span>
                       {command.shortcut ? (
-                        <span className="ml-auto flex items-center gap-1 text-xs text-neutral-10">
-                          {command.shortcut.map((key) => (
-                            <kbd
-                              key={key}
-                              className="rounded border border-neutral-7 bg-neutral-2 px-1.5 py-0.5 font-mono text-[10px]"
-                            >
-                              {key}
-                            </kbd>
-                          ))}
-                        </span>
+                        <CommandMenu.Shortcut keys={command.shortcut} label={`${title} shortcut`} />
                       ) : null}
-                    </Command.Item>
+                    </CommandMenu.Item>
                   );
                 })}
-              </Command.Group>
+              </CommandMenu.Group>
             );
           })}
-        </Command.List>
-      </Command>
+        </CommandMenu.List>
+      </CommandMenu.Root>
     </div>
   );
 }
