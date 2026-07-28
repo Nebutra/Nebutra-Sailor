@@ -91,6 +91,14 @@ export function LocalePanel({
     maxHeight: "min(70vh, 560px)",
     display: "flex",
     flexDirection: "column",
+    // Inline solid fill — never rely only on Tailwind utility generation.
+    // If app CSS misses @source for @nebutra/i18n, `bg-neutral-1` is a no-op
+    // and hero copy bleeds through a translucent default. Match app shells that
+    // paint body with hsl(var(--background)).
+    backgroundColor: "hsl(var(--background))",
+    backdropFilter: "none",
+    WebkitBackdropFilter: "none",
+    isolation: "isolate",
   };
 
   return (
@@ -130,7 +138,7 @@ export function LocalePanel({
           aria-label={copy.menuAria}
           aria-modal="false"
           style={panelStyle}
-          className="overflow-hidden rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 shadow-xl"
+          className="overflow-hidden rounded-[var(--radius-lg)] border border-neutral-7 bg-background shadow-xl"
         >
           {copy.title || showSearch ? (
             <div className="border-b border-neutral-6 px-4 py-3">
