@@ -183,7 +183,12 @@ function rewritePackageJson(pkg) {
         .replace(/\.tsx?(?=\*|$)/g, ".js")
         .replace(/\*\.tsx?/g, "*.js");
     }
-    return mapExport(value);
+    // Non-glob path. This branch called mapExport(value) with the same value,
+    // which is unconditional self-recursion: every plain export path blew the
+    // stack, and `pnpm deploy` failed for all 34 packages that declare exports
+    // without a wildcard. Glob exports took the branch above and hid it.
+    if (!isTsSource(value)) return value;
+    return `./${distRelForSource(stripDot(value))}`;
   };
 
   if (typeof pkg.main === "string") pkg.main = mapExport(pkg.main);
