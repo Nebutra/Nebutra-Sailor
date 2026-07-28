@@ -48,7 +48,7 @@ export type SearchResult = {
   /** Optional ISO date or display string. */
   date?: string;
   /** If provided, row renders as a real external link. */
-  url?: string;
+  url?: string | undefined;
 };
 
 export type SearchToolState = "pending" | "completed";

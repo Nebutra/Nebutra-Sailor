@@ -10,6 +10,7 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useDebounceValue } from "usehooks-ts";
@@ -40,6 +41,8 @@ export function useDataTable<TData>(props: DataTableProps<TData>) {
     columnResizeMode = "onChange",
     enableCellSelection = false,
   } = props;
+
+  const t = useTranslations();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery] = useDebounceValue(searchQuery, 300);

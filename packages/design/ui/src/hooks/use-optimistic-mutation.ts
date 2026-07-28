@@ -169,13 +169,13 @@ export function createOptimisticConfig<
   /** 乐观更新函数 */
   optimisticUpdate: (old: TData | undefined, variables: TVariables) => TData | undefined;
   /** 成功提示 */
-  successMessage?: string;
+  successMessage?: string | undefined;
   /** 错误提示 */
-  errorMessage?: string;
+  errorMessage?: string | undefined;
   /** 成功回调 */
-  onSuccess?: () => void;
+  onSuccess?: (() => void) | undefined;
   /** 错误回调 */
-  onError?: (error: Error) => void;
+  onError?: ((error: Error) => void) | undefined;
 }) {
   return {
     onMutate: async (variables: TVariables): Promise<TContext> => {
@@ -227,10 +227,10 @@ export function createOptimisticDeleteConfig<TData extends { id: string }[]>({
     setData: (updater: undefined | ((old: TData | undefined) => TData | undefined)) => void;
     invalidate: () => Promise<void>;
   };
-  successMessage?: string;
-  errorMessage?: string;
-  onSuccess?: () => void;
-  onError?: (error: Error) => void;
+  successMessage?: string | undefined;
+  errorMessage?: string | undefined;
+  onSuccess?: (() => void) | undefined;
+  onError?: ((error: Error) => void) | undefined;
 }) {
   return createOptimisticConfig<TData, { id: string }>({
     queryKey,

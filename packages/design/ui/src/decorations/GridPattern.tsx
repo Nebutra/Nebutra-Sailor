@@ -19,7 +19,7 @@ export interface GridPatternProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: number;
   strokeWidth?: number;
   fade?: "none" | "top" | "bottom" | "both" | "radial";
-  color?: string;
+  color?: string | undefined;
 }
 
 export const GridPattern = React.forwardRef<HTMLDivElement, GridPatternProps>(

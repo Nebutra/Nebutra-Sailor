@@ -15,9 +15,9 @@ export interface CrossPatternProps extends React.HTMLAttributes<HTMLDivElement> 
    * - Use "currentColor" to inherit text color (default)
    * - Use CSS variables: "hsl(var(--border))" for theme compatibility
    */
-  color?: string;
+  color?: string | undefined;
   /** Opacity 0-1 (default: 0.03) */
-  opacity?: number;
+  opacity?: number | undefined;
 }
 
 /**

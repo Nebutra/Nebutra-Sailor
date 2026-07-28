@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof Accordion>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Accordion>;
 
 const loremA =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
@@ -28,7 +28,7 @@ const loremB =
 export const Default: Story = {
   render: () => (
     <div className="w-[480px]">
-      <Accordion type="single" collapsible>
+      <Accordion>
         <AccordionItem value="item-1">
           <AccordionTrigger>Question A</AccordionTrigger>
           <AccordionContent>
@@ -49,7 +49,7 @@ export const Default: Story = {
 export const Expanded: Story = {
   render: () => (
     <div className="w-[480px]">
-      <Accordion type="single" collapsible defaultValue="item-2">
+      <Accordion defaultValue={["item-2"]}>
         <AccordionItem value="item-1">
           <AccordionTrigger>Question A</AccordionTrigger>
           <AccordionContent>
@@ -70,7 +70,7 @@ export const Expanded: Story = {
 export const Multiple: Story = {
   render: () => (
     <div className="w-[480px]">
-      <Accordion type="multiple">
+      <Accordion multiple>
         <AccordionItem value="item-1">
           <AccordionTrigger>Question A</AccordionTrigger>
           <AccordionContent>
@@ -91,7 +91,7 @@ export const Multiple: Story = {
 export const Small: Story = {
   render: () => (
     <div className="w-[480px]">
-      <Accordion type="single" collapsible>
+      <Accordion>
         <AccordionItem value="item-1">
           <AccordionTrigger size="small">Question A</AccordionTrigger>
           <AccordionContent size="small">
@@ -106,7 +106,7 @@ export const Small: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="w-[480px]">
-      <Accordion type="single" collapsible>
+      <Accordion>
         <AccordionItem value="item-1">
           <AccordionTrigger>Enabled item</AccordionTrigger>
           <AccordionContent>
@@ -126,12 +126,14 @@ export const Disabled: Story = {
 
 export const Controlled: Story = {
   render: function ControlledStory() {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState<string[]>([]);
 
     return (
       <div className="w-[480px]">
-        <div className="mb-4 text-sm text-muted-foreground">Active: {value || "none"}</div>
-        <Accordion type="single" collapsible value={value} onValueChange={setValue}>
+        <div className="mb-4 text-sm text-muted-foreground">
+          Active: {value.join(", ") || "none"}
+        </div>
+        <Accordion value={value} onValueChange={setValue}>
           <AccordionItem value="item-1">
             <AccordionTrigger>Question A</AccordionTrigger>
             <AccordionContent>

@@ -65,10 +65,10 @@ export interface SidebarNavSection {
 export interface SidebarNavRenderLinkProps {
   href: string;
   children: React.ReactNode;
-  className?: string;
+  className?: string | undefined;
   "aria-current"?: "page" | undefined;
-  "aria-label"?: string;
-  onClick?: () => void;
+  "aria-label"?: string | undefined;
+  onClick?: (() => void) | undefined;
 }
 
 export interface SidebarNavProps {
@@ -167,10 +167,10 @@ function ItemContent({
 interface InteractiveItemProps {
   item: SidebarNavItem;
   collapsed: boolean;
-  itemClassName?: string;
+  itemClassName?: string | undefined;
   renderLink: (props: SidebarNavRenderLinkProps) => React.ReactElement;
   /** Indent for nested children. */
-  nested?: boolean;
+  nested?: boolean | undefined;
 }
 
 function InteractiveItem({
@@ -257,7 +257,7 @@ function InteractiveItem({
 interface ParentItemProps {
   item: SidebarNavItem;
   collapsed: boolean;
-  itemClassName?: string;
+  itemClassName?: string | undefined;
   renderLink: (props: SidebarNavRenderLinkProps) => React.ReactElement;
 }
 

@@ -628,7 +628,7 @@ export type QuestionToolProps = {
   allowSkip?: boolean;
   onSubmitAnswer?: (answer: QuestionAnswer, questionIndex: number) => void;
   /** When provided, renders the summary state with this answer. */
-  output?: { answer?: QuestionAnswer };
+  output?: { answer?: QuestionAnswer | undefined } | undefined;
   /** Stable id used to reset internal state when the question set changes. */
   toolCallId?: string;
   /** Header label shown in the chrome bar. @default "Question" */

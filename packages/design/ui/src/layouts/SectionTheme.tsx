@@ -44,7 +44,7 @@ export interface SectionThemeConfig {
  * Some use specific hex colors for artistic effect (exempt from Primer
  * strict compliance per WARP.md).
  */
-export const sectionThemes: Record<string, SectionThemeConfig> = {
+const sectionThemeDefs = {
   // Hero: "Cosmic Launch" - Deep blue gradient with floating particles
   hero: {
     backgroundColor: "bg-background",
@@ -137,11 +137,21 @@ export const sectionThemes: Record<string, SectionThemeConfig> = {
     backgroundColor: "bg-[var(--neutral-1)]",
     pattern: "none",
   },
-};
+} satisfies Record<string, SectionThemeConfig>;
+
+/** Names of the predefined section themes. */
+export type SectionThemeName = keyof typeof sectionThemeDefs;
+
+/**
+ * Predefined themes, keyed by a closed union so that `sectionThemes[name]`
+ * is known to exist. Declaring this as `Record<string, …>` would erase the
+ * literal keys and make every lookup `SectionThemeConfig | undefined`.
+ */
+export const sectionThemes: Record<SectionThemeName, SectionThemeConfig> = sectionThemeDefs;
 
 export interface ThemedSectionProps extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
   /** Theme preset name or custom config */
-  theme: keyof typeof sectionThemes | SectionThemeConfig;
+  theme: SectionThemeName | SectionThemeConfig;
   /** Section content */
   children: React.ReactNode;
   /** Custom CSS variables for the section */

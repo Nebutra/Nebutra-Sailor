@@ -25,7 +25,7 @@ const meta = {
 } satisfies Meta<typeof FeatureIconItem>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FeatureIconItem>;
 
 export const Default: Story = {
   render: () => (

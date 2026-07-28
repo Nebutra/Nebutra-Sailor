@@ -28,7 +28,7 @@ const meta = {
 } satisfies Meta<typeof LineShadowText>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof LineShadowText>;
 
 export const Default: Story = {
   args: {

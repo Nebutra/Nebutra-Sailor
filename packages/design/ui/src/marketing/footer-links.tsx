@@ -4,7 +4,7 @@ import {
   ChevronDown,
   External as ExternalLink,
   LogoGithub as Github,
-  LogoLinkedin as Linkedin,
+  Linkedin,
   LogoTwitterX as Twitter,
   LogoYoutubeSmall as Youtube,
 } from "@nebutra/icons";
@@ -110,15 +110,18 @@ export function FooterLinkColumn({ group, className }: FooterLinkColumnProps) {
           <DropdownMenuContent side="top" align="start" className="w-60 p-1">
             {group.dropdown.items.map((item, index) =>
               item.href ? (
-                <DropdownMenuItem key={index} asChild className="h-10 px-4">
-                  <Link
-                    href={item.href}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noopener noreferrer" : undefined}
-                  >
-                    {item.title}
-                    {item.external && <ExternalLink className="ml-auto h-4 w-4" />}
-                  </Link>
+                <DropdownMenuItem
+                  key={index}
+                  className="h-10 px-4"
+                  render={
+                    <Link
+                      href={item.href}
+                      {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    />
+                  }
+                >
+                  {item.title}
+                  {item.external && <ExternalLink className="ml-auto h-4 w-4" />}
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem key={index} className="h-10 px-4">

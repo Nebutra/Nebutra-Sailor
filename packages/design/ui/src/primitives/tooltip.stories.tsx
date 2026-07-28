@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
-const meta = {
+const meta: Meta<typeof Tooltip> = {
   title: "Primitives/Tooltip",
   component: Tooltip,
   parameters: {
@@ -22,10 +22,10 @@ const meta = {
       </TooltipProvider>
     ),
   ],
-} satisfies Meta<typeof Tooltip>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Tooltip>;
 
 export const Default: Story = {
   render: () => (

@@ -37,9 +37,9 @@ export type FileAttachmentProps = {
   /** Optional file size in bytes; rendered below filename when present. */
   size?: number;
   /** Pass true when MIME indicates an image; pair with `url` to show a thumbnail. */
-  isImage?: boolean;
+  isImage?: boolean | undefined;
   /** Preview URL — required for thumbnail rendering. */
-  url?: string;
+  url?: string | undefined;
   /** Removal callback. When omitted, no remove button renders. */
   onRemove?: () => void;
   /** @default "chip" */

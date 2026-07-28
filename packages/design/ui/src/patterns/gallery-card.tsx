@@ -189,13 +189,13 @@ function GalleryCardActionsMenu({ actions, title }: GalleryCardActionsMenuProps)
 
 interface GalleryCardBodyProps {
   title: string;
-  description?: string;
-  icon?: React.ReactNode;
+  description?: string | undefined;
+  icon?: React.ReactNode | undefined;
   iconTone: GalleryCardIconTone;
-  badge?: GalleryCardBadge;
-  pinned?: boolean;
-  metadata?: GalleryCardMetadata;
-  actions?: GalleryCardAction[];
+  badge?: GalleryCardBadge | undefined;
+  pinned?: boolean | undefined;
+  metadata?: GalleryCardMetadata | undefined;
+  actions?: GalleryCardAction[] | undefined;
 }
 
 /**

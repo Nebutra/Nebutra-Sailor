@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof MetricCard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof MetricCard>;
 
 export const Default: Story = {
   render: () => (

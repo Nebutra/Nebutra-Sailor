@@ -52,8 +52,11 @@ function TestimonialCard({ testimonial, cardStyle = "solid", className }: Testim
 
   return (
     <figure className={cn(cardVariants({ cardStyle }), className)}>
+      {/* Decorative rating glyph. No orange ramp is registered; amber is the nearest
+          registered hue. -900 (not -700) because amber-700 is oklch 81.87% in both themes
+          and misses the 3:1 non-text floor on a light card. */}
       {rating > 0 && (
-        <div className="flex gap-0.5 mb-4 text-[var(--orange-9)]">
+        <div className="flex gap-0.5 mb-4 text-amber-900">
           {RATING_STARS.map((star) => (
             <svg
               key={star}

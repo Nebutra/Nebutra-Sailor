@@ -17,11 +17,11 @@ export interface FloatingSpotsProps extends React.HTMLAttributes<HTMLDivElement>
    * - "hsl(var(--accent))" for accent color
    * - "hsl(var(--primary))" for primary brand color
    */
-  color?: string;
+  color?: string | undefined;
   /** Minimum opacity 0-1 (default: 0.05) */
-  minOpacity?: number;
+  minOpacity?: number | undefined;
   /** Maximum opacity 0-1 (default: 0.15) */
-  maxOpacity?: number;
+  maxOpacity?: number | undefined;
   /** Animation cycle duration in seconds (default: 20) */
   cycleDuration?: number;
   /** Blur amount in pixels (default: 40) */

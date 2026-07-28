@@ -118,9 +118,9 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 };
 
 export interface StaggerTestimonialsProps {
-  items?: StaggerTestimonialItem[];
-  height?: number;
-  className?: string;
+  items?: StaggerTestimonialItem[] | undefined;
+  height?: number | undefined;
+  className?: string | undefined;
 }
 
 export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({

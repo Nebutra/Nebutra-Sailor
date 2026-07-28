@@ -23,7 +23,7 @@ const meta = {
 } satisfies Meta<typeof InteractiveCard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof InteractiveCard>;
 
 export const Default: Story = {
   args: {

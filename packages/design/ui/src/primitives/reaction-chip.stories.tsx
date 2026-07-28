@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof MessageWithReactions>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof MessageWithReactions>;
 
 export const Default: Story = {
   args: {

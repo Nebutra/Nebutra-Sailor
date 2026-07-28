@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof FeatureArrowCard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FeatureArrowCard>;
 
 export const Default: Story = {
   render: () => (

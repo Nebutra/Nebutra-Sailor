@@ -25,7 +25,7 @@ const meta = {
 } satisfies Meta<typeof BentoGrid>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof BentoGrid>;
 
 export const Default: Story = {
   render: () => (

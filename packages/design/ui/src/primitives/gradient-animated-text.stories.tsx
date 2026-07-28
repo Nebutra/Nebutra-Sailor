@@ -33,7 +33,7 @@ const meta = {
 } satisfies Meta<typeof GradientAnimatedText>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof GradientAnimatedText>;
 
 export const Default: Story = {
   args: {

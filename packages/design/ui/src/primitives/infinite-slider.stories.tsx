@@ -25,7 +25,7 @@ const meta = {
 } satisfies Meta<typeof InfiniteSlider>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof InfiniteSlider>;
 
 export const Default: Story = {
   render: () => (

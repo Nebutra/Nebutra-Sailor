@@ -60,8 +60,14 @@ export function FeaturesGrid({ features, gridSize = 20, className }: FeaturesGri
 /**
  * Decorative grid overlay for feature cards
  */
-export function DecorativeGrid({ pattern, size }: { pattern?: number[][]; size?: number }) {
-  const p = pattern ?? [
+export function DecorativeGrid({
+  pattern,
+  size,
+}: {
+  pattern?: Array<[x: number, y: number]>;
+  size?: number;
+}) {
+  const p: Array<[x: number, y: number]> = pattern ?? [
     [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
     [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
     [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
@@ -93,7 +99,7 @@ interface GridPatternProps extends React.SVGProps<SVGSVGElement> {
   height: number;
   x: string;
   y: string;
-  squares?: number[][];
+  squares?: Array<[x: number, y: number]>;
 }
 
 /**

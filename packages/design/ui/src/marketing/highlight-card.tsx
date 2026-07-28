@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion, type Variants } from "../shared/animation/motion";
+import {
+  type MotionStyle,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 /**
@@ -146,7 +151,7 @@ export const HighlightCard = React.forwardRef<HTMLDivElement, HighlightCardProps
             linear-gradient(to bottom right, var(--card-from-color), var(--card-to-color))
           `,
             backgroundSize: "0.5rem 0.5rem, 100% 100%",
-          } as React.CSSProperties
+          } as MotionStyle
         }
         variants={cardMotionVariants}
         initial="hidden"

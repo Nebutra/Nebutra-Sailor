@@ -6,8 +6,10 @@ import {
   SettingsGear as Settings,
   User,
 } from "@nebutra/icons";
-import { SettingsSidebarNav } from "./components/sidebar-nav";
-import { Separator } from "./separator";
+import { useTranslations } from "next-intl";
+import type * as React from "react";
+import { Separator } from "../../primitives/separator";
+import { SettingsSidebarNav } from "./sidebar-nav";
 
 interface SettingsLayoutClientProps {
   children: React.ReactNode;
@@ -15,7 +17,7 @@ interface SettingsLayoutClientProps {
 }
 
 export function SettingsLayoutClient({ children, locale }: SettingsLayoutClientProps) {
-  const { t } = useI18n();
+  const t = useTranslations();
 
   const sidebarNavItems = [
     {

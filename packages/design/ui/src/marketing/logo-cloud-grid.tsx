@@ -57,11 +57,8 @@ export function LogoCloudGrid({
   className,
   ...props
 }: LogoCloudGridProps) {
-  // Ensure we have exactly 8 logos (pad or truncate)
-  const displayLogos = logos.slice(0, 8);
-  while (displayLogos.length < 8) {
-    displayLogos.push({ src: "", alt: "" });
-  }
+  // The grid always renders exactly 8 slots; short arrays fall back to an empty cell.
+  const logoAt = (index: number): LogoCloudGridLogo => logos[index] ?? { src: "", alt: "" };
 
   return (
     <div className={cn("relative grid grid-cols-2 border-x md:grid-cols-4", className)} {...props}>
@@ -71,7 +68,7 @@ export function LogoCloudGrid({
       {/* Row 1 */}
       <LogoCard
         className="relative border-r border-b bg-secondary dark:bg-secondary/30"
-        logo={displayLogos[0]}
+        logo={logoAt(0)}
       >
         {showDecorators && (
           <PlusIcon
@@ -81,11 +78,11 @@ export function LogoCloudGrid({
         )}
       </LogoCard>
 
-      <LogoCard className="border-b md:border-r" logo={displayLogos[1]} />
+      <LogoCard className="border-b md:border-r" logo={logoAt(1)} />
 
       <LogoCard
         className="relative border-r border-b md:bg-secondary dark:md:bg-secondary/30"
-        logo={displayLogos[2]}
+        logo={logoAt(2)}
       >
         {showDecorators && (
           <>
@@ -103,13 +100,13 @@ export function LogoCloudGrid({
 
       <LogoCard
         className="relative border-b bg-secondary md:bg-background dark:bg-secondary/30 md:dark:bg-background"
-        logo={displayLogos[3]}
+        logo={logoAt(3)}
       />
 
       {/* Row 2 */}
       <LogoCard
         className="relative border-r border-b bg-secondary md:border-b-0 md:bg-background dark:bg-secondary/30 md:dark:bg-background"
-        logo={displayLogos[4]}
+        logo={logoAt(4)}
       >
         {showDecorators && (
           <PlusIcon
@@ -121,12 +118,12 @@ export function LogoCloudGrid({
 
       <LogoCard
         className="border-b bg-background md:border-r md:border-b-0 md:bg-secondary dark:md:bg-secondary/30"
-        logo={displayLogos[5]}
+        logo={logoAt(5)}
       />
 
-      <LogoCard className="border-r" logo={displayLogos[6]} />
+      <LogoCard className="border-r" logo={logoAt(6)} />
 
-      <LogoCard className="bg-secondary dark:bg-secondary/30" logo={displayLogos[7]} />
+      <LogoCard className="bg-secondary dark:bg-secondary/30" logo={logoAt(7)} />
 
       {/* Bottom border line */}
       <div className="-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b" />

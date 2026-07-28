@@ -27,7 +27,7 @@ const meta = {
 } satisfies Meta<typeof EmptyState.Root>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof EmptyState.Root>;
 
 export const BlankSlate: Story = {
   render: () => (

@@ -67,7 +67,7 @@ export const CenteredCard: Story = {
   render: () => (
     <Stack gap={3} align="center" className="w-48 border rounded-xl p-6">
       <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/60" />
-      <Stack gap={0.5} align="center">
+      <Stack gap={1} align="center">
         <span className="font-semibold text-sm">Jane Doe</span>
         <span className="text-xs text-muted-foreground">Product Designer</span>
       </Stack>

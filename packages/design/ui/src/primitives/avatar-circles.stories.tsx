@@ -21,7 +21,7 @@ const meta = {
 } satisfies Meta<typeof AvatarCircles>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof AvatarCircles>;
 
 const sampleAvatars = [
   {

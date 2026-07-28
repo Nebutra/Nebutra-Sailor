@@ -23,7 +23,7 @@ const meta = {
 } satisfies Meta<typeof TextLoop>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof TextLoop>;
 
 export const Default: Story = {
   render: () => (

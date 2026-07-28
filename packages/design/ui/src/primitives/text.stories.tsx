@@ -41,7 +41,7 @@ export const AllVariants: Story = {
       <Text variant="body">Body — Default paragraph text style</Text>
       <Text variant="body-sm">Body SM — Smaller body for secondary content</Text>
       <Text variant="label">Label — Form labels and metadata</Text>
-      <Text variant="label-sm">Label SM — Micro labels and tags</Text>
+      <Text variant="caption">Caption — Micro labels and tags</Text>
       <Text variant="code">code — Monospace for inline code</Text>
     </div>
   ),
@@ -71,7 +71,7 @@ export const LineClamp: Story = {
   render: () => (
     <div className="w-64 space-y-4">
       <div>
-        <Text variant="label-sm" color="muted" className="mb-1 block">
+        <Text variant="caption" color="muted" className="mb-1 block">
           lineClamp=2
         </Text>
         <Text lineClamp={2}>
@@ -81,7 +81,7 @@ export const LineClamp: Story = {
         </Text>
       </div>
       <div>
-        <Text variant="label-sm" color="muted" className="mb-1 block">
+        <Text variant="caption" color="muted" className="mb-1 block">
           lineClamp=3
         </Text>
         <Text lineClamp={3}>

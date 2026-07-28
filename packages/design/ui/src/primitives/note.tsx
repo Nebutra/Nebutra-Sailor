@@ -63,6 +63,9 @@ export interface NoteBaseProps
 
 export type NoteProps = NoteBaseProps & NoteToneProps;
 
+// `tone`/`type` are typed by NoteTone, so it belongs to this module's public surface.
+export type { NoteSize, NoteTone };
+
 const defaultLabels = {
   default: false,
   secondary: "Info",

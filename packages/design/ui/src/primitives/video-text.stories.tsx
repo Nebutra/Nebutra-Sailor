@@ -32,7 +32,7 @@ const meta = {
 } satisfies Meta<typeof VideoText>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof VideoText>;
 
 export const Placeholder: Story = {
   name: "Layout Demo (no video)",

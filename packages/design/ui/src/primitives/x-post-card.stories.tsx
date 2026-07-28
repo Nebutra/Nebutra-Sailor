@@ -17,7 +17,7 @@ const meta = {
 } satisfies Meta<typeof XPostCard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof XPostCard>;
 
 export const Default: Story = {
   args: {

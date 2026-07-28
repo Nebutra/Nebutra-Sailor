@@ -104,10 +104,10 @@ export function useUndo<T>(initialState: T, options: UseUndoOptions = {}): UseUn
 
   const undo = React.useCallback(() => {
     setHistory((prev) => {
-      if (prev.past.length === 0) return prev;
+      const previous = prev.past[prev.past.length - 1];
+      if (previous === undefined) return prev;
 
       const newPast = prev.past.slice(0, -1);
-      const previous = prev.past[prev.past.length - 1];
 
       return {
         past: newPast,
@@ -119,9 +119,9 @@ export function useUndo<T>(initialState: T, options: UseUndoOptions = {}): UseUn
 
   const redo = React.useCallback(() => {
     setHistory((prev) => {
-      if (prev.future.length === 0) return prev;
-
       const next = prev.future[0];
+      if (next === undefined) return prev;
+
       const newFuture = prev.future.slice(1);
 
       return {
@@ -221,7 +221,7 @@ export type UndoAction<T> =
   | { type: "SET"; payload: T }
   | { type: "UNDO" }
   | { type: "REDO" }
-  | { type: "RESET"; payload?: T }
+  | { type: "RESET"; payload?: T | undefined }
   | { type: "CLEAR_HISTORY" };
 
 function undoReducer<T>(state: HistoryState<T>, action: UndoAction<T>): HistoryState<T> {
@@ -237,8 +237,8 @@ function undoReducer<T>(state: HistoryState<T>, action: UndoAction<T>): HistoryS
       };
     }
     case "UNDO": {
-      if (state.past.length === 0) return state;
       const previous = state.past[state.past.length - 1];
+      if (previous === undefined) return state;
       return {
         past: state.past.slice(0, -1),
         present: previous,
@@ -246,8 +246,8 @@ function undoReducer<T>(state: HistoryState<T>, action: UndoAction<T>): HistoryS
       };
     }
     case "REDO": {
-      if (state.future.length === 0) return state;
       const next = state.future[0];
+      if (next === undefined) return state;
       return {
         past: [...state.past, state.present],
         present: next,

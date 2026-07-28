@@ -22,7 +22,7 @@ const meta = {
 } satisfies Meta<typeof Modal.Modal>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Modal.Modal>;
 
 function ModalFixture({ sticky = false }: { sticky?: boolean }) {
   const [active, setActive] = useState(false);

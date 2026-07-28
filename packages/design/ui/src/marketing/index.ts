@@ -29,9 +29,6 @@ export { CTA } from "./CTA";
 // =============================================================================
 // Subcomponents
 // =============================================================================
-export { GradientText } from "./components/GradientText";
-export { LogoCloud } from "./components/LogoCloud";
-export { StatsCounter } from "./components/StatsCounter";
 export { FAQ } from "./FAQ";
 export { Features } from "./Features";
 export { Footer } from "./Footer";

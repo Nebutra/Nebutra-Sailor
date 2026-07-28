@@ -27,7 +27,7 @@ const makeEdge = (from: string, to: string, h: string | null): DemoEdge => ({
 const renderNode = (n: DemoNode) => ({
   label: n.label,
   subtitle: n.done ? "done" : "pending",
-  ready: n.done,
+  ready: n.done ?? false,
 });
 
 const meta: Meta<typeof NodeGraphCanvas> = {
@@ -38,7 +38,7 @@ const meta: Meta<typeof NodeGraphCanvas> = {
 export default meta;
 type Story = StoryObj<typeof NodeGraphCanvas>;
 
-function Editor({ seed, readOnly }: { seed: DemoGraph; readOnly?: boolean }) {
+function Editor({ seed, readOnly = false }: { seed: DemoGraph; readOnly?: boolean }) {
   const [graph, setGraph] = useState<DemoGraph>(seed);
   return (
     <NodeGraphCanvas

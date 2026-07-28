@@ -5,14 +5,14 @@ import {
   ArrowRight,
   Message as Discord,
   LogoGithub as Github,
-  LogoLinkedin as Linkedin,
+  Linkedin,
   LogoTwitterX as Twitter,
   LogoYoutubeSmall as Youtube,
 } from "@nebutra/icons";
-import { Input } from "@nebutra/ui/primitives";
 import { cva } from "class-variance-authority";
 import Link from "next/link";
 import { AnimateIn } from "../primitives/animate-in";
+import { Input } from "../primitives/input";
 import { cn } from "../utils/cn";
 import type { FooterProps } from "./types";
 

@@ -110,7 +110,7 @@ export function Pricing({
                 Yearly
               </button>
               {yearlyDiscount && (
-                <div className="absolute -top-3 -right-3 px-2 py-0.5 bg-[var(--green-9)] text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm z-20 transform rotate-3">
+                <div className="absolute -top-3 -right-3 px-2 py-0.5 bg-green-200 text-green-900 text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm z-20 transform rotate-3">
                   Save {yearlyDiscount}%
                 </div>
               )}
@@ -192,7 +192,7 @@ export function Pricing({
                         >
                           <div className="flex-shrink-0 mt-0.5">
                             {feature.included ? (
-                              <Check className="w-4 h-4 text-[var(--green-10)]" />
+                              <Check className="w-4 h-4 text-green-900" />
                             ) : (
                               <X className="w-4 h-4 text-[var(--neutral-8)]" />
                             )}

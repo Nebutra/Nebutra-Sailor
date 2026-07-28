@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof GitHubCalendar>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof GitHubCalendar>;
 
 // Generate sample data for the past year
 function generateSampleData(days: number = 365) {

@@ -28,7 +28,7 @@ const meta = {
 } satisfies Meta<typeof GridFeatureCard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof GridFeatureCard>;
 
 export const Default: Story = {
   render: () => (

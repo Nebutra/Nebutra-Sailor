@@ -53,7 +53,6 @@ export function Marquee3DTestimonials({ items, className, height = 384 }: Testim
     name: x.author,
     username: x.company ? `@${x.company.toLowerCase().replace(/\s+/g, "")}` : `@user${i}`,
     body: x.quote,
-    country: undefined,
   }));
 
   if (mapped.length === 0) return null;

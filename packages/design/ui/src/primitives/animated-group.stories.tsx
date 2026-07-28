@@ -34,7 +34,7 @@ const meta = {
 } satisfies Meta<typeof AnimatedGroup>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof AnimatedGroup>;
 
 const Items = () => (
   <>

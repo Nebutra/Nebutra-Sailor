@@ -17,7 +17,7 @@ const meta = {
 } satisfies Meta<typeof Browser>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Browser>;
 
 export const Default: Story = {
   render: () => (

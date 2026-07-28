@@ -56,7 +56,7 @@ export const Default: Story = {
           <DialogClose asChild>
             <button
               type="button"
-              className="rounded-md bg-[color:var(--red-9)] px-3 py-2 text-sm text-white"
+              className="rounded-md bg-destructive px-3 py-2 text-sm text-destructive-foreground"
             >
               Delete
             </button>

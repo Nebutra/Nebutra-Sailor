@@ -176,11 +176,11 @@ export const Destructive: Story = {
 
 export const Grouped: Story = {
   args: {
+    // No `avatarUrl` key at all — the initials fallback is what this story shows.
     user: {
-      ...baseUser,
+      id: baseUser.id,
       name: "Grace Hopper",
       email: "grace@example.com",
-      avatarUrl: undefined,
     },
     groups: [
       {

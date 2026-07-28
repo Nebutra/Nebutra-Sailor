@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { ChoiceboxGroup } from "./choicebox";
 
-const meta = {
+const meta: Meta<typeof ChoiceboxGroup> = {
   title: "Primitives/Choicebox",
   component: ChoiceboxGroup,
   parameters: {
@@ -15,10 +15,10 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof ChoiceboxGroup>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ChoiceboxGroup>;
 
 // ─── Stories ──────────────────────────────────────────────────────────────────
 

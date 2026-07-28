@@ -277,6 +277,10 @@ export function TerminalControlSectionAnimated({
     [items.length],
   );
 
+  // The tab panel needs a concrete item; an empty `items` array has nothing to show.
+  const activeItem = items[active];
+  if (!activeItem) return null;
+
   return (
     <section className={cn("relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8", className)}>
       {/* Decorative background */}
@@ -319,7 +323,7 @@ export function TerminalControlSectionAnimated({
                     {/* Animated active background (shared layout) */}
                     {isActive && (
                       <motion.span
-                        layoutId={shouldReduceMotion ? undefined : "activeTabBg"}
+                        {...(shouldReduceMotion ? {} : { layoutId: "activeTabBg" })}
                         className="absolute inset-0 -z-10 rounded-[var(--radius-xl)] ring-1 ring-black/5"
                         transition={
                           shouldReduceMotion
@@ -353,7 +357,7 @@ export function TerminalControlSectionAnimated({
         <div
           role="tabpanel"
           aria-live="polite"
-          aria-label={`Preview: ${items[active].title}`}
+          aria-label={`Preview: ${activeItem.title}`}
           className="[&_div]:scrollbar-thin [&_div]:scrollbar-track-transparent [&_div]:scrollbar-thumb-zinc-300 dark:[&_div]:scrollbar-thumb-zinc-700"
         >
           <motion.div
@@ -366,7 +370,7 @@ export function TerminalControlSectionAnimated({
           >
             <div className="p-4 sm:p-6">
               <AnimatePresence mode="wait" initial={!shouldReduceMotion}>
-                <CodeDiff key={items[active].title} diff={items[active].diff} />
+                <CodeDiff key={activeItem.title} diff={activeItem.diff} />
               </AnimatePresence>
             </div>
           </motion.div>

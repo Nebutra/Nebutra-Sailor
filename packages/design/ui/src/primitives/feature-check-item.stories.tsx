@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof FeatureCheckItem>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FeatureCheckItem>;
 
 export const Default: Story = {
   render: () => (

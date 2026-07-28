@@ -130,9 +130,9 @@ export function FAQ({
                       {item.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-muted-foreground">
-                      <ReactMarkdown className="prose prose-neutral dark:prose-invert max-w-none text-sm leading-relaxed">
-                        {item.answer}
-                      </ReactMarkdown>
+                      <div className="prose prose-neutral dark:prose-invert max-w-none text-sm leading-relaxed">
+                        <ReactMarkdown>{item.answer}</ReactMarkdown>
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
                 </AnimateIn>
@@ -150,9 +150,9 @@ export function FAQ({
                   )}
                 >
                   <h3 className="font-semibold text-base text-foreground">{item.question}</h3>
-                  <ReactMarkdown className="prose prose-neutral dark:prose-invert max-w-none text-sm text-muted-foreground">
-                    {item.answer}
-                  </ReactMarkdown>
+                  <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-muted-foreground">
+                    <ReactMarkdown>{item.answer}</ReactMarkdown>
+                  </div>
                 </div>
               </AnimateIn>
             ))

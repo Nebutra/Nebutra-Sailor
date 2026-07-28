@@ -44,9 +44,9 @@ export interface PlusCardProps {
   /** Card description */
   description: string;
   /** Additional CSS classes */
-  className?: string;
+  className?: string | undefined;
   /** Optional link - if provided, card content is wrapped in anchor */
-  href?: string;
+  href?: string | undefined;
   /** Link target attribute */
   target?: "_blank" | "_self" | "_parent" | "_top";
   /** Children to render instead of default title/description */

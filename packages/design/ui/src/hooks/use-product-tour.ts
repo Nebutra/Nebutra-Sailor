@@ -90,13 +90,15 @@ export function useProductTour({
     const currentSteps = stepsRef.current;
 
     // 转换步骤格式
+    // driver.js declares these as optional, so under exactOptionalPropertyTypes an
+    // absent key and an explicit `undefined` are not interchangeable — omit the key.
     const driverSteps: DriveStep[] = currentSteps.map((step) => ({
-      element: step.element,
+      ...(step.element === undefined ? {} : { element: step.element }),
       popover: {
         title: step.popover.title,
         description: step.popover.description,
-        side: step.popover.side,
-        align: step.popover.align,
+        ...(step.popover.side === undefined ? {} : { side: step.popover.side }),
+        ...(step.popover.align === undefined ? {} : { align: step.popover.align }),
       },
     }));
 

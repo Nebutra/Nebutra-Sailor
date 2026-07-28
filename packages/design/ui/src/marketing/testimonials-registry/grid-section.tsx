@@ -24,9 +24,9 @@ const defaultTestimonials: {
 }[] = [];
 
 export interface GridTestimonialsProps extends TestimonialsCommonProps {
-  title?: string;
-  description?: string;
-  showHeader?: boolean;
+  title?: string | undefined;
+  description?: string | undefined;
+  showHeader?: boolean | undefined;
 }
 
 export function GridTestimonials({
@@ -78,11 +78,11 @@ export function GridTestimonials({
                   ? { opacity: 0 }
                   : { filter: "blur(4px)", translateY: -8, opacity: 0 }
               }
-              whileInView={{
-                filter: shouldReduceMotion ? undefined : "blur(0px)",
-                translateY: shouldReduceMotion ? undefined : 0,
-                opacity: 1,
-              }}
+              whileInView={
+                shouldReduceMotion
+                  ? { opacity: 1 }
+                  : { filter: "blur(0px)", translateY: 0, opacity: 1 }
+              }
               viewport={{ once: true }}
               transition={
                 shouldReduceMotion ? { duration: 0 } : { delay: 0.1 * index + 0.1, duration: 0.8 }

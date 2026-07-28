@@ -7,9 +7,9 @@ export interface FeatureCheckItemProps {
   /** Feature title */
   title: string;
   /** Feature description */
-  description?: string;
+  description?: string | undefined;
   /** Custom icon component (defaults to Check) */
-  icon?: LucideIcon;
+  icon?: LucideIcon | undefined;
   /** Icon className */
   iconClassName?: string;
   /** Additional className for container */

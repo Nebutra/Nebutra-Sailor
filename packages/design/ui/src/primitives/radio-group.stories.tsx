@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Radio, RadioGroup, useRadio } from "./radio-group";
 
-const meta = {
+const meta: Meta<typeof RadioGroup> = {
   title: "Primitives/RadioGroup",
   component: RadioGroup,
   parameters: {
@@ -15,10 +15,10 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof RadioGroup>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof RadioGroup>;
 
 function HeadlessRadioRow({ label, value }: { label: string; value: string }) {
   const radio = useRadio({ value, "aria-label": label });

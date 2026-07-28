@@ -28,7 +28,7 @@ const meta = {
 } satisfies Meta<typeof MiddleTruncate>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof MiddleTruncate>;
 
 type ExampleItem = {
   label: string;

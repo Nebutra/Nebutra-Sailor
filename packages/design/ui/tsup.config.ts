@@ -107,16 +107,10 @@ const SERVER_ONLY_ENTRIES = new Set<string>(["agent/index", "tailwind.preset"]);
 export default defineConfig({
   entry: ENTRIES,
   format: ["esm"],
-  // DTS-only relaxation: source has long-standing strict-mode type debt
-  // (exactOptionalPropertyTypes + noUncheckedIndexedAccess) in a few files
-  // (e.g. layouts/SectionTheme.tsx). Runtime build is unaffected; consumers
-  // still get accurate .d.ts types. Tightening these is a separate cleanup.
-  dts: {
-    compilerOptions: {
-      exactOptionalPropertyTypes: false,
-      noUncheckedIndexedAccess: false,
-    },
-  },
+  // No DTS-only relaxation: src/** is strict-clean under the package tsconfig
+  // (exactOptionalPropertyTypes + noUncheckedIndexedAccess), so declaration
+  // emit runs on the same rules as `pnpm typecheck`.
+  dts: true,
   splitting: false,
   sourcemap: true,
   clean: true,

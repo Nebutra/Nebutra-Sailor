@@ -161,7 +161,7 @@ export default function FAQBlock({
       )}
 
       {/* FAQ Accordion */}
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion className="w-full">
         {filteredFaqs.length === 0 ? (
           <div className="text-muted-foreground text-center py-8">
             <p className="mb-6">No FAQs found matching your search.</p>

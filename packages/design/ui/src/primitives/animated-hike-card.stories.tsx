@@ -25,7 +25,7 @@ const meta = {
 } satisfies Meta<typeof AnimatedHikeCard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof AnimatedHikeCard>;
 
 // Placeholder gradient images for demos
 const gradientImages = [

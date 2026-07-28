@@ -22,18 +22,12 @@ const meta = {
 } satisfies Meta<typeof DitheringBackground>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
-
-const containerStyle: React.CSSProperties = {
-  position: "relative",
-  height: "400px",
-  width: "100%",
-};
+type Story = StoryObj<typeof DitheringBackground>;
 
 export const SystemMode: Story = {
   render: () => (
     <div className="relative h-[400px] w-full overflow-hidden">
-      <DitheringBackground themeMode="system" style={containerStyle} />
+      <DitheringBackground themeMode="system" className="absolute" />
     </div>
   ),
 };
@@ -41,7 +35,7 @@ export const SystemMode: Story = {
 export const LightTheme: Story = {
   render: () => (
     <div className="relative h-[400px] w-full overflow-hidden">
-      <DitheringBackground themeMode="light" syncTailwindDark={false} style={containerStyle} />
+      <DitheringBackground themeMode="light" syncTailwindDark={false} className="absolute" />
     </div>
   ),
 };
@@ -49,7 +43,7 @@ export const LightTheme: Story = {
 export const DarkTheme: Story = {
   render: () => (
     <div className="relative h-[400px] w-full overflow-hidden">
-      <DitheringBackground themeMode="dark" syncTailwindDark={false} style={containerStyle} />
+      <DitheringBackground themeMode="dark" syncTailwindDark={false} className="absolute" />
     </div>
   ),
 };
@@ -61,7 +55,7 @@ export const HighIntensity: Story = {
         themeMode="dark"
         intensity={1}
         syncTailwindDark={false}
-        style={containerStyle}
+        className="absolute"
       />
     </div>
   ),
@@ -77,7 +71,7 @@ export const NoOverlays: Story = {
         showVignette={false}
         showShine={false}
         showGlow={false}
-        style={containerStyle}
+        className="absolute"
       />
     </div>
   ),

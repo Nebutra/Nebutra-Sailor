@@ -56,7 +56,7 @@ function getInitials(workspace: Workspace): string {
   if (!trimmed) return "??";
   const parts = trimmed.split(/\s+/).filter(Boolean);
   if (parts.length >= 2) {
-    return `${parts[0][0] ?? ""}${parts[1][0] ?? ""}`.toUpperCase();
+    return `${parts[0]?.[0] ?? ""}${parts[1]?.[0] ?? ""}`.toUpperCase();
   }
   return trimmed.slice(0, 2).toUpperCase();
 }
@@ -110,7 +110,7 @@ interface TriggerProps {
   variant: "compact" | "expanded";
   showRoleBadge: boolean;
   disabled: boolean;
-  className?: string;
+  className?: string | undefined;
 }
 
 function TriggerButton({

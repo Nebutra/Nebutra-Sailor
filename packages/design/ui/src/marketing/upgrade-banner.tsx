@@ -1,7 +1,12 @@
 "use client";
 import { Cross as X } from "@nebutra/icons";
 import * as React from "react";
-import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 export interface UpgradeBannerProps {
   /** Button text for the upgrade CTA */
@@ -33,7 +38,7 @@ const SettingsFilled = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const reducedIconVariants = {
+const reducedIconVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0 } },
 };
@@ -47,7 +52,7 @@ export function UpgradeBanner({
 }: UpgradeBannerProps) {
   const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const iconVariants = {
+  const iconVariants: Variants = {
     hidden: { x: 0, y: 0, opacity: 0, rotate: 0 },
     visible: (custom: { x: number; y: number }) => ({
       x: custom.x,

@@ -17,7 +17,7 @@ const meta = {
 } satisfies Meta<typeof StatusDot>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof StatusDot>;
 
 export const Default: Story = {
   args: {

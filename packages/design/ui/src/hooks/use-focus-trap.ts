@@ -103,9 +103,9 @@ export function useFocusTrap(options: UseFocusTrapOptions = {}): UseFocusTrapRet
     if (initialFocusRef?.current) {
       initialFocusRef.current.focus();
     } else {
-      const focusableElements = getFocusableElements();
-      if (focusableElements.length > 0) {
-        focusableElements[0].focus();
+      const firstFocusable = getFocusableElements()[0];
+      if (firstFocusable) {
+        firstFocusable.focus();
       } else {
         // Focus container if no focusable elements
         containerRef.current?.focus();
@@ -136,10 +136,9 @@ export function useFocusTrap(options: UseFocusTrapOptions = {}): UseFocusTrapRet
       if (event.key !== "Tab") return;
 
       const focusableElements = getFocusableElements();
-      if (focusableElements.length === 0) return;
-
       const firstElement = focusableElements[0];
       const lastElement = focusableElements[focusableElements.length - 1];
+      if (!firstElement || !lastElement) return;
 
       // Shift + Tab on first element -> go to last
       if (event.shiftKey && document.activeElement === firstElement) {
@@ -170,10 +169,7 @@ export function useFocusTrap(options: UseFocusTrapOptions = {}): UseFocusTrapRet
       const target = event.target as Node;
       if (!containerRef.current.contains(target)) {
         // Focus escaped, bring it back
-        const focusableElements = getFocusableElements();
-        if (focusableElements.length > 0) {
-          focusableElements[0].focus();
-        }
+        getFocusableElements()[0]?.focus();
       }
     };
 
@@ -324,7 +320,7 @@ export function useArrowNavigation({
       }
 
       if (nextIndex !== null) {
-        items[nextIndex].focus();
+        items[nextIndex]?.focus();
       }
     };
 

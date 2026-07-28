@@ -14,9 +14,9 @@ export interface GradientAnimatedTextProps extends React.HTMLAttributes<HTMLSpan
   /** Color theme preset */
   theme?: GradientTheme;
   /** Custom gradient start color (CSS color) */
-  gradientFrom?: string;
+  gradientFrom?: string | undefined;
   /** Custom gradient end color (CSS color) */
-  gradientTo?: string;
+  gradientTo?: string | undefined;
   /** Animation duration in seconds */
   duration?: number;
 }

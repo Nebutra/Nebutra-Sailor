@@ -17,7 +17,7 @@ const meta = {
 } satisfies Meta<typeof Terminal>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Terminal>;
 
 export const Default: Story = {
   render: () => (

@@ -27,7 +27,7 @@ const meta = {
 } satisfies Meta<typeof Awards>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Awards>;
 
 export const Badge: Story = {
   args: {

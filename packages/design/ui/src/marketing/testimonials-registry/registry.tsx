@@ -9,11 +9,11 @@ import type { TestimonialsCommonProps, TestimonialsVariant } from "./types";
 export type TestimonialsRegistryProps = TestimonialsCommonProps & {
   variant?: TestimonialsVariant;
   /** Title for grid variant */
-  title?: string;
+  title?: string | undefined;
   /** Description for grid variant */
-  description?: string;
+  description?: string | undefined;
   /** Show header for grid variant */
-  showHeader?: boolean;
+  showHeader?: boolean | undefined;
 };
 
 export function TestimonialsRegistry({

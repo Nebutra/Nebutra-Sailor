@@ -8,7 +8,7 @@ export function StaggerTestimonialsAdapter({
   items,
   height = 600,
   className,
-}: TestimonialsCommonProps & { height?: number }) {
+}: TestimonialsCommonProps & { height?: number | undefined }) {
   const mapped = useMemo(
     () =>
       items.map((x, i) => ({

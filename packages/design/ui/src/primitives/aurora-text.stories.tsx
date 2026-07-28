@@ -27,7 +27,7 @@ const meta = {
 } satisfies Meta<typeof AuroraText>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof AuroraText>;
 
 export const Default: Story = {
   args: {

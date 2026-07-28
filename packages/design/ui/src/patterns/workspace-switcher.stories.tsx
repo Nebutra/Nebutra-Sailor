@@ -127,7 +127,7 @@ export const Owner: Story = {
 export const SingleWorkspace: Story = {
   render: () => (
     <Interactive
-      workspaces={[sampleWorkspaces[0]]}
+      workspaces={sampleWorkspaces.slice(0, 1)}
       initialActiveId="ws_acme"
       variant="expanded"
       disabled

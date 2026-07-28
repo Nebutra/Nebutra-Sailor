@@ -55,7 +55,7 @@ const meta = {
 } satisfies Meta<typeof NotificationMessageList>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof NotificationMessageList>;
 
 export const Default: Story = {
   args: {

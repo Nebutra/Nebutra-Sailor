@@ -42,7 +42,7 @@ export function DashboardCommandSurface({
         <div className="min-w-0">
           {status ? (
             <div className="flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-green-9 shadow-[0_0_0_3px_var(--green-3)]" />
+              <span className="size-1.5 rounded-full bg-success shadow-[0_0_0_3px_hsl(var(--success)/0.18)]" />
               <p className="text-[11px] font-medium uppercase text-muted-foreground">{status}</p>
             </div>
           ) : null}

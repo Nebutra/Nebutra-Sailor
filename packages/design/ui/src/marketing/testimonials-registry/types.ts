@@ -11,6 +11,6 @@ export type TestimonialsVariant = "stagger" | "marquee3d" | "marquee" | "grid" |
 
 export type TestimonialsCommonProps = {
   items: TestimonialItem[];
-  className?: string;
-  height?: number; // for fixed-height layouts like stagger/carousel
+  className?: string | undefined;
+  height?: number | undefined; // for fixed-height layouts like stagger/carousel
 };

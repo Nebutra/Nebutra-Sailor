@@ -26,8 +26,8 @@ export interface ReactionBadgeProps {
   className?: string;
 }
 export interface MessageWithReactionsProps {
-  /** Message text content */
-  text: string;
+  /** Message text content. Ignored when `children` are supplied. */
+  text?: string | undefined;
   /** Available emoji options for reactions */
   reactionOptions?: string[];
   /** Additional CSS classes */
@@ -217,7 +217,7 @@ export function MessageWithReactions({
         className,
       )}
     >
-      {children || <p className="text-pretty">{text}</p>}
+      {children ?? (text ? <p className="text-pretty">{text}</p> : null)}
       {/* Reactions row */}
       {activeReactions.length > 0 && (
         <div

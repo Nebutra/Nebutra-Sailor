@@ -20,7 +20,7 @@ const meta = {
 } satisfies Meta<typeof CommandMenu.Root>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof CommandMenu.Root>;
 
 type DemoCommand = {
   id: string;
@@ -95,7 +95,7 @@ function CommandMenuFixture({
               {groupItems.map((item) => (
                 <CommandMenu.Item
                   key={item.id}
-                  disabled={item.disabled}
+                  {...(item.disabled ? { disabled: true } : {})}
                   onSelect={close}
                   value={item.id}
                   keywords={[item.label, item.group]}

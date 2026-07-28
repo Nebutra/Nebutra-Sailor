@@ -19,7 +19,7 @@ const meta = {
 } satisfies Meta<typeof ShowMore>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ShowMore>;
 
 const items = [
   "Production deploy completed",

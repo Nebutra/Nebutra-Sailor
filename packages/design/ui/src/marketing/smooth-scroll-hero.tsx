@@ -89,7 +89,7 @@ interface SmoothScrollHeroBackgroundProps {
   finalClipPercentage: number;
   initialZoom: string;
   finalZoom: string;
-  className?: string;
+  className?: string | undefined;
 }
 
 // =============================================================================

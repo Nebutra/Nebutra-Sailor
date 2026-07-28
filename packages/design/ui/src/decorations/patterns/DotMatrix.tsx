@@ -13,9 +13,9 @@ export interface DotMatrixProps extends React.HTMLAttributes<HTMLDivElement> {
    * - Use "currentColor" to inherit text color (default)
    * - Use CSS variables: "hsl(var(--border))" for theme compatibility
    */
-  color?: string;
+  color?: string | undefined;
   /** Opacity 0-1 (default: 0.04) */
-  opacity?: number;
+  opacity?: number | undefined;
 }
 
 /**

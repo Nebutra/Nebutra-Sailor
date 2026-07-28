@@ -4,11 +4,16 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../primitives/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../primitives/tooltip";
-import { motion, type Transition, useReducedMotion } from "../shared/animation/motion";
+import {
+  type MotionStyle,
+  motion,
+  type Transition,
+  useReducedMotion,
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 type PricingFrequency = "monthly" | "yearly";
-const frequencies: PricingFrequency[] = ["monthly", "yearly"];
+const frequencies = ["monthly", "yearly"] as const satisfies readonly PricingFrequency[];
 export interface PricingPlan {
   name: string;
   info: string;
@@ -96,7 +101,7 @@ export function PricingFrequencyToggle({
           <span className="relative z-10">{freq}</span>
           {frequency === freq && (
             <motion.span
-              layoutId={shouldReduceMotion ? undefined : "frequency"}
+              {...(shouldReduceMotion ? {} : { layoutId: "frequency" })}
               transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", duration: 0.4 }}
               className="bg-foreground absolute inset-0 z-0 rounded-full mix-blend-difference"
             />
@@ -215,8 +220,8 @@ interface BorderTrailProps {
   size?: number;
   transition?: Transition;
   delay?: number;
-  onAnimationComplete?: () => void;
-  style?: React.CSSProperties;
+  onAnimationComplete?: (() => void) | undefined;
+  style?: MotionStyle | undefined;
 }
 export function BorderTrail({
   className,
@@ -227,7 +232,7 @@ export function BorderTrail({
   style,
 }: BorderTrailProps) {
   const shouldReduceMotion = useReducedMotion();
-  const BASE_TRANSITION = {
+  const BASE_TRANSITION: Transition = {
     repeat: Infinity,
     duration: 5,
     ease: "linear",
@@ -245,9 +250,11 @@ export function BorderTrail({
           offsetDistance: shouldReduceMotion ? "0%" : ["0%", "100%"],
         }}
         transition={
-          shouldReduceMotion ? { duration: 0 } : { ...(transition ?? BASE_TRANSITION), delay }
+          shouldReduceMotion
+            ? { duration: 0 }
+            : { ...(transition ?? BASE_TRANSITION), ...(delay === undefined ? {} : { delay }) }
         }
-        onAnimationComplete={onAnimationComplete}
+        {...(onAnimationComplete ? { onAnimationComplete } : {})}
       />
     </div>
   );

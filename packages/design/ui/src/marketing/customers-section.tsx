@@ -4,9 +4,10 @@ import { ChevronRight } from "@nebutra/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatedGroup } from "../primitives/animated-group";
+import type { Variants } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
-const transitionVariants = {
+const transitionVariants: { item: Variants } = {
   item: {
     hidden: {
       opacity: 0,
@@ -33,6 +34,8 @@ export interface CustomerLogo {
   alt: string;
   /** Logo height in pixels */
   height: number;
+  /** Logo width in pixels. Defaults to 400 when omitted. */
+  width?: number | undefined;
 }
 
 export interface CustomersSectionProps {

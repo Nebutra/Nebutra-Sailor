@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof AssistedPasswordConfirmation>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof AssistedPasswordConfirmation>;
 
 export const Default: Story = {
   render: () => {

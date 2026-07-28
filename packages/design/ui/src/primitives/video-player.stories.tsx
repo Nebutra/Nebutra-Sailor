@@ -24,7 +24,7 @@ const meta = {
 } satisfies Meta<typeof VideoPlayer>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof VideoPlayer>;
 
 // Using a public domain sample video for demonstration
 const SAMPLE_VIDEO =

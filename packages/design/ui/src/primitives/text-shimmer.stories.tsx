@@ -28,10 +28,6 @@ const meta = {
       control: { type: "range", min: 1, max: 6, step: 1 },
       description: "Shimmer beam spread multiplier",
     },
-    paused: {
-      control: "boolean",
-      description: "Pause the animation",
-    },
   },
 } satisfies Meta<typeof TextShimmer>;
 
@@ -69,12 +65,5 @@ export const Heading: Story = {
     as: "h1",
     className: "text-4xl font-bold",
     duration: 3,
-  },
-};
-
-export const Paused: Story = {
-  args: {
-    children: "Static (paused)",
-    paused: true,
   },
 };

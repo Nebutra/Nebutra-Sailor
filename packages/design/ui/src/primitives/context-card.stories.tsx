@@ -19,7 +19,7 @@ const meta = {
 } satisfies Meta<typeof ContextCard.Trigger>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ContextCard.Trigger>;
 
 const PROJECT_CONTENT = (
   <ContextCard.Entity

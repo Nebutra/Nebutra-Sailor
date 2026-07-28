@@ -23,7 +23,7 @@ const meta = {
 } satisfies Meta<typeof CodeBlock>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof CodeBlock>;
 
 const tsCode = `import { useState } from "react";
 

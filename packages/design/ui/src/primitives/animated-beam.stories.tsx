@@ -20,7 +20,7 @@ const meta = {
 } satisfies Meta<typeof AnimatedBeam>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof AnimatedBeam>;
 
 function FlowNode({
   ref,

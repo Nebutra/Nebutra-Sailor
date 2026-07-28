@@ -42,7 +42,7 @@ const meta = {
 } satisfies Meta<typeof Input>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Input>;
 
 function ClearableSearchDemo() {
   const [value, setValue] = useState("build logs");

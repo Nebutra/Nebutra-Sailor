@@ -22,7 +22,7 @@ const meta = {
 } satisfies Meta<typeof AgentPlan>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof AgentPlan>;
 
 const simpleTasks: AgentTask[] = [
   {

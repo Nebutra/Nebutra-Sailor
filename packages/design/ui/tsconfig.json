@@ -1,4 +1,17 @@
 {
+  "//": [
+    "Whole-package typecheck. `include` covers all of src/**, so src/marketing,",
+    "src/patterns, src/layouts, src/hooks and every *.stories.tsx are inside the",
+    "program.",
+    "",
+    "Do NOT narrow this back to a hand-listed subset. Until 2026-07-28 those four",
+    "directories and all stories sat outside the program, and shipped real breakage",
+    "no CI run could see: imports of modules that never existed, a free `t`",
+    "identifier in useDataTable, and three dependencies that resolved only through",
+    "the repo-wide public-hoist-pattern in .npmrc.",
+    "",
+    "*.test.* / *.spec.* stay excluded — vitest typechecks those on its own config."
+  ],
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
@@ -7,32 +20,13 @@
     "composite": false,
     "preserveSymlinks": false
   },
-  "include": [
-    "src/index.ts",
-    "src/components/**/*.ts",
-    "src/components/**/*.tsx",
-    "src/layout/**/*.ts",
-    "src/layout/**/*.tsx",
-    "src/icons/**/*.ts",
-    "src/icons/**/*.tsx",
-    "src/theme/**/*.ts",
-    "src/theme/**/*.tsx",
-    "src/agent/**/*.ts",
-    "src/agent/**/*.tsx",
-    "src/primitives/index.ts",
-    "src/typography/**/*.ts",
-    "src/typography/**/*.tsx",
-    "src/utils/**/*.ts",
-    "src/utils/**/*.tsx"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/*.test.tsx",
-    "**/*.spec.tsx",
-    "**/*.stories.ts",
-    "**/*.stories.tsx"
+    "**/*.spec.tsx"
   ]
 }

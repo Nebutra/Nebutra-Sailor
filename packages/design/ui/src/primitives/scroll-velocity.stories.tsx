@@ -17,7 +17,7 @@ const meta = {
 } satisfies Meta<typeof ScrollVelocityContainer>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ScrollVelocityContainer>;
 
 const logoItem = (text: string) => (
   <span className="mx-8 text-2xl font-bold text-muted-foreground">{text}</span>

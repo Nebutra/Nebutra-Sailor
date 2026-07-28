@@ -18,7 +18,7 @@ const meta = {
 } satisfies Meta<typeof GithubInlineDiff>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof GithubInlineDiff>;
 
 const sampleDiff: DiffLine[] = [
   { kind: "hunk", content: "@@ -1,8 +1,10 @@" },

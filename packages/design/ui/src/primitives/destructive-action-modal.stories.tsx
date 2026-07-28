@@ -20,7 +20,7 @@ const meta = {
 } satisfies Meta<typeof DestructiveActionModal>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof DestructiveActionModal>;
 
 function DeleteProjectFixture() {
   const [open, setOpen] = useState(false);

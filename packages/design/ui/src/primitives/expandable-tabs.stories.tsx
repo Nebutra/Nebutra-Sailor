@@ -31,7 +31,7 @@ const meta = {
 } satisfies Meta<typeof ExpandableTabs>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ExpandableTabs>;
 
 export const Default: Story = {
   args: {
