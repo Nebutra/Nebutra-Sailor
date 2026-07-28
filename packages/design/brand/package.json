@@ -9,27 +9,33 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./logo": {
       "types": "./dist/components/Logo.d.ts",
-      "import": "./dist/components/Logo.js"
+      "import": "./dist/components/Logo.js",
+      "default": "./dist/components/Logo.js"
     },
     "./metadata": {
       "types": "./dist/metadata.d.ts",
-      "import": "./dist/metadata.js"
+      "import": "./dist/metadata.js",
+      "default": "./dist/metadata.js"
     },
     "./metadata-helpers": {
       "types": "./dist/metadata-helpers.d.ts",
-      "import": "./dist/metadata-helpers.js"
+      "import": "./dist/metadata-helpers.js",
+      "default": "./dist/metadata-helpers.js"
     },
     "./microcopy": {
       "types": "./dist/microcopy.d.ts",
-      "import": "./dist/microcopy.js"
+      "import": "./dist/microcopy.js",
+      "default": "./dist/microcopy.js"
     },
     "./og": {
       "types": "./dist/og/index.d.ts",
-      "import": "./dist/og/index.js"
+      "import": "./dist/og/index.js",
+      "default": "./dist/og/index.js"
     },
     "./assets/*": "./assets/*"
   },

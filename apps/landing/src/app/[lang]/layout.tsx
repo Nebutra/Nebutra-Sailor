@@ -171,6 +171,8 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     "stats",
     "features",
     "compliance",
+    // Market × language picker (Navbar chrome) — client-only
+    "MarketLocalePicker",
   ] as const;
 
   type Messages = typeof messages;
