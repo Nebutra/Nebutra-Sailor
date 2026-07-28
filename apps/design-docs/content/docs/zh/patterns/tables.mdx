@@ -3,6 +3,19 @@ title: "表格"
 description: "表格化数据展示、排序、筛选与行操作模式。"
 ---
 
+<Callout type="warn" title="DataTable 尚未导出">
+  `DataTable` 位于 `packages/design/ui/src/patterns/data-table/`，但**没有**从
+  `@nebutra/ui/components` 或 `@nebutra/ui/patterns` 重新导出，因此本页的 import 目前无法解析。
+  它同样不在构建产物 `dist` 中——`tsup.config.ts` 只构建 pattern barrel，而 barrel 里没有它。
+
+  在接通之前，请用 `@nebutra/ui/primitives` 里的 `Table` 系列原语搭表格
+  （`Table`、`TableHeader`、`TableBody`、`TableRow`、`TableHead`、`TableCell`）——这些是已导出、
+  已纳入 typecheck、且有 Storybook story 的。下文的组合思路仍然成立，只有 `DataTable` 这个 import 不可用。
+
+  跟踪于 [#345](https://github.com/Nebutra/Nebutra-Sailor/issues/345)。
+</Callout>
+
+
 ## 何时使用
 
 需要以表格展示结构化数据时使用此模式：

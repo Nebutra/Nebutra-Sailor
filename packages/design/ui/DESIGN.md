@@ -88,7 +88,7 @@ The library exports ~250 components organized into 5 categories. Storybook is th
 
 | Pattern | Purpose |
 |---------|---------|
-| `DataTable` (`src/patterns/data-table/`) | Column-driven table with sorting, filtering, pagination, row selection |
+| `DataTable` (`src/patterns/data-table/`) | Column-driven table with sorting, filtering, pagination, row selection. **Not exported** — absent from `src/patterns/index.ts`, so absent from `dist` and unimportable. Use the `Table` primitives until it is wired up ([#345](https://github.com/Nebutra/Nebutra-Sailor/issues/345)) |
 | `CommandBox` | ⌘K-style command palette wrapper around `cmdk` |
 | `Terminal` (`src/patterns/Terminal/`) | Animated terminal output, pulse cursor |
 | `Card` (`src/patterns/Card/`) | Composite card layouts (header/body/footer slots) |

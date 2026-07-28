@@ -3,6 +3,21 @@ title: "Tables"
 description: "Tabular data display, sorting, filtering, and row-action patterns."
 ---
 
+<Callout type="warn" title="DataTable is not exported yet">
+  `DataTable` lives in `packages/design/ui/src/patterns/data-table/` but is **not** re-exported from
+  `@nebutra/ui/components` or `@nebutra/ui/patterns`, so the imports on this page do not resolve
+  today. It is also absent from the built `dist`, because `tsup.config.ts` builds only the pattern
+  barrel and the barrel omits it.
+
+  Until it is wired up, build tables from the `Table` primitives in `@nebutra/ui/primitives`
+  (`Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`) — those are exported,
+  typechecked, and have a Storybook story. The composition guidance below is still the right shape;
+  only the `DataTable` import is unavailable.
+
+  Tracked in [#345](https://github.com/Nebutra/Nebutra-Sailor/issues/345).
+</Callout>
+
+
 ## When to Use
 
 Use a table pattern when displaying structured data where:
