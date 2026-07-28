@@ -38,7 +38,8 @@ export async function AuthSplitLayout({
           <ArrowLeft className="h-4 w-4" aria-hidden />
           {t("homeLink")}
         </a>
-        <div className="absolute right-5 top-6 sm:right-8 lg:right-12 lg:top-10">
+        {/* z-20: locale panel must paint above password visibility toggle + fields */}
+        <div className="absolute right-5 top-6 z-20 sm:right-8 lg:right-12 lg:top-10">
           <LocaleSwitcher />
         </div>
         <div

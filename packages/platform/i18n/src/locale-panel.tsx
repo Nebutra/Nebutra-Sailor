@@ -86,19 +86,21 @@ export function LocalePanel({
     right: 0,
     top: "100%",
     marginTop: 8,
-    zIndex: 60,
+    // Above password-toggle / form chrome on auth split layout (z-10–ish).
+    zIndex: 100,
     width,
     maxHeight: "min(70vh, 560px)",
     display: "flex",
     flexDirection: "column",
     // Inline solid fill — never rely only on Tailwind utility generation.
-    // If app CSS misses @source for @nebutra/i18n, `bg-neutral-1` is a no-op
-    // and hero copy bleeds through a translucent default. Match app shells that
-    // paint body with hsl(var(--background)).
-    backgroundColor: "hsl(var(--background))",
+    // Auth/forge shells use hsl(var(--background)); keep a white/black fallback
+    // so missing CSS variables cannot leave the panel translucent over the form.
+    backgroundColor: "hsl(var(--background, 0 0% 100%))",
+    background: "hsl(var(--background, 0 0% 100%))",
     backdropFilter: "none",
     WebkitBackdropFilter: "none",
     isolation: "isolate",
+    boxShadow: "0 18px 50px -24px rgb(0 0 0 / 0.35), 0 0 0 1px rgb(0 0 0 / 0.04)",
   };
 
   return (
