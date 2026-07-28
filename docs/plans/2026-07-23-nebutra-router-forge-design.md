@@ -228,7 +228,7 @@ Forge is a **strategic growth + infrastructure product**:
 |------|---------|
 | **Cover** | Match real tool-station taxonomy (text, codec, hash, JSON, time, image, PDF, A/V light, network, frontend, units, life calculators, CN validators, convert matrix, generators…) — density **80 → 150–250+** for “knife feel” |
 | **SOTA via OSS** | Per tool: survey maintained open-source SOTA (or de-facto standard lib), pin version, wrap — **do not** re-derive algorithms or rebuild mediocre half-clones |
-| **AI-Native rebuild** | Human UX (search, categories, instant page) **and** machine contract (OpenAPI, MCP, SKILL, meter, errors, jobs) for the **same** capability id |
+| **AI-Native rebuild** | Human UX (search, categories, instant page) **and** machine contract (OpenAPI, MCP, SKILL, meter, errors, jobs) for the **same** capability id. **AI-Native is the contract, not a model call** — a `pure` tool an agent can type-check and meter is AI-Native; a model-backed tool with an opaque schema is not (§6.7.8) |
 
 **Anti-patterns**
 
@@ -430,19 +430,22 @@ compose.next: [checker/password-strength]   ← optional graph edge
 **Tier S — main runway (must densify; AI-Native Core by default)**  
 High intent; finish-in-one-session; pure/controlled upload; **agents must be able to call without a browser**.
 
-| Root cluster | ~IDs | Intent | Agent role | Inventory (2026-07) | Matrix goal |
-|--------------|------|--------|------------|---------------------|-------------|
-| **Generator** | 02 | Create | Produce structured artifacts | Strong: UUID / NanoID / password / QR | ≥3 tools/domain; schema outputs agents can pipe |
-| **Converter / Convert** | 04, 37 | Transform | Typed I/O transforms | Strong: codec / data / unit / color | Lossless where possible; declare lossy in schema |
-| **Formatter / Format** | 22 | Beautify | Canonicalize for next tool | Medium: JSON / XML / SQL | Pretty + minify pairs; idempotent |
-| **Calculator** | 19 | Compute | Numeric/date pure functions | Medium: mortgage / BMI / units | Pure, unit-tested; no float surprises undocumented |
-| **Checker / Verifier** | 26, 42 | Validate | Gate before write/send | Medium: ID / phone | Machine-readable pass/fail + error codes |
-| **Optimizer** | 35 | Compress / slim | Cost/size reduction step | Weak: image compress | Report metrics (bytes in/out) for agents |
-| **Viewer / Extractor** | 38, 39 | Inspect / extract | Grounding for RAG/pipelines | Medium: JWT / CSV / MD | Structured extract > screenshot-as-product |
-| **Analyzer** | 13 | Analyze | Features / stats / explain | Weak | Prefer deterministic; mark LLM-backed as external |
-| **Comparator** | 46 | Diff / compare | CI / eval / change detect | Has text diff | Structured diff JSON for agents |
+| Root cluster | ~IDs | Intent | Agent role | Audited 2026-07-28 | Matrix goal |
+|--------------|------|--------|------------|--------------------|-------------|
+| **Generator** | 02 | Create | Produce structured artifacts | **24** — UUID / NanoID / password / QR / lorem / hash family | ≥3 tools/domain; schema outputs agents can pipe |
+| **Converter / Convert** | 04, 37 | Transform | Typed I/O transforms | **54** — codec / data / unit / color / time / CN | Lossless where possible; declare lossy in schema |
+| **Formatter / Format** | 22 | Beautify | Canonicalize for next tool | **18** — JSON / XML / YAML / SQL / CSS / HTML | Pretty + minify pairs; idempotent |
+| **Calculator** | 19 | Compute | Numeric/date pure functions | **28** — mortgage / BMI / units / date / token cost | Pure, unit-tested; no float surprises undocumented |
+| **Checker** | 26 | Validate | Gate before write/send | **22** — ID / phone / email / regex / schema | Machine-readable pass/fail + error codes |
+| **Verifier** | 42 | Prove | Cryptographic / checksum proof | **4** — id-card, credit-card-luhn, hmac-verify, email-validate | Split from Checker: verifier answers *provably*, not *plausibly* |
+| **Optimizer** | 35 | Compress / slim | Cost/size reduction step | **19** — minify family / pdf-compress / image / whitespace | Report metrics (bytes in/out) for agents |
+| **Viewer** | 38 | Inspect | Grounding for RAG/pipelines | **19** — JWT / CSV / MD / cron / QR decode | Structured view > screenshot-as-product |
+| **Extractor** | 39 | Extract | Structured payload out of blobs | **16** — JSONPath / PDF / docx / xlsx / pptx / URLs | Structured extract; declare partial coverage |
+| **Analyzer** | 13 | Analyze | Features / stats / explain | **16** — counts / diff stats / strength / checksum | Prefer deterministic; mark LLM-backed as external |
+| **Comparator** | 46 | Diff / compare | CI / eval / change detect | **4** — text-diff, json-diff, hash-compare, string-similarity | Structured diff JSON for agents |
 
-**S-tier KPI:** 9/9 roots; **≥5 tools/root**; **≥80% Core H+A same impl**; every Core tool in `tools.json` + MCP.
+**S-tier KPI:** 11/11 roots present; **≥5 tools/root** — met on 9, **short on Verifier (4) and Comparator (4)**;
+**Core H+A same impl**; 100% of tools on `tools.json` + MCP + OpenAPI (landed 2026-07-28).
 
 **Tier A — selective density (Agent-gated by side-effect)**  
 
@@ -470,6 +473,65 @@ High intent; finish-in-one-session; pure/controlled upload; **agents must be abl
 | Navigator / Syncer / Connector | 47–49 | Integration fabric | Out of Forge |
 | Assistant | 44 | Chat product | Router / product chat; not a Forge “tool” dumping ground |
 | Cataloger / Constructor / Responder | 45, 50, 51 | Platform nouns | Ignore for expansion |
+
+#### 6.7.2a Coverage ledger — all 51 roots (audited 2026-07-28)
+
+Counts are read from the registry (`ForgeRegistry.openDefault()`, 147 tools; the
+product host adds `doc/md-to-pdf` → 148). A root's count is the number of tools
+carrying that tag, so a tool with two roots is counted under both.
+
+**Verdict: 18 of the 51 entries are in scope for Forge. 10 are covered at
+density, 4 are thin, 4 are empty. The other 33 are deliberately out.**
+
+| # | Root | Status | Tools | Note |
+|---|------|--------|-------|------|
+| 02 | Generator | ✅ dense | 24 | |
+| 04 | Convert | ✅ dense | 54 | same engine set as 37 |
+| 13 | Analyzer | ✅ dense | 16 | |
+| 19 | Calculator | ✅ dense | 28 | |
+| 22 | Format | ✅ dense | 18 | |
+| 26 | Checker | ✅ dense | 22 | |
+| 35 | Optimizer | ✅ dense | 19 | |
+| 37 | Converter | ✅ dense | 54 | |
+| 38 | Viewer | ✅ dense | 19 | |
+| 39 | Extractor | ✅ dense | 16 | |
+| 09 | Editor | ◐ thin | 3 | image-crop, find-replace-regex, text-replace |
+| 42 | Verifier | ◐ thin | 4 | id-card, credit-card-luhn, hmac-verify, email-validate |
+| 43 | Simulator | ◐ thin | 2 | dice-roll, cron-explain |
+| 46 | Comparator | ◐ thin | 4 | text-diff, json-diff, hash-compare, string-similarity |
+| 01 | Translator | ○ empty | 0 | Router-backed `external` shell; the only planned non-`pure` root |
+| 10 | Processor | ○ empty | 0 | J surface exists (`/api/v1/jobs` + worker); **no tool is tagged `processor`** |
+| 21 | Template | ○ empty | 0 | lorem-ipsum ships but tags as `generator`; license / gitignore / .editorconfig missing |
+| 27 | Detector | ○ empty | 0 | MIME / encoding / secret detection — read-only pre-pipeline gate |
+| 03 · 20 | Example · Sample | — out | | Content formats, not tool calls |
+| 05 | Online | — out | | Query modifier, not a root |
+| 06 · 28 · 18 | Downloader · Scraper · Uploader | — out | | Abuse / copyright; upload only as temp+metered input |
+| 07 · 08 · 11 | Maker · Creator · Designer | — out | | Creative suite; QR/logo-class only, already under Generator |
+| 12 · 17 | Compiler · Interpreter | — out | | No arbitrary exec |
+| 14 | Evaluator | — out | | "Website/product evaluator" is SEO bait or an LLM opinion; deterministic parts already live in Analyzer |
+| 15 · 16 · 41 | Sender · Receiver · Notifier | — out | | Unconstrained outbound is a product policy question, not a tool |
+| 23 · 45 | Builder · Constructor | — out | | App builders; that is the Sailor product, not a blade |
+| 24 · 25 | Scheme · Pattern | — out | | Non-technical senses (business plan, knitting) |
+| 29 · 31 · 32 · 33 | Manager · Dashboard · Planner · Tracker | — out | | Product shells with state; exclude from agent catalogs |
+| 30 · 47 · 48 · 49 | Explorer · Navigator · Syncer · Connector | — out | | Integration fabric / browsing |
+| 34 · 40 | Recorder · Monitor | — out | | Needs persistent capture; privacy + payload cost |
+| 36 | Scheduler | — out | | Scheduling *product*; cron next-run stays under Simulator |
+| 44 | Assistant | — out | | Router / product chat |
+| 50 · 51 | Cataloger · Responder | — out | | Platform nouns |
+
+**What the ledger says, plainly:** the deterministic middle of the 51 is
+essentially done — the transform/inspect/compute spine (Convert, Generator,
+Calculator, Checker, Format, Optimizer, Viewer, Extractor, Analyzer) carries
+94% of the inventory. The remaining Forge-shaped work is **8 root slots, not
+40**: four thin roots to deepen and four empty ones to open. Everything else on
+that poster is either a content format, a product shell, or an abuse surface —
+counting it as "uncovered" would misread the map.
+
+**Composition consequence:** `pure` is 146/147 tools, so every pipeline an
+agent can assemble today is reproducible end to end. Translator (01) is the one
+in-scope root that cannot be pure; it is therefore not a W3 item but a gated
+one (§6.7.8), and when it lands it lands as an explicit Router-backed
+`external` tool — never quietly emulated inside Forge.
 
 #### 6.7.3 Root × object matrix (coverage map)
 
@@ -530,52 +592,187 @@ Agents discover compositions via: **schema-compatible edges**, `compose.next` me
 
 Every matrix cell that claims “covered” must appear on at least one machine index:
 
-| Surface | Role |
-|---------|------|
-| `GET /api/tools.json` (or equivalent) | Catalog: id, roots, objects, sideEffect, meterId, engine |
-| OpenAPI `/v1/tools…` | Invoke contract |
-| MCP | Agent runtime binding |
-| SKILL.md (Core) | When to use / limits / composition tips |
-| Wallet + API keys | Same purse as Router where applicable |
+| Surface | Role | State 2026-07-28 |
+|---------|------|------------------|
+| `GET /api/tools.json` | Catalog: id, roots, sideEffect, meterId, engine, invoke path, mcpName | **v2 shipped** |
+| `GET /api/openapi.json` | Invoke contract — OpenAPI 3.1, one operation per tool | **Shipped**, 148 operations |
+| `POST /api/mcp` | Agent runtime binding (`tools/list` / `tools/call`) | **Shipped** with derived schemas |
+| SKILL.md (Core) | When to use / limits / composition tips | **Missing** — W4 |
+| Wallet + API keys | Same purse as Router where applicable | Shipped (demo wallet) |
+
+**Derivation rule (why this stays true):** agent-facing schemas are generated
+from each tool's Zod `inputSchema` via `toolInputJsonSchema()`. There is no
+hand-maintained second copy to drift, and a test fails the build if any tool
+degrades to an opaque `{ type: "object" }`. Registering a tool is the whole job.
 
 **Human SEO without machine index = incomplete AI-Native cell.**
 
 #### 6.7.6 Three waves (matrix fill order)
 
-| Wave | Goal | Focus (always dual-surface) |
-|------|------|------------------------------|
-| **W1 · Intent alignment** | 0–few engines | Tag all ~79 tools with `roots` + primary EN/ZH SEO; related-by-root; ensure **Core** tools listed in `tools.json` + MCP; optional `/r/{root}` hubs for humans |
-| **W2 · Fill S gaps** | → **~100–110** tools | P0/P1 largely done. **pdf-compress** now ships via host **qpdf/Ghostscript** (+ pdf-lib fallback). **exif-viewer** via **exifr**. |
-| **W3 · Density, jobs, Router shells** | → **150+** | Converter/Generator/Checker long-tail; Job paths for heavy media; Translator/LLM Extractor **only** as Router-backed `external` tools |
+| Wave | Goal | Focus (always dual-surface) | State |
+|------|------|------------------------------|-------|
+| **W1 · Intent alignment** | 0–few engines | Tag all tools with `roots` + primary EN/ZH SEO; related-by-root; `/r/{root}` hubs + sitemap | **Done** — every tool resolves roots (`roots-defaults.ts`), 13 hubs live |
+| **W2 · Fill S gaps** | → **~100–110** tools | Waves 2–5 batches; **pdf-compress** via host qpdf/Ghostscript (+ pdf-lib fallback); **exif-viewer** via exifr; docx/xlsx/pptx text via pure ZIP OOXML | **Done** — 148 tools |
+| **W2.5 · Machine surface** | 100% callable by agents | Zod → JSON Schema derivation; OpenAPI 3.1 one-op-per-tool; MCP descriptors carry real schemas; `tools.json` v2 | **Done 2026-07-28** — `json-schema.ts` / `openapi.ts`; regression test forbids opaque schemas |
+| **W3 · Close the open slots, all `pure`** | quality over count | Deepen **Verifier / Comparator** to ≥5; open **Template → Detector → Processor** (that order, see §6.7.9); bring dense roots to competitor parity | **Next** |
+| **W4 · Composition** | agent planners | `compose.next` edges, per-tool SKILL.md, schema-compatible chaining | Not started |
+| **W5 · New object domains, still `pure`** | new traffic, same doctrine | Geo and bio columns on the object axis — existing verbs over new payloads (§6.7.8) | Planned |
+| **W6 · LLM-backed, gated** | only after the gate | Translator and the model-backed candidates, each as an explicit Router-backed `external` tool | **Gated — not scheduled by tool count** |
+
+**W3 is deliberately not "add 50 more tools."** §6.7.2a shows the count metric
+is already met while four root slots sit empty; density now means *opening the
+missing verbs and the async/external shapes*, not padding the Converter column.
 
 **Still explicit non-goals:** Downloader, Scraper, general Compiler, project Manager/Dashboard, unconstrained outbound Sender.
 
 #### 6.7.7 North stars & guardrails
 
-| Metric | 6-month scale target |
-|--------|----------------------|
-| Registered tools | 79 → **120** (W2) → **150+** (W3) |
-| S-root coverage | 9/9 roots, **≥5 tools each** |
-| Core H+A same impl | ≥80% of Core tier |
-| Core tools on MCP + tools.json | **100%** of Core |
-| `pure` share | ≥85% (reproducible agent steps) |
-| Tier X tools in default agent catalog | **0** |
-| LLM-backed tools without Router meter | **0** |
+| Metric | Target | Actual 2026-07-28 |
+|--------|--------|-------------------|
+| Registered tools | 79 → **120** (W2) → **150+** (W3) | **148** (147 default + host `md-to-pdf`) |
+| In-scope roots opened | 18/18 of the 51 | **14/18** — Translator, Processor, Template, Detector still empty |
+| S-root density | **≥5 tools each** | **9 of 11** — Verifier 4, Comparator 4 |
+| Tools on MCP + tools.json + OpenAPI | **100%** | **100%** — schemas derived from Zod, no hand-written duplicate |
+| `pure` share | ≥85% (reproducible agent steps) | **99.3%** (146/147) |
+| Tier X tools in default agent catalog | **0** | **0** |
+| LLM-backed tools without Router meter | **0** | **0** — no LLM-backed tool ships yet |
+
+**Read `pure` 99.3% as an asset, not a debt.** It is the reason every Forge
+step is reproducible, cacheable, cheap to serve, and safe to put in an agent
+loop. It falls only when an LLM-backed tool passes the gate in §6.7.8 — and
+then deliberately, one tool at a time, never as drift.
 
 Ship gate remains §6.5. **Additional AI-Native coverage rule:** missing MCP/OpenAPI/meter/sideEffect for a Core cell ⇒ **not covered** in this matrix (even if the human page ranks).
+
+#### 6.7.8 Pure-first, and the gate an LLM tool must pass
+
+**AI-Native is a contract property, not a model call.** A `pure` tool that an
+agent can discover, type-check, invoke and meter through one stable contract is
+already AI-Native — that is the whole point of the machine surface in §6.7.5.
+A tool that calls a model but hands an agent an opaque schema and an unpriced
+step is *less* AI-Native, not more. So the order is settled:
+
+> **Finish Pure first.** These roots already carry the search volume, they are
+> reproducible, and their unit cost is server time. Nothing about shipping them
+> well is blocked on a model.
+
+Adding a model changes the cost structure, the latency budget, the failure
+mode, and the abuse surface all at once. We will pay that price — an Agent OS
+that never touches a model would be a lie — but on evidence, not on schedule.
+
+**The gate.** An LLM-backed tool may be built only when all four hold:
+
+| # | Gate | Why it is a gate and not a preference |
+|---|------|----------------------------------------|
+| 1 | **Rides validated PMF** | The demand must already be visible — a pure tool of ours with traffic, or an established competitor's proven surface. We do not invent a market and then staff it. |
+| 2 | **Removes a step in a job the user is already doing** | Not a new job. If the model step is a detour from the journey the pure tool serves, it is a different product. |
+| 3 | **Unit economics close** | Cost per call priced against free-tier ad revenue or wallet debit, with a stated cap. An unbounded model call behind a free SEO page is a bill, not a feature. |
+| 4 | **Honest UX under failure** | Marked `external`, Router-metered, latency disclosed, degrades to the pure path where one exists. Never marketed as a deterministic Checker/Converter. |
+
+**Do not invent PMF — sit on top of it.** The strongest LLM candidates are
+therefore *adjacent to traffic we can already measure*, which is another reason
+Pure comes first: it is what generates the evidence.
+
+**Planned directions (owner's list, not yet scheduled).**
+
+| Direction | Shape | First move |
+|-----------|-------|------------|
+| **Geographic information** | Mostly **pure + dataset**: coordinate-system conversion (WGS84/GCJ02/BD09), distance/bearing, geohash, bbox, timezone-from-point, address normalization | Ship the pure layer as a new object column; a model only helps later at fuzzy address parsing |
+| **Biological information** | Mostly **pure + dataset**: FASTA/GenBank parse, reverse-complement, codon translation, GC content, sequence diff, primer melting temp | Same — deterministic first; model value is in interpretation, not computation |
+| **Hero background generator** | Genuinely **generative** (image model) | The one candidate with no pure core; treat it as the pilot for the gate above, not as a blade among blades |
+
+**The insight worth acting on:** geo and bio are **new columns on the object
+axis, not new verbs on the root axis**. Converter, Calculator, Viewer,
+Extractor and Checker all apply to them unchanged. So two thirds of the
+owner's LLM list can ship as `pure` tools *first*, earn traffic, and only then
+present a measured case for a model step. That is what "sit on validated PMF"
+looks like operationally.
+
+#### 6.7.9 Per-layer play (dense · thin · empty)
+
+The three layers in §6.7.2a need three different kinds of work. Treating them
+as one backlog is how a tool station becomes wide and bad.
+
+**Dense (10 entries, 94% of inventory) — go to SOTA.**
+Coverage is done here; quality is not. Per tool: reach competitor parity on the
+journey (paste → result → copy/download, keyboard, large-input behaviour,
+mobile), then add the thing the competitor cannot be bothered to do. Where the
+best available wheel is genuinely weak, say so in the brief and close the gap
+with engineering rather than shipping the weakness. **A dense root that is only
+"present" is not covered** — §6.5 gates apply per tool, not per root.
+
+**Thin (Editor 3 · Verifier 4 · Simulator 2 · Comparator 4) — complete them.**
+These are half-open doors: the verb exists, so an agent planner will reach for
+it and find nothing behind it. Bring each to ≥5 with tools that are obviously
+the missing members of the set, not filler.
+
+**Empty (4) — design the set before building it.** Priority is by *web-first
+frequency*: which operation does a human come to a browser to finish?
+
+| Order | Root | Why this order | Candidate set |
+|-------|------|----------------|---------------|
+| 1 | **Template** 21 | Highest web-first frequency and trivially deterministic — people search these by name every day | license chooser, .gitignore, .editorconfig, Dockerfile starters, commit-message / PR templates, README skeleton |
+| 2 | **Detector** 27 | Developer-frequency, strong pipeline value as a pre-flight gate | MIME/file-type from bytes, text encoding + BOM, line-ending, secret/API-key scan (read-only), language detect |
+| 3 | **Processor** 10 | **Not a keyword play** — it is a *shape*, not a search term | Batch/async wrappers over heavy tools we already have (bulk image, multi-PDF), delivered on the existing `/api/v1/jobs` surface |
+
+Naming Processor honestly matters: chasing "processor" as an SEO root would
+produce junk pages. What users want is *the same tools, over many files, without
+blocking* — so the work is the J surface, and the traffic keeps coming through
+the tools they already search for.
+
+#### 6.7.10 Competitor research and know-how (per tool, not per quarter)
+
+We are building a station; several of our competitors have spent years polishing
+one blade. On any single tool they usually hold the domain know-how and we do
+not. That gap is closed by research, and research is only real if it is written
+down where the next person will hit it.
+
+**Required in every tool brief** (`docs/plans/tools/<slug>.md`, the artifact
+that already exists — extended, not replaced by a new mechanism):
+
+| Field | Content |
+|-------|---------|
+| **Named competitors** | 2–3 actual URLs, not "various online tools" |
+| **What they do better** | The specific interaction or edge case they handle and we do not |
+| **Their debt** | Ad density, dark patterns, upload-required-for-local-work, dead UI, no API |
+| **Domain know-how** | The non-obvious rules of this problem — the things that make a naive implementation wrong |
+| **Our differentiator** | What a user gets here that they cannot get there |
+
+**Where our edge actually is.** Not per-tool depth — a single-point competitor
+will usually match or beat us there, and we should expect to spend real effort
+just reaching parity. Our edge is what they structurally cannot offer:
+
+| Their weakness | Our position |
+|----------------|--------------|
+| Ad-choked pages, interstitials, fake download buttons | No ad clutter on the tool journey; ads, if any, never sit inside the workflow |
+| Inconsistent per-tool UI, every page a different product | One design system, one journey grammar across 148 blades |
+| No machine contract — a human page and nothing else | Every tool callable via OpenAPI + MCP with a derived schema and one wallet |
+| Upload-first for work that could stay local | Client-side where possible; privacy stated per tool (§6.5 gate 8) |
+| A tool ends where its page ends | Tools compose — chained by schema, billed on one purse |
+
+**The compounding claim, stated so it can be checked:** our moat is per-tool
+quality **×** composition. Composition alone, over mediocre blades, is a
+demo — which is exactly why the dense layer must reach parity before we sell
+the chaining story.
 
 ### 6.8 Density & commercial phasing
 
 Aligned with §6.7 waves (F* = catalog density; W* = demand-matrix + AI-Native workstreams).
 
-| Phase | Catalog feel | Focus |
-|-------|----------------|-------|
-| **F0** | ~40–60 → **~79 done** + real home IA | Dual-surface pipeline proven; **W1** root tags + machine catalog honesty |
-| **F1** | ~100–120 | Image/PDF/units/life + **W2** S-root gap fill; SEO/ads **and** agent catalog density |
-| **F2** | ~150–200 | Convert matrix, A/V light, jobs (**W3**); composition metadata |
-| **F3** | 200–300+ | Long-tail + Agent blade depth + Router deep links / multi-tool skills |
+| Phase | Catalog feel | Focus | State |
+|-------|----------------|-------|-------|
+| **F0** | ~40–60 → **~79** + real home IA | Dual-surface pipeline proven; **W1** root tags + machine catalog honesty | Done |
+| **F1** | ~100–120 | Image/PDF/units/life + **W2** S-root gap fill; **W2.5** machine surface | Done — **148** |
+| **F2** | **quality, not count** | **W3**: dense roots to competitor parity, thin roots completed, Template/Detector/Processor opened; **W4** composition metadata | Next |
+| **F3** | new object domains | **W5** geo / bio columns — still `pure`; long-tail + Router deep links | Planned |
+| **F4** | first metered model steps | **W6** LLM-backed tools, one at a time, each through the §6.7.8 gate | Gated |
 
-Commercial: free tier → login → top-up → API limits; ads allowed on free **human** tier; **Agent/API path stays clean, metered, and free of Tier X clutter**.
+**F2 deliberately has no tool-count target.** The count target was met at F1
+while four root slots stood empty and dense roots sat at "present" rather than
+"good" — so the next phase is measured by parity and completeness, not by
+inventory. Counting resumes at F3, when new object domains genuinely add rows.
+
+Commercial: free tier → login → top-up → API limits; ads allowed on free **human** tier, **never inside the tool workflow** (§6.7.10); **Agent/API path stays clean, metered, and free of Tier X clutter**.
 
 ### 6.9 Shared account with Router
 
@@ -751,6 +948,12 @@ Do **not** start by forking engine UIs or copying full upstream source into the 
 | 2026-07-23 | Prepaid pure balance pay-as-you-go |
 | 2026-07-23 | Brand correction: Nebutra not Nebula; CPA = CLIProxyAPI |
 | 2026-07-23 | Forge = full tool-station Swiss army knife + per-tool OSS SOTA + AI-Native dual surface |
+| 2026-07-28 | Machine surface derived from Zod (OpenAPI 3.1 + MCP + tools.json v2); no hand-written schema copy |
+| 2026-07-28 | Acceptance status is an internal review gate in tool briefs — **not** a registry field |
+| 2026-07-28 | 51-root audit: 18 in scope (10 dense / 4 thin / 4 empty), 33 deliberately out |
+| 2026-07-28 | **Pure-first**: AI-Native means the agent contract, not a model call; LLM tools are gated on validated PMF + unit economics (§6.7.8), never on schedule |
+| 2026-07-28 | Geo / bio enter as **object-axis columns shipped `pure`**, not as LLM features |
+| 2026-07-28 | F2 measured by parity and completeness, not tool count |
 
 ---
 
