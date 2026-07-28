@@ -1,5 +1,14 @@
 # @nebutra/storybook
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/icons@0.1.2
+  - @nebutra/tokens@0.1.2
+  - @nebutra/ui@0.2.2
+
 ## 0.1.2
 
 ### Patch Changes

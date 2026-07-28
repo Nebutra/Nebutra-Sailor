@@ -1,5 +1,37 @@
 # @nebutra/gateway
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agent-runtime@0.2.2
+  - @nebutra/agents@1.1.2
+  - @nebutra/billing@0.1.3
+  - @nebutra/license@0.1.3
+  - @nebutra/metering@0.1.2
+  - @nebutra/brand@0.1.2
+  - @nebutra/audit@0.1.2
+  - @nebutra/permissions@0.1.3
+  - @nebutra/vault@0.1.2
+  - @nebutra/cache@0.0.3
+  - @nebutra/email@0.1.2
+  - @nebutra/notifications@0.1.3
+  - @nebutra/queue@0.1.3
+  - @nebutra/search@0.1.2
+  - @nebutra/errors@0.1.2
+  - @nebutra/logger@0.1.2
+  - @nebutra/startup-os@0.1.1
+  - @nebutra/workflow-runtime@0.1.1
+  - @nebutra/analytics@0.0.4
+  - @nebutra/gateway-core@0.1.3
+  - @nebutra/auth@0.1.3
+  - @nebutra/db@0.1.2
+  - @nebutra/sms@0.1.2
+  - @nebutra/feature-flags@0.1.3
+  - @nebutra/event-bus@0.1.2
+  - @nebutra/repositories@0.0.3
+
 ## 0.2.1
 
 ### Patch Changes
