@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Ścieżka nawigacji",
-    "labNotice": "Funkcja laboratoryjna: ograniczone dane lub pokrycie słownika; wyniki mają charakter wyłącznie informacyjny.",
     "workspace": "Przestrzeń robocza",
     "workspaceHint": "Lokalnie lub na serwerze · ta sama ścieżka co API",
     "api": "API",

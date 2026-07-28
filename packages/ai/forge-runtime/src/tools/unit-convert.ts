@@ -172,7 +172,6 @@ function makeUnitTool(family: UnitFamily): AnyForgeToolDefinition {
       version: "1.0.0",
     },
     seoKeywords: family.seoKeywords,
-    sotaStatus: "production" as const,
     inputSchema: z.object({
       value: z.number(),
       from: z.enum(unitKeys).default(family.defaultFrom as (typeof unitKeys)[number]),

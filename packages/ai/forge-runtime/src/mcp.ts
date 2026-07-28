@@ -1,15 +1,15 @@
 import { invokeTool } from "./invoke";
+import { toolInputJsonSchema } from "./json-schema";
 import type { ForgeRegistry } from "./registry";
 
 /** MCP-shaped tool descriptor (JSON-RPC friendly, no MCP SDK hard dep). */
 export interface McpToolDescriptor {
   readonly name: string;
   readonly description: string;
-  readonly inputSchema: {
-    readonly type: "object";
-    readonly properties: Record<string, unknown>;
-    readonly additionalProperties: boolean;
-  };
+  /** JSON Schema derived from the tool's Zod input schema. */
+  readonly inputSchema: Record<string, unknown>;
+  /** Demand roots (§6.7) so planners can group tools by verb. */
+  readonly roots: readonly string[];
 }
 
 export function listMcpTools(registry: ForgeRegistry): McpToolDescriptor[] {
@@ -18,11 +18,8 @@ export function listMcpTools(registry: ForgeRegistry): McpToolDescriptor[] {
     return {
       name: t.id.replace(/\//g, "__"),
       description: `${t.title.en} / ${t.title.zh} — ${t.description.en}`,
-      inputSchema: {
-        type: "object",
-        properties: zodToLooseJsonSchema(def.inputSchema),
-        additionalProperties: true,
-      },
+      inputSchema: toolInputJsonSchema(def.inputSchema),
+      roots: t.roots ?? [],
     };
   });
 }
@@ -45,15 +42,6 @@ export async function callMcpTool(
   }
   return {
     content: [{ type: "text", text: JSON.stringify(result.output, null, 2) }],
-  };
-}
-
-/** Best-effort Zod → JSON Schema fragment (not full OpenAPI). */
-function zodToLooseJsonSchema(_schema: unknown): Record<string, unknown> {
-  void _schema;
-  return {
-    type: "object",
-    description: "See tool OpenAPI / human page for field details",
   };
 }
 

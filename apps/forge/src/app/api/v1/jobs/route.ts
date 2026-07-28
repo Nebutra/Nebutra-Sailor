@@ -1,11 +1,20 @@
-import { getDefaultJobStore, invokeTool } from "@nebutra/forge-runtime";
+import {
+  dispatchJob,
+  getDefaultJobStore,
+  invokeTool,
+  resolveJobDispatchMode,
+} from "@nebutra/forge-runtime";
 import { NextResponse } from "next/server";
 import { getForgeRegistry } from "@/lib/registry";
 
 /**
  * POST /api/v1/jobs
  * Body: { toolId: string, input: unknown }
- * Creates a job, runs tool async in-process (demo). Production: queue worker.
+ *
+ * Dispatch modes (FORGE_JOB_MODE or auto):
+ * - inline  — fire-and-forget in this process (default)
+ * - http    — POST to FORGE_JOB_WORKER_URL
+ * - qstash  — Upstash QStash → worker URL (needs QSTASH_TOKEN)
  */
 export async function POST(request: Request) {
   let body: { toolId?: string; input?: unknown };
@@ -19,23 +28,48 @@ export async function POST(request: Request) {
   }
 
   const store = getDefaultJobStore();
-  const job = store.create(body.toolId);
-  store.markRunning(job.id);
+  const job = await store.create(body.toolId);
+  await store.markRunning(job.id);
 
-  // Fire-and-forget in-process (demo). Errors captured on job.
-  void (async () => {
-    try {
-      const result = await invokeTool(getForgeRegistry(), {
-        toolId: body.toolId as string,
-        input: body.input ?? {},
-        requestId: job.id,
-      });
-      if (result.ok) store.complete(job.id, result.output);
-      else store.fail(job.id, `${result.code}: ${result.message}`);
-    } catch (err) {
-      store.fail(job.id, err instanceof Error ? err.message : String(err));
-    }
-  })();
+  const mode = resolveJobDispatchMode();
+  const payload = {
+    jobId: job.id,
+    toolId: body.toolId,
+    input: body.input ?? {},
+  };
 
-  return NextResponse.json(job, { status: 202 });
+  if (mode === "inline") {
+    void (async () => {
+      try {
+        const result = await invokeTool(getForgeRegistry(), {
+          toolId: body.toolId as string,
+          input: body.input ?? {},
+          requestId: job.id,
+        });
+        if (result.ok) await store.complete(job.id, result.output);
+        else await store.fail(job.id, `${result.code}: ${result.message}`);
+      } catch (err) {
+        await store.fail(job.id, err instanceof Error ? err.message : String(err));
+      }
+    })();
+    return NextResponse.json({ ...job, dispatch: "inline" }, { status: 202 });
+  }
+
+  try {
+    const dispatched = await dispatchJob(payload);
+    return NextResponse.json(
+      { ...job, dispatch: dispatched.mode, accepted: dispatched.accepted },
+      { status: 202 },
+    );
+  } catch (err) {
+    await store.fail(job.id, err instanceof Error ? err.message : String(err));
+    return NextResponse.json(
+      {
+        error: "dispatch_failed",
+        message: err instanceof Error ? err.message : String(err),
+        jobId: job.id,
+      },
+      { status: 502 },
+    );
+  }
 }

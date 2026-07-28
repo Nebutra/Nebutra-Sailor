@@ -269,7 +269,6 @@ export const mdToPdfTool: ForgeToolDefinition<MdToPdfInput, MdToPdfOutput> = {
     en: "markdown to pdf online",
   },
   // Playwright print is SOTA when Chromium present; dedicated upload UX in apps/forge.
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: async (input) => {
     const html = markdownToHtml(input.markdown);

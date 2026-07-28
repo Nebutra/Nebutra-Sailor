@@ -1,27 +1,20 @@
-import { brand } from "@nebutra/brand/metadata";
 import { buildToolPageModel } from "@nebutra/forge-runtime";
-import { isChineseLocale } from "@nebutra/i18n/locales";
 import { Card, PageHeader } from "@nebutra/ui/layout";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
-import { LabBadge } from "@/components/lab-badge";
 import { PageFrame } from "@/components/page-frame";
 import { ToolWorkspace } from "@/components/tool-workspace";
+import { pickBilingual } from "@/lib/bilingual";
 import { getForgeRegistry } from "@/lib/registry";
 
 type Props = { params: Promise<{ slug: string }> };
 
-function pickBilingual(locale: string, fields: { zh: string; en: string }): string {
-  return isChineseLocale(locale) ? fields.zh : fields.en;
-}
-
-export async function generateStaticParams() {
-  return getForgeRegistry()
-    .list()
-    .map((t) => ({ slug: t.slug }));
-}
+// Avoid Next 16 SSG flakiness (workStore invariant during multi-locale prerender).
+// Tool pages are cheap to SSR; ECS/CF edge cache still applies at the CDN.
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -31,14 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const page = buildToolPageModel(registry, slug);
   const locale = await getLocale();
-  const isLab = page.sotaStatus === "lab";
-  const title = pickBilingual(locale, page.title);
   const description = pickBilingual(locale, page.description);
   const seoTitle = pickBilingual(locale, page.seo.title);
   const keywords = pickBilingual(locale, page.seo.keywords);
   return {
-    title: isLab ? `${title} · Lab | ${brand.name} Forge` : seoTitle,
-    description: isLab ? `${description} (lab capability)` : description,
+    title: seoTitle,
+    description,
     keywords: keywords.split(","),
   };
 }
@@ -58,7 +49,6 @@ export default async function ToolPage({ params }: Props) {
   const t = await getTranslations("tool");
   const tNav = await getTranslations("nav");
   const tCat = await getTranslations("categories");
-  const isLab = page.sotaStatus === "lab";
   const categoryLabel = tCat.has(`${page.category}.label` as never)
     ? tCat(`${page.category}.label` as never)
     : page.category;
@@ -88,16 +78,9 @@ export default async function ToolPage({ params }: Props) {
             >
               {categoryLabel}
             </Link>
-            {isLab ? <LabBadge className="ml-1" /> : null}
           </nav>
 
           <PageHeader title={title} description={description} />
-
-          {isLab ? (
-            <p className="rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--status-warning)_30%,transparent)] bg-[color-mix(in_srgb,var(--status-warning)_8%,transparent)] px-3 py-2 text-sm text-[var(--neutral-11)]">
-              {t("labNotice")}
-            </p>
-          ) : null}
 
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-[var(--neutral-10)]">
             <span>{page.engine.name}</span>

@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "麵包屑",
-    "labNotice": "實驗室功能：資料或詞典涵蓋有限，結果僅供參考。",
     "workspace": "工作區",
     "workspaceHint": "本機或伺服器 · 與 API 路徑相同",
     "api": "API",

@@ -53,7 +53,6 @@ export const base64Tool: ForgeToolDefinition<Base64Input, Base64Output> = {
     zh: "base64编码,base64解码在线",
     en: "base64 encode decode online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: runBase64,
   unitCost: 0,

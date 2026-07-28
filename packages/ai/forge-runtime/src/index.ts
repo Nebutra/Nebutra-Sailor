@@ -1,19 +1,41 @@
 export { type ForgeErrorCode, ForgeRuntimeError } from "./errors";
 export { invokeTool } from "./invoke";
 export {
+  dispatchJob,
+  type JobDispatchMode,
+  type JobDispatchPayload,
+  resolveJobDispatchMode,
+} from "./job-dispatch";
+export {
+  createJobStoreFromEnv,
   type ForgeJob,
+  type ForgeJobStore,
   getDefaultJobStore,
   type JobStatus,
   MemoryJobStore,
+  resetDefaultJobStoreForTests,
+  UpstashRedisJobStore,
 } from "./jobs";
+export {
+  type ToolInputJsonSchema,
+  toolInputJsonSchema,
+  toolRequestBodyJsonSchema,
+} from "./json-schema";
 export {
   callMcpTool,
   createForgeMcpHandlers,
   listMcpTools,
   type McpToolDescriptor,
 } from "./mcp";
-export { buildCategoryHub, buildToolPageModel } from "./page-model";
+export { buildForgeOpenApi, type OpenApiBuildOptions } from "./openapi";
+export {
+  buildCategoryHub,
+  buildRootHub,
+  buildToolPageModel,
+  DEMAND_ROOTS,
+} from "./page-model";
 export { ForgeRegistry } from "./registry";
+export { resolveToolRoots, SLUG_ROOTS } from "./roots-defaults";
 export {
   base64Tool,
   caseConvertTool,
@@ -21,6 +43,7 @@ export {
   codecExtraTools,
   dataFormatTools,
   devExtraTools,
+  docxTextTools,
   F0_BATCH1_TOOLS,
   htmlEntitiesTool,
   imageTools,
@@ -32,6 +55,7 @@ export {
   numberBaseTool,
   passwordGenerateTool,
   pdfOpsTools,
+  pptxTextTools,
   pureBatchTools,
   qrTools,
   removeBlankLinesTool,
@@ -45,8 +69,15 @@ export {
   unixTimestampTool,
   urlCodecTool,
   uuidTool,
+  wave2bMatrixTools,
+  wave2DemandTools,
+  wave3StapleTools,
+  wave4LongtailTools,
+  wave5SotaGapTools,
   wordCountTool,
+  xlsxTextTools,
 } from "./tools/index";
+export { compressPdfBuffer, pdfCompressTool } from "./tools/pdf-compress";
 export {
   DEFAULT_PRICE_CARD_MODEL,
   getPriceRow,
@@ -67,7 +98,6 @@ export type {
   InvokeSuccess,
   LocalizedString,
   SideEffectClass,
-  SotaStatus,
   ToolEngineMeta,
   ToolPageModel,
   ToolRuntime,

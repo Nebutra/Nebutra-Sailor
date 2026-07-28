@@ -32,7 +32,6 @@ export const sha512Tool = tool({
   meterId: "forge.hash.sha512",
   engine: { name: "node-crypto", upstream: "node:crypto", version: "runtime" },
   seoKeywords: { zh: "sha512在线,sha512哈希", en: "sha512 hash online" },
-  sotaStatus: "production",
   inputSchema: z.object({ text: z.string() }),
   execute: (input: { text: string }) => ({
     hex: createHash("sha512").update(input.text, "utf8").digest("hex"),
@@ -53,7 +52,6 @@ export const hmacTool = tool({
   meterId: "forge.hash.hmac",
   engine: { name: "node-crypto", upstream: "node:crypto", version: "runtime" },
   seoKeywords: { zh: "hmac在线计算,hmac-sha256", en: "hmac sha256 online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     secret: z.string().min(1),
@@ -85,7 +83,6 @@ export const fileChecksumTool = tool({
   meterId: "forge.hash.file_checksum",
   engine: { name: "node-crypto", upstream: "node:crypto", version: "runtime" },
   seoKeywords: { zh: "文件md5,文件sha256校验", en: "file checksum md5 sha256 online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     fileBase64: z.string().min(1),
     algorithms: z
@@ -133,7 +130,6 @@ export const passwordStrengthTool = tool({
     version: "3.x",
   },
   seoKeywords: { zh: "密码强度检测,密码安全检测", en: "password strength checker online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     password: z.string().min(1).max(256),
     userInputs: z.array(z.string()).max(20).default([]),

@@ -1,10 +1,12 @@
 "use client";
 
 import { Button, Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote } from "@/components/runner-ui";
 
 export function UuidRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [count, setCount] = useState(5);
   const [uuids, setUuids] = useState<string[]>([]);
   const [error, setError] = useState("");
@@ -43,7 +45,7 @@ export function UuidRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <Input
-        label="数量"
+        label={t("uuid.count")}
         id="uuid-count"
         type="number"
         min={1}
@@ -54,10 +56,10 @@ export function UuidRunner({ toolId }: { toolId: string }) {
       />
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" onClick={local}>
-          本地生成
+          {t("uuid.local")}
         </Button>
         <Button type="button" variant="outline" disabled={loading} onClick={() => void server()}>
-          服务端生成
+          {t("uuid.server")}
         </Button>
         <Button
           type="button"
@@ -65,7 +67,7 @@ export function UuidRunner({ toolId }: { toolId: string }) {
           onClick={() => void navigator.clipboard.writeText(uuids.join("\n"))}
           disabled={uuids.length === 0}
         >
-          复制全部
+          {t("uuid.copyAll")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
@@ -81,7 +83,7 @@ export function UuidRunner({ toolId }: { toolId: string }) {
           ))}
         </ul>
       ) : (
-        <RunnerNote>生成结果会显示在这里</RunnerNote>
+        <RunnerNote>{t("uuid.empty")}</RunnerNote>
       )}
     </div>
   );

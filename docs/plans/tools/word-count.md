@@ -15,4 +15,4 @@
 | **Intl.Segmenter** (when available) + CJK ranges | 现代 Unicode 分词 SOTA 路径 |
 | Fallback | 既有 latin token + CJK char 规则 |
 
-**sota_status:** `production`（Intl.Segmenter + 实时统计 UX + 服务端/Agent 同契约）
+**内部验收状态：** `production`（Intl.Segmenter + 实时统计 UX + 服务端/Agent 同契约）

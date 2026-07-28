@@ -36,13 +36,13 @@ export const cronExplainTool = tool({
   sideEffect: "pure",
   runtime: ["server"],
   meterId: "forge.time.cron_explain",
+  roots: ["viewer", "simulator", "analyzer"],
   engine: {
     name: "cron-parser",
     upstream: "https://github.com/harrisiirak/cron-parser",
     version: "5.x",
   },
   seoKeywords: { zh: "cron表达式,cron在线解析", en: "cron expression parser online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     expression: z.string().min(1).max(200),
     count: z.number().int().min(1).max(20).default(5),
@@ -82,7 +82,6 @@ export const timezoneTool = tool({
   meterId: "forge.time.timezone",
   engine: { name: "dayjs", upstream: "https://github.com/iamkun/dayjs", version: "1.x" },
   seoKeywords: { zh: "时区转换,世界时间转换", en: "timezone converter online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     datetime: z.string().min(1).max(80),
     fromTz: z.string().default("UTC"),
@@ -140,7 +139,6 @@ export const lunarTool = tool({
     version: "1.x",
   },
   seoKeywords: { zh: "农历转换,公历转农历", en: "lunar calendar converter online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     mode: z.enum(["solar_to_lunar", "lunar_to_solar"]).default("solar_to_lunar"),
     year: z.number().int().min(1900).max(2100),

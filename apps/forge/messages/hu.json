@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Vezérlőpálya",
-    "labNotice": "Lab funkció: korlátozott adat- vagy szótárlefedettség; az eredmények tájékoztató jellegűek.",
     "workspace": "Munkaterület",
     "workspaceHint": "Helyi vagy szerver · ugyanaz az elérési út, mint az API",
     "api": "API",

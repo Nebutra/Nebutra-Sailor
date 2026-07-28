@@ -9,18 +9,66 @@ pnpm --filter @nebutra/forge dev
 # http://localhost:3105
 ```
 
+## Production build (ECS / standalone)
+
+```bash
+NEXT_OUTPUT=standalone pnpm --filter @nebutra/forge build
+# → apps/forge/.next/standalone + .next/static
+```
+
+Default `build` uses `next build --experimental-build-mode compile` so the
+bundle is fully dynamic (all routes already `force-dynamic`) and skips Next 16’s
+broken `/_global-error` static prerender (`workStore` invariant). Use
+`build:full` only when you need a complete generate pass and that bug is fixed.
+
+Assemble for PM2 (cwd = release root that contains `apps/forge/server.js`):
+
+```bash
+STAGE=.deploy/forge
+rm -rf "$STAGE" && mkdir -p "$STAGE"
+rsync -a apps/forge/.next/standalone/ "$STAGE/"
+mkdir -p "$STAGE/apps/forge/.next"
+rsync -a apps/forge/.next/static/ "$STAGE/apps/forge/.next/static/"
+rsync -a apps/forge/public/ "$STAGE/apps/forge/public/"
+```
+
 ## Surfaces
 
 | Path | Role |
 |------|------|
 | `/` | Search + category grid |
 | `/t/[slug]` | Human tool page + runner |
+| `/r/[root]` | Demand-root hub (generator / converter / checker …) |
 | `/docs` | API quick docs |
 | `GET /api/v1/tools` | Catalog |
 | `POST /api/v1/tools/invoke/{id}` | Invoke (id may include `/`) |
+| `GET /api/tools.json` | Machine catalog — roots, sideEffect, meterId, mcpName |
+| `GET /api/openapi.json` | OpenAPI 3.1 — one operation per tool, schemas from Zod |
+| `POST /api/mcp` | MCP-over-HTTP bridge (`tools/list`, `tools/call`) |
+| `POST /api/v1/jobs` · `GET /api/v1/jobs/{id}` | Async (J) surface |
+
+### Machine surface contract
+
+Agent-facing schemas are **derived**, never hand-written: `toolInputJsonSchema()`
+(`@nebutra/forge-runtime`) converts each tool's Zod `inputSchema` to JSON Schema,
+and both MCP descriptors and the OpenAPI request bodies read from it. Adding a
+tool to the registry is therefore enough to make it callable, discoverable and
+typed for agents — there is no second place to update.
 
 Runtime: `@nebutra/forge-runtime`  
 Wallet demo: `@nebutra/prepaid-wallet` MemoryPrepaidWallet (swap to CreditBalance via `createCreditLedgerWallet`)
+
+---
+
+## i18n contract
+
+| What | Where |
+|------|--------|
+| Locale resolution | Cookie `NEXT_LOCALE` → `src/i18n/request.ts` (full `@nebutra/i18n` wheel) |
+| Shell / categories / runner chrome | `messages/en.json` (+ overrides e.g. `zh-Hans.json`) |
+| Tool title / description / SEO | Registry `LocalizedString` `{ zh, en }` + `src/lib/bilingual.ts` `pickBilingual` |
+
+**Do not** put per-tool titles into message JSON. **Do** put new runner labels under `runners.*` in messages. Full rules: `docs/plans/2026-07-23-nebutra-router-forge-design.md` §6.10.
 
 ---
 
@@ -53,14 +101,9 @@ See also: `docs/plans/tools/md-to-pdf.md`, `packages/ai/forge-runtime/skills/md-
 
 ---
 
-## Lab tools (honest labeling)
+## Coverage honesty
 
-Internal `sotaStatus: lab` is **not** a marketing “SOTA” badge. On product UI we
-show an **实验** chip for lab blades so SEO/traffic does not over-claim:
-
-| Slug | Status | Note |
-|------|--------|------|
-| `kinship` | lab | Lightweight dictionary; not a full 亲戚称呼 engine |
-| `phone-lookup` | lab | Prefix/carrier coarse map only; not a full 归属地库 |
-
-Do not promote lab tools as production SOTA in copy or SEO titles.
+Some blades ship on deliberately narrow data — `kinship` uses a lightweight
+dictionary, `phone-lookup` a coarse prefix/carrier map. Say so in the tool's own
+`description`, which is the one place both the page and the API already read.
+Do not over-claim coverage in SEO titles or marketing copy.

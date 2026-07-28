@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "面包屑",
-    "labNotice": "实验能力：数据范围或词典有限，结果仅供参考，不承诺完整生产精度。",
     "workspace": "工作台",
     "workspaceHint": "本地或服务端 · 与 API 同一路径",
     "api": "API",
@@ -125,7 +124,47 @@
       "outputPreview": "输出预览",
       "mode": "模式",
       "encode": "编码",
-      "decode": "解码"
+      "decode": "解码",
+      "download": "下载",
+      "format": "格式化",
+      "formatting": "格式化中…",
+      "dialect": "方言",
+      "color": "颜色",
+      "pickColor": "取色",
+      "content": "内容",
+      "algorithm": "算法",
+      "encoding": "编码",
+      "message": "消息",
+      "secret": "密钥",
+      "password": "密码",
+      "direction": "方向",
+      "preview": "预览",
+      "query": "查询",
+      "querying": "查询中…",
+      "validate": "校验",
+      "validating": "校验中…",
+      "processing": "处理中…",
+      "pretty": "美化",
+      "minify": "压缩",
+      "from": "从",
+      "to": "到",
+      "timezone": "时区",
+      "datetime": "日期时间",
+      "compute": "计算",
+      "computing": "计算中…",
+      "convertAction": "转换",
+      "count": "数量",
+      "value": "数值",
+      "unit": "单位",
+      "generateLocal": "本地生成",
+      "generateServer": "服务端生成",
+      "copyAll": "复制全部",
+      "emptyResult": "结果会显示在这里",
+      "clear": "清空",
+      "copyText": "复制文本",
+      "quality": "质量",
+      "original": "原图",
+      "result": "结果"
     },
     "lorem": {
       "paragraphs": "段落数",
@@ -378,6 +417,335 @@
       "out": "输出",
       "saved": "节省",
       "note": "PDF 压缩 · 宿主 qpdf / Ghostscript · pdf-lib 回落"
+    },
+    "markdown": {
+      "preview": "预览",
+      "html": "HTML",
+      "emptyPreview": "点击运行查看预览",
+      "emptyHtml": "渲染结果",
+      "rendering": "渲染中…",
+      "toHtml": "转为 HTML",
+      "copyHtml": "复制 HTML",
+      "note": "marked · 预览使用沙箱 iframe · 与 API 同一路径"
+    },
+    "pdfMerge": {
+      "files": "PDF 文件（≥2，顺序即合并顺序）",
+      "needFiles": "请至少选择 2 个 PDF",
+      "merging": "合并中…",
+      "mergeDownload": "合并并下载",
+      "done": "合并完成 · {pages} 页 · {bytes} bytes",
+      "note": "pdf-lib · 与 API 同一路径"
+    },
+    "pdfSplit": {
+      "file": "PDF 文件",
+      "needFile": "请选择 PDF",
+      "fromPage": "起始页 (1-based)",
+      "toPage": "结束页 (空=到末页)",
+      "toPlaceholder": "末页",
+      "splitting": "拆分中…",
+      "splitDownload": "拆分并下载",
+      "done": "拆分完成 · 源 {source} 页 → 输出 {pages} 页",
+      "note": "pdf-lib · 与 API 同一路径"
+    },
+    "passwordStrength": {
+      "check": "检测强度",
+      "checking": "检测中…",
+      "crack": "离线慢哈希粗估：{time}",
+      "score0": "极弱",
+      "score1": "弱",
+      "score2": "一般",
+      "score3": "较强",
+      "score4": "很强",
+      "note": "zxcvbn-ts · 与 API 同一路径 · 密码不会落盘"
+    },
+    "hmacSign": {
+      "compute": "计算 HMAC",
+      "computing": "计算中…",
+      "note": "node:crypto · 与 API 同一路径"
+    },
+    "costEstimate": {
+      "text": "输入文本（用于估算 input tokens）",
+      "model": "模型",
+      "outputTokens": "输出 tokens 估",
+      "estimate": "估算费用",
+      "estimating": "估算中…",
+      "note": "@nebutra/ai-providers/frontier 价卡 + js-tiktoken · 标价球估，非账单"
+    },
+    "jsonSchema": {
+      "data": "JSON 数据",
+      "schema": "JSON Schema",
+      "validate": "校验",
+      "validating": "校验中…",
+      "pass": "通过",
+      "fail": "未通过",
+      "note": "Ajv · 与 API 同一路径"
+    },
+    "zhCnTw": {
+      "s2t": "简 → 繁",
+      "t2s": "繁 → 简",
+      "s2tw": "简 → 台湾",
+      "tw2s": "台湾 → 简",
+      "s2hk": "简 → 香港",
+      "hk2s": "香港 → 简",
+      "note": "OpenCC (opencc-js) · 与 API 同一路径"
+    },
+    "pinyin": {
+      "tones": "声调",
+      "symbol": "符号 nǐ",
+      "num": "数字 ni3",
+      "none": "无调 ni",
+      "hanzi": "汉字",
+      "convert": "转拼音",
+      "converting": "转换中…",
+      "note": "pinyin-pro · 与 API 同一路径"
+    },
+    "sqlFormat": {
+      "dialect": "方言",
+      "format": "格式化",
+      "formatting": "格式化中…",
+      "note": "sql-formatter · 与 API 同一路径"
+    },
+    "colorConvert": {
+      "color": "颜色",
+      "pick": "取色",
+      "convert": "转换",
+      "converting": "转换中…",
+      "note": "culori · hex / rgb / hsl / oklch · 与 API 同一路径"
+    },
+    "qrGen": {
+      "content": "内容",
+      "format": "格式",
+      "pngPreview": "PNG (预览)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "生成二维码",
+      "generating": "生成中…",
+      "note": "qrcode · 与 API 同一路径"
+    },
+    "qrDecode": {
+      "upload": "上传含二维码的图片",
+      "parsing": "解析中…",
+      "note": "jsQR + sharp · 与 API 同一路径"
+    },
+    "cron": {
+      "expression": "Cron 表达式",
+      "timezone": "时区",
+      "parse": "解析下次触发",
+      "parsing": "解析中…",
+      "nextTitle": "下次触发 (ISO)",
+      "note": "cron-parser · 与 API 同一路径"
+    },
+    "timezone": {
+      "datetime": "日期时间",
+      "from": "从",
+      "to": "到",
+      "convert": "转换时区",
+      "converting": "转换中…",
+      "placeholder": "2026-07-24 12:00:00 或 ISO / unix",
+      "note": "dayjs timezone · 与 API 同一路径"
+    },
+    "csvPreview": {
+      "preview": "预览表格",
+      "parsing": "解析中…",
+      "rows": "预览 {shown} / 共 {total} 行",
+      "note": "papaparse · 与 API 同一路径"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "查询",
+      "querying": "查询中…",
+      "note": "jsonpath-plus · 与 API 同一路径"
+    },
+    "xmlFormat": {
+      "pretty": "美化",
+      "minify": "压缩",
+      "validate": "校验",
+      "validOk": "校验通过",
+      "done": "完成 · {engine}",
+      "processing": "处理中…",
+      "note": "fast-xml-parser · 与 API 同一路径"
+    },
+    "regexLegacy": {
+      "pattern": "正则",
+      "flags": "标志",
+      "mode": "模式",
+      "match": "匹配",
+      "replace": "替换",
+      "test": "测试",
+      "replacement": "替换为",
+      "note": "本地即时 · 服务端带超时预算 · 与 API 同一路径"
+    },
+    "docxText": {
+      "file": "DOCX 文件",
+      "needFile": "请先选择 .docx 文件",
+      "extract": "提取文本",
+      "extracting": "提取中…",
+      "note": "DOCX → 文本 · pure ZIP + document.xml（无需 Office）"
+    },
+    "uuid": {
+      "count": "数量",
+      "local": "本地生成",
+      "server": "服务端生成",
+      "copyAll": "复制全部",
+      "empty": "生成结果会显示在这里"
+    },
+    "timestamp": {
+      "nowSec": "当前秒",
+      "nowMs": "当前毫秒 / ISO",
+      "serverNow": "服务端 now",
+      "toDate": "时间戳 → 日期",
+      "toUnix": "日期 → 时间戳",
+      "seconds": "秒",
+      "milliseconds": "毫秒",
+      "value": "值",
+      "convert": "转换",
+      "note": "与 API 同一路径"
+    },
+    "wordCount": {
+      "words": "词数",
+      "chars": "字符",
+      "noSpaces": "不含空格",
+      "cjk": "中日韩",
+      "lines": "行",
+      "paragraphs": "段",
+      "placeholder": "粘贴或输入文字…",
+      "copyText": "复制文本",
+      "clear": "清空",
+      "verifying": "校验中…",
+      "serverNote": "服务端 words={words} · 与 API 同一路径",
+      "note": "实时引擎：{engine} · 不上传即可统计 · 与 API 同一路径"
+    },
+    "bmi": {
+      "height": "身高 (cm)",
+      "weight": "体重 (kg)",
+      "compute": "计算 BMI",
+      "computing": "计算中…",
+      "invalid": "请输入有效的身高（cm）与体重（kg）",
+      "underweight": "偏瘦",
+      "normal": "正常",
+      "overweight": "超重",
+      "obese": "肥胖",
+      "note": "WHO BMI · 与 API 同一路径 · 仅供参考，非医疗诊断"
+    },
+    "percentage": {
+      "mode": "计算方式",
+      "percentOf": "a% 的 b 是多少",
+      "isWhat": "a 是 b 的百分之几",
+      "percentA": "百分比 a",
+      "valueA": "数值 a",
+      "baseB": "基数 b",
+      "compute": "计算",
+      "computing": "计算中…",
+      "invalid": "请输入有效数字",
+      "note": "与 API 同一路径"
+    },
+    "dataSize": {
+      "value": "数值",
+      "convert": "换算",
+      "converting": "换算中…",
+      "invalid": "请输入有效数值",
+      "binary": "{value} {from} → 1024 进制",
+      "note": "二进制单位（1 KB = 1024 B）· 与 API 同一路径"
+    },
+    "rmb": {
+      "amount": "金额（元）",
+      "convert": "转大写",
+      "converting": "转换中…",
+      "invalid": "请输入非负金额",
+      "note": "中文发票金额大写 · 与 API 同一路径"
+    },
+    "dateDiff": {
+      "from": "起始日期",
+      "to": "结束日期",
+      "compute": "计算间隔",
+      "computing": "计算中…",
+      "days": "天",
+      "note": "ECMAScript Date · 与 API 同一路径"
+    },
+    "xlsxText": {
+      "file": "XLSX 文件",
+      "needFile": "请先选择 .xlsx 文件",
+      "extract": "提取表格",
+      "extracting": "提取中…",
+      "note": "XLSX → CSV · pure ZIP + sheet1.xml（首表）"
+    },
+    "mdToPdf": {
+      "drop": "拖拽 .md 文件，或粘贴下方 Markdown",
+      "title": "标题",
+      "engine": "引擎",
+      "eAuto": "auto（优先 Playwright）",
+      "ePlaywright": "playwright（Chromium 打印）",
+      "eSimple": "simple（无浏览器）",
+      "generate": "生成 PDF",
+      "generating": "生成中…",
+      "download": "下载 PDF",
+      "note": "marked → HTML → Playwright Chromium 打印（SOTA）。宿主未装 Chromium 时 auto 回退 simple 结构化 PDF——结果区会标明 renderEngine，不得把 simple 当成打印级排版。"
+    },
+    "tokenCount": {
+      "count": "精确计数",
+      "counting": "计数中…",
+      "chars": "字符 {n}",
+      "note": "引擎：js-tiktoken · 服务端精确计数 · 可对接 Router 费用估算"
+    },
+    "codec": {
+      "encodeDir": "文本 → 编码",
+      "decodeDir": "编码 → 文本",
+      "localNote": "本地运行",
+      "serverNote": "服务端 · 与 API 同一路径",
+      "hexInvalid": "不是合法的十六进制字符串",
+      "hexDecodeFail": "服务端无法将输入解码为 UTF-8（需合法 hex）",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · 与 API 同一路径",
+      "noteHtml": "HTML 实体映射 · 与 API 同一路径",
+      "noteHex": "UTF-8 ↔ hex · 与 API 同一路径"
+    },
+    "textDiff": {
+      "left": "左侧",
+      "right": "右侧",
+      "compare": "对比",
+      "comparing": "对比中…"
+    },
+    "imageTool": {
+      "drop": "拖拽图片到此处，或点击选择",
+      "selected": "已选：{name}（{kb} KB）",
+      "needFile": "请先选择图片",
+      "format": "输出格式",
+      "quality": "质量 {n}",
+      "maxW": "最大宽",
+      "maxH": "最大高",
+      "optional": "可选",
+      "resizeEg": "如 1280",
+      "processing": "处理中…",
+      "compress": "压缩",
+      "resize": "缩放",
+      "convert": "转换格式",
+      "download": "下载结果",
+      "outMeta": "输出 {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · 约为原图 {pct}%",
+      "dims": " · {w}×{h}",
+      "original": "原图",
+      "result": "结果",
+      "note": "引擎：sharp（libvips）· 服务端处理 · 与 API 同一路径（imageBase64）"
+    },
+    "imageCrop": {
+      "needFile": "请先选择图片",
+      "crop": "裁剪",
+      "drop": "拖拽图片或点击选择",
+      "dragHint": "在图上拖拽选择裁剪区域",
+      "left": "左",
+      "top": "上",
+      "width": "宽",
+      "height": "高",
+      "natural": "原图像素 {w}×{h}",
+      "source": "原图",
+      "result": "裁剪结果",
+      "note": "图片裁剪 · 拖拽选区 · sharp extract"
+    },
+    "pptxText": {
+      "file": "PPTX 文件",
+      "needFile": "请先选择 .pptx 文件",
+      "extract": "提取大纲",
+      "extracting": "提取中…",
+      "note": "PPTX 大纲 · pure ZIP + slide XML（无需 PowerPoint）"
     }
   },
   "roots": {

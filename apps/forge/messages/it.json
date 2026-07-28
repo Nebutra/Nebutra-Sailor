@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Briciola di pane",
-    "labNotice": "Funzionalità Lab: copertura dati o dizionario limitata; i risultati sono solo indicativi.",
     "workspace": "Area di lavoro",
     "workspaceHint": "Locale o server · stesso percorso dell'API",
     "api": "API",

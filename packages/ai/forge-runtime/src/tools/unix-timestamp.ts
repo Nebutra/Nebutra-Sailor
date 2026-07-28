@@ -85,7 +85,6 @@ export const unixTimestampTool: ForgeToolDefinition<UnixTimestampInput, UnixTime
     zh: "时间戳转换,unix时间戳在线",
     en: "unix timestamp converter online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: runUnixTimestamp,
   unitCost: 0,

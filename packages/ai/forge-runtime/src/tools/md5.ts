@@ -35,7 +35,6 @@ export const md5Tool: ForgeToolDefinition<Md5Input, Md5Output> = {
     zh: "md5在线加密",
     en: "md5 hash online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: (input) => ({
     algorithm: "md5" as const,

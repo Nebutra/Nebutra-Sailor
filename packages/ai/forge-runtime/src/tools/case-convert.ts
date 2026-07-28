@@ -75,7 +75,6 @@ export const caseConvertTool: ForgeToolDefinition<CaseConvertInput, CaseConvertO
     zh: "大小写转换在线",
     en: "case converter online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: runCaseConvert,
   unitCost: 0,

@@ -33,7 +33,7 @@
 **Policy:** 产品要求 SOTA → **必须走 Playwright**（`engine: playwright` 或 `auto` 成功路径）。  
 会话 plan 的 non-goal **不能**豁免 SOTA 硬门槛。
 
-**sota_status now:** `production`（Playwright 主路径 + 拖拽上传 UX + SKILL；CJK 依赖宿主字体）  
+**内部验收状态：** `production`（Playwright 主路径 + 拖拽上传 UX + SKILL；CJK 依赖宿主字体）  
 **Rejected:** 仅手写 PDF 字符串冒充 production  
 
 ## Host registration policy (2026-07-24)

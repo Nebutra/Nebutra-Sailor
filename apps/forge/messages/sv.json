@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Brödsmulor",
-    "labNotice": "Lab-funktion: begränsad data- eller ordbokscoverage; resultaten är endast för referens.",
     "workspace": "Arbetsyta",
     "workspaceHint": "Lokalt eller server · samma sökväg som API",
     "api": "API",

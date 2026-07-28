@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Lab capability: limited data or dictionary coverage; results are for reference only.",
     "workspace": "Workspace",
     "workspaceHint": "Local or server · same path as API",
     "api": "API",
@@ -52,20 +51,62 @@
     "emptyHint": "Try another keyword, or pick a tool from the categories below."
   },
   "categories": {
-    "codec": { "label": "Codecs", "hint": "Base64 · URL · JWT · Unicode" },
-    "cn": { "label": "China validation", "hint": "ID · phone" },
-    "data": { "label": "Data", "hint": "JSON · YAML · CSV · XML" },
-    "dev": { "label": "Developer", "hint": "Regex · SQL · color · UUID" },
-    "doc": { "label": "Documents", "hint": "Markdown · PDF merge/split" },
-    "finance": { "label": "Finance", "hint": "Amount to words" },
-    "hash": { "label": "Hash & security", "hint": "MD5 · SHA · HMAC · password" },
-    "image": { "label": "Images", "hint": "Compress · QR · convert" },
-    "life": { "label": "Life calculators", "hint": "Mortgage · BMI · kinship" },
-    "llm": { "label": "LLM", "hint": "Tokens · cost · schema" },
-    "security": { "label": "Security", "hint": "Password generator" },
-    "text": { "label": "Text", "hint": "Word count · CJK · pinyin · Diff" },
-    "time": { "label": "Time", "hint": "Timestamp · timezone · Cron · lunar" },
-    "unit": { "label": "Units", "hint": "Length · weight · temperature · data" }
+    "codec": {
+      "label": "Codecs",
+      "hint": "Base64 · URL · JWT · Unicode"
+    },
+    "cn": {
+      "label": "China validation",
+      "hint": "ID · phone"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "JSON · YAML · CSV · XML"
+    },
+    "dev": {
+      "label": "Developer",
+      "hint": "Regex · SQL · color · UUID"
+    },
+    "doc": {
+      "label": "Documents",
+      "hint": "Markdown · PDF merge/split"
+    },
+    "finance": {
+      "label": "Finance",
+      "hint": "Amount to words"
+    },
+    "hash": {
+      "label": "Hash & security",
+      "hint": "MD5 · SHA · HMAC · password"
+    },
+    "image": {
+      "label": "Images",
+      "hint": "Compress · QR · convert"
+    },
+    "life": {
+      "label": "Life calculators",
+      "hint": "Mortgage · BMI · kinship"
+    },
+    "llm": {
+      "label": "LLM",
+      "hint": "Tokens · cost · schema"
+    },
+    "security": {
+      "label": "Security",
+      "hint": "Password generator"
+    },
+    "text": {
+      "label": "Text",
+      "hint": "Word count · CJK · pinyin · Diff"
+    },
+    "time": {
+      "label": "Time",
+      "hint": "Timestamp · timezone · Cron · lunar"
+    },
+    "unit": {
+      "label": "Units",
+      "hint": "Length · weight · temperature · data"
+    }
   },
   "runners": {
     "common": {
@@ -80,10 +121,96 @@
       "yes": "Yes",
       "no": "No",
       "text": "Text",
+      "input": "Input",
+      "output": "Output",
+      "outputPlaceholder": "Result appears here",
+      "localRun": "Run local",
+      "serverRun": "Run on server",
+      "serverVerify": "Server verify",
       "outputPreview": "Output preview",
       "mode": "Mode",
       "encode": "Encode",
-      "decode": "Decode"
+      "decode": "Decode",
+      "file": "File",
+      "clear": "Clear",
+      "length": "Length: {n}",
+      "bytes": "{bytes} bytes",
+      "download": "Download",
+      "format": "Format",
+      "formatting": "Formatting…",
+      "dialect": "Dialect",
+      "color": "Color",
+      "pickColor": "Pick color",
+      "content": "Content",
+      "algorithm": "Algorithm",
+      "encoding": "Encoding",
+      "message": "Message",
+      "secret": "Secret",
+      "password": "Password",
+      "direction": "Direction",
+      "preview": "Preview",
+      "query": "Query",
+      "querying": "Querying…",
+      "validate": "Validate",
+      "validating": "Validating…",
+      "processing": "Processing…",
+      "pretty": "Pretty",
+      "minify": "Minify",
+      "from": "From",
+      "to": "To",
+      "timezone": "Timezone",
+      "datetime": "Date & time",
+      "compute": "Compute",
+      "computing": "Computing…",
+      "convertAction": "Convert",
+      "count": "Count",
+      "value": "Value",
+      "unit": "Unit",
+      "generateLocal": "Generate local",
+      "generateServer": "Generate on server",
+      "copyAll": "Copy all",
+      "emptyResult": "Results appear here",
+      "copyText": "Copy text",
+      "quality": "Quality",
+      "original": "Original",
+      "result": "Result"
+    },
+    "base64": {
+      "encodeDir": "Text → Base64",
+      "decodeDir": "Base64 → Text",
+      "localNote": "Local Web API (TextEncoder / atob)",
+      "serverNote": "Server Buffer · same path as API"
+    },
+    "password": {
+      "uppercase": "Uppercase",
+      "lowercase": "Lowercase",
+      "digits": "Digits",
+      "symbols": "Symbols",
+      "generate": "Generate password",
+      "recent": "Recent",
+      "note": "Engine: node:crypto randomInt · cryptographically secure · same path as API"
+    },
+    "hash": {
+      "algo": "Algorithm: {algo}",
+      "md5Warn": " · checksum/compat only — do not store passwords",
+      "md5LocalError": "MD5 requires server run (Web Crypto has no MD5)",
+      "md5ServerHint": "MD5: use server run (compat only, not for password storage)",
+      "localNote": "Local Web Crypto · {algo}",
+      "serverNote": "Server node:crypto · same path as API"
+    },
+    "convert": {
+      "converting": "Converting…",
+      "convert": "Convert",
+      "done": "Done · {engine}"
+    },
+    "fileChecksum": {
+      "drop": "Drop a file here, or click to browse",
+      "needFile": "Choose a file first",
+      "needAlgo": "Select at least one algorithm",
+      "compute": "Compute checksums",
+      "computing": "Computing…",
+      "algorithms": "Algorithms",
+      "note": "node:crypto · multi-algo · same path as API"
     },
     "lorem": {
       "paragraphs": "Paragraphs",
@@ -197,7 +324,8 @@
     },
     "multiHash": {
       "encoding": "Digest encoding",
-      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto"
+      "note": "Multi-Hash · MD5 + SHA-1/256/512 · node:crypto",
+      "sotaNote": "One shot digests · copy each · node:crypto"
     },
     "cssFormat": {
       "note": "CSS Beautifier · lightweight"
@@ -279,14 +407,26 @@
     },
     "regex": {
       "pattern": "Pattern",
-      "replacement": "Replacement",
       "flags": "Flags",
-      "note": "Regex Find & Replace · ECMAScript"
+      "replacement": "Replacement",
+      "match": "Match",
+      "replace": "Replace",
+      "test": "Test",
+      "local": "Run local",
+      "server": "Server verify",
+      "count": "{count} matches",
+      "sotaNote": "Instant local highlight · server timeout budget · same path as API"
     },
     "jwt": {
-      "payload": "Payload JSON",
+      "decode": "Decode JWT",
+      "sample": "Load sample",
+      "tokenPlaceholder": "Paste JWT",
+      "decodeNote": "{engine} · decode only, signature not verified",
+      "footerNote": "Engine: jose · no signature verification. Production verify with keys via jwtVerify on the server.",
+      "generateHint": "Need to sign tokens?",
       "secret": "Secret",
       "exp": "Expires (seconds)",
+      "payload": "Payload JSON",
       "note": "JWT Generate · HS256 (dev/test only)"
     },
     "rand": {
@@ -336,6 +476,378 @@
       "out": "Output",
       "saved": "Saved",
       "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+    },
+    "jsonFormat": {
+      "indent": "Indent",
+      "format": "Format",
+      "minify": "Minify",
+      "serverVerify": "Server verify",
+      "clear": "Clear",
+      "sample": "Sample",
+      "placeholder": "Paste JSON…",
+      "formatted": "Formatted",
+      "minified": "Minified",
+      "serverOk": "Server {mode} · {engine}",
+      "valid": "Valid JSON",
+      "invalid": "Invalid JSON",
+      "line": "line",
+      "column": "column",
+      "note": "Engine: JSON.parse/stringify · instant local · same path as API"
+    },
+    "qr": {
+      "size": "Size",
+      "ecl": "Error correction",
+      "generate": "Generate",
+      "download": "Download PNG",
+      "needText": "Enter text or URL",
+      "note": "QR · qrcode · live preview · same path as API"
+    },
+    "pdfText": {
+      "file": "PDF file",
+      "layout": "Layout",
+      "needFile": "Choose a PDF first",
+      "note": "PDF Text · pdftotext (poppler) on host"
+    },
+    "svg": {
+      "optimize": "Optimize",
+      "note": "SVG Optimize · lightweight pure minify"
+    },
+    "routerTranslate": {
+      "lab": "Lab shell: does not translate here. Opens Router with a prompt — model meter on Router only.",
+      "source": "Source lang",
+      "target": "Target lang",
+      "open": "Prepare Router link",
+      "deepLink": "Open in Router",
+      "note": "external · no silent Forge LLM ledger"
+    },
+    "imageCrop": {
+      "needFile": "Choose an image first",
+      "crop": "Crop",
+      "note": "Image Crop · drag region · sharp extract",
+      "drop": "Drop image or click to browse",
+      "dragHint": "Drag on the image to select a crop region",
+      "left": "Left",
+      "top": "Top",
+      "width": "Width",
+      "height": "Height",
+      "natural": "Natural {w}×{h}",
+      "source": "Source",
+      "result": "Cropped"
+    },
+    "markdown": {
+      "preview": "Preview",
+      "html": "HTML",
+      "emptyPreview": "Run to see preview",
+      "emptyHtml": "Rendered HTML",
+      "rendering": "Rendering…",
+      "toHtml": "To HTML",
+      "copyHtml": "Copy HTML",
+      "note": "marked · sandboxed iframe preview · same path as API"
+    },
+    "pdfMerge": {
+      "files": "PDF files (≥2, order = merge order)",
+      "needFiles": "Select at least 2 PDFs",
+      "merging": "Merging…",
+      "mergeDownload": "Merge & download",
+      "done": "Merged · {pages} pages · {bytes} bytes",
+      "note": "pdf-lib · same path as API"
+    },
+    "pdfSplit": {
+      "file": "PDF file",
+      "needFile": "Choose a PDF",
+      "fromPage": "From page (1-based)",
+      "toPage": "To page (empty = last)",
+      "toPlaceholder": "Last page",
+      "splitting": "Splitting…",
+      "splitDownload": "Split & download",
+      "done": "Split · source {source} pages → output {pages} pages",
+      "note": "pdf-lib · same path as API"
+    },
+    "passwordStrength": {
+      "check": "Check strength",
+      "checking": "Checking…",
+      "crack": "Offline slow-hash estimate: {time}",
+      "score0": "Very weak",
+      "score1": "Weak",
+      "score2": "Fair",
+      "score3": "Strong",
+      "score4": "Very strong",
+      "note": "zxcvbn-ts · same path as API · password never stored"
+    },
+    "hmacSign": {
+      "compute": "Compute HMAC",
+      "computing": "Computing…",
+      "note": "node:crypto · same path as API"
+    },
+    "costEstimate": {
+      "text": "Input text (for input token estimate)",
+      "model": "Model",
+      "outputTokens": "Output tokens (est.)",
+      "estimate": "Estimate cost",
+      "estimating": "Estimating…",
+      "note": "@nebutra/ai-providers/frontier card + js-tiktoken · list-price estimate, not a bill"
+    },
+    "jsonSchema": {
+      "data": "JSON data",
+      "schema": "JSON Schema",
+      "validate": "Validate",
+      "validating": "Validating…",
+      "pass": "Pass",
+      "fail": "Fail",
+      "note": "Ajv · same path as API"
+    },
+    "zhCnTw": {
+      "s2t": "Simplified → Traditional",
+      "t2s": "Traditional → Simplified",
+      "s2tw": "Simplified → Taiwan",
+      "tw2s": "Taiwan → Simplified",
+      "s2hk": "Simplified → Hong Kong",
+      "hk2s": "Hong Kong → Simplified",
+      "note": "OpenCC (opencc-js) · same path as API"
+    },
+    "pinyin": {
+      "tones": "Tone style",
+      "symbol": "Symbol nǐ",
+      "num": "Number ni3",
+      "none": "None ni",
+      "hanzi": "Chinese characters",
+      "convert": "To pinyin",
+      "converting": "Converting…",
+      "note": "pinyin-pro · same path as API"
+    },
+    "sqlFormat": {
+      "dialect": "Dialect",
+      "format": "Format",
+      "formatting": "Formatting…",
+      "note": "sql-formatter · same path as API"
+    },
+    "colorConvert": {
+      "color": "Color",
+      "pick": "Pick color",
+      "convert": "Convert",
+      "converting": "Converting…",
+      "note": "culori · hex / rgb / hsl / oklch · same path as API"
+    },
+    "qrGen": {
+      "content": "Content",
+      "format": "Format",
+      "pngPreview": "PNG (preview)",
+      "pngB64": "PNG Base64",
+      "svg": "SVG",
+      "generate": "Generate QR",
+      "generating": "Generating…",
+      "note": "qrcode · same path as API"
+    },
+    "qrDecode": {
+      "upload": "Upload an image with a QR code",
+      "parsing": "Decoding…",
+      "note": "jsQR + sharp · same path as API"
+    },
+    "cron": {
+      "expression": "Cron expression",
+      "timezone": "Timezone",
+      "parse": "Next runs",
+      "parsing": "Parsing…",
+      "nextTitle": "Next runs (ISO)",
+      "note": "cron-parser · same path as API"
+    },
+    "timezone": {
+      "datetime": "Date & time",
+      "from": "From",
+      "to": "To",
+      "convert": "Convert timezone",
+      "converting": "Converting…",
+      "placeholder": "2026-07-24 12:00:00 or ISO / unix",
+      "note": "dayjs timezone · same path as API"
+    },
+    "csvPreview": {
+      "preview": "Preview table",
+      "parsing": "Parsing…",
+      "rows": "Preview {shown} / {total} rows",
+      "note": "papaparse · same path as API"
+    },
+    "jsonPath": {
+      "path": "JSONPath",
+      "query": "Query",
+      "querying": "Querying…",
+      "note": "jsonpath-plus · same path as API"
+    },
+    "xmlFormat": {
+      "pretty": "Pretty",
+      "minify": "Minify",
+      "validate": "Validate",
+      "validOk": "Valid",
+      "done": "Done · {engine}",
+      "processing": "Processing…",
+      "note": "fast-xml-parser · same path as API"
+    },
+    "regexLegacy": {
+      "pattern": "Pattern",
+      "flags": "Flags",
+      "mode": "Mode",
+      "match": "Match",
+      "replace": "Replace",
+      "test": "Test",
+      "replacement": "Replacement",
+      "note": "Instant local · server timeout budget · same path as API"
+    },
+    "docxText": {
+      "file": "DOCX file",
+      "needFile": "Choose a .docx file first",
+      "extract": "Extract text",
+      "extracting": "Extracting…",
+      "note": "DOCX → text · pure ZIP + document.xml (no Office suite)"
+    },
+    "uuid": {
+      "count": "Count",
+      "local": "Generate local",
+      "server": "Generate on server",
+      "copyAll": "Copy all",
+      "empty": "UUIDs appear here"
+    },
+    "timestamp": {
+      "nowSec": "Unix seconds",
+      "nowMs": "Unix ms / ISO",
+      "serverNow": "Server now",
+      "toDate": "Timestamp → date",
+      "toUnix": "Date → timestamp",
+      "seconds": "Seconds",
+      "milliseconds": "Milliseconds",
+      "value": "Value",
+      "convert": "Convert",
+      "note": "Same path as API"
+    },
+    "wordCount": {
+      "words": "Words",
+      "chars": "Characters",
+      "noSpaces": "No spaces",
+      "cjk": "CJK",
+      "lines": "Lines",
+      "paragraphs": "Paragraphs",
+      "placeholder": "Paste or type text…",
+      "copyText": "Copy text",
+      "clear": "Clear",
+      "verifying": "Verifying…",
+      "serverNote": "Server words={words} · same path as API",
+      "note": "Live engine: {engine} · no upload required · same path as API"
+    },
+    "bmi": {
+      "height": "Height (cm)",
+      "weight": "Weight (kg)",
+      "compute": "Calculate BMI",
+      "computing": "Calculating…",
+      "invalid": "Enter valid height (cm) and weight (kg)",
+      "underweight": "Underweight",
+      "normal": "Normal",
+      "overweight": "Overweight",
+      "obese": "Obese",
+      "note": "WHO BMI · same path as API · not medical advice"
+    },
+    "percentage": {
+      "mode": "Mode",
+      "percentOf": "a% of b",
+      "isWhat": "a is what % of b",
+      "percentA": "Percent a",
+      "valueA": "Value a",
+      "baseB": "Base b",
+      "compute": "Calculate",
+      "computing": "Calculating…",
+      "invalid": "Enter valid numbers",
+      "note": "Same path as API"
+    },
+    "dataSize": {
+      "value": "Value",
+      "convert": "Convert",
+      "converting": "Converting…",
+      "invalid": "Enter a valid number",
+      "binary": "{value} {from} → base-1024",
+      "note": "Binary units (1 KB = 1024 B) · same path as API"
+    },
+    "rmb": {
+      "amount": "Amount (CNY)",
+      "convert": "To uppercase",
+      "converting": "Converting…",
+      "invalid": "Enter a non-negative amount",
+      "note": "Chinese invoice amount uppercase · same path as API"
+    },
+    "dateDiff": {
+      "from": "Start date",
+      "to": "End date",
+      "compute": "Day difference",
+      "computing": "Calculating…",
+      "days": "days",
+      "note": "ECMAScript Date · same path as API"
+    },
+    "xlsxText": {
+      "file": "XLSX file",
+      "needFile": "Choose a .xlsx file first",
+      "extract": "Extract sheet",
+      "extracting": "Extracting…",
+      "note": "XLSX → CSV · pure ZIP + sheet1.xml (first sheet)"
+    },
+    "mdToPdf": {
+      "drop": "Drop a .md file here, or paste Markdown below",
+      "title": "Title",
+      "engine": "Engine",
+      "eAuto": "auto (prefer Playwright)",
+      "ePlaywright": "playwright (Chromium print)",
+      "eSimple": "simple (no browser)",
+      "generate": "Generate PDF",
+      "generating": "Generating…",
+      "download": "Download PDF",
+      "note": "marked → HTML → Playwright Chromium print. If Chromium is missing, auto falls back to simple structured PDF — check renderEngine; simple is not print-grade layout."
+    },
+    "tokenCount": {
+      "count": "Count tokens",
+      "counting": "Counting…",
+      "chars": "Characters {n}",
+      "note": "Engine: js-tiktoken · server-side exact count · can feed Router cost estimate"
+    },
+    "codec": {
+      "encodeDir": "Text → encoded",
+      "decodeDir": "Encoded → text",
+      "localNote": "Local run",
+      "serverNote": "Server · same path as API",
+      "hexInvalid": "Not a valid hex string",
+      "hexDecodeFail": "Server could not decode as UTF-8 (need valid hex)",
+      "noteUrl": "encodeURIComponent / decodeURIComponent · same path as API",
+      "noteHtml": "HTML entity map · same path as API",
+      "noteHex": "UTF-8 ↔ hex · same path as API"
+    },
+    "textDiff": {
+      "left": "Left",
+      "right": "Right",
+      "compare": "Compare",
+      "comparing": "Comparing…"
+    },
+    "imageTool": {
+      "drop": "Drop an image here, or click to browse",
+      "selected": "Selected: {name} ({kb} KB)",
+      "needFile": "Choose an image first",
+      "format": "Output format",
+      "quality": "Quality {n}",
+      "maxW": "Max width",
+      "maxH": "Max height",
+      "optional": "Optional",
+      "resizeEg": "e.g. 1280",
+      "processing": "Processing…",
+      "compress": "Compress",
+      "resize": "Resize",
+      "convert": "Convert format",
+      "download": "Download result",
+      "outMeta": "Output {kb} KB{dims}{ratio} · {type}",
+      "ratio": " · ~{pct}% of original",
+      "dims": " · {w}×{h}",
+      "original": "Original",
+      "result": "Result",
+      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)"
+    },
+    "pptxText": {
+      "file": "PPTX file",
+      "needFile": "Choose a .pptx file first",
+      "extract": "Extract outline",
+      "extracting": "Extracting…",
+      "note": "PPTX outline · pure ZIP + slide XML (no PowerPoint)"
     }
   },
   "roots": {

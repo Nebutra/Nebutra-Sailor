@@ -11,29 +11,36 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("meta");
-  return {
-    title: {
-      default: t("titleDefault", { brandName: brand.name }),
-      template: t("titleTemplate", { brandName: brand.name }),
-    },
-    description: t("description"),
-    icons: {
-      icon: [
-        { url: "/favicon.png", type: "image/png", sizes: "32x32" },
-        { url: "/product/forge-favicon.png", type: "image/png", sizes: "256x256" },
-        { url: "/favicon.ico", sizes: "48x48" },
-      ],
-      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-    },
-  };
-}
+// Full SSR: avoids Next 16 static export flakiness (workStore on _not-found / global-error).
+// CDN (CF) can still cache HTML at the edge for public tool pages if desired.
+export const dynamic = "force-dynamic";
+
+/**
+ * Static root metadata only — do NOT call next-intl/cookies here.
+ * Next 16 prerenders `/_global-error` without workStore; async generateMetadata
+ * that touches request APIs throws InvariantError and fails the whole build.
+ * Locale-specific titles live on route segments (home / tool pages).
+ */
+export const metadata: Metadata = {
+  title: {
+    default: `${brand.name} Forge — Online tool station`,
+    template: `%s | ${brand.name} Forge`,
+  },
+  description: "Codecs, text, hashing, documents, and image tools online.",
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/product/forge-favicon.png", type: "image/png", sizes: "256x256" },
+      { url: "/favicon.ico", sizes: "48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+};
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const authProvider = getConfiguredAuthProvider();

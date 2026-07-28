@@ -1,10 +1,12 @@
 "use client";
 
 import { Button, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
 export function TextDiffRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [left, setLeft] = useState("alpha\nbeta\ngamma");
   const [right, setRight] = useState("alpha\nBETA\ngamma");
   const [patch, setPatch] = useState("");
@@ -48,7 +50,7 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="grid gap-3 md:grid-cols-2">
         <Textarea
-          label="左侧"
+          label={t("textDiff.left")}
           id="diff-left"
           value={left}
           onChange={(e) => setLeft(e.target.value)}
@@ -56,7 +58,7 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
           className="font-mono text-sm"
         />
         <Textarea
-          label="右侧"
+          label={t("textDiff.right")}
           id="diff-right"
           value={right}
           onChange={(e) => setRight(e.target.value)}
@@ -65,7 +67,7 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "对比中…" : "对比"}
+        {loading ? t("textDiff.comparing") : t("textDiff.compare")}
       </Button>
       <RunnerNote>{meta}</RunnerNote>
       <RunnerError>{error}</RunnerError>

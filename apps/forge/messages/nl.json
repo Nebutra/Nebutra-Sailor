@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Broodkruimels",
-    "labNotice": "Lab-functie: beperkte data- of woordenboekdekking; resultaten zijn slechts ter referentie.",
     "workspace": "Werkruimte",
     "workspaceHint": "Lokaal of server · zelfde pad als API",
     "api": "API",

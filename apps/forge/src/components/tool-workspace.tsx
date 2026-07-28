@@ -1,7 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Base64Runner } from "@/components/base64-runner";
-import { resolveCatalogRunner } from "@/components/catalog-runners";
+import { CatalogRunnerRouter } from "@/components/catalog-runners";
 import { CodecModeRunner } from "@/components/codec-mode-runner";
 import {
   BmiRunner,
@@ -12,6 +13,7 @@ import {
 } from "@/components/form-runners";
 import { HashRunner } from "@/components/hash-runner";
 import { ImageToolRunner } from "@/components/image-tool-runner";
+import { JsonDiffRunner } from "@/components/json-diff-runner";
 import { JsonFormatRunner } from "@/components/json-format-runner";
 import { JwtRunner } from "@/components/jwt-runner";
 import { MdToPdfRunner } from "@/components/md-to-pdf-runner";
@@ -23,8 +25,6 @@ import {
   CsvPreviewRunner,
   JsonPathRunner,
   QrDecodeRunner,
-  QrGenerateRunner,
-  RegexTesterRunner,
   SqlFormatRunner,
   TimezoneRunner,
   XmlFormatRunner,
@@ -58,6 +58,19 @@ import {
   UnitConvertRunner,
 } from "@/components/p2-runners";
 import { PasswordRunner } from "@/components/password-runner";
+import { PdfCompressRunner } from "@/components/pdf-compress-runner";
+import {
+  DocxTextRunner,
+  ImageCropRunner,
+  MultiHashSotaRunner,
+  PdfTextRunner,
+  PptxTextRunner,
+  QrSotaRunner,
+  RegexSotaRunner,
+  RouterTranslateRunner,
+  SvgOptimizeRunner,
+  XlsxTextRunner,
+} from "@/components/sota-runners";
 import { TextDiffRunner } from "@/components/text-diff-runner";
 import { pickResult, TextTransformRunner } from "@/components/text-transform-runner";
 import { TimestampRunner } from "@/components/timestamp-runner";
@@ -126,11 +139,14 @@ export function ToolWorkspace({
   toolId: string;
   category: string;
 }) {
+  const tRunners = useTranslations("runners.common");
   switch (slug) {
     case "word-count":
       return <WordCountRunner toolId={toolId} />;
     case "json-format":
       return <JsonFormatRunner toolId={toolId} />;
+    case "json-diff":
+      return <JsonDiffRunner toolId={toolId} />;
     case "text-diff":
       return <TextDiffRunner toolId={toolId} />;
     case "base64":
@@ -381,20 +397,36 @@ export function ToolWorkspace({
       return <XmlFormatRunner toolId={toolId} />;
     case "csv-preview":
       return <CsvPreviewRunner toolId={toolId} />;
-    case "regex-tester":
-      return <RegexTesterRunner toolId={toolId} />;
     case "sql-format":
       return <SqlFormatRunner toolId={toolId} />;
     case "color-convert":
       return <ColorConvertRunner toolId={toolId} />;
     case "qr-generate":
-      return <QrGenerateRunner toolId={toolId} />;
+      return <QrSotaRunner toolId={toolId} />;
     case "qr-decode":
       return <QrDecodeRunner toolId={toolId} />;
     case "cron-explain":
       return <CronExplainRunner toolId={toolId} />;
     case "timezone":
       return <TimezoneRunner toolId={toolId} />;
+    case "regex-tester":
+      return <RegexSotaRunner toolId={toolId} />;
+    case "multi-hash":
+      return <MultiHashSotaRunner toolId={toolId} />;
+    case "pdf-text":
+      return <PdfTextRunner toolId={toolId} />;
+    case "docx-text":
+      return <DocxTextRunner toolId={toolId} />;
+    case "xlsx-text":
+      return <XlsxTextRunner toolId={toolId} />;
+    case "pptx-text":
+      return <PptxTextRunner toolId={toolId} />;
+    case "svg-optimize":
+      return <SvgOptimizeRunner toolId={toolId} />;
+    case "router-translate":
+      return <RouterTranslateRunner toolId={toolId} />;
+    case "image-crop":
+      return <ImageCropRunner toolId={toolId} />;
 
     // ── P1 specialized workspaces (#255) ────────────────────────────────
     case "markdown-preview":
@@ -405,6 +437,8 @@ export function ToolWorkspace({
       return <PdfMergeRunner toolId={toolId} />;
     case "pdf-split":
       return <PdfSplitRunner toolId={toolId} />;
+    case "pdf-compress":
+      return <PdfCompressRunner toolId={toolId} />;
     case "password-strength":
       return <PasswordStrengthRunner toolId={toolId} />;
     case "hmac":
@@ -463,13 +497,21 @@ export function ToolWorkspace({
     case "image-convert":
       return <ImageToolRunner toolId={toolId} mode="convert" />;
 
-    default: {
-      const catalog = resolveCatalogRunner(slug, toolId);
-      if (catalog) return catalog;
-      if (category === "image") {
-        return <ImageToolRunner toolId={toolId} />;
-      }
-      return <p className="text-sm text-[var(--status-danger)]">未配置工作台：{slug}</p>;
-    }
+    default:
+      return (
+        <CatalogRunnerRouter
+          slug={slug}
+          toolId={toolId}
+          fallback={
+            category === "image" ? (
+              <ImageToolRunner toolId={toolId} />
+            ) : (
+              <p className="text-sm text-[var(--status-danger)]">
+                {tRunners("workspaceMissing", { slug })}
+              </p>
+            )
+          }
+        />
+      );
   }
 }

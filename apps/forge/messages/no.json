@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Sti",
-    "labNotice": "Lab-funksjonalitet: begrenset data- eller ordboksdekning; resultatene er kun til referanse.",
     "workspace": "Arbeidsområde",
     "workspaceHint": "Lokal eller server · samme sti som API",
     "api": "API",

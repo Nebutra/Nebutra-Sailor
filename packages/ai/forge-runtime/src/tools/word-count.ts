@@ -78,7 +78,6 @@ export const wordCountTool: ForgeToolDefinition<WordCountInput, WordCountOutput>
     en: "word counter online,character count",
   },
   // Segmenter path + dedicated live UX in apps/forge; Agent invoke shares API.
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: (input) => countText(input.text),
   unitCost: 0,

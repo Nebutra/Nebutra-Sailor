@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Uwezo wa lab: data au dictionary zinazofikiwa ni za kikomo; matokeo ni ya marejeleo tu.",
     "workspace": "Kazi",
     "workspaceHint": "Ndani au seva · njia sawa kama API",
     "api": "API",

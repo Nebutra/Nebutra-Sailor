@@ -13,14 +13,10 @@ async function main() {
   const tools = reg.list();
   log("TOOL_COUNT", tools.length);
   log(
-    "HAS_SOTA",
-    tools.every((t) => typeof t.sotaStatus === "string"),
-  );
-  log(
-    "SAMPLE_SOTA",
+    "SAMPLE_ROOTS",
     tools
       .slice(0, 5)
-      .map((t) => `${t.slug}:${t.sotaStatus}`)
+      .map((t) => `${t.slug}:${(t.roots ?? []).join("|")}`)
       .join(","),
   );
 

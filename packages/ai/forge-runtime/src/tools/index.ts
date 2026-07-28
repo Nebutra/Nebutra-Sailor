@@ -5,6 +5,7 @@ import { cnValidateTools } from "./cn-validate";
 import { codecExtraTools } from "./codec-extra";
 import { dataFormatTools } from "./data-formats";
 import { devExtraTools } from "./dev-extra";
+import { docxTextTools } from "./docx-text";
 import { htmlEntitiesTool } from "./html-entities";
 import { imageTools } from "./image-ops";
 import { jsonFormatTool } from "./json-format";
@@ -15,6 +16,7 @@ import { md5Tool } from "./md5";
 import { numberBaseTool } from "./number-base";
 import { passwordGenerateTool } from "./password-generate";
 import { pdfOpsTools } from "./pdf-ops";
+import { pptxTextTools } from "./pptx-text";
 import { pureBatchTools } from "./pure-batch";
 import { qrTools } from "./qr";
 import { removeBlankLinesTool } from "./remove-blank-lines";
@@ -28,7 +30,13 @@ import { unitConvertTools } from "./unit-convert";
 import { unixTimestampTool } from "./unix-timestamp";
 import { urlCodecTool } from "./url-codec";
 import { uuidTool } from "./uuid";
+import { wave2DemandTools } from "./wave2-demand";
+import { wave2bMatrixTools } from "./wave2b-matrix";
+import { wave3StapleTools } from "./wave3-staples";
+import { wave4LongtailTools } from "./wave4-longtail";
+import { wave5SotaGapTools } from "./wave5-sota-gaps";
 import { wordCountTool } from "./word-count";
+import { xlsxTextTools } from "./xlsx-text";
 
 /**
  * Full Forge registry — core batch + pure catalog + OSS expansions.
@@ -73,6 +81,20 @@ export const F0_BATCH1_TOOLS: readonly AnyForgeToolDefinition[] = [
   ...qrTools,
   ...pdfOpsTools,
   ...imageTools,
+  // demand-matrix W2 (generator / checker / optimizer / comparator)
+  ...wave2DemandTools,
+  // W2b matrix fill (json-diff, formatters, validators, reading-time, pdf-info…)
+  ...wave2bMatrixTools,
+  // W3 competitor staples (rot13, morse, multi-hash, beautifiers, life calcs…)
+  ...wave3StapleTools,
+  // W4 long-tail + EXIF
+  ...wave4LongtailTools,
+  // W5 SOTA matrix gaps
+  ...wave5SotaGapTools,
+  // Office-lite extractors (pure ZIP OOXML)
+  ...docxTextTools,
+  ...xlsxTextTools,
+  ...pptxTextTools,
 ];
 
 export {
@@ -82,6 +104,7 @@ export {
   codecExtraTools,
   dataFormatTools,
   devExtraTools,
+  docxTextTools,
   htmlEntitiesTool,
   imageTools,
   jsonFormatTool,
@@ -92,6 +115,7 @@ export {
   numberBaseTool,
   passwordGenerateTool,
   pdfOpsTools,
+  pptxTextTools,
   pureBatchTools,
   qrTools,
   removeBlankLinesTool,
@@ -105,5 +129,11 @@ export {
   unixTimestampTool,
   urlCodecTool,
   uuidTool,
+  wave2bMatrixTools,
+  wave2DemandTools,
+  wave3StapleTools,
+  wave4LongtailTools,
+  wave5SotaGapTools,
   wordCountTool,
+  xlsxTextTools,
 };

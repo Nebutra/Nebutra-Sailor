@@ -2,6 +2,7 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { Button, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
@@ -10,7 +11,7 @@ async function digestHex(
   text: string,
 ): Promise<string> {
   if (algorithm === "MD5") {
-    throw new Error("MD5 仅支持服务端路径（Web Crypto 无 MD5）");
+    throw new Error("MD5_SERVER_ONLY");
   }
   const data = new TextEncoder().encode(text);
   const buf = await crypto.subtle.digest(algorithm, data);
@@ -24,6 +25,7 @@ export function HashRunner({
   toolId: string;
   algorithm: "md5" | "sha1" | "sha256" | "sha512";
 }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(`Hello ${brand.name}`);
   const [hex, setHex] = useState("");
   const [error, setError] = useState("");
@@ -40,13 +42,14 @@ export function HashRunner({
     setError("");
     try {
       if (!webAlgo) {
-        setError("MD5 请点「服务端运行」（兼容校验用途，勿作密码存储）");
+        setError(t("hash.md5ServerHint"));
         return;
       }
       setHex(await digestHex(webAlgo, text));
-      setNote(`本地 Web Crypto · ${webAlgo}`);
+      setNote(t("hash.localNote", { algo: webAlgo }));
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      const msg = e instanceof Error ? e.message : String(e);
+      setError(msg === "MD5_SERVER_ONLY" ? t("hash.md5LocalError") : msg);
     }
   };
 
@@ -67,17 +70,17 @@ export function HashRunner({
       return;
     }
     setHex(body.output?.hex ?? "");
-    setNote("服务端 node:crypto · 与 API 同一路径");
+    setNote(t("hash.serverNote"));
   };
 
   return (
     <div className="space-y-4">
       <RunnerNote>
-        算法：{algorithm.toUpperCase()}
-        {algorithm === "md5" ? " · 仅校验/兼容，勿作密码存储" : null}
+        {t("hash.algo", { algo: algorithm.toUpperCase() })}
+        {algorithm === "md5" ? t("hash.md5Warn") : null}
       </RunnerNote>
       <Textarea
-        label="输入"
+        label={t("common.input")}
         id={`hash-${algorithm}`}
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -86,10 +89,10 @@ export function HashRunner({
       />
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" onClick={() => void runLocal()}>
-          本地运行
+          {t("common.localRun")}
         </Button>
         <Button type="button" variant="outline" onClick={() => void runServer()}>
-          服务端运行
+          {t("common.serverRun")}
         </Button>
         <Button
           type="button"
@@ -97,7 +100,7 @@ export function HashRunner({
           onClick={() => void navigator.clipboard.writeText(hex)}
           disabled={!hex}
         >
-          复制
+          {t("common.copy")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>

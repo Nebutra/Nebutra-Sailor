@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import {
   RunnerError,
@@ -11,6 +12,7 @@ import {
 } from "@/components/runner-ui";
 
 export function TimestampRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [now, setNow] = useState(() => Date.now());
   const [value, setValue] = useState("");
   const [mode, setMode] = useState<"to_date" | "to_unix">("to_date");
@@ -19,8 +21,8 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(t);
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
   }, []);
 
   const run = async (body: Record<string, unknown>) => {
@@ -45,10 +47,10 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <RunnerPanel title="当前秒">
+        <RunnerPanel title={t("timestamp.nowSec")}>
           <p className="font-mono text-xl tabular-nums">{Math.floor(now / 1000)}</p>
         </RunnerPanel>
-        <RunnerPanel title="当前毫秒 / ISO">
+        <RunnerPanel title={t("timestamp.nowMs")}>
           <p className="font-mono text-sm tabular-nums">{now}</p>
           <p className="mt-1 font-mono text-xs text-[var(--neutral-10)]">
             {new Date(now).toISOString()}
@@ -57,30 +59,30 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
       </div>
 
       <Button type="button" variant="ink" onClick={() => void run({ mode: "now" })}>
-        服务端 now
+        {t("timestamp.serverNow")}
       </Button>
 
       <div className="grid gap-3 sm:grid-cols-3">
         <RunnerSelect
-          label="模式"
+          label={t("common.mode")}
           id="ts-mode"
           value={mode}
           onChange={(v) => setMode(v as typeof mode)}
         >
-          <option value="to_date">时间戳 → 日期</option>
-          <option value="to_unix">日期 → 时间戳</option>
+          <option value="to_date">{t("timestamp.toDate")}</option>
+          <option value="to_unix">{t("timestamp.toUnix")}</option>
         </RunnerSelect>
         <RunnerSelect
-          label="单位"
+          label={t("common.unit")}
           id="ts-unit"
           value={unit}
           onChange={(v) => setUnit(v as typeof unit)}
         >
-          <option value="seconds">秒</option>
-          <option value="milliseconds">毫秒</option>
+          <option value="seconds">{t("timestamp.seconds")}</option>
+          <option value="milliseconds">{t("timestamp.milliseconds")}</option>
         </RunnerSelect>
         <Input
-          label="值"
+          label={t("timestamp.value")}
           id="timestamp-value"
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -89,11 +91,11 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="outline" onClick={() => void run({ mode, value, unit })}>
-        转换
+        {t("timestamp.convert")}
       </Button>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput>{output}</RunnerOutput>
-      <RunnerNote>与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("timestamp.note")}</RunnerNote>
     </div>
   );
 }

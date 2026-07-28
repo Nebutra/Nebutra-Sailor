@@ -27,7 +27,6 @@ export const jsonYamlTool = tool({
   meterId: "forge.data.json_yaml",
   engine: { name: "js-yaml", upstream: "https://github.com/nodeca/js-yaml", version: "4.x" },
   seoKeywords: { zh: "json转yaml,yaml转json", en: "json to yaml converter online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     mode: z.enum(["json_to_yaml", "yaml_to_json"]).default("json_to_yaml"),
@@ -69,7 +68,6 @@ export const jsonTomlTool = tool({
     version: "1.x",
   },
   seoKeywords: { zh: "json转toml,toml转json", en: "json to toml converter" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     mode: z.enum(["json_to_toml", "toml_to_json"]).default("json_to_toml"),
@@ -102,7 +100,6 @@ export const jsonCsvTool = tool({
   meterId: "forge.data.json_csv",
   engine: { name: "papaparse", upstream: "https://github.com/mholt/PapaParse", version: "5.x" },
   seoKeywords: { zh: "json转csv,csv转json", en: "json to csv converter online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     mode: z.enum(["json_to_csv", "csv_to_json"]).default("json_to_csv"),
@@ -149,7 +146,6 @@ export const csvPreviewTool = tool({
   meterId: "forge.data.csv_preview",
   engine: { name: "papaparse", upstream: "https://github.com/mholt/PapaParse", version: "5.x" },
   seoKeywords: { zh: "csv在线预览,csv解析", en: "csv preview online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     maxRows: z.number().int().min(1).max(500).default(50),
@@ -187,7 +183,6 @@ export const xmlFormatTool = tool({
     version: "5.x",
   },
   seoKeywords: { zh: "xml格式化,xml美化在线", en: "xml formatter beautify online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     mode: z.enum(["format", "minify", "validate"]).default("format"),
@@ -245,7 +240,6 @@ export const jsonPathTool = tool({
     version: "10.x",
   },
   seoKeywords: { zh: "jsonpath在线,json路径查询", en: "jsonpath online tester" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     path: z.string().default("$"),

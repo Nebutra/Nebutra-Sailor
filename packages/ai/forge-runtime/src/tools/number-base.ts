@@ -54,7 +54,6 @@ export const numberBaseTool: ForgeToolDefinition<NumberBaseInput, NumberBaseOutp
     zh: "进制转换在线,十六进制转换",
     en: "number base converter hex binary",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: run,
   unitCost: 0,

@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Migas de pan",
-    "labNotice": "Capacidad de laboratorio: cobertura de datos o diccionario limitada; los resultados son solo de referencia.",
     "workspace": "Espacio de trabajo",
     "workspaceHint": "Local o servidor · misma ruta que la API",
     "api": "API",

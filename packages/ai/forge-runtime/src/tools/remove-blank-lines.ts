@@ -46,7 +46,6 @@ export const removeBlankLinesTool: ForgeToolDefinition<
     zh: "删除空行在线",
     en: "remove blank lines online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: run,
   unitCost: 0,

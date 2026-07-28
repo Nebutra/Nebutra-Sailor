@@ -1,15 +1,16 @@
 "use client";
 
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 const SAMPLE = `# Nebutra Forge
 
-**Markdown → PDF**（Playwright 打印）
+**Markdown → PDF** (Playwright print)
 
-- 中文与 **粗体**
-- 代码：\`const x = 1\`
+- Mixed **bold**
+- Code: \`const x = 1\`
 
 | Col | Val |
 | --- | --- |
@@ -17,6 +18,7 @@ const SAMPLE = `# Nebutra Forge
 `;
 
 export function MdToPdfRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [markdown, setMarkdown] = useState(SAMPLE);
   const [title, setTitle] = useState("document");
   const [engine, setEngine] = useState<"auto" | "playwright" | "simple">("auto");
@@ -89,25 +91,25 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
           data-allow-native
           onChange={(e) => onFile(e.target.files?.[0] ?? null)}
         />
-        <p className="mt-2">拖拽 .md 文件，或粘贴下方 Markdown</p>
+        <p className="mt-2">{t("mdToPdf.drop")}</p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
-          label="标题"
+          label={t("mdToPdf.title")}
           id="md-pdf-title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <RunnerSelect
-          label="引擎"
+          label={t("mdToPdf.engine")}
           id="md-pdf-engine"
           value={engine}
           onChange={(v) => setEngine(v as typeof engine)}
         >
-          <option value="auto">auto（优先 Playwright）</option>
-          <option value="playwright">playwright（Chromium 打印）</option>
-          <option value="simple">simple（无浏览器）</option>
+          <option value="auto">{t("mdToPdf.eAuto")}</option>
+          <option value="playwright">{t("mdToPdf.ePlaywright")}</option>
+          <option value="simple">{t("mdToPdf.eSimple")}</option>
         </RunnerSelect>
       </div>
 
@@ -122,22 +124,18 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
 
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading ? "生成中…" : "生成 PDF"}
+          {loading ? t("mdToPdf.generating") : t("mdToPdf.generate")}
         </Button>
         {downloadUrl ? (
           <Button asChild variant="outline">
             <a href={downloadUrl} download={`${title || "document"}.pdf`}>
-              下载 PDF
+              {t("mdToPdf.download")}
             </a>
           </Button>
         ) : null}
       </div>
 
-      <RunnerNote>
-        marked → HTML → Playwright Chromium 打印（SOTA）。宿主未装 Chromium 时 auto 回退 simple
-        结构化 PDF——结果区会标明 renderEngine，不得把 simple 当成打印级排版。 策略见 apps/forge
-        README § md-to-pdf。
-      </RunnerNote>
+      <RunnerNote>{t("mdToPdf.note")}</RunnerNote>
       <RunnerError>{error}</RunnerError>
       <RunnerNote>{meta}</RunnerNote>
     </div>

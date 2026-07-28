@@ -31,7 +31,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.sort_lines",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "文本行排序", en: "sort lines online" },
-    sotaStatus: "production",
     execute: (text) => ({
       result: text
         .split(/\r\n|\r|\n/)
@@ -50,7 +49,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.reverse",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "字符串反转", en: "reverse string online" },
-    sotaStatus: "production",
     execute: (text) => ({ result: [...text].reverse().join("") }),
   }),
   textTool({
@@ -64,7 +62,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.unique_lines",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "删除重复行", en: "remove duplicate lines" },
-    sotaStatus: "production",
     execute: (text) => {
       const seen = new Set<string>();
       const out: string[] = [];
@@ -88,21 +85,20 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.strip_html",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "去除html标签", en: "strip html tags online" },
-    sotaStatus: "production",
     execute: (text) => ({ result: text.replace(/<[^>]*>/g, "") }),
   }),
   textTool({
     id: "text/slugify",
     slug: "slugify",
     category: "text",
-    title: { zh: "Slug 生成", en: "Slugify" },
-    description: { zh: "生成 URL slug", en: "Generate URL-safe slug" },
+    title: { zh: "Slug 生成器", en: "Slug Generator" },
+    description: { zh: "生成 URL 安全 slug", en: "Generate URL-safe slugs" },
     tier: "catalog",
     sideEffect: "pure",
     meterId: "forge.text.slugify",
+    roots: ["generator"],
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
-    seoKeywords: { zh: "slug生成", en: "slugify online" },
-    sotaStatus: "production",
+    seoKeywords: { zh: "slug生成器,url slug", en: "slug generator, slugify online" },
     execute: (text) => ({
       result: text
         .normalize("NFKD")
@@ -123,7 +119,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.extract_urls",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "提取网址", en: "extract urls from text" },
-    sotaStatus: "production",
     execute: (text) => ({
       urls: text.match(/https?:\/\/[^\s<>"{}|\\^`[\]]+/gi) ?? [],
     }),
@@ -139,7 +134,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.extract_emails",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "提取邮箱", en: "extract emails online" },
-    sotaStatus: "production",
     execute: (text) => ({
       emails: text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) ?? [],
     }),
@@ -155,7 +149,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.codec.hex",
     engine: { name: "std-buffer", upstream: "Buffer", version: "0.1.0" },
     seoKeywords: { zh: "hex编码", en: "hex encode decode" },
-    sotaStatus: "production",
     execute: (text) => ({
       encode: Buffer.from(text, "utf8").toString("hex"),
       // if looks like hex, also try decode
@@ -176,7 +169,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.dev.camel_snake",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "驼峰下划线转换", en: "camelCase snake_case converter" },
-    sotaStatus: "production",
     inputSchema: z.object({
       text: z.string(),
       mode: z.enum(["to_snake", "to_camel", "to_kebab"]).default("to_snake"),
@@ -221,7 +213,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.dev.json_to_ts",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "json转typescript", en: "json to typescript interface" },
-    sotaStatus: "production",
     inputSchema: z.object({
       text: z.string(),
       name: z.string().default("Root"),
@@ -245,7 +236,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.life.bmi",
     engine: { name: "life-utils", upstream: "WHO BMI formula", version: "0.1.0" },
     seoKeywords: { zh: "bmi计算器", en: "bmi calculator online" },
-    sotaStatus: "production",
     inputSchema: z.object({
       heightCm: z.number().positive(),
       weightKg: z.number().positive(),
@@ -273,7 +263,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.life.percentage",
     engine: { name: "life-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "百分比计算", en: "percentage calculator" },
-    sotaStatus: "production",
     inputSchema: z.object({
       mode: z.enum(["percent_of", "is_what_percent"]).default("percent_of"),
       a: z.number(),
@@ -301,7 +290,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.unit.data_size",
     engine: { name: "unit-utils", upstream: "1024-based binary units", version: "0.1.0" },
     seoKeywords: { zh: "mb转gb", en: "mb to gb converter" },
-    sotaStatus: "production",
     inputSchema: z.object({
       value: z.number(),
       from: z.enum(["B", "KB", "MB", "GB", "TB"]).default("MB"),
@@ -333,7 +321,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.finance.rmb_uppercase",
     engine: { name: "nzh-lite", upstream: "nebutra CNY algorithm", version: "0.1.0" },
     seoKeywords: { zh: "人民币大写转换", en: "chinese currency uppercase" },
-    sotaStatus: "production",
     inputSchema: z.object({ amount: z.number().nonnegative().max(999_999_999_999.99) }),
     execute: (input: { amount: number }) => ({ result: rmbUppercase(input.amount) }),
     unitCost: 0,
@@ -350,7 +337,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.hash.sha1",
     engine: { name: "node-crypto", upstream: "node:crypto", version: "0.1.0" },
     seoKeywords: { zh: "sha1在线", en: "sha1 hash online" },
-    sotaStatus: "production",
     inputSchema: z.object({ text: z.string() }),
     execute: async (input: { text: string }) => {
       const { createHash } = await import("node:crypto");
@@ -373,7 +359,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.time.date_diff",
     engine: { name: "std-date", upstream: "ECMAScript Date", version: "0.1.0" },
     seoKeywords: { zh: "日期间隔计算", en: "date difference calculator" },
-    sotaStatus: "production",
     inputSchema: z.object({
       from: z.string(),
       to: z.string(),
@@ -401,7 +386,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.trim_whitespace",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "去除空格,多余空格删除", en: "trim whitespace online" },
-    sotaStatus: "production",
     execute: (text) => ({
       trim: text.trim(),
       collapse: text
@@ -424,7 +408,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.replace",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "文本替换,批量替换在线", en: "text find replace online" },
-    sotaStatus: "production",
     inputSchema: z.object({
       text: z.string(),
       find: z.string(),
@@ -462,7 +445,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.line_prefix_suffix",
     engine: { name: "text-utils", upstream: "nebutra pure TS", version: "0.1.0" },
     seoKeywords: { zh: "行首添加,批量加前缀", en: "add prefix to each line" },
-    sotaStatus: "production",
     inputSchema: z.object({
       text: z.string(),
       prefix: z.string().default(""),
@@ -493,7 +475,6 @@ export const pureBatchTools: readonly AnyForgeToolDefinition[] = [
     meterId: "forge.text.fullwidth_halfwidth",
     engine: { name: "text-utils", upstream: "Unicode FF00 mapping", version: "0.1.0" },
     seoKeywords: { zh: "全角半角转换", en: "fullwidth halfwidth converter" },
-    sotaStatus: "production",
     inputSchema: z.object({
       text: z.string(),
       mode: z.enum(["to_half", "to_full"]).default("to_half"),

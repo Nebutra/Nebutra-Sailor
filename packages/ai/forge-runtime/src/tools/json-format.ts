@@ -74,12 +74,12 @@ export const jsonFormatTool: ForgeToolDefinition<JsonFormatInput, JsonFormatOutp
     upstream: "ECMA-262 JSON",
     version: "runtime",
   },
+  roots: ["formatter", "optimizer"],
   seoKeywords: {
-    zh: "json格式化,json美化在线",
-    en: "json formatter beautify online",
+    zh: "json格式化,json美化,json压缩,json formatter",
+    en: "json formatter, json beautifier, json minifier online",
   },
   // Engine is language SOTA; dedicated human UX + Agent parity ship in apps/forge.
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: runJsonFormat,
   unitCost: 0,

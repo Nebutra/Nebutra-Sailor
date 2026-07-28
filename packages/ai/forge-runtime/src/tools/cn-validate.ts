@@ -119,7 +119,6 @@ export const idCardTool = tool({
     version: "1.0.0",
   },
   seoKeywords: { zh: "身份证校验,身份证号码验证", en: "china id card validator" },
-  sotaStatus: "production",
   inputSchema: z.object({
     id: z.string().min(15).max(18),
   }),
@@ -148,7 +147,6 @@ export const phoneLookupTool = tool({
     version: "0.1.0",
   },
   seoKeywords: { zh: "手机号归属地,手机号运营商查询", en: "china mobile number lookup" },
-  sotaStatus: "lab",
   inputSchema: z.object({
     phone: z.string().min(7).max(20),
   }),

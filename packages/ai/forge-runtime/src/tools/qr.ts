@@ -22,15 +22,15 @@ export const qrGenerateTool = tool({
   sideEffect: "pure",
   runtime: ["server"],
   meterId: "forge.image.qr_generate",
+  roots: ["generator"],
   engine: { name: "qrcode", upstream: "https://github.com/soldair/node-qrcode", version: "1.x" },
   seoKeywords: { zh: "二维码生成,qrcode在线生成", en: "qr code generator online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string().min(1).max(4000),
     format: z.enum(["png", "svg", "dataurl"]).default("png"),
-    width: z.number().int().min(64).max(1024).default(256),
+    width: z.coerce.number().int().min(64).max(1024).default(256),
     errorCorrectionLevel: z.enum(["L", "M", "Q", "H"]).default("M"),
-    margin: z.number().int().min(0).max(8).default(2),
+    margin: z.coerce.number().int().min(0).max(8).default(2),
   }),
   execute: async (input: {
     text: string;
@@ -86,7 +86,6 @@ export const qrDecodeTool = tool({
   meterId: "forge.image.qr_decode",
   engine: { name: "jsqr", upstream: "https://github.com/cozmo/jsQR", version: "1.x" },
   seoKeywords: { zh: "二维码解析,扫码识别在线", en: "qr code decoder online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     imageBase64: z.string().min(1),
   }),

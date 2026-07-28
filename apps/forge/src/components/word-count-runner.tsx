@@ -2,6 +2,7 @@
 
 import { Card } from "@nebutra/ui/layout";
 import { Button, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote } from "@/components/runner-ui";
 
@@ -36,12 +37,13 @@ function countClient(text: string) {
   };
 }
 
-const SAMPLE = `Nebutra Forge 字数统计
+const SAMPLE = `Nebutra Forge word count
 
-中英混排：Hello world，你好世界。
-用于作文、公众号、产品文案与 token 前置估算。`;
+Mixed: Hello world，你好世界。
+Drafts, posts, and pre-token estimates.`;
 
 export function WordCountRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(SAMPLE);
   const [apiNote, setApiNote] = useState("");
   const [error, setError] = useState("");
@@ -49,7 +51,7 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
 
   const verifyServer = async () => {
     setError("");
-    setApiNote("校验中…");
+    setApiNote(t("wordCount.verifying"));
     const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,16 +67,16 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
       setApiNote("");
       return;
     }
-    setApiNote(`服务端 words=${body.output?.words ?? "?"} · 与 API 同一路径`);
+    setApiNote(t("wordCount.serverNote", { words: body.output?.words ?? "?" }));
   };
 
   const stats = [
-    { label: "词数", value: live.words, primary: true },
-    { label: "字符", value: live.characters },
-    { label: "不含空格", value: live.charactersNoSpaces },
-    { label: "中日韩", value: live.cjkCharacters },
-    { label: "行", value: live.lines },
-    { label: "段", value: live.paragraphs },
+    { label: t("wordCount.words"), value: live.words, primary: true },
+    { label: t("wordCount.chars"), value: live.characters },
+    { label: t("wordCount.noSpaces"), value: live.charactersNoSpaces },
+    { label: t("wordCount.cjk"), value: live.cjkCharacters },
+    { label: t("wordCount.lines"), value: live.lines },
+    { label: t("wordCount.paragraphs"), value: live.paragraphs },
   ];
 
   return (
@@ -96,13 +98,13 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
       </div>
 
       <Textarea
-        label="文本"
+        label={t("common.text")}
         id="word-count-input"
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={12}
         className="min-h-[240px] font-mono text-sm"
-        placeholder="粘贴或输入文字…"
+        placeholder={t("wordCount.placeholder")}
       />
 
       <div className="flex flex-wrap gap-2">
@@ -111,16 +113,16 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
           variant="outline"
           onClick={() => void navigator.clipboard.writeText(text)}
         >
-          复制文本
+          {t("wordCount.copyText")}
         </Button>
         <Button type="button" variant="ghost" onClick={() => setText("")}>
-          清空
+          {t("wordCount.clear")}
         </Button>
         <Button type="button" variant="ink" onClick={() => void verifyServer()}>
-          服务端校验
+          {t("common.serverVerify")}
         </Button>
       </div>
-      <RunnerNote>实时引擎：{live.engine} · 不上传即可统计 · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("wordCount.note", { engine: live.engine })}</RunnerNote>
       <RunnerError>{error}</RunnerError>
       <RunnerNote>{apiNote}</RunnerNote>
     </div>

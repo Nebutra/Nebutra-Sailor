@@ -35,7 +35,6 @@ export const tokenCountTool: ForgeToolDefinition<TokenCountInput, TokenCountOutp
     version: "1.x",
   },
   seoKeywords: { zh: "token计数,tiktoken在线", en: "tiktoken counter online" },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: (input) => {
     const encoding = (input.encoding ?? "o200k_base") as TiktokenEncoding;

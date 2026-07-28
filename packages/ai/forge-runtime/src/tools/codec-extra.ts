@@ -22,7 +22,6 @@ export const unicodeTool = tool({
   meterId: "forge.codec.unicode",
   engine: { name: "std-unicode", upstream: "ECMAScript String code points", version: "1.0.0" },
   seoKeywords: { zh: "unicode转换,unicode编码在线", en: "unicode converter online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     mode: z.enum(["to_escape", "from_escape", "code_points"]).default("to_escape"),
@@ -64,7 +63,6 @@ export const queryStringTool = tool({
   meterId: "forge.codec.query_string",
   engine: { name: "URLSearchParams", upstream: "WHATWG URL API", version: "runtime" },
   seoKeywords: { zh: "querystring解析,url参数解析", en: "query string parser online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     mode: z.enum(["parse", "stringify"]).default("parse"),
@@ -114,7 +112,6 @@ export const imageBase64Tool = tool({
   meterId: "forge.codec.image_base64",
   engine: { name: "Buffer", upstream: "Node Buffer", version: "runtime" },
   seoKeywords: { zh: "图片转base64,base64转图片", en: "image to base64 online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     imageBase64: z.string().min(1),
     mode: z.enum(["inspect", "to_data_url"]).default("inspect"),

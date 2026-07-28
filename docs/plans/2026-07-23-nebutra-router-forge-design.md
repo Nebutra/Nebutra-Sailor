@@ -56,7 +56,7 @@ They share identity, tenant, and wallet language with the rest of Nebutra. They 
 | 19 | Forge quality bar | **Per-tool SOTA** — five-step research (need → competitors → solutions → OSS → **unicorn wheels**); pin best engines; **function-complete is not shippable** (see SOTA playbook) |
 | 20 | Forge rebuild lens | **AI-Native dual surface** — every tool is great for humans **and** first-class Agent infrastructure (REST + MCP + SKILL + meter) |
 | 21 | Platform quality bar | Router + Forge **journey / UX / ease / AI-native / visual craft** must be professional-grade, not “works in demo” |
-| 22 | Honesty metadata | Every tool declares `sota_status`: `scaffold` \| `lab` \| `production`; only `production` may be marketed as SOTA |
+| 22 | Honesty | Craftsmanship acceptance is an **internal review gate** tracked in tool briefs (`docs/plans/tools/`), never a registry or catalog field; only accepted tools may be marketed as SOTA |
 
 ---
 
@@ -326,6 +326,8 @@ A tool is not “done” until:
 
 Forge must **cover** these drawers (Swiss-army completeness). Volume target: **≥80** to call it a station; **150–250+** for competitive density.
 
+**Inventory snapshot (2026-07):** `@nebutra/forge-runtime` default registry has **≥139** tools (W2/W2b + W3 staples + **W4 long-tail + EXIF**). Engineering categories: text, codec, hash, data, dev, unit, life, image, time, doc, llm, cn. **W1 roots:** every tool resolves `roots[]` (explicit or `roots-defaults`). **Demand hubs:** `/r/{root}` (generator, checker, …) + related-by-root on tool pages.
+
 | # | Drawer | Examples (non-exhaustive) |
 |---|--------|---------------------------|
 | 1 | Text | word count, clean lines, replace, 简繁, pinyin, 人民币大写, diff, markdown |
@@ -347,20 +349,261 @@ Forge must **cover** these drawers (Swiss-army completeness). Volume target: **�
 
 Drawers 1–15 create tool-station muscle memory; drawer 16 is the AI-Native edge and Router bridge.
 
-### 6.7 Density & commercial phasing
+**Triple navigation (must coexist) — AI-Native first:**
+
+| Nav | Serves | Structure |
+|-----|--------|-----------|
+| **Agent verbs / demand roots** (§6.7) | Models, agents, MCP clients, SEO | Generator / Converter / Checker / … as *callable intents* |
+| **Engineering drawers** (this §) | Human browse + code ownership | text / codec / hash / unit / … |
+| **Object domains** | Composition & routing | “what payload” (text, pdf, image, id, …) |
+
+Same capability is **triple-tagged** in the registry: drawers place the blade, **roots are the agent verb**, objects are the typed payload. Discovery for agents is **not** “scrape HTML category pages” — it is `tools.json` / OpenAPI / MCP / SKILL with roots + schema.
+
+### 6.7 Demand-root product matrix (AI-Native + Google intent grammar)
+
+> **Source:** “51 个挖掘谷歌需求关键词” demand-mining grammar (Translator, Generator, Converter, …).  
+> **Human principle:** demand = **root suffix × concrete object** (e.g. `password` + `generator`) → SEO landers.  
+> **AI-Native principle:** the same root is an **agent verb** — deterministic, schema-bound, meterable steps that models *compose* (not pages they scrape).  
+> **One-liner:** Forge = *tool matrix organized by intent roots for both search engines and agents* × *one implementation, two readers (H + A), Router for probabilistic steps*.
+
+#### 6.7.0 AI-Native reading of the 51 roots (non-negotiable)
+
+The 51 list is **not** a SEO-only growth cheat sheet. Under AI-Native doctrine (§6.2–6.5):
+
+| Lens | What the root means | Forge must ship |
+|------|---------------------|-----------------|
+| **Human** | How people type into Google | Title / slug / lander / related tools |
+| **Agent** | How models name a *tool call* | Stable `id`, JSON Schema I/O, MCP name, SKILL when/why |
+| **Composition** | How agents chain work | Root sequences as default pipelines (see §6.7.4) |
+| **Meter** | How wallet bills a step | `meterId` per capability; free tier vs paid; Router for LLM roots |
+| **Honesty** | What is deterministic vs model | `pure` / `read` / `write` / `external`; never market LLM noise as “Checker” |
+
+**Agent-first default for Tier S:** if a cell cannot pass §6.5 gates **for agents** (OpenAPI + MCP + errors + meter + side-effect class), it is **not covered** — a pretty human page alone is **scaffold**, not matrix complete.
+
+**Probabilistic vs deterministic split:**
+
+| Kind | Roots (examples) | Where it runs |
+|------|------------------|---------------|
+| **Deterministic tools** | Generator, Converter, Formatter, Calculator, Checker, Optimizer, Viewer, Extractor, Analyzer, Comparator | Forge runtime (OSS SOTA wrap) — preferred for agents (reproducible) |
+| **Probabilistic / generative AI** | Translator, Assistant, “smart” Extractor/Analyzer when LLM-backed | **Router** models + Forge *shell tool* that calls Router with explicit `external` + model meter |
+| **Out of Agent OS** | Downloader, Scraper, arbitrary Compiler, Manager/Dashboard | Tier X — do not pollute agent catalogs |
+
+#### 6.7.1 Coordinate system
+
+| Axis | Meaning | Human mapping | Agent mapping |
+|------|---------|---------------|---------------|
+| **X · Demand root** | Intent verb | SEO title, hubs `/r/{root}`, related-by-root | MCP tool group / verb family; composition alphabet |
+| **Y · Object domain** | Payload type | Category cards | Schema `$id` / content-type / field conventions |
+| **Z · Delivery surface** | Consumer | **H** page | **A** sync API+MCP · **J** async job+webhook |
+| **W · Cognitive class** | Deterministic vs model | Copy & privacy notes | Routing: Forge engine vs Router model |
+
+Cell target state (AI-Native):
+
+```text
+[root] × [object]
+  → 1 primary capability id (+ 2–4 long-tail variants)
+  → H: SEO copy, instant UX
+  → A: OpenAPI + MCP + SKILL (Core) + stable errors + request_id
+  → meterId + sideEffect
+  → optional compose-with: [root′/object′] edges for agent planners
+```
+
+Registry metadata (illustrative):
+
+```text
+id:           hash/password-generate
+slug:         password-generate
+category:     hash                 ← engineering drawer
+roots:        [generator]          ← demand / agent verb
+objects:      [secret, text]
+sideEffect:   pure
+surfaces:     [human, agent]       ← Core
+meterId:      forge.hash.password_generate
+seo.en:       "Password Generator"
+seo.zh:       "在线密码生成器"
+mcp.name:     forge_password_generate
+compose.next: [checker/password-strength]   ← optional graph edge
+```
+
+#### 6.7.2 Strategic tiering of the 51 roots
+
+**Tier S — main runway (must densify; AI-Native Core by default)**  
+High intent; finish-in-one-session; pure/controlled upload; **agents must be able to call without a browser**.
+
+| Root cluster | ~IDs | Intent | Agent role | Inventory (2026-07) | Matrix goal |
+|--------------|------|--------|------------|---------------------|-------------|
+| **Generator** | 02 | Create | Produce structured artifacts | Strong: UUID / NanoID / password / QR | ≥3 tools/domain; schema outputs agents can pipe |
+| **Converter / Convert** | 04, 37 | Transform | Typed I/O transforms | Strong: codec / data / unit / color | Lossless where possible; declare lossy in schema |
+| **Formatter / Format** | 22 | Beautify | Canonicalize for next tool | Medium: JSON / XML / SQL | Pretty + minify pairs; idempotent |
+| **Calculator** | 19 | Compute | Numeric/date pure functions | Medium: mortgage / BMI / units | Pure, unit-tested; no float surprises undocumented |
+| **Checker / Verifier** | 26, 42 | Validate | Gate before write/send | Medium: ID / phone | Machine-readable pass/fail + error codes |
+| **Optimizer** | 35 | Compress / slim | Cost/size reduction step | Weak: image compress | Report metrics (bytes in/out) for agents |
+| **Viewer / Extractor** | 38, 39 | Inspect / extract | Grounding for RAG/pipelines | Medium: JWT / CSV / MD | Structured extract > screenshot-as-product |
+| **Analyzer** | 13 | Analyze | Features / stats / explain | Weak | Prefer deterministic; mark LLM-backed as external |
+| **Comparator** | 46 | Diff / compare | CI / eval / change detect | Has text diff | Structured diff JSON for agents |
+
+**S-tier KPI:** 9/9 roots; **≥5 tools/root**; **≥80% Core H+A same impl**; every Core tool in `tools.json` + MCP.
+
+**Tier A — selective density (Agent-gated by side-effect)**  
+
+| Root cluster | ~IDs | Stance | AI-Native note |
+|--------------|------|--------|----------------|
+| **Editor** | 09 | Single-screen only | Prefer *transform tools* over free-form editors for agents |
+| **Template** | 21 | Lorem, license, gitignore | Generators with fixed schemas — excellent for agents |
+| **Detector** | 27 | MIME / encoding / secrets (read-only) | Pre-pipeline gate; never auto-exfiltrate findings |
+| **Simulator** | 43 | Cron next-run, timezone only | Pure prediction tools OK; no game sims |
+| **Processor** | 10 | Batch pipelines | Map to **J** jobs; progress + webhook for agents |
+| **Translator** | 01 | Router/LLM shell | `external` + model meter; cacheable prompts in SKILL |
+| **Sender / Notifier** | 15, 41 | mailto / preview only | Agents must not get unconstrained “send email” without product policy |
+| **Recorder** | 34 | Default **out** | Privacy + payload; not agent-safe by default |
+
+**A-tier KPI:** deepen 4–5 roots; Agent eligibility explicit in registry (`surfaces` / sideEffect).
+
+**Tier X — non-runway (do not poison agent catalogs)**
+
+| Root cluster | ~IDs | Why out | Policy |
+|--------------|------|---------|--------|
+| Manager / Dashboard / Planner | 29, 31, 32 | Product shell, not a tool call | Link wallet/docs; **exclude from MCP default list** |
+| Uploader / Downloader / Scraper | 18, 06, 28 | Abuse / copyright | No scrapers/downloaders; upload only temp+metered |
+| Compiler / Interpreter | 12, 17 | Sandbox | No arbitrary exec; format/lint only |
+| Designer / Creator / Maker | 07, 08, 11 | Creative suite | QR/logo-class generators only |
+| Navigator / Syncer / Connector | 47–49 | Integration fabric | Out of Forge |
+| Assistant | 44 | Chat product | Router / product chat; not a Forge “tool” dumping ground |
+| Cataloger / Constructor / Responder | 45, 50, 51 | Platform nouns | Ignore for expansion |
+
+#### 6.7.3 Root × object matrix (coverage map)
+
+Legend: `●` present · `○` priority gap · `–` do not build
+
+| Demand root ↓ / object → | Text | Data/JSON | Dev | Codec | Hash/Sec | Doc/PDF | Image | Time | Life/CN | LLM |
+|--------------------------|------|-----------|-----|-------|----------|---------|-------|------|---------|-----|
+| **Generator** | ●○ | ● | ● strong | ● | ● password | – | ● QR | – | – | ○ schema mock |
+| **Converter** | ● 简繁 | ● strong | ● color/camel | ● strong | – | ● MD/HTML ○Office | ●○ | ● | ● CNY words | – |
+| **Formatter** | ● | ● JSON/XML | ● SQL | – | – | ○ | – | – | – | – |
+| **Calculator** | ○ word stats+ | – | ● radix | – | – | – | – | ● | ● mortgage/BMI | ● token/cost |
+| **Checker/Verifier** | ○ | ○ schema | ● regex | – | ○ | – | – | – | ● ID/phone | ○ |
+| **Optimizer** | ○ blank-lines | ○ minify | – | – | – | ○ PDF compress | ● | – | – | – |
+| **Viewer** | ● MD preview | ● CSV | – | ● JWT | – | ○ PDF view | ○ | – | – | – |
+| **Extractor** | ○ | ● JSONPath | – | ○ | – | ○ PDF text | ○ EXIF | – | – | – |
+| **Analyzer** | ● count/diff | ○ | ○ | – | ○ checksum | – | – | – | – | ○ |
+| **Comparator** | ● diff | ○ JSON diff | – | – | ○ | – | ○ | – | – | – |
+| **Editor** | ○ light | ○ | – | – | – | – | ○ crop | – | – | – |
+| **Translator** | ○ | – | – | – | – | – | – | – | – | ○ via Router |
+| **Downloader/Scraper** | – | – | – | – | – | – | – | – | – | – |
+
+**Expansion order (SEO × Agent overlap):**  
+1. **Generator × {Dev, Sec, Image}** — cheap pure calls, high agent reuse  
+2. **Converter × {Data, Codec, Doc}** — pipeline glue for agents  
+3. **Checker / Optimizer / Comparator** — gates and eval loops for agent workflows  
+4. **Extractor (structured)** — grounding before Router LLM steps  
+
+#### 6.7.4 Dual surface + composition (H / A / J)
+
+| Tool shape | Human (H) | Agent (A) | Metering | Examples |
+|------------|-----------|-----------|----------|----------|
+| **Core pure** | Primary SEO keyword + instant run | Sync API + MCP **required** | Free tier → wallet | UUID, JSON format, Base64 |
+| **Catalog pure** | Long-tail SEO | API optional phase-2 | Near-free | Sort lines, strip blanks |
+| **Job / write** | Upload progress + download | Async job + webhook + poll | Per call / MB | PDF merge, bulk image |
+| **External / LLM** | “via Router” honesty | Key + model meter; never silent | Router ledger | Translate, smart extract |
+
+**Rule:** Tier S new tools default **Core (H+A same engine wrap)**. If H and A cannot share one implementation, it is not Tier S.
+
+**Default agent compositions** (planner hints / SKILL “when to chain” — not hard-coded workflows only):
+
+```text
+ingest → Extractor/Viewer → Converter/Formatter → Checker → (Router Translator?) → Generator/Optimizer → Comparator
+```
+
+Examples:
+
+| Human journey | Agent composition (capability ids conceptual) |
+|---------------|-----------------------------------------------|
+| “Clean and validate JSON” | `formatter/json` → `checker/json-schema` |
+| “Ship a QR for this URL” | `checker/url` → `generator/qr` |
+| “Hash then compare” | `generator` n/a → `hash/sha256` → `comparator/hash` |
+| “PDF text then translate” | `extractor/pdf-text` → Router `translator` (external) |
+| “Estimate LLM cost” | `calculator/token-count` → `calculator/cost-estimate` (Router prices) |
+
+Agents discover compositions via: **schema-compatible edges**, `compose.next` metadata, SKILL progressive disclosure, and MCP tool descriptions — **not** by scraping landers.
+
+#### 6.7.5 Machine discovery surface (AI-Native product requirement)
+
+Every matrix cell that claims “covered” must appear on at least one machine index:
+
+| Surface | Role |
+|---------|------|
+| `GET /api/tools.json` (or equivalent) | Catalog: id, roots, objects, sideEffect, meterId, engine |
+| OpenAPI `/v1/tools…` | Invoke contract |
+| MCP | Agent runtime binding |
+| SKILL.md (Core) | When to use / limits / composition tips |
+| Wallet + API keys | Same purse as Router where applicable |
+
+**Human SEO without machine index = incomplete AI-Native cell.**
+
+#### 6.7.6 Three waves (matrix fill order)
+
+| Wave | Goal | Focus (always dual-surface) |
+|------|------|------------------------------|
+| **W1 · Intent alignment** | 0–few engines | Tag all ~79 tools with `roots` + primary EN/ZH SEO; related-by-root; ensure **Core** tools listed in `tools.json` + MCP; optional `/r/{root}` hubs for humans |
+| **W2 · Fill S gaps** | → **~100–110** tools | P0/P1 largely done. **pdf-compress** now ships via host **qpdf/Ghostscript** (+ pdf-lib fallback). **exif-viewer** via **exifr**. |
+| **W3 · Density, jobs, Router shells** | → **150+** | Converter/Generator/Checker long-tail; Job paths for heavy media; Translator/LLM Extractor **only** as Router-backed `external` tools |
+
+**Still explicit non-goals:** Downloader, Scraper, general Compiler, project Manager/Dashboard, unconstrained outbound Sender.
+
+#### 6.7.7 North stars & guardrails
+
+| Metric | 6-month scale target |
+|--------|----------------------|
+| Registered tools | 79 → **120** (W2) → **150+** (W3) |
+| S-root coverage | 9/9 roots, **≥5 tools each** |
+| Core H+A same impl | ≥80% of Core tier |
+| Core tools on MCP + tools.json | **100%** of Core |
+| `pure` share | ≥85% (reproducible agent steps) |
+| Tier X tools in default agent catalog | **0** |
+| LLM-backed tools without Router meter | **0** |
+
+Ship gate remains §6.5. **Additional AI-Native coverage rule:** missing MCP/OpenAPI/meter/sideEffect for a Core cell ⇒ **not covered** in this matrix (even if the human page ranks).
+
+### 6.8 Density & commercial phasing
+
+Aligned with §6.7 waves (F* = catalog density; W* = demand-matrix + AI-Native workstreams).
 
 | Phase | Catalog feel | Focus |
 |-------|----------------|-------|
-| **F0** | ~40–60 tools + real home IA | Text, codec, hash, JSON, time, dev knives; prove dual-surface pipeline |
-| **F1** | ~100+ | Image, PDF core, unit converters, life calcs — **SEO/ads scale** |
-| **F2** | ~150–200 | Convert matrix, A/V light, heavier jobs |
-| **F3** | 200–300+ | Long-tail + Agent blade depth + Router deep links |
+| **F0** | ~40–60 → **~79 done** + real home IA | Dual-surface pipeline proven; **W1** root tags + machine catalog honesty |
+| **F1** | ~100–120 | Image/PDF/units/life + **W2** S-root gap fill; SEO/ads **and** agent catalog density |
+| **F2** | ~150–200 | Convert matrix, A/V light, jobs (**W3**); composition metadata |
+| **F3** | 200–300+ | Long-tail + Agent blade depth + Router deep links / multi-tool skills |
 
-Commercial (aligned with prepaid wallet): free tier limits → login → top-up → higher limits / API; ads allowed on free human tier; **Agent/API path stays clean and metered**.
+Commercial: free tier → login → top-up → API limits; ads allowed on free **human** tier; **Agent/API path stays clean, metered, and free of Tier X clutter**.
 
-### 6.8 Shared account with Router
+### 6.9 Shared account with Router
 
 Same Nebutra identity and **same prepaid wallet** language (302-like unified purse). Cross-sell: token/cost tools and docs point at `router.nebutra.com`. Key scopes (`models:*` / `tools:*`) are control-plane detail.
+
+**AI-Native billing boundary:** deterministic Forge tools bill `forge.*` meters; **Translator / LLM Extractor / Assistant** roots bill **Router** model meters via Forge shell tools marked `external` — never a silent second ledger and never marketed as pure Checkers/Converters.
+
+### 6.10 i18n architecture (Forge product host)
+
+Forge is **cookie-locale** (`NEXT_LOCALE` → `apps/forge/src/i18n/request.ts`), same wheel as other Nebutra product apps (`@nebutra/i18n` route locales). There is **no** `/[locale]` URL prefix (`localePrefix: "never"`).
+
+| Layer | Source of truth | Rule |
+|-------|-----------------|------|
+| **Shell chrome** (nav, footer, home, search, categories, tool page frame, runner chrome) | `apps/forge/messages/<messageKey>.json` via next-intl | Author **en.json** first; override product languages (at least **zh-Hans**). Other locales shallow-merge onto en (missing keys fall back to English). **Do not** put per-tool titles here. |
+| **Tool title / description / SEO keywords** | `@nebutra/forge-runtime` `LocalizedString` `{ zh, en }` on each tool definition | Content axis is bilingual only (`toContentLocale` → `zh` \| `en`). UI picks via `pickBilingual` / `isChineseLocale`. **Never** add 34 message keys per tool. |
+| **Category labels** | `messages.*.categories.<id>.{label,hint}` | Category *ids* stay English machine keys (`codec`, `text`, …); only labels are translated. |
+| **Runner field labels / common buttons** | `messages.*.runners.*` | New Wave tools (W2+) must use `useTranslations("runners")` for field labels and notes. Legacy runners still hardcode ZH — migrate on-touch. |
+| **API / MCP / tools.json** | English-first machine ids + optional bilingual summary fields | Agents consume `id` / `slug` / schema; human SEO is a separate surface. |
+
+**Anti-patterns**
+
+- Hardcoding Chinese (or English) in new catalog runners for user-facing labels
+- Adding tool titles into `messages/*.json` (does not scale; breaks registry single source)
+- Expanding `LocalizedString` to full PRODUCT_LANGUAGES until content ops require it
+- Using raw `console` / ad-hoc locale cookies outside `canonicalizeLocaleOrDefault`
+- Root `layout.tsx` `generateMetadata` that calls next-intl / `cookies()` — Next 16 prerenders `/_global-error` **without** workStore and the whole production build dies (`Invariant: Expected workStore to be initialized`). Keep **static** root metadata; put locale-aware metadata on route segments only.
+
+**Implementation touchpoints:** `apps/forge/src/lib/bilingual.ts`, `src/i18n/*`, `messages/en.json` + `zh-Hans.json`, tool definitions under `packages/ai/forge-runtime/src/tools/`.
 
 ---
 
@@ -435,14 +678,15 @@ apps/…                         # router/forge console if separate apps
 
 - Tool-station IA: search, categories, hot/new  
 - Capability registry + dual-surface pipeline (page + OpenAPI + MCP + SKILL + meter)  
-- **40–60** everyday tools across text/codec/hash/JSON/time/dev (OSS SOTA wraps)  
+- **40–60** everyday tools target → **~79 registered** (2026-07 inventory; text/codec/hash/JSON/time/dev + expansions)  
 - ≥1 job tool (e.g. md→pdf) proving async path  
 - Shared wallet identity hooks  
+- **Demand-root matrix** locked in §6.7 (W1 SEO/root tagging)  
 
 ### Phase 2
 
 - CLIProxyAPI sidecar (Router)  
-- Forge **F1**: image + PDF core + units + life calcs → ~100+ tools; SEO/ads ready  
+- Forge **F1** + **W2**: image + PDF core + units + life calcs + S-root gap fill → **~100–120** tools; SEO/ads ready  
 - Richer ops supply desk (optional; may still use private engine admin)  
 - Cross-engine fallback polish  
 

@@ -7,8 +7,10 @@
  * @see https://github.com/Nebutra/Nebutra-Sailor/issues/255
  */
 import { DEFAULT_PUBLIC_MODEL, frontierSelectOptions } from "@nebutra/ai-providers/frontier";
+import { Check, Copy } from "@nebutra/icons";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
-import { type ChangeEvent, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
+import { type ChangeEvent, type DragEvent, useMemo, useRef, useState } from "react";
 import {
   RunnerError,
   RunnerNote,
@@ -76,6 +78,7 @@ export function MarkdownPreviewRunner({
   toolId: string;
   mode?: "preview" | "html";
 }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(MD_SAMPLE);
   const [html, setHtml] = useState("");
   const [error, setError] = useState("");
@@ -123,11 +126,11 @@ export function MarkdownPreviewRunner({
         />
         <div className="space-y-2">
           <p className="text-xs font-medium text-[var(--neutral-11)]">
-            {mode === "html" ? "HTML" : "预览"}
+            {mode === "html" ? t("markdown.html") : t("markdown.preview")}
           </p>
           {mode === "html" ? (
             <RunnerOutput className="min-h-[280px] whitespace-pre-wrap break-all">
-              {html || <span className="text-[var(--neutral-9)]">渲染结果</span>}
+              {html || <span className="text-[var(--neutral-9)]">{t("markdown.emptyHtml")}</span>}
             </RunnerOutput>
           ) : (
             <div className="min-h-[280px] overflow-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4">
@@ -139,7 +142,7 @@ export function MarkdownPreviewRunner({
                   className="h-[280px] w-full border-0"
                 />
               ) : (
-                <p className="text-sm text-[var(--neutral-9)]">点击运行查看预览</p>
+                <p className="text-sm text-[var(--neutral-9)]">{t("markdown.emptyPreview")}</p>
               )}
             </div>
           )}
@@ -147,7 +150,11 @@ export function MarkdownPreviewRunner({
       </div>
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading ? "渲染中…" : mode === "html" ? "转为 HTML" : "预览"}
+          {loading
+            ? t("markdown.rendering")
+            : mode === "html"
+              ? t("markdown.toHtml")
+              : t("markdown.preview")}
         </Button>
         {html ? (
           <Button
@@ -155,12 +162,12 @@ export function MarkdownPreviewRunner({
             variant="outline"
             onClick={() => void navigator.clipboard.writeText(html)}
           >
-            复制 HTML
+            {t("markdown.copyHtml")}
           </Button>
         ) : null}
       </div>
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>marked · 预览使用沙箱 iframe · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("markdown.note")}</RunnerNote>
     </div>
   );
 }
@@ -168,6 +175,7 @@ export function MarkdownPreviewRunner({
 // ─── PDF merge / split ──────────────────────────────────────────────────────
 
 export function PdfMergeRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState("");
   const [meta, setMeta] = useState("");
@@ -175,7 +183,7 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
 
   const run = async () => {
     if (files.length < 2) {
-      setError("请至少选择 2 个 PDF");
+      setError(t("pdfMerge.needFiles"));
       return;
     }
     setLoading(true);
@@ -191,7 +199,10 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
       const b64 = typeof r.output.base64 === "string" ? r.output.base64 : "";
       if (b64) downloadBase64(b64, "merged.pdf", "application/pdf");
       setMeta(
-        `合并完成 · ${String(r.output.pageCount ?? "?")} 页 · ${String(r.output.bytes ?? "?")} bytes`,
+        t("pdfMerge.done", {
+          pages: String(r.output.pageCount ?? "?"),
+          bytes: String(r.output.bytes ?? "?"),
+        }),
       );
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -203,7 +214,7 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-        <span className="text-xs font-medium">PDF 文件（≥2，顺序即合并顺序）</span>
+        <span className="text-xs font-medium">{t("pdfMerge.files")}</span>
         <input
           data-allow-native
           type="file"
@@ -225,15 +236,16 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
         </ul>
       ) : null}
       <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "合并中…" : "合并并下载"}
+        {loading ? t("pdfMerge.merging") : t("pdfMerge.mergeDownload")}
       </Button>
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>{meta || "pdf-lib · 与 API 同一路径"}</RunnerNote>
+      <RunnerNote>{meta || t("pdfMerge.note")}</RunnerNote>
     </div>
   );
 }
 
 export function PdfSplitRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [file, setFile] = useState<File | null>(null);
   const [fromPage, setFromPage] = useState("1");
   const [toPage, setToPage] = useState("");
@@ -243,7 +255,7 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
 
   const run = async () => {
     if (!file) {
-      setError("请选择 PDF");
+      setError(t("pdfSplit.needFile"));
       return;
     }
     setLoading(true);
@@ -264,7 +276,10 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
       const b64 = typeof r.output.base64 === "string" ? r.output.base64 : "";
       if (b64) downloadBase64(b64, "split.pdf", "application/pdf");
       setMeta(
-        `拆分完成 · 源 ${String(r.output.sourcePages ?? "?")} 页 → 输出 ${String(r.output.pageCount ?? "?")} 页`,
+        t("pdfSplit.done", {
+          source: String(r.output.sourcePages ?? "?"),
+          pages: String(r.output.pageCount ?? "?"),
+        }),
       );
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -276,7 +291,7 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-        <span className="text-xs font-medium">PDF 文件</span>
+        <span className="text-xs font-medium">{t("pdfSplit.file")}</span>
         <input
           data-allow-native
           type="file"
@@ -287,7 +302,7 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
       </label>
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
-          label="起始页 (1-based)"
+          label={t("pdfSplit.fromPage")}
           id="pdf-from"
           type="number"
           min={1}
@@ -298,7 +313,7 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
         <Input
-          label="结束页 (空=到末页)"
+          label={t("pdfSplit.toPage")}
           id="pdf-to"
           type="number"
           min={1}
@@ -307,23 +322,22 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
             setToPage(e.target.value)
           }
           className="font-mono"
-          placeholder="末页"
+          placeholder={t("pdfSplit.toPlaceholder")}
         />
       </div>
       <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "拆分中…" : "拆分并下载"}
+        {loading ? t("pdfSplit.splitting") : t("pdfSplit.splitDownload")}
       </Button>
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>{meta || "pdf-lib · 与 API 同一路径"}</RunnerNote>
+      <RunnerNote>{meta || t("pdfSplit.note")}</RunnerNote>
     </div>
   );
 }
 
 // ─── Password strength ──────────────────────────────────────────────────────
 
-const SCORE_LABEL = ["极弱", "弱", "一般", "较强", "很强"] as const;
-
 export function PasswordStrengthRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [password, setPassword] = useState("Nebutra!2024");
   const [error, setError] = useState("");
   const [score, setScore] = useState<number | null>(null);
@@ -359,7 +373,7 @@ export function PasswordStrengthRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <Input
-        label="密码"
+        label={t("common.password")}
         id="pw-str"
         type="password"
         value={password}
@@ -369,13 +383,13 @@ export function PasswordStrengthRunner({ toolId }: { toolId: string }) {
         className="font-mono"
       />
       <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "检测中…" : "检测强度"}
+        {loading ? t("passwordStrength.checking") : t("passwordStrength.check")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {score != null ? (
         <RunnerPanel>
           <p className="text-2xl font-semibold tabular-nums">
-            {score}/4 · {SCORE_LABEL[score] ?? score}
+            {score}/4 · {t(`passwordStrength.score${score}` as "passwordStrength.score0")}
           </p>
           <div className="mt-3 flex gap-1">
             {[0, 1, 2, 3, 4].map((i) => (
@@ -396,18 +410,20 @@ export function PasswordStrengthRunner({ toolId }: { toolId: string }) {
             ))}
           </div>
           {crack ? (
-            <p className="mt-3 text-xs text-[var(--neutral-10)]">离线慢哈希粗估：{crack}</p>
+            <p className="mt-3 text-xs text-[var(--neutral-10)]">
+              {t("passwordStrength.crack", { time: crack })}
+            </p>
           ) : null}
           {feedback.length > 0 ? (
             <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--neutral-11)]">
-              {feedback.map((t) => (
-                <li key={t}>{t}</li>
+              {feedback.map((tip) => (
+                <li key={tip}>{tip}</li>
               ))}
             </ul>
           ) : null}
         </RunnerPanel>
       ) : null}
-      <RunnerNote>zxcvbn-ts · 与 API 同一路径 · 密码不会落盘</RunnerNote>
+      <RunnerNote>{t("passwordStrength.note")}</RunnerNote>
     </div>
   );
 }
@@ -415,6 +431,7 @@ export function PasswordStrengthRunner({ toolId }: { toolId: string }) {
 // ─── HMAC ───────────────────────────────────────────────────────────────────
 
 export function HmacRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState("payload");
   const [secret, setSecret] = useState("secret");
   const [algorithm, setAlgorithm] = useState("sha256");
@@ -439,7 +456,7 @@ export function HmacRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <Textarea
         id="hmac-text"
-        label="消息"
+        label={t("common.message")}
         value={text}
         onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setText(e.target.value)
@@ -448,7 +465,7 @@ export function HmacRunner({ toolId }: { toolId: string }) {
         className="font-mono text-sm"
       />
       <Input
-        label="密钥"
+        label={t("common.secret")}
         id="hmac-secret"
         type="password"
         value={secret}
@@ -458,19 +475,29 @@ export function HmacRunner({ toolId }: { toolId: string }) {
         className="font-mono"
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <RunnerSelect label="算法" id="hmac-algo" value={algorithm} onChange={setAlgorithm}>
+        <RunnerSelect
+          label={t("common.algorithm")}
+          id="hmac-algo"
+          value={algorithm}
+          onChange={setAlgorithm}
+        >
           <option value="sha256">SHA-256</option>
           <option value="sha512">SHA-512</option>
           <option value="sha1">SHA-1</option>
         </RunnerSelect>
-        <RunnerSelect label="编码" id="hmac-enc" value={encoding} onChange={setEncoding}>
+        <RunnerSelect
+          label={t("common.encoding")}
+          id="hmac-enc"
+          value={encoding}
+          onChange={setEncoding}
+        >
           <option value="hex">hex</option>
           <option value="base64">base64</option>
         </RunnerSelect>
       </div>
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading ? "计算中…" : "计算 HMAC"}
+          {loading ? t("hmacSign.computing") : t("hmacSign.compute")}
         </Button>
         <Button
           type="button"
@@ -478,20 +505,25 @@ export function HmacRunner({ toolId }: { toolId: string }) {
           disabled={!digest}
           onClick={() => void navigator.clipboard.writeText(digest)}
         >
-          复制
+          {t("common.copy")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="break-all">{digest}</RunnerOutput>
-      <RunnerNote>node:crypto · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("hmacSign.note")}</RunnerNote>
     </div>
   );
 }
 
-// ─── File checksum ──────────────────────────────────────────────────────────
+// ─── File checksum (SOTA: drag-drop + multi-algo copy rows) ─────────────────
+
+const CHECKSUM_ALGOS = ["md5", "sha1", "sha256", "sha512"] as const;
 
 export function FileChecksumRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [dragging, setDragging] = useState(false);
   const [algos, setAlgos] = useState<Record<string, boolean>>({
     md5: true,
     sha1: false,
@@ -502,6 +534,7 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
   const [bytes, setBytes] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
 
   const selected = useMemo(
     () =>
@@ -511,13 +544,27 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
     [algos],
   );
 
+  const pickFile = (next: File | null) => {
+    setFile(next);
+    setHashes({});
+    setBytes(null);
+    setError("");
+  };
+
+  const onDrop = (e: DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setDragging(false);
+    const f = e.dataTransfer.files?.[0] ?? null;
+    if (f) pickFile(f);
+  };
+
   const run = async () => {
     if (!file) {
-      setError("请选择文件");
+      setError(t("fileChecksum.needFile"));
       return;
     }
     if (selected.length === 0) {
-      setError("请至少选一种算法");
+      setError(t("fileChecksum.needAlgo"));
       return;
     }
     setLoading(true);
@@ -529,7 +576,7 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
         setError(r.message);
         return;
       }
-      setBytes(typeof r.output.bytes === "number" ? r.output.bytes : null);
+      setBytes(typeof r.output.bytes === "number" ? r.output.bytes : file.size);
       setHashes(
         r.output.hashes && typeof r.output.hashes === "object"
           ? (r.output.hashes as Record<string, string>)
@@ -542,49 +589,128 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
     }
   };
 
+  const copyOne = (algo: string, value: string) => {
+    void navigator.clipboard.writeText(value);
+    setCopied(algo);
+    setTimeout(() => setCopied(null), 1000);
+  };
+
   return (
     <div className="space-y-4">
-      <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-        <span className="text-xs font-medium">文件</span>
+      {/* label + hidden input: native click-to-open and keyboard activation,
+          no synthetic role/tabIndex/key handling. */}
+      <label
+        onDragEnter={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
+        onDragLeave={(e) => {
+          e.preventDefault();
+          setDragging(false);
+        }}
+        onDrop={onDrop}
+        className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed px-4 py-10 text-center transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] ${
+          dragging
+            ? "border-[var(--blue-9)] bg-[var(--blue-3)]/40"
+            : "border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 hover:border-[var(--neutral-8)]"
+        }`}
+      >
+        <p className="text-sm font-medium text-[var(--neutral-12)]">{t("fileChecksum.drop")}</p>
+        {file ? (
+          <p className="max-w-full truncate font-mono text-xs text-[var(--neutral-11)]">
+            {file.name} · {t("common.bytes", { bytes: file.size })}
+          </p>
+        ) : null}
         <input
+          ref={inputRef}
           data-allow-native
           type="file"
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setFile(e.target.files?.[0] ?? null)}
-          className="text-sm"
+          className="sr-only"
+          onChange={(e: ChangeEvent<HTMLInputElement>) => pickFile(e.target.files?.[0] ?? null)}
         />
       </label>
-      <div className="flex flex-wrap gap-4 text-sm text-[var(--neutral-11)]">
-        {(["md5", "sha1", "sha256", "sha512"] as const).map((algo) => (
-          <label key={algo} className="inline-flex items-center gap-2">
-            <input
-              data-allow-native
-              type="checkbox"
-              checked={Boolean(algos[algo])}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setAlgos((a) => ({ ...a, [algo]: e.target.checked }))
-              }
-              className="size-4 accent-[var(--blue-9)]"
-            />
-            {algo}
-          </label>
-        ))}
+
+      <div className="space-y-2">
+        <p className="text-xs font-medium text-[var(--neutral-11)]">
+          {t("fileChecksum.algorithms")}
+        </p>
+        <div className="flex flex-wrap gap-4 text-sm text-[var(--neutral-11)]">
+          {CHECKSUM_ALGOS.map((algo) => (
+            <label key={algo} className="inline-flex items-center gap-2">
+              <input
+                data-allow-native
+                type="checkbox"
+                checked={Boolean(algos[algo])}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setAlgos((a) => ({ ...a, [algo]: e.target.checked }))
+                }
+                className="size-4 accent-[var(--blue-9)]"
+              />
+              <span className="font-mono uppercase">{algo}</span>
+            </label>
+          ))}
+        </div>
       </div>
-      <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "计算中…" : "计算校验和"}
-      </Button>
+
+      <div className="flex flex-wrap gap-2">
+        <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
+          {loading ? t("fileChecksum.computing") : t("fileChecksum.compute")}
+        </Button>
+        {file || Object.keys(hashes).length > 0 ? (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => {
+              pickFile(null);
+              if (inputRef.current) inputRef.current.value = "";
+            }}
+          >
+            {t("common.clear")}
+          </Button>
+        ) : null}
+      </div>
+
       <RunnerError>{error}</RunnerError>
-      {bytes != null ? (
-        <RunnerPanel title={`${bytes} bytes`}>
-          <ul className="space-y-2 font-mono text-xs break-all">
-            {Object.entries(hashes).map(([k, v]) => (
-              <li key={k}>
-                <span className="text-[var(--neutral-10)]">{k}:</span> {v}
-              </li>
-            ))}
-          </ul>
-        </RunnerPanel>
+
+      {Object.keys(hashes).length > 0 ? (
+        <div className="space-y-2">
+          {bytes != null ? (
+            <p className="text-xs text-[var(--neutral-10)]">{t("common.bytes", { bytes })}</p>
+          ) : null}
+          {Object.entries(hashes).map(([algo, value]) => (
+            <div
+              key={algo}
+              className="flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2"
+            >
+              <span className="w-16 font-mono text-xs font-semibold uppercase text-[var(--neutral-11)]">
+                {algo}
+              </span>
+              <code className="min-w-0 flex-1 break-all font-mono text-xs text-[var(--neutral-12)]">
+                {value}
+              </code>
+              <Button
+                type="button"
+                variant="ghost"
+                className="h-8 px-2"
+                aria-label={t("common.copy")}
+                onClick={() => copyOne(algo, value)}
+              >
+                {copied === algo ? (
+                  <Check className="h-3.5 w-3.5" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5" />
+                )}
+              </Button>
+            </div>
+          ))}
+        </div>
       ) : null}
-      <RunnerNote>node:crypto · 与 API 同一路径</RunnerNote>
+
+      <RunnerNote>{t("fileChecksum.note")}</RunnerNote>
     </div>
   );
 }
@@ -592,6 +718,7 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
 // ─── Cost estimate ──────────────────────────────────────────────────────────
 
 export function CostEstimateRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const options = useMemo(() => frontierSelectOptions(), []);
   const [text, setText] = useState("Explain quantum computing in simple terms.");
   const [model, setModel] = useState(DEFAULT_PUBLIC_MODEL);
@@ -622,7 +749,7 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <Textarea
         id="cost-text"
-        label="输入文本（用于估算 input tokens）"
+        label={t("costEstimate.text")}
         value={text}
         onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setText(e.target.value)
@@ -631,7 +758,12 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
         className="font-mono text-sm"
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <RunnerSelect label="模型" id="cost-model" value={model} onChange={setModel}>
+        <RunnerSelect
+          label={t("costEstimate.model")}
+          id="cost-model"
+          value={model}
+          onChange={setModel}
+        >
           {options.map((o) => (
             <option key={o.value} value={o.value}>
               {o.label}
@@ -639,7 +771,7 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
           ))}
         </RunnerSelect>
         <Input
-          label="输出 tokens 估"
+          label={t("costEstimate.outputTokens")}
           id="cost-out"
           type="number"
           min={0}
@@ -651,7 +783,7 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "估算中…" : "估算费用"}
+        {loading ? t("costEstimate.estimating") : t("costEstimate.estimate")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {result ? (
@@ -670,7 +802,7 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
           </dl>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>@nebutra/ai-providers/frontier 价卡 + js-tiktoken · 标价球估，非账单</RunnerNote>
+      <RunnerNote>{t("costEstimate.note")}</RunnerNote>
     </div>
   );
 }
@@ -678,6 +810,7 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
 // ─── JSON Schema validate ───────────────────────────────────────────────────
 
 export function JsonSchemaValidateRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [data, setData] = useState('{"name":"Ada","age":30}');
   const [schema, setSchema] = useState(
     '{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name"]}',
@@ -706,7 +839,7 @@ export function JsonSchemaValidateRunner({ toolId }: { toolId: string }) {
       <div className="grid gap-4 lg:grid-cols-2">
         <Textarea
           id="jsv-data"
-          label="JSON 数据"
+          label={t("jsonSchema.data")}
           value={data}
           onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
             setData(e.target.value)
@@ -728,7 +861,7 @@ export function JsonSchemaValidateRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "校验中…" : "校验"}
+        {loading ? t("jsonSchema.validating") : t("jsonSchema.validate")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {valid != null ? (
@@ -737,7 +870,7 @@ export function JsonSchemaValidateRunner({ toolId }: { toolId: string }) {
             className="text-lg font-semibold"
             style={{ color: valid ? "var(--status-success)" : "var(--status-danger)" }}
           >
-            {valid ? "通过" : "未通过"}
+            {valid ? t("jsonSchema.pass") : t("jsonSchema.fail")}
           </p>
           {!valid && errors ? (
             <pre className="mt-2 overflow-x-auto font-mono text-xs">
@@ -746,7 +879,7 @@ export function JsonSchemaValidateRunner({ toolId }: { toolId: string }) {
           ) : null}
         </RunnerPanel>
       ) : null}
-      <RunnerNote>Ajv · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("jsonSchema.note")}</RunnerNote>
     </div>
   );
 }
@@ -754,6 +887,7 @@ export function JsonSchemaValidateRunner({ toolId }: { toolId: string }) {
 // ─── 简繁 / 拼音 ────────────────────────────────────────────────────────────
 
 export function ZhCnTwRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState("汉字与计算机，繁體測試");
   const [mode, setMode] = useState("s2t");
   const [result, setResult] = useState("");
@@ -774,18 +908,18 @@ export function ZhCnTwRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <RunnerSelect label="方向" id="zh-mode" value={mode} onChange={setMode}>
-        <option value="s2t">简 → 繁</option>
-        <option value="t2s">繁 → 简</option>
-        <option value="s2tw">简 → 台湾</option>
-        <option value="tw2s">台湾 → 简</option>
-        <option value="s2hk">简 → 香港</option>
-        <option value="hk2s">香港 → 简</option>
+      <RunnerSelect label={t("common.direction")} id="zh-mode" value={mode} onChange={setMode}>
+        <option value="s2t">{t("zhCnTw.s2t")}</option>
+        <option value="t2s">{t("zhCnTw.t2s")}</option>
+        <option value="s2tw">{t("zhCnTw.s2tw")}</option>
+        <option value="tw2s">{t("zhCnTw.tw2s")}</option>
+        <option value="s2hk">{t("zhCnTw.s2hk")}</option>
+        <option value="hk2s">{t("zhCnTw.hk2s")}</option>
       </RunnerSelect>
       <div className="grid gap-4 lg:grid-cols-2">
         <Textarea
           id="zh-in"
-          label="输入"
+          label={t("common.input")}
           value={text}
           onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
             setText(e.target.value)
@@ -795,7 +929,9 @@ export function ZhCnTwRunner({ toolId }: { toolId: string }) {
         />
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-[var(--neutral-11)]">输出</span>
+            <span className="text-xs font-medium text-[var(--neutral-11)]">
+              {t("common.output")}
+            </span>
             <Button
               type="button"
               variant="ghost"
@@ -803,22 +939,23 @@ export function ZhCnTwRunner({ toolId }: { toolId: string }) {
               disabled={!result}
               onClick={() => void navigator.clipboard.writeText(result)}
             >
-              复制
+              {t("common.copy")}
             </Button>
           </div>
           <RunnerOutput className="min-h-[220px] whitespace-pre-wrap">{result}</RunnerOutput>
         </div>
       </div>
       <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? "转换中…" : "转换"}
+        {loading ? t("convert.converting") : t("convert.convert")}
       </Button>
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>OpenCC (opencc-js) · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("zhCnTw.note")}</RunnerNote>
     </div>
   );
 }
 
 export function PinyinRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState("你好，世界");
   const [toneType, setToneType] = useState("symbol");
   const [result, setResult] = useState("");
@@ -840,14 +977,14 @@ export function PinyinRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <RunnerSelect label="声调" id="py-tone" value={toneType} onChange={setToneType}>
-        <option value="symbol">符号 nǐ</option>
-        <option value="num">数字 ni3</option>
-        <option value="none">无调 ni</option>
+      <RunnerSelect label={t("pinyin.tones")} id="py-tone" value={toneType} onChange={setToneType}>
+        <option value="symbol">{t("pinyin.symbol")}</option>
+        <option value="num">{t("pinyin.num")}</option>
+        <option value="none">{t("pinyin.none")}</option>
       </RunnerSelect>
       <Textarea
         id="py-text"
-        label="汉字"
+        label={t("pinyin.hanzi")}
         value={text}
         onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setText(e.target.value)
@@ -856,7 +993,7 @@ export function PinyinRunner({ toolId }: { toolId: string }) {
       />
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading ? "转换中…" : "转拼音"}
+          {loading ? t("pinyin.converting") : t("pinyin.convert")}
         </Button>
         <Button
           type="button"
@@ -864,12 +1001,12 @@ export function PinyinRunner({ toolId }: { toolId: string }) {
           disabled={!result}
           onClick={() => void navigator.clipboard.writeText(result)}
         >
-          复制
+          {t("common.copy")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="whitespace-pre-wrap text-lg tracking-wide">{result}</RunnerOutput>
-      <RunnerNote>pinyin-pro · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("pinyin.note")}</RunnerNote>
     </div>
   );
 }

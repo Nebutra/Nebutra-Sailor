@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Drumuleț",
-    "labNotice": "Capacitate Lab: acoperire limitată de date sau dicționar; rezultatele sunt doar orientative.",
     "workspace": "Spațiu de lucru",
     "workspaceHint": "Local sau server · același path ca API",
     "api": "API",

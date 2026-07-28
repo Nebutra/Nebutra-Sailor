@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Breadcrumbs",
-    "labNotice": "Tính năng Lab: phạm vi dữ liệu hoặc từ điển hạn chế; kết quả chỉ mang tính tham khảo.",
     "workspace": "Không gian làm việc",
     "workspaceHint": "Cục bộ hoặc máy chủ · cùng đường dẫn như API",
     "api": "API",

@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Navigační cesta",
-    "labNotice": "Funkce v laboratoři: omezená data nebo pokrytí slovníku; výsledky jsou pouze orientační.",
     "workspace": "Pracovní prostor",
     "workspaceHint": "Lokální nebo server · stejná cesta jako API",
     "api": "API",

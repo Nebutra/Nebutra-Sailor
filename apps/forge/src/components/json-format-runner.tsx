@@ -1,6 +1,8 @@
 "use client";
 
+import { Check, Copy } from "@nebutra/icons";
 import { Button, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
@@ -24,11 +26,14 @@ function positionFromOffset(text: string, offset: number) {
 }
 
 export function JsonFormatRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(SAMPLE);
   const [indent, setIndent] = useState(2);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
+  const [valid, setValid] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const localFormat = useCallback(
     (mode: "format" | "minify") => {
@@ -39,17 +44,21 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
         const next =
           mode === "minify" ? JSON.stringify(parsed) : JSON.stringify(parsed, null, indent);
         setText(next);
-        setStatus(mode === "minify" ? "已压缩" : "已格式化");
+        setValid(true);
+        setStatus(mode === "minify" ? t("jsonFormat.minified") : t("jsonFormat.formatted"));
       } catch (err) {
+        setValid(false);
         const message = err instanceof Error ? err.message : String(err);
         const match = message.match(/position\s+(\d+)/i);
         if (match?.[1]) {
           const { line, column } = positionFromOffset(text, Number(match[1]));
-          setError(`${message} (line ${line}, column ${column})`);
+          setError(
+            `${message} (${t("jsonFormat.line")} ${line}, ${t("jsonFormat.column")} ${column})`,
+          );
         } else setError(message);
       }
     },
-    [indent, text],
+    [indent, t, text],
   );
 
   const serverVerify = async (mode: "format" | "minify") => {
@@ -68,11 +77,13 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
         message?: string;
       };
       if (!res.ok || body.ok === false) {
+        setValid(false);
         setError(body.message ?? `HTTP ${res.status}`);
         return;
       }
       if (body.output?.result) setText(body.output.result);
-      setStatus(`服务端 ${mode} · ${body.output?.engine ?? "JSON.parse"}`);
+      setValid(true);
+      setStatus(t("jsonFormat.serverOk", { engine: body.output?.engine ?? "JSON.parse", mode }));
     } finally {
       setLoading(false);
     }
@@ -82,7 +93,7 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
     <div className="space-y-5">
       <div className="flex flex-wrap items-end gap-2">
         <RunnerSelect
-          label="缩进"
+          label={t("jsonFormat.indent")}
           id="json-indent"
           value={String(indent)}
           onChange={(v) => setIndent(Number(v))}
@@ -95,10 +106,10 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
           ))}
         </RunnerSelect>
         <Button type="button" variant="ink" onClick={() => localFormat("format")}>
-          格式化
+          {t("jsonFormat.format")}
         </Button>
         <Button type="button" variant="outline" onClick={() => localFormat("minify")}>
-          压缩
+          {t("jsonFormat.minify")}
         </Button>
         <Button
           type="button"
@@ -106,14 +117,19 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
           disabled={loading}
           onClick={() => void serverVerify("format")}
         >
-          服务端校验
+          {loading ? t("common.running") : t("jsonFormat.serverVerify")}
         </Button>
         <Button
           type="button"
           variant="ghost"
-          onClick={() => void navigator.clipboard.writeText(text)}
+          onClick={() => {
+            void navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1200);
+          }}
         >
-          复制
+          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          {copied ? t("common.copied") : t("common.copy")}
         </Button>
         <Button
           type="button"
@@ -122,26 +138,44 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
             setText("");
             setError("");
             setStatus("");
+            setValid(null);
           }}
         >
-          清空
+          {t("jsonFormat.clear")}
         </Button>
+        <Button type="button" variant="ghost" onClick={() => setText(SAMPLE)}>
+          {t("jsonFormat.sample")}
+        </Button>
+        {valid !== null ? (
+          <span
+            className={`rounded-full px-3 py-1 text-xs font-medium ${
+              valid
+                ? "bg-[color-mix(in_srgb,var(--status-success)_15%,transparent)] text-[var(--status-success)]"
+                : "bg-[color-mix(in_srgb,var(--status-danger)_15%,transparent)] text-[var(--status-danger)]"
+            }`}
+          >
+            {valid ? t("jsonFormat.valid") : t("jsonFormat.invalid")}
+          </span>
+        ) : null}
       </div>
 
       <Textarea
         label="JSON"
         id="json-format-input"
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+          setValid(null);
+        }}
         rows={16}
         spellCheck={false}
         className="min-h-[320px] font-mono text-sm"
-        placeholder="粘贴 JSON…"
+        placeholder={t("jsonFormat.placeholder")}
       />
 
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>{status}</RunnerNote>
-      <RunnerNote>引擎：ECMAScript JSON.parse / stringify · 本地即时 · 与 API 同一路径</RunnerNote>
+      {status ? <RunnerNote>{status}</RunnerNote> : null}
+      <RunnerNote>{t("jsonFormat.note")}</RunnerNote>
     </div>
   );
 }

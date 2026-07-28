@@ -5,6 +5,7 @@
  *「未配置工作台」— JSON/YAML family, regex, SQL, color, QR, cron, timezone.
  */
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import {
   RunnerError,
@@ -52,6 +53,7 @@ export function ConvertModeRunner({
   note?: string;
   resultKey?: string;
 }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(sample);
   const [mode, setMode] = useState(defaultMode);
   const [error, setError] = useState("");
@@ -70,13 +72,18 @@ export function ConvertModeRunner({
     }
     const out = r.output[resultKey];
     if (typeof out === "string") setText(out);
-    setStatus(`完成 · ${String(r.output.engine ?? mode)}`);
+    setStatus(t("convert.done", { engine: String(r.output.engine ?? mode) }));
   };
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-2">
-        <RunnerSelect label="模式" id={`${toolId}-mode`} value={mode} onChange={setMode}>
+        <RunnerSelect
+          label={t("common.mode")}
+          id={`${toolId}-mode`}
+          value={mode}
+          onChange={setMode}
+        >
           {modes.map((m) => (
             <option key={m.value} value={m.value}>
               {m.label}
@@ -84,7 +91,7 @@ export function ConvertModeRunner({
           ))}
         </RunnerSelect>
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-          {loading ? "转换中…" : "转换"}
+          {loading ? t("convert.converting") : t("convert.convert")}
         </Button>
       </div>
       <Textarea
@@ -105,6 +112,7 @@ export function ConvertModeRunner({
 // ─── Regex ──────────────────────────────────────────────────────────────────
 
 export function RegexTesterRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [pattern, setPattern] = useState("\\b[A-Z][a-z]+\\b");
   const [flags, setFlags] = useState("g");
   const [text, setText] = useState("Hello Nebutra World — Forge Tools");
@@ -164,14 +172,14 @@ export function RegexTesterRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
-          label="正则"
+          label={t("regexLegacy.pattern")}
           id="re-pattern"
           value={pattern}
           onChange={(e) => setPattern(e.target.value)}
           className="font-mono"
         />
         <Input
-          label="标志"
+          label={t("regexLegacy.flags")}
           id="re-flags"
           value={flags}
           onChange={(e) => setFlags(e.target.value)}
@@ -181,18 +189,18 @@ export function RegexTesterRunner({ toolId }: { toolId: string }) {
       </div>
       <div className="flex flex-wrap items-end gap-2">
         <RunnerSelect
-          label="模式"
+          label={t("common.mode")}
           id="re-mode"
           value={mode}
           onChange={(v) => setMode(v as typeof mode)}
         >
-          <option value="match">匹配</option>
-          <option value="replace">替换</option>
-          <option value="test">测试</option>
+          <option value="match">{t("regexLegacy.match")}</option>
+          <option value="replace">{t("regexLegacy.replace")}</option>
+          <option value="test">{t("regexLegacy.test")}</option>
         </RunnerSelect>
         {mode === "replace" ? (
           <Input
-            label="替换为"
+            label={t("regexLegacy.replacement")}
             id="re-repl"
             value={replacement}
             onChange={(e) => setReplacement(e.target.value)}
@@ -200,15 +208,15 @@ export function RegexTesterRunner({ toolId }: { toolId: string }) {
           />
         ) : null}
         <Button type="button" variant="ink" onClick={runLocal}>
-          本地运行
+          {t("common.localRun")}
         </Button>
         <Button type="button" variant="outline" onClick={() => void runServer()} disabled={loading}>
-          {loading ? "校验中…" : "服务端校验"}
+          {loading ? t("common.running") : t("common.serverVerify")}
         </Button>
       </div>
       <Textarea
         id="re-text"
-        label="文本"
+        label={t("common.text")}
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={8}
@@ -216,7 +224,7 @@ export function RegexTesterRunner({ toolId }: { toolId: string }) {
       />
       <RunnerError>{error}</RunnerError>
       <RunnerOutput>{output}</RunnerOutput>
-      <RunnerNote>本地即时 · 服务端带超时预算 · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("regexLegacy.note")}</RunnerNote>
     </div>
   );
 }
@@ -224,6 +232,7 @@ export function RegexTesterRunner({ toolId }: { toolId: string }) {
 // ─── SQL format ─────────────────────────────────────────────────────────────
 
 export function SqlFormatRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(
     "select id,name from users u join orders o on o.user_id=u.id where o.status='paid' order by o.created_at desc",
   );
@@ -246,7 +255,12 @@ export function SqlFormatRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-2">
-        <RunnerSelect label="方言" id="sql-lang" value={language} onChange={setLanguage}>
+        <RunnerSelect
+          label={t("sqlFormat.dialect")}
+          id="sql-lang"
+          value={language}
+          onChange={setLanguage}
+        >
           {["sql", "mysql", "postgresql", "sqlite", "tsql", "bigquery", "snowflake"].map((l) => (
             <option key={l} value={l}>
               {l}
@@ -254,7 +268,7 @@ export function SqlFormatRunner({ toolId }: { toolId: string }) {
           ))}
         </RunnerSelect>
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-          {loading ? "格式化中…" : "格式化"}
+          {loading ? t("sqlFormat.formatting") : t("sqlFormat.format")}
         </Button>
       </div>
       <Textarea
@@ -266,7 +280,7 @@ export function SqlFormatRunner({ toolId }: { toolId: string }) {
         spellCheck={false}
       />
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>sql-formatter · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("sqlFormat.note")}</RunnerNote>
     </div>
   );
 }
@@ -274,6 +288,7 @@ export function SqlFormatRunner({ toolId }: { toolId: string }) {
 // ─── Color ──────────────────────────────────────────────────────────────────
 
 export function ColorConvertRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [color, setColor] = useState("#0033FE");
   const [error, setError] = useState("");
   const [result, setResult] = useState<Record<string, unknown> | null>(null);
@@ -298,7 +313,7 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-2">
         <Input
-          label="颜色"
+          label={t("colorConvert.color")}
           id="color-in"
           value={color}
           onChange={(e) => setColor(e.target.value)}
@@ -308,13 +323,13 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
         <input
           data-allow-native
           type="color"
-          aria-label="取色"
+          aria-label={t("colorConvert.pick")}
           value={hex && /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : "#0033FE"}
           onChange={(e) => setColor(e.target.value)}
           className="h-10 w-14 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
         />
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-          {loading ? "转换中…" : "转换"}
+          {loading ? t("colorConvert.converting") : t("colorConvert.convert")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
@@ -332,7 +347,7 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
           </pre>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>culori · hex / rgb / hsl / oklch · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("colorConvert.note")}</RunnerNote>
     </div>
   );
 }
@@ -340,6 +355,7 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
 // ─── QR generate / decode ───────────────────────────────────────────────────
 
 export function QrGenerateRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState("https://forge.nebutra.com");
   const [format, setFormat] = useState<"png" | "svg" | "dataurl">("dataurl");
   const [error, setError] = useState("");
@@ -369,24 +385,24 @@ export function QrGenerateRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <Textarea
         id="qr-text"
-        label="内容"
+        label={t("qrGen.content")}
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={4}
       />
       <div className="flex flex-wrap items-end gap-2">
         <RunnerSelect
-          label="格式"
+          label={t("qrGen.format")}
           id="qr-fmt"
           value={format}
           onChange={(v) => setFormat(v as typeof format)}
         >
-          <option value="dataurl">PNG (预览)</option>
-          <option value="png">PNG Base64</option>
+          <option value="dataurl">{t("qrGen.pngPreview")}</option>
+          <option value="png">{t("qrGen.pngB64")}</option>
           <option value="svg">SVG</option>
         </RunnerSelect>
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-          {loading ? "生成中…" : "生成二维码"}
+          {loading ? t("qrGen.generating") : t("qrGen.generate")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
@@ -398,12 +414,13 @@ export function QrGenerateRunner({ toolId }: { toolId: string }) {
           className="h-48 w-48 rounded-lg border border-[var(--neutral-6)] bg-white p-2"
         />
       ) : null}
-      <RunnerNote>qrcode · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("qrGen.note")}</RunnerNote>
     </div>
   );
 }
 
 export function QrDecodeRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [error, setError] = useState("");
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -435,7 +452,7 @@ export function QrDecodeRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-        <span className="text-xs font-medium">上传含二维码的图片</span>
+        <span className="text-xs font-medium">{t("qrDecode.upload")}</span>
         <input
           data-allow-native
           type="file"
@@ -444,10 +461,10 @@ export function QrDecodeRunner({ toolId }: { toolId: string }) {
           className="text-sm"
         />
       </label>
-      {loading ? <RunnerNote>解析中…</RunnerNote> : null}
+      {loading ? <RunnerNote>{t("qrDecode.parsing")}</RunnerNote> : null}
       <RunnerError>{error}</RunnerError>
       <RunnerOutput>{text}</RunnerOutput>
-      <RunnerNote>jsQR + sharp · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("qrDecode.note")}</RunnerNote>
     </div>
   );
 }
@@ -455,6 +472,7 @@ export function QrDecodeRunner({ toolId }: { toolId: string }) {
 // ─── Cron ───────────────────────────────────────────────────────────────────
 
 export function CronExplainRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [expression, setExpression] = useState("0 9 * * 1-5");
   const [tz, setTz] = useState("Asia/Shanghai");
   const [error, setError] = useState("");
@@ -478,14 +496,14 @@ export function CronExplainRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
-          label="Cron 表达式"
+          label={t("cron.expression")}
           id="cron-expr"
           value={expression}
           onChange={(e) => setExpression(e.target.value)}
           className="font-mono"
         />
         <Input
-          label="时区"
+          label={t("cron.timezone")}
           id="cron-tz"
           value={tz}
           onChange={(e) => setTz(e.target.value)}
@@ -494,19 +512,19 @@ export function CronExplainRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "解析中…" : "解析下次触发"}
+        {loading ? t("cron.parsing") : t("cron.parse")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {next.length > 0 ? (
-        <RunnerPanel title="下次触发 (ISO)">
+        <RunnerPanel title={t("cron.nextTitle")}>
           <ul className="space-y-1 font-mono text-sm">
-            {next.map((t) => (
-              <li key={t}>{t}</li>
+            {next.map((iso) => (
+              <li key={iso}>{iso}</li>
             ))}
           </ul>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>cron-parser · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("cron.note")}</RunnerNote>
     </div>
   );
 }
@@ -525,6 +543,7 @@ const TZ_PRESETS = [
 ];
 
 export function TimezoneRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [datetime, setDatetime] = useState(() =>
     new Date().toISOString().slice(0, 19).replace("T", " "),
   );
@@ -558,31 +577,31 @@ export function TimezoneRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <Input
-        label="日期时间"
+        label={t("timezone.datetime")}
         id="tz-dt"
         value={datetime}
         onChange={(e) => setDatetime(e.target.value)}
         className="font-mono"
-        placeholder="2026-07-24 12:00:00 或 ISO / unix"
+        placeholder={t("timezone.placeholder")}
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <RunnerSelect label="从" id="tz-from" value={fromTz} onChange={setFromTz}>
-          {TZ_PRESETS.map((t) => (
-            <option key={t} value={t}>
-              {t}
+        <RunnerSelect label={t("timezone.from")} id="tz-from" value={fromTz} onChange={setFromTz}>
+          {TZ_PRESETS.map((tz) => (
+            <option key={tz} value={tz}>
+              {tz}
             </option>
           ))}
         </RunnerSelect>
-        <RunnerSelect label="到" id="tz-to" value={toTz} onChange={setToTz}>
-          {TZ_PRESETS.map((t) => (
-            <option key={t} value={t}>
-              {t}
+        <RunnerSelect label={t("timezone.to")} id="tz-to" value={toTz} onChange={setToTz}>
+          {TZ_PRESETS.map((tz) => (
+            <option key={tz} value={tz}>
+              {tz}
             </option>
           ))}
         </RunnerSelect>
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "转换中…" : "转换时区"}
+        {loading ? t("timezone.converting") : t("timezone.convert")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {result ? (
@@ -591,7 +610,7 @@ export function TimezoneRunner({ toolId }: { toolId: string }) {
           {meta ? <p className="mt-1 text-xs text-[var(--neutral-10)]">{meta}</p> : null}
         </RunnerPanel>
       ) : null}
-      <RunnerNote>dayjs timezone · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("timezone.note")}</RunnerNote>
     </div>
   );
 }
@@ -599,6 +618,7 @@ export function TimezoneRunner({ toolId }: { toolId: string }) {
 // ─── CSV preview ────────────────────────────────────────────────────────────
 
 export function CsvPreviewRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState("id,name,role\n1,Ada,admin\n2,Lin,member\n3,Tom,viewer");
   const [error, setError] = useState("");
   const [headers, setHeaders] = useState<string[]>([]);
@@ -631,7 +651,7 @@ export function CsvPreviewRunner({ toolId }: { toolId: string }) {
         spellCheck={false}
       />
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "解析中…" : "预览表格"}
+        {loading ? t("csvPreview.parsing") : t("csvPreview.preview")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {headers.length > 0 || rows.length > 0 ? (
@@ -659,11 +679,11 @@ export function CsvPreviewRunner({ toolId }: { toolId: string }) {
             </tbody>
           </table>
           <p className="border-t border-[var(--neutral-6)] px-3 py-2 text-xs text-[var(--neutral-10)]">
-            预览 {rows.length} / 共 {totalRows} 行
+            {t("csvPreview.rows", { shown: rows.length, total: totalRows })}
           </p>
         </div>
       ) : null}
-      <RunnerNote>papaparse · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("csvPreview.note")}</RunnerNote>
     </div>
   );
 }
@@ -671,6 +691,7 @@ export function CsvPreviewRunner({ toolId }: { toolId: string }) {
 // ─── JSON Path ──────────────────────────────────────────────────────────────
 
 export function JsonPathRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState('{"users":[{"id":1,"name":"Ada"},{"id":2,"name":"Lin"}]}');
   const [path, setPath] = useState("$.users[*].name");
   const [error, setError] = useState("");
@@ -712,11 +733,11 @@ export function JsonPathRunner({ toolId }: { toolId: string }) {
         spellCheck={false}
       />
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "查询中…" : "查询"}
+        {loading ? t("jsonPath.querying") : t("jsonPath.query")}
       </Button>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput>{output}</RunnerOutput>
-      <RunnerNote>jsonpath-plus · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("jsonPath.note")}</RunnerNote>
     </div>
   );
 }
@@ -724,6 +745,7 @@ export function JsonPathRunner({ toolId }: { toolId: string }) {
 // ─── XML format ─────────────────────────────────────────────────────────────
 
 export function XmlFormatRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(
     '<root><item id="1">hello</item><item id="2">world</item></root>',
   );
@@ -743,19 +765,23 @@ export function XmlFormatRunner({ toolId }: { toolId: string }) {
       return;
     }
     if (typeof r.output.result === "string") setText(r.output.result);
-    setStatus(mode === "validate" ? "校验通过" : `完成 · ${String(r.output.engine ?? "xml")}`);
+    setStatus(
+      mode === "validate"
+        ? t("xmlFormat.validOk")
+        : t("xmlFormat.done", { engine: String(r.output.engine ?? "xml") }),
+    );
   };
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-2">
-        <RunnerSelect label="模式" id="xml-mode" value={mode} onChange={setMode}>
-          <option value="format">美化</option>
-          <option value="minify">压缩</option>
-          <option value="validate">校验</option>
+        <RunnerSelect label={t("common.mode")} id="xml-mode" value={mode} onChange={setMode}>
+          <option value="format">{t("xmlFormat.pretty")}</option>
+          <option value="minify">{t("xmlFormat.minify")}</option>
+          <option value="validate">{t("xmlFormat.validate")}</option>
         </RunnerSelect>
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-          {loading ? "处理中…" : "运行"}
+          {loading ? t("xmlFormat.processing") : t("common.run")}
         </Button>
       </div>
       <Textarea
@@ -768,7 +794,7 @@ export function XmlFormatRunner({ toolId }: { toolId: string }) {
       />
       <RunnerError>{error}</RunnerError>
       {status ? <RunnerNote>{status}</RunnerNote> : null}
-      <RunnerNote>fast-xml-parser · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("xmlFormat.note")}</RunnerNote>
     </div>
   );
 }

@@ -12,13 +12,4 @@ describe("forge host registry", () => {
     expect(host.has("doc/md-to-pdf")).toBe(true);
     expect(host.get("md-to-pdf").slug).toBe("md-to-pdf");
   });
-
-  it("keeps lab tools marked as lab for honest UI labeling", () => {
-    const labs = getForgeRegistry()
-      .list()
-      .filter((t) => t.sotaStatus === "lab")
-      .map((t) => t.slug)
-      .sort();
-    expect(labs).toEqual(["kinship", "phone-lookup"]);
-  });
 });

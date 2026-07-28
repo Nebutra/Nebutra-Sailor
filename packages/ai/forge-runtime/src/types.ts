@@ -3,15 +3,6 @@ import type { z } from "zod";
 export type ToolTier = "core" | "catalog" | "job";
 export type SideEffectClass = "pure" | "read" | "write" | "external";
 export type ToolRuntime = "client" | "server";
-/**
- * **Internal** craftsmanship gate — NOT a user-facing product label.
- * See docs/plans/2026-07-23-nebutra-sota-quality-playbook.md
- * Do not render this on customer UI (cards, marketing, badges).
- * - scaffold: works, playbook not yet passed
- * - lab: real engine, human UX incomplete
- * - production: playbook gates passed for shipping confidence
- */
-export type SotaStatus = "scaffold" | "lab" | "production";
 
 export interface LocalizedString {
   readonly zh: string;
@@ -40,8 +31,11 @@ export interface ForgeToolDefinition<TInput = unknown, TOutput = unknown> {
   readonly execute: (input: TInput) => TOutput | Promise<TOutput>;
   /** Optional free-tier unit cost in wallet currency (0 = free). */
   readonly unitCost?: number;
-  /** Internal only; defaults to scaffold until playbook gates pass. */
-  readonly sotaStatus?: SotaStatus;
+  /**
+   * Demand-root / agent-verb tags (docs §6.7): generator, converter, formatter,
+   * calculator, checker, optimizer, viewer, extractor, analyzer, comparator, …
+   */
+  readonly roots?: readonly string[];
 }
 
 /**
@@ -62,7 +56,8 @@ export interface ForgeToolSummary {
   readonly meterId: string;
   readonly engine: ToolEngineMeta;
   readonly path: string;
-  readonly sotaStatus: SotaStatus;
+  /** Demand roots for agent discovery + SEO hubs (§6.7). */
+  readonly roots?: readonly string[];
 }
 
 export interface InvokeRequest {
@@ -104,7 +99,6 @@ export interface ToolPageModel {
   readonly engine: ToolEngineMeta;
   readonly meterId: string;
   readonly sideEffect: SideEffectClass;
-  readonly sotaStatus: SotaStatus;
   readonly seo: {
     readonly title: LocalizedString;
     readonly keywords: LocalizedString;

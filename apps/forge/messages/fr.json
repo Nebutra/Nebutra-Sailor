@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Fil d'Ariane",
-    "labNotice": "Fonctionnalité Lab : couverture de données ou de dictionnaire limitée ; les résultats sont donnés à titre indicatif.",
     "workspace": "Espace de travail",
     "workspaceHint": "Local ou serveur · même chemin que l'API",
     "api": "API",

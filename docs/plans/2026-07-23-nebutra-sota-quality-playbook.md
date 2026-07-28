@@ -103,14 +103,13 @@ engine:
   name: sharp
   upstream: https://github.com/lovell/sharp
   version: "0.34.x"
-  sota_status: production   # production | lab | scaffold
 quality:
   brief_path: docs/plans/tools/image-compress.md
   competitors_beaten: ["basic online compressors on speed"]
   known_gaps: []            # 必须空才能 production
 ```
 
-`sota_status: scaffold` = 功能通了但 **未** 完成五步 / 未换真轮子 —— **禁止对外营销为 SOTA**。
+未完成五步 / 未换真轮子的工具 —— **禁止对外营销为 SOTA**。这是内部验收规范，由 brief（`docs/plans/tools/`）记录，**不进 registry、不进对外 catalog**。
 
 ---
 
@@ -202,7 +201,7 @@ quality:
 
 ### 5.1 立即政策
 
-1. 所有已注册工具默认 `sota_status: scaffold`，直到 brief + 真轮子验收。  
+1. 所有已注册工具默认视为未验收，直到 brief + 真轮子验收。  
 2. 新 PR **禁止**再增加「手写伪引擎」冒充 production。  
 3. 还债顺序：**md-to-pdf → 图片人用 UX → 高频 SEO 工具五步升级 → Router 控制台视觉**。  
 
@@ -267,7 +266,7 @@ quality:
 | 提工具需求 | 先五步 brief，再写代码 |
 | 实现 | engine pin + 双读 + 模板页 |
 | Code review | 用本文 §2 清单；缺 brief = 打回 |
-| 对外营销 | 仅 `sota_status: production` 可写「专业/SOTA」 |
+| 对外营销 | 仅通过五步验收的工具可写「专业/SOTA」 |
 | 季度 | 抽 10 个高流量工具重新对标竞品与上游版本 |
 
 ---
@@ -278,13 +277,12 @@ quality:
 |------------|--------------|
 | 定「必须 SOTA、禁止能用就行」 | 五步调研落地、选轮子、写 brief |
 | 定竞品对标与品牌审美红线 | 实现双读与 Nebutra UI 规范 |
-| 否决「假 SOTA」叙事 | 维护 `sota_status` 诚实元数据 |
+| 否决「假 SOTA」叙事 | 维护 brief 与验收记录 |
 
 ---
 
 ## 10. 下一步工程（按本 playbook）
 
-1. **Registry 增加 `sota_status` 字段**（默认 scaffold）  
 2. **md-to-pdf 还债**：Playwright 或选定 md-to-pdf 栈 + brief  
 3. **image 工具人用页**：拖拽上传、质量滑杆、格式预设（sharp 已具备）  
 4. **高频 10 刀**（字数、JSON、Base64、时间戳、Diff…）逐个五步升级  
@@ -304,7 +302,7 @@ quality:
 | Item | Status |
 |------|--------|
 | Playbook + design decisions 19–22 | Done |
-| `sotaStatus` on registry/summary/page | Done |
+| 验收状态以 brief 记录（**不作为 registry 字段**） | Done |
 | Briefs: md-to-pdf, json-format, image-compress, word-count | Done (`docs/plans/tools/`) |
 | Engines: **marked**, **diff**, **jose**, **js-tiktoken**, **sharp**, **Intl.Segmenter** | Done (lab) |
 | Image human UX drag-drop | Done |

@@ -37,7 +37,6 @@ export const regexTesterTool = tool({
     version: "0.1.0",
   },
   seoKeywords: { zh: "正则表达式在线测试", en: "regex tester online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     pattern: z.string().min(1).max(2000),
     flags: z.string().max(10).default("g"),
@@ -139,7 +138,6 @@ export const colorConvertTool = tool({
   meterId: "forge.dev.color_convert",
   engine: { name: "culori", upstream: "https://github.com/Evercoder/culori", version: "4.x" },
   seoKeywords: { zh: "颜色转换,hex转rgb,hsl转换", en: "color converter hex rgb hsl online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     color: z.string().min(1).max(200),
   }),
@@ -182,7 +180,6 @@ export const sqlFormatTool = tool({
     version: "15.x",
   },
   seoKeywords: { zh: "sql格式化,sql美化在线", en: "sql formatter beautify online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string(),
     language: z
@@ -229,7 +226,6 @@ export const nanoidTool = tool({
   meterId: "forge.dev.nanoid",
   engine: { name: "nanoid", upstream: "https://github.com/ai/nanoid", version: "5.x" },
   seoKeywords: { zh: "nanoid生成,短id生成", en: "nanoid generator online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     size: z.number().int().min(4).max(64).default(21),
     count: z.number().int().min(1).max(100).default(1),
@@ -256,7 +252,6 @@ export const markdownPreviewTool = tool({
   meterId: "forge.dev.markdown_preview",
   engine: { name: "marked", upstream: "https://github.com/markedjs/marked", version: "15.x" },
   seoKeywords: { zh: "markdown预览,md转html在线", en: "markdown preview online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string().max(500_000),
   }),
@@ -281,7 +276,6 @@ export const mdToHtmlTool = tool({
   meterId: "forge.doc.md_to_html",
   engine: { name: "marked", upstream: "https://github.com/markedjs/marked", version: "15.x" },
   seoKeywords: { zh: "markdown转html", en: "markdown to html converter" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string().max(500_000),
     gfm: z.boolean().default(true),

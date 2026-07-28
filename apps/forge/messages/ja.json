@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "パンくずリスト",
-    "labNotice": "ラボ機能：データまたは辞書の範囲が限定的です。結果は参考用です。",
     "workspace": "ワークスペース",
     "workspaceHint": "ローカルまたはサーバー · APIと同じパス",
     "api": "API",

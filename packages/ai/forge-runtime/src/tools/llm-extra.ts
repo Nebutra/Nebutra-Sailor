@@ -51,7 +51,6 @@ export const costEstimateTool = tool({
     version: "0.2.0",
   },
   seoKeywords: { zh: "llm费用估算,token成本计算", en: "llm cost calculator token price" },
-  sotaStatus: "production",
   inputSchema: z.object({
     text: z.string().optional(),
     inputTokens: z.number().int().min(0).optional(),
@@ -116,7 +115,6 @@ export const jsonSchemaValidateTool = tool({
   meterId: "forge.llm.json_schema_validate",
   engine: { name: "ajv", upstream: "https://github.com/ajv-validator/ajv", version: "8.x" },
   seoKeywords: { zh: "json schema校验,ajv在线", en: "json schema validator online" },
-  sotaStatus: "production",
   inputSchema: z.object({
     data: z.string(),
     schema: z.string(),

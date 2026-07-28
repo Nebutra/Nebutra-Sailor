@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Brotkrümelnavigation",
-    "labNotice": "Lab-Funktion: Begrenzte Daten- oder Wörterbuchabdeckung; Ergebnisse dienen nur als Referenz.",
     "workspace": "Arbeitsbereich",
     "workspaceHint": "Lokal oder Server · gleicher Pfad wie API",
     "api": "API",

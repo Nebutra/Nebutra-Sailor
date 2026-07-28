@@ -1,8 +1,16 @@
 import { ForgeRuntimeError } from "./errors";
+import { resolveToolRoots } from "./roots-defaults";
 import { F0_BATCH1_TOOLS } from "./tools/index";
 import type { AnyForgeToolDefinition, ForgeToolSummary } from "./types";
 
+function withResolvedRoots(tool: AnyForgeToolDefinition): AnyForgeToolDefinition {
+  const roots = resolveToolRoots(tool);
+  if (tool.roots === roots) return tool;
+  return { ...tool, roots };
+}
+
 function toSummary(tool: AnyForgeToolDefinition): ForgeToolSummary {
+  const roots = resolveToolRoots(tool);
   return {
     id: tool.id,
     slug: tool.slug,
@@ -14,7 +22,7 @@ function toSummary(tool: AnyForgeToolDefinition): ForgeToolSummary {
     meterId: tool.meterId,
     engine: tool.engine,
     path: `/t/${tool.slug}`,
-    sotaStatus: tool.sotaStatus ?? "scaffold",
+    roots,
   };
 }
 
@@ -23,7 +31,8 @@ export class ForgeRegistry {
   private readonly bySlug = new Map<string, AnyForgeToolDefinition>();
 
   constructor(tools: readonly AnyForgeToolDefinition[] = F0_BATCH1_TOOLS) {
-    for (const tool of tools) {
+    for (const raw of tools) {
+      const tool = withResolvedRoots(raw);
       if (this.byId.has(tool.id)) {
         throw new ForgeRuntimeError("execution_failed", `Duplicate tool id: ${tool.id}`);
       }

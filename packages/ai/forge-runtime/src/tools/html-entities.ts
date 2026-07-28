@@ -64,7 +64,6 @@ export const htmlEntitiesTool: ForgeToolDefinition<HtmlEntitiesInput, HtmlEntiti
     zh: "html转义,html实体编码",
     en: "html entity encode decode",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: run,
   unitCost: 0,

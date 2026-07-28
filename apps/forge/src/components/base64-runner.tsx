@@ -2,6 +2,7 @@
 
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Tabs, TabsList, TabsTrigger, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
@@ -19,6 +20,7 @@ function base64ToUtf8(b64: string): string {
 }
 
 export function Base64Runner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState("Hello Nebutra 你好");
   const [mode, setMode] = useState<"encode" | "decode">("encode");
   const [result, setResult] = useState("");
@@ -30,7 +32,7 @@ export function Base64Runner({ toolId }: { toolId: string }) {
     setError("");
     try {
       setResult(mode === "encode" ? utf8ToBase64(text) : base64ToUtf8(text));
-      setNote("本地 Web API（TextEncoder / atob）");
+      setNote(t("base64.localNote"));
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -53,7 +55,7 @@ export function Base64Runner({ toolId }: { toolId: string }) {
       return;
     }
     setResult(body.output?.result ?? "");
-    setNote("服务端 Buffer · 与 API 同一路径");
+    setNote(t("base64.serverNote"));
   };
 
   const copy = async () => {
@@ -73,16 +75,16 @@ export function Base64Runner({ toolId }: { toolId: string }) {
           shape="pill"
         >
           <TabsList>
-            <TabsTrigger value="encode">编码</TabsTrigger>
-            <TabsTrigger value="decode">解码</TabsTrigger>
+            <TabsTrigger value="encode">{t("common.encode")}</TabsTrigger>
+            <TabsTrigger value="decode">{t("common.decode")}</TabsTrigger>
           </TabsList>
         </Tabs>
-        <RunnerNote>{mode === "encode" ? "文本 → Base64" : "Base64 → 文本"}</RunnerNote>
+        <RunnerNote>{mode === "encode" ? t("base64.encodeDir") : t("base64.decodeDir")}</RunnerNote>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <Textarea
-          label="输入"
+          label={t("common.input")}
           id="base64-input"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -91,7 +93,9 @@ export function Base64Runner({ toolId }: { toolId: string }) {
         />
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-[var(--neutral-11)]">输出</span>
+            <span className="text-xs font-medium text-[var(--neutral-11)]">
+              {t("common.output")}
+            </span>
             <Button
               type="button"
               variant="ghost"
@@ -101,27 +105,29 @@ export function Base64Runner({ toolId }: { toolId: string }) {
             >
               {copied ? (
                 <>
-                  <Check className="h-3.5 w-3.5" /> 已复制
+                  <Check className="h-3.5 w-3.5" /> {t("common.copied")}
                 </>
               ) : (
                 <>
-                  <Copy className="h-3.5 w-3.5" /> 复制
+                  <Copy className="h-3.5 w-3.5" /> {t("common.copy")}
                 </>
               )}
             </Button>
           </div>
           <RunnerOutput className="min-h-[220px] whitespace-pre-wrap break-all">
-            {result || <span className="text-[var(--neutral-9)]">结果会显示在这里</span>}
+            {result || (
+              <span className="text-[var(--neutral-9)]">{t("common.outputPlaceholder")}</span>
+            )}
           </RunnerOutput>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" onClick={runLocal}>
-          本地运行
+          {t("common.localRun")}
         </Button>
         <Button type="button" variant="outline" onClick={() => void runServer()}>
-          服务端校验
+          {t("common.serverVerify")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>

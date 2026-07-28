@@ -35,7 +35,6 @@ export const jwtDecodeTool: ForgeToolDefinition<JwtDecodeInput, JwtDecodeOutput>
     version: "6.x",
   },
   seoKeywords: { zh: "jwt解析,jwt decode", en: "jwt decode online" },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: (input) => {
     const protectedHeader = jose.decodeProtectedHeader(input.token);

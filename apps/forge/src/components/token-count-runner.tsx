@@ -2,14 +2,13 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { Button, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
 /**
- * Tokenizer presets — labels map encodings to current models.dev families,
- * not retired product lines (no GPT-3.5 / early GPT-4 as primary association).
+ * Tokenizer presets — labels map encodings to current models.dev families.
  * Default = o200k (GPT-5 / o-series / 4o-class tokenizer).
- * @see https://models.dev
  */
 const ENCODINGS = [
   {
@@ -35,7 +34,8 @@ const ENCODINGS = [
 ] as const;
 
 export function TokenCountRunner({ toolId }: { toolId: string }) {
-  const [text, setText] = useState(`Hello ${brand.name}, count my tokens. 你好，数一下 token。`);
+  const t = useTranslations("runners");
+  const [text, setText] = useState(`Hello ${brand.name}, count my tokens.`);
   const [encoding, setEncoding] = useState<(typeof ENCODINGS)[number]["id"]>("o200k_base");
   const [tokens, setTokens] = useState<number | null>(null);
   const [error, setError] = useState("");
@@ -85,7 +85,7 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
         ))}
       </div>
       <Textarea
-        label="文本"
+        label={t("common.text")}
         id="token-count-input"
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -94,9 +94,11 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
       />
       <div className="flex flex-wrap items-center gap-3">
         <Button type="button" variant="ink" onClick={() => void count()} disabled={loading}>
-          {loading ? "计数中…" : "精确计数"}
+          {loading ? t("tokenCount.counting") : t("tokenCount.count")}
         </Button>
-        <span className="text-sm text-[var(--neutral-11)]">字符 {text.length}</span>
+        <span className="text-sm text-[var(--neutral-11)]">
+          {t("tokenCount.chars", { n: text.length })}
+        </span>
       </div>
       <RunnerError>{error}</RunnerError>
       {tokens !== null ? (
@@ -106,7 +108,7 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
           <RunnerNote>{note}</RunnerNote>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>引擎：js-tiktoken · 服务端精确计数 · 可对接 Router 费用估算</RunnerNote>
+      <RunnerNote>{t("tokenCount.note")}</RunnerNote>
     </div>
   );
 }

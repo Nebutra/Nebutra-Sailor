@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Polku",
-    "labNotice": "Laboratoriotila: rajallinen data- tai sanakirjakattavuus; tulokset ovat vain viitteellisiä.",
     "workspace": "Työtila",
     "workspaceHint": "Paikallinen tai palvelin · sama polku kuin API",
     "api": "API",

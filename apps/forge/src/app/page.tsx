@@ -1,10 +1,13 @@
+import { brand } from "@nebutra/brand/metadata";
 import { buildCategoryHub } from "@nebutra/forge-runtime";
 import { Section } from "@nebutra/ui/layout";
 import { AuroraBackground } from "@nebutra/ui/primitives";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CategoryNav } from "@/components/category-nav";
 import { HomeSearch } from "@/components/home-search";
 import { PageFrame } from "@/components/page-frame";
+import { RootNav } from "@/components/root-nav";
 import { ToolCard } from "@/components/tool-card";
 import { getForgeRegistry } from "@/lib/registry";
 
@@ -16,6 +19,17 @@ import { getForgeRegistry } from "@/lib/registry";
  *
  * Copy from apps/forge/messages/<PRODUCT_LANGUAGES key>.json
  */
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("meta");
+  return {
+    title: {
+      default: t("titleDefault", { brandName: brand.name }),
+      template: t("titleTemplate", { brandName: brand.name }),
+    },
+    description: t("description"),
+  };
+}
+
 export default async function ForgeHomePage() {
   const registry = getForgeRegistry();
   const hub = buildCategoryHub(registry);
@@ -59,7 +73,10 @@ export default async function ForgeHomePage() {
       </section>
 
       <PageFrame className="pb-20 pt-8 md:pb-24 md:pt-10">
-        <CategoryNav categories={hub.categories.map((c) => c.id)} />
+        <div className="space-y-6">
+          <RootNav tools={hub.tools} />
+          <CategoryNav categories={hub.categories.map((c) => c.id)} />
+        </div>
 
         <div className="mt-10 space-y-16 md:mt-12 md:space-y-20">
           {hub.categories.map((cat) => {

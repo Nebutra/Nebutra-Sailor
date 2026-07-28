@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Brødkrumme",
-    "labNotice": "Lab-funktion: begrænset data- eller ordbogscoverage; resultater er kun vejledende.",
     "workspace": "Arbejdsområde",
     "workspaceHint": "Lokal eller server · samme sti som API",
     "api": "API",

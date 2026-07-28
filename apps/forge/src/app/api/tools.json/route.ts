@@ -1,7 +1,10 @@
 import { getForgeRegistry } from "@/lib/registry";
 
 /**
- * Machine-readable forge tool catalog (G17/G20).
+ * Machine-readable forge tool catalog (G17/G20, §6.7.5).
+ *
+ * Carries the axes an agent planner needs to pick and meter a call: demand
+ * roots (verb), side-effect class, tier and meterId.
  */
 export function GET() {
   const tools = getForgeRegistry()
@@ -12,15 +15,23 @@ export function GET() {
       name: tool.title,
       description: tool.description,
       category: tool.category,
+      roots: tool.roots ?? [],
       path: tool.path,
+      invoke: { method: "POST", path: `/api/v1/tools/invoke/${tool.id}` },
+      mcpName: tool.id.replace(/\//g, "__"),
       tier: tool.tier,
+      sideEffect: tool.sideEffect,
+      meterId: tool.meterId,
+      engine: tool.engine,
     }));
 
   return Response.json(
     {
-      version: 1,
+      version: 2,
       generatedAt: new Date().toISOString(),
       count: tools.length,
+      openapi: "/api/openapi.json",
+      mcp: "/api/mcp",
       tools,
     },
     {

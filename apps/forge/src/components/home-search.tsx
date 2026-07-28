@@ -1,16 +1,12 @@
 "use client";
 
 import type { ForgeToolSummary } from "@nebutra/forge-runtime";
-import { isChineseLocale } from "@nebutra/i18n/locales";
 import { MagnifyingGlass } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
-
-function pickBilingual(locale: string, fields: { zh: string; en: string }): string {
-  return isChineseLocale(locale) ? fields.zh : fields.en;
-}
+import { pickBilingual } from "@/lib/bilingual";
 
 export function HomeSearch({ tools }: { tools: readonly ForgeToolSummary[] }) {
   const [q, setQ] = useState("");

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel, RunnerSelect } from "@/components/runner-ui";
 
@@ -25,14 +26,8 @@ async function invokeTool(
   return { ok: true, output: body.output ?? {} };
 }
 
-const CATEGORY_ZH: Record<string, string> = {
-  underweight: "偏瘦",
-  normal: "正常",
-  overweight: "超重",
-  obese: "肥胖",
-};
-
 export function BmiRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [heightCm, setHeightCm] = useState("170");
   const [weightKg, setWeightKg] = useState("65");
   const [bmi, setBmi] = useState<number | null>(null);
@@ -40,13 +35,21 @@ export function BmiRunner({ toolId }: { toolId: string }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const categoryLabel = (c: string) => {
+    if (c === "underweight") return t("bmi.underweight");
+    if (c === "normal") return t("bmi.normal");
+    if (c === "overweight") return t("bmi.overweight");
+    if (c === "obese") return t("bmi.obese");
+    return c;
+  };
+
   const run = async () => {
     setLoading(true);
     setError("");
     const h = Number(heightCm);
     const w = Number(weightKg);
     if (!Number.isFinite(h) || h <= 0 || !Number.isFinite(w) || w <= 0) {
-      setError("请输入有效的身高（cm）与体重（kg）");
+      setError(t("bmi.invalid"));
       setLoading(false);
       return;
     }
@@ -64,7 +67,7 @@ export function BmiRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
-          label="身高 (cm)"
+          label={t("bmi.height")}
           id="bmi-height"
           type="number"
           min={50}
@@ -75,7 +78,7 @@ export function BmiRunner({ toolId }: { toolId: string }) {
           className="font-mono tabular-nums"
         />
         <Input
-          label="体重 (kg)"
+          label={t("bmi.weight")}
           id="bmi-weight"
           type="number"
           min={10}
@@ -87,23 +90,22 @@ export function BmiRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "计算中…" : "计算 BMI"}
+        {loading ? t("bmi.computing") : t("bmi.compute")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {bmi != null ? (
         <RunnerPanel>
           <p className="text-3xl font-semibold tabular-nums tracking-tight">{bmi}</p>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">
-            {CATEGORY_ZH[category] ?? category}
-          </p>
+          <p className="mt-1 text-sm text-[var(--neutral-11)]">{categoryLabel(category)}</p>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>WHO BMI · 与 API 同一路径 · 仅供参考，非医疗诊断</RunnerNote>
+      <RunnerNote>{t("bmi.note")}</RunnerNote>
     </div>
   );
 }
 
 export function PercentageRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [mode, setMode] = useState<"percent_of" | "is_what_percent">("percent_of");
   const [a, setA] = useState("20");
   const [b, setB] = useState("150");
@@ -117,7 +119,7 @@ export function PercentageRunner({ toolId }: { toolId: string }) {
     const na = Number(a);
     const nb = Number(b);
     if (!Number.isFinite(na) || !Number.isFinite(nb)) {
-      setError("请输入有效数字");
+      setError(t("percentage.invalid"));
       setLoading(false);
       return;
     }
@@ -133,17 +135,17 @@ export function PercentageRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <RunnerSelect
-        label="计算方式"
+        label={t("percentage.mode")}
         id="pct-mode"
         value={mode}
         onChange={(v) => setMode(v as "percent_of" | "is_what_percent")}
       >
-        <option value="percent_of">a% 的 b 是多少</option>
-        <option value="is_what_percent">a 是 b 的百分之几</option>
+        <option value="percent_of">{t("percentage.percentOf")}</option>
+        <option value="is_what_percent">{t("percentage.isWhat")}</option>
       </RunnerSelect>
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
-          label={mode === "percent_of" ? "百分比 a" : "数值 a"}
+          label={mode === "percent_of" ? t("percentage.percentA") : t("percentage.valueA")}
           id="pct-a"
           type="number"
           value={a}
@@ -151,7 +153,7 @@ export function PercentageRunner({ toolId }: { toolId: string }) {
           className="font-mono tabular-nums"
         />
         <Input
-          label={mode === "percent_of" ? "基数 b" : "基数 b"}
+          label={t("percentage.baseB")}
           id="pct-b"
           type="number"
           value={b}
@@ -160,7 +162,7 @@ export function PercentageRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "计算中…" : "计算"}
+        {loading ? t("percentage.computing") : t("percentage.compute")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {result != null ? (
@@ -171,7 +173,7 @@ export function PercentageRunner({ toolId }: { toolId: string }) {
           </p>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("percentage.note")}</RunnerNote>
     </div>
   );
 }
@@ -179,6 +181,7 @@ export function PercentageRunner({ toolId }: { toolId: string }) {
 const SIZE_UNITS = ["B", "KB", "MB", "GB", "TB"] as const;
 
 export function DataSizeRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [value, setValue] = useState("1024");
   const [from, setFrom] = useState<(typeof SIZE_UNITS)[number]>("MB");
   const [to, setTo] = useState<(typeof SIZE_UNITS)[number]>("GB");
@@ -191,7 +194,7 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
     setError("");
     const n = Number(value);
     if (!Number.isFinite(n)) {
-      setError("请输入有效数值");
+      setError(t("dataSize.invalid"));
       setLoading(false);
       return;
     }
@@ -207,7 +210,7 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <Input
-        label="数值"
+        label={t("dataSize.value")}
         id="data-size-value"
         type="number"
         value={value}
@@ -216,7 +219,7 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
       />
       <div className="grid gap-3 sm:grid-cols-2">
         <RunnerSelect
-          label="从"
+          label={t("common.from")}
           id="data-size-from"
           value={from}
           onChange={(v) => setFrom(v as (typeof SIZE_UNITS)[number])}
@@ -228,7 +231,7 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
           ))}
         </RunnerSelect>
         <RunnerSelect
-          label="到"
+          label={t("common.to")}
           id="data-size-to"
           value={to}
           onChange={(v) => setTo(v as (typeof SIZE_UNITS)[number])}
@@ -241,7 +244,7 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
         </RunnerSelect>
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "换算中…" : "换算"}
+        {loading ? t("dataSize.converting") : t("dataSize.convert")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {result != null ? (
@@ -250,16 +253,17 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
             {result} {to}
           </p>
           <p className="mt-1 text-xs text-[var(--neutral-10)]">
-            {value} {from} → 1024 进制
+            {t("dataSize.binary", { value, from })}
           </p>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>二进制单位（1 KB = 1024 B）· 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("dataSize.note")}</RunnerNote>
     </div>
   );
 }
 
 export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const [amount, setAmount] = useState("1234.56");
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
@@ -270,7 +274,7 @@ export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
     setError("");
     const n = Number(amount);
     if (!Number.isFinite(n) || n < 0) {
-      setError("请输入非负金额");
+      setError(t("rmb.invalid"));
       setLoading(false);
       return;
     }
@@ -286,7 +290,7 @@ export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <Input
-        label="金额（元）"
+        label={t("rmb.amount")}
         id="rmb-amount"
         type="number"
         min={0}
@@ -298,7 +302,7 @@ export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
       />
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-          {loading ? "转换中…" : "转大写"}
+          {loading ? t("rmb.converting") : t("rmb.convert")}
         </Button>
         <Button
           type="button"
@@ -306,7 +310,7 @@ export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
           onClick={() => void navigator.clipboard.writeText(result)}
           disabled={!result}
         >
-          复制
+          {t("common.copy")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
@@ -315,12 +319,13 @@ export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
           <p className="text-lg leading-relaxed tracking-wide">{result}</p>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>中文发票金额大写 · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("rmb.note")}</RunnerNote>
     </div>
   );
 }
 
 export function DateDiffRunner({ toolId }: { toolId: string }) {
+  const t = useTranslations("runners");
   const today = new Date().toISOString().slice(0, 10);
   const [from, setFrom] = useState(today);
   const [to, setTo] = useState(today);
@@ -344,14 +349,14 @@ export function DateDiffRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
-          label="起始日期"
+          label={t("dateDiff.from")}
           id="date-diff-from"
           type="date"
           value={from}
           onChange={(e) => setFrom(e.target.value)}
         />
         <Input
-          label="结束日期"
+          label={t("dateDiff.to")}
           id="date-diff-to"
           type="date"
           value={to}
@@ -359,21 +364,23 @@ export function DateDiffRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? "计算中…" : "计算间隔"}
+        {loading ? t("dateDiff.computing") : t("dateDiff.compute")}
       </Button>
       <RunnerError>{error}</RunnerError>
       {days != null ? (
         <RunnerPanel>
           <p className="text-3xl font-semibold tabular-nums tracking-tight">
             {days}
-            <span className="ml-2 text-base font-normal text-[var(--neutral-11)]">天</span>
+            <span className="ml-2 text-base font-normal text-[var(--neutral-11)]">
+              {t("dateDiff.days")}
+            </span>
           </p>
           <p className="mt-1 text-xs text-[var(--neutral-10)]">
             {from} → {to}
           </p>
         </RunnerPanel>
       ) : null}
-      <RunnerNote>ECMAScript Date · 与 API 同一路径</RunnerNote>
+      <RunnerNote>{t("dateDiff.note")}</RunnerNote>
     </div>
   );
 }

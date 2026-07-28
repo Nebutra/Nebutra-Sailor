@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "경로",
-    "labNotice": "실험실 기능: 데이터 또는 사전 커버리지가 제한적이며, 결과는 참고용입니다.",
     "workspace": "작업 공간",
     "workspaceHint": "로컬 또는 서버 · API와 동일한 경로",
     "api": "API",

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
@@ -10,9 +11,9 @@ export function ImageToolRunner({
   mode = "compress",
 }: {
   toolId: string;
-  /** Hint for defaults / labels — all three tools share BufferInput. */
   mode?: "compress" | "resize" | "convert";
 }) {
+  const t = useTranslations("runners");
   const [fileName, setFileName] = useState("");
   const [base64, setBase64] = useState("");
   const [format, setFormat] = useState<"webp" | "jpeg" | "png">(
@@ -51,7 +52,7 @@ export function ImageToolRunner({
 
   const run = async () => {
     if (!base64) {
-      setError("请先选择图片");
+      setError(t("imageTool.needFile"));
       return;
     }
     setLoading(true);
@@ -116,6 +117,13 @@ export function ImageToolRunner({
   const ratio =
     inputBytes > 0 && resultMeta ? Math.round((resultMeta.bytes / inputBytes) * 100) : null;
 
+  const actionLabel =
+    mode === "resize"
+      ? t("imageTool.resize")
+      : mode === "convert"
+        ? t("imageTool.convert")
+        : t("imageTool.compress");
+
   return (
     <div className="space-y-4">
       {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
@@ -136,14 +144,17 @@ export function ImageToolRunner({
         />
         <p>
           {fileName
-            ? `已选：${fileName}（${(inputBytes / 1024).toFixed(1)} KB）`
-            : "拖拽图片到此处，或点击选择"}
+            ? t("imageTool.selected", {
+                name: fileName,
+                kb: (inputBytes / 1024).toFixed(1),
+              })
+            : t("imageTool.drop")}
         </p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <RunnerSelect
-          label="输出格式"
+          label={t("imageTool.format")}
           id="image-format"
           value={format}
           onChange={(v) => setFormat(v as typeof format)}
@@ -153,7 +164,7 @@ export function ImageToolRunner({
           <option value="png">png</option>
         </RunnerSelect>
         <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-          <span className="text-xs font-medium">质量 {quality}</span>
+          <span className="text-xs font-medium">{t("imageTool.quality", { n: quality })}</span>
           <input
             data-allow-native
             type="range"
@@ -165,18 +176,18 @@ export function ImageToolRunner({
           />
         </label>
         <Input
-          label="最大宽"
+          label={t("imageTool.maxW")}
           id="image-width"
           type="number"
-          placeholder={mode === "resize" ? "如 1280" : "可选"}
+          placeholder={mode === "resize" ? t("imageTool.resizeEg") : t("imageTool.optional")}
           value={width}
           onChange={(e) => setWidth(e.target.value)}
         />
         <Input
-          label="最大高"
+          label={t("imageTool.maxH")}
           id="image-height"
           type="number"
-          placeholder="可选"
+          placeholder={t("imageTool.optional")}
           value={height}
           onChange={(e) => setHeight(e.target.value)}
         />
@@ -184,16 +195,10 @@ export function ImageToolRunner({
 
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading
-            ? "处理中…"
-            : mode === "resize"
-              ? "缩放"
-              : mode === "convert"
-                ? "转换格式"
-                : "压缩"}
+          {loading ? t("imageTool.processing") : actionLabel}
         </Button>
         <Button type="button" variant="outline" disabled={!previewOut} onClick={download}>
-          下载结果
+          {t("imageTool.download")}
         </Button>
       </div>
 
@@ -201,20 +206,22 @@ export function ImageToolRunner({
 
       {resultMeta ? (
         <RunnerNote>
-          输出 {(resultMeta.bytes / 1024).toFixed(1)} KB
-          {resultMeta.width && resultMeta.height
-            ? ` · ${resultMeta.width}×${resultMeta.height}`
-            : null}
-          {ratio !== null ? ` · 约为原图 ${ratio}%` : null}
-          {" · "}
-          {resultMeta.contentType}
+          {t("imageTool.outMeta", {
+            kb: (resultMeta.bytes / 1024).toFixed(1),
+            dims:
+              resultMeta.width && resultMeta.height
+                ? t("imageTool.dims", { w: resultMeta.width, h: resultMeta.height })
+                : "",
+            ratio: ratio !== null ? t("imageTool.ratio", { pct: ratio }) : "",
+            type: resultMeta.contentType,
+          })}
         </RunnerNote>
       ) : null}
 
       <div className="grid gap-3 sm:grid-cols-2">
         {previewIn ? (
           <div>
-            <p className="mb-1 text-xs text-[var(--neutral-10)]">原图</p>
+            <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.original")}</p>
             <img
               src={previewIn}
               alt="input preview"
@@ -224,7 +231,7 @@ export function ImageToolRunner({
         ) : null}
         {previewOut ? (
           <div>
-            <p className="mb-1 text-xs text-[var(--neutral-10)]">结果</p>
+            <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.result")}</p>
             <img
               src={previewOut}
               alt="output preview"
@@ -234,7 +241,7 @@ export function ImageToolRunner({
         ) : null}
       </div>
 
-      <RunnerNote>引擎：sharp（libvips）· 服务端处理 · 与 API 同一路径（imageBase64）</RunnerNote>
+      <RunnerNote>{t("imageTool.note")}</RunnerNote>
     </div>
   );
 }

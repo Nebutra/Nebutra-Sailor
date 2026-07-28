@@ -2,6 +2,7 @@
 
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput, RunnerSelect } from "@/components/runner-ui";
 
@@ -84,9 +85,11 @@ function defaultFormat(output: Record<string, unknown>): string {
 export function GenericInvokeRunner({
   toolId,
   fields,
-  note = "与 API 同一 invoke 路径 · OSS 引擎",
+  note,
   formatOutput = defaultFormat,
 }: GenericInvokeRunnerProps) {
+  const t = useTranslations("runners.common");
+  const resolvedNote = note ?? t("sameAsApi");
   const [values, setValues] = useState<Record<string, string | boolean>>(() => {
     const init: Record<string, string | boolean> = {};
     for (const f of fields) {
@@ -131,7 +134,7 @@ export function GenericInvokeRunner({
       if (f.kind === "number") {
         const n = Number(raw);
         if (!Number.isFinite(n)) {
-          setError(`${f.label} 需为数字`);
+          setError(t("mustBeNumber", { label: f.label }));
           setLoading(false);
           return;
         }
@@ -204,7 +207,7 @@ export function GenericInvokeRunner({
                 onChange={(e) => void onFile(f.key, e.target.files?.[0] ?? null)}
               />
               {values[f.key] ? (
-                <p className="text-xs text-[var(--neutral-11)]">已加载 Base64 载荷</p>
+                <p className="text-xs text-[var(--neutral-11)]">{t("base64Loaded")}</p>
               ) : null}
             </div>
           );
@@ -238,7 +241,7 @@ export function GenericInvokeRunner({
       })}
       <div className="flex flex-wrap items-center gap-2">
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-          {loading ? "运行中…" : "运行"}
+          {loading ? t("running") : t("run")}
         </Button>
         {result ? (
           <Button
@@ -251,7 +254,7 @@ export function GenericInvokeRunner({
             }}
           >
             {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            复制
+            {copied ? t("copied") : t("copy")}
           </Button>
         ) : null}
       </div>
@@ -260,12 +263,12 @@ export function GenericInvokeRunner({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={previewUrl}
-          alt="output preview"
+          alt={t("outputPreview")}
           className="max-h-64 rounded border border-[var(--neutral-6)]"
         />
       ) : null}
       {result ? <RunnerOutput>{result}</RunnerOutput> : null}
-      <RunnerNote>{note}</RunnerNote>
+      <RunnerNote>{resolvedNote}</RunnerNote>
     </div>
   );
 }

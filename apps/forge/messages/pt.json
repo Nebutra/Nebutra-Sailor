@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Capacidade de laboratório: cobertura de dados ou dicionário limitada; os resultados são apenas para referência.",
     "workspace": "Área de trabalho",
     "workspaceHint": "Local ou servidor · mesmo caminho da API",
     "api": "API",

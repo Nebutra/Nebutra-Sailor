@@ -35,7 +35,6 @@ export const sha256Tool: ForgeToolDefinition<Sha256Input, Sha256Output> = {
     zh: "sha256在线,哈希计算",
     en: "sha256 hash online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: (input) => ({
     algorithm: "sha256" as const,

@@ -1,22 +1,15 @@
 "use client";
 
 import type { ForgeToolSummary } from "@nebutra/forge-runtime";
-import { isChineseLocale } from "@nebutra/i18n/locales";
 import { ArrowRight } from "@nebutra/icons";
 import { Card } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { LabBadge } from "@/components/lab-badge";
-
-/** Bilingual registry fields until tools ship full PRODUCT_LANGUAGES catalogs. */
-function pickBilingual(locale: string, fields: { zh: string; en: string }): string {
-  return isChineseLocale(locale) ? fields.zh : fields.en;
-}
+import { pickBilingual } from "@/lib/bilingual";
 
 export function ToolCard({ tool }: { tool: ForgeToolSummary }) {
   const t = useTranslations("categories");
   const locale = useLocale();
-  const isLab = tool.sotaStatus === "lab";
   const categoryLabel = t.has(`${tool.category}.label` as never)
     ? t(`${tool.category}.label` as never)
     : tool.category;
@@ -30,7 +23,6 @@ export function ToolCard({ tool }: { tool: ForgeToolSummary }) {
         <div className="mb-3 flex items-start justify-between gap-2">
           <span className="flex flex-wrap items-center gap-1.5 text-xs font-medium tracking-wide text-muted-foreground">
             {categoryLabel}
-            {isLab ? <LabBadge /> : null}
           </span>
           <ArrowRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
         </div>

@@ -2,12 +2,18 @@
 
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Tabs, TabsList, TabsTrigger, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
 type CodecKind = "url" | "html" | "hex";
 
-function runLocal(kind: CodecKind, text: string, mode: "encode" | "decode"): string {
+function runLocal(
+  kind: CodecKind,
+  text: string,
+  mode: "encode" | "decode",
+  hexInvalid: string,
+): string {
   if (kind === "url") {
     return mode === "encode" ? encodeURIComponent(text) : decodeURIComponent(text);
   }
@@ -27,14 +33,13 @@ function runLocal(kind: CodecKind, text: string, mode: "encode" | "decode"): str
       .replace(/&#39;/g, "'")
       .replace(/&amp;/g, "&");
   }
-  // hex — browser TextEncoder / Uint8Array
   if (mode === "encode") {
     const bytes = new TextEncoder().encode(text);
     return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
   }
   const clean = text.replace(/\s/g, "");
   if (!/^[0-9a-fA-F]*$/.test(clean) || clean.length % 2 !== 0) {
-    throw new Error("不是合法的十六进制字符串");
+    throw new Error(hexInvalid);
   }
   const bytes = new Uint8Array(clean.length / 2);
   for (let i = 0; i < clean.length; i += 2) {
@@ -44,22 +49,16 @@ function runLocal(kind: CodecKind, text: string, mode: "encode" | "decode"): str
 }
 
 const SAMPLES: Record<CodecKind, string> = {
-  url: "https://nebutra.com/path?q=你好",
+  url: "https://nebutra.com/path?q=hello",
   html: `<p class="x">Hello & "Nebutra"</p>`,
-  hex: "Hello Nebutra 你好",
-};
-
-const NOTES: Record<CodecKind, string> = {
-  url: "encodeURIComponent / decodeURIComponent · 与 API 同一路径",
-  html: "HTML 实体映射 · 与 API 同一路径",
-  hex: "UTF-8 ↔ hex · 与 API 同一路径",
+  hex: "Hello Nebutra",
 };
 
 /**
  * Encode/decode workspace for url / html-entities / hex.
- * Replaces incorrect Base64Runner reuse for url & html.
  */
 export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecKind }) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(SAMPLES[kind]);
   const [mode, setMode] = useState<"encode" | "decode">("encode");
   const [result, setResult] = useState("");
@@ -67,11 +66,18 @@ export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecK
   const [note, setNote] = useState("");
   const [copied, setCopied] = useState(false);
 
+  const kindNote =
+    kind === "url"
+      ? t("codec.noteUrl")
+      : kind === "html"
+        ? t("codec.noteHtml")
+        : t("codec.noteHex");
+
   const local = () => {
     setError("");
     try {
-      setResult(runLocal(kind, text, mode));
-      setNote("本地运行");
+      setResult(runLocal(kind, text, mode, t("codec.hexInvalid")));
+      setNote(t("codec.localNote"));
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -79,8 +85,7 @@ export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecK
 
   const server = async () => {
     setError("");
-    // hex API returns { encode, decode } without mode — adapt
-    const input = kind === "hex" ? { text: mode === "encode" ? text : text } : { text, mode };
+    const input = kind === "hex" ? { text } : { text, mode };
 
     const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
       method: "POST",
@@ -106,7 +111,7 @@ export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecK
       } else {
         const d = body.output?.decode;
         if (d == null) {
-          setError("服务端无法将输入解码为 UTF-8（需合法 hex）");
+          setError(t("codec.hexDecodeFail"));
           return;
         }
         setResult(d);
@@ -114,7 +119,7 @@ export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecK
     } else {
       setResult(body.output?.result ?? "");
     }
-    setNote("服务端 · 与 API 同一路径");
+    setNote(t("codec.serverNote"));
   };
 
   const copy = async () => {
@@ -134,16 +139,16 @@ export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecK
           shape="pill"
         >
           <TabsList>
-            <TabsTrigger value="encode">编码</TabsTrigger>
-            <TabsTrigger value="decode">解码</TabsTrigger>
+            <TabsTrigger value="encode">{t("common.encode")}</TabsTrigger>
+            <TabsTrigger value="decode">{t("common.decode")}</TabsTrigger>
           </TabsList>
         </Tabs>
-        <RunnerNote>{mode === "encode" ? "文本 → 编码" : "编码 → 文本"}</RunnerNote>
+        <RunnerNote>{mode === "encode" ? t("codec.encodeDir") : t("codec.decodeDir")}</RunnerNote>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <Textarea
-          label="输入"
+          label={t("common.input")}
           id={`${kind}-input`}
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -153,7 +158,9 @@ export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecK
         />
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-[var(--neutral-11)]">输出</span>
+            <span className="text-xs font-medium text-[var(--neutral-11)]">
+              {t("common.output")}
+            </span>
             <Button
               type="button"
               variant="ghost"
@@ -163,31 +170,33 @@ export function CodecModeRunner({ toolId, kind }: { toolId: string; kind: CodecK
             >
               {copied ? (
                 <>
-                  <Check className="h-3.5 w-3.5" /> 已复制
+                  <Check className="h-3.5 w-3.5" /> {t("common.copied")}
                 </>
               ) : (
                 <>
-                  <Copy className="h-3.5 w-3.5" /> 复制
+                  <Copy className="h-3.5 w-3.5" /> {t("common.copy")}
                 </>
               )}
             </Button>
           </div>
           <RunnerOutput className="min-h-[220px] whitespace-pre-wrap break-all">
-            {result || <span className="text-[var(--neutral-9)]">结果会显示在这里</span>}
+            {result || (
+              <span className="text-[var(--neutral-9)]">{t("common.outputPlaceholder")}</span>
+            )}
           </RunnerOutput>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
         <Button type="button" variant="ink" onClick={local}>
-          本地运行
+          {t("common.localRun")}
         </Button>
         <Button type="button" variant="outline" onClick={() => void server()}>
-          服务端校验
+          {t("common.serverVerify")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>{note || NOTES[kind]}</RunnerNote>
+      <RunnerNote>{note || kindNote}</RunnerNote>
     </div>
   );
 }

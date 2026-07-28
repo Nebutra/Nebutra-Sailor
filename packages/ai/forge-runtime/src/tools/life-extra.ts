@@ -29,7 +29,6 @@ export const mortgageTool = tool({
     version: "1.0.0",
   },
   seoKeywords: { zh: "房贷计算器,等额本息计算", en: "mortgage calculator amortization" },
-  sotaStatus: "production",
   inputSchema: z.object({
     principal: z.number().positive(),
     annualRatePercent: z.number().min(0).max(100),
@@ -132,7 +131,6 @@ export const kinshipTool = tool({
     version: "0.1.0",
   },
   seoKeywords: { zh: "亲戚称呼,三舅的儿子叫什么", en: "chinese kinship calculator" },
-  sotaStatus: "lab",
   inputSchema: z.object({
     relation: z.string().min(1).max(80),
   }),

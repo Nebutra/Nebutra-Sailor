@@ -40,7 +40,6 @@ export const zhCnTwTool: ForgeToolDefinition<
   meterId: "forge.text.zh_cn_tw",
   engine: { name: "opencc-js", upstream: "https://github.com/nk2028/opencc-js", version: "1.x" },
   seoKeywords: { zh: "简繁转换,繁体字转换在线", en: "simplified traditional chinese converter" },
-  sotaStatus: "production",
   inputSchema: ZhCnTwInput,
   execute: (input) => {
     const mode = input.mode ?? "s2t";
@@ -75,7 +74,6 @@ export const pinyinTool: ForgeToolDefinition<
   meterId: "forge.text.pinyin",
   engine: { name: "pinyin-pro", upstream: "https://github.com/zh-lx/pinyin-pro", version: "3.x" },
   seoKeywords: { zh: "汉字转拼音,拼音转换在线", en: "chinese to pinyin converter online" },
-  sotaStatus: "production",
   inputSchema: PinyinInput,
   execute: (input) => {
     const toneType = input.toneType ?? "symbol";

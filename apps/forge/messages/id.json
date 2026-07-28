@@ -16,7 +16,6 @@
   },
   "tool": {
     "breadcrumbAria": "Breadcrumb",
-    "labNotice": "Kemampuan lab: cakupan data atau kamus terbatas; hasil hanya untuk referensi.",
     "workspace": "Workspace",
     "workspaceHint": "Lokal atau server · jalur sama seperti API",
     "api": "API",

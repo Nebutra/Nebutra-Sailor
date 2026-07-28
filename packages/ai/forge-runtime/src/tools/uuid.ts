@@ -17,25 +17,25 @@ export const uuidTool: ForgeToolDefinition<UuidInput, UuidOutput> = {
   id: "dev/uuid",
   slug: "uuid",
   category: "dev",
-  title: { zh: "UUID 生成", en: "UUID Generator" },
+  title: { zh: "UUID 生成器", en: "UUID Generator" },
   description: {
-    zh: "生成 UUID v4",
+    zh: "生成 UUID v4 标识符",
     en: "Generate UUID v4 identifiers",
   },
   tier: "core",
   sideEffect: "pure",
   runtime: ["client", "server"],
   meterId: "forge.dev.uuid",
+  roots: ["generator"],
   engine: {
     name: "std-uuid",
     upstream: "crypto.randomUUID",
     version: "0.1.0",
   },
   seoKeywords: {
-    zh: "uuid生成器,在线uuid",
-    en: "uuid generator online",
+    zh: "uuid生成器,在线uuid,guid生成",
+    en: "uuid generator, guid generator online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: (input) => {
     const count = input.count ?? 1;

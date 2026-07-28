@@ -43,7 +43,6 @@ export const urlCodecTool: ForgeToolDefinition<UrlCodecInput, UrlCodecOutput> = 
     zh: "url编码,url解码在线",
     en: "url encode decode online",
   },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: runUrlCodec,
   unitCost: 0,

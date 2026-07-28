@@ -36,7 +36,6 @@ export const textDiffTool: ForgeToolDefinition<TextDiffInput, TextDiffOutput> = 
     version: "7.x",
   },
   seoKeywords: { zh: "文本对比,在线diff", en: "text diff online" },
-  sotaStatus: "production",
   inputSchema: InputSchema,
   execute: (input) => {
     const context = input.context ?? 3;
