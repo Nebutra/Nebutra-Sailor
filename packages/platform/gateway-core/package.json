@@ -40,5 +40,11 @@
     "vitest": "catalog:",
     "@vitest/coverage-v8": "catalog:"
   },
-  "license": "AGPL-3.0-only"
+  "license": "AGPL-3.0-only",
+  "imports": {
+    "#tokenizer": {
+      "workerd": "./dist/metering/encoding.workerd.js",
+      "default": "./dist/metering/encoding.node.js"
+    }
+  }
 }

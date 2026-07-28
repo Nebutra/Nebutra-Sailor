@@ -1,5 +1,11 @@
 import { logger } from "@nebutra/logger";
-import { getEncoding, type TiktokenModel } from "js-tiktoken";
+// Type-only, erased at compile time — does not pull the package into a bundle.
+import type { TiktokenModel } from "js-tiktoken";
+// Resolved by the "#tokenizer" condition: Node gets js-tiktoken, workerd gets
+// a stub that returns null so the character heuristic below is used. A direct
+// import would put several megabytes of BPE tables in the Workers bundle, to
+// be parsed inside a startup budget of a few hundred milliseconds.
+import { getEncoding } from "#tokenizer";
 import type { UsageResult } from "../types";
 
 const CHAR_PER_TOKEN_HEURISTIC = 3.5;
@@ -67,6 +73,7 @@ export function countTokens(text: string, model: string): number {
     // model id, so we prefer the raw `getEncoding` path which is guaranteed
     // to work for the encoding names we mapped above.
     const enc = getEncoding(encodingName);
+    if (!enc) return Math.ceil(text.length / CHAR_PER_TOKEN_HEURISTIC);
     return enc.encode(text).length;
   } catch (error) {
     logger.warn("tiktoken-fallback: encoding failed, using char heuristic", {
