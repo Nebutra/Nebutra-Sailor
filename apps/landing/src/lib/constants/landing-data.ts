@@ -203,12 +203,26 @@ export const TREE_DATA: FileNode[] = [
     id: "apps",
     label: "apps",
     path: "apps",
-    tag: "10",
+    tag: "14",
     icon: React.createElement(FolderOpen, {
       className: "h-[15px] w-[15px] text-blue-500 fill-blue-500/20",
     }),
     description: "- Workspace applications",
     children: [
+      {
+        id: "apps-admin",
+        label: "admin",
+        path: "apps/admin",
+        description: "- Internal control plane (admin.nebutra.com)",
+        icon: React.createElement(Shield, { className: "h-4 w-4 text-rose-500" }),
+      },
+      {
+        id: "apps-auth",
+        label: "auth",
+        path: "apps/auth",
+        description: "- Login center for all first-party apps",
+        icon: React.createElement(Key, { className: "h-4 w-4 text-amber-500" }),
+      },
       {
         id: "apps-design-docs",
         label: "design-docs",
@@ -224,6 +238,13 @@ export const TREE_DATA: FileNode[] = [
         icon: React.createElement(Key, { className: "h-4 w-4 text-purple-500" }),
       },
       {
+        id: "apps-forge",
+        label: "forge",
+        path: "apps/forge",
+        description: "- Human tool station + Agent invoke API",
+        icon: React.createElement(Settings, { className: "h-4 w-4 text-cyan-500" }),
+      },
+      {
         id: "apps-landing",
         label: "landing",
         path: "apps/landing",
@@ -236,6 +257,13 @@ export const TREE_DATA: FileNode[] = [
         path: "apps/mail-preview",
         description: "- Email template preview and export surface",
         icon: React.createElement(Mail, { className: "h-4 w-4 text-red-500" }),
+      },
+      {
+        id: "apps-router",
+        label: "router",
+        path: "apps/router",
+        description: "- OpenAI-compatible model relay",
+        icon: React.createElement(GitBranch, { className: "h-4 w-4 text-violet-500" }),
       },
       {
         id: "apps-sailor-docs",
@@ -264,6 +292,13 @@ export const TREE_DATA: FileNode[] = [
         path: "apps/studio",
         description: "- Sanity Studio CMS v5",
         icon: React.createElement(PenTool, { className: "h-4 w-4 text-red-500" }),
+      },
+      {
+        id: "apps-typelens",
+        label: "typelens",
+        path: "apps/typelens",
+        description: "- Type specimen collection UI",
+        icon: React.createElement(FileText, { className: "h-4 w-4 text-lime-500" }),
       },
       {
         id: "apps-web",
