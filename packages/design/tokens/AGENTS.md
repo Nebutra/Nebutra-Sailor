@@ -16,9 +16,13 @@ base semantic CSS variables and the light/dark theme-provider surface.
 
 ## Contract Boundaries
 
-- Treat `styles.css` as the single source of truth for runtime token names,
-  semantic aliases, and Tailwind-consumable CSS variables. Do not redefine core
-  token names in apps or sibling packages.
+- `styles.css` is where you *read* the authoritative set of runtime token names,
+  semantic aliases and Tailwind-consumable variables — apps and sibling packages
+  must not redefine those names. It is **not** where you write: the file is
+  regenerated from `@nebutra/design-tokens`, so an edit here is erased by the
+  next build of any dependent package, silently and without an error. Change
+  `packages/design/design-tokens/tokens/` (light and dark as a pair) and rebuild.
+  `recipe.css` in this package *is* hand-maintained and safe to edit.
 - Keep `THEME_IDS` and `DEFAULT_THEME` in `src/index.ts` aligned with the
   actual light/dark behavior implemented in `styles.css`.
 - This package owns the base light/dark token system only. Do not move named
