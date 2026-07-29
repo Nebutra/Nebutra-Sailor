@@ -2,7 +2,9 @@ import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getAllPosts } from "@/lib/blog";
 
-export const revalidate = 3600;
+// Cache lifetime is the Cache-Control header below, not a route segment
+// config: `revalidate` is rejected outright under cacheComponents, and this
+// handler already states the same thing in the response it returns.
 
 /** JSON Feed 1.1 (G52). */
 export async function GET() {

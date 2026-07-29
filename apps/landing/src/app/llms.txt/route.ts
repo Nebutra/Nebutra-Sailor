@@ -8,7 +8,9 @@ import { getSiteUrl } from "@/lib/seo/site-routes";
  *
  * Spec convention: https://llmstxt.org/
  */
-export const revalidate = false;
+// Cache lifetime is the Cache-Control header below, not a route segment
+// config: `revalidate` is rejected outright under cacheComponents, and this
+// handler already states the same thing in the response it returns.
 
 export function GET() {
   const base = getSiteUrl();
