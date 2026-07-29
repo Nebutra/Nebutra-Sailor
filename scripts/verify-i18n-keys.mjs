@@ -311,8 +311,17 @@ const ADVISORY_CEILINGS = {
  */
 const CRITICAL_IDENTICAL_ENFORCED = new Set(ENFORCED_LOCALES);
 
-// ICU placeholder pattern. Matches `{name}`, `{count, number}`, `{n, plural, one {...}}`, etc.
-const PLACEHOLDER_RE = /\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
+// ICU placeholder pattern. Matches `{name}`, `{count, number}`, `{n, plural, one {...}}`.
+//
+// The trailing `(?=\s*[},])` is load-bearing: an ICU argument name is always
+// followed by `}` or `,`. Without it, the sub-message bodies of a plural match
+// too — in
+//   {count, plural, =0 {No sessions} other {# recent sessions}}
+// the branch `{No sessions}` yielded a placeholder called `No`, so the checker
+// demanded the English word "No" appear in all 30 translations and reported a
+// dropped placeholder in every one of them. That false positive blocked pushes
+// on a string that was correctly translated.
+const PLACEHOLDER_RE = /\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=[},])/g;
 
 /**
  * Brand-variable placeholder names injected by injectBrandVars() in
