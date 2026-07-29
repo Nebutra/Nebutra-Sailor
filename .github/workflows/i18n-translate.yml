@@ -72,18 +72,22 @@ concurrency:
 
 jobs:
   translate:
-    # One job per catalog. Previously all four ran sequentially inside a single
-    # 90-minute job and nothing was committed until the end, so a timeout threw
-    # the whole run away — which is exactly what happened on 2026-07-29 after
-    # Forge grew 1084 keys. Now each catalog gets its own budget, they run in
-    # parallel, and a slow one cannot starve the others.
-    name: Translate ${{ matrix.catalog }}
+    # Catalogs run SEQUENTIALLY, on purpose.
+    #
+    # A per-catalog matrix was tried on 2026-07-29 and made things worse: four
+    # jobs share one API key, so the provider's requests-per-minute budget was
+    # exhausted in three seconds, every model was benched, and the run aborted
+    # having translated nothing. Parallelism cannot beat an RPM cap — it only
+    # converts a slow pipeline into 429s.
+    #
+    # The real problem the matrix was aiming at — a timeout discarding the whole
+    # run — is fixed instead by committing after each catalog, so whatever
+    # finished survives.
+    name: Translate all product catalogs
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-    strategy:
-      fail-fast: false
-      matrix:
-        catalog: ${{ fromJSON((github.event.inputs.catalog == null || github.event.inputs.catalog == 'all') && '["landing","web","forge","router"]' || format('["{0}"]', github.event.inputs.catalog)) }}
+    # Sequential over 4 catalogs x 30 locales at a throttled request rate. The
+    # old 90 was below the real duration, so the job was killed mid-flight.
+    timeout-minutes: 330
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -161,59 +165,70 @@ jobs:
       - name: Seed missing PRODUCT_LANGUAGES catalogs
         run: node scripts/i18n-seed-product-locales.mjs
 
-      - name: Translate ${{ matrix.catalog }}
-        # continue-on-error: Token Plan quota may exhaust mid-run; still commit partial catalogs.
-        if: steps.smoke.outputs.quota != 'exhausted'
-        continue-on-error: true
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Translate each catalog, committing as it finishes
+        # No continue-on-error: an aborted translation used to be reported as a
+        # green run. Per-catalog failure is caught and recorded below, but the
+        # step still tells the truth about what happened.
         env:
           SENSENOVA_API_KEY: ${{ secrets.SENSENOVA_API_KEY }}
           SENSENOVA_BASE_URL: https://token.sensenova.cn/v1
-          # Multi-model rotation (u1-fast + deepseek-v4-flash + flash-lite).
-          # Override via repo variable SENSENOVA_TRANSLATE_MODELS if needed.
-          SENSENOVA_TRANSLATE_MODELS: ${{ vars.SENSENOVA_TRANSLATE_MODELS || 'deepseek-v4-flash,sensenova-u1-fast,sensenova-6.7-flash-lite' }}
-          # Low concurrency avoids Token Plan burst 429s that look like hard quota.
+          # sensenova-u1-fast is not on this plan (404 "bad id", retired every
+          # run) — kept out of the default pool rather than rediscovered daily.
+          SENSENOVA_TRANSLATE_MODELS: ${{ vars.SENSENOVA_TRANSLATE_MODELS || 'deepseek-v4-flash,sensenova-6.7-flash-lite' }}
           CATALOG_CONCURRENCY: "1"
           LOCALE_CONCURRENCY: "2"
           CONCURRENCY: ${{ github.event.inputs.concurrency || '3' }}
           BATCH_SIZE: ${{ github.event.inputs.batch_size || '12' }}
           MAX_RETRIES: "5"
         run: |
+          set -uo pipefail
           EXTRA=()
-          if [ "${{ github.event.inputs.force }}" = "true" ]; then
-            EXTRA+=(--force)
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then EXTRA+=(--force); fi
+          CAT="${{ github.event.inputs.catalog || 'all' }}"
+          if [ "$CAT" = "all" ] || [ -z "$CAT" ]; then
+            # Product shells first: if the budget runs out, the surfaces users
+            # are actually looking at are the ones already committed.
+            CATALOGS="forge router web landing"
+          else
+            CATALOGS="$CAT"
           fi
-          node scripts/i18n-translate-sensenova.mjs --catalog "${{ matrix.catalog }}" "${EXTRA[@]}"
 
-      # Deterministic, no API — undoes known model over-translations (legal entity,
-      # Webhooks/Discord/Tokens exact leaves, etc.) before any PR is opened.
-      - name: Glossary post-process (deterministic)
-        run: node scripts/i18n-glossary-postprocess.mjs
+          git checkout -B chore/i18n-auto-translate
+          failed=""
+          for c in $CATALOGS; do
+            echo "::group::translate $c"
+            if node scripts/i18n-translate-sensenova.mjs --catalog "$c" "${EXTRA[@]}"; then
+              node scripts/i18n-glossary-postprocess.mjs --catalog "$c" || true
+              git add -A apps packages i18n-confirmed-identical.json 2>/dev/null || true
+              if ! git diff --cached --quiet; then
+                git commit -m "chore(i18n): auto-translate $c via SenseNova"
+                # Push each catalog as it lands: a later timeout or abort can no
+                # longer take finished work with it.
+                git push -f origin chore/i18n-auto-translate
+                echo "committed $c"
+              else
+                echo "no changes for $c"
+              fi
+            else
+              echo "::warning::translation aborted for $c"
+              failed="$failed $c"
+            fi
+            echo "::endgroup::"
+          done
 
-      # Only this catalog's directory. Every job seeds all four, so uploading
-      # all of them would let a seeded-but-untranslated copy overwrite another
-      # job's real translations when the artifacts are merged.
-      - name: Resolve catalog path
-        id: paths
-        run: |
-          case "${{ matrix.catalog }}" in
-            landing) echo "dir=apps/landing/messages" >> "$GITHUB_OUTPUT" ;;
-            web)     echo "dir=packages/platform/i18n/locales" >> "$GITHUB_OUTPUT" ;;
-            forge)   echo "dir=apps/forge/messages" >> "$GITHUB_OUTPUT" ;;
-            router)  echo "dir=apps/router/messages" >> "$GITHUB_OUTPUT" ;;
-            *) echo "::error::unknown catalog ${{ matrix.catalog }}"; exit 1 ;;
-          esac
+          if [ -n "$failed" ]; then
+            echo "::error::catalogs that did not complete:$failed"
+            echo "incomplete=$failed" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
 
-      - name: Upload translated catalog
-        uses: actions/upload-artifact@v4
-        with:
-          name: i18n-${{ matrix.catalog }}
-          path: ${{ steps.paths.outputs.dir }}/*.json
-          if-no-files-found: ignore
-          retention-days: 3
-
-  # Collect whatever finished. A catalog that timed out simply contributes
-  # nothing; the others still reach a PR, which is the property the old
-  # single-job shape did not have.
+  # Runs even when translation aborted part-way: whatever was committed to the
+  # branch still deserves a PR.
   open-pr:
     name: Open or update the locale PR
     needs: translate
@@ -231,31 +246,8 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Download translated catalogs
-        uses: actions/download-artifact@v4
-        with:
-          pattern: i18n-*
-          path: /tmp/i18n-artifacts
-
-      - name: Restore each catalog in place
-        run: |
-          set -euo pipefail
-          restore() {
-            src="/tmp/i18n-artifacts/i18n-$1"
-            [ -d "$src" ] || { echo "no artifact for $1 — catalog did not finish"; return 0; }
-            mkdir -p "$2"
-            cp "$src"/*.json "$2"/
-            echo "restored $1 -> $2"
-          }
-          restore landing apps/landing/messages
-          restore web packages/platform/i18n/locales
-          restore forge apps/forge/messages
-          restore router apps/router/messages
-
-      # Deterministic and API-free — regenerated here rather than carried through
-      # artifacts, where four jobs writing the same shared file would race.
-      - name: Regenerate product-locales + seed shape
-        run: node scripts/i18n-seed-product-locales.mjs
+      - name: Check out the translation branch
+        run: git checkout chore/i18n-auto-translate
 
       - name: Enable pnpm + install for i18n verify
         run: |
@@ -269,52 +261,37 @@ jobs:
         continue-on-error: true
         run: pnpm i18n:check
 
-      # Fixed branch name → updates the same PR on subsequent en pushes (async).
-      # delete-branch: true → remove branch after the PR is merged/closed (no zombies).
-      # Author must be github-actions[bot] so CLA allowlist matches. Without this,
-      # peter-evans attributes commits to the workflow actor (human) and CLA fails.
-      # Labels i18n + automated also skip CLA via .github/workflows/cla.yml.
-      - name: Open or update async locale PR
-        uses: peter-evans/create-pull-request@v7
-        continue-on-error: true
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore(i18n): global auto-translate via SenseNova flash-lite"
-          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-          signoff: false
-          branch: chore/i18n-auto-translate
-          delete-branch: true
-          title: "chore(i18n): global auto-translate (PRODUCT_LANGUAGES wheel)"
-          add-paths: |
-            apps/landing/messages/**
-            packages/platform/i18n/locales/**
-            apps/forge/messages/**
-            apps/router/messages/**
-            packages/platform/i18n/src/product-locales.generated.ts
-            i18n-confirmed-identical.json
-          body: |
-            Automated **async** localization (not on the main CI critical path).
+      # The branch is already pushed by the translate job, so the
+      # create-pull-request action would find nothing to commit and quietly do
+      # nothing. Create it explicitly, and fail loudly when the org setting
+      # forbids it instead of reporting a green run with no PR — that is how
+      # 43k lines of locale fill sat on a branch unnoticed on 2026-07-29.
+      - name: Open or update the locale PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          BRANCH=chore/i18n-auto-translate
+          if ! git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null; then
+            echo "No translation branch — nothing to open."
+            exit 0
+          fi
+          existing=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "PR #$existing already open for $BRANCH — updated by the push."
+            exit 0
+          fi
+          if gh pr create \
+              --base main --head "$BRANCH" \
+              --title "chore(i18n): auto-translate (PRODUCT_LANGUAGES wheel)" \
+              --label i18n --label automated \
+              --body "Automated localization fill. Catalogs are committed one at a time, so a partial run still lands what finished.
 
-            Language wheel SSOT: `@nebutra/i18n` `PRODUCT_LANGUAGES` (~34 locales).
-            Chinese: **zh-Hans** + **zh-Hant** (CLDR multi-script; never bare `zh`).
+          Language wheel SSOT: \`@nebutra/i18n\` \`PRODUCT_LANGUAGES\`. Chinese: **zh-Hans** + **zh-Hant** (never bare \`zh\`).
 
-            | Catalog | Path |
-            |---|---|
-            | landing | `apps/landing/messages` |
-            | web | `packages/platform/i18n/locales` |
-            | forge | `apps/forge/messages` |
-            | router | `apps/router/messages` |
-
-            - Provider: SenseNova Token Plan (`https://token.sensenova.cn/v1`)
-            - Incremental leaves + `i18n-confirmed-identical.json` cache
-            - Deterministic glossary post-process (legal entity, product tokens)
-            - Same branch is **updated** on each en-source push (`chore/i18n-auto-translate`)
-            - Branch is deleted after this PR is merged/closed
-            - **CLA:** labels `i18n` + `automated` skip CLA (see `.github/workflows/cla.yml`)
-
-            Review tip: skim critical locales (zh-Hans, ja) + brand/legal strings.
-            If PR creation is blocked by org policy, merge `chore/i18n-auto-translate` manually.
-          labels: |
-            i18n
-            automated
+          Review focus: values that are still identical to English mean that string was seeded, not translated."; then
+            echo "PR opened."
+          else
+            echo "::error::Could not open the PR. If this says 'GitHub Actions is not permitted to create or approve pull requests', enable that in Settings -> Actions -> General. The translations are safe on '$BRANCH' either way."
+            exit 1
+          fi
