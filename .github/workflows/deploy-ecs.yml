@@ -44,7 +44,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api idp auth design-docs sailor-docs router forge). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api idp auth design-docs sailor-docs router forge admin). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -100,6 +100,7 @@ jobs:
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
       router:      ${{ steps.resolve.outputs.router }}
       forge:       ${{ steps.resolve.outputs.forge }}
+      admin:       ${{ steps.resolve.outputs.admin }}
       any:         ${{ steps.resolve.outputs.any }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -183,6 +184,16 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
+            admin:
+              - 'apps/admin/**'
+              - 'packages/iam/permissions/**'
+              - 'packages/platform/db/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
             forge:
               - 'apps/forge/**'
               - 'packages/ai/forge-runtime/**'
@@ -209,6 +220,7 @@ jobs:
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
           F_ROUTER:       ${{ steps.filter.outputs.router }}
           F_FORGE:        ${{ steps.filter.outputs.forge }}
+          F_ADMIN:        ${{ steps.filter.outputs.admin }}
         run: |
           normalize_apps() {
             printf '%s' "$1" | tr ',\n\t' '    ' | xargs
@@ -234,6 +246,7 @@ jobs:
               echo "sailor-docs=false"
               echo "router=false"
               echo "forge=true"
+              echo "admin=false"
               echo "any=true"
             } >> "$GITHUB_OUTPUT"
             echo "Auto-CI push: deploying forge only"
@@ -246,13 +259,13 @@ jobs:
             unknown_apps=""
             for app in $normalized_apps; do
               case "$app" in
-                landing|web|api|idp|auth|design-docs|sailor-docs|router|forge) ;;
+                landing|web|api|idp|auth|design-docs|sailor-docs|router|forge|admin) ;;
                 *) unknown_apps="$unknown_apps $app" ;;
               esac
             done
 
             if [ -n "$unknown_apps" ]; then
-              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design-docs sailor-docs router forge"
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design-docs sailor-docs router forge admin"
               exit 1
             fi
           fi
@@ -268,6 +281,7 @@ jobs:
               echo "sailor-docs=$(contains_app "$normalized_apps" sailor-docs)"
               echo "router=$(contains_app "$normalized_apps" router)"
               echo "forge=$(contains_app "$normalized_apps" forge)"
+              echo "admin=$(contains_app "$normalized_apps" admin)"
               echo "any=true"
             else
               echo "landing=$F_LANDING"
@@ -279,7 +293,8 @@ jobs:
               echo "sailor-docs=$F_SAILOR_DOCS"
               echo "router=$F_ROUTER"
               echo "forge=$F_FORGE"
-              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" ]] && echo true || echo false)"
+              echo "admin=$F_ADMIN"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
             fi
           } >> "$GITHUB_OUTPUT"
 
