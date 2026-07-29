@@ -3,7 +3,11 @@
   "$description": "Light mode theme — 12-step functional scales (Geist-style) + shadcn HSL semantics + Geist DS scale + elevation. Mirrors :root in @nebutra/tokens/styles.css.",
   "scale": {
     "neutral": {
-      "1": { "$value": "{color.white}", "$type": "color", "$description": "app background" },
+      "1": {
+        "$value": "{color.white}",
+        "$type": "color",
+        "$description": "app background"
+      },
       "2": {
         "$value": "{color.nebutra-neutral.50}",
         "$type": "color",
@@ -28,19 +32,34 @@
         "$value": "{scale.neutral.5}",
         "$type": "color",
         "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp step5 → step9 at t=0.25. The $value here is a placeholder anchor only; the preprocessor overwrites it.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "7": {
         "$value": "{scale.neutral.5}",
         "$type": "color",
         "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "8": {
         "$value": "{scale.neutral.5}",
         "$type": "color",
         "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "9": {
         "$value": "{color.nebutra-neutral.500}",
@@ -64,66 +83,147 @@
       }
     },
     "blue": {
-      "1": { "$value": "{color.nebutra-blue.50}", "$type": "color" },
-      "2": { "$value": "{color.nebutra-blue.100}", "$type": "color" },
-      "3": { "$value": "{color.nebutra-blue.200}", "$type": "color" },
-      "4": { "$value": "{color.nebutra-blue.300}", "$type": "color" },
-      "5": { "$value": "{color.nebutra-blue.400}", "$type": "color" },
+      "1": {
+        "$value": "{color.nebutra-blue.50}",
+        "$type": "color"
+      },
+      "2": {
+        "$value": "{color.nebutra-blue.100}",
+        "$type": "color"
+      },
+      "3": {
+        "$value": "{color.nebutra-blue.200}",
+        "$type": "color"
+      },
+      "4": {
+        "$value": "{color.nebutra-blue.300}",
+        "$type": "color"
+      },
+      "5": {
+        "$value": "{color.nebutra-blue.400}",
+        "$type": "color"
+      },
       "6": {
         "$value": "{scale.blue.5}",
         "$type": "color",
         "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "7": {
         "$value": "{scale.blue.5}",
         "$type": "color",
         "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "8": {
         "$value": "{scale.blue.5}",
         "$type": "color",
         "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "9": {
         "$value": "{color.nebutra-blue.500}",
         "$type": "color",
         "$description": "solid fill — main brand"
       },
-      "10": { "$value": "{color.nebutra-blue.600}", "$type": "color" },
-      "11": { "$value": "{color.nebutra-blue.700}", "$type": "color" },
-      "12": { "$value": "{color.nebutra-blue.900}", "$type": "color" }
+      "10": {
+        "$value": "{color.nebutra-blue.600}",
+        "$type": "color"
+      },
+      "11": {
+        "$value": "{color.nebutra-blue.700}",
+        "$type": "color"
+      },
+      "12": {
+        "$value": "{color.nebutra-blue.900}",
+        "$type": "color"
+      }
     },
     "cyan": {
-      "1": { "$value": "{color.nebutra-cyan.50}", "$type": "color" },
-      "2": { "$value": "{color.nebutra-cyan.100}", "$type": "color" },
-      "3": { "$value": "{color.nebutra-cyan.200}", "$type": "color" },
-      "4": { "$value": "{color.nebutra-cyan.300}", "$type": "color" },
-      "5": { "$value": "{color.nebutra-cyan.400}", "$type": "color" },
+      "1": {
+        "$value": "{color.nebutra-cyan.50}",
+        "$type": "color"
+      },
+      "2": {
+        "$value": "{color.nebutra-cyan.100}",
+        "$type": "color"
+      },
+      "3": {
+        "$value": "{color.nebutra-cyan.200}",
+        "$type": "color"
+      },
+      "4": {
+        "$value": "{color.nebutra-cyan.300}",
+        "$type": "color"
+      },
+      "5": {
+        "$value": "{color.nebutra-cyan.400}",
+        "$type": "color"
+      },
       "6": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
         "$description": "subtle border — DERIVED: bright-scale fallback (|L9−L5| = 0.017 < 0.06), so the anchor is step 10, not step 9. OKLab lerp step5 → step10 at t=0.25.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "7": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
         "$description": "default border — DERIVED: OKLab lerp step5 → step10 at t=0.50 (bright-scale fallback).",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "8": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
         "$description": "hovered border — DERIVED: OKLab lerp step5 → step10 at t=0.75 (bright-scale fallback).",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
-      "9": { "$value": "{color.nebutra-cyan.500}", "$type": "color" },
-      "10": { "$value": "{color.nebutra-cyan.600}", "$type": "color" },
-      "11": { "$value": "{color.nebutra-cyan.700}", "$type": "color" },
-      "12": { "$value": "{color.nebutra-cyan.900}", "$type": "color" }
+      "9": {
+        "$value": "{color.nebutra-cyan.500}",
+        "$type": "color"
+      },
+      "10": {
+        "$value": "{color.nebutra-cyan.600}",
+        "$type": "color"
+      },
+      "11": {
+        "$value": "{color.nebutra-cyan.700}",
+        "$type": "color"
+      },
+      "12": {
+        "$value": "{color.nebutra-cyan.900}",
+        "$type": "color"
+      }
     }
   },
   "shadcn": {
@@ -132,136 +232,330 @@
       "$type": "string",
       "$description": "HSL channel triple — consume via hsl(var(--background))"
     },
-    "foreground": { "$value": "222 47% 11%", "$type": "string" },
-    "card": { "$value": "0 0% 100%", "$type": "string" },
-    "card-foreground": { "$value": "222 47% 11%", "$type": "string" },
-    "popover": { "$value": "0 0% 100%", "$type": "string" },
-    "popover-foreground": { "$value": "222 47% 11%", "$type": "string" },
+    "foreground": {
+      "$value": "222 47% 11%",
+      "$type": "string"
+    },
+    "card": {
+      "$value": "0 0% 100%",
+      "$type": "string"
+    },
+    "card-foreground": {
+      "$value": "222 47% 11%",
+      "$type": "string"
+    },
+    "popover": {
+      "$value": "0 0% 100%",
+      "$type": "string"
+    },
+    "popover-foreground": {
+      "$value": "222 47% 11%",
+      "$type": "string"
+    },
     "primary": {
       "$value": "228 85% 56%",
       "$type": "string",
       "$description": "Softer brand blue. 228 85% 56% resolves to #2f56ee, not the #254bfa this note claimed until 2026-07-28 — the hex was stale and the HSL triple is the shipped value. 5.70:1 on white, so it passes AA as both fill and foreground. The raw --blue-9 (#0033FE) is the identity colour and must not surface on components."
     },
-    "primary-foreground": { "$value": "0 0% 100%", "$type": "string" },
-    "secondary": { "$value": "210 40% 96%", "$type": "string" },
-    "secondary-foreground": { "$value": "222 47% 11%", "$type": "string" },
-    "muted": { "$value": "210 40% 96%", "$type": "string" },
-    "muted-foreground": { "$value": "215 25% 45%", "$type": "string" },
-    "accent": { "$value": "228 100% 97%", "$type": "string" },
+    "primary-foreground": {
+      "$value": "0 0% 100%",
+      "$type": "string"
+    },
+    "secondary": {
+      "$value": "210 40% 96%",
+      "$type": "string"
+    },
+    "secondary-foreground": {
+      "$value": "222 47% 11%",
+      "$type": "string"
+    },
+    "muted": {
+      "$value": "210 40% 96%",
+      "$type": "string"
+    },
+    "muted-foreground": {
+      "$value": "215 25% 45%",
+      "$type": "string"
+    },
+    "accent": {
+      "$value": "228 100% 97%",
+      "$type": "string"
+    },
     "accent-foreground": {
       "$value": "228 85% 56%",
       "$type": "string",
       "$description": "Softer brand blue — desaturated to match --primary, avoids 100% saturation glare on focus/accent"
     },
-    "destructive": { "$value": "0 84% 45%", "$type": "string" },
-    "destructive-foreground": { "$value": "0 0% 100%", "$type": "string" },
+    "destructive": {
+      "$value": "0 84% 45%",
+      "$type": "string"
+    },
+    "destructive-foreground": {
+      "$value": "0 0% 100%",
+      "$type": "string"
+    },
     "destructive-strong": {
       "$value": "0 84% 45%",
       "$type": "string",
       "$description": "Red as FOREGROUND. In light mode --destructive already passes (5.42:1 on white), so this equals it; the token exists so consumers reference one name across themes. In DARK, --destructive is 0 63% 38% = 2.15:1 on --card, unreadable as text — see dark.json. Mirrors --warning-strong."
     },
-    "success": { "$value": "142 71% 29%", "$type": "string" },
-    "success-foreground": { "$value": "0 0% 100%", "$type": "string" },
+    "success": {
+      "$value": "142 71% 29%",
+      "$type": "string"
+    },
+    "success-foreground": {
+      "$value": "0 0% 100%",
+      "$type": "string"
+    },
     "success-strong": {
       "$value": "142 71% 27%",
       "$type": "string",
       "$description": "Green as FOREGROUND. --success (142 71% 29%) is 5.15:1 on white but only 4.49:1 as ink on its own 10% tint — one hundredth under AA, which is where badge green-subtle sat. Darkened two points: 5.71:1 on white, 4.99:1 on the tint, alongside --warning-strong (5.40) and --destructive-strong (5.42) so the three status foregrounds read with the same weight. Completes the trio; use --success for fills with --success-foreground on top."
     },
-    "warning": { "$value": "38 92% 50%", "$type": "string" },
-    "warning-foreground": { "$value": "222 47% 11%", "$type": "string" },
+    "warning": {
+      "$value": "38 92% 50%",
+      "$type": "string"
+    },
+    "warning-foreground": {
+      "$value": "222 47% 11%",
+      "$type": "string"
+    },
     "warning-strong": {
       "$value": "38 92% 30%",
       "$type": "string",
       "$description": "Amber as FOREGROUND on a light surface. --warning is a fill: at 38 92% 50% it is 2.04:1 against --neutral-2, so it is unreadable as text or as an icon stroke. This darkened step is 5.17:1, which sits between --success (4.92) and --destructive (5.19) so the three status colours read with the same weight. Use --warning for fills with --warning-foreground on top; use this for amber text and icons. Destructive and success need no equivalent — they already pass AA as foreground."
     },
-    "info": { "$value": "228 85% 56%", "$type": "string" },
-    "info-foreground": { "$value": "0 0% 100%", "$type": "string" },
-    "border": { "$value": "240 5.9% 90%", "$type": "string" },
-    "input": { "$value": "240 5.9% 90%", "$type": "string" },
+    "info": {
+      "$value": "228 85% 56%",
+      "$type": "string"
+    },
+    "info-foreground": {
+      "$value": "0 0% 100%",
+      "$type": "string"
+    },
+    "border": {
+      "$value": "240 5.9% 90%",
+      "$type": "string"
+    },
+    "input": {
+      "$value": "240 5.9% 90%",
+      "$type": "string"
+    },
     "ring": {
       "$value": "222 47% 11%",
       "$type": "string",
       "$description": "Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring) / 0.5)."
     },
-    "sidebar": { "$value": "210 40% 98%", "$type": "string" },
-    "sidebar-foreground": { "$value": "215 25% 27%", "$type": "string" },
-    "sidebar-primary": { "$value": "228 85% 56%", "$type": "string" },
-    "sidebar-primary-foreground": { "$value": "0 0% 100%", "$type": "string" },
-    "sidebar-accent": { "$value": "228 100% 97%", "$type": "string" },
-    "sidebar-accent-foreground": { "$value": "228 85% 56%", "$type": "string" },
-    "sidebar-border": { "$value": "214 32% 91%", "$type": "string" },
-    "sidebar-ring": { "$value": "228 85% 56%", "$type": "string" },
-    "chart-1": { "$value": "228 100% 50%", "$type": "string" },
-    "chart-2": { "$value": "168 91% 49%", "$type": "string" },
-    "chart-3": { "$value": "263 70% 66%", "$type": "string" },
-    "chart-4": { "$value": "168 91% 70%", "$type": "string" },
-    "chart-5": { "$value": "228 100% 35%", "$type": "string" }
+    "sidebar": {
+      "$value": "210 40% 98%",
+      "$type": "string"
+    },
+    "sidebar-foreground": {
+      "$value": "215 25% 27%",
+      "$type": "string"
+    },
+    "sidebar-primary": {
+      "$value": "228 85% 56%",
+      "$type": "string"
+    },
+    "sidebar-primary-foreground": {
+      "$value": "0 0% 100%",
+      "$type": "string"
+    },
+    "sidebar-accent": {
+      "$value": "228 100% 97%",
+      "$type": "string"
+    },
+    "sidebar-accent-foreground": {
+      "$value": "228 85% 56%",
+      "$type": "string"
+    },
+    "sidebar-border": {
+      "$value": "214 32% 91%",
+      "$type": "string"
+    },
+    "sidebar-ring": {
+      "$value": "228 85% 56%",
+      "$type": "string"
+    },
+    "chart-1": {
+      "$value": "228 100% 50%",
+      "$type": "string"
+    },
+    "chart-2": {
+      "$value": "168 91% 49%",
+      "$type": "string"
+    },
+    "chart-3": {
+      "$value": "263 70% 66%",
+      "$type": "string"
+    },
+    "chart-4": {
+      "$value": "168 91% 70%",
+      "$type": "string"
+    },
+    "chart-5": {
+      "$value": "228 100% 35%",
+      "$type": "string"
+    }
   },
   "ds": {
     "$description": "Geist Design System color scale. sRGB hsla() fallbacks for legacy engines; oklch() overrides emitted via @supports wrapper for ds-gray-*.",
-    "blue-200": { "$value": "oklch(96.29% 0.0195 250.59)", "$type": "color" },
-    "blue-700": { "$value": "oklch(57.61% 0.2508 258.23)", "$type": "color" },
-    "blue-900": { "$value": "oklch(53.18% 0.2399 256.9900584162342)", "$type": "color" },
-    "red-200": { "$value": "oklch(95.41% 0.0299 14.252646656611997)", "$type": "color" },
-    "red-700": { "$value": "oklch(62.56% 0.2524 23.03)", "$type": "color" },
-    "red-900": { "$value": "oklch(54.99% 0.232 25.29)", "$type": "color" },
-    "amber-200": { "$value": "oklch(96.81% 0.0495 90.24227879900472)", "$type": "color" },
-    "amber-700": { "$value": "oklch(81.87% 0.1969 76.46)", "$type": "color" },
-    "amber-900": { "$value": "oklch(52.79% 0.1496 54.65)", "$type": "color" },
-    "green-200": { "$value": "oklch(96.92% 0.037 147.15)", "$type": "color" },
-    "green-700": { "$value": "oklch(64.58% 0.1746 147.27)", "$type": "color" },
-    "green-900": { "$value": "oklch(51.75% 0.1453 147.65)", "$type": "color" },
-    "teal-300": { "$value": "oklch(94.92% 0.0478 182.07)", "$type": "color" },
-    "teal-700": { "$value": "oklch(64.92% 0.1572 181.95)", "$type": "color" },
-    "teal-900": { "$value": "oklch(52.08% 0.1251 182.93)", "$type": "color" },
-    "purple-200": { "$value": "oklch(96.73% 0.0228 309.8)", "$type": "color" },
-    "purple-700": { "$value": "oklch(55.5% 0.3008 306.12)", "$type": "color" },
-    "purple-900": { "$value": "oklch(47.18% 0.2579 304)", "$type": "color" },
-    "pink-300": { "$value": "oklch(93.83% 0.0451 356.29)", "$type": "color" },
-    "pink-700": { "$value": "oklch(63.52% 0.238 1.01)", "$type": "color" },
-    "pink-900": { "$value": "oklch(53.5% 0.2058 2.84)", "$type": "color" },
+    "blue-200": {
+      "$value": "oklch(96.29% 0.0195 250.59)",
+      "$type": "color"
+    },
+    "blue-700": {
+      "$value": "oklch(57.61% 0.2508 258.23)",
+      "$type": "color"
+    },
+    "blue-900": {
+      "$value": "oklch(53.18% 0.2399 256.9900584162342)",
+      "$type": "color"
+    },
+    "red-200": {
+      "$value": "oklch(95.41% 0.0299 14.252646656611997)",
+      "$type": "color"
+    },
+    "red-700": {
+      "$value": "oklch(62.56% 0.2524 23.03)",
+      "$type": "color"
+    },
+    "red-900": {
+      "$value": "oklch(54.99% 0.232 25.29)",
+      "$type": "color"
+    },
+    "amber-200": {
+      "$value": "oklch(96.81% 0.0495 90.24227879900472)",
+      "$type": "color"
+    },
+    "amber-700": {
+      "$value": "oklch(81.87% 0.1969 76.46)",
+      "$type": "color"
+    },
+    "amber-900": {
+      "$value": "oklch(52.79% 0.1496 54.65)",
+      "$type": "color"
+    },
+    "green-200": {
+      "$value": "oklch(96.92% 0.037 147.15)",
+      "$type": "color"
+    },
+    "green-700": {
+      "$value": "oklch(64.58% 0.1746 147.27)",
+      "$type": "color"
+    },
+    "green-900": {
+      "$value": "oklch(51.75% 0.1453 147.65)",
+      "$type": "color"
+    },
+    "teal-300": {
+      "$value": "oklch(94.92% 0.0478 182.07)",
+      "$type": "color"
+    },
+    "teal-700": {
+      "$value": "oklch(64.92% 0.1572 181.95)",
+      "$type": "color"
+    },
+    "teal-900": {
+      "$value": "oklch(52.08% 0.1251 182.93)",
+      "$type": "color"
+    },
+    "purple-200": {
+      "$value": "oklch(96.73% 0.0228 309.8)",
+      "$type": "color"
+    },
+    "purple-700": {
+      "$value": "oklch(55.5% 0.3008 306.12)",
+      "$type": "color"
+    },
+    "purple-900": {
+      "$value": "oklch(47.18% 0.2579 304)",
+      "$type": "color"
+    },
+    "pink-300": {
+      "$value": "oklch(93.83% 0.0451 356.29)",
+      "$type": "color"
+    },
+    "pink-700": {
+      "$value": "oklch(63.52% 0.238 1.01)",
+      "$type": "color"
+    },
+    "pink-900": {
+      "$value": "oklch(53.5% 0.2058 2.84)",
+      "$type": "color"
+    },
     "gray-100": {
       "$value": "hsla(0, 0%, 95%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.953 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.953 0 0)"
+      }
     },
     "gray-200": {
       "$value": "hsla(0, 0%, 92%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.929 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.929 0 0)"
+      }
     },
     "gray-500": {
       "$value": "hsla(0, 0%, 79%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.81 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.81 0 0)"
+      }
     },
     "gray-600": {
       "$value": "hsla(0, 0%, 66%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.69 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.69 0 0)"
+      }
     },
     "gray-700": {
       "$value": "hsla(0, 0%, 56%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.598 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.598 0 0)"
+      }
     },
     "gray-1000": {
       "$value": "hsla(0, 0%, 9%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.215 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.215 0 0)"
+      }
     },
     "background-100": {
       "$value": "hsla(0, 0%, 100%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(1 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(1 0 0)"
+      }
     },
-    "trial-start": { "$value": "rgb(0, 112, 243)", "$type": "color" },
-    "trial-end": { "$value": "rgb(248, 28, 229)", "$type": "color" },
-    "turbo-start": { "$value": "#ff1e56", "$type": "color" },
-    "turbo-end": { "$value": "#0096ff", "$type": "color" }
+    "trial-start": {
+      "$value": "rgb(0, 112, 243)",
+      "$type": "color"
+    },
+    "trial-end": {
+      "$value": "rgb(248, 28, 229)",
+      "$type": "color"
+    },
+    "turbo-start": {
+      "$value": "#ff1e56",
+      "$type": "color"
+    },
+    "turbo-end": {
+      "$value": "#0096ff",
+      "$type": "color"
+    }
   },
   "elevation": {
-    "xs": { "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "$type": "shadow" },
+    "xs": {
+      "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "$type": "shadow"
+    },
     "sm": {
       "$value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
       "$type": "shadow"
@@ -278,7 +572,10 @@
       "$value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
       "$type": "shadow"
     },
-    "2xl": { "$value": "0 25px 50px -12px rgb(0 0 0 / 0.25)", "$type": "shadow" },
+    "2xl": {
+      "$value": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+      "$type": "shadow"
+    },
     "brand": {
       "$value": "0 0 0 1px rgb(0 51 254 / 0.15), 0 4px 20px -2px rgb(0 51 254 / 0.2)",
       "$type": "shadow"
@@ -286,6 +583,41 @@
     "brand-lg": {
       "$value": "0 0 0 1px rgb(0 51 254 / 0.2), 0 8px 40px -4px rgb(0 51 254 / 0.3)",
       "$type": "shadow"
+    },
+    "ambient-sm": {
+      "$value": "0 1px 2px -1px hsl(222 47% 11% / 0.06), 0 6px 16px -6px hsl(222 47% 11% / 0.12)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, small. Contact layer plus a wide soft pool — the marketing-surface counterpart to the tight xs..2xl product ramp."
+    },
+    "ambient-md": {
+      "$value": "0 2px 4px -2px hsl(222 47% 11% / 0.06), 0 12px 32px -10px hsl(222 47% 11% / 0.14)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, medium. Default resting depth for a floating marketing card."
+    },
+    "ambient-lg": {
+      "$value": "0 4px 8px -4px hsl(222 47% 11% / 0.06), 0 24px 56px -18px hsl(222 47% 11% / 0.16)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, large. One step up from md; use for hover of a md surface, not as a resting default."
+    },
+    "glass-sm": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.5), 0 1px 2px -1px hsl(222 47% 11% / 0.06), 0 6px 16px -6px hsl(222 47% 11% / 0.12)",
+      "$type": "shadow",
+      "$description": "Ambient-sm plus a lit top edge, for translucent panels over a blurred backdrop."
+    },
+    "glass-md": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.5), 0 2px 4px -2px hsl(222 47% 11% / 0.06), 0 12px 32px -10px hsl(222 47% 11% / 0.14)",
+      "$type": "shadow",
+      "$description": "Ambient-md plus a lit top edge."
+    },
+    "glass-lg": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.5), 0 4px 8px -4px hsl(222 47% 11% / 0.06), 0 24px 56px -18px hsl(222 47% 11% / 0.16)",
+      "$type": "shadow",
+      "$description": "Ambient-lg plus a lit top edge."
+    },
+    "sheen": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.2)",
+      "$type": "shadow",
+      "$description": "Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one."
     }
   }
 }

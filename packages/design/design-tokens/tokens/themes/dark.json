@@ -37,216 +37,548 @@
   },
   "scale": {
     "neutral": {
-      "1": { "$value": "{color.nebutra-neutral.950}", "$type": "color" },
-      "2": { "$value": "{color.nebutra-neutral.900}", "$type": "color" },
-      "3": { "$value": "{color.nebutra-neutral.800}", "$type": "color" },
-      "4": { "$value": "{color.nebutra-neutral.700}", "$type": "color" },
-      "5": { "$value": "{color.nebutra-neutral.600}", "$type": "color" },
+      "1": {
+        "$value": "{color.nebutra-neutral.950}",
+        "$type": "color"
+      },
+      "2": {
+        "$value": "{color.nebutra-neutral.900}",
+        "$type": "color"
+      },
+      "3": {
+        "$value": "{color.nebutra-neutral.800}",
+        "$type": "color"
+      },
+      "4": {
+        "$value": "{color.nebutra-neutral.700}",
+        "$type": "color"
+      },
+      "5": {
+        "$value": "{color.nebutra-neutral.600}",
+        "$type": "color"
+      },
       "6": {
         "$value": "{scale.neutral.5}",
         "$type": "color",
         "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25, chroma forced to 0. The achromatic result is deliberate and preserves the documented intent of color.nebutra-gray ('used where blue undertone clashes — primarily dark-mode borders, dividers, elevation hairlines'). What was broken was the LIGHTNESS: gray-900/800/700 are darker than the slate background tier they sit above, so the border read as a hole rather than a hairline.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border", "chroma": 0 } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border",
+            "chroma": 0
+          }
+        }
       },
       "7": {
         "$value": "{scale.neutral.5}",
         "$type": "color",
         "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50, chroma 0.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border", "chroma": 0 } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border",
+            "chroma": 0
+          }
+        }
       },
       "8": {
         "$value": "{scale.neutral.5}",
         "$type": "color",
         "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75, chroma 0.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border", "chroma": 0 } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border",
+            "chroma": 0
+          }
+        }
       },
-      "9": { "$value": "{color.nebutra-neutral.400}", "$type": "color" },
-      "10": { "$value": "{color.nebutra-neutral.300}", "$type": "color" },
-      "11": { "$value": "{color.nebutra-neutral.200}", "$type": "color" },
-      "12": { "$value": "{color.nebutra-neutral.50}", "$type": "color" }
+      "9": {
+        "$value": "{color.nebutra-neutral.400}",
+        "$type": "color"
+      },
+      "10": {
+        "$value": "{color.nebutra-neutral.300}",
+        "$type": "color"
+      },
+      "11": {
+        "$value": "{color.nebutra-neutral.200}",
+        "$type": "color"
+      },
+      "12": {
+        "$value": "{color.nebutra-neutral.50}",
+        "$type": "color"
+      }
     },
     "blue": {
-      "1": { "$value": "{color.nebutra-blue.950}", "$type": "color" },
-      "2": { "$value": "{color.nebutra-blue.900}", "$type": "color" },
-      "3": { "$value": "{color.nebutra-blue.800}", "$type": "color" },
-      "4": { "$value": "{color.nebutra-blue.700}", "$type": "color" },
-      "5": { "$value": "{color.nebutra-blue.600}", "$type": "color" },
+      "1": {
+        "$value": "{color.nebutra-blue.950}",
+        "$type": "color"
+      },
+      "2": {
+        "$value": "{color.nebutra-blue.900}",
+        "$type": "color"
+      },
+      "3": {
+        "$value": "{color.nebutra-blue.800}",
+        "$type": "color"
+      },
+      "4": {
+        "$value": "{color.nebutra-blue.700}",
+        "$type": "color"
+      },
+      "5": {
+        "$value": "{color.nebutra-blue.600}",
+        "$type": "color"
+      },
       "6": {
         "$value": "{scale.blue.5}",
         "$type": "color",
         "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "7": {
         "$value": "{scale.blue.5}",
         "$type": "color",
         "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "8": {
         "$value": "{scale.blue.5}",
         "$type": "color",
         "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
-      "9": { "$value": "{color.nebutra-blue.400}", "$type": "color" },
-      "10": { "$value": "{color.nebutra-blue.300}", "$type": "color" },
-      "11": { "$value": "{color.nebutra-blue.200}", "$type": "color" },
-      "12": { "$value": "{color.nebutra-blue.100}", "$type": "color" }
+      "9": {
+        "$value": "{color.nebutra-blue.400}",
+        "$type": "color"
+      },
+      "10": {
+        "$value": "{color.nebutra-blue.300}",
+        "$type": "color"
+      },
+      "11": {
+        "$value": "{color.nebutra-blue.200}",
+        "$type": "color"
+      },
+      "12": {
+        "$value": "{color.nebutra-blue.100}",
+        "$type": "color"
+      }
     },
     "cyan": {
-      "1": { "$value": "{color.nebutra-cyan.950}", "$type": "color" },
-      "2": { "$value": "{color.nebutra-cyan.900}", "$type": "color" },
-      "3": { "$value": "{color.nebutra-cyan.800}", "$type": "color" },
-      "4": { "$value": "{color.nebutra-cyan.700}", "$type": "color" },
-      "5": { "$value": "{color.nebutra-cyan.600}", "$type": "color" },
+      "1": {
+        "$value": "{color.nebutra-cyan.950}",
+        "$type": "color"
+      },
+      "2": {
+        "$value": "{color.nebutra-cyan.900}",
+        "$type": "color"
+      },
+      "3": {
+        "$value": "{color.nebutra-cyan.800}",
+        "$type": "color"
+      },
+      "4": {
+        "$value": "{color.nebutra-cyan.700}",
+        "$type": "color"
+      },
+      "5": {
+        "$value": "{color.nebutra-cyan.600}",
+        "$type": "color"
+      },
       "6": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
         "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "7": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
         "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
       "8": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
         "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
-        "$extensions": { "com.nebutra.derive": { "space": "oklab", "tier": "border" } }
+        "$extensions": {
+          "com.nebutra.derive": {
+            "space": "oklab",
+            "tier": "border"
+          }
+        }
       },
-      "9": { "$value": "{color.nebutra-cyan.400}", "$type": "color" },
-      "10": { "$value": "{color.nebutra-cyan.300}", "$type": "color" },
-      "11": { "$value": "{color.nebutra-cyan.200}", "$type": "color" },
-      "12": { "$value": "{color.nebutra-cyan.100}", "$type": "color" }
+      "9": {
+        "$value": "{color.nebutra-cyan.400}",
+        "$type": "color"
+      },
+      "10": {
+        "$value": "{color.nebutra-cyan.300}",
+        "$type": "color"
+      },
+      "11": {
+        "$value": "{color.nebutra-cyan.200}",
+        "$type": "color"
+      },
+      "12": {
+        "$value": "{color.nebutra-cyan.100}",
+        "$type": "color"
+      }
     }
   },
   "shadcn": {
-    "background": { "$value": "222 14% 9%", "$type": "string" },
-    "foreground": { "$value": "210 18% 96%", "$type": "string" },
-    "card": { "$value": "222 12% 13%", "$type": "string" },
-    "card-foreground": { "$value": "210 18% 96%", "$type": "string" },
-    "popover": { "$value": "222 12% 13%", "$type": "string" },
-    "popover-foreground": { "$value": "210 18% 96%", "$type": "string" },
-    "primary": { "$value": "228 90% 72%", "$type": "string" },
-    "primary-foreground": { "$value": "222 14% 9%", "$type": "string" },
-    "secondary": { "$value": "222 10% 18%", "$type": "string" },
-    "secondary-foreground": { "$value": "210 18% 96%", "$type": "string" },
-    "muted": { "$value": "222 10% 17%", "$type": "string" },
-    "muted-foreground": { "$value": "220 8% 65%", "$type": "string" },
-    "accent": { "$value": "228 38% 22%", "$type": "string" },
-    "accent-foreground": { "$value": "228 95% 80%", "$type": "string" },
-    "destructive": { "$value": "0 63% 38%", "$type": "string" },
-    "destructive-foreground": { "$value": "210 18% 96%", "$type": "string" },
+    "background": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "card": {
+      "$value": "222 12% 13%",
+      "$type": "string"
+    },
+    "card-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "popover": {
+      "$value": "222 12% 13%",
+      "$type": "string"
+    },
+    "popover-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "primary": {
+      "$value": "228 90% 72%",
+      "$type": "string"
+    },
+    "primary-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "secondary": {
+      "$value": "222 10% 18%",
+      "$type": "string"
+    },
+    "secondary-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
+    "muted": {
+      "$value": "222 10% 17%",
+      "$type": "string"
+    },
+    "muted-foreground": {
+      "$value": "220 8% 65%",
+      "$type": "string"
+    },
+    "accent": {
+      "$value": "228 38% 22%",
+      "$type": "string"
+    },
+    "accent-foreground": {
+      "$value": "228 95% 80%",
+      "$type": "string"
+    },
+    "destructive": {
+      "$value": "0 63% 38%",
+      "$type": "string"
+    },
+    "destructive-foreground": {
+      "$value": "210 18% 96%",
+      "$type": "string"
+    },
     "destructive-strong": {
       "$value": "0 80% 66%",
       "$type": "string",
       "$description": "Red as FOREGROUND on a dark surface. --destructive (0 63% 38%) is 2.15:1 on --card here — a fill only. Lightened to 5.18:1 on --card / 5.61:1 on --neutral-1, which sits alongside the light-mode 5.42:1 so red reads with the same weight in both themes. Use --destructive for fills with --destructive-foreground on top; use this for red text and icons."
     },
-    "success": { "$value": "142 60% 42%", "$type": "string" },
-    "success-foreground": { "$value": "222 14% 9%", "$type": "string" },
+    "success": {
+      "$value": "142 60% 42%",
+      "$type": "string"
+    },
+    "success-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
     "success-strong": {
       "$value": "142 60% 42%",
       "$type": "string",
       "$description": "Green as foreground on a dark surface. Needs no adjustment — 142 60% 42% is already 4.83:1 as ink on its own 10% tint — so it deliberately equals --success, matching how --warning-strong behaves in this theme."
     },
-    "warning": { "$value": "38 80% 52%", "$type": "string" },
-    "warning-foreground": { "$value": "222 14% 9%", "$type": "string" },
+    "warning": {
+      "$value": "38 80% 52%",
+      "$type": "string"
+    },
+    "warning-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
     "warning-strong": {
       "$value": "38 80% 52%",
       "$type": "string",
       "$description": "Amber as foreground on a dark surface. Unlike light mode this needs no adjustment — 38 80% 52% is already 7.98:1 against --neutral-1 — so it deliberately equals --warning. The token exists in both themes so consumers can reference one name."
     },
-    "info": { "$value": "228 95% 72%", "$type": "string" },
-    "info-foreground": { "$value": "222 14% 9%", "$type": "string" },
-    "border": { "$value": "220 8% 22%", "$type": "string" },
-    "input": { "$value": "220 8% 22%", "$type": "string" },
+    "info": {
+      "$value": "228 95% 72%",
+      "$type": "string"
+    },
+    "info-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "border": {
+      "$value": "220 8% 22%",
+      "$type": "string"
+    },
+    "input": {
+      "$value": "220 8% 22%",
+      "$type": "string"
+    },
     "ring": {
       "$value": "0 0% 88%",
       "$type": "string",
       "$description": "Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice."
     },
-    "sidebar": { "$value": "222 16% 8%", "$type": "string" },
-    "sidebar-foreground": { "$value": "210 18% 94%", "$type": "string" },
-    "sidebar-primary": { "$value": "228 95% 72%", "$type": "string" },
-    "sidebar-primary-foreground": { "$value": "222 14% 9%", "$type": "string" },
-    "sidebar-accent": { "$value": "228 38% 22%", "$type": "string" },
-    "sidebar-accent-foreground": { "$value": "228 95% 80%", "$type": "string" },
-    "sidebar-border": { "$value": "220 8% 18%", "$type": "string" },
-    "sidebar-ring": { "$value": "228 95% 72%", "$type": "string" },
-    "chart-1": { "$value": "228 95% 67%", "$type": "string" },
-    "chart-2": { "$value": "168 96% 54%", "$type": "string" },
-    "chart-3": { "$value": "228 100% 82%", "$type": "string" },
-    "chart-4": { "$value": "168 100% 75%", "$type": "string" },
-    "chart-5": { "$value": "228 100% 50%", "$type": "string" }
+    "sidebar": {
+      "$value": "222 16% 8%",
+      "$type": "string"
+    },
+    "sidebar-foreground": {
+      "$value": "210 18% 94%",
+      "$type": "string"
+    },
+    "sidebar-primary": {
+      "$value": "228 95% 72%",
+      "$type": "string"
+    },
+    "sidebar-primary-foreground": {
+      "$value": "222 14% 9%",
+      "$type": "string"
+    },
+    "sidebar-accent": {
+      "$value": "228 38% 22%",
+      "$type": "string"
+    },
+    "sidebar-accent-foreground": {
+      "$value": "228 95% 80%",
+      "$type": "string"
+    },
+    "sidebar-border": {
+      "$value": "220 8% 18%",
+      "$type": "string"
+    },
+    "sidebar-ring": {
+      "$value": "228 95% 72%",
+      "$type": "string"
+    },
+    "chart-1": {
+      "$value": "228 95% 67%",
+      "$type": "string"
+    },
+    "chart-2": {
+      "$value": "168 96% 54%",
+      "$type": "string"
+    },
+    "chart-3": {
+      "$value": "228 100% 82%",
+      "$type": "string"
+    },
+    "chart-4": {
+      "$value": "168 100% 75%",
+      "$type": "string"
+    },
+    "chart-5": {
+      "$value": "228 100% 50%",
+      "$type": "string"
+    }
   },
   "ds": {
-    "blue-200": { "$value": "oklch(25.45% 0.0811 255.8)", "$type": "color" },
-    "blue-700": { "$value": "oklch(57.61% 0.2321 258.23)", "$type": "color" },
-    "blue-900": { "$value": "oklch(71.7% 0.1648 250.79360374054167)", "$type": "color" },
-    "red-200": { "$value": "oklch(25.93% 0.0834 19.02)", "$type": "color" },
-    "red-700": { "$value": "oklch(62.56% 0.2234 23.03)", "$type": "color" },
-    "red-900": { "$value": "oklch(69.96% 0.2136 22.03)", "$type": "color" },
-    "amber-200": { "$value": "oklch(24.95% 0.0642 64.78)", "$type": "color" },
-    "amber-700": { "$value": "oklch(81.87% 0.1969 76.46)", "$type": "color" },
-    "amber-900": { "$value": "oklch(77.21% 0.1991 64.28)", "$type": "color" },
-    "green-200": { "$value": "oklch(27.12% 0.0895 150.09)", "$type": "color" },
-    "green-700": { "$value": "oklch(64.58% 0.199 147.27)", "$type": "color" },
-    "green-900": { "$value": "oklch(73.1% 0.2158 148.29)", "$type": "color" },
-    "teal-300": { "$value": "oklch(31.5% 0.0767 180.99)", "$type": "color" },
-    "teal-700": { "$value": "oklch(64.92% 0.1403 181.95)", "$type": "color" },
-    "teal-900": { "$value": "oklch(74.56% 0.1765 182.8)", "$type": "color" },
-    "purple-200": { "$value": "oklch(25.91% 0.0921 314.41)", "$type": "color" },
-    "purple-700": { "$value": "oklch(55.5% 0.2186 306.12)", "$type": "color" },
-    "purple-900": { "$value": "oklch(69.87% 0.2037 309.51)", "$type": "color" },
-    "pink-300": { "$value": "oklch(31.15% 0.1067 355.93)", "$type": "color" },
-    "pink-700": { "$value": "oklch(63.52% 0.2346 1.01)", "$type": "color" },
-    "pink-900": { "$value": "oklch(69.36% 0.2223 3.91)", "$type": "color" },
+    "blue-200": {
+      "$value": "oklch(25.45% 0.0811 255.8)",
+      "$type": "color"
+    },
+    "blue-700": {
+      "$value": "oklch(57.61% 0.2321 258.23)",
+      "$type": "color"
+    },
+    "blue-900": {
+      "$value": "oklch(71.7% 0.1648 250.79360374054167)",
+      "$type": "color"
+    },
+    "red-200": {
+      "$value": "oklch(25.93% 0.0834 19.02)",
+      "$type": "color"
+    },
+    "red-700": {
+      "$value": "oklch(62.56% 0.2234 23.03)",
+      "$type": "color"
+    },
+    "red-900": {
+      "$value": "oklch(69.96% 0.2136 22.03)",
+      "$type": "color"
+    },
+    "amber-200": {
+      "$value": "oklch(24.95% 0.0642 64.78)",
+      "$type": "color"
+    },
+    "amber-700": {
+      "$value": "oklch(81.87% 0.1969 76.46)",
+      "$type": "color"
+    },
+    "amber-900": {
+      "$value": "oklch(77.21% 0.1991 64.28)",
+      "$type": "color"
+    },
+    "green-200": {
+      "$value": "oklch(27.12% 0.0895 150.09)",
+      "$type": "color"
+    },
+    "green-700": {
+      "$value": "oklch(64.58% 0.199 147.27)",
+      "$type": "color"
+    },
+    "green-900": {
+      "$value": "oklch(73.1% 0.2158 148.29)",
+      "$type": "color"
+    },
+    "teal-300": {
+      "$value": "oklch(31.5% 0.0767 180.99)",
+      "$type": "color"
+    },
+    "teal-700": {
+      "$value": "oklch(64.92% 0.1403 181.95)",
+      "$type": "color"
+    },
+    "teal-900": {
+      "$value": "oklch(74.56% 0.1765 182.8)",
+      "$type": "color"
+    },
+    "purple-200": {
+      "$value": "oklch(25.91% 0.0921 314.41)",
+      "$type": "color"
+    },
+    "purple-700": {
+      "$value": "oklch(55.5% 0.2186 306.12)",
+      "$type": "color"
+    },
+    "purple-900": {
+      "$value": "oklch(69.87% 0.2037 309.51)",
+      "$type": "color"
+    },
+    "pink-300": {
+      "$value": "oklch(31.15% 0.1067 355.93)",
+      "$type": "color"
+    },
+    "pink-700": {
+      "$value": "oklch(63.52% 0.2346 1.01)",
+      "$type": "color"
+    },
+    "pink-900": {
+      "$value": "oklch(69.36% 0.2223 3.91)",
+      "$type": "color"
+    },
     "gray-100": {
       "$value": "hsla(0, 0%, 10%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.232 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.232 0 0)"
+      }
     },
     "gray-200": {
       "$value": "hsla(0, 0%, 12%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.259 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.259 0 0)"
+      }
     },
     "gray-500": {
       "$value": "hsla(0, 0%, 27%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.409 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.409 0 0)"
+      }
     },
     "gray-600": {
       "$value": "hsla(0, 0%, 53%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.59 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.59 0 0)"
+      }
     },
     "gray-700": {
       "$value": "hsla(0, 0%, 56%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.598 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.598 0 0)"
+      }
     },
     "gray-1000": {
       "$value": "hsla(0, 0%, 93%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.94 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.94 0 0)"
+      }
     },
     "background-100": {
       "$value": "hsla(0, 0%, 4%, 1)",
       "$type": "color",
-      "$extensions": { "com.nebutra.oklch": "oklch(0.143 0 0)" }
+      "$extensions": {
+        "com.nebutra.oklch": "oklch(0.143 0 0)"
+      }
     },
-    "trial-start": { "$value": "rgb(0, 112, 243)", "$type": "color" },
-    "trial-end": { "$value": "rgb(248, 28, 229)", "$type": "color" },
-    "turbo-start": { "$value": "#ff1e56", "$type": "color" },
-    "turbo-end": { "$value": "#0096ff", "$type": "color" }
+    "trial-start": {
+      "$value": "rgb(0, 112, 243)",
+      "$type": "color"
+    },
+    "trial-end": {
+      "$value": "rgb(248, 28, 229)",
+      "$type": "color"
+    },
+    "turbo-start": {
+      "$value": "#ff1e56",
+      "$type": "color"
+    },
+    "turbo-end": {
+      "$value": "#0096ff",
+      "$type": "color"
+    }
   },
   "elevation": {
-    "xs": { "$value": "0 1px 2px 0 rgb(0 0 0 / 0.3)", "$type": "shadow" },
+    "xs": {
+      "$value": "0 1px 2px 0 rgb(0 0 0 / 0.3)",
+      "$type": "shadow"
+    },
     "sm": {
       "$value": "0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)",
       "$type": "shadow"
@@ -263,7 +595,10 @@
       "$value": "0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6)",
       "$type": "shadow"
     },
-    "2xl": { "$value": "0 25px 50px -12px rgb(0 0 0 / 0.8)", "$type": "shadow" },
+    "2xl": {
+      "$value": "0 25px 50px -12px rgb(0 0 0 / 0.8)",
+      "$type": "shadow"
+    },
     "brand": {
       "$value": "0 0 0 1px rgb(92 124 250 / 0.25), 0 4px 20px -2px rgb(92 124 250 / 0.3)",
       "$type": "shadow"
@@ -271,6 +606,41 @@
     "brand-lg": {
       "$value": "0 0 0 1px rgb(92 124 250 / 0.3), 0 8px 40px -4px rgb(92 124 250 / 0.4)",
       "$type": "shadow"
+    },
+    "ambient-sm": {
+      "$value": "0 1px 2px -1px rgb(0 0 0 / 0.4), 0 6px 16px -6px rgb(0 0 0 / 0.5)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, small. Contact layer plus a wide soft pool — the marketing-surface counterpart to the tight xs..2xl product ramp."
+    },
+    "ambient-md": {
+      "$value": "0 2px 4px -2px rgb(0 0 0 / 0.4), 0 12px 32px -10px rgb(0 0 0 / 0.55)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, medium. Default resting depth for a floating marketing card."
+    },
+    "ambient-lg": {
+      "$value": "0 4px 8px -4px rgb(0 0 0 / 0.4), 0 24px 56px -18px rgb(0 0 0 / 0.6)",
+      "$type": "shadow",
+      "$description": "Ambient elevation, large. One step up from md; use for hover of a md surface, not as a resting default."
+    },
+    "glass-sm": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.4), 0 6px 16px -6px rgb(0 0 0 / 0.5)",
+      "$type": "shadow",
+      "$description": "Ambient-sm plus a lit top edge, for translucent panels over a blurred backdrop."
+    },
+    "glass-md": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.4), 0 12px 32px -10px rgb(0 0 0 / 0.55)",
+      "$type": "shadow",
+      "$description": "Ambient-md plus a lit top edge."
+    },
+    "glass-lg": {
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.4), 0 24px 56px -18px rgb(0 0 0 / 0.6)",
+      "$type": "shadow",
+      "$description": "Ambient-lg plus a lit top edge."
+    },
+    "sheen": {
+      "$value": "inset 0 1px 0 rgb(0 0 0 / 0.12)",
+      "$type": "shadow",
+      "$description": "Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one."
     }
   }
 }

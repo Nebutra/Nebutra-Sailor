@@ -851,6 +851,17 @@ function buildTailwindThemeInline() {
   --shadow-brand: var(--elevation-brand);
   --shadow-brand-lg: var(--elevation-brand-lg);
 
+  /* shadow-ambient-md / shadow-glass-lg / shadow-sheen — so marketing surfaces
+     reach for a step on the ramp instead of spelling out a blur and a spread.
+     Aliased to var() rather than inlined so the dark theme's values apply. */
+  --shadow-ambient-sm: var(--elevation-ambient-sm);
+  --shadow-ambient-md: var(--elevation-ambient-md);
+  --shadow-ambient-lg: var(--elevation-ambient-lg);
+  --shadow-glass-sm: var(--elevation-glass-sm);
+  --shadow-glass-md: var(--elevation-glass-md);
+  --shadow-glass-lg: var(--elevation-glass-lg);
+  --shadow-sheen: var(--elevation-sheen);
+
   /* Motion — Easing curves */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);

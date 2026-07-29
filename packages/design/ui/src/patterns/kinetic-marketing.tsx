@@ -110,7 +110,7 @@ export function KineticFeatureCard({
   return (
     <article
       className={cn(
-        "group/kinetic relative flex h-full min-h-[540px] flex-col overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/82 p-6 shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_24px_90px_-70px_hsl(var(--foreground))] backdrop-blur-2xl transition-[transform,border-color,box-shadow,background-color] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:border-foreground/25 hover:bg-background/94 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.55),0_34px_110px_-74px_hsl(var(--foreground))] focus-within:-translate-y-1 focus-within:border-foreground/25 sm:p-7",
+        "group/kinetic relative flex h-full min-h-[540px] flex-col overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/82 p-6 shadow-glass-md backdrop-blur-2xl transition-[transform,border-color,box-shadow,background-color] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:border-foreground/25 hover:bg-background/94 hover:shadow-glass-lg focus-within:-translate-y-1 focus-within:border-foreground/25 sm:p-7",
         className,
       )}
       data-taste="nebutra-texture-cutout-card"
@@ -134,7 +134,7 @@ export function KineticFeatureCard({
       <div className="relative z-10 flex h-full flex-col">
         <div className="mb-8 flex items-start justify-between gap-4 pr-16">
           {renderedIcon && (
-            <div className="grid size-14 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background/75 shadow-[inset_0_1px_0_rgb(255_255_255/0.55),0_16px_42px_-34px_hsl(var(--foreground))] transition-transform duration-500 group-hover/kinetic:-translate-y-1">
+            <div className="grid size-14 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background/75 shadow-glass-sm transition-transform duration-500 group-hover/kinetic:-translate-y-1">
               {renderedIcon}
             </div>
           )}
@@ -166,7 +166,7 @@ export function KineticCodePreview({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-muted/30 shadow-[0_18px_70px_-56px_hsl(var(--foreground))] transition-[transform,border-color,box-shadow] duration-500 group-hover/kinetic:-translate-y-2 group-hover/kinetic:border-foreground/20 group-hover/kinetic:shadow-[0_26px_90px_-62px_hsl(var(--foreground))]",
+        "relative overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-muted/30 shadow-ambient-md transition-[transform,border-color,box-shadow] duration-500 group-hover/kinetic:-translate-y-2 group-hover/kinetic:border-foreground/20 group-hover/kinetic:shadow-ambient-lg",
         className,
       )}
       {...props}
@@ -212,7 +212,7 @@ export function KineticConsoleFrame({
   return (
     <div
       className={cn(
-        "group/kinetic relative flex h-full min-h-[460px] w-full flex-col overflow-hidden rounded-[2rem] border border-border/65 bg-background/84 shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_32px_120px_-88px_hsl(var(--foreground))] backdrop-blur-3xl transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.55),0_44px_140px_-90px_hsl(var(--foreground))]",
+        "group/kinetic relative flex h-full min-h-[460px] w-full flex-col overflow-hidden rounded-[2rem] border border-border/65 bg-background/84 shadow-glass-md backdrop-blur-3xl transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-glass-lg",
         className,
       )}
       data-taste="nebutra-terminal-animation"
@@ -264,7 +264,7 @@ export function KineticMorphSurface({
   return (
     <div
       className={cn(
-        "group/kinetic relative overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/80 p-3 shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_28px_110px_-82px_hsl(var(--foreground))] backdrop-blur-2xl transition-[border-color,box-shadow,background-color] duration-500 hover:border-foreground/20 hover:bg-background/92 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.55),0_36px_130px_-88px_hsl(var(--foreground))] sm:p-4 lg:p-5",
+        "group/kinetic relative overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/80 p-3 shadow-glass-md backdrop-blur-2xl transition-[border-color,box-shadow,background-color] duration-500 hover:border-foreground/20 hover:bg-background/92 hover:shadow-glass-lg sm:p-4 lg:p-5",
         className,
       )}
       data-active-key={activeKey}
@@ -294,7 +294,7 @@ export function KineticSignalMarquee({
   return (
     <div
       className={cn(
-        "group/kinetic relative mx-auto overflow-hidden rounded-[var(--radius-panel)] border border-border/55 bg-background/72 px-3 py-8 shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_22px_90px_-76px_hsl(var(--foreground))] backdrop-blur-2xl sm:px-5",
+        "group/kinetic relative mx-auto overflow-hidden rounded-[var(--radius-panel)] border border-border/55 bg-background/72 px-3 py-8 shadow-glass-md backdrop-blur-2xl sm:px-5",
         className,
       )}
       data-taste="nebutra-provider-grid"
@@ -340,7 +340,7 @@ export function KineticCommandBox({
   return (
     <div
       className={cn(
-        "group/kinetic relative flex flex-col items-stretch overflow-hidden rounded-[var(--radius-xl)] border border-border/65 bg-background/82 p-1.5 shadow-[inset_0_1px_0_rgb(255_255_255/0.5),0_20px_70px_-58px_hsl(var(--foreground))] backdrop-blur-2xl transition-[transform,border-color,box-shadow,background-color] duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:bg-background/92 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.6),0_28px_90px_-62px_hsl(var(--foreground))] sm:flex-row sm:items-center",
+        "group/kinetic relative flex flex-col items-stretch overflow-hidden rounded-[var(--radius-xl)] border border-border/65 bg-background/82 p-1.5 shadow-glass-sm backdrop-blur-2xl transition-[transform,border-color,box-shadow,background-color] duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:bg-background/92 hover:shadow-glass-md sm:flex-row sm:items-center",
         className,
       )}
       data-taste="nebutra-texture-command"
@@ -356,7 +356,7 @@ export function KineticCommandBox({
       <button
         type="button"
         onClick={handleCopy}
-        className="relative z-10 mt-2 flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[var(--radius-lg)] border border-primary/20 bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-[inset_0_1px_0_rgb(255_255_255/0.2)] transition-[transform,opacity] hover:-translate-y-px hover:opacity-90 sm:mt-0"
+        className="relative z-10 mt-2 flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[var(--radius-lg)] border border-primary/20 bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-sheen transition-[transform,opacity] hover:-translate-y-px hover:opacity-90 sm:mt-0"
       >
         {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
         {copied ? copiedLabel : copyLabel}
@@ -369,7 +369,7 @@ export function KineticStepRail({ className, children, ...props }: KineticStepRa
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/78 p-6 shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_24px_100px_-78px_hsl(var(--foreground))] backdrop-blur-2xl md:p-10",
+        "relative overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/78 p-6 shadow-glass-md backdrop-blur-2xl md:p-10",
         className,
       )}
       data-taste="nebutra-grid-beam"
@@ -406,12 +406,12 @@ export function KineticStep({
   return (
     <article
       className={cn(
-        "group/kinetic relative flex h-full flex-col items-center rounded-[var(--radius-xl)] border border-border/60 bg-background/82 p-5 text-center shadow-[0_18px_70px_-58px_hsl(var(--foreground))] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[0_28px_90px_-62px_hsl(var(--foreground))]",
+        "group/kinetic relative flex h-full flex-col items-center rounded-[var(--radius-xl)] border border-border/60 bg-background/82 p-5 text-center shadow-ambient-md backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-ambient-lg",
         className,
       )}
       {...props}
     >
-      <div className="relative mb-6 grid size-16 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background shadow-[inset_0_1px_0_rgb(255_255_255/0.55),0_18px_56px_-42px_hsl(var(--foreground))]">
+      <div className="relative mb-6 grid size-16 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background shadow-glass-sm">
         <span
           className="absolute -right-2 -top-2 rounded-full border border-border/60 bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
           aria-hidden

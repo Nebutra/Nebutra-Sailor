@@ -266,6 +266,22 @@
   --elevation-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --elevation-brand: 0 0 0 1px rgb(0 51 254 / 0.15), 0 4px 20px -2px rgb(0 51 254 / 0.2);
   --elevation-brand-lg: 0 0 0 1px rgb(0 51 254 / 0.2), 0 8px 40px -4px rgb(0 51 254 / 0.3);
+  --elevation-ambient-sm:
+    0 1px 2px -1px hsl(222 47% 11% / 0.06), 0 6px 16px -6px hsl(222 47% 11% / 0.12); /** Ambient elevation, small. Contact layer plus a wide soft pool — the marketing-surface counterpart to the tight xs..2xl product ramp. */
+  --elevation-ambient-md:
+    0 2px 4px -2px hsl(222 47% 11% / 0.06), 0 12px 32px -10px hsl(222 47% 11% / 0.14); /** Ambient elevation, medium. Default resting depth for a floating marketing card. */
+  --elevation-ambient-lg:
+    0 4px 8px -4px hsl(222 47% 11% / 0.06), 0 24px 56px -18px hsl(222 47% 11% / 0.16); /** Ambient elevation, large. One step up from md; use for hover of a md surface, not as a resting default. */
+  --elevation-glass-sm:
+    inset 0 1px 0 rgb(255 255 255 / 0.5), 0 1px 2px -1px hsl(222 47% 11% / 0.06),
+    0 6px 16px -6px hsl(222 47% 11% / 0.12); /** Ambient-sm plus a lit top edge, for translucent panels over a blurred backdrop. */
+  --elevation-glass-md:
+    inset 0 1px 0 rgb(255 255 255 / 0.5), 0 2px 4px -2px hsl(222 47% 11% / 0.06),
+    0 12px 32px -10px hsl(222 47% 11% / 0.14); /** Ambient-md plus a lit top edge. */
+  --elevation-glass-lg:
+    inset 0 1px 0 rgb(255 255 255 / 0.5), 0 4px 8px -4px hsl(222 47% 11% / 0.06),
+    0 24px 56px -18px hsl(222 47% 11% / 0.16); /** Ambient-lg plus a lit top edge. */
+  --elevation-sheen: inset 0 1px 0 rgb(255 255 255 / 0.2); /** Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one. */
 }
 
 :root {
@@ -566,6 +582,22 @@
   --elevation-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.8);
   --elevation-brand: 0 0 0 1px rgb(92 124 250 / 0.25), 0 4px 20px -2px rgb(92 124 250 / 0.3);
   --elevation-brand-lg: 0 0 0 1px rgb(92 124 250 / 0.3), 0 8px 40px -4px rgb(92 124 250 / 0.4);
+  --elevation-ambient-sm:
+    0 1px 2px -1px rgb(0 0 0 / 0.4), 0 6px 16px -6px rgb(0 0 0 / 0.5); /** Ambient elevation, small. Contact layer plus a wide soft pool — the marketing-surface counterpart to the tight xs..2xl product ramp. */
+  --elevation-ambient-md:
+    0 2px 4px -2px rgb(0 0 0 / 0.4), 0 12px 32px -10px rgb(0 0 0 / 0.55); /** Ambient elevation, medium. Default resting depth for a floating marketing card. */
+  --elevation-ambient-lg:
+    0 4px 8px -4px rgb(0 0 0 / 0.4), 0 24px 56px -18px rgb(0 0 0 / 0.6); /** Ambient elevation, large. One step up from md; use for hover of a md surface, not as a resting default. */
+  --elevation-glass-sm:
+    inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.4),
+    0 6px 16px -6px rgb(0 0 0 / 0.5); /** Ambient-sm plus a lit top edge, for translucent panels over a blurred backdrop. */
+  --elevation-glass-md:
+    inset 0 1px 0 rgb(255 255 255 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.4),
+    0 12px 32px -10px rgb(0 0 0 / 0.55); /** Ambient-md plus a lit top edge. */
+  --elevation-glass-lg:
+    inset 0 1px 0 rgb(255 255 255 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.4),
+    0 24px 56px -18px rgb(0 0 0 / 0.6); /** Ambient-lg plus a lit top edge. */
+  --elevation-sheen: inset 0 1px 0 rgb(0 0 0 / 0.12); /** Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one. */
 }
 
 .dark {
@@ -781,6 +813,17 @@
   --shadow-2xl: var(--elevation-2xl);
   --shadow-brand: var(--elevation-brand);
   --shadow-brand-lg: var(--elevation-brand-lg);
+
+  /* shadow-ambient-md / shadow-glass-lg / shadow-sheen — so marketing surfaces
+     reach for a step on the ramp instead of spelling out a blur and a spread.
+     Aliased to var() rather than inlined so the dark theme's values apply. */
+  --shadow-ambient-sm: var(--elevation-ambient-sm);
+  --shadow-ambient-md: var(--elevation-ambient-md);
+  --shadow-ambient-lg: var(--elevation-ambient-lg);
+  --shadow-glass-sm: var(--elevation-glass-sm);
+  --shadow-glass-md: var(--elevation-glass-md);
+  --shadow-glass-lg: var(--elevation-glass-lg);
+  --shadow-sheen: var(--elevation-sheen);
 
   /* Motion — Easing curves */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
