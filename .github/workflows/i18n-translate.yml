@@ -63,7 +63,12 @@ permissions:
 
 concurrency:
   group: i18n-translate-global
-  cancel-in-progress: true
+  # Queue, never kill. Translation is a long job over 30 locales; with
+  # cancel-in-progress a burst of pushes to the watched paths leaves ZERO runs
+  # completing and nothing says so — two back-to-back pushes on 2026-07-28 each
+  # cancelled the other and Forge's catalogs stayed empty. The i18n-check gate
+  # now catches the resulting drift, but the fill side should not self-cancel.
+  cancel-in-progress: false
 
 jobs:
   translate:
