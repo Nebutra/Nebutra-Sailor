@@ -1,6 +1,6 @@
-import { Warning } from "@nebutra/icons";
+"use client";
 
-("use client");
+import { Warning } from "@nebutra/icons";
 
 type Status = "stable" | "beta" | "deprecated" | "experimental";
 
