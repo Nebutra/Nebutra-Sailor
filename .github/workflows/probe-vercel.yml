@@ -1,0 +1,26 @@
+name: Probe Vercel Projects
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Vercel projects and their root directories
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+        run: |
+          set -euo pipefail
+          curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v9/projects?teamId=$VERCEL_ORG_ID&limit=100" \
+          | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+for p in d.get('projects',[]):
+    print(f\"{p['name']:<28} {p['id']:<32} root={p.get('rootDirectory') or '(repo root)'}\")
+"
