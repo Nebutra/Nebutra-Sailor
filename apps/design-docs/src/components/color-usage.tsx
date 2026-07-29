@@ -39,12 +39,12 @@ export function ColorUsageDemos() {
         <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow
             colorName="Background 1"
-            hex="var(--background)"
+            hex="hsl(var(--background))"
             description="Default element and page background"
           />
           <UsageRow
             colorName="Background 2"
-            hex="var(--muted)"
+            hex="hsl(var(--muted))"
             description="Secondary background for subtle contrast"
           />
         </div>

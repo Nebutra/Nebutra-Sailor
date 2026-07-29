@@ -205,10 +205,10 @@
   @keyframes text-blink {
     0%,
     100% {
-      color: var(--primary);
+      color: hsl(var(--primary));
     }
     50% {
-      color: var(--muted-foreground);
+      color: hsl(var(--muted-foreground));
     }
   }
   @keyframes bounce-dots {

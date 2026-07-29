@@ -254,6 +254,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../packages/platform/db
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -269,6 +272,9 @@ importers:
       '@nebutra/ui':
         specifier: workspace:*
         version: link:../../packages/design/ui
+      better-auth:
+        specifier: ^1.6.13
+        version: 1.6.23(@opentelemetry/api@1.9.1)(@prisma/client@7.4.2(prisma@7.4.2(@types/react@19.2.14)(better-sqlite3@12.10.0)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3))(better-sqlite3@12.10.0)(mysql2@3.15.3)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.20.0)(prisma@7.4.2(@types/react@19.2.14)(better-sqlite3@12.10.0)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vitest@4.1.4)
       geist:
         specifier: 'catalog:'
         version: 1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))

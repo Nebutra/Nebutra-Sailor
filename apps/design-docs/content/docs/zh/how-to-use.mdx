@@ -90,8 +90,14 @@ Registry manifest 是 shadcn-compatible 分发产物。它可以携带复制出�
 // Good: 通过组件 API 消费 semantic/component tokens。
 <Button intent="primary">Deploy</Button>
 
-// Good: 组合本地布局时使用 CSS variables。
-<div className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]" />
+// Good: 组合本地布局时使用语义 utility class。
+<div className="border-border bg-background text-foreground" />
+
+// Bad: 用 bg-[var(--…)] 这类任意值手写同一批 token。--background /
+// --foreground / --border / --primary 存的是裸 HSL 通道值(222 47% 11%),
+// 结果不是颜色,浏览器会把整条声明静默丢弃 —— 任何地方都不会报错。上面的
+// utility 已经替你包好 hsl();非要手写就得写成 hsl(var(--…))。
+<div className="border-[var(--…)] bg-[var(--…)]" />
 
 // Bad: 产品 UI 里硬编码漂移色。
 <div className="bg-blue-600 text-white" />

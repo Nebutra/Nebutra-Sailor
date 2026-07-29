@@ -23,7 +23,8 @@
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border: transparent;
   --btn-default-border-width: 0px;
-  --btn-default-stroke-gradient: transparent;
+  /* An image, never a colour — see the @property registration below. */
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --btn-default-radius: var(--radius-button, var(--radius-md, 0.375rem));
   --btn-default-shadow: 0 0 #0000;
@@ -60,6 +61,30 @@
   --badge-default-border: transparent;
   --badge-default-radius: var(--radius-badge, 9999px);
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--brand-mark)) 80%, transparent);
+}
+
+/**
+ * The stroke slot is consumed as a background-image layer, so its value has to
+ * be an <image>. A colour there is not merely ignored: background-image becomes
+ * invalid as a whole and the browser drops every layer, including the solid
+ * brand fill in front of it. The button then renders with no background at all,
+ * while `color` — a separate declaration — keeps painting white text. That is
+ * what shipped: every default Button outside the gsap skin was white-on-white,
+ * because the slot held `transparent`, which is a colour.
+ *
+ * Registering the property makes that unrepresentable rather than merely
+ * discouraged. A colour written here now fails to parse against `<image>`, so
+ * the declaration is rejected and the slot keeps this initial value — the fill
+ * survives. Skins are generated, and a generator is exactly the place where one
+ * wrong branch reaches every brand at once.
+ *
+ * The var() fallbacks at the use sites stay as the unregistered path, so the
+ * recipe is still correct where @property is unsupported.
+ */
+@property --btn-default-stroke-gradient {
+  syntax: "<image>";
+  inherits: true;
+  initial-value: linear-gradient(transparent, transparent);
 }
 
 /* Tailwind v4: brand-mark as first-class color (Logo / BrandMark / badge) */

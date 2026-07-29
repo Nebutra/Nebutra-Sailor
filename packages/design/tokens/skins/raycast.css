@@ -130,7 +130,7 @@ html[data-brand="raycast"] {
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
   --btn-default-border: transparent;
-  --btn-default-stroke-gradient: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --badge-default-bg: hsl(var(--secondary));
   --badge-default-fg: hsl(var(--secondary-foreground));

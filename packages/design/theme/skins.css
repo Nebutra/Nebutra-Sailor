@@ -352,7 +352,7 @@ html[data-brand="linear"] {
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
   --btn-default-border: transparent;
-  --btn-default-stroke-gradient: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --badge-default-bg: hsl(var(--primary));
   --badge-default-fg: hsl(var(--primary-foreground));
@@ -645,7 +645,7 @@ html[data-brand="notion"] {
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
   --btn-default-border: transparent;
-  --btn-default-stroke-gradient: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --badge-default-bg: hsl(var(--secondary));
   --badge-default-fg: hsl(var(--secondary-foreground));
@@ -916,7 +916,7 @@ html[data-brand="raycast"] {
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
   --btn-default-border: transparent;
-  --btn-default-stroke-gradient: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --badge-default-bg: hsl(var(--secondary));
   --badge-default-fg: hsl(var(--secondary-foreground));
@@ -1154,7 +1154,7 @@ html[data-brand="stripe"] {
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
   --btn-default-border: transparent;
-  --btn-default-stroke-gradient: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --badge-default-bg: hsl(var(--secondary));
   --badge-default-fg: hsl(var(--secondary-foreground));
@@ -1419,7 +1419,7 @@ html[data-brand="vanta"] {
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
   --btn-default-border: transparent;
-  --btn-default-stroke-gradient: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --badge-default-bg: hsl(var(--secondary));
   --badge-default-fg: hsl(var(--secondary-foreground));
@@ -1656,7 +1656,7 @@ html[data-brand="vercel"] {
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
   --btn-default-border: transparent;
-  --btn-default-stroke-gradient: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
   --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
   --badge-default-bg: hsl(var(--secondary));
   --badge-default-fg: hsl(var(--secondary-foreground));

@@ -103,10 +103,14 @@ const Beam: React.FC<BeamProps> = ({ seed, width, x, delay, duration }) => {
           "--x": `${x}`,
           "--width": `${width}`,
           "--aspect-ratio": `${aspectRatio}`,
-          "--background": `linear-gradient(hsl(${hue} 80% 60%), transparent)`,
+          // Not `--background`. That is the core semantic surface token, and
+          // setting it here overrides it for the whole subtree — any descendant
+          // resolving hsl(var(--background)) would get hsl(a gradient) and lose
+          // its declaration entirely.
+          "--beam-fill": `linear-gradient(hsl(${hue} 80% 60%), transparent)`,
         } as any
       }
-      className="absolute left-[var(--x)] top-0 [aspect-ratio:1/var(--aspect-ratio)] [background:var(--background)] [width:var(--width)]"
+      className="absolute left-[var(--x)] top-0 [aspect-ratio:1/var(--aspect-ratio)] [background:var(--beam-fill)] [width:var(--width)]"
       initial={{ y: "100cqmax", x: "-50%" }}
       animate={{ y: "-100%", x: "-50%" }}
       transition={{
@@ -161,7 +165,10 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
   beamDelayMax = 3,
   beamDelayMin = 0,
   beamDuration = 3,
-  gridColor = "var(--border)",
+  // hsl(), because this lands in a gradient colour stop and --border holds bare
+  // HSL channels. Unwrapped it invalidates the whole background shorthand and
+  // the grid does not draw at all.
+  gridColor = "hsl(var(--border))",
   ...props
 }) => {
   const shouldReduceMotion = useReducedMotion();

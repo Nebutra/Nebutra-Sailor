@@ -52,7 +52,7 @@ function FlowNode({
 function FlowSurface({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={`relative min-h-[260px] w-[680px] overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%),var(--neutral-1)] p-8 ${className ?? ""}`}
+      className={`relative min-h-[260px] w-[680px] overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-neutral-1 bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%)] p-8 ${className ?? ""}`}
     >
       {children}
     </div>

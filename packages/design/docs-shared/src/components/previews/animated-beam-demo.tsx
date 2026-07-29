@@ -42,7 +42,7 @@ export function AnimatedBeamDemo() {
   return (
     <div
       ref={containerRef}
-      className="relative flex min-h-[260px] w-full max-w-2xl items-center justify-between overflow-hidden rounded-lg border border-border bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%),hsl(var(--background))] p-8"
+      className="relative flex min-h-[260px] w-full max-w-2xl items-center justify-between overflow-hidden rounded-lg border border-border bg-background bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%)] p-8"
     >
       <div className="pointer-events-none absolute inset-x-8 top-1/2 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--border)),transparent)]" />
       <FlowNode

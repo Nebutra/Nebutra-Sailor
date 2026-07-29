@@ -90,8 +90,15 @@ Registry manifests are shadcn-compatible distribution artifacts. They may includ
 // Good: semantic/component tokens through the component API.
 <Button intent="primary">Deploy</Button>
 
-// Good: CSS variables when composing local layout.
-<div className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]" />
+// Good: the semantic utilities when composing local layout.
+<div className="border-border bg-background text-foreground" />
+
+// Bad: reaching for the same tokens by hand, as bg-[var(--…)] arbitrary
+// values. --background, --foreground, --border and --primary hold bare HSL
+// channels (222 47% 11%), so the result is not a colour and the browser
+// discards the entire declaration — with no warning anywhere. The utilities
+// above wrap them in hsl() for you. Written by hand, it needs hsl(var(--…)).
+<div className="border-[var(--…)] bg-[var(--…)]" />
 
 // Bad: raw palette drift in product UI.
 <div className="bg-blue-600 text-white" />

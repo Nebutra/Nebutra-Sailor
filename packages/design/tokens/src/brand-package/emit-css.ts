@@ -78,7 +78,11 @@ function recipeVars(recipe: BrandRecipe): string[] {
       lines.push("  --btn-default-fg: hsl(var(--primary-foreground));");
       lines.push("  --btn-default-border-width: 0px;");
       lines.push("  --btn-default-border: transparent;");
-      lines.push("  --btn-default-stroke-gradient: transparent;");
+      // A gradient, not `transparent`. This slot is a background-image layer:
+      // a colour invalidates the whole declaration and takes the solid fill
+      // above it with it, leaving the button with no background. Every solid
+      // skin goes through this branch, so the one wrong word reached them all.
+      lines.push("  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);");
       lines.push(
         "  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);",
       );

@@ -39,7 +39,7 @@ export function VrtCard() {
           </div>
 
           {/* Laser Line Scanner */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-emerald-500/50 shadow-[0_0-[15px_15px]_rgba(16,185,129,0.3)] z-30 group-hover:left-[40%] transition-[left] duration-700 ease-in-out motion-reduce:transition-none flex flex-col items-center justify-center">
+          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-emerald-500/50 shadow-[0_0_15px_15px_rgba(16,185,129,0.3)] z-30 group-hover:left-[40%] transition-[left] duration-700 ease-in-out motion-reduce:transition-none flex flex-col items-center justify-center">
             {/* Glow dot on laser */}
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_8px_rgba(16,185,129,0.4)]" />
           </div>
