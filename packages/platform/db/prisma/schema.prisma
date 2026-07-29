@@ -1696,13 +1696,18 @@ model OAuthClient {
   refreshTokenTtl Int @default(2592000) @map("refresh_token_ttl")
 
   // Ownership
-  tenantId    String  @map("tenant_id")
+  // AUDIT(no-tenant): platform-level clients (the admin control plane, ops
+  // tooling) belong to no tenant. There is no "platform tenant" to point at —
+  // Tenant is a supertype of Organization and Individual and must link to one
+  // of them — so forcing a value here would mean inventing a fake tenant row.
+  // Nullable is the honest shape; tenant-owned clients still set it.
+  tenantId    String? @map("tenant_id")
   createdById String? @map("created_by_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  tenant         Tenant               @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant         Tenant?              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   authorizations OAuthAuthorization[]
   accessTokens   OAuthAccessToken[]
 
