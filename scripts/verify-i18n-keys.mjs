@@ -398,10 +398,21 @@ function diff(locale, enKeys, localeKeys) {
 }
 
 function findIdenticalMessages(locale, enFlat, localeFlat, namespaces) {
-  // Chinese catalogs (zh-Hans / zh-Hant / legacy zh) use different scripts —
-  // identical-English check does not apply the same way as for Latin locales.
-  if (locale === "zh" || locale.startsWith("zh-")) return [];
-
+  // This check used to be skipped entirely for zh-* on the grounds that the
+  // different script made it "not apply the same way". That reasoning is
+  // backwards, and it cost us: on 2026-07-29 Forge's zh-Hans reported
+  // criticalIdentical=0 while 803 of its 1244 runner strings were verbatim
+  // English.
+  //
+  // For a Latin-script locale, a translation coinciding with English is a
+  // routine false positive ("Import", "Format"). For Chinese, a value equal to
+  // a full English string is the *strongest* available signal that nothing was
+  // translated. The exemption was disabling the check precisely where it is
+  // most reliable — and on the primary product language.
+  //
+  // Brand names, tech tokens and short labels are already excluded below by
+  // ALLOWED_IDENTICAL_VALUES and the minimum length, which is where the
+  // legitimate identical cases belong.
   const identical = [];
   for (const [key, enValue] of Object.entries(enFlat)) {
     const namespace = key.split(".")[0];
