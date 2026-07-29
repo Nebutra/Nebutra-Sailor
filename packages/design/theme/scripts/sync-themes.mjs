@@ -1,7 +1,7 @@
-import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { formatGenerated } from "../../tokens/scripts/format-generated.mjs";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = resolve(packageRoot, "..", "..", "..");
@@ -9,12 +9,6 @@ const designTokensRoot = resolve(packageRoot, "..", "design-tokens");
 const generatedThemesPath = resolve(designTokensRoot, "build", "css", "themes.generated.css");
 const keyframesPath = resolve(packageRoot, "keyframes.css");
 const themesAliasPath = resolve(packageRoot, "themes.css");
-const biomeBin = resolve(
-  repoRoot,
-  "node_modules",
-  ".bin",
-  process.platform === "win32" ? "biome.cmd" : "biome",
-);
 
 if (!existsSync(generatedThemesPath)) {
   throw new Error(
@@ -33,8 +27,5 @@ writeFileSync(
 @import "./keyframes.css";
 `,
 );
-execFileSync(biomeBin, ["format", "--write", keyframesPath], {
-  cwd: repoRoot,
-  stdio: "inherit",
-});
+formatGenerated(keyframesPath);
 process.stdout.write("keyframes.css refreshed from @nebutra/design-tokens (+ themes.css alias)\n");

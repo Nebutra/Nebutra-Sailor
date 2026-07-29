@@ -6,17 +6,17 @@
  *
  * Product chrome SSOT remains tokens/styles.css; this file never paints :root alone.
  */
-import { spawnSync } from "node:child_process";
+
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { formatGenerated } from "../../tokens/scripts/format-generated.mjs";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = resolve(packageRoot, "../../..");
 const tokensRoot = resolve(packageRoot, "..", "tokens");
 const skinsDir = join(tokensRoot, "skins");
 const outPath = join(packageRoot, "skins.css");
-const biomeBin = join(repoRoot, "node_modules/.bin/biome");
 
 if (!existsSync(skinsDir)) {
   throw new Error(`Missing skins dir at ${skinsDir}`);
@@ -69,15 +69,5 @@ for (const file of files) {
 }
 
 writeFileSync(outPath, `${chunks.join("\n").trimEnd()}\n`);
-// Match Biome CSS formatter so governance lint after theme build stays green.
-if (existsSync(biomeBin)) {
-  const fmt = spawnSync(biomeBin, ["format", "--write", outPath], {
-    cwd: repoRoot,
-    encoding: "utf8",
-  });
-  if (fmt.status !== 0) {
-    process.stderr.write(fmt.stderr || fmt.stdout || "biome format failed on skins.css\n");
-    process.exit(fmt.status ?? 1);
-  }
-}
+formatGenerated(outPath);
 process.stdout.write(`skins.css refreshed: ${ids.length} languages -> ${outPath}\n`);
