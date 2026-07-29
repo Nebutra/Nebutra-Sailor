@@ -92,6 +92,11 @@ jobs:
           # double the path.
           mkdir -p .vercel
           printf '{"projectId":"%s","orgId":"%s"}\n' "$PROJECT_ID" "${VERCEL_ORG_ID:-}" > .vercel/project.json
+          # The CLI reads VERCEL_ORG_ID/VERCEL_PROJECT_ID from the environment in
+          # preference to .vercel/project.json, and refuses to run with only one
+          # of the pair set. VERCEL_ORG_ID comes from the step env, so the id
+          # resolved above has to be exported alongside it.
+          export VERCEL_PROJECT_ID="$PROJECT_ID"
 
           set +e
           out=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}" 2>&1)
