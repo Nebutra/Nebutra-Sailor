@@ -72,9 +72,18 @@ concurrency:
 
 jobs:
   translate:
-    name: Translate all product catalogs
+    # One job per catalog. Previously all four ran sequentially inside a single
+    # 90-minute job and nothing was committed until the end, so a timeout threw
+    # the whole run away — which is exactly what happened on 2026-07-29 after
+    # Forge grew 1084 keys. Now each catalog gets its own budget, they run in
+    # parallel, and a slow one cannot starve the others.
+    name: Translate ${{ matrix.catalog }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        catalog: ${{ fromJSON((github.event.inputs.catalog == null || github.event.inputs.catalog == 'all') && '["landing","web","forge","router"]' || format('["{0}"]', github.event.inputs.catalog)) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -152,7 +161,7 @@ jobs:
       - name: Seed missing PRODUCT_LANGUAGES catalogs
         run: node scripts/i18n-seed-product-locales.mjs
 
-      - name: Concurrent global translate (full wheel)
+      - name: Translate ${{ matrix.catalog }}
         # continue-on-error: Token Plan quota may exhaust mid-run; still commit partial catalogs.
         if: steps.smoke.outputs.quota != 'exhausted'
         continue-on-error: true
@@ -173,22 +182,80 @@ jobs:
           if [ "${{ github.event.inputs.force }}" = "true" ]; then
             EXTRA+=(--force)
           fi
-          CAT="${{ github.event.inputs.catalog || 'all' }}"
-          if [ -n "$CAT" ] && [ "$CAT" != "all" ]; then
-            EXTRA+=(--catalog "$CAT")
-          fi
-          # Prefer product shell catalogs first when running "all"
-          if [ "$CAT" = "all" ] || [ -z "$CAT" ]; then
-            node scripts/i18n-translate-sensenova.mjs --catalog forge --catalog router "${EXTRA[@]}" || true
-            node scripts/i18n-translate-sensenova.mjs --catalog web --catalog landing "${EXTRA[@]}" || true
-          else
-            node scripts/i18n-translate-sensenova.mjs "${EXTRA[@]}"
-          fi
+          node scripts/i18n-translate-sensenova.mjs --catalog "${{ matrix.catalog }}" "${EXTRA[@]}"
 
       # Deterministic, no API — undoes known model over-translations (legal entity,
       # Webhooks/Discord/Tokens exact leaves, etc.) before any PR is opened.
       - name: Glossary post-process (deterministic)
         run: node scripts/i18n-glossary-postprocess.mjs
+
+      # Only this catalog's directory. Every job seeds all four, so uploading
+      # all of them would let a seeded-but-untranslated copy overwrite another
+      # job's real translations when the artifacts are merged.
+      - name: Resolve catalog path
+        id: paths
+        run: |
+          case "${{ matrix.catalog }}" in
+            landing) echo "dir=apps/landing/messages" >> "$GITHUB_OUTPUT" ;;
+            web)     echo "dir=packages/platform/i18n/locales" >> "$GITHUB_OUTPUT" ;;
+            forge)   echo "dir=apps/forge/messages" >> "$GITHUB_OUTPUT" ;;
+            router)  echo "dir=apps/router/messages" >> "$GITHUB_OUTPUT" ;;
+            *) echo "::error::unknown catalog ${{ matrix.catalog }}"; exit 1 ;;
+          esac
+
+      - name: Upload translated catalog
+        uses: actions/upload-artifact@v4
+        with:
+          name: i18n-${{ matrix.catalog }}
+          path: ${{ steps.paths.outputs.dir }}/*.json
+          if-no-files-found: ignore
+          retention-days: 3
+
+  # Collect whatever finished. A catalog that timed out simply contributes
+  # nothing; the others still reach a PR, which is the property the old
+  # single-job shape did not have.
+  open-pr:
+    name: Open or update the locale PR
+    needs: translate
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: ./.github/actions/setup-node
+        with:
+          node-version: "24"
+
+      - name: Download translated catalogs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: i18n-*
+          path: /tmp/i18n-artifacts
+
+      - name: Restore each catalog in place
+        run: |
+          set -euo pipefail
+          restore() {
+            src="/tmp/i18n-artifacts/i18n-$1"
+            [ -d "$src" ] || { echo "no artifact for $1 — catalog did not finish"; return 0; }
+            mkdir -p "$2"
+            cp "$src"/*.json "$2"/
+            echo "restored $1 -> $2"
+          }
+          restore landing apps/landing/messages
+          restore web packages/platform/i18n/locales
+          restore forge apps/forge/messages
+          restore router apps/router/messages
+
+      # Deterministic and API-free — regenerated here rather than carried through
+      # artifacts, where four jobs writing the same shared file would race.
+      - name: Regenerate product-locales + seed shape
+        run: node scripts/i18n-seed-product-locales.mjs
 
       - name: Enable pnpm + install for i18n verify
         run: |
@@ -196,8 +263,11 @@ jobs:
           corepack prepare pnpm@10.32.1 --activate
           pnpm install --frozen-lockfile --filter @nebutra/landing...
 
-      - name: Verify landing i18n integrity
-        run: pnpm --filter @nebutra/landing check:i18n
+      # Reports every catalog, blocks nothing: this PR is the thing that FIXES
+      # a red gate, so failing it here would deadlock the fill.
+      - name: Verify i18n integrity (all catalogs, advisory)
+        continue-on-error: true
+        run: pnpm i18n:check
 
       # Fixed branch name → updates the same PR on subsequent en pushes (async).
       # delete-branch: true → remove branch after the PR is merged/closed (no zombies).
