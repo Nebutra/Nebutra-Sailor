@@ -466,11 +466,18 @@ describe("ci harness dependency closure", () => {
       "utf8",
     );
 
-    // Separator line testid must remain (E2E selectors depend on it).
-    expect(footer).toContain('data-testid="footer-gradient-line"');
-    // Footer was refactored: the gradient-line div now uses the neutral border token
-    // and the vivid gradient effect is provided by AuroraBackground (opt-in via showFinalCta).
-    expect(footer).toContain("var(--neutral-7)");
+    // No separator above the footer. It was a 1px div painted with
+    // --brand-gradient, whose first stop is blue-9 at full saturation — a value
+    // the token rules keep off component surfaces. Someone had already replaced
+    // it with a neutral border once; it came back as the gradient and this
+    // assertion was left expecting the neutral token, so it had been failing
+    // rather than preventing the regression.
+    //
+    // Asserting its absence rather than its color: the footer separates itself
+    // from the article by whitespace and a background shift, which is how the
+    // rest of the surface does it.
+    expect(footer).not.toContain("footer-gradient-line");
+    expect(footer).not.toContain("--brand-gradient");
     expect(footer).toContain("AuroraBackground");
   });
 });

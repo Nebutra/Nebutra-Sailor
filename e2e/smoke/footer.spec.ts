@@ -204,11 +204,12 @@ test.describe("FooterMinimal", () => {
   // Design System Compliance
   // ---------------------------------------------------------------------------
 
-  test("brand gradient line is present at top of footer", async ({ page }) => {
-    const gradientLine = page.getByTestId("footer-gradient-line");
-    await expect(gradientLine).toBeAttached();
-    const bg = await gradientLine.evaluate((el) => el.style.background);
-    expect(bg).toContain("brand-gradient");
+  test("no saturated separator above the footer", async ({ page }) => {
+    // The footer used to open with a 1px --brand-gradient rule. Its first stop
+    // is blue-9 at full saturation, which the token rules keep off component
+    // surfaces, and it read as a hard seam across the page. Separation now
+    // comes from whitespace and the background shift instead.
+    await expect(page.getByTestId("footer-gradient-line")).toHaveCount(0);
   });
 
   test("footer uses semantic design tokens (not raw hex)", async ({ page }) => {

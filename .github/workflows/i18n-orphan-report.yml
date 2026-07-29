@@ -28,10 +28,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
+      - name: Setup Node and pnpm
+        # Shared action, not actions/setup-node directly: it pins the Node
+        # version, the pnpm version and the supply-chain guards in one place.
+        # A workflow that sets up its own drifts from the rest silently.
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Orphan report
         run: node scripts/i18n-orphan-report.mjs

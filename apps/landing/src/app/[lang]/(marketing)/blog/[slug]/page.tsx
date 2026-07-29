@@ -213,7 +213,10 @@ function BlogArticleFooter({
 }) {
   return (
     <section className="mx-auto mt-16 max-w-4xl border-y border-border py-10">
-      <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
+      {/* items-start: grid items stretch to the row height by default, so the
+          subscribe card grew to match the taller article column and painted its
+          bg-muted across the gap — a block of grey with nothing in it. */}
+      <div className="grid items-start gap-8 lg:grid-cols-[1fr_280px]">
         <div>
           <div className="flex items-center justify-between gap-4">
             <div>
