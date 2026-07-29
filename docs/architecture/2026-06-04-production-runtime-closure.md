@@ -22,7 +22,7 @@ apps/web + apps/landing
   -> Cloud VM Origin (ECS Origin legacy target)
      -> backends/python/ai FastAPI
      -> Celery worker / beat
-  -> Supabase Postgres
+  -> PlanetScale Postgres
   -> Upstash Redis / QStash
   -> R2 or OSS object storage
 ```
@@ -121,8 +121,14 @@ without it.
 
 ### Managed Data Layer
 
-Supabase Postgres is the primary database. Upstash Redis/QStash is the default
-cache, rate-limit, lock, queue, and task-event substrate. R2/OSS stores files.
+PlanetScale Postgres is the primary database as of 2026-07. Supabase and Neon
+remain first-class supported providers — the application depends on the Postgres
+contract (Prisma driver adapter, `DIRECT_URL` for migrations, `pgvector`), not on
+one vendor — but production runs on PlanetScale. See
+docs/plans/2026-07-06-planetscale-support-design.md.
+
+Upstash Redis/QStash is the default cache, rate-limit, lock, queue, and
+task-event substrate. R2/OSS stores files.
 
 Files go to object storage. The VM handles metadata and async processing, not raw
 frontend file ingress.

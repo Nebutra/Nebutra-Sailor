@@ -8,8 +8,8 @@ deployment path. The deploy workflow forwards these values from the GitHub
 
 | Capability | GitHub secret or variable | Notes |
 | --- | --- | --- |
-| Database runtime | `DATABASE_URL` or `SUPABASE_DATABASE_URL` | Use the pooled Supabase Postgres URL after cutover. |
-| Database migrations | `DIRECT_URL` or `SUPABASE_DIRECT_URL` | Use the direct Supabase Postgres URL for restore and migrations. |
+| Database runtime | `DATABASE_URL` | Pooled Postgres URL. Production is PlanetScale (PgBouncer endpoint) as of 2026-07; Supabase and Neon use their own pooler URLs. |
+| Database migrations | `DIRECT_URL` | Direct (non-pooled) Postgres URL, required for migrations and restore on every provider. |
 | Auth core | `BETTER_AUTH_SECRET`, `AUTH_PROVIDER`, `NEXT_PUBLIC_AUTH_PROVIDER`, `BETTER_AUTH_URL` | `AUTH_PROVIDER` defaults to `better-auth`; keep `BETTER_AUTH_SECRET` stable across deploys. |
 | Enterprise SSO discovery | `AUTH_SSO_DISCOVERY_PROVIDERS` | Maps email domains to Clerk Enterprise SSO, Feishu/Lark OAuth, or explicit generic handoff URLs. |
 | Nebutra-owned SSO issuer | `OIDC_ISSUER`, `OIDC_COOKIE_KEYS`, `OIDC_ENABLE_CLIENT_CREDENTIALS`, `REDIS_URL` | `apps/idp` runs at `https://sso.nebutra.com`. `OIDC_COOKIE_KEYS` must contain two or more high-entropy values. `REDIS_URL` must be an ioredis-compatible URL, not an Upstash REST URL. |

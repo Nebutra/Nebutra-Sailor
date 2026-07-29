@@ -1,5 +1,12 @@
 # ECS PostgreSQL to Supabase migration
 
+> **Superseded (2026-07).** Production moved on from Supabase to PlanetScale
+> Postgres. This runbook is kept because the mechanics — pooled vs direct URL,
+> `migrate diff --script` plus batched apply, the `app_user` RLS role — are
+> provider-agnostic and still correct. What is stale is the destination: do not
+> read this as a statement of where the data lives today. See
+> docs/architecture/2026-06-04-production-runtime-closure.md.
+
 This runbook moves the production database from the ECS-hosted PostgreSQL
 container to Supabase PostgreSQL without changing application query code.
 
