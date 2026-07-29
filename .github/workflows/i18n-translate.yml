@@ -36,6 +36,10 @@ on:
         description: "Catalog filter (landing|web|forge|router|all)"
         required: false
         default: "all"
+      locales:
+        description: "Space-separated locale filter, e.g. 'zh-Hans zh-Hant'. Empty = every PRODUCT_LANGUAGES locale."
+        required: false
+        default: ""
       concurrency:
         description: "Per-locale batch concurrency"
         required: false
@@ -189,6 +193,7 @@ jobs:
           set -uo pipefail
           EXTRA=()
           if [ "${{ github.event.inputs.force }}" = "true" ]; then EXTRA+=(--force); fi
+          for loc in ${{ github.event.inputs.locales }}; do EXTRA+=(--locale "$loc"); done
           CAT="${{ github.event.inputs.catalog || 'all' }}"
           if [ "$CAT" = "all" ] || [ -z "$CAT" ]; then
             # Product shells first: if the budget runs out, the surfaces users
@@ -198,6 +203,16 @@ jobs:
             CATALOGS="$CAT"
           fi
 
+          # Recreate the branch from current main every run.
+          #
+          # Branching from main while the remote branch still points at an older
+          # main makes today's workflow edits part of the push, and GITHUB_TOKEN
+          # is refused when a push touches .github/workflows — which is what
+          # killed the 2026-07-29 run AFTER it had translated forge (commit
+          # built, push rejected, 3.5h discarded). Starting from a clean branch
+          # at main means the workflow files are identical to the base and the
+          # push carries only message catalogs.
+          git push origin --delete chore/i18n-auto-translate || true
           git checkout -B chore/i18n-auto-translate
           failed=""
           for c in $CATALOGS; do
