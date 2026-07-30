@@ -632,13 +632,22 @@ jobs:
 
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          # conf.d is taken as a whole DIRECTORY, never a glob. actions/checkout
+          # runs sparse-checkout in cone mode, and cone mode takes directories —
+          # a pattern makes git exit 128 ("specify directories rather than
+          # patterns"), which fails every deploy before a single job body runs.
+          # Note these lines cannot move inside the block scalar below: in a `|`
+          # scalar a leading # is literal text, so each comment would be handed
+          # to git as a path.
+          #
+          # The directory form also means a newly added vhost is checked out
+          # without anyone remembering to list it here — which is the same reason
+          # the scp loop further down globs instead of enumerating hosts.
           sparse-checkout: |
             infra/iac/ecs/ecosystem.config.cjs
             infra/ops/scripts/ecs-deploy-remote.sh
             infra/runtime/nginx/nginx.conf
-            infra/runtime/nginx/conf.d/proxy_params.conf
-            infra/runtime/nginx/conf.d/security.conf
-            infra/runtime/nginx/conf.d/*.nebutra.com.conf
+            infra/runtime/nginx/conf.d
 
       - name: Download landing bundle
         if: needs.detect-changes.outputs.landing == 'true'
