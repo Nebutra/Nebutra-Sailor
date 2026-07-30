@@ -419,9 +419,16 @@ persist_idp_runtime_env() {
   local app_root="$1"
 
   persist_database_runtime_env "$app_root"
+  # VAULT_LOCAL_MASTER_KEY is not optional decoration. Confidential OAuth clients
+  # keep their secret as a @nebutra/vault envelope, and without a KEK getVault()
+  # throws — the OIDC adapter then declines to serve the client and the
+  # authorization endpoint answers 500 with "oops! something went wrong". Reaching
+  # the remote shell is not enough: this list is what actually lands in the app's
+  # .env, and the process reads only that.
   persist_runtime_keys "$app_root" "idp SSO" \
     DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
     REDIS_URL OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS \
+    VAULT_LOCAL_MASTER_KEY AWS_KMS_KEY_ID AWS_KMS_KEY_ARN \
     SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED
 }
 
@@ -593,6 +600,12 @@ load_runtime_env() {
     [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
     [ -n "${REDIS_URL:-}" ] || missing+=("REDIS_URL")
     [ -n "${OIDC_COOKIE_KEYS:-}" ] || missing+=("OIDC_COOKIE_KEYS")
+    # A KEK, from either provider. Absent one, every confidential OAuth client is
+    # unusable and the only symptom is a 500 from /auth — fail the deploy instead,
+    # where there is something to read.
+    if [ -z "${VAULT_LOCAL_MASTER_KEY:-}" ] && [ -z "${AWS_KMS_KEY_ID:-}" ] && [ -z "${AWS_KMS_KEY_ARN:-}" ]; then
+      missing+=("VAULT_LOCAL_MASTER_KEY (or AWS_KMS_KEY_ID/AWS_KMS_KEY_ARN)")
+    fi
     if [ "${#missing[@]}" -gt 0 ]; then
       fail "idp runtime env missing required keys after env load: ${missing[*]}"
     fi
