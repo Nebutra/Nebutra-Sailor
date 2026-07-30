@@ -894,6 +894,21 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
+          # DEPLOY_-prefixed duplicates, and they are not redundant.
+          #
+          # ecs-deploy-remote.sh sources the VM's existing per-app .env
+          # (source_runtime_env_file uses `set -a`) BEFORE composing the new one,
+          # which overwrites whatever this job forwarded. runtime_env_value then
+          # writes that sourced value straight back. The effect is a box pinned to
+          # the first DATABASE_URL it ever received: rotating this secret changes
+          # nothing, and the apps keep talking to whichever database they were
+          # first pointed at.
+          #
+          # runtime_env_value checks DEPLOY_<KEY> first, precisely so the deploy
+          # can override the file. Using it for the database URLs makes the repo
+          # the source of truth again.
+          DEPLOY_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DEPLOY_DIRECT_URL: ${{ secrets.DIRECT_URL }}
           # Non-bypassrls role assumed per tenant transaction. Belt and braces:
           # DATABASE_URL already connects as this role, so RLS applies either
           # way — but a future connection string that does not would silently
@@ -1120,7 +1135,7 @@ jobs:
           add_remote_env SHA "${{ github.sha }}"
           add_remote_env BUNDLE_DIR "$ECS_DEPLOY_ROOT/.incoming/${{ github.sha }}"
           add_remote_envs \
-            DATABASE_URL DIRECT_URL APP_DB_ROLE SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
+            DATABASE_URL DIRECT_URL DEPLOY_DATABASE_URL DEPLOY_DIRECT_URL APP_DB_ROLE SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
             AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL \
             NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY CLERK_SECRET_KEY CLERK_WEBHOOK_SECRET AUTH_SSO_DISCOVERY_PROVIDERS \
             BETTER_AUTH_SECRET BETTER_AUTH_URL ADMIN_AUTH_SECRET VAULT_LOCAL_MASTER_KEY \
