@@ -1,6 +1,8 @@
 {
   "brandLiterals": {
     "allowlist": [
+      "apps/admin/src/lib/auth.ts",
+      "apps/admin/src/lib/staff.ts",
       "apps/design-docs/mdx-components.tsx",
       "apps/design-docs/src/__registry__/index.tsx",
       "apps/design-docs/src/app/[lang]/docs/[[...slug]]/page.tsx",

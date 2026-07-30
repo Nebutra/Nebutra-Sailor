@@ -1,3 +1,7 @@
+// @brand-exempt: the only literal is a hostname inside the header comment explaining which
+// origin this CORS policy is for. The policy itself resolves trusted origins through
+// resolveBetterAuthTrustedOrigins — nothing is hardcoded at runtime.
+
 import "server-only";
 
 import { resolveBetterAuthTrustedOrigins } from "@nebutra/auth";

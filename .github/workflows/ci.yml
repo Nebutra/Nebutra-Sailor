@@ -395,6 +395,120 @@ jobs:
           # not inherit env reliably).
           DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
+      # The css-var-types job below audits BUILT stylesheets — Tailwind
+      # arbitrary values do not exist before a build — so it consumes what this
+      # job already produced instead of building the apps a second time.
+      # Collecting is a copy of a few hundred KB; the audit itself is seconds.
+      #
+      # One sheet per app, not one per chunk. Next.js splits the app's CSS: the
+      # token :root block lands in one chunk and the utilities that read those
+      # tokens land in another. The audit resolves each var() against the values
+      # the stylesheet it was handed defines, and skips any name it cannot
+      # resolve — so auditing chunk-by-chunk silently skips every cross-chunk
+      # reference, which is most of them. Measured on apps/landing: two chunks,
+      # tokens in one and component classes in the other, and a var-type error
+      # injected into the component chunk was NOT reported per-chunk and WAS
+      # reported once the chunks were concatenated. The glob is sorted, so the
+      # concatenation order is deterministic.
+      - name: Collect built app stylesheets
+        run: |
+          mkdir -p artifacts/built-css
+          : > artifacts/built-css/manifest.txt
+          for app in landing web; do
+            next_dir="apps/$app/.next"
+            # BUILD_ID, not the directory: `next dev` also creates .next but
+            # never emits .next/static/css, so a bare directory check would fail
+            # this step for an app that was never production-built.
+            if [ ! -f "$next_dir/BUILD_ID" ]; then
+              echo "apps/$app: not built by the affected filter — nothing to collect"
+              continue
+            fi
+            count=$(find "$next_dir/static/css" -maxdepth 1 -name '*.css' 2>/dev/null | wc -l | tr -d ' ')
+            if [ "$count" -eq 0 ]; then
+              echo "::error file=.github/workflows/ci.yml::[css-var-types] apps/$app was built but produced no stylesheets at $next_dir/static/css. The collector's assumption about the Next.js CSS output path has broken, which would make the CSS Var Type Audit pass without checking anything. Fix the path here — do not delete the check."
+              exit 1
+            fi
+            cat "$next_dir"/static/css/*.css > "artifacts/built-css/$app.css"
+            echo "$app $count" >> artifacts/built-css/manifest.txt
+          done
+          echo "collected stylesheets (app, chunk count):"
+          cat artifacts/built-css/manifest.txt
+
+      - name: Upload built app stylesheets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: built-app-css-${{ github.run_id }}
+          path: artifacts/built-css
+          retention-days: 3
+
+  # ── CSS var-type audit (declarations the browser throws away) ─────────────
+  # scripts/audit-css-var-types.mjs resolves every var() in a BUILT stylesheet
+  # against the values that stylesheet defines and asks the browser's own parser
+  # whether the declaration survives. Its failure class has no other signal: the
+  # build is green, the class is in the stylesheet, the element carries it, and
+  # nothing paints. It shipped once as every default Button rendering with no
+  # fill, and it has only ever run when a human remembered.
+  #
+  # This job does NOT build. It downloads the stylesheets the `build` job
+  # produced, so a one-line CSS error comes back in a couple of minutes instead
+  # of behind a full app build. apps/design-docs is audited in
+  # ui-governance.yml, which already builds it.
+  css-var-types:
+    name: CSS Var Type Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [detect-changes, build]
+    if: needs.detect-changes.outputs.template != 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Download built app stylesheets
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: built-app-css-${{ github.run_id }}
+          path: artifacts/built-css
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Install Playwright chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Audit built stylesheets for dropped declarations
+        run: |
+          if [ ! -s artifacts/built-css/manifest.txt ]; then
+            echo "The affected build produced no landing/web stylesheets, so there is nothing to audit."
+            echo "apps/landing and apps/web are audited whenever the affected filter builds them;"
+            echo "apps/design-docs is audited in .github/workflows/ui-governance.yml."
+            exit 0
+          fi
+          echo "collected stylesheets (app, chunk count):"
+          cat artifacts/built-css/manifest.txt
+          # Every app the collector recorded must have arrived. Checking the
+          # manifest against the files, rather than just counting files, is what
+          # keeps this from passing quietly when one app's sheet goes missing in
+          # transit and another app's is still there.
+          sheets=()
+          while read -r app _; do
+            sheet="artifacts/built-css/$app.css"
+            if [ ! -s "$sheet" ]; then
+              echo "::error file=.github/workflows/ci.yml::[css-var-types] The collector recorded a stylesheet for apps/$app but $sheet did not arrive in the built-app-css artifact, so that app would go unaudited. Fix the artifact plumbing — do not delete the check."
+              exit 1
+            fi
+            sheets+=("$sheet")
+          done < artifacts/built-css/manifest.txt
+          printf 'auditing %s\n' "${sheets[@]}"
+          node scripts/audit-css-var-types.mjs "${sheets[@]}"
+
   # ── Web release verification ─────────────────────────────────────────────
   # Production-like web gate: validates generated types, TS, webpack build, and
   # fails on new unclassified dependency warnings.

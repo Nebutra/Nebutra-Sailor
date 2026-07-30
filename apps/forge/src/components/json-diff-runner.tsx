@@ -1,3 +1,6 @@
+// @brand-exempt: the two literals are the demo JSON documents the diff runner compares.
+// Sample payloads, not brand identity.
+
 "use client";
 
 /**

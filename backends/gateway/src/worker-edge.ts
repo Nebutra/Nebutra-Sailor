@@ -24,6 +24,10 @@
  * at the origin, where the logic already lives exactly once.
  */
 
+// @brand-exempt: the only literals are hostnames inside comments explaining which host this
+// Worker serves and which one it forwards to. The forwarding target itself is ORIGIN_URL, a
+// wrangler var, precisely so it is not hardcoded here.
+
 interface EdgeEnv {
   /** Non-proxied origin hostname. Must not be the hostname this Worker serves. */
   ORIGIN_URL?: string;

@@ -13,6 +13,10 @@
  * over HTTP.
  */
 
+// @brand-exempt: hostnames appear only in the header comment describing the deploy topology.
+// This Worker takes no hostname at runtime — it is cron-triggered and reaches Postgres through
+// a Hyperdrive binding.
+
 interface HyperdriveBinding {
   connectionString: string;
 }

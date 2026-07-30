@@ -22,11 +22,20 @@
 //   2xl      1536px   Tailwind default
 //   3xl      1800px   4K / Studio Display
 //
+// Scope note: this guard scanned `apps` only until 2026-07-30. The component
+// library is what every app renders, so a breakpoint hardcoded there reaches
+// further than one hardcoded in a single app — packages/design is now scanned
+// too. It was clean at the time of widening (0 arbitrary breakpoints), so this
+// is a guard placed ahead of the debt rather than around it, and needs no
+// allowlist. Mirrors the 2026-07-28 widening of scripts/lint-no-focus-rings.mjs.
+//
 // Run: node scripts/lint-no-arbitrary-breakpoints.mjs
 // Exit 1 on any violation. Wired into root `pnpm lint`.
 
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+
+const SCAN_ROOTS = ["apps", "packages/design"];
 
 const WHITELIST = [/\.test\.tsx?$/, /\/__tests__\//, /\.stories\.tsx?$/];
 
@@ -35,17 +44,18 @@ const isWhitelisted = (path) => WHITELIST.some((re) => re.test(path));
 // Pattern: `min-[NNNpx]:` or `max-[NNNpx]:` Tailwind responsive prefix.
 const BAD_RE = /\b(min|max)-\[(\d+)px\]:/g;
 
-// grep exits 1 when zero matches — that's a clean state, not an error.
+// rg exits 1 when zero matches — that's a clean state, not an error.
 let filesRaw;
 try {
   filesRaw = execSync(
-    `grep -rlE '(min|max)-\\[[0-9]+px\\]:' --include='*.tsx' --include='*.ts' apps 2>/dev/null | grep -v node_modules | grep -v dist/ | grep -v build/ | grep -v '/.next/'`,
+    "rg -l --glob '*.{tsx,ts,jsx,js}' --glob '!**/node_modules/**' " +
+      "--glob '!**/.next/**' --glob '!**/.open-next/**' --glob '!**/.turbo/**' " +
+      "--glob '!**/dist/**' --glob '!**/build/**' --glob '!**/storybook-static/**' " +
+      `--glob '!**/.deploy/**' '(min|max)-\\[[0-9]+px\\]:' ${SCAN_ROOTS.join(" ")}`,
     { encoding: "utf-8" },
   ).trim();
-} catch (e) {
-  // Exit code 1 from grep = no matches found = success.
-  if (e.status === 1) filesRaw = "";
-  else throw e;
+} catch {
+  filesRaw = "";
 }
 
 const files = filesRaw
@@ -68,16 +78,20 @@ for (const file of files) {
 
 if (violations.length === 0) {
   process.stdout.write(
-    `✅ No arbitrary Tailwind breakpoints in app code — all responsive utilities go through named tokens.\n`,
+    `✅ lint-no-arbitrary-breakpoints: no arbitrary Tailwind breakpoints in ` +
+      `${SCAN_ROOTS.map((r) => `${r}/**`).join(" + ")} — all responsive utilities go through named tokens.\n`,
   );
   process.exit(0);
 }
 
 process.stderr.write(
-  `\n❌ ${violations.length} arbitrary breakpoint violation(s) — please use a named breakpoint token from @theme inline:\n\n`,
+  `\n❌ lint-no-arbitrary-breakpoints: ${violations.length} arbitrary breakpoint violation(s) — ` +
+    `use a named breakpoint token from @theme inline:\n\n`,
 );
 for (const v of violations) {
-  process.stderr.write(`  ${v.file}:${v.line}  \`${v.snippet}\`  (${v.px}px)\n`);
+  process.stderr.write(
+    `  ${v.file}:${v.line}  [arbitrary-breakpoint]  \`${v.snippet}\`  (${v.px}px)\n`,
+  );
 }
 process.stderr.write(`\nNamed tokens currently available (packages/design/tokens/styles.css):\n`);
 process.stderr.write(

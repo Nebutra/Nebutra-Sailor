@@ -13,6 +13,7 @@ on:
       - "package.json"
       - "packages/design/**"
       - "pnpm-lock.yaml"
+      - "scripts/audit-css-var-types.mjs"
       - "scripts/lib/ui-governance-policy.ts"
       - "scripts/validate-ui-governance-policy.ts"
       - "scripts/verify-brand-token-sync.ts"
@@ -30,6 +31,7 @@ on:
       - "package.json"
       - "packages/design/**"
       - "pnpm-lock.yaml"
+      - "scripts/audit-css-var-types.mjs"
       - "scripts/lib/ui-governance-policy.ts"
       - "scripts/validate-ui-governance-policy.ts"
       - "scripts/verify-brand-token-sync.ts"
@@ -84,3 +86,42 @@ jobs:
         run: |
           pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs typecheck
           pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs build
+
+      # scripts/audit-css-var-types.mjs needs BUILT css — Tailwind arbitrary
+      # values do not exist before a build — and the Design Docs build above has
+      # just produced it, so this attaches to that build instead of adding one.
+      # The failure class has no other signal: the build is green, the class is
+      # in the stylesheet, the element carries it, and nothing paints. It last
+      # shipped as the docs' own colour swatches having no colour.
+      # apps/landing and apps/web are audited by the css-var-types job in
+      # .github/workflows/ci.yml, off the stylesheets its build job produces.
+      - name: Cache Playwright Browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Audit Design Docs Stylesheets for Dropped Declarations
+        run: |
+          # One sheet, not one per chunk. Next.js puts the token :root block in
+          # one CSS chunk and the utilities that read those tokens in another;
+          # the audit skips any var() name the stylesheet it was handed does not
+          # define, so a chunk-by-chunk run silently skips every cross-chunk
+          # reference — which is most of them. Verified on apps/landing: an
+          # injected var-type error in the component chunk was reported only
+          # after the chunks were concatenated. The glob is sorted, so the order
+          # is deterministic.
+          chunks=$(find apps/design-docs/.next/static/css -maxdepth 1 -name '*.css' 2>/dev/null | wc -l | tr -d ' ')
+          if [ "$chunks" -eq 0 ]; then
+            echo "::error file=.github/workflows/ui-governance.yml::[css-var-types] The Design Docs build produced no stylesheets at apps/design-docs/.next/static/css, so this audit would pass without checking anything. Fix the path here — do not delete the check."
+            exit 1
+          fi
+          mkdir -p artifacts/design-docs-css
+          cat apps/design-docs/.next/static/css/*.css > artifacts/design-docs-css/design-docs.css
+          echo "auditing apps/design-docs ($chunks css chunks, concatenated)"
+          node scripts/audit-css-var-types.mjs artifacts/design-docs-css/design-docs.css

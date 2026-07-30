@@ -1,3 +1,7 @@
+// @brand-exempt: global-error.tsx renders OUTSIDE the root layout, so no stylesheet and no CSS
+// custom properties are available. CLAUDE.md documents the hardcoded hex as the sanctioned
+// exception for exactly this file.
+
 "use client";
 
 /**

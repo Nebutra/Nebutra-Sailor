@@ -44,38 +44,24 @@ jobs:
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, 'I have read the CLA Document and I hereby sign the CLA')) ||
       (github.event_name == 'pull_request_target')
     steps:
-      - name: Detect CLA exemption
-        id: exempt
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          # Empty string when not a PR event.
-          PR_LABELS: ${{ github.event_name == 'pull_request_target' && join(github.event.pull_request.labels.*.name, ',') || '' }}
-        run: |
-          set -euo pipefail
-          echo "event=${EVENT_NAME}"
-          echo "labels=${PR_LABELS}"
-
-          # SenseNova / machine i18n PRs: both labels required (defense in depth —
-          # a lone "i18n" label on a human PR still requires CLA).
-          if [ "$EVENT_NAME" = "pull_request_target" ]; then
-            labels=",${PR_LABELS},"
-            if [[ "$labels" == *",i18n,"* && "$labels" == *",automated,"* ]]; then
-              echo "exempt=true" >> "$GITHUB_OUTPUT"
-              echo "Exempt: PR has labels i18n + automated"
-              exit 0
-            fi
-          fi
-
-          echo "exempt=false" >> "$GITHUB_OUTPUT"
-
-      - name: CLA not required (i18n + automated)
-        if: steps.exempt.outputs.exempt == 'true'
-        run: |
-          echo "::notice::CLA check skipped for machine i18n PR (labels: i18n + automated)."
-          echo "In-repo SenseNova / create-pull-request output — no human CLA needed."
-
+      # The i18n exemption is a pure `if:` condition, deliberately — this job runs
+      # on pull_request_target, which means the base repo's write token and secrets
+      # are available while the PR head is untrusted. A `run:` step is where that
+      # combination turns into code execution, so scripts/verify-supply-chain-policy.mjs
+      # forbids the pair outright, and it is right to: the previous version of this
+      # file expressed the same exemption in shell and thereby blocked the entire CI
+      # pipeline for three days, because the policy check runs inside the shared
+      # setup action before any job body does.
+      #
+      # Both labels are required. A lone `i18n` label on a human PR still needs a
+      # CLA — labelling requires triage permission, but defence in depth is cheap
+      # here and the alternative is one label standing between a fork and an
+      # unsigned merge.
       - name: "CLA Assistant"
-        if: steps.exempt.outputs.exempt != 'true'
+        if: >-
+          !(github.event_name == 'pull_request_target' &&
+            contains(github.event.pull_request.labels.*.name, 'i18n') &&
+            contains(github.event.pull_request.labels.*.name, 'automated'))
         uses: cla-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

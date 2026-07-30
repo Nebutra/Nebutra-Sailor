@@ -6,6 +6,7 @@ import {
 } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -64,7 +65,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
     process.env.NEXT_PUBLIC_FORGE_URL?.trim() ||
     process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    "https://forge.nebutra.com";
+    // brand.domains.forge rather than a literal host: this is the last-resort
+    // fallback, so on a white-label build it is the one value that would still
+    // point at the upstream vendor after every env var had been replaced.
+    getBrandOrigin("forge");
   const signInHref = buildAuthCenterSignInUrl(defaultReturnTo);
   const signUpHref = buildAuthCenterSignUpUrl(defaultReturnTo);
 

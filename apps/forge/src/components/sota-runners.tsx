@@ -1,3 +1,8 @@
+// @brand-exempt: every literal here is SAMPLE INPUT for a tool — a demo SVG the optimiser
+// operates on, demo text for the case/word-count runners, a demo URL for the QR runner. The
+// point of sample input is that it is arbitrary; routing it through brand.metadata would make
+// the demo describe the brand instead of exercising the tool.
+
 "use client";
 
 /**

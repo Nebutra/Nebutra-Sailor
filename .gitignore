@@ -13,6 +13,11 @@ dist
 .turbo
 out
 storybook-static
+# Local deploy staging tree (pnpm deploy --prod output). Untracked build
+# artifact; Biome reads this file (biome.json vcs.useIgnoreFile), so leaving it
+# out made `pnpm lint` fail on generated server bundles and short-circuited
+# every guard chained after `biome check`.
+.deploy
 
 # Environment
 .env
@@ -112,6 +117,13 @@ apps/*/.source/
 
 # Brainstorm visual companion scratch
 .superpowers/
+
+# Verification scratch — throwaway playwright harnesses used to render a component
+# and look at it before a change lands. Ignored rather than tidied away by hand
+# because biome honours the ignore file, so an unformatted scratch script here
+# would otherwise fail `pnpm lint` and gate the whole pipeline on a file nobody
+# intended to keep.
+scratch-verify/
 
 # Competitor teardown captures — local research artifacts, not source.
 # Briefs in docs/plans/tools/ are the committed deliverable; regenerate the
