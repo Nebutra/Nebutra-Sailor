@@ -1,5 +1,14 @@
 # nebutra
 
+## 0.4.1
+
+### Patch Changes
+
+- [`8acefae`](https://github.com/Nebutra/Nebutra-Sailor/commit/8acefae3b5f119ce650563a78ca089c8c7fecc83) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Align scaffolded `@nebutra/*` dependency ranges with monorepo package.json versions.
+  - Make `packages/ops/preset/src/nebutra-package-versions.ts` the single source of truth
+  - Re-export it from the `nebutra` and `create-sailor` CLIs (remove the stale CLI-local map)
+  - Add `pnpm package-versions:sync` / `package-versions:check` and wire check into release
+
 ## 0.4.0
 
 ### Minor Changes
