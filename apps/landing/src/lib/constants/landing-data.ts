@@ -203,7 +203,7 @@ export const TREE_DATA: FileNode[] = [
     id: "apps",
     label: "apps",
     path: "apps",
-    tag: "14",
+    tag: "15",
     icon: React.createElement(FolderOpen, {
       className: "h-[15px] w-[15px] text-blue-500 fill-blue-500/20",
     }),
@@ -222,6 +222,13 @@ export const TREE_DATA: FileNode[] = [
         path: "apps/auth",
         description: "- Login center for all first-party apps",
         icon: React.createElement(Key, { className: "h-4 w-4 text-amber-500" }),
+      },
+      {
+        id: "apps-design",
+        label: "design",
+        path: "apps/design",
+        description: "- Live design system surface (tokens + components)",
+        icon: React.createElement(Paintbrush, { className: "h-4 w-4 text-teal-400" }),
       },
       {
         id: "apps-design-docs",

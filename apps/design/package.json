@@ -1,0 +1,33 @@
+{
+  "name": "@nebutra/design",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VERIFIER SCAFFOLD — minimal app shell created only to render and screenshot the token/component pages. Replace with the real shell.",
+  "scripts": {
+    "dev": "next dev --port 3109",
+    "build": "next build --webpack",
+    "start": "next start --port 3109",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
+    "clean": "rm -rf .next"
+  },
+  "dependencies": {
+    "@nebutra/design-tokens": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "geist": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  },
+  "license": "AGPL-3.0-only"
+}

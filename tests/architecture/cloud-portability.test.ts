@@ -73,7 +73,14 @@ describe("cloud platform portability contract", () => {
     expect(deployTargets).toContain('"gcp"');
     expect(deployTargets).toContain('edgeGateway: "cloudflare-workers"');
     expect(deployTargets).toContain('originBackend: "ecs-docker"');
-    expect(createSailorDeploy).toContain('"gcp"');
+    // The scaffold deliberately holds no target list of its own — it imports
+    // the map type and the defaults from the preset, so a target added there
+    // reaches create-sailor without a second edit. Grepping for the literal
+    // "gcp" here asserted the duplication that import removed, and went red the
+    // moment the two were deduplicated.
+    expect(createSailorDeploy).toContain('from "../../../preset/src/deploy-target"');
+    expect(createSailorDeploy).toContain("getDefaultDeployTargets");
+    expect(createSailorDeploy).not.toMatch(/originBackend:\s*\[/);
   });
 
   it("adds a GCP Terraform scaffold while preserving AWS as an active provider option", () => {

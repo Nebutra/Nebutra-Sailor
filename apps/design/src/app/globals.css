@@ -1,0 +1,10 @@
+/**
+ * Design site CSS entry (Tailwind v4).
+ *
+ * preset.css wires tailwind + @nebutra/tokens/styles.css +
+ * @nebutra/tokens/recipe.css + @nebutra/ui/styles/sources.css + fonts.
+ */
+@import "@nebutra/ui/styles/preset.css";
+
+/* Scan this app's source so its utility classes generate */
+@source "../**/*.{ts,tsx}";
