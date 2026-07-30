@@ -203,18 +203,14 @@ jobs:
             CATALOGS="$CAT"
           fi
 
-          # Recreate the branch from current main every run.
-          #
-          # Branching from main while the remote branch still points at an older
-          # main makes today's workflow edits part of the push, and GITHUB_TOKEN
-          # is refused when a push touches .github/workflows — which is what
-          # killed the 2026-07-29 run AFTER it had translated forge (commit
-          # built, push rejected, 3.5h discarded). Starting from a clean branch
-          # at main means the workflow files are identical to the base and the
-          # push carries only message catalogs.
-          git push origin --delete chore/i18n-auto-translate || true
+          # Branch from current main. The remote branch is replaced only once
+          # this run actually has a translated catalog to put there — see the
+          # push below. Deleting it up front, as this did on 2026-07-30, means a
+          # failure before the first catalog (a smoke timeout, say) leaves no
+          # branch at all and discards the previous run's unmerged work.
           git checkout -B chore/i18n-auto-translate
           failed=""
+          replaced=""
           for c in $CATALOGS; do
             echo "::group::translate $c"
             if node scripts/i18n-translate-sensenova.mjs --catalog "$c" "${EXTRA[@]}"; then
@@ -222,6 +218,14 @@ jobs:
               git add -A apps packages i18n-confirmed-identical.json 2>/dev/null || true
               if ! git diff --cached --quiet; then
                 git commit -m "chore(i18n): auto-translate $c via SenseNova"
+                # The remote branch is based on an older main, so a plain push
+                # would carry this repo's workflow edits and GITHUB_TOKEN refuses
+                # any push touching .github/workflows. Replacing the ref sidesteps
+                # that — but only now, with a translated catalog in hand.
+                if [ -z "$replaced" ]; then
+                  git push origin --delete chore/i18n-auto-translate || true
+                  replaced=1
+                fi
                 # Push each catalog as it lands: a later timeout or abort can no
                 # longer take finished work with it.
                 git push -f origin chore/i18n-auto-translate
@@ -262,7 +266,16 @@ jobs:
           node-version: "24"
 
       - name: Check out the translation branch
-        run: git checkout chore/i18n-auto-translate
+        id: branch
+        run: |
+          if git ls-remote --exit-code --heads origin chore/i18n-auto-translate >/dev/null 2>&1; then
+            git fetch origin chore/i18n-auto-translate
+            git checkout chore/i18n-auto-translate
+            echo "exists=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "No translation branch — the run produced nothing to open."
+            echo "exists=" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Enable pnpm + install for i18n verify
         run: |
@@ -273,6 +286,7 @@ jobs:
       # Reports every catalog, blocks nothing: this PR is the thing that FIXES
       # a red gate, so failing it here would deadlock the fill.
       - name: Verify i18n integrity (all catalogs, advisory)
+        if: steps.branch.outputs.exists
         continue-on-error: true
         run: pnpm i18n:check
 
@@ -282,6 +296,7 @@ jobs:
       # forbids it instead of reporting a green run with no PR — that is how
       # 43k lines of locale fill sat on a branch unnoticed on 2026-07-29.
       - name: Open or update the locale PR
+        if: steps.branch.outputs.exists
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
