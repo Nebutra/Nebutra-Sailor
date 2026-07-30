@@ -1,16 +1,23 @@
 import { defineConfig } from "vitest/config";
 
-const tsxApi = import.meta.resolve("tsx/esm/api");
-
 export default defineConfig({
   test: {
-    execArgv: [`--import=data:text/javascript,import * as tsx from "${tsxApi}";tsx.register()`],
     environment: "node",
     include: ["src/**/*.{test,spec}.ts"],
-    experimental: {
-      // OAuth server tests are pure Node contract tests. Running without Vite's
-      // module runner keeps them closer to production ESM resolution.
-      viteModuleRunner: false,
-    },
+    // `experimental.viteModuleRunner: false` used to be set here, with a tsx
+    // loader via execArgv, on the grounds that it kept these contract tests
+    // "closer to production ESM resolution".
+    //
+    // It did the opposite. Production imports oidc-provider — which is CJS —
+    // through tsup output under Node, and that works. The raw-Node + tsx path
+    // could not load it: any test file reaching provider.ts died with
+    // `Expected a string, an ArrayBuffer, or a TypedArray to be returned for the
+    // "source" from the "load" hook but got undefined`, before a single test
+    // registered. So the config was less faithful to production, not more, and
+    // provider-cookie-keys.test.ts — which pins how OIDC cookie signing keys are
+    // resolved — had simply stopped running.
+    //
+    // With the default runner: 3 files, 19 tests. With the override: 1 file
+    // unloadable, 13 tests.
   },
 });

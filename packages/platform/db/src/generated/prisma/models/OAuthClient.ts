@@ -86,6 +86,7 @@ export type OAuthClientCountAggregateOutputType = {
   id: number
   clientId: number
   clientSecretHash: number
+  clientSecretEnvelope: number
   type: number
   status: number
   name: number
@@ -170,6 +171,7 @@ export type OAuthClientCountAggregateInputType = {
   id?: true
   clientId?: true
   clientSecretHash?: true
+  clientSecretEnvelope?: true
   type?: true
   status?: true
   name?: true
@@ -283,6 +285,7 @@ export type OAuthClientGroupByOutputType = {
   id: string
   clientId: string
   clientSecretHash: string | null
+  clientSecretEnvelope: runtime.JsonValue | null
   type: $Enums.OAuthClientType
   status: $Enums.OAuthClientStatus
   name: string
@@ -332,6 +335,7 @@ export type OAuthClientWhereInput = {
   id?: Prisma.StringFilter<"OAuthClient"> | string
   clientId?: Prisma.StringFilter<"OAuthClient"> | string
   clientSecretHash?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
+  clientSecretEnvelope?: Prisma.JsonNullableFilter<"OAuthClient">
   type?: Prisma.EnumOAuthClientTypeFilter<"OAuthClient"> | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFilter<"OAuthClient"> | $Enums.OAuthClientStatus
   name?: Prisma.StringFilter<"OAuthClient"> | string
@@ -361,6 +365,7 @@ export type OAuthClientOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   clientSecretHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientSecretEnvelope?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -393,6 +398,7 @@ export type OAuthClientWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OAuthClientWhereInput[]
   NOT?: Prisma.OAuthClientWhereInput | Prisma.OAuthClientWhereInput[]
   clientSecretHash?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
+  clientSecretEnvelope?: Prisma.JsonNullableFilter<"OAuthClient">
   type?: Prisma.EnumOAuthClientTypeFilter<"OAuthClient"> | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFilter<"OAuthClient"> | $Enums.OAuthClientStatus
   name?: Prisma.StringFilter<"OAuthClient"> | string
@@ -422,6 +428,7 @@ export type OAuthClientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   clientSecretHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientSecretEnvelope?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -456,6 +463,7 @@ export type OAuthClientScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"OAuthClient"> | string
   clientId?: Prisma.StringWithAggregatesFilter<"OAuthClient"> | string
   clientSecretHash?: Prisma.StringNullableWithAggregatesFilter<"OAuthClient"> | string | null
+  clientSecretEnvelope?: Prisma.JsonNullableWithAggregatesFilter<"OAuthClient">
   type?: Prisma.EnumOAuthClientTypeWithAggregatesFilter<"OAuthClient"> | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusWithAggregatesFilter<"OAuthClient"> | $Enums.OAuthClientStatus
   name?: Prisma.StringWithAggregatesFilter<"OAuthClient"> | string
@@ -482,6 +490,7 @@ export type OAuthClientCreateInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -510,6 +519,7 @@ export type OAuthClientUncheckedCreateInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -538,6 +548,7 @@ export type OAuthClientUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -566,6 +577,7 @@ export type OAuthClientUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -594,6 +606,7 @@ export type OAuthClientCreateManyInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -620,6 +633,7 @@ export type OAuthClientUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -645,6 +659,7 @@ export type OAuthClientUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -681,6 +696,7 @@ export type OAuthClientCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   clientSecretHash?: Prisma.SortOrder
+  clientSecretEnvelope?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -882,6 +898,7 @@ export type OAuthClientCreateWithoutTenantInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -909,6 +926,7 @@ export type OAuthClientUncheckedCreateWithoutTenantInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -965,6 +983,7 @@ export type OAuthClientScalarWhereInput = {
   id?: Prisma.StringFilter<"OAuthClient"> | string
   clientId?: Prisma.StringFilter<"OAuthClient"> | string
   clientSecretHash?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
+  clientSecretEnvelope?: Prisma.JsonNullableFilter<"OAuthClient">
   type?: Prisma.EnumOAuthClientTypeFilter<"OAuthClient"> | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFilter<"OAuthClient"> | $Enums.OAuthClientStatus
   name?: Prisma.StringFilter<"OAuthClient"> | string
@@ -991,6 +1010,7 @@ export type OAuthClientCreateWithoutAuthorizationsInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -1018,6 +1038,7 @@ export type OAuthClientUncheckedCreateWithoutAuthorizationsInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -1061,6 +1082,7 @@ export type OAuthClientUpdateWithoutAuthorizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1088,6 +1110,7 @@ export type OAuthClientUncheckedUpdateWithoutAuthorizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1115,6 +1138,7 @@ export type OAuthClientCreateWithoutAccessTokensInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -1142,6 +1166,7 @@ export type OAuthClientUncheckedCreateWithoutAccessTokensInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -1185,6 +1210,7 @@ export type OAuthClientUpdateWithoutAccessTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1212,6 +1238,7 @@ export type OAuthClientUncheckedUpdateWithoutAccessTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1239,6 +1266,7 @@ export type OAuthClientCreateManyTenantInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: $Enums.OAuthClientType
   status?: $Enums.OAuthClientStatus
   name: string
@@ -1264,6 +1292,7 @@ export type OAuthClientUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1291,6 +1320,7 @@ export type OAuthClientUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1318,6 +1348,7 @@ export type OAuthClientUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientSecretEnvelope?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   type?: Prisma.EnumOAuthClientTypeFieldUpdateOperationsInput | $Enums.OAuthClientType
   status?: Prisma.EnumOAuthClientStatusFieldUpdateOperationsInput | $Enums.OAuthClientStatus
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1383,6 +1414,7 @@ export type OAuthClientSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   clientId?: boolean
   clientSecretHash?: boolean
+  clientSecretEnvelope?: boolean
   type?: boolean
   status?: boolean
   name?: boolean
@@ -1413,6 +1445,7 @@ export type OAuthClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   clientId?: boolean
   clientSecretHash?: boolean
+  clientSecretEnvelope?: boolean
   type?: boolean
   status?: boolean
   name?: boolean
@@ -1440,6 +1473,7 @@ export type OAuthClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   clientId?: boolean
   clientSecretHash?: boolean
+  clientSecretEnvelope?: boolean
   type?: boolean
   status?: boolean
   name?: boolean
@@ -1467,6 +1501,7 @@ export type OAuthClientSelectScalar = {
   id?: boolean
   clientId?: boolean
   clientSecretHash?: boolean
+  clientSecretEnvelope?: boolean
   type?: boolean
   status?: boolean
   name?: boolean
@@ -1489,7 +1524,7 @@ export type OAuthClientSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OAuthClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "clientSecretHash" | "type" | "status" | "name" | "description" | "logoUrl" | "websiteUrl" | "privacyPolicyUrl" | "tosUrl" | "redirectUris" | "allowedScopes" | "grantTypes" | "responseTypes" | "tokenEndpointAuthMethod" | "rateLimitRpm" | "accessTokenTtl" | "refreshTokenTtl" | "tenantId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["oAuthClient"]>
+export type OAuthClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "clientSecretHash" | "clientSecretEnvelope" | "type" | "status" | "name" | "description" | "logoUrl" | "websiteUrl" | "privacyPolicyUrl" | "tosUrl" | "redirectUris" | "allowedScopes" | "grantTypes" | "responseTypes" | "tokenEndpointAuthMethod" | "rateLimitRpm" | "accessTokenTtl" | "refreshTokenTtl" | "tenantId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["oAuthClient"]>
 export type OAuthClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.OAuthClient$tenantArgs<ExtArgs>
   authorizations?: boolean | Prisma.OAuthClient$authorizationsArgs<ExtArgs>
@@ -1513,7 +1548,29 @@ export type $OAuthClientPayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     clientId: string
+    /**
+     * Argon2/bcrypt hash — verifies a secret the caller already holds. One-way,
+     * so it cannot answer "what is this client's secret", which is what the
+     * token endpoint needs when the client authenticates with client_secret_basic.
+     */
     clientSecretHash: string | null
+    /**
+     * @nebutra/vault EncryptedSecret envelope, for confidential clients whose
+     * secret must be RETRIEVABLE rather than merely verifiable.
+     * 
+     * The hash above cannot serve that: oidc-provider has to hand the configured
+     * secret to its own client-auth check, so a one-way digest leaves the client
+     * unusable — the Prisma adapter refuses to serve it rather than inventing one.
+     * That is why an external relying party such as Cloudflare Access, whose OIDC
+     * connector requires a client_secret and does not support private_key_jwt,
+     * could not federate with this issuer at all.
+     * 
+     * Envelope encryption, not plaintext: the DEK is wrapped by a KEK held in AWS
+     * KMS (or derived via local HKDF in development), so the database alone does
+     * not yield the secret. Both fields are kept — the hash for paths that only
+     * verify, this for the token endpoint.
+     */
+    clientSecretEnvelope: runtime.JsonValue | null
     type: $Enums.OAuthClientType
     status: $Enums.OAuthClientStatus
     name: string
@@ -1963,6 +2020,7 @@ export interface OAuthClientFieldRefs {
   readonly id: Prisma.FieldRef<"OAuthClient", 'String'>
   readonly clientId: Prisma.FieldRef<"OAuthClient", 'String'>
   readonly clientSecretHash: Prisma.FieldRef<"OAuthClient", 'String'>
+  readonly clientSecretEnvelope: Prisma.FieldRef<"OAuthClient", 'Json'>
   readonly type: Prisma.FieldRef<"OAuthClient", 'OAuthClientType'>
   readonly status: Prisma.FieldRef<"OAuthClient", 'OAuthClientStatus'>
   readonly name: Prisma.FieldRef<"OAuthClient", 'String'>

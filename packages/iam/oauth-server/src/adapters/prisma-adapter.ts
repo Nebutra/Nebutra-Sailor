@@ -9,6 +9,11 @@
  */
 
 import type { PrismaClient } from "@nebutra/db";
+// NOTE: @nebutra/vault is imported LAZILY inside defaultSecretRecovery, never at
+// module scope. Its index eagerly re-exports AWSKMSProvider, which statically
+// imports @aws-sdk/client-kms — so a static import here would pull the AWS SDK
+// into the module graph of every consumer of this adapter, including the Worker
+// build, for a decryption that most requests never perform.
 import type { Redis } from "ioredis";
 import type { Adapter, AdapterPayload, ClientAuthMethod, ResponseType } from "oidc-provider";
 
@@ -39,15 +44,75 @@ function requiresSharedSecretAuth(method: string): boolean {
 }
 
 /**
+ * Turns a stored vault envelope back into the plaintext client secret.
+ *
+ * Injected rather than imported so tests need no module mocking, and so the AWS
+ * SDK stays out of the graph until a confidential client is actually served.
+ */
+export type SecretRecovery = (envelope: unknown) => Promise<string>;
+
+/** Loads @nebutra/vault on first use and decrypts through it. */
+const defaultSecretRecovery: SecretRecovery = async (envelope) => {
+  const { getVault, isEncryptedSecret } = await import("@nebutra/vault");
+  // Prisma returns whatever JSON is in the column. Shape-check before decrypting
+  // so a hand-edited row surfaces as a refusal rather than a crash inside the
+  // crypto layer.
+  if (!isEncryptedSecret(envelope)) {
+    throw new Error("client_secret_envelope is not a vault EncryptedSecret");
+  }
+  const vault = await getVault();
+  return vault.decrypt(envelope);
+};
+
+/**
+ * Recovers a confidential client's secret, or null if it cannot be had.
+ *
+ * `clientSecretHash` cannot serve this purpose. oidc-provider runs its own
+ * client-auth check and needs the configured secret to compare against, so a
+ * one-way digest leaves the client unusable — which is why any relying party
+ * requiring a client_secret (Cloudflare Access being the case at hand; its
+ * generic OIDC connector has no private_key_jwt option) could not federate with
+ * this issuer at all.
+ *
+ * Every failure returns null and the caller declines to serve the client.
+ * Failing closed matters more here than in most places: the alternative to a
+ * missing secret is not a degraded login, it is a token endpoint that no longer
+ * authenticates clients. A KMS outage must make the client unavailable, never
+ * open.
+ */
+async function recoverClientSecret(
+  clientId: string,
+  envelope: unknown,
+  recover: SecretRecovery,
+): Promise<string | null> {
+  if (envelope === null || envelope === undefined) return null;
+
+  try {
+    return await recover(envelope);
+  } catch (error) {
+    console.error(
+      `[@nebutra/oauth-server] Could not recover the client secret for ${clientId}: ` +
+        `${error instanceof Error ? error.message : String(error)}. Refusing to serve the client.`,
+    );
+    return null;
+  }
+}
+
+/**
  * Creates a storage adapter factory for oidc-provider.
  *
  * For "Client" model → reads from Prisma `OAuthClient` table
  * For ephemeral models → uses Redis with TTL (blazing fast, auto-expiring)
  */
-export function createPrismaAdapter(prisma: PrismaClient, redis: Redis): (name: string) => Adapter {
+export function createPrismaAdapter(
+  prisma: PrismaClient,
+  redis: Redis,
+  /** Override only in tests. Production resolves through @nebutra/vault. */
+  recoverSecret: SecretRecovery = defaultSecretRecovery,
+): (name: string) => Adapter {
   return function adapterFactory(name: string): Adapter {
     if (name === "Client") {
-      return new PrismaClientAdapter(prisma);
+      return new PrismaClientAdapter(prisma, recoverSecret);
     }
     return new RedisEphemeralAdapter(redis, name);
   };
@@ -58,7 +123,10 @@ export function createPrismaAdapter(prisma: PrismaClient, redis: Redis): (name: 
  * Clients are long-lived, structured data — perfect for relational storage.
  */
 class PrismaClientAdapter implements Adapter {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(
+    private readonly prisma: PrismaClient,
+    private readonly recoverSecret: SecretRecovery,
+  ) {}
 
   async find(id: string): Promise<AdapterPayload | undefined> {
     const client = await this.prisma.oAuthClient.findFirst({
@@ -67,15 +135,29 @@ class PrismaClientAdapter implements Adapter {
 
     if (!client) return undefined;
 
+    let clientSecret: string | null = null;
     if (requiresSharedSecretAuth(client.tokenEndpointAuthMethod)) {
-      console.warn(
-        `[@nebutra/oauth-server] OAuth client ${client.clientId} uses ${client.tokenEndpointAuthMethod}, ` +
-          "but no retrievable client secret is available. Refusing to expose or infer client_secret.",
+      clientSecret = await recoverClientSecret(
+        client.clientId,
+        client.clientSecretEnvelope,
+        this.recoverSecret,
       );
-      return undefined;
+      if (clientSecret === null) {
+        console.warn(
+          `[@nebutra/oauth-server] OAuth client ${client.clientId} uses ${client.tokenEndpointAuthMethod} ` +
+            "but has no usable client_secret_envelope. Refusing to expose or infer client_secret. " +
+            "Register the secret with scripts/register-oauth-client-secret.ts.",
+        );
+        return undefined;
+      }
     }
 
     return {
+      // Only present for shared-secret methods. A public client must NOT carry
+      // this key at all — oidc-provider infers confidentiality from its presence,
+      // so an empty string here would quietly turn a PKCE client into one that
+      // authenticates with a secret of "".
+      ...(clientSecret !== null ? { client_secret: clientSecret } : {}),
       client_id: client.clientId,
       grant_types: client.grantTypes,
       redirect_uris: client.redirectUris,

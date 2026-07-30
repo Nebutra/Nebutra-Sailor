@@ -7824,6 +7824,7 @@ export const OAuthClientScalarFieldEnum = {
   id: 'id',
   clientId: 'clientId',
   clientSecretHash: 'clientSecretHash',
+  clientSecretEnvelope: 'clientSecretEnvelope',
   type: 'type',
   status: 'status',
   name: 'name',

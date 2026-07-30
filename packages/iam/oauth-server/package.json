@@ -16,11 +16,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "oidc-provider": "^9.1.0",
-    "ioredis": "^5.4.2",
     "@nebutra/contracts": "workspace:*",
     "@nebutra/db": "workspace:*",
-    "@nebutra/identity": "workspace:*"
+    "@nebutra/identity": "workspace:*",
+    "@nebutra/vault": "workspace:*",
+    "ioredis": "^5.4.2",
+    "oidc-provider": "^9.1.0"
   },
   "devDependencies": {
     "tsx": "catalog:",

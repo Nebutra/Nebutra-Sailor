@@ -3964,6 +3964,9 @@ importers:
       '@nebutra/identity':
         specifier: workspace:*
         version: link:../identity
+      '@nebutra/vault':
+        specifier: workspace:*
+        version: link:../vault
       ioredis:
         specifier: ^5.4.2
         version: 5.10.1

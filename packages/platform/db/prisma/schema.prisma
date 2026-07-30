@@ -1673,7 +1673,25 @@ enum OAuthClientStatus {
 model OAuthClient {
   id               String            @id @default(cuid())
   clientId         String            @unique @map("client_id")
+  /// Argon2/bcrypt hash — verifies a secret the caller already holds. One-way,
+  /// so it cannot answer "what is this client's secret", which is what the
+  /// token endpoint needs when the client authenticates with client_secret_basic.
   clientSecretHash String?           @map("client_secret_hash")
+  /// @nebutra/vault EncryptedSecret envelope, for confidential clients whose
+  /// secret must be RETRIEVABLE rather than merely verifiable.
+  ///
+  /// The hash above cannot serve that: oidc-provider has to hand the configured
+  /// secret to its own client-auth check, so a one-way digest leaves the client
+  /// unusable — the Prisma adapter refuses to serve it rather than inventing one.
+  /// That is why an external relying party such as Cloudflare Access, whose OIDC
+  /// connector requires a client_secret and does not support private_key_jwt,
+  /// could not federate with this issuer at all.
+  ///
+  /// Envelope encryption, not plaintext: the DEK is wrapped by a KEK held in AWS
+  /// KMS (or derived via local HKDF in development), so the database alone does
+  /// not yield the secret. Both fields are kept — the hash for paths that only
+  /// verify, this for the token endpoint.
+  clientSecretEnvelope Json?         @map("client_secret_envelope")
   type             OAuthClientType   @default(CONFIDENTIAL)
   status           OAuthClientStatus @default(ACTIVE)
   name             String

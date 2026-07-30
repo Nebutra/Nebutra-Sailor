@@ -25,15 +25,18 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./aws-kms": {
       "types": "./dist/providers/aws-kms.d.ts",
-      "import": "./dist/providers/aws-kms.js"
+      "import": "./dist/providers/aws-kms.js",
+      "default": "./dist/providers/aws-kms.js"
     },
     "./local": {
       "types": "./dist/providers/local.d.ts",
-      "import": "./dist/providers/local.js"
+      "import": "./dist/providers/local.js",
+      "default": "./dist/providers/local.js"
     }
   },
   "files": [
