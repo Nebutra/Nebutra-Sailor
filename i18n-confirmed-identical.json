@@ -4791,7 +4791,8 @@
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
         "settings.appearance.fontFamily.options.ui.geist": "0071814e4a757823fcbad27305ed4246",
         "settings.appearance.fontFamily.options.ui.inter": "db41658ae019987ccd6504de6b8742a5",
-        "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3"
+        "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "bn": {
         "auth.signIn.providers.apple": "9f6290f4436e5a2351f12e03b6433c3c",
@@ -4799,13 +4800,15 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
         "settings.appearance.fontFamily.options.ui.geist": "0071814e4a757823fcbad27305ed4246",
         "settings.appearance.fontFamily.options.ui.inter": "db41658ae019987ccd6504de6b8742a5",
         "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3",
-        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d"
+        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "cs": {
         "account.avatar.title": "32036005d1f6ed59803ba3e13c80993e",
@@ -4985,12 +4988,14 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
         "settings.appearance.fontFamily.options.ui.geist": "0071814e4a757823fcbad27305ed4246",
         "settings.appearance.fontFamily.options.ui.inter": "db41658ae019987ccd6504de6b8742a5",
-        "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3"
+        "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "fi": {
         "auth.signIn.providers.apple": "9f6290f4436e5a2351f12e03b6433c3c",
@@ -4998,6 +5003,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
@@ -5006,7 +5012,8 @@
         "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3",
         "settings.notifications.channels.push.label": "9c6a9d9f033001a9b3104984d319563b",
         "settings.notifications.channels.sms.label": "4cecb21b44628b17c436739bf6301af2",
-        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d"
+        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "fr": {
         "account.avatar.title": "32036005d1f6ed59803ba3e13c80993e",
@@ -5056,6 +5063,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
@@ -5072,6 +5080,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.apiKeys.dialog.scopesLabel": "48b26d57c14af0500090800c2cdd0d58",
         "settings.apiKeys.title": "b4717f6ab3c2357c13c0c2cd32dfc4ca",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
@@ -5085,7 +5094,8 @@
         "settings.auditLog.columns.entity": "1a434befae3f49ae09347ded52032f6f",
         "settings.auditLog.columns.ip": "a12a3079e14ced46e69ba52b8a90b21a",
         "settings.auditLog.title": "5b2421f0f47e513e94c6256ebedcfef1",
-        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d"
+        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "hu": {
         "admin.organizations.columns.slug": "0c908588520b3ef787bce443fc2b507c",
@@ -5145,7 +5155,8 @@
         "settings.notifications.channels.sms.label": "4cecb21b44628b17c436739bf6301af2",
         "settings.webhooks.list.actions.edit": "7dce122004969d56ae2e0245cb754d35",
         "settings.webhooks.list.columns.status": "ec53a8c4f07baed5d8825072c89799be",
-        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d"
+        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "it": {
         "account.avatar.title": "32036005d1f6ed59803ba3e13c80993e",
@@ -5213,6 +5224,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
@@ -5221,7 +5233,8 @@
         "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3",
         "settings.auditLog.columns.ip": "a12a3079e14ced46e69ba52b8a90b21a",
         "settings.notifications.channels.sms.label": "4cecb21b44628b17c436739bf6301af2",
-        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d"
+        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "ms": {
         "account.avatar.title": "32036005d1f6ed59803ba3e13c80993e",
@@ -5343,6 +5356,7 @@
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
         "commandPalette.commands.nav.admin": "e3afed0047b08059d0fada10f400c1e5",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "commandPalette.sections.admin": "e3afed0047b08059d0fada10f400c1e5",
         "cookieConsent.toggle.marketing.label": "7cb15e416d62919b1b40298324fbe30b",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
@@ -5356,7 +5370,8 @@
         "settings.notifications.channels.sms.label": "4cecb21b44628b17c436739bf6301af2",
         "settings.notifications.eventTypes.marketing.label": "7cb15e416d62919b1b40298324fbe30b",
         "settings.webhooks.list.columns.status": "ec53a8c4f07baed5d8825072c89799be",
-        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d"
+        "settings.webhooks.list.columns.url": "e6b391a8d2c4d45902a23a8b6585703d",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "pt": {
         "account.avatar.title": "32036005d1f6ed59803ba3e13c80993e",
@@ -5434,6 +5449,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
@@ -5517,6 +5533,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "dashboard.gettingStarted.tasks.ai.label": "3b510ce2a3ed2f6ea291059c2e3eb26f",
         "dashboard.home.actions.audit": "9a0fd8208acdc142faf1e8499e5086ce",
         "dashboard.home.actions.billing": "780c462e85ba4399a5d42e88f69a15ca",
@@ -5547,6 +5564,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.accent.options.amber": "88068e33c78eb72f1b371c7110846085",
         "settings.appearance.accent.options.cyan": "023c239d2f2538f140a20e72c7b73f20",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
@@ -5568,6 +5586,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
@@ -5582,12 +5601,14 @@
       "ur": {
         "auth.signIn.providers.feishu": "851a542028d21892c45b4debef979c12",
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
         "settings.appearance.fontFamily.options.ui.geist": "0071814e4a757823fcbad27305ed4246",
         "settings.appearance.fontFamily.options.ui.inter": "db41658ae019987ccd6504de6b8742a5",
-        "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3"
+        "settings.appearance.fontFamily.options.ui.sf": "1e916f2f61d45d5942575b83b67ddea3",
+        "settings.webhooks.title": "221d2a347ebfc15d48665188f639d1cb"
       },
       "vi": {
         "account.profile.emailLabel": "ce8ae9da5b7cd6c3df2929543a9af92d",
@@ -5601,6 +5622,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "dashboard.workspaceSnapshot.meta.tenant": "6252d0571760e3d285e2e41a2b1e7743",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
@@ -5622,6 +5644,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
@@ -5637,6 +5660,7 @@
         "auth.signIn.providers.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "auth.signIn.providers.google": "8b36e9207c24c76e6719268e49201d94",
         "auth.signIn.providers.microsoft": "140864078aeca1c7c35b4beb33c53c34",
+        "commandPalette.commands.nav.webhooks": "221d2a347ebfc15d48665188f639d1cb",
         "settings.appearance.fontFamily.options.code.geist-mono": "1412f7c5ccc2028d8afba4addd361bc6",
         "settings.appearance.fontFamily.options.code.jetbrains-mono": "e969044e00865ad44abf90704acc4dfb",
         "settings.appearance.fontFamily.options.code.sf-mono": "126b9544248cbbe3954c99ee99f0c0ed",
