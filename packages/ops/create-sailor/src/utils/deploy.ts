@@ -1,36 +1,41 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { type DeployTargetMap, getDefaultDeployTargets } from "../../../preset/src/deploy-target";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export type ScaffoldDeployTarget = "vercel" | "railway" | "cloudflare" | "selfhost" | "none";
 
-export type ScaffoldDeployTargetMap = {
-  web: "vercel" | "standalone" | "cloudflare-pages" | "railway";
-  landing: "vercel" | "standalone" | "cloudflare-pages" | "railway";
-  "design-docs": "vercel" | "standalone" | "cloudflare-pages" | "railway";
-  "sailor-docs": "vercel" | "standalone" | "cloudflare-pages" | "railway";
-  gateway:
-    | "cloudflare-workers"
-    | "vercel-functions"
-    | "ecs-docker"
-    | "k8s"
-    | "aws"
-    | "gcp"
-    | "railway";
-  "python-ai": "ecs-docker" | "k8s" | "aws" | "gcp" | "railway";
-};
+/** Same shape as `@nebutra/preset` deploy-target map — keep scaffold in lock-step. */
+export type ScaffoldDeployTargetMap = DeployTargetMap;
 
-const DEFAULT_DEPLOY_TARGETS = {
-  web: "vercel",
-  landing: "vercel",
-  "design-docs": "vercel",
-  "sailor-docs": "vercel",
-  gateway: "cloudflare-workers",
-  "python-ai": "ecs-docker",
-} as const satisfies ScaffoldDeployTargetMap;
+const FRONTEND_CLOUDFLARE = "cloudflare-pages" as const;
+const FRONTEND_STANDALONE = "standalone" as const;
+const FRONTEND_RAILWAY = "railway" as const;
+
+function withFrontends(
+  base: DeployTargetMap,
+  frontend: DeployTargetMap["web"],
+  gateway: DeployTargetMap["gateway"],
+  pythonAi: DeployTargetMap["python-ai"],
+): DeployTargetMap {
+  return {
+    ...base,
+    web: frontend,
+    landing: frontend,
+    auth: frontend,
+    admin: frontend,
+    "design-docs": frontend,
+    "sailor-docs": frontend,
+    router: frontend,
+    forge: frontend,
+    typelens: frontend,
+    gateway,
+    "python-ai": pythonAi,
+  };
+}
 
 /**
  * Resolve the deploy templates directory in both dev (src/) and built (dist/)
@@ -53,37 +58,17 @@ function resolveDeployTemplatesDir(): string {
 export function resolveScaffoldDeployTargets(
   target: ScaffoldDeployTarget,
 ): ScaffoldDeployTargetMap {
+  const defaults = getDefaultDeployTargets();
   switch (target) {
     case "cloudflare":
-      return {
-        web: "cloudflare-pages",
-        landing: "cloudflare-pages",
-        "design-docs": "cloudflare-pages",
-        "sailor-docs": "cloudflare-pages",
-        gateway: "cloudflare-workers",
-        "python-ai": "ecs-docker",
-      };
+      return withFrontends(defaults, FRONTEND_CLOUDFLARE, "cloudflare-workers", "ecs-docker");
     case "selfhost":
-      return {
-        web: "standalone",
-        landing: "standalone",
-        "design-docs": "standalone",
-        "sailor-docs": "standalone",
-        gateway: "ecs-docker",
-        "python-ai": "ecs-docker",
-      };
+      return withFrontends(defaults, FRONTEND_STANDALONE, "ecs-docker", "ecs-docker");
     case "railway":
-      return {
-        web: "railway",
-        landing: "railway",
-        "design-docs": "railway",
-        "sailor-docs": "railway",
-        gateway: "railway",
-        "python-ai": "railway",
-      };
+      return withFrontends(defaults, FRONTEND_RAILWAY, "railway", "railway");
     case "none":
     case "vercel":
-      return { ...DEFAULT_DEPLOY_TARGETS };
+      return defaults;
   }
 }
 

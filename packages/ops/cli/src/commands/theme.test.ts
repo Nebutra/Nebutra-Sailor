@@ -2,32 +2,34 @@ import { describe, expect, it } from "vitest";
 import { formatThemeInspect, formatThemeList } from "./theme";
 
 describe("theme command formatters", () => {
-  it("formats theme list as json for agents", () => {
+  it("formats design-language list as json for agents", () => {
     const json = formatThemeList("json");
     const parsed = JSON.parse(json);
 
-    // Robust to theme-registry growth (community themes land continuously):
-    // assert self-consistency + presence of the core themes, not an exact list/count.
-    const CORE_THEMES = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean"];
-    expect(parsed.count).toBe(parsed.themes.length);
-    expect(parsed.count).toBeGreaterThanOrEqual(CORE_THEMES.length);
-    expect(parsed.themes.map((theme: { id: string }) => theme.id)).toEqual(
-      expect.arrayContaining(CORE_THEMES),
+    // Brand Package languages (not the retired mood catalog).
+    const CORE_LANGUAGES = ["factory", "linear", "vercel", "stripe"];
+    expect(parsed.count).toBe(parsed.languages.length);
+    expect(parsed.count).toBeGreaterThanOrEqual(CORE_LANGUAGES.length);
+    expect(parsed.defaultLanguage).toBe("factory");
+    expect(parsed.languages.map((lang: { id: string }) => lang.id)).toEqual(
+      expect.arrayContaining(CORE_LANGUAGES),
     );
-    const nebutra = parsed.themes.find((theme: { id: string }) => theme.id === "nebutra");
-    expect(nebutra?.installCommand).toBe("nebutra theme add nebutra");
+    const factory = parsed.languages.find((lang: { id: string }) => lang.id === "factory");
+    expect(factory?.install?.command).toBe("nebutra theme use factory");
   });
 
-  it("formats inspect output for a known theme", () => {
-    const json = formatThemeInspect("dark-dense", "json");
-    const parsed = JSON.parse(json);
+  it("formats inspect output for a known design language", () => {
+    const json = formatThemeInspect("linear", "json");
+    expect(json).toBeDefined();
+    const parsed = JSON.parse(json as string);
 
-    expect(parsed.id).toBe("dark-dense");
-    expect(parsed.tokenPath).toBe("tokens/themes/dark-dense.json");
-    expect(parsed.governance.wcag).toBe("AA");
+    expect(parsed.id).toBe("linear");
+    expect(parsed.kind).toBe("design-language");
+    expect(parsed.install.command).toBe("nebutra theme use linear");
+    expect(parsed.skinPath).toBeTruthy();
   });
 
-  it("returns undefined when inspecting an unknown theme", () => {
+  it("returns undefined when inspecting an unknown language", () => {
     expect(formatThemeInspect("missing", "json")).toBeUndefined();
   });
 });
