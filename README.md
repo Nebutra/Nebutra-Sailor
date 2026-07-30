@@ -535,13 +535,13 @@ Nebutra-Sailor/
 │   ├── mail-preview/      # Email template preview
 │   ├── sleptons/          # Sleptons companion app
 ├── packages/                  # Shared TS libraries (categorized in W3b)
-│   ├── ai/                # 3 pkgs — agents, ai-providers, mcp
-│   ├── commerce/          # 7 pkgs — billing, contracts, marketing, metering, license, legal, waitlist
-│   ├── design/            # 7 pkgs — ui, tokens, brand, theme, icons, design-tokens, design-sync
+│   ├── ai/                # 41 pkgs — e.g. agents, agent-runtime, ai-providers, startup-os, knowledge-rag, mcp
+│   ├── commerce/          # 9 pkgs — e.g. billing, metering, contracts, license, access-gate, waitlist
+│   ├── design/            # 10 pkgs — e.g. ui, tokens, design-tokens, brand, theme, icons, fonts
 │   ├── iam/               # 8 pkgs — auth, audit, vault, oauth-server, permissions, tenant, identity, captcha
-│   ├── integrations/      # 11 pkgs — queue, search, email, notifications, storage, webhooks, cache, sms, uploads, event-bus, saga
+│   ├── integrations/      # 17 pkgs — e.g. queue, search, email, notifications, storage, webhooks, cache
 │   ├── ops/               # 6 pkgs — cli, create-sailor, preset, sanity, supabase, china-compliance
-│   └── platform/          # 13 pkgs — db, logger, rate-limit, feature-flags, gateway-core, errors, config, health, status, alerting, analytics, repositories, i18n
+│   └── platform/          # 21 pkgs — e.g. db, logger, repositories, rate-limit, feature-flags, i18n, status
 ├── backends/                  # No-UI backends (split by language à la vercel/vercel)
 │   ├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, routing
 │   └── python/                # FastAPI — only when ML/batch/specialized libs justify

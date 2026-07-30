@@ -21,7 +21,7 @@ npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
 
 ## Token Truth
 
-The registry manifest is a delivery adapter, not the design authority. Token ownership stays in `packages/design/tokens/src/index.ts` and `packages/design/tokens/styles.css`; docs and registry JSON must describe that source instead of inventing another token layer.
+The registry manifest is a delivery adapter, not the design authority. `packages/design/tokens/styles.css` is a **generated file** — `packages/design/tokens/scripts/sync-styles.mjs` copies the Style Dictionary build output over it on every build, so hand-edits there vanish silently. Token ownership stays in the DTCG source: `packages/design/design-tokens/tokens/core.json` (primitives), `tokens/semantic.json` (semantic aliases), and `tokens/themes/{light,dark}.json` (mode-specific values). Edit `light.json` and `dark.json` **as a pair** — a value changed in one without the other reintroduces a mode where the token silently falls back to its unchanged sibling. Docs and registry JSON must describe that source instead of inventing another token layer.
 
 <ComponentPreview name="nebutra-tokens-demo" />
 

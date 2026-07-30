@@ -10,7 +10,9 @@ description: "表面高度 (Surface Elevation) 原语。通过阴影和背景 To
 
 ## 概览
 
-`Material` 是一个构建在 `Stack` 之上的表面高度原语。它将语义化的 `type` 属性映射到项目的 `@theme` 阴影和背景 Token —— 无需手动编写数值。在任何需要表达视觉深度的地方都可以使用它：卡片、下拉菜单、对话框或全屏叠加层。
+`Material` 是一个表面高度原语。它通过 `class-variance-authority` 将语义化的 `type` 属性映射到
+Tailwind 中由 theme 派生的阴影和背景工具类（`shadow-sm`、`bg-card` 等）—— 没有手写的阴影或填充值。
+在任何需要表达视觉深度的地方都可以使用它：卡片、下拉菜单、对话框或全屏叠加层。
 
 ## 安装
 
@@ -22,11 +24,12 @@ import { Material } from "@nebutra/ui/primitives";
 
 ### 类型
 
-所有四个高度级别均使用 `packages/design/theme/themes.css` 中定义的 Token。
+`Material` 有 8 个规范高度级别，外加 1 个已弃用别名——不是 4 个。定义于
+`packages/design/ui/src/primitives/material.tsx`：
 
 ```tsx
-<Material type="card">
-  <div className="p-6">卡片内容 (Card content)</div>
+<Material type="base">
+  <div className="p-6">静态卡片内容</div>
 </Material>
 
 <Material type="menu">
@@ -42,12 +45,12 @@ import { Material } from "@nebutra/ui/primitives";
 </Material>
 ```
 
-### 卡片
+### base
 
-用于页面内容的默认表面。应用 `shadow-sm` 和 `bg-card`。
+用于静态卡片的默认表面。应用 `shadow-sm` 和 `bg-card`。
 
 ```tsx
-<Material type="card" className="w-80">
+<Material type="base" className="w-80">
   <div className="p-6">
     <h2 className="text-sm font-medium">卡片标题 (Card title)</h2>
     <p className="text-xs text-muted-foreground mt-1">辅助文本 (Supporting text)</p>
@@ -55,9 +58,22 @@ import { Material } from "@nebutra/ui/primitives";
 </Material>
 ```
 
-### 菜单
+`type="card"` 仍然可用，作为 `base` 的**已弃用**别名，为已有调用方保留。新代码应使用 `base`。
 
-下拉菜单和气泡框 (Popover) 表面。应用 `shadow-md` 和 `bg-popover`。
+### small / medium / large
+
+依次递增的抬升内容层级。`small` 与 `base` 相同（`shadow-sm`）；`medium` 和 `large` 都应用
+`shadow-md` 和 `bg-card`。
+
+```tsx
+<Material type="medium" className="w-80">
+  <div className="p-6">抬升内容</div>
+</Material>
+```
+
+### tooltip / menu
+
+浮动气泡表面。两者都应用 `shadow-md` 和 `bg-popover`。
 
 ```tsx
 <Material type="menu" className="w-56">
@@ -74,7 +90,7 @@ import { Material } from "@nebutra/ui/primitives";
 
 ### 模态框
 
-对话框和抽屉表面。应用 `shadow-lg` 和 `bg-popover`。
+对话框和抽屉表面。应用 `shadow-xl` 和 `bg-popover`。
 
 ```tsx
 <Material type="modal" className="w-96">
@@ -103,22 +119,27 @@ import { Material } from "@nebutra/ui/primitives";
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `type` | `"card" \| "menu" \| "modal" \| "fullscreen"` | `"card"` | 表面高度级别 |
+| `type` | `"base" \| "small" \| "medium" \| "large" \| "tooltip" \| "menu" \| "modal" \| "fullscreen" \| "card"`（`"card"` 已弃用，为 `"base"` 的别名） | `"base"` | 表面高度级别 |
 | `className` | `string` | — | 额外的 CSS 类名 |
 | `children` | `ReactNode` | — | 表面内容 |
 | `ref` | `Ref<HTMLDivElement>` | — | 转发的引用 (Forwarded ref) |
 
-还支持所有标准的 `div` HTML 属性。
+还支持所有标准的 `div` HTML 属性。不要在同一元素上叠加两个 `Material`——如果子元素需要更高的
+层级，把它提升到一个独立的、`type` 更高的 `Material` 中。
 
 ## Token 引用
 
-所有值均来自 `packages/design/theme/themes.css` 的 `@theme` 区块。
+`--shadow-*` 与 `--color-card`/`--color-popover`/`--color-background` 定义在
+`packages/design/tokens/styles.css` 的 `@theme inline` 区块中，这是一个 generated 文件，不要手动编辑。
+可编辑的源是 `packages/design/design-tokens/tokens/` 下的 DTCG token JSON。
+`packages/design/theme/themes.css` 不含任何高度 token；它只是五行生成代码，用于别名 `keyframes.css`。
 
 | 类型 (type) | 阴影 Token | 背景 Token |
 |------|-------------|-----------------|
-| `card` | `--shadow-sm` | `--color-card` |
-| `menu` | `--shadow-md` | `--color-popover` |
-| `modal` | `--shadow-lg` | `--color-popover` |
+| `base` / `small` / `card`（已弃用） | `--shadow-sm` | `--color-card` |
+| `medium` / `large` | `--shadow-md` | `--color-card` |
+| `tooltip` / `menu` | `--shadow-md` | `--color-popover` |
+| `modal` | `--shadow-xl` | `--color-popover` |
 | `fullscreen` | _(无)_ | `--color-background` |
 
 ## 可访问性

@@ -67,6 +67,8 @@ above instead of preserving outdated examples.
 
 - Status type, provider, or export-surface changes:
   `pnpm --filter @nebutra/status exec tsc --noEmit`
-- Because this package currently has no package-local tests, verify the
-  narrowest downstream consumer that exercises the affected provider or React
-  surface when behavior changes are non-trivial.
+- Run the package-local suite before changing provider behavior:
+  `pnpm --filter @nebutra/status test` (`vitest run`). It covers the
+  fetch-timeout provider (`src/providers/__tests__/fetch-timeout.test.ts`).
+  Also verify the narrowest downstream consumer that exercises the affected
+  provider or React surface when behavior changes are non-trivial.

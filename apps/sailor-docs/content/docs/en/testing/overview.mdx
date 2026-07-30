@@ -53,7 +53,7 @@ pnpm test:coverage
 Test files are co-located with source files, using the `.test.ts` or `.spec.ts` suffix:
 
 ```
-packages/commerce/billing/src/
+packages/commerce/metering/src/
   metering.ts
   metering.test.ts      ← co-located unit test
 ```
@@ -62,7 +62,7 @@ packages/commerce/billing/src/
 
 ```typescript
 import { describe, it, expect } from "vitest";
-import { calculateOverageFee } from "@nebutra/billing/metering";
+import { calculateOverageFee } from "@nebutra/metering";
 
 describe("calculateOverageFee", () => {
   it("returns zero when usage is within limit", () => {

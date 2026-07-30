@@ -57,7 +57,7 @@ These are **TS source primitives**. The runtime equivalent lives in `@nebutra/to
 | `colors.primary[500]` | `#0033FE` | 云毓蓝 | Primary brand — tech & trust |
 | `colors.accent[500]` | `#0BF1C3` | 云毓青 | Data flow, intelligence |
 
-> Note: `packages/design/brand/src/guidelines/color.ts` exports a 50–950 scale per anchor. The accent scale uses slightly different green-bias values than the runtime `@nebutra/tokens` cyan scale; the **runtime tokens** at `packages/design/tokens/styles.css` are the source of truth for what ships in apps. The brand `guidelines/color.ts` is the **design data** for VI / print / Figma.
+> Note: `packages/design/brand/src/guidelines/color.ts` exports a 50–950 scale per anchor. The accent scale uses slightly different green-bias values than the runtime `@nebutra/tokens` cyan scale; the **runtime tokens**, sourced from the `@nebutra/design-tokens` DTCG JSON (`packages/design/design-tokens/tokens/*.json`), are the source of truth for what ships in apps — `packages/design/tokens/styles.css` is the generated CSS those tokens compile to, not itself editable. The brand `guidelines/color.ts` is the **design data** for VI / print / Figma.
 
 ### 2.2 Brand gradient
 
@@ -118,15 +118,15 @@ Spring presets: `default | bouncy | heavy | gentle` (`packages/design/brand/src/
 | Use case | Import from |
 |---------|------------|
 | Marketing copy, README, og-image text | `@nebutra/brand` (`positioning`, `brand` metadata) |
-| Custom motion outside `AnimateIn` | `@nebutra/brand/motion` |
-| Logo SVG components | `@nebutra/brand/components` |
+| Custom motion outside `AnimateIn` | `@nebutra/brand` (`emerge`, `flow`, `pulse`, `brandEasing`, `brandMotion` — re-exported at root, no `/motion` subpath) |
+| Logo SVG components | `@nebutra/brand/logo` (or `@nebutra/brand` — also re-exported at root) |
 | **Anything in app runtime CSS** | **NOT** this package — use `@nebutra/tokens` |
 
 ### 3.2 Custom motion (rare — prefer `AnimateIn`)
 
 ```tsx
 import { motion } from "@nebutra/ui/components";
-import { emerge, brandEasing } from "@nebutra/brand/motion";
+import { emerge, brandEasing } from "@nebutra/brand";
 
 <motion.div {...emerge}>
   <CustomFadeInElement />
@@ -140,16 +140,17 @@ Default to `<AnimateIn preset="emerge">` from `@nebutra/ui/components` for 99% o
 ## 4. Imports & Conventions
 
 ```ts
-import { brand, colors } from "@nebutra/brand";
-import { positioning } from "@nebutra/brand/positioning";
-import { emerge, flow, pulse, brandMotion } from "@nebutra/brand/motion";
+// positioning, motion, and the color guidelines are all re-exported from the
+// package root — none of /positioning, /motion, /guidelines/color are in the
+// exports map, so import everything from "@nebutra/brand" itself.
+import { brand, colors, positioning, emerge, flow, pulse, brandMotion } from "@nebutra/brand";
 ```
 
 ### Forbidden in app runtime code
 
 ```tsx
 // ❌ Importing brand color JS in app runtime — use CSS variables from @nebutra/tokens
-import { colors } from "@nebutra/brand/guidelines/color";
+import { colors } from "@nebutra/brand";
 <div style={{ color: colors.primary[500] }} />
 
 // ✅ CORRECT — use the runtime CSS variable

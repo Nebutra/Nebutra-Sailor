@@ -1,30 +1,31 @@
 ---
 title: "PageHeader"
-description: "Page title block with optional breadcrumbs, description, and action slot."
+description: "Page title block with description and action slot."
 ---
+
+> This page previously documented a `breadcrumbs` prop rendered with `@primer/react` `Breadcrumbs`,
+> imported from `@nebutra/ui`. `@primer/react` has been removed from the repo entirely, `PageHeader`
+> has never taken a `breadcrumbs` or `children` prop, and the correct import is `@nebutra/ui/layout`.
+> This page now documents the real component (`packages/design/ui/src/layout/PageHeader.tsx`).
 
 ## Demo
 
 ```tsx
-import { PageHeader } from "@nebutra/ui";
+import { PageHeader } from "@nebutra/ui/layout";
+import { Button } from "@nebutra/ui/components";
 
 <PageHeader
   title="Pipeline settings"
   description="Configure ingestion rules, filters, and destinations."
-  breadcrumbs={[
-    { label: "Pipelines", href: "/pipelines" },
-    { label: "Ingestion pipeline" },
-  ]}
-  actions={
-    <Button variant="primary">Save changes</Button>
-  }
-/>
+  actions={<Button variant="primary">Save changes</Button>}
+/>;
 ```
 
 ## Usage
 
 ```tsx
-import { PageHeader } from "@nebutra/ui";
+import { PageHeader } from "@nebutra/ui/layout";
+import { Button } from "@nebutra/ui/components";
 
 export function PipelineSettingsPage({ pipeline }: { pipeline: Pipeline }) {
   return (
@@ -32,10 +33,6 @@ export function PipelineSettingsPage({ pipeline }: { pipeline: Pipeline }) {
       <PageHeader
         title={pipeline.name}
         description={`Last updated ${formatRelative(pipeline.updatedAt)}`}
-        breadcrumbs={[
-          { label: "Pipelines", href: "/pipelines" },
-          { label: pipeline.name },
-        ]}
         actions={
           <div className="flex gap-2">
             <Button variant="secondary" onClick={handleDisable}>Pause</Button>
@@ -58,21 +55,11 @@ export function PipelineSettingsPage({ pipeline }: { pipeline: Pipeline }) {
 |---|---|---|---|
 | `title` | `string` | — | **Required.** Page heading rendered as `<h1>` |
 | `description` | `string` | — | Muted subtitle rendered below the title |
-| `actions` | `React.ReactNode` | — | Action controls (buttons, menus) anchored to the right on wider screens |
-| `breadcrumbs` | `Array<{ label: string; href?: string }>` | — | Breadcrumb trail rendered above the title using `@primer/react` `Breadcrumbs` |
-| `className` | `string` | — | Additional classes on the `<header>` root |
-| `children` | `React.ReactNode` | — | Additional content rendered below the title row (e.g. tabs) |
+| `actions` | `React.ReactNode` | — | Action controls (buttons, menus), stacked below the title on narrow screens and anchored to the right on `sm:` and up |
+| `className` | `string` | — | Additional classes on the root element |
 
-### Breadcrumb item
-
-```ts
-interface BreadcrumbItem {
-  label: string;
-  href?: string;   // Omit for the current (last) item
-}
-```
-
-The last item in the `breadcrumbs` array is automatically marked as `selected` and rendered without a link.
+There is no `breadcrumbs` prop and no `children` slot. Compose breadcrumbs, tabs, or any other
+content as a sibling of `PageHeader` in the page, not inside it.
 
 ## Examples
 
@@ -82,36 +69,16 @@ The last item in the `breadcrumbs` array is automatically marked as `selected` a
 <PageHeader title="Members" />
 ```
 
-### With tabs below
+### No actions
 
 ```tsx
 <PageHeader
   title="Analytics"
   description="Usage metrics for the last 30 days."
->
-  <Tabs className="mt-4">
-    <Tab>Overview</Tab>
-    <Tab>Events</Tab>
-    <Tab>Errors</Tab>
-  </Tabs>
-</PageHeader>
-```
-
-### Deep breadcrumb trail
-
-```tsx
-<PageHeader
-  title="Edit alert"
-  breadcrumbs={[
-    { label: "Dashboard", href: "/" },
-    { label: "Monitoring", href: "/monitoring" },
-    { label: "Alerts", href: "/monitoring/alerts" },
-    { label: "High error rate" },
-  ]}
 />
 ```
 
-### No breadcrumbs, actions only
+### Actions only
 
 ```tsx
 <PageHeader
@@ -124,11 +91,24 @@ The last item in the `breadcrumbs` array is automatically marked as `selected` a
 />
 ```
 
+### Tabs below the header
+
+Since `PageHeader` has no `children` slot, render tabs (or any other content) as a sibling:
+
+```tsx
+<PageHeader title="Analytics" description="Usage metrics for the last 30 days." />
+<Tabs className="mt-4">
+  <Tab>Overview</Tab>
+  <Tab>Events</Tab>
+  <Tab>Errors</Tab>
+</Tabs>
+```
+
 ## Accessibility
 
 - The `title` renders as `<h1>` — each page must have exactly one `<h1>`.
-- The `<header>` element uses the implicit landmark role `banner`.
-- Breadcrumbs render inside `<nav aria-label="Breadcrumb">` (via `@primer/react`).
-- The last breadcrumb item has `aria-current="page"`.
-- The `actions` slot has no implicit landmark role; wrap with `<nav aria-label="Page actions">` if it contains navigation.
+- The root element is a plain `<div>` — it carries no implicit landmark role. Wrap the page in
+  `<main>` (or an equivalent landmark) at a higher level if one isn't already present.
+- The `actions` slot has no implicit landmark role; wrap with `<nav aria-label="Page actions">` if it
+  contains navigation.
 - `description` is plain `<p>` text — do not use it as the sole source of critical instructions.

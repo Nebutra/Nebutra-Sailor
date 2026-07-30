@@ -1,33 +1,33 @@
 ---
 title: "EmptyState"
-description: "带三图标、标题、描述和可选操作按钮的动画空状态组件。"
+description: "带单个图标/吉祥物槽位、标题、描述和操作按钮的空状态布局组件。"
 ---
+
+> 本页此前记录了 `icons` 数组（三个图标、动画三联）、`theme` 和 `isIconAnimated` 属性。无论是
+> `@nebutra/ui/layout` 的 `EmptyState`，还是底层 `@nebutra/ui/primitives` 的 `EmptyState.Root`，都
+> 从未有过这些属性——两者都只接受**单个**图标。本页现在记录的是真实组件
+> （`packages/design/ui/src/layout/EmptyState.tsx`）。
 
 ## 演示
 
 ```tsx
-import { EmptyState } from "@nebutra/ui";
-import { FolderOpen, Plus, Lightning as Rocket } from "@nebutra/icons";
+import { EmptyState } from "@nebutra/ui/layout";
+import { FolderOpen } from "@nebutra/icons";
+import { Button } from "@nebutra/ui/components";
 
 <EmptyState
   title="No projects yet"
   description="Create your first project to get started with Nebutra."
-  icons={[<FolderOpen />, <Plus />, <Rocket />]}
-  action={{
-    label: "Create project",
-    icon: <Plus className="w-4 h-4" />,
-    onClick: () => router.push("/projects/new"),
-  }}
-  theme="light"
-  size="default"
-/>
+  icon={<FolderOpen />}
+  action={<Button onClick={() => router.push("/projects/new")}>Create project</Button>}
+/>;
 ```
 
 ## 用法
 
 ```tsx
-import { EmptyState } from "@nebutra/ui";
-import { Database, Plus, Lightning as Zap } from "@nebutra/icons";
+import { EmptyState } from "@nebutra/ui/layout";
+import { Database } from "@nebutra/icons";
 
 export function PipelinesPage() {
   const { pipelines } = usePipelines();
@@ -37,9 +37,8 @@ export function PipelinesPage() {
       <EmptyState
         title="No pipelines"
         description="Build your first pipeline to start processing events."
-        icons={[<Database />, <Zap />, <Plus />]}
-        action={{ label: "New pipeline", onClick: openCreateDialog }}
-        theme="light"
+        icon={<Database />}
+        action={<Button onClick={openCreateDialog}>New pipeline</Button>}
       />
     );
   }
@@ -53,77 +52,63 @@ export function PipelinesPage() {
 
 | 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `title` | `string` | — | **Required.** Heading text rendered as `<h2>` |
-| `description` | `string` | — | Supporting body copy beneath the title |
-| `icons` | `React.ReactNode[]` | — | Array of exactly 3 icons displayed in an animated trio |
-| `action` | `EmptyStateAction` | — | Configuration for the action button |
-| `variant` | `"default" \| "subtle" \| "error"` | `"default"` | Visual style of the container |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Controls padding and text scale |
-| `theme` | `"light" \| "dark" \| "neutral"` | `"light"` | Color palette; match your page background |
-| `isIconAnimated` | `boolean` | `true` | When `true`, icons fan out and lift on hover |
-| `className` | `string` | `""` | Additional Tailwind classes on the root element |
+| `title` | `string` | — | **必填。** 主要信息 |
+| `description` | `string` | — | 标题下方的补充说明 |
+| `mascot` | `React.ReactNode` | — | 视觉锚点。省略且 `tone="branded"` 时渲染默认的 `<BrandMark>` |
+| `icon` | `React.ReactNode` | — | 标题上方展示的内联图标。提供 `mascot` 时忽略 |
+| `action` | `React.ReactNode` | — | 主操作节点——传入真实的 `Button`/`Link`，而不是配置对象 |
+| `secondaryAction` | `React.ReactNode` | — | 次操作节点 |
+| `tone` | `"default" \| "branded" \| "subtle"` | `"default"` | `default`：中性带边框状态。`branded`：首触面板的 `BrandMark` 锚点。`subtle`：更克制的内联状态 |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | 控制内边距和文字比例 |
+| `className` | `string` | — | 附加在根元素上的额外 class |
 
-### `EmptyStateAction`
+没有 `icons` 数组，没有 `theme` 属性，也没有 `isIconAnimated` 属性。`icon`（和 `mascot`）各自只接受一个节点。
 
-| 属性 | 类型 | 默认值 | 说明 |
-|---|---|---|---|
-| `label` | `string` | — | **Required.** Button label text |
-| `icon` | `React.ReactNode` | — | Optional icon rendered before the label; rotates 90° on hover |
-| `onClick` | `() => void` | — | Click handler |
-| `disabled` | `boolean` | — | Disables the action button |
+`action` 和 `secondaryAction` 接受的是渲染节点，而不是 `{ label, onClick, icon }` 配置对象——传入真实的
+`<Button>`（或 `<Link>`）元素。
 
 ## 示例
-### 深色主题
+### 品牌化 tone
 
 ```tsx
 <EmptyState
-  title="No logs available"
-  description="Start emitting events to see logs appear here."
-  icons={[<Terminal />, <Activity />, <Zap />]}
-  theme="dark"
-  variant="default"
+  title="Welcome to Nebutra"
+  description="Connect your first data source to get started."
+  tone="branded"
 />
 ```
 
-### 错误变体
-
-```tsx
-<EmptyState
-  title="Failed to load data"
-  description="An error occurred while fetching your resources. Please try again."
-  icons={[<AlertCircle />, <RefreshCcw />, <HelpCircle />]}
-  action={{ label: "Retry", onClick: refetch }}
-  variant="error"
-  theme="light"
-/>
-```
-
-### 克制样式 — 无边框
+### 克制样式 — 更安静的内联状态
 
 ```tsx
 <EmptyState
   title="Nothing here yet"
   description="Items will appear once data is available."
-  variant="subtle"
+  tone="subtle"
   size="sm"
 />
 ```
 
-### 静态图标（无悬停动画）
+### 带次操作
 
 ```tsx
 <EmptyState
-  title="All caught up"
-  description="No new notifications."
-  icons={[<Bell />, <Check />, <Star />]}
-  isIconAnimated={false}
+  title="Failed to load data"
+  description="An error occurred while fetching your resources."
+  icon={<AlertCircle />}
+  action={<Button onClick={refetch}>Retry</Button>}
+  secondaryAction={<Link href="/support">Contact support</Link>}
 />
 ```
 
+## 更高级的组合 — `@nebutra/ui/primitives`
+
+`layout/EmptyState` 是围绕规范复合原语 `@nebutra/ui/primitives` 的 `EmptyState.Root` 的简化封装。
+如果新的组合场景需要超出 `default`/`branded`/`subtle` 之外的变体（例如 `no-results`、
+`permission`、`error`）或 `align` 控制，应直接使用该原语，而不是扩展这个封装组件的属性面。
+
 ## 可访问性
-- The root element renders as `<section>` with `role="region"` and `aria-labelledby` pointing to the title.
-- When `description` is present, `aria-describedby` references the description paragraph.
-- The action button renders as a native `<button>` with `type="button"`.
-- `disabled` action buttons have `aria-disabled="true"` and `disabled` attributes.
-- Icon containers are `aria-hidden="true"` — decorative only.
-- Framer Motion animations respect the user's `prefers-reduced-motion` setting via `LazyMotion` with `domAnimation`.
+- 根元素渲染为 `<section>`，带 `role="region"` 和指向标题的 `aria-labelledby`。
+- 提供 `description` 时，`aria-describedby` 会引用描述段落。
+- 图标容器带 `aria-hidden="true"`——仅作装饰。
+- `action`/`secondaryAction` 应为真实的可交互元素（`<button type="button">`、`<a>`）——组件本身不会为它们补充语义。

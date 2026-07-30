@@ -60,6 +60,8 @@ instead of preserving outdated examples.
 
 - Error type, code, or middleware changes:
   `pnpm --filter @nebutra/errors exec tsc --noEmit`
-- Because this package currently has no package-local tests, verify the
-  narrowest downstream consumer that exercises the changed error contract when
-  behavior changes are non-trivial.
+- Run the package-local suite before changing error types, codes, or
+  middleware: `pnpm --filter @nebutra/errors test` (`vitest run`). It covers
+  the package's index (`src/index.test.ts`). Also verify the narrowest
+  downstream consumer that exercises the changed error contract when behavior
+  changes are non-trivial.

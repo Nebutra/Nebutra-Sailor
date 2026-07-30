@@ -21,7 +21,9 @@ npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
 
 ## Token 真相源
 
-registry manifest 是分发适配层，不是设计权威。Token 所有权仍在 `packages/design/tokens/src/index.ts` 和 `packages/design/tokens/styles.css`；docs 与 registry JSON 只能描述这个来源，不能发明第二套 token 层。
+registry manifest 是分发适配层，不是设计权威。`packages/design/tokens/styles.css` 是 generated（生成）文件，不要手动编辑——`packages/design/tokens/scripts/sync-styles.mjs` 在每次构建时都会把 Style Dictionary 的构建产物覆盖上去。
+
+Token 所有权在 DTCG 源文件：`packages/design/design-tokens/tokens/core.json`（基础值）、`tokens/semantic.json`（语义别名）以及 `tokens/themes/{light,dark}.json`（各模式的值）。编辑 `light.json` 和 `dark.json` 时**必须成对修改**——只改一个而不改另一个，会让该 token 在未修改的模式下静默回退到旧值。docs 与 registry JSON 只能描述这个来源，不能发明第二套 token 层。
 
 <ComponentPreview name="nebutra-tokens-demo" />
 

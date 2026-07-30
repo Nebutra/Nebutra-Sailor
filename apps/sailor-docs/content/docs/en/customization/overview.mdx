@@ -9,7 +9,7 @@ Nebutra-Sailor is designed to be fully white-labeled. Every visual and structura
 
 <CardGroup cols={2}>
   <Card title="Brand & Theming" icon="palette" href="/customization/theming">
-    Change brand colors, swap between six multi-theme presets, configure light/dark mode, and create a fully custom oklch theme.
+    Change brand colors, swap between built-in Brand Packages via `data-brand`, configure light/dark mode, and create a fully custom oklch theme.
   </Card>
   <Card title="Dashboard Pages" icon="layout-dashboard" href="/customization/dashboard">
     Add new dashboard sections, customize the sidebar navigation, and gate features by plan.
@@ -35,7 +35,7 @@ apps/web          ← Dashboard pages compose components
 apps/landing ← Marketing site composes components
 ```
 
-Because every color and spacing value in `@nebutra/ui` is a CSS variable reference (never a hardcoded hex), updating `packages/design/tokens/styles.css` — or running the palette script — cascades through the entire product.
+Because every color and spacing value in `@nebutra/ui` is a CSS variable reference (never a hardcoded hex), editing the DTCG token source at `packages/design/design-tokens/tokens/*.json` — or running the palette script — cascades through the entire product once the token build regenerates `packages/design/tokens/styles.css`.
 
 ## Quick wins (under 5 minutes)
 
@@ -46,13 +46,20 @@ Because every color and spacing value in `@nebutra/ui` is a CSS variable referen
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 ```
 
-The script rewrites `packages/design/tokens/styles.css` and all downstream token aliases. Restart the dev server to see the change.
+The script prints a `brand-override.css` file to stdout — it does not write anything to disk itself. Redirect it to a file and `@import` it after `@nebutra/tokens/styles.css`, or fold the values into the DTCG token source at `packages/design/design-tokens/tokens/*.json` and rebuild.
 
-### Switch the active theme preset
+### Switch the active Brand Package
 
-```tsx
-// apps/web/src/app/layout.tsx
-<html data-theme="nebutra">   {/* nebutra | dark-dense | minimal | vibrant | ocean */}
+```ts
+import { applyLanguage, clearLanguage } from "@nebutra/theme";
+
+applyLanguage("vanta", { persist: true }); // any built-in id from LANGUAGE_REGISTRY
+clearLanguage(); // back to the factory default
+```
+
+```bash
+nebutra theme list
+nebutra theme use vanta
 ```
 
 ### Toggle dark mode
@@ -68,7 +75,7 @@ setTheme("dark"); // "light" | "dark" | "system"
 
 | Goal | Where to start |
 |------|---------------|
-| New multi-theme preset | `packages/design/theme/themes.css` |
+| New Brand Package | `packages/design/tokens/brands/<id>/brand.json` + an entry in `packages/design/theme/src/languages.meta.json`, then `node packages/design/theme/scripts/sync-languages.mjs` (writes the generated `languages.json` — do not hand-edit it) |
 | New UI primitive | `packages/design/ui/src/components/` + Storybook story |
 | New dashboard section | `apps/web/src/app/(dashboard)/[section]/page.tsx` |
 | Modify onboarding steps | `apps/web/src/app/(onboarding)/` |
@@ -76,7 +83,7 @@ setTheme("dark"); // "light" | "dark" | "system"
 
 ## Token architecture at a glance
 
-All runtime CSS variables are defined in a single file: `packages/design/tokens/styles.css`. This is the **single source of truth** — never hardcode hex values anywhere else in the codebase.
+All runtime CSS variables are compiled into a single file, `packages/design/tokens/styles.css` — but that file is generated (its own header says so) and gets overwritten on every token build. The **single source of truth** is the DTCG token JSON at `packages/design/design-tokens/tokens/*.json`; edit there, then run the Style Dictionary build so `sync-styles.mjs` regenerates `styles.css`. Never hardcode hex values anywhere in the codebase.
 
 ```css
 /* packages/design/tokens/styles.css — excerpt */
@@ -98,7 +105,7 @@ All runtime CSS variables are defined in a single file: `packages/design/tokens/
 
 <CardGroup cols={2}>
   <Card title="Theming" icon="paintbrush" href="/customization/theming">
-    CSS variables, light/dark mode, and multi-theme presets
+    CSS variables, light/dark mode, and Brand Packages
   </Card>
   <Card title="Dashboard" icon="layout-panel-left" href="/customization/dashboard">
     Add pages, update navigation, and gate by plan

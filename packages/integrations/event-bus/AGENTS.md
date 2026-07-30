@@ -60,6 +60,7 @@ source files above rather than preserving outdated examples.
 
 - Event schema, export, bus, or DLQ changes:
   `pnpm --filter @nebutra/event-bus typecheck`
-- Because the package currently has no package-local test suite, changes to
-  transport semantics should be verified conservatively in the narrowest
-  downstream consumer or integration that exercises the affected event path.
+- Run the package-local suite before changing transport semantics:
+  `pnpm --filter @nebutra/event-bus test` (`vitest run`). It covers the bus
+  implementation (`src/bus.test.ts`). Also verify the narrowest downstream
+  consumer or integration that exercises the affected event path.

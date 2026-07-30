@@ -62,7 +62,7 @@ import { WarpBackground } from "@nebutra/ui/primitives"
 | `beamDelayMax` | `number` | `3` | 最大启动延迟（秒） |
 | `beamDelayMin` | `number` | `0` | 最小启动延迟（秒） |
 | `beamDuration` | `number` | `3` | 每道光束动画的持续时间（秒） |
-| `gridColor` | `string` | `"var(--border)"` | 网格线的 CSS 颜色 |
+| `gridColor` | `string` | `"hsl(var(--border))"` | 网格线的 CSS 颜色。`--border` 是裸 HSL 三元组，且这个值会落入渐变的 color stop，所以必须保持 `hsl(...)` 包裹——未包裹的 `var(--border)` 会使整条声明失效，浏览器会静默丢弃它。 |
 | `className` | `string` | — | 额外的 CSS 类名（默认包含 `p-20`） |
 
 ## 注意事项

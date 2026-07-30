@@ -4,7 +4,7 @@ description: 设计系统内置的 WCAG 2.1 AA 原语、ARIA 模式、焦点管�
 ---
 
 ## 概览
-可访问性原语位于 `apps/docs-hub/design-system/src/primitives/accessibility.ts`。该文件导出样式对象、ARIA 属性辅助函数和实现 WCAG 2.1 AA 要求的工具函数。它们是底层构件：设计系统组件会在内部消费它们，应用代码在创建自定义模式时也可以直接导入。
+可访问性原语位于 `packages/design/ui/src/primitives/accessibility.ts`，通过 `@nebutra/ui/primitives` 重新导出。该文件导出样式对象、ARIA 属性辅助函数和实现 WCAG 2.1 AA 要求的工具函数。它们是底层构件：设计系统组件会在内部消费它们，应用代码在创建自定义模式时也可以直接导入。
 
 导出成员：
 
@@ -31,7 +31,7 @@ description: 设计系统内置的 WCAG 2.1 AA 原语、ARIA 模式、焦点管�
 从视觉布局中移除元素，但保留在可访问性树中。
 
 ```ts
-import { visuallyHidden } from "@nebutra/ui/primitives/accessibility";
+import { visuallyHidden } from "@nebutra/ui/primitives";
 
 // 样式对象，可展开到 inline style 或 CSS-in-JS
 const style = visuallyHidden;
@@ -57,7 +57,7 @@ const style = visuallyHidden;
 符合 WCAG 2.4.7（焦点可见）的标准键盘焦点环。
 
 ```ts
-import { focusRing } from "@nebutra/ui/primitives/accessibility";
+import { focusRing } from "@nebutra/ui/primitives";
 
 // focusRing 解析为：
 // {
@@ -78,7 +78,7 @@ import { focusRing } from "@nebutra/ui/primitives/accessibility";
 仅在键盘聚焦时可见的跳转导航链接。WCAG 2.4.1（绕过区块）要求提供这种能力。
 
 ```tsx
-import { skipLinkStyle } from "@nebutra/ui/primitives/accessibility";
+import { skipLinkStyle } from "@nebutra/ui/primitives";
 
 // 在根布局中
 <a href="#main-content" style={skipLinkStyle}>
@@ -95,7 +95,7 @@ import { skipLinkStyle } from "@nebutra/ui/primitives/accessibility";
 ### `ariaPatterns.loading`
 
 ```tsx
-import { ariaPatterns } from "@nebutra/ui/primitives/accessibility";
+import { ariaPatterns } from "@nebutra/ui/primitives";
 
 <div {...ariaPatterns.loading}>
   内容加载中...
@@ -143,7 +143,7 @@ import { ariaPatterns } from "@nebutra/ui/primitives/accessibility";
 WCAG 2.5.5（目标尺寸）要求交互区域至少为 44×44px。
 
 ```ts
-import { minTouchTarget } from "@nebutra/ui/primitives/accessibility";
+import { minTouchTarget } from "@nebutra/ui/primitives";
 
 // minTouchTarget = { minWidth: 44, minHeight: 44 }
 
@@ -159,7 +159,7 @@ import { minTouchTarget } from "@nebutra/ui/primitives/accessibility";
 运行时检测系统级减少动态效果偏好。
 
 ```ts
-import { prefersReducedMotion } from "@nebutra/ui/primitives/accessibility";
+import { prefersReducedMotion } from "@nebutra/ui/primitives";
 
 const duration = prefersReducedMotion() ? 0 : 300;
 
@@ -183,7 +183,7 @@ element.animate([{ opacity: 0 }, { opacity: 1 }], {
 | `contrastRequirements.largeTextAAA` | 4.5 | AAA | 增强级大文本 |
 
 ```ts
-import { contrastRequirements } from "@nebutra/ui/primitives/accessibility";
+import { contrastRequirements } from "@nebutra/ui/primitives";
 
 function isAccessible(contrastRatio: number, isLargeText: boolean): boolean {
   const required = isLargeText
@@ -221,7 +221,7 @@ function isAccessible(contrastRatio: number, isLargeText: boolean): boolean {
 }
 ```
 
-当 `prefersReducedMotion()` 返回 `true` 时，营销侧的 `marketingTransitions` 应替换为即时过渡。
+当 `prefersReducedMotion()` 返回 `true` 时，任何手写的过渡时长常量都应替换为即时过渡。
 
 ## 应做 / 禁止
 

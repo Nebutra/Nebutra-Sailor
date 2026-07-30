@@ -60,6 +60,8 @@ the source of truth here rather than patching consuming packages.
 
 - Metering contract or provider changes:
   `pnpm --filter @nebutra/metering typecheck`
-- Because the package currently has no package-local test suite, changes to
-  provider semantics should be verified conservatively in the narrowest
-  downstream consumer that exercises the affected path.
+- Run the package-local suite before changing provider semantics:
+  `pnpm --filter @nebutra/metering test` (`vitest run`). It covers quota
+  enforcement, the in-memory provider, the ClickHouse provider, and a
+  ClickHouse integration test. Also verify the narrowest downstream consumer
+  for anything the local suite does not reach.

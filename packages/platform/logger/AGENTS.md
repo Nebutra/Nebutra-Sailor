@@ -56,6 +56,8 @@ files above instead of preserving outdated docs.
 
 - Logger interface, redaction, or request-scope changes:
   `pnpm --filter @nebutra/logger typecheck`
-- OTel bootstrap or metrics changes should also be verified in the narrowest
-  downstream runtime that initializes telemetry, because this package currently
-  has no package-local test suite.
+- Run the package-local suite before changing OTel bootstrap behavior:
+  `pnpm --filter @nebutra/logger test` (`vitest run`). It covers
+  `__tests__/otel-bootstrap.test.ts` — exactly the area to also verify in the
+  narrowest downstream runtime that initializes telemetry, since that test
+  does not exercise a real collector.

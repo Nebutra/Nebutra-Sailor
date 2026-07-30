@@ -64,6 +64,10 @@ source of truth here rather than patching consumers.
 
 - Queue contract or provider changes:
   `pnpm --filter @nebutra/queue typecheck`
-- Because the package currently has no package-local test suite, changes to
-  provider semantics should be verified conservatively in the narrowest
-  downstream consumer that exercises the affected path.
+- Run the package-local suite before changing provider semantics:
+  `pnpm --filter @nebutra/queue test` (`vitest run`). It covers the
+  provider-agnostic factory/detection logic, each provider (QStash, BullMQ,
+  in-memory), the QStash webhook signature verification middleware, and the
+  scheduled-job handlers (scheduler, invitation cleanup, session cleanup).
+  Verify the narrowest downstream consumer as well for behavior the local
+  suite does not reach (e.g. real Redis/QStash wiring).

@@ -54,7 +54,9 @@ entitlement logic.
 
 - Package contract changes:
   `pnpm --filter @nebutra/permissions typecheck`
-- Because the package currently has no package-local test suite, verify the
-  narrowest affected downstream consumer when changing provider semantics or
-  middleware behavior.
+- Run the package-local suite before changing provider or middleware
+  semantics: `pnpm --filter @nebutra/permissions test` (`vitest run`). It
+  covers the CASL provider, the OpenFGA provider, the platform role
+  definitions, and the roles module. Also verify the narrowest affected
+  downstream consumer.
 

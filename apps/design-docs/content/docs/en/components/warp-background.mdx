@@ -62,7 +62,7 @@ import { WarpBackground } from "@nebutra/ui/primitives"
 | `beamDelayMax` | `number` | `3` | Maximum start delay in seconds |
 | `beamDelayMin` | `number` | `0` | Minimum start delay in seconds |
 | `beamDuration` | `number` | `3` | Duration of each beam animation in seconds |
-| `gridColor` | `string` | `"var(--border)"` | CSS color for grid lines |
+| `gridColor` | `string` | `"hsl(var(--border))"` | CSS color for grid lines. `--border` holds bare HSL channels, and this value lands in a gradient color stop, so it must stay wrapped in `hsl(...)` — an unwrapped `var(--border)` there invalidates the whole declaration and the browser silently discards it. |
 | `className` | `string` | — | Additional CSS classes (default: `p-20`) |
 
 ## Notes

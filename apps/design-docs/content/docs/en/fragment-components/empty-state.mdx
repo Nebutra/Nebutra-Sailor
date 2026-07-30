@@ -1,33 +1,34 @@
 ---
 title: "EmptyState"
-description: "Animated empty state component with an icon trio, title, description, and optional action button."
+description: "Empty state layout wrapper with a single icon/mascot slot, title, description, and action(s)."
 ---
+
+> This page previously documented an `icons` array (three icons, animated trio), `theme`, and
+> `isIconAnimated` props. Neither `@nebutra/ui/layout` `EmptyState` nor the underlying
+> `@nebutra/ui/primitives` `EmptyState.Root` has ever had those props — both take a **singular**
+> icon. This page now documents the real component
+> (`packages/design/ui/src/layout/EmptyState.tsx`).
 
 ## Demo
 
 ```tsx
-import { EmptyState } from "@nebutra/ui";
-import { FolderOpen, Plus, Lightning as Rocket } from "@nebutra/icons";
+import { EmptyState } from "@nebutra/ui/layout";
+import { FolderOpen } from "@nebutra/icons";
+import { Button } from "@nebutra/ui/components";
 
 <EmptyState
   title="No projects yet"
   description="Create your first project to get started with Nebutra."
-  icons={[<FolderOpen />, <Plus />, <Rocket />]}
-  action={{
-    label: "Create project",
-    icon: <Plus className="w-4 h-4" />,
-    onClick: () => router.push("/projects/new"),
-  }}
-  theme="light"
-  size="default"
-/>
+  icon={<FolderOpen />}
+  action={<Button onClick={() => router.push("/projects/new")}>Create project</Button>}
+/>;
 ```
 
 ## Usage
 
 ```tsx
-import { EmptyState } from "@nebutra/ui";
-import { Database, Plus, Lightning as Zap } from "@nebutra/icons";
+import { EmptyState } from "@nebutra/ui/layout";
+import { Database } from "@nebutra/icons";
 
 export function PipelinesPage() {
   const { pipelines } = usePipelines();
@@ -37,9 +38,8 @@ export function PipelinesPage() {
       <EmptyState
         title="No pipelines"
         description="Build your first pipeline to start processing events."
-        icons={[<Database />, <Zap />, <Plus />]}
-        action={{ label: "New pipeline", onClick: openCreateDialog }}
-        theme="light"
+        icon={<Database />}
+        action={<Button onClick={openCreateDialog}>New pipeline</Button>}
       />
     );
   }
@@ -54,79 +54,69 @@ export function PipelinesPage() {
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `title` | `string` | — | **Required.** Heading text rendered as `<h2>` |
-| `description` | `string` | — | Supporting body copy beneath the title |
-| `icons` | `React.ReactNode[]` | — | Array of exactly 3 icons displayed in an animated trio |
-| `action` | `EmptyStateAction` | — | Configuration for the action button |
-| `variant` | `"default" \| "subtle" \| "error"` | `"default"` | Visual style of the container |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Controls padding and text scale |
-| `theme` | `"light" \| "dark" \| "neutral"` | `"light"` | Color palette; match your page background |
-| `isIconAnimated` | `boolean` | `true` | When `true`, icons fan out and lift on hover |
-| `className` | `string` | `""` | Additional Tailwind classes on the root element |
+| `title` | `string` | — | **Required.** Primary message |
+| `description` | `string` | — | Supporting description beneath the title |
+| `mascot` | `React.ReactNode` | — | Visual anchor. When omitted and `tone="branded"`, a default `<BrandMark>` renders |
+| `icon` | `React.ReactNode` | — | Inline icon shown above the title. Ignored when `mascot` is provided |
+| `action` | `React.ReactNode` | — | Primary call-to-action node — a real `Button`/`Link`, not a config object |
+| `secondaryAction` | `React.ReactNode` | — | Secondary call-to-action node |
+| `tone` | `"default" \| "branded" \| "subtle"` | `"default"` | `default`: neutral bordered state. `branded`: `BrandMark` anchor for first-touch panels. `subtle`: quieter inline state |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Controls padding and text scale |
+| `className` | `string` | — | Additional classes on the root element |
 
-### `EmptyStateAction`
+There is no `icons` array, no `theme` prop, and no `isIconAnimated` prop. `icon` (and `mascot`) each
+take exactly one node.
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `label` | `string` | — | **Required.** Button label text |
-| `icon` | `React.ReactNode` | — | Optional icon rendered before the label; rotates 90° on hover |
-| `onClick` | `() => void` | — | Click handler |
-| `disabled` | `boolean` | — | Disables the action button |
+`action` and `secondaryAction` take rendered nodes, not `{ label, onClick, icon }` config objects —
+pass a real `<Button>` (or `<Link>`) element.
 
 ## Examples
 
-### Dark theme
+### Branded tone
 
 ```tsx
 <EmptyState
-  title="No logs available"
-  description="Start emitting events to see logs appear here."
-  icons={[<Terminal />, <Activity />, <Zap />]}
-  theme="dark"
-  variant="default"
+  title="Welcome to Nebutra"
+  description="Connect your first data source to get started."
+  tone="branded"
 />
 ```
 
-### Error variant
-
-```tsx
-<EmptyState
-  title="Failed to load data"
-  description="An error occurred while fetching your resources. Please try again."
-  icons={[<AlertCircle />, <RefreshCcw />, <HelpCircle />]}
-  action={{ label: "Retry", onClick: refetch }}
-  variant="error"
-  theme="light"
-/>
-```
-
-### Subtle — no border
+### Subtle — quieter inline state
 
 ```tsx
 <EmptyState
   title="Nothing here yet"
   description="Items will appear once data is available."
-  variant="subtle"
+  tone="subtle"
   size="sm"
 />
 ```
 
-### Static icons (no hover animation)
+### With a secondary action
 
 ```tsx
 <EmptyState
-  title="All caught up"
-  description="No new notifications."
-  icons={[<Bell />, <Check />, <Star />]}
-  isIconAnimated={false}
+  title="Failed to load data"
+  description="An error occurred while fetching your resources."
+  icon={<AlertCircle />}
+  action={<Button onClick={refetch}>Retry</Button>}
+  secondaryAction={<Link href="/support">Contact support</Link>}
 />
 ```
 
+## Advanced composition — `@nebutra/ui/primitives`
+
+`layout/EmptyState` is a simplified wrapper around the canonical compound primitive,
+`EmptyState.Root` from `@nebutra/ui/primitives`. New composition work that needs variants beyond
+`default`/`branded`/`subtle` (e.g. `no-results`, `permission`, `error`) or an `align` control should
+use the primitive directly rather than extending this wrapper's prop surface.
+
 ## Accessibility
 
-- The root element renders as `<section>` with `role="region"` and `aria-labelledby` pointing to the title.
+- The root element renders as `<section>` with `role="region"` and `aria-labelledby` pointing to the
+  title.
 - When `description` is present, `aria-describedby` references the description paragraph.
-- The action button renders as a native `<button>` with `type="button"`.
-- `disabled` action buttons have `aria-disabled="true"` and `disabled` attributes.
-- Icon containers are `aria-hidden="true"` — decorative only.
-- Framer Motion animations respect the user's `prefers-reduced-motion` setting via `LazyMotion` with `domAnimation`.
+- The icon container is `aria-hidden="true"` — decorative only.
+- `action`/`secondaryAction` should be real interactive elements (`<button type="button">`, `<a>`) —
+  the component does not add semantics for you.

@@ -9,7 +9,7 @@
 | Status | Stable, actively expanding |
 | Source root | `packages/design/ui/src/` |
 | Storybook | `apps/storybook` (dev: http://localhost:6006) |
-| Subpath exports | `@nebutra/ui/components`, `@nebutra/ui/layout`, `@nebutra/ui/marketing`, `@nebutra/ui/utils` |
+| Subpath exports | `@nebutra/ui/components`, `@nebutra/ui/layout`, `@nebutra/ui/utils` (see §3.4 — `src/marketing/` is not yet wired into the build) |
 | Composition | Radix UI + HeroUI + Nebutra primitives + curated compatibility bridges |
 
 > **Note**: `@nebutra/design-system` has been **merged into** `@nebutra/ui`. Layout components now live at `@nebutra/ui/layout`.
@@ -26,7 +26,7 @@
 - **21st.dev** community-vetted patterns
 - Custom components built strictly on top of `@nebutra/tokens` CSS variables
 
-**Component-creation rule (locked, see project memory)**: do not hand-craft components. Priority — Geist source → 21st.dev → HeroUI/Radix → hand-craft (last resort). No inline SVG icons; always import from `@nebutra/icons` or `lucide-react`.
+**Component-creation rule (locked, see project memory)**: do not hand-craft components. Priority — Geist source → 21st.dev → HeroUI/Radix → hand-craft (last resort). No inline SVG icons; always import from `@nebutra/icons`. `lucide-react` is banned repo-wide (`scripts/lint-no-lucide.mjs`, wired into `pnpm lint`) — see §5.1.
 
 ---
 
@@ -59,7 +59,7 @@ The library exports ~250 components organized into 5 categories. Storybook is th
 |---------|------|----------------|-------------|
 | Primitives | `src/primitives/` | `@nebutra/ui/components` | 180+ |
 | Patterns (composite) | `src/patterns/` | `@nebutra/ui/components` | 8 |
-| Marketing sections | `src/marketing/` | `@nebutra/ui/marketing` | 40+ |
+| Marketing sections | `src/marketing/` | **not exported** (§3.4) | 40+ |
 | Layout scaffolding | `src/layout/` | `@nebutra/ui/layout` | 8 |
 | Decorations | `src/decorations/` | `@nebutra/ui/components` | several |
 | Widgets | `src/widgets/` | `@nebutra/ui/components` | small set |
@@ -96,7 +96,13 @@ The library exports ~250 components organized into 5 categories. Storybook is th
 
 ### 3.4 Marketing sections
 
-Self-contained landing blocks with prop-driven content. Examples:
+**Not exported.** `src/marketing/` has 40+ components and its own `index.ts`, but the subpath is
+absent from both `tsup.config.ts`'s `ENTRIES` map and `package.json`'s `exports` — there is no
+`dist/marketing/`, so `@nebutra/ui/marketing` does not resolve. `apps/landing` does not consume it
+either; its landing sections are hand-built locally under
+`apps/landing/src/components/landing/`. Treat this directory as source pending a decision to wire it
+up (add the tsup entry + exports key + verify the build) or fold it into `apps/landing`'s local
+components. Self-contained landing blocks with prop-driven content. Examples:
 
 | Component | Purpose |
 |-----------|---------|
@@ -204,14 +210,17 @@ Presets: `emerge` (default — blur+rise), `flow` (slide-left), `fade`, `fadeUp`
 ```tsx
 import { X } from "@nebutra/icons";
 
-<button
-  type="button"
-  aria-label="Close dialog"
-  className="rounded-md p-1 focus:outline-none focus:ring-2 focus:ring-[var(--blue-9)] focus:ring-offset-1"
->
+<button type="button" aria-label="Close dialog" className="rounded-md p-1">
   <X className="h-4 w-4" />
 </button>
 ```
+
+No ring classes needed: the global `:focus-visible` rule in
+`packages/design/design-tokens/static/base.css` already outlines every focusable element
+(`outline: 2px solid hsl(var(--ring) / 0.5)`, 2px offset) on keyboard focus, so mouse users don't see
+it and keyboard users always do. A component-level focus ring class doubles that outline, and one
+built from the brand-blue token additionally leaks the VI identity-lock color onto a component
+surface, which CLAUDE.md forbids outright.
 
 ### 4.4 Container width selection
 
@@ -230,8 +239,8 @@ import { X } from "@nebutra/icons";
 ```tsx
 import { Button, Input, Card, Dialog, Tabs } from "@nebutra/ui/components";
 import { PageHeader, EmptyState, Section, Container } from "@nebutra/ui/layout";
-import { Hero, Pricing, Features, FAQ, Footer, Navbar } from "@nebutra/ui/marketing";
 import { cn } from "@nebutra/ui/utils";
+// "@nebutra/ui/marketing" does not resolve today — see §3.4
 import { MagnifyingGlass, SettingsGear, ChevronRight } from "@nebutra/icons";
 // lucide-react is banned — use @nebutra/icons (Geist) only
 ```
@@ -261,7 +270,7 @@ import { MagnifyingGlass, SettingsGear, ChevronRight } from "@nebutra/icons";
    export const Default: Story = { args: { /* … */ } };
    export const AllVariants: Story = { render: () => (/* showcase */) };
    ```
-4. **Type-checked accessibility**: every interactive element must have `type="button"`, `aria-label` on icon-only triggers, and the brand focus ring.
+4. **Type-checked accessibility**: every interactive element must have `type="button"` and `aria-label` on icon-only triggers. Do not add a component-level focus ring — the global `:focus-visible` rule already supplies one (see §4.3).
 5. **Prove tokens-only styling**: search for hex values in your diff — should be zero (except `global-error.tsx` exception).
 
 ### 5.3 Forbidden
@@ -270,7 +279,7 @@ import { MagnifyingGlass, SettingsGear, ChevronRight } from "@nebutra/icons";
 // ❌ Removed package
 import { Box } from "@primer/react";
 
-// ❌ Inline SVG icons — use @nebutra/icons / lucide-react
+// ❌ Inline SVG icons — use @nebutra/icons (lucide-react is banned)
 <svg viewBox="0 0 24 24">…</svg>
 
 // ❌ Hardcoded brand colors

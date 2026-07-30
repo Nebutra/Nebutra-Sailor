@@ -58,5 +58,8 @@ the source of truth here rather than patching downstream consumers.
 
 - Audit contract changes:
   `pnpm exec tsc -p packages/iam/audit/tsconfig.json --noEmit`
-- Because the package currently has no package-local test script, verify the
-  narrowest downstream consumer that exercises the changed audit path.
+- Run the package-local suite before changing audit behavior:
+  `pnpm --filter @nebutra/audit test` (`vitest run`). It covers the audit log
+  schema, the logging middleware, and the storage providers, plus an
+  index-level integration test. Also verify the narrowest downstream consumer
+  that exercises the changed audit path.

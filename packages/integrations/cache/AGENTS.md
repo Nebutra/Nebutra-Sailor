@@ -64,6 +64,8 @@ of truth here instead of patching downstream consumers.
 
 - Cache contract changes:
   `pnpm --filter @nebutra/cache typecheck`
-- Because the package currently has no package-local tests, verify the narrowest
-  downstream consumer that exercises the changed strategy or Redis env path
-  before widening the change.
+- Run the package-local suite before changing cache strategies:
+  `pnpm --filter @nebutra/cache test` (`vitest run`). It covers the lock-cache
+  and cache-stampede strategies. Also verify the narrowest downstream consumer
+  that exercises the changed strategy or Redis env path before widening the
+  change.

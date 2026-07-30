@@ -1,244 +1,153 @@
 ---
 title: 主题
-description: 主题模式、DesignSystemProvider、createTheme API 和营销 token 注入。
+description: 运行时 token、浅色/深色模式切换，以及 Brand Package 语言层。
 ---
 
 ## 概览
-主题层负责控制设计 token 在运行时如何传递给组件。它分成两个清晰职责：
 
-1. **应用主题**：通过 `createTheme()` + `DesignSystemProvider` 驱动产品 UI 的浅色/深色模式。
-2. **营销 token 注入**：通过 `generateMarketingCSSVars()` 为落地页 surface 注入变量。
+> 本页此前记录的是归属于 `apps/docs-hub` 的 `createTheme()` / `DesignSystemProvider` /
+> `generateMarketingCSSVars()` API。这些在仓库中并不存在——`apps/docs-hub` 从未是一个真实的
+> app，`@nebutra/ui` 中也没有任何这些导出。本页现在记录的是真实上线的主题机制。
 
-Token 源自 `default.ts`（Primer baseline），可在 `brand.ts` 中通过 `BrandOverrides` 覆盖；营销扩展位于 `marketing.ts`。
+主题被拆分到三个包中，各自职责清晰：
 
-## 应用主题
-
-### `createTheme(mode, overrides?)`
-
-位于 `apps/docs-hub/design-system/src/theme/brand.ts`。
-
-```ts
-import { createTheme } from "@nebutra/ui/theme/brand";
-
-// 无覆盖的浅色主题（Primer 默认值）
-const theme = createTheme("light");
-
-// 深色主题
-const darkTheme = createTheme("dark");
-
-// 带品牌覆盖的浅色主题
-const brandTheme = createTheme("light", {
-  colors: {
-    accent: {
-      fg: "#0033FE",
-      emphasis: "#002ad4",
-      muted: "rgb(0 51 254 / 0.4)",
-      subtle: "rgb(0 51 254 / 0.1)",
-    },
-  },
-  typography: {
-    fontFamily: {
-      normal: '"BrandFont", var(--font-geist-sans), "Geist", sans-serif',
-      mono: '"BrandMono", var(--font-geist-mono), "Geist Mono", ui-monospace, monospace',
-      display: '"BrandDisplay", var(--font-geist-sans), "Geist", sans-serif',
-    },
-  },
-  radii: {
-    lg: "16px",
-    xl: "24px",
-  },
-  shadows: {
-    brand: "0 0 40px rgb(0 51 254 / 0.25)",
-  },
-});
-```
-
-**签名：**
-```ts
-function createTheme(
-  mode: "light" | "dark",
-  overrides?: BrandOverrides
-): DefaultTheme
-```
-
-**`BrandOverrides` 接口：**
-
-| 字段 | 类型 | 说明 |
+| 层级 | 包 | 职责 |
 |---|---|---|
-| `colors` | `Partial<semanticColorsLight>` | 覆盖语义颜色 token |
-| `typography.fontFamily.normal` | `string` | 正文 / UI 字体栈 |
-| `typography.fontFamily.mono` | `string` | 代码 / 等宽字体栈 |
-| `typography.fontFamily.display` | `string` | Display / hero 字体栈 |
-| `radii` | `Partial<typeof defaultTheme.radii>` | 圆角覆盖 |
-| `shadows` | `Record<string, string>` | 命名阴影扩展 |
+| 运行时 token（SSOT） | `@nebutra/tokens` | `styles.css`（CSS 变量）+ `ThemeProvider`/`useTheme`（浅色/深色模式） |
+| 语言切换 | `@nebutra/theme` | Brand Package + `applyLanguage()` + `skins.css`，作用域为 `html[data-brand]` |
+| 组件桥接 | `@nebutra/ui` | `NebutraThemeProvider` —— 用同一套 token 包裹 Lobe UI |
 
-### 预置主题
+## 运行时 token —— `@nebutra/tokens`
 
-直接导出两个预置主题：
+`@nebutra/tokens` 是运行时设计 token 的唯一真源。在应用根部导入一次生成后的样式表：
 
-```ts
-import { lightTheme, darkTheme } from "@nebutra/ui/theme/brand";
+```css
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/recipe.css";
 ```
 
-两者都是 `DefaultTheme` 对象，即未应用品牌覆盖的 Primer 语义 token。
+`styles.css` 声明了：
 
-### `DesignSystemProvider`
+- 品牌色阶（`--nebutra-blue-*`、`--nebutra-cyan-*`）
+- 12 档功能色阶（`--neutral-1..12`、`--blue-1..12`、`--cyan-1..12`）
+- 语义变量（`--primary`、`--background`、`--border` 等），以**裸 HSL 三元组**的形式声明——落在颜色位置时需要包裹（`hsl(var(--border))`），或改用语义化 Tailwind 工具类。原因见 [Nebutra Tokens](/zh/docs/foundations/nebutra-tokens)。
+- 通过 `:root` / `.dark` 实现浅色/深色模式
+- Display-P3 广色域，带 sRGB 回退
+- Tailwind v4 `@theme` 集成
 
-<Info>
-`DesignSystemProvider` 是设计系统和 React 应用的集成点，通过 context 下发当前主题。
-</Info>
+`styles.css` 本身是**生成产物**——可编辑的源文件见 [Nebutra Tokens](/zh/docs/foundations/nebutra-tokens)。
 
-```tsx
-import { DesignSystemProvider } from "@nebutra/ui";
-
-// 默认模式：跟随系统偏好
-<DesignSystemProvider>
-  <App />
-</DesignSystemProvider>
-
-// 强制浅色模式
-<DesignSystemProvider defaultMode="light">
-  <App />
-</DesignSystemProvider>
-
-// 强制深色模式
-<DesignSystemProvider defaultMode="dark">
-  <App />
-</DesignSystemProvider>
-```
-
-**Props:**
-
-| 属性 | 类型 | 默认值 | 说明 |
-|---|---|---|---|
-| `defaultMode` | `"light" \| "dark" \| "system"` | `"system"` | 初始颜色模式 |
-| `theme` | `DefaultTheme` | `lightTheme` | 来自 `createTheme()` 的自定义主题对象 |
-| `children` | `ReactNode` | — | 应用子树 |
-
-### `useDesignSystem` Hook
-
-在 `DesignSystemProvider` 内的任意组件中读取当前主题和模式切换方法。
+### `ThemeProvider` / `useTheme` —— 浅色/深色模式
 
 ```tsx
-import { useDesignSystem } from "@nebutra/ui";
+import { ThemeProvider, useTheme } from "@nebutra/tokens";
 
+// 应用根部
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+  <App />
+</ThemeProvider>;
+
+// 树内任意组件
 function ThemeToggle() {
-  const { mode, setMode, theme } = useDesignSystem();
-
+  const { resolvedTheme, setTheme } = useTheme();
   return (
-    <button onClick={() => setMode(mode === "light" ? "dark" : "light")}>
-      Current: {mode}
+    <button type="button" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}>
+      Current: {resolvedTheme}
     </button>
   );
 }
 ```
 
-**返回值：**
+这是 `next-themes` 的手写替代实现（prop 和 hook 命名保持一致，可直接迁移），而非对其的重新导出——
+`next-themes@0.4.x` 会在 Client Component 内渲染一个内联 `<script>`，React 19 + Next.js 16（Turbopack）
+现在会对此报警。该 provider 拆分为客户端 `ThemeProvider`（运行时状态、跟随系统）并写入 cookie，使
+Server Component 能通过 `next/headers` 的 `cookies()` 读取已解析的主题，并直接把 class 注入
+`<html>`——没有内联脚本，没有 FOUC。
+
+**`ThemeProviderProps`：**
+
+| 属性 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `attribute` | `"class" \| "data-theme"` | `"class"` | 设置在 `<html>` 上的 DOM 属性 |
+| `defaultTheme` | `"light" \| "dark" \| "system"` | `"system"` | 初始偏好 |
+| `enableSystem` | `boolean` | `true` | `theme === "system"` 时跟随操作系统偏好 |
+| `storageKey` | `string` | `"theme"` | localStorage / cookie 键名 |
+| `children` | `ReactNode` | — | 应用子树 |
+
+**`useTheme()` 返回值：**
 
 | 属性 | 类型 | 说明 |
 |---|---|---|
-| `mode` | `"light" \| "dark"` | 当前颜色模式 |
-| `setMode` | `(mode: "light" \| "dark") => void` | 命令式切换模式 |
-| `theme` | `DefaultTheme` | 完整解析后的主题对象 |
+| `theme` | `"light" \| "dark" \| "system"` | 原始用户偏好 |
+| `resolvedTheme` | `"light" \| "dark"` | 实际应用的主题 |
+| `systemTheme` | `"light" \| "dark"` | 操作系统层面的偏好 |
+| `setTheme` | `(theme) => void` | 命令式切换偏好 |
 
-## 营销 Token 注入
+应用根部只包裹一次 `ThemeProvider`。通过 `useTheme()` 读取和切换模式——不要独立管理主题状态。
 
-营销 token 不属于主题 context。它们是注入到页面级别的 CSS 自定义属性。
+## 语言切换 —— `@nebutra/theme`
 
-### `generateMarketingCSSVars()`
+`@nebutra/theme` 是独立的可选层：全局产品外观切换（例如 Create Center / 多租户 SaaS 中让租户选择
+整套设计语言）。它**不是**浅色/深色模式——那是上面的 `@nebutra/tokens`。
 
-位于 `apps/docs-hub/design-system/src/theme/marketing.ts`。
-
-```ts
-import { generateMarketingCSSVars } from "@nebutra/ui/theme/marketing";
-
-// 返回 CSS 自定义属性声明字符串
-const cssVars = generateMarketingCSSVars();
-```
-
-生成的属性：
+> **已移除（2026-07）：** `[data-theme]` 下的 78 种 oklch “mood” 预设（`neon`、`gradient`、
+> `dark-dense`、`minimal`、`vibrant`、`ocean`）。它们会双写产品外观、观感通用，且与 carrier 模型冲突。
+> 不要重新引入。
 
 ```css
-/* Marketing Spacing */
---marketing-section-sm: 64px;
---marketing-section-md: 96px;
---marketing-section-lg: 128px;
---marketing-section-xl: 160px;
---marketing-hero-min-height: 100vh;
---marketing-content-max-width: 1200px;
-
-/* Marketing Radii */
---marketing-radius-sm: 8px;
---marketing-radius-card: 16px;
---marketing-radius-card-lg: 24px;
---marketing-radius-xl: 32px;
---marketing-radius-button: 9999px;
-
-/* Marketing Transitions */
---marketing-transition-fast: 150ms ease;
---marketing-transition-default: 200ms ease;
---marketing-transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
---marketing-transition-emphasized: 400ms cubic-bezier(0.4, 0, 0.2, 1);
---marketing-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+@import "@nebutra/theme/skins.css"; /* 多语言，作用域为 html[data-brand] */
 ```
-
-在任意营销 surface 的页面布局中注入它：
-
-```tsx
-// apps/landing/src/app/layout.tsx
-import { generateMarketingCSSVars } from "@nebutra/ui/theme/marketing";
-
-export default function Layout({ children }) {
-  return (
-    <html>
-      <head>
-        <style>{`:root { ${generateMarketingCSSVars()} }`}</style>
-      </head>
-      <body>{children}</body>
-    </html>
-  );
-}
-```
-
-### 完整营销 Token 映射
 
 ```ts
-import { marketingTokens } from "@nebutra/ui/theme/marketing";
-// marketingTokens.spacing
-// marketingTokens.typography
-// marketingTokens.gradients
-// marketingTokens.effects
-// marketingTokens.radii
-// marketingTokens.transitions
-// marketingTokens.zIndex
+import { applyLanguage, clearLanguage, LANGUAGE_REGISTRY } from "@nebutra/theme";
+
+applyLanguage("vanta", { persist: true }); // 内置 Brand Package
+clearLanguage(); // 回到 factory token
 ```
 
-渐变和效果 token 值见 [Color foundation](/zh/docs/foundations/brand-colors)。营销排版预设（`display`、`headline`、`subheadline`、`featureTitle`、`cardText`、`label`）见 [Typography](/zh/docs/foundations/typography)。
+内置目录（`id` → 证明的方向）：`factory`（默认 SSOT）、`linear`、`gsap`、`raycast`、`vercel`、
+`vanta`、`stripe`、`notion`。用 CLI 查看：
 
-## Z-Index 尺度（营销）
+```bash
+nebutra theme list
+nebutra theme inspect vanta
+```
 
-| Token | 值 | 层级 |
-|---|---|---|
-| `marketingZIndex.background` | −1 | 装饰背景 |
-| `marketingZIndex.base` | 0 | 默认内容 |
-| `marketingZIndex.elevated` | 10 | Hover 状态卡片 |
-| `marketingZIndex.sticky` | 100 | 粘性页头 |
-| `marketingZIndex.nav` | 1000 | 导航栏 |
-| `marketingZIndex.dropdown` | 1100 | Dropdown / Popover |
-| `marketingZIndex.modal` | 1200 | Modal / Dialog |
-| `marketingZIndex.toast` | 1300 | Toast / Notification |
-| `marketingZIndex.tooltip` | 1400 | Tooltip |
+## 组件桥接 —— `@nebutra/ui`
+
+`@nebutra/ui` 中的部分组件（源自 Lobe UI / Ant Design）需要自己的主题 context。
+`NebutraThemeProvider` 用同一套品牌 token 包裹该 context——它不替代 `@nebutra/tokens` 的
+`ThemeProvider`。
+
+```tsx
+import { NebutraThemeProvider } from "@nebutra/ui";
+
+<NebutraThemeProvider appearance="auto" defaultAppearance="light">
+  <App />
+</NebutraThemeProvider>;
+```
+
+**`NebutraThemeProviderProps`：**
+
+| 属性 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `appearance` | `"dark" \| "light" \| "auto"` | `"auto"` | 强制某一模式，或跟随 `defaultAppearance` |
+| `defaultAppearance` | `"dark" \| "light"` | `"light"` | `appearance === "auto"` 时的回退值 |
+| `children` | `ReactNode` | — | 子树 |
 
 ## 应做 / 禁止
 
-**应做**：在应用顶层只包裹一次 `DesignSystemProvider`。
+**应做**：在应用根部只导入一次 `@nebutra/tokens/styles.css`，且要在任何组件样式之前。
 
-**应做**：使用 `useDesignSystem()` 读取和切换当前模式，不要独立管理主题状态。
+**应做**：使用 `@nebutra/tokens` 的 `useTheme()` 读取和切换浅色/深色模式。
 
-**应做**：只在营销页面布局中调用 `generateMarketingCSSVars()`，不要放进应用 shell。
+**应做**：裸 HSL 三元组的语义 token（`--background`、`--border` 等）在落入颜色位置时始终用
+`hsl(...)` 包裹——未包裹的 `var(--border)` 会使整条声明失效，浏览器会静默丢弃它。
 
-**禁止**：在共享 UI 组件中导入 `marketingTokens`，它只属于营销 surface 代码。
+**禁止**：不要手动编辑 `packages/design/tokens/styles.css`——它是 generated（生成）产物，构建会覆盖任何手改。
+改动请编辑 `packages/design/design-tokens/tokens/` 下的 DTCG 源文件。
 
-**禁止**：用硬编码 HEX 覆盖语义 token。应使用带 `BrandOverrides` 的 `createTheme()`。
+**禁止**：把 `@nebutra/theme` 的 `applyLanguage()` 当作普通的浅色/深色模式切换来用——那是整套产品
+外观的切换，不是模式开关。
 
-**禁止**：嵌套多个 `DesignSystemProvider`。根部单一 provider 应治理整棵树。
+**禁止**：嵌套多个 `ThemeProvider` 实例。根部单一 provider 应治理整棵树。

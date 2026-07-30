@@ -1,253 +1,162 @@
 ---
 title: Theming
-description: Theme modes, the DesignSystemProvider, createTheme API, and marketing token injection.
+description: Runtime tokens, light/dark mode switching, and the Brand Package language-swap layer.
 ---
 
 ## Overview
 
-The theming layer controls how design tokens are delivered to components at runtime. It has two distinct concerns:
+> This page previously documented a `createTheme()` / `DesignSystemProvider` / `generateMarketingCSSVars()`
+> API attributed to `apps/docs-hub`. None of that exists in the repo — `apps/docs-hub` was never a
+> real app, and none of those exports exist anywhere in `@nebutra/ui`. This page now documents the
+> theming mechanism that actually ships.
 
-1. **Application theming** — `createTheme()` + `DesignSystemProvider` for light/dark mode across product UI
-2. **Marketing token injection** — `generateMarketingCSSVars()` for landing page surfaces
+Theming is split across three packages, each with a distinct job:
 
-Tokens originate in `default.ts` (Primer baseline), are optionally overridden in `brand.ts` via `BrandOverrides`, and the marketing extension lives in `marketing.ts`.
-
-<ThemeColorsDemo />
-
-## Application Theming
-
-### `createTheme(mode, overrides?)`
-
-Located in `apps/docs-hub/design-system/src/theme/brand.ts`.
-
-```ts
-import { createTheme } from "@nebutra/ui/theme/brand";
-
-// Light theme with no overrides (Primer defaults)
-const theme = createTheme("light");
-
-// Dark theme
-const darkTheme = createTheme("dark");
-
-// Light theme with brand overrides
-const brandTheme = createTheme("light", {
-  colors: {
-    accent: {
-      fg: "#0033FE",
-      emphasis: "#002ad4",
-      muted: "rgb(0 51 254 / 0.4)",
-      subtle: "rgb(0 51 254 / 0.1)",
-    },
-  },
-  typography: {
-    fontFamily: {
-      normal: '"BrandFont", var(--font-geist-sans), "Geist", sans-serif',
-      mono: '"BrandMono", var(--font-geist-mono), "Geist Mono", ui-monospace, monospace',
-      display: '"BrandDisplay", var(--font-geist-sans), "Geist", sans-serif',
-    },
-  },
-  radii: {
-    lg: "16px",
-    xl: "24px",
-  },
-  shadows: {
-    brand: "0 0 40px rgb(0 51 254 / 0.25)",
-  },
-});
-```
-
-**Signature:**
-```ts
-function createTheme(
-  mode: "light" | "dark",
-  overrides?: BrandOverrides
-): DefaultTheme
-```
-
-**`BrandOverrides` interface:**
-
-| Field | Type | Description |
+| Layer | Package | Role |
 |---|---|---|
-| `colors` | `Partial<semanticColorsLight>` | Override semantic color tokens |
-| `typography.fontFamily.normal` | `string` | Body / UI font stack |
-| `typography.fontFamily.mono` | `string` | Code / monospace stack |
-| `typography.fontFamily.display` | `string` | Display / hero font stack |
-| `radii` | `Partial<typeof defaultTheme.radii>` | Border radius overrides |
-| `shadows` | `Record<string, string>` | Named shadow additions |
+| Runtime tokens (SSOT) | `@nebutra/tokens` | `styles.css` (CSS variables) + `ThemeProvider`/`useTheme` (light/dark mode) |
+| Language swap | `@nebutra/theme` | Brand Packages + `applyLanguage()` + `skins.css`, scoped to `html[data-brand]` |
+| Component bridge | `@nebutra/ui` | `NebutraThemeProvider` — wraps Lobe UI with the same tokens |
 
-<BrandOverridesDemo />
+## Runtime tokens — `@nebutra/tokens`
 
-### Pre-built Themes
+`@nebutra/tokens` is the single source of truth for runtime design tokens. Import the generated
+stylesheet once, at the app root:
 
-Two pre-built themes are exported directly:
-
-```ts
-import { lightTheme, darkTheme } from "@nebutra/ui/theme/brand";
+```css
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/recipe.css";
 ```
 
-Both are `DefaultTheme` objects — Primer semantic tokens with no brand overrides applied.
+`styles.css` declares:
 
-### `DesignSystemProvider`
+- Brand color scales (`--nebutra-blue-*`, `--nebutra-cyan-*`)
+- 12-step functional scales (`--neutral-1..12`, `--blue-1..12`, `--cyan-1..12`)
+- Semantic variables (`--primary`, `--background`, `--border`, etc.) as **bare HSL channel triples**
+  — wrap them (`hsl(var(--border))`) when they land in a color slot, or use the semantic Tailwind
+  utility instead. See [Nebutra Tokens](/en/docs/foundations/nebutra-tokens) for why.
+- Light/dark mode via `:root` / `.dark`
+- Display-P3 wide gamut with sRGB fallback
+- Tailwind v4 `@theme` integration
 
-<Info>
-The `DesignSystemProvider` component is the integration point between the design system and React applications. It delivers the active theme via context.
-</Info>
+`styles.css` itself is **generated** — see [Nebutra Tokens](/en/docs/foundations/nebutra-tokens) for
+the editable source.
 
-```tsx
-import { DesignSystemProvider } from "@nebutra/ui";
-
-// Default mode: system preference
-<DesignSystemProvider>
-  <App />
-</DesignSystemProvider>
-
-// Force light mode
-<DesignSystemProvider defaultMode="light">
-  <App />
-</DesignSystemProvider>
-
-// Force dark mode
-<DesignSystemProvider defaultMode="dark">
-  <App />
-</DesignSystemProvider>
-```
-
-**Props:**
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `defaultMode` | `"light" \| "dark" \| "system"` | `"system"` | Initial color mode |
-| `theme` | `DefaultTheme` | `lightTheme` | Custom theme object from `createTheme()` |
-| `children` | `ReactNode` | — | Application subtree |
-
-### `useDesignSystem` Hook
-
-Access the current theme and mode toggle from any component inside `DesignSystemProvider`.
+### `ThemeProvider` / `useTheme` — light/dark mode
 
 ```tsx
-import { useDesignSystem } from "@nebutra/ui";
+import { ThemeProvider, useTheme } from "@nebutra/tokens";
 
+// App root
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+  <App />
+</ThemeProvider>;
+
+// Anywhere inside the tree
 function ThemeToggle() {
-  const { mode, setMode, theme } = useDesignSystem();
-
+  const { resolvedTheme, setTheme } = useTheme();
   return (
-    <button onClick={() => setMode(mode === "light" ? "dark" : "light")}>
-      Current: {mode}
+    <button type="button" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}>
+      Current: {resolvedTheme}
     </button>
   );
 }
 ```
 
-**Return value:**
+This is a hand-rolled replacement for `next-themes` (same prop and hook names, drop-in migration),
+not a re-export of it — `next-themes@0.4.x` renders an inline `<script>` inside a Client Component,
+which React 19 + Next.js 16 (Turbopack) now flags. The provider splits into a client `ThemeProvider`
+(runtime state, OS sync) and writes a cookie so Server Components can read the resolved theme via
+`next/headers` `cookies()` and inject the class directly into `<html>` — no inline script, no FOUC.
+
+**`ThemeProviderProps`:**
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `attribute` | `"class" \| "data-theme"` | `"class"` | DOM attribute set on `<html>` |
+| `defaultTheme` | `"light" \| "dark" \| "system"` | `"system"` | Initial preference |
+| `enableSystem` | `boolean` | `true` | Follow OS preference when `theme === "system"` |
+| `storageKey` | `string` | `"theme"` | localStorage / cookie key |
+| `children` | `ReactNode` | — | Application subtree |
+
+**`useTheme()` return value:**
 
 | Property | Type | Description |
 |---|---|---|
-| `mode` | `"light" \| "dark"` | Active color mode |
-| `setMode` | `(mode: "light" \| "dark") => void` | Imperatively switch modes |
-| `theme` | `DefaultTheme` | Full resolved theme object |
+| `theme` | `"light" \| "dark" \| "system"` | The raw user preference |
+| `resolvedTheme` | `"light" \| "dark"` | The concretely-applied theme |
+| `systemTheme` | `"light" \| "dark"` | The OS-level preference |
+| `setTheme` | `(theme) => void` | Imperatively switch the preference |
 
-<ThemeSwitcherDemo />
+Wrap the app root with `ThemeProvider` exactly once. Read and toggle mode through `useTheme()` —
+don't manage theme state independently.
 
-## Marketing Token Injection
+## Language swap — `@nebutra/theme`
 
-Marketing tokens are not part of the theme context. They are CSS custom properties injected at the page level.
+`@nebutra/theme` is a separate, optional layer: global product-chrome swap (e.g. a Create Center /
+multi-tenant SaaS letting a tenant pick a whole design language). It is **not** light/dark mode —
+that's `@nebutra/tokens` above.
 
-### `generateMarketingCSSVars()`
-
-Located in `apps/docs-hub/design-system/src/theme/marketing.ts`.
-
-```ts
-import { generateMarketingCSSVars } from "@nebutra/ui/theme/marketing";
-
-// Returns a string of CSS custom property declarations
-const cssVars = generateMarketingCSSVars();
-```
-
-Generated properties:
+> **Removed (2026-07):** 78 oklch "mood" presets under `[data-theme]` (`neon`, `gradient`,
+> `dark-dense`, `minimal`, `vibrant`, `ocean`). They dual-wrote product chrome and fought the carrier
+> model. Do not reintroduce them.
 
 ```css
-/* Marketing Spacing */
---marketing-section-sm: 64px;
---marketing-section-md: 96px;
---marketing-section-lg: 128px;
---marketing-section-xl: 160px;
---marketing-hero-min-height: 100vh;
---marketing-content-max-width: 1200px;
-
-/* Marketing Radii */
---marketing-radius-sm: 8px;
---marketing-radius-card: 16px;
---marketing-radius-card-lg: 24px;
---marketing-radius-xl: 32px;
---marketing-radius-button: 9999px;
-
-/* Marketing Transitions */
---marketing-transition-fast: 150ms ease;
---marketing-transition-default: 200ms ease;
---marketing-transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
---marketing-transition-emphasized: 400ms cubic-bezier(0.4, 0, 0.2, 1);
---marketing-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+@import "@nebutra/theme/skins.css"; /* multi-language, scoped to html[data-brand] */
 ```
-
-Inject this into the page layout of any marketing surface:
-
-```tsx
-// apps/landing/src/app/layout.tsx
-import { generateMarketingCSSVars } from "@nebutra/ui/theme/marketing";
-
-export default function Layout({ children }) {
-  return (
-    <html>
-      <head>
-        <style>{`:root { ${generateMarketingCSSVars()} }`}</style>
-      </head>
-      <body>{children}</body>
-    </html>
-  );
-}
-```
-
-### Full Marketing Token Map
 
 ```ts
-import { marketingTokens } from "@nebutra/ui/theme/marketing";
-// marketingTokens.spacing
-// marketingTokens.typography
-// marketingTokens.gradients
-// marketingTokens.effects
-// marketingTokens.radii
-// marketingTokens.transitions
-// marketingTokens.zIndex
+import { applyLanguage, clearLanguage, LANGUAGE_REGISTRY } from "@nebutra/theme";
+
+applyLanguage("vanta", { persist: true }); // built-in Brand Package
+clearLanguage(); // back to factory tokens
 ```
 
-See the [Color foundation](/en/docs/foundations/brand-colors) page for gradient and effect token values. See [Typography](/en/docs/foundations/typography) for marketing typography presets (`display`, `headline`, `subheadline`, `featureTitle`, `cardText`, `label`).
+Built-in catalog (`id` → what it proves): `factory` (default SSOT), `linear`, `gsap`, `raycast`,
+`vercel`, `vanta`, `stripe`, `notion`. Inspect with the CLI:
 
-## Z-Index Scale (Marketing)
+```bash
+nebutra theme list
+nebutra theme inspect vanta
+```
 
-| Token | Value | Layer |
-|---|---|---|
-| `marketingZIndex.background` | −1 | Decorative backgrounds |
-| `marketingZIndex.base` | 0 | Default content |
-| `marketingZIndex.elevated` | 10 | Hover-state cards |
-| `marketingZIndex.sticky` | 100 | Sticky headers |
-| `marketingZIndex.nav` | 1000 | Navigation bar |
-| `marketingZIndex.dropdown` | 1100 | Dropdowns / Popovers |
-| `marketingZIndex.modal` | 1200 | Modals / Dialogs |
-| `marketingZIndex.toast` | 1300 | Toasts / Notifications |
-| `marketingZIndex.tooltip` | 1400 | Tooltips |
+## Component bridge — `@nebutra/ui`
 
-<ZIndexDemo />
+`@nebutra/ui` ships some components (Lobe UI / Ant Design derived) that need their own theme
+context. `NebutraThemeProvider` wraps that context with the same brand tokens — it does not replace
+`ThemeProvider` from `@nebutra/tokens`.
+
+```tsx
+import { NebutraThemeProvider } from "@nebutra/ui";
+
+<NebutraThemeProvider appearance="auto" defaultAppearance="light">
+  <App />
+</NebutraThemeProvider>;
+```
+
+**`NebutraThemeProviderProps`:**
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `appearance` | `"dark" \| "light" \| "auto"` | `"auto"` | Force a mode, or follow `defaultAppearance` |
+| `defaultAppearance` | `"dark" \| "light"` | `"light"` | Fallback when `appearance === "auto"` |
+| `children` | `ReactNode` | — | Subtree |
 
 ## Do / Don't
 
-**Do** wrap your application root with `DesignSystemProvider` exactly once, at the top level.
+**Do** import `@nebutra/tokens/styles.css` once, at the app root, before any component styles.
 
-**Do** use `useDesignSystem()` to read the active mode and toggle it — do not manage theme state independently.
+**Do** use `useTheme()` from `@nebutra/tokens` to read and toggle light/dark mode.
 
-**Do** call `generateMarketingCSSVars()` only in marketing page layouts, not in the application shell.
+**Do** wrap bare-HSL-channel semantic tokens (`--background`, `--border`, …) in `hsl(...)` whenever
+they land in a color slot — an unwrapped `var(--border)` there invalidates the whole declaration and
+the browser silently discards it.
 
-**Don't** import `marketingTokens` inside shared UI components — they belong exclusively in marketing surface code.
+**Don't** hand-edit `packages/design/tokens/styles.css` — it's generated. Edit the DTCG source under
+`packages/design/design-tokens/tokens/` instead.
 
-**Don't** override semantic tokens with hardcoded hex values. Use `createTheme()` with `BrandOverrides` instead.
+**Don't** reach for `@nebutra/theme`'s `applyLanguage()` for ordinary light/dark mode — that's a
+whole-product-chrome swap, not a mode toggle.
 
-**Don't** nest multiple `DesignSystemProvider` instances. A single provider at the root governs the entire tree.
+**Don't** nest multiple `ThemeProvider` instances. A single provider at the root governs the entire
+tree.

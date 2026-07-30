@@ -5,7 +5,7 @@ description: WCAG 2.1 AA primitives, ARIA patterns, focus management, and contra
 
 ## Overview
 
-Accessibility primitives live in `apps/docs-hub/design-system/src/primitives/accessibility.ts`. The file exports style objects, ARIA attribute helpers, and utility functions that implement WCAG 2.1 AA requirements. These are building blocks — components in the design system use them internally, and application code can import them directly when building custom patterns.
+Accessibility primitives live in `packages/design/ui/src/primitives/accessibility.ts`, re-exported from `@nebutra/ui/primitives`. The file exports style objects, ARIA attribute helpers, and utility functions that implement WCAG 2.1 AA requirements. These are building blocks — components in the design system use them internally, and application code can import them directly when building custom patterns.
 
 Exported members:
 
@@ -34,7 +34,7 @@ Removes an element from the visual layout while keeping it in the accessibility 
 <VisuallyHiddenDemo />
 
 ```ts
-import { visuallyHidden } from "@nebutra/ui/primitives/accessibility";
+import { visuallyHidden } from "@nebutra/ui/primitives";
 
 // Style object — spread into inline styles or CSS-in-JS
 const style = visuallyHidden;
@@ -62,7 +62,7 @@ Standard keyboard focus ring that meets WCAG 2.4.7 (Focus Visible).
 <FocusRingDemo />
 
 ```ts
-import { focusRing } from "@nebutra/ui/primitives/accessibility";
+import { focusRing } from "@nebutra/ui/primitives";
 
 // focusRing resolves to:
 // {
@@ -85,7 +85,7 @@ A skip navigation link visible only on keyboard focus. Required for WCAG 2.4.1 (
 <SkipLinkStyleDemo />
 
 ```tsx
-import { skipLinkStyle } from "@nebutra/ui/primitives/accessibility";
+import { skipLinkStyle } from "@nebutra/ui/primitives";
 
 // In your root layout
 <a href="#main-content" style={skipLinkStyle}>
@@ -104,7 +104,7 @@ Pre-composed ARIA attribute objects for common UI states.
 ### `ariaPatterns.loading`
 
 ```tsx
-import { ariaPatterns } from "@nebutra/ui/primitives/accessibility";
+import { ariaPatterns } from "@nebutra/ui/primitives";
 
 <div {...ariaPatterns.loading}>
   Loading content...
@@ -154,7 +154,7 @@ WCAG 2.5.5 (Target Size) requires a minimum 44×44px interactive area.
 <MinTouchTargetDemo />
 
 ```ts
-import { minTouchTarget } from "@nebutra/ui/primitives/accessibility";
+import { minTouchTarget } from "@nebutra/ui/primitives";
 
 // minTouchTarget = { minWidth: 44, minHeight: 44 }
 
@@ -172,7 +172,7 @@ Runtime check for the OS-level reduce-motion preference.
 <PrefersReducedMotionDemo />
 
 ```ts
-import { prefersReducedMotion } from "@nebutra/ui/primitives/accessibility";
+import { prefersReducedMotion } from "@nebutra/ui/primitives";
 
 const duration = prefersReducedMotion() ? 0 : 300;
 
@@ -198,7 +198,7 @@ WCAG contrast ratio thresholds for programmatic contrast checking.
 | `contrastRequirements.largeTextAAA` | 4.5 | AAA | Enhanced large text |
 
 ```ts
-import { contrastRequirements } from "@nebutra/ui/primitives/accessibility";
+import { contrastRequirements } from "@nebutra/ui/primitives";
 
 function isAccessible(contrastRatio: number, isLargeText: boolean): boolean {
   const required = isLargeText
@@ -237,7 +237,7 @@ Wrap all animations in a reduced-motion check:
 }
 ```
 
-The marketing `marketingTransitions` values should be replaced with instant transitions when `prefersReducedMotion()` returns `true`.
+Any hand-rolled transition duration constants should be replaced with instant transitions when `prefersReducedMotion()` returns `true`.
 
 ## Do / Don't
 

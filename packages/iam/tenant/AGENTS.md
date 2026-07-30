@@ -50,6 +50,9 @@ boundary, not the place for app-specific organization UX or billing policy.
 
 - Package contract changes:
   `pnpm --filter @nebutra/tenant typecheck`
-- For resolver or isolation changes, verify the narrowest affected downstream
-  consumer because the package currently has no package-local test suite.
+- Run the package-local suite before changing resolver or isolation behavior:
+  `pnpm --filter @nebutra/tenant test` (`vitest run --config vitest.config.ts`).
+  It covers tenant resolvers (including the auth-session resolver), RLS
+  isolation, and the AsyncLocalStorage tenant context. Also verify the
+  narrowest affected downstream consumer.
 

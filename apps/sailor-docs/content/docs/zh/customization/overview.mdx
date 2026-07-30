@@ -9,7 +9,7 @@ Nebutra-Sailor 被设计为完全可白标化。每一个视觉和结构元素�
 
 <CardGroup cols={2}>
   <Card title="品牌与主题" icon="palette" href="/zh/customization/theming">
-    更改品牌颜色，在六种多主题预设之间切换，配置明暗模式，以及创建完全自定义的 oklch 主题。
+    更改品牌颜色，通过 `data-brand` 在内置 Brand Package 之间切换，配置明暗模式，以及创建完全自定义的 oklch 主题。
   </Card>
   <Card title="仪表板页面" icon="layout-dashboard" href="/zh/customization/dashboard">
     添加新的仪表板板块，自定义侧边栏导航，以及按套餐限制功能访问。
@@ -35,7 +35,9 @@ apps/web          ← 仪表板页面组合组件
 apps/landing ← 营销网站组合组件
 ```
 
-由于 `@nebutra/ui` 中的每个颜色和间距值都是 CSS 变量引用（而非硬编码的十六进制值），更新 `packages/design/tokens/styles.css`——或运行调色板脚本——就能级联影响整个产品。
+由于 `@nebutra/ui` 中的每个颜色和间距值都是 CSS 变量引用（而非硬编码的十六进制值），编辑位于 `packages/design/design-tokens/tokens/*.json` 的 DTCG token 源——或运行调色板脚本——就能级联影响整个产品。
+
+token 构建会据此重新生成（generated）`packages/design/tokens/styles.css`；该文件本身不接受手工改动。
 
 ## 快速上手（5 分钟以内）
 
@@ -46,13 +48,20 @@ apps/landing ← 营销网站组合组件
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 ```
 
-该脚本会重写 `packages/design/tokens/styles.css` 及所有下游 token 别名。重启开发服务器即可看到更改效果。
+该脚本会将 `brand-override.css` 打印到标准输出——它本身不会写入任何磁盘文件。将输出重定向到一个文件并在 `@nebutra/tokens/styles.css` 之后 `@import` 它，或者将数值并入 `packages/design/design-tokens/tokens/*.json` 中的 DTCG token 源后重新构建。
 
-### 切换活跃主题预设
+### 切换活跃的 Brand Package
 
-```tsx
-// apps/web/src/app/layout.tsx
-<html data-theme="nebutra">   {/* nebutra | dark-dense | minimal | vibrant | ocean */}
+```ts
+import { applyLanguage, clearLanguage } from "@nebutra/theme";
+
+applyLanguage("vanta", { persist: true }); // LANGUAGE_REGISTRY 中任意内置 id
+clearLanguage(); // 恢复出厂默认
+```
+
+```bash
+nebutra theme list
+nebutra theme use vanta
 ```
 
 ### 切换深色模式
@@ -68,7 +77,7 @@ setTheme("dark"); // "light" | "dark" | "system"
 
 | 目标 | 从哪里开始 |
 |------|-----------|
-| 新建多主题预设 | `packages/design/theme/themes.css` |
+| 新建 Brand Package | `packages/design/tokens/brands/<id>/brand.json` + 在 `packages/design/theme/src/languages.meta.json` 中添加条目，然后运行 `node packages/design/theme/scripts/sync-languages.mjs`（会重新生成 `languages.json`——不要手动编辑它） |
 | 新建 UI 原语组件 | `packages/design/ui/src/components/` + Storybook 故事 |
 | 新建仪表板板块 | `apps/web/src/app/(dashboard)/[section]/page.tsx` |
 | 修改引导步骤 | `apps/web/src/app/(onboarding)/` |
@@ -76,7 +85,7 @@ setTheme("dark"); // "light" | "dark" | "system"
 
 ## Token 架构一览
 
-所有运行时 CSS 变量均定义在单一文件中：`packages/design/tokens/styles.css`。这是**唯一真实来源**——任何地方都不要硬编码十六进制值。
+所有运行时 CSS 变量都被编译进单一文件 `packages/design/tokens/styles.css`——但该文件是 generated 产物(其文件头本身也这么写)，每次 token 构建都会被覆盖。**唯一真实来源**是位于 `packages/design/design-tokens/tokens/*.json` 的 DTCG token JSON；在那里改动，然后运行 Style Dictionary 构建，让 `sync-styles.mjs` 重新生成 `styles.css`。任何地方都不要硬编码十六进制值。
 
 ```css
 /* packages/design/tokens/styles.css — 摘录 */
@@ -98,7 +107,7 @@ setTheme("dark"); // "light" | "dark" | "system"
 
 <CardGroup cols={2}>
   <Card title="主题" icon="paintbrush" href="/zh/customization/theming">
-    CSS 变量、明暗模式与多主题预设
+    CSS 变量、明暗模式与 Brand Package
   </Card>
   <Card title="仪表板" icon="layout-panel-left" href="/zh/customization/dashboard">
     添加页面、更新导航，以及按套餐限制访问

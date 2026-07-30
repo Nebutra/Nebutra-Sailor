@@ -61,7 +61,7 @@ app.delete("/api/projects/:id", requirePermission("project:delete"), handler);
 
 ```typescript
 "use server";
-import { requirePermission } from "@nebutra/permissions/next";
+import { requirePermission } from "@nebutra/permissions";
 
 export async function deleteProject(projectId: string) {
   await requirePermission("project:delete"); // throws if unauthorized

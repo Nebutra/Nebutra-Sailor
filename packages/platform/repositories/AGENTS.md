@@ -47,8 +47,12 @@ logic, or tenant-policy decisions.
 
 ## Validation
 
-- This package currently has no package-local validation script.
-- Repository contract changes should be validated in the narrowest affected
-  consumer and, when model semantics change, alongside the relevant
-  `@nebutra/db` verification.
+- Repository contract or query changes:
+  `pnpm --filter @nebutra/repositories typecheck`
+- Run the package-local suite before changing repository behavior:
+  `pnpm --filter @nebutra/repositories test` (`vitest run`). It covers the
+  organization repository against a mocked Prisma client
+  (`src/__tests__/organization.repository.test.ts`). Also validate in the
+  narrowest affected consumer and, when model semantics change, alongside the
+  relevant `@nebutra/db` verification.
 
