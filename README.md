@@ -493,7 +493,7 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 <table>
 <tr><th>Capability</th><th>Package</th><th>Providers (auto-detected)</th></tr>
 <tr><td>Authentication</td><td><code>@nebutra/auth</code></td><td>Clerk · Better Auth · Auth.js</td></tr>
-<tr><td>Identity Provider</td><td><code>@nebutra/oauth-server</code></td><td>OIDC (oidc-provider) · Redis-backed sessions</td></tr>
+<tr><td>Identity Provider</td><td><code>@nebutra/oauth</code></td><td>OIDC (oidc-provider) · Redis-backed sessions</td></tr>
 <tr><td>Permissions</td><td><code>@nebutra/permissions</code></td><td>CASL — RBAC + ABAC, Hono middleware, React <code>&lt;Can /&gt;</code></td></tr>
 <tr><td>Multi-tenancy</td><td><code>@nebutra/tenant</code></td><td>AsyncLocalStorage context · Prisma RLS bridge</td></tr>
 <tr><td>Captcha</td><td><code>@nebutra/captcha</code></td><td>Cloudflare Turnstile</td></tr>
@@ -538,7 +538,7 @@ Nebutra-Sailor/
 │   ├── ai/                # 41 pkgs — e.g. agents, agent-runtime, ai-providers, startup-os, knowledge-rag, mcp
 │   ├── commerce/          # 9 pkgs — e.g. billing, metering, contracts, license, access-gate, waitlist
 │   ├── design/            # 10 pkgs — e.g. ui, tokens, design-tokens, brand, theme, icons, fonts
-│   ├── iam/               # 8 pkgs — auth, audit, vault, oauth-server, permissions, tenant, identity, captcha
+│   ├── iam/               # 8 pkgs — auth, audit, vault, oauth, permissions, tenant, identity, captcha
 │   ├── integrations/      # 17 pkgs — e.g. queue, search, email, notifications, storage, webhooks, cache
 │   ├── ops/               # 6 pkgs — cli, create-sailor, preset, sanity, supabase, china-compliance
 │   └── platform/          # 21 pkgs — e.g. db, logger, repositories, rate-limit, feature-flags, i18n, status

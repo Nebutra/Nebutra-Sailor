@@ -16,7 +16,7 @@ COPY apps/idp/package.json ./apps/idp/
 # Internal workspace packages that @nebutra/idp depends on.
 # Derived from the "dependencies" field in apps/idp/package.json
 # and transitive workspace deps.
-COPY packages/iam/oauth-server/package.json   ./packages/iam/oauth-server/
+COPY packages/iam/oauth/package.json   ./packages/iam/oauth/
 COPY packages/commerce/contracts/package.json ./packages/commerce/contracts/
 COPY packages/platform/db/package.json        ./packages/platform/db/
 COPY packages/design/tokens/package.json      ./packages/design/tokens/

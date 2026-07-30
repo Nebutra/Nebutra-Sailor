@@ -1,5 +1,5 @@
 /**
- * @nebutra/oauth-server — Prisma Adapter for oidc-provider
+ * @nebutra/oauth — Prisma Adapter for oidc-provider
  *
  * Implements the `oidc-provider` Adapter interface using Prisma + PostgreSQL
  * for persistent data (clients, grants, tokens) and Redis for ephemeral
@@ -91,7 +91,7 @@ async function recoverClientSecret(
     return await recover(envelope);
   } catch (error) {
     console.error(
-      `[@nebutra/oauth-server] Could not recover the client secret for ${clientId}: ` +
+      `[@nebutra/oauth] Could not recover the client secret for ${clientId}: ` +
         `${error instanceof Error ? error.message : String(error)}. Refusing to serve the client.`,
     );
     return null;
@@ -144,7 +144,7 @@ class PrismaClientAdapter implements Adapter {
       );
       if (clientSecret === null) {
         console.warn(
-          `[@nebutra/oauth-server] OAuth client ${client.clientId} uses ${client.tokenEndpointAuthMethod} ` +
+          `[@nebutra/oauth] OAuth client ${client.clientId} uses ${client.tokenEndpointAuthMethod} ` +
             "but has no usable client_secret_envelope. Refusing to expose or infer client_secret. " +
             "Register the secret with scripts/register-oauth-client-secret.ts.",
         );

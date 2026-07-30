@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
 
   // Transpile workspace packages
   transpilePackages: [
-    "@nebutra/oauth-server",
+    "@nebutra/oauth",
     "@nebutra/contracts",
     "@nebutra/db",
     "@nebutra/tokens",

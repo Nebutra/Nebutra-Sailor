@@ -1,4 +1,4 @@
-# @nebutra/oauth-server
+# @nebutra/oauth
 
 > OIDC Identity Provider engine for the Nebutra platform, enabling "Sign in with Nebutra" for third-party applications.
 
@@ -6,13 +6,13 @@
 
 ```bash
 # Internal monorepo dependency
-pnpm add @nebutra/oauth-server@workspace:*
+pnpm add @nebutra/oauth@workspace:*
 ```
 
 ## Usage
 
 ```typescript
-import { createNebutraOIDCProvider, SCOPE_DESCRIPTIONS } from "@nebutra/oauth-server";
+import { createNebutraOIDCProvider, SCOPE_DESCRIPTIONS } from "@nebutra/oauth";
 
 const provider = createNebutraOIDCProvider({
   issuer: "https://sso.nebutra.com",

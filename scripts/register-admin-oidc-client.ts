@@ -8,7 +8,7 @@
  *
  * The instinct for a server-side Next.js app is a confidential client with
  * client_secret_basic. That does not work here, and the reason is deliberate
- * rather than an oversight: packages/iam/oauth-server/src/adapters/prisma-adapter.ts
+ * rather than an oversight: packages/iam/oauth/src/adapters/prisma-adapter.ts
  * stores only `clientSecretHash` and refuses to serve any client whose
  * token_endpoint_auth_method is client_secret_basic / _post / _jwt — it returns
  * undefined and logs, rather than exposing or reconstructing a secret it does

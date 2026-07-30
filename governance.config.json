@@ -142,9 +142,9 @@
       "packages/iam/identity/src/adapters/nebutra.ts",
       "packages/iam/identity/src/index.ts",
       "packages/iam/identity/src/registry.ts",
-      "packages/iam/oauth-server/src/claims.ts",
-      "packages/iam/oauth-server/src/index.ts",
-      "packages/iam/oauth-server/src/provider.ts",
+      "packages/iam/oauth/src/claims.ts",
+      "packages/iam/oauth/src/index.ts",
+      "packages/iam/oauth/src/provider.ts",
       "packages/iam/tenant/src/resolvers.ts",
       "packages/integrations/admin-tooling/src/index.ts",
       "packages/integrations/email/src/index.ts",
@@ -212,6 +212,12 @@
       "packages/platform/prepaid-wallet/src/usage-envelope.ts",
       "packages/platform/provider-factory/src/index.ts",
       "packages/platform/router-supply/src/resolve.ts"
+    ]
+  },
+  "brandHex": {
+    "allowlist": [
+      "apps/forge/src/components/sota-runners.tsx",
+      "packages/design/ui/src/marketing/cosmic-spectrum.tsx"
     ]
   },
   "repositorySeam": {

@@ -482,7 +482,7 @@ Sailor は **プロバイダー非依存** です。以下の各プラットフ�
 <table>
 <tr><th>機能</th><th>パッケージ</th><th>プロバイダー（自動検出）</th></tr>
 <tr><td>認証</td><td><code>@nebutra/auth</code></td><td>Clerk · Better Auth · Auth.js</td></tr>
-<tr><td>アイデンティティプロバイダー</td><td><code>@nebutra/oauth-server</code></td><td>OIDC (oidc-provider) · Redis セッション</td></tr>
+<tr><td>アイデンティティプロバイダー</td><td><code>@nebutra/oauth</code></td><td>OIDC (oidc-provider) · Redis セッション</td></tr>
 <tr><td>権限</td><td><code>@nebutra/permissions</code></td><td>CASL — RBAC + ABAC、Hono ミドルウェア、React <code>&lt;Can /&gt;</code></td></tr>
 <tr><td>マルチテナント</td><td><code>@nebutra/tenant</code></td><td>AsyncLocalStorage コンテキスト · Prisma RLS ブリッジ</td></tr>
 <tr><td>キャプチャ</td><td><code>@nebutra/captcha</code></td><td>Cloudflare Turnstile</td></tr>

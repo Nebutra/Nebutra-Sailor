@@ -1,12 +1,12 @@
 /**
- * @nebutra/oauth-server
+ * @nebutra/oauth
  *
  * Core OIDC Identity Provider engine for the Nebutra platform.
  * Enables third-party applications to implement "Sign in with Nebutra".
  *
  * @example
  * ```ts
- * import { createNebutraOIDCProvider, SCOPE_DESCRIPTIONS } from "@nebutra/oauth-server";
+ * import { createNebutraOIDCProvider, SCOPE_DESCRIPTIONS } from "@nebutra/oauth";
  *
  * const provider = createNebutraOIDCProvider({
  *   issuer: "https://sso.nebutra.com",

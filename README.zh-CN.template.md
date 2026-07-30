@@ -500,7 +500,7 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
 <table>
 <tr><th>能力</th><th>包</th><th>支持的 Provider（自动检测）</th></tr>
 <tr><td>身份认证</td><td><code>@nebutra/auth</code></td><td>Clerk · Better Auth · Auth.js</td></tr>
-<tr><td>身份提供方</td><td><code>@nebutra/oauth-server</code></td><td>OIDC (oidc-provider) · Redis 会话</td></tr>
+<tr><td>身份提供方</td><td><code>@nebutra/oauth</code></td><td>OIDC (oidc-provider) · Redis 会话</td></tr>
 <tr><td>权限</td><td><code>@nebutra/permissions</code></td><td>CASL — RBAC + ABAC，Hono 中间件，React <code>&lt;Can /&gt;</code></td></tr>
 <tr><td>多租户</td><td><code>@nebutra/tenant</code></td><td>AsyncLocalStorage 上下文 · Prisma RLS 桥接</td></tr>
 <tr><td>验证码</td><td><code>@nebutra/captcha</code></td><td>Cloudflare Turnstile</td></tr>
@@ -544,7 +544,7 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
 │   ├── ai/                # 3 个 — agents、ai-providers、mcp
 │   ├── commerce/          # 7 个 — billing、contracts、marketing、metering、license、legal、waitlist
 │   ├── design/            # 7 个 — ui、tokens、brand、theme、icons、design-tokens、design-sync
-│   ├── iam/               # 8 个 — auth、audit、vault、oauth-server、permissions、tenant、identity、captcha
+│   ├── iam/               # 8 个 — auth、audit、vault、oauth、permissions、tenant、identity、captcha
 │   ├── integrations/      # 11 个 — queue、search、email、notifications、storage、webhooks、cache、sms、uploads、event-bus、saga
 │   ├── ops/               # 6 个 — cli、create-sailor、preset、sanity、supabase、china-compliance
 │   └── platform/          # 13 个 — db、logger、rate-limit、feature-flags、gateway-core、errors、config、health、status、alerting、analytics、repositories、i18n

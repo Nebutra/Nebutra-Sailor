@@ -1,10 +1,10 @@
-# AGENTS.md — packages/oauth-server
+# AGENTS.md — packages/oauth
 
 Execution contract for Nebutra's OIDC provider engine.
 
 ## Scope
 
-Applies to everything under `packages/iam/oauth-server/`.
+Applies to everything under `packages/iam/oauth/`.
 
 This package owns the reusable OAuth 2.0 / OpenID Connect server boundary for
 Nebutra. It defines provider construction, supported scopes and claims, and the
@@ -50,7 +50,7 @@ source of truth here rather than patching downstream apps.
 ## Validation
 
 - Package contract changes:
-  `pnpm --filter @nebutra/oauth-server typecheck`
+  `pnpm --filter @nebutra/oauth typecheck`
 - Runtime adapter or provider changes:
-  `pnpm --filter @nebutra/oauth-server test`
+  `pnpm --filter @nebutra/oauth test`
 

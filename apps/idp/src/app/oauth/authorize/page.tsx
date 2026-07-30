@@ -5,7 +5,7 @@
  * Design: token surfaces aligned with auth-center / Agent OS (no raw slate/amber).
  */
 
-import { SCOPE_DESCRIPTIONS } from "@nebutra/oauth-server";
+import { SCOPE_DESCRIPTIONS } from "@nebutra/oauth";
 import { ConsentForm } from "./consent-form";
 
 export const dynamic = "force-dynamic";

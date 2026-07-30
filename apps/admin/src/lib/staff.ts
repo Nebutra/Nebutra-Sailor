@@ -53,7 +53,7 @@ export interface StaffContext {
  * forever while looking entirely correct.
  *
  * The bridge is the account link. `AuthAccount.accountId` holds the subject the
- * issuer sent, and packages/iam/oauth-server/src/provider.ts resolves accounts
+ * issuer sent, and packages/iam/oauth/src/provider.ts resolves accounts
  * out of `prisma.user` and claims `sub: user.id` — so that subject *is* the
  * platform user id. Unique on (providerId, accountId), so one row, no ordering
  * dependence.

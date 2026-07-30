@@ -7,7 +7,7 @@
  */
 
 import { getSystemDb } from "@nebutra/db";
-import { createNebutraOIDCProvider } from "@nebutra/oauth-server";
+import { createNebutraOIDCProvider } from "@nebutra/oauth";
 import Redis from "ioredis";
 import { getIdpRuntimeConfig } from "./oidc-config";
 

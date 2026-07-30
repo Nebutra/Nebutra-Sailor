@@ -14,7 +14,7 @@ It owns:
 - app-local styling and landing surface for discovery and identity endpoints
 
 It does not own the canonical OAuth provider implementation in
-`@nebutra/oauth-server`, database contracts in `@nebutra/db`, or shared auth
+`@nebutra/oauth`, database contracts in `@nebutra/db`, or shared auth
 schemas from workspace packages.
 
 ## Source Of Truth
@@ -30,7 +30,7 @@ Do not treat `.next/` output as implementation truth.
 
 ## Contract Boundaries
 
-- Keep protocol semantics and shared provider behavior in `@nebutra/oauth-server`
+- Keep protocol semantics and shared provider behavior in `@nebutra/oauth`
   unless the change is explicitly app-local.
 - Keep database access and persistence rules aligned with `@nebutra/db`; do not
   recreate auth storage contracts inside this app.
@@ -41,7 +41,7 @@ Do not treat `.next/` output as implementation truth.
 
 ## Out Of Scope (Complexity Cap)
 
-This app and `@nebutra/oauth-server` exist to serve the **internal needs** of
+This app and `@nebutra/oauth` exist to serve the **internal needs** of
 `apps/sleptons`, `apps/web`, and `apps/landing` — not to compete with
 Auth0 / Ory Hydra / Authentik. Building an OIDC-Certified server is an
 explicit non-goal: it's a 6+ engineer-year effort with no product return at

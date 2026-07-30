@@ -1,5 +1,5 @@
 /**
- * D4 contract test — `@nebutra/oauth-server` ↔ `@nebutra/identity`.
+ * D4 contract test — `@nebutra/oauth` ↔ `@nebutra/identity`.
  *
  * Validates the boundary defined in ADR `2026-05-10-auth-provider-abstraction-wave2.md` D4:
  * any claims this server emits MUST be parseable by `NebutraIdentityAdapter`
@@ -8,7 +8,7 @@
  * contract — break it and CI fails.
  *
  * If this test starts failing, the wire format between the IdP and resource
- * servers has diverged: either oauth-server is emitting a claim shape that
+ * servers has diverged: either oauth is emitting a claim shape that
  * identity can't read, OR identity has changed its expected shape in a way
  * that breaks compatibility with what we already issue. Either one is a
  * downstream auth break.
@@ -18,7 +18,7 @@ import { NebutraIdentityAdapter } from "@nebutra/identity";
 import { describe, expect, it } from "vitest";
 import { NEBUTRA_CLAIMS, SUPPORTED_SCOPES } from "../claims";
 
-describe("D4 contract: oauth-server claims → identity adapter", () => {
+describe("D4 contract: oauth claims → identity adapter", () => {
   const adapter = new NebutraIdentityAdapter();
 
   it("round-trips a fully-populated organization:read token into a valid CanonicalIdentity", () => {
@@ -101,15 +101,15 @@ describe("D4 contract: oauth-server claims → identity adapter", () => {
   });
 
   describe("known gaps (documented, not fixed by this test)", () => {
-    it("identity adapter does NOT propagate organization_name or organization_slug — oauth-server over-emits or identity under-reads", () => {
-      // ADR D4 follow-up: oauth-server's NEBUTRA_CLAIMS["organization:read"]
+    it("identity adapter does NOT propagate organization_name or organization_slug — oauth over-emits or identity under-reads", () => {
+      // ADR D4 follow-up: oauth's NEBUTRA_CLAIMS["organization:read"]
       // includes `nebutra:organization_name` and `nebutra:organization_slug`,
       // but NebutraIdentityAdapter currently drops them. Two acceptable resolutions:
       //
       //   (a) extend NebutraIdentityAdapter (and CanonicalIdentity) to carry
       //       organizationName / organizationSlug — useful for UIs and avoids
       //       a round-trip to fetch them.
-      //   (b) trim oauth-server's emitted claims to only what identity reads —
+      //   (b) trim oauth's emitted claims to only what identity reads —
       //       smaller tokens.
       //
       // This test asserts the CURRENT gap so any change to either side wakes us up.

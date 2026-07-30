@@ -1,11 +1,11 @@
 /**
- * @nebutra/oauth-server — OIDC Provider Factory
+ * @nebutra/oauth — OIDC Provider Factory
  *
  * Creates a fully configured oidc-provider instance backed by
  * Prisma (clients) + Redis (ephemeral tokens/sessions).
  *
  * Usage:
- *   import { createNebutraOIDCProvider } from "@nebutra/oauth-server";
+ *   import { createNebutraOIDCProvider } from "@nebutra/oauth";
  *   const provider = createNebutraOIDCProvider({ prisma, redis, issuer, ... });
  *   app.use("/oidc", provider.callback());
  */
@@ -63,7 +63,7 @@ export function resolveCookieKeys(cookieKeys: string[] | undefined): string[] {
           ? "known-weak/default cookie signing keys were provided"
           : `cookie signing keys shorter than ${MIN_PRODUCTION_COOKIE_KEY_LENGTH} characters were provided`;
     throw new Error(
-      `[@nebutra/oauth-server] Refusing to start the OIDC provider: ${reason}. ` +
+      `[@nebutra/oauth] Refusing to start the OIDC provider: ${reason}. ` +
         "Set strong, secret cookie signing keys via the `cookieKeys` option " +
         "(e.g. from the OIDC_COOKIE_KEYS env var, two or more high-entropy values). " +
         "These keys sign session/interaction cookies — weak values let attackers forge them.",
@@ -76,7 +76,7 @@ export function resolveCookieKeys(cookieKeys: string[] | undefined): string[] {
     // secrets. These rotate on every process start (sessions won't persist
     // across restarts in dev — acceptable, and a signal to set real keys).
     console.warn(
-      "[@nebutra/oauth-server] No strong cookie signing keys provided; " +
+      "[@nebutra/oauth] No strong cookie signing keys provided; " +
         "using ephemeral dev-only random keys. Set `cookieKeys` (OIDC_COOKIE_KEYS) " +
         "for stable sessions and before deploying to production.",
     );
