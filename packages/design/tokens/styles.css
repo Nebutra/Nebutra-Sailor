@@ -166,30 +166,32 @@
   --neutral-10: #475569; /** solid fill hover */
   --neutral-11: #334155; /** secondary text */
   --neutral-12: #0f172a; /** primary text */
-  --blue-1: #f0f4ff;
-  --blue-2: #dbe4ff;
-  --blue-3: #bac8ff;
-  --blue-4: #91a7ff;
-  --blue-5: #5c7cfa;
-  --blue-6: #476efb; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25. */
-  --blue-7: #325efd; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
-  --blue-8: #1b4bfd; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
-  --blue-9: #0033fe; /** solid fill — main brand */
-  --blue-10: #002ad4;
-  --blue-11: #0021ab;
-  --blue-12: #000f59;
-  --cyan-1: #e6fff8;
-  --cyan-2: #b3ffec;
-  --cyan-3: #80ffe0;
-  --cyan-4: #4dfcd4;
-  --cyan-5: #1af7c8;
-  --cyan-6: #16ebbf; /** subtle border — DERIVED: bright-scale fallback (|L9−L5| = 0.017 < 0.06), so the anchor is step 10, not step 9. OKLab lerp step5 → step10 at t=0.25. */
-  --cyan-7: #12e0b5; /** default border — DERIVED: OKLab lerp step5 → step10 at t=0.50 (bright-scale fallback). */
-  --cyan-8: #0ed4ac; /** hovered border — DERIVED: OKLab lerp step5 → step10 at t=0.75 (bright-scale fallback). */
-  --cyan-9: #0bf1c3;
-  --cyan-10: #09c9a3;
-  --cyan-11: #07a183;
-  --cyan-12: #035143;
+  --blue-1: #fafcfe; /** app tint — L* 99.01, C 0.003, hue 264. Radix blue-1 sits at L* 99.31 C 0.003. */
+  --blue-2: #f2f6fd; /** subtle background — L* 97.21, C 0.010. */
+  --blue-3: #e7eefc; /** component background default — L* 94.79, C 0.020. */
+  --blue-4: #d8e4fb; /** component background hover — L* 91.69, C 0.034. */
+  --blue-5: #c6d7fa; /** component background active — L* 87.77, C 0.052. Anchor for the derived border tier. */
+  --blue-6: #9fbcf9; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 79.61, C 0.093. */
+  --blue-7: #79a1f7; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 71.63, C 0.134. */
+  --blue-8: #5384f3; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 63.47, C 0.175. */
+  --blue-9: #2e65ee; /** solid fill — L* 55.50, C 0.215, hue 264.0. White label 4.99:1, inside the 4.7-5.4 band comparable products ship. Same value as shadcn --primary so the deep solid fill has one source, not two. The VI hex #0033FE (C 0.290, L* 48.4) stays the identity token --brand-primary and is deliberately NOT pinned into this ramp slot: pinning it left steps 6-9 only 3.5 L* apart with chroma climbing to 0.290. */
+  --blue-10: #2253d4; /** solid fill hover — L* 49.52, C 0.205. White label 6.45:1. */
+  --blue-11: #1740ad; /** secondary text — L* 42.04, C 0.180. 8.60:1 on step 1. */
+  --blue-12: #031654; /** primary text — L* 23.91, C 0.115. 16.38:1 on step 1. */
+  --blue-contrast: #ffffff; /** Label ink for the solid fill tier. Absolute value, identical in both modes: a deep fill always takes white, never the scale's own step 12, which is light in dark mode. 4.99:1 on step 9, 6.45:1 on step 10. */
+  --cyan-1: #f9fdfb; /** app tint — L* 99.05, C 0.005, hue 172. */
+  --cyan-2: #effbf7; /** subtle background — L* 97.81, C 0.014. */
+  --cyan-3: #daf9ee; /** component background default — L* 95.68, C 0.035. */
+  --cyan-4: #c3f6e4; /** component background hover — L* 93.29, C 0.058. */
+  --cyan-5: #a3f2d8; /** component background active — L* 90.27, C 0.086. Anchor for the derived border tier. */
+  --cyan-6: #8eefd1; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 88.38, C 0.102. */
+  --cyan-7: #77ecc9; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 86.50, C 0.119. */
+  --cyan-8: #5be8c2; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 84.42, C 0.134. */
+  --cyan-9: #0bf1c3; /** solid fill — bright scale, so the fill is LIGHT and takes dark ink: L* 85.41, C 0.164, hue 172.1. Ink 10.35:1 against --cyan-contrast. Step 9 legitimately sits above step 8 on a bright scale, exactly as Radix mint does (8 at L* 72.2, 9 at L* 87.0). */
+  --cyan-10: #33e5bb; /** solid fill hover — L* 82.61, C 0.150. 2.80 L* below step 9, matching Radix mint's own 2.95 L* step9-to-step10 drop, so hovering the bright fill deepens it slightly instead of collapsing past its own border tier. The previous value was 10.87 L* below step 9 and landed DARKER than step 8. Ink 9.40:1. */
+  --cyan-11: #027a61; /** secondary text — L* 51.64, C 0.100. 5.17:1 on step 1. */
+  --cyan-12: #004133; /** primary text — L* 33.45, C 0.065. 11.35:1 on step 1. */
+  --cyan-contrast: #0d2b25; /** Label ink for the bright fill tier. Absolute near-black, identical in both modes, carrying a trace of the scale hue. A bright fill needs an explicit dark ink; comparing white against the scale's own step 12 picks white in dark mode, where step 12 is light, and measures 1.52:1. 10.35:1 on step 9, 9.40:1 on step 10. */
   --background: 0 0% 100%; /** HSL channel triple — consume via hsl(var(--background)) */
   --foreground: 222 47% 11%;
   --card: 0 0% 100%;
@@ -443,8 +445,8 @@
     sans-serif;
   --font-mono:
     var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-  --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
-  --brand-accent: #1af7c8; /** Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400). */
+  --brand-primary: #5c7cfa; /** Dark-mode brand primary — the identity blue lifted to nebutra-blue-400 so it stays visible on dark surfaces. This is the identity alias, not the functional fill: the dark solid fill is --blue-9 (#396ae2, white label 4.85:1). The two are deliberately separate now that the VI hex is no longer pinned into ramp slot 9. */
+  --brand-accent: #1af7c8; /** Dark-mode brand accent — nebutra-cyan-400 (L* 87.1). The functional bright fill is --cyan-9 (#0bf1c3, L* 85.41), the same hex in both modes; dark ink for it is --cyan-contrast at 10.35:1. */
   --brand-tertiary: #8b5cf6;
   --brand-gradient-start: hsl(
     var(--primary)
@@ -495,30 +497,32 @@
   --neutral-10: #cbd5e1;
   --neutral-11: #e2e8f0;
   --neutral-12: #f8fafc;
-  --blue-1: #000830;
-  --blue-2: #000f59;
-  --blue-3: #001882;
-  --blue-4: #0021ab;
-  --blue-5: #002ad4;
-  --blue-6: #1943de; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25. */
-  --blue-7: #3058e7; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
-  --blue-8: #466af1; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
-  --blue-9: #5c7cfa;
-  --blue-10: #91a7ff;
-  --blue-11: #bac8ff;
-  --blue-12: #dbe4ff;
-  --cyan-1: #012923;
-  --cyan-2: #035143;
-  --cyan-3: #057963;
-  --cyan-4: #07a183;
-  --cyan-5: #09c9a3;
-  --cyan-6: #0ed4ac; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25. */
-  --cyan-7: #12e0b5; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
-  --cyan-8: #16ebbf; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
-  --cyan-9: #1af7c8;
-  --cyan-10: #4dfcd4;
-  --cyan-11: #80ffe0;
-  --cyan-12: #b3ffec;
+  --blue-1: #030815; /** app tint — L* 13.59, C 0.031, hue 264. */
+  --blue-2: #060f25; /** subtle background — L* 17.43, C 0.048. */
+  --blue-3: #09183b; /** component background default — L* 22.04, C 0.071. */
+  --blue-4: #0d2254; /** component background hover — L* 26.99, C 0.095. */
+  --blue-5: #132e6f; /** component background active — L* 32.46, C 0.118. Anchor for the derived border tier. */
+  --blue-6: #1c3c8a; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 38.25, C 0.136. */
+  --blue-7: #254ba7; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 44.21, C 0.155. */
+  --blue-8: #2f5ac4; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 50.01, C 0.173. */
+  --blue-9: #396ae2; /** solid fill — L* 55.92, C 0.191, hue 264.3. White label 4.85:1. Same value as the dark shadcn --primary, so light and dark both take their deep fill from one source. Chroma ceiling for dark is 0.190; this is 0.191. */
+  --blue-10: #3f70e3; /** solid fill hover — L* 57.44, C 0.183. White label 4.53:1. The hover has to move UP in a dark ramp, which costs contrast, so the step is deliberately small (1.52 L*) to keep white above 4.5:1. */
+  --blue-11: #89aaee; /** secondary text — L* 74.01, C 0.106. 8.62:1 on step 1. */
+  --blue-12: #d2e0fd; /** primary text — L* 90.52, C 0.043. 15.08:1 on step 1. */
+  --blue-contrast: #ffffff; /** Label ink for the solid fill tier. Absolute value, identical in both modes. 4.85:1 on step 9, 4.53:1 on step 10. */
+  --cyan-1: #04100c; /** app tint — L* 15.90, C 0.021, hue 172. */
+  --cyan-2: #091e18; /** subtle background — L* 21.54, C 0.030. */
+  --cyan-3: #0f2e25; /** component background default — L* 27.46, C 0.041. */
+  --cyan-4: #1c4035; /** component background hover — L* 34.10, C 0.046. */
+  --cyan-5: #2b5347; /** component background active — L* 40.88, C 0.050. Anchor for the derived border tier. */
+  --cyan-6: #307864; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 52.12, C 0.079. */
+  --cyan-7: #309e82; /** default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 63.04, C 0.107. */
+  --cyan-8: #28c7a2; /** hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 74.30, C 0.136. */
+  --cyan-9: #0bf1c3; /** solid fill — same bright value as light mode, the way Radix ships one hex for mint-9 in both modes: L* 85.41, C 0.164. Ink 10.35:1 against --cyan-contrast. */
+  --cyan-10: #5af8ce; /** solid fill hover — L* 88.53, C 0.145, 3.12 L* above step 9 (Radix mint dark moves up 4.60 L*). Ink 11.34:1. */
+  --cyan-11: #90fbdb; /** secondary text — L* 91.46, C 0.110. 15.68:1 on step 1. */
+  --cyan-12: #bdfde8; /** primary text — L* 94.54, C 0.070. 16.95:1 on step 1. */
+  --cyan-contrast: #0d2b25; /** Label ink for the bright fill tier. Absolute near-black, identical in both modes. 10.35:1 on step 9, 11.34:1 on step 10. */
   --background: 222 14% 9%;
   --foreground: 210 18% 96%;
   --card: 222 12% 13%;
@@ -526,7 +530,7 @@
   --popover: 222 12% 13%;
   --popover-foreground: 210 18% 96%;
   --primary: 222.6 74.4% 55.5%; /** Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191. */
-  --primary-foreground: 222 14% 9%;
+  --primary-foreground: 0 0% 100%; /** White, matching light mode and matching --blue-contrast. It was near-black (222 14% 9%) when --primary was a LIGHT fill at L* 68.3, where dark ink read 6.20:1. Once --primary became a deep fill at L* 55.9 the pairing inverted and measured 3.74:1, below AA — the fill moved and the ink did not. The deep-fill tier takes white in both modes; --blue-contrast says the same thing, and they must agree because --primary and --blue-9 are now the same value. */
   --secondary: 222 10% 18%;
   --secondary-foreground: 210 18% 96%;
   --muted: 222 10% 17%;

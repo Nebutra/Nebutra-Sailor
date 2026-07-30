@@ -6,12 +6,12 @@
     "primary": {
       "$value": "{color.nebutra-blue.400}",
       "$type": "color",
-      "$description": "Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400)."
+      "$description": "Dark-mode brand primary — the identity blue lifted to nebutra-blue-400 so it stays visible on dark surfaces. This is the identity alias, not the functional fill: the dark solid fill is --blue-9 (#396ae2, white label 4.85:1). The two are deliberately separate now that the VI hex is no longer pinned into ramp slot 9."
     },
     "accent": {
       "$value": "{color.nebutra-cyan.400}",
       "$type": "color",
-      "$description": "Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400)."
+      "$description": "Dark-mode brand accent — nebutra-cyan-400 (L* 87.1). The functional bright fill is --cyan-9 (#0bf1c3, L* 85.41), the same hex in both modes; dark ink for it is --cyan-contrast at 10.35:1."
     }
   },
   "status": {
@@ -112,29 +112,34 @@
     },
     "blue": {
       "1": {
-        "$value": "{color.nebutra-blue.950}",
-        "$type": "color"
+        "$value": "#030815",
+        "$type": "color",
+        "$description": "app tint — L* 13.59, C 0.031, hue 264."
       },
       "2": {
-        "$value": "{color.nebutra-blue.900}",
-        "$type": "color"
+        "$value": "#060f25",
+        "$type": "color",
+        "$description": "subtle background — L* 17.43, C 0.048."
       },
       "3": {
-        "$value": "{color.nebutra-blue.800}",
-        "$type": "color"
+        "$value": "#09183b",
+        "$type": "color",
+        "$description": "component background default — L* 22.04, C 0.071."
       },
       "4": {
-        "$value": "{color.nebutra-blue.700}",
-        "$type": "color"
+        "$value": "#0d2254",
+        "$type": "color",
+        "$description": "component background hover — L* 26.99, C 0.095."
       },
       "5": {
-        "$value": "{color.nebutra-blue.600}",
-        "$type": "color"
+        "$value": "#132e6f",
+        "$type": "color",
+        "$description": "component background active — L* 32.46, C 0.118. Anchor for the derived border tier."
       },
       "6": {
         "$value": "{scale.blue.5}",
         "$type": "color",
-        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
+        "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 38.25, C 0.136.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -145,7 +150,7 @@
       "7": {
         "$value": "{scale.blue.5}",
         "$type": "color",
-        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
+        "$description": "default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 44.21, C 0.155.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -156,7 +161,7 @@
       "8": {
         "$value": "{scale.blue.5}",
         "$type": "color",
-        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
+        "$description": "hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 23.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 50.01, C 0.173.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -165,47 +170,61 @@
         }
       },
       "9": {
-        "$value": "{color.nebutra-blue.400}",
-        "$type": "color"
+        "$value": "#396ae2",
+        "$type": "color",
+        "$description": "solid fill — L* 55.92, C 0.191, hue 264.3. White label 4.85:1. Same value as the dark shadcn --primary, so light and dark both take their deep fill from one source. Chroma ceiling for dark is 0.190; this is 0.191."
       },
       "10": {
-        "$value": "{color.nebutra-blue.300}",
-        "$type": "color"
+        "$value": "#3f70e3",
+        "$type": "color",
+        "$description": "solid fill hover — L* 57.44, C 0.183. White label 4.53:1. The hover has to move UP in a dark ramp, which costs contrast, so the step is deliberately small (1.52 L*) to keep white above 4.5:1."
       },
       "11": {
-        "$value": "{color.nebutra-blue.200}",
-        "$type": "color"
+        "$value": "#89aaee",
+        "$type": "color",
+        "$description": "secondary text — L* 74.01, C 0.106. 8.62:1 on step 1."
       },
       "12": {
-        "$value": "{color.nebutra-blue.100}",
-        "$type": "color"
+        "$value": "#d2e0fd",
+        "$type": "color",
+        "$description": "primary text — L* 90.52, C 0.043. 15.08:1 on step 1."
+      },
+      "contrast": {
+        "$value": "#ffffff",
+        "$type": "color",
+        "$description": "Label ink for the solid fill tier. Absolute value, identical in both modes. 4.85:1 on step 9, 4.53:1 on step 10."
       }
     },
     "cyan": {
       "1": {
-        "$value": "{color.nebutra-cyan.950}",
-        "$type": "color"
+        "$value": "#04100c",
+        "$type": "color",
+        "$description": "app tint — L* 15.90, C 0.021, hue 172."
       },
       "2": {
-        "$value": "{color.nebutra-cyan.900}",
-        "$type": "color"
+        "$value": "#091e18",
+        "$type": "color",
+        "$description": "subtle background — L* 21.54, C 0.030."
       },
       "3": {
-        "$value": "{color.nebutra-cyan.800}",
-        "$type": "color"
+        "$value": "#0f2e25",
+        "$type": "color",
+        "$description": "component background default — L* 27.46, C 0.041."
       },
       "4": {
-        "$value": "{color.nebutra-cyan.700}",
-        "$type": "color"
+        "$value": "#1c4035",
+        "$type": "color",
+        "$description": "component background hover — L* 34.10, C 0.046."
       },
       "5": {
-        "$value": "{color.nebutra-cyan.600}",
-        "$type": "color"
+        "$value": "#2b5347",
+        "$type": "color",
+        "$description": "component background active — L* 40.88, C 0.050. Anchor for the derived border tier."
       },
       "6": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
-        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
+        "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 52.12, C 0.079.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -216,7 +235,7 @@
       "7": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
-        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
+        "$description": "default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 63.04, C 0.107.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -227,7 +246,7 @@
       "8": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
-        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
+        "$description": "hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (span 44.5 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 74.30, C 0.136.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -236,20 +255,29 @@
         }
       },
       "9": {
-        "$value": "{color.nebutra-cyan.400}",
-        "$type": "color"
+        "$value": "#0bf1c3",
+        "$type": "color",
+        "$description": "solid fill — same bright value as light mode, the way Radix ships one hex for mint-9 in both modes: L* 85.41, C 0.164. Ink 10.35:1 against --cyan-contrast."
       },
       "10": {
-        "$value": "{color.nebutra-cyan.300}",
-        "$type": "color"
+        "$value": "#5af8ce",
+        "$type": "color",
+        "$description": "solid fill hover — L* 88.53, C 0.145, 3.12 L* above step 9 (Radix mint dark moves up 4.60 L*). Ink 11.34:1."
       },
       "11": {
-        "$value": "{color.nebutra-cyan.200}",
-        "$type": "color"
+        "$value": "#90fbdb",
+        "$type": "color",
+        "$description": "secondary text — L* 91.46, C 0.110. 15.68:1 on step 1."
       },
       "12": {
-        "$value": "{color.nebutra-cyan.100}",
-        "$type": "color"
+        "$value": "#bdfde8",
+        "$type": "color",
+        "$description": "primary text — L* 94.54, C 0.070. 16.95:1 on step 1."
+      },
+      "contrast": {
+        "$value": "#0d2b25",
+        "$type": "color",
+        "$description": "Label ink for the bright fill tier. Absolute near-black, identical in both modes. 10.35:1 on step 9, 11.34:1 on step 10."
       }
     }
   },
@@ -284,8 +312,9 @@
       "$description": "Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191."
     },
     "primary-foreground": {
-      "$value": "222 14% 9%",
-      "$type": "string"
+      "$value": "0 0% 100%",
+      "$type": "string",
+      "$description": "White, matching light mode and matching --blue-contrast. It was near-black (222 14% 9%) when --primary was a LIGHT fill at L* 68.3, where dark ink read 6.20:1. Once --primary became a deep fill at L* 55.9 the pairing inverted and measured 3.74:1, below AA — the fill moved and the ink did not. The deep-fill tier takes white in both modes; --blue-contrast says the same thing, and they must agree because --primary and --blue-9 are now the same value."
     },
     "secondary": {
       "$value": "222 10% 18%",

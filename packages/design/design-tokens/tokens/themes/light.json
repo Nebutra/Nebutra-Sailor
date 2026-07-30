@@ -84,29 +84,34 @@
     },
     "blue": {
       "1": {
-        "$value": "{color.nebutra-blue.50}",
-        "$type": "color"
+        "$value": "#fafcfe",
+        "$type": "color",
+        "$description": "app tint — L* 99.01, C 0.003, hue 264. Radix blue-1 sits at L* 99.31 C 0.003."
       },
       "2": {
-        "$value": "{color.nebutra-blue.100}",
-        "$type": "color"
+        "$value": "#f2f6fd",
+        "$type": "color",
+        "$description": "subtle background — L* 97.21, C 0.010."
       },
       "3": {
-        "$value": "{color.nebutra-blue.200}",
-        "$type": "color"
+        "$value": "#e7eefc",
+        "$type": "color",
+        "$description": "component background default — L* 94.79, C 0.020."
       },
       "4": {
-        "$value": "{color.nebutra-blue.300}",
-        "$type": "color"
+        "$value": "#d8e4fb",
+        "$type": "color",
+        "$description": "component background hover — L* 91.69, C 0.034."
       },
       "5": {
-        "$value": "{color.nebutra-blue.400}",
-        "$type": "color"
+        "$value": "#c6d7fa",
+        "$type": "color",
+        "$description": "component background active — L* 87.77, C 0.052. Anchor for the derived border tier."
       },
       "6": {
         "$value": "{scale.blue.5}",
         "$type": "color",
-        "$description": "subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25.",
+        "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 79.61, C 0.093.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -117,7 +122,7 @@
       "7": {
         "$value": "{scale.blue.5}",
         "$type": "color",
-        "$description": "default border — DERIVED: OKLab lerp step5 → step9 at t=0.50.",
+        "$description": "default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 71.63, C 0.134.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -128,7 +133,7 @@
       "8": {
         "$value": "{scale.blue.5}",
         "$type": "color",
-        "$description": "hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75.",
+        "$description": "hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step9 (deep scale, span 32.3 L*) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 63.47, C 0.175.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -137,48 +142,61 @@
         }
       },
       "9": {
-        "$value": "{color.nebutra-blue.500}",
+        "$value": "#2e65ee",
         "$type": "color",
-        "$description": "solid fill — main brand"
+        "$description": "solid fill — L* 55.50, C 0.215, hue 264.0. White label 4.99:1, inside the 4.7-5.4 band comparable products ship. Same value as shadcn --primary so the deep solid fill has one source, not two. The VI hex #0033FE (C 0.290, L* 48.4) stays the identity token --brand-primary and is deliberately NOT pinned into this ramp slot: pinning it left steps 6-9 only 3.5 L* apart with chroma climbing to 0.290."
       },
       "10": {
-        "$value": "{color.nebutra-blue.600}",
-        "$type": "color"
+        "$value": "#2253d4",
+        "$type": "color",
+        "$description": "solid fill hover — L* 49.52, C 0.205. White label 6.45:1."
       },
       "11": {
-        "$value": "{color.nebutra-blue.700}",
-        "$type": "color"
+        "$value": "#1740ad",
+        "$type": "color",
+        "$description": "secondary text — L* 42.04, C 0.180. 8.60:1 on step 1."
       },
       "12": {
-        "$value": "{color.nebutra-blue.900}",
-        "$type": "color"
+        "$value": "#031654",
+        "$type": "color",
+        "$description": "primary text — L* 23.91, C 0.115. 16.38:1 on step 1."
+      },
+      "contrast": {
+        "$value": "#ffffff",
+        "$type": "color",
+        "$description": "Label ink for the solid fill tier. Absolute value, identical in both modes: a deep fill always takes white, never the scale's own step 12, which is light in dark mode. 4.99:1 on step 9, 6.45:1 on step 10."
       }
     },
     "cyan": {
       "1": {
-        "$value": "{color.nebutra-cyan.50}",
-        "$type": "color"
+        "$value": "#f9fdfb",
+        "$type": "color",
+        "$description": "app tint — L* 99.05, C 0.005, hue 172."
       },
       "2": {
-        "$value": "{color.nebutra-cyan.100}",
-        "$type": "color"
+        "$value": "#effbf7",
+        "$type": "color",
+        "$description": "subtle background — L* 97.81, C 0.014."
       },
       "3": {
-        "$value": "{color.nebutra-cyan.200}",
-        "$type": "color"
+        "$value": "#daf9ee",
+        "$type": "color",
+        "$description": "component background default — L* 95.68, C 0.035."
       },
       "4": {
-        "$value": "{color.nebutra-cyan.300}",
-        "$type": "color"
+        "$value": "#c3f6e4",
+        "$type": "color",
+        "$description": "component background hover — L* 93.29, C 0.058."
       },
       "5": {
-        "$value": "{color.nebutra-cyan.400}",
-        "$type": "color"
+        "$value": "#a3f2d8",
+        "$type": "color",
+        "$description": "component background active — L* 90.27, C 0.086. Anchor for the derived border tier."
       },
       "6": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
-        "$description": "subtle border — DERIVED: bright-scale fallback (|L9−L5| = 0.017 < 0.06), so the anchor is step 10, not step 9. OKLab lerp step5 → step10 at t=0.25.",
+        "$description": "subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.25. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 88.38, C 0.102.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -189,7 +207,7 @@
       "7": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
-        "$description": "default border — DERIVED: OKLab lerp step5 → step10 at t=0.50 (bright-scale fallback).",
+        "$description": "default border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.50. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 86.50, C 0.119.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -200,7 +218,7 @@
       "8": {
         "$value": "{scale.cyan.5}",
         "$type": "color",
-        "$description": "hovered border — DERIVED: OKLab lerp step5 → step10 at t=0.75 (bright-scale fallback).",
+        "$description": "hovered border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp of step 5 toward step10 (bright scale: |L9-L5| = 4.9 L* < 6.0, so the tier continues toward step 10) at t=0.75. The value here is a placeholder anchor only; the preprocessor overwrites it. Lands at L* 84.42, C 0.134.",
         "$extensions": {
           "com.nebutra.derive": {
             "space": "oklab",
@@ -209,20 +227,29 @@
         }
       },
       "9": {
-        "$value": "{color.nebutra-cyan.500}",
-        "$type": "color"
+        "$value": "#0bf1c3",
+        "$type": "color",
+        "$description": "solid fill — bright scale, so the fill is LIGHT and takes dark ink: L* 85.41, C 0.164, hue 172.1. Ink 10.35:1 against --cyan-contrast. Step 9 legitimately sits above step 8 on a bright scale, exactly as Radix mint does (8 at L* 72.2, 9 at L* 87.0)."
       },
       "10": {
-        "$value": "{color.nebutra-cyan.600}",
-        "$type": "color"
+        "$value": "#33e5bb",
+        "$type": "color",
+        "$description": "solid fill hover — L* 82.61, C 0.150. 2.80 L* below step 9, matching Radix mint's own 2.95 L* step9-to-step10 drop, so hovering the bright fill deepens it slightly instead of collapsing past its own border tier. The previous value was 10.87 L* below step 9 and landed DARKER than step 8. Ink 9.40:1."
       },
       "11": {
-        "$value": "{color.nebutra-cyan.700}",
-        "$type": "color"
+        "$value": "#027a61",
+        "$type": "color",
+        "$description": "secondary text — L* 51.64, C 0.100. 5.17:1 on step 1."
       },
       "12": {
-        "$value": "{color.nebutra-cyan.900}",
-        "$type": "color"
+        "$value": "#004133",
+        "$type": "color",
+        "$description": "primary text — L* 33.45, C 0.065. 11.35:1 on step 1."
+      },
+      "contrast": {
+        "$value": "#0d2b25",
+        "$type": "color",
+        "$description": "Label ink for the bright fill tier. Absolute near-black, identical in both modes, carrying a trace of the scale hue. A bright fill needs an explicit dark ink; comparing white against the scale's own step 12 picks white in dark mode, where step 12 is light, and measures 1.52:1. 10.35:1 on step 9, 9.40:1 on step 10."
       }
     }
   },
