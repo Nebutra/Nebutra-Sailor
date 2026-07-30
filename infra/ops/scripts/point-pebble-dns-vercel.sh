@@ -33,7 +33,8 @@ echo "=== existing pebble records ==="
 EXIST=$(auth_get "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?name=${HOST}")
 echo "$EXIST" | python3 -m json.tool | head -40
 
-BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'pebble','content':'${CONTENT}','proxied':True,'ttl':1,'comment':'Pebble brand front (Vercel)'}))")
+# Match point-www-dns-apex.sh body shape (no comment field — some tokens reject it).
+BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'pebble','content':'${CONTENT}','proxied':True,'ttl':1}))")
 RID=$(python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")' <<<"$EXIST")
 
 tmp="$(mktemp)"
