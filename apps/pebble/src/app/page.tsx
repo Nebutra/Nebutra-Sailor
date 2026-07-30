@@ -55,14 +55,14 @@ export default function HomePage() {
         <div className="hero-visual">
           <div className="hero-frame">
             <img
-              src="/brand/hero.jpg"
+              src="/assets/hero.jpg"
               alt="Pebble desktop running agents in parallel worktrees"
               width={1600}
               height={1000}
             />
           </div>
           <div className="hero-float" aria-hidden>
-            <img src="/brand/mark.png" alt="" width={320} height={320} />
+            <img src="/assets/mark.png" alt="" width={320} height={320} />
           </div>
         </div>
       </section>

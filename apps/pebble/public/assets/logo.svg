@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Pebble logo">
+  <path
+    fill="#8f887c"
+    d="M504 181c116-3 229 45 297 132 83 108 88 255 17 382-67 121-198 180-355 155-137-22-238-94-279-208-45-126-6-263 102-359 58-51 134-99 218-102z"
+  />
+  <path
+    fill="none"
+    stroke="#ffffff"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="70"
+    d="M395 370 543 518 395 666"
+  />
+  <path
+    fill="none"
+    stroke="#ffffff"
+    stroke-linecap="round"
+    stroke-width="70"
+    d="M612 620h131"
+  />
+</svg>

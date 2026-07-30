@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "Run Codex, Claude Code, OpenCode and more side-by-side — each in its own worktree, tracked in one place.",
   icons: {
     icon: "/favicon.png",
-    apple: "/brand/icon-180.png",
+    apple: "/assets/icon-180.png",
   },
   openGraph: {
     title: "Pebble · 溪石",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     url: "https://pebble.nebutra.com",
     siteName: "Pebble",
     type: "website",
-    images: [{ url: "/brand/hero.jpg", width: 1600, height: 1000, alt: "Pebble desktop" }],
+    images: [{ url: "/assets/hero.jpg", width: 1600, height: 1000, alt: "Pebble desktop" }],
   },
   alternates: {
     canonical: "https://pebble.nebutra.com",
@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <header className="nav">
           <a className="brand" href="/">
-            <img src="/brand/logo.svg" alt="" width={34} height={34} />
+            <img src="/assets/logo.svg" alt="" width={34} height={34} />
             Pebble
             <span className="brand-zh">溪石</span>
           </a>
