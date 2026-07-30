@@ -60,8 +60,7 @@ on:
       - "apps/router/**"
       - "packages/ai/forge-runtime/**"
       - "packages/platform/router-supply/**"
-      - "infra/runtime/nginx/conf.d/forge.nebutra.com.conf"
-      - "infra/runtime/nginx/conf.d/router.nebutra.com.conf"
+      - "infra/runtime/nginx/conf.d/*.nebutra.com.conf"
       - "infra/runtime/nginx/nginx.conf"
       - "infra/ops/scripts/ecs-deploy-remote.sh"
       - ".github/workflows/deploy-ecs.yml"
@@ -123,6 +122,7 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
             web:
               - 'apps/web/**'
@@ -130,6 +130,7 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
             api:
               - 'backends/gateway/**'
@@ -137,6 +138,7 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
             idp:
               - 'apps/idp/**'
@@ -164,6 +166,7 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
             sailor-docs:
               - 'apps/sailor-docs/**'
@@ -171,6 +174,7 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
             router:
               - 'apps/router/**'
@@ -634,8 +638,7 @@ jobs:
             infra/runtime/nginx/nginx.conf
             infra/runtime/nginx/conf.d/proxy_params.conf
             infra/runtime/nginx/conf.d/security.conf
-            infra/runtime/nginx/conf.d/forge.nebutra.com.conf
-            infra/runtime/nginx/conf.d/router.nebutra.com.conf
+            infra/runtime/nginx/conf.d/*.nebutra.com.conf
 
       - name: Download landing bundle
         if: needs.detect-changes.outputs.landing == 'true'
@@ -841,12 +844,13 @@ jobs:
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-proxy_params.conf"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/security.conf \
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-security.conf"
-          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/forge.nebutra.com.conf \
-            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-forge.conf"
-          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/router.nebutra.com.conf \
-            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-router.conf"
-          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/docs.nebutra.com.conf \
-            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-docs.conf"
+          # Every vhost fragment, named after itself. Enumerating hosts here is
+          # how design.nebutra.com came to have a conf file in the repo that was
+          # never uploaded, leaving the host on the apex redirect.
+          for vhost in infra/runtime/nginx/conf.d/*.nebutra.com.conf; do
+            scp "${SCP_OPTS[@]}" "$vhost" \
+              "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-vhost-$(basename "$vhost")"
+          done
 
       - name: Run remote deploy
         env:
@@ -869,6 +873,11 @@ jobs:
           VITE_API_GATEWAY_URL: ${{ vars.VITE_API_GATEWAY_URL || vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
           VITE_AUTH_API_URL: ${{ vars.VITE_AUTH_API_URL || 'https://api.nebutra.com/api/auth' }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          # The control plane signs its own sessions with its own secret, NOT
+          # BETTER_AUTH_SECRET. Sharing that one would make a session minted by
+          # the tenant login centre verifiable here, which is the whole thing the
+          # host-only cookie in apps/admin/src/lib/auth.ts exists to prevent.
+          ADMIN_AUTH_SECRET: ${{ secrets.ADMIN_AUTH_SECRET }}
           # Login center owns Better Auth origin (multi-app RP model).
           BETTER_AUTH_URL: ${{ vars.BETTER_AUTH_URL || 'https://auth.nebutra.com' }}
           NEXT_PUBLIC_AUTH_URL: ${{ vars.NEXT_PUBLIC_AUTH_URL || 'https://auth.nebutra.com' }}
@@ -1043,7 +1052,7 @@ jobs:
             DATABASE_URL DIRECT_URL APP_DB_ROLE SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
             AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL \
             NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY CLERK_SECRET_KEY CLERK_WEBHOOK_SECRET AUTH_SSO_DISCOVERY_PROVIDERS \
-            BETTER_AUTH_SECRET BETTER_AUTH_URL \
+            BETTER_AUTH_SECRET BETTER_AUTH_URL ADMIN_AUTH_SECRET \
             NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL \
             NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN \
             NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO \
@@ -1106,28 +1115,41 @@ jobs:
           [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && origin_hosts[router]="router.nebutra.com"
           [ "${{ needs.detect-changes.outputs.forge }}"  = "true" ] && origin_hosts[forge]="forge.nebutra.com"
           ECS_ORIGIN_IP="${ECS_HOST:-${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}}"
-          ok_codes='^(200|301|302|307)$'
+          # Follow redirects and require the request to still be on the host it
+          # was aimed at. Accepting a bare 301 as success is what made this smoke
+          # test blind to the failure it exists for: a host with no server_name
+          # falls through to the first 443 block, which answers
+          # `301 -> https://nebutra.com$request_uri`, and every deploy of
+          # design-docs reported design.nebutra.com healthy while the design
+          # system was unreachable. Any misrouted host 301s — that is the symptom,
+          # not the pass condition.
+          host_of() { printf '%s' "$1" | sed -E 's#^https?://([^/]+).*#\1#'; }
           for name in "${!targets[@]}"; do
             url="${targets[$name]}"
             code=000
+            ok=0
             for i in 1 2 3 4 5; do
-              code=$(curl -sf -o /dev/null -w "%{http_code}" --max-time 15 "$url" 2>/dev/null || echo 000)
-              if [[ "$code" =~ $ok_codes ]]; then
-                echo "✅ $name $url -> $code"; break
+              read -r code final < <(curl -sSL -o /dev/null \
+                -w "%{http_code} %{url_effective}" --max-time 15 "$url" 2>/dev/null || echo "000 -")
+              if [ "$code" = "200" ] && [ "$(host_of "$final")" = "$(host_of "$url")" ]; then
+                echo "✅ $name $url -> $code $final"; ok=1; break
+              fi
+              if [ "$code" = "200" ]; then
+                echo "::warning::$name $url left its host: ended on $final"
               fi
               sleep 8
             done
-            if [[ ! "$code" =~ $ok_codes ]]; then
+            if [ "$ok" -ne 1 ]; then
               host="${origin_hosts[$name]:-}"
               if [ -n "$host" ]; then
                 ocode=$(curl -skf -o /dev/null -w "%{http_code}" --max-time 15 \
                   --resolve "${host}:443:${ECS_ORIGIN_IP}" "https://${host}/" 2>/dev/null || echo 000)
-                if [[ "$ocode" =~ $ok_codes ]]; then
+                if [ "$ocode" = "200" ] || [ "$ocode" = "301" ] || [ "$ocode" = "302" ]; then
                   echo "::warning::$name public $url failed ($code) but origin https://${host}/ via ${ECS_ORIGIN_IP} -> $ocode (DNS/edge issue, not app rollback)"
                   continue
                 fi
               fi
-              echo "::error::Smoke test failed for $name at $url (last code: $code)"; exit 1
+              echo "::error::Smoke test failed for $name at $url (last code: $code, ended on ${final:-?})"; exit 1
             fi
           done
 

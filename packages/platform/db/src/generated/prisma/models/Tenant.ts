@@ -1060,10 +1060,12 @@ export type TenantCreateNestedOneWithoutOauthClientsInput = {
   connect?: Prisma.TenantWhereUniqueInput
 }
 
-export type TenantUpdateOneRequiredWithoutOauthClientsNestedInput = {
+export type TenantUpdateOneWithoutOauthClientsNestedInput = {
   create?: Prisma.XOR<Prisma.TenantCreateWithoutOauthClientsInput, Prisma.TenantUncheckedCreateWithoutOauthClientsInput>
   connectOrCreate?: Prisma.TenantCreateOrConnectWithoutOauthClientsInput
   upsert?: Prisma.TenantUpsertWithoutOauthClientsInput
+  disconnect?: Prisma.TenantWhereInput | boolean
+  delete?: Prisma.TenantWhereInput | boolean
   connect?: Prisma.TenantWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutOauthClientsInput, Prisma.TenantUpdateWithoutOauthClientsInput>, Prisma.TenantUncheckedUpdateWithoutOauthClientsInput>
 }

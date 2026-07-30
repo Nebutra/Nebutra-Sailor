@@ -9,7 +9,7 @@ import {
   type PlatformStaffRole,
 } from "@nebutra/permissions";
 import { headers } from "next/headers";
-import { auth } from "./auth";
+import { auth, SSO_PROVIDER_ID } from "./auth";
 
 /**
  * Authorisation for the control plane.
@@ -30,9 +30,40 @@ import { auth } from "./auth";
 const db = getSystemDb();
 
 export interface StaffContext {
+  /**
+   * The platform user id — `users.id`, which is also the OIDC `sub` issued by
+   * sso.nebutra.com. This is the id that appears in audit records, NOT the
+   * Better Auth id below.
+   */
   userId: string;
+  /** Better Auth's own row id, for session bookkeeping only. Never an actor id. */
+  authUserId: string;
   email: string | null;
   role: PlatformStaffRole;
+}
+
+/**
+ * TWO ID SPACES, AND THE GRANT LIVES IN ONLY ONE OF THEM.
+ *
+ * `session.user.id` is an `auth_users.id` — Better Auth's own row, created the
+ * first time someone completes the SSO round-trip. `PlatformStaff.userId` is a
+ * `users.id`, foreign-keyed to the platform user table. The Prisma schema
+ * declares NO relation between auth_users and users, so those ids never
+ * coincide, and looking a grant up by the session id would deny everyone
+ * forever while looking entirely correct.
+ *
+ * The bridge is the account link. `AuthAccount.accountId` holds the subject the
+ * issuer sent, and packages/iam/oauth-server/src/provider.ts resolves accounts
+ * out of `prisma.user` and claims `sub: user.id` — so that subject *is* the
+ * platform user id. Unique on (providerId, accountId), so one row, no ordering
+ * dependence.
+ */
+async function resolvePlatformUserId(authUserId: string): Promise<string | null> {
+  const account = await db.authAccount.findFirst({
+    where: { userId: authUserId, providerId: SSO_PROVIDER_ID },
+    select: { accountId: true },
+  });
+  return account?.accountId ?? null;
 }
 
 /**
@@ -44,7 +75,12 @@ export interface StaffContext {
  */
 export async function getStaffContext(): Promise<StaffContext | null> {
   const session = await auth.api.getSession({ headers: await headers() });
-  const userId = session?.user?.id;
+  const authUserId = session?.user?.id;
+  if (!authUserId) return null;
+
+  // A session with no SSO account link is not a staff member — it is either a
+  // stale row or an account created by some path other than the SSO flow.
+  const userId = await resolvePlatformUserId(authUserId);
   if (!userId) return null;
 
   const grant = await db.platformStaff.findUnique({
@@ -60,7 +96,7 @@ export async function getStaffContext(): Promise<StaffContext | null> {
   const role = normalizePlatformStaffRole(grant.role);
   if (!role) return null;
 
-  return { userId, email: session.user.email ?? null, role };
+  return { userId, authUserId, email: session.user.email ?? null, role };
 }
 
 /**
