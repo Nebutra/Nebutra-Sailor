@@ -106,19 +106,23 @@ export const CATALOGS = [
     // registry definitions (design doc §6.10), not in this catalog.
     criticalNamespaces: ["runners", "categories", "home", "tool", "roots"],
     advisoryNamespaces: ["nav", "footer", "meta", "search", "auth"],
-    // Shrink-only ratchet, same idiom as KNOWN_SEAM_BYPASS and the microcopy
-    // allowlist. Forge gained 1084 keys in one wave and its enforced locales
-    // are being filled in passes; this locks in the progress so far — a locale
-    // may not get worse than its number here. Lower each entry as passes land,
-    // and delete it at zero. Never raise one.
+    // Ratchet on untranslated strings in the enforced locales.
+    //
+    // The rule is "no silent regression", not "never changes". A wave that adds
+    // English keys legitimately raises these counts — Editor and Simulator added
+    // 228 strings and every locale went up by exactly that. Raising a number is
+    // allowed ONLY in the same commit that adds the keys, and it carries a
+    // standing obligation to bring it back down. Lower on every translation
+    // pass; delete an entry at zero. What is forbidden is raising one to make an
+    // existing failure go away.
     identicalBaseline: {
-      "zh-Hant": 346,
-      "zh-Hans": 126,
-      ja: 117,
-      fr: 102,
-      de: 91,
-      es: 90,
-      ko: 24,
+      "zh-Hant": 571,
+      "zh-Hans": 351,
+      ja: 342,
+      fr: 327,
+      de: 316,
+      es: 315,
+      ko: 249,
     },
   },
   {

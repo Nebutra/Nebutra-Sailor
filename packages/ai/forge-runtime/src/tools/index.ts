@@ -30,21 +30,27 @@ import { unitConvertTools } from "./unit-convert";
 import { unixTimestampTool } from "./unix-timestamp";
 import { urlCodecTool } from "./url-codec";
 import { uuidTool } from "./uuid";
+import { w3BusinessDayShiftTools } from "./w3-business-day-shift";
+import { w3CsvColumnsTools } from "./w3-csv-columns";
 import { w3CsvDiffTools } from "./w3-csv-diff";
 import { w3DockerfileStarterTools } from "./w3-dockerfile-starter";
 import { w3EanUpcGtinTools } from "./w3-ean-upc-gtin";
 import { editorconfigGeneratorTools } from "./w3-editorconfig-generator";
 import { w3EncodingDetectTools } from "./w3-encoding-detect";
 import { w3EnvDiffTools } from "./w3-env-diff";
+import { w3ExifStripTools } from "./w3-exif-strip";
 import { w3FileTypeDetectTools } from "./w3-file-type-detect";
 import { w3GitignoreGeneratorTools } from "./w3-gitignore-generator";
 import { w3IbanTools } from "./w3-iban";
+import { w3ImageRotateFlipTools } from "./w3-image-rotate-flip";
 import { w3IsbnTools } from "./w3-isbn";
 import { w3LanguageDetectTools } from "./w3-language-detect";
 import { w3LicenseChooserTools } from "./w3-license-chooser";
 import { w3LineEndingDetectTools } from "./w3-line-ending-detect";
 import { w3ListSetCompareTools } from "./w3-list-set-compare";
+import { w3LoanAmortizationTools } from "./w3-loan-amortization";
 import { w3ReadmeSkeletonGeneratorTools } from "./w3-readme-skeleton-generator";
+import { w3RetryBackoffScheduleTools } from "./w3-retry-backoff-schedule";
 import { w3RobotsTxtGeneratorTools } from "./w3-robots-txt-generator";
 import { w3SecretScanTools } from "./w3-secret-scan";
 import { w3UnifiedSocialCreditCodeTools } from "./w3-unified-social-credit-code";
@@ -116,6 +122,13 @@ export const F0_BATCH1_TOOLS: readonly AnyForgeToolDefinition[] = [
   ...xlsxTextTools,
   ...pptxTextTools,
   // W3 — opened Template + Detector roots, deepened Verifier + Comparator (docs §6.7.2a)
+  // W3b — completed the Editor and Simulator roots (docs §6.7.9)
+  ...w3BusinessDayShiftTools,
+  ...w3CsvColumnsTools,
+  ...w3ExifStripTools,
+  ...w3ImageRotateFlipTools,
+  ...w3LoanAmortizationTools,
+  ...w3RetryBackoffScheduleTools,
   ...w3CsvDiffTools,
   ...w3DockerfileStarterTools,
   ...w3EanUpcGtinTools,
@@ -171,20 +184,26 @@ export {
   unixTimestampTool,
   urlCodecTool,
   uuidTool,
+  w3BusinessDayShiftTools,
+  w3CsvColumnsTools,
   w3CsvDiffTools,
   w3DockerfileStarterTools,
   w3EanUpcGtinTools,
   w3EncodingDetectTools,
   w3EnvDiffTools,
+  w3ExifStripTools,
   w3FileTypeDetectTools,
   w3GitignoreGeneratorTools,
   w3IbanTools,
+  w3ImageRotateFlipTools,
   w3IsbnTools,
   w3LanguageDetectTools,
   w3LicenseChooserTools,
   w3LineEndingDetectTools,
   w3ListSetCompareTools,
+  w3LoanAmortizationTools,
   w3ReadmeSkeletonGeneratorTools,
+  w3RetryBackoffScheduleTools,
   w3RobotsTxtGeneratorTools,
   w3SecretScanTools,
   w3UnifiedSocialCreditCodeTools,
