@@ -93,10 +93,20 @@ describe("D4 contract: oauth claims → identity adapter", () => {
 
   it("every NEBUTRA_CLAIMS scope name is well-formed (no typos that'd misroute consent)", () => {
     expect(SUPPORTED_SCOPES.length).toBeGreaterThanOrEqual(8);
-    expect(SUPPORTED_SCOPES).toEqual(Object.keys(NEBUTRA_CLAIMS));
+
+    // Every claims-bearing scope must be advertised — but SUPPORTED_SCOPES is no
+    // longer identical to the claims keys, and asserting that identity was part
+    // of how a real bug survived. Scopes that carry no claims (offline_access)
+    // cannot come from this map, and while offline_access was missing the issuer
+    // could not enable the refresh_token grant at all. See PROTOCOL_SCOPES.
+    for (const scope of Object.keys(NEBUTRA_CLAIMS)) {
+      expect(SUPPORTED_SCOPES).toContain(scope);
+    }
+
     for (const scope of SUPPORTED_SCOPES) {
-      // OIDC standard scopes are lowercase letters or word:word
-      expect(scope).toMatch(/^[a-z]+(:[a-z]+)?$/);
+      // OIDC scope names: lowercase, optionally word:word, or the snake_case the
+      // spec itself uses for offline_access.
+      expect(scope).toMatch(/^[a-z]+((:|_)[a-z]+)?$/);
     }
   });
 
