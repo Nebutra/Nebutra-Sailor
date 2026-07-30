@@ -390,3 +390,139 @@ code.inline {
 .footer a:hover {
   color: var(--ink);
 }
+
+/* ── Docs shell (self-hosted until docs.nebutra.com Worker is redeployed) ─ */
+
+.docs-shell {
+  width: min(1080px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1rem 0 3.5rem;
+  display: grid;
+  grid-template-columns: 13.5rem 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .docs-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+.docs-nav {
+  position: sticky;
+  top: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+}
+
+.docs-nav-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.docs-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.docs-nav a {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.45rem;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.docs-nav a:hover {
+  background: color-mix(in srgb, var(--stone) 35%, transparent);
+  color: var(--ink);
+}
+
+.docs-nav-note {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+.docs-article {
+  min-width: 0;
+  padding: 0.25rem 0 2rem;
+}
+
+.docs-article h1 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font);
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.docs-article h2 {
+  margin: 1.75rem 0 0.65rem;
+  font-family: var(--font);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.docs-article p,
+.docs-article li {
+  color: var(--ink-muted);
+  line-height: 1.65;
+}
+
+.docs-article a {
+  color: color-mix(in srgb, var(--ink) 70%, var(--tide));
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.docs-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+
+.docs-article th,
+.docs-article td {
+  border: 1px solid var(--border);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+}
+
+.docs-article th {
+  background: color-mix(in srgb, var(--stone) 30%, transparent);
+  color: var(--ink);
+}
+
+.docs-article pre {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--ink) 92%, var(--mist));
+  color: var(--mist);
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+.docs-article code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+.docs-article :not(pre) > code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--stone) 40%, transparent);
+  color: var(--ink);
+}

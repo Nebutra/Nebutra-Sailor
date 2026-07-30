@@ -9,6 +9,7 @@ export const DOWNLOADS = {
   all: GITHUB_RELEASES,
 } as const;
 
-export const DOCS_BASE = "https://docs.nebutra.com/pebble";
+/** Prefer on-origin docs while docs.nebutra.com/pebble Worker is stale. */
+export const DOCS_BASE = "https://pebble.nebutra.com/docs";
 export const STATUS_URL = "https://status.nebutra.com";
 export const GITHUB_REPO = "https://github.com/Nebutra/pebble";

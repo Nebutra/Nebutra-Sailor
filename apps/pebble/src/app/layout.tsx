@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </a>
           <nav className="nav-links" aria-label="Primary">
             <a href="/download">Download</a>
-            <a href={DOCS_BASE}>Docs</a>
+            <a href="/docs">Docs</a>
             <a href={GITHUB_REPO}>GitHub</a>
             <a href={STATUS_URL}>Status</a>
             <a className="nav-cta" href="/download">

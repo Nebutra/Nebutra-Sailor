@@ -10,6 +10,6 @@ describe("pebble brand front release links", () => {
   });
 
   it("keeps docs on the platform docs host under /pebble", () => {
-    expect(DOCS_BASE).toBe("https://docs.nebutra.com/pebble");
+    expect(DOCS_BASE).toBe("https://pebble.nebutra.com/docs");
   });
 });

@@ -18,7 +18,7 @@ Vercel is **not** the production path for this host (Hobby deploy caps; owner ch
 |---------|----------|
 | `/`, `/download` | Next app (marketing / download) |
 | `/whats-new/*.json`, `/media/*` | Static feeds from the app — **no client redirects** |
-| `/docs/*` | nginx 301 → `https://docs.nebutra.com/pebble/*` |
+| `/docs/*` | Self-hosted docs on the brand app (until Sailor Docs Worker redeploys) |
 | `POST /v1/feedback`, `/diagnostics/*` | nginx reverse-proxy → `api-gateway` `/pebble/*` (legacy clients) |
 
 Canonical machine endpoints remain `https://api.nebutra.com/pebble/*`.
