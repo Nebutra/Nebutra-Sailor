@@ -9,9 +9,12 @@ mail:
     imap: "imap.qiye.aliyun.com"
     pop3: "pop.qiye.aliyun.com"
     smtp: "smtp.qiye.aliyun.com"
-ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin]
-# Brand fronts on Vercel — static + redirects, no ECS origin.
-vercel_surfaces: [pebble]
+# Pebble brand front is ECS (same A pattern as app/api) — owner topology 2026-07-30.
+# Brand product fronts on ECS (same A pattern as app/api) — owner 2026-07-30.
+# pebble: PM2 Next; carina: nginx static Astro from Nebutra/carina apps/docs.
+ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina]
+# No product brand fronts on Vercel.
+vercel_surfaces: []
 proxy:
   proxied:
     [
@@ -27,6 +30,7 @@ proxy:
       status,
       admin,
       pebble,
+      carina,
       mail,
       imap,
       pop3,

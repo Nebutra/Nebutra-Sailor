@@ -17,9 +17,8 @@ export function FauxTerminal({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      {/* Terminal Content Area (Theme Adaptive) */}
+      {/* Terminal Content Area (Theme Adaptive) — solid gradient only, no grid. */}
       <div className="flex-1 p-6 sm:p-8 overflow-y-auto w-full bg-gradient-to-br from-background/40 via-background/20 to-muted/20 dark:from-zinc-950 dark:to-muted relative">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:14px_24px] opacity-50 pointer-events-none" />
         <div className="relative z-10 w-full h-full">{children}</div>
       </div>
     </div>

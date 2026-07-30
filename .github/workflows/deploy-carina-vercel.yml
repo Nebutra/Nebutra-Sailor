@@ -1,0 +1,160 @@
+name: Deploy Carina docs (Vercel)
+
+# Platform bootstrap for carina.nebutra.com.
+# Checks out public Nebutra/carina (apps/docs), ensures Vercel project
+# nebutra-carina + domain + Git link, deploys production using Sailor VERCEL_*.
+# Day-2 deploys can also run from the Carina repo once it has the same secrets.
+# DNS: point-carina-dns.yml (this monorepo owns the nebutra.com zone).
+#
+# Project id (optional var): VERCEL_CARINA_PROJECT_ID=prj_JN4csIJFkFiz1qoQCSYPXucmuJRx
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Carina git ref to deploy (branch, tag, or SHA)"
+        required: true
+        default: main
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/deploy-carina-vercel.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-carina-vercel
+  cancel-in-progress: true
+
+jobs:
+  vercel:
+    name: Deploy carina.nebutra.com
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Carina
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Nebutra/carina
+          ref: ${{ inputs.ref || 'main' }}
+          path: carina
+
+      - name: Ensure project, domain, git link, and deploy
+        working-directory: carina
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          KNOWN_PROJECT_ID: ${{ vars.VERCEL_CARINA_PROJECT_ID || '' }}
+          EXPECTED_ROOT: apps/docs
+          PROJECT_NAME: nebutra-carina
+          DOMAIN: carina.nebutra.com
+          GIT_REPO: Nebutra/carina
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error::VERCEL_TOKEN is not set"; exit 1
+          fi
+          if [ -z "${VERCEL_ORG_ID:-}" ]; then
+            echo "::error::VERCEL_ORG_ID is not set"; exit 1
+          fi
+
+          api() {
+            curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" "$@"
+          }
+
+          PROJECT_ID="${KNOWN_PROJECT_ID:-}"
+          CURRENT_ROOT="(missing)"
+          if [ -n "$PROJECT_ID" ]; then
+            meta=$(api "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" || true)
+            CURRENT_ROOT=$(echo "$meta" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("rootDirectory") or "(none)")' 2>/dev/null || echo "(missing)")
+            echo "Using known PROJECT_ID=$PROJECT_ID root=$CURRENT_ROOT"
+          else
+            api "https://api.vercel.com/v9/projects?teamId=${VERCEL_ORG_ID}&limit=100" > projects.json
+            python3 - <<'PY' > resolved.env
+          import json
+          data = json.load(open("projects.json"))
+          names = {p["name"]: p for p in data.get("projects", [])}
+          for candidate in ("nebutra-carina", "carina", "carina-docs"):
+              if candidate in names:
+                  p = names[candidate]
+                  print("PROJECT_ID=" + p["id"])
+                  print("CURRENT_ROOT=" + (p.get("rootDirectory") or "(none)"))
+                  break
+          else:
+              print("PROJECT_ID=")
+              print("CURRENT_ROOT=(missing)")
+          PY
+            cat resolved.env
+            set -a; . ./resolved.env; set +a
+          fi
+
+          if [ -z "${PROJECT_ID:-}" ]; then
+            echo "Creating Vercel project ${PROJECT_NAME}"
+            create=$(api -X POST "https://api.vercel.com/v10/projects?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"name\":\"${PROJECT_NAME}\",\"framework\":\"astro\",\"rootDirectory\":\"${EXPECTED_ROOT}\"}")
+            echo "$create" | python3 -m json.tool | head -40
+            PROJECT_ID=$(echo "$create" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("id",""))')
+            [ -n "$PROJECT_ID" ] || { echo "::error::failed to create project"; exit 1; }
+            CURRENT_ROOT="$EXPECTED_ROOT"
+            echo "::notice::Created project id=${PROJECT_ID} — set vars.VERCEL_CARINA_PROJECT_ID"
+          fi
+
+          if [ "$CURRENT_ROOT" != "$EXPECTED_ROOT" ] && [ "$CURRENT_ROOT" != "(missing)" ] && [ "$CURRENT_ROOT" != "(none)" ]; then
+            echo "::warning::Root Directory was '$CURRENT_ROOT', correcting to '$EXPECTED_ROOT'"
+            api -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+              -d "{\"rootDirectory\":\"${EXPECTED_ROOT}\",\"framework\":\"astro\"}" > /dev/null
+          fi
+
+          # Keep framework/root honest even on first create follow-ups
+          api -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+            -d "{\"rootDirectory\":\"${EXPECTED_ROOT}\",\"framework\":\"astro\"}" > /dev/null || true
+
+          echo "Attaching domain ${DOMAIN} (idempotent)"
+          api -X POST "https://api.vercel.com/v10/projects/${PROJECT_ID}/domains?teamId=${VERCEL_ORG_ID}" \
+            -d "{\"name\":\"${DOMAIN}\"}" > domain.json || true
+          python3 -c 'import json; d=json.load(open("domain.json")); print("domain", d.get("name") or d.get("error",{}).get("code"), d.get("verified", d.get("error")))' || true
+
+          echo "Linking GitHub ${GIT_REPO} (idempotent best-effort)"
+          api -X POST "https://api.vercel.com/v9/projects/${PROJECT_ID}/link?teamId=${VERCEL_ORG_ID}" \
+            -d "{\"type\":\"github\",\"repo\":\"${GIT_REPO}\",\"productionBranch\":\"main\"}" > link.json || true
+          python3 -c 'import json; d=json.load(open("link.json")); print("git_link", d.get("link") or d.get("error") or list(d.keys())[:6])' || true
+
+          npm i -g vercel@56.5.0
+          mkdir -p .vercel
+          printf '{"projectId":"%s","orgId":"%s"}\n' "$PROJECT_ID" "$VERCEL_ORG_ID" > .vercel/project.json
+          export VERCEL_PROJECT_ID="$PROJECT_ID"
+
+          set +e
+          out=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID" 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours'; then
+              echo "::error::Vercel Hobby daily deploy quota exhausted (api-deployments-free-per-day)."
+              echo "::error::Project ${PROJECT_NAME} (${PROJECT_ID}) and domain ${DOMAIN} are provisioned."
+              echo "::error::Re-run this workflow after the quota window resets (or upgrade the Vercel plan)."
+              echo "::error::DNS is independent: run Point carina DNS to Vercel when CLOUDFLARE_API_TOKEN has Zone DNS Edit."
+              exit 1
+            fi
+            if echo "$out" | grep -qiE 'Upload aborted'; then
+              echo "::warning::Transient upload failure — re-run workflow"
+              exit 1
+            fi
+            exit "$code"
+          fi
+
+      - name: Smoke carina.nebutra.com
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://carina.nebutra.com/?ci=${GITHUB_SHA}" || echo 000)
+            llms=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://carina.nebutra.com/llms.txt" || echo 000)
+            echo "attempt $i home=$code llms=$llms"
+            if [ "$code" = "200" ] && [ "$llms" = "200" ]; then
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error::carina.nebutra.com not healthy after deploy. Check DNS (point-carina-dns) and Vercel domain."
+          exit 1

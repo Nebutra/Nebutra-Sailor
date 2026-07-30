@@ -8,6 +8,7 @@
 //   $DEPLOY_ROOT/idp/current/apps/idp/server.js                  (Next standalone)
 //   $DEPLOY_ROOT/auth/current/apps/auth/server.js                (Next standalone login center)
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
+//   $DEPLOY_ROOT/pebble/current/apps/pebble/server.js            (Next standalone brand front)
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/router/current/apps/router/server.js            (Next standalone)
 //   $DEPLOY_ROOT/forge/current/apps/forge/server.js              (Next standalone)
@@ -61,6 +62,25 @@ module.exports = {
         HOSTNAME: "127.0.0.1",
       },
       max_memory_restart: "400M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
+      // Pebble brand front — marketing / download / whats-new feeds.
+      // Fronted by nginx conf.d/pebble.nebutra.com.conf (A → ECS, CF proxied).
+      name: "pebble",
+      cwd: "/var/www/nebutra/pebble/current",
+      script: "apps/pebble/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3017,
+        HOSTNAME: "127.0.0.1",
+      },
+      max_memory_restart: "300M",
       instances: 1,
       exec_mode: "fork",
       autorestart: true,
