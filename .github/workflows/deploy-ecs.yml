@@ -1241,7 +1241,10 @@ jobs:
             url="${targets[$name]}"
             code=000
             ok=0
-            for i in 1 2 3 4 5; do
+            # New PM2 apps (pebble) need extra headroom before the first 200.
+            retries=5
+            [ "$name" = "pebble" ] && retries=10
+            for i in $(seq 1 "$retries"); do
               read -r code final < <(curl -sSL -o /dev/null \
                 -w "%{http_code} %{url_effective}" --max-time 15 "$url" 2>/dev/null || echo "000 -")
               if [ "$code" = "200" ] && [ "$(host_of "$final")" = "$(host_of "$url")" ]; then
