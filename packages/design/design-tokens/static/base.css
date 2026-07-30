@@ -51,6 +51,22 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+ * MUST STAY UNLAYERED. Do not wrap this rule in `@layer base` (or any layer).
+ *
+ * Tailwind v4's `@import "tailwindcss"` puts every generated utility — including
+ * every `outline-none` / `focus-visible:outline-none` a component might carry —
+ * inside `@layer utilities`. Per the cascade-layers spec, unlayered rules beat
+ * layered ones regardless of specificity or source order, which is the only
+ * reason this single declaration can supply the keyboard focus ring for the
+ * whole design system without each component opting in.
+ *
+ * Move it into a layer and keyboard focus indication disappears library-wide,
+ * silently: nothing throws, nothing looks wrong until someone tabs.
+ *
+ * Verified against apps/landing's built CSS (2026-07-30): this rule emits
+ * unlayered, `.outline-none` emits inside `@layer components;@layer utilities`.
+ */
 :focus-visible:not(
     :where(input, textarea, select, [cmdk-input], [role="textbox"], [contenteditable="true"])
   ) {

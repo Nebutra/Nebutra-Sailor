@@ -77,6 +77,35 @@ export function PricingFrequencyToggle({
   ...props
 }: PricingFrequencyToggleProps) {
   const shouldReduceMotion = useReducedMotion();
+  const radioRefs = React.useRef(new Map<PricingFrequency, HTMLButtonElement>());
+
+  // The radiogroup roles were already declared here; this is the keyboard
+  // behaviour they promise. Roving tabindex + wrapping arrow keys select on move,
+  // per the ARIA radio-group pattern.
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = frequencies.length - 1;
+    let nextIndex: number | null = null;
+
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextIndex = index === lastIndex ? 0 : index + 1;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextIndex = index === 0 ? lastIndex : index - 1;
+        break;
+      default:
+        return;
+    }
+
+    const next = frequencies[nextIndex];
+    if (!next) return;
+
+    event.preventDefault();
+    setFrequency(next);
+    radioRefs.current.get(next)?.focus();
+  };
 
   return (
     <div
@@ -88,15 +117,21 @@ export function PricingFrequencyToggle({
       aria-label="Billing frequency"
       {...props}
     >
-      {frequencies.map((freq) => (
+      {frequencies.map((freq, index) => (
         // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
         <button
           type="button"
           key={freq}
+          ref={(node) => {
+            if (node) radioRefs.current.set(freq, node);
+            else radioRefs.current.delete(freq);
+          }}
           onClick={() => setFrequency(freq)}
-          className="relative px-4 py-1 text-sm capitalize focus-visible:outline-none rounded-full"
+          onKeyDown={(event) => handleKeyDown(event, index)}
+          className="relative px-4 py-1 text-sm capitalize rounded-full"
           role="radio"
           aria-checked={frequency === freq}
+          tabIndex={frequency === freq ? 0 : -1}
         >
           <span className="relative z-10">{freq}</span>
           {frequency === freq && (

@@ -154,7 +154,6 @@ export const comboboxTriggerVariants = cva(
     "text-[length:var(--combobox-font-size)] ring-offset-background",
     "transition-colors duration-micro ease-out",
     "placeholder:text-muted-foreground",
-    "focus-visible:outline-none",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "[&>span]:line-clamp-1 [&>span]:text-left",
   ].join(" "),

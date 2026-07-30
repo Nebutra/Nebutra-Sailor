@@ -40,7 +40,12 @@ describe("primitive source governance", () => {
     const componentSource = primitiveSource("button.tsx");
 
     expect(source).toContain("duration-micro");
-    expect(source).toMatch(/\bfocus-visible:outline-none\b/u);
+    // The global `:focus-visible` rule in design-tokens/static/base.css is
+    // unlayered, so it outranks every Tailwind-generated utility (which land in
+    // `@layer utilities`). A component-level `focus-visible:outline-none`
+    // therefore suppresses nothing — it only encodes the false assumption that
+    // the reset lives inside `@layer base`. Keep it out.
+    expect(source).not.toMatch(/\bfocus-visible:outline-none\b/u);
     expect(source).toMatch(/\bdisabled:pointer-events-none disabled:opacity-50\b/u);
     expect(source).toMatch(/\baria-busy:cursor-wait\b/u);
     expect(source).not.toMatch(/\bduration-150\b/u);

@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const baseButtonVariants = cva(
-  "cursor-pointer group whitespace-nowrap focus-visible:outline-none inline-flex items-center justify-center has-data-[arrow=true]:justify-between whitespace-nowrap text-sm font-medium ring-offset-background transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-60 [&_svg]:shrink-0",
+  "cursor-pointer group whitespace-nowrap inline-flex items-center justify-center has-data-[arrow=true]:justify-between whitespace-nowrap text-sm font-medium ring-offset-background transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-60 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -54,7 +54,7 @@ export const baseButtonVariants = cva(
         link: "text-primary h-auto p-0 bg-transparent rounded-none hover:bg-transparent data-[state=open]:bg-transparent",
         input: `
             justify-start font-normal hover:bg-background [&_svg]:transition-colors [&_svg]:hover:text-foreground data-[state=open]:bg-background
-            focus-visible:border-ring focus-visible:outline-none 
+            focus-visible:border-ring
             [[data-state=open]>&]:border-ring [[data-state=open]>&]:outline-none [[data-state=open]>&]:ring-[3px]
             [[data-state=open]>&]:ring-ring/30
             aria-invalid:border-destructive/60 aria-invalid:ring-destructive/10 dark:aria-invalid:border-destructive dark:aria-invalid:ring-destructive/20

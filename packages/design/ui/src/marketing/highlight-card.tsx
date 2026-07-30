@@ -188,9 +188,10 @@ export const HighlightCard = React.forwardRef<HTMLDivElement, HighlightCardProps
               <p className="text-sm opacity-90">{metricLabel}</p>
             </motion.div>
             <motion.button
+              type="button"
               variants={itemMotionVariants}
               onClick={onButtonClick}
-              className="rounded-full bg-white/30 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/40 focus-visible:outline-none"
+              className="rounded-full bg-white/30 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/40"
               aria-label={buttonText}
             >
               {buttonText}

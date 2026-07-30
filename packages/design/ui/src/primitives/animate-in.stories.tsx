@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { AnimateIn, AnimateInGroup } from "./animate-in";
+import { useState } from "react";
+import { AnimateIn, AnimateInGroup, AnimateSwap } from "./animate-in";
 
 const meta: Meta<typeof AnimateIn> = {
   title: "Primitives/AnimateIn",
@@ -67,4 +68,40 @@ export const GroupStagger: Story = {
       ))}
     </AnimateInGroup>
   ),
+};
+
+export const Swap: Story = {
+  name: "AnimateSwap — one thing replacing another",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "AnimateIn animates something arriving. AnimateSwap animates something being replaced: " +
+          "changing `swapKey` plays the outgoing exit to completion before the incoming enters " +
+          '(AnimatePresence mode="wait"), so the two never overlap and the layout never jumps. ' +
+          "Use it for a value that changes in place — a step label, a status, a selected tab's body — " +
+          "where mounting a second copy alongside the first would reflow the row.",
+      },
+    },
+  },
+  render: () => {
+    const steps = ["Cloning", "Installing", "Building", "Deployed"];
+    const [i, setI] = useState(0);
+    return (
+      <div className="flex flex-col items-start gap-4">
+        <div className="flex h-12 items-center">
+          <AnimateSwap swapKey={steps[i] as string} preset="fadeUp">
+            <Box>{steps[i]}</Box>
+          </AnimateSwap>
+        </div>
+        <button
+          type="button"
+          onClick={() => setI((n) => (n + 1) % steps.length)}
+          className="rounded-[var(--radius-md)] bg-primary px-3 py-1.5 text-primary-foreground text-sm"
+        >
+          Next step
+        </button>
+      </div>
+    );
+  },
 };

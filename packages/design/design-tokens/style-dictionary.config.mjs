@@ -893,6 +893,16 @@ function buildTailwindThemeInline() {
   --shadow-glass-lg: var(--elevation-glass-lg);
   --shadow-sheen: var(--elevation-sheen);
 
+  /* Coloured and centred elevation. shadow-ambient-glow is the one
+     non-directional step; shadow-glow-accent|-lg|-sm carry a brand-accent halo
+     so a glass card never hand-types the accent as raw rgba; shadow-glow-primary
+     tints the xl geometry with the action fill. */
+  --shadow-ambient-glow: var(--elevation-ambient-glow);
+  --shadow-glow-accent: var(--elevation-glow-accent);
+  --shadow-glow-accent-lg: var(--elevation-glow-accent-lg);
+  --shadow-glow-accent-sm: var(--elevation-glow-accent-sm);
+  --shadow-glow-primary: var(--elevation-glow-primary);
+
   /* Motion — Easing curves */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);

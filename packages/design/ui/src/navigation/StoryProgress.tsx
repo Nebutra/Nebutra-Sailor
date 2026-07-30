@@ -60,6 +60,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
           return (
             <motion.button
               key={section.id}
+              type="button"
               onClick={() => scrollToSection(section.id)}
               className={cn(
                 "relative z-10 group flex items-center gap-3",

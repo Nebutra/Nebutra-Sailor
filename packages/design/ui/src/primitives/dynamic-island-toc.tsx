@@ -120,7 +120,7 @@ function CircleProgress({ percentage, reduceMotion }: CircleProgressProps) {
         cy={size / 2}
         r={radius}
         fill="none"
-        stroke="var(--muted)"
+        stroke="hsl(var(--muted))"
         strokeWidth={strokeWidth}
       />
       <m.circle
@@ -128,7 +128,7 @@ function CircleProgress({ percentage, reduceMotion }: CircleProgressProps) {
         cy={size / 2}
         r={radius}
         fill="none"
-        stroke="var(--foreground)"
+        stroke="hsl(var(--foreground))"
         strokeWidth={strokeWidth}
         strokeDasharray={circumference}
         initial={false}

@@ -108,6 +108,28 @@ describe("auth provider boundary", () => {
     /** Permanent standalone-app exceptions (not shrink-only product debt). */
     const STANDALONE_APP_PATH_SNIPPETS = ["/sleptons/"];
 
+    /**
+     * SHRINK-ONLY product debt, kept separate from the permanent list above
+     * because the two mean different things and collapsing them loses the only
+     * signal that a decision is still open.
+     *
+     * apps/admin gained a direct better-auth session store on 2026-07-30. It may
+     * well deserve a permanent exception — admin.nebutra.com sits behind
+     * Cloudflare Access, so it is an internal control plane rather than a product
+     * surface, and the argument for routing it through @nebutra/auth is weaker
+     * than for web or auth. But that is the admin owner's call, not this test's,
+     * so it is recorded as debt until someone makes it. Either promote these to
+     * STANDALONE_APP_PATH_SNIPPETS with the reasoning, or route them through the
+     * package. Do not leave them here indefinitely.
+     *
+     * The list may only shrink: an entry that no longer violates fails the test,
+     * so a fixed file cannot keep its exemption.
+     */
+    const PENDING_DECISION = [
+      "/apps/admin/src/app/api/auth/[...all]/route.ts",
+      "/apps/admin/src/lib/auth.ts",
+    ];
+
     async function* walk(dir: string): AsyncGenerator<string> {
       const entries = await readdir(dir, { withFileTypes: true });
       for (const e of entries) {
@@ -137,6 +159,19 @@ describe("auth provider boundary", () => {
       }
     }
 
-    expect(violations, `Direct provider SDK imports:\n${violations.join("\n")}`).toEqual([]);
+    const unlisted = violations.filter((v) => !PENDING_DECISION.includes(v)).sort();
+    const stale = PENDING_DECISION.filter((v) => !violations.includes(v)).sort();
+
+    expect(
+      unlisted,
+      `Direct provider SDK imports outside the allowlist:\n${unlisted.join("\n")}\n` +
+        "Product apps must go through @nebutra/auth so the provider stays swappable.",
+    ).toEqual([]);
+
+    expect(
+      stale,
+      `PENDING_DECISION lists files that no longer import a provider SDK directly:\n${stale.join("\n")}\n` +
+        "Delete these entries — the list is shrink-only, and a fixed file must not keep its exemption.",
+    ).toEqual([]);
   });
 });

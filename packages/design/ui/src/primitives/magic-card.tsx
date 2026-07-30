@@ -71,7 +71,7 @@ export function MagicCard({
     radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
     ${gradientFrom},
     ${gradientTo},
-    var(--border) 100%
+    hsl(var(--border)) 100%
     )
   `;
   const spotlightGradient = useMotionTemplate`
@@ -132,7 +132,7 @@ export function MagicCard({
         className="bg-border pointer-events-none absolute inset-0 rounded-[inherit] duration-300 group-hover:opacity-100"
         style={{
           background: shouldReduceMotion
-            ? `linear-gradient(135deg, ${gradientFrom}, ${gradientTo}, var(--border) 100%)`
+            ? `linear-gradient(135deg, ${gradientFrom}, ${gradientTo}, hsl(var(--border)) 100%)`
             : borderGradient,
         }}
       />

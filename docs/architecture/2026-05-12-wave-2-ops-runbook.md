@@ -185,7 +185,7 @@ After every flag flip or maintenance window action, verify:
 | ADR-12 Phase 4 — write cutover | ⏸️ awaiting ops | this doc § B.3 |
 | ADR-12 Phase 5 — DROP TABLE | ⏸️ awaiting ops + explicit ack | this doc § B.4 |
 
-**Total test net**: `@nebutra/auth` 43 → **125** (+82). `@nebutra/web` ~640 → **709** (+69). `@nebutra/db` 0 → **33** (+33). `@nebutra/tenant` 18 → **25** (+7). `@nebutra/oauth-server` 0 → **7** (+7). 27 consumer files unchanged — zero regression.
+**Total test net**: `@nebutra/auth` 43 → **125** (+82). `@nebutra/web` ~640 → **709** (+69). `@nebutra/db` 0 → **33** (+33). `@nebutra/tenant` 18 → **25** (+7). `@nebutra/oauth` 0 → **7** (+7). 27 consumer files unchanged — zero regression.
 
 ---
 

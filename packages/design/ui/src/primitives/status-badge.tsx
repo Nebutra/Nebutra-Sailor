@@ -95,10 +95,10 @@ export function StatusBadge({
   ...props
 }: StatusBadgeProps) {
   const iconColorClasses = {
-    success: "text-emerald-600 dark:text-emerald-500",
-    error: "text-red-600 dark:text-red-500",
-    warning: "text-amber-600 dark:text-amber-500",
-    info: "text-blue-600 dark:text-blue-500",
+    success: "text-[hsl(var(--success-strong))]",
+    error: "text-[hsl(var(--destructive-strong))]",
+    warning: "text-[hsl(var(--warning-strong))]",
+    info: "text-info",
     default: "text-muted-foreground",
   };
 

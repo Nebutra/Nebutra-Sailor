@@ -207,7 +207,7 @@ export function Hero({
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-[var(--neutral-3)] to-[var(--neutral-2)] flex items-center justify-center overflow-hidden">
                   {/* 3D Placeholder or generic fallback */}
-                  <div className="w-3/4 h-3/4 bg-white/50 dark:bg-background/70 backdrop-blur border border-white/20 rounded-[var(--radius-xl)] shadow-[0_0_80px_rgba(0,0,0,0.1)] flex items-center justify-center -rotate-3 hover:rotate-0 transition-transform duration-700 cursor-pointer group">
+                  <div className="w-3/4 h-3/4 bg-white/50 dark:bg-background/70 backdrop-blur border border-white/20 rounded-[var(--radius-xl)] shadow-ambient-glow flex items-center justify-center -rotate-3 hover:rotate-0 transition-transform duration-700 cursor-pointer group">
                     <Play className="h-16 w-16 text-primary group-hover:scale-110 transition-transform" />
                   </div>
                 </div>
@@ -217,10 +217,10 @@ export function Hero({
         </div>
 
         {/* Scroll Indicator */}
-        <m.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
+        <AnimateIn
+          preset="fade"
+          delay={1}
+          duration={1}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
         >
           <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
@@ -231,7 +231,7 @@ export function Hero({
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
             className="w-px h-12 bg-gradient-to-b from-[var(--neutral-5)] to-transparent"
           />
-        </m.div>
+        </AnimateIn>
       </section>
     </LazyMotion>
   );

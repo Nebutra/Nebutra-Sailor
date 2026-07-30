@@ -116,11 +116,11 @@ public.<existing business>  ← untouched
 | Package | Owns | Triggered by |
 |---|---|---|
 | `@nebutra/auth` | Runtime user authentication state in Sailor's own apps | User logs in to web/landing; API gateway verifies session cookie |
-| `@nebutra/identity` | Translating any external identity claims into `CanonicalIdentity` | `@nebutra/oauth-server` issues JWT to a 3P app, that 3P app uses identity to parse it; S2S tokens; external OIDC userinfo |
+| `@nebutra/identity` | Translating any external identity claims into `CanonicalIdentity` | `@nebutra/oauth` issues JWT to a 3P app, that 3P app uses identity to parse it; S2S tokens; external OIDC userinfo |
 
 **Action**: `@nebutra/identity` currently has **zero consumers** in the repo. The hard-but-right call:
 - **Do NOT delete** — the conceptual boundary is real and we'll need it for `oauth-server` + S2S work
-- **Do force `@nebutra/oauth-server` to consume `@nebutra/identity`** in PR 4 — gives it a real consumer, validates the boundary, prevents zombie-package status
+- **Do force `@nebutra/oauth` to consume `@nebutra/identity`** in PR 4 — gives it a real consumer, validates the boundary, prevents zombie-package status
 - Until PR 4: leave it untouched but add a clear AGENTS.md "Status: pending consumer wiring in Wave 2 PR 4" note
 
 **Hard-but-right note**: easy path is "delete the orphan package." Right path is "keep the conceptual seam, give it a real job."
@@ -150,7 +150,7 @@ Per project workflow ([feedback_main_only_workflow.md](~/.claude/projects/-Users
 |---|---|---|---|---|
 | **Phase 1 — Foundation** (schema + API surface) | (a) `auth` Postgres schema + 4 new BA-plugin tables (`organization`/`member`/`invitation`/`passkey`) + `active_organization_id` column on `public.auth_sessions`; (b) `app.user_profile` table FK to `auth_users.id` + nullable `external_id` columns on existing `User`/`Organization`; (c) `AuthProvider` interface gains `signIn`/`signOut` + `capabilities` runtime probe + optional `organizations`/`passkeys`/`twoFactor`/`magicLink` capability shapes; (d) Better Auth provider wires up plugin methods through canonical interface; Clerk + NextAuth providers report `capabilities.* = false` for unsupported features | 4-6 commits | Low–Medium | Yes (drop schema + drop columns + revert package) |
 | **Phase 2 — Dev opt-in** (apps/web in dev only) | Tenant bridge middleware (`session.activeOrganizationId` → `runWithTenant(...)`); passkeys/orgs UI in `apps/web` gated by `NEXT_PUBLIC_AUTH_FEATURES` env flag; E2E tests for new flows; update `packages/iam/auth/AGENTS.md` + `packages/iam/identity/AGENTS.md` boundary docs | 3-5 commits | Medium | Yes (env flag off) |
-| **Phase 3 — Prod rollout + cleanup** | Production feature flag (`@nebutra/feature-flags`) for gradual % rollout; rewire `@nebutra/oauth-server` to consume `@nebutra/identity`; absorb the 5 Clerk-direct-import files in `apps/web` into the canonical interface where possible | 3-5 commits | Medium | Yes (flag off + revert) |
+| **Phase 3 — Prod rollout + cleanup** | Production feature flag (`@nebutra/feature-flags`) for gradual % rollout; rewire `@nebutra/oauth` to consume `@nebutra/identity`; absorb the 5 Clerk-direct-import files in `apps/web` into the canonical interface where possible | 3-5 commits | Medium | Yes (flag off + revert) |
 
 **Hard rules (D6 invariants — apply per-commit, not per-phase)**:
 - Every commit ships tests-first (see "TDD Closed Loop" section below)
@@ -366,7 +366,7 @@ If a commit can't articulate the tests-first ordering, it's reverted. Same stand
 - [x] Phase 3.2 D4 contract test (oauth-server ⇄ identity, first real consumer of @nebutra/identity) — `f8b0d76c`
 - [x] Phase 3.3 Clerk direct-import audit + provider env centralization — `b27f8aa1` (11 call sites collapsed to `getConfiguredAuthProvider()`)
 - [x] Phase 3.4 Invitation consolidation ADR-12 — `fc7fe60b` (separate ADR file)
-- [x] **Phase 3 COMPLETE** — 117 tests in `@nebutra/auth` (+7 config), 698 in `@nebutra/web`, 7 in `@nebutra/oauth-server` (was 0, identity now has its first consumer)
+- [x] **Phase 3 COMPLETE** — 117 tests in `@nebutra/auth` (+7 config), 698 in `@nebutra/web`, 7 in `@nebutra/oauth` (was 0, identity now has its first consumer)
 - [ ] Phase 3.5 — production gradual rollout: configure real `@nebutra/feature-flags` evaluator (Redis or DB-backed) and flip `auth.organizations` to a small % cohort — pending operations decision
 - [ ] ADR-12 invitation migration Phase 1+2 dispatched (additive schema + BA databaseHooks) — see `2026-05-12-invitation-table-consolidation.md`
 

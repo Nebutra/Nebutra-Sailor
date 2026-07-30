@@ -147,6 +147,7 @@ export * from "./confetti";
 export * from "./confirm-dialog";
 export * from "./context-card";
 export * from "./context-menu";
+export * from "./control-glyph";
 export * from "./copy-button";
 export * from "./data-list";
 export * from "./description";

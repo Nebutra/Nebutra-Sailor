@@ -8,6 +8,7 @@
  */
 import React from "react";
 import { cn } from "../utils/cn";
+import { CheckGlyph, IndeterminateGlyph } from "./control-glyph";
 // =============================================================================
 // Types
 // =============================================================================
@@ -104,26 +105,7 @@ export const Checkbox = ({
         className="sr-only"
       />
       <span className={getInputClasses(checked, disabled, indeterminate)}>
-        <svg aria-hidden="true" className="shrink-0" height="16" viewBox="0 0 20 20" width="16">
-          {indeterminate ? (
-            <line
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              x1="5"
-              x2="15"
-              y1="10"
-              y2="10"
-            />
-          ) : (
-            <path
-              d="M14 7L8.5 12.5L6 10"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-          )}
-        </svg>
+        {indeterminate ? <IndeterminateGlyph /> : <CheckGlyph />}
       </span>
       {children && <span className="ml-2">{children}</span>}
     </label>

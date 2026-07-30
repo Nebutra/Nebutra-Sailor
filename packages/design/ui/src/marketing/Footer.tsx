@@ -176,7 +176,7 @@ export function Footer({
                       />
                       <button
                         type="button"
-                        className="absolute right-1 p-1.5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-colors focus:outline-none"
+                        className="absolute right-1 p-1.5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-colors"
                         aria-label="Submit newsletter subscription"
                       >
                         <ArrowRight className="w-4 h-4" />

@@ -883,6 +883,19 @@ blurred backdrop), `shadow-sheen` (top edge on solid inverted fills). Base takes
 one step, hover the next. Each has a real dark-mode value — do not reach for
 `hsl(var(--foreground))` in a shadow, it is near-white in dark mode.
 
+Three further steps exist for the cases a directional neutral shadow cannot express:
+
+| Step | Shape | Use for |
+|---|---|---|
+| `shadow-ambient-glow` | centred, no offset, 80px blur | a translucent panel that needs separation from its backdrop without reading as lifted. The only non-directional step. Inverts to a low-alpha *light* halo in dark mode, because a black halo has nothing to darken against a dark surround. |
+| `shadow-glow-accent` / `-lg` / `-sm` | pool + `--brand-accent` halo | fixed dark-glass surfaces. `-lg` is the hover escalation, `-sm` is the halo alone for a chip or icon plate. The pool is deliberately identical in light and dark: these surfaces present the same dark glass in both themes. |
+| `shadow-glow-primary` | `xl` geometry tinted with `--primary` at 5% | the emphasised card in a set, where the lift should read as coloured. |
+
+A coloured shadow never hand-types the accent. `--brand-accent` is a complete
+colour, not HSL channels, so alpha comes from
+`color-mix(in srgb, var(--brand-accent) 8%, transparent)` — `hsl(var(--brand-accent)/.08)`
+is invalid and voids the whole declaration.
+
 **Detecting this:** `node scripts/audit-css-var-types.mjs <built .css>` resolves
 every `var()` against the values the stylesheet defines and asks the browser's
 own parser whether the result survives. It needs **built** CSS — Tailwind

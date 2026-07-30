@@ -44,12 +44,30 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 }) => {
   const isCenter = position === 0;
 
+  // Clicking a card brings it to the centre — the only way to advance the deck.
+  // `handleMove(0)` is a no-op, so the centre card keeps the same click semantics
+  // it always had, but it is taken out of the tab order rather than left as a tab
+  // stop that does nothing. Enter/Space now work because this is a real <button>
+  // (same whole-card-as-button shape as patterns/gallery-card.tsx).
+  const activate = () => handleMove(position);
+
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-    <div
-      onClick={() => handleMove(position)}
+    <button
+      type="button"
+      tabIndex={isCenter ? -1 : 0}
+      aria-current={isCenter ? "true" : undefined}
+      aria-label={`Show testimonial from ${testimonial.by}`}
+      onClick={activate}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activate();
+        }
+      }}
       className={cn(
-        "absolute left-1/2 top-1/2 cursor-pointer border-2 p-8 transition-[background-color,border-color,box-shadow,color,transform] duration-500 ease-in-out motion-reduce:transition-colors",
+        // `block text-left` restates what a <div> gave for free — a real <button>
+        // is inline-block and centres its text. Same rendering, real semantics.
+        "absolute left-1/2 top-1/2 block cursor-pointer border-2 p-8 text-left transition-[background-color,border-color,box-shadow,color,transform] duration-500 ease-in-out motion-reduce:transition-colors",
         isCenter
           ? "z-10 bg-primary text-primary-foreground border-primary"
           : "z-0 bg-card text-card-foreground border-border hover:border-primary/50",
@@ -113,7 +131,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       >
         - {testimonial.by}
       </p>
-    </div>
+    </button>
   );
 };
 
@@ -203,7 +221,6 @@ export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({
           className={cn(
             "flex h-14 w-14 items-center justify-center text-2xl transition-colors",
             "bg-background border-2 border-border hover:bg-primary hover:text-primary-foreground",
-            "focus-visible:outline-none",
           )}
           aria-label="Previous testimonial"
         >
@@ -215,7 +232,6 @@ export const StaggerTestimonials: React.FC<StaggerTestimonialsProps> = ({
           className={cn(
             "flex h-14 w-14 items-center justify-center text-2xl transition-colors",
             "bg-background border-2 border-border hover:bg-primary hover:text-primary-foreground",
-            "focus-visible:outline-none",
           )}
           aria-label="Next testimonial"
         >

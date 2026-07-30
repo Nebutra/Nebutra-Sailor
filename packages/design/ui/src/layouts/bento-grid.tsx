@@ -81,13 +81,10 @@ function BentoCard({ item }: BentoCardProps) {
       className={cn(
         "group relative p-4 rounded-[var(--radius-xl)] overflow-hidden transition-[box-shadow,transform] duration-300 motion-reduce:transition-none motion-reduce:transform-none",
         "border border-[var(--neutral-6)] bg-white dark:bg-black",
-        "hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:hover:shadow-[0_2px_12px_rgba(255,255,255,0.03)]",
+        "hover:shadow-ambient-sm",
         "hover:-translate-y-0.5 will-change-transform",
         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
-        item.hasPersistentHover && [
-          "shadow-[0_2px_12px_rgba(0,0,0,0.03)] -translate-y-0.5",
-          "dark:shadow-[0_2px_12px_rgba(255,255,255,0.03)]",
-        ],
+        item.hasPersistentHover && ["shadow-ambient-sm -translate-y-0.5"],
       )}
     >
       {/* Background pattern */}

@@ -29,7 +29,7 @@ function CapturedMobileScreen() {
       </div>
       <div className="rounded-[var(--radius-xl)] border border-border bg-[var(--neutral-2)] p-5">
         <div className="h-3 w-28 rounded-[var(--radius-full)] bg-[var(--neutral-12)]" />
-        <div className="mt-5 h-2 w-48 rounded-[var(--radius-full)] bg-[var(--blue-9)]" />
+        <div className="mt-5 h-2 w-48 rounded-[var(--radius-full)] bg-primary" />
         <div className="mt-3 h-2 w-32 rounded-[var(--radius-full)] bg-[var(--neutral-7)]" />
       </div>
       <div className="grid grid-cols-2 gap-3">

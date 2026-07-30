@@ -16,7 +16,7 @@ export const toggleGroupVariants = cva(
 );
 
 export const toggleGroupItemVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium ring-offset-background transition-[background-color,box-shadow,color,opacity] duration-flow ease-out motion-reduce:transition-none focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium ring-offset-background transition-[background-color,box-shadow,color,opacity] duration-flow ease-out motion-reduce:transition-none disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm",
   {
     variants: {
       variant: {

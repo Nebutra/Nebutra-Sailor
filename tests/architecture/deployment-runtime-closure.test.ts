@@ -124,6 +124,13 @@ describe("production runtime closure", () => {
     expect(wrangler).toContain('compatibility_flags = ["nodejs_compat"]');
     expect(wrangler).toContain("[observability]");
     expect(wrangler).toContain("head_sampling_rate = 1");
+
+    // wrangler.toml is kept for the Hyperdrive binding, the retention cron and
+    // the vars the full gateway expects, so DEPLOY_TARGET_GATEWAY can select
+    // cloudflare-workers again once the entry is small enough to start. It must
+    // say out loud that deploying it today fails at startup validation —
+    // otherwise the next person reads a complete-looking config and tries.
+    expect(wrangler).toContain("NOT DEPLOYED");
   });
 
   it("gates the Cloudflare Workers gateway deploy behind the per-service selector", () => {
@@ -138,12 +145,29 @@ describe("production runtime closure", () => {
     expect(workflow).toContain("cloudflare/wrangler-action");
     expect(workflow).toContain("CLOUDFLARE_API_TOKEN secret is not set");
     expect(workflow).toContain("CLOUDFLARE_ACCOUNT_ID secret is not set");
-    expect(workflow).toContain("AI_SERVICE_URL repository variable is not set");
-    expect(workflow).toContain("SERVICE_SECRET secret is not set");
-    expect(workflow).toContain("GATEWAY_SHARED_SECRET secret is not set");
+
+    // The edge entry, not the full gateway. nebutra-gateway was deleted on
+    // 2026-07-28 — bundled for Workers it is the whole Node backend, 25MB and
+    // 457ms of startup CPU against a ~400ms budget, so it could not deploy and
+    // no fix could reach it. api.nebutra.com is now served by
+    // nebutra-gateway-edge, which forwards to ECS Origin.
+    //
+    // So the credentials this workflow needs are Cloudflare's plus Upstash, for
+    // the per-IP flood limit the edge shares across colos. It deliberately does
+    // NOT need AI_SERVICE_URL, SERVICE_SECRET or GATEWAY_SHARED_SECRET: every
+    // decision keyed on who the caller is stays at the origin, where the logic
+    // already lives exactly once. This test asserted those three until
+    // 2026-07-30 and had been failing since the split, which is also why nobody
+    // could tell that CI was red for a different reason entirely.
+    expect(workflow).toContain("UPSTASH_REDIS_REST_URL secret is not set");
+    expect(workflow).toContain("UPSTASH_REDIS_REST_TOKEN secret is not set");
+    expect(workflow).not.toContain("AI_SERVICE_URL");
+    expect(workflow).not.toContain("GATEWAY_SHARED_SECRET");
+
     expect(workflow).toContain("Prepare Worker runtime bindings");
     expect(workflow).toContain("Sync Worker runtime bindings");
-    expect(workflow).toContain("secret bulk .wrangler-secrets.json --config wrangler.toml");
+    expect(workflow).toContain("secret bulk .wrangler-secrets.json --config wrangler.edge.toml");
+    expect(workflow).toContain("deploy --config wrangler.edge.toml");
     expect(workflow).toContain("backends/gateway");
     expect(workflow).not.toContain("DEPLOY_TARGET == '");
   });

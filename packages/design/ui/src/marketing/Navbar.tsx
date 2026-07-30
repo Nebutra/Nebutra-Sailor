@@ -11,6 +11,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { Bell, ChevronDown, Menu, Cross as X } from "@nebutra/icons";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { AnimateIn } from "../primitives/animate-in";
 import {
   AnimatePresence,
   domAnimation,
@@ -18,6 +19,7 @@ import {
   m,
   useReducedMotion,
 } from "../shared/animation/motion";
+import { motionDurations } from "../tokens/motion";
 import { cn } from "../utils";
 import type { NavbarProps, NavLink } from "./types";
 
@@ -100,6 +102,23 @@ export function Navbar({
     };
   }, [isMobileMenuOpen]);
 
+  // Escape closes the drawer. NOTE: this drawer is still hand-rolled and has no
+  // focus trap — see docs/design-system/ui-compliance-audit.md §2.4. Escape is
+  // added here because it is purely additive; `role="dialog" aria-modal` is
+  // deliberately NOT added, because claiming a modal without trapping focus lies
+  // to assistive tech. The real fix is composing Sheet, which changes the slide
+  // motion and needs a visual review.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMobileMenuOpen(false);
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isMobileMenuOpen]);
+
   const dismissAnnouncement = () => {
     try {
       window.localStorage.setItem(ANNOUNCEMENT_STORAGE_KEY, "true");
@@ -152,7 +171,7 @@ export function Navbar({
               {activeAnnouncement.dismissible !== false && (
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-[var(--radius-md)] p-1.5 hover:bg-white/20 transition-colors focus:outline-none"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-[var(--radius-md)] p-1.5 hover:bg-white/20 transition-colors"
                   onClick={dismissAnnouncement}
                   aria-label="Dismiss announcement"
                 >
@@ -174,10 +193,7 @@ export function Navbar({
         >
           <div className="flex items-center gap-8">
             {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center gap-2 group focus:outline-none rounded-[var(--radius-md)]"
-            >
+            <Link href="/" className="flex items-center gap-2 group rounded-[var(--radius-md)]">
               {/* Simple logo placeholder - swap with actual Logo module */}
               <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-primary to-[var(--blue-5)] shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
                 <span className="text-white font-bold text-lg leading-none">
@@ -195,7 +211,7 @@ export function Navbar({
                 <div key={link.href} className="relative group">
                   <a
                     href={link.href}
-                    className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors focus:outline-none rounded-[var(--radius-md)] px-2 py-1"
+                    className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors rounded-[var(--radius-md)] px-2 py-1"
                   >
                     {link.label}
                     {link.children && (
@@ -218,9 +234,10 @@ export function Navbar({
             {showLocaleSwitcher && (
               <button
                 type="button"
+                aria-label={`Change language, currently ${locale}`}
                 className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground uppercase tracking-wider transition-colors px-2 py-1 rounded-[var(--radius-md)] hover:bg-muted"
               >
-                {locale} <ChevronDown className="h-3 w-3" />
+                {locale} <ChevronDown className="h-3 w-3" aria-hidden="true" />
               </button>
             )}
 
@@ -229,7 +246,7 @@ export function Navbar({
               <a
                 href={cta.href}
                 className={cn(
-                  "inline-flex h-9 items-center justify-center rounded-[var(--radius-md)] px-4 text-sm font-medium shadow-sm transition-colors focus:outline-none",
+                  "inline-flex h-9 items-center justify-center rounded-[var(--radius-md)] px-4 text-sm font-medium shadow-sm transition-colors",
                   cta.variant === "outline"
                     ? "border border-[var(--neutral-5)] bg-transparent text-foreground hover:bg-muted"
                     : "bg-primary text-white hover:bg-primary/90",
@@ -245,7 +262,7 @@ export function Navbar({
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 text-muted-foreground hover:bg-muted hover:text-foreground focus:outline-none transition-colors"
+              className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
               aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -263,25 +280,18 @@ export function Navbar({
           {isMobileMenuOpen && (
             <>
               {/* Backdrop */}
-              <m.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
+              <AnimateIn
+                preset="fade"
+                duration={motionDurations.flow / 1000}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="fixed inset-0 z-40 bg-[var(--neutral-12)]/40 backdrop-blur-sm dark:bg-background/60 md:hidden"
               />
 
-              {/* Drawer */}
-              <m.div
-                initial={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
-                animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
-                exit={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
-                transition={
-                  shouldReduceMotion
-                    ? { duration: 0 }
-                    : { type: "spring", damping: 25, stiffness: 200 }
-                }
+              {/* Drawer — reduced-motion fallback lives inside AnimateIn */}
+              <AnimateIn
+                preset="slideFromRight"
+                role="dialog"
+                aria-label="Main menu"
                 className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white dark:bg-background shadow-2xl ring-1 ring-black/10 overflow-y-auto p-6 md:hidden flex flex-col"
               >
                 <div className="flex items-center justify-between mb-8">
@@ -334,9 +344,10 @@ export function Navbar({
                         <span className="text-sm font-medium text-muted-foreground">Language</span>
                         <button
                           type="button"
+                          aria-label={`Change language, currently ${locale}`}
                           className="flex items-center gap-1.5 text-sm font-medium uppercase text-foreground bg-muted px-3 py-1.5 rounded-[var(--radius-md)]"
                         >
-                          {locale} <ChevronDown className="h-4 w-4" />
+                          {locale} <ChevronDown className="h-4 w-4" aria-hidden="true" />
                         </button>
                       </div>
                     )}
@@ -357,7 +368,7 @@ export function Navbar({
                     )}
                   </div>
                 </div>
-              </m.div>
+              </AnimateIn>
             </>
           )}
         </AnimatePresence>

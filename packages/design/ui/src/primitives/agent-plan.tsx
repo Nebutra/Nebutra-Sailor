@@ -10,6 +10,7 @@ import {
 import type React from "react";
 import { useMemo, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "../shared/animation/motion";
+import { easings, motionDurations } from "../tokens/motion";
 import { cn } from "../utils";
 
 // =============================================================================
@@ -135,7 +136,7 @@ const StatusBadge: React.FC<{ status: TaskStatus }> = ({ status }) => {
       className={cn("rounded px-1.5 py-0.5 text-xs", colorClasses[status])}
       initial={{ scale: 1 }}
       animate={{ scale: [1, 1.08, 1] }}
-      transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
+      transition={{ duration: 0.35, ease: easings.spring }}
       key={status}
     >
       {status}
@@ -290,7 +291,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
       opacity: 1,
       overflow: "visible" as const,
       transition: {
-        duration: 0.25,
+        duration: motionDurations.reveal / 1000,
         staggerChildren: prefersReducedMotion ? 0 : 0.05,
         ease: [0.2, 0.65, 0.3, 0.9] as const,
       },
@@ -313,7 +314,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
       <motion.div
         className="overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card shadow"
         initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }}
+        animate={{ opacity: 1, y: 0, transition: { duration: motionDurations.reveal / 1000 } }}
       >
         <LayoutGroup>
           <div className="overflow-hidden p-4">

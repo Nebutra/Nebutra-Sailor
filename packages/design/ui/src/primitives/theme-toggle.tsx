@@ -231,7 +231,6 @@ export const ThemeToggle = ({
         "inline-flex size-[var(--theme-toggle-size)] shrink-0 items-center justify-center rounded-[var(--theme-toggle-radius)] p-[var(--theme-toggle-padding)] text-foreground",
         "transition-[background-color,color,box-shadow] duration-[var(--theme-toggle-duration)] ease-[var(--theme-toggle-easing)]",
         "hover:bg-accent hover:text-accent-foreground",
-        "focus-visible:outline-none",
         "disabled:pointer-events-none disabled:opacity-50",
         "motion-reduce:transition-none",
         className,

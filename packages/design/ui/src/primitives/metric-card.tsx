@@ -71,8 +71,8 @@ export function MetricCard({
   };
 
   const trendColors = {
-    up: "text-emerald-600 dark:text-emerald-400",
-    down: "text-red-600 dark:text-red-400",
+    up: "text-[hsl(var(--success-strong))]",
+    down: "text-[hsl(var(--destructive-strong))]",
     neutral: "text-muted-foreground",
   };
 
@@ -154,9 +154,9 @@ export interface StatItemProps {
 
 export function StatItem({ label, value, color = "neutral", className }: StatItemProps) {
   const colorClasses = {
-    success: "bg-emerald-500",
-    warning: "bg-amber-500",
-    error: "bg-red-500",
+    success: "bg-success",
+    warning: "bg-warning",
+    error: "bg-destructive",
     info: "bg-info",
     neutral: "bg-muted-foreground",
   };

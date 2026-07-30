@@ -196,10 +196,10 @@ export function Stepper({
                   "relative flex items-center justify-center rounded-full border-2 transition-[background-color,border-color,box-shadow,color,opacity,transform]",
                   config.icon,
                   status === "completed" && "border-primary bg-primary text-white",
-                  status === "current" && "border-primary bg-white text-primary dark:bg-slate-900",
-                  status === "pending" &&
-                    "border-slate-300 bg-white text-slate-400 dark:border-slate-600 dark:bg-slate-900",
-                  status === "error" && "border-red-500 bg-red-500 text-white",
+                  status === "current" && "border-primary bg-background text-primary",
+                  status === "pending" && "border-neutral-6 bg-background text-muted-foreground",
+                  status === "error" &&
+                    "border-destructive bg-destructive text-destructive-foreground",
                   clickable && "cursor-pointer hover:scale-105",
                 )}
               >
@@ -216,7 +216,7 @@ export function Stepper({
                   className={cn(
                     "transition-colors",
                     orientation === "horizontal" ? cn(config.connector, "mx-2") : "my-2 h-8 w-0.5",
-                    index < currentStep ? "bg-primary" : "bg-slate-200 dark:bg-slate-700",
+                    index < currentStep ? "bg-primary" : "bg-neutral-4",
                   )}
                 />
               )}
@@ -229,8 +229,8 @@ export function Stepper({
                   "font-medium",
                   config.text,
                   status === "completed" && "text-primary",
-                  status === "current" && "text-slate-900 dark:text-slate-100",
-                  status === "pending" && "text-slate-400 dark:text-slate-500",
+                  status === "current" && "text-foreground",
+                  status === "pending" && "text-muted-foreground",
                 )}
               >
                 {step.title}
@@ -422,7 +422,7 @@ export function ProgressStepper({
   return (
     <div className={cn("space-y-2", className)}>
       {/* 进度条 */}
-      <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-4">
         <div
           className="h-full rounded-full bg-primary transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300"
           style={{ width: `${progress}%` }}

@@ -3,12 +3,18 @@
 import { brandSpring, emerge, flow } from "@nebutra/brand";
 import type * as React from "react";
 import {
+  AnimatePresence,
   domAnimation,
   LazyMotion,
   m,
   useReducedMotion as useFramerReducedMotion,
 } from "../shared/animation/motion";
-import { motionVariants, staggerContainers, viewportSettings } from "../tokens/motion";
+import {
+  motionDurations,
+  motionVariants,
+  staggerContainers,
+  viewportSettings,
+} from "../tokens/motion";
 
 // ─────────────────────────────────────────────────────────────
 // Fallback variant for `fadeIn` (not present in motionVariants)
@@ -46,9 +52,67 @@ const PRESETS = {
   fadeUp: motionVariants.fadeInUp,
   /** Scale in */
   scale: motionVariants.scaleIn,
+  /**
+   * Keyed content swap — short, symmetric, blur-softened. Rises in, sinks out.
+   * Shorter and shallower than `emerge` on purpose: a swap replaces content the
+   * reader is already looking at, so it must resolve inside the reveal rail.
+   * Pair with `AnimateSwap`.
+   */
+  swap: {
+    initial: { opacity: 0, y: 10, filter: "blur(4px)" },
+    animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+    exit: { opacity: 0, y: -10, filter: "blur(4px)" },
+    transition: { duration: motionDurations.reveal / 1000 },
+  },
+  /** Off-canvas panel entering from the right edge (drawer, sheet). */
+  slideFromRight: {
+    initial: { x: "100%" },
+    animate: { x: 0 },
+    exit: { x: "100%" },
+    transition: brandSpring.default,
+  },
+  /** Off-canvas panel entering from the left edge. */
+  slideFromLeft: {
+    initial: { x: "-100%" },
+    animate: { x: 0 },
+    exit: { x: "-100%" },
+    transition: brandSpring.default,
+  },
+  /** Off-canvas panel entering from the top edge (banner, command bar). */
+  slideFromTop: {
+    initial: { y: "-100%" },
+    animate: { y: 0 },
+    exit: { y: "-100%" },
+    transition: brandSpring.default,
+  },
+  /** Off-canvas panel entering from the bottom edge (mobile action sheet). */
+  slideFromBottom: {
+    initial: { y: "100%" },
+    animate: { y: 0 },
+    exit: { y: "100%" },
+    transition: brandSpring.default,
+  },
 } as const;
 
 type Preset = keyof typeof PRESETS;
+
+/**
+ * DOM attributes forwarded to the underlying element.
+ *
+ * Without this, anything needing `role`, `aria-*`, `onClick` or `onKeyDown` —
+ * every dialog, drawer and tabpanel — has to drop out of `AnimateIn` and
+ * hand-roll its own `m.div`, which is how reduced-motion branching and raw
+ * duration numbers keep reappearing at call sites.
+ *
+ * The four drag/animation handlers are omitted because framer-motion redefines
+ * them with incompatible signatures. `style` is omitted because framer's
+ * `MotionStyle` rejects `undefined` under `exactOptionalPropertyTypes`, and an
+ * animated element's static styling belongs in `className` anyway.
+ */
+type ForwardedDivProps = Omit<
+  React.ComponentPropsWithoutRef<"div">,
+  "children" | "className" | "style" | "onAnimationStart" | "onDrag" | "onDragStart" | "onDragEnd"
+>;
 
 type MotionDivProps = React.ComponentProps<typeof m.div>;
 type MotionInitial = NonNullable<MotionDivProps["initial"]>;
@@ -68,8 +132,9 @@ function MotionDiv(props: MotionDivProps) {
 // AnimateIn
 // ─────────────────────────────────────────────────────────────
 
-export interface AnimateInProps {
-  children: React.ReactNode;
+export interface AnimateInProps extends ForwardedDivProps {
+  /** Optional: a purely decorative animated surface (a backdrop) has no content. */
+  children?: React.ReactNode;
   preset?: Preset;
   delay?: number;
   duration?: number;
@@ -92,7 +157,15 @@ export interface AnimateInProps {
 // Next.js build then mis-infers optional props as required `any`. Use the
 // `props: AnimateInProps` form and destructure inside.
 export function AnimateIn(props: AnimateInProps) {
-  const { children, preset = "emerge", delay = 0, duration, inView = false, className } = props;
+  const {
+    children,
+    preset = "emerge",
+    delay = 0,
+    duration,
+    inView = false,
+    className,
+    ...rest
+  } = props;
   const shouldReduce = useFramerReducedMotion();
   const base = PRESETS[preset] || PRESETS.emerge;
 
@@ -111,6 +184,7 @@ export function AnimateIn(props: AnimateInProps) {
   if (inView) {
     return (
       <MotionDiv
+        {...rest}
         className={className}
         initial={initial}
         whileInView={animate}
@@ -125,6 +199,7 @@ export function AnimateIn(props: AnimateInProps) {
 
   return (
     <MotionDiv
+      {...rest}
       className={className}
       initial={initial}
       animate={animate}
@@ -133,6 +208,46 @@ export function AnimateIn(props: AnimateInProps) {
     >
       {children}
     </MotionDiv>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// AnimateSwap — keyed content exchange
+// ─────────────────────────────────────────────────────────────
+
+export interface AnimateSwapProps extends AnimateInProps {
+  /**
+   * Identity of the content currently rendered. When it changes, the outgoing
+   * content plays its exit and is fully unmounted before the incoming content
+   * enters (`AnimatePresence mode="wait"`).
+   */
+  swapKey: React.Key;
+}
+
+/**
+ * AnimateSwap — swap one piece of content for another, one at a time.
+ *
+ * `AnimateIn` can only animate an entrance: it has no `AnimatePresence`, so its
+ * `exit` never plays and a keyed replacement cross-fades on top of itself. Any
+ * tab panel, step body or filtered result set therefore had to hand-roll
+ * `AnimatePresence mode="wait"` plus a raw `m.div`. This is that pattern, once.
+ *
+ * Reduced motion is inherited from `AnimateIn`: opacity only, no travel, no blur.
+ *
+ * @example
+ * <AnimateSwap swapKey={activeTab} preset="swap" role="tabpanel">
+ *   {panelFor(activeTab)}
+ * </AnimateSwap>
+ */
+export function AnimateSwap(props: AnimateSwapProps) {
+  const { swapKey, ...animateInProps } = props;
+
+  return (
+    <LazyMotion features={domAnimation}>
+      <AnimatePresence mode="wait">
+        <AnimateIn key={swapKey} {...animateInProps} />
+      </AnimatePresence>
+    </LazyMotion>
   );
 }
 

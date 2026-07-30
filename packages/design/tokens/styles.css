@@ -280,6 +280,14 @@
     inset 0 1px 0 rgb(255 255 255 / 0.5), 0 4px 8px -4px hsl(222 47% 11% / 0.06),
     0 24px 56px -18px hsl(222 47% 11% / 0.16); /** Ambient-lg plus a lit top edge. */
   --elevation-sheen: inset 0 1px 0 rgb(255 255 255 / 0.2); /** Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one. */
+  --elevation-ambient-glow: 0 0 80px hsl(222 47% 11% / 0.1); /** Centred offsetless halo — the only non-directional step on the ramp. For a translucent panel that needs separation from its backdrop without reading as lifted off a surface. In dark mode this inverts to a low-alpha light halo, because a black halo cannot read against a dark surround. */
+  --elevation-glow-accent:
+    0 8px 32px rgb(0 0 0 / 0.4), 0 0 60px color-mix(in srgb, var(--brand-accent) 8%, transparent); /** Directional pool plus a wide brand-accent halo, for fixed dark-glass surfaces. The pool is theme-invariant black on purpose: the surfaces that carry an accent halo present the same dark glass in both themes, so a theme-flipping pool would lighten in light mode exactly where the panel needs the most separation. Accent sourced from --brand-accent, so it follows the light and dark accent values. */
+  --elevation-glow-accent-lg:
+    0 12px 48px rgb(0 0 0 / 0.5), 0 0 80px color-mix(in srgb, var(--brand-accent) 12%, transparent); /** Hover escalation of glow-accent. Deeper pool, wider and stronger accent halo. */
+  --elevation-glow-accent-sm: 0 0 20px color-mix(in srgb, var(--brand-accent) 10%, transparent); /** Accent halo alone, no pool. For a small accent-tinted chip or icon plate inside a glow-accent surface. */
+  --elevation-glow-primary:
+    0 20px 25px -5px hsl(var(--primary) / 0.05), 0 8px 10px -6px hsl(var(--primary) / 0.05); /** xl geometry tinted with the action fill at 5 percent. For the emphasised card in a set (a highlighted plan) where the lift should read as coloured rather than neutral. */
 }
 
 :root {
@@ -594,6 +602,14 @@
     inset 0 1px 0 rgb(255 255 255 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.4),
     0 24px 56px -18px rgb(0 0 0 / 0.6); /** Ambient-lg plus a lit top edge. */
   --elevation-sheen: inset 0 1px 0 rgb(0 0 0 / 0.12); /** Top-edge sheen for solid inverted fills (bg-foreground). Lifts with light on a dark fill, with shade on a light one. */
+  --elevation-ambient-glow: 0 0 80px rgb(255 255 255 / 0.06); /** Centred offsetless halo — the only non-directional step on the ramp. Inverted from the light value: a black halo has nothing to darken against a dark surround, so the halo becomes light. Keep the alpha low; this is separation, not a bloom. */
+  --elevation-glow-accent:
+    0 8px 32px rgb(0 0 0 / 0.4), 0 0 60px color-mix(in srgb, var(--brand-accent) 8%, transparent); /** Identical to the light value by design. The pool is theme-invariant black because glow-accent surfaces are fixed dark glass in both themes; only the accent halo shifts, via --brand-accent. */
+  --elevation-glow-accent-lg:
+    0 12px 48px rgb(0 0 0 / 0.5), 0 0 80px color-mix(in srgb, var(--brand-accent) 12%, transparent); /** Hover escalation of glow-accent. Identical to the light value by design. */
+  --elevation-glow-accent-sm: 0 0 20px color-mix(in srgb, var(--brand-accent) 10%, transparent); /** Accent halo alone, no pool. Identical to the light value by design. */
+  --elevation-glow-primary:
+    0 20px 25px -5px hsl(var(--primary) / 0.05), 0 8px 10px -6px hsl(var(--primary) / 0.05); /** xl geometry tinted with the action fill at 5 percent. Same reference as light; --primary carries the dark channels. */
 }
 
 .dark {
@@ -821,6 +837,16 @@
   --shadow-glass-lg: var(--elevation-glass-lg);
   --shadow-sheen: var(--elevation-sheen);
 
+  /* Coloured and centred elevation. shadow-ambient-glow is the one
+     non-directional step; shadow-glow-accent|-lg|-sm carry a brand-accent halo
+     so a glass card never hand-types the accent as raw rgba; shadow-glow-primary
+     tints the xl geometry with the action fill. */
+  --shadow-ambient-glow: var(--elevation-ambient-glow);
+  --shadow-glow-accent: var(--elevation-glow-accent);
+  --shadow-glow-accent-lg: var(--elevation-glow-accent-lg);
+  --shadow-glow-accent-sm: var(--elevation-glow-accent-sm);
+  --shadow-glow-primary: var(--elevation-glow-primary);
+
   /* Motion — Easing curves */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -897,6 +923,22 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+ * MUST STAY UNLAYERED. Do not wrap this rule in `@layer base` (or any layer).
+ *
+ * Tailwind v4's `@import "tailwindcss"` puts every generated utility — including
+ * every `outline-none` / `focus-visible:outline-none` a component might carry —
+ * inside `@layer utilities`. Per the cascade-layers spec, unlayered rules beat
+ * layered ones regardless of specificity or source order, which is the only
+ * reason this single declaration can supply the keyboard focus ring for the
+ * whole design system without each component opting in.
+ *
+ * Move it into a layer and keyboard focus indication disappears library-wide,
+ * silently: nothing throws, nothing looks wrong until someone tabs.
+ *
+ * Verified against apps/landing's built CSS (2026-07-30): this rule emits
+ * unlayered, `.outline-none` emits inside `@layer components;@layer utilities`.
+ */
 :focus-visible:not(
     :where(input, textarea, select, [cmdk-input], [role="textbox"], [contenteditable="true"])
   ) {
