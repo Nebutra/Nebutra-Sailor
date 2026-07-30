@@ -51,6 +51,8 @@ const endpoints = [
     id: "studio-sanity-host",
     url: "https://nebutra.sanity.studio",
     okStatuses: [200],
+    // Sanity's own hosting bounces an unauthenticated visit to its login flow.
+    allowFinalHosts: ["www.sanity.io"],
   },
   {
     id: "landing-www-alias",
@@ -164,9 +166,31 @@ async function checkEndpoint(endpoint, options) {
         ok: endpoint.okStatuses.includes(response.status),
       };
 
+      // Where the request ended up, not just what it ended up returning.
+      //
+      // Redirects are followed, so a host that nothing serves still reports 200:
+      // nginx has no server_name for it, the request falls through to the first
+      // 443 block, and its `301 → https://nebutra.com$request_uri` hands back
+      // the marketing home page. That is exactly how design.nebutra.com passed
+      // this check while the design system was unreachable — the whole point of
+      // the check being that someone would notice.
+      const expectedHost = new URL(endpoint.url).host;
+      const finalHost = new URL(response.url).host;
+      // `alias: true` means the endpoint exists in order to redirect somewhere
+      // else (www → apex, studio.nebutra.com → Sanity), so landing off-host is
+      // the passing case for those.
+      const hostAllowed =
+        endpoint.alias === true ||
+        finalHost === expectedHost ||
+        (endpoint.allowFinalHosts ?? []).includes(finalHost);
+
       if (!result.ok) {
         await discardResponseBody(response);
         lastError = `expected ${endpoint.okStatuses.join("/")}, got ${response.status}`;
+      } else if (!hostAllowed) {
+        await discardResponseBody(response);
+        result.ok = false;
+        lastError = `redirected off ${expectedHost} to ${finalHost} — nothing appears to serve this host`;
       } else if (endpoint.validate) {
         const validationError = await endpoint.validate(response);
         if (validationError) {

@@ -1,0 +1,38 @@
+name: Public URL Check
+
+# scripts/check-public-urls.mjs existed as a package script and nothing ever ran
+# it. So design.nebutra.com sat on the apex redirect — the marketing nav opened a
+# tab that landed back on the home page — and the check that would have said so
+# was never invoked.
+#
+# The deploy pipeline now makes the same host assertion after it ships, which
+# covers regressions introduced by a deploy. This covers the rest: a DNS record
+# edited in a console, a certificate expiring, an app that died between deploys.
+# Nothing in the repo changes when any of those happen, so only a clock finds them.
+
+on:
+  schedule:
+    # 01:30 UTC daily — well clear of the deploy window.
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-url-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check public endpoints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Check public endpoints
+        run: node scripts/check-public-urls.mjs --include-aliases

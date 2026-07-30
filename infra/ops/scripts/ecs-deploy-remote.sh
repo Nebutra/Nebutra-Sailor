@@ -1273,15 +1273,14 @@ restore_nginx_config() {
   if [ -f "$backup_dir/security.conf" ]; then
     cp -p "$backup_dir/security.conf" /etc/nginx/conf.d/security.conf
   fi
-  if [ -f "$backup_dir/forge.nebutra.com.conf" ]; then
-    cp -p "$backup_dir/forge.nebutra.com.conf" /etc/nginx/conf.d/forge.nebutra.com.conf
-  fi
-  if [ -f "$backup_dir/router.nebutra.com.conf" ]; then
-    cp -p "$backup_dir/router.nebutra.com.conf" /etc/nginx/conf.d/router.nebutra.com.conf
-  fi
-  if [ -f "$backup_dir/docs.nebutra.com.conf" ]; then
-    cp -p "$backup_dir/docs.nebutra.com.conf" /etc/nginx/conf.d/docs.nebutra.com.conf
-  fi
+  # Every vhost fragment, by glob. Naming them one by one is what let
+  # design.nebutra.com ship without a server block: the file existed in the
+  # repo, no list mentioned it, and the host quietly fell through to the
+  # apex redirect.
+  for backup_vhost in "$backup_dir"/*.nebutra.com.conf; do
+    [ -f "$backup_vhost" ] || continue
+    cp -p "$backup_vhost" "/etc/nginx/conf.d/$(basename "$backup_vhost")"
+  done
 }
 
 dump_nginx_web_diagnostics() {
@@ -1309,9 +1308,11 @@ sync_nginx_runtime_config() {
   local nginx_main="/tmp/nebutra-nginx.conf"
   local nginx_proxy="/tmp/nebutra-nginx-proxy_params.conf"
   local nginx_security="/tmp/nebutra-nginx-security.conf"
-  local nginx_forge="/tmp/nebutra-nginx-forge.conf"
-  local nginx_router="/tmp/nebutra-nginx-router.conf"
-  local nginx_docs="/tmp/nebutra-nginx-docs.conf"
+  # Vhost fragments arrive as /tmp/nebutra-vhost-<name>.nebutra.com.conf, one
+  # per file in infra/runtime/nginx/conf.d/. Uploading them under a predictable
+  # prefix is what lets everything below be a loop instead of a list that has to
+  # be extended in five places for every new host — the omission that left
+  # design.nebutra.com falling through to the apex redirect.
 
   if ! command -v nginx >/dev/null 2>&1; then
     log "nginx not installed; skipping nginx config sync"
@@ -1327,9 +1328,10 @@ sync_nginx_runtime_config() {
   [ -f /etc/nginx/nginx.conf ] && cp -p /etc/nginx/nginx.conf "$backup_dir/nginx.conf" || true
   [ -f /etc/nginx/conf.d/proxy_params.conf ] && cp -p /etc/nginx/conf.d/proxy_params.conf "$backup_dir/proxy_params.conf" || true
   [ -f /etc/nginx/conf.d/security.conf ] && cp -p /etc/nginx/conf.d/security.conf "$backup_dir/security.conf" || true
-  [ -f /etc/nginx/conf.d/forge.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/forge.nebutra.com.conf "$backup_dir/forge.nebutra.com.conf" || true
-  [ -f /etc/nginx/conf.d/router.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/router.nebutra.com.conf "$backup_dir/router.nebutra.com.conf" || true
-  [ -f /etc/nginx/conf.d/docs.nebutra.com.conf ] && cp -p /etc/nginx/conf.d/docs.nebutra.com.conf "$backup_dir/docs.nebutra.com.conf" || true
+  for live_vhost in /etc/nginx/conf.d/*.nebutra.com.conf; do
+    [ -f "$live_vhost" ] || continue
+    cp -p "$live_vhost" "$backup_dir/$(basename "$live_vhost")"
+  done
 
   local rendered_main worker_user
   rendered_main="$(mktemp)"
@@ -1364,31 +1366,26 @@ sync_nginx_runtime_config() {
     mv "${rendered_main}.with-vhost" "$rendered_main"
     log "injected ${conf_name} include into nginx.conf"
   }
-  inject_vhost_include "forge.nebutra.com.conf" "Nebutra Forge tool station (PM2 :3105)"
-  inject_vhost_include "router.nebutra.com.conf" "Nebutra Router product edge (PM2 :3106)"
-  inject_vhost_include "docs.nebutra.com.conf" "Nebutra Sailor Docs (PM2 :3005)"
+  for uploaded_vhost in /tmp/nebutra-vhost-*.nebutra.com.conf; do
+    [ -f "$uploaded_vhost" ] || continue
+    vhost_name="${uploaded_vhost#/tmp/nebutra-vhost-}"
+    inject_vhost_include "$vhost_name" "product vhost (${vhost_name%.conf})"
+  done
 
   install -m 0644 "$rendered_main" /etc/nginx/nginx.conf
   rm -f "$rendered_main"
   [ -f "$nginx_proxy" ] && install -m 0644 "$nginx_proxy" /etc/nginx/conf.d/proxy_params.conf
   [ -f "$nginx_security" ] && install -m 0644 "$nginx_security" /etc/nginx/conf.d/security.conf
-  if [ -f "$nginx_forge" ]; then
-    install -m 0644 "$nginx_forge" /etc/nginx/conf.d/forge.nebutra.com.conf
-    log "installed forge.nebutra.com.conf"
-  else
-    log "forge nginx fragment not uploaded; keeping existing conf.d/forge.nebutra.com.conf if present"
-  fi
-  if [ -f "$nginx_router" ]; then
-    install -m 0644 "$nginx_router" /etc/nginx/conf.d/router.nebutra.com.conf
-    log "installed router.nebutra.com.conf"
-  else
-    log "router nginx fragment not uploaded; keeping existing conf.d/router.nebutra.com.conf if present"
-  fi
-  if [ -f "$nginx_docs" ]; then
-    install -m 0644 "$nginx_docs" /etc/nginx/conf.d/docs.nebutra.com.conf
-    log "installed docs.nebutra.com.conf"
-  else
-    log "docs nginx fragment not uploaded; keeping existing conf.d/docs.nebutra.com.conf if present"
+  installed_vhosts=0
+  for uploaded_vhost in /tmp/nebutra-vhost-*.nebutra.com.conf; do
+    [ -f "$uploaded_vhost" ] || continue
+    vhost_name="${uploaded_vhost#/tmp/nebutra-vhost-}"
+    install -m 0644 "$uploaded_vhost" "/etc/nginx/conf.d/$vhost_name"
+    log "installed $vhost_name"
+    installed_vhosts=$((installed_vhosts + 1))
+  done
+  if [ "$installed_vhosts" -eq 0 ]; then
+    log "no vhost fragments uploaded; keeping existing conf.d/*.nebutra.com.conf"
   fi
 
   if ! nginx -t; then
