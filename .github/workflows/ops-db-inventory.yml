@@ -22,7 +22,9 @@ on:
         description: >-
           Copy the box's live DATABASE_URL back into the repo secret. Use only to
           undo an accidental overwrite — it makes the secret match what production
-          is already using, never the other way round.
+          is already using, never the other way round. NEEDS a PAT in
+          OPS_SECRETS_TOKEN: the built-in GITHUB_TOKEN cannot write Actions
+          secrets, and the step fails with no output when it is missing.
         type: boolean
         default: false
 
@@ -118,7 +120,10 @@ jobs:
           # node_modules containing pg. Borrowing it beats asking someone to
           # apt-get install on a production host just to count rows.
           echo "looking for a bundled pg module..."
-          pg_index=$(find "$DEPLOY_ROOT" -maxdepth 8 -type f -path '*/node_modules/pg/package.json' 2>/dev/null | head -1)
+          # -L: every app is served through a `current` SYMLINK into releases/,
+          # and find does not traverse symlinks by default — which is why the
+          # first attempt reported no pg on a host that has several.
+          pg_index=$(find -L "$DEPLOY_ROOT" -maxdepth 8 -type f -path '*/node_modules/pg/package.json' 2>/dev/null | head -1)
           if [ -z "$pg_index" ]; then
             echo "  none found under $DEPLOY_ROOT — skipping row counts."
             echo "  (the endpoint facts above are the part that matters; counts need pg or psql)"
@@ -179,9 +184,12 @@ jobs:
           ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
           ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
           ECS_DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Must be a PAT with repo scope. GITHUB_TOKEN has no permission that
+          # grants Actions-secret writes, so it fails here silently.
+          GH_TOKEN: ${{ secrets.OPS_SECRETS_TOKEN }}
         run: |
           set -euo pipefail
+          [ -n "${GH_TOKEN:-}" ] || { echo "::error::OPS_SECRETS_TOKEN is not set — GITHUB_TOKEN cannot write Actions secrets"; exit 1; }
           # The value moves box -> GitHub without passing through a log or a
           # human's screen. `gh secret set` reads stdin, and ::add-mask:: keeps it
           # out of the run output even if a later command echoes it.
