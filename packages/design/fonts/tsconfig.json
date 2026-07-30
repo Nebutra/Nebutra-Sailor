@@ -2,9 +2,11 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "outDir": "dist",
-    "rootDir": "src"
+    "outDir": "dist"
   },
-  "include": ["src"],
+  // `generated/` is part of the program: the subset metadata module is typed and
+  // src/next-cjk.test.ts asserts the hand-written next/font literals still match
+  // it. (No rootDir — the package publishes source, nothing is emitted here.)
+  "include": ["src", "generated"],
   "exclude": ["node_modules", "dist"]
 }

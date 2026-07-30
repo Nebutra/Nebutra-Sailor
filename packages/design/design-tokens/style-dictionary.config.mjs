@@ -50,10 +50,13 @@ function formatCssWithBiome(content, stdinFilePath) {
   }
 }
 
+// Mirror of FONT_REGISTRY in packages/design/fonts/src/index.ts (duplicated
+// because this generator is plain ESM and cannot import the TS source).
 const FONT_REGISTRY = {
   geist: "--font-geist-sans",
   "geist sans": "--font-geist-sans",
   "geist mono": "--font-geist-mono",
+  "vivo sans sc": "--font-vivo-sans-sc",
   inter: "--font-inter",
   "space grotesk": "--font-space-grotesk",
   "playfair display": "--font-playfair-display",
@@ -915,11 +918,14 @@ function buildTailwindThemeInline() {
   --duration-reveal: 300ms;
   --duration-cinematic: 500ms;
 
-  /* Font family — Geist primary stack with CJK fallbacks */
-  --font-sans: var(--font-geist-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
-  --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+  /* Font family — Geist keeps Latin + numerals, self-hosted vivo Sans SC takes
+     CJK, system CJK faces behind it. Order is the design decision; see the
+     fontFamily $description in tokens/core.json. Mirror of those tokens — keep
+     the two in sync (verify:parity compares them). */
+  --font-sans: var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn: var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-display: var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", sans-serif;
+  --font-heading: var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC", sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 `;

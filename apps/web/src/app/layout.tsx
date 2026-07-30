@@ -3,6 +3,7 @@ import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { getSiteMetadata } from "@nebutra/brand/metadata-helpers";
 import { fontRegistryClassName } from "@nebutra/fonts/next";
+import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
@@ -25,7 +26,14 @@ import "./globals.css";
 // GeistSans → --font-geist-sans (variable font, 100–900)
 // GeistMono → --font-geist-mono (variable font, 100–900)
 // Referenced in packages/design/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
-// CJK fallback is provided by @nebutra/tokens and @nebutra/ui without Google font fetches.
+//
+// cjkFontClassName → --font-vivo-sans-sc: the self-hosted vivo Sans SC subset
+// (next/font/local — files ship in @nebutra/fonts, so no build-time fetch). Geist
+// has zero CJK coverage, so without it every Chinese character fell back to the
+// OS face (PingFang / YaHei / whatever Android ships). ORDER: --font-sans lists
+// Geist first and vivo Sans SC after it, so Geist keeps Latin and the numerals
+// (tabular figures in dense tables) and only CJK falls through — and the subset
+// carries no Latin glyphs at all, so that holds even if a stack is mis-ordered.
 //
 // Theme / DESIGN.md webfonts — the self-hosted OSS font registry (@nebutra/fonts)
 // declares ~16 common faces via next/font (build-time self-host, ZERO runtime
@@ -99,7 +107,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
-      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${fontRegistryClassName}`.trim()}
+      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${fontRegistryClassName}`.trim()}
       suppressHydrationWarning
     >
       <body className="antialiased">

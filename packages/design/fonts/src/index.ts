@@ -23,6 +23,10 @@ export const FONT_REGISTRY: Record<string, string> = {
   geist: "--font-geist-sans",
   "geist sans": "--font-geist-sans",
   "geist mono": "--font-geist-mono",
+  // Self-hosted via next/font/local from the subset built in ./generated (see
+  // ./next-cjk). The Simplified-Chinese face — CJK only, it carries no Latin or
+  // digit glyphs, so it can never take Latin away from Geist.
+  "vivo sans sc": "--font-vivo-sans-sc",
   // Self-hosted via next/font/google (see ./next)
   inter: "--font-inter",
   "space grotesk": "--font-space-grotesk",

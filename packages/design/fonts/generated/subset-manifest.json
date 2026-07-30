@@ -1,0 +1,68 @@
+{
+  "generatedBy": "packages/design/fonts/scripts/subset-cjk.mjs",
+  "inputHash": "330af2d7d4d2b86b78af4f5fac872d5ac8b7724713deb37363b0a2fe4d351ba9",
+  "charsetHash": "0bd19045d121e327c1f2b3030c53d0b13f0318f67b33a33450758c829ed5eb7e",
+  "charCount": 4282,
+  "charsFromCatalogs": 1586,
+  "punctuationFloor": 197,
+  "gb2312Level1Floor": 3755,
+  "uncoveredBySourceFace": "〄〘〙〚〛〜〟〠〪〭〮〯〫〬〰〱〲〳〴〵〶〷〸〹〺〻〼〽〿︲﹅﹆﹇﹈￦",
+  "catalogs": [
+    "apps/forge/messages/zh-Hans.json",
+    "apps/forge/messages/zh-Hant.json",
+    "apps/landing/messages/zh-Hans.json",
+    "apps/landing/messages/zh-Hant.json",
+    "apps/landing/messages/zh.json",
+    "apps/router/messages/zh-Hans.json",
+    "apps/router/messages/zh-Hant.json",
+    "packages/platform/i18n/locales/zh-Hans.json",
+    "packages/platform/i18n/locales/zh-Hant.json",
+    "packages/platform/i18n/locales/zh.json"
+  ],
+  "unicodeRange": [
+    "U+3000-303F",
+    "U+3400-4DBF",
+    "U+4E00-9FFF",
+    "U+F900-FAFF",
+    "U+FE30-FE4F",
+    "U+FF00-FFEF"
+  ],
+  "subsetOptions": [
+    "--flavor=woff2",
+    "--layout-features=kern,liga,clig,calt,ccmp,locl,palt,halt,vert,vrt2",
+    "--no-subset-tables+=DSIG",
+    "--drop-tables+=DSIG",
+    "--recalc-bounds",
+    "--recalc-average-width"
+  ],
+  "faces": [
+    {
+      "weight": 400,
+      "source": "vivoSans-Regular.ttf",
+      "sourceBytes": 7786748,
+      "output": "vivo-sans-sc-400.woff2",
+      "bytes": 498084
+    },
+    {
+      "weight": 500,
+      "source": "vivoSans-Medium.ttf",
+      "sourceBytes": 7776188,
+      "output": "vivo-sans-sc-500.woff2",
+      "bytes": 504228
+    },
+    {
+      "weight": 600,
+      "source": "vivoSans-DemiBold.ttf",
+      "sourceBytes": 7769504,
+      "output": "vivo-sans-sc-600.woff2",
+      "bytes": 504332
+    },
+    {
+      "weight": 700,
+      "source": "vivoSans-Bold.ttf",
+      "sourceBytes": 7757540,
+      "output": "vivo-sans-sc-700.woff2",
+      "bytes": 506808
+    }
+  ]
+}

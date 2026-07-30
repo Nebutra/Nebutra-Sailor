@@ -100,11 +100,17 @@
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
   --overlay-faint: rgb(0 0 0 / 0.06); /** Light-mode faint overlay (6% black) */
   --font-sans:
-    var(--font-geist-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
-    -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
-  --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", sans-serif; /** CJK-locale stack — same order as sans, minus the Latin-only system faces */
+  --font-display:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    sans-serif;
+  --font-heading:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    sans-serif;
   --font-mono:
     var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
@@ -422,11 +428,17 @@
     255 255 255 / 0.06
   ); /** Dark-mode faint overlay (6% white) — inverted from light */
   --font-sans:
-    var(--font-geist-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
-    -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
-  --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", sans-serif; /** CJK-locale stack — same order as sans, minus the Latin-only system faces */
+  --font-display:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    sans-serif;
+  --font-heading:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    sans-serif;
   --font-mono:
     var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
@@ -859,13 +871,22 @@
   --duration-reveal: 300ms;
   --duration-cinematic: 500ms;
 
-  /* Font family — Geist primary stack with CJK fallbacks */
+  /* Font family — Geist keeps Latin + numerals, self-hosted vivo Sans SC takes
+     CJK, system CJK faces behind it. Order is the design decision; see the
+     fontFamily $description in tokens/core.json. Mirror of those tokens — keep
+     the two in sync (verify:parity compares them). */
   --font-sans:
-    var(--font-geist-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
-    -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
-  --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-display:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    sans-serif;
+  --font-heading:
+    var(--font-geist-sans), "Geist", var(--font-vivo-sans-sc, "vivo Sans SC"), "Noto Sans SC",
+    sans-serif;
   --font-mono:
     var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }

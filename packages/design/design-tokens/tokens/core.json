@@ -403,21 +403,22 @@
     }
   },
   "fontFamily": {
-    "$description": "Geist + Geist Mono primary (Vercel typography) with Noto Sans SC / PingFang SC / Microsoft YaHei CJK fallbacks. Replaces Poppins per VI 2026 update. Each stack prefixes the next/font variable (--font-geist-sans / --font-geist-mono) so the actual loaded face wins over the literal 'Geist' family name (which the browser cannot resolve directly when next/font assigns a generated unique font-family identifier).",
+    "$description": "Geist + Geist Mono for Latin, self-hosted vivo Sans SC for CJK, system CJK faces (Noto Sans SC / PingFang SC / Microsoft YaHei) as the fallback behind it. ORDER IS THE DESIGN DECISION: Geist comes first so it keeps Latin and the numerals (tabular figures, tighter x-height — what dense dashboard tables need, and the locked UI face); vivo Sans SC follows so only CJK falls through to it. Reversed, vivo Sans would take the Latin too and its Latin is not as good as Geist's for UI. Each stack prefixes the next/font variable (--font-geist-sans / --font-geist-mono / --font-vivo-sans-sc) so the actual loaded face wins over the literal family name, which the browser cannot resolve directly once next/font assigns a generated unique font-family identifier. The vivo entry carries a literal fallback inside var() so a surface that never applies cjkFontClassName degrades to the family name instead of making the whole declaration invalid at computed-value time. `cn` is kept rather than deleted because it still has a job: the `font-cn` utility and the `html:lang(zh|ja|ko) body` auto-activation rule in static/base.css both set font-family to that token ALONE (they exist for the CJK line-height / word-break metrics), so it governs Chinese pages entirely — including their Latin. It used to start with Noto Sans SC, which silently took Latin and the numerals away from Geist on every zh/ja/ko page, and 'vivo Sans' sat LAST in it, which is why the licensed face was never once selected.",
     "sans": {
-      "$value": "var(--font-geist-sans), \"Geist\", \"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-vivo-sans-sc, \"vivo Sans SC\"), \"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
       "$type": "fontFamily"
     },
     "cn": {
-      "$value": "\"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", \"vivo Sans\", sans-serif",
-      "$type": "fontFamily"
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-vivo-sans-sc, \"vivo Sans SC\"), \"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "$type": "fontFamily",
+      "$description": "CJK-locale stack — same order as sans, minus the Latin-only system faces"
     },
     "display": {
-      "$value": "var(--font-geist-sans), \"Geist\", \"Noto Sans SC\", sans-serif",
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-vivo-sans-sc, \"vivo Sans SC\"), \"Noto Sans SC\", sans-serif",
       "$type": "fontFamily"
     },
     "heading": {
-      "$value": "var(--font-geist-sans), \"Geist\", \"Noto Sans SC\", sans-serif",
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-vivo-sans-sc, \"vivo Sans SC\"), \"Noto Sans SC\", sans-serif",
       "$type": "fontFamily"
     },
     "mono": {

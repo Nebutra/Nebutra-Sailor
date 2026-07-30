@@ -1,3 +1,4 @@
+import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { I18nProvider } from "fumadocs-ui/contexts/i18n";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { GeistMono } from "geist/font/mono";
@@ -9,7 +10,10 @@ import "../globals.css";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // Matches the Precision Stack used across apps/web and apps/landing
-// CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
+// cjkFontClassName -> --font-vivo-sans-sc: self-hosted vivo Sans SC subset via
+// next/font/local (files ship in @nebutra/fonts, so no build-time fetch). Geist has
+// no CJK coverage; it stays first in --font-sans and keeps Latin + numerals, and only
+// CJK falls through to vivo Sans SC — whose subset carries no Latin glyphs at all.
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -27,7 +31,7 @@ export default async function RootLayout({
   return (
     <html
       lang={htmlLangForLanguage(lang)}
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>

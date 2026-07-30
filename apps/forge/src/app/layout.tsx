@@ -7,6 +7,7 @@ import {
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -76,7 +77,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
     >
       <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>

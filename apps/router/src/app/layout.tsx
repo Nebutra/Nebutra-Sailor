@@ -3,6 +3,7 @@ import "./globals.css";
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
+import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -60,7 +61,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
       suppressHydrationWarning
     >
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>

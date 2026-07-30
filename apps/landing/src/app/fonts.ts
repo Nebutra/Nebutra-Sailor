@@ -1,9 +1,14 @@
+import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { Inter, JetBrains_Mono, Playfair_Display, Space_Grotesk } from "next/font/google";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
-// CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
+// cjkFontClassName → --font-vivo-sans-sc (self-hosted vivo Sans SC subset,
+// next/font/local, so no build-time fetch and no sandboxed-dev-server failure).
+// Geist stays FIRST in --font-sans so it keeps Latin and the numerals; only CJK
+// falls through to vivo Sans SC, whose subset contains no Latin glyphs at all.
+// Weights 400/500/600 are real files — see @nebutra/fonts/next/cjk.
 //
 // Theme-preset webfonts — loaded once so that non-default themes (gradient,
 // design languages via @nebutra/theme (data-brand)
@@ -31,4 +36,4 @@ const playfairDisplay = Playfair_Display({
  * `app/not-found.tsx` (the global, non-localized 404) — so both render the
  * same typography shell.
  */
-export const fontVariables = `${GeistSans.variable} ${GeistMono.variable} ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable}`;
+export const fontVariables = `${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable}`;

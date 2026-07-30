@@ -129,3 +129,17 @@ scratch-verify/
 # Briefs in docs/plans/tools/ are the committed deliverable; regenerate the
 # captures with scripts/research-screenshot.mjs.
 docs/research/
+
+# vivo Sans source faces. The generated subsets under
+# packages/design/fonts/generated/ ARE committed — apps load them through
+# next/font/local and a CI build must not need python fontTools to render text.
+# The 7.5MB source TTFs are not, for two reasons that agree: they would add 30MB
+# to history permanently, and the licence permits distributing works created with
+# the font while forbidding redistribution of the font software itself. A subset
+# embedded in the product is the former; four unmodified TTFs in a public repo
+# are the latter. Fetch them from the vendor drop and re-run
+# `pnpm --filter @nebutra/fonts subset:cjk`; subset-manifest.json fingerprints the
+# source bytes, so a wrong or truncated file is caught rather than silently
+# producing a different face.
+packages/design/fonts/vendor/**/*.ttf
+packages/design/fonts/vendor/**/*.otf
