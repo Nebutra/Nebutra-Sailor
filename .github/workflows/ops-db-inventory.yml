@@ -134,7 +134,11 @@ jobs:
           echo "  using pg from: $pg_root"
           echo
 
-          cat > /tmp/.db-inventory.mjs <<'NODE'
+          # Written INTO the directory that owns the pg module: ESM resolves bare
+          # specifiers from the importing FILE's location, not from cwd, so the same
+          # script under /tmp cannot see it however the process was started.
+          probe="$pg_root/.db-inventory.mjs"
+          cat > "$probe" <<'NODE'
           import pg from "pg";
           const TABLES = ["users","organizations","tenants","auth_users","auth_sessions","oauth_clients","platform_staff"];
           async function report(label, url) {
@@ -170,8 +174,8 @@ jobs:
           if (!direct) console.log("DIRECT_URL is unset on this host — migrations would target the runtime database.");
           NODE
 
-          ( cd "$pg_root" && RUNTIME_URL="${DATABASE_URL:-}" DIRECT_URL_IN="${DIRECT_URL:-}" node /tmp/.db-inventory.mjs )
-          rm -f /tmp/.db-inventory.mjs
+          RUNTIME_URL="${DATABASE_URL:-}" DIRECT_URL_IN="${DIRECT_URL:-}" node "$probe"
+          rm -f "$probe"
           echo "read-only inventory complete; nothing was modified"
           REMOTE
 
