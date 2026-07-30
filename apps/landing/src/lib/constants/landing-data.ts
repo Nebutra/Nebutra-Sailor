@@ -203,7 +203,7 @@ export const TREE_DATA: FileNode[] = [
     id: "apps",
     label: "apps",
     path: "apps",
-    tag: "15",
+    tag: "16",
     icon: React.createElement(FolderOpen, {
       className: "h-[15px] w-[15px] text-blue-500 fill-blue-500/20",
     }),
@@ -264,6 +264,13 @@ export const TREE_DATA: FileNode[] = [
         path: "apps/mail-preview",
         description: "- Email template preview and export surface",
         icon: React.createElement(Mail, { className: "h-4 w-4 text-red-500" }),
+      },
+      {
+        id: "apps-pebble",
+        label: "pebble",
+        path: "apps/pebble",
+        description: "- Pebble brand front and support intake",
+        icon: React.createElement(Megaphone, { className: "h-4 w-4 text-orange-500" }),
       },
       {
         id: "apps-router",
