@@ -22,6 +22,10 @@
 set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
+# `admin` is deliberately NOT in this default. The default is what a bare
+# invocation deploys, and the control plane should move only when someone names
+# it — it reads across every tenant, so an accidental redeploy is not the same
+# kind of event as one for a product app.
 APPS="${APPS:-landing web api idp auth design-docs sailor-docs router forge}"
 # Keep 2 releases per app for one-step rollback. Pre/post prune only touch
 # THAT app's releases/ dir (never other apps). Override with VM_KEEP_RELEASES
@@ -85,8 +89,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*sailor-docs*|*router*|*forge*) : ;;
-  *) fail "APPS must contain at least one of: landing web api idp auth design-docs sailor-docs router forge (got: $APPS)" ;;
+  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*sailor-docs*|*router*|*forge*|*admin*) : ;;
+  *) fail "APPS must contain at least one of: landing web api idp auth design-docs sailor-docs router forge admin (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -1159,6 +1163,15 @@ for p in procs:
     forge)
       wait_for_local_http "forge" "$pm2_name" "http://127.0.0.1:3105/"
       ;;
+    admin)
+      # Probed on the loopback, which bypasses both the nginx deny and the
+      # Cloudflare Access gate in front of it. That is intentional and it is why
+      # the Phase 1 Fleet page must stay renderable without a session: this
+      # checks that the process serves, not that the gate works. Do not "fix"
+      # the 200 expectation by making the page require staff — probe a dedicated
+      # health route instead.
+      wait_for_local_http "admin" "$pm2_name" "http://127.0.0.1:3108/"
+      ;;
   esac
 
   # Retention — keep latest N, drop the rest. find sorts by mtime via -printf
@@ -1195,6 +1208,7 @@ pm2_name_for_app() {
     sailor-docs)  printf '%s\n' "sailor-docs" ;;
     router)       printf '%s\n' "router" ;;
     forge)        printf '%s\n' "forge" ;;
+    admin)        printf '%s\n' "admin" ;;
     *)            fail "unknown app: $1" ;;
   esac
 }
@@ -1435,7 +1449,7 @@ verify_nginx_web_origin() {
 
 run_selected_apps() {
   local action="$1" app pm2_name
-  for app in api landing web idp auth design-docs sailor-docs router forge; do
+  for app in api landing web idp auth design-docs sailor-docs router forge admin; do
     case " $APPS " in
       *" $app "*) : ;;
       *) continue ;;
@@ -1453,7 +1467,7 @@ if [ "$MODE" = "rollback" ]; then
   exit 0
 fi
 
-for app in api landing web idp auth design-docs sailor-docs router forge; do
+for app in api landing web idp auth design-docs sailor-docs router forge admin; do
   case " $APPS " in
     *" $app "*) : ;;
     *) continue ;;
@@ -1469,6 +1483,7 @@ for app in api landing web idp auth design-docs sailor-docs router forge; do
     sailor-docs)  deploy_one sailor-docs sailor-docs  ;;
     router)       deploy_one router      router       ;;
     forge)        deploy_one forge       forge        ;;
+    admin)        deploy_one admin       admin        ;;
     *)            fail "unknown app: $app"            ;;
   esac
 done

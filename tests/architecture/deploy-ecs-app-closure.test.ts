@@ -3,8 +3,8 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
- * deploy-ecs.yml enumerates its apps in SEVEN independent places, and nothing made
- * them agree until this test existed.
+ * deploy-ecs.yml enumerates its apps in seven places, and the remote script it
+ * drives in five more. Nothing made the twelve agree until this test existed.
  *
  * The failure that prompted it: `admin` was in the dispatch input description,
  * the path filter, the `resolve` outputs and the allow-list `case`, but not the
@@ -162,5 +162,84 @@ describe("deploy-ecs app enumeration closure", () => {
     expect(buildNextGateApps()).toContain("admin");
     expect(downloadedApps()).toContain("admin");
     expect(yml).toContain("'apps/admin/**'");
+  });
+});
+
+/**
+ * The workflow hands APPS to ecs-deploy-remote.sh, which enumerates the same
+ * apps another five times — an accept `case`, a pm2-name map, two iteration
+ * lists, and a deploy dispatch. `admin` appeared in none of them, so even a
+ * correct workflow would have uploaded a bundle to a script that iterates past
+ * it in silence: no error, nothing deployed.
+ *
+ * The APPS *default* is intentionally excluded. It is what a bare invocation
+ * deploys, and the control plane should move only when named.
+ */
+describe("ecs-deploy-remote.sh app closure", () => {
+  const sh = readFileSync(
+    resolve(process.cwd(), "infra/ops/scripts/ecs-deploy-remote.sh"),
+    "utf-8",
+  );
+
+  /** Apps the script will accept in APPS at all. */
+  function acceptedApps(): string[] {
+    const arm = sh.match(/^\s*(\*[a-z0-9*|-]*admin[a-z0-9*|-]*)\)\s*:\s*;;/m);
+    expect(arm, "ecs-deploy-remote.sh must keep the APPS validation case").toBeTruthy();
+    return (arm?.[1] ?? "")
+      .split("|")
+      .map((p) => p.replaceAll("*", ""))
+      .filter(Boolean);
+  }
+
+  function pm2MappedApps(): string[] {
+    const fn = sh.match(/pm2_name_for_app\(\)\s*\{([\s\S]*?)\n\}/);
+    expect(fn, "ecs-deploy-remote.sh must keep pm2_name_for_app").toBeTruthy();
+    return [...(fn?.[1] ?? "").matchAll(/^\s{4}([a-z0-9-]+)\)\s*printf/gm)].map((m) => m[1]);
+  }
+
+  function iterationLists(): string[][] {
+    const lists = [...sh.matchAll(/^\s*for app in ([a-z0-9 -]+); do$/gm)].map((m) =>
+      m[1].trim().split(/\s+/),
+    );
+    expect(lists.length, "expected the two `for app in …` iteration lists").toBeGreaterThanOrEqual(
+      2,
+    );
+    return lists;
+  }
+
+  function dispatchedApps(): string[] {
+    return [...sh.matchAll(/^\s+([a-z0-9-]+)\)\s+deploy_one\s/gm)].map((m) => m[1]);
+  }
+
+  const dispatchable = allowListApps();
+
+  it("accepts every app the workflow can dispatch", () => {
+    const missing = dispatchable.filter((app) => !acceptedApps().includes(app));
+    expect(
+      missing,
+      `ecs-deploy-remote.sh rejects these, so the deploy fails at the validation ` +
+        `case after the bundle has already been uploaded: ${missing.join(", ")}`,
+    ).toEqual([]);
+  });
+
+  it("maps every dispatchable app to a pm2 process name", () => {
+    const missing = dispatchable.filter((app) => !pm2MappedApps().includes(app));
+    expect(missing, `pm2_name_for_app calls fail() for these: ${missing.join(", ")}`).toEqual([]);
+  });
+
+  it("iterates over every dispatchable app in both loops", () => {
+    for (const [index, list] of iterationLists().entries()) {
+      const missing = dispatchable.filter((app) => !list.includes(app));
+      expect(
+        missing,
+        `iteration list ${index + 1} skips these silently — no error, nothing ` +
+          `deployed: ${missing.join(", ")}`,
+      ).toEqual([]);
+    }
+  });
+
+  it("has a deploy_one dispatch arm for every dispatchable app", () => {
+    const missing = dispatchable.filter((app) => !dispatchedApps().includes(app));
+    expect(missing, `no deploy_one arm for: ${missing.join(", ")}`).toEqual([]);
   });
 });
