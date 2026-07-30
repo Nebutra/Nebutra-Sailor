@@ -322,7 +322,8 @@ jobs:
       needs.detect-changes.outputs['design-docs'] == 'true' ||
       needs.detect-changes.outputs['sailor-docs'] == 'true' ||
       needs.detect-changes.outputs.router == 'true' ||
-      needs.detect-changes.outputs.forge == 'true'
+      needs.detect-changes.outputs.forge == 'true' ||
+      needs.detect-changes.outputs.admin == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
