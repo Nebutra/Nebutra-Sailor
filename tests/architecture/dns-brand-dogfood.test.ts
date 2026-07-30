@@ -15,6 +15,8 @@ describe("dns brand dogfood", () => {
       "docs",
       "router",
       "forge",
+      "pebble",
+      "carina",
     ] as const) {
       expect(DEFAULT_BRAND.domains[key]).toMatch(/\./);
     }

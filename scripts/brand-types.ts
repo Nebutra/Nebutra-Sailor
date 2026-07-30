@@ -249,6 +249,11 @@ export interface BrandConfig {
      * `/pebble/v1/*`, status under `status`. See docs/DOMAINS.md.
      */
     pebble: string;
+    /**
+     * Carina product docs (Astro + Starlight in Nebutra/carina `apps/docs`).
+     * Local-first runtime — no `api.carina.*` origin. See docs/DOMAINS.md.
+     */
+    carina: string;
   };
 
   social: {
@@ -363,6 +368,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     admin: "admin.nebutra.com",
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",
+    carina: "carina.nebutra.com",
   },
   social: {
     twitter: "https://twitter.com/nebutra",

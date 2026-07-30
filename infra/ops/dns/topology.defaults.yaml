@@ -10,8 +10,9 @@ mail:
     pop3: "pop.qiye.aliyun.com"
     smtp: "smtp.qiye.aliyun.com"
 ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin]
-# Brand fronts on Vercel — static + redirects, no ECS origin.
-vercel_surfaces: [pebble]
+# Brand / product fronts on Vercel — static + redirects, no ECS origin.
+# Hosts come from brand.domains via `pnpm dns:render` (vercel_surfaces keys).
+vercel_surfaces: [pebble, carina]
 proxy:
   proxied:
     [
@@ -27,6 +28,7 @@ proxy:
       status,
       admin,
       pebble,
+      carina,
       mail,
       imap,
       pop3,
