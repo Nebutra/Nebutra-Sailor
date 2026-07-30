@@ -52,6 +52,7 @@ export const brand = {
     admin: "admin.nebutra.com",
     analytics: "analytics.nebutra.com",
     pebble: "pebble.nebutra.com",
+    carina: "carina.nebutra.com",
   },
 
   social: {

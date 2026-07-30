@@ -70,6 +70,8 @@ export function getBrandPublicUrls() {
     studioUrl: getBrandOrigin("studio"),
     cdnUrl: getBrandOrigin("cdn"),
     analyticsUrl: getBrandOrigin("analytics"),
+    pebbleUrl: getBrandOrigin("pebble"),
+    carinaUrl: getBrandOrigin("carina"),
     cookieDomain: getBrandCookieDomain(),
   } as const;
 }

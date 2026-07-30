@@ -65,9 +65,19 @@ and do **not** get a parallel `api.carina.*` origin.
 | Skills / catalog URLs | `carina.nebutra.com/llms.txt`, `/data/rpc-catalog-*.json` |
 | Staging | **no host** — preview deploys / project isolation only |
 
-Deploy lives in the Carina repo (`deploy-docs-vercel.yml` → project `nebutra-carina`).
-DNS for the shared `nebutra.com` zone is owned here: `point-carina-dns.yml` +
-`infra/ops/scripts/point-carina-dns-vercel.sh`.
+**Deploy ownership (two paths, one project):**
+
+| Path | When |
+|---|---|
+| Platform bootstrap | This monorepo: `deploy-carina-vercel.yml` (checks out `Nebutra/carina`, uses Sailor `VERCEL_*`) |
+| Product day-2 | Carina repo: `deploy-docs-vercel.yml` once `VERCEL_TOKEN` + `VERCEL_ORG_ID` are mirrored |
+
+Vercel project: `nebutra-carina` · root `apps/docs` · domain `carina.nebutra.com`.
+
+**DNS** for the shared `nebutra.com` zone is owned here only: `point-carina-dns.yml` +
+`infra/ops/scripts/point-carina-dns-vercel.sh` → CNAME `cname.vercel-dns.com` (proxied).
+
+**Bring-up order:** (1) `Deploy Carina docs (Vercel)` (2) `Point carina DNS to Vercel` (3) smoke `/` + `/llms.txt`.
 
 ## Production truth (as of 2026-07-22)
 
@@ -85,7 +95,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `forge.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `forge` | Product edge :3105; Vercel project `nebutra-forge` exists (Hobby deploy cap) |
 | `admin.nebutra.com` | **not yet created** | **ECS PM2** `admin` :3108 (PM2 slot reserved, not deployed) | Blocked on the Cloudflare Access policy + OIDC gate — do not create the DNS record before both exist. No Vercel project by design |
 | `pebble.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `@nebutra/pebble-site` (`apps/pebble`) | Brand front only. Deploy: `deploy-pebble-vercel.yml`. DNS: `point-pebble-dns.yml`. API stays on `api.nebutra.com/pebble/*`. |
-| `carina.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `nebutra-carina` (`Nebutra/carina` `apps/docs`) | Product docs only. Deploy: carina repo `deploy-docs-vercel.yml`. DNS: `point-carina-dns.yml` (this monorepo owns the zone). |
+| `carina.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `nebutra-carina` (`Nebutra/carina` `apps/docs`) | Product docs only. Deploy: `deploy-carina-vercel.yml` (bootstrap) or carina `deploy-docs-vercel.yml`. DNS: `point-carina-dns.yml`. |
 
 ### Topology layers
 
