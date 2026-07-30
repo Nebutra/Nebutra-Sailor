@@ -2,9 +2,12 @@
 # Upsert carina.nebutra.com → cname.vercel-dns.com (proxied orange-cloud).
 # Carina product docs front only — no ECS origin. See docs/DOMAINS.md.
 #
-# IMPORTANT: do not put a `comment` field in the DNS JSON body.
-# Some CLOUDFLARE_API_TOKEN scopes return 10000 Authentication error on write
-# when `comment` is present (verify + list still succeed). Match www/pebble scripts.
+# Body rules (match point-www / fixed pebble):
+# - Never include a `comment` field — some tokens return CF 10000 on write.
+# - Drop leftover A/AAAA (ECS cutover) before owning the name with CNAME.
+#
+# Required token permissions on zone nebutra.com:
+#   Zone → DNS → Edit  (verify+list alone are not enough)
 set -euo pipefail
 
 TOKEN="${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN required}"
@@ -31,26 +34,50 @@ fi
 [ -n "$ZONE_ID" ] || { echo "zone missing for ${ZONE_NAME} (set CF_ZONE_ID)"; exit 1; }
 echo "ZONE_ID=${ZONE_ID} HOST=${HOST} → ${CONTENT}"
 
-auth_get() { curl -sS -H "Authorization: Bearer ${TOKEN}" "$1"; }
+# Drop A/AAAA leftovers so CNAME can own the name (docs cutover pattern).
+for rtype in A AAAA; do
+  EXIST=$(curl -sS -H "Authorization: Bearer ${TOKEN}" \
+    "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?name=${HOST}&type=${rtype}")
+  while read -r rid; do
+    [ -z "$rid" ] && continue
+    echo "=== DELETE ${rtype} $rid ==="
+    curl -sS -X DELETE -H "Authorization: Bearer ${TOKEN}" \
+      "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${rid}" \
+      | python3 -c 'import json,sys; d=json.load(sys.stdin); print("deleted", d.get("success"), d.get("errors"))'
+  done < <(echo "$EXIST" | python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print("\n".join(x["id"] for x in r))')
+done
 
-echo "=== existing carina records ==="
-EXIST=$(auth_get "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?name=${HOST}")
+echo "=== existing carina CNAME records ==="
+EXIST=$(curl -sS -H "Authorization: Bearer ${TOKEN}" \
+  "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?name=${HOST}&type=CNAME")
 echo "$EXIST" | python3 -m json.tool | head -40
 
-# No `comment` — see header note / pebble DNS auth fix.
 BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'carina','content':'${CONTENT}','proxied':True,'ttl':1}))")
-RID=$(python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")' <<<"$EXIST")
+RID=$(echo "$EXIST" | python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")')
 
 tmp="$(mktemp)"
 if [ -n "$RID" ]; then
   curl -sS -X PUT -H "Authorization: Bearer ${TOKEN}" -H "Content-Type: application/json" \
     --data "$BODY" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RID}" -o "$tmp"
-  python3 -c 'import json,sys; d=json.load(sys.stdin); print("dns put", d.get("success"), d.get("errors")); assert d.get("success"), d' <"$tmp"
 else
   curl -sS -X POST -H "Authorization: Bearer ${TOKEN}" -H "Content-Type: application/json" \
     --data "$BODY" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" -o "$tmp"
-  python3 -c 'import json,sys; d=json.load(sys.stdin); print("dns post", d.get("success"), d.get("errors")); assert d.get("success"), d' <"$tmp"
 fi
+python3 -c '
+import json,sys
+d=json.load(open(sys.argv[1]))
+print("dns_write", d.get("success"), d.get("errors"))
+if not d.get("success"):
+    errs=d.get("errors") or []
+    codes=[e.get("code") for e in errs if isinstance(e, dict)]
+    if 10000 in codes:
+        print("::error::CLOUDFLARE_API_TOKEN cannot write DNS (code 10000).")
+        print("::error::Grant Zone DNS Edit on nebutra.com and update the GitHub secret.")
+        print("::error::Until then set carina CNAME cname.vercel-dns.com (proxied) in CF dashboard.")
+    raise SystemExit(1)
+r=d.get("result") or {}
+print(r.get("type"), r.get("name"), "->", r.get("content"), "proxied=", r.get("proxied"))
+' "$tmp"
 rm -f "$tmp"
 
 echo "=== smoke (DNS may still be propagating) ==="
