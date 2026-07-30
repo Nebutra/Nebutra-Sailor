@@ -16,16 +16,19 @@ const rows = [
 export default function DownloadPage() {
   return (
     <main>
-      <section className="hero">
-        <h1>Download Pebble</h1>
-        <p className="lead">
-          Installers ship from GitHub Releases — the product origin never becomes the artifact
-          authority. Homebrew and AUR packages are available from the README.
-        </p>
-        <div className="actions">
-          <a className="btn btn-primary" href={GITHUB_RELEASES}>
-            Latest release on GitHub
-          </a>
+      <section className="hero" style={{ gridTemplateColumns: "1fr", maxWidth: "40rem" }}>
+        <div>
+          <p className="eyebrow">Install</p>
+          <h1>Download Pebble</h1>
+          <p className="lead">
+            Installers ship from GitHub Releases — this origin never becomes the artifact authority.
+            Prefer Homebrew or AUR when you can.
+          </p>
+          <div className="actions">
+            <a className="btn btn-primary" href={GITHUB_RELEASES}>
+              Latest release on GitHub
+            </a>
+          </div>
         </div>
       </section>
 
@@ -41,8 +44,10 @@ export default function DownloadPage() {
       </ul>
 
       <p className="muted" style={{ marginTop: "1.5rem" }}>
-        Prefer package managers? <code>brew install --cask nebutra/pebble/pebble</code> or see the
-        repository README for AUR and mobile builds.
+        Package managers:{" "}
+        <code className="inline">brew install --cask nebutra/pebble/pebble</code>
+        {" · "}
+        AUR <code className="inline">nebutra-pebble-bin</code>
       </p>
     </main>
   );
