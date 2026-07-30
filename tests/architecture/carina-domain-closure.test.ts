@@ -1,4 +1,3 @@
-import { execSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -7,9 +6,8 @@ import { getBrandOrigin, getBrandPublicUrls } from "../../packages/design/brand/
 import { DEFAULT_BRAND } from "../../scripts/brand-types";
 
 /**
- * Contract lock for carina.nebutra.com — product docs front on Vercel,
- * zone DNS owned by this monorepo. Prevents silent drift between brand SSOT,
- * topology, workflows, and docs/DOMAINS.md.
+ * Contract lock for carina.nebutra.com — product docs on ECS (A record),
+ * nginx static root. Owner topology 2026-07-30 (same pattern as pebble).
  */
 describe("carina domain closure", () => {
   it("brand SSOT carries carina.nebutra.com", () => {
@@ -19,57 +17,46 @@ describe("carina domain closure", () => {
     expect(getBrandPublicUrls().carinaUrl).toBe("https://carina.nebutra.com");
   });
 
-  it("topology lists carina as a vercel surface (not ECS)", () => {
+  it("topology lists carina as an ECS surface (not Vercel)", () => {
     const raw = readFileSync("infra/ops/dns/topology.defaults.yaml", "utf-8");
-    expect(raw).toMatch(/vercel_surfaces:.*\[.*carina/);
+    expect(raw).toMatch(/ecs_surfaces:.*\[.*carina/);
     expect(raw).toMatch(/^\s*carina,/m);
-    expect(raw).not.toMatch(/ecs_surfaces:.*carina/);
+    // vercel_surfaces must not claim carina
+    const vercelLine = raw.split("\n").find((l) => l.startsWith("vercel_surfaces:"));
+    expect(vercelLine ?? "").not.toMatch(/carina/);
   });
 
-  it("DOMAINS.md documents host, deploy, and no parallel origin", () => {
+  it("DOMAINS.md documents ECS A topology and no parallel origin", () => {
     const domains = readFileSync("docs/DOMAINS.md", "utf-8");
     expect(domains).toContain("carina.nebutra.com");
-    expect(domains).toContain("nebutra-carina");
-    expect(domains).toContain("point-carina-dns");
-    expect(domains).toContain("deploy-carina-vercel");
+    expect(domains).toContain("106.15.4.31");
+    expect(domains).toContain("deploy-carina-ecs");
     expect(domains).toMatch(/api\.carina\.\*/);
     expect(domains).toContain("Nebutra/carina");
+    expect(domains).toMatch(/A.*carina|carina.*ECS/i);
   });
 
-  it("ops scripts and workflows exist and are executable paths", () => {
-    const script = join(process.cwd(), "infra/ops/scripts/point-carina-dns-vercel.sh");
-    const dnsWf = join(process.cwd(), ".github/workflows/point-carina-dns.yml");
-    const deployWf = join(process.cwd(), ".github/workflows/deploy-carina-vercel.yml");
+  it("nginx vhost + deploy script + workflow exist", () => {
+    const conf = join(process.cwd(), "infra/runtime/nginx/conf.d/carina.nebutra.com.conf");
+    const script = join(process.cwd(), "infra/ops/scripts/deploy-carina-docs-ecs.sh");
+    const deployWf = join(process.cwd(), ".github/workflows/deploy-carina-ecs.yml");
+    const mainNginx = join(process.cwd(), "infra/runtime/nginx/nginx-ecs-current.conf");
+
+    expect(existsSync(conf), conf).toBe(true);
     expect(existsSync(script), script).toBe(true);
-    expect(existsSync(dnsWf), dnsWf).toBe(true);
     expect(existsSync(deployWf), deployWf).toBe(true);
 
-    const scriptBody = readFileSync(script, "utf-8");
-    expect(scriptBody).toContain("carina");
-    expect(scriptBody).toContain("cname.vercel-dns.com");
+    const confBody = readFileSync(conf, "utf-8");
+    expect(confBody).toContain("server_name carina.nebutra.com");
+    expect(confBody).toContain("/var/www/nebutra/carina/current");
+    expect(confBody).not.toMatch(/return 301 https:\/\/nebutra\.com/);
+
+    const main = readFileSync(mainNginx, "utf-8");
+    expect(main).toContain("carina.nebutra.com.conf");
 
     const deploy = readFileSync(deployWf, "utf-8");
     expect(deploy).toContain("Nebutra/carina");
-    expect(deploy).toContain("apps/docs");
-    expect(deploy).toContain("nebutra-carina");
-    expect(deploy).toContain("carina.nebutra.com");
-
-    const dns = readFileSync(dnsWf, "utf-8");
-    expect(dns).toContain("point-carina-dns-vercel.sh");
-  });
-
-  it("dns:render emits a carina CNAME when topology is loaded", () => {
-    // Dry-run render logic: brand + topology must resolve carina → www_cname
-    const topo = readFileSync("infra/ops/dns/topology.defaults.yaml", "utf-8");
-    expect(topo).toMatch(/www_cname:\s*"cname\.vercel-dns\.com"/);
-    expect(DEFAULT_BRAND.domains.carina.startsWith("carina.")).toBe(true);
-
-    // Script stays tracked (gitignored zone files are not)
-    const tracked = execSync("git ls-files infra/ops/scripts/point-carina-dns-vercel.sh", {
-      encoding: "utf-8",
-    }).trim();
-    // Untracked until commit — still require file on disk
-    expect(existsSync("infra/ops/scripts/point-carina-dns-vercel.sh")).toBe(true);
-    void tracked;
+    expect(deploy).toContain("deploy-carina-docs-ecs.sh");
+    expect(deploy).toContain("ECS_SSH_PRIVATE_KEY");
   });
 });
