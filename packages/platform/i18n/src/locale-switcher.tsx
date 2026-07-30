@@ -220,12 +220,12 @@ export function createLocaleSwitcher<TLocale extends string>(
             // min-h-11: same 44px tap target the market picker rows use.
             "flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-sm transition-colors",
             isActive
-              ? "bg-neutral-3 font-medium text-neutral-12"
-              : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",
+              ? "bg-accent font-medium text-foreground"
+              : "text-muted-foreground hover:bg-muted hover:text-foreground",
           )}
         >
           <span className="min-w-0 flex-1 truncate text-start">{label}</span>
-          <span className="shrink-0 text-[11px] tabular-nums text-neutral-9">{code}</span>
+          <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground/70">{code}</span>
           <Check
             className={cn("h-3.5 w-3.5 shrink-0", isActive ? "opacity-100" : "opacity-0")}
             aria-hidden
@@ -250,7 +250,7 @@ export function createLocaleSwitcher<TLocale extends string>(
         trigger={
           <>
             <Globe className="h-4 w-4 shrink-0" aria-hidden />
-            <span className="truncate text-left normal-case tracking-normal text-neutral-12">
+            <span className="truncate text-left normal-case tracking-normal text-foreground">
               {displayLocale(locale)}
             </span>
           </>
@@ -261,14 +261,16 @@ export function createLocaleSwitcher<TLocale extends string>(
           const rest = otherLocales.filter((l) => matches(l, query));
           if (!pinned && rest.length === 0) {
             return (
-              <p className="px-2 py-6 text-center text-sm text-neutral-11">{noResultsLabel}</p>
+              <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+                {noResultsLabel}
+              </p>
             );
           }
           return (
             <>
               {pinned ? renderItem(pinned, close) : null}
               {pinned && rest.length > 0 ? (
-                <p className="px-2.5 pb-1 pt-3 text-[11px] font-medium uppercase tracking-wide text-neutral-9">
+                <p className="px-2.5 pb-1 pt-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70">
                   {allLanguagesLabel}
                 </p>
               ) : null}

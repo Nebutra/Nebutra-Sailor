@@ -100,7 +100,13 @@ export function LocalePanel({
     backdropFilter: "none",
     WebkitBackdropFilter: "none",
     isolation: "isolate",
-    boxShadow: "0 18px 50px -24px rgb(0 0 0 / 0.35), 0 0 0 1px rgb(0 0 0 / 0.04)",
+    // Contact + ambient, no hairline ring. The ring was doing the separating
+    // work a shadow should do, which is why the panel read as a pasted-on box:
+    // a 1px line at 4% alpha is too faint to be a deliberate edge and too
+    // present to disappear. The two-layer form gives 2px of contact and 24px of
+    // visible ambient spread (48px blur against -24px spread) so the surface
+    // lifts off the page instead of being outlined against it.
+    boxShadow: "0 1px 2px rgb(0 0 0 / 0.06), 0 24px 48px -24px rgb(0 0 0 / 0.28)",
   };
 
   return (
@@ -129,7 +135,7 @@ export function LocalePanel({
           setQuery("");
         }}
         // min-h-11 = 44px, the WCAG touch-target floor.
-        className="inline-flex min-h-11 max-w-[min(280px,70vw)] items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:opacity-50"
+        className="inline-flex min-h-11 max-w-[min(280px,70vw)] items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-50"
       >
         {trigger}
       </button>
@@ -140,23 +146,34 @@ export function LocalePanel({
           aria-label={copy.menuAria}
           aria-modal="false"
           style={panelStyle}
-          className="overflow-hidden rounded-[var(--radius-lg)] border border-neutral-7 bg-background shadow-xl"
+          className="overflow-hidden rounded-[var(--radius-lg)] bg-background"
         >
           {copy.title || showSearch ? (
-            <div className="border-b border-neutral-6 px-4 py-3">
+            // The header is a tonal block, not a bordered strip: the step from
+            // --muted to the --background body is the separator, so the list
+            // starts without a line drawn across it.
+            //
+            // --muted and not neutral-2, even though both are "one step up". The
+            // panel body is --background, and in dark mode the two ramps do not
+            // agree: --background is 222° at 14% saturation while neutral-2 is
+            // the same hue at 47%. Mixing them put a navy block on a near-black
+            // surface, so the header read as a different material rather than a
+            // lighter part of the same one. Everything on this surface now comes
+            // from the semantic ramp.
+            <div className="bg-muted px-4 py-3">
               {copy.title ? (
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-neutral-12">{copy.title}</p>
+                    <p className="text-sm font-semibold text-foreground">{copy.title}</p>
                     {copy.description ? (
-                      <p className="mt-0.5 text-xs text-neutral-11">{copy.description}</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">{copy.description}</p>
                     ) : null}
                   </div>
                   <button
                     type="button"
                     aria-label={copy.closeAria}
                     onClick={close}
-                    className="rounded-[var(--radius-sm)] p-1 text-neutral-11 hover:bg-neutral-3"
+                    className="-mr-1 -mt-1 rounded-[var(--radius-sm)] p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                   >
                     <Cross className="h-4 w-4" aria-hidden />
                   </button>
@@ -164,11 +181,16 @@ export function LocalePanel({
               ) : null}
               {showSearch ? (
                 <label
-                  className={`flex items-center gap-2 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 px-2.5 py-1.5 ${
+                  // A well sunk into the tonal header rather than a bordered
+                  // field: --background is lighter than the --muted header in
+                  // light mode and darker in dark mode, so it reads as inset in
+                  // both without a stroke. The ring appears on focus only —
+                  // that is feedback, not decoration.
+                  className={`flex items-center gap-2 rounded-[var(--radius-md)] bg-background px-2.5 py-2 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-[hsl(var(--ring)/0.5)] ${
                     copy.title ? "mt-3" : ""
                   }`}
                 >
-                  <MagnifyingGlass className="h-4 w-4 shrink-0 text-neutral-10" aria-hidden />
+                  <MagnifyingGlass className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
                   <input
                     ref={searchRef}
                     data-allow-native
@@ -177,7 +199,7 @@ export function LocalePanel({
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder={copy.searchPlaceholder}
-                    className="min-w-0 flex-1 appearance-none border-0 bg-transparent text-sm text-neutral-12 outline-none placeholder:text-neutral-9"
+                    className="min-w-0 flex-1 appearance-none border-0 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70"
                     autoComplete="off"
                     autoCorrect="off"
                     spellCheck={false}

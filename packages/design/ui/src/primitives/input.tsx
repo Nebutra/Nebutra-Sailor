@@ -26,11 +26,11 @@ type InputCssVars = React.CSSProperties & {
 
 const inputVariants = cva(
   [
-    "flex h-[var(--input-height)] w-full rounded-[var(--input-radius)] border border-input bg-background",
-    "px-[var(--input-padding-x)] text-[length:var(--input-font-size)] text-foreground shadow-xs",
+    "flex h-[var(--input-height)] w-full rounded-[var(--input-radius)]",
+    "px-[var(--input-padding-x)] text-[length:var(--input-font-size)] text-foreground",
     "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out",
     "placeholder:text-muted-foreground",
-    formControlFocusClassNames.input,
+    "outline-none",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "read-only:bg-muted/70 read-only:cursor-default",
     "file:h-full file:border-0 file:border-e file:border-solid file:border-input file:bg-transparent",
@@ -54,10 +54,30 @@ const inputVariants = cva(
         suffix: "pr-[var(--input-padding-right)]",
         both: "pl-[var(--input-padding-left)] pr-[var(--input-padding-right)]",
       },
+      /**
+       * `bare` drops the field's own stroke, fill and lift so it can sit inside
+       * a container that already provides them — a footer subscribe group, a
+       * search well, a segmented composer. Those surfaces were each being built
+       * by hand with a raw <input>, because overriding the bordered look from
+       * outside is not reliable: `border-transparent` passed via className and
+       * `border-input` from the base are both border-color utilities, so which
+       * one wins depends on their order in the generated stylesheet rather than
+       * on the order they were written. That is why the stroke, fill and shadow
+       * live in this variant instead of the base — the two tones now never emit
+       * a competing declaration.
+       *
+       * A bare field draws no focus ring of its own. The container owns it, so
+       * the ring surrounds the whole group rather than a box inside it.
+       */
+      tone: {
+        bordered: `border border-input bg-background shadow-xs ${formControlFocusClassNames.input}`,
+        bare: "border-0 bg-transparent shadow-none",
+      },
     },
     defaultVariants: {
       size: "md",
       affix: "none",
+      tone: "bordered",
     },
   },
 );
@@ -215,6 +235,7 @@ const Input = ({
     className,
     type = "text",
     size = "md",
+    tone = "bordered",
     prefix,
     suffix,
     clearable,
@@ -362,7 +383,7 @@ const Input = ({
       aria-describedby={describedBy}
       aria-busy={loading || undefined}
       className={cn(
-        inputVariants({ size, affix }),
+        inputVariants({ size, affix, tone }),
         type === "file" && "p-0 pr-[var(--input-padding-x)] text-muted-foreground",
         className,
       )}

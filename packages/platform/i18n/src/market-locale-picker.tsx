@@ -136,7 +136,10 @@ export function createMarketLocalePicker(
       <LocalePanel
         className={className ?? config.className}
         disabled={isPending}
-        width="min(720px, calc(100vw - 1.5rem))"
+        // 720px gave each of two columns 360px to hold a word like "Dansk",
+        // so the panel was mostly empty and the rows drifted apart. 560px sizes
+        // the columns to their content.
+        width="min(560px, calc(100vw - 1.5rem))"
         copy={{
           triggerAria: copy.triggerAria,
           menuAria: copy.menuAria,
@@ -150,8 +153,8 @@ export function createMarketLocalePicker(
           <>
             <Globe className="h-4 w-4 shrink-0" aria-hidden />
             <span className="truncate text-left normal-case tracking-normal">
-              <span className="text-neutral-12">{activeLocale.pathTag}</span>
-              <span className="text-neutral-9"> · </span>
+              <span className="text-foreground">{activeLocale.pathTag}</span>
+              <span className="text-muted-foreground/70"> · </span>
               <span>{labels.languageEndonym}</span>
             </span>
           </>
@@ -161,11 +164,13 @@ export function createMarketLocalePicker(
           const filtered = languageEntries.filter((e) => languageMatches(e, query));
           if (filtered.length === 0) {
             return (
-              <p className="px-2 py-6 text-center text-sm text-neutral-11">{copy.noResults}</p>
+              <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+                {copy.noResults}
+              </p>
             );
           }
           return (
-            <div className="grid grid-cols-1 gap-1 p-1 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-0.5 p-1 sm:grid-cols-2">
               {filtered.map((entry) => {
                 const isActive = activeLocale.language === entry.language;
                 return (
@@ -183,18 +188,25 @@ export function createMarketLocalePicker(
                     className={[
                       // min-h-11: the row is the tap target, and a language list is the one
                       // control a phone user reaches for first.
-                      "inline-flex min-h-11 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-left text-sm transition-colors",
+                      "flex min-h-11 w-full items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-left text-sm transition-colors",
                       isActive
-                        ? "bg-neutral-3 font-medium text-neutral-12"
-                        : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",
+                        ? "bg-accent font-medium text-foreground"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
                       entry.planned && !isActive ? "opacity-80" : "",
                     ].join(" ")}
                   >
+                    <span className="min-w-0 flex-1 truncate">{entry.endonym}</span>
+                    {/* The tag earns the row its second column of information.
+                        Without it every row was one short word against a wide
+                        empty gutter, which is what made the list read as
+                        unfinished rather than sparse. */}
+                    <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground/70">
+                      {entry.language}
+                    </span>
                     <Check
-                      className={`h-3.5 w-3.5 shrink-0 ${isActive ? "" : "invisible"}`}
+                      className={`h-3.5 w-3.5 shrink-0 ${isActive ? "opacity-100" : "opacity-0"}`}
                       aria-hidden
                     />
-                    <span className="truncate">{entry.endonym}</span>
                   </button>
                 );
               })}

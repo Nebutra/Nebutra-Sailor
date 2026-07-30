@@ -2,6 +2,7 @@ import { Dollar as DollarSign, Envelope as Mail, MagnifyingGlass as Search } fro
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
+import { Button } from "./button";
 import { Input } from "./input";
 
 const meta = {
@@ -268,6 +269,47 @@ export const DarkMode: Story = {
         defaultValue="docs"
         description="Dark mode uses the same semantic contract."
       />
+    </div>
+  ),
+};
+
+/**
+ * `tone="bare"` drops the field's stroke, fill and lift so a container can own
+ * them. Both rows below are one control, not two boxes touching — which is the
+ * shape a footer subscribe group, a search well or a composer wants, and the
+ * shape each of those surfaces was previously hand-building with a raw input.
+ */
+export const Tone: Story = {
+  render: () => (
+    <div className="flex max-w-sm flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          bordered — the default, a field that stands alone
+        </span>
+        <Input placeholder="you@example.com" aria-label="Email, bordered" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          bare — the group draws the fill and the focus ring
+        </span>
+        <div className="flex items-center gap-1 rounded-full bg-muted p-0.5 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)]">
+          <Input
+            tone="bare"
+            size="sm"
+            placeholder="you@example.com"
+            aria-label="Email, bare"
+            className="min-h-11 min-w-0 flex-1 ps-3.5"
+          />
+          <Button
+            type="button"
+            size="sm"
+            variant="ink"
+            className="min-h-11 shrink-0 rounded-full px-4"
+          >
+            Subscribe
+          </Button>
+        </div>
+      </div>
     </div>
   ),
 };

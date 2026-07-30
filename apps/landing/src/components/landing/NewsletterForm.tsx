@@ -65,7 +65,7 @@ export function NewsletterForm() {
       data-status={status}
       data-testid="newsletter-form"
       onSubmit={handleSubmit}
-      className="flex w-full max-w-md flex-col gap-2 sm:max-w-none sm:w-auto sm:flex-row sm:items-center"
+      className="flex w-full max-w-md flex-col gap-2 sm:w-auto sm:max-w-none"
     >
       {/* G27 honeypot — bots fill hidden fields; humans never see it */}
       <input
@@ -78,32 +78,42 @@ export function NewsletterForm() {
         className="absolute -left-[9999px] h-0 w-0 opacity-0"
         defaultValue=""
       />
-      <Input
-        type="email"
-        size="sm"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder={t("newsletterPlaceholder")}
-        aria-label={t("newsletterPlaceholder")}
-        required
-        className="min-h-11 w-full sm:w-48 sm:shrink-0"
-      />
       {/*
-        Use ink (solid neutral-12 fill) — not default btn-brand-default.
-        Brand default paints via background-image + primary-foreground text; when
-        the gradient fails to paint, the CTA becomes white-on-white and "only the
-        email field" is visible (footer newsletter regression).
-        Ink matches the navbar Loslegen high-contrast pattern.
+        One control, not two boxes touching. The field and the submit used to be
+        siblings that each drew their own stroke and their own right angles,
+        which is what made the pair read as a form pasted into the footer. The
+        group owns the fill and the focus ring; the field goes bare inside it.
+        The pill is the same shape the header's theme toggle already uses.
       */}
-      <Button
-        type="submit"
-        size="sm"
-        variant="ink"
-        disabled={status === "loading"}
-        className="min-h-11 w-full shrink-0 sm:w-auto"
-      >
-        {status === "loading" ? "…" : t("newsletterSubscribe")}
-      </Button>
+      <div className="flex w-full items-center gap-1 rounded-full bg-neutral-3 p-0.5 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] sm:w-[20rem]">
+        <Input
+          type="email"
+          size="sm"
+          tone="bare"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={t("newsletterPlaceholder")}
+          aria-label={t("newsletterPlaceholder")}
+          required
+          className="min-h-11 min-w-0 flex-1 ps-3.5"
+        />
+        {/*
+          Use ink (solid neutral-12 fill) — not default btn-brand-default.
+          Brand default paints via background-image + primary-foreground text; when
+          the gradient fails to paint, the CTA becomes white-on-white and "only the
+          email field" is visible (footer newsletter regression).
+          Ink matches the navbar high-contrast pattern.
+        */}
+        <Button
+          type="submit"
+          size="sm"
+          variant="ink"
+          disabled={status === "loading"}
+          className="min-h-11 shrink-0 rounded-full px-4"
+        >
+          {status === "loading" ? "…" : t("newsletterSubscribe")}
+        </Button>
+      </div>
       {status === "error" && (
         <p role="alert" className="self-center text-xs text-red-500 sm:ms-0">
           {t("newsletterError")}
