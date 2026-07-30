@@ -116,13 +116,13 @@ export const CATALOGS = [
     // pass; delete an entry at zero. What is forbidden is raising one to make an
     // existing failure go away.
     identicalBaseline: {
-      "zh-Hant": 571,
-      "zh-Hans": 351,
-      ja: 342,
-      fr: 327,
-      de: 316,
-      es: 315,
-      ko: 249,
+      "zh-Hant": 8,
+      "zh-Hans": 8,
+      ja: 8,
+      fr: 8,
+      de: 8,
+      es: 8,
+      ko: 8,
     },
   },
   {
