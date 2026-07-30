@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Upsert carina.nebutra.com → cname.vercel-dns.com (proxied orange-cloud).
 # Carina product docs front only — no ECS origin. See docs/DOMAINS.md.
+#
+# IMPORTANT: do not put a `comment` field in the DNS JSON body.
+# Some CLOUDFLARE_API_TOKEN scopes return 10000 Authentication error on write
+# when `comment` is present (verify + list still succeed). Match www/pebble scripts.
 set -euo pipefail
 
 TOKEN="${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN required}"
@@ -33,7 +37,8 @@ echo "=== existing carina records ==="
 EXIST=$(auth_get "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?name=${HOST}")
 echo "$EXIST" | python3 -m json.tool | head -40
 
-BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'carina','content':'${CONTENT}','proxied':True,'ttl':1,'comment':'Carina product docs (Vercel apps/docs)'}))")
+# No `comment` — see header note / pebble DNS auth fix.
+BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'carina','content':'${CONTENT}','proxied':True,'ttl':1}))")
 RID=$(python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")' <<<"$EXIST")
 
 tmp="$(mktemp)"
