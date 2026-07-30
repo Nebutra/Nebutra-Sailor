@@ -61,23 +61,23 @@ and do **not** get a parallel `api.carina.*` origin.
 
 | Capability | Host + path |
 |---|---|
-| Product docs / LLM surface | `carina.nebutra.com` (CF CNAME → Vercel, proxied) |
+| Product docs / LLM surface | `carina.nebutra.com` (**CF A → ECS** `106.15.4.31`, proxied — same pattern as pebble) |
 | Skills / catalog URLs | `carina.nebutra.com/llms.txt`, `/data/rpc-catalog-*.json` |
 | Staging | **no host** — preview deploys / project isolation only |
 
-**Deploy ownership (two paths, one project):**
+**Owner topology (2026-07-30):** DNS **A** record is correct — do **not** point carina at Vercel CNAME.
+nginx `conf.d/carina.nebutra.com.conf` serves static files from
+`/var/www/nebutra/carina/current`. Without that vhost the Host falls through to
+the default 443 block and 301s to `nebutra.com`.
 
-| Path | When |
-|---|---|
-| Platform bootstrap | This monorepo: `deploy-carina-vercel.yml` (checks out `Nebutra/carina`, uses Sailor `VERCEL_*`) |
-| Product day-2 | Carina repo: `deploy-docs-vercel.yml` once `VERCEL_TOKEN` + `VERCEL_ORG_ID` are mirrored |
+**Deploy:** `deploy-carina-ecs.yml` / `infra/ops/scripts/deploy-carina-docs-ecs.sh`
+(checks out `Nebutra/carina`, builds `apps/docs`, rsyncs `dist/`, reloads nginx).
 
-Vercel project: `nebutra-carina` · root `apps/docs` · domain `carina.nebutra.com`.
+Legacy Vercel experiment (`nebutra-carina`, `deploy-carina-vercel.yml`) is
+superseded — keep only if Hobby quota is free for experiments.
 
-**DNS** for the shared `nebutra.com` zone is owned here only: `point-carina-dns.yml` +
-`infra/ops/scripts/point-carina-dns-vercel.sh` → CNAME `cname.vercel-dns.com` (proxied).
-
-**Bring-up order:** (1) `Deploy Carina docs (Vercel)` (2) `Point carina DNS to Vercel` (3) smoke `/` + `/llms.txt`.
+**Bring-up order:** (1) DNS A → ECS (already true) (2) Deploy Carina docs (ECS)
+(3) smoke `/` + `/llms.txt` (must not 301 to apex).
 
 ## Production truth (as of 2026-07-22)
 
@@ -95,7 +95,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `forge.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `forge` | Product edge :3105; Vercel project `nebutra-forge` exists (Hobby deploy cap) |
 | `admin.nebutra.com` | **not yet created** | **ECS PM2** `admin` :3108 (PM2 slot reserved, not deployed) | Blocked on the Cloudflare Access policy + OIDC gate — do not create the DNS record before both exist. No Vercel project by design |
 | `pebble.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `pebble` :3017 | Brand front. Owner topology 2026-07-30: same ECS A pattern as app/api (not Vercel). nginx `conf.d/pebble.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`pebble`. Legacy `POST /v1/feedback` + `/diagnostics/*` reverse-proxy to api-gateway `/pebble/*`. |
-| `carina.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `nebutra-carina` (`prj_JN4csIJFkFiz1qoQCSYPXucmuJRx`, `Nebutra/carina` `apps/docs`) | Product docs only. Deploy: `deploy-carina-vercel.yml` (bootstrap) or carina `deploy-docs-vercel.yml`. DNS: `point-carina-dns.yml`. Requires CF token **Zone DNS Edit**; Hobby deploys hit `api-deployments-free-per-day`. |
+| `carina.nebutra.com` | A `106.15.4.31` proxied | **ECS nginx static** `/var/www/nebutra/carina/current` | Product docs (Astro). Owner topology 2026-07-30: same ECS A as pebble. nginx `conf.d/carina.nebutra.com.conf`. Deploy: `deploy-carina-ecs.yml`. |
 
 ### Topology layers
 
@@ -144,7 +144,7 @@ A       forge     106.15.4.31              ✅           ECS PM2 @nebutra/forge
 A       admin     106.15.4.31              ✅           ECS PM2 @nebutra/admin — create ONLY together with the Cloudflare Access policy
 CNAME   docs      nebutra-sailor-docs.nebutra.workers.dev  ✅  # OpenNext Worker; Vercel grey-cloud is fallback only
 A       pebble    106.15.4.31              ✅           Pebble brand front (ECS PM2 :3017); not Vercel
-CNAME   carina    cname.vercel-dns.com     ✅           Carina product docs (Nebutra/carina apps/docs); no backend
+A       carina    106.15.4.31              ✅           Carina product docs (ECS nginx static); not Vercel
 ```
 
 When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.

@@ -1,0 +1,106 @@
+name: Deploy Carina docs (ECS)
+
+# Owner topology 2026-07-30: carina.nebutra.com is A → ECS (CF proxied), same
+# pattern as pebble — not Vercel. Builds Nebutra/carina apps/docs and rsyncs
+# static dist/ to the box; nginx serves /var/www/nebutra/carina/current.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Carina git ref to deploy"
+        required: true
+        default: main
+  push:
+    branches: [main]
+    paths:
+      - "infra/ops/scripts/deploy-carina-docs-ecs.sh"
+      - "infra/runtime/nginx/conf.d/carina.nebutra.com.conf"
+      - "infra/runtime/nginx/nginx-ecs-current.conf"
+      - ".github/workflows/deploy-carina-ecs.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-carina-ecs
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build + rsync carina docs to ECS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sailor (scripts + nginx)
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Checkout Carina
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Nebutra/carina
+          ref: ${{ inputs.ref || 'main' }}
+          path: carina
+
+      - name: Setup Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: "24"
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.13.1 --activate
+
+      - name: Configure SSH
+        env:
+          ECS_SSH_PRIVATE_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY }}
+          ECS_SSH_KNOWN_HOSTS: ${{ secrets.ECS_SSH_KNOWN_HOSTS }}
+          ECS_HOST: ${{ vars.ECS_HOST || '106.15.4.31' }}
+          ECS_USER: ${{ vars.ECS_USER || 'root' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${ECS_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::error::ECS_SSH_PRIVATE_KEY is not set"; exit 1
+          fi
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$ECS_SSH_PRIVATE_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          if [ -n "${ECS_SSH_KNOWN_HOSTS:-}" ]; then
+            printf '%s\n' "$ECS_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            ssh-keyscan -H "$ECS_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+          fi
+          cat >> ~/.ssh/config <<EOF
+          Host carina-ecs
+            HostName ${ECS_HOST}
+            User ${ECS_USER}
+            IdentityFile ~/.ssh/id_deploy
+            StrictHostKeyChecking accept-new
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Deploy
+        env:
+          CARINA_REPO_DIR: ${{ github.workspace }}/carina
+          REMOTE_HOST: carina-ecs
+        run: bash infra/ops/scripts/deploy-carina-docs-ecs.sh
+
+      - name: Smoke public host
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://carina.nebutra.com/?ci=${GITHUB_SHA}" || echo 000)
+            llms=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://carina.nebutra.com/llms.txt" || echo 000)
+            loc=$(curl -sSI --max-time 15 "https://carina.nebutra.com/" 2>/dev/null | tr -d '\r' | awk 'tolower($1)=="location:"{print $2; exit}')
+            echo "attempt $i home=$code llms=$llms location=${loc:-none}"
+            if [ "$code" = "200" ] && [ "$llms" = "200" ]; then
+              case "${loc:-}" in
+                https://nebutra.com/*|https://nebutra.com) echo "::error::still redirecting to apex"; exit 1 ;;
+              esac
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error::carina.nebutra.com not healthy (need nginx vhost + dist on ECS)"
+          exit 1
