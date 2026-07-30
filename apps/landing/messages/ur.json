@@ -1168,7 +1168,7 @@
         "badge": "ٹیم",
         "price": "2,000 ڈالر",
         "period": "/ سال",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "ان ٹیمز کے لیے جو کمیونٹی کے جوابات کی رفتار پر انحصار نہیں کر سکتیں۔",
         "cta": "{brandName} سپورٹ حاصل کریں",
         "f1": "نجی سپورٹ چینل (ای میل + مشترکہ Slack یا Discord)",
         "f2": "دو کاروباری دنوں میں پہلا جواب یقینی",
@@ -1527,7 +1527,7 @@
         "badge": "{price}/سال سے شروع",
         "title": "ٹیم",
         "subtitle": "سپورٹ سبسکرپشن",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "ان ٹیموں کے لیے جو کمیونٹی کے جواب دینے کے اوقات پر کسی اہم کام کا انحصار نہیں کر سکتیں۔",
         "features": {
           "privateChannel": "پرائیویٹ سپورٹ چینل",
           "firstResponse": "دو کاروباری دنوں میں پہلا جواب، گارنٹی شدہ",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "MIT یا AGPL کی بجائے FSL کیوں؟",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL ہر استعمال کی اجازت دیتا ہے سوائے Sailor کا متبادل بیچنے کے، اور ہر ورژن ریلیز کے دو سال بعد Apache-2.0 بن جاتا ہے — ایک ایسی اجازت جو پہلے سے ہی غیر منسوخ شدہ طور پر دی گئی ہے۔ یہ AGPL کے مقابلے میں کارپوریٹ قانونی جائزے میں زیادہ آسانی سے پاس ہو جاتا ہے۔"
         },
         "reallyFree": {
           "q": "کیا تجارتی استعمال واقعی مفت ہے؟",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "عوامی سیکیورٹی ریکارڈ"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "علاقے اور زبانیں",
+    "description": "مارکیٹنگ سائٹ کے لیے علاقہ اور زبان منتخب کریں۔",
+    "triggerAria": "علاقہ اور زبان منتخب کریں",
+    "searchPlaceholder": "علاقے تلاش کریں…",
     "plannedHint": "اس زبان کی شپمنٹ تک انٹرفیس انگریزی پر واپس آ جائے گا",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "کوئی علاقہ نہیں ملا",
+    "menuAria": "علاقے اور زبانیں"
   }
 }

@@ -1168,7 +1168,7 @@
         "badge": "צוות",
         "price": "2,000 $",
         "period": "/ שנה",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "לצוותים שלא יכולים להרשות לעצמם להסתמך על זמני תגובה קהילתיים.",
         "cta": "קבלו תמיכת {brandName}",
         "f1": "ערוץ תמיכה פרטי (דוא\"ל + Slack או Discord משותף)",
         "f2": "מענה ראשון מובטח בתוך שני ימי עסקים",
@@ -1527,7 +1527,7 @@
         "badge": "מ-{price}/שנה",
         "title": "צוות",
         "subtitle": "מנוי תמיכה",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "לצוותים שלא יכולים להסתמך על זמני תגובה של הקהילה בנתיב הקריטי.",
         "features": {
           "privateChannel": "ערוץ תמיכה פרטי",
           "firstResponse": "תגובה ראשונה תוך יומיים עסקיים, מובטח",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "למה FSL במקום MIT או AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL מאפשר כל שימוש למעט מכירה של תחליף ל-Sailor עצמו, וכל גרסה הופכת ל-Apache-2.0 שנתיים לאחר השקה — מתן זכות בלתי הפיך מראש. זה עובר סקירה משפטית תאגידית בקלות רבה יותר מ-AGPL."
         },
         "reallyFree": {
           "q": "האם שימוש מסחרי באמת חינם?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "רישום אבטחה ציבורית"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "אזורים ושפות",
+    "description": "בחר אזור ושפה לאתר השיווק.",
+    "triggerAria": "בחר אזור ושפה",
+    "searchPlaceholder": "חפש אזורים…",
     "plannedHint": "הממשק יחזור לאנגלית עד ששפה זו תושק",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "לא נמצאו אזורים תואמים",
+    "menuAria": "אזורים ושפות"
   }
 }

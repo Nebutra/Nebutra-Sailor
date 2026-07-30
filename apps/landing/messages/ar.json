@@ -1168,7 +1168,7 @@
         "badge": "الفريق",
         "price": "2,000 $",
         "period": "/ سنة",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "للفِرق التي لا يمكنها وضع مسار حرج على أوقات الاستجابة المجتمعية.",
         "cta": "احصل على دعم {brandName}",
         "f1": "قناة دعم خاصة (بريد إلكتروني + Slack أو Discord مشترك)",
         "f2": "أول رد مضمون خلال يومَي عمل",
@@ -1527,7 +1527,7 @@
         "badge": "من {price}/سنة",
         "title": "الفريق",
         "subtitle": "اشتراك الدعم",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "للفرق التي لا يمكنها الاعتماد على أوقات الاستجابة في المجتمع لمساراتها الحرجة.",
         "features": {
           "privateChannel": "قناة دعم خاصة",
           "firstResponse": "استجابة أولى خلال يومين عمل، مضمونة",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "لماذا FSL بدلاً من MIT أو AGPL؟",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "تسمح FSL بكل الاستخدامات باستثناء بيع بديل لـ Sailor نفسه، ويصبح كل إصدار Apache-2.0 بعد عامين من الإصدار — وهو منح يُمنح بشكل لا رجعة فيه مسبقاً. إنه يمر بمراجعة قانونية للشركات بسهولة أكبر من AGPL."
         },
         "reallyFree": {
           "q": "هل الاستخدام التجاري مجاني حقًا؟",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "سجل الأمن العام"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "المناطق واللغات",
+    "description": "اختر منطقة ولغة لموقع التسويق.",
+    "triggerAria": "اختيار المنطقة واللغة",
+    "searchPlaceholder": "البحث عن مناطق…",
     "plannedHint": "سيتم الرجوع إلى اللغة الإنجليزية حتى يتم إصدار هذه اللغة",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "لا توجد مناطق مطابقة",
+    "menuAria": "المناطق واللغات"
   }
 }

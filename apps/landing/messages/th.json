@@ -1168,7 +1168,7 @@
         "badge": "ทีม",
         "price": "$2,000",
         "period": "/ ปี",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "สำหรับทีมที่ไม่สามารถพึ่งพาเวลาตอบกลับจากชุมชนในขั้นตอนสำคัญได้",
         "cta": "รับการสนับสนุน {brandName}",
         "f1": "ช่องทางสนับสนุนส่วนตัว (อีเมล + Slack หรือ Discord ร่วมกัน)",
         "f2": "รับประกันการตอบกลับครั้งแรกภายในสองวันทำการ",
@@ -1527,7 +1527,7 @@
         "badge": "เริ่มต้น {price}/ปี",
         "title": "Team",
         "subtitle": "การสมัครรับสนับสนุน",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "สำหรับทีมที่ไม่สามารถพึ่งพาเวลาตอบกลับจากชุมชนในขั้นตอนสำคัญได้",
         "features": {
           "privateChannel": "ช่องสนับสนุนส่วนตัว",
           "firstResponse": "การตอบกลับครั้งแรกภายในสองวันทำการ รับประกัน",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "ทำไมถึงใช้ FSL แทน MIT หรือ AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL อนุญาตการใช้งานทุกแบบ ยกเว้นการขายผลิตภัณฑ์ที่แทนที่ Sailor และแต่ละเวอร์ชันจะเปลี่ยนเป็น Apache-2.0 หลังจากเผยแพร่ครบสองปี — สิทธิ์ที่มอบให้ล่วงหน้าอย่างถาวร ซึ่งผ่านการตรวจสอบทางกฎหมายขององค์กรได้ง่ายกว่า AGPL"
         },
         "reallyFree": {
           "q": "การใช้งานเชิงพาณิชย์ฟรีจริงๆ หรือ?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "เลขที่บันทึกความมั่นคงสาธารณะ"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "ภูมิภาคและภาษา",
+    "description": "เลือกภูมิภาคและภาษาสำหรับเว็บไซต์การตลาด",
+    "triggerAria": "เลือกภูมิภาคและภาษา",
+    "searchPlaceholder": "ค้นหาภูมิภาค…",
     "plannedHint": "ส่วนติดต่อผู้ใช้จะกลับเป็นภาษาอังกฤษจนกว่าภาษานี้จะพร้อมใช้งาน",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "ไม่พบภูมิภาคที่ตรงกัน",
+    "menuAria": "ภูมิภาคและภาษา"
   }
 }

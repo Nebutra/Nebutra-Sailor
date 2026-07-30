@@ -1168,7 +1168,7 @@
         "badge": "TEAM",
         "price": "2 000 $",
         "period": "/ år",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "För team som inte kan ha kritiska arbetsflöden beroende av communitys svarstider.",
         "cta": "Skaffa {brandName}-support",
         "f1": "Privat supportkanal (e-post + delad Slack eller Discord)",
         "f2": "Första svar garanterat inom två arbetsdagar",
@@ -1527,7 +1527,7 @@
         "badge": "Från {price}/år",
         "title": "Team",
         "subtitle": "Supportprenumeration",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "För team som inte kan ha kritiska arbetsflöden beroende av communitys svarstider.",
         "features": {
           "privateChannel": "Privat supportkanal",
           "firstResponse": "Första svar inom två arbetsdagar, garanterat",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Varför FSL istället för MIT eller AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL tillåter alla användningsområden utom att sälja en ersättning för Sailor i sig, och varje version blir Apache-2.0 två år efter lansering — en tillåtelse som är oåterkallelig i förväg. Den klarar företagets juridiska granskning lättare än AGPL."
         },
         "reallyFree": {
           "q": "Är kommersiell användning verkligen gratis?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Offentlig säkerhetsregistrering"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "Regioner och språk",
+    "description": "Välj en region och ett språk för marknadsföringssidan.",
+    "triggerAria": "Välj region och språk",
+    "searchPlaceholder": "Sök regioner…",
     "plannedHint": "Gränssnittet återgår till engelska tills detta språk släpps",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "Inga regioner matchar",
+    "menuAria": "Regioner och språk"
   }
 }

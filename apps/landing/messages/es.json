@@ -1168,7 +1168,7 @@
         "badge": "EQUIPO",
         "price": "2.000 $",
         "period": "/ año",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "Para equipos que no pueden depender de los tiempos de respuesta de la comunidad en su ruta crítica.",
         "cta": "Obtener soporte de {brandName}",
         "f1": "Canal de soporte privado (email + Slack o Discord compartido)",
         "f2": "Primera respuesta garantizada en dos días hábiles",
@@ -1527,7 +1527,7 @@
         "badge": "Desde {price}/año",
         "title": "Equipo",
         "subtitle": "Suscripción de soporte",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "Para equipos que no pueden depender de los tiempos de respuesta de la comunidad en su ruta crítica.",
         "features": {
           "privateChannel": "Canal de soporte privado",
           "firstResponse": "Primera respuesta en dos días hábiles, garantizada",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "¿Por qué FSL en lugar de MIT o AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL permite todo uso salvo vender un sustituto de Sailor mismo, y cada versión pasa a Apache-2.0 dos años después de su lanzamiento, una concesión irrevocable hecha de antemano. Facilita la revisión legal corporativa más que AGPL."
         },
         "reallyFree": {
           "q": "¿El uso comercial es realmente gratis?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Registro de seguridad pública"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "Regiones e idiomas",
+    "description": "Selecciona una región e idioma para el sitio de marketing.",
+    "triggerAria": "Seleccionar región e idioma",
+    "searchPlaceholder": "Buscar regiones…",
     "plannedHint": "La interfaz usa inglés hasta que este idioma esté disponible",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "No hay regiones que coincidan",
+    "menuAria": "Regiones e idiomas"
   }
 }
