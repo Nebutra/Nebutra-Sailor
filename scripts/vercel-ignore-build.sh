@@ -228,11 +228,28 @@ EOF
   esac
 }
 
-# Portable array fill (no mapfile — macOS bash 3.x)
+# Portable array fill. No mapfile (macOS bash 3.x) and NO process substitution:
+# Vercel's build shell has no /dev/fd, so `done < <(...)` fails with
+# "/dev/fd/63: No such file or directory" and leaves this array EMPTY.
+#
+# That failure was silent and it inverted the script's purpose. With no scope
+# paths, path_in_scope() below matches only shared_roots — so a commit touching
+# nothing but apps/<name>/src produced zero SCOPE_HITS and the build was SKIPPED.
+# A false skip is the one outcome every other branch in this file goes out of its
+# way to avoid, and it is why an app-only change could deploy as a no-op.
+#
+# A here-string is the portable form and this same file already uses it further
+# down, on DIFF_FILES. It writes a temp file rather than a /dev/fd entry.
 APP_SCOPE_PATHS=()
+_scope_out="$(scope_paths_for "$APP_DIR")"
 while IFS= read -r _scope_line; do
   [ -n "$_scope_line" ] && APP_SCOPE_PATHS+=("$_scope_line")
-done < <(scope_paths_for "$APP_DIR")
+done <<< "$_scope_out"
+
+if [ ${#APP_SCOPE_PATHS[@]} -eq 0 ]; then
+  echo "scope_paths_for produced nothing for $APP_DIR — building rather than risk a false skip."
+  exit 1
+fi
 
 echo "Scope paths:"
 for _p in "${APP_SCOPE_PATHS[@]}" "${shared_roots[@]}"; do
