@@ -95,7 +95,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `forge.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `forge` | Product edge :3105; Vercel project `nebutra-forge` exists (Hobby deploy cap) |
 | `admin.nebutra.com` | **not yet created** | **ECS PM2** `admin` :3108 (PM2 slot reserved, not deployed) | Blocked on the Cloudflare Access policy + OIDC gate — do not create the DNS record before both exist. No Vercel project by design |
 | `pebble.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `@nebutra/pebble-site` (`apps/pebble`) | Brand front only. Deploy: `deploy-pebble-vercel.yml`. DNS: `point-pebble-dns.yml`. API stays on `api.nebutra.com/pebble/*`. |
-| `carina.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `nebutra-carina` (`Nebutra/carina` `apps/docs`) | Product docs only. Deploy: `deploy-carina-vercel.yml` (bootstrap) or carina `deploy-docs-vercel.yml`. DNS: `point-carina-dns.yml`. |
+| `carina.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `nebutra-carina` (`prj_JN4csIJFkFiz1qoQCSYPXucmuJRx`, `Nebutra/carina` `apps/docs`) | Product docs only. Deploy: `deploy-carina-vercel.yml` (bootstrap) or carina `deploy-docs-vercel.yml`. DNS: `point-carina-dns.yml`. Requires CF token **Zone DNS Edit**; Hobby deploys hit `api-deployments-free-per-day`. |
 
 ### Topology layers
 
