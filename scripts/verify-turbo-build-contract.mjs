@@ -171,10 +171,14 @@ assert(
 
 const gatewayCoreBuild = taskById(dryRun("@nebutra/gateway-core"), "@nebutra/gateway-core#build");
 assert(gatewayCoreBuild, "Gateway-core build graph must include @nebutra/gateway-core#build");
+// gateway-core emits dist/ (package.json main/types → ./dist); outputs:[] was a
+// cache bug that dropped dist on cache hit. See 0f6b6aec.
 assert(
   Array.isArray(gatewayCoreBuild.resolvedTaskDefinition.outputs) &&
-    gatewayCoreBuild.resolvedTaskDefinition.outputs.length === 0,
-  "@nebutra/gateway-core#build is tsc/noEmit and must declare outputs: []",
+    gatewayCoreBuild.resolvedTaskDefinition.outputs.some(
+      (output) => output === "dist/**" || output.endsWith("dist/**"),
+    ),
+  "@nebutra/gateway-core#build emits dist/ and must declare dist/** outputs",
 );
 
 const onboardingBuild = taskById(dryRun("@nebutra/onboarding"), "@nebutra/onboarding#build");
