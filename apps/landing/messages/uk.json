@@ -1168,7 +1168,7 @@
         "badge": "КОМАНДА",
         "price": "2 000 $",
         "period": "/ рік",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "Для команд, які не можуть ставити критичні процеси в залежність від часу реакції спільноти.",
         "cta": "Отримати підтримку {brandName}",
         "f1": "Приватний канал підтримки (email + спільний Slack або Discord)",
         "f2": "Перша відповідь гарантовано протягом двох робочих днів",
@@ -1527,7 +1527,7 @@
         "badge": "Від {price}/рік",
         "title": "Команда",
         "subtitle": "Підписка на підтримку",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "Для команд, які не можуть ставити критичні процеси залежно від часу реакції спільноти.",
         "features": {
           "privateChannel": "Приватний канал підтримки",
           "firstResponse": "Гарантована перша відповідь протягом двох робочих днів",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Чому FSL, а не MIT чи AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL дозволяє будь-яке використання, крім продажу заміни самому Sailor, і кожна версія стає Apache-2.0 через два роки після випуску — це незворотна заздалегідь надана ліцензія. Вона легше проходить корпоративний юридичний огляд, ніж AGPL."
         },
         "reallyFree": {
           "q": "Чи дійсно комерційне використання безкоштовне?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Запис про громадську безпеку"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "Регіони та мови",
+    "description": "Виберіть регіон та мову для маркетингового сайту.",
+    "triggerAria": "Виберіть регіон та мову",
+    "searchPlaceholder": "Пошук регіонів…",
     "plannedHint": "Інтерфейс буде англійською, доки ця мова не буде випущена",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "Не знайдено відповідних регіонів",
+    "menuAria": "Регіони та мови"
   }
 }

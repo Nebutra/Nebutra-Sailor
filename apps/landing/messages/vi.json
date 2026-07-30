@@ -1168,7 +1168,7 @@
         "badge": "NHÓM",
         "price": "2.000 $",
         "period": "/ năm",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "Dành cho các đội nhóm không thể để thời gian phản hồi cộng đồng ảnh hưởng đến tiến độ quan trọng.",
         "cta": "Nhận hỗ trợ {brandName}",
         "f1": "Kênh hỗ trợ riêng (email + Slack hoặc Discord dùng chung)",
         "f2": "Đảm bảo phản hồi đầu tiên trong hai ngày làm việc",
@@ -1527,7 +1527,7 @@
         "badge": "Từ {price}/năm",
         "title": "Đội Nhóm",
         "subtitle": "Gói hỗ trợ",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "Dành cho các đội nhóm không thể phụ thuộc vào thời gian phản hồi của cộng đồng cho các công việc quan trọng.",
         "features": {
           "privateChannel": "Kênh hỗ trợ riêng",
           "firstResponse": "Phản hồi lần đầu trong hai ngày làm việc, được đảm bảo",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Tại sao là FSL thay vì MIT hoặc AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL cho phép mọi mục đích sử dụng trừ việc bán sản phẩm thay thế cho chính Sailor, và mỗi phiên bản sẽ chuyển sang Apache-2.0 sau hai năm phát hành — một quyền được cấp trước và không thể thu hồi. FSL dễ dàng vượt qua kiểm duyệt pháp lý doanh nghiệp hơn so với AGPL."
         },
         "reallyFree": {
           "q": "Sử dụng thương mại có thực sự miễn phí không?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Mã số công an"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "Khu vực và ngôn ngữ",
+    "description": "Chọn khu vực và ngôn ngữ cho trang marketing.",
+    "triggerAria": "Chọn khu vực và ngôn ngữ",
+    "searchPlaceholder": "Tìm kiếm khu vực…",
     "plannedHint": "Giao diện sẽ tạm thời sử dụng tiếng Anh cho đến khi ngôn ngữ này được phát hành",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "Không có khu vực nào phù hợp",
+    "menuAria": "Khu vực và ngôn ngữ"
   }
 }

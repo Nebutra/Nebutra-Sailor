@@ -1527,7 +1527,7 @@
         "badge": "Από {price}/έτος",
         "title": "Ομάδα",
         "subtitle": "Συμβόλαιο υποστήριξης",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "Για ομάδες που δεν μπορούν να βασιστούν σε χρόνους απόκρισης της κοινότητας για κρίσιμες διαδικασίες.",
         "features": {
           "privateChannel": "Ιδιωτικός κανάλι υποστήριξης",
           "firstResponse": "Απάντηση εντός δύο εργάσιμων ημερών, εγγυημένη",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Γιατί FSL αντί για MIT ή AGPL;",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "Το FSL επιτρέπει κάθε χρήση, εκτός από την πώληση υποκατάστατου του Sailor, και κάθε έκδοση γίνεται Apache-2.0 δύο χρόνια μετά την κυκλοφορία της — μια άδεια που χορηγείται αμετάκλητα εκ των προτέρων. Διευκολύνει περισσότερο την νομική έγκριση σε εταιρικό επίπεδο σε σύγκριση με το AGPL."
         },
         "reallyFree": {
           "q": "Είναι η εμπορική χρήση πραγματικά δωρεάν;",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Αριθμός εγγραφής δημόσιας ασφάλειας"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "Περιοχές και γλώσσες",
+    "description": "Επιλέξτε περιοχή και γλώσσα για την ιστοσελίδα marketing.",
+    "triggerAria": "Επιλογή περιοχής και γλώσσας",
+    "searchPlaceholder": "Αναζήτηση περιοχών…",
     "plannedHint": "Η διεπαφή θα χρησιμοποιεί αγγλικά μέχρι να κυκλοφορήσει αυτή η γλώσσα",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "Δεν βρέθηκαν περιοχές",
+    "menuAria": "Περιοχές και γλώσσες"
   }
 }

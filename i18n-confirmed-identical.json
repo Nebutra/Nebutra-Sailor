@@ -3752,6 +3752,7 @@
         "footer.links.discord": "8f5cc6430613f1c12f36965050bb7197",
         "footer.links.dpa": "a50a1efe5421320d2dc8ba27e1f7463d",
         "footer.links.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
+        "footer.links.twitter": "e6522551e0cc9ad7dfc18967ab135f70",
         "legalPages.cookies.analyticsType.cookies.0.name": "d045b58d245a51b84cb345dad6499780",
         "legalPages.cookies.analyticsType.cookies.0.provider": "d86cf69a8b82547a94ca3f6a307cf9a6",
         "legalPages.cookies.analyticsType.cookies.1.name": "80ae1f9ea359873f4030b423f88bb443",
@@ -4551,6 +4552,7 @@
         "legalPages.cookies.necessary.cookies.2.name": "84fa0b8c9d7da99d162659e11c5e4028",
         "licenseWizard.referralSource.productHunt": "384bd704030952f98a8e191317ef4e1f",
         "microLanding.architecture.database.title": "9dac92070a9af7135c78a3fc08a08f2d",
+        "nav.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "refer.infrastructure.api.eyebrow": "db974238714ca8de634a7ce1d083a14f",
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
       },
@@ -4578,6 +4580,7 @@
         "legalPages.cookies.necessary.cookies.2.name": "84fa0b8c9d7da99d162659e11c5e4028",
         "licenseWizard.referralSource.productHunt": "384bd704030952f98a8e191317ef4e1f",
         "microLanding.architecture.database.title": "9dac92070a9af7135c78a3fc08a08f2d",
+        "nav.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "refer.infrastructure.api.eyebrow": "db974238714ca8de634a7ce1d083a14f",
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
       }

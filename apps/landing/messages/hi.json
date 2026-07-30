@@ -1527,7 +1527,7 @@
         "badge": "{price}/वर्ष से शुरू",
         "title": "Team",
         "subtitle": "सहायता सदस्यता",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "उन टीमों के लिए जो समुदाय की प्रतिक्रिया समय पर निर्भर नहीं रहना चाहते।",
         "features": {
           "privateChannel": "निजी सहायता चैनल",
           "firstResponse": "दो व्यावसायिक दिनों में पहला प्रतिक्रिया, गारंटीकृत",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "MIT या AGPL की जगह FSL क्यों?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL Sailor के विकल्प को बेचने को छोड़कर हर उपयोग की अनुमति देता है, और प्रत्येक संस्करण रिलीज़ के दो साल बाद Apache-2.0 बन जाता है — जो पहले से ही अपरिवर्तनीय रूप से दिया गया है। यह AGPL की तुलना में कॉर्पोरेट कानूनी समीक्षा में अधिक आसानी से पास होता है।"
         },
         "reallyFree": {
           "q": "क्या commercial use वास्तव में मुफ्त है?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "सार्वजनिक सुरक्षा रिकॉर्ड"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "क्षेत्र और भाषाएँ",
+    "description": "मार्केटिंग साइट के लिए एक क्षेत्र और भाषा चुनें।",
+    "triggerAria": "क्षेत्र और भाषा चुनें",
+    "searchPlaceholder": "क्षेत्र खोजें…",
     "plannedHint": "इस भाषा के लॉन्च होने तक इंटरफ़ेस अंग्रेज़ी पर वापस आ जाता है",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "कोई क्षेत्र मेल नहीं खाता",
+    "menuAria": "क्षेत्र और भाषाएँ"
   }
 }

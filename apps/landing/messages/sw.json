@@ -1168,7 +1168,7 @@
         "badge": "TIMU",
         "price": "$2,000",
         "period": "/ mwaka",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "Kwa timu ambazo haziwezi kuweka njia muhimu kwenye muda wa majibu ya jamii.",
         "cta": "Pata msaada wa {brandName}",
         "f1": "Njia binafsi ya msaada (barua pepe + Slack au Discord ya pamoja)",
         "f2": "Jibu la kwanza limehakikishwa ndani ya siku mbili za kazi",
@@ -1527,7 +1527,7 @@
         "badge": "Kutoka {price}/mw",
         "title": "Timu",
         "subtitle": "Ujiwezi wa usaidizi",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "Kwa timu ambazo haziwezi kuweka njia muhimu kwenye vipindi vya jibu la jamii.",
         "features": {
           "privateChannel": "Kituo cha usaidizi cha siri",
           "firstResponse": "Jibu la kwanza la siku mbili za kazi, linalohakikishiwa",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Kwa nini FSL badala ya MIT au AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL inaruhusu matumizi yote isipokuwa kuuza badala ya Sailor yenyewe, na kila toleo linakuwa Apache-2.0 miaka miwili baada ya kutolewa — ruhusa inayotolewa bila kufutwa mapema. Inapitisha ukaguzi wa kisheria wa kampuni kwa urahisi zaidi kuliko AGPL."
         },
         "reallyFree": {
           "q": "Je, matumizi ya biashara ni bure kweli?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Rekodi ya usalama wa umma"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "Mikoa na lugha",
+    "description": "Chagua eneo na lugha kwa tovuti ya masoko.",
+    "triggerAria": "Chagua eneo na lugha",
+    "searchPlaceholder": "Tafuta mikoa…",
     "plannedHint": "Kiolesura kinakwenda kwa Kiingereza hadi lugha hii itafikishwa",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "Hakuna mikoa inayolingana",
+    "menuAria": "Mikoa na lugha"
   }
 }

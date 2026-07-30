@@ -1168,7 +1168,7 @@
         "badge": "تیم",
         "price": "۲٬۰۰۰ دلار",
         "period": "/ سال",
-        "desc": "For teams that cannot put a critical path on community response times.",
+        "desc": "برای تیم‌هایی که نمی‌توانند مسیر حیاتی را بر زمان پاسخ‌دهی جامعه تنظیم کنند.",
         "cta": "دریافت پشتیبانی {brandName}",
         "f1": "کانال پشتیبانی خصوصی (ایمیل + Slack یا Discord مشترک)",
         "f2": "اولین پاسخ تضمینی ظرف دو روز کاری",
@@ -1420,7 +1420,7 @@
         "desc": "محصولات SaaS شامل هماهنگ‌سازی چندعامل، چت‌بات، متن به تصویر، تصویر به متن و متن به ویدیو را با رابط کاربری جریان‌یافته پیشرو، مسیریابی هوشمند مدل و اندازه‌گیری مصرف عرضه کنید.",
         "features": {
           "f1": "رابط کاربری جریان‌دار چندعامله",
-          "f2": "Model Router + Usage Metering"
+          "f2": "مدل Router + اندازه‌گیری مصرف"
         }
       },
       "enterprise": {
@@ -1527,7 +1527,7 @@
         "badge": "از {price}/سال",
         "title": "تیم",
         "subtitle": "اشتراک پشتیبانی",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "برای تیم‌هایی که نمی‌توانند مسیر حیاتی خود را به زمان پاسخ‌دهی جامعه واگذار کنند.",
         "features": {
           "privateChannel": "کانال پشتیبانی خصوصی",
           "firstResponse": "پاسخ اولیه در دو روز کاری، تضمین‌شده",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "چرا FSL به جای MIT یا AGPL؟",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL هر نوع استفاده‌ای را به‌جز فروش جایگزینی برای خود Sailor مجاز می‌داند و هر نسخه دو سال پس از انتشار به Apache-2.0 تبدیل می‌شود — امتیازی که به‌صورت غیرقابل‌برگشت از پیش داده شده است. این مجوز نسبت به AGPL راحت‌تر از بررسی حقوقی شرکت‌ها عبور می‌کند."
         },
         "reallyFree": {
           "q": "آیا استفاده تجاری واقعاً رایگان است؟",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "ثبت امنیت عمومی"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "منطقه‌ها و زبان‌ها",
+    "description": "یک منطقه و زبان برای سایت بازاریابی انتخاب کنید.",
+    "triggerAria": "انتخاب منطقه و زبان",
+    "searchPlaceholder": "جستجوی منطقه‌ها…",
     "plannedHint": "رابط کاربری تا زمان عرضه این زبان به انگلیسی بازمی‌گردد",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "هیچ منطقه‌ای مطابقت ندارد",
+    "menuAria": "منطقه‌ها و زبان‌ها"
   }
 }

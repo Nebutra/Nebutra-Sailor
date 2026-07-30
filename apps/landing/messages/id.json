@@ -1527,7 +1527,7 @@
         "badge": "Mulai {price}/thn",
         "title": "Tim",
         "subtitle": "Langganan dukungan",
-        "description": "For teams that cannot put a critical path on community response times.",
+        "description": "Untuk tim yang tidak bisa mengandalkan waktu respons komunitas pada jalur kritis.",
         "features": {
           "privateChannel": "Saluran dukungan privat",
           "firstResponse": "Respons pertama dalam dua hari kerja, dijamin",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Mengapa FSL bukan MIT atau AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+          "a": "FSL mengizinkan setiap penggunaan kecuali menjual pengganti Sailor itu sendiri, dan setiap versi menjadi Apache-2.0 dua tahun setelah rilis — sebuah hak yang diberikan secara tidak dapat ditarik sebelumnya. Ini lebih mudah melewati tinjauan hukum perusahaan dibandingkan AGPL."
         },
         "reallyFree": {
           "q": "Apakah penggunaan komersial benar-benar gratis?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Rekam keamanan publik"
   },
   "MarketLocalePicker": {
-    "title": "Regions and languages",
-    "description": "Select a region and language for the marketing site.",
-    "triggerAria": "Select region and language",
-    "searchPlaceholder": "Search regions…",
+    "title": "Region dan bahasa",
+    "description": "Pilih region dan bahasa untuk situs pemasaran.",
+    "triggerAria": "Pilih region dan bahasa",
+    "searchPlaceholder": "Cari wilayah…",
     "plannedHint": "Antarmuka kembali ke bahasa Inggris hingga bahasa ini dirilis",
-    "noResults": "No regions match",
-    "menuAria": "Regions and languages"
+    "noResults": "Tidak ada wilayah yang cocok",
+    "menuAria": "Wilayah dan bahasa"
   }
 }
