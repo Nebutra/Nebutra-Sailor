@@ -227,6 +227,40 @@ persist_runtime_keys() {
   fi
 }
 
+## Prints a connection URL with the password replaced by ***.
+##
+## Written to fail SAFE, because this goes into a CI log. Two obvious versions
+## both leak on passwords that skip percent-encoding, and the spec requiring the
+## encoding is no help — a redaction that only works on well-formed input is not
+## a redaction:
+##   - `s#(://[^:/@]+):[^@]*@#\1:***@#` stops at the first @, so a password
+##     containing @ keeps its tail.
+##   - splitting the authority at the first / first lets a password containing /
+##     move the split point, and the password lands in what is treated as host.
+##
+## So the split is on the LAST @ in the whole string. If a query parameter ever
+## contains an @, that consumes too much and the output is mangled — but mangled
+## in the direction of hiding more, never less.
+redact_db_url() {
+  local url="$1" scheme rest userinfo
+  case "$url" in
+    *://*) : ;;
+    *) printf '%s' "$url"; return 0 ;;
+  esac
+  scheme="${url%%://*}"
+  rest="${url#*://}"
+  case "$rest" in
+    *@*) : ;;
+    *) printf '%s' "$url"; return 0 ;;
+  esac
+  userinfo="${rest%@*}"
+  case "$userinfo" in
+    # No colon means no password to hide; saying ":***" would invent one.
+    *:*) printf '%s://%s:***@%s' "$scheme" "${userinfo%%:*}" "${rest##*@}" ;;
+    *) printf '%s://%s@%s' "$scheme" "$userinfo" "${rest##*@}" ;;
+  esac
+}
+
 persist_database_runtime_env() {
   local app_root="$1"
   local env_file="$app_root/.env"
@@ -261,6 +295,23 @@ persist_database_runtime_env() {
   replace_env_assignment "$env_file" SUPABASE_DATABASE_URL "$supabase_database_url"
   replace_env_assignment "$env_file" SUPABASE_DIRECT_URL "$supabase_direct_url"
   log "ensured database runtime env: $env_file"
+
+  # Say WHICH database, with the password stripped. The log has always claimed to
+  # have "ensured database runtime env" without ever naming the endpoint, so a
+  # deploy pointing an app at the wrong Postgres looked identical to one pointing
+  # it at the right one. That cost hours on a `column does not exist` error where
+  # the schema plainly had the column: with no interactive access to the box and
+  # nothing in the log, there was no way to tell whether the app and the migration
+  # were even talking to the same server.
+  #
+  # Query parameters are kept deliberately — pgbouncer=true, schema=, sslmode= all
+  # change what a client can see, and they are not secret. Only the password is.
+  if [ -n "$database_url" ]; then
+    log "database endpoint: $(redact_db_url "$database_url")"
+  fi
+  if [ -n "$direct_url" ] && [ "$direct_url" != "$database_url" ]; then
+    log "direct endpoint:   $(redact_db_url "$direct_url")"
+  fi
 }
 
 persist_redis_runtime_env() {
