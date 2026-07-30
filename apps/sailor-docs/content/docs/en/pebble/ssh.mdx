@@ -1,0 +1,20 @@
+---
+title: SSH worktrees
+description: Remote worktrees over SSH
+---
+
+# SSH worktrees
+
+Run agents against remote machines over SSH without exposing Pebble's local control ports to the public internet.
+
+Local runtime ports stay on `127.0.0.1`:
+
+| Service | Port |
+|---------|------|
+| `pebble-runtime` | 17777 |
+| `pebble serve` / pairing | 6768 |
+
+```bash
+ssh -L 17777:127.0.0.1:17777 user@host
+ssh -L 6768:127.0.0.1:6768 user@host
+```

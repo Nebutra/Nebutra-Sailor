@@ -43,6 +43,18 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/pebble",
+      "destination": "https://pebble.nebutra.com",
+      "permanent": true
+    },
+    {
+      "source": "/pebble/:path*",
+      "destination": "https://pebble.nebutra.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",

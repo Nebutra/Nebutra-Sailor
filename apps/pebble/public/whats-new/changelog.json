@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-30T00:00:00.000Z",
+  "entries": [
+    {
+      "version": "0.0.0",
+      "tag": "placeholder",
+      "title": "Changelog feed is live",
+      "summary": "This feed is served from the Pebble brand front. Release notes continue to originate on GitHub Releases; desktop clients read this JSON without redirects.",
+      "releaseNotesUrl": "https://github.com/Nebutra/pebble/releases",
+      "publishedAt": "2026-07-30T00:00:00.000Z"
+    }
+  ]
+}

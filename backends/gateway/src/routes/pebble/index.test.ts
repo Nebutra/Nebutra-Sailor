@@ -185,6 +185,34 @@ describe("pebble support intake", () => {
       expect(response.status).toBe(400);
       expect(feedback).toHaveLength(0);
     });
+
+    it("accepts desktop legacy field names and synthesizes submission_id", async () => {
+      const app = await createApp();
+
+      const response = await app.request("/pebble/v1/feedback", {
+        method: "POST",
+        headers: { "content-type": "application/json", "cf-connecting-ip": "203.0.113.4" },
+        body: JSON.stringify({
+          feedback: "terminal lost scrollback after restart",
+          submission_type: "feedback",
+          github_email: "builder@example.com",
+          app_version: "1.4.200",
+          platform: "darwin",
+          os_release: "24.0.0",
+          arch: "arm64",
+        }),
+      });
+
+      expect(response.status).toBe(202);
+      const body = (await response.json()) as { submission_id: string; received: boolean };
+      expect(body.received).toBe(true);
+      expect(body.submission_id).toMatch(/^desk_/);
+      expect(feedback[0]).toMatchObject({
+        kind: "FEEDBACK",
+        contactEmail: "builder@example.com",
+        message: "terminal lost scrollback after restart",
+      });
+    });
   });
 
   describe("POST /pebble/diagnostics/token", () => {
