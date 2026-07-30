@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
- * deploy-ecs.yml enumerates its apps in SIX independent places, and nothing made
+ * deploy-ecs.yml enumerates its apps in SEVEN independent places, and nothing made
  * them agree until this test existed.
  *
  * The failure that prompted it: `admin` was in the dispatch input description,
@@ -68,6 +68,17 @@ function buildNextGateApps(): string[] {
 }
 
 /**
+ * Apps the deploy job pulls a bundle back down for. The build matrix uploads
+ * `bundle-${{ matrix.app }}` generically, but the download side is one hand-
+ * written step per app — so a built bundle with no download step reaches the
+ * upload as nothing at all: "No bundle artifacts to upload", after a green
+ * build. That was the seventh enumeration to bite.
+ */
+function downloadedApps(): string[] {
+  return [...yml.matchAll(/^\s+name: bundle-([a-z0-9-]+)\s*$/gm)].map((m) => m[1]);
+}
+
+/**
  * Apps the dispatch input accepts. The `case` arm is the gate that rejects
  * anything else, so it is the authoritative accept-list.
  */
@@ -129,6 +140,18 @@ describe("deploy-ecs app enumeration closure", () => {
     ).toEqual([]);
   });
 
+  it("every buildable app has a download step in the deploy job", () => {
+    // The upload side's `bundle-${{ matrix.app }}` does not match the literal
+    // pattern, so downloadedApps() sees only the hand-written per-app steps —
+    // which is exactly the list this compares against.
+    const missing = buildableApps().filter((app) => !downloadedApps().includes(app));
+    expect(
+      missing,
+      `these apps build a bundle that the deploy job never downloads, so the upload ` +
+        `step finds nothing and fails after a green build: ${missing.join(", ")}`,
+    ).toEqual([]);
+  });
+
   it("admin is wired end to end", () => {
     // Named explicitly because it is the case that was broken, and because a
     // control plane silently absent from the fleet is exactly the thing it
@@ -137,6 +160,7 @@ describe("deploy-ecs app enumeration closure", () => {
     expect(allowListApps()).toContain("admin");
     expect(resolvedOutputs()).toContain("admin");
     expect(buildNextGateApps()).toContain("admin");
+    expect(downloadedApps()).toContain("admin");
     expect(yml).toContain("'apps/admin/**'");
   });
 });
