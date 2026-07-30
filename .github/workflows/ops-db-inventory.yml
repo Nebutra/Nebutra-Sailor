@@ -1,0 +1,148 @@
+name: Ops — Database Inventory (read-only)
+
+# Answers "which database is production actually using, and what is in it" from a
+# box nobody can SSH into.
+#
+# This exists because that question had no answer. The apps' DATABASE_URL points
+# at a local Postgres on the VM while DIRECT_URL — which Prisma uses only for
+# migrations — points at PlanetScale. So migrations have been landing on a
+# database no application reads, and the discrepancy was invisible: every deploy
+# logged "ensured database runtime env" without naming an endpoint, and there is
+# no interactive access to look.
+#
+# STRICTLY READ-ONLY. No DDL, no writes, no dumps, no secrets in the output —
+# connection URLs are printed with the password removed. Safe to run at any time,
+# including while deciding whether a cutover is safe, which is the point: the
+# numbers have to come before the decision.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ops-db-inventory
+  cancel-in-progress: true
+
+jobs:
+  inventory:
+    name: Inventory both databases
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: |
+            .github
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [ -n "$SSH_KEY" ] || { echo "::error::No VM SSH private key secret is set"; exit 1; }
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Inventory
+        env:
+          ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          # Forwarded so the report can say whether the secret and the box agree.
+          # Compared after redaction; the values themselves are never printed.
+          SECRET_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_DIRECT_URL: ${{ secrets.DIRECT_URL }}
+        run: |
+          set -euo pipefail
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST is not set"; exit 1; }
+
+          # Hashes let the report state agreement without revealing either value.
+          secret_db_hash=$(printf '%s' "${SECRET_DATABASE_URL:-}" | sha256sum | cut -c1-12)
+          secret_direct_hash=$(printf '%s' "${SECRET_DIRECT_URL:-}" | sha256sum | cut -c1-12)
+          secret_db_len=${#SECRET_DATABASE_URL}
+
+          ssh -i ~/.ssh/id_deploy -p "$ECS_SSH_PORT" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "DEPLOY_ROOT=$(printf '%q' "$ECS_DEPLOY_ROOT") SECRET_DB_HASH=$secret_db_hash SECRET_DIRECT_HASH=$secret_direct_hash SECRET_DB_LEN=$secret_db_len bash -s" <<'REMOTE'
+          set -uo pipefail
+
+          redact() {
+            local url="$1" scheme rest userinfo
+            case "$url" in *://*) : ;; *) printf '%s' "$url"; return 0 ;; esac
+            scheme="${url%%://*}"; rest="${url#*://}"
+            case "$rest" in *@*) : ;; *) printf '%s' "$url"; return 0 ;; esac
+            userinfo="${rest%@*}"
+            case "$userinfo" in
+              *:*) printf '%s://%s:***@%s' "$scheme" "${userinfo%%:*}" "${rest##*@}" ;;
+              *)   printf '%s://%s@%s' "$scheme" "$userinfo" "${rest##*@}" ;;
+            esac
+          }
+
+          env_file="$DEPLOY_ROOT/idp/.env"
+          [ -f "$env_file" ] || { echo "no $env_file on this host"; exit 1; }
+          # shellcheck disable=SC1090
+          set -a; . "$env_file"; set +a
+
+          echo "=================================================================="
+          echo " ENDPOINTS AS THE APPS SEE THEM"
+          echo "=================================================================="
+          echo "DATABASE_URL (runtime reads/writes go here):"
+          echo "  $(redact "${DATABASE_URL:-<unset>}")"
+          echo "DIRECT_URL (Prisma uses this ONLY for migrations):"
+          echo "  $(redact "${DIRECT_URL:-<unset>}")"
+          echo
+          echo "Repo secret vs box, by hash (values never printed):"
+          box_hash=$(printf '%s' "${DATABASE_URL:-}" | sha256sum | cut -c1-12)
+          echo "  DATABASE_URL  box=$box_hash secret=$SECRET_DB_HASH  $([ "$box_hash" = "$SECRET_DB_HASH" ] && echo SAME || echo DIFFERENT)"
+          if [ "$SECRET_DB_LEN" -eq 0 ]; then
+            echo "  !! the DATABASE_URL repo secret is EMPTY — a deploy would fall back to SUPABASE_DATABASE_URL"
+          else
+            echo "  DATABASE_URL secret length: $SECRET_DB_LEN chars (non-empty)"
+          fi
+          echo
+
+          if ! command -v psql >/dev/null 2>&1; then
+            echo "psql is not installed on this host; cannot count rows." >&2
+            exit 2
+          fi
+
+          count_db() {
+            local label="$1" url="$2"
+            echo "=================================================================="
+            echo " $label"
+            echo " $(redact "$url")"
+            echo "=================================================================="
+            if ! psql "$url" -Atqc 'select 1' >/dev/null 2>&1; then
+              echo "  UNREACHABLE from this host"
+              echo
+              return 0
+            fi
+            echo "  tables in public: $(psql "$url" -Atqc "select count(*) from pg_tables where schemaname='public'" 2>/dev/null)"
+            echo "  has client_secret_envelope on oauth_clients: $(psql "$url" -Atqc "select count(*) from information_schema.columns where table_name='oauth_clients' and column_name='client_secret_envelope'" 2>/dev/null)"
+            echo "  applied migrations: $(psql "$url" -Atqc 'select count(*) from _prisma_migrations' 2>/dev/null || echo 'no _prisma_migrations table')"
+            echo "  --- row counts for the tables that decide whether this is the real database ---"
+            for t in users organizations tenants auth_users auth_sessions oauth_clients platform_staff; do
+              n=$(psql "$url" -Atqc "select count(*) from \"$t\"" 2>/dev/null || echo "-")
+              printf '  %-22s %s\n' "$t" "$n"
+            done
+            echo "  --- the 10 largest tables by live row estimate ---"
+            psql "$url" -Atqc "select relname || ' ' || n_live_tup from pg_stat_user_tables order by n_live_tup desc limit 10" 2>/dev/null \
+              | while read -r line; do printf '  %s\n' "$line"; done
+            echo
+          }
+
+          count_db "RUNTIME DATABASE (DATABASE_URL)" "${DATABASE_URL:-}"
+          if [ -n "${DIRECT_URL:-}" ] && [ "${DIRECT_URL:-}" != "${DATABASE_URL:-}" ]; then
+            count_db "MIGRATION TARGET (DIRECT_URL)" "$DIRECT_URL"
+          fi
+          echo "read-only inventory complete; nothing was modified"
+          REMOTE
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -f ~/.ssh/id_deploy ~/.ssh/known_hosts
