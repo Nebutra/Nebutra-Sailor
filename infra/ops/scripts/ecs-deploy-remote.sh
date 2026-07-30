@@ -1120,6 +1120,18 @@ for p in procs:
     fi
   fi
 
+  # Capture the OUTGOING instance's log before touching it. The post-start dump
+  # further down exists "so CI can see crash reasons", but it runs after the
+  # restart — and a force-recreate gives PM2 a fresh process id and therefore a
+  # fresh, empty log file. So the one thing it was meant to show, why the
+  # instance that was running misbehaved, is the one thing it could never show.
+  # Diagnosing a 500 on this box meant having no way to read the stack trace at
+  # all, since there is no interactive access.
+  if pm2 describe "$pm2_name" >/dev/null 2>&1; then
+    log "pm2 logs for $pm2_name (OUTGOING instance, last 60 lines — pre-restart):"
+    pm2 logs "$pm2_name" --nostream --lines 60 --raw --no-color 2>&1 | tail -70 || true
+  fi
+
   if [ "$can_reload" = "yes" ]; then
     log "reload pm2 $pm2_name (cwd=$pm_cwd, zero-downtime)"
     pm2 reload "$pm2_name" --update-env
