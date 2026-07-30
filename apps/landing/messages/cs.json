@@ -1168,7 +1168,7 @@
         "badge": "TÝM",
         "price": "2 000 $",
         "period": "/ rok",
-        "desc": "Pro týmy, které potřebují závazek, ne naději. Vše je už zdarma — tímto si kupujete naši pozornost.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Získat podporu {brandName}",
         "f1": "Soukromý kanál podpory (e-mail + sdílený Slack nebo Discord)",
         "f2": "První odpověď zaručeně do dvou pracovních dnů",
@@ -1527,7 +1527,7 @@
         "badge": "Od {price}/rok",
         "title": "Tým",
         "subtitle": "Předplatné podpory",
-        "description": "Pro týmy, které potřebují závazek, ne naději. Kód je už teď zdarma.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Soukromý kanál podpory",
           "firstResponse": "První odpověď do dvou pracovních dnů, zaručeno",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Proč FSL místo MIT nebo AGPL?",
-          "a": "FSL umožňuje každé použití kromě prodeje náhrady za Sailor samotný a každá verze se stává Apache-2.0 dva roky po vydání — oprávnění udělené nevratně předem. AGPL bránila adopci při korporátní právní revizi, aniž by chránila cokoliv, co jsme skutečně potřebovali chránit."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Je komerční použití skutečně zdarma?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Záznam veřejné bezpečnosti"
   },
   "MarketLocalePicker": {
-    "title": "Země a jazyky",
-    "description": "Vyberte zemi a jazyk pro marketingový web.",
-    "triggerAria": "Vybrat zemi a jazyk",
-    "searchPlaceholder": "Hledat země…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Rozhraní přejde na angličtinu, dokud nebude tento jazyk vydán",
-    "noResults": "Žádná shodující se země",
-    "menuAria": "Země a jazyky"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

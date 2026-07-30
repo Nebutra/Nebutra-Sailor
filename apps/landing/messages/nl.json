@@ -1168,7 +1168,7 @@
         "badge": "TEAM",
         "price": "$2.000",
         "period": "/ jaar",
-        "desc": "Voor teams die een toezegging nodig hebben in plaats van hoop. Alles is al gratis — hiermee koopt u onze aandacht.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "{brandName}-support afnemen",
         "f1": "Privé supportkanaal (e-mail + gedeelde Slack of Discord)",
         "f2": "Eerste reactie gegarandeerd binnen twee werkdagen",
@@ -1527,7 +1527,7 @@
         "badge": "Vanaf {price}/jr",
         "title": "Team",
         "subtitle": "Ondersteuningsabonnement",
-        "description": "Voor teams die een toezegging nodig hebben in plaats van een hoop. De code is al gratis.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Privé-ondersteuningskanaal",
           "firstResponse": "Eerste reactie binnen twee werkdagen, gegarandeerd",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Waarom FSL in plaats van MIT of AGPL?",
-          "a": "FSL staat elk gebruik toe, behalve het verkopen van een vervanging voor Sailor zelf, en elke versie wordt twee jaar na release Apache-2.0 — een onherroepelijk vooraf verleende vergunning. AGPL blokkeerde adoptie bij juridische review in bedrijven zonder iets te beschermen wat we daadwerkelijk hoefden te beschermen."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Is commercieel gebruik echt gratis?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Openbare veiligheidsregistratie"
   },
   "MarketLocalePicker": {
-    "title": "Landen en talen",
-    "description": "Selecteer een land en taal voor de marketingwebsite.",
-    "triggerAria": "Selecteer land en taal",
-    "searchPlaceholder": "Zoek landen…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "De interface valt terug op Engels tot deze taal beschikbaar is",
-    "noResults": "Geen overeenkomende landen",
-    "menuAria": "Landen en talen"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

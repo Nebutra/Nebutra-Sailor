@@ -1168,7 +1168,7 @@
         "badge": "ทีม",
         "price": "$2,000",
         "period": "/ ปี",
-        "desc": "สำหรับทีมที่ต้องการคำมั่น ไม่ใช่ความหวัง ทุกอย่างฟรีอยู่แล้ว — แพ็กเกจนี้ซื้อความใส่ใจของเรา",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "รับการสนับสนุน {brandName}",
         "f1": "ช่องทางสนับสนุนส่วนตัว (อีเมล + Slack หรือ Discord ร่วมกัน)",
         "f2": "รับประกันการตอบกลับครั้งแรกภายในสองวันทำการ",
@@ -1527,7 +1527,7 @@
         "badge": "เริ่มต้น {price}/ปี",
         "title": "Team",
         "subtitle": "การสมัครรับสนับสนุน",
-        "description": "สำหรับทีมที่ต้องการพันธะสัญญา ไม่ใช่แค่ความหวัง โค้ดใช้งานฟรีอยู่แล้ว",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "ช่องสนับสนุนส่วนตัว",
           "firstResponse": "การตอบกลับครั้งแรกภายในสองวันทำการ รับประกัน",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "ทำไมถึงใช้ FSL แทน MIT หรือ AGPL?",
-          "a": "FSL อนุญาตทุกการใช้งาน ยกเว้นการขายผลิตภัณฑ์ที่แทนที่ Sailor เอง และแต่ละเวอร์ชันจะกลายเป็น Apache-2.0 หลังจากปล่อยออกมาสองปี — สิทธิ์ที่มอบให้ล่วงหน้าอย่างถาวร AGPL กีดกันการนำไปใช้ในองค์กรเนื่องจากขั้นตอนการตรวจสอบทางกฎหมาย โดยไม่ได้ปกป้องสิ่งใดที่เราจำเป็นต้องปกป้อง"
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "การใช้งานเชิงพาณิชย์ฟรีจริงๆ หรือ?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "เลขที่บันทึกความมั่นคงสาธารณะ"
   },
   "MarketLocalePicker": {
-    "title": "ประเทศและภาษา",
-    "description": "เลือกประเทศและภาษาสำหรับเว็บไซต์การตลาด",
-    "triggerAria": "เลือกประเทศและภาษา",
-    "searchPlaceholder": "ค้นหาประเทศ…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "ส่วนติดต่อผู้ใช้จะกลับเป็นภาษาอังกฤษจนกว่าภาษานี้จะพร้อมใช้งาน",
-    "noResults": "ไม่พบประเทศที่ตรงกัน",
-    "menuAria": "ประเทศและภาษา"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

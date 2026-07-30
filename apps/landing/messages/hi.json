@@ -1168,7 +1168,7 @@
         "badge": "टीम",
         "price": "$2,000",
         "period": "/ वर्ष",
-        "desc": "उन टीमों के लिए जिन्हें उम्मीद नहीं, प्रतिबद्धता चाहिए। सब कुछ पहले से मुफ़्त है — यह हमारा ध्यान खरीदता है।",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "{brandName} सहायता लें",
         "f1": "निजी सहायता चैनल (ईमेल + साझा Slack या Discord)",
         "f2": "दो कार्यदिवसों में पहली प्रतिक्रिया की गारंटी",
@@ -1527,7 +1527,7 @@
         "badge": "{price}/वर्ष से शुरू",
         "title": "Team",
         "subtitle": "सहायता सदस्यता",
-        "description": "उन टीमों के लिए जो उम्मीद की बजाय प्रतिबद्धता चाहते हैं। कोड पहले से ही मुफ़्त है।",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "निजी सहायता चैनल",
           "firstResponse": "दो व्यावसायिक दिनों में पहला प्रतिक्रिया, गारंटीकृत",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "MIT या AGPL की जगह FSL क्यों?",
-          "a": "FSL Sailor के लिए substitute बेचने को छोड़कर हर उपयोग की अनुमति देता है, और प्रत्येक version release के दो साल बाद Apache-2.0 बन जाता है — जो पहले से ही irrevocably दिया गया है। AGPL ने corporate legal review पर adoption को block किया बिना हमें जो protect करना था वह protect किए।"
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "क्या commercial use वास्तव में मुफ्त है?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "सार्वजनिक सुरक्षा रिकॉर्ड"
   },
   "MarketLocalePicker": {
-    "title": "देश और भाषाएँ",
-    "description": "मार्केटिंग साइट के लिए एक देश और भाषा चुनें।",
-    "triggerAria": "देश और भाषा चुनें",
-    "searchPlaceholder": "देश खोजें…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "इस भाषा के लॉन्च होने तक इंटरफ़ेस अंग्रेज़ी पर वापस आ जाता है",
-    "noResults": "कोई देश मेल नहीं खाता",
-    "menuAria": "देश और भाषाएँ"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

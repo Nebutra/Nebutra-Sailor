@@ -1168,7 +1168,7 @@
         "badge": "PASUKAN",
         "price": "$2,000",
         "period": "/ tahun",
-        "desc": "Untuk pasukan yang perlukan komitmen, bukan harapan. Semuanya sudah percuma — ini membeli perhatian kami.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Dapatkan sokongan {brandName}",
         "f1": "Saluran sokongan peribadi (e-mel + Slack atau Discord dikongsi)",
         "f2": "Maklum balas pertama dijamin dalam dua hari bekerja",
@@ -1527,7 +1527,7 @@
         "badge": "Dari {price}/thn",
         "title": "Pasukan",
         "subtitle": "Langganan sokongan",
-        "description": "Untuk pasukan yang memerlukan komitmen, bukan harapan. Kod sudah percuma.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Saluran sokongan peribadi",
           "firstResponse": "Tindak balas pertama dalam dua hari bekerja, dijamin",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Mengapa FSL berbanding MIT atau AGPL?",
-          "a": "FSL membenarkan setiap penggunaan kecuali menjual pengganti Sailor itu sendiri, dan setiap versi menjadi Apache-2.0 dua tahun selepas pelancaran — pemberian yang dibuat secara tidak boleh ditarik balik terlebih dahulu. AGPL menghalang penerimaan semasa semakan undang-undang korporat tanpa melindungi apa yang sebenarnya perlu kami lindungi."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Adakah penggunaan komersial benar-benar percuma?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Rekod keselamatan awam"
   },
   "MarketLocalePicker": {
-    "title": "Negara dan bahasa",
-    "description": "Pilih negara dan bahasa untuk laman pemasaran.",
-    "triggerAria": "Pilih negara dan bahasa",
-    "searchPlaceholder": "Cari negara…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Antaramuka akan kembali ke bahasa Inggeris sehingga bahasa ini dilancarkan",
-    "noResults": "Tiada negara sepadan",
-    "menuAria": "Negara dan bahasa"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

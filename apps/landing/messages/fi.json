@@ -1168,7 +1168,7 @@
         "badge": "TIIMI",
         "price": "2 000 $",
         "period": "/ vuosi",
-        "desc": "Tiimeille, jotka tarvitsevat sitoumuksen toiveen sijaan. Kaikki on jo ilmaista — tämä ostaa huomiomme.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Hanki {brandName}-tuki",
         "f1": "Yksityinen tukikanava (sähköposti + jaettu Slack tai Discord)",
         "f2": "Ensimmäinen vastaus taatusti kahden arkipäivän kuluessa",
@@ -1527,7 +1527,7 @@
         "badge": "Alkaen {price}/v",
         "title": "Tiimi",
         "subtitle": "Tukipaketti",
-        "description": "Tiimeille, jotka tarvitsevat sitoumuksen, ei toiveen. Koodi on jo ilmainen.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Yksityinen tukikanava",
           "firstResponse": "Kaksi arkipäivää ensimmäiseen vastaukseen, taattu",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Miksi FSL eikä MIT tai AGPL?",
-          "a": "FSL sallii kaiken käytön paitsi Sailorin itsensä korvaajan myymisen, ja jokainen versio muuttuu Apache-2.0:ksi kaksi vuotta julkaisun jälkeen — peruuttamaton etukäteisluovutus. AGPL esti käyttöönottoa yritysten oikeudellisessa tarkastuksessa ilman, että suojasimme mitään, mitä oikeasti tarvitsimme suojata."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Onko kaupallinen käyttö todella ilmaista?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Julkinen turvallisuusrekisteri"
   },
   "MarketLocalePicker": {
-    "title": "Maat ja kielet",
-    "description": "Valitse markkinointisivuston maa ja kieli.",
-    "triggerAria": "Valitse maa ja kieli",
-    "searchPlaceholder": "Hae maita…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Käyttöliittymä palautuu englanniksi, kunnes tämä kieli julkaistaan",
-    "noResults": "Ei vastaavia maita",
-    "menuAria": "Maat ja kielet"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

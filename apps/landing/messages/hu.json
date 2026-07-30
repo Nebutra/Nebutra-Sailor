@@ -1168,7 +1168,7 @@
         "badge": "CSAPAT",
         "price": "2 000 $",
         "period": "/ év",
-        "desc": "Olyan csapatoknak, akiknek nem remény, hanem vállalás kell. Minden eleve ingyenes — ez a figyelmünket veszi meg.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "{brandName} támogatás igénylése",
         "f1": "Privát támogatási csatorna (e-mail + közös Slack vagy Discord)",
         "f2": "Első válasz garantáltan két munkanapon belül",
@@ -1527,7 +1527,7 @@
         "badge": "Évi {price}-tól",
         "title": "Csapat",
         "subtitle": "Támogatási előfizetés",
-        "description": "Azok számára, akik elköteleződést szeretnének, nem reményt. A kód már ingyenes.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Privát támogatási csatorna",
           "firstResponse": "Garantált két munkanapos első válasz",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Miért FSL, nem MIT vagy AGPL?",
-          "a": "Az FSL minden felhasználást engedélyez, kivéve a Sailor saját maga helyettesítésének értékesítését, és minden verzió két évvel a kiadás után Apache-2.0 licenc alá kerül — egy előre, visszavonhatatlanul megadott engedély. Az AGPL akadályozta a vállalati jogi felülvizsgálaton keresztüli elfogadást, anélkül, hogy bármit is védett volna, amit valójában meg kellett volna védenünk."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Valóban ingyenes a kereskedelmi felhasználás?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Közrendvédelmi nyilvántartás"
   },
   "MarketLocalePicker": {
-    "title": "Országok és nyelvek",
-    "description": "Válasszon országot és nyelvet a marketingoldalon.",
-    "triggerAria": "Ország és nyelv kiválasztása",
-    "searchPlaceholder": "Országok keresése…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "A felület angolra vált, amíg ez a nyelv nem érhető el",
-    "noResults": "Nincs találat az országok között",
-    "menuAria": "Országok és nyelvek"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

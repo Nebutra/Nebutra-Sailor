@@ -1168,7 +1168,7 @@
         "badge": "팀",
         "price": "$2,000",
         "period": "/ 년",
-        "desc": "기대가 아니라 약속이 필요한 팀을 위해. 모든 기능은 이미 무료입니다 — 이 등급은 저희의 주의를 구매합니다.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "{brandName} 지원 받기",
         "f1": "비공개 지원 채널(이메일 + 전용 Slack 또는 Discord)",
         "f2": "영업일 기준 2일 이내 최초 응답 보장",
@@ -1527,7 +1527,7 @@
         "badge": "{price}/년부터",
         "title": "팀",
         "subtitle": "지원 구독",
-        "description": "희망이 아닌 약속이 필요한 팀을 위한 요금제입니다. 코드는 이미 무료입니다.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "전용 지원 채널",
           "firstResponse": "2영업일 이내 첫 응답 보장",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "왜 MIT나 AGPL 대신 FSL을 사용하나요?",
-          "a": "FSL은 Sailor 자체를 대체하는 제품을 판매하는 경우를 제외한 모든 사용을 허용하며, 각 버전은 출시 2년 후 Apache-2.0이 됩니다. 이는 사전에 철회 불가능하게 부여된 권리입니다. AGPL은 실제로 보호해야 할 것을 보호하지 못하면서 기업 법무 검토에서 채택을 막았습니다."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "상업적 사용도 정말 무료인가요?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "공안비안 번호"
   },
   "MarketLocalePicker": {
-    "title": "국가 및 언어",
-    "description": "마케팅 사이트의 국가와 언어를 선택하세요.",
-    "triggerAria": "국가 및 언어 선택",
-    "searchPlaceholder": "국가 검색…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "이 언어는 아직 제공되지 않아 영어 UI로 표시됩니다",
-    "noResults": "일치하는 국가 없음",
-    "menuAria": "국가 및 언어"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

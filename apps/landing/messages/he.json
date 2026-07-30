@@ -1168,7 +1168,7 @@
         "badge": "צוות",
         "price": "2,000 $",
         "period": "/ שנה",
-        "desc": "לצוותים שצריכים התחייבות ולא תקווה. הכול ממילא חינם — כאן קונים את תשומת הלב שלנו.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "קבלו תמיכת {brandName}",
         "f1": "ערוץ תמיכה פרטי (דוא\"ל + Slack או Discord משותף)",
         "f2": "מענה ראשון מובטח בתוך שני ימי עסקים",
@@ -1527,7 +1527,7 @@
         "badge": "מ-{price}/שנה",
         "title": "צוות",
         "subtitle": "מנוי תמיכה",
-        "description": "לצוותים שצריכים התחייבות ולא תקווה. הקוד כבר חינם.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "ערוץ תמיכה פרטי",
           "firstResponse": "תגובה ראשונה תוך יומיים עסקיים, מובטח",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "למה FSL במקום MIT או AGPL?",
-          "a": "FSL מאפשר כל שימוש מלבד מכירת תחליף ל-Sailor עצמו, וכל גרסה הופכת ל-Apache-2.0 שנתיים לאחר השקה — מתן זכות בלתי הפיך מראש. AGPL חסם אימוץ בבדיקות משפטיות ארגוניות בלי להגן על דבר שצריך היה להגן עליו."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "האם שימוש מסחרי באמת חינם?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "רישום אבטחה ציבורית"
   },
   "MarketLocalePicker": {
-    "title": "מדינות ושפות",
-    "description": "בחר מדינה ושפה לאתר השיווק.",
-    "triggerAria": "בחר מדינה ושפה",
-    "searchPlaceholder": "חפש מדינות…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "הממשק יחזור לאנגלית עד ששפה זו תושק",
-    "noResults": "לא נמצאו מדינות תואמות",
-    "menuAria": "מדינות ושפות"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

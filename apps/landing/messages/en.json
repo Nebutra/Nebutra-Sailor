@@ -1168,7 +1168,7 @@
         "badge": "TEAM",
         "price": "$2,000",
         "period": "/ year",
-        "desc": "For teams who need a commitment rather than a hope. Everything is already free — this buys our attention.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Get {brandName} support",
         "f1": "Private support channel (email + shared Slack or Discord)",
         "f2": "Two business-day first response, guaranteed",
@@ -1527,7 +1527,7 @@
         "badge": "From {price}/yr",
         "title": "Team",
         "subtitle": "Support subscription",
-        "description": "For teams who need a commitment rather than a hope. The code is already free.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Private support channel",
           "firstResponse": "Two business-day first response, guaranteed",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. AGPL blocked adoption at corporate legal review without protecting anything we actually needed to protect."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Is commercial use really free?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Public security record"
   },
   "MarketLocalePicker": {
-    "title": "Countries and languages",
-    "description": "Select a country and language for the marketing site.",
-    "triggerAria": "Select country and language",
-    "searchPlaceholder": "Search countries…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Interface falls back to English until this language ships",
-    "noResults": "No countries match",
-    "menuAria": "Countries and languages"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

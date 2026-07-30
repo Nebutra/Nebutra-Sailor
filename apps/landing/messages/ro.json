@@ -1168,7 +1168,7 @@
         "badge": "ECHIPĂ",
         "price": "2.000 $",
         "period": "/ an",
-        "desc": "Pentru echipele care au nevoie de un angajament, nu de o speranță. Totul este deja gratuit — asta cumpără atenția noastră.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Obține suport {brandName}",
         "f1": "Canal privat de suport (email + Slack sau Discord partajat)",
         "f2": "Primul răspuns garantat în două zile lucrătoare",
@@ -1527,7 +1527,7 @@
         "badge": "De la {price}/an",
         "title": "Echipă",
         "subtitle": "Abonament suport",
-        "description": "Pentru echipele care au nevoie de un angajament, nu de o speranță. Codul este deja gratuit.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Canal privat de suport",
           "firstResponse": "Răspuns inițial în două zile lucrătoare, garantat",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "De ce FSL în loc de MIT sau AGPL?",
-          "a": "FSL permite orice utilizare, cu excepția vânzării unui substitut pentru Sailor însuși, iar fiecare versiune devine Apache-2.0 la doi ani după lansare — o acordare irevocabilă în avans. AGPL bloca adoptarea în revizuirile juridice corporative fără a proteja nimic ce aveam nevoie să protejăm."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Este utilizarea comercială cu adevărat gratuită?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Înregistrare securitate publică"
   },
   "MarketLocalePicker": {
-    "title": "Țări și limbi",
-    "description": "Selectați o țară și o limbă pentru site-ul de marketing.",
-    "triggerAria": "Selectați țara și limba",
-    "searchPlaceholder": "Căutați țări…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Interfața revine la engleză până când această limbă este lansată",
-    "noResults": "Nicio țară nu corespunde",
-    "menuAria": "Țări și limbi"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

@@ -1168,7 +1168,7 @@
         "badge": "EKİP",
         "price": "2.000 $",
         "period": "/ yıl",
-        "desc": "Umut değil taahhüt isteyen ekipler için. Her şey zaten ücretsiz — bu, ilgimizi satın alır.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "{brandName} desteği alın",
         "f1": "Özel destek kanalı (e-posta + paylaşılan Slack veya Discord)",
         "f2": "İki iş günü içinde garantili ilk yanıt",
@@ -1527,7 +1527,7 @@
         "badge": "{price}/yıl'dan",
         "title": "Ekip",
         "subtitle": "Destek aboneliği",
-        "description": "Umut yerine taahhüt isteyen ekipler için. Kod zaten ücretsiz.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Özel destek kanalı",
           "firstResponse": "İki iş günü içinde ilk yanıt, garanti",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "MIT veya AGPL yerine neden FSL?",
-          "a": "FSL, Sailor'un kendisinin bir ikamesini satmak dışında her türlü kullanıma izin verir ve her sürüm, yayımlanmasından iki yıl sonra Apache-2.0 lisansına geçer — bu, önceden geri alınamaz şekilde verilen bir izin. AGPL, aslında korumamıza ihtiyaç duyduğumuz hiçbir şeyi korumadan kurumsal hukuk incelemesinde benimsemeyi engelliyordu."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Ticari kullanım gerçekten ücretsiz mi?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Kamu güvenliği kaydı"
   },
   "MarketLocalePicker": {
-    "title": "Ülkeler ve diller",
-    "description": "Pazarlama sitesinde bir ülke ve dil seçin.",
-    "triggerAria": "Ülke ve dil seç",
-    "searchPlaceholder": "Ülkeleri ara…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Bu dil yayına alınana kadar arayüz İngilizce olarak kalır",
-    "noResults": "Eşleşen ülke bulunamadı",
-    "menuAria": "Ülkeler ve diller"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

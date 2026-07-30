@@ -217,7 +217,8 @@ export function createLocaleSwitcher<TLocale extends string>(
             handleSelect(l);
           }}
           className={cn(
-            "flex w-full cursor-pointer items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-sm transition-colors",
+            // min-h-11: same 44px tap target the market picker rows use.
+            "flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-sm transition-colors",
             isActive
               ? "bg-neutral-3 font-medium text-neutral-12"
               : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",

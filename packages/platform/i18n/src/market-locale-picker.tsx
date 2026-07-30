@@ -8,11 +8,14 @@ import { getLanguageEndonym, getRegionDisplayName } from "./display-names";
 import type { ProductLanguage } from "./languages";
 import { LocalePanel } from "./locale-panel";
 import {
+  buildLanguagePickerEntries,
   buildMarketPickerEntries,
   createMarketLocale,
   getMarketLocaleLabels,
+  type LanguagePickerEntry,
   type MarketLocale,
   type MarketPickerEntry,
+  marketLocaleForLanguage,
 } from "./market-locale";
 import { pinScrollPosition } from "./scroll-pin";
 
@@ -45,26 +48,18 @@ export interface MarketLocalePickerProps {
 }
 
 const DEFAULT_COPY: MarketLocalePickerCopy = {
-  title: "Countries and languages",
-  description: "Select a country and language for the marketing site.",
-  triggerAria: "Select country and language",
-  searchPlaceholder: "Search countries…",
+  title: "Language",
+  description: "Choose the language for the marketing site.",
+  triggerAria: "Select language",
+  searchPlaceholder: "Search languages…",
   plannedHint: "Interface falls back to English until this language ships",
-  noResults: "No countries match",
-  menuAria: "Countries and languages",
+  noResults: "No languages match",
+  menuAria: "Languages",
 };
 
-function entryMatches(entry: MarketPickerEntry, q: string): boolean {
+function languageMatches(entry: LanguagePickerEntry, q: string): boolean {
   if (!q) return true;
-  const hay = [
-    entry.countryName,
-    entry.market.nameEn,
-    entry.market.country,
-    ...entry.options.map((o) => o.endonym),
-  ]
-    .join(" ")
-    .toLowerCase();
-  return hay.includes(q);
+  return `${entry.endonym} ${entry.language}`.toLowerCase().includes(q);
 }
 
 export function createMarketLocalePicker(
@@ -94,6 +89,10 @@ export function createMarketLocalePicker(
         : (config.displayLocale ?? routeLocale);
 
     const entries = useMemo(() => buildMarketPickerEntries(displayLocale), [displayLocale]);
+    // Language list is display-locale independent: endonyms are the language's
+    // own name, which is the point — a reader finds their language without
+    // already reading the current one.
+    const languageEntries = useMemo(() => buildLanguagePickerEntries(), []);
 
     const activeLocale: MarketLocale = useMemo(() => {
       const pair = createMarketLocale(marketCountry, routeLocale as ProductLanguage);
@@ -154,54 +153,51 @@ export function createMarketLocalePicker(
               <span className="text-neutral-12">{activeLocale.pathTag}</span>
               <span className="text-neutral-9"> · </span>
               <span>{labels.languageEndonym}</span>
-              <span className="hidden sm:inline text-neutral-9"> · {labels.countryName}</span>
             </span>
           </>
         }
       >
         {(query, close) => {
-          const filtered = entries.filter((e) => entryMatches(e, query));
+          const filtered = languageEntries.filter((e) => languageMatches(e, query));
           if (filtered.length === 0) {
             return (
               <p className="px-2 py-6 text-center text-sm text-neutral-11">{copy.noResults}</p>
             );
           }
           return (
-            <div className="grid grid-cols-1 gap-4 p-1 sm:grid-cols-2">
-              {filtered.map((entry) => (
-                <div key={entry.market.country} className="min-w-0">
-                  <p className="text-sm font-semibold text-neutral-12">{entry.countryName}</p>
-                  <div className="mt-1.5 flex flex-wrap gap-1.5">
-                    {entry.options.map((opt) => {
-                      const isActive =
-                        activeLocale.country === entry.market.country &&
-                        activeLocale.language === opt.language;
-                      return (
-                        <button
-                          key={`${entry.market.country}-${opt.language}`}
-                          type="button"
-                          aria-current={isActive ? "true" : undefined}
-                          title={opt.planned ? copy.plannedHint : undefined}
-                          onClick={() => {
-                            close();
-                            handleSelect(opt.marketLocale);
-                          }}
-                          className={[
-                            "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium transition-colors",
-                            isActive
-                              ? "bg-neutral-12 text-neutral-1"
-                              : "bg-neutral-3 text-neutral-12 hover:bg-neutral-4",
-                            opt.planned && !isActive ? "opacity-80" : "",
-                          ].join(" ")}
-                        >
-                          {isActive ? <Check className="h-3 w-3" aria-hidden /> : null}
-                          <span>{opt.endonym}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 gap-1 p-1 sm:grid-cols-2">
+              {filtered.map((entry) => {
+                const isActive = activeLocale.language === entry.language;
+                return (
+                  <button
+                    key={entry.language}
+                    type="button"
+                    aria-current={isActive ? "true" : undefined}
+                    title={entry.planned ? copy.plannedHint : undefined}
+                    onClick={() => {
+                      close();
+                      // Keep the resolved market so switching language never
+                      // silently changes the visitor's currency.
+                      handleSelect(marketLocaleForLanguage(entry.language, activeLocale.country));
+                    }}
+                    className={[
+                      // min-h-11: the row is the tap target, and a language list is the one
+                      // control a phone user reaches for first.
+                      "inline-flex min-h-11 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-left text-sm transition-colors",
+                      isActive
+                        ? "bg-neutral-3 font-medium text-neutral-12"
+                        : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",
+                      entry.planned && !isActive ? "opacity-80" : "",
+                    ].join(" ")}
+                  >
+                    <Check
+                      className={`h-3.5 w-3.5 shrink-0 ${isActive ? "" : "invisible"}`}
+                      aria-hidden
+                    />
+                    <span className="truncate">{entry.endonym}</span>
+                  </button>
+                );
+              })}
             </div>
           );
         }}

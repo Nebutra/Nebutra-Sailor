@@ -1168,7 +1168,7 @@
         "badge": "团队版",
         "price": "$2,000",
         "period": "/ 年",
-        "desc": "给需要「承诺」而不是「指望」的团队。功能本来就免费——这一档买的是我们的注意力。",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "获取 {brandName} 支持",
         "f1": "私有支持通道（邮件 + 专属 Slack 或 Discord）",
         "f2": "两个工作日内首次响应，有保证",
@@ -1527,7 +1527,7 @@
         "badge": "{price}/年起",
         "title": "团队版",
         "subtitle": "支持订阅",
-        "description": "给需要「承诺」而不是「指望」的团队。代码本来就免费。",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "私有支持通道",
           "firstResponse": "两个工作日内首次响应，有保证",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "为什么选 FSL 而不是 MIT 或 AGPL？",
-          "a": "FSL 允许除「售卖 Sailor 替代品」之外的一切用途，且每个版本在发布两年后转为 Apache-2.0——这个授权是提前不可撤销地做出的。AGPL 在企业法务评审阶段就堵死了采用，却没能保护任何我们真正需要保护的东西。"
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "商业使用真的免费吗？",
@@ -1764,12 +1764,12 @@
     "recordNumber": "ICP 备案号"
   },
   "MarketLocalePicker": {
-    "title": "国家和语言",
-    "description": "为营销站点选择国家与语言。",
-    "triggerAria": "选择国家和语言",
-    "searchPlaceholder": "搜索国家…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "该语言尚未上线，界面暂以英文显示",
-    "noResults": "没有匹配的国家",
-    "menuAria": "国家和语言"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

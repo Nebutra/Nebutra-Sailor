@@ -1168,7 +1168,7 @@
         "badge": "ΟΜΑΔΑ",
         "price": "2.000 $",
         "period": "/ έτος",
-        "desc": "Για ομάδες που χρειάζονται δέσμευση αντί για ελπίδα. Όλα είναι ήδη δωρεάν — αυτό αγοράζει την προσοχή μας.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Αποκτήστε υποστήριξη {brandName}",
         "f1": "Ιδιωτικό κανάλι υποστήριξης (email + κοινόχρηστο Slack ή Discord)",
         "f2": "Πρώτη απάντηση εγγυημένα εντός δύο εργάσιμων ημερών",
@@ -1527,7 +1527,7 @@
         "badge": "Από {price}/έτος",
         "title": "Ομάδα",
         "subtitle": "Συμβόλαιο υποστήριξης",
-        "description": "Για ομάδες που χρειάζονται δέσμευση αντί για ελπίδα. Ο κώδικας είναι ήδη δωρεάν.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Ιδιωτικός κανάλι υποστήριξης",
           "firstResponse": "Απάντηση εντός δύο εργάσιμων ημερών, εγγυημένη",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Γιατί FSL αντί για MIT ή AGPL;",
-          "a": "Το FSL επιτρέπει κάθε χρήση εκτός από την πώληση υποκατάστατου του Sailor, και κάθε έκδοση γίνεται Apache-2.0 δύο έτη μετά την κυκλοφορία της — μια άδεια που χορηγείται ανεπιστρεπτί εκ των προτέρων. Το AGPL εμπόδιζε την υιοθέτηση σε εταιρική νομική ανασκόπηση χωρίς να προστατεύει κάτι που πραγματικά χρειαζόμασταν να προστατεύσουμε."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Είναι η εμπορική χρήση πραγματικά δωρεάν;",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Αριθμός εγγραφής δημόσιας ασφάλειας"
   },
   "MarketLocalePicker": {
-    "title": "Χώρες και γλώσσες",
-    "description": "Επιλέξτε χώρα και γλώσσα για τον ιστότοπο marketing.",
-    "triggerAria": "Επιλογή χώρας και γλώσσας",
-    "searchPlaceholder": "Αναζήτηση χωρών…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Η διεπαφή θα χρησιμοποιεί αγγλικά μέχρι να κυκλοφορήσει αυτή η γλώσσα",
-    "noResults": "Δεν βρέθηκαν αντίστοιχες χώρες",
-    "menuAria": "Χώρες και γλώσσες"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

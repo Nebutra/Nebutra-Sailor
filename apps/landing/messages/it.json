@@ -1168,7 +1168,7 @@
         "badge": "TEAM",
         "price": "2.000 $",
         "period": "/ anno",
-        "desc": "Per team che hanno bisogno di un impegno, non di una speranza. Tutto è già gratuito: questo compra la nostra attenzione.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Ottieni il supporto {brandName}",
         "f1": "Canale di supporto privato (email + Slack o Discord condiviso)",
         "f2": "Prima risposta garantita entro due giorni lavorativi",
@@ -1527,7 +1527,7 @@
         "badge": "Da {price}/anno",
         "title": "Team",
         "subtitle": "Abbonamento al supporto",
-        "description": "Per i team che hanno bisogno di un impegno, non di una speranza. Il codice è già gratuito.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Canale di supporto privato",
           "firstResponse": "Prima risposta entro due giorni lavorativi, garantita",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Perché FSL invece di MIT o AGPL?",
-          "a": "FSL consente ogni uso tranne la vendita di un sostituto di Sailor stesso, e ogni versione diventa Apache-2.0 due anni dopo il rilascio — una concessione fatta in modo irrevocabile in anticipo. AGPL bloccava l'adozione nella revisione legale aziendale senza proteggere nulla di ciò che effettivamente dovevamo proteggere."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "L'uso commerciale è davvero gratuito?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Registrazione sicurezza pubblica"
   },
   "MarketLocalePicker": {
-    "title": "Paesi e lingue",
-    "description": "Seleziona un paese e una lingua per il sito marketing.",
-    "triggerAria": "Seleziona paese e lingua",
-    "searchPlaceholder": "Cerca paesi…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "L'interfaccia torna all'inglese fino alla pubblicazione di questa lingua",
-    "noResults": "Nessun paese corrisponde",
-    "menuAria": "Paesi e lingue"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

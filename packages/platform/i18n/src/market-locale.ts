@@ -180,3 +180,57 @@ export function listAllMarketLocales(): MarketLocale[] {
   }
   return out;
 }
+
+export type LanguagePickerEntry = {
+  language: ProductLanguage;
+  endonym: string;
+  planned: boolean;
+};
+
+/**
+ * The languages the marketing site ships, deduplicated across markets.
+ *
+ * The picker is language-first on purpose. What the site actually varies is
+ * language; the market only decides currency, and currency does not need a
+ * browsable list of political entities to be resolved. Listing regions as a
+ * navigation axis bought no product value and put naming decisions about
+ * contested territories into the UI.
+ */
+export function buildLanguagePickerEntries(): LanguagePickerEntry[] {
+  const seen = new Map<ProductLanguage, LanguagePickerEntry>();
+  for (const market of listMarkets()) {
+    for (const language of market.languages) {
+      if (seen.has(language)) continue;
+      seen.set(language, {
+        language,
+        endonym: getLanguageEndonym(language),
+        planned: PRODUCT_LANGUAGE_META[language].catalog === "planned",
+      });
+    }
+  }
+  return [...seen.values()].sort((a, b) =>
+    a.endonym.localeCompare(b.endonym, "en", { sensitivity: "base" }),
+  );
+}
+
+/**
+ * Pair a chosen language with a market.
+ *
+ * Keeps the visitor's current market when it offers the language, so switching
+ * language never silently changes their currency. Falls back to the first
+ * market that does offer it, and finally to US/en.
+ */
+export function marketLocaleForLanguage(
+  language: ProductLanguage,
+  preferredCountry?: null | string,
+): MarketLocale {
+  if (preferredCountry) {
+    const kept = createMarketLocale(preferredCountry, language);
+    if (kept) return kept;
+  }
+  for (const market of listMarkets()) {
+    const found = createMarketLocale(market.country, language);
+    if (found) return found;
+  }
+  return createMarketLocale("US", "en") as MarketLocale;
+}

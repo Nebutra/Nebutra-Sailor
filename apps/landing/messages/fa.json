@@ -1168,7 +1168,7 @@
         "badge": "تیم",
         "price": "۲٬۰۰۰ دلار",
         "period": "/ سال",
-        "desc": "برای تیم‌هایی که به تعهد نیاز دارند نه امید. همه‌چیز از پیش رایگان است — این توجه ما را می‌خرد.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "دریافت پشتیبانی {brandName}",
         "f1": "کانال پشتیبانی خصوصی (ایمیل + Slack یا Discord مشترک)",
         "f2": "اولین پاسخ تضمینی ظرف دو روز کاری",
@@ -1527,7 +1527,7 @@
         "badge": "از {price}/سال",
         "title": "تیم",
         "subtitle": "اشتراک پشتیبانی",
-        "description": "برای تیم‌هایی که به تعهد نیاز دارند نه امید. کد از قبل رایگان است.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "کانال پشتیبانی خصوصی",
           "firstResponse": "پاسخ اولیه در دو روز کاری، تضمین‌شده",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "چرا FSL به جای MIT یا AGPL؟",
-          "a": "FSL هر استفاده‌ای را به جز فروش جایگزینی برای خود Sailor مجاز می‌کند و هر نسخه دو سال پس از انتشار به Apache-2.0 تبدیل می‌شود — مجوزی که به‌صورت غیرقابل بازگشت از پیش داده شده است. AGPL پذیرش را در بازبینی حقوقی شرکت‌ها مسدود می‌کرد بدون اینکه چیزی که واقعاً نیاز داشتیم محافظت شود."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "آیا استفاده تجاری واقعاً رایگان است؟",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "ثبت امنیت عمومی"
   },
   "MarketLocalePicker": {
-    "title": "کشورها و زبان‌ها",
-    "description": "یک کشور و زبان برای سایت بازاریابی انتخاب کنید.",
-    "triggerAria": "انتخاب کشور و زبان",
-    "searchPlaceholder": "جستجوی کشورها…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "رابط کاربری تا زمان عرضه این زبان به انگلیسی بازمی‌گردد",
-    "noResults": "هیچ کشوری مطابقت ندارد",
-    "menuAria": "کشورها و زبان‌ها"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }

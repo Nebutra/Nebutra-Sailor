@@ -1168,7 +1168,7 @@
         "badge": "TIM",
         "price": "$2.000",
         "period": "/ tahun",
-        "desc": "Untuk tim yang butuh komitmen, bukan harapan. Semuanya sudah gratis — ini membeli perhatian kami.",
+        "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Dapatkan dukungan {brandName}",
         "f1": "Kanal dukungan privat (email + Slack atau Discord bersama)",
         "f2": "Respons pertama dijamin dalam dua hari kerja",
@@ -1527,7 +1527,7 @@
         "badge": "Mulai {price}/thn",
         "title": "Tim",
         "subtitle": "Langganan dukungan",
-        "description": "Untuk tim yang membutuhkan komitmen, bukan harapan. Kodenya sudah gratis.",
+        "description": "For teams that cannot put a critical path on community response times.",
         "features": {
           "privateChannel": "Saluran dukungan privat",
           "firstResponse": "Respons pertama dalam dua hari kerja, dijamin",
@@ -1556,7 +1556,7 @@
       "items": {
         "whyFsl": {
           "q": "Mengapa FSL bukan MIT atau AGPL?",
-          "a": "FSL mengizinkan setiap penggunaan kecuali menjual pengganti Sailor itu sendiri, dan setiap versi menjadi Apache-2.0 dua tahun setelah rilis — pemberian hak yang tidak dapat dicabut secara permanen. AGPL menghalangi adopsi pada tinjauan hukum perusahaan tanpa melindungi apa pun yang benar-benar perlu kami lindungi."
+          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
         },
         "reallyFree": {
           "q": "Apakah penggunaan komersial benar-benar gratis?",
@@ -1764,12 +1764,12 @@
     "publicSecurity": "Rekam keamanan publik"
   },
   "MarketLocalePicker": {
-    "title": "Negara dan bahasa",
-    "description": "Pilih negara dan bahasa untuk situs pemasaran.",
-    "triggerAria": "Pilih negara dan bahasa",
-    "searchPlaceholder": "Cari negara…",
+    "title": "Regions and languages",
+    "description": "Select a region and language for the marketing site.",
+    "triggerAria": "Select region and language",
+    "searchPlaceholder": "Search regions…",
     "plannedHint": "Antarmuka kembali ke bahasa Inggris hingga bahasa ini dirilis",
-    "noResults": "Tidak ada negara yang cocok",
-    "menuAria": "Negara dan bahasa"
+    "noResults": "No regions match",
+    "menuAria": "Regions and languages"
   }
 }
