@@ -916,6 +916,25 @@ jobs:
           # the tenant login centre verifiable here, which is the whole thing the
           # host-only cookie in apps/admin/src/lib/auth.ts exists to prevent.
           ADMIN_AUTH_SECRET: ${{ secrets.ADMIN_AUTH_SECRET }}
+          # Wraps the per-secret DEKs that @nebutra/vault stores in the database —
+          # OAuth client secrets among them, which is what lets sso.nebutra.com
+          # federate with a relying party that requires a client_secret.
+          #
+          # Without it getVault() throws "No vault provider detected", the OIDC
+          # adapter cannot recover any confidential client's secret and (by
+          # design) refuses to serve it. Nothing appears broken; the client simply
+          # never authenticates.
+          #
+          # The KEK is HKDF-derived from this value against a fixed salt, so it is
+          # deterministic across machines — the same key here and on the VM means
+          # an envelope written from a laptop is readable by the IdP. It also means
+          # ROTATING THIS VALUE ORPHANS EVERY STORED SECRET: re-encrypt through
+          # vault.rotateKek() before changing it, never by editing the secret.
+          #
+          # AWS_KMS_KEY_ID/_ARN takes precedence if ever set, which is the upgrade
+          # path — a KEK in KMS rather than one sitting in this .env next to
+          # DATABASE_URL.
+          VAULT_LOCAL_MASTER_KEY: ${{ secrets.VAULT_LOCAL_MASTER_KEY }}
           # Login center owns Better Auth origin (multi-app RP model).
           BETTER_AUTH_URL: ${{ vars.BETTER_AUTH_URL || 'https://auth.nebutra.com' }}
           NEXT_PUBLIC_AUTH_URL: ${{ vars.NEXT_PUBLIC_AUTH_URL || 'https://auth.nebutra.com' }}
@@ -1104,7 +1123,7 @@ jobs:
             DATABASE_URL DIRECT_URL APP_DB_ROLE SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
             AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL \
             NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY CLERK_SECRET_KEY CLERK_WEBHOOK_SECRET AUTH_SSO_DISCOVERY_PROVIDERS \
-            BETTER_AUTH_SECRET BETTER_AUTH_URL ADMIN_AUTH_SECRET \
+            BETTER_AUTH_SECRET BETTER_AUTH_URL ADMIN_AUTH_SECRET VAULT_LOCAL_MASTER_KEY \
             NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL \
             NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN \
             NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO \
