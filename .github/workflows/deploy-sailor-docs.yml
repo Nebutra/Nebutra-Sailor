@@ -5,9 +5,15 @@ name: Deploy Sailor Docs
 # - vercel: CLI re-trigger (Hobby plan caps at ~100 deploys/day)
 # - cloudflare-workers: OpenNext → Worker + Assets (same pattern as typelens)
 #
-# Default: both jobs evaluate. Vercel soft-fails on daily quota. Cloudflare
-# runs when DEPLOY_TARGET_SAILOR_DOCS is cloudflare-pages / cloudflare-workers,
-# or when workflow_dispatch selects cloudflare / both.
+# Push path follows vars.DEPLOY_TARGET_SAILOR_DOCS:
+#   vercel | "" → Vercel job
+#   cloudflare-workers | cloudflare-pages → Cloudflare job
+# workflow_dispatch can force both / cloudflare / vercel.
+#
+# Cloudflare token: CLOUDFLARE_WORKERS_API_TOKEN || CLOUDFLARE_API_TOKEN
+# must include Workers Scripts Edit (preflight probes assets-upload-session).
+# See docs/ops/cloudflare-ci-token.md. Until token is fixed, set
+# DEPLOY_TARGET_SAILOR_DOCS=vercel so push deploys stay healthy.
 #
 # Historical note: old monorepo Workers builds could exceed script size; modern
 # OpenNext keeps handler thin and static under ASSETS. If CF deploy fails on
@@ -119,10 +125,51 @@ jobs:
         with:
           node-version: 22
 
+      # Prefer CLOUDFLARE_WORKERS_API_TOKEN (Workers Scripts Edit) when the
+      # general CLOUDFLARE_API_TOKEN is read-only / DNS-only. See:
+      # docs/ops/cloudflare-ci-token.md
       - name: Validate Cloudflare secrets
+        id: cf_secrets
+        env:
+          WORKERS_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT_ID_SECRET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ACCOUNT_ID_VAR: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
-          [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
+          set -euo pipefail
+          TOKEN="${WORKERS_TOKEN:-${API_TOKEN:-}}"
+          if [ -z "$TOKEN" ]; then
+            echo "::error::Set CLOUDFLARE_WORKERS_API_TOKEN or CLOUDFLARE_API_TOKEN (Workers Scripts Edit required). See docs/ops/cloudflare-ci-token.md"
+            exit 1
+          fi
+          ACCOUNT_ID="${ACCOUNT_ID_SECRET:-${ACCOUNT_ID_VAR:-}}"
+          if [ -z "$ACCOUNT_ID" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID secret/var is not set"
+            exit 1
+          fi
+          if [ -n "${WORKERS_TOKEN:-}" ]; then
+            echo "token_source=CLOUDFLARE_WORKERS_API_TOKEN"
+          else
+            echo "token_source=CLOUDFLARE_API_TOKEN"
+          fi
+          echo "account_id=$ACCOUNT_ID" >> "$GITHUB_OUTPUT"
+          # Masked echo only of source name for logs
+          echo "Using token source above for Workers deploy + preflight."
+
+      - name: Preflight Workers token (assets-upload-session)
+        env:
+          CLOUDFLARE_WORKERS_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if ! bash infra/ops/scripts/verify-cloudflare-ci-token.sh; then
+            echo "::error::Cloudflare token cannot deploy Workers (often error 10000 — missing Workers Scripts Edit)."
+            echo "::error::Fix: docs/ops/cloudflare-ci-token.md — create token from Edit Cloudflare Workers template, then:"
+            echo "::error::  printf '%s' \"\$NEW_TOKEN\" | gh secret set CLOUDFLARE_API_TOKEN -R Nebutra/Nebutra-Sailor"
+            echo "::error::Temporary path: gh variable set DEPLOY_TARGET_SAILOR_DOCS --body vercel && re-run with target=vercel"
+            exit 1
+          fi
 
       # Workspace packages export dist/ (gitignored). Build transitive deps so
       # Next can resolve @nebutra/brand, @nebutra/ui, icons, tokens, etc.
@@ -140,7 +187,8 @@ jobs:
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Workers-scoped token first; general API token as fallback.
+          apiToken: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           # Secret preferred; vars fallback if secret is empty/stale.
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/sailor-docs
@@ -149,16 +197,29 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Point docs DNS at Worker (proxied)
+        # DNS Edit usually lives on CLOUDFLARE_API_TOKEN (not Workers-only).
+        # Soft-fail: Worker is live on *.workers.dev even if DNS write is denied.
+        continue-on-error: true
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
-        run: bash infra/ops/scripts/point-docs-dns-cloudflare-worker.sh
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::warning::No token for DNS point — skip. Worker still on nebutra-sailor-docs.nebutra.workers.dev"
+            exit 0
+          fi
+          if ! bash infra/ops/scripts/point-docs-dns-cloudflare-worker.sh; then
+            echo "::warning::DNS point failed (token may lack Zone DNS Edit). See docs/ops/cloudflare-ci-token.md"
+            exit 1
+          fi
 
       - name: Smoke docs
         run: |
           set -euo pipefail
           for url in \
             "https://docs.nebutra.com/en" \
+            "https://docs.nebutra.com/en/pebble" \
             "https://nebutra-sailor-docs.nebutra.workers.dev/en" \
             ; do
             code=$(curl -sS -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
