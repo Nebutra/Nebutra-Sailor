@@ -376,7 +376,6 @@
       "pattern": "Mchoro",
       "replacement": "Badilisho",
       "flags": "Bendera",
-      "note": "Regex Tafuta na Badilisha · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

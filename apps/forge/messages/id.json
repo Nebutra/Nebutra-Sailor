@@ -376,7 +376,6 @@
       "pattern": "Pola",
       "replacement": "Pengganti",
       "flags": "Bendera",
-      "note": "Cari & Ganti Regex · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

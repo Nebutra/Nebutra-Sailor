@@ -376,7 +376,6 @@
       "pattern": "Model",
       "replacement": "Înlocuire",
       "flags": "Indicatori",
-      "note": "Căutare și înlocuire cu regex · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

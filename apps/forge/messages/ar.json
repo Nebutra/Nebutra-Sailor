@@ -376,7 +376,6 @@
       "pattern": "النمط",
       "replacement": "الاستبدال",
       "flags": "العلامات",
-      "note": "البحث والاستبدال بالنمط · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

@@ -376,7 +376,6 @@
       "pattern": "الگو",
       "replacement": "جایگزینی",
       "flags": "پرچم‌ها",
-      "note": "جستجو و جایگزینی Regex · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

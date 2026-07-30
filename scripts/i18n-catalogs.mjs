@@ -106,6 +106,20 @@ export const CATALOGS = [
     // registry definitions (design doc §6.10), not in this catalog.
     criticalNamespaces: ["runners", "categories", "home", "tool", "roots"],
     advisoryNamespaces: ["nav", "footer", "meta", "search", "auth"],
+    // Shrink-only ratchet, same idiom as KNOWN_SEAM_BYPASS and the microcopy
+    // allowlist. Forge gained 1084 keys in one wave and its enforced locales
+    // are being filled in passes; this locks in the progress so far — a locale
+    // may not get worse than its number here. Lower each entry as passes land,
+    // and delete it at zero. Never raise one.
+    identicalBaseline: {
+      "zh-Hant": 346,
+      "zh-Hans": 126,
+      ja: 117,
+      fr: 102,
+      de: 91,
+      es: 90,
+      ko: 24,
+    },
   },
   {
     id: "router",

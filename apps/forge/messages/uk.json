@@ -376,7 +376,6 @@
       "pattern": "Шаблон",
       "replacement": "Заміна",
       "flags": "Прапорці",
-      "note": "Пошук та заміна регулярними виразами · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

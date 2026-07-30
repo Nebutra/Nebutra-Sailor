@@ -376,7 +376,6 @@
       "pattern": "תבנית",
       "replacement": "החלפה",
       "flags": "דגלים",
-      "note": "חיפוש והחלפה ב-Regex · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

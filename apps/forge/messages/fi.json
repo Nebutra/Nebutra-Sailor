@@ -376,7 +376,6 @@
       "pattern": "Kuvio",
       "replacement": "Korvaus",
       "flags": "Liput",
-      "note": "Regex Etsi ja Korvaa · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

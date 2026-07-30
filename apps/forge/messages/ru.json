@@ -376,7 +376,6 @@
       "pattern": "Шаблон",
       "replacement": "Замена",
       "flags": "Флаги",
-      "note": "Поиск и замена по Regex · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

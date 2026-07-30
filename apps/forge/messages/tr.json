@@ -376,7 +376,6 @@
       "pattern": "Desen",
       "replacement": "Değiştirme",
       "flags": "Bayraklar",
-      "note": "Regex Bul & Değiştir · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

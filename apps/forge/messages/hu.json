@@ -376,7 +376,6 @@
       "pattern": "Minta",
       "replacement": "Csere",
       "flags": "Jelzők",
-      "note": "Regex keresés és csere · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

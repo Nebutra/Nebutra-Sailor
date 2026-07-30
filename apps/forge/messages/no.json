@@ -376,7 +376,6 @@
       "pattern": "Mønster",
       "replacement": "Erstatning",
       "flags": "Flagg",
-      "note": "Regex Finn og erstatt · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

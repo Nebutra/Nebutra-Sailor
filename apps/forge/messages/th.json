@@ -376,7 +376,6 @@
       "pattern": "รูปแบบ",
       "replacement": "ข้อความแทนที่",
       "flags": "Flags",
-      "note": "Regex ค้นหาและแทนที่ · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

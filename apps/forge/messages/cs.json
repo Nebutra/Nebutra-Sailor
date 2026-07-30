@@ -376,7 +376,6 @@
       "pattern": "Vzor",
       "replacement": "Nahrazení",
       "flags": "Příznaky",
-      "note": "Regex Najít a nahradit · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

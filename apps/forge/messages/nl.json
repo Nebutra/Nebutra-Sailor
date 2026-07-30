@@ -376,7 +376,6 @@
       "pattern": "Patroon",
       "replacement": "Vervanging",
       "flags": "Vlaggen",
-      "note": "Regex zoeken & vervangen · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

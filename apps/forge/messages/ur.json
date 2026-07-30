@@ -376,7 +376,6 @@
       "pattern": "پیٹرن",
       "replacement": "ریپلیسمنٹ",
       "flags": "فلیگز",
-      "note": "ریگیکس فائنڈ اینڈ ریپلیس · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

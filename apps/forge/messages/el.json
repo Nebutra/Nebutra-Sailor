@@ -376,7 +376,6 @@
       "pattern": "Σχέδιο",
       "replacement": "Αντικατάσταση",
       "flags": "Σημαίες",
-      "note": "Regex Find & Replace · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

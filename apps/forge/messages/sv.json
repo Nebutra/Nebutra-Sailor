@@ -376,7 +376,6 @@
       "pattern": "Mönster",
       "replacement": "Ersättning",
       "flags": "Flaggor",
-      "note": "Regex sök & ersätt · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

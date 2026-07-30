@@ -376,7 +376,6 @@
       "pattern": "Mẫu",
       "replacement": "Thay thế",
       "flags": "Cờ",
-      "note": "Tìm & Thay thế Regex · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

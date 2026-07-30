@@ -376,7 +376,6 @@
       "pattern": "Wzorzec",
       "replacement": "Zastąpienie",
       "flags": "Flagi",
-      "note": "Szukaj i zamień regex · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

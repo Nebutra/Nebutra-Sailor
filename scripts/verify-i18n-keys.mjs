@@ -37,12 +37,15 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CATALOGS, catalogById, ENFORCED_LOCALES } from "./i18n-catalogs.mjs";
+import { sourceFingerprint } from "./i18n-translate-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..");
 
 // Set per catalog by run(); the checks below read whichever catalog is active.
 let MESSAGES_DIR = "";
+let CONFIRMED_IDENTICAL = new Map();
+let IDENTICAL_BASELINE = {};
 let CRITICAL_CONTENT_NAMESPACES = new Set();
 let ADVISORY_CONTENT_NAMESPACES = new Set();
 const CANONICAL_LOCALE = "en";
@@ -406,6 +409,31 @@ function diff(locale, enKeys, localeKeys) {
   return { locale, missing, extra };
 }
 
+/**
+ * Strings a translator has already judged to be legitimately the same in this
+ * locale — spec names, format strings, placeholders like `@scope/package`.
+ *
+ * The translator has recorded these in i18n-confirmed-identical.json all along;
+ * the verifier simply never read it, so the two halves disagreed about what
+ * counts as drift. The fingerprint is of the ENGLISH source: change the English
+ * and the confirmation lapses, which is the property that makes this safe to
+ * trust rather than a permanent mute.
+ */
+function loadConfirmedIdentical(catalogId) {
+  try {
+    const raw = JSON.parse(readFileSync(join(REPO_ROOT, "i18n-confirmed-identical.json"), "utf8"));
+    const perLocale = raw?.confirmed?.[catalogId] ?? {};
+    return new Map(
+      Object.entries(perLocale).map(([loc, entries]) => [
+        loc,
+        new Map(Object.entries(entries ?? {})),
+      ]),
+    );
+  } catch {
+    return new Map();
+  }
+}
+
 function findIdenticalMessages(locale, enFlat, localeFlat, namespaces) {
   // This check used to be skipped entirely for zh-* on the grounds that the
   // different script made it "not apply the same way". That reasoning is
@@ -436,6 +464,7 @@ function findIdenticalMessages(locale, enFlat, localeFlat, namespaces) {
       continue;
     }
     if (localeValue.trim() === enValue.trim()) {
+      if (CONFIRMED_IDENTICAL.get(locale)?.get(key) === sourceFingerprint(enValue)) continue;
       identical.push(key);
     }
   }
@@ -485,6 +514,8 @@ function formatList(keys, limit) {
 function runCatalog(catalog) {
   MESSAGES_DIR = join(REPO_ROOT, catalog.messagesDir);
   CRITICAL_CONTENT_NAMESPACES = new Set(catalog.criticalNamespaces ?? []);
+  CONFIRMED_IDENTICAL = loadConfirmedIdentical(catalog.id);
+  IDENTICAL_BASELINE = catalog.identicalBaseline ?? {};
   ADVISORY_CONTENT_NAMESPACES = new Set(catalog.advisoryNamespaces ?? []);
   const log = JSON_OUT ? () => {} : (s) => process.stdout.write(s);
   log(`[i18n-verify] catalog: ${catalog.id} — ${catalog.description}\n`);
@@ -514,7 +545,12 @@ function runCatalog(catalog) {
 
   let hasBlockingDrift = false;
   for (const r of results) {
-    const enforceCritical = CRITICAL_IDENTICAL_ENFORCED.has(r.locale);
+    const baseline = IDENTICAL_BASELINE[r.locale] ?? 0;
+    // A locale may not get worse than its recorded baseline. Getting better is
+    // reported, not punished — a translation campaign moves this number every
+    // pass, and failing on improvement would just teach people to skip the gate.
+    const enforceCritical =
+      CRITICAL_IDENTICAL_ENFORCED.has(r.locale) && r.identicalCritical.length > baseline;
     const blocking =
       r.missing.length > 0 ||
       r.extra.length > 0 ||
@@ -555,7 +591,12 @@ function runCatalog(catalog) {
 
   log(`\n[i18n-verify] DRIFT DETECTED\n`);
   for (const r of results) {
-    const enforceCritical = CRITICAL_IDENTICAL_ENFORCED.has(r.locale);
+    const baseline = IDENTICAL_BASELINE[r.locale] ?? 0;
+    // A locale may not get worse than its recorded baseline. Getting better is
+    // reported, not punished — a translation campaign moves this number every
+    // pass, and failing on improvement would just teach people to skip the gate.
+    const enforceCritical =
+      CRITICAL_IDENTICAL_ENFORCED.has(r.locale) && r.identicalCritical.length > baseline;
     const blocking =
       r.missing.length > 0 ||
       r.extra.length > 0 ||

@@ -376,7 +376,6 @@
       "pattern": "প্যাটার্ন",
       "replacement": "প্রতিস্থাপন",
       "flags": "ফ্ল্যাগ",
-      "note": "রেগুলার এক্সপ্রেশন খুঁজুন ও প্রতিস্থাপন করুন · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",

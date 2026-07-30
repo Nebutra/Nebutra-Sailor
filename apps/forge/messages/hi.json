@@ -376,7 +376,6 @@
       "pattern": "पैटर्न",
       "replacement": "प्रतिस्थापन",
       "flags": "फ़्लैग्स",
-      "note": "रेगेक्स खोजें और बदलें · ECMAScript",
       "match": "Match",
       "replace": "Replace",
       "test": "Test",
