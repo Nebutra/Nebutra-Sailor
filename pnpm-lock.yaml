@@ -257,6 +257,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -403,6 +406,9 @@ importers:
       '@nebutra/docs-shared':
         specifier: workspace:*
         version: link:../../packages/design/docs-shared
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -545,6 +551,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/forge-runtime':
         specifier: workspace:*
         version: link:../../packages/ai/forge-runtime
@@ -706,6 +715,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -860,6 +872,9 @@ importers:
       '@nebutra/email':
         specifier: workspace:*
         version: link:../../packages/integrations/email
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -918,6 +933,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -997,6 +1015,9 @@ importers:
       '@nebutra/docs-shared':
         specifier: workspace:*
         version: link:../../packages/design/docs-shared
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -1145,6 +1166,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -1325,6 +1349,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -1458,6 +1485,9 @@ importers:
       '@nebutra/feature-flags':
         specifier: workspace:*
         version: link:../../packages/platform/feature-flags
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
