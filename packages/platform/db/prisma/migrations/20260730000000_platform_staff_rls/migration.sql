@@ -1,0 +1,25 @@
+-- platform_staff: RLS on, no policy — deny-all for app_user, on purpose.
+--
+-- Staff grants authorize the admin.nebutra.com control plane to read ACROSS
+-- tenants. A tenant session must never see this table, let alone write it. The
+-- control plane reaches it through the cross-tenant service role after OIDC +
+-- staff authorization, never through getTenantDb().
+--
+-- infra/data/database/policies/rls.sql already documents this intent, but it
+-- relies on "the ensure_rls event trigger already enables RLS on new public
+-- tables". That trigger does not exist on the PlanetScale branch, so the table
+-- was created with RLS OFF and protected only by the absence of grants. That
+-- holds right up until somebody runs a blanket
+-- `GRANT ... ON ALL TABLES IN SCHEMA public TO app_user` — a routine sweep that
+-- would silently hand every tenant session full access, with nothing left to
+-- stop it. Enabling RLS makes the un-policied table deny-all regardless of what
+-- grants are added later.
+--
+-- Deliberately NO policy. Adding one to "fix the missing policy" is the mistake
+-- this guards against; an empty policy set is the security property.
+--
+-- Also deliberately no FORCE ROW LEVEL SECURITY. It would be inert here — the
+-- service role holds BYPASSRLS, which outranks FORCE — and none of the other 77
+-- RLS-enabled tables use it, so adding it to this one alone would imply a
+-- distinction that does not exist.
+ALTER TABLE "public"."platform_staff" ENABLE ROW LEVEL SECURITY;
