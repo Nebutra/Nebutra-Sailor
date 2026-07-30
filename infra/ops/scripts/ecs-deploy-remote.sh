@@ -1400,6 +1400,24 @@ sync_nginx_runtime_config() {
   done
   if [ "$installed_vhosts" -eq 0 ]; then
     log "no vhost fragments uploaded; keeping existing conf.d/*.nebutra.com.conf"
+  else
+    # The repo is authoritative for these fragments, so a vhost it no longer
+    # ships is removed here. Without this a deleted vhost stays on disk forever,
+    # and the next person to add a wildcard include to nginx.conf inherits it as
+    # a mystery — which is roughly how a stale auth.nebutra.com.conf came to fail
+    # every deploy with `duplicate upstream "nebutra_auth"`.
+    #
+    # Only touched when at least one fragment was uploaded: zero uploads means
+    # something went wrong upstream, and that is not the moment to start deleting
+    # the live config. Scoped to *.nebutra.com.conf, so proxy_params.conf,
+    # security.conf and anything not matching that shape are left alone.
+    for live_vhost in /etc/nginx/conf.d/*.nebutra.com.conf; do
+      [ -f "$live_vhost" ] || continue
+      if [ ! -f "/tmp/nebutra-vhost-$(basename "$live_vhost")" ]; then
+        rm -f "$live_vhost"
+        log "removed $(basename "$live_vhost") — no longer shipped by the repo"
+      fi
+    done
   fi
 
   if ! nginx -t; then

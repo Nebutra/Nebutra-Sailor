@@ -868,6 +868,19 @@ jobs:
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-proxy_params.conf"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/security.conf \
             "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-security.conf"
+          # Clear the staging area FIRST. /tmp survives between deploys and the
+          # remote script includes every /tmp/nebutra-vhost-* it finds, so a
+          # leftover from an earlier run keeps being deployed after the repo has
+          # stopped shipping it — a vhost deleted from the repo was undeletable.
+          # That is not hypothetical: a stale auth.nebutra.com.conf kept being
+          # injected alongside nginx.conf's own auth blocks, giving
+          # `duplicate upstream "nebutra_auth"` and failing every deploy on a
+          # file that no longer existed here.
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              'rm -f /tmp/nebutra-vhost-*.nebutra.com.conf'
+
           # Every vhost fragment, named after itself. Enumerating hosts here is
           # how design.nebutra.com came to have a conf file in the repo that was
           # never uploaded, leaving the host on the apex redirect.
