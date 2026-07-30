@@ -134,6 +134,15 @@ export interface NebutraOIDCConfig {
    * first-party authorization_code + refresh_token browser flows.
    */
   enableClientCredentials?: boolean;
+
+  /**
+   * Trust X-Forwarded-* from the reverse proxy when deciding whether a request
+   * is secure. Required wherever TLS terminates before this process — see the
+   * note next to `provider.proxy` below. Defaults to true in production, where
+   * that is always the case, and false elsewhere so a plain local `next dev`
+   * cannot be told it is on https by a header.
+   */
+  trustProxy?: boolean;
 }
 
 /**
@@ -159,6 +168,7 @@ export function createNebutraOIDCProvider(config: NebutraOIDCConfig): Provider {
     consentUrl = "/oauth/authorize",
     debug = false,
     enableClientCredentials = false,
+    trustProxy = process.env.NODE_ENV === "production",
   } = config;
 
   // Validate cookie signing keys: throw in production on missing/weak values,
@@ -302,6 +312,28 @@ export function createNebutraOIDCProvider(config: NebutraOIDCConfig): Provider {
       };
     },
   });
+
+  /**
+   * Trust the reverse proxy's X-Forwarded-* headers.
+   *
+   * oidc-provider decides whether a request is "secure" from the socket unless
+   * told otherwise. In this topology nothing ever reaches it over TLS: nginx
+   * terminates and proxies to 127.0.0.1 over plain HTTP, setting
+   * X-Forwarded-Proto (see infra/runtime/nginx/conf.d/proxy_params.conf). With
+   * proxy left at its default those headers are ignored, so an https issuer is
+   * being served by what the library considers an insecure request — and the
+   * endpoints that must set a signed session cookie fail, while plain GETs like
+   * discovery and /jwks keep working. Which is exactly the shape of the fault
+   * this is aimed at: /auth answering 500 for every client while
+   * /.well-known/openid-configuration and /jwks answer 200.
+   *
+   * Safe here because nginx is the only path to this process: the sso vhost
+   * returns 403 to anything not arriving from Cloudflare, and the port is bound
+   * to 127.0.0.1. Were the app ever exposed directly, a client could assert
+   * X-Forwarded-Proto: https over plaintext — hence the flag rather than an
+   * unconditional true, and hence the default following NODE_ENV.
+   */
+  provider.proxy = trustProxy;
 
   return provider;
 }
