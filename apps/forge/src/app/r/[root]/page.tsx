@@ -94,7 +94,7 @@ export default async function RootHubPage({ params }: Props) {
                     href={`/r/${r}`}
                     className={`inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors ${
                       r === hub.root
-                        ? "border-[var(--blue-9)] bg-[var(--blue-3)] text-[var(--neutral-12)]"
+                        ? "border-primary bg-[var(--blue-3)] text-[var(--neutral-12)]"
                         : "border-[var(--neutral-6)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]"
                     }`}
                   >

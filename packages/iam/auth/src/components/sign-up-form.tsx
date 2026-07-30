@@ -146,7 +146,7 @@ export function SignUpForm({ onSubmit, oauthProviders, signInUrl = "/sign-in" }:
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-[var(--blue-9)] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:opacity-90 disabled:opacity-50"
+          className="rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition-colors hover:opacity-90 disabled:opacity-50"
         >
           {loading ? "Creating account\u2026" : "Create Account"}
         </button>

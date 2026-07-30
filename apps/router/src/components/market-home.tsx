@@ -305,9 +305,7 @@ export function MarketHome({
                     <span
                       className={[
                         "h-7 w-0.5 shrink-0 rounded-full transition",
-                        active
-                          ? "bg-[var(--blue-9)]"
-                          : "bg-transparent group-hover:bg-[var(--neutral-6)]",
+                        active ? "bg-primary" : "bg-transparent group-hover:bg-[var(--neutral-6)]",
                       ].join(" ")}
                       aria-hidden
                     />
@@ -380,7 +378,7 @@ export function MarketHome({
               className={[
                 "relative pb-1 transition",
                 tab === id
-                  ? "font-semibold text-[var(--neutral-12)] after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-[var(--blue-9)]"
+                  ? "font-semibold text-[var(--neutral-12)] after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-primary"
                   : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]",
               ].join(" ")}
             >

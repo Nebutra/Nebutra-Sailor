@@ -281,7 +281,7 @@ export function ProductDetail({
               <span
                 className={[
                   "h-4 w-0.5 rounded-full",
-                  tab === t.id ? "bg-[var(--blue-9)]" : "bg-transparent",
+                  tab === t.id ? "bg-primary" : "bg-transparent",
                 ].join(" ")}
                 aria-hidden
               />
@@ -464,33 +464,41 @@ function PlaygroundEmptyArt() {
       <rect x="168" y="106" width="48" height="28" rx="8" fill="var(--blue-4)" opacity="0.35" />
       {/* locks */}
       <circle cx="192" cy="78" r="10" fill="white" />
-      <rect x="186" y="76" width="12" height="10" rx="2" fill="var(--blue-9)" opacity="0.7" />
+      <rect x="186" y="76" width="12" height="10" rx="2" fill="hsl(var(--primary))" opacity="0.7" />
       <path
         d="M188 76v-4a4 4 0 018 0v4"
-        stroke="var(--blue-9)"
+        stroke="hsl(var(--primary))"
         strokeWidth="2"
         fill="none"
         opacity="0.7"
       />
       <circle cx="192" cy="120" r="8" fill="white" />
-      <rect x="187" y="118" width="10" height="8" rx="2" fill="var(--blue-9)" opacity="0.55" />
+      <rect
+        x="187"
+        y="118"
+        width="10"
+        height="8"
+        rx="2"
+        fill="hsl(var(--primary))"
+        opacity="0.55"
+      />
       {/* person */}
-      <circle cx="108" cy="72" r="16" fill="var(--blue-9)" opacity="0.85" />
+      <circle cx="108" cy="72" r="16" fill="hsl(var(--primary))" opacity="0.85" />
       <path
         d="M84 148c4-28 12-44 24-48 14-5 28 4 36 22 6 14 8 28 8 40"
-        fill="var(--blue-9)"
+        fill="hsl(var(--primary))"
         opacity="0.8"
       />
       <path
         d="M92 100c-8 6-14 16-16 28"
-        stroke="var(--blue-9)"
+        stroke="hsl(var(--primary))"
         strokeWidth="8"
         strokeLinecap="round"
         opacity="0.8"
       />
       <path
         d="M128 104c10 4 16 14 18 26"
-        stroke="var(--blue-9)"
+        stroke="hsl(var(--primary))"
         strokeWidth="8"
         strokeLinecap="round"
         opacity="0.8"

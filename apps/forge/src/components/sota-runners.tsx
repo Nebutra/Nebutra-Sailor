@@ -950,7 +950,7 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
           />
           {selStyle ? (
             <div
-              className="pointer-events-none absolute border-2 border-[var(--blue-9)] bg-[color-mix(in_srgb,var(--blue-9)_18%,transparent)]"
+              className="pointer-events-none absolute border-2 border-primary bg-[color-mix(in_srgb,hsl(var(--primary))_18%,transparent)]"
               style={selStyle}
             />
           ) : null}

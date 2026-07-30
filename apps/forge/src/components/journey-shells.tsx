@@ -944,9 +944,7 @@ export function DecisionShell({
                 )}
               >
                 <span className="flex items-start gap-2">
-                  {selected ? (
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--blue-9)]" />
-                  ) : null}
+                  {selected ? <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> : null}
                   <span>
                     <span className="block text-sm font-medium text-[var(--neutral-12)]">
                       {option.label}

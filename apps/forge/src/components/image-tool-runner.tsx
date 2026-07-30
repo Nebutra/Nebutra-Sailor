@@ -172,7 +172,7 @@ export function ImageToolRunner({
             max={100}
             value={quality}
             onChange={(e) => setQuality(Number(e.target.value))}
-            className="mt-2 w-full accent-[var(--blue-9)]"
+            className="mt-2 w-full accent-primary"
           />
         </label>
         <Input

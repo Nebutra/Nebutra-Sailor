@@ -204,7 +204,7 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
               onClick={() => setFilter(f.id)}
               className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                 filter === f.id
-                  ? "border-[var(--blue-9)] bg-[var(--blue-3)] text-[var(--neutral-12)]"
+                  ? "border-primary bg-[var(--blue-3)] text-[var(--neutral-12)]"
                   : "border-[var(--neutral-6)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
               }`}
             >

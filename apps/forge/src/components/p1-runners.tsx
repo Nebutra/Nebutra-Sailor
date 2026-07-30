@@ -107,7 +107,7 @@ export function MarkdownPreviewRunner({
             type="checkbox"
             checked={gfm}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setGfm(e.target.checked)}
-            className="size-4 accent-[var(--blue-9)]"
+            className="size-4 accent-primary"
           />
           GFM
         </label>
@@ -615,7 +615,7 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
         onDrop={onDrop}
         className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed px-4 py-10 text-center transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] ${
           dragging
-            ? "border-[var(--blue-9)] bg-[var(--blue-3)]/40"
+            ? "border-primary bg-[var(--blue-3)]/40"
             : "border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 hover:border-[var(--neutral-8)]"
         }`}
       >
@@ -648,7 +648,7 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setAlgos((a) => ({ ...a, [algo]: e.target.checked }))
                 }
-                className="size-4 accent-[var(--blue-9)]"
+                className="size-4 accent-primary"
               />
               <span className="font-mono uppercase">{algo}</span>
             </label>

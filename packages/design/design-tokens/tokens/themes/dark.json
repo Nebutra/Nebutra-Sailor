@@ -279,8 +279,9 @@
       "$type": "string"
     },
     "primary": {
-      "$value": "228 90% 72%",
-      "$type": "string"
+      "$value": "222.6 74.4% 55.5%",
+      "$type": "string",
+      "$description": "Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191."
     },
     "primary-foreground": {
       "$value": "222 14% 9%",

@@ -57,7 +57,7 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
           max={64}
           value={length}
           onChange={(e) => setLength(Number(e.target.value))}
-          className="mt-2 w-full accent-[var(--blue-9)]"
+          className="mt-2 w-full accent-primary"
         />
       </label>
       <div className="flex flex-wrap gap-4 text-sm text-[var(--neutral-11)]">
@@ -68,7 +68,7 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
               type="checkbox"
               checked={checked}
               onChange={(e) => set(e.target.checked)}
-              className="size-4 accent-[var(--blue-9)]"
+              className="size-4 accent-primary"
             />
             {label}
           </label>

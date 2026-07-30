@@ -591,7 +591,7 @@ export function TextReplaceRunner({ toolId }: { toolId: string }) {
             type="checkbox"
             checked={regex}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setRegex(e.target.checked)}
-            className="size-4 accent-[var(--blue-9)]"
+            className="size-4 accent-primary"
           />
           正则
         </label>
@@ -689,7 +689,7 @@ export function LinePrefixSuffixRunner({ toolId }: { toolId: string }) {
           type="checkbox"
           checked={skipEmpty}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setSkipEmpty(e.target.checked)}
-          className="size-4 accent-[var(--blue-9)]"
+          className="size-4 accent-primary"
         />
         跳过空行
       </label>
@@ -1170,7 +1170,7 @@ export function LunarRunner({ toolId }: { toolId: string }) {
             type="checkbox"
             checked={isLeap}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setIsLeap(e.target.checked)}
-            className="size-4 accent-[var(--blue-9)]"
+            className="size-4 accent-primary"
           />
           农历闰月
         </label>

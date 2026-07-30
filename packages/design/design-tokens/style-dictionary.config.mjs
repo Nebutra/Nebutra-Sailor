@@ -316,6 +316,37 @@ StyleDictionary.registerPreprocessor({
   },
 });
 
+/**
+ * A token description must not be able to break the build.
+ *
+ * $description is emitted verbatim into `/** … *\/` comments in the CSS and the
+ * TypeScript declarations, so a description containing the comment terminator
+ * closes it early and the generated .ts stops parsing. Writing an asterisk-slash inside a note
+ * about a colour ramp is enough to do it, and the failure surfaces as a
+ * sixty-line minified prettier stack trace pointing at a blank line in
+ * build/ts/estree.ts — nowhere near the token that caused it.
+ *
+ * Neutralised rather than rejected: the author's sentence still reads the same,
+ * and there is nothing for a contributor to learn or remember.
+ */
+StyleDictionary.registerPreprocessor({
+  name: "nebutra/safe-descriptions",
+  preprocessor: (tokens) => {
+    const walk = (node) => {
+      if (node === null || typeof node !== "object") return;
+      if (typeof node.$description === "string" && node.$description.includes("*/")) {
+        node.$description = node.$description.replaceAll("*/", "* /");
+      }
+      for (const [key, child] of Object.entries(node)) {
+        if (key === "$description") continue;
+        walk(child);
+      }
+    };
+    walk(tokens);
+    return tokens;
+  },
+});
+
 StyleDictionary.registerTransform({
   name: "color/nebutra/passthrough",
   type: "value",
@@ -354,7 +385,7 @@ const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/
 
   return {
     log: { verbosity: "default", warnings: "error" },
-    preprocessors: ["tokens-studio", "nebutra/derive-border-tier"],
+    preprocessors: ["tokens-studio", "nebutra/safe-descriptions", "nebutra/derive-border-tier"],
     include: sources.slice(0, -1),
     source: sources.slice(-1),
     platforms: {

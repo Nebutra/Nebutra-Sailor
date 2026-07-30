@@ -191,7 +191,7 @@
   --card-foreground: 222 47% 11%;
   --popover: 0 0% 100%;
   --popover-foreground: 222 47% 11%;
-  --primary: 228 85% 56%; /** Softer brand blue. 228 85% 56% resolves to #2f56ee, not the #254bfa this note claimed until 2026-07-28 — the hex was stale and the HSL triple is the shipped value. 5.70:1 on white, so it passes AA as both fill and foreground. The raw --blue-9 (#0033FE) is the identity colour and must not surface on components. */
+  --primary: 222.8 85% 55.7%; /** Product action blue. Derived, not borrowed: hue 264 is the VI hue, L* and C were chosen inside the band the industry actually ships (measured OKLCH C 0.167-0.235, L* 54-67 across Vercel, Stripe, Linear, GitHub, Tailwind, Radix, Figma, Notion). #2e65ee = L*55.5 C0.215, white label 4.99:1. The previous 228 85% 56% (#2f56ee, C0.232) also passed at 5.70:1 — this trims it to the middle of the band rather than its top edge. The VI lock --blue-9 (#0033FE, C0.290) is 23% above anything in that band and must never surface on a component. */
   --primary-foreground: 0 0% 100%;
   --secondary: 210 40% 96%;
   --secondary-foreground: 222 47% 11%;
@@ -507,7 +507,7 @@
   --card-foreground: 210 18% 96%;
   --popover: 222 12% 13%;
   --popover-foreground: 210 18% 96%;
-  --primary: 228 90% 72%;
+  --primary: 222.6 74.4% 55.5%; /** Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191. */
   --primary-foreground: 222 14% 9%;
   --secondary: 222 10% 18%;
   --secondary-foreground: 210 18% 96%;
