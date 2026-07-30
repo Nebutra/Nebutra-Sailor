@@ -127,7 +127,7 @@ The 70% parity floor is enforced; below it, the script exits non-zero.
 1. **Display-P3 wide-gamut overrides** — the legacy SSOT defines `--nebutra-brand-blue` / `--nebutra-brand-cyan` aliases inside `@supports (color: color(display-p3 ...))`. Those are not yet modeled in DTCG; today the generated values are the sRGB hex fallback. Next step: add a P3 wide-gamut variant in `core.json` and emit it under a SD `mediaQuery` wrapper.
 2. **`oklch()` overrides for `--ds-gray-*`** — the legacy file ships sRGB `hsla()` baseline values and overrides them under `@supports (color: oklch(...))`. The generated CSS currently keeps only the sRGB fallback. Next step: add a separate `themes/ds-gray-oklch.json` and a SD format that wraps it in the `@supports` block.
 3. **Compound shorthand tokens not yet emitted**:
-   - `--transition` (combines `--transition-duration` + `--transition-easing`)
+   - `--transition` (emitted today as a hardcoded `150ms ease-out` literal in `buildExtras()`; the `--transition-duration` / `--transition-easing` component tokens were removed from `semantic.json` — they had zero consumers)
    - `--focus-ring` (compound box-shadow recipe)
    These can be modeled as DTCG `composite` tokens; deferred to follow-up.
 4. **`--brand-primary` / `--brand-accent` in `.dark` mode** — the legacy SSOT keeps these mapped to the sRGB primitives, but in dark mode the visual brand is `var(--blue-9)` which itself maps to `--nebutra-blue-400`. Today the DTCG model resolves to the *core* primitive (always blue-500/cyan-500). Next step: add per-mode brand alias overrides in the dark theme file.

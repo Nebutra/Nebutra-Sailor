@@ -87,18 +87,6 @@
       "cinematic": { "$value": "{duration.cinematic}", "$type": "duration" }
     }
   },
-  "transition": {
-    "duration": {
-      "$value": "{duration.flow}",
-      "$type": "duration",
-      "$description": "Default transition duration — 200ms flow rail."
-    },
-    "easing": {
-      "$value": "ease-out",
-      "$type": "string",
-      "$description": "ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1)."
-    }
-  },
   "focusRing": {
     "default": {
       "$type": "string",

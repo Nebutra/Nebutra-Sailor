@@ -107,8 +107,6 @@
   --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
   --font-mono:
     var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-  --transition-duration: 200ms; /** Default transition duration — 200ms flow rail. */
-  --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
   --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
   --brand-accent: #0bf1c3; /** Brand accent — 云毓青 */
   --brand-tertiary: #8b5cf6;
@@ -423,8 +421,6 @@
   --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
   --font-mono:
     var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-  --transition-duration: 200ms; /** Default transition duration — 200ms flow rail. */
-  --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
   --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
   --brand-accent: #1af7c8; /** Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400). */
   --brand-tertiary: #8b5cf6;
