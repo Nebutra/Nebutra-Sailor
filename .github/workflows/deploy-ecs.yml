@@ -388,6 +388,13 @@ jobs:
             build_command: "build"
             condition: ${{ needs.detect-changes.outputs.forge }}
             site_url: "https://forge.nebutra.com"
+          - app: admin
+            package: "@nebutra/admin"
+            workspace: apps/admin
+            kind: "next-standalone"
+            build_command: "build"
+            condition: ${{ needs.detect-changes.outputs.admin }}
+            site_url: "https://admin.nebutra.com"
     steps:
       - name: Skip if not needed
         if: matrix.condition != 'true'
