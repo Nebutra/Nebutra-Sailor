@@ -1,0 +1,32 @@
+---
+title: Pebble
+description: AI orchestrator desktop product — docs namespace on the Nebutra platform
+---
+
+# Pebble
+
+Pebble is Nebutra's AI orchestrator for builders: run Codex, Claude Code, OpenCode, and more side-by-side in isolated git worktrees from one desktop surface.
+
+## Where things live
+
+| Surface | Host |
+|---------|------|
+| Product / download | [pebble.nebutra.com](https://pebble.nebutra.com) |
+| **These docs** | [docs.nebutra.com/pebble](https://docs.nebutra.com/pebble) |
+| Feedback & diagnostics API | `https://api.nebutra.com/pebble/*` |
+| Status | [status.nebutra.com](https://status.nebutra.com) |
+| Source & releases | [github.com/Nebutra/pebble](https://github.com/Nebutra/pebble) |
+
+`pebble.nebutra.com` is a **brand front only** (landing, download, static update feeds). It has no product database. Machine endpoints use the shared platform API under the `/pebble` prefix so other Nebutra products can coexist on `api.nebutra.com`.
+
+## Start here
+
+- [Download](https://pebble.nebutra.com/download)
+- [Mobile companion](/pebble/mobile)
+- [Parallel worktrees](/pebble/model/worktrees)
+- [Terminal](/pebble/terminal)
+- [Privacy & telemetry](/pebble/telemetry)
+
+## Platform topology
+
+See the Pebble repository's [`docs/reference/infra-index.md`](https://github.com/Nebutra/pebble/blob/main/docs/reference/infra-index.md) for the frozen host map (Cloudflare → Vercel brand front + ECS API origin).

@@ -37,6 +37,9 @@ trustPolicyExclude:
   - "@auth/core@0.41.3"
   # chokidar@4.0.3 (via tsup) lost provenance attestation vs earlier 4.x — not a takeover.
   - "chokidar@4.0.3"
+  # undici-types@6.21.0 (via @types/node) dropped provenance vs earlier 6.x — not a takeover.
+  - "undici-types@6.21.0"
+  - "undici-types"
 strictDepBuilds: true
 ignorePnpmfile: true
 

@@ -18,6 +18,7 @@
 | `forge.nebutra.com` | forge | **Nebutra Forge** — tool station + Agent tool API (Vercel; ECS PM2 fallback :3105) |
 | `admin.nebutra.com` | admin | **Ecosystem control plane** — staff-only (Cloudflare Access + `sso` OIDC + platform-staff role). Never tenant-visible. See [PRD](./plans/2026-07-28-nebutra-admin-control-plane-design.md) |
 | `pebble.nebutra.com` | (external repo `Nebutra/pebble`) | **Pebble brand front** — landing / download / docs redirect only. No backend of its own. |
+| `carina.nebutra.com` | (external repo `Nebutra/carina` → `apps/docs`) | **Carina product docs** — Astro + Starlight static site. No backend of its own. |
 
 > Router/Forge: product hosts; supply engines (New-API, Sub2API) stay **internal** — see `infra/nebutra-router/`.
 
@@ -51,6 +52,23 @@ or `staging.pebble.*`. Client-side origins are build-time configurable
 (`DOCS_ORIGIN` / `API_ORIGIN` / `STATUS_ORIGIN`) — see the Pebble repo's
 `docs/reference/infra-index.md`.
 
+### Carina — product docs front, local-first runtime
+
+Carina is a separate repo (`Nebutra/carina`). The public host is **docs only**
+(Astro + Starlight under `apps/docs`). The runtime itself stays local-first;
+identity/cloud boundaries are documented in Carina's `docs/nebutra-cloud-boundary.md`
+and do **not** get a parallel `api.carina.*` origin.
+
+| Capability | Host + path |
+|---|---|
+| Product docs / LLM surface | `carina.nebutra.com` (CF CNAME → Vercel, proxied) |
+| Skills / catalog URLs | `carina.nebutra.com/llms.txt`, `/data/rpc-catalog-*.json` |
+| Staging | **no host** — preview deploys / project isolation only |
+
+Deploy lives in the Carina repo (`deploy-docs-vercel.yml` → project `nebutra-carina`).
+DNS for the shared `nebutra.com` zone is owned here: `point-carina-dns.yml` +
+`infra/ops/scripts/point-carina-dns-vercel.sh`.
+
 ## Production truth (as of 2026-07-22)
 
 Single source of truth for *where traffic lands today*. Do not invent a second story in other docs without updating this table.
@@ -66,6 +84,8 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `router.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `router` | Product edge :3106; Vercel project `nebutra-router` exists for future cutover |
 | `forge.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `forge` | Product edge :3105; Vercel project `nebutra-forge` exists (Hobby deploy cap) |
 | `admin.nebutra.com` | **not yet created** | **ECS PM2** `admin` :3108 (PM2 slot reserved, not deployed) | Blocked on the Cloudflare Access policy + OIDC gate — do not create the DNS record before both exist. No Vercel project by design |
+| `pebble.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `@nebutra/pebble-site` (`apps/pebble`) | Brand front only. Deploy: `deploy-pebble-vercel.yml`. DNS: `point-pebble-dns.yml`. API stays on `api.nebutra.com/pebble/*`. |
+| `carina.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `nebutra-carina` (`Nebutra/carina` `apps/docs`) | Product docs only. Deploy: carina repo `deploy-docs-vercel.yml`. DNS: `point-carina-dns.yml` (this monorepo owns the zone). |
 
 ### Topology layers
 
@@ -114,6 +134,7 @@ A       forge     106.15.4.31              ✅           ECS PM2 @nebutra/forge
 A       admin     106.15.4.31              ✅           ECS PM2 @nebutra/admin — create ONLY together with the Cloudflare Access policy
 CNAME   docs      nebutra-sailor-docs.nebutra.workers.dev  ✅  # OpenNext Worker; Vercel grey-cloud is fallback only
 CNAME   pebble    cname.vercel-dns.com     ✅           Pebble brand front (landing/download); no backend
+CNAME   carina    cname.vercel-dns.com     ✅           Carina product docs (Nebutra/carina apps/docs); no backend
 ```
 
 When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.
@@ -156,6 +177,7 @@ Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.n
 |---------|------|-----------|
 | landing | `apps/landing` | `nebutra.com`, `www` |
 | docs | `apps/sailor-docs` | `docs.nebutra.com` |
+| nebutra-pebble | `apps/pebble` | `pebble.nebutra.com` |
 | nebutra-auth | `apps/auth` | `auth.nebutra.com` (ready; DNS may still be ECS) |
 | nebutra-web | `apps/web` | `app.nebutra.com` (ready; DNS may still be ECS) |
 

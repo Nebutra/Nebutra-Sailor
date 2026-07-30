@@ -1,0 +1,15 @@
+---
+title: 隐私与遥测
+description: Pebble 收集哪些匿名数据以及如何关闭
+---
+
+# 隐私与遥测
+
+| 通道 | 目标 |
+|------|------|
+| 产品分析 | PostHog Cloud（设置中可关闭） |
+| 错误 / 崩溃 | Sentry Cloud |
+| 应用内反馈 | `POST https://api.nebutra.com/pebble/v1/feedback` |
+| 诊断包 | `POST https://api.nebutra.com/pebble/diagnostics/*` |
+
+诊断上传有 4 MiB 上限、短时一次性 token、按 IP 限流，默认保留 30 天。反馈正文不会进入公共 issue 或分析事件。

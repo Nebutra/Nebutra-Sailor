@@ -1,0 +1,63 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "pnpm turbo build --filter=@nebutra/pebble-site",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/pebble",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "outputDirectory": ".next",
+  "regions": ["iad1"],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        }
+      ]
+    },
+    {
+      "source": "/whats-new/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+        },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/docs",
+      "destination": "https://docs.nebutra.com/pebble",
+      "permanent": true
+    },
+    {
+      "source": "/docs/:path*",
+      "destination": "https://docs.nebutra.com/pebble/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/v1/feedback",
+      "destination": "https://api.nebutra.com/pebble/v1/feedback"
+    },
+    {
+      "source": "/diagnostics/:path*",
+      "destination": "https://api.nebutra.com/pebble/diagnostics/:path*"
+    }
+  ]
+}

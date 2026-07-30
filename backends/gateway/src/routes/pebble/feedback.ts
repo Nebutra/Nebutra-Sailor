@@ -52,6 +52,40 @@ function formDataToRecord(form: FormData): Record<string, string> {
   return record;
 }
 
+/**
+ * Normalize desktop / brand-front legacy payloads onto the canonical schema.
+ *
+ * Shipped Tauri clients historically POSTed camel-ish / alternate field names
+ * to `pebble.nebutra.com/v1/feedback` (now rewritten to this route):
+ *   feedback → message
+ *   submission_type → kind
+ *   github_email → contact_email
+ * and often omitted `submission_id`. New clients send the canonical shape
+ * directly to `api.nebutra.com/pebble/v1/feedback`.
+ */
+export function normalizeFeedbackBody(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
+  const source = raw as Record<string, unknown>;
+  const out: Record<string, unknown> = { ...source };
+
+  if (out.message == null && typeof out.feedback === "string") {
+    out.message = out.feedback;
+  }
+  if (out.kind == null && typeof out.submission_type === "string") {
+    out.kind = out.submission_type;
+  }
+  if (out.contact_email == null && typeof out.github_email === "string") {
+    out.contact_email = out.github_email;
+  }
+  if (
+    out.submission_id == null ||
+    (typeof out.submission_id === "string" && out.submission_id.trim() === "")
+  ) {
+    out.submission_id = `desk_${Date.now().toString(36)}_${crypto.randomUUID().slice(0, 8)}`;
+  }
+  return out;
+}
+
 const submitRoute = createRoute({
   method: "post",
   path: "/",
@@ -106,7 +140,7 @@ feedbackRoutes.openapi(submitRoute, async (c) => {
     return c.json({ error: "Bad Request", message: "Body is not valid JSON or form data." }, 400);
   }
 
-  const parsed = FeedbackRequestSchema.safeParse(raw);
+  const parsed = FeedbackRequestSchema.safeParse(normalizeFeedbackBody(raw));
   if (!parsed.success) {
     return c.json({ error: "Bad Request", message: "Submission failed validation." }, 400);
   }
