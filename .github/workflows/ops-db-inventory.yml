@@ -117,17 +117,16 @@ jobs:
           # psql is not installed on this box, but every deployed app ships a
           # node_modules containing pg. Borrowing it beats asking someone to
           # apt-get install on a production host just to count rows.
-          pg_root=""
-          for cand in "$DEPLOY_ROOT"/idp/current "$DEPLOY_ROOT"/web/current "$DEPLOY_ROOT"/api/current; do
-            if [ -d "$cand" ] && find "$cand" -maxdepth 6 -type d -name pg -path '*node_modules*' 2>/dev/null | head -1 | grep -q .; then
-              pg_root="$cand"; break
-            fi
-          done
-          if [ -z "$pg_root" ]; then
-            echo "could not find a bundled pg module on this host; cannot count rows" >&2
-            exit 2
+          echo "looking for a bundled pg module..."
+          pg_index=$(find "$DEPLOY_ROOT" -maxdepth 8 -type f -path '*/node_modules/pg/package.json' 2>/dev/null | head -1)
+          if [ -z "$pg_index" ]; then
+            echo "  none found under $DEPLOY_ROOT — skipping row counts."
+            echo "  (the endpoint facts above are the part that matters; counts need pg or psql)"
+            echo "read-only inventory complete; nothing was modified"
+            exit 0
           fi
-          echo "using pg from: $pg_root"
+          pg_root="${pg_index%/node_modules/pg/package.json}"
+          echo "  using pg from: $pg_root"
           echo
 
           cat > /tmp/.db-inventory.mjs <<'NODE'
@@ -172,7 +171,9 @@ jobs:
           REMOTE
 
       - name: Restore the DATABASE_URL secret from the box
-        if: inputs.restore_secret_from_box
+        # always(): an emptied secret is a live hazard and must be fixable even
+        # when the inventory half of this workflow cannot run.
+        if: always() && inputs.restore_secret_from_box
         env:
           ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
           ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
