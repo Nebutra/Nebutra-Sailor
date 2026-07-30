@@ -65,8 +65,10 @@ export interface WarpBackgroundProps extends HTMLAttributes<HTMLDivElement> {
    */
   beamDuration?: number;
   /**
-   * Color of the grid lines (CSS color value)
-   * @default "var(--border)"
+   * Colour of the grid lines. Must be an actual colour: it lands in a gradient
+   * stop, and --border holds bare HSL channels, so an unwrapped var(--border)
+   * makes the whole background declaration invalid and the grid does not draw.
+   * @default "hsl(var(--border))"
    */
   gridColor?: string;
 }
