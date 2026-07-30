@@ -73,17 +73,18 @@
   --breakpoint-tight: 67.5rem; /** 1080px — dense dashboard header horizontal */
   --breakpoint-shell: 73.75rem; /** 1180px — three-pane shell threshold */
   --breakpoint-3xl: 112.5rem; /** 1800px — 4K / Studio Display friendliness */
-  --radius-none: 0;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
-  --radius-full: 9999px;
-  --radius-button: 0.5rem; /** 2026 button radius — Vercel/Linear/Cursor consensus */
-  --radius-card: 0.75rem; /** 2026 card radius */
-  --radius-panel: 1rem; /** 2026 bento/hero panel radius */
+  --radius-none: 0; /** Job: flush. Edge-to-edge surfaces — a full-bleed table row, a segment welded to its neighbour, an inset that must not round twice. */
+  --radius-xs: 0.125rem; /** Job: swatch. The smallest corner that still reads as intentional at 8-12px: chart legend keys, mark highlights, progress and sparkline bar caps. Added because 18 call sites had hand-written 1px, 2px and 3px corners with no step to reach for. Matches the bottom of the Tailwind scale, so rounded-xs and var(--radius-xs) agree. */
+  --radius-sm: 0.25rem; /** Job: inner. The corner of something nested inside a control — a thumbnail inside a chip, a swatch inside a tile, a code span inside a paragraph. One step inside md. */
+  --radius-md: 0.375rem; /** Job: control. The default for anything you can click or type into at text height: input, select trigger, small button, menu item, badge with square corners. The most-used step on the ladder. */
+  --radius-lg: 0.5rem; /** Job: container. Things that hold controls rather than being one: popover, dropdown surface, tooltip, toolbar, inline code block. Aliased as radius-button. */
+  --radius-xl: 0.75rem; /** Job: card. A discrete surface in a list or grid that carries its own padding and elevation. Aliased as radius-card. */
+  --radius-2xl: 1rem; /** Job: panel. A region that holds cards — bento cell, dialog, sheet, dashboard section. Aliased as radius-panel. */
+  --radius-3xl: 1.5rem; /** Job: frame. The outermost shell of a marketing or docs composition — mockup window, hero frame, screenshot chrome. The top of the ladder. */
+  --radius-full: 9999px; /** Job: pill. Fully round by intent, not by size: avatar, dot, toggle track, tag. Kept as one step, not a pair, so there is exactly one way to say round. */
+  --radius-button: 0.5rem; /** Intent alias for the container step. Reach for this in product code instead of lg so the shape can be re-tuned in one place. */
+  --radius-card: 0.75rem; /** Intent alias for the card step. Reach for this in product code instead of xl. */
+  --radius-panel: 1rem; /** Intent alias for the panel step. Reach for this in product code instead of 2xl. */
   --duration-micro: 100ms; /** Micro-feedback: hover, focus, toggle, button press */
   --duration-flow: 200ms; /** State flow: modal open, dropdown reveal, tab switch, default page transition */
   --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */
@@ -399,17 +400,18 @@
   --breakpoint-tight: 67.5rem; /** 1080px — dense dashboard header horizontal */
   --breakpoint-shell: 73.75rem; /** 1180px — three-pane shell threshold */
   --breakpoint-3xl: 112.5rem; /** 1800px — 4K / Studio Display friendliness */
-  --radius-none: 0;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
-  --radius-full: 9999px;
-  --radius-button: 0.5rem; /** 2026 button radius — Vercel/Linear/Cursor consensus */
-  --radius-card: 0.75rem; /** 2026 card radius */
-  --radius-panel: 1rem; /** 2026 bento/hero panel radius */
+  --radius-none: 0; /** Job: flush. Edge-to-edge surfaces — a full-bleed table row, a segment welded to its neighbour, an inset that must not round twice. */
+  --radius-xs: 0.125rem; /** Job: swatch. The smallest corner that still reads as intentional at 8-12px: chart legend keys, mark highlights, progress and sparkline bar caps. Added because 18 call sites had hand-written 1px, 2px and 3px corners with no step to reach for. Matches the bottom of the Tailwind scale, so rounded-xs and var(--radius-xs) agree. */
+  --radius-sm: 0.25rem; /** Job: inner. The corner of something nested inside a control — a thumbnail inside a chip, a swatch inside a tile, a code span inside a paragraph. One step inside md. */
+  --radius-md: 0.375rem; /** Job: control. The default for anything you can click or type into at text height: input, select trigger, small button, menu item, badge with square corners. The most-used step on the ladder. */
+  --radius-lg: 0.5rem; /** Job: container. Things that hold controls rather than being one: popover, dropdown surface, tooltip, toolbar, inline code block. Aliased as radius-button. */
+  --radius-xl: 0.75rem; /** Job: card. A discrete surface in a list or grid that carries its own padding and elevation. Aliased as radius-card. */
+  --radius-2xl: 1rem; /** Job: panel. A region that holds cards — bento cell, dialog, sheet, dashboard section. Aliased as radius-panel. */
+  --radius-3xl: 1.5rem; /** Job: frame. The outermost shell of a marketing or docs composition — mockup window, hero frame, screenshot chrome. The top of the ladder. */
+  --radius-full: 9999px; /** Job: pill. Fully round by intent, not by size: avatar, dot, toggle track, tag. Kept as one step, not a pair, so there is exactly one way to say round. */
+  --radius-button: 0.5rem; /** Intent alias for the container step. Reach for this in product code instead of lg so the shape can be re-tuned in one place. */
+  --radius-card: 0.75rem; /** Intent alias for the card step. Reach for this in product code instead of xl. */
+  --radius-panel: 1rem; /** Intent alias for the panel step. Reach for this in product code instead of 2xl. */
   --duration-micro: 100ms; /** Micro-feedback: hover, focus, toggle, button press */
   --duration-flow: 200ms; /** State flow: modal open, dropdown reveal, tab switch, default page transition */
   --duration-reveal: 300ms; /** Content unveil: slide-in, expand, accordion, drawer */

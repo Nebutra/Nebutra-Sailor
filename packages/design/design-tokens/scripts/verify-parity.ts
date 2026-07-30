@@ -432,6 +432,7 @@ const ALLOWLIST_GROUPS: readonly AllowlistGroup[] = [
       "Emit `--shadow-<name>` per `elevation.*` / `shadow.*` leaf; delete the hand-written list.",
     tokens: [
       "--shadow-2xl",
+      "--shadow-ambient-glow",
       "--shadow-ambient-lg",
       "--shadow-ambient-md",
       "--shadow-ambient-sm",
@@ -440,6 +441,10 @@ const ALLOWLIST_GROUPS: readonly AllowlistGroup[] = [
       "--shadow-glass-lg",
       "--shadow-glass-md",
       "--shadow-glass-sm",
+      "--shadow-glow-accent",
+      "--shadow-glow-accent-lg",
+      "--shadow-glow-accent-sm",
+      "--shadow-glow-primary",
       "--shadow-lg",
       "--shadow-md",
       "--shadow-sheen",

@@ -16,6 +16,14 @@
     "./tokens/semantic.json": "./tokens/semantic.json",
     "./tokens/themes/light.json": "./tokens/themes/light.json",
     "./tokens/themes/dark.json": "./tokens/themes/dark.json",
+    "./scripts/css-var-name.mjs": {
+      "types": "./scripts/css-var-name.d.mts",
+      "default": "./scripts/css-var-name.mjs"
+    },
+    "./scripts/derive-border-tier.mjs": {
+      "types": "./scripts/derive-border-tier.d.mts",
+      "default": "./scripts/derive-border-tier.mjs"
+    },
     "./themes": {
       "types": "./themes.ts",
       "import": "./themes.ts"
@@ -25,6 +33,10 @@
   "files": [
     "tokens",
     "build",
+    "scripts/css-var-name.mjs",
+    "scripts/css-var-name.d.mts",
+    "scripts/derive-border-tier.mjs",
+    "scripts/derive-border-tier.d.mts",
     "themes.ts",
     "style-dictionary.config.mjs"
   ],

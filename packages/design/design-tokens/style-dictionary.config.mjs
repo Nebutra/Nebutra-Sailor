@@ -24,6 +24,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import StyleDictionary from "style-dictionary";
+import { multiThemeName, pathToCssVarName } from "./scripts/css-var-name.mjs";
 import { assertLadder, deriveBorderTier } from "./scripts/derive-border-tier.mjs";
 
 // Multi-mood oklch catalog removed (2026.07). Only light/dark modes remain.
@@ -89,84 +90,11 @@ function withRegistryFont(stack) {
   return variable ? `var(${variable}), ${stack}` : stack;
 }
 
-/**
- * Custom CSS variable namer.
- *
- * Maps DTCG paths to the same names the legacy SSOT uses.
- */
-function pathToCssVarName(token) {
-  const path = token.path;
-  const [head, ...rest] = path;
-
-  // Drop primitive `color.` prefix → keep child name.
-  if (head === "color") {
-    if (rest[0] === "white" || rest[0] === "black") return null;
-    if (rest[0] === "tertiary-purple") return "brand-tertiary";
-    return rest.join("-");
-  }
-
-  if (head === "size") return rest.join("-");
-  if (head === "duration") return `duration-${rest.join("-")}`;
-  if (head === "easing") return `ease-${rest.join("-")}`;
-  if (head === "fontFamily") return `font-${rest.join("-")}`;
-
-  if (head === "brand") {
-    if (rest[0] === "gradient") {
-      const sub = rest.slice(1).join("-");
-      return sub === "primary" ? "brand-gradient" : `brand-gradient-${sub}`;
-    }
-    return `brand-${rest.join("-")}`;
-  }
-
-  if (head === "status") return `status-${rest.join("-")}`;
-
-  if (head === "container") return `container-${rest.join("-")}`;
-  if (head === "radius") {
-    return rest[0] === "default" ? "radius" : `radius-${rest.join("-")}`;
-  }
-  if (head === "transition") {
-    if (rest[0] === "shorthand") return "transition";
-    if (rest[0] === "default") return null; // composite — emitted via post-process
-    return `transition-${rest.join("-")}`;
-  }
-  if (head === "focusRing") {
-    if (rest[0] === "default") return "focus-ring";
-    return `focus-ring-${rest.join("-")}`;
-  }
-
-  if (head === "scale") return rest.join("-");
-  if (head === "shadcn") return rest.join("-");
-  if (head === "ds") return `ds-${rest.join("-")}`;
-  if (head === "elevation") return `elevation-${rest.join("-")}`;
-
-  if (head === "theme") return null;
-
-  if (head === "shadow") return `shadow-${rest.join("-")}`;
-
-  return path.join("-");
-}
-
 StyleDictionary.registerTransform({
   name: "name/nebutra/css",
   type: "name",
   transform: (token) => pathToCssVarName(token) ?? `__skip__${token.path.join("-")}`,
 });
-
-/**
- * CSS variable namer for theme token trees (light/dark).
- * Emits Tailwind v4 `@theme`-compatible names: color.primary → --color-primary.
- */
-function multiThemeName(token) {
-  const path = token.path;
-  const [head, ...rest] = path;
-  if (head === "theme") return null;
-  if (head === "color") return `color-${rest.join("-")}`;
-  if (head === "radius") return `radius-${rest.join("-")}`;
-  if (head === "fontFamily") return `font-${rest.join("-")}`;
-  if (head === "shadow") return `shadow-${rest.join("-")}`;
-  if (head === "transition") return `transition-${rest.join("-")}`;
-  return path.join("-");
-}
 
 StyleDictionary.registerTransform({
   name: "name/nebutra/css/multi-theme",
