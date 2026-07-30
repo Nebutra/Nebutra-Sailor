@@ -261,6 +261,21 @@ jobs:
       - name: Unit tests (landing SEO + i18n locales)
         if: needs.detect-changes.outputs.landing == 'true' || needs.detect-changes.outputs.packages == 'true'
         run: |
+          # Build the workspace deps these tests import before running them.
+          # sitemap.ts imports @nebutra/sanity/queries, whose exports map points
+          # at ./dist/queries.js — so the test needs that package built. Locally
+          # dist/ already exists from some earlier build and the test has always
+          # passed; on a clean CI checkout it failed with ERR_MODULE_NOT_FOUND,
+          # which is why this suite was red while the same command was green on
+          # every developer machine.
+          #
+          # turbo.json already declares `test` as dependsOn: ["^build"]. The
+          # previous form called vitest through `pnpm exec` and therefore skipped
+          # that contract entirely. Building explicitly here keeps the step's
+          # narrow file list — the point of this gate is SEO and locale coverage,
+          # not the whole landing suite — while honouring the dependency.
+          pnpm turbo build --filter=@nebutra/sanity --filter=@nebutra/i18n \
+            --filter=@nebutra/brand --filter=@nebutra/tokens
           pnpm --filter @nebutra/landing exec vitest run \
             src/lib/seo \
             src/lib/docs-routing.test.ts \
