@@ -113,7 +113,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 |----------|------------------|---------|
 | `HA_TOPOLOGY` | `cf-edge + vercel-marketing/docs + ecs-origin(app,auth,api,sso)` | Describe *actual* routing |
 | `DEPLOY_TARGET_LANDING` | `vercel` | Primary deploy path |
-| `DEPLOY_TARGET_SAILOR_DOCS` | `cloudflare-workers` | Primary deploy path (Vercel fallback when CF unavailable) |
+| `DEPLOY_TARGET_SAILOR_DOCS` | `vercel` (temp) / `cloudflare-workers` (target) | Push path for `deploy-sailor-docs.yml`. Prefer CF Workers when token has **Workers Scripts Edit**; until then set `vercel`. Token ops: [ops/cloudflare-ci-token.md](./ops/cloudflare-ci-token.md) |
 | `DEPLOY_TARGET_WEB` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
 | `DEPLOY_TARGET_AUTH` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
 | `DEPLOY_TARGET_ADMIN` | `standalone` | Control plane — ECS origin only; a Vercel project would create a second origin outside Cloudflare Access |
