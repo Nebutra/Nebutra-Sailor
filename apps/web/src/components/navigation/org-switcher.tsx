@@ -16,15 +16,26 @@
  *     Better Auth's `Set-Cookie` rotation so the next request sees the new
  *     active org (phase 2.3 / SetActiveResult).
  *   - Empty state links to /onboarding (the existing create-org flow).
+ *
+ * The surface is the DS `DropdownMenu` (Base UI menu): arrow keys, Home/End,
+ * type-ahead, focus trap, focus return to the trigger, Escape and outside-press
+ * all come from the primitive. Rows are real `menuitem`s so they participate in
+ * that rotation — including the "create organization" row.
  */
 
 import { useOrganization } from "@nebutra/auth/client";
 import { Buildings as Building2, Check, ChevronDown, Plus } from "@nebutra/icons";
-import { AnimateIn } from "@nebutra/ui/components";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface OrgSummary {
   id: string;
@@ -45,20 +56,6 @@ export function OrgSwitcher() {
   const [orgs, setOrgs] = useState<OrgSummary[]>([]);
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  // Close on outside click.
-  useEffect(() => {
-    if (!open) return;
-    function onDocumentClick(event: MouseEvent) {
-      if (!containerRef.current) return;
-      if (!containerRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", onDocumentClick);
-    return () => document.removeEventListener("mousedown", onDocumentClick);
-  }, [open]);
 
   // Lazily fetch the org list the first time the menu opens.
   useEffect(() => {
@@ -123,100 +120,85 @@ export function OrgSwitcher() {
   const triggerLabel = organization?.name ? truncate(organization.name) : t("selectOrg");
 
   return (
-    <div ref={containerRef} className="relative inline-block">
-      <button
-        type="button"
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger
         aria-label={t("ariaLabel")}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((prev) => !prev)}
         className="inline-flex h-8 items-center gap-2 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 px-3 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3"
       >
         <Building2 className="h-4 w-4 text-neutral-11" aria-hidden />
         <span className="max-w-[12rem] truncate">{triggerLabel}</span>
         <ChevronDown className="h-3.5 w-3.5 text-neutral-11" aria-hidden />
-      </button>
+      </DropdownMenuTrigger>
 
-      {open && (
-        <AnimateIn preset="emerge">
-          <div
-            role="menu"
-            aria-label={t("ariaLabel")}
-            className="absolute right-0 z-50 mt-2 w-72 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg"
-          >
-            {orgs.length === 0 ? (
-              <div className="px-3 py-3 text-sm">
-                <p className="mb-2 text-neutral-11">{t("empty")}</p>
-                <Link
-                  href="/onboarding"
-                  className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-[hsl(var(--primary))] px-3 py-1.5 text-xs font-medium text-white hover:opacity-90"
-                  onClick={() => setOpen(false)}
-                >
-                  <Plus className="h-3.5 w-3.5" aria-hidden />
+      <DropdownMenuContent aria-label={t("ariaLabel")} align="end" className="w-72">
+        {orgs.length === 0 ? (
+          <div className="px-3 py-3 text-sm">
+            <p className="mb-2 text-muted-foreground">{t("empty")}</p>
+            <DropdownMenuItem
+              render={
+                <Link href="/onboarding">
+                  <Plus className="mr-2 h-3.5 w-3.5 shrink-0" aria-hidden />
                   <span>{t("create")}</span>
                 </Link>
-              </div>
-            ) : (
-              <ul className="max-h-72 overflow-y-auto">
-                {orgs.map((entry) => {
-                  const isActive = entry.id === organization?.id;
-                  const isPending = pendingId === entry.id;
-                  return (
-                    <li key={entry.id}>
-                      <button
-                        type="button"
-                        role="menuitem"
-                        aria-current={isActive ? "true" : undefined}
-                        aria-label={entry.name}
-                        disabled={isPending || isActive}
-                        onClick={() => {
-                          void handleSelect(entry.id);
-                        }}
-                        className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-left text-sm text-neutral-12 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-70"
-                      >
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate font-medium">{entry.name}</span>
-                          {entry.slug && (
-                            <span className="block truncate text-xs text-neutral-11">
-                              {entry.slug}
-                            </span>
-                          )}
-                        </span>
-                        {isPending ? (
-                          <span className="text-xs text-neutral-11">{t("switching")}</span>
-                        ) : isActive ? (
-                          <Check className="h-4 w-4 text-[hsl(var(--primary))]" aria-hidden />
-                        ) : null}
-                      </button>
-                    </li>
-                  );
-                })}
-                <li className="my-1 h-px bg-neutral-6" aria-hidden />
-                <li>
-                  <Link
-                    href="/onboarding"
-                    role="menuitem"
-                    className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
-                    onClick={() => setOpen(false)}
-                  >
-                    <Plus className="h-4 w-4 text-neutral-11" aria-hidden />
-                    <span>{t("create")}</span>
-                  </Link>
-                </li>
-              </ul>
-            )}
-
-            {errorMessage && (
-              <p
-                role="alert"
-                className="mt-1 rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
-              >
-                {errorMessage}
-              </p>
-            )}
+              }
+            />
           </div>
-        </AnimateIn>
-      )}
-    </div>
+        ) : (
+          <div className="max-h-72 overflow-y-auto">
+            {orgs.map((entry) => {
+              const isActive = entry.id === organization?.id;
+              const isPending = pendingId === entry.id;
+              return (
+                <DropdownMenuItem
+                  key={entry.id}
+                  aria-current={isActive ? "true" : undefined}
+                  aria-label={entry.name}
+                  disabled={isPending || isActive}
+                  // Stay open until the POST resolves — the row shows its own
+                  // pending label, and a failure has to land on the alert below.
+                  closeOnClick={false}
+                  onClick={() => {
+                    void handleSelect(entry.id);
+                  }}
+                  className="justify-between gap-2 py-2"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate font-medium">{entry.name}</span>
+                    {entry.slug && (
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {entry.slug}
+                      </span>
+                    )}
+                  </span>
+                  {isPending ? (
+                    <span className="text-xs text-muted-foreground">{t("switching")}</span>
+                  ) : isActive ? (
+                    <Check className="h-4 w-4 text-primary" aria-hidden />
+                  ) : null}
+                </DropdownMenuItem>
+              );
+            })}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              render={
+                <Link href="/onboarding">
+                  <Plus className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+                  <span>{t("create")}</span>
+                </Link>
+              }
+            />
+          </div>
+        )}
+
+        {errorMessage && (
+          <p
+            role="alert"
+            className="mt-1 rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
+          >
+            {errorMessage}
+          </p>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

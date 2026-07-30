@@ -7,6 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Table,
 } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -14,6 +15,10 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { dicebearAvatarUrl } from "@/lib/avatar";
 import { queryKeys } from "@/lib/query-keys";
+
+// The roster is flush inside its own bordered panel and keeps the settings-page
+// 16px cell rhythm rather than the default table density.
+const MEMBER_DENSITY = { "--table-cell-padding-x": "1rem", "--table-cell-padding-y": "1rem" };
 
 type TeamRole = "owner" | "admin" | "member" | "viewer";
 
@@ -262,111 +267,111 @@ export function TeamMemberList({ orgId }: Props) {
         </p>
       )}
 
-      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-border">
-        <table className="w-full border-collapse text-left text-sm">
-          <thead className="bg-muted text-xs uppercase tracking-[0.16em] text-muted-foreground">
-            <tr>
-              <th className="px-4 py-3 font-medium">Member</th>
-              <th className="hidden px-4 py-3 font-medium md:table-cell">Joined</th>
-              <th className="px-4 py-3 font-medium">Role</th>
-              <th className="px-4 py-3 text-right font-medium">Action</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {payload.members.map((member) => {
-              const isSelf = member.userId === payload.currentUserId;
-              const isOwner = member.role === "owner";
-              const isBusy = busyMemberId === member.id;
-              const canChangeRole = payload.canManageRoles && !isOwner && !isBusy;
-              const canRemove = (payload.canRemoveMembers || isSelf) && !isOwner && !isBusy;
+      <Table
+        bare
+        wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-border"
+        wrapperStyle={MEMBER_DENSITY}
+      >
+        <Table.Header className="bg-muted text-xs uppercase tracking-[0.16em]">
+          <Table.Row>
+            <Table.Head>Member</Table.Head>
+            <Table.Head className="hidden md:table-cell">Joined</Table.Head>
+            <Table.Head>Role</Table.Head>
+            <Table.Head>Action</Table.Head>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body bordered>
+          {payload.members.map((member) => {
+            const isSelf = member.userId === payload.currentUserId;
+            const isOwner = member.role === "owner";
+            const isBusy = busyMemberId === member.id;
+            const canChangeRole = payload.canManageRoles && !isOwner && !isBusy;
+            const canRemove = (payload.canRemoveMembers || isSelf) && !isOwner && !isBusy;
 
-              return (
-                <tr key={member.id} className="bg-background">
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-3">
-                      {member.user.image ? (
-                        <Image
-                          src={member.user.image}
-                          alt=""
-                          width={40}
-                          height={40}
-                          className="rounded-full object-cover"
-                        />
-                      ) : (
-                        <img
-                          src={dicebearAvatarUrl(member.user.email ?? member.user.name)}
-                          alt=""
-                          width={40}
-                          height={40}
-                          className="size-10 rounded-full object-cover"
-                        />
-                      )}
-                      <div className="min-w-0">
-                        <p className="truncate font-medium text-foreground">
-                          {memberDisplayName(member)}
-                          {isSelf && (
-                            <span className="ml-2 rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-                              You
-                            </span>
-                          )}
-                        </p>
-                        <p className="truncate text-xs text-muted-foreground">
-                          {member.user.email}
-                        </p>
-                      </div>
+            return (
+              <Table.Row key={member.id} className="bg-background">
+                <Table.Cell>
+                  <div className="flex items-center gap-3">
+                    {member.user.image ? (
+                      <Image
+                        src={member.user.image}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="rounded-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={dicebearAvatarUrl(member.user.email ?? member.user.name)}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="size-10 rounded-full object-cover"
+                      />
+                    )}
+                    <div className="min-w-0">
+                      <p className="truncate font-medium text-foreground">
+                        {memberDisplayName(member)}
+                        {isSelf && (
+                          <span className="ml-2 rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                            You
+                          </span>
+                        )}
+                      </p>
+                      <p className="truncate text-xs text-muted-foreground">{member.user.email}</p>
                     </div>
-                  </td>
-                  <td className="hidden px-4 py-4 text-muted-foreground md:table-cell">
-                    {formatJoinedAt(member.joinedAt)}
-                  </td>
-                  <td className="px-4 py-4">
-                    <Select
-                      value={member.role}
-                      disabled={!canChangeRole}
-                      onValueChange={(value) => handleRoleChange(member, value as TeamRole)}
-                    >
-                      <SelectTrigger aria-label={`Role for ${memberDisplayName(member)}`}>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {isOwner && <SelectItem value="owner">Owner</SelectItem>}
-                        {editableRoles.map((role) => (
-                          <SelectItem key={role} value={role}>
-                            {roleLabels[role]}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </td>
-                  <td className="px-4 py-4 text-right">
-                    <button
-                      type="button"
-                      disabled={!canRemove}
-                      onClick={() => handleRemoveMember(member)}
-                      className="rounded px-2 py-1 text-xs font-medium text-[hsl(var(--destructive-strong))] hover:text-[hsl(var(--destructive-strong))]/80 disabled:cursor-not-allowed disabled:text-muted-foreground"
-                      aria-label={
-                        isSelf
-                          ? "Leave organization"
-                          : `Remove ${memberDisplayName(member)} from organization`
-                      }
-                    >
-                      {isSelf ? "Leave" : "Remove"}
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+                  </div>
+                </Table.Cell>
+                <Table.Cell className="hidden text-muted-foreground md:table-cell">
+                  {formatJoinedAt(member.joinedAt)}
+                </Table.Cell>
+                <Table.Cell>
+                  <Select
+                    value={member.role}
+                    disabled={!canChangeRole}
+                    onValueChange={(value) => handleRoleChange(member, value as TeamRole)}
+                  >
+                    <SelectTrigger aria-label={`Role for ${memberDisplayName(member)}`}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {isOwner && <SelectItem value="owner">Owner</SelectItem>}
+                      {editableRoles.map((role) => (
+                        <SelectItem key={role} value={role}>
+                          {roleLabels[role]}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Table.Cell>
+                <Table.Cell>
+                  <button
+                    type="button"
+                    disabled={!canRemove}
+                    onClick={() => handleRemoveMember(member)}
+                    className="rounded px-2 py-1 text-xs font-medium text-[hsl(var(--destructive-strong))] hover:text-[hsl(var(--destructive-strong))]/80 disabled:cursor-not-allowed disabled:text-muted-foreground"
+                    aria-label={
+                      isSelf
+                        ? "Leave organization"
+                        : `Remove ${memberDisplayName(member)} from organization`
+                    }
+                  >
+                    {isSelf ? "Leave" : "Remove"}
+                  </button>
+                </Table.Cell>
+              </Table.Row>
+            );
+          })}
 
-            {payload.members.length === 0 && (
-              <tr>
-                <td className="px-4 py-8 text-center text-muted-foreground" colSpan={4}>
-                  {t("emptyState.teamMembers")}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          {payload.members.length === 0 && (
+            <Table.Row>
+              <Table.Cell alignment="center" colSpan={4} className="py-8 text-muted-foreground">
+                {t("emptyState.teamMembers")}
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table>
     </div>
   );
 }

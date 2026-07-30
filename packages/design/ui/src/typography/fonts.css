@@ -1,42 +1,37 @@
 /**
- * Font CSS Variables — SSOT for typography across Nebutra packages.
- * "Precision Stack" — Geist × Geist Mono × Noto Sans SC
+ * Font rules — the typography BEHAVIOUR layer (which element gets which stack).
+ * The STACKS themselves are owned by @nebutra/tokens, generated from
+ * packages/design/design-tokens/tokens/core.json → fontFamily.*.
  *
- * Font loading strategy (Next.js apps):
- * Each app's layout.tsx loads Latin fonts via geist/font:
- *   GeistSans  → injects --font-geist-sans  (variable font, 100–900)
- *   GeistMono  → injects --font-geist-mono  (variable font, 100–900)
+ * Font loading (Next.js apps): each app's layout.tsx applies the loader classes
+ *   GeistSans        → --font-geist-sans     (variable, 100–900)   Latin + numerals
+ *   GeistMono        → --font-geist-mono     (variable, 100–900)   code
+ *   cjkFontClassName → --font-vivo-sans-sc   (@nebutra/fonts/next/cjk)  CJK
+ * and the token stacks reference those variables in that order, so Geist keeps
+ * Latin and only CJK falls through to vivo Sans SC.
  *
- * The CSS custom properties below reference those injected variables and
- * fall back gracefully when font loaders are unavailable (e.g., Storybook, tests).
- * CJK uses local/system font fallback to avoid build-time Google font fetches.
+ * IMPORT ORDER MATTERS: this file must come AFTER @nebutra/tokens/styles.css
+ * (see ../styles/preset.css). It used to re-declare --font-sans / --font-heading /
+ * --font-mono here as Geist-only literals; being the later import, those copies
+ * won, and the CJK half of every token stack was silently discarded. Declare
+ * stacks in the tokens, never here.
  */
 
 /* ============================================
-   CSS Custom Properties (SSOT)
+   CSS Custom Properties — derived aliases only
    ============================================ */
 
 :root {
-  /* Primary font stack — Geist Sans (geometric precision, variable) */
-  --font-primary:
-    var(--font-geist-sans), "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
-    sans-serif;
+  /* Legacy alias for the body/UI stack — the stack lives in the tokens. */
+  --font-primary: var(--font-sans);
 
-  /* Heading font stack — matches primary for Precision Stack */
-  --font-heading:
-    var(--font-geist-sans), "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
-    sans-serif;
-
-  /* Monospace — Geist Mono */
-  --font-mono:
-    var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-
-  /* CJK — local/system fallback, no build-time font fetch */
+  /* CJK — appended as a fallback on the rules below (see the note there). The
+     token already leads with the self-hosted face; the system families repeat
+     here so this alias still degrades on its own. */
   --font-cjk:
     var(--font-cn), "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 
-  /* Aliases for Tailwind/shadcn compatibility */
-  --font-sans: var(--font-primary);
+  /* Not a token: no Nebutra surface uses a serif, this exists for shadcn parity. */
   --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 

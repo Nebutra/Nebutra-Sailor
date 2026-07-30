@@ -14,15 +14,13 @@ import type {
   NotificationRuntimeStatus,
   NotificationSettingsSnapshot,
 } from "@nebutra/notifications";
+import { Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
-import { useState } from "react";
-import { createPortal } from "react-dom";
 import {
   markAllNotificationsRead,
   markNotificationRead,
 } from "@/app/(app)/settings/notifications/actions";
-import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 
 interface NotificationCenterProps {
   locale: string;
@@ -140,18 +138,10 @@ export function NotificationCenter({
   const unreadBadge = getUnreadBadgeLabel(snapshot.unreadCount);
   const unreadItems = snapshot.inboxItems.filter((item) => !item.read);
   const canMarkAllRead = snapshot.runtime.canMarkInboxRead && unreadItems.length > 0;
-  const [open, setOpen] = useState(defaultOpen);
-  const { triggerRef, menuRef, style } = useAnchoredMenu(open, () => setOpen(false));
-
   return (
-    <>
-      <button
-        ref={triggerRef}
-        type="button"
+    <Popover defaultOpen={defaultOpen}>
+      <PopoverTrigger
         aria-label="Open notifications"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((prev) => !prev)}
         className="relative flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
       >
         <Bell className="size-4" aria-hidden />
@@ -160,77 +150,75 @@ export function NotificationCenter({
             {unreadBadge}
           </span>
         ) : null}
-      </button>
+      </PopoverTrigger>
 
-      {open &&
-        typeof document !== "undefined" &&
-        createPortal(
-          <div
-            ref={menuRef}
-            role="menu"
-            aria-label="Notifications"
-            style={style}
-            className="w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 shadow-2xl shadow-black/15"
+      {/* Not a menu: the panel holds a heading, two forms and a list of link
+          cards, so `role="menu"` announced a menu with zero menuitems. Popover
+          is the right surface and still supplies Escape, outside-press, focus
+          trap and focus return. */}
+      <PopoverContent
+        aria-label="Notifications"
+        side="top"
+        align="start"
+        className="w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-[var(--radius-2xl)] p-0"
+      >
+        <div className="flex items-start justify-between gap-3 border-b border-neutral-7 px-4 py-3">
+          <div>
+            <p className="text-sm font-semibold text-neutral-12">Notifications</p>
+            <p className="mt-0.5 text-xs text-neutral-10">{snapshot.unreadCount} unread</p>
+          </div>
+
+          <form action={markAllNotificationsRead}>
+            <input data-allow-native type="hidden" name="locale" value={locale} />
+            <button
+              type="submit"
+              disabled={!canMarkAllRead}
+              className="rounded-[var(--radius-lg)] px-2.5 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50"
+              title={
+                snapshot.runtime.canMarkInboxRead
+                  ? "Mark every visible unread notification as read"
+                  : snapshot.runtime.reason
+              }
+            >
+              Mark all read
+            </button>
+          </form>
+        </div>
+
+        {snapshot.inboxSource === "unavailable" ? (
+          <div className="mx-3 mt-3 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-3 text-sm text-neutral-11">
+            {snapshot.inboxReason ?? t("inbox.noBackend")}
+          </div>
+        ) : null}
+
+        <div className="max-h-96 overflow-y-auto p-3">
+          {snapshot.inboxItems.length === 0 ? (
+            <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-2 px-4 py-8 text-center text-sm text-neutral-11">
+              {t("inbox.emptyCaughtUp")}
+            </div>
+          ) : (
+            <ul className="space-y-2">
+              {snapshot.inboxItems.map((item) => (
+                <NotificationCenterItem
+                  key={item.id}
+                  item={item}
+                  locale={locale}
+                  runtime={snapshot.runtime}
+                />
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="border-t border-neutral-7 px-4 py-3">
+          <Link
+            href={`/${locale}/settings/notifications`}
+            className="text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary-foreground"
           >
-            <div className="flex items-start justify-between gap-3 border-b border-neutral-7 px-4 py-3">
-              <div>
-                <p className="text-sm font-semibold text-neutral-12">Notifications</p>
-                <p className="mt-0.5 text-xs text-neutral-10">{snapshot.unreadCount} unread</p>
-              </div>
-
-              <form action={markAllNotificationsRead}>
-                <input data-allow-native type="hidden" name="locale" value={locale} />
-                <button
-                  type="submit"
-                  disabled={!canMarkAllRead}
-                  className="rounded-[var(--radius-lg)] px-2.5 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50"
-                  title={
-                    snapshot.runtime.canMarkInboxRead
-                      ? "Mark every visible unread notification as read"
-                      : snapshot.runtime.reason
-                  }
-                >
-                  Mark all read
-                </button>
-              </form>
-            </div>
-
-            {snapshot.inboxSource === "unavailable" ? (
-              <div className="mx-3 mt-3 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-3 text-sm text-neutral-11">
-                {snapshot.inboxReason ?? t("inbox.noBackend")}
-              </div>
-            ) : null}
-
-            <div className="max-h-96 overflow-y-auto p-3">
-              {snapshot.inboxItems.length === 0 ? (
-                <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-2 px-4 py-8 text-center text-sm text-neutral-11">
-                  {t("inbox.emptyCaughtUp")}
-                </div>
-              ) : (
-                <ul className="space-y-2">
-                  {snapshot.inboxItems.map((item) => (
-                    <NotificationCenterItem
-                      key={item.id}
-                      item={item}
-                      locale={locale}
-                      runtime={snapshot.runtime}
-                    />
-                  ))}
-                </ul>
-              )}
-            </div>
-
-            <div className="border-t border-neutral-7 px-4 py-3">
-              <Link
-                href={`/${locale}/settings/notifications`}
-                className="text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary-foreground"
-              >
-                Notification settings
-              </Link>
-            </div>
-          </div>,
-          document.body,
-        )}
-    </>
+            Notification settings
+          </Link>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }

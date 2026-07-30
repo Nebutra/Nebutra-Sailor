@@ -10,6 +10,7 @@ import {
 } from "@nebutra/agent-runtime";
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { Card } from "@nebutra/ui/layout";
+import { Table } from "@nebutra/ui/primitives";
 import { connection } from "next/server";
 
 /**
@@ -91,26 +92,26 @@ export default async function AgentRuntimeDemoPage() {
 
         <Card className="p-6">
           <h2 className="font-medium">Rule decision × approval policy</h2>
-          <table className="mt-3 w-full text-sm">
-            <thead>
-              <tr className="text-left text-muted-foreground">
-                <th className="py-1">rule</th>
-                <th className="py-1">on_request</th>
-                <th className="py-1">never</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table bare className="mt-3">
+            <Table.Header>
+              <Table.Row>
+                <Table.Head>rule</Table.Head>
+                <Table.Head>on_request</Table.Head>
+                <Table.Head alignment="start">never</Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body bordered>
               {ruleRows.map((r) => (
-                <tr key={r.rule} className="border-border border-t">
-                  <td className="py-1">
+                <Table.Row key={r.rule}>
+                  <Table.Cell>
                     <code>{r.rule}</code>
-                  </td>
-                  <td className="py-1">{r.onRequest}</td>
-                  <td className="py-1">{r.never}</td>
-                </tr>
+                  </Table.Cell>
+                  <Table.Cell>{r.onRequest}</Table.Cell>
+                  <Table.Cell alignment="start">{r.never}</Table.Cell>
+                </Table.Row>
               ))}
-            </tbody>
-          </table>
+            </Table.Body>
+          </Table>
         </Card>
 
         <Card className="p-6">

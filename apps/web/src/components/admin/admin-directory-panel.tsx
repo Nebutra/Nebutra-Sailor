@@ -1,7 +1,12 @@
 "use client";
 
+import { Table } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
+
+// The directory table sits flush inside the panel that already owns the border
+// and the title band, and keeps the panel's 16px/12px cell rhythm.
+const DIRECTORY_DENSITY = { "--table-cell-padding-x": "1rem", "--table-cell-padding-y": "0.75rem" };
 
 export interface AdminUserSearchResult {
   id: string;
@@ -206,13 +211,13 @@ function DirectoryTable({
       {rows.length === 0 ? (
         <p className="px-4 py-8 text-center text-muted-foreground text-sm">{empty}</p>
       ) : (
-        <table className="w-full border-collapse">
-          <tbody>
+        <Table bare wrapperStyle={DIRECTORY_DENSITY}>
+          <Table.Body bordered>
             {rows.map((row) => (
               <DirectoryTableRow key={`${row.kind}:${row.id}`} row={row} />
             ))}
-          </tbody>
-        </table>
+          </Table.Body>
+        </Table>
       )}
     </div>
   );
@@ -289,15 +294,15 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
 
   return (
     <>
-      <tr aria-label={row.label} className="border-border border-b">
-        <td className="px-4 py-3">
+      <Table.Row aria-label={row.label}>
+        <Table.Cell>
           <p className="font-medium text-foreground text-sm">{row.label}</p>
           <p className="mt-0.5 text-muted-foreground text-xs">{row.meta}</p>
-        </td>
-        <td className="hidden px-4 py-3 text-muted-foreground text-sm sm:table-cell">
+        </Table.Cell>
+        <Table.Cell className="hidden text-muted-foreground text-sm sm:table-cell">
           {row.detail}
-        </td>
-        <td className="px-4 py-3">
+        </Table.Cell>
+        <Table.Cell>
           <div className="flex flex-wrap justify-end gap-2">
             {row.kind === "user" ? (
               <button
@@ -320,11 +325,11 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
           <Link href={row.editHref} className="sr-only">
             Open {row.label}
           </Link>
-        </td>
-      </tr>
+        </Table.Cell>
+      </Table.Row>
       {open ? (
-        <tr className="border-border border-b bg-muted/60">
-          <td colSpan={3} className="px-4 py-4">
+        <Table.Row className="bg-muted/60">
+          <Table.Cell alignment="start" colSpan={3} className="py-4">
             <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-3">
               <label className="text-xs font-medium text-muted-foreground">
                 {row.kind === "user" ? "User name" : "Organization name"}
@@ -394,8 +399,8 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                 ) : null}
               </div>
             </form>
-          </td>
-        </tr>
+          </Table.Cell>
+        </Table.Row>
       ) : null}
     </>
   );

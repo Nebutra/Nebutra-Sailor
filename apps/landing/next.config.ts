@@ -139,6 +139,7 @@ const nextConfig: NextConfig = {
   // resolve via package exports — keeping them here would force SWC + React
   // Compiler to walk the entire workspace src tree on every build.
   transpilePackages: [
+    "@nebutra/fonts",
     "@nebutra/agents",
     "@nebutra/auth",
     "@nebutra/billing",

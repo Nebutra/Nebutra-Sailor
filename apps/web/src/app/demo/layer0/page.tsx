@@ -1,5 +1,6 @@
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { Card } from "@nebutra/ui/layout";
+import { Table } from "@nebutra/ui/primitives";
 import { connection } from "next/server";
 
 const rows = [
@@ -40,32 +41,30 @@ export default async function Layer0DemoPage() {
         </header>
 
         <Card className="p-6">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-muted-foreground">
-                  <th className="py-2">Capability</th>
-                  <th className="py-2">Doctor</th>
-                  <th className="py-2">Debug file</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map(([capability, doctor, debug]) => (
-                  <tr key={capability} className="border-border border-t">
-                    <td className="py-2">
-                      <code>{capability}</code>
-                    </td>
-                    <td className="py-2">
-                      <code>{doctor}</code>
-                    </td>
-                    <td className="py-2">
-                      <code>{debug}</code>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table bare>
+            <Table.Header>
+              <Table.Row>
+                <Table.Head>Capability</Table.Head>
+                <Table.Head>Doctor</Table.Head>
+                <Table.Head alignment="start">Debug file</Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body bordered>
+              {rows.map(([capability, doctor, debug]) => (
+                <Table.Row key={capability}>
+                  <Table.Cell>
+                    <code>{capability}</code>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <code>{doctor}</code>
+                  </Table.Cell>
+                  <Table.Cell alignment="start">
+                    <code>{debug}</code>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
         </Card>
 
         <Card className="p-6">

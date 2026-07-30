@@ -18,6 +18,7 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@nebutra/brand": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/typelens-catalog": "workspace:*",

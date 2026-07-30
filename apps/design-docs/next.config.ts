@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
 
   serverExternalPackages: ["@takumi-rs/image-response"],
   transpilePackages: [
+    "@nebutra/fonts",
     "@nebutra/ui",
     "@nebutra/tokens",
     "fumadocs-ui",

@@ -1,6 +1,6 @@
 ---
 title: "Typography"
-description: "Nebutra Precision Stack — Geist Sans, Geist Mono, Noto Sans SC. Variable fonts, CJK cascade, and type scale."
+description: "Nebutra Precision Stack — Geist Sans, Geist Mono, vivo Sans SC. Variable fonts, CJK cascade, and type scale."
 ---
 
 <Callout>
@@ -23,7 +23,7 @@ The Nebutra design system uses three fonts. Geist handles all text roles through
 |------|------|----------|---------|
 | **Geist Sans** | UI, body, headings, display | `--font-geist-sans` | SIL OFL (Vercel) |
 | **Geist Mono** | Code, data, tokens, IDs | `--font-geist-mono` | SIL OFL (Vercel) |
-| **Noto Sans SC** | Chinese (CJK) UI text | `--font-cn` | SIL OFL (Google) |
+| **vivo Sans SC** | Chinese (CJK) UI text | `--font-vivo-sans-sc` | Licensed from vivo — see attribution below |
 
 ---
 
@@ -123,9 +123,20 @@ font-feature-settings: "calt" 1, "liga" 1;
 
 ---
 
-## Noto Sans SC — Chinese Typeface
+## vivo Sans SC — Chinese Typeface
 
-Noto Sans SC is the CJK typeface for all Chinese UI text. Applied via the `font-cn` Tailwind class or the `--font-cn` CSS variable.
+vivo Sans SC is the CJK typeface for all Chinese UI text. It is **self-hosted** and
+subset in `@nebutra/fonts` — Geist has no CJK coverage at all, so before this every
+Chinese character fell back to whatever the OS supplied (PingFang on macOS,
+Microsoft YaHei on Windows, something else on Android). No Chinese UI text should
+ever depend on the OS again.
+
+Nothing needs to opt in: the `--font-sans`, `--font-cn`, `--font-display` and
+`--font-heading` token stacks all carry the face, positioned **after** Geist so
+Geist keeps Latin and the numerals and only CJK falls through. The subset contains
+no Latin or digit glyphs, so that holds even if a stack is written the wrong way
+round. `font-cn` / `--font-cn` remain the way to opt into the CJK line-height and
+word-break metrics.
 
 ### When to Use
 
@@ -136,11 +147,26 @@ Noto Sans SC is the CJK typeface for all Chinese UI text. Applied via the `font-
 
 ### Weights
 
+Three real files ship — 400 / 500 / 600. There is no 700 file: 700 resolves to the
+600 (DemiBold) face by CSS weight matching, and `font-synthesis: none` forbids faux
+bold, so Chinese headings are never synthesised.
+
 | Weight | Value | Use Case |
 |--------|-------|----------|
 | Regular | 400 | Chinese body copy |
 | Medium | 500 | Chinese labels, navigation |
-| Bold | 700 | Chinese headings |
+| DemiBold | 600 | Chinese headings (700 resolves here) |
+
+### Coverage
+
+4,282 characters: every CJK character in the repo's `zh*` message catalogs, the CJK
+punctuation and fullwidth blocks wholesale, and a floor of GB2312 level-1 (3,755
+常用字) so user-entered names and places don't drop out of the face mid-sentence.
+Rarer characters (GB2312 level-2 and beyond) fall through to the system face on
+purpose — including them would roughly double every file. Each weight is ~490 KB
+and is fetched **only** when a CJK glyph actually renders: the `@font-face` rules
+carry a CJK-only `unicode-range` and nothing is preloaded, so a Latin-only page
+downloads none of it.
 
 ### Code
 
@@ -163,17 +189,21 @@ font-weight: 400;
 
 ```css
 :root {
-  /* Primary UI — Geist Sans (all Latin text) */
-  --font-sans: var(--font-geist-sans), "Geist", -apple-system,
-               BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  /* Primary UI — Geist for Latin + numerals, vivo Sans SC for CJK, system CJK
+     faces behind it. The ORDER is the design decision, not an accident. */
+  --font-sans: var(--font-geist-sans), "Geist",
+               var(--font-vivo-sans-sc, "vivo Sans SC"),
+               "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+               -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   /* Code — Geist Mono */
   --font-mono: var(--font-geist-mono), "Geist Mono",
                ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
-  /* Chinese — token-provided local/system stack */
-  --font-cjk: var(--font-cn), "Noto Sans SC", "PingFang SC",
-              "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  /* Chinese — same order as --font-sans, minus the Latin-only system faces */
+  --font-cn: var(--font-geist-sans), "Geist",
+             var(--font-vivo-sans-sc, "vivo Sans SC"),
+             "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 ```
 
@@ -194,15 +224,17 @@ font-weight: 400;
 
 ```tsx
 // app/layout.tsx
+import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "@nebutra/tokens/styles.css";
 
 // Apply to <html>:
-// className={`${GeistSans.variable} ${GeistMono.variable}`}
+// className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
 //
-// CJK fallback comes from @nebutra/tokens --font-cn.
-// Do not use next/font/google for Noto Sans SC in CI-built apps.
+// All three are next/font — Geist from the `geist` package, the CJK subset from
+// next/font/local. Nothing is fetched from a font CDN at build time, which is also
+// why this keeps working in a network-sandboxed dev server.
 ```
 
 ---
@@ -346,3 +378,15 @@ CJK glyphs are optically larger than Latin characters at the same font size. App
 **Don't** set letter-spacing on body text — tracking adjustments belong only to headings and display text.
 
 **Don't** mix `font-sans` and `font-cn` on the same element — choose one based on the content language.
+
+---
+
+## Third-party font attribution
+
+本软件使用了 **vivo Sans** 字体。/ This software uses the **vivo Sans** typeface.
+
+Required by clause 2.1 of the vivo Sans 字体知识产权许可协议 (您应在软件中特别注明使用了
+vivo Sans 字体). vivo Sans is licensed from vivo Mobile Communication Co., Ltd.; the
+agreement is committed at `packages/design/fonts/vendor/vivo-sans/LICENCE-vivo-Sans.txt`
+and it does **not** fall under the MIT licence covering Nebutra's own code. Geist and
+Geist Mono are SIL OFL (Vercel).

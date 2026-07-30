@@ -28,7 +28,17 @@ import {
   Copy,
   Download,
 } from "@nebutra/icons";
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Input,
+  RadioGroupCard,
+  RadioGroupCardItem,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Textarea,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import {
   type KeyboardEvent as ReactKeyboardEvent,
@@ -792,56 +802,62 @@ export interface ShellArtifact {
 /** Labelled panels for multi-file generators — never one concatenated blob. */
 export function ShellArtifacts({ artifacts }: { artifacts: readonly ShellArtifact[] }) {
   const uid = useId();
-  const [active, setActive] = useState(0);
-  const current = artifacts[Math.min(active, artifacts.length - 1)];
+  const first = artifacts[0];
+  const [activeId, setActiveId] = useState(first?.id ?? "");
+  const current = artifacts.find((a) => a.id === activeId) ?? first;
   if (!current) return null;
 
-  const onKeyDown = (e: ReactKeyboardEvent<HTMLButtonElement>) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-    e.preventDefault();
-    const delta = e.key === "ArrowRight" ? 1 : -1;
-    setActive((i) => (i + delta + artifacts.length) % artifacts.length);
-  };
+  const panel = (a: ShellArtifact) => (
+    <>
+      <ShellCode label={a.label}>{a.body}</ShellCode>
+      <ShellExitActions
+        exit={{
+          text: a.body,
+          filename: a.filename ?? a.label,
+          ...(a.mimeType ? { mimeType: a.mimeType } : {}),
+        }}
+        idPrefix={`${uid}-${a.id}`}
+      />
+    </>
+  );
 
-  return (
-    <div className="space-y-3">
-      {artifacts.length > 1 ? (
-        <div className="flex flex-wrap gap-1.5" role="tablist">
-          {artifacts.map((a, i) => (
-            <button
-              key={a.id}
-              type="button"
-              role="tab"
-              id={`${uid}-tab-${a.id}`}
-              aria-selected={i === active}
-              aria-controls={`${uid}-panel-${a.id}`}
-              tabIndex={i === active ? 0 : -1}
-              onClick={() => setActive(i)}
-              onKeyDown={onKeyDown}
-              className={cx(
-                "rounded-full px-3 py-1 font-mono text-xs transition-colors",
-                i === active
-                  ? "bg-[var(--blue-3)] text-[var(--neutral-12)]"
-                  : "bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]",
-              )}
-            >
-              {a.label}
-            </button>
-          ))}
-        </div>
-      ) : null}
-      <section id={`${uid}-panel-${current.id}`} aria-label={current.label} className="space-y-2">
-        <ShellCode label={current.label}>{current.body}</ShellCode>
-        <ShellExitActions
-          exit={{
-            text: current.body,
-            filename: current.filename ?? current.label,
-            ...(current.mimeType ? { mimeType: current.mimeType } : {}),
-          }}
-          idPrefix={`${uid}-${current.id}`}
-        />
+  // One artifact means there is nothing to navigate, so no tab strip either.
+  if (artifacts.length === 1) {
+    return (
+      <section aria-label={current.label} className="space-y-2">
+        {panel(current)}
       </section>
-    </div>
+    );
+  }
+
+  // DS Tabs (Base UI). The hand-built strip moved the *selection* on
+  // ArrowLeft/Right but never moved DOM focus, so focus was left on a tab that
+  // had just become tabIndex={-1}; Home/End did nothing at all. Roving focus,
+  // Home/End, looping and the tab/panel wiring now come from the primitive.
+  return (
+    <Tabs
+      value={current.id}
+      onValueChange={setActiveId}
+      variant="button"
+      shape="pill"
+      size="sm"
+      className="space-y-3"
+    >
+      {/* No aria-label: the strip had none before and this file has no message
+          key for one — each tab labels its own panel via the primitive. */}
+      <TabsList className="flex-wrap">
+        {artifacts.map((a) => (
+          <TabsTrigger key={a.id} value={a.id} className="font-mono">
+            {a.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {artifacts.map((a) => (
+        <TabsContent key={a.id} value={a.id} className="space-y-2 text-[var(--neutral-12)]">
+          {panel(a)}
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 }
 
@@ -879,36 +895,6 @@ export function DecisionShell({
   aside,
 }: DecisionShellProps) {
   const uid = useId();
-  const refs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  const move = (from: number, delta: number) => {
-    const next = (from + delta + options.length) % options.length;
-    const option = options[next];
-    if (!option) return;
-    onChange(option.id);
-    refs.current[next]?.focus();
-  };
-
-  const onKeyDown = (e: ReactKeyboardEvent<HTMLButtonElement>, index: number) => {
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-      e.preventDefault();
-      move(index, 1);
-    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-      e.preventDefault();
-      move(index, -1);
-    } else if (e.key === "Home") {
-      e.preventDefault();
-      move(-1, 1);
-    } else if (e.key === "End") {
-      e.preventDefault();
-      move(0, -1);
-    }
-  };
-
-  const activeIndex = Math.max(
-    0,
-    options.findIndex((o) => o.id === value),
-  );
 
   return (
     <div className="space-y-4">
@@ -916,30 +902,27 @@ export function DecisionShell({
         <p id={`${uid}-prompt`} className="text-sm font-medium text-[var(--neutral-12)]">
           {prompt}
         </p>
-        <div
-          role="radiogroup"
+        {/* DS RadioGroupCard (Base UI radio group). Replaces a hand-written
+            ArrowKey/Home/End roving-focus implementation — the composite root
+            ships the same contract plus RTL handling and correct focus/checked
+            coupling. Card styling stays house style: no border, selection is a
+            tonal background shift. */}
+        <RadioGroupCard
           aria-labelledby={`${uid}-prompt`}
+          value={value}
+          onValueChange={(next) => onChange(String(next))}
           className="grid gap-2 sm:grid-cols-2"
         >
-          {options.map((option, index) => {
+          {options.map((option) => {
             const selected = option.id === value;
             return (
-              // biome-ignore lint/a11y/useSemanticElements: raw <input type="radio"> is banned in apps/** — button + radio role is the DS-compliant path
-              <button
+              <RadioGroupCardItem
                 key={option.id}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                tabIndex={index === activeIndex ? 0 : -1}
-                ref={(el) => {
-                  refs.current[index] = el;
-                }}
-                onClick={() => onChange(option.id)}
-                onKeyDown={(e) => onKeyDown(e, index)}
+                value={option.id}
                 className={cx(
-                  "rounded-[var(--radius-lg)] p-4 text-left transition-colors",
+                  "block border-0 items-stretch justify-start rounded-[var(--radius-lg)] p-4 text-left transition-colors",
                   selected
-                    ? "bg-[var(--blue-3)]"
+                    ? "bg-[var(--blue-3)] hover:bg-[var(--blue-3)]"
                     : "bg-[var(--neutral-2)] hover:bg-[var(--neutral-3)]",
                 )}
               >
@@ -956,10 +939,10 @@ export function DecisionShell({
                     ) : null}
                   </span>
                 </span>
-              </button>
+              </RadioGroupCardItem>
             );
           })}
-        </div>
+        </RadioGroupCard>
         {aside ? <div className={META}>{aside}</div> : null}
       </div>
       {value ? <div className="space-y-4">{children}</div> : null}
@@ -1091,122 +1074,115 @@ export function DropVerdictShell<TOutput>({
     else setActed(true);
   };
 
-  const showPaste = paste && (paste.mode !== "tab" || tab === "paste");
-  const showFile = !paste || paste.mode !== "tab" || tab === "file";
+  const isTabbed = paste?.mode === "tab";
+  const showPaste = paste && (!isTabbed || tab === "paste");
+  const showFile = !paste || !isTabbed || tab === "file";
+
+  const filePanel = (
+    // biome-ignore lint/a11y/noStaticElementInteractions: drop target; the button inside carries keyboard + click
+    <div
+      className={cx(
+        "flex flex-col items-center gap-2 rounded-[var(--radius-lg)] p-6 text-center transition-colors",
+        dragging ? "bg-[var(--blue-3)]" : "bg-[var(--neutral-2)]",
+      )}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={() => setDragging(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragging(false);
+        void takeFile(e.dataTransfer.files?.[0] ?? null);
+      }}
+    >
+      <p className="text-sm text-[var(--neutral-11)]">{dropLabel}</p>
+      <input
+        data-allow-native
+        ref={fileInput}
+        type="file"
+        accept={accept ?? "*/*"}
+        className="sr-only"
+        onChange={(e) => void takeFile(e.target.files?.[0] ?? null)}
+      />
+      <Button type="button" variant="ghost" size="sm" onClick={() => fileInput.current?.click()}>
+        {t("shell.browse")}
+      </Button>
+      {source?.kind === "file" ? (
+        <p className={META}>
+          {t("shell.selectedFile", {
+            name: source.name,
+            kb: (source.size / 1024).toFixed(1),
+          })}
+        </p>
+      ) : null}
+      {source?.kind === "file" && source.truncated ? (
+        <p className={META}>{t("shell.truncated", { kb: Math.round(maxReadBytes / 1024) })}</p>
+      ) : null}
+      <p className={META}>{privacyNote}</p>
+    </div>
+  );
+
+  const pastePanel = paste ? (
+    <div className={cx(PANEL, "space-y-3")}>
+      <Textarea
+        id={`${uid}-paste`}
+        label={paste.label}
+        value={text}
+        placeholder={paste.placeholder}
+        rows={paste.rows ?? 8}
+        onChange={(e) => takeText(e.target.value)}
+        onKeyDown={runShortcut(trigger)}
+        className="font-mono text-sm"
+        spellCheck={false}
+      />
+      <div className="flex flex-wrap items-center gap-2">
+        <CharCount text={text} />
+        {text ? (
+          <Button type="button" variant="ghost" size="sm" onClick={() => takeText("")}>
+            {t("common.clear")}
+          </Button>
+        ) : null}
+      </div>
+      {!isTabbed ? <p className={META}>{privacyNote}</p> : null}
+    </div>
+  ) : null;
 
   return (
     <div className="space-y-4">
-      {paste?.mode === "tab" ? (
-        <div className="flex gap-1.5" role="tablist" aria-label={dropLabel}>
-          {(["file", "paste"] as const).map((id) => (
-            <button
-              key={id}
-              type="button"
-              role="tab"
-              id={`${uid}-tab-${id}`}
-              aria-selected={tab === id}
-              aria-controls={`${uid}-panel-${id}`}
-              tabIndex={tab === id ? 0 : -1}
-              onClick={() => setTab(id)}
-              className={cx(
-                "rounded-full px-3 py-1 text-xs transition-colors",
-                tab === id
-                  ? "bg-[var(--blue-3)] text-[var(--neutral-12)]"
-                  : "bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]",
-              )}
-            >
-              {id === "file" ? t("shell.fileTab") : (paste?.label ?? t("shell.pasteTab"))}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
-      {showFile ? (
-        // biome-ignore lint/a11y/noStaticElementInteractions: drop target; the button inside carries keyboard + click
-        <div
-          id={`${uid}-panel-file`}
-          {...(paste?.mode === "tab"
-            ? { role: "tabpanel", "aria-labelledby": `${uid}-tab-file` }
-            : {})}
-          className={cx(
-            "flex flex-col items-center gap-2 rounded-[var(--radius-lg)] p-6 text-center transition-colors",
-            dragging ? "bg-[var(--blue-3)]" : "bg-[var(--neutral-2)]",
-          )}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragging(true);
-          }}
-          onDragLeave={() => setDragging(false)}
-          onDrop={(e) => {
-            e.preventDefault();
-            setDragging(false);
-            void takeFile(e.dataTransfer.files?.[0] ?? null);
-          }}
+      {isTabbed && paste ? (
+        // DS Tabs (Base UI). The hand-built strip set a roving tabindex but
+        // wired no key handler at all, so the unselected tab was unreachable
+        // from the keyboard: Tab landed on the selected tab and every arrow key
+        // was a no-op. Arrow keys, Home/End, looping and the tab/panel aria
+        // wiring now come from the primitive.
+        <Tabs
+          value={tab}
+          onValueChange={(next) => setTab(next as "file" | "paste")}
+          variant="button"
+          shape="pill"
+          size="sm"
+          className="space-y-4"
         >
-          <p className="text-sm text-[var(--neutral-11)]">{dropLabel}</p>
-          <input
-            data-allow-native
-            ref={fileInput}
-            type="file"
-            accept={accept ?? "*/*"}
-            className="sr-only"
-            onChange={(e) => void takeFile(e.target.files?.[0] ?? null)}
-          />
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => fileInput.current?.click()}
-          >
-            {t("shell.browse")}
-          </Button>
-          {source?.kind === "file" ? (
-            <p className={META}>
-              {t("shell.selectedFile", {
-                name: source.name,
-                kb: (source.size / 1024).toFixed(1),
-              })}
-            </p>
-          ) : null}
-          {source?.kind === "file" && source.truncated ? (
-            <p className={META}>{t("shell.truncated", { kb: Math.round(maxReadBytes / 1024) })}</p>
-          ) : null}
-          <p className={META}>{privacyNote}</p>
-        </div>
-      ) : null}
-
-      {readError ? <ShellError message={readError} /> : null}
-
-      {showPaste && paste ? (
-        <div
-          id={`${uid}-panel-paste`}
-          {...(paste.mode === "tab"
-            ? { role: "tabpanel", "aria-labelledby": `${uid}-tab-paste` }
-            : {})}
-          className={cx(PANEL, "space-y-3")}
-        >
-          <Textarea
-            id={`${uid}-paste`}
-            label={paste.label}
-            value={text}
-            placeholder={paste.placeholder}
-            rows={paste.rows ?? 8}
-            onChange={(e) => takeText(e.target.value)}
-            onKeyDown={runShortcut(trigger)}
-            className="font-mono text-sm"
-            spellCheck={false}
-          />
-          <div className="flex flex-wrap items-center gap-2">
-            <CharCount text={text} />
-            {text ? (
-              <Button type="button" variant="ghost" size="sm" onClick={() => takeText("")}>
-                {t("common.clear")}
-              </Button>
-            ) : null}
-          </div>
-          {paste.mode !== "tab" ? <p className={META}>{privacyNote}</p> : null}
-        </div>
-      ) : null}
+          <TabsList aria-label={dropLabel}>
+            <TabsTrigger value="file">{t("shell.fileTab")}</TabsTrigger>
+            <TabsTrigger value="paste">{paste.label ?? t("shell.pasteTab")}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="file" className="text-[var(--neutral-12)]">
+            {filePanel}
+            {readError ? <ShellError message={readError} /> : null}
+          </TabsContent>
+          <TabsContent value="paste" className="text-[var(--neutral-12)]">
+            {pastePanel}
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <>
+          {showFile ? filePanel : null}
+          {readError ? <ShellError message={readError} /> : null}
+          {showPaste ? pastePanel : null}
+        </>
+      )}
 
       {options ? <div className="flex flex-wrap items-end gap-3">{options}</div> : null}
 

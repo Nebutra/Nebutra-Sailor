@@ -6,7 +6,6 @@ import { buildCanonicalLocaleLabels, defaultCompactTrigger } from "@nebutra/i18n
 import { CANONICAL_LOCALES, type CanonicalLocale } from "@nebutra/i18n/locales";
 import {
   ChevronDown,
-  ChevronRight,
   Globe,
   Lifebuoy as LifeBuoy,
   Logout as LogOut,
@@ -17,14 +16,26 @@ import {
   User,
 } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuEmpty,
+  DropdownMenuFilterInput,
+  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@nebutra/ui/primitives";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useMemo, useState, useTransition } from "react";
-import { createPortal } from "react-dom";
 import { useAccountDialog } from "@/components/account/account-dialog";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
-import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 import { dicebearAvatarUrl } from "@/lib/avatar";
 
 type ThemeChoice = "system" | "light" | "dark";
@@ -52,6 +63,8 @@ const THEME_ICON: Record<ThemeChoice, typeof Monitor> = {
   dark: Moon,
 };
 
+const THEME_CHOICES: readonly ThemeChoice[] = ["light", "dark", "system"];
+
 export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: UserMenuProps = {}) {
   const t = useTranslations("userMenu");
   const tTheme = useTranslations("theme");
@@ -64,8 +77,6 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
-  const [themeOpen, setThemeOpen] = useState(false);
-  const [localeOpen, setLocaleOpen] = useState(false);
   const [localeQuery, setLocaleQuery] = useState("");
 
   const filteredLocales = useMemo(() => {
@@ -78,14 +89,10 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
     });
   }, [locale, localeQuery]);
 
-  const closeAll = useCallback(() => {
-    setOpen(false);
-    setThemeOpen(false);
-    setLocaleOpen(false);
-    setLocaleQuery("");
+  const handleOpenChange = useCallback((next: boolean) => {
+    setOpen(next);
+    if (!next) setLocaleQuery("");
   }, []);
-
-  const { triggerRef, menuRef, style } = useAnchoredMenu(open, closeAll);
 
   const handleSignOut = useCallback(async () => {
     setOpen(false);
@@ -102,7 +109,7 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
     (next: LocaleCode) => {
       setLocaleCookie(next);
       setOpen(false);
-      setLocaleOpen(false);
+      setLocaleQuery("");
       // Cookie mode: write cookie then re-run getRequestConfig server-side via
       // router.refresh() — no URL change, no navigation, instant switch.
       startTransition(() => {
@@ -115,6 +122,13 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
   if (!isSignedIn || !user) {
     return null;
   }
+
+  const hasLocaleKey = (key: string) =>
+    typeof tLocale.has === "function" && tLocale.has(key as never);
+  const searchLabel = hasLocaleKey("searchPlaceholder")
+    ? tLocale("searchPlaceholder" as never)
+    : "Search";
+  const noResultsLabel = hasLocaleKey("noResults") ? tLocale("noResults" as never) : "No matches";
 
   const activeTheme = (theme as ThemeChoice | undefined) ?? "system";
   const displayName = user.name ?? user.email ?? "User";
@@ -138,221 +152,145 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
     />
   );
 
-  const trigger =
-    variant === "row" ? (
-      <button
-        ref={triggerRef}
-        type="button"
-        aria-label={t("ariaLabel")}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center gap-2 rounded-[var(--radius-md)] px-1.5 py-1 text-left text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-      >
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2">
-          {avatarNode}
-        </span>
-        <span className="min-w-0 flex-1 truncate font-medium text-sidebar-foreground">
-          {displayName}
-        </span>
-        <ChevronDown className="size-3.5 shrink-0 text-sidebar-foreground/60" aria-hidden="true" />
-      </button>
-    ) : (
-      <button
-        ref={triggerRef}
-        type="button"
-        aria-label={t("ariaLabel")}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2 text-xs font-semibold text-neutral-12 transition-colors hover:bg-neutral-3"
-      >
-        {avatarNode}
-      </button>
-    );
-
   return (
-    <>
-      {trigger}
+    <DropdownMenu open={open} onOpenChange={handleOpenChange}>
+      {variant === "row" ? (
+        <DropdownMenuTrigger
+          aria-label={t("ariaLabel")}
+          className="flex w-full items-center gap-2 rounded-[var(--radius-md)] px-1.5 py-1 text-left text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        >
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2">
+            {avatarNode}
+          </span>
+          <span className="min-w-0 flex-1 truncate font-medium text-sidebar-foreground">
+            {displayName}
+          </span>
+          <ChevronDown
+            className="size-3.5 shrink-0 text-sidebar-foreground/60"
+            aria-hidden="true"
+          />
+        </DropdownMenuTrigger>
+      ) : (
+        <DropdownMenuTrigger
+          aria-label={t("ariaLabel")}
+          className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-neutral-7 bg-neutral-2 text-xs font-semibold text-neutral-12 transition-colors hover:bg-neutral-3"
+        >
+          {avatarNode}
+        </DropdownMenuTrigger>
+      )}
 
-      {open &&
-        typeof document !== "undefined" &&
-        createPortal(
-          <div
-            ref={menuRef}
-            role="menu"
-            aria-label={t("ariaLabel")}
-            style={style}
-            className="w-60 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg"
-          >
-            <div className="px-3 py-2">
-              <p className="truncate text-sm font-medium text-neutral-12">
-                {user.name ?? user.email}
-              </p>
-              {user.email && <p className="truncate text-xs text-neutral-11">{user.email}</p>}
+      {/* The row variant is docked at the bottom of the sidebar rail, so the
+          menu opens upward and left-aligns with the row. */}
+      <DropdownMenuContent
+        aria-label={t("ariaLabel")}
+        side={variant === "row" ? "top" : "bottom"}
+        align={variant === "row" ? "start" : "end"}
+        sideOffset={6}
+        className="w-60"
+      >
+        <div className="px-3 py-2">
+          <p className="truncate text-sm font-medium text-foreground">{user.name ?? user.email}</p>
+          {user.email && <p className="truncate text-xs text-muted-foreground">{user.email}</p>}
+        </div>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem
+          onClick={() => {
+            account.openDialog("profile");
+          }}
+        >
+          <User className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+          <span>{t("profile")}</span>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          onClick={() => {
+            router.push("/settings");
+          }}
+        >
+          <Settings className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+          <span>{t("settings")}</span>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          onClick={() => {
+            openFeedback();
+          }}
+        >
+          <LifeBuoy className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+          <span>{t("feedback")}</span>
+        </DropdownMenuItem>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Globe className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            <span>{tLocale("ariaLabel")}</span>
+            <span className="ml-auto max-w-[4.5rem] truncate pl-2 text-xs text-muted-foreground">
+              {defaultCompactTrigger(locale)}
+            </span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent aria-label={tLocale("ariaLabel")} className="w-60">
+            <div className="p-1">
+              <DropdownMenuFilterInput
+                value={localeQuery}
+                aria-label={searchLabel}
+                placeholder={searchLabel}
+                onChange={(event) => setLocaleQuery(event.target.value)}
+              />
             </div>
-            <div className="my-1 h-px bg-neutral-6" />
-
-            <button
-              type="button"
-              role="menuitem"
-              aria-label={t("profile")}
-              className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
-              onClick={() => {
-                setOpen(false);
-                account.openDialog("profile");
-              }}
-            >
-              <User className="h-4 w-4" aria-hidden />
-              <span>{t("profile")}</span>
-            </button>
-            <button
-              type="button"
-              role="menuitem"
-              aria-label={t("settings")}
-              className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
-              onClick={() => {
-                setOpen(false);
-                router.push("/settings");
-              }}
-            >
-              <Settings className="h-4 w-4" aria-hidden />
-              <span>{t("settings")}</span>
-            </button>
-
-            <button
-              type="button"
-              role="menuitem"
-              aria-label={t("feedback")}
-              className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
-              onClick={() => {
-                setOpen(false);
-                openFeedback();
-              }}
-            >
-              <LifeBuoy className="h-4 w-4" aria-hidden />
-              <span>{t("feedback")}</span>
-            </button>
-
-            <button
-              type="button"
-              role="menuitem"
-              aria-label={tLocale("ariaLabel")}
-              aria-haspopup="menu"
-              aria-expanded={localeOpen}
-              onClick={() => setLocaleOpen((prev) => !prev)}
-              className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
-            >
-              <span className="flex items-center gap-2">
-                <Globe className="h-4 w-4" aria-hidden />
-                <span>{tLocale("ariaLabel")}</span>
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="max-w-[4.5rem] truncate text-xs text-neutral-11">
-                  {defaultCompactTrigger(locale)}
-                </span>
-                <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-              </span>
-            </button>
-
-            {localeOpen && (
-              <div
-                role="menu"
-                aria-label={tLocale("ariaLabel")}
-                className="mt-1 max-h-56 overflow-y-auto px-1"
-              >
-                <input
-                  data-allow-native
-                  type="search"
-                  value={localeQuery}
-                  onChange={(e) => setLocaleQuery(e.target.value)}
-                  placeholder={
-                    tLocale.has("searchPlaceholder" as never)
-                      ? tLocale("searchPlaceholder" as never)
-                      : "Search…"
-                  }
-                  className="mb-1 h-7 w-full rounded-[var(--radius-sm)] border border-neutral-6 px-2 text-xs outline-none focus:border-neutral-8"
-                  onClick={(e) => e.stopPropagation()}
-                />
-                {filteredLocales.map((cur) => {
-                  const isActive = locale === cur;
-                  return (
-                    <button
-                      key={cur}
-                      type="button"
-                      role="menuitemradio"
-                      aria-checked={isActive}
-                      aria-current={isActive ? "true" : undefined}
-                      onClick={() => handleLocaleChange(cur)}
-                      className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2"
-                    >
+            {filteredLocales.length === 0 ? (
+              <DropdownMenuEmpty>{noResultsLabel}</DropdownMenuEmpty>
+            ) : (
+              <div className="max-h-56 overflow-y-auto">
+                <DropdownMenuRadioGroup
+                  value={locale}
+                  onValueChange={(next) => handleLocaleChange(String(next) as LocaleCode)}
+                >
+                  {filteredLocales.map((cur) => (
+                    <DropdownMenuRadioItem key={cur} value={cur} className="text-xs">
                       <span className="truncate">{LOCALE_LABELS[cur] ?? cur}</span>
-                      {isActive && <span aria-hidden>•</span>}
-                    </button>
-                  );
-                })}
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
               </div>
             )}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
 
-            <button
-              type="button"
-              role="menuitem"
-              aria-label={t("theme")}
-              aria-haspopup="menu"
-              aria-expanded={themeOpen}
-              onClick={() => setThemeOpen((prev) => !prev)}
-              className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Sun className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            <span>{t("theme")}</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent aria-label={t("theme")} className="w-44">
+            <DropdownMenuRadioGroup
+              value={activeTheme}
+              onValueChange={(next) => setTheme(String(next) as ThemeChoice)}
             >
-              <span className="flex items-center gap-2">
-                <Sun className="h-4 w-4" aria-hidden />
-                <span>{t("theme")}</span>
-              </span>
-              <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-            </button>
+              {THEME_CHOICES.map((choice) => {
+                const Icon = THEME_ICON[choice];
+                return (
+                  <DropdownMenuRadioItem key={choice} value={choice} className="text-xs">
+                    <Icon className="mr-2 h-3.5 w-3.5 shrink-0" aria-hidden />
+                    <span>{tTheme(choice)}</span>
+                  </DropdownMenuRadioItem>
+                );
+              })}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
 
-            {themeOpen && (
-              <div role="menu" aria-label={t("theme")} className="mt-1 px-1">
-                {(["light", "dark", "system"] as const).map((choice) => {
-                  const Icon = THEME_ICON[choice];
-                  const isActive = activeTheme === choice;
-                  return (
-                    <button
-                      key={choice}
-                      type="button"
-                      role="menuitemradio"
-                      aria-checked={isActive}
-                      aria-label={tTheme(choice)}
-                      onClick={() => setTheme(choice)}
-                      className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2"
-                    >
-                      <span className="flex items-center gap-2">
-                        <Icon className="h-3.5 w-3.5" aria-hidden />
-                        <span>{tTheme(choice)}</span>
-                      </span>
-                      {isActive && <span aria-hidden>•</span>}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+        <DropdownMenuSeparator />
 
-            <div className="my-1 h-px bg-neutral-6" />
-
-            <button
-              type="button"
-              role="menuitem"
-              aria-label={t("signOut")}
-              onClick={() => {
-                void handleSignOut();
-              }}
-              className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
-            >
-              <LogOut className="h-4 w-4" aria-hidden />
-              <span>{t("signOut")}</span>
-            </button>
-          </div>,
-          document.body,
-        )}
-    </>
+        <DropdownMenuItem
+          onClick={() => {
+            void handleSignOut();
+          }}
+        >
+          <LogOut className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+          <span>{t("signOut")}</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

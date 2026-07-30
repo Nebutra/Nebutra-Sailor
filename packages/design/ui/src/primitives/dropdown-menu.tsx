@@ -259,6 +259,59 @@ const DropdownMenuRadioItem = ({
 );
 DropdownMenuRadioItem.displayName = "DropdownMenuRadioItem";
 
+const MENU_RESERVED_KEYS = new Set(["ArrowUp", "ArrowDown", "Enter", "Tab"]);
+
+/**
+ * Text filter for a long menu (language wheels, workspace lists).
+ *
+ * Menu popups own every printable keystroke: Base UI wires `useTypeahead` on the
+ * popup and calls `preventDefault()` + `stopPropagation()` for any single
+ * character key, so a bare `<input>` dropped into menu content cannot be typed
+ * into at all. This primitive is the supported way to put one there — it stops
+ * the keydown before the popup's typeahead and list-navigation handlers see it,
+ * while deliberately letting ArrowUp / ArrowDown / Enter / Tab through so the
+ * keyboard path from the filter into the filtered items still works. Escape is
+ * unaffected either way: dismissal is bound on `document`, not on the popup.
+ */
+const DropdownMenuFilterInput = ({
+  className,
+  onKeyDown,
+  ref,
+  ...props
+}: Omit<React.ComponentPropsWithoutRef<"input">, "type"> & {
+  ref?: React.Ref<HTMLInputElement> | undefined;
+}) => (
+  <input
+    ref={ref}
+    type="search"
+    className={cn(overlayPrimitiveClassNames.menuFilterInput, className)}
+    onKeyDown={(event) => {
+      onKeyDown?.(event);
+      // Caret keys and printable characters belong to the field, not the menu.
+      // Arrow up/down, Enter and Tab stay with the menu so the keyboard path
+      // out of the filter and into the filtered items is preserved.
+      if (!MENU_RESERVED_KEYS.has(event.key)) {
+        event.stopPropagation();
+      }
+    }}
+    {...props}
+  />
+);
+DropdownMenuFilterInput.displayName = "DropdownMenuFilterInput";
+
+/** Shown in place of items when a `DropdownMenuFilterInput` matches nothing. */
+const DropdownMenuEmpty = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div
+    role="presentation"
+    className={cn(overlayPrimitiveClassNames.menuEmpty, className)}
+    {...props}
+  />
+);
+DropdownMenuEmpty.displayName = "DropdownMenuEmpty";
+
 const DropdownMenuLabel = ({
   className,
   inset,
@@ -303,6 +356,8 @@ export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuEmpty,
+  DropdownMenuFilterInput,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,

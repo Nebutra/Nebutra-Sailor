@@ -2,6 +2,7 @@
 
 import { Check, Copy, Message as MessageSquare, Moon, Sun, Terminal } from "@nebutra/icons";
 import {
+  CopyButton,
   Tabs,
   TabsContent,
   TabsList,
@@ -63,20 +64,6 @@ Steps to integrate:
 3. Import and use the component where needed
 4. Pass any required props documented in the component's props interface
 5. Verify the component renders correctly in both light and dark modes`;
-}
-
-function CopyButton({ value }: { value: string }) {
-  const { copied: hasCopied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
-  return (
-    <button
-      type="button"
-      onClick={() => copy(value)}
-      className="p-2 backdrop-blur inline-flex items-center justify-center rounded-md border bg-muted/50 text-muted-foreground transition-opacity hover:bg-muted"
-      aria-label="Copy code to clipboard"
-    >
-      {hasCopied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
-    </button>
-  );
 }
 
 function InstallButton({ name }: { name: string }) {
@@ -268,7 +255,13 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
           {themeToggle}
           {name && <InstallButton name={name} />}
           {name && code && <PromptButton name={name} code={code} />}
-          <CopyButton value={code} />
+          <CopyButton
+            value={code}
+            variant="outline"
+            tooltipText="Copy code"
+            showToast={false}
+            className="size-auto rounded-md bg-muted/50 p-2 text-muted-foreground backdrop-blur hover:bg-muted hover:text-muted-foreground"
+          />
         </div>
       </div>
 

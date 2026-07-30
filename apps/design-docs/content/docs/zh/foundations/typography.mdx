@@ -1,6 +1,6 @@
 ---
 title: "排版与字体"
-description: "云毓智能精密字体栈 — Geist Sans、Geist Mono、Noto Sans SC。可变字体、中文字体级联与字号比例尺。"
+description: "云毓智能精密字体栈 — Geist Sans、Geist Mono、vivo Sans SC。可变字体、中文字体级联与字号比例尺。"
 ---
 
 <Callout>
@@ -23,7 +23,7 @@ Nebutra 设计系统使用三款字体。Geist 通过字重与字号的变化覆
 |------|------|----------|------|
 | **Geist Sans** | UI、正文、标题、展示 | `--font-geist-sans` | SIL OFL（Vercel） |
 | **Geist Mono** | 代码、数据、Token、ID | `--font-geist-mono` | SIL OFL（Vercel） |
-| **Noto Sans SC** | 中文（CJK）UI 文字 | `--font-cn` | SIL OFL（Google） |
+| **vivo Sans SC** | 中文（CJK）UI 文字 | `--font-vivo-sans-sc` | vivo 授权 — 见文末字体署名 |
 
 ---
 
@@ -123,9 +123,17 @@ font-feature-settings: "calt" 1, "liga" 1;
 
 ---
 
-## Noto Sans SC — 中文字体
+## vivo Sans SC — 中文字体
 
-Noto Sans SC 是所有中文 UI 文字的字体，通过 `font-cn` Tailwind 类或 `--font-cn` CSS 变量使用。
+vivo Sans SC 是所有中文 UI 文字的字体，由 `@nebutra/fonts` **自托管**并做了子集化。
+Geist 完全不含 CJK 字形，在此之前每一个汉字都落回操作系统自带字体——macOS 是苹方、
+Windows 是微软雅黑、Android 又是另一套。中文界面不该再由操作系统决定长什么样。
+
+无需逐处接入：`--font-sans`、`--font-cn`、`--font-display`、`--font-heading` 四个 token
+栈都已带上这个字体，且都排在 Geist **之后**——拉丁字母与数字仍归 Geist（等宽数字、更紧的
+x-height 是密集表格需要的），只有 CJK 会落到 vivo Sans SC。子集里没有任何拉丁与数字字形，
+所以即使某处字体栈写反了，这条边界依然成立。`font-cn` / `--font-cn` 的作用是切换中文的
+行高与断行度量。
 
 ### 使用场景
 
@@ -136,11 +144,22 @@ Noto Sans SC 是所有中文 UI 文字的字体，通过 `font-cn` Tailwind 类�
 
 ### 字重
 
+只有 400 / 500 / 600 三个真实文件，没有 700：按 CSS 字重匹配规则 700 会落到 600
+（DemiBold）这一档，而全局的 `font-synthesis: none` 禁止伪粗体，所以中文标题不会被合成。
+
 | 字重 | 值 | 使用场景 |
 |------|----|----------|
 | Regular | 400 | 中文正文 |
 | Medium | 500 | 中文标签、导航 |
-| Bold | 700 | 中文标题 |
+| DemiBold | 600 | 中文标题（700 落到这一档） |
+
+### 覆盖范围
+
+4,282 字：仓库内所有 `zh*` 文案目录里出现的汉字、CJK 标点与全角区整块收录，再加一层
+GB2312 一级字（3,755 个常用字）作为底线——产品界面要渲染用户数据，人名地名中的某一个字
+落回苹方，比不用这个字体更难看。更生僻的字（GB2312 二级及以上）有意留给系统字体：全收
+会让每个文件体积翻倍。每个字重约 490 KB，且**只有真正渲染 CJK 字形时才会下载**：
+`@font-face` 上的 `unicode-range` 只含 CJK 区段，且不做 preload，纯拉丁页面一个字节都不下。
 
 ### 代码示例
 
@@ -163,17 +182,21 @@ font-weight: 400;
 
 ```css
 :root {
-  /* 主 UI — Geist Sans（所有拉丁文字） */
-  --font-sans: var(--font-geist-sans), "Geist", -apple-system,
-               BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  /* 主 UI — 拉丁与数字归 Geist，CJK 归自托管的 vivo Sans SC，系统中文字体兜底。
+     顺序本身就是设计决策，不是随手写的。 */
+  --font-sans: var(--font-geist-sans), "Geist",
+               var(--font-vivo-sans-sc, "vivo Sans SC"),
+               "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+               -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   /* 代码 — Geist Mono */
   --font-mono: var(--font-geist-mono), "Geist Mono",
                ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
-  /* 中文 — token 提供的本地 / 系统字体栈 */
-  --font-cjk: var(--font-cn), "Noto Sans SC", "PingFang SC",
-              "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  /* 中文 — 与 --font-sans 同序，去掉只含拉丁的系统字体 */
+  --font-cn: var(--font-geist-sans), "Geist",
+             var(--font-vivo-sans-sc, "vivo Sans SC"),
+             "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 ```
 
@@ -194,15 +217,16 @@ font-weight: 400;
 
 ```tsx
 // app/layout.tsx
+import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "@nebutra/tokens/styles.css";
 
 // 应用到 <html>：
-// className={`${GeistSans.variable} ${GeistMono.variable}`}
+// className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
 //
-// CJK fallback 来自 @nebutra/tokens --font-cn。
-// CI 构建的应用不要为 Noto Sans SC 使用 next/font/google。
+// 三者都走 next/font：Geist 来自 geist 包，中文子集走 next/font/local。
+// 构建期不请求任何字体 CDN，所以在断网沙箱里的 dev server 同样能跑。
 ```
 
 ---
@@ -346,3 +370,14 @@ CJK 字形在相同字号下视觉上比拉丁字母大，混排时需轻微缩�
 **不应该** 对正文设置字间距——字间距调整仅适用于标题和展示文字。
 
 **不应该** 在同一元素上混用 `font-sans` 与 `font-cn`——根据内容语言选择其一。
+
+---
+
+## 字体署名（Third-party font attribution）
+
+本软件使用了 **vivo Sans** 字体。
+
+这是 vivo Sans 字体知识产权许可协议第 2.1 条的要求（"您应在软件中特别注明使用了
+vivo Sans 字体"）。vivo Sans 由 vivo 移动通信有限公司授权，协议原文提交在
+`packages/design/fonts/vendor/vivo-sans/LICENCE-vivo-Sans.txt`，**不**在覆盖 Nebutra
+自有代码的 MIT 许可范围内。Geist 与 Geist Mono 为 SIL OFL（Vercel）。

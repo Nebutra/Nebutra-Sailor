@@ -13,7 +13,7 @@
  * The 18 characters are five fields, so the answer is five field verdicts, not
  * a boolean. That is the thing every competitor in the teardown declines to do.
  */
-import { Button } from "@nebutra/ui/primitives";
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import {
@@ -465,30 +465,27 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-1.5" role="tablist" aria-label={t("uscc.modeLabel")}>
-        {(["verify", "generate"] as const).map((id) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            id={`uscc-tab-${id}`}
-            aria-selected={mode === id}
-            aria-controls={`uscc-panel-${id}`}
-            tabIndex={mode === id ? 0 : -1}
-            onClick={() => setMode(id)}
-            className={
-              mode === id
-                ? "rounded-full bg-[var(--blue-3)] px-3 py-1 text-xs text-[var(--neutral-12)]"
-                : "rounded-full bg-[var(--neutral-3)] px-3 py-1 text-xs text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-4)]"
-            }
-          >
-            {t(`uscc.tab.${id}`)}
-          </button>
-        ))}
-      </div>
+      {/* DS Tabs (Base UI): the hand-rolled version set a roving tabindex but
+          wired no key handler, so the unselected tab was unreachable by
+          keyboard. Arrow keys, Home/End and the panel wiring come from the
+          primitive. `variant="button" shape="pill"` matches the sibling
+          runners. */}
+      <Tabs
+        value={mode}
+        onValueChange={(next) => setMode(next as "verify" | "generate")}
+        variant="button"
+        shape="pill"
+        size="sm"
+      >
+        <TabsList aria-label={t("uscc.modeLabel")}>
+          {(["verify", "generate"] as const).map((id) => (
+            <TabsTrigger key={id} value={id}>
+              {t(`uscc.tab.${id}`)}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {mode === "verify" ? (
-        <div id="uscc-panel-verify" role="tabpanel" aria-labelledby="uscc-tab-verify">
+        <TabsContent value="verify" className="text-[var(--neutral-12)]">
           <InstantTransformShell<VerifyOutput>
             engine={{ toolId, parse: (o) => o as unknown as VerifyOutput }}
             inputLabel={t("uscc.inputLabel")}
@@ -512,9 +509,9 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
             })}
             note={t("uscc.scope")}
           />
-        </div>
-      ) : (
-        <div id="uscc-panel-generate" role="tabpanel" aria-labelledby="uscc-tab-generate">
+        </TabsContent>
+
+        <TabsContent value="generate" className="text-[var(--neutral-12)]">
           <ConfigureGenerateShell<GenerateOutput>
             engine={{ toolId, parse: (o) => o as unknown as GenerateOutput }}
             input={generateInput}
@@ -574,8 +571,8 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
               </Button>
             </div>
           </ConfigureGenerateShell>
-        </div>
-      )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

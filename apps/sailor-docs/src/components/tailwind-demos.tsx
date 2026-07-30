@@ -1,10 +1,10 @@
 "use client";
 
-import { Check, Copy, Play } from "@nebutra/icons";
+import { Play } from "@nebutra/icons";
 import {
+  CopyMenuItem,
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
 import {
@@ -18,27 +18,6 @@ import {
 import * as React from "react";
 
 // --- Colors Demo ---
-
-function CopyButton({ value, label }: { value: string; label: string }) {
-  const [copied, setCopied] = React.useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(value);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <DropdownMenuItem onClick={handleCopy} className="cursor-pointer">
-      <span className="flex-1">{label}</span>
-      {copied ? (
-        <Check className="h-4 w-4 text-green-500" />
-      ) : (
-        <Copy className="h-4 w-4 text-muted-foreground" />
-      )}
-    </DropdownMenuItem>
-  );
-}
 
 function Swatch({
   name,
@@ -74,8 +53,8 @@ function Swatch({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[180px]">
-        <CopyButton value={hex} label="Copy HEX" />
-        <CopyButton value={twClass} label="Copy Tailwind Class" />
+        <CopyMenuItem value={hex}>Copy HEX</CopyMenuItem>
+        <CopyMenuItem value={twClass}>Copy Tailwind Class</CopyMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -30,7 +30,10 @@ const RadioGroupCardItem = ({
     <BaseRadio.Root
       ref={ref}
       className={cn(
-        "relative flex flex-col items-center justify-center rounded-[var(--radius-lg)] border-2 border-muted bg-popover p-4 hover:bg-accent outline-none hover:text-accent-foreground peer-data-state-checked:border-primary data-state-checked:border-primary focus-visible:outline-none",
+        // Base UI radio emits `data-checked` / `data-unchecked`. The Radix-era
+        // `data-state-checked:` selectors this shipped with never matched, so the
+        // selected card had no visual state at all.
+        "relative flex flex-col items-center justify-center rounded-[var(--radius-lg)] border-2 border-muted bg-popover p-4 hover:bg-accent outline-none hover:text-accent-foreground data-[checked]:border-primary focus-visible:outline-none",
         className,
       )}
       {...props}

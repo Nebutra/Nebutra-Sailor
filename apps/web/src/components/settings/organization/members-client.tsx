@@ -31,12 +31,17 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Table,
 } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
 import { InviteDialog } from "./invite-dialog";
+
+// The roster is flush inside its own bordered panel and keeps this panel's
+// tighter 12px/8px cell rhythm rather than the default table density.
+const MEMBER_DENSITY = { "--table-cell-padding-x": "0.75rem", "--table-cell-padding-y": "0.5rem" };
 
 type Role = "owner" | "admin" | "member" | "viewer";
 
@@ -222,101 +227,95 @@ export function MembersClient({ orgId }: MembersClientProps) {
             {t("empty")}
           </p>
         ) : (
-          <div className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-7">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-neutral-2 text-xs uppercase text-neutral-11">
-                <tr>
-                  <th scope="col" className="px-3 py-2 font-medium">
-                    {t("columnMember")}
-                  </th>
-                  <th scope="col" className="px-3 py-2 font-medium">
-                    {t("columnRole")}
-                  </th>
-                  <th scope="col" className="px-3 py-2 font-medium">
-                    {t("columnJoined")}
-                  </th>
-                  <th scope="col" className="px-3 py-2 font-medium">
-                    <span className="sr-only">{t("columnActions")}</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-6">
-                {members.map((member) => {
-                  const isSelf = member.userId === currentUserId;
-                  const isOwner = member.role === "owner";
-                  const canEditRole = canManageRoles && !isSelf && !isOwner;
-                  const canRemove = canRemoveMembers && !isSelf && !isOwner;
-                  const displayName = member.user.name ?? member.user.email;
-                  return (
-                    <tr key={member.id} className="bg-neutral-1 dark:bg-transparent">
-                      <td className="px-3 py-2">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-xs font-semibold text-white"
-                            aria-hidden
-                          >
-                            {(displayName?.[0] ?? "?").toUpperCase()}
-                          </div>
-                          <div className="min-w-0">
-                            <div className="truncate font-medium text-neutral-12">
-                              {displayName}
-                            </div>
-                            <div className="truncate text-xs text-neutral-11">
-                              {member.user.email}
-                            </div>
+          <Table
+            bare
+            wrapperClassName="overflow-hidden rounded-[var(--radius-md)] border border-neutral-7"
+            wrapperStyle={MEMBER_DENSITY}
+          >
+            <Table.Header className="bg-neutral-2 text-xs uppercase">
+              <Table.Row>
+                <Table.Head>{t("columnMember")}</Table.Head>
+                <Table.Head>{t("columnRole")}</Table.Head>
+                <Table.Head>{t("columnJoined")}</Table.Head>
+                <Table.Head>
+                  <span className="sr-only">{t("columnActions")}</span>
+                </Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body bordered>
+              {members.map((member) => {
+                const isSelf = member.userId === currentUserId;
+                const isOwner = member.role === "owner";
+                const canEditRole = canManageRoles && !isSelf && !isOwner;
+                const canRemove = canRemoveMembers && !isSelf && !isOwner;
+                const displayName = member.user.name ?? member.user.email;
+                return (
+                  <Table.Row key={member.id} className="bg-neutral-1 dark:bg-transparent">
+                    <Table.Cell>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-xs font-semibold text-white"
+                          aria-hidden
+                        >
+                          {(displayName?.[0] ?? "?").toUpperCase()}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="truncate font-medium text-neutral-12">{displayName}</div>
+                          <div className="truncate text-xs text-neutral-11">
+                            {member.user.email}
                           </div>
                         </div>
-                      </td>
-                      <td className="px-3 py-2 align-middle">
-                        {canEditRole ? (
-                          <Select
-                            disabled={pendingMemberId === member.id}
-                            value={member.role}
-                            onValueChange={(value) => handleRoleChange(member.id, value as Role)}
-                          >
-                            <SelectTrigger aria-label={`${t("changeRole")} for ${displayName}`}>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="admin">{t("role.admin")}</SelectItem>
-                              <SelectItem value="member">{t("role.member")}</SelectItem>
-                              <SelectItem value="viewer">{t("role.viewer")}</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        ) : (
-                          <span className="text-xs text-neutral-11">
-                            {t(`role.${member.role}` as `role.${Role}`)}
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-3 py-2 text-xs text-neutral-11">
-                        {Number.isNaN(new Date(member.joinedAt).getTime())
-                          ? member.joinedAt
-                          : format.dateTime(new Date(member.joinedAt), {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                      </td>
-                      <td className="px-3 py-2 text-right">
-                        {canRemove && (
-                          <button
-                            type="button"
-                            aria-label={`${t("remove")} ${displayName}`}
-                            onClick={() => setConfirmRemoveId(member.id)}
-                            className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" aria-hidden />
-                            <span>{t("remove")}</span>
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {canEditRole ? (
+                        <Select
+                          disabled={pendingMemberId === member.id}
+                          value={member.role}
+                          onValueChange={(value) => handleRoleChange(member.id, value as Role)}
+                        >
+                          <SelectTrigger aria-label={`${t("changeRole")} for ${displayName}`}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="admin">{t("role.admin")}</SelectItem>
+                            <SelectItem value="member">{t("role.member")}</SelectItem>
+                            <SelectItem value="viewer">{t("role.viewer")}</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      ) : (
+                        <span className="text-xs text-neutral-11">
+                          {t(`role.${member.role}` as `role.${Role}`)}
+                        </span>
+                      )}
+                    </Table.Cell>
+                    <Table.Cell className="text-xs text-neutral-11">
+                      {Number.isNaN(new Date(member.joinedAt).getTime())
+                        ? member.joinedAt
+                        : format.dateTime(new Date(member.joinedAt), {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {canRemove && (
+                        <button
+                          type="button"
+                          aria-label={`${t("remove")} ${displayName}`}
+                          onClick={() => setConfirmRemoveId(member.id)}
+                          className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" aria-hidden />
+                          <span>{t("remove")}</span>
+                        </button>
+                      )}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
+            </Table.Body>
+          </Table>
         )}
 
         <InviteDialog

@@ -4,7 +4,7 @@ import type {
   NotificationPreferenceSource,
   NotificationRuntimeStatus,
 } from "@nebutra/notifications";
-import { Button } from "@nebutra/ui/primitives";
+import { Button, Table } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { updateNotificationPreference } from "@/app/(app)/settings/notifications/actions";
 
@@ -16,6 +16,11 @@ interface Props {
 }
 
 const VISIBLE_CHANNELS = new Set(["in_app", "email", "push"]);
+
+// The matrix reads as a panel, so the table sits flush inside its own border
+// and keeps the roomier 16px cell rhythm rather than the default table density.
+const MATRIX_DENSITY = { "--table-cell-padding-x": "1rem", "--table-cell-padding-y": "1rem" };
+const MATRIX_HEADING = "text-xs font-semibold uppercase tracking-wide";
 
 // State-only overlay classes. Button outline variant supplies the base
 // border / background / text — these classes layer on top to encode
@@ -81,106 +86,101 @@ export function NotificationPreferenceMatrix({
               <p className="mt-1 text-sm text-muted-foreground">{section.description}</p>
             </div>
 
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-border">
-              <table className="min-w-[720px] w-full border-collapse">
-                <thead className="bg-muted text-left">
-                  <tr className="border-b border-border">
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Signal
-                    </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Inbox
-                    </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Email
-                    </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Push
-                    </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Notes
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {section.rows.map((row) => (
-                    <tr key={row.id} className="border-b border-border last:border-b-0">
-                      <td className="p-4 align-top">
-                        <p className="text-sm font-medium text-foreground">{row.label}</p>
-                        <p className="mt-1 text-sm text-muted-foreground">{row.description}</p>
-                      </td>
+            <Table
+              bare
+              wrapperClassName="rounded-[var(--radius-lg)] border border-border"
+              wrapperStyle={MATRIX_DENSITY}
+              className="min-w-[720px]"
+            >
+              <Table.Header className="bg-muted">
+                <Table.Row>
+                  <Table.Head className={MATRIX_HEADING}>Signal</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>Inbox</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>Email</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>Push</Table.Head>
+                  <Table.Head alignment="start" className={MATRIX_HEADING}>
+                    Notes
+                  </Table.Head>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body bordered>
+                {section.rows.map((row) => (
+                  <Table.Row key={row.id}>
+                    <Table.Cell className="align-top">
+                      <p className="text-sm font-medium text-foreground">{row.label}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{row.description}</p>
+                    </Table.Cell>
 
-                      {row.cells.slice(0, 3).map((cell) => (
-                        <td key={cell.channel} className="p-4 align-top">
-                          {cell.supported ? (
-                            <form action={updateNotificationPreference}>
-                              <input data-allow-native type="hidden" name="locale" value={locale} />
-                              <input data-allow-native type="hidden" name="type" value={row.id} />
-                              <input
-                                data-allow-native
-                                type="hidden"
-                                name="channel"
-                                value={cell.channel}
-                              />
-                              <input
-                                data-allow-native
-                                type="hidden"
-                                name="enabled"
-                                value={String(!cell.enabled)}
-                              />
-                              <Button
-                                type="submit"
-                                variant="outline"
-                                size="sm"
-                                disabled={!cell.editable}
-                                aria-pressed={cell.enabled}
-                                aria-label={`${cell.enabled ? "Turn off" : "Turn on"} ${row.label} via ${cell.channelLabel}`}
-                                title={cell.reason}
-                                className={cn(
-                                  "min-w-20 rounded-full",
-                                  getCellButtonClasses(cell.enabled, cell.editable),
-                                )}
-                              >
-                                {cell.enabled ? "On" : "Off"}
-                              </Button>
-                            </form>
-                          ) : (
-                            <span
+                    {row.cells.slice(0, 3).map((cell) => (
+                      <Table.Cell key={cell.channel} className="align-top">
+                        {cell.supported ? (
+                          <form action={updateNotificationPreference}>
+                            <input data-allow-native type="hidden" name="locale" value={locale} />
+                            <input data-allow-native type="hidden" name="type" value={row.id} />
+                            <input
+                              data-allow-native
+                              type="hidden"
+                              name="channel"
+                              value={cell.channel}
+                            />
+                            <input
+                              data-allow-native
+                              type="hidden"
+                              name="enabled"
+                              value={String(!cell.enabled)}
+                            />
+                            <Button
+                              type="submit"
+                              variant="outline"
+                              size="sm"
+                              disabled={!cell.editable}
+                              aria-pressed={cell.enabled}
+                              aria-label={`${cell.enabled ? "Turn off" : "Turn on"} ${row.label} via ${cell.channelLabel}`}
                               title={cell.reason}
-                              className="inline-flex rounded-full border border-border bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground"
+                              className={cn(
+                                "min-w-20 rounded-full",
+                                getCellButtonClasses(cell.enabled, cell.editable),
+                              )}
                             >
-                              N/A
-                            </span>
-                          )}
-                        </td>
-                      ))}
+                              {cell.enabled ? "On" : "Off"}
+                            </Button>
+                          </form>
+                        ) : (
+                          <span
+                            title={cell.reason}
+                            className="inline-flex rounded-full border border-border bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground"
+                          >
+                            N/A
+                          </span>
+                        )}
+                      </Table.Cell>
+                    ))}
 
-                      <td className="p-4 align-top">
-                        <ul className="space-y-1 text-sm text-muted-foreground">
-                          {row.cells
-                            .filter((cell) => VISIBLE_CHANNELS.has(cell.channel) && cell.reason)
-                            .slice(0, 2)
-                            .map((cell) => (
-                              <li key={cell.channel}>
-                                <span className="font-medium text-foreground">
-                                  {cell.channelLabel}:
-                                </span>{" "}
-                                {cell.reason}
-                              </li>
-                            ))}
-                          {row.cells.every((cell) => !cell.reason) ? (
-                            <li>
-                              <span className="font-medium text-foreground">Default:</span> Routed
-                              only where this signal is meant to stay high-signal.
+                    <Table.Cell alignment="start" className="align-top">
+                      <ul className="space-y-1 text-sm text-muted-foreground">
+                        {row.cells
+                          .filter((cell) => VISIBLE_CHANNELS.has(cell.channel) && cell.reason)
+                          .slice(0, 2)
+                          .map((cell) => (
+                            <li key={cell.channel}>
+                              <span className="font-medium text-foreground">
+                                {cell.channelLabel}:
+                              </span>{" "}
+                              {cell.reason}
                             </li>
-                          ) : null}
-                        </ul>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                          ))}
+                        {row.cells.every((cell) => !cell.reason) ? (
+                          <li>
+                            <span className="font-medium text-foreground">Default:</span> Routed
+                            only where this signal is meant to stay high-signal.
+                          </li>
+                        ) : null}
+                      </ul>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
           </div>
         ))}
       </div>

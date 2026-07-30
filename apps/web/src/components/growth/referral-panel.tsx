@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowUpRight, Check, Copy, Sparkles as Gift, Sparkles } from "@nebutra/icons";
-import { useCopyToClipboard } from "@nebutra/ui/primitives";
+import { ArrowUpRight, Sparkles as Gift, Sparkles } from "@nebutra/icons";
+import { CopyButton } from "@nebutra/ui/primitives";
 
 /**
  * TEMPLATE — Referral panel.
@@ -66,30 +66,6 @@ interface Props {
   levels?: ReferralLevel[];
 }
 
-function CopyButton({ value, label }: { value: string; label: string }) {
-  const { copied, copy } = useCopyToClipboard({ timeout: 1600, showToast: false });
-  return (
-    <button
-      type="button"
-      onClick={() => copy(value)}
-      aria-label={`Copy ${label}`}
-      className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:bg-black/40"
-    >
-      {copied ? (
-        <>
-          <Check className="h-3 w-3 text-success" />
-          Copied
-        </>
-      ) : (
-        <>
-          <Copy className="h-3 w-3" />
-          Copy
-        </>
-      )}
-    </button>
-  );
-}
-
 export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
   // Preview state — no live data yet.
   if (!stats) {
@@ -142,7 +118,16 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
                 <code className="truncate font-mono text-sm font-semibold text-neutral-12">
                   {stats.referralCode}
                 </code>
-                <CopyButton value={stats.referralCode} label="referral code" />
+                <CopyButton
+                  value={stats.referralCode}
+                  aria-label="Copy referral code"
+                  label="Copy"
+                  variant="outline"
+                  size="tiny"
+                  showToast={false}
+                  timeout={1600}
+                  className="h-auto gap-1.5 rounded-[var(--radius-md)] border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:bg-black/40"
+                />
               </div>
             </div>
             <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-3 dark:bg-black/30">
@@ -151,7 +136,16 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
               </p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
                 <span className="truncate text-xs text-neutral-11">{stats.shareUrl}</span>
-                <CopyButton value={stats.shareUrl} label="share link" />
+                <CopyButton
+                  value={stats.shareUrl}
+                  aria-label="Copy share link"
+                  label="Copy"
+                  variant="outline"
+                  size="tiny"
+                  showToast={false}
+                  timeout={1600}
+                  className="h-auto gap-1.5 rounded-[var(--radius-md)] border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:bg-black/40"
+                />
               </div>
             </div>
           </div>

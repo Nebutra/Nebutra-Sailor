@@ -44,6 +44,11 @@ export const overlayPrimitiveClassNames = {
     "data-[highlighted]:bg-accent data-[popup-open]:bg-accent",
   ].join(" "),
   menuCheckboxItem: [menuItemBaseClassName, menuHighlightedClassName, "pl-8"].join(" "),
+  menuFilterInput: [
+    "h-7 w-full rounded-[var(--radius-sm)] bg-muted px-2 text-sm text-foreground",
+    "placeholder:text-muted-foreground outline-none",
+  ].join(" "),
+  menuEmpty: "px-2 py-3 text-center text-sm text-muted-foreground",
   menuIndicator:
     "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center text-muted-foreground",
   menubarRoot:

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@nebutra/email": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",

@@ -13,6 +13,7 @@
   "dependencies": {
     "@nebutra/brand": "workspace:*",
     "@nebutra/db": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/permissions": "workspace:*",
     "@nebutra/preset": "workspace:*",

@@ -1,34 +1,23 @@
 "use client";
 
-import { Check, Copy } from "@nebutra/icons";
-import { MagicCard } from "@nebutra/ui/primitives";
-import { useState } from "react";
+import { CopyButton, MagicCard } from "@nebutra/ui/primitives";
 
-function CopyButton({ text, label }: { text: string; label?: string }) {
-  const [hasCopied, setHasCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    setHasCopied(true);
-    setTimeout(() => setHasCopied(false), 2000);
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      className="group flex items-center justify-between gap-2 px-3 py-2 w-full rounded-md bg-transparent hover:bg-muted transition-colors text-left"
-      title="Click to copy CSS variable"
-    >
-      <span className="font-mono text-xs text-muted-foreground truncate">{label || text}</span>
-      {hasCopied ? (
-        <Check className="h-3 w-3 text-emerald-500 flex-shrink-0" />
-      ) : (
-        <Copy className="h-3 w-3 text-muted-foreground opacity-50 group-hover:opacity-100 transition-opacity flex-shrink-0" />
-      )}
-    </button>
-  );
-}
+/**
+ * Shared chrome for the token rows below: a full-width, left-aligned mono row
+ * whose visible label is the CSS value itself, with the copy affordance at the
+ * far edge. `copiedLabel={false}` keeps that value on screen — swapping it for
+ * "Copied" would hide the string the reader came for.
+ */
+const tokenRowCopyProps = {
+  variant: "ghost",
+  size: "tiny",
+  iconPosition: "trailing",
+  copiedLabel: false,
+  showToast: false,
+  tooltipText: "Copy CSS value",
+  className:
+    "h-auto w-full justify-between gap-2 rounded-md px-3 py-2 font-mono text-xs font-normal text-muted-foreground",
+} as const;
 
 export function BrandGradientsDemo() {
   return (
@@ -53,10 +42,15 @@ export function BrandGradientsDemo() {
               </p>
             </div>
             <div className="bg-card border border-border rounded-lg overflow-hidden mt-auto">
-              <CopyButton text="var(--gradient-brand)" label="var(--gradient-brand)" />
+              <CopyButton
+                {...tokenRowCopyProps}
+                value="var(--gradient-brand)"
+                label="var(--gradient-brand)"
+              />
               <div className="h-[1px] w-full bg-[hsl(var(--border))]" />
               <CopyButton
-                text="linear-gradient(135deg, hsl(var(--primary)) 0%, #0BF1C3 100%)"
+                {...tokenRowCopyProps}
+                value="linear-gradient(135deg, hsl(var(--primary)) 0%, #0BF1C3 100%)"
                 label="linear-gradient(...)"
               />
             </div>
@@ -83,12 +77,14 @@ export function BrandGradientsDemo() {
             </div>
             <div className="bg-card border border-border rounded-lg overflow-hidden mt-auto">
               <CopyButton
-                text="var(--gradient-brand-reverse)"
+                {...tokenRowCopyProps}
+                value="var(--gradient-brand-reverse)"
                 label="var(--gradient-brand-reverse)"
               />
               <div className="h-[1px] w-full bg-[hsl(var(--border))]" />
               <CopyButton
-                text="linear-gradient(135deg, #0BF1C3 0%, hsl(var(--primary)) 100%)"
+                {...tokenRowCopyProps}
+                value="linear-gradient(135deg, #0BF1C3 0%, hsl(var(--primary)) 100%)"
                 label="linear-gradient(...)"
               />
             </div>
@@ -115,12 +111,14 @@ export function BrandGradientsDemo() {
             </div>
             <div className="bg-card border border-border rounded-lg overflow-hidden mt-auto">
               <CopyButton
-                text="var(--gradient-brand-vertical)"
+                {...tokenRowCopyProps}
+                value="var(--gradient-brand-vertical)"
                 label="var(--gradient-brand-vertical)"
               />
               <div className="h-[1px] w-full bg-[hsl(var(--border))]" />
               <CopyButton
-                text="linear-gradient(180deg, ...)"
+                {...tokenRowCopyProps}
+                value="linear-gradient(180deg, ...)"
                 label="linear-gradient(180deg, ...)"
               />
             </div>
@@ -150,10 +148,15 @@ export function BrandGradientsDemo() {
               </p>
             </div>
             <div className="bg-black border border-zinc-800 rounded-lg overflow-hidden mt-auto">
-              <CopyButton text="var(--gradient-brand-glow)" label="var(--gradient-brand-glow)" />
+              <CopyButton
+                {...tokenRowCopyProps}
+                value="var(--gradient-brand-glow)"
+                label="var(--gradient-brand-glow)"
+              />
               <div className="h-[1px] w-full bg-zinc-800" />
               <CopyButton
-                text="radial-gradient(circle, #0BF1C3 0%, hsl(var(--primary)) 100%)"
+                {...tokenRowCopyProps}
+                value="radial-gradient(circle, #0BF1C3 0%, hsl(var(--primary)) 100%)"
                 label="radial-gradient(...)"
               />
             </div>

@@ -30,6 +30,7 @@
     "@nebutra/blog": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/db": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/license": "workspace:*",

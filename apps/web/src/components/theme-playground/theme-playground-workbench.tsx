@@ -8,7 +8,6 @@ import {
   Clipboard,
   CloudUpload,
   Command,
-  Copy,
   CreditCard,
   GridSquare,
   Layout,
@@ -28,6 +27,7 @@ import {
 import {
   Badge,
   Button,
+  CopyButton,
   Input,
   Select,
   SelectContent,
@@ -37,7 +37,6 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-  useCopyToClipboard,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
@@ -83,22 +82,19 @@ const densityScale: Record<Density, string> = {
   comfortable: "text-sm [--playground-gap:1.125rem] [--playground-pad:1.25rem]",
 };
 
-function CopyButton({ value, label = "Copy" }: { value: string; label?: string }) {
-  const { copied, copy } = useCopyToClipboard({ timeout: 1200, showToast: false });
-
-  return (
-    <Button
-      size="tiny"
-      variant="tertiary"
-      className="h-7 border-border/70 bg-card/70 px-2 text-[11px]"
-      prefix={copied ? <Check /> : <Copy />}
-      onClick={() => copy(value)}
-      type="button"
-    >
-      {copied ? "Copied" : label}
-    </Button>
-  );
-}
+/**
+ * Shared chrome for the inspector's copy affordances. Was a local `CopyButton`
+ * wrapper; the behaviour now comes from the library primitive and only the
+ * styling stays here.
+ */
+const inspectorCopyProps = {
+  label: "Copy",
+  variant: "tertiary",
+  size: "tiny",
+  showToast: false,
+  timeout: 1200,
+  className: "h-7 border-border/70 bg-card/70 px-2 text-[11px]",
+} as const;
 
 function ThemeSwatches({
   themeId,
@@ -952,6 +948,7 @@ function TokenInspector({
           title="CSS Variables"
           action={
             <CopyButton
+              {...inspectorCopyProps}
               value={rows.map((row) => `${row.name}: ${row.value};`).join("\n")}
               label="Copy all"
             />
@@ -982,6 +979,7 @@ function TokenInspector({
           title="Brand path"
           action={
             <CopyButton
+              {...inspectorCopyProps}
               value={
                 theme.id === "factory" || theme.id === IMPORTED_THEME_ID
                   ? "(factory SSOT)"
@@ -997,7 +995,10 @@ function TokenInspector({
           </code>
         </InspectorBlock>
 
-        <InspectorBlock title="CLI" action={<CopyButton value={cliCommand} />}>
+        <InspectorBlock
+          title="CLI"
+          action={<CopyButton {...inspectorCopyProps} value={cliCommand} />}
+        >
           <code className="block rounded-[var(--radius-md)] border border-border bg-background p-3 font-mono text-[11px] text-muted-foreground">
             {cliCommand}
           </code>

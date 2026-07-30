@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@nebutra/ui", "@nebutra/tokens", "@nebutra/icons"],
+  transpilePackages: ["@nebutra/fonts", "@nebutra/ui", "@nebutra/tokens", "@nebutra/icons"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "img.clerk.com" },

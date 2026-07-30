@@ -2,7 +2,7 @@ import type * as React from "react";
 import { tableTokens } from "../tokens/components/table";
 import { cn } from "../utils";
 
-type TableCssVar =
+export type TableCssVar =
   | "--table-min-width"
   | "--table-padding"
   | "--table-radius"
@@ -17,11 +17,28 @@ type TableCssVar =
   | "--table-motion-duration"
   | "--table-motion-easing";
 
-export type TableProps = React.TableHTMLAttributes<HTMLTableElement> & {
+/**
+ * The table's density/geometry knobs, addressable by callers so a table can be
+ * retuned without reaching past the primitive into raw cell classes.
+ */
+export type TableCssVarOverrides = Partial<Record<TableCssVar, string | number>>;
+
+export type TableStyle = React.CSSProperties & TableCssVarOverrides;
+
+export type TableProps = Omit<React.TableHTMLAttributes<HTMLTableElement>, "style"> & {
   /** Class applied to the scroll container around the native table. */
   wrapperClassName?: string;
   /** Style applied to the scroll container around the native table. */
-  wrapperStyle?: React.CSSProperties;
+  wrapperStyle?: TableStyle;
+  /** Style applied to the native table element. */
+  style?: TableStyle;
+  /**
+   * Drops the container's own card chrome — surface, border, radius, inset
+   * padding, minimum width, and the header/body spacer. Use when the table is
+   * already inside a panel or `Card`, so the rows sit flush with the panel edge
+   * instead of being double-framed.
+   */
+  bare?: boolean;
 };
 
 export type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement> & {
@@ -35,14 +52,31 @@ export type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement> & {
   virtualize?: boolean;
 };
 
+/**
+ * Explicit horizontal alignment. Setting it also opts the cell out of the
+ * implicit "last column is the action column, so right-align it" rule, which a
+ * plain `text-left` class cannot override — `:last-child` outranks it.
+ */
+export type TableCellAlignment = "start" | "center" | "end";
+
+const ALIGNMENT_CLASS: Record<TableCellAlignment, string> = {
+  start: "text-left",
+  center: "text-center",
+  end: "text-right",
+};
+
 export type TableHeadProps = React.ThHTMLAttributes<HTMLTableCellElement> & {
   /** Aligns numeric headings and applies tabular numbers. */
   numeric?: boolean;
+  /** Overrides the implicit last-column right alignment. */
+  alignment?: TableCellAlignment;
 };
 
 export type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement> & {
   /** Aligns numeric values and applies tabular numbers. */
   numeric?: boolean;
+  /** Overrides the implicit last-column right alignment. */
+  alignment?: TableCellAlignment;
 };
 
 type TableComponent = React.ComponentType<
@@ -59,7 +93,7 @@ type TableComponent = React.ComponentType<
   Row: typeof TableRow;
 };
 
-function createTableVars(style?: React.CSSProperties) {
+function createTableVars(style: TableStyle | undefined, bare: boolean) {
   return {
     "--table-min-width": `${tableTokens.wrapper.minWidth}px`,
     "--table-padding": `${tableTokens.wrapper.padding}px`,
@@ -71,7 +105,7 @@ function createTableVars(style?: React.CSSProperties) {
     "--table-font-size": `${tableTokens.typography.size}px`,
     "--table-heading-weight": tableTokens.typography.headingWeight,
     "--table-body-weight": tableTokens.typography.bodyWeight,
-    "--table-body-spacer": `${tableTokens.spacer.bodyTop}px`,
+    "--table-body-spacer": bare ? "0px" : `${tableTokens.spacer.bodyTop}px`,
     "--table-motion-duration": `${tableTokens.motion.duration}ms`,
     "--table-motion-easing": tableTokens.motion.easing,
     ...style,
@@ -83,15 +117,18 @@ const TableRoot = ({
   wrapperClassName,
   wrapperStyle,
   style,
+  bare = false,
   ref,
   ...props
 }: TableProps & { ref?: React.Ref<HTMLTableElement> | undefined }) => (
   <div
     className={cn(
-      "relative w-full min-w-[var(--table-min-width)] overflow-auto rounded-[var(--table-radius)] border border-border bg-card p-[var(--table-padding)]",
+      "relative w-full overflow-auto",
+      !bare &&
+        "min-w-[var(--table-min-width)] rounded-[var(--table-radius)] border border-border bg-card p-[var(--table-padding)]",
       wrapperClassName,
     )}
-    style={createTableVars(wrapperStyle)}
+    style={createTableVars(wrapperStyle, bare)}
   >
     <table
       ref={ref}
@@ -191,6 +228,7 @@ TableRow.displayName = "TableRow";
 const TableHead = ({
   className,
   numeric = false,
+  alignment,
   scope = "col",
   ref,
   ...props
@@ -200,8 +238,10 @@ const TableHead = ({
     scope={scope}
     className={cn(
       "h-[var(--table-header-height)] px-[var(--table-cell-padding-x)] text-left align-middle font-[var(--table-heading-weight)] text-muted-foreground",
-      "last:text-right [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-px",
+      "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-px",
+      !alignment && "last:text-right",
       numeric && "text-right font-mono tabular-nums",
+      alignment && ALIGNMENT_CLASS[alignment],
       className,
     )}
     {...props}
@@ -212,6 +252,7 @@ TableHead.displayName = "TableHead";
 const TableCell = ({
   className,
   numeric = false,
+  alignment,
   ref,
   ...props
 }: TableCellProps & { ref?: React.Ref<HTMLTableCellElement> | undefined }) => (
@@ -219,8 +260,10 @@ const TableCell = ({
     ref={ref}
     className={cn(
       "px-[var(--table-cell-padding-x)] py-[var(--table-cell-padding-y)] align-middle",
-      "last:text-right [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-px",
+      "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-px",
+      !alignment && "last:text-right",
       numeric && "text-right font-mono tabular-nums",
+      alignment && ALIGNMENT_CLASS[alignment],
       className,
     )}
     {...props}

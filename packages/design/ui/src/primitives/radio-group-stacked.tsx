@@ -30,7 +30,9 @@ const RadioGroupStackedItem = ({
     <BaseRadio.Root
       ref={ref}
       className={cn(
-        "relative flex w-full flex-row items-center justify-between rounded-[var(--radius-lg)] border px-4 py-3 text-left hover:bg-accent outline-none focus-visible:outline-none peer-data-state-checked:border-primary peer-data-state-checked:bg-primary/5 data-state-checked:border-primary data-state-checked:bg-primary/5",
+        // Base UI radio emits `data-checked` / `data-unchecked`; the Radix-era
+        // `data-state-checked:` selectors never matched.
+        "relative flex w-full flex-row items-center justify-between rounded-[var(--radius-lg)] border px-4 py-3 text-left hover:bg-accent outline-none focus-visible:outline-none data-[checked]:border-primary data-[checked]:bg-primary/5",
         className,
       )}
       {...props}

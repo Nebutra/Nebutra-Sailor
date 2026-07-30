@@ -112,7 +112,7 @@ describe("OrgSwitcher", () => {
     await waitFor(() => {
       expect(screen.getByRole("menu")).toBeInTheDocument();
     });
-    expect(screen.getByRole("menuitem", { name: /Acme Labs/i })).toHaveAttribute(
+    expect(await screen.findByRole("menuitem", { name: /Acme Labs/i })).toHaveAttribute(
       "aria-current",
       "true",
     );
@@ -150,8 +150,10 @@ describe("OrgSwitcher", () => {
     await user.click(screen.getByRole("button", { name: /Switch organization/i }));
 
     expect(await screen.findByText("No organizations")).toBeInTheDocument();
-    const createLink = screen.getByRole("link", { name: /Create organization/i });
-    expect(createLink).toHaveAttribute("href", "/onboarding");
+    // The create row is a real menuitem (rendered as a link) so it joins the
+    // menu's arrow-key rotation instead of being reachable by Tab only.
+    const createItem = screen.getByRole("menuitem", { name: /Create organization/i });
+    expect(createItem).toHaveAttribute("href", "/onboarding");
   });
 
   it("shows an error message when the switch request fails", async () => {

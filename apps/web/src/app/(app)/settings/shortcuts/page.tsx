@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { Table } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import {
@@ -10,6 +11,10 @@ import {
   SECTION_ORDER,
 } from "@/components/command-palette/commands";
 import { usePermission } from "@/hooks/usePermission";
+
+// Both shortcut tables are flush inside their own bordered panel and keep the
+// settings-page 16px/12px cell rhythm rather than the default table density.
+const SHORTCUT_DENSITY = { "--table-cell-padding-x": "1rem", "--table-cell-padding-y": "0.75rem" };
 
 const GLOBAL_SHORTCUTS: Array<{ keys: string[]; label: string; description: string }> = [
   {
@@ -97,35 +102,37 @@ export default function ShortcutsPage() {
           <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
             Global
           </h2>
-          <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7">
-            <table className="w-full border-collapse text-left text-sm">
-              <tbody className="divide-y divide-neutral-6">
-                {GLOBAL_SHORTCUTS.map((row) => (
-                  <tr key={row.label} className="bg-neutral-1">
-                    <td className="px-4 py-3 align-top">
-                      <div className="flex items-center gap-1">
-                        {row.keys.map((k, i) => (
-                          <span
-                            key={`${row.label}-${k}-${i}`}
-                            className="inline-flex items-center gap-1"
-                          >
-                            <KeyCap>{k}</KeyCap>
-                            {i < row.keys.length - 1 && (
-                              <span className="text-[10px] text-neutral-9">+</span>
-                            )}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 align-top">
-                      <p className="font-medium text-neutral-12">{row.label}</p>
-                      <p className="mt-0.5 text-xs text-neutral-10">{row.description}</p>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table
+            bare
+            wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
+            wrapperStyle={SHORTCUT_DENSITY}
+          >
+            <Table.Body bordered>
+              {GLOBAL_SHORTCUTS.map((row) => (
+                <Table.Row key={row.label} className="bg-neutral-1">
+                  <Table.Cell className="align-top">
+                    <div className="flex items-center gap-1">
+                      {row.keys.map((k, i) => (
+                        <span
+                          key={`${row.label}-${k}-${i}`}
+                          className="inline-flex items-center gap-1"
+                        >
+                          <KeyCap>{k}</KeyCap>
+                          {i < row.keys.length - 1 && (
+                            <span className="text-[10px] text-neutral-9">+</span>
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell alignment="start" className="align-top">
+                    <p className="font-medium text-neutral-12">{row.label}</p>
+                    <p className="mt-0.5 text-xs text-neutral-10">{row.description}</p>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
         </div>
       </AnimateIn>
 
@@ -140,43 +147,45 @@ export default function ShortcutsPage() {
                 <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
                   {t(`sections.${section}`)}
                 </h2>
-                <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7">
-                  <table className="w-full border-collapse text-left text-sm">
-                    <tbody className="divide-y divide-neutral-6">
-                      {items.map((cmd) => {
-                        const Icon = cmd.icon;
-                        return (
-                          <tr key={cmd.id} className="bg-neutral-1">
-                            <td className="w-12 px-4 py-3 align-middle">
-                              <Icon className="h-4 w-4 text-neutral-11" aria-hidden />
-                            </td>
-                            <td className="px-4 py-3 align-middle">
-                              <p className="font-medium text-neutral-12">
-                                {t(`commands.${cmd.titleKey}`)}
+                <Table
+                  bare
+                  wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
+                  wrapperStyle={SHORTCUT_DENSITY}
+                >
+                  <Table.Body bordered>
+                    {items.map((cmd) => {
+                      const Icon = cmd.icon;
+                      return (
+                        <Table.Row key={cmd.id} className="bg-neutral-1">
+                          <Table.Cell className="w-12">
+                            <Icon className="h-4 w-4 text-neutral-11" aria-hidden />
+                          </Table.Cell>
+                          <Table.Cell alignment="start">
+                            <p className="font-medium text-neutral-12">
+                              {t(`commands.${cmd.titleKey}`)}
+                            </p>
+                            {cmd.tags && cmd.tags.length > 0 && (
+                              <p className="mt-0.5 text-xs text-neutral-10">
+                                {cmd.tags.join(" · ")}
                               </p>
-                              {cmd.tags && cmd.tags.length > 0 && (
-                                <p className="mt-0.5 text-xs text-neutral-10">
-                                  {cmd.tags.join(" · ")}
-                                </p>
-                              )}
-                            </td>
-                            <td className="px-4 py-3 text-right align-middle">
-                              {cmd.shortcut ? (
-                                <div className="inline-flex items-center gap-1">
-                                  {cmd.shortcut.map((k, i) => (
-                                    <KeyCap key={`${cmd.id}-${k}-${i}`}>{k}</KeyCap>
-                                  ))}
-                                </div>
-                              ) : (
-                                <span className="text-[11px] text-neutral-10">via ⌘K</span>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                            )}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {cmd.shortcut ? (
+                              <div className="inline-flex items-center gap-1">
+                                {cmd.shortcut.map((k, i) => (
+                                  <KeyCap key={`${cmd.id}-${k}-${i}`}>{k}</KeyCap>
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="text-[11px] text-neutral-10">via ⌘K</span>
+                            )}
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table.Body>
+                </Table>
               </div>
             </AnimateIn>
           );
