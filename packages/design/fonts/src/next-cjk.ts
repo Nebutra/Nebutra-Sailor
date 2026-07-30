@@ -29,7 +29,7 @@
 import localFont from "next/font/local";
 
 /**
- * vivo Sans SC — 400 / 500 / 600 static subsets.
+ * vivo Sans SC — 400 / 500 / 600 / 700 static subsets.
  *
  * - `preload: false` on purpose. Each weight is ~490 KB; preloading them on every
  *   route would tax Latin-only pages for nothing. The browser fetches a weight
@@ -42,15 +42,16 @@ import localFont from "next/font/local";
  * - `adjustFontFallback: false` — next/font's metric-matched fallback is derived
  *   from Arial, which is meaningless for a Han face and would add a size-adjusted
  *   ghost face into the same family.
- * - No 700 file: 700 resolves to the 600 (DemiBold) face by normal CSS weight
- *   matching, and `font-synthesis: none` (packages/design/ui/src/typography/fonts.css)
- *   forbids faux bold, so nothing is synthesised.
+ * - 700 is a real Bold subset (not synthetic). Without it, CSS weight matching
+ *   collapses 700 → 600 and the mixed-script ladder flattens against Geist.
+ *   `font-synthesis: none` still forbids faux bold for any weight we do not ship.
  */
 export const vivoSansCn = localFont({
   src: [
     { path: "../generated/vivo-sans-sc-400.woff2", weight: "400", style: "normal" },
     { path: "../generated/vivo-sans-sc-500.woff2", weight: "500", style: "normal" },
     { path: "../generated/vivo-sans-sc-600.woff2", weight: "600", style: "normal" },
+    { path: "../generated/vivo-sans-sc-700.woff2", weight: "700", style: "normal" },
   ],
   declarations: [
     {
