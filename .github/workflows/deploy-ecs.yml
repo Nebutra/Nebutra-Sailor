@@ -770,6 +770,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && prune_apps="$prune_apps sailor-docs"
           [ "${{ needs.detect-changes.outputs.router }}" = "true" ] && prune_apps="$prune_apps router"
           [ "${{ needs.detect-changes.outputs.forge }}" = "true" ] && prune_apps="$prune_apps forge"
+          [ "${{ needs.detect-changes.outputs.admin }}" = "true" ] && prune_apps="$prune_apps admin"
           prune_apps="$(echo "$prune_apps" | xargs)"
           prune_apps_q=$(printf '%q' "$prune_apps")
           echo "Preflight will only prune releases for: ${prune_apps:-<none>}"
@@ -1059,7 +1060,21 @@ jobs:
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
           [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && APPS="$APPS forge"
+          [ "${{ needs.detect-changes.outputs.admin }}"          = "true" ] && APPS="$APPS admin"
           APPS="$(echo "$APPS" | xargs)"
+
+          # An empty APPS must not reach the remote script. Its own
+          # `APPS="${APPS:-landing web api idp auth design-docs sailor-docs
+          # router forge}"` default then expands "deploy nothing" into "deploy
+          # everything": it walks all nine apps, logs `skip — no tarball` for
+          # each because only the selected bundle was uploaded, and finishes with
+          # `deploy complete: landing web api …`. That is how dispatching
+          # apps=admin reported a successful deploy of nine other apps and never
+          # touched the control plane.
+          if [ -z "$APPS" ]; then
+            echo "::error::Resolved APPS is empty. detect-changes selected something this step does not know how to name — add it above rather than letting the remote default expand to every app."
+            exit 1
+          fi
           echo "Deploying: $APPS"
           # SSH joins all remaining args into a single shell-evaluated string
           # on the remote side. We must wrap the whole remote command in one
@@ -1309,7 +1324,12 @@ jobs:
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && APPS="$APPS router"
           [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && APPS="$APPS forge"
+          [ "${{ needs.detect-changes.outputs.admin }}"          = "true" ] && APPS="$APPS admin"
           APPS="$(echo "$APPS" | xargs)"
+          # Empty means the deploy never named anything, so there is nothing to
+          # undo — and it must exit rather than fall through, because the remote
+          # script's APPS default would expand "nothing" into every app and roll
+          # the whole fleet back over one app's failure.
           [ -n "$APPS" ] || { echo "No deployed apps to roll back."; exit 0; }
 
           shell_quote() { printf "%q" "$1"; }

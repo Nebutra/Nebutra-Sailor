@@ -3,8 +3,8 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
- * deploy-ecs.yml enumerates its apps in seven places, and the remote script it
- * drives in five more. Nothing made the twelve agree until this test existed.
+ * deploy-ecs.yml enumerates its apps in ten places, and the remote script it
+ * drives in five more. Nothing made the fifteen agree until this test existed.
  *
  * The failure that prompted it: `admin` was in the dispatch input description,
  * the path filter, the `resolve` outputs and the allow-list `case`, but not the
@@ -76,6 +76,36 @@ function buildNextGateApps(): string[] {
  */
 function downloadedApps(): string[] {
   return [...yml.matchAll(/^\s+name: bundle-([a-z0-9-]+)\s*$/gm)].map((m) => m[1]);
+}
+
+/**
+ * Apps appended to a shell accumulator by a chain of
+ * `[ "…outputs.<app>" = "true" ] && VAR="$VAR <app>"` lines. There are two such
+ * chains — APPS, handed to the remote script, and prune_apps, which decides
+ * whose old releases get cleaned — and they are the last two enumerations.
+ *
+ * APPS was the one that mattered most and looked least like a bug: with admin
+ * missing, dispatching apps=admin resolved APPS to the empty string, the remote
+ * script's own `APPS="${APPS:-landing web …}"` default turned that into every
+ * app, and the run reported `deploy complete: landing web api idp auth …`. A
+ * green deploy of nine apps nobody asked for, and no admin.
+ */
+function accumulatorChains(variable: string): string[][] {
+  // Split per `VAR=""` reset, NOT flattened. There are two APPS chains — the
+  // deploy step's and the rollback step's — and a flat union hides a gap in
+  // either one behind the other's completeness. That exact false pass happened
+  // here: the union contained admin, the rollback chain did not.
+  const blocks = yml.split(new RegExp(String.raw`^\s+${variable}=""$`, "m")).slice(1);
+  const pattern = new RegExp(
+    String.raw`outputs(?:\.([a-z0-9-]+)|\['([a-z0-9-]+)'\])\s*\}\}"\s*=\s*"true"\s*\]\s*&&\s*${variable}="\$${variable} `,
+    "g",
+  );
+  const chains = blocks.map((block) => [...block.matchAll(pattern)].map((m) => m[1] ?? m[2]));
+  expect(chains.length, `expected at least one ${variable} accumulator chain`).toBeGreaterThan(0);
+  for (const chain of chains) {
+    expect(chain.length, `a ${variable} chain parsed as empty`).toBeGreaterThan(0);
+  }
+  return chains;
 }
 
 /**
@@ -152,11 +182,45 @@ describe("deploy-ecs app enumeration closure", () => {
     ).toEqual([]);
   });
 
+  it("every buildable app reaches the remote script through APPS — in every chain", () => {
+    // Both chains: the deploy step's, and the rollback step's. A gap in the
+    // rollback chain means a failed deploy of that app cannot be undone.
+    for (const [index, chain] of accumulatorChains("APPS").entries()) {
+      const missing = buildableApps().filter((app) => !chain.includes(app));
+      expect(
+        missing,
+        `APPS chain ${index + 1} never appends these, so selecting only one of them ` +
+          `resolves APPS to empty; the remote \`\${APPS:-…}\` default then expands that ` +
+          `to every app: ${missing.join(", ")}`,
+      ).toEqual([]);
+    }
+  });
+
+  it("every buildable app is pruned when it is the deploy target", () => {
+    for (const chain of accumulatorChains("prune_apps")) {
+      const missing = buildableApps().filter((app) => !chain.includes(app));
+      expect(
+        missing,
+        `these apps never appear in prune_apps, so their old releases accumulate on a ` +
+          `disk the preflight is specifically there to keep clear: ${missing.join(", ")}`,
+      ).toEqual([]);
+    }
+  });
+
+  it("refuses to hand an empty APPS to the remote script", () => {
+    // Without this the remote `${APPS:-…}` default silently turns "nothing
+    // selected" into "everything", which is how a dispatch for one app reported
+    // a successful deploy of nine others.
+    expect(yml).toMatch(/if \[ -z "\$APPS" \]; then\n\s+echo "::error::/);
+  });
+
   it("admin is wired end to end", () => {
     // Named explicitly because it is the case that was broken, and because a
     // control plane silently absent from the fleet is exactly the thing it
     // exists to make visible.
     expect(matrixApps()).toContain("admin");
+    for (const chain of accumulatorChains("APPS")) expect(chain).toContain("admin");
+    for (const chain of accumulatorChains("prune_apps")) expect(chain).toContain("admin");
     expect(allowListApps()).toContain("admin");
     expect(resolvedOutputs()).toContain("admin");
     expect(buildNextGateApps()).toContain("admin");
