@@ -1,5 +1,19 @@
 # auth.nebutra.com — login center (Better Auth UX + session authority)
-# Copy to /etc/nginx/conf.d/ when not using monolithic nginx.conf
+#
+# NOT a `.conf`, and that is deliberate. This is the ALTERNATIVE to the auth
+# blocks in the monolithic nginx.conf, not a companion to them: nginx.conf
+# already declares `upstream nebutra_auth` and a server block for this host
+# (5b). Both at once is `nginx: [emerg] duplicate upstream "nebutra_auth"`,
+# which fails the config test and aborts the deploy.
+#
+# The ECS deploy uploads and includes every `conf.d/*.nebutra.com.conf`, without
+# an exception list — enumerating hosts there is how design.nebutra.com sat in
+# the repo unshipped for weeks. So the way to keep this file out of that set is
+# for its name not to match, rather than to special-case it somewhere a reader
+# of this file would never see.
+#
+# To use it, drop the suffix and remove the auth upstream + server block from
+# nginx.conf in the same change.
 
 upstream nebutra_auth {
     server 127.0.0.1:3101;
