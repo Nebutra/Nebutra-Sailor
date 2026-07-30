@@ -30,9 +30,17 @@ not a second source of truth for runtime package behavior after scaffolding.
   `templates/`
 - Package-local tests:
   `src/**/*.test.ts`
+- Published `@nebutra/*` caret ranges emitted into scaffolds:
+  re-export only from
+  `packages/ops/preset/src/nebutra-package-versions.ts`
+  via `src/utils/nebutra-versions.ts`. **Never** maintain a local version map.
 
 If scaffolded file shape, selection semantics, or generated config changes,
 update the source of truth here instead of patching downstream generated apps.
+
+When platform package versions change, keep the shared registry in lock-step
+(`pnpm package-versions:sync` / `pnpm package-versions:check`). Scaffold
+defaults that lag monorepo package.json versions are a product bug.
 
 ## Contract Boundaries
 

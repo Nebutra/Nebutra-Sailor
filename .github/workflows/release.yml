@@ -43,6 +43,9 @@ jobs:
       - name: Verify release surface
         run: pnpm verify:release-surface
 
+      - name: Verify scaffold package-version registry
+        run: pnpm package-versions:check
+
       - name: Verify changeset graph
         run: |
           if find .changeset -maxdepth 1 -name '*.md' ! -name README.md | grep -q .; then

@@ -30,9 +30,17 @@ that should live in the owning workspace package.
 - CLI test harness:
   `tests/`,
   command-local `*.test.ts`
+- Published `@nebutra/*` caret ranges emitted by `nebutra add`:
+  re-export only from
+  `packages/ops/preset/src/nebutra-package-versions.ts`
+  via `src/utils/nebutra-versions.ts`. **Never** maintain a local version map.
 
 If command names, flags, exit behavior, or delegation semantics change, update
 the source of truth here rather than patching generated `dist/` output.
+
+When infrastructure package versions bump, run
+`pnpm package-versions:sync` (or let `scripts/release-version.sh` do it) so
+user-facing dependency ranges stay current.
 
 ## Contract Boundaries
 

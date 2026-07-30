@@ -1,19 +1,17 @@
 /**
- * NPM versions for @nebutra/* packages that can be consumed by user projects.
+ * NPM versions for `@nebutra/*` packages emitted into user projects.
  *
- * This file is a thin RE-EXPORT of the single source of truth at
- * `@nebutra/preset` → `src/nebutra-package-versions.ts`. The import is by
- * relative path (not the `@nebutra/preset` package specifier) so the
- * npm-published `create-sailor` binary stays self-contained: tsup inlines the
- * dependency-free registry module into `dist/index.js` without adding a
- * workspace runtime dependency.
+ * Thin RE-EXPORT of the single source of truth:
+ *   `packages/ops/preset/src/nebutra-package-versions.ts`
  *
- * Do NOT edit the version map here — edit it in the shared registry so
- * `create-sailor`, `nebutra add`, and the web Startup OS generator all track
- * the same published versions.
+ * Relative import (not `@nebutra/preset`) so the published `create-sailor`
+ * binary stays self-contained — tsup inlines the dependency-free registry.
  *
- * NEVER emit "workspace:*" into a user-facing project — that token only
- * resolves inside this monorepo and will break `pnpm install` for users.
+ * Do NOT edit version numbers here. Edit the shared registry, then:
+ *   pnpm package-versions:sync
+ *   pnpm package-versions:check
+ *
+ * NEVER emit "workspace:*" into a user-facing project.
  */
 
 export {

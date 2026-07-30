@@ -87,6 +87,8 @@
     "animation:governance": "node scripts/verify-animation-governance.mjs",
     "docs:cli": "tsx scripts/generate-cli-docs.ts",
     "template:check": "tsx scripts/template-check.ts",
+    "package-versions:sync": "node scripts/sync-nebutra-package-versions.mjs",
+    "package-versions:check": "node scripts/sync-nebutra-package-versions.mjs --check",
     "template:build": "tsx scripts/template-build.ts",
     "prepare": "node scripts/install-git-hooks.mjs",
     "verify:release-surface": "node scripts/verify-release-surface.mjs",

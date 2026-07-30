@@ -24,6 +24,18 @@ Its responsibilities are:
 - Product capability resolution: `src/capabilities.ts`
 - Env bridge and app/package mapping: `src/feature-map.ts`
 - Scenario definitions: `src/presets/*.ts`
+- **Published `@nebutra/*` caret ranges for scaffolds / CLI**
+  (`NEBUTRA_PACKAGE_VERSIONS`):
+  `src/nebutra-package-versions.ts`
+
+  This is the **only** owned version map. `create-sailor` and `nebutra` CLI
+  re-export it via relative path (do not duplicate). Keep ranges equal to
+  `^${package.json.version}` for every listed declassified package:
+
+  ```bash
+  pnpm package-versions:sync   # rewrite from package.json
+  pnpm package-versions:check  # fail on drift (also wired into release.yml)
+  ```
 
 ## Defaults
 
