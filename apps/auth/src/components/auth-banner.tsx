@@ -1,12 +1,26 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import {
+  BOOT_LOG_LABEL,
+  bootLogDensity,
+  bootLogSpan,
+  pickBootLogRotation,
+  resolveBootLogLocale,
+} from "@/content/boot-log";
 import { cn } from "@/lib/cn";
+import { BootLogCard } from "./boot-log-card";
 
 /**
  * Sign-in left panel — Pattern A (editorial silence), same as apps/web AuthBanner.
  */
 export async function AuthBanner({ className }: { className?: string }) {
   const t = await getTranslations("auth.banner");
+  // Drawn per request — the sign-in route is force-dynamic, so every visit
+  // gets a different entry rather than one frozen at build time.
+  const locale = await getLocale();
+  const bootLog = pickBootLogRotation(locale);
+  // The rail runs to the current year, so the last slot on it is always empty.
+  const railSpan = bootLogSpan(new Date().getFullYear());
 
   return (
     <aside
@@ -63,6 +77,13 @@ export async function AuthBanner({ className }: { className?: string }) {
             {t("tagline")}
           </p>
         </div>
+
+        <BootLogCard
+          entries={bootLog}
+          density={bootLogDensity(46, railSpan)}
+          span={railSpan}
+          label={BOOT_LOG_LABEL[resolveBootLogLocale(locale)]}
+        />
 
         <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
           © {new Date().getFullYear()} {brand.name}
