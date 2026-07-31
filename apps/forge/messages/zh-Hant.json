@@ -479,7 +479,11 @@
       "in": "輸入",
       "out": "輸出",
       "saved": "已儲存",
-      "note": "PDF 壓縮 · 主機端 qpdf / Ghostscript · pdf-lib 備用"
+      "note": "PDF 壓縮 · 主機端 qpdf / Ghostscript · pdf-lib 備用",
+      "drop": "拖入 PDF，或點擊選擇",
+      "needPdf": "請拖入 .pdf 檔案",
+      "privacy": "檔案會上傳至 Forge 服務端壓縮，回應後丟棄。需要無損流時請優先結構壓縮。",
+      "barHint": "進度條表示輸出相對輸入的體積（越短壓縮越多）。"
     },
     "jsonFormat": {
       "indent": "縮排",
@@ -496,7 +500,10 @@
       "invalid": "無效 JSON",
       "line": "行",
       "column": "欄",
-      "note": "引擎：JSON.parse/stringify · 即時本地處理 · 與 API 路徑相同"
+      "note": "引擎：JSON.parse/stringify · 即時本地處理 · 與 API 路徑相同",
+      "sortKeys": "鍵排序",
+      "stats": "{chars} 字元 · {lines} 行",
+      "liveOff": "已關閉即時校驗（輸入過大）"
     },
     "qr": {
       "size": "尺寸",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "原始",
       "result": "結果",
-      "note": "引擎：sharp (libvips) · 伺服器端 · 與 API (imageBase64) 路徑相同"
+      "note": "引擎：sharp (libvips) · 伺服器端 · 與 API (imageBase64) 路徑相同",
+      "privacy": "圖片會上傳至 Forge 服務端（sharp）。多檔案請用 Batch。回應後不落盤。"
     },
     "pptxText": {
       "file": "PPTX 檔案",

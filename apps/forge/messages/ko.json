@@ -479,7 +479,11 @@
       "in": "입력",
       "out": "출력",
       "saved": "저장됨",
-      "note": "PDF 압축 · 호스트에서 qpdf / Ghostscript 사용 · pdf-lib 대체"
+      "note": "PDF 압축 · 호스트에서 qpdf / Ghostscript 사용 · pdf-lib 대체",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "들여쓰기",
@@ -496,7 +500,10 @@
       "invalid": "유효하지 않은 JSON",
       "line": "줄",
       "column": "열",
-      "note": "엔진: JSON.parse/stringify · 로컬 즉시 처리 · API와 동일한 경로"
+      "note": "엔진: JSON.parse/stringify · 로컬 즉시 처리 · API와 동일한 경로",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "크기",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "원본",
       "result": "결과",
-      "note": "엔진: sharp (libvips) · 서버 측 · API(imageBase64)와 동일 경로"
+      "note": "엔진: sharp (libvips) · 서버 측 · API(imageBase64)와 동일 경로",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX 파일",

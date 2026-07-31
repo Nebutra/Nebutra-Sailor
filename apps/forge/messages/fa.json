@@ -479,7 +479,11 @@
       "in": "ورودی",
       "out": "خروجی",
       "saved": "ذخیره شد",
-      "note": "فشرده‌سازی PDF · qpdf / Ghostscript روی میزبان · pdf-lib به‌عنوان جایگزین"
+      "note": "فشرده‌سازی PDF · qpdf / Ghostscript روی میزبان · pdf-lib به‌عنوان جایگزین",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "فاصله‌گذاری",
@@ -496,7 +500,10 @@
       "invalid": "JSON نامعتبر",
       "line": "خط",
       "column": "ستون",
-      "note": "موتور: JSON.parse/stringify · محلی فوری · مسیر مشابه API"
+      "note": "موتور: JSON.parse/stringify · محلی فوری · مسیر مشابه API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "اندازه",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "اصلی",
       "result": "نتیجه",
-      "note": "موتور: sharp (libvips) · سمت سرور · مسیر یکسان با API (imageBase64)"
+      "note": "موتور: sharp (libvips) · سمت سرور · مسیر یکسان با API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "فایل PPTX",

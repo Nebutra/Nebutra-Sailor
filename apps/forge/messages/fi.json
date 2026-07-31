@@ -479,7 +479,11 @@
       "in": "Syöte",
       "out": "Tulos",
       "saved": "Tallennettu",
-      "note": "PDF-pakkaus · qpdf / Ghostscript isäntäkonetta · pdf-lib-varjostus"
+      "note": "PDF-pakkaus · qpdf / Ghostscript isäntäkonetta · pdf-lib-varjostus",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Sisennys",
@@ -496,7 +500,10 @@
       "invalid": "Virheellinen JSON",
       "line": "rivi",
       "column": "sarakke",
-      "note": "Moottori: JSON.parse/stringify · välitön paikallinen · sama polku kuin API"
+      "note": "Moottori: JSON.parse/stringify · välitön paikallinen · sama polku kuin API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Koko",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Alkuperäinen",
       "result": "Tulos",
-      "note": "Moottori: sharp (libvips) · palvelinpohjainen · sama polku kuin API:ssa (imageBase64)"
+      "note": "Moottori: sharp (libvips) · palvelinpohjainen · sama polku kuin API:ssa (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX-tiedosto",

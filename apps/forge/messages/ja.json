@@ -479,7 +479,11 @@
       "in": "入力",
       "out": "出力",
       "saved": "保存済み",
-      "note": "PDF圧縮 · ホスト上のqpdf / Ghostscript · pdf-libフォールバック"
+      "note": "PDF圧縮 · ホスト上のqpdf / Ghostscript · pdf-libフォールバック",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "インデント",
@@ -496,7 +500,10 @@
       "invalid": "JSON が無効です",
       "line": "行",
       "column": "列",
-      "note": "エンジン: JSON.parse/stringify · ローカルで即時処理 · API と同じパス"
+      "note": "エンジン: JSON.parse/stringify · ローカルで即時処理 · API と同じパス",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "サイズ",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "オリジナル",
       "result": "結果",
-      "note": "エンジン: sharp (libvips) · サーバー側処理 · APIと同じパス (imageBase64)"
+      "note": "エンジン: sharp (libvips) · サーバー側処理 · APIと同じパス (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX ファイル",

@@ -479,7 +479,11 @@
       "in": "الإدخال",
       "out": "الإخراج",
       "saved": "تم الحفظ",
-      "note": "ضغط PDF · qpdf / Ghostscript على المضيف · pdf-lib كخيار بديل"
+      "note": "ضغط PDF · qpdf / Ghostscript على المضيف · pdf-lib كخيار بديل",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "المسافة البادئة",
@@ -496,7 +500,10 @@
       "invalid": "JSON غير صالح",
       "line": "سطر",
       "column": "عمود",
-      "note": "المحرك: JSON.parse/stringify · محلي فوري · نفس مسار API"
+      "note": "المحرك: JSON.parse/stringify · محلي فوري · نفس مسار API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "الحجم",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "الأصلي",
       "result": "النتيجة",
-      "note": "المحرك: sharp (libvips) · على الخادم · نفس مسار API (imageBase64)"
+      "note": "المحرك: sharp (libvips) · على الخادم · نفس مسار API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "ملف PPTX",

@@ -442,7 +442,11 @@
       "in": "Bemenet",
       "out": "Kimenet",
       "saved": "Mentve",
-      "note": "PDF tömörítés · qpdf / Ghostscript a hosztján · pdf-lib tartalék"
+      "note": "PDF tömörítés · qpdf / Ghostscript a hosztján · pdf-lib tartalék",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "base64": {
       "encodeDir": "Text → Base64",
@@ -496,7 +500,10 @@
       "invalid": "Invalid JSON",
       "line": "line",
       "column": "column",
-      "note": "Engine: JSON.parse/stringify · instant local · same path as API"
+      "note": "Engine: JSON.parse/stringify · instant local · same path as API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Size",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Original",
       "result": "Result",
-      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)"
+      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX file",

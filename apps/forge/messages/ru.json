@@ -479,7 +479,11 @@
       "in": "Вход",
       "out": "Выход",
       "saved": "Сохранено",
-      "note": "Сжатие PDF · qpdf / Ghostscript на хосте · pdf-lib как запасной вариант"
+      "note": "Сжатие PDF · qpdf / Ghostscript на хосте · pdf-lib как запасной вариант",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Отступ",
@@ -496,7 +500,10 @@
       "invalid": "Невалидный JSON",
       "line": "строка",
       "column": "столбец",
-      "note": "Движок: JSON.parse/stringify · мгновенно локально · тот же путь, что и API"
+      "note": "Движок: JSON.parse/stringify · мгновенно локально · тот же путь, что и API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Размер",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Исходное",
       "result": "Результат",
-      "note": "Движок: sharp (libvips) · серверная обработка · тот же путь, что и API (imageBase64)"
+      "note": "Движок: sharp (libvips) · серверная обработка · тот же путь, что и API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "Файл PPTX",

@@ -479,7 +479,11 @@
       "in": "Giriş",
       "out": "Çıkış",
       "saved": "Kaydedildi",
-      "note": "PDF Sıkıştırma · ana bilgisayarda qpdf / Ghostscript · pdf-lib yedek"
+      "note": "PDF Sıkıştırma · ana bilgisayarda qpdf / Ghostscript · pdf-lib yedek",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Girinti",
@@ -496,7 +500,10 @@
       "invalid": "Geçersiz JSON",
       "line": "satır",
       "column": "sütun",
-      "note": "Motor: JSON.parse/stringify · anında yerel · API ile aynı yol"
+      "note": "Motor: JSON.parse/stringify · anında yerel · API ile aynı yol",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Boyut",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Orijinal",
       "result": "Sonuç",
-      "note": "Motor: sharp (libvips) · sunucu tarafı · API (imageBase64) ile aynı yol"
+      "note": "Motor: sharp (libvips) · sunucu tarafı · API (imageBase64) ile aynı yol",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX dosyası",

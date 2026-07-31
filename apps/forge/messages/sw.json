@@ -479,7 +479,11 @@
       "in": "Ingizo",
       "out": "Tokeo",
       "saved": "Imehifadhiwa",
-      "note": "PDF Compress · qpdf / Ghostscript kwenye mwenyeji · pdf-lib mbadala"
+      "note": "PDF Compress · qpdf / Ghostscript kwenye mwenyeji · pdf-lib mbadala",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Pandisha",
@@ -496,7 +500,10 @@
       "invalid": "JSON isiyo halali",
       "line": "mstari",
       "column": "safa",
-      "note": "Injini: JSON.parse/stringify · papo hapo ndani · njia ileile kama API"
+      "note": "Injini: JSON.parse/stringify · papo hapo ndani · njia ileile kama API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Ukubwa",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Asili",
       "result": "Matokeo",
-      "note": "Injini: sharp (libvips) · upande wa seva · njia ileile kama API (imageBase64)"
+      "note": "Injini: sharp (libvips) · upande wa seva · njia ileile kama API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "Faili ya PPTX",

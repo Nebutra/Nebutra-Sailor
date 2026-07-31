@@ -479,7 +479,11 @@
       "in": "ইনপুট",
       "out": "আউটপুট",
       "saved": "সংরক্ষিত",
-      "note": "PDF কম্প্রেস · হোস্টে qpdf / Ghostscript · pdf-lib ফলব্যাক"
+      "note": "PDF কম্প্রেস · হোস্টে qpdf / Ghostscript · pdf-lib ফলব্যাক",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "ইনডেন্ট",
@@ -496,7 +500,10 @@
       "invalid": "ভুল JSON",
       "line": "লাইন",
       "column": "কলাম",
-      "note": "এঞ্জিন: JSON.parse/stringify · তাৎক্ষণিক স্থানীয় · API-এর মতোই পথ"
+      "note": "এঞ্জিন: JSON.parse/stringify · তাৎক্ষণিক স্থানীয় · API-এর মতোই পথ",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "আকার",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "মূল",
       "result": "ফলাফল",
-      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)"
+      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX ফাইল",

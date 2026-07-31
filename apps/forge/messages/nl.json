@@ -479,7 +479,11 @@
       "in": "Invoer",
       "out": "Uitvoer",
       "saved": "Opgeslagen",
-      "note": "PDF Compress · qpdf / Ghostscript op host · pdf-lib terugval"
+      "note": "PDF Compress · qpdf / Ghostscript op host · pdf-lib terugval",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Inspringen",
@@ -496,7 +500,10 @@
       "invalid": "Ongeldige JSON",
       "line": "regel",
       "column": "kolom",
-      "note": "Engine: JSON.parse/stringify · direct lokaal · zelfde pad als API"
+      "note": "Engine: JSON.parse/stringify · direct lokaal · zelfde pad als API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Grootte",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Origineel",
       "result": "Resultaat",
-      "note": "Engine: sharp (libvips) · server-side · zelfde pad als API (imageBase64)"
+      "note": "Engine: sharp (libvips) · server-side · zelfde pad als API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX-bestand",

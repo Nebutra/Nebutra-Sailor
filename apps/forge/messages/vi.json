@@ -479,7 +479,11 @@
       "in": "Đầu vào",
       "out": "Đầu ra",
       "saved": "Đã lưu",
-      "note": "Nén PDF · qpdf / Ghostscript trên máy chủ · pdf-lib dự phòng"
+      "note": "Nén PDF · qpdf / Ghostscript trên máy chủ · pdf-lib dự phòng",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Thụt lề",
@@ -496,7 +500,10 @@
       "invalid": "JSON không hợp lệ",
       "line": "dòng",
       "column": "cột",
-      "note": "Engine: JSON.parse/stringify · xử lý cục bộ ngay lập tức · cùng đường dẫn như API"
+      "note": "Engine: JSON.parse/stringify · xử lý cục bộ ngay lập tức · cùng đường dẫn như API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Kích thước",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Gốc",
       "result": "Kết quả",
-      "note": "Engine: sharp (libvips) · server-side · cùng đường dẫn như API (imageBase64)"
+      "note": "Engine: sharp (libvips) · server-side · cùng đường dẫn như API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "Tệp PPTX",

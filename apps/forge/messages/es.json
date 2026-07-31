@@ -479,7 +479,11 @@
       "in": "Entrada",
       "out": "Salida",
       "saved": "Guardado",
-      "note": "Comprimir PDF · qpdf / Ghostscript en el host · pdf-lib como respaldo"
+      "note": "Comprimir PDF · qpdf / Ghostscript en el host · pdf-lib como respaldo",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Indentar",
@@ -496,7 +500,10 @@
       "invalid": "JSON no válido",
       "line": "línea",
       "column": "columna",
-      "note": "Motor: JSON.parse/stringify · local instantáneo · misma ruta que la API"
+      "note": "Motor: JSON.parse/stringify · local instantáneo · misma ruta que la API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Tamaño",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Original",
       "result": "Resultado",
-      "note": "Motor: sharp (libvips) · lado servidor · misma ruta que la API (imageBase64)"
+      "note": "Motor: sharp (libvips) · lado servidor · misma ruta que la API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "Archivo PPTX",

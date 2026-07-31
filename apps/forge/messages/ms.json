@@ -479,7 +479,11 @@
       "in": "Input",
       "out": "Output",
       "saved": "Disimpan",
-      "note": "PDF Compress · qpdf / Ghostscript pada hos · pdf-lib fallback"
+      "note": "PDF Compress · qpdf / Ghostscript pada hos · pdf-lib fallback",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Sisipan",
@@ -496,7 +500,10 @@
       "invalid": "JSON tidak sah",
       "line": "baris",
       "column": "kolum",
-      "note": "Enjin: JSON.parse/stringify · setempat serta-merta · laluan sama seperti API"
+      "note": "Enjin: JSON.parse/stringify · setempat serta-merta · laluan sama seperti API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Saiz",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Asal",
       "result": "Hasil",
-      "note": "Enjin: sharp (libvips) · sisi pelayan · laluan sama seperti API (imageBase64)"
+      "note": "Enjin: sharp (libvips) · sisi pelayan · laluan sama seperti API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "Fail PPTX",

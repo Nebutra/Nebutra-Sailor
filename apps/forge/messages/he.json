@@ -479,7 +479,11 @@
       "in": "קלט",
       "out": "פלט",
       "saved": "נשמר",
-      "note": "PDF Compress · qpdf / Ghostscript על המארח · pdf-lib כגיבוי"
+      "note": "PDF Compress · qpdf / Ghostscript על המארח · pdf-lib כגיבוי",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "הזחה",
@@ -496,7 +500,10 @@
       "invalid": "JSON לא תקין",
       "line": "שורה",
       "column": "עמודה",
-      "note": "מנוע: JSON.parse/stringify · מיידי מקומי · אותו נתיב כמו API"
+      "note": "מנוע: JSON.parse/stringify · מיידי מקומי · אותו נתיב כמו API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "גודל",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "מקור",
       "result": "תוצאה",
-      "note": "מנוע: sharp (libvips) · בצד השרת · אותו נתיב כמו API (imageBase64)"
+      "note": "מנוע: sharp (libvips) · בצד השרת · אותו נתיב כמו API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "קובץ PPTX",

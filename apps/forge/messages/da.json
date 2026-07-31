@@ -479,7 +479,11 @@
       "in": "Input",
       "out": "Output",
       "saved": "Gemt",
-      "note": "PDF Compress · qpdf / Ghostscript på host · pdf-lib fallback"
+      "note": "PDF Compress · qpdf / Ghostscript på host · pdf-lib fallback",
+      "drop": "Drop a PDF here, or browse",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression)."
     },
     "jsonFormat": {
       "indent": "Indryk",
@@ -496,7 +500,10 @@
       "invalid": "Ugyldig JSON",
       "line": "linje",
       "column": "kolonne",
-      "note": "Motor: JSON.parse/stringify · øjeblikkeligt lokalt · samme sti som API"
+      "note": "Motor: JSON.parse/stringify · øjeblikkeligt lokalt · samme sti som API",
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)"
     },
     "qr": {
       "size": "Størrelse",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Original",
       "result": "Result",
-      "note": "Motor: sharp (libvips) · server-side · samme sti som API (imageBase64)"
+      "note": "Motor: sharp (libvips) · server-side · samme sti som API (imageBase64)",
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
     },
     "pptxText": {
       "file": "PPTX-fil",
