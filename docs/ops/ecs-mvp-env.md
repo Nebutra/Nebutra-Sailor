@@ -30,15 +30,20 @@ deployment path. The deploy workflow forwards these values from the GitHub
 
 ### R2 Uploads
 
-Use these when `UPLOAD_PROVIDER=r2`:
+Use these when `UPLOAD_PROVIDER=r2` or `UPLOAD_PROVIDER=s3` with R2:
 
 ```env
 R2_ACCOUNT_ID=
 R2_ACCESS_KEY_ID=
 R2_SECRET_ACCESS_KEY=
+R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
 R2_BUCKET_UPLOADS=
 R2_PUBLIC_URL=
+# Pebble diagnostic bundles (private)
+PEBBLE_DIAGNOSTICS_BUCKET=nebutra-pebble-diagnostics
 ```
+
+See [pebble-support-intake.md](./pebble-support-intake.md) for provisioning + ECS apply.
 
 ### Resend Email
 
