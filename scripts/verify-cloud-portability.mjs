@@ -145,9 +145,20 @@ includesAll(
 );
 
 const createSailorDeploy = readText("packages/ops/create-sailor/src/utils/deploy.ts");
+// The scaffold holds no target list of its own — it imports the map type and
+// the defaults from the preset, so a target added there reaches create-sailor
+// without a second edit. Grepping for the literal "gcp" here asserted the
+// duplication that import removed, and went red the moment the two were
+// deduplicated. Assert the derivation instead.
 assert(
-  createSailorDeploy.includes('"gcp"'),
-  "create-sailor deploy target map must include gcp",
+  createSailorDeploy.includes('from "../../../preset/src/deploy-target"') &&
+    createSailorDeploy.includes("getDefaultDeployTargets"),
+  "create-sailor must derive its deploy target map from @nebutra/preset",
+  failures,
+);
+assert(
+  !/originBackend:\s*\[/.test(createSailorDeploy),
+  "create-sailor must not re-declare the deploy target list",
   failures,
 );
 

@@ -60,3 +60,14 @@ export function permanentRedirect(_url: string): never {
 export function notFound(): never {
   throw new Error("notFound() called in Storybook stub (next/navigation)");
 }
+
+/**
+ * A value export, not a type. @clerk/nextjs imports `RedirectType` alongside
+ * `redirect` in a runtime position, so a `type` alias here still leaves the
+ * binding missing at bundle time and rolldown fails the whole preview build —
+ * which is what took Chromatic down. The member names mirror next/navigation.
+ */
+export const RedirectType = {
+  push: "push",
+  replace: "replace",
+} as const;
