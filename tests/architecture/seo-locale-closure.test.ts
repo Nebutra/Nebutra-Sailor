@@ -177,7 +177,7 @@ describe("per-app robots posture", () => {
    * was deleted rather than the route.
    */
   // tsekaluk-dev extracted 2026-07-27 → github.com/TsekaLuk/tsekaluk-dev
-  const INDEXABLE = ["landing", "sailor-docs", "forge", "router"];
+  const INDEXABLE = ["landing", "sailor-docs", "forge", "router", "pebble"];
 
   /** Everything else: internal tooling or authenticated product surfaces. */
   const DISALLOWED = [
