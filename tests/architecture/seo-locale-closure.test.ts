@@ -183,6 +183,7 @@ describe("per-app robots posture", () => {
   const DISALLOWED = [
     "admin",
     "auth",
+    "design",
     "design-docs",
     "idp",
     "mail-preview",
