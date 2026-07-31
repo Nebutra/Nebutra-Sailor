@@ -1,16 +1,18 @@
 /**
- * Persist Pebble diagnostic bundles without relying on a working public HTTP
- * loopback for presigned uploads (local provider) or accidental random keys.
+ * Persist Pebble diagnostic bundles.
  *
  * Order:
- * 1. If cloud credentials exist → presigned PUT via @nebutra/uploads (S3/R2)
+ * 1. If R2/S3 credentials exist → presigned PUT via @nebutra/uploads (exact key)
  * 2. Else → local disk under PEBBLE_DIAGNOSTICS_DIR (ECS single-node OK)
+ *
+ * createS3Provider must see R2_ENDPOINT (or S3_ENDPOINT) — configure-api-r2-env.sh
+ * writes both when applying R2 credentials.
  */
 
 import { mkdir, unlink, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { logger } from "@nebutra/logger";
-import { getActiveProviderType, getUploadProvider } from "@nebutra/uploads";
+import { getActiveProviderType, getUploadProvider, resetUploadProvider } from "@nebutra/uploads";
 
 const NDJSON = "application/x-ndjson";
 
@@ -29,9 +31,7 @@ function hasCloudUploadCredentials(): boolean {
       process.env["AWS_ACCESS_KEY_ID"] ||
       process.env["AWS_SECRET_ACCESS_KEY"] ||
       process.env["S3_ENDPOINT"] ||
-      process.env["BLOB_READ_WRITE_TOKEN"] ||
-      process.env["UPLOAD_PROVIDER"] === "s3" ||
-      process.env["UPLOAD_PROVIDER"] === "blob",
+      process.env["R2_ENDPOINT"],
   );
 }
 
@@ -41,13 +41,16 @@ export async function putDiagnosticBundle(input: {
   body: Uint8Array;
 }): Promise<{ backend: "cloud" | "local" }> {
   if (hasCloudUploadCredentials()) {
+    // Re-resolve provider so env changes after process start are not stuck on a
+    // singleton that was created before R2 keys were present (rare, but cheap).
+    resetUploadProvider();
     const provider = await getUploadProvider();
     const presigned = await provider.createPresignedUpload({
       bucket: input.bucket,
       key: input.key,
       contentType: NDJSON,
       maxSize: input.body.byteLength,
-      acl: "private",
+      // Omit ACL — R2 does not need/want AWS canned ACLs for private buckets.
       metadata: { purpose: "pebble-diagnostics" },
     });
 
@@ -63,10 +66,17 @@ export async function putDiagnosticBundle(input: {
         status: stored.status,
         backend: getActiveProviderType(),
         detail: detail.slice(0, 200),
+        hasEndpoint: Boolean(process.env["R2_ENDPOINT"] || process.env["S3_ENDPOINT"]),
       });
       throw new Error(`cloud_store_failed:${stored.status}`);
     }
 
+    logger.info("Pebble diagnostic stored in object storage", {
+      bucket: input.bucket,
+      key: input.key,
+      bytes: input.body.byteLength,
+      backend: getActiveProviderType(),
+    });
     return { backend: "cloud" };
   }
 
@@ -85,6 +95,7 @@ export async function deleteDiagnosticBundle(input: {
   key: string;
 }): Promise<void> {
   if (hasCloudUploadCredentials()) {
+    resetUploadProvider();
     const provider = await getUploadProvider();
     await provider.deleteFile(input.bucket, input.key);
     return;

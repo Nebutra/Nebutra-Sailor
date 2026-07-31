@@ -353,10 +353,10 @@ importers:
         version: 13.3.0
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-intl:
         specifier: 'catalog:'
-        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react:
         specifier: 19.2.4
         version: 19.2.4
@@ -511,7 +511,7 @@ importers:
         version: 16.6.12(@emotion/is-prop-valid@1.4.0)(@takumi-rs/image-response@0.71.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(fumadocs-core@16.6.12(@mdx-js/mdx@3.1.1)(@tanstack/react-router@1.170.13(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6))(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.2.1)
       geist:
         specifier: 'catalog:'
-        version: 1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        version: 1.7.0(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       hast-util-to-jsx-runtime:
         specifier: ^2.3.6
         version: 2.3.6
@@ -520,7 +520,7 @@ importers:
         version: 11.15.0
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       octokit:
         specifier: ^5.0.5
         version: 5.0.5
@@ -693,7 +693,7 @@ importers:
         version: 5.10.1
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       oidc-provider:
         specifier: ^9.1.0
         version: 9.7.1
@@ -739,7 +739,7 @@ importers:
         version: 0.0.7
       '@clerk/nextjs':
         specifier: '>=7.2.4'
-        version: 7.3.7(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 7.3.7(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@dicebear/collection':
         specifier: ^9.4.2
         version: 9.4.2(@dicebear/core@9.4.2)
@@ -814,10 +814,10 @@ importers:
         version: 5.90.21(react@19.2.4)
       '@vercel/analytics':
         specifier: ^1.6.1
-        version: 1.6.1(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        version: 1.6.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@vercel/speed-insights':
         specifier: ^1.3.1
-        version: 1.3.1(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        version: 1.3.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       better-auth:
         specifier: ^1.6.13
         version: 1.6.23(@opentelemetry/api@1.9.1)(@prisma/client@7.4.2(prisma@7.4.2(@types/react@19.2.14)(better-sqlite3@12.10.0)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3))(better-sqlite3@12.10.0)(mysql2@3.15.3)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.20.0)(prisma@7.4.2(@types/react@19.2.14)(better-sqlite3@12.10.0)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vitest@4.1.4)
@@ -838,7 +838,7 @@ importers:
         version: 12.35.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       geist:
         specifier: 'catalog:'
-        version: 1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        version: 1.7.0(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       gsap:
         specifier: ^3.15.0
         version: 3.15.0
@@ -850,10 +850,10 @@ importers:
         version: 11.15.0
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-intl:
         specifier: ^4.12.0
-        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       p-limit:
         specifier: ^7.3.0
         version: 7.3.0
@@ -1148,7 +1148,7 @@ importers:
         version: 16.6.12(@emotion/is-prop-valid@1.4.0)(@takumi-rs/image-response@0.71.4)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(fumadocs-core@16.6.12(@mdx-js/mdx@3.1.1)(@tanstack/react-router@1.170.13(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(algoliasearch@5.50.0)(lucide-react@0.577.0(react@19.2.4))(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6))(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.2.1)
       geist:
         specifier: 'catalog:'
-        version: 1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        version: 1.7.0(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       hast-util-to-jsx-runtime:
         specifier: ^2.3.6
         version: 2.3.6
@@ -1157,7 +1157,7 @@ importers:
         version: 11.15.0
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       octokit:
         specifier: ^5.0.5
         version: 5.0.5
@@ -1327,10 +1327,10 @@ importers:
         version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-intl:
         specifier: ^4.12.0
-        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react:
         specifier: 19.2.4
         version: 19.2.4
@@ -1504,7 +1504,7 @@ importers:
         version: 3.0.118(react@19.2.4)(zod@4.3.6)
       '@clerk/nextjs':
         specifier: '>=7.2.4'
-        version: 7.3.7(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 7.3.7(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@dicebear/collection':
         specifier: ^9.4.2
         version: 9.4.2(@dicebear/core@9.4.2)
@@ -1624,7 +1624,7 @@ importers:
         version: link:../../packages/integrations/webhooks
       '@sentry/nextjs':
         specifier: ^10.68.0
-        version: 10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.105.4(esbuild@0.28.1))
+        version: 10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.105.4(esbuild@0.28.1))
       '@simplewebauthn/browser':
         specifier: ^13.3.0
         version: 13.3.0
@@ -1645,28 +1645,28 @@ importers:
         version: 1.170.13(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@vercel/analytics':
         specifier: ^1.5.0
-        version: 1.6.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        version: 1.6.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@vercel/speed-insights':
         specifier: ^1.2.0
-        version: 1.3.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        version: 1.3.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       ai:
         specifier: ^6.0.116
         version: 6.0.116(zod@4.3.6)
       geist:
         specifier: 'catalog:'
-        version: 1.7.0(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        version: 1.7.0(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       google-auth-library:
         specifier: ^10.6.2
         version: 10.6.2
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-auth:
         specifier: ^5.0.0-beta.32
-        version: 5.0.0-beta.32(@simplewebauthn/browser@13.3.0)(@simplewebauthn/server@13.3.0)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(nodemailer@9.0.1)(react@19.2.4)
+        version: 5.0.0-beta.32(@simplewebauthn/browser@13.3.0)(@simplewebauthn/server@13.3.0)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(nodemailer@9.0.1)(react@19.2.4)
       next-intl:
         specifier: ^4.12.0
-        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       openapi-fetch:
         specifier: ^0.17.0
         version: 0.17.0
@@ -1760,7 +1760,7 @@ importers:
         version: 8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3)
       vitest:
         specifier: ^4.0.18
-        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))
 
   backends/gateway:
     dependencies:
@@ -3746,7 +3746,7 @@ importers:
         version: 1.3.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@clerk/nextjs':
         specifier: '>=7.2.4'
-        version: 7.3.7(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 7.3.7(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@icons-pack/react-simple-icons':
         specifier: ^13.13.0
         version: 13.13.0(react@19.2.4)
@@ -3924,10 +3924,10 @@ importers:
         version: 1.4.0
       next:
         specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-intl:
         specifier: 'catalog:'
-        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       storybook:
         specifier: ^8.6.17
         version: 8.6.17(prettier@3.8.1)
@@ -5760,10 +5760,6 @@ packages:
     resolution: {integrity: sha512-/Wt5+CT8dpTFQxEJ9iGy/UGrXr7p2wlIOEHvIr/YcHYByzoLjrqkYqXdJjd9UIgWjv7eqV2HnFJen93UTuwfTQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/middleware-sdk-s3@3.972.18':
-    resolution: {integrity: sha512-5E3XxaElrdyk6ZJ0TjH7Qm6ios4b/qQCiLr6oQ8NK7e4Kn6JBTJCaYioQCQ65BpZ1+l1mK5wTAac2+pEz0Smpw==}
-    engines: {node: '>=20.0.0'}
-
   '@aws-sdk/middleware-sdk-s3@3.972.37':
     resolution: {integrity: sha512-Km7M+i8DrLArVzrid1gfxeGhYHBd3uxvE77g0s5a52zPSVosxzQBnJ0gwWb6NIp/DOk8gsBMhi7V+cpJG0ndTA==}
     engines: {node: '>=20.0.0'}
@@ -5883,14 +5879,6 @@ packages:
     peerDependenciesMeta:
       aws-crt:
         optional: true
-
-  '@aws-sdk/xml-builder@3.972.16':
-    resolution: {integrity: sha512-iu2pyvaqmeatIJLURLqx9D+4jKAdTH20ntzB6BFwjyN7V960r4jK32mx0Zf7YbtOYAbmbtQfDNuL60ONinyw7A==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/xml-builder@3.972.22':
-    resolution: {integrity: sha512-PMYKKtJd70IsSG0yHrdAbxBr+ZWBKLvzFZfD3/urxgf6hXVMzuU5M+3MJ5G67RpOmLBu1fAUN65SbWuKUCOlAA==}
-    engines: {node: '>=20.0.0'}
 
   '@aws-sdk/xml-builder@3.972.36':
     resolution: {integrity: sha512-RdGmS1GLrtaTOLE1ElSluMldNrpk9Emq6uYs8SS8iHlu5xTAmM9rRkM91o48+rIRryBtyO9t+uLYCoMG6jVMVA==}
@@ -12149,10 +12137,6 @@ packages:
     resolution: {integrity: sha512-n6rQ4N8Jj4YTQO3YFrlgZuwKodf4zUFs7EJIWH86pSCWBaAtAGBFfCM7Wx6D2bBJ2xqFNxGBSrUWswT3M0VJow==}
     engines: {node: '>=18.0.0'}
 
-  '@smithy/md5-js@4.2.11':
-    resolution: {integrity: sha512-350X4kGIrty0Snx2OWv7rPM6p6vM7RzryvFs6B/56Cux3w3sChOb3bymo5oidXJlPcP9fIRxGUCk7GqpiSOtng==}
-    engines: {node: '>=18.0.0'}
-
   '@smithy/md5-js@4.3.1':
     resolution: {integrity: sha512-98NalujRdzv6ggVQNYPWpL2K57UKeUB8roIr61u6+JiHd7KUlMQ+sn/vk6IG4XxEjw2vlC7eu/xjYXshUE4XXg==}
     engines: {node: '>=18.0.0'}
@@ -12247,14 +12231,6 @@ packages:
 
   '@smithy/shared-ini-file-loader@4.5.1':
     resolution: {integrity: sha512-FKoKxVzdFPhyynFI+SPTWrgOP60fZ4l1UwukWYj4eyhpSmEI7MJ6p58hawIIt9bwp+aek9NEm8Zika7E+GEoeg==}
-    engines: {node: '>=18.0.0'}
-
-  '@smithy/signature-v4@5.3.12':
-    resolution: {integrity: sha512-B/FBwO3MVOL00DaRSXfXfa/TRXRheagt/q5A2NM13u7q+sHS59EOVGQNfG7DkmVtdQm5m3vOosoKAXSqn/OEgw==}
-    engines: {node: '>=18.0.0'}
-
-  '@smithy/signature-v4@5.4.1':
-    resolution: {integrity: sha512-728lZZEWYWubBESrfntNslZQYDKRlJDY4dcDnYbL50+gu35pGPLblu4S0/RH/RDLF6me1M87ECHsHELGL7dA/Q==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/signature-v4@5.6.7':
@@ -12355,10 +12331,6 @@ packages:
 
   '@smithy/util-retry@4.4.1':
     resolution: {integrity: sha512-qkgWgwn1xw0GoY9Ea/B6FrYSPfHA0zyOtJkokwxZuvucRf2+2lfTut6adi4e4Y7LEAaxsFG7r6i05mtDCxbHKA==}
-    engines: {node: '>=18.0.0'}
-
-  '@smithy/util-stream@4.5.20':
-    resolution: {integrity: sha512-4yXLm5n/B5SRBR2p8cZ90Sbv4zL4NKsgxdzCzp/83cXw2KxLEumt5p+GAVyRNZgQOSrzXn9ARpO0lUe8XSlSDw==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/util-stream@4.6.1':
@@ -22021,7 +21993,7 @@ snapshots:
   '@apm-js-collab/tracing-hooks@0.13.0':
     dependencies:
       '@apm-js-collab/code-transformer': 0.18.1
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       module-details-from-path: 1.0.4
     transitivePeerDependencies:
       - supports-color
@@ -22156,20 +22128,20 @@ snapshots:
   '@aws-crypto/crc32@5.2.0':
     dependencies:
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       tslib: 2.8.1
 
   '@aws-crypto/crc32c@5.2.0':
     dependencies:
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       tslib: 2.8.1
 
   '@aws-crypto/sha1-browser@5.2.0':
     dependencies:
       '@aws-crypto/supports-web-crypto': 5.2.0
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-locate-window': 3.965.5
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
@@ -22179,7 +22151,7 @@ snapshots:
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-crypto/supports-web-crypto': 5.2.0
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-locate-window': 3.965.5
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
@@ -22187,7 +22159,7 @@ snapshots:
   '@aws-crypto/sha256-js@5.2.0':
     dependencies:
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       tslib: 2.8.1
 
   '@aws-crypto/supports-web-crypto@5.2.0':
@@ -22196,7 +22168,7 @@ snapshots:
 
   '@aws-crypto/util@5.2.0':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
 
@@ -22403,55 +22375,55 @@ snapshots:
       '@aws-crypto/sha1-browser': 5.2.0
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
-      '@aws-sdk/core': 3.973.25
-      '@aws-sdk/credential-provider-node': 3.972.27
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/credential-provider-node': 3.972.39
       '@aws-sdk/middleware-bucket-endpoint': 3.972.7
       '@aws-sdk/middleware-expect-continue': 3.972.7
       '@aws-sdk/middleware-flexible-checksums': 3.973.4
-      '@aws-sdk/middleware-host-header': 3.972.8
+      '@aws-sdk/middleware-host-header': 3.972.10
       '@aws-sdk/middleware-location-constraint': 3.972.7
-      '@aws-sdk/middleware-logger': 3.972.8
-      '@aws-sdk/middleware-recursion-detection': 3.972.9
-      '@aws-sdk/middleware-sdk-s3': 3.972.18
+      '@aws-sdk/middleware-logger': 3.972.10
+      '@aws-sdk/middleware-recursion-detection': 3.972.11
+      '@aws-sdk/middleware-sdk-s3': 3.972.37
       '@aws-sdk/middleware-ssec': 3.972.7
-      '@aws-sdk/middleware-user-agent': 3.972.26
-      '@aws-sdk/region-config-resolver': 3.972.10
-      '@aws-sdk/signature-v4-multi-region': 3.996.6
-      '@aws-sdk/types': 3.973.6
-      '@aws-sdk/util-endpoints': 3.996.5
-      '@aws-sdk/util-user-agent-browser': 3.972.8
-      '@aws-sdk/util-user-agent-node': 3.973.12
-      '@smithy/config-resolver': 4.4.13
-      '@smithy/core': 3.23.12
+      '@aws-sdk/middleware-user-agent': 3.972.38
+      '@aws-sdk/region-config-resolver': 3.972.13
+      '@aws-sdk/signature-v4-multi-region': 3.996.25
+      '@aws-sdk/types': 3.974.2
+      '@aws-sdk/util-endpoints': 3.996.8
+      '@aws-sdk/util-user-agent-browser': 3.972.10
+      '@aws-sdk/util-user-agent-node': 3.973.24
+      '@smithy/config-resolver': 4.5.1
+      '@smithy/core': 3.29.6
       '@smithy/eventstream-serde-browser': 4.2.11
       '@smithy/eventstream-serde-config-resolver': 4.3.11
       '@smithy/eventstream-serde-node': 4.2.11
-      '@smithy/fetch-http-handler': 5.3.15
+      '@smithy/fetch-http-handler': 5.4.1
       '@smithy/hash-blob-browser': 4.2.12
-      '@smithy/hash-node': 4.2.12
+      '@smithy/hash-node': 4.3.1
       '@smithy/hash-stream-node': 4.2.11
-      '@smithy/invalid-dependency': 4.2.12
-      '@smithy/md5-js': 4.2.11
-      '@smithy/middleware-content-length': 4.2.12
-      '@smithy/middleware-endpoint': 4.4.27
-      '@smithy/middleware-retry': 4.4.44
-      '@smithy/middleware-serde': 4.2.15
-      '@smithy/middleware-stack': 4.2.12
-      '@smithy/node-config-provider': 4.3.12
-      '@smithy/node-http-handler': 4.5.0
-      '@smithy/protocol-http': 5.3.12
-      '@smithy/smithy-client': 4.12.7
-      '@smithy/types': 4.13.1
-      '@smithy/url-parser': 4.2.12
+      '@smithy/invalid-dependency': 4.3.1
+      '@smithy/md5-js': 4.3.1
+      '@smithy/middleware-content-length': 4.3.1
+      '@smithy/middleware-endpoint': 4.5.1
+      '@smithy/middleware-retry': 4.6.1
+      '@smithy/middleware-serde': 4.3.1
+      '@smithy/middleware-stack': 4.3.1
+      '@smithy/node-config-provider': 4.4.1
+      '@smithy/node-http-handler': 4.7.1
+      '@smithy/protocol-http': 5.4.1
+      '@smithy/smithy-client': 4.13.1
+      '@smithy/types': 4.16.1
+      '@smithy/url-parser': 4.3.1
       '@smithy/util-base64': 4.3.2
       '@smithy/util-body-length-browser': 4.2.2
       '@smithy/util-body-length-node': 4.2.3
-      '@smithy/util-defaults-mode-browser': 4.3.43
-      '@smithy/util-defaults-mode-node': 4.2.47
-      '@smithy/util-endpoints': 3.3.3
-      '@smithy/util-middleware': 4.2.12
-      '@smithy/util-retry': 4.2.12
-      '@smithy/util-stream': 4.5.20
+      '@smithy/util-defaults-mode-browser': 4.4.1
+      '@smithy/util-defaults-mode-node': 4.3.1
+      '@smithy/util-endpoints': 3.5.1
+      '@smithy/util-middleware': 4.3.1
+      '@smithy/util-retry': 4.4.1
+      '@smithy/util-stream': 4.6.1
       '@smithy/util-utf8': 4.2.2
       '@smithy/util-waiter': 4.2.11
       tslib: 2.8.1
@@ -22612,15 +22584,15 @@ snapshots:
 
   '@aws-sdk/core@3.973.25':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@aws-sdk/xml-builder': 3.972.16
-      '@smithy/core': 3.24.1
+      '@aws-sdk/types': 3.974.2
+      '@aws-sdk/xml-builder': 3.972.36
+      '@smithy/core': 3.29.6
       '@smithy/node-config-provider': 4.4.1
       '@smithy/property-provider': 4.2.12
       '@smithy/protocol-http': 5.4.1
-      '@smithy/signature-v4': 5.3.12
+      '@smithy/signature-v4': 5.6.7
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-base64': 4.3.2
       '@smithy/util-middleware': 4.3.1
       '@smithy/util-utf8': 4.2.2
@@ -22628,15 +22600,15 @@ snapshots:
 
   '@aws-sdk/core@3.974.8':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@aws-sdk/xml-builder': 3.972.22
-      '@smithy/core': 3.24.1
+      '@aws-sdk/types': 3.974.2
+      '@aws-sdk/xml-builder': 3.972.36
+      '@smithy/core': 3.29.6
       '@smithy/node-config-provider': 4.4.1
       '@smithy/property-provider': 4.3.1
       '@smithy/protocol-http': 5.4.1
-      '@smithy/signature-v4': 5.4.1
+      '@smithy/signature-v4': 5.6.7
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-base64': 4.3.2
       '@smithy/util-middleware': 4.3.1
       '@smithy/util-retry': 4.4.1
@@ -22656,73 +22628,73 @@ snapshots:
 
   '@aws-sdk/crc64-nvme@3.972.4':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-env@3.972.23':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
-      '@smithy/property-provider': 4.2.12
-      '@smithy/types': 4.14.1
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
+      '@smithy/property-provider': 4.3.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-env@3.972.34':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
       '@smithy/property-provider': 4.3.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-http@3.972.25':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
       '@smithy/fetch-http-handler': 5.4.1
       '@smithy/node-http-handler': 4.7.1
-      '@smithy/property-provider': 4.2.12
+      '@smithy/property-provider': 4.3.1
       '@smithy/protocol-http': 5.4.1
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-stream': 4.6.1
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-http@3.972.36':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
       '@smithy/fetch-http-handler': 5.4.1
       '@smithy/node-http-handler': 4.7.1
       '@smithy/property-provider': 4.3.1
       '@smithy/protocol-http': 5.4.1
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-stream': 4.6.1
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-ini@3.972.26':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/credential-provider-env': 3.972.23
-      '@aws-sdk/credential-provider-http': 3.972.25
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/credential-provider-env': 3.972.34
+      '@aws-sdk/credential-provider-http': 3.972.36
       '@aws-sdk/credential-provider-login': 3.972.26
-      '@aws-sdk/credential-provider-process': 3.972.23
-      '@aws-sdk/credential-provider-sso': 3.972.26
-      '@aws-sdk/credential-provider-web-identity': 3.972.26
+      '@aws-sdk/credential-provider-process': 3.972.34
+      '@aws-sdk/credential-provider-sso': 3.972.38
+      '@aws-sdk/credential-provider-web-identity': 3.972.38
       '@aws-sdk/nested-clients': 3.996.16
-      '@aws-sdk/types': 3.973.8
-      '@smithy/credential-provider-imds': 4.2.12
-      '@smithy/property-provider': 4.2.12
-      '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/credential-provider-imds': 4.3.1
+      '@smithy/property-provider': 4.3.1
+      '@smithy/shared-ini-file-loader': 4.5.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/credential-provider-ini@3.972.38':
     dependencies:
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/credential-provider-env': 3.972.34
       '@aws-sdk/credential-provider-http': 3.972.36
       '@aws-sdk/credential-provider-login': 3.972.38
@@ -22730,37 +22702,37 @@ snapshots:
       '@aws-sdk/credential-provider-sso': 3.972.38
       '@aws-sdk/credential-provider-web-identity': 3.972.38
       '@aws-sdk/nested-clients': 3.997.6
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/credential-provider-imds': 4.3.1
       '@smithy/property-provider': 4.3.1
       '@smithy/shared-ini-file-loader': 4.5.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/credential-provider-login@3.972.26':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/nested-clients': 3.996.16
-      '@aws-sdk/types': 3.973.8
-      '@smithy/property-provider': 4.2.12
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/nested-clients': 3.997.6
+      '@aws-sdk/types': 3.974.2
+      '@smithy/property-provider': 4.3.1
       '@smithy/protocol-http': 5.4.1
-      '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@smithy/shared-ini-file-loader': 4.5.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/credential-provider-login@3.972.38':
     dependencies:
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/nested-clients': 3.997.6
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/property-provider': 4.3.1
       '@smithy/protocol-http': 5.4.1
       '@smithy/shared-ini-file-loader': 4.5.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
@@ -22773,11 +22745,11 @@ snapshots:
       '@aws-sdk/credential-provider-process': 3.972.23
       '@aws-sdk/credential-provider-sso': 3.972.26
       '@aws-sdk/credential-provider-web-identity': 3.972.26
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/credential-provider-imds': 4.2.12
       '@smithy/property-provider': 4.2.12
       '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
@@ -22790,79 +22762,79 @@ snapshots:
       '@aws-sdk/credential-provider-process': 3.972.34
       '@aws-sdk/credential-provider-sso': 3.972.38
       '@aws-sdk/credential-provider-web-identity': 3.972.38
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/credential-provider-imds': 4.3.1
       '@smithy/property-provider': 4.3.1
       '@smithy/shared-ini-file-loader': 4.5.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/credential-provider-process@3.972.23':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
-      '@smithy/property-provider': 4.2.12
-      '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
+      '@smithy/property-provider': 4.3.1
+      '@smithy/shared-ini-file-loader': 4.5.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-process@3.972.34':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
       '@smithy/property-provider': 4.3.1
       '@smithy/shared-ini-file-loader': 4.5.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-sso@3.972.26':
     dependencies:
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/nested-clients': 3.996.16
       '@aws-sdk/token-providers': 3.1019.0
-      '@aws-sdk/types': 3.973.8
-      '@smithy/property-provider': 4.2.12
-      '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/property-provider': 4.3.1
+      '@smithy/shared-ini-file-loader': 4.5.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/credential-provider-sso@3.972.38':
     dependencies:
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/nested-clients': 3.997.6
       '@aws-sdk/token-providers': 3.1041.0
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/property-provider': 4.3.1
       '@smithy/shared-ini-file-loader': 4.5.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/credential-provider-web-identity@3.972.26':
     dependencies:
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/nested-clients': 3.996.16
-      '@aws-sdk/types': 3.973.8
-      '@smithy/property-provider': 4.2.12
-      '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/property-provider': 4.3.1
+      '@smithy/shared-ini-file-loader': 4.5.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/credential-provider-web-identity@3.972.38':
     dependencies:
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/nested-clients': 3.997.6
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/property-provider': 4.3.1
       '@smithy/shared-ini-file-loader': 4.5.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
@@ -22881,11 +22853,11 @@ snapshots:
 
   '@aws-sdk/middleware-bucket-endpoint@3.972.7':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-arn-parser': 3.972.3
       '@smithy/node-config-provider': 4.4.1
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-config-provider': 4.2.2
       tslib: 2.8.1
 
@@ -22899,9 +22871,9 @@ snapshots:
 
   '@aws-sdk/middleware-expect-continue@3.972.7':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-flexible-checksums@3.973.4':
@@ -22909,13 +22881,13 @@ snapshots:
       '@aws-crypto/crc32': 5.2.0
       '@aws-crypto/crc32c': 5.2.0
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/crc64-nvme': 3.972.4
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/is-array-buffer': 4.2.2
       '@smithy/node-config-provider': 4.4.1
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-middleware': 4.3.1
       '@smithy/util-stream': 4.6.1
       '@smithy/util-utf8': 4.2.2
@@ -22923,80 +22895,63 @@ snapshots:
 
   '@aws-sdk/middleware-host-header@3.972.10':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-host-header@3.972.8':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-location-constraint@3.972.7':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-logger@3.972.10':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-logger@3.972.8':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-recursion-detection@3.972.11':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@aws/lambda-invoke-store': 0.2.3
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-recursion-detection@3.972.9':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@aws/lambda-invoke-store': 0.2.3
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
-      tslib: 2.8.1
-
-  '@aws-sdk/middleware-sdk-s3@3.972.18':
-    dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
-      '@aws-sdk/util-arn-parser': 3.972.3
-      '@smithy/core': 3.24.1
-      '@smithy/node-config-provider': 4.4.1
-      '@smithy/protocol-http': 5.4.1
-      '@smithy/signature-v4': 5.3.12
-      '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
-      '@smithy/util-config-provider': 4.2.2
-      '@smithy/util-middleware': 4.3.1
-      '@smithy/util-stream': 4.6.1
-      '@smithy/util-utf8': 4.2.2
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-sdk-s3@3.972.37':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-arn-parser': 3.972.3
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/node-config-provider': 4.4.1
       '@smithy/protocol-http': 5.4.1
-      '@smithy/signature-v4': 5.4.1
+      '@smithy/signature-v4': 5.6.7
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-config-provider': 4.2.2
       '@smithy/util-middleware': 4.3.1
       '@smithy/util-stream': 4.6.1
@@ -23005,38 +22960,38 @@ snapshots:
 
   '@aws-sdk/middleware-sdk-sqs@3.972.22':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-hex-encoding': 4.2.2
       '@smithy/util-utf8': 4.2.2
       tslib: 2.8.1
 
   '@aws-sdk/middleware-ssec@3.972.7':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-user-agent@3.972.26':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-endpoints': 3.996.8
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-retry': 4.4.1
       tslib: 2.8.1
 
   '@aws-sdk/middleware-user-agent@3.972.38':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-endpoints': 3.996.8
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-retry': 4.4.1
       tslib: 2.8.1
 
@@ -23044,18 +22999,18 @@ snapshots:
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/middleware-host-header': 3.972.10
       '@aws-sdk/middleware-logger': 3.972.10
       '@aws-sdk/middleware-recursion-detection': 3.972.11
       '@aws-sdk/middleware-user-agent': 3.972.38
       '@aws-sdk/region-config-resolver': 3.972.13
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-endpoints': 3.996.8
       '@aws-sdk/util-user-agent-browser': 3.972.10
       '@aws-sdk/util-user-agent-node': 3.973.24
       '@smithy/config-resolver': 4.5.1
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/fetch-http-handler': 5.4.1
       '@smithy/hash-node': 4.3.1
       '@smithy/invalid-dependency': 4.3.1
@@ -23068,7 +23023,7 @@ snapshots:
       '@smithy/node-http-handler': 4.7.1
       '@smithy/protocol-http': 5.4.1
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/url-parser': 4.3.1
       '@smithy/util-base64': 4.3.2
       '@smithy/util-body-length-browser': 4.2.2
@@ -23087,19 +23042,19 @@ snapshots:
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/middleware-host-header': 3.972.10
       '@aws-sdk/middleware-logger': 3.972.10
       '@aws-sdk/middleware-recursion-detection': 3.972.11
       '@aws-sdk/middleware-user-agent': 3.972.38
       '@aws-sdk/region-config-resolver': 3.972.13
       '@aws-sdk/signature-v4-multi-region': 3.996.25
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@aws-sdk/util-endpoints': 3.996.8
       '@aws-sdk/util-user-agent-browser': 3.972.10
       '@aws-sdk/util-user-agent-node': 3.973.24
       '@smithy/config-resolver': 4.5.1
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/fetch-http-handler': 5.4.1
       '@smithy/hash-node': 4.3.1
       '@smithy/invalid-dependency': 4.3.1
@@ -23112,7 +23067,7 @@ snapshots:
       '@smithy/node-http-handler': 4.7.1
       '@smithy/protocol-http': 5.4.1
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/url-parser': 4.3.1
       '@smithy/util-base64': 4.3.2
       '@smithy/util-body-length-browser': 4.2.2
@@ -23129,18 +23084,18 @@ snapshots:
 
   '@aws-sdk/region-config-resolver@3.972.10':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/config-resolver': 4.5.1
       '@smithy/node-config-provider': 4.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/region-config-resolver@3.972.13':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/config-resolver': 4.5.1
       '@smithy/node-config-provider': 4.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/s3-request-presigner@3.1003.0':
@@ -23166,53 +23121,53 @@ snapshots:
   '@aws-sdk/signature-v4-multi-region@3.996.25':
     dependencies:
       '@aws-sdk/middleware-sdk-s3': 3.972.37
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/protocol-http': 5.4.1
-      '@smithy/signature-v4': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/signature-v4': 5.6.7
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/signature-v4-multi-region@3.996.6':
     dependencies:
       '@aws-sdk/middleware-sdk-s3': 3.972.37
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/protocol-http': 5.4.1
-      '@smithy/signature-v4': 5.3.12
-      '@smithy/types': 4.14.1
+      '@smithy/signature-v4': 5.6.7
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/token-providers@3.1019.0':
     dependencies:
-      '@aws-sdk/core': 3.974.8
-      '@aws-sdk/nested-clients': 3.996.16
-      '@aws-sdk/types': 3.973.8
-      '@smithy/property-provider': 4.2.12
-      '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@aws-sdk/core': 3.975.3
+      '@aws-sdk/nested-clients': 3.997.6
+      '@aws-sdk/types': 3.974.2
+      '@smithy/property-provider': 4.3.1
+      '@smithy/shared-ini-file-loader': 4.5.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/token-providers@3.1041.0':
     dependencies:
-      '@aws-sdk/core': 3.974.8
+      '@aws-sdk/core': 3.975.3
       '@aws-sdk/nested-clients': 3.997.6
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/property-provider': 4.3.1
       '@smithy/shared-ini-file-loader': 4.5.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
     transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/types@3.973.6':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/types@3.973.8':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/types@3.974.2':
@@ -23234,25 +23189,25 @@ snapshots:
 
   '@aws-sdk/util-endpoints@3.996.5':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       '@smithy/url-parser': 4.3.1
       '@smithy/util-endpoints': 3.5.1
       tslib: 2.8.1
 
   '@aws-sdk/util-endpoints@3.996.8':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       '@smithy/url-parser': 4.3.1
       '@smithy/util-endpoints': 3.5.1
       tslib: 2.8.1
 
   '@aws-sdk/util-format-url@3.972.7':
     dependencies:
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/querystring-builder': 4.2.12
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@aws-sdk/util-locate-window@3.965.5':
@@ -23261,47 +23216,34 @@ snapshots:
 
   '@aws-sdk/util-user-agent-browser@3.972.10':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       bowser: 2.14.1
       tslib: 2.8.1
 
   '@aws-sdk/util-user-agent-browser@3.972.8':
     dependencies:
-      '@aws-sdk/types': 3.973.8
-      '@smithy/types': 4.14.1
+      '@aws-sdk/types': 3.974.2
+      '@smithy/types': 4.16.1
       bowser: 2.14.1
       tslib: 2.8.1
 
   '@aws-sdk/util-user-agent-node@3.973.12':
     dependencies:
       '@aws-sdk/middleware-user-agent': 3.972.38
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/node-config-provider': 4.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-config-provider': 4.2.2
       tslib: 2.8.1
 
   '@aws-sdk/util-user-agent-node@3.973.24':
     dependencies:
       '@aws-sdk/middleware-user-agent': 3.972.38
-      '@aws-sdk/types': 3.973.8
+      '@aws-sdk/types': 3.974.2
       '@smithy/node-config-provider': 4.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-config-provider': 4.2.2
-      tslib: 2.8.1
-
-  '@aws-sdk/xml-builder@3.972.16':
-    dependencies:
-      '@smithy/types': 4.14.1
-      fast-xml-parser: 5.8.0
-      tslib: 2.8.1
-
-  '@aws-sdk/xml-builder@3.972.22':
-    dependencies:
-      '@nodable/entities': 2.1.0
-      '@smithy/types': 4.14.1
-      fast-xml-parser: 5.8.0
       tslib: 2.8.1
 
   '@aws-sdk/xml-builder@3.972.36':
@@ -23340,7 +23282,7 @@ snapshots:
       '@babel/types': 7.29.0
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 7.8.0
@@ -23400,7 +23342,7 @@ snapshots:
       '@babel/core': 7.29.6
       '@babel/helper-compilation-targets': 7.28.6
       '@babel/helper-plugin-utils': 7.28.6
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.11
     transitivePeerDependencies:
@@ -24089,7 +24031,7 @@ snapshots:
       '@babel/parser': 7.29.0
       '@babel/template': 7.28.6
       '@babel/types': 7.29.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -24531,23 +24473,12 @@ snapshots:
       - react
       - react-dom
 
-  '@clerk/nextjs@7.3.7(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@clerk/nextjs@7.3.7(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@clerk/backend': 3.4.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@clerk/react': 6.6.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@clerk/shared': 4.12.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-      server-only: 0.0.1
-      tslib: 2.8.1
-
-  '@clerk/nextjs@7.3.7(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      '@clerk/backend': 3.4.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@clerk/react': 6.6.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@clerk/shared': 4.12.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       server-only: 0.0.1
@@ -26089,7 +26020,7 @@ snapshots:
 
   '@koa/router@15.4.0(koa@3.1.2)':
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       http-errors: 2.0.1
       koa: 3.1.2
       koa-compose: 4.1.0
@@ -26710,7 +26641,7 @@ snapshots:
       cookie: 1.1.1
       esbuild: 0.28.1
       express: 5.2.1
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       path-to-regexp: 8.4.2
       urlpattern-polyfill: 10.1.0
       yaml: 2.8.3
@@ -26752,7 +26683,7 @@ snapshots:
       comment-json: 4.6.2
       enquirer: 2.4.1
       glob: 13.0.6
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       ts-tqdm: 0.8.6
       wrangler: 4.112.0(@types/node@22.19.15)
       yargs: 18.0.0
@@ -27804,12 +27735,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@opentelemetry/resources@2.10.0(@opentelemetry/api@1.9.0)':
-    dependencies:
-      '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/semantic-conventions': 1.40.0
-
   '@opentelemetry/resources@2.10.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
@@ -27997,14 +27922,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0)':
-    dependencies:
-      '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 2.10.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-trace': 2.10.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/semantic-conventions': 1.40.0
-
   '@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
@@ -28075,13 +27992,6 @@ snapshots:
       '@opentelemetry/context-async-hooks': 2.8.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 2.8.0(@opentelemetry/api@1.9.1)
-
-  '@opentelemetry/sdk-trace@2.10.0(@opentelemetry/api@1.9.0)':
-    dependencies:
-      '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 2.10.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/semantic-conventions': 1.40.0
 
   '@opentelemetry/sdk-trace@2.10.0(@opentelemetry/api@1.9.1)':
     dependencies:
@@ -28641,7 +28551,7 @@ snapshots:
       '@portabletext/schema': 2.1.1
       '@portabletext/to-html': 5.0.2
       '@xstate/react': 6.1.0(@types/react@19.2.14)(react@19.2.4)(xstate@5.31.1)
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       react: 19.2.4
       scroll-into-view-if-needed: 3.1.0
       xstate: 5.31.1
@@ -29702,7 +29612,7 @@ snapshots:
       dotenv: 16.4.7
       glob: 13.0.6
       handlebars: 4.7.9
-      https-proxy-agent: 7.0.6(supports-color@10.2.2)
+      https-proxy-agent: 7.0.6
       mobx: 6.12.3
       picomatch: 4.0.4
       pluralize: 8.0.0
@@ -29731,6 +29641,20 @@ snapshots:
   '@redocly/config@0.48.2':
     dependencies:
       json-schema-to-ts: 2.7.2
+
+  '@redocly/openapi-core@1.34.10':
+    dependencies:
+      '@redocly/ajv': 8.11.2
+      '@redocly/config': 0.22.0
+      colorette: 1.4.0
+      https-proxy-agent: 7.0.6
+      js-levenshtein: 1.1.6
+      js-yaml: 5.2.2
+      minimatch: 10.2.4
+      pluralize: 8.0.0
+      yaml-ast-parser: 0.0.43
+    transitivePeerDependencies:
+      - supports-color
 
   '@redocly/openapi-core@1.34.10(supports-color@10.2.2)':
     dependencies:
@@ -29971,7 +29895,7 @@ snapshots:
       '@sanity/client': 7.22.0
       babel-plugin-react-compiler: 1.0.0
       boxen: 8.0.1
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       get-it: 8.7.0(debug@4.4.3)
       get-tsconfig: 4.14.0
       import-meta-resolve: 4.2.0
@@ -30028,7 +29952,7 @@ snapshots:
       chokidar: 5.0.0
       console-table-printer: 2.15.0
       date-fns: 4.1.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       dotenv: 17.4.2
       eventsource: 4.1.0
       execa: 9.6.1
@@ -30127,7 +30051,7 @@ snapshots:
       '@sanity/telemetry': 0.9.0(react@19.2.4)
       '@sanity/worker-channels': 2.0.0
       chokidar: 3.6.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       globby: 11.1.0
       groq: 5.25.1
       groq-js: 1.30.1
@@ -30175,7 +30099,7 @@ snapshots:
 
   '@sanity/export@6.1.0':
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       get-it: 8.7.0(debug@4.4.3)
       json-stream-stringify: 3.1.6
       p-queue: 9.3.0
@@ -30213,7 +30137,7 @@ snapshots:
       '@sanity/client': 7.22.0
       '@sanity/generate-help-url': 4.0.0
       '@sanity/mutator': 5.25.1(@types/react@19.2.14)
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       get-it: 8.7.0(debug@4.4.3)
       gunzip-maybe: 1.4.2
       p-map: 7.0.4
@@ -30269,7 +30193,7 @@ snapshots:
       '@sanity/util': 5.25.1(@types/react@19.2.14)
       arrify: 2.0.1
       console-table-printer: 2.15.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       fast-fifo: 1.3.2
       groq-js: 1.30.1
       p-map: 7.0.4
@@ -30296,7 +30220,7 @@ snapshots:
       '@sanity/diff-match-patch': 3.2.0
       '@sanity/types': 5.25.1(@types/react@19.2.14)
       '@sanity/uuid': 3.0.2
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       lodash-es: 4.18.1
     transitivePeerDependencies:
       - '@types/react'
@@ -30711,7 +30635,7 @@ snapshots:
     dependencies:
       '@sentry/core': 10.68.0
 
-  '@sentry/nextjs@10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.105.4(esbuild@0.28.1))':
+  '@sentry/nextjs@10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.105.4(esbuild@0.28.1))':
     dependencies:
       '@opentelemetry/api': 1.9.1
       '@rollup/plugin-commonjs': 28.0.1(rollup@4.59.0)
@@ -30719,13 +30643,13 @@ snapshots:
       '@sentry/bundler-plugin-core': 5.3.0
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.68.0
-      '@sentry/node': 10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))
-      '@sentry/opentelemetry': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))
+      '@sentry/node': 10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))
+      '@sentry/opentelemetry': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))
       '@sentry/react': 10.68.0(react@19.2.4)
       '@sentry/server-utils': 10.68.0
       '@sentry/vercel-edge': 10.68.0
       '@sentry/webpack-plugin': 5.4.0(rollup@4.59.0)(webpack@5.105.4(esbuild@0.28.1))
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rollup: 4.59.0
       stacktrace-parser: 0.1.11
     transitivePeerDependencies:
@@ -30750,33 +30674,17 @@ snapshots:
       '@opentelemetry/instrumentation': 0.220.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 2.10.0(@opentelemetry/api@1.9.1)
 
-  '@sentry/node-core@10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.220.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))':
+  '@sentry/node-core@10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/instrumentation@0.220.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))':
     dependencies:
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.68.0
-      '@sentry/opentelemetry': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))
+      '@sentry/opentelemetry': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))
       import-in-the-middle: 3.0.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation': 0.220.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/sdk-trace-base': 2.10.0(@opentelemetry/api@1.9.0)
-
-  '@sentry/node@10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))':
-    dependencies:
-      '@opentelemetry/api': 1.9.1
+      '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/instrumentation': 0.220.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 2.10.0(@opentelemetry/api@1.9.1)
-      '@sentry/conventions': 0.16.0
-      '@sentry/core': 10.68.0
-      '@sentry/node-core': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.220.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))
-      '@sentry/opentelemetry': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))
-      '@sentry/server-utils': 10.68.0
-      import-in-the-middle: 3.0.0
-    transitivePeerDependencies:
-      - '@opentelemetry/core'
-      - '@opentelemetry/exporter-trace-otlp-http'
-      - supports-color
 
   '@sentry/node@10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/exporter-trace-otlp-http@0.219.0(@opentelemetry/api@1.9.0))':
     dependencies:
@@ -30794,18 +30702,34 @@ snapshots:
       - '@opentelemetry/exporter-trace-otlp-http'
       - supports-color
 
-  '@sentry/opentelemetry@10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.0))':
+  '@sentry/node@10.68.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))':
     dependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-trace-base': 2.10.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation': 0.220.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-trace-base': 2.10.0(@opentelemetry/api@1.9.1)
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.68.0
+      '@sentry/node-core': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/instrumentation@0.220.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))
+      '@sentry/opentelemetry': 10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))
+      '@sentry/server-utils': 10.68.0
+      import-in-the-middle: 3.0.0
+    transitivePeerDependencies:
+      - '@opentelemetry/core'
+      - '@opentelemetry/exporter-trace-otlp-http'
+      - supports-color
 
   '@sentry/opentelemetry@10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))':
     dependencies:
       '@opentelemetry/api': 1.9.1
       '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 2.10.0(@opentelemetry/api@1.9.1)
+      '@sentry/conventions': 0.16.0
+      '@sentry/core': 10.68.0
+
+  '@sentry/opentelemetry@10.68.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))':
+    dependencies:
+      '@opentelemetry/api': 1.9.1
+      '@opentelemetry/core': 2.8.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 2.10.0(@opentelemetry/api@1.9.1)
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.68.0
@@ -30983,7 +30907,7 @@ snapshots:
 
   '@smithy/abort-controller@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/chunked-blob-reader-native@4.2.3':
@@ -30998,7 +30922,7 @@ snapshots:
   '@smithy/config-resolver@4.4.13':
     dependencies:
       '@smithy/node-config-provider': 4.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-config-provider': 4.2.2
       '@smithy/util-endpoints': 3.5.1
       '@smithy/util-middleware': 4.3.1
@@ -31006,13 +30930,13 @@ snapshots:
 
   '@smithy/config-resolver@4.5.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/core@3.23.12':
     dependencies:
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/url-parser': 4.3.1
       '@smithy/util-base64': 4.3.2
       '@smithy/util-body-length-browser': 4.2.2
@@ -31025,7 +30949,7 @@ snapshots:
   '@smithy/core@3.24.1':
     dependencies:
       '@aws-crypto/crc32': 5.2.0
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/core@3.29.6':
@@ -31036,94 +30960,94 @@ snapshots:
   '@smithy/credential-provider-imds@4.2.12':
     dependencies:
       '@smithy/node-config-provider': 4.4.1
-      '@smithy/property-provider': 4.2.12
-      '@smithy/types': 4.14.1
+      '@smithy/property-provider': 4.3.1
+      '@smithy/types': 4.16.1
       '@smithy/url-parser': 4.3.1
       tslib: 2.8.1
 
   '@smithy/credential-provider-imds@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
-      '@smithy/types': 4.14.1
+      '@smithy/core': 3.29.6
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/eventstream-codec@4.2.11':
     dependencies:
       '@aws-crypto/crc32': 5.2.0
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-hex-encoding': 4.2.2
       tslib: 2.8.1
 
   '@smithy/eventstream-serde-browser@4.2.11':
     dependencies:
       '@smithy/eventstream-serde-universal': 4.2.11
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/eventstream-serde-config-resolver@4.3.11':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/eventstream-serde-node@4.2.11':
     dependencies:
       '@smithy/eventstream-serde-universal': 4.2.11
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/eventstream-serde-universal@4.2.11':
     dependencies:
       '@smithy/eventstream-codec': 4.2.11
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/fetch-http-handler@5.3.15':
     dependencies:
       '@smithy/protocol-http': 5.4.1
       '@smithy/querystring-builder': 4.2.12
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-base64': 4.3.2
       tslib: 2.8.1
 
   '@smithy/fetch-http-handler@5.4.1':
     dependencies:
-      '@smithy/core': 3.24.1
-      '@smithy/types': 4.14.1
+      '@smithy/core': 3.29.6
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/hash-blob-browser@4.2.12':
     dependencies:
       '@smithy/chunked-blob-reader': 5.2.2
       '@smithy/chunked-blob-reader-native': 4.2.3
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/hash-node@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-buffer-from': 4.2.2
       '@smithy/util-utf8': 4.2.2
       tslib: 2.8.1
 
   '@smithy/hash-node@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/hash-stream-node@4.2.11':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-utf8': 4.2.2
       tslib: 2.8.1
 
   '@smithy/invalid-dependency@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/invalid-dependency@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/is-array-buffer@2.2.0':
@@ -31134,42 +31058,36 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@smithy/md5-js@4.2.11':
-    dependencies:
-      '@smithy/types': 4.14.1
-      '@smithy/util-utf8': 4.2.2
-      tslib: 2.8.1
-
   '@smithy/md5-js@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/middleware-content-length@4.2.12':
     dependencies:
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/middleware-content-length@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/middleware-endpoint@4.4.27':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/middleware-serde': 4.3.1
       '@smithy/node-config-provider': 4.4.1
       '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/url-parser': 4.3.1
       '@smithy/util-middleware': 4.3.1
       tslib: 2.8.1
 
   '@smithy/middleware-endpoint@4.5.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/middleware-retry@4.4.44':
@@ -31178,7 +31096,7 @@ snapshots:
       '@smithy/protocol-http': 5.4.1
       '@smithy/service-error-classification': 4.2.12
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-middleware': 4.3.1
       '@smithy/util-retry': 4.4.1
       '@smithy/uuid': 1.1.2
@@ -31186,41 +31104,41 @@ snapshots:
 
   '@smithy/middleware-retry@4.6.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/middleware-serde@4.2.15':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/middleware-serde@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/middleware-stack@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/middleware-stack@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/node-config-provider@4.3.12':
     dependencies:
       '@smithy/property-provider': 4.2.12
       '@smithy/shared-ini-file-loader': 4.4.7
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/node-config-provider@4.4.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/node-http-handler@4.5.0':
@@ -31228,75 +31146,58 @@ snapshots:
       '@smithy/abort-controller': 4.2.12
       '@smithy/protocol-http': 5.4.1
       '@smithy/querystring-builder': 4.2.12
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/node-http-handler@4.7.1':
     dependencies:
-      '@smithy/core': 3.24.1
-      '@smithy/types': 4.14.1
+      '@smithy/core': 3.29.6
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/property-provider@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/property-provider@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/protocol-http@5.3.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/protocol-http@5.4.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/querystring-builder@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-uri-escape': 4.2.2
       tslib: 2.8.1
 
   '@smithy/querystring-parser@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/service-error-classification@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
 
   '@smithy/shared-ini-file-loader@4.4.7':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/shared-ini-file-loader@4.5.1':
     dependencies:
-      '@smithy/core': 3.24.1
-      tslib: 2.8.1
-
-  '@smithy/signature-v4@5.3.12':
-    dependencies:
-      '@smithy/is-array-buffer': 4.2.2
-      '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
-      '@smithy/util-hex-encoding': 4.2.2
-      '@smithy/util-middleware': 4.3.1
-      '@smithy/util-uri-escape': 4.2.2
-      '@smithy/util-utf8': 4.2.2
-      tslib: 2.8.1
-
-  '@smithy/signature-v4@5.4.1':
-    dependencies:
-      '@smithy/core': 3.24.1
-      '@smithy/types': 4.14.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/signature-v4@5.6.7':
@@ -31307,18 +31208,18 @@ snapshots:
 
   '@smithy/smithy-client@4.12.7':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       '@smithy/middleware-endpoint': 4.5.1
       '@smithy/middleware-stack': 4.3.1
       '@smithy/protocol-http': 5.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       '@smithy/util-stream': 4.6.1
       tslib: 2.8.1
 
   '@smithy/smithy-client@4.13.1':
     dependencies:
-      '@smithy/core': 3.24.1
-      '@smithy/types': 4.14.1
+      '@smithy/core': 3.29.6
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/types@4.13.1':
@@ -31336,12 +31237,12 @@ snapshots:
   '@smithy/url-parser@4.2.12':
     dependencies:
       '@smithy/querystring-parser': 4.2.12
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/url-parser@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/util-base64@4.3.2':
@@ -31376,12 +31277,12 @@ snapshots:
     dependencies:
       '@smithy/property-provider': 4.2.12
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/util-defaults-mode-browser@4.4.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/util-defaults-mode-node@4.2.47':
@@ -31391,23 +31292,23 @@ snapshots:
       '@smithy/node-config-provider': 4.4.1
       '@smithy/property-provider': 4.2.12
       '@smithy/smithy-client': 4.13.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/util-defaults-mode-node@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/util-endpoints@3.3.3':
     dependencies:
       '@smithy/node-config-provider': 4.4.1
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/util-endpoints@3.5.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/util-hex-encoding@4.2.2':
@@ -31416,39 +31317,28 @@ snapshots:
 
   '@smithy/util-middleware@4.2.12':
     dependencies:
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/util-middleware@4.3.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/util-retry@4.2.12':
     dependencies:
       '@smithy/service-error-classification': 4.2.12
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/util-retry@4.4.1':
     dependencies:
-      '@smithy/core': 3.24.1
-      tslib: 2.8.1
-
-  '@smithy/util-stream@4.5.20':
-    dependencies:
-      '@smithy/fetch-http-handler': 5.4.1
-      '@smithy/node-http-handler': 4.7.1
-      '@smithy/types': 4.14.1
-      '@smithy/util-base64': 4.3.2
-      '@smithy/util-buffer-from': 4.2.2
-      '@smithy/util-hex-encoding': 4.2.2
-      '@smithy/util-utf8': 4.2.2
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/util-stream@4.6.1':
     dependencies:
-      '@smithy/core': 3.24.1
+      '@smithy/core': 3.29.6
       tslib: 2.8.1
 
   '@smithy/util-uri-escape@4.2.2':
@@ -31468,7 +31358,7 @@ snapshots:
   '@smithy/util-waiter@4.2.11':
     dependencies:
       '@smithy/abort-controller': 4.2.12
-      '@smithy/types': 4.14.1
+      '@smithy/types': 4.16.1
       tslib: 2.8.1
 
   '@smithy/uuid@1.1.2':
@@ -32854,14 +32744,9 @@ snapshots:
       '@use-gesture/core': 10.3.1
       react: 19.2.4
 
-  '@vercel/analytics@1.6.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+  '@vercel/analytics@1.6.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     optionalDependencies:
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react: 19.2.4
-
-  '@vercel/analytics@1.6.1(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
-    optionalDependencies:
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
 
   '@vercel/blob@2.3.1':
@@ -32884,14 +32769,9 @@ snapshots:
 
   '@vercel/oidc@3.1.0': {}
 
-  '@vercel/speed-insights@1.3.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+  '@vercel/speed-insights@1.3.1(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     optionalDependencies:
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react: 19.2.4
-
-  '@vercel/speed-insights@1.3.1(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
-    optionalDependencies:
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
 
   '@vercel/stega@1.1.0': {}
@@ -32943,7 +32823,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))
+      vitest: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))
 
   '@vitest/expect@2.0.5':
     dependencies:
@@ -33213,7 +33093,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -33636,7 +33516,7 @@ snapshots:
       '@prisma/client': 7.4.2(prisma@7.4.2(@types/react@19.2.14)(better-sqlite3@12.10.0)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
       better-sqlite3: 12.10.0
       mysql2: 3.15.3
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       pg: 8.20.0
       prisma: 7.4.2(@types/react@19.2.14)(better-sqlite3@12.10.0)(magicast@0.3.5)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react: 19.2.4
@@ -33736,7 +33616,7 @@ snapshots:
     dependencies:
       bytes: 3.1.2
       content-type: 2.0.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       http-errors: 2.0.1
       iconv-lite: 0.7.2
       on-finished: 2.4.1
@@ -34893,7 +34773,7 @@ snapshots:
 
   esbuild-register@3.6.0(esbuild@0.28.1):
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       esbuild: 0.28.1
     transitivePeerDependencies:
       - supports-color
@@ -35089,7 +34969,7 @@ snapshots:
       content-type: 1.0.5
       cookie: 0.7.2
       cookie-signature: 1.2.2
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       depd: 2.0.0
       encodeurl: 2.0.0
       escape-html: 1.0.3
@@ -35257,7 +35137,7 @@ snapshots:
 
   finalhandler@2.1.1:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       encodeurl: 2.0.0
       escape-html: 1.0.3
       on-finished: 2.4.1
@@ -35306,7 +35186,7 @@ snapshots:
 
   follow-redirects@1.16.0(debug@4.4.3):
     optionalDependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
 
   for-each@0.3.5:
     dependencies:
@@ -35424,7 +35304,7 @@ snapshots:
       '@types/react': 19.2.14
       algoliasearch: 5.50.0
       lucide-react: 0.577.0(react@19.2.4)
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       zod: 4.3.6
@@ -35497,7 +35377,7 @@ snapshots:
       '@types/mdast': 4.0.4
       '@types/mdx': 2.0.13
       '@types/react': 19.2.14
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
       vite: 8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.6.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
@@ -35668,7 +35548,7 @@ snapshots:
     optionalDependencies:
       '@takumi-rs/image-response': 0.71.4
       '@types/react': 19.2.14
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - '@types/react-dom'
@@ -35714,7 +35594,7 @@ snapshots:
   gaxios@7.1.4:
     dependencies:
       extend: 3.0.2
-      https-proxy-agent: 7.0.6(supports-color@10.2.2)
+      https-proxy-agent: 7.0.6
       node-fetch: 3.3.2
     transitivePeerDependencies:
       - supports-color
@@ -35729,13 +35609,9 @@ snapshots:
 
   gearhash-jit@1.0.2: {}
 
-  geist@1.7.0(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
+  geist@1.7.0(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
     dependencies:
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-
-  geist@1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
-    dependencies:
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
   geist@1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
     dependencies:
@@ -35916,7 +35792,7 @@ snapshots:
 
   groq-js@1.30.1:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -36214,7 +36090,7 @@ snapshots:
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -36225,7 +36101,14 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
+    transitivePeerDependencies:
+      - supports-color
+
+  https-proxy-agent@7.0.6:
+    dependencies:
+      agent-base: 7.1.4
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -36374,7 +36257,7 @@ snapshots:
       canonicalize: 1.0.8
       chalk: 4.1.2
       cross-fetch: 4.1.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       hash.js: 1.1.7
       json-stringify-safe: 5.0.1
       ms: 2.1.3
@@ -36412,7 +36295,7 @@ snapshots:
       '@types/ms': 2.1.0
       canonicalize: 1.0.8
       cross-fetch: 4.1.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       hash.js: 1.1.7
       json-stringify-safe: 5.0.1
       ms: 2.1.3
@@ -36424,7 +36307,7 @@ snapshots:
       express: 5.2.1
       hono: 4.12.27
       koa: 3.1.2
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -36454,7 +36337,7 @@ snapshots:
     dependencies:
       '@ioredis/commands': 1.5.1
       cluster-key-slot: 1.1.2
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       denque: 2.1.0
       lodash.defaults: 4.2.0
       lodash.isarguments: 3.1.0
@@ -36748,7 +36631,7 @@ snapshots:
       decimal.js: 10.6.0
       html-encoding-sniffer: 4.0.0
       http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.6(supports-color@10.2.2)
+      https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
       nwsapi: 2.2.23
       parse5: 7.3.0
@@ -36779,7 +36662,7 @@ snapshots:
       decimal.js: 10.6.0
       html-encoding-sniffer: 6.0.0(@noble/hashes@2.2.0)
       http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.6(supports-color@10.2.2)
+      https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
       parse5: 8.0.1
       saxes: 6.0.0
@@ -38000,7 +37883,7 @@ snapshots:
   micromark@4.0.2:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       decode-named-character-reference: 1.3.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -38230,10 +38113,10 @@ snapshots:
 
   neverthrow@7.2.0: {}
 
-  next-auth@5.0.0-beta.32(@simplewebauthn/browser@13.3.0)(@simplewebauthn/server@13.3.0)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(nodemailer@9.0.1)(react@19.2.4):
+  next-auth@5.0.0-beta.32(@simplewebauthn/browser@13.3.0)(@simplewebauthn/server@13.3.0)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(nodemailer@9.0.1)(react@19.2.4):
     dependencies:
       '@auth/core': 0.41.3(@simplewebauthn/browser@13.3.0)(@simplewebauthn/server@13.3.0)(nodemailer@9.0.1)
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
     optionalDependencies:
       '@simplewebauthn/browser': 13.3.0
@@ -38251,31 +38134,14 @@ snapshots:
 
   next-intl-swc-plugin-extractor@4.12.0: {}
 
-  next-intl@4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3):
+  next-intl@4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3):
     dependencies:
       '@formatjs/intl-localematcher': 0.8.1
       '@parcel/watcher': 2.5.6
       '@swc/core': 1.15.18(@swc/helpers@0.5.19)
       icu-minify: 4.12.0
       negotiator: 1.0.0
-      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      next-intl-swc-plugin-extractor: 4.12.0
-      po-parser: 2.1.1
-      react: 19.2.4
-      use-intl: 4.12.0(react@19.2.4)
-    optionalDependencies:
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - '@swc/helpers'
-
-  next-intl@4.12.0(@swc/helpers@0.5.19)(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3):
-    dependencies:
-      '@formatjs/intl-localematcher': 0.8.1
-      '@parcel/watcher': 2.5.6
-      '@swc/core': 1.15.18(@swc/helpers@0.5.19)
-      icu-minify: 4.12.0
-      negotiator: 1.0.0
-      next: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-intl-swc-plugin-extractor: 4.12.0
       po-parser: 2.1.1
       react: 19.2.4
@@ -38319,35 +38185,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
-    dependencies:
-      '@next/env': 16.2.11
-      '@swc/helpers': 0.5.15
-      baseline-browser-mapping: 2.10.0
-      caniuse-lite: 1.0.30001777
-      postcss: 8.5.22
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-      styled-jsx: 5.1.6(@babel/core@7.29.6)(react@19.2.4)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 16.2.11
-      '@next/swc-darwin-x64': 16.2.11
-      '@next/swc-linux-arm64-gnu': 16.2.11
-      '@next/swc-linux-arm64-musl': 16.2.11
-      '@next/swc-linux-x64-gnu': 16.2.11
-      '@next/swc-linux-x64-musl': 16.2.11
-      '@next/swc-win32-arm64-msvc': 16.2.11
-      '@next/swc-win32-x64-msvc': 16.2.11
-      '@opentelemetry/api': 1.9.0
-      '@playwright/test': 1.58.2
-      babel-plugin-react-compiler: 1.0.0
-      sharp: 0.35.3(@types/node@22.19.15)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/node'
-      - babel-plugin-macros
-
-  next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  next@16.2.11(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@next/env': 16.2.11
       '@swc/helpers': 0.5.15
@@ -38374,6 +38212,35 @@ snapshots:
       - '@babel/core'
       - '@types/node'
       - babel-plugin-macros
+
+  next@16.2.11(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      '@next/env': 16.2.11
+      '@swc/helpers': 0.5.15
+      baseline-browser-mapping: 2.10.0
+      caniuse-lite: 1.0.30001777
+      postcss: 8.5.22
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+      styled-jsx: 5.1.6(@babel/core@7.29.6)(react@19.2.4)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 16.2.11
+      '@next/swc-darwin-x64': 16.2.11
+      '@next/swc-linux-arm64-gnu': 16.2.11
+      '@next/swc-linux-arm64-musl': 16.2.11
+      '@next/swc-linux-x64-gnu': 16.2.11
+      '@next/swc-linux-x64-musl': 16.2.11
+      '@next/swc-win32-arm64-msvc': 16.2.11
+      '@next/swc-win32-x64-msvc': 16.2.11
+      '@opentelemetry/api': 1.9.0
+      '@playwright/test': 1.58.2
+      babel-plugin-react-compiler: 1.0.0
+      sharp: 0.35.3(@types/node@22.19.15)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/node'
+      - babel-plugin-macros
+    optional: true
 
   next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
@@ -38572,7 +38439,7 @@ snapshots:
     dependencies:
       '@koa/cors': 5.0.0
       '@koa/router': 15.4.0(koa@3.1.2)
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       eta: 4.5.1
       jose: 6.2.0
       jsesc: 3.1.0
@@ -39904,7 +39771,7 @@ snapshots:
 
   redoc@2.5.1(core-js@3.48.0)(mobx@6.12.3)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.4.1(css-to-react-native@3.2.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
     dependencies:
-      '@redocly/openapi-core': 1.34.10(supports-color@10.2.2)
+      '@redocly/openapi-core': 1.34.10
       classnames: 2.5.1
       core-js: 3.48.0
       decko: 1.2.0
@@ -40159,7 +40026,7 @@ snapshots:
 
   require-in-the-middle@7.5.2:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       module-details-from-path: 1.0.4
       resolve: 1.22.11
     transitivePeerDependencies:
@@ -40167,7 +40034,7 @@ snapshots:
 
   require-in-the-middle@8.0.1:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       module-details-from-path: 1.0.4
     transitivePeerDependencies:
       - supports-color
@@ -40293,7 +40160,7 @@ snapshots:
 
   router@2.2.0:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       depd: 2.0.0
       is-promise: 4.0.0
       parseurl: 1.3.3
@@ -40397,7 +40264,7 @@ snapshots:
       color2k: 2.0.3
       dataloader: 2.2.3
       date-fns: 4.1.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       exif-component: 1.0.1
       fast-deep-equal: 3.1.3
       groq-js: 1.30.1
@@ -40517,7 +40384,7 @@ snapshots:
 
   send@1.2.1:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       encodeurl: 2.0.0
       escape-html: 1.0.3
       etag: 1.8.1
@@ -40762,7 +40629,7 @@ snapshots:
 
   simple-websocket@9.1.0:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       queue-microtask: 1.2.3
       randombytes: 2.1.0
       readable-stream: 3.6.2
@@ -41451,7 +41318,7 @@ snapshots:
       cac: 6.7.14
       chokidar: 4.0.3
       consola: 3.4.2
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       esbuild: 0.28.1
       fix-dts-default-cjs-exports: 1.0.1
       joycon: 3.1.1
@@ -41892,7 +41759,7 @@ snapshots:
 
   vite-tsconfig-paths@6.1.1(typescript@5.9.3)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3(supports-color@8.1.1)
       globrex: 0.1.2
       tsconfck: 3.1.6(typescript@5.9.3)
       vite: 8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3)
