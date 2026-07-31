@@ -11,6 +11,7 @@ import { getConfiguredAuthProvider, sanitizeReturnUrl } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { applyAuthCors } from "@/lib/cors";
 import { isOAuthProvider, type OAuthProvider } from "@/lib/oauth-providers";
+import { resolveAppOrigin } from "@/lib/return-to";
 import { applySessionHint } from "@/lib/session-hint";
 
 const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set([
@@ -47,11 +48,10 @@ function readOAuthStartRequest(request: Request): OAuthStartRequest | null {
     url.searchParams.get("returnTo") ??
     url.searchParams.get("redirect");
 
-  const appOrigin = (
-    process.env.NEXT_PUBLIC_APP_URL ||
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://app.nebutra.com"
-  ).replace(/\/$/, "");
+  // One chain, defined once. This route had its own copy that also fell back
+  // through NEXT_PUBLIC_SITE_URL — the marketing origin — and then to a
+  // hardcoded app host.
+  const appOrigin = resolveAppOrigin();
   const fallback = `${appOrigin}/dashboard`;
 
   let callbackURL = fallback;

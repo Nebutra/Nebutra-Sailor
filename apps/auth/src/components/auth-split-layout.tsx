@@ -1,4 +1,4 @@
-// @brand-exempt: marketing home fallback URL until NEXT_PUBLIC_SITE_URL is always set
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { ArrowLeft } from "@nebutra/icons";
 import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/cn";
@@ -17,7 +17,13 @@ export async function AuthSplitLayout({
   className?: string;
 }) {
   const t = await getTranslations("auth.signIn");
-  const homeHref = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
+  // Not NEXT_PUBLIC_SITE_URL. It is meant to be the marketing origin, but the
+  // deployed auth center answers with its own host, so this link pointed back
+  // at the page the visitor was already on. The marketing home is a brand fact
+  // rather than a per-deployment one, so read it from the domains map — which
+  // also retires the hardcoded fallback this file carried a brand-exempt
+  // comment for.
+  const homeHref = getBrandOrigin("landing");
 
   return (
     <div
