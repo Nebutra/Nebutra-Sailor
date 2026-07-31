@@ -3,11 +3,17 @@
 /**
  * StatusBadge — compact status indicator dot
  *
- * @example OpenStatus (existing API, unchanged)
+ * @example OpenStatus (default)
  *   <StatusBadge pageSlug="nebutra" showLabel />
  *
  * @example Atlassian Statuspage
  *   <StatusBadge provider="statuspage" pageId="kctbh9vrtdwd" showLabel />
+ *
+ * @example Better Stack
+ *   <StatusBadge provider="betterstack" pageUrl="https://status.example.com" showLabel />
+ *
+ * @example Instatus
+ *   <StatusBadge provider="instatus" pageUrl="https://status.example.com" showLabel />
  *
  * @example Static (no fetch)
  *   <StatusBadge status="operational" showLabel />
@@ -15,16 +21,17 @@
 
 import { useEffect, useState } from "react";
 import { fetchStatusPage } from "../api";
-import type { StatusConfig, StatusState } from "../types";
+import type { StatusProviderType, StatusState } from "../types";
+import { buildStatusConfig } from "./status-config";
 
 interface StatusBadgeProps {
   // Static value — skips fetch
   status?: StatusState;
-  // OpenStatus
+  provider?: StatusProviderType;
   pageSlug?: string;
-  // Atlassian Statuspage
-  provider?: "statuspage";
   pageId?: string;
+  pageUrl?: string;
+  healthUrl?: string;
   // Display
   showLabel?: boolean;
   size?: "sm" | "md" | "lg";
@@ -71,31 +78,25 @@ const SIZE_CONFIG = {
   lg: { dot: "h-3 w-3", text: "text-base" },
 };
 
-function buildConfig(props: StatusBadgeProps): StatusConfig | null {
-  if (props.provider === "statuspage" && props.pageId) {
-    return { provider: "statuspage", pageId: props.pageId };
-  }
-  if (props.pageSlug) {
-    return { pageSlug: props.pageSlug };
-  }
-  return null;
-}
-
 export function StatusBadge({
   status: propStatus,
   pageSlug,
   provider,
   pageId,
+  pageUrl,
+  healthUrl,
   showLabel = false,
   size = "md",
   className = "",
   onClick,
 }: StatusBadgeProps) {
   const [status, setStatus] = useState<StatusState>(propStatus ?? "unknown");
-  const config = buildConfig({
-    ...(pageSlug !== undefined ? { pageSlug } : {}),
+  const config = buildStatusConfig({
     ...(provider !== undefined ? { provider } : {}),
+    ...(pageSlug !== undefined ? { pageSlug } : {}),
     ...(pageId !== undefined ? { pageId } : {}),
+    ...(pageUrl !== undefined ? { pageUrl } : {}),
+    ...(healthUrl !== undefined ? { healthUrl } : {}),
   });
   const [loading, setLoading] = useState(!propStatus && !!config);
 

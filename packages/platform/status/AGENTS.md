@@ -22,7 +22,11 @@ service-local health policy.
 - Provider-specific fetch and transform semantics:
   `src/providers/openstatus.ts`,
   `src/providers/statuspage.ts`,
+  `src/providers/betterstack.ts`,
+  `src/providers/instatus.ts`,
   `src/providers/internal.ts`
+- Shared React config mapping:
+  `src/components/status-config.ts`
 - React presentation surfaces:
   `src/components/status-badge.tsx`,
   `src/components/status-widget.tsx`
@@ -40,7 +44,8 @@ above instead of preserving outdated examples.
   intentionally extending the package boundary.
 - Keep backwards-compatible defaults in `src/api.ts` and the React components:
   OpenStatus remains the default when `provider` is omitted and `pageSlug` is
-  provided.
+  provided. Native read adapters also cover `statuspage`, `betterstack`,
+  `instatus`, and `internal`.
 - Preserve the separation between data adapters and UI:
   provider implementations normalize remote payloads into `StatusPageData`,
   while `status-badge` and `status-widget` consume the normalized data or the
@@ -68,7 +73,9 @@ above instead of preserving outdated examples.
 - Status type, provider, or export-surface changes:
   `pnpm --filter @nebutra/status exec tsc --noEmit`
 - Run the package-local suite before changing provider behavior:
-  `pnpm --filter @nebutra/status test` (`vitest run`). It covers the
-  fetch-timeout provider (`src/providers/__tests__/fetch-timeout.test.ts`).
+  `pnpm --filter @nebutra/status test` (`vitest run`). It covers
+  fetch-timeout (`src/providers/__tests__/fetch-timeout.test.ts`),
+  adapter transforms/factory (`src/providers/__tests__/provider-adapters.test.ts`),
+  and React config mapping (`src/components/__tests__/status-config.test.ts`).
   Also verify the narrowest downstream consumer that exercises the affected
   provider or React surface when behavior changes are non-trivial.

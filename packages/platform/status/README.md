@@ -1,6 +1,22 @@
 # @nebutra/status
 
-Public status page integration.
+Multi-provider public status page integration for Nebutra apps.
+
+Native adapters (read-only `fetchSummary`):
+
+| Provider | `provider` value | Identifier |
+|----------|------------------|------------|
+| **OpenStatus** (default) | `openstatus` or omit | `pageSlug` |
+| **Atlassian Statuspage** | `statuspage` | `pageId` (id or full base URL) |
+| **Better Stack** | `betterstack` | `pageUrl` (full URL or Better Uptime subdomain) |
+| **Instatus** | `instatus` | `pageUrl` (full URL or Instatus subdomain) |
+| **Internal health** | `internal` | `healthUrl` |
+
+This package normalizes vendor payloads into a shared `StatusPageData` shape and
+ships React surfaces (`StatusBadge`, `StatusWidget`). It is **not** a write API
+for creating incidents, and it is **not** the production host for
+`status.nebutra.com` (that surface currently uses first-party probes in
+`apps/landing`).
 
 ## Installation
 
@@ -8,63 +24,72 @@ Public status page integration.
 pnpm add @nebutra/status
 ```
 
-## Features
-
-- **OpenStatus Integration** — Public status page
-- **Incident Management** — Create and update incidents
-- **Uptime Tracking** — Monitor service availability
-- **Status Badges** — Embeddable status indicators
-
-## Usage
-
-### Report Status
+## Programmatic fetch
 
 ```typescript
-import { status } from "@nebutra/status";
+import { createStatusProvider, fetchStatusPage } from "@nebutra/status";
 
-// Report service status
-await status.report({
-  service: "api",
-  status: "operational",
+// OpenStatus (default)
+await fetchStatusPage({ pageSlug: "nebutra" });
+
+// Atlassian Statuspage
+await fetchStatusPage({ provider: "statuspage", pageId: "kctbh9vrtdwd" });
+await fetchStatusPage({
+  provider: "statuspage",
+  pageId: "https://status.example.com",
 });
 
-// Report degraded performance
-await status.report({
-  service: "api",
-  status: "degraded",
-  message: "Elevated response times",
+// Better Stack — public GET {page}/index.json
+await fetchStatusPage({
+  provider: "betterstack",
+  pageUrl: "https://status.betterstack.com",
 });
+
+// Instatus — public GET {page}/summary.json
+await fetchStatusPage({
+  provider: "instatus",
+  pageUrl: "https://instat.us",
+});
+
+// Internal /health
+await fetchStatusPage({
+  provider: "internal",
+  healthUrl: "https://api.example.com/health",
+});
+
+// Or keep a provider instance
+const provider = createStatusProvider({
+  provider: "betterstack",
+  pageUrl: "https://status.example.com",
+});
+const data = await provider.fetchSummary();
 ```
 
-### Create Incident
+## React components
 
-```typescript
-import { incidents } from "@nebutra/status";
+```tsx
+import { StatusBadge, StatusWidget } from "@nebutra/status";
 
-const incident = await incidents.create({
-  title: "API Degradation",
-  status: "investigating",
-  impact: "minor",
-  message: "We are investigating elevated error rates.",
-  affectedServices: ["api", "dashboard"],
-});
+// OpenStatus
+<StatusBadge pageSlug="nebutra" showLabel />
+<StatusWidget pageSlug="nebutra" />
+
+// Atlassian Statuspage
+<StatusBadge provider="statuspage" pageId="kctbh9vrtdwd" showLabel />
+
+// Better Stack
+<StatusBadge provider="betterstack" pageUrl="https://status.example.com" showLabel />
+<StatusWidget provider="betterstack" pageUrl="https://status.example.com" />
+
+// Instatus
+<StatusBadge provider="instatus" pageUrl="https://status.example.com" showLabel />
+<StatusWidget provider="instatus" pageUrl="https://status.example.com" />
+
+// Static (no network)
+<StatusBadge status="operational" showLabel />
 ```
 
-### Update Incident
-
-```typescript
-await incidents.update(incident.id, {
-  status: "identified",
-  message: "Root cause identified. Working on fix.",
-});
-
-// Resolve incident
-await incidents.resolve(incident.id, {
-  message: "Issue has been resolved.",
-});
-```
-
-### Status Values
+## Status vocabulary
 
 | Status           | Description               |
 | ---------------- | ------------------------- |
@@ -73,50 +98,34 @@ await incidents.resolve(incident.id, {
 | `partial_outage` | Some features unavailable |
 | `major_outage`   | Service unavailable       |
 | `maintenance`    | Planned maintenance       |
+| `unknown`        | Fetch failed / unmapped   |
 
-### Incident Status
+## Public endpoints used by adapters
 
-| Status          | Description              |
-| --------------- | ------------------------ |
-| `investigating` | Looking into the issue   |
-| `identified`    | Root cause found         |
-| `monitoring`    | Fix deployed, monitoring |
-| `resolved`      | Issue resolved           |
+| Provider | Endpoint |
+|----------|----------|
+| OpenStatus | `GET https://api.openstatus.dev/v1/status-page/{slug}/summary` |
+| Statuspage | `GET https://{pageId}.statuspage.io/api/v2/summary.json` (or `{custom}/api/v2/summary.json`) |
+| Better Stack | `GET {pageUrl}/index.json` |
+| Instatus | `GET {pageUrl}/summary.json` |
+| Internal | `GET {healthUrl}` |
 
-## OpenStatus Configuration
+Failed or timed-out fetches degrade to safe empty `StatusPageData` (`status: "unknown"`), they do not throw into UI consumers.
 
-```typescript
-import { configureStatus } from "@nebutra/status";
+## Environment variables (optional)
 
-configureStatus({
-  apiKey: process.env.OPENSTATUS_API_KEY,
-  pageId: "your-page-id",
-  services: {
-    api: "monitor-id-1",
-    dashboard: "monitor-id-2",
-    database: "monitor-id-3",
-  },
-});
-```
-
-## Status Badge
-
-```typescript
-import { getStatusBadge } from "@nebutra/status";
-
-const badge = getStatusBadge("api");
-// Returns SVG badge URL
-```
-
-## Environment Variables
+OpenStatus uptime config (repo root `openstatus.lock` / ops tooling):
 
 ```bash
-OPENSTATUS_API_KEY=your-api-key
-OPENSTATUS_PAGE_ID=your-page-id
+OPENSTATUS_API_TOKEN=
+OPENSTATUS_PAGE_SLUG=nebutra
 ```
+
+Badge/widget read paths for Statuspage / Better Stack / Instatus use **public**
+summary JSON and do not require API tokens.
 
 ## Related
 
-- [Health package](../health/)
-- [Alerting package](../alerting/)
-- [Observability](../../../infra/ops/observability/)
+- Landing first-party probes: `apps/landing/src/lib/status-checks.ts`
+- Observability notes: `infra/ops/observability/README.md`
+- Package contract: `AGENTS.md`

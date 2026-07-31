@@ -20,6 +20,12 @@ import type { OpenStatusConfig, StatusConfig, StatusPageData } from "./types";
  * @example Custom Statuspage domain
  *   await fetchStatusPage({ provider: "statuspage", pageId: "https://status.example.com" })
  *
+ * @example Better Stack
+ *   await fetchStatusPage({ provider: "betterstack", pageUrl: "https://status.betterstack.com" })
+ *
+ * @example Instatus
+ *   await fetchStatusPage({ provider: "instatus", pageUrl: "https://instat.us" })
+ *
  * @example Internal health endpoint
  *   await fetchStatusPage({ provider: "internal", healthUrl: "https://api.example.com/health" })
  */

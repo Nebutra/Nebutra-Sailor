@@ -2,6 +2,9 @@ import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import pLimit from "p-limit";
 import { env } from "@/lib/env";
+import { loadAllServiceHistory, recordProbeHistory } from "./status-history";
+import { listActiveIncidents, listIncidents, type StatusIncident } from "./status-incidents";
+import { isStatusHistoryDurable } from "./status-store";
 
 export type ServiceState = "operational" | "degraded" | "outage" | "unknown";
 
@@ -15,12 +18,18 @@ export interface ServiceProbe {
   latencyMs: number | null;
   checkedAt: string;
   note: string;
+  /** UTC date → worst state recorded that day (when history store is available). */
+  history?: Record<string, ServiceState>;
 }
 
 export interface StatusSnapshot {
   checkedAt: string;
   overall: Exclude<ServiceState, "unknown">;
   services: ServiceProbe[];
+  activeIncidents: StatusIncident[];
+  /** All incidents for history feed (resolved + active). */
+  incidents: StatusIncident[];
+  historyDurable: boolean;
 }
 
 interface ServiceTarget {
@@ -155,12 +164,45 @@ function summarize(services: ServiceProbe[]): StatusSnapshot["overall"] {
 
 export async function getStatusSnapshot(): Promise<StatusSnapshot> {
   const limit = pLimit(STATUS_PROBE_CONCURRENCY);
-  const services = await Promise.all(
+  const probed = await Promise.all(
     getServiceTargets().map((target) => limit(() => probeService(target))),
   );
+
+  // Fire-and-forget history write should not block the page, but we await so
+  // today's cell is visible on the same request when storage is available.
+  try {
+    await recordProbeHistory(probed.map((s) => ({ id: s.id, state: s.state })));
+  } catch {
+    // History is best-effort — page still serves live probes.
+  }
+
+  let historyByService: Record<string, Record<string, ServiceState>> = {};
+  try {
+    historyByService = await loadAllServiceHistory(probed.map((s) => s.id));
+  } catch {
+    historyByService = {};
+  }
+
+  const services = probed.map((service) => ({
+    ...service,
+    history: historyByService[service.id] ?? {},
+  }));
+
+  let activeIncidents: StatusIncident[] = [];
+  let incidents: StatusIncident[] = [];
+  try {
+    [activeIncidents, incidents] = await Promise.all([listActiveIncidents(), listIncidents()]);
+  } catch {
+    activeIncidents = [];
+    incidents = [];
+  }
+
   return {
     checkedAt: new Date().toISOString(),
     overall: summarize(services),
     services,
+    activeIncidents,
+    incidents,
+    historyDurable: isStatusHistoryDurable(),
   };
 }

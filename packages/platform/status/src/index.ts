@@ -2,7 +2,8 @@
  * @nebutra/status
  *
  * Multi-provider status page integration.
- * Supports OpenStatus, Atlassian Statuspage, and internal /health endpoints.
+ * Supports OpenStatus, Atlassian Statuspage, Better Stack, Instatus,
+ * and internal /health endpoints.
  *
  * @example OpenStatus
  *   import { StatusBadge } from "@nebutra/status"
@@ -12,9 +13,15 @@
  *   <StatusBadge provider="statuspage" pageId="kctbh9vrtdwd" showLabel />
  *   <StatusWidget provider="statuspage" pageId="kctbh9vrtdwd" />
  *
+ * @example Better Stack
+ *   <StatusBadge provider="betterstack" pageUrl="https://status.example.com" showLabel />
+ *
+ * @example Instatus
+ *   <StatusBadge provider="instatus" pageUrl="https://status.example.com" showLabel />
+ *
  * @example Programmatic
  *   import { createStatusProvider } from "@nebutra/status"
- *   const provider = createStatusProvider({ provider: "statuspage", pageId: "abc" })
+ *   const provider = createStatusProvider({ provider: "betterstack", pageUrl: "https://status.example.com" })
  *   const data = await provider.fetchSummary()
  */
 
@@ -29,7 +36,9 @@ export type { StatusProvider } from "./provider";
 
 // All types
 export type {
+  BetterstackConfig,
   IncidentStatus,
+  InstatusConfig,
   InternalStatusConfig,
   MonitorStatus,
   OpenStatusConfig,

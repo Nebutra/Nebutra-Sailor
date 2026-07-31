@@ -2,13 +2,15 @@
  * StatusProvider — abstract interface + factory
  *
  * Dependency-inversion principle: components depend on this
- * interface, not on concrete OpenStatus/Statuspage SDKs.
+ * interface, not on concrete vendor SDKs.
  *
  * Usage:
  *   const provider = createStatusProvider({ provider: "statuspage", pageId: "abc123" });
  *   const data = await provider.fetchSummary();
  */
 
+import { BetterstackStatusProvider } from "./providers/betterstack";
+import { InstatusStatusProvider } from "./providers/instatus";
 import { InternalStatusProvider } from "./providers/internal";
 import { OpenStatusProvider } from "./providers/openstatus";
 import { AtlassianStatuspageProvider } from "./providers/statuspage";
@@ -29,6 +31,12 @@ export interface StatusProvider {
 export function createStatusProvider(config: StatusConfig): StatusProvider {
   if (config.provider === "statuspage") {
     return new AtlassianStatuspageProvider(config);
+  }
+  if (config.provider === "betterstack") {
+    return new BetterstackStatusProvider(config);
+  }
+  if (config.provider === "instatus") {
+    return new InstatusStatusProvider(config);
   }
   if (config.provider === "internal") {
     return new InternalStatusProvider(config);

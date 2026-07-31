@@ -1,4 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { BetterstackStatusProvider } from "../betterstack";
+import { InstatusStatusProvider } from "../instatus";
 import { InternalStatusProvider } from "../internal";
 import { OpenStatusProvider } from "../openstatus";
 import { AtlassianStatuspageProvider } from "../statuspage";
@@ -46,6 +48,34 @@ describe("status provider fetch timeout", () => {
     expect(signals[0]).toBeInstanceOf(AbortSignal);
     expect(summary.status).toBe("unknown");
     expect(summary.activeIncidents).toEqual([]);
+  });
+
+  it("passes a timeout signal to Better Stack fetch and falls back safely", async () => {
+    const signals = stubAbortedFetch();
+    const provider = new BetterstackStatusProvider({
+      provider: "betterstack",
+      pageUrl: "https://status.test",
+    });
+
+    const summary = await provider.fetchSummary();
+
+    expect(signals[0]).toBeInstanceOf(AbortSignal);
+    expect(summary.status).toBe("unknown");
+    expect(summary.monitors).toEqual([]);
+  });
+
+  it("passes a timeout signal to Instatus fetch and falls back safely", async () => {
+    const signals = stubAbortedFetch();
+    const provider = new InstatusStatusProvider({
+      provider: "instatus",
+      pageUrl: "https://status.test",
+    });
+
+    const summary = await provider.fetchSummary();
+
+    expect(signals[0]).toBeInstanceOf(AbortSignal);
+    expect(summary.status).toBe("unknown");
+    expect(summary.scheduledMaintenances).toEqual([]);
   });
 
   it("passes a timeout signal to internal health fetch and falls back safely", async () => {

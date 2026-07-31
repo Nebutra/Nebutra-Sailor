@@ -2,9 +2,11 @@
  * Shared status types — provider-agnostic
  *
  * Supports:
- *  - OpenStatus        (provider: "openstatus")
- *  - Atlassian Statuspage (provider: "statuspage")
- *  - Internal /health  (provider: "internal")
+ *  - OpenStatus             (provider: "openstatus")
+ *  - Atlassian Statuspage   (provider: "statuspage")
+ *  - Better Stack           (provider: "betterstack")
+ *  - Instatus               (provider: "instatus")
+ *  - Internal /health       (provider: "internal")
  */
 
 // ============================================
@@ -68,7 +70,12 @@ export interface ScheduledMaintenance {
 // Provider configs (discriminated union)
 // ============================================
 
-export type StatusProviderType = "openstatus" | "statuspage" | "internal";
+export type StatusProviderType =
+  | "openstatus"
+  | "statuspage"
+  | "betterstack"
+  | "instatus"
+  | "internal";
 
 export interface OpenStatusConfig {
   provider?: "openstatus";
@@ -91,6 +98,32 @@ export interface StatuspageConfig {
   refreshInterval?: number;
 }
 
+export interface BetterstackConfig {
+  provider: "betterstack";
+  /**
+   * Full status page base URL (preferred), e.g. "https://status.betterstack.com",
+   * OR a Better Stack / Better Uptime subdomain → `https://{slug}.betteruptime.com`.
+   * Summary is read from `{base}/index.json`.
+   */
+  pageUrl: string;
+  /** Override the JSON base (tests / private mirrors). */
+  apiUrl?: string;
+  refreshInterval?: number;
+}
+
+export interface InstatusConfig {
+  provider: "instatus";
+  /**
+   * Full status page base URL (preferred), e.g. "https://instat.us",
+   * OR an Instatus subdomain → `https://{slug}.instatus.com`.
+   * Summary is read from `{base}/summary.json`.
+   */
+  pageUrl: string;
+  /** Override the JSON base (tests / private mirrors). */
+  apiUrl?: string;
+  refreshInterval?: number;
+}
+
 export interface InternalStatusConfig {
   provider: "internal";
   /** Full URL to the /health endpoint */
@@ -98,4 +131,9 @@ export interface InternalStatusConfig {
   refreshInterval?: number;
 }
 
-export type StatusConfig = OpenStatusConfig | StatuspageConfig | InternalStatusConfig;
+export type StatusConfig =
+  | OpenStatusConfig
+  | StatuspageConfig
+  | BetterstackConfig
+  | InstatusConfig
+  | InternalStatusConfig;

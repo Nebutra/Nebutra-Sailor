@@ -4,26 +4,30 @@
  * StatusWidget — full status panel with monitors, uptime, incidents,
  * and scheduled maintenances.
  *
- * @example OpenStatus (existing API, unchanged)
+ * @example OpenStatus (default)
  *   <StatusWidget pageSlug="nebutra" />
  *
  * @example Atlassian Statuspage
  *   <StatusWidget provider="statuspage" pageId="kctbh9vrtdwd" />
  *
- * @example Statuspage with custom domain
- *   <StatusWidget provider="statuspage" pageId="https://status.example.com" />
+ * @example Better Stack
+ *   <StatusWidget provider="betterstack" pageUrl="https://status.example.com" />
+ *
+ * @example Instatus
+ *   <StatusWidget provider="instatus" pageUrl="https://status.example.com" />
  */
 
 import { useEffect, useState } from "react";
 import { fetchStatusPage } from "../api";
-import type { StatusConfig, StatusPageData, StatusState } from "../types";
+import type { StatusPageData, StatusProviderType, StatusState } from "../types";
+import { buildStatusConfig } from "./status-config";
 
 interface StatusWidgetProps {
-  // OpenStatus
+  provider?: StatusProviderType;
   pageSlug?: string;
-  // Atlassian Statuspage
-  provider?: "statuspage";
   pageId?: string;
+  pageUrl?: string;
+  healthUrl?: string;
   // Override the "View Status Page →" link
   statusPageUrl?: string;
   // Display toggles
@@ -92,19 +96,14 @@ const STATUS_LABELS: Record<StatusState, string> = {
   unknown: "Status Unknown",
 };
 
-function buildConfig(props: StatusWidgetProps): StatusConfig | null {
-  if (props.provider === "statuspage" && props.pageId) {
-    return { provider: "statuspage", pageId: props.pageId };
-  }
-  if (props.pageSlug) {
-    return { pageSlug: props.pageSlug };
-  }
-  return null;
-}
-
-function deriveStatusPageUrl(props: StatusWidgetProps, data: StatusPageData): string {
+function deriveStatusPageUrl(
+  props: Pick<StatusWidgetProps, "statusPageUrl" | "pageSlug" | "pageUrl" | "pageId">,
+  data: StatusPageData,
+): string {
   if (props.statusPageUrl) return props.statusPageUrl;
   if (data.pageUrl) return data.pageUrl;
+  if (props.pageUrl?.startsWith("http")) return props.pageUrl;
+  if (props.pageId?.startsWith("http")) return props.pageId;
   if (props.pageSlug) return `https://${props.pageSlug}.openstatus.dev`;
   return "#";
 }
@@ -113,6 +112,8 @@ export function StatusWidget({
   pageSlug,
   provider,
   pageId,
+  pageUrl,
+  healthUrl,
   statusPageUrl,
   showMonitors = true,
   showUptime = true,
@@ -125,10 +126,12 @@ export function StatusWidget({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const config = buildConfig({
-    ...(pageSlug !== undefined ? { pageSlug } : {}),
+  const config = buildStatusConfig({
     ...(provider !== undefined ? { provider } : {}),
+    ...(pageSlug !== undefined ? { pageSlug } : {}),
     ...(pageId !== undefined ? { pageId } : {}),
+    ...(pageUrl !== undefined ? { pageUrl } : {}),
+    ...(healthUrl !== undefined ? { healthUrl } : {}),
   });
 
   useEffect(() => {
@@ -182,7 +185,7 @@ export function StatusWidget({
   const externalUrl = deriveStatusPageUrl(
     {
       ...(pageSlug !== undefined ? { pageSlug } : {}),
-      ...(provider !== undefined ? { provider } : {}),
+      ...(pageUrl !== undefined ? { pageUrl } : {}),
       ...(pageId !== undefined ? { pageId } : {}),
       ...(statusPageUrl !== undefined ? { statusPageUrl } : {}),
     },

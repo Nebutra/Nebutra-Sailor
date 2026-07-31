@@ -119,6 +119,7 @@ OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer ...
 ## OpenStatus Setup
 
 OpenStatus uptime monitoring is configured via `openstatus.lock` at the repository root and `packages/platform/status/src/providers/openstatus.ts`.
+`@nebutra/status` also ships native read adapters for Atlassian Statuspage, Better Stack (`/index.json`), and Instatus (`/summary.json`) — see `packages/platform/status/README.md`.
 
 ## Logging Best Practices
 

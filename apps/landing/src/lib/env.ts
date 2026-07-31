@@ -11,6 +11,11 @@ export const env = createEnv({
     CONTACT_FORM_TO: z.string().email().default(getBrandEmail("contact")),
     // Direct docs app origin used for health checks and edge redirects.
     DOCS_ORIGIN_URL: z.string().url().default(getBrandOrigin("docs")),
+    // Status page history + incident store (Upstash REST — optional, edge-friendly)
+    UPSTASH_REDIS_REST_URL: z.string().url().optional(),
+    UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
+    // Shared secret for POST /api/status/incidents
+    STATUS_ADMIN_TOKEN: z.string().min(16).optional(),
   },
 
   client: {
