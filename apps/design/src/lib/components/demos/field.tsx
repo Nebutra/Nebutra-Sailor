@@ -45,7 +45,7 @@ export default function FieldDemo() {
         <Stack className="max-w-sm">
           <Field
             description="Used for deploy notifications only."
-            error={error ? "That address is already on this team." : undefined}
+            {...(error ? { error: "That address is already on this team." } : {})}
             htmlFor="field-email-2"
             label="Email"
           >

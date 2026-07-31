@@ -26,7 +26,8 @@ const RUNTIME_CSS = [
 function findRepoRoot(): string {
   let dir = process.cwd();
   for (let up = 0; up < 6; up += 1) {
-    if (existsSync(join(dir, RUNTIME_CSS[0]))) return dir;
+    const probe = RUNTIME_CSS[0];
+    if (probe !== undefined && existsSync(join(dir, probe))) return dir;
     const parent = dirname(dir);
     if (parent === dir) break;
     dir = parent;
@@ -58,7 +59,8 @@ function themeVariables(css: string): string[] {
     }
     const body = css.slice(from, index - 1);
     for (const declaration of body.matchAll(/(--[a-z0-9-]+)\s*:/giu)) {
-      names.push(declaration[1].slice(2));
+      const name = declaration[1];
+      if (name !== undefined) names.push(name.slice(2));
     }
     blockStart.lastIndex = index;
     match = blockStart.exec(css);

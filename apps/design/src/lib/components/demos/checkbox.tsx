@@ -50,7 +50,7 @@ export default function CheckboxDemo() {
           <div className="ml-6 flex flex-col gap-2">
             {["Analytics", "Notifications", "API access"].map((label, i) => (
               <Checkbox
-                checked={checked[i]}
+                checked={checked[i] ?? false}
                 key={label}
                 onChange={(next: boolean) =>
                   setChecked((prev) => prev.map((v, j) => (j === i ? next : v)))

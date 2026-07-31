@@ -59,6 +59,21 @@ const HSL_FN_RE = /^hsla?\(([^)]+)\)$/iu;
 const RGB_FN_RE = /^rgba?\(([^)]+)\)$/iu;
 const OKLCH_FN_RE = /^oklch\(([^)]+)\)$/iu;
 
+/**
+ * Three finite channels, or null. Returns a fixed-length tuple so callers get
+ * real numbers rather than `number | undefined` from an index signature —
+ * `.some(Number.isFinite)` reads like a guard but narrows nothing.
+ */
+function threeChannels(
+  body: string | undefined,
+): [number, number, number, number | undefined] | null {
+  if (body === undefined) return null;
+  const [a, b, c, alpha] = numbers(body);
+  if (a === undefined || b === undefined || c === undefined) return null;
+  if (!Number.isFinite(a) || !Number.isFinite(b) || !Number.isFinite(c)) return null;
+  return [a, b, c, alpha];
+}
+
 function numbers(body: string): number[] {
   return body
     .split(/[\s,/]+/u)
@@ -125,15 +140,17 @@ export function parseColor(raw: string): ParsedColor | null {
 
   const hslFn = HSL_FN_RE.exec(value);
   if (hslFn) {
-    const [h, s, l, a] = numbers(hslFn[1]);
-    if ([h, s, l].some((n) => !Number.isFinite(n))) return null;
+    const parsed = threeChannels(hslFn[1]);
+    if (!parsed) return null;
+    const [h, s, l, a] = parsed;
     return { hex: hslToHex(h, s, l), alpha: a ?? 1, notation: "hsl-function" };
   }
 
   const rgbFn = RGB_FN_RE.exec(value);
   if (rgbFn) {
-    const [r, g, b, a] = numbers(rgbFn[1]);
-    if ([r, g, b].some((n) => !Number.isFinite(n))) return null;
+    const parsed = threeChannels(rgbFn[1]);
+    if (!parsed) return null;
+    const [r, g, b, a] = parsed;
     return {
       hex: rgbToHex([r / 255, g / 255, b / 255]),
       alpha: a ?? 1,
@@ -143,9 +160,10 @@ export function parseColor(raw: string): ParsedColor | null {
 
   const oklchFn = OKLCH_FN_RE.exec(value);
   if (oklchFn) {
-    const body = oklchFn[1].trim();
-    const [l, c, h, a] = numbers(body);
-    if ([l, c, h].some((n) => !Number.isFinite(n))) return null;
+    const body = oklchFn[1]?.trim();
+    const parsed = threeChannels(body);
+    if (body === undefined || !parsed) return null;
+    const [l, c, h, a] = parsed;
     // `oklch(57.61% 0.2508 258.23)` — a percentage L is 0…100, a bare L is 0…1.
     const lightness = /^-?[\d.]+%/u.test(body) ? l / 100 : l;
     return {
@@ -172,13 +190,12 @@ export function over(color: ParsedColor, backdropHex: string): string {
   const fg = hexToRgb(color.hex);
   const bg = hexToRgb(backdropHex);
   if (!fg || !bg) return color.hex;
-  return rgbToHex(
-    [0, 1, 2].map((i) => fg[i] * color.alpha + bg[i] * (1 - color.alpha)) as [
-      number,
-      number,
-      number,
-    ],
-  );
+  const blend = (a: number, b: number) => a * color.alpha + b * (1 - color.alpha);
+  return rgbToHex([blend(fg[0], bg[0]), blend(fg[1], bg[1]), blend(fg[2], bg[2])] as [
+    number,
+    number,
+    number,
+  ]);
 }
 
 /** WCAG 2.2 contrast ratio between two opaque hexes. */

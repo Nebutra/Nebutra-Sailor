@@ -295,7 +295,9 @@ export interface Scale {
 export function scales(mode: Mode): Scale[] {
   const byScale = new Map<string, Token[]>();
   for (const token of group(mode, "scale")) {
-    const [family] = token.name.split(".");
+    // split() always yields at least one element, but the index signature does
+    // not know that; the whole name is the honest fallback.
+    const family = token.name.split(".")[0] ?? token.name;
     const list = byScale.get(family) ?? [];
     list.push(token);
     byScale.set(family, list);
@@ -309,7 +311,7 @@ export function palettes(mode: Mode): Scale[] {
   for (const token of group(mode, "color")) {
     const segments = token.name.split(".");
     // `color.nebutra-blue.500` is a palette stop; `color.status.danger` is not.
-    const family = segments.length > 1 ? segments[0] : "single";
+    const family = segments.length > 1 ? (segments[0] ?? "single") : "single";
     const list = byPalette.get(family) ?? [];
     list.push(token);
     byPalette.set(family, list);
@@ -577,10 +579,12 @@ export const MISSING_FAMILIES: MissingFamily[] = [
  */
 export function assertStillMissing(mode: Mode): void {
   const present = new Set(tokenSet(mode).tokens.map((token) => token.group));
-  const nowPresent = [
-    ["spacing", "spacing"],
-    ["fontSize", "font size / type scale"],
-  ].filter(([group]) => present.has(group));
+  const nowPresent = (
+    [
+      ["spacing", "spacing"],
+      ["fontSize", "font size / type scale"],
+    ] as const
+  ).filter(([group]) => present.has(group));
 
   if (nowPresent.length > 0) {
     throw new Error(

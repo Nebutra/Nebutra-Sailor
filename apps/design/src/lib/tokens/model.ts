@@ -265,7 +265,7 @@ function resolveAlias(tree: TokenNode, raw: string): string {
     const match = ALIAS_RE.exec(current.trim());
     if (!match) break;
     const target = match[1];
-    if (seen.has(target)) break;
+    if (target === undefined || seen.has(target)) break;
     seen.add(target);
     const leaf = lookup(tree, target);
     if (!leaf) break;
@@ -348,7 +348,7 @@ function buildSet(mode: Mode): TokenSet {
 
     tokens.push({
       path,
-      group: path[0],
+      group: path[0] ?? "",
       name: path.slice(1).join("."),
       cssVar,
       type: leaf.$type ?? "unknown",
@@ -359,7 +359,7 @@ function buildSet(mode: Mode): TokenSet {
       slotDescriptionBorrowed: false,
       source: winner,
       layer: LAYER_BY_SOURCE[winner],
-      tier: TIER_BY_GROUP[path[0]] ?? "foundation",
+      tier: (path[0] === undefined ? undefined : TIER_BY_GROUP[path[0]]) ?? "foundation",
       isAlias: aliasMatch !== null,
       aliasTarget: aliasMatch?.[1] ?? null,
       derivation:

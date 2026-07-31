@@ -86,7 +86,7 @@ export default function SelectDemo({ derived }: DemoProps) {
         <div className="max-w-sm">
           <Select
             disabled={disabled}
-            error={error ? "Pick a region before deploying." : undefined}
+            {...(error ? { error: "Pick a region before deploying." } : {})}
             label="Region"
             options={REGIONS}
             placeholder="Choose a region"
