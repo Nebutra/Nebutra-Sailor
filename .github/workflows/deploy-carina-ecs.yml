@@ -41,12 +41,29 @@ jobs:
           ref: ${{ inputs.ref || 'main' }}
           path: carina
 
-      # No Node or pnpm setup on the runner on purpose: this job only checks out
-      # two repos, opens an SSH session and builds on the ECS box. Nothing here
-      # executes node, npx or pnpm locally, so the toolchain steps installed a
-      # runtime that was never called — and calling actions/setup-node directly
-      # is what ci-harness-closure forbids, since every workflow that does need a
-      # toolchain must share one pinned setup.
+      # The runner really does need a toolchain: the Deploy step runs
+      # infra/ops/scripts/deploy-carina-docs-ecs.sh, which does `pnpm install`
+      # and `pnpm run build` here and rsyncs the output — the SSH session only
+      # receives the built site. The pnpm usage lives in that script rather than
+      # in this file, which is easy to miss when reading the workflow alone.
+      #
+      # Through the shared action rather than actions/setup-node directly, which
+      # is what ci-harness-closure asks for. install stays false because the
+      # dependencies to install are carina's, in its own checkout, not this
+      # repo's at the root.
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "24"
+          install: "false"
+
+      # Carina builds under pnpm 11 while this repo pins 10.32.1, which is what
+      # the shared action installs from the root packageManager field. corepack
+      # puts the carina version in front for the build that follows.
+      - name: Pin the pnpm version carina builds with
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.13.1 --activate
 
       - name: Configure SSH
         env:
