@@ -316,6 +316,32 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "apollo-burn-baby-burn",
+    stamp: "1969.07",
+    sources: [
+      {
+        label: "chrislgarry/Apollo-11, Luminary099/BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc",
+        url: "https://github.com/chrislgarry/Apollo-11/blob/master/Luminary099/BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc",
+      },
+      {
+        label: "chrislgarry/Apollo-11 repository",
+        url: "https://github.com/chrislgarry/Apollo-11",
+      },
+    ],
+    zh: {
+      tag: "源码",
+      title: "点火程序注释",
+      body: "登月舱的主点火程序在源码里被写作「BURN_BABY_BURN」。这名字不是点火那一刻的激动,是借自当年一个灵魂乐电台主持人的口头禅。",
+      coda: "该注释随源码保存在公开仓库中,未再修改。",
+    },
+    en: {
+      tag: "Comment",
+      title: "Burn, Baby, Burn",
+      body: "The lunar module's master ignition routine is labelled BURN_BABY_BURN in the source. The name is not about the thrust; it was borrowed from a soul radio DJ's catchphrase of the day.",
+      coda: "The line still sits unedited in the public repository.",
+    },
+  },
+  {
     id: "waterfall",
     stamp: "1970",
     sources: [
@@ -365,6 +391,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "The first actual bug",
       body: "A moth was pulled from a relay of the Harvard Mark II and taped into the logbook. The line beside it is cited as the origin of the word, but what it says is: first actual case of bug being found.",
       coda: "Engineers had said bug since Edison. The museum doubts the page is even in Hopper's hand.",
+    },
+  },
+  {
+    id: "unix-not-expected-to-understand",
+    stamp: "1975",
+    sources: [
+      {
+        label: 'Wikipedia, "You are not expected to understand this"',
+        url: "https://en.wikipedia.org/wiki/You_are_not_expected_to_understand_this",
+      },
+    ],
+    zh: {
+      tag: "内核",
+      title: "这题不考",
+      body: "「You are not expected to understand this」——第六版Unix源码slp.c注释。里奇后来说,那只是句玩笑话。",
+      coda: "该函数逻辑后来在第七版Unix中被重写。",
+    },
+    en: {
+      tag: "Kernel",
+      title: "Not Expected to Understand",
+      body: "Sixth Edition Unix's slp.c contains the line 'You are not expected to understand this,' attached to process-swap stack-restoration code built on PDP-11 compiler quirks. Dennis Ritchie later said he meant it the way a teacher says this won't be on the exam.",
+      coda: "The routine was rewritten for Seventh Edition Unix.",
     },
   },
   {
@@ -443,6 +491,23 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "sosumi-so-sue-me",
+    stamp: "1991",
+    sources: [{ label: "Wikipedia — Sosumi", url: "https://en.wikipedia.org/wiki/Sosumi" }],
+    zh: {
+      tag: "命名",
+      title: "所以告我啊",
+      body: "1991年,苹果法务驳回了「Let It Beep」这个提案,理由是太像音乐。声音设计师回了一句「so sue me」,然后把它拼成「sosumi」交了上去。",
+      coda: "这个提示音用了近三十年,2020年才被替换。",
+    },
+    en: {
+      tag: "Naming",
+      title: "So Sue Me",
+      body: 'In 1991, Apple\'s legal department rejected the alert-sound name "Let It Beep" as too musical, under a settlement barring Apple Computer from music-related trademarks. Sound designer Jim Reekes wrote back "so sue me," then filed it as "sosumi."',
+      coda: "The sound shipped in Mac OS for nearly three decades before Big Sur replaced it in 2020.",
+    },
+  },
+  {
     id: "www-royalty-free",
     stamp: "1993.04.30",
     sources: [
@@ -462,6 +527,23 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "The day it stopped costing",
       body: "On 30 April 1993 CERN made the protocol and the code of the World Wide Web available royalty-free. Anyone could take it, without paying and without asking.",
       coda: "Nobody has paid a royalty to use it since.",
+    },
+  },
+  {
+    id: "zlib-two-authors",
+    stamp: "1995",
+    sources: [{ label: 'Wikipedia, "Zlib"', url: "https://en.wikipedia.org/wiki/Zlib" }],
+    zh: {
+      tag: "地基",
+      title: "两个人的压缩层",
+      body: "zlib 嵌在 Linux、macOS、iOS 和多代游戏主机里,Git 与 OpenSSH 都靠它压缩。1995年,两个人写出了它的第一版。",
+      coda: "作者栏此后再未新增第三个名字。",
+    },
+    en: {
+      tag: "Foundation",
+      title: "The Compression Layer of Two",
+      body: "zlib sits inside Linux, macOS, iOS and successive generations of game consoles; Git and OpenSSH both lean on it to compress. Two people wrote its first public release in 1995.",
+      coda: "The authorship line has never grown a third name.",
     },
   },
   {
@@ -491,6 +573,75 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "curl-one-maintainer",
+    stamp: "1998",
+    sources: [
+      { label: 'curl.se, "History of curl"', url: "https://curl.se/docs/history.html" },
+      { label: 'curl.se, "Who uses curl?"', url: "https://curl.se/docs/companies.html" },
+    ],
+    zh: {
+      tag: "地基",
+      title: "一个人的协议栈",
+      body: "curl文档称libcurl已装入约百亿台设备,覆盖百余种系统与二十八种架构。项目自1998年起,由Daniel Stenberg一人主导维护。",
+      coda: "该职位仍无继任者名单。",
+    },
+    en: {
+      tag: "Foundation",
+      title: "One Man's Protocol Stack",
+      body: "curl's own docs put libcurl on roughly ten billion devices, running on 110 operating systems and 28 CPU architectures. The project has carried Daniel Stenberg's name as lead maintainer since it was renamed curl in 1998.",
+      coda: "No named successor has ever been listed.",
+    },
+  },
+  {
+    id: "book-of-mozilla-verses",
+    stamp: "1998.05",
+    sources: [
+      {
+        label: 'Wikipedia, "The Book of Mozilla"',
+        url: "https://en.wikipedia.org/wiki/The_Book_of_Mozilla",
+      },
+    ],
+    zh: {
+      tag: "彩蛋",
+      title: "摩西拉之书",
+      body: "在地址栏输入about:mozilla可见「摩西拉之书」,历代版本各附一句经文式警句,野兽与玛门缠斗。经文编号并非章节,而是发布日期。",
+      coda: "最新一节写于2020年Nightly发布。",
+    },
+    en: {
+      tag: "Easter Egg",
+      title: "The Book of Mozilla",
+      body: "Typing about:mozilla into the address bar reveals the Book of Mozilla, an apocalyptic verse pitting 'the beast' against 'Mammon' that each browser generation updates. The verse numbers are not chapter markers: they are release dates.",
+      coda: "The newest verse, 6:27, first shipped in a Firefox Nightly build in 2020.",
+    },
+  },
+  {
+    id: "http-418-teapot",
+    stamp: "1998.04",
+    sources: [
+      {
+        label: "IETF, RFC 2324 — Hyper Text Coffee Pot Control Protocol",
+        url: "https://www.rfc-editor.org/rfc/rfc2324",
+      },
+      {
+        label:
+          "IETF, RFC 7168 — The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances",
+        url: "https://www.rfc-editor.org/rfc/rfc7168",
+      },
+    ],
+    zh: {
+      tag: "标准",
+      title: "我是茶壶",
+      body: "RFC 2324 发布于1998年4月1日,把418定义为「我是茶壶」,文件类别是非正式。2014年的愚人节,RFC 7168 又给它补了煮茶条款。",
+      coda: "两份愚人节文件,定义了一个真被实现的状态码。",
+    },
+    en: {
+      tag: "Protocol",
+      title: "I'm a Teapot",
+      body: 'RFC 2324, published April 1, 1998, defines status 418 as "I\'m a teapot" and files itself as Informational, not a standard. On April 1, 2014, RFC 7168 extended it to cover tea brewing. The code still never became a real standard.',
+      coda: "Both documents remain Informational; the status code shipped in real servers anyway.",
+    },
+  },
+  {
     id: "multics-shutdown",
     stamp: "2000.10.30",
     sources: [
@@ -507,6 +658,29 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "The last one",
       body: "On 30 October 2000 the last known Multics installation running natively on Honeywell hardware was shut down at the Canadian Department of National Defence in Halifax, Nova Scotia.",
       coda: "Thirty-five years after the project began.",
+    },
+  },
+  {
+    id: "sqlite-no-license",
+    stamp: "2000",
+    sources: [
+      {
+        label: 'SQLite, "Most Widely Deployed SQL Database Engine"',
+        url: "https://www.sqlite.org/mostdeployed.html",
+      },
+      { label: 'SQLite, "Copyright"', url: "https://www.sqlite.org/copyright.html" },
+    ],
+    zh: {
+      tag: "地基",
+      title: "没有许可证的数据库",
+      body: "SQLite官网估算全球活跃数据库超万亿份,四十多亿部手机各装数百个,部署量或仅次于zlib。它没有许可证,作者把代码直接献给公有领域。",
+      coda: "想要法律担保的公司,要另付费买一份保证书。",
+    },
+    en: {
+      tag: "Foundation",
+      title: "The Database With No License",
+      body: "SQLite's own page estimates over a trillion active database files worldwide, since every smartphone alone carries hundreds, ranking it second only to zlib among deployed software. There is no license, because the authors gave every line to the public domain.",
+      coda: "Companies wanting legal cover buy a separate warranty of title.",
     },
   },
   {
@@ -593,6 +767,54 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Named after the alley",
       body: "The site that went live on 6 March 2005 is not named after a metaphor. Yang Bo wrote its source in a cafe near Douban Hutong in Beijing, and took the name of the alley.",
       coda: "Twenty-one years on, the site still carries it.",
+    },
+  },
+  {
+    id: "git-information-manager-hell",
+    stamp: "2005.04.07",
+    sources: [
+      {
+        label: "git/git, commit e83c516",
+        url: "https://github.com/git/git/commit/e83c5163316f89bfbde7d9ab23ca2e25604af290",
+      },
+      {
+        label: "GitHub API, commit metadata",
+        url: "https://api.github.com/repos/git/git/commits/e83c5163316f89bfbde7d9ab23ca2e25604af290",
+      },
+    ],
+    zh: {
+      tag: "版本控制",
+      title: "来自地狱",
+      body: '2005年4月7日,林纳斯提交了 git 的第一个 commit,留言是「"git" 的初始版本,来自地狱的信息管理器」,提交邮箱为 ppc970.osdl.org。',
+      coda: "该邮箱指向OSDL测试用PowerPC机器。",
+    },
+    en: {
+      tag: "Git",
+      title: "Information Manager from Hell",
+      body: 'On 7 April 2005 Linus Torvalds committed git\'s first revision. The message reads: Initial revision of "git", the information manager from hell. The author address on it is torvalds@ppc970.osdl.org.',
+      coda: "That address points to a PowerPC 970 test machine at OSDL.",
+    },
+  },
+  {
+    id: "knuth-reward-check",
+    stamp: "2005",
+    sources: [
+      {
+        label: "Wikipedia — Knuth reward check",
+        url: "https://en.wikipedia.org/wiki/Knuth_reward_check",
+      },
+    ],
+    zh: {
+      tag: "支票",
+      title: "圣塞里夫银行",
+      body: "Knuth为找到书中错误的读者签发2.56美元支票,开票行是虚构的「圣塞里夫银行」。到2005年3月,他签出的支票总额已超两万美元。",
+      coda: "多数支票被裱起来挂在墙上,很少有人拿去兑现。",
+    },
+    en: {
+      tag: "Reward",
+      title: "Bank of San Serriffe",
+      body: "Donald Knuth pays $2.56 for each error found in his books, drawn on the fictional Bank of San Serriffe. By March 2005 the checks he had signed totaled over $20,000.",
+      coda: "Most recipients frame the check rather than deposit it.",
     },
   },
   {
@@ -723,6 +945,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Attributed to nobody",
       body: '"640K ought to be enough for anybody" — Gates\'s own answer is that there is never a citation, that the quotation just floats like a rumour and gets repeated. "A world market for maybe five computers" — Thomas Watson did say five, in 1953, about the orders he expected for one machine, the IBM 701.',
       coda: "The 701 went on to sell eighteen.",
+    },
+  },
+  {
+    id: "homebrew-volunteer-team",
+    stamp: "2009",
+    sources: [
+      {
+        label: 'Wikipedia, "Homebrew (package manager)"',
+        url: "https://en.wikipedia.org/wiki/Homebrew_(package_manager)",
+      },
+    ],
+    zh: {
+      tag: "地基",
+      title: "没有公司的软件仓库",
+      body: "Homebrew是苹果开发者默认的包管理器,2013年贡献者数居GitHub全站第一。Max Howell写下第一版,如今由三十四名无偿志愿者维护。",
+      coda: "资金来自一次众筹与开源集体的账户。",
+    },
+    en: {
+      tag: "Foundation",
+      title: "The Repository With No Employer",
+      body: "Homebrew is the default package manager on most Mac developer machines; in 2013 it led all of GitHub in contributors. Max Howell wrote its first release in 2009. It is maintained today by a team of 34 people, all unpaid.",
+      coda: "Its funding history is one Kickstarter and an Open Source Collective account.",
     },
   },
   {
@@ -3960,6 +4204,55 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "goto-fail-duplicate",
+    stamp: "2014.02",
+    sources: [
+      {
+        label: "Adam Langley, imperialviolet.org — Apple's SSL/TLS bug",
+        url: "https://www.imperialviolet.org/2014/02/22/applebug.html",
+      },
+      {
+        label: "Wikipedia — Transport Layer Security",
+        url: "https://en.wikipedia.org/wiki/Transport_Layer_Security",
+      },
+    ],
+    zh: {
+      tag: "漏洞",
+      title: "重复的跳转",
+      body: "苹果SSL验证函数里,一行「goto fail;」被复制成两行,后一句没有if判断,验证代码永远跳过签名检查,却始终返回成功。",
+      coda: "该代码在受影响系统上原样运行了数月。",
+    },
+    en: {
+      tag: "Security",
+      title: "The Duplicate Jump",
+      body: "Inside Apple's SSLVerifySignedServerKeyExchange, a goto fail; line was duplicated. The second copy sat outside any if, so the function always jumped past the signature check and returned success regardless.",
+      coda: "The duplicate line ran unchanged on the affected systems for months.",
+    },
+  },
+  {
+    id: "ntp-harlan-stenn",
+    stamp: "2015.03",
+    sources: [
+      {
+        label: 'Wikipedia, "Network Time Protocol"',
+        url: "https://en.wikipedia.org/wiki/Network_Time_Protocol",
+      },
+      { label: "Network Time Foundation, nwtime.org", url: "https://www.nwtime.org/" },
+    ],
+    zh: {
+      tag: "地基",
+      title: "谁在对表",
+      body: "全球银行、交易所与卫星导航靠 NTP 对表。米尔斯设计了协议,如今参考实现主要由哈兰·斯滕一人维护。二零一五年,基金会公开求援,称经费将尽。",
+      coda: "基金会仍在为经费四处筹款。",
+    },
+    en: {
+      tag: "Time",
+      title: "Who Sets the Clock",
+      body: "Banks, exchanges and satellite systems synchronize against NTP. David Mills designed the protocol; the reference implementation is now led, largely alone, by Harlan Stenn. In March 2015 trade press ran the headline 'NTP Needs Money: Is A Foundation The Answer?'",
+      coda: "The foundation is still fundraising toward its budget.",
+    },
+  },
+  {
     id: "aws-s3-2017-typo",
     stamp: "2017.02.28",
     sources: [
@@ -4027,6 +4320,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "requests-kenneth-reitz",
+    stamp: "2019",
+    sources: [
+      {
+        label: 'Wikipedia, "Requests (software)"',
+        url: "https://en.wikipedia.org/wiki/Requests_(software)",
+      },
+    ],
+    zh: {
+      tag: "移交",
+      title: "交出去的钥匙",
+      body: "Requests 月下载超三千万次,是 Python 常用的网络请求库。雷茨二零一一年发布它,二零一九年因健康问题交给了软件基金会。",
+      coda: "他此后再未领导过这个项目。",
+    },
+    en: {
+      tag: "Handoff",
+      title: "Handing Over the Keys",
+      body: "Requests logs over 30 million downloads a month and became the standard HTTP client for Python. Kenneth Reitz released it on February 14, 2011. In 2019, after health problems, he handed control of the project to the Python Software Foundation.",
+      coda: "He has not returned to lead the project since stepping down.",
+    },
+  },
+  {
     id: "linux-y2038-kernel-fix",
     stamp: "2020.01",
     sources: [
@@ -4047,6 +4362,49 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Eighteen Years Early",
       body: "32-bit Unix systems will overflow their time_t counter on 19 January 2038. Linux 5.6, released in 2020, was the first kernel able to keep a 32-bit system running past that date. Applications still need a rebuild against a 64-bit time_t to actually benefit.",
       coda: "The kernel was patched years before most 32-bit userspace caught up.",
+    },
+  },
+  {
+    id: "log4shell-eight-years",
+    stamp: "2021.12.10",
+    sources: [
+      { label: 'Wikipedia, "Log4Shell"', url: "https://en.wikipedia.org/wiki/Log4Shell" },
+      { label: 'Wikipedia, "Log4j"', url: "https://en.wikipedia.org/wiki/Log4j" },
+    ],
+    zh: {
+      tag: "漏洞",
+      title: "八年后被发现",
+      body: "Log4j 是 Java 最常用的日志库,漏洞令九成云端企业中招。这段代码自二零一三年起便有缺陷,无人细查,直到二零二一年十二月才公开。",
+      coda: "修复它的仍是几名志愿者。",
+    },
+    en: {
+      tag: "Vulnerability",
+      title: "Eight Years Unread",
+      body: "Log4j sits inside most enterprise Java software; Wiz and EY found 93 percent of cloud environments exposed to Log4Shell. The flaw existed in the code since 2013. It was reported November 24, 2021 and disclosed publicly on December 10, rated CVSS 10.",
+      coda: "A handful of volunteers wrote the fix that reached millions of servers.",
+    },
+  },
+  {
+    id: "core-js-denis-pushkarev",
+    stamp: "2023.02.14",
+    sources: [
+      {
+        label: 'core-js docs, "So, what\'s next" (Denis Pushkarev)',
+        url: "https://github.com/zloirock/core-js/blob/master/docs/2023-02-14-so-whats-next.md",
+      },
+      { label: "GitHub, zloirock/core-js", url: "https://github.com/zloirock/core-js" },
+    ],
+    zh: {
+      tag: "维护",
+      title: "补丁的作者",
+      body: "core-js 被 WhatsApp、Netflix、苹果引用,月下载约两点五亿次。作者二零一九年卷入车祸致人死亡,次年入狱十个月,出狱后仍在维护它。",
+      coda: "捐款从每月两千五百美元跌到四百美元。",
+    },
+    en: {
+      tag: "Maintainer",
+      title: "The Patch Nobody Replaced",
+      body: "core-js ships inside WhatsApp, Netflix, Apple and PayPal, logging roughly 250 million downloads a month. Its author, Denis Pushkarev, was in a fatal 2019 car accident, served about ten months in prison starting January 2020, and kept maintaining the library throughout.",
+      coda: "Monthly donations fell from about 2,500 dollars to 400.",
     },
   },
 ];
