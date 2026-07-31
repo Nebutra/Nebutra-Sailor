@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 const rows = [
   { label: "macOS Universal", href: DOWNLOADS.macosUniversal, badge: ".dmg" },
   { label: "Windows x64", href: DOWNLOADS.windowsX64, badge: ".exe" },
-  { label: "Linux x64 AppImage", href: DOWNLOADS.linuxX64AppImage, badge: "AppImage" },
-  { label: "Linux arm64 AppImage", href: DOWNLOADS.linuxArm64AppImage, badge: "AppImage" },
+  { label: "Linux x64", href: DOWNLOADS.linuxX64Deb, badge: ".deb" },
+  { label: "Linux arm64", href: DOWNLOADS.linuxArm64Deb, badge: ".deb" },
 ] as const;
 
 export default function DownloadPage() {
