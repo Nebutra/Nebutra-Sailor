@@ -6,8 +6,8 @@ name: Deploy to Cloud VM (PM2 Manual Fallback)
 # any equivalent VM with SSH + Node.js + PM2.
 #
 # The production default is still Vercel frontends + Cloudflare Workers gateway
-# + VM/FastAPI origin for most surfaces. Forge is the exception: it lives on
-# this VM and auto-deploys from main when forge paths change (see `on.push`).
+# + VM/FastAPI origin for most surfaces. Auto-CI on this VM (see `on.push`) is
+# limited to product edges + the api-gateway (forge, router, pebble, api).
 # All other apps stay manual via workflow_dispatch to protect the small disk
 # and avoid cross-region SSH blast radius.
 #
@@ -51,13 +51,14 @@ on:
         description: "Reason (shown in run summary)"
         required: false
         default: ""
-  # Product edges auto CI/CD: main push of forge/router product paths deploys
-  # those apps (+ nginx vhosts). Other ECS apps remain workflow_dispatch.
+  # Auto CI/CD on this VM (allowlisted). Other apps remain workflow_dispatch.
   push:
     branches: [main]
     paths:
       - "apps/forge/**"
       - "apps/router/**"
+      - "apps/pebble/**"
+      - "backends/gateway/**"
       - "packages/ai/forge-runtime/**"
       - "packages/platform/router-supply/**"
       - "infra/runtime/nginx/conf.d/*.nebutra.com.conf"
@@ -141,6 +142,9 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
+            # Tighter filter for main-push auto-CI (avoids packages/** fan-out).
+            api-core:
+              - 'backends/gateway/**'
             idp:
               - 'apps/idp/**'
               - 'packages/iam/oauth-server/**'
@@ -222,6 +226,7 @@ jobs:
           F_LANDING:      ${{ steps.filter.outputs.landing }}
           F_WEB:          ${{ steps.filter.outputs.web }}
           F_API:          ${{ steps.filter.outputs.api }}
+          F_API_CORE:     ${{ steps.filter.outputs['api-core'] }}
           F_IDP:          ${{ steps.filter.outputs.idp }}
           F_AUTH:         ${{ steps.filter.outputs.auth }}
           F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
@@ -242,24 +247,39 @@ jobs:
             esac
           }
 
-          # main push auto-CI is forge-only (see on.push.paths). Do not trust
-          # broad path filters (e.g. packages/** on other apps) for that path.
+          # main push auto-CI allowlist: product edges + api-gateway on this VM.
+          # Use api-core (backends/gateway only) so packages/** does not fan out.
+          # Nginx-only edits still match forge/router/api/pebble filters via
+          # their shared infra/runtime/nginx/** paths — prefer forge as carrier
+          # when no app source changed.
           if [ "${EVENT_NAME:-}" = "push" ]; then
+            api="${F_API_CORE:-false}"
+            forge="${F_FORGE:-false}"
+            router="${F_ROUTER:-false}"
+            pebble="${F_PEBBLE:-false}"
+            if [ "$api" != "true" ] && [ "$forge" != "true" ] && [ "$router" != "true" ] && [ "$pebble" != "true" ]; then
+              # Shared deploy/nginx/workflow-only change: ship via forge so vhosts update.
+              forge=true
+            fi
+            any=false
+            if [ "$api" = "true" ] || [ "$forge" = "true" ] || [ "$router" = "true" ] || [ "$pebble" = "true" ]; then
+              any=true
+            fi
             {
               echo "landing=false"
               echo "web=false"
-              echo "api=false"
+              echo "api=$api"
               echo "idp=false"
               echo "auth=false"
               echo "design-docs=false"
-              echo "pebble=false"
+              echo "pebble=$pebble"
               echo "sailor-docs=false"
-              echo "router=false"
-              echo "forge=true"
+              echo "router=$router"
+              echo "forge=$forge"
               echo "admin=false"
-              echo "any=true"
+              echo "any=$any"
             } >> "$GITHUB_OUTPUT"
-            echo "Auto-CI push: deploying forge only"
+            echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble any=$any"
             exit 0
           fi
 

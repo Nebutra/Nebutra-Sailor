@@ -9,6 +9,11 @@ Object storage for user uploads, static assets, and media files.
 | `nebutra-assets` | Public static assets | ✅ Yes | `cdn.nebutra.com` |
 | `nebutra-uploads` | User uploads (private) | ❌ No | Signed URLs |
 | `nebutra-backups` | Database backups | ❌ No | Internal only |
+| `nebutra-pebble-diagnostics` | Pebble desktop diagnostic NDJSON | ❌ No | Server-side only |
+
+Pebble diagnostics: [docs/ops/pebble-support-intake.md](../../../../docs/ops/pebble-support-intake.md) ·  
+`infra/ops/scripts/provision-pebble-diagnostics-r2.sh` ·  
+`gh workflow run ops-configure-pebble-r2.yml`
 
 ## Setup
 
