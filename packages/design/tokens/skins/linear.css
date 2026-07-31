@@ -116,6 +116,20 @@ html[data-brand="linear"] {
   --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
   --font-weight-heading: 510;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 80ms;
+  --motion-duration-micro: 80ms;
+  --duration-flow: 140ms;
+  --motion-duration-flow: 140ms;
+  --duration-reveal: 200ms;
+  --motion-duration-reveal: 200ms;
+  --duration-cinematic: 320ms;
+  --motion-duration-cinematic: 320ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 13px;
   --zone-product-caption-leading: 1.2;

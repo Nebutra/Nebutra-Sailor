@@ -90,6 +90,16 @@ export function buildStripe(ctx: CompileContext): BrandPackage {
       // Ghost outline companion uses lavender hairline, not carbon
       outlineBorder: lavender,
     }),
+    // Deliberate and even. Stripe's motion never draws attention to itself;
+    // the curve is symmetric so a panel leaves the way it arrived.
+    motion: {
+      easeOut: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+      easeInOut: "cubic-bezier(0.645, 0.045, 0.355, 1)",
+      micro: 100,
+      flow: 180,
+      reveal: 260,
+      cinematic: 400,
+    },
     typography: {
       fontSans: `'sohne-var', 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'sohne-var', 'Inter Tight', ui-sans-serif, system-ui, sans-serif`,

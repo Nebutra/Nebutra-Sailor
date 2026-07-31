@@ -126,6 +126,20 @@ html[data-brand="vanta"] {
   --font-display: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
   --font-weight-heading: 500;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --motion-ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --motion-ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 240ms;
+  --motion-duration-flow: 240ms;
+  --duration-reveal: 380ms;
+  --motion-duration-reveal: 380ms;
+  --duration-cinematic: 620ms;
+  --motion-duration-cinematic: 620ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 12px;
   --zone-product-caption-leading: 1.5;

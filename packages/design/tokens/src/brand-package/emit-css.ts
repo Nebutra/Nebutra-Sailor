@@ -7,6 +7,7 @@ import { isDualModeBrand, normalizeBrandPackage } from "./normalize";
 import type {
   BrandColorRoles,
   BrandFontFace,
+  BrandMotion,
   BrandPackage,
   BrandRecipe,
   BrandSemanticColors,
@@ -18,6 +19,51 @@ import type {
 /** Biome CSS formatter prefers double-quoted font families over single quotes. */
 function cssFontStack(stack: string): string {
   return stack.replace(/'/g, '"');
+}
+
+/**
+ * Timing for one language.
+ *
+ * Emits both spellings the shared sheet ships — `--duration-flow` and
+ * `--motion-duration-flow` — because both are already consumed and a skin that
+ * set only one would leave half the surface on the default ramp, which reads as
+ * a language that moves at two speeds.
+ *
+ * Only the keys the package declares are written. An omitted curve inherits the
+ * shared ramp rather than being reset to it, so a language can adjust its
+ * durations without also restating curves it does not care about.
+ */
+function motionVars(motion: BrandMotion | undefined): string[] {
+  if (!motion) return [];
+  const lines: string[] = [];
+  // Both rails, for the same reason the durations write both spellings: the
+  // utility layer reads --motion-ease-*, hand-written CSS reads --ease-*, and a
+  // skin that moved only one would animate its utilities and its stylesheets at
+  // different speeds.
+  const curves: Array<[keyof BrandMotion, string]> = [
+    ["easeOut", "ease-out"],
+    ["easeInOut", "ease-in-out"],
+    ["easeSpring", "ease-spring"],
+  ];
+  for (const [key, name] of curves) {
+    const value = motion[key];
+    if (typeof value !== "string" || !value.trim()) continue;
+    lines.push(`  --${name}: ${value};`);
+    lines.push(`  --motion-${name}: ${value};`);
+  }
+  const durations: Array<[keyof BrandMotion, string]> = [
+    ["micro", "micro"],
+    ["flow", "flow"],
+    ["reveal", "reveal"],
+    ["cinematic", "cinematic"],
+  ];
+  for (const [key, name] of durations) {
+    const value = motion[key];
+    if (typeof value !== "number" || !Number.isFinite(value)) continue;
+    lines.push(`  --duration-${name}: ${value}ms;`);
+    lines.push(`  --motion-duration-${name}: ${value}ms;`);
+  }
+  return lines.length ? [``, `  /* Motion */`, ...lines] : [];
 }
 
 function recipeVars(recipe: BrandRecipe): string[] {
@@ -428,6 +474,7 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     ``,
     `  /* Typography */`,
     ...typeLines,
+    ...motionVars(b.motion),
     ...emitZones(b.zones),
     ...(extLines.length
       ? ["", "  /* Taxonomy / decorative (not product CTA) */", ...extLines]

@@ -110,6 +110,16 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
       badgeDefault: "muted",
       outlineBorder: carbon,
     }),
+    // Atmospheric. Backdrops drift rather than move, so even the micro step is
+    // slow and nothing snaps.
+    motion: {
+      easeOut: "cubic-bezier(0.33, 1, 0.68, 1)",
+      easeInOut: "cubic-bezier(0.37, 0, 0.63, 1)",
+      micro: 120,
+      flow: 240,
+      reveal: 380,
+      cinematic: 620,
+    },
     typography: {
       fontSans: `'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'Reckless', 'Source Serif 4', 'Lora', ui-serif, Georgia, serif`,

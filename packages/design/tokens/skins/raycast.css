@@ -151,6 +151,22 @@ html[data-brand="raycast"] {
   --font-mono: "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 400;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-micro: 90ms;
+  --motion-duration-micro: 90ms;
+  --duration-flow: 160ms;
+  --motion-duration-flow: 160ms;
+  --duration-reveal: 220ms;
+  --motion-duration-reveal: 220ms;
+  --duration-cinematic: 340ms;
+  --motion-duration-cinematic: 340ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 11px;
   --zone-product-caption-leading: 0.91;

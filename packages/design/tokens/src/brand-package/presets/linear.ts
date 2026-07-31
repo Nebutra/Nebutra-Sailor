@@ -121,6 +121,18 @@ export function buildLinear(ctx: CompileContext): BrandPackage {
       elevationPreset: "soft",
       density: "compact",
     }),
+    // Resolves before the eye asks it to. Linear's interfaces answer on the
+    // frame you click; the expo-out curve spends its whole budget decelerating,
+    // which is what makes a 140ms move read as instant rather than abrupt. No
+    // spring — nothing in this language overshoots.
+    motion: {
+      easeOut: "cubic-bezier(0.16, 1, 0.3, 1)",
+      easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+      micro: 80,
+      flow: 140,
+      reveal: 200,
+      cinematic: 320,
+    },
     typography: {
       fontSans: `'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontMono: `'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace`,

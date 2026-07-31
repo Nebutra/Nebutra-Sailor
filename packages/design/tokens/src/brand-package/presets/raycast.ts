@@ -69,6 +69,17 @@ export function buildRaycast(ctx: CompileContext): BrandPackage {
       density: ctx.recipeHints.density ?? "comfortable",
       badgeDefault: "muted",
     }),
+    // Native-feeling: quick, with a small overshoot on things that appear. The
+    // spring is the point — a launcher should feel like it was already there.
+    motion: {
+      easeOut: "cubic-bezier(0.16, 1, 0.3, 1)",
+      easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+      easeSpring: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      micro: 90,
+      flow: 160,
+      reveal: 220,
+      cinematic: 340,
+    },
     typography: {
       fontSans: `'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif`,
       fontMono: `'Geist Mono', 'GeistMono', ui-monospace, Menlo, monospace`,

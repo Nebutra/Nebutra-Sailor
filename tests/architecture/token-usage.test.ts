@@ -200,3 +200,61 @@ describe("Property 3c: No Hardcoded Hex Values in Components", () => {
     );
   });
 });
+
+describe("Property 3d: Every switchable dimension is switchable", () => {
+  const TOKENS_CSS = readFileSync(resolve(ROOT, "packages/design/tokens/styles.css"), "utf-8");
+  const SKINS_CSS = readFileSync(resolve(ROOT, "packages/design/theme/skins.css"), "utf-8");
+
+  /**
+   * A Brand Package is meant to swap a whole design language, not a palette.
+   * That only holds for a dimension if the Tailwind utility resolves through a
+   * variable rather than a baked value: `@theme inline` writes the literal it is
+   * given straight into the class, so `--ease-out: cubic-bezier(...)` compiled
+   * `.ease-out` to a fixed curve that no skin could reach, while every colour,
+   * radius and shadow around it moved.
+   */
+  // lastIndexOf, not indexOf: the file header names the block in prose, and
+  // slicing from there leaves the :root declarations inside the window — which
+  // reads as a literal and fails every case for the wrong reason.
+  const themeBlock = TOKENS_CSS.slice(TOKENS_CSS.lastIndexOf("@theme inline"));
+
+  const INDIRECT = [
+    ["--ease-in", "--motion-ease-in"],
+    ["--ease-out", "--motion-ease-out"],
+    ["--ease-in-out", "--motion-ease-in-out"],
+    ["--ease-spring", "--motion-ease-spring"],
+    ["--duration-micro", "--motion-duration-micro"],
+    ["--duration-flow", "--motion-duration-flow"],
+    ["--duration-reveal", "--motion-duration-reveal"],
+    ["--duration-cinematic", "--motion-duration-cinematic"],
+  ] as const;
+
+  it.each(INDIRECT)("@theme %s points at %s rather than a literal", (utility, source) => {
+    const declaration = new RegExp(`${utility}:\\s*([^;]+);`).exec(themeBlock);
+    expect(declaration, `${utility} is missing from the @theme block`).not.toBeNull();
+    expect(declaration?.[1]?.trim()).toBe(`var(${source})`);
+  });
+
+  it("declares a runtime source for every indirected motion token", () => {
+    const missing = INDIRECT.map(([, source]) => source).filter(
+      (source) => !new RegExp(`${source}:\\s*[^;]+;`).test(TOKENS_CSS),
+    );
+    expect(missing, "indirection with no source resolves to nothing at all").toEqual([]);
+  });
+
+  it("gives each built-in language its own motion, not just its own colours", () => {
+    const perBrand = new Map<string, string>();
+    for (const [, id, body] of SKINS_CSS.matchAll(
+      /html\[data-brand="([a-z]+)"\][^{]*\{([\s\S]*?)\n\}/g,
+    ) as unknown as Array<[string, string, string]>) {
+      const flow = /--duration-flow:\s*([^;]+);/.exec(body)?.[1];
+      if (flow && !perBrand.has(id)) perBrand.set(id, flow.trim());
+    }
+    expect(perBrand.size, "no language declares motion — the dimension is inert").toBeGreaterThan(
+      0,
+    );
+    // Not all-identical: if every language shipped the same timing, the tokens
+    // would exist and still leave motion out of what a brand switch changes.
+    expect(new Set(perBrand.values()).size).toBeGreaterThan(1);
+  });
+});

@@ -834,17 +834,22 @@ function buildTailwindThemeInline() {
   --shadow-glow-accent-sm: var(--elevation-glow-accent-sm);
   --shadow-glow-primary: var(--elevation-glow-primary);
 
-  /* Motion — Easing curves */
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Motion — Easing curves.
+     Indirect, like the shadows above: an @theme entry holding a literal is
+     inlined into the utility, so the ease-out class compiled to a fixed
+     cubic-bezier and no Brand Package could move it. Pointing at the runtime
+     rail in static/base.css makes it follow the language the page is under.
+     (No backticks in this block — it is inside a JS template literal.) */
+  --ease-in: var(--motion-ease-in);
+  --ease-out: var(--motion-ease-out);
+  --ease-in-out: var(--motion-ease-in-out);
+  --ease-spring: var(--motion-ease-spring);
 
   /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
-  --duration-micro: 100ms;
-  --duration-flow: 200ms;
-  --duration-reveal: 300ms;
-  --duration-cinematic: 500ms;
+  --duration-micro: var(--motion-duration-micro);
+  --duration-flow: var(--motion-duration-flow);
+  --duration-reveal: var(--motion-duration-reveal);
+  --duration-cinematic: var(--motion-duration-cinematic);
 
   /* Font family — Geist keeps Latin + numerals, self-hosted vivo Sans SC takes
      CJK, system CJK faces behind it. Order is the design decision; see the

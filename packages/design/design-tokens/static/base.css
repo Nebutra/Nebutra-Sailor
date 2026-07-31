@@ -9,6 +9,25 @@
    page that re-evaluated on every paint. Mode-aware via CSS cascade.
    Lives in static/ so it survives Style Dictionary rebuilds.
    ─────────────────────────────────────────────────────────── */
+/* ─── Motion source rail ────────────────────────────────────
+   The runtime half of the motion tokens, and the reason it exists under a
+   second name: a theme entry cannot point at itself, so the utility layer
+   needs a source that is not the same property. Durations already had that
+   pair; the curves did not, which is why the ease utilities compiled to a
+   literal cubic-bezier and stayed on the default ramp no matter which brand
+   package was applied.
+
+   Same shape as elevation, where `--shadow-*: var(--elevation-*)` has always
+   given the utilities something a skin can move. A Brand Package overrides
+   these; nothing else should.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 :root {
   --edge-faint: rgb(0 0 0 / 0.04);
   --edge-soft: rgb(0 0 0 / 0.07);

@@ -132,6 +132,22 @@ html[data-brand="gsap"] {
   --font-display: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 600;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --motion-ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 250ms;
+  --motion-duration-flow: 250ms;
+  --duration-reveal: 400ms;
+  --motion-duration-reveal: 400ms;
+  --duration-cinematic: 700ms;
+  --motion-duration-cinematic: 700ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 14px;
   --zone-product-caption-leading: 1.4;
@@ -372,6 +388,20 @@ html[data-brand="linear"] {
   --font-display: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
   --font-weight-heading: 510;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 80ms;
+  --motion-duration-micro: 80ms;
+  --duration-flow: 140ms;
+  --motion-duration-flow: 140ms;
+  --duration-reveal: 200ms;
+  --motion-duration-reveal: 200ms;
+  --duration-cinematic: 320ms;
+  --motion-duration-cinematic: 320ms;
 
   /* Zone type scales */
   --zone-product-caption-size: 13px;
@@ -658,6 +688,20 @@ html[data-brand="notion"] {
   --font-display: "NotionInter", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 700;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 200ms;
+  --motion-duration-flow: 200ms;
+  --duration-reveal: 280ms;
+  --motion-duration-reveal: 280ms;
+  --duration-cinematic: 460ms;
+  --motion-duration-cinematic: 460ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 12px;
   --zone-product-caption-leading: 1.33;
@@ -937,6 +981,22 @@ html[data-brand="raycast"] {
   --font-mono: "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 400;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-micro: 90ms;
+  --motion-duration-micro: 90ms;
+  --duration-flow: 160ms;
+  --motion-duration-flow: 160ms;
+  --duration-reveal: 220ms;
+  --motion-duration-reveal: 220ms;
+  --duration-cinematic: 340ms;
+  --motion-duration-cinematic: 340ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 11px;
   --zone-product-caption-leading: 0.91;
@@ -1166,6 +1226,20 @@ html[data-brand="stripe"] {
   --font-heading: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-display: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 300;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --motion-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --motion-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --duration-micro: 100ms;
+  --motion-duration-micro: 100ms;
+  --duration-flow: 180ms;
+  --motion-duration-flow: 180ms;
+  --duration-reveal: 260ms;
+  --motion-duration-reveal: 260ms;
+  --duration-cinematic: 400ms;
+  --motion-duration-cinematic: 400ms;
 
   /* Zone type scales */
   --zone-product-caption-size: 12px;
@@ -1432,6 +1506,20 @@ html[data-brand="vanta"] {
   --font-display: "Reckless", "Source Serif 4", "Lora", ui-serif, Georgia, serif;
   --font-weight-heading: 500;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --motion-ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --motion-ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 240ms;
+  --motion-duration-flow: 240ms;
+  --duration-reveal: 380ms;
+  --motion-duration-reveal: 380ms;
+  --duration-cinematic: 620ms;
+  --motion-duration-cinematic: 620ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 12px;
   --zone-product-caption-leading: 1.5;
@@ -1676,6 +1764,20 @@ html[data-brand="vercel"] {
   --font-display: "Geist Sans", "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 450;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 100ms;
+  --motion-duration-micro: 100ms;
+  --duration-flow: 150ms;
+  --motion-duration-flow: 150ms;
+  --duration-reveal: 200ms;
+  --motion-duration-reveal: 200ms;
+  --duration-cinematic: 300ms;
+  --motion-duration-cinematic: 300ms;
 
   /* Zone type scales */
   --zone-product-caption-size: 13px;

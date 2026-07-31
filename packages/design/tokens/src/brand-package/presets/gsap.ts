@@ -63,6 +63,18 @@ export function buildGsap(ctx: CompileContext): BrandPackage {
       outlineBorder: cream,
       primaryStrokeGradient: "linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%)",
     }),
+    // Performs. This is the one language where motion is the message, so the
+    // ramp is long enough to be watched and the spring is allowed to overshoot
+    // well past its resting state.
+    motion: {
+      easeOut: "cubic-bezier(0.22, 1, 0.36, 1)",
+      easeInOut: "cubic-bezier(0.65, 0, 0.35, 1)",
+      easeSpring: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+      micro: 120,
+      flow: 250,
+      reveal: 400,
+      cinematic: 700,
+    },
     typography: {
       fontSans: `'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif`,

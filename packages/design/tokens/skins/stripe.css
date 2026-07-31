@@ -109,6 +109,20 @@ html[data-brand="stripe"] {
   --font-display: "sohne-var", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 300;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --motion-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --motion-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --duration-micro: 100ms;
+  --motion-duration-micro: 100ms;
+  --duration-flow: 180ms;
+  --motion-duration-flow: 180ms;
+  --duration-reveal: 260ms;
+  --motion-duration-reveal: 260ms;
+  --duration-cinematic: 400ms;
+  --motion-duration-cinematic: 400ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 12px;
   --zone-product-caption-leading: 1.45;

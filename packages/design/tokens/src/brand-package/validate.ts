@@ -91,6 +91,35 @@ export function validateBrandPackage(brand: unknown): ValidationResult {
     });
   }
 
+  if (b.motion) {
+    // Durations are milliseconds, and the emitter appends the unit. A package
+    // that wrote "200ms" here would emit `200msms` — invalid, so the whole
+    // declaration is dropped and that language silently keeps the shared timing.
+    for (const key of ["micro", "flow", "reveal", "cinematic"] as const) {
+      const value = b.motion[key];
+      if (value == null) continue;
+      if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+        errors.push(`motion.${key} must be a non-negative number of milliseconds`);
+      } else if (value > 2000) {
+        warnings.push(`motion.${key} is ${value}ms — long enough to read as a stall`);
+      }
+    }
+    for (const key of ["easeOut", "easeInOut", "easeSpring"] as const) {
+      const value = b.motion[key];
+      if (value == null) continue;
+      if (typeof value !== "string" || !value.trim()) {
+        errors.push(`motion.${key} must be a non-empty timing function`);
+      }
+    }
+    const { micro, flow, reveal, cinematic } = b.motion;
+    const ramp = [micro, flow, reveal, cinematic].filter((v): v is number => typeof v === "number");
+    if (ramp.length > 1 && ramp.some((v, i) => i > 0 && v < (ramp[i - 1] ?? v))) {
+      warnings.push(
+        "motion durations are not ascending — micro should be the shortest and cinematic the longest",
+      );
+    }
+  }
+
   if (b.zones?.marketing?.display && !b.zones.product) {
     warnings.push(
       "marketing.display set without product zone — app shell may inherit display size",

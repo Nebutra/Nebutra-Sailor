@@ -122,6 +122,22 @@ html[data-brand="gsap"] {
   --font-display: "Mori", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 600;
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --motion-ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --duration-micro: 120ms;
+  --motion-duration-micro: 120ms;
+  --duration-flow: 250ms;
+  --motion-duration-flow: 250ms;
+  --duration-reveal: 400ms;
+  --motion-duration-reveal: 400ms;
+  --duration-cinematic: 700ms;
+  --motion-duration-cinematic: 700ms;
+
   /* Zone type scales */
   --zone-product-caption-size: 14px;
   --zone-product-caption-leading: 1.4;

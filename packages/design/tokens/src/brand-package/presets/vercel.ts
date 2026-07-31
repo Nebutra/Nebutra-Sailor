@@ -117,6 +117,16 @@ export function buildVercel(ctx: CompileContext): BrandPackage {
       cardShadow: "rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px",
       outlineBorder: hairline,
     }),
+    // Neutral and quick. Geist treats motion as feedback rather than
+    // expression, so the ramp is short and the curve is the platform default.
+    motion: {
+      easeOut: "cubic-bezier(0, 0, 0.2, 1)",
+      easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+      micro: 100,
+      flow: 150,
+      reveal: 200,
+      cinematic: 300,
+    },
     typography: {
       fontSans: `'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif`,
       fontMono: `'Geist Mono', ui-monospace, Menlo, monospace`,

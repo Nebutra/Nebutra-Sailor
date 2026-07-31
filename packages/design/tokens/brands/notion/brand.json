@@ -98,6 +98,14 @@
       }
     ]
   },
+  "motion": {
+    "easeOut": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "micro": 120,
+    "flow": 200,
+    "reveal": 280,
+    "cinematic": 460
+  },
   "zones": {
     "product": {
       "caption": {

@@ -111,6 +111,17 @@ export function buildNotion(ctx: CompileContext): BrandPackage {
         raised: "0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03)",
       },
     }),
+    // Settles rather than snaps. A document surface is read, not operated, so
+    // motion here is slow enough to follow with the eye and never competes with
+    // the text it is moving.
+    motion: {
+      easeOut: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+      micro: 120,
+      flow: 200,
+      reveal: 280,
+      cinematic: 460,
+    },
     typography: {
       fontSans: `'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif`,

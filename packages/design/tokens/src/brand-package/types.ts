@@ -215,6 +215,36 @@ export interface BrandTypography {
   faces?: BrandFontFace[];
 }
 
+/**
+ * How a design language moves.
+ *
+ * Motion is a dimension of a language, not a constant: Linear resolves almost
+ * before you notice, Notion settles, GSAP performs. Until this existed the
+ * durations and curves were declared once in the shared token sheet and no skin
+ * could override them, so switching brand changed every colour, radius, face and
+ * type scale on the page — and left the timing identical.
+ *
+ * Durations are milliseconds and carry the same four names the token sheet
+ * already ships, so a component written against `--duration-flow` picks up the
+ * language it is under without changing.
+ */
+export interface BrandMotion {
+  /** Entering — decelerates into place. */
+  easeOut?: string;
+  /** Moving between two on-screen states. */
+  easeInOut?: string;
+  /** Overshoots and settles. Omit for languages that never overshoot. */
+  easeSpring?: string;
+  /** State flips the eye should not have to wait for: hover, press, check. */
+  micro?: number;
+  /** Something moving across the surface: a drawer, a tab indicator. */
+  flow?: number;
+  /** Something arriving that was not there: a panel, a toast. */
+  reveal?: number;
+  /** Deliberately slow, for a single focal moment. Never for chrome. */
+  cinematic?: number;
+}
+
 export interface BrandExtensions {
   /** Taxonomy / category accents (GSAP disciplines, etc.) — product chrome may ignore */
   categories?: Record<string, CssColor>;
@@ -268,6 +298,8 @@ export interface BrandPackage {
   /** Always canonical after normalizeBrandPackage(). */
   recipe: BrandRecipe;
   typography: BrandTypography;
+  /** How the language moves. Falls back to the shared ramp when omitted. */
+  motion?: BrandMotion;
   zones?: BrandZones;
   extensions?: BrandExtensions;
 }
