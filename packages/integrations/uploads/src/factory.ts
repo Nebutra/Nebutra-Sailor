@@ -53,8 +53,19 @@ function createUploadProviderByType(
  * Auto-detect provider based on environment
  */
 function autoDetectProvider(config?: ProviderConfig): UploadProvider {
-  // Priority 1: Check explicit UPLOAD_PROVIDER
-  const explicitProvider = process.env.UPLOAD_PROVIDER as UploadProviderType | undefined;
+  // Priority 1: Check explicit UPLOAD_PROVIDER (r2 is an alias for S3-compatible)
+  const explicitRaw = process.env.UPLOAD_PROVIDER?.trim().toLowerCase();
+  if (explicitRaw === "r2") {
+    logger.info("Using explicit upload provider", { provider: "r2→s3" });
+    return new S3UploadProvider({
+      accessKeyId: process.env.R2_ACCESS_KEY_ID || "",
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || "",
+      region: "auto",
+      ...(process.env.R2_ENDPOINT !== undefined ? { endpoint: process.env.R2_ENDPOINT } : {}),
+      ...(process.env.R2_PUBLIC_URL !== undefined ? { publicUrl: process.env.R2_PUBLIC_URL } : {}),
+    });
+  }
+  const explicitProvider = explicitRaw as UploadProviderType | undefined;
   if (explicitProvider) {
     logger.info("Using explicit upload provider", { provider: explicitProvider });
     return createUploadProviderByType(explicitProvider, config);
