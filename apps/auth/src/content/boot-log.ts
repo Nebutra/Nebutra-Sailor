@@ -69,6 +69,134 @@ export const BOOT_LOG_LABEL: Record<BootLogLocale, string> = {
 
 export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
   {
+    id: "transistor-name-off-patent-1947",
+    stamp: "1947.12",
+    sources: [
+      {
+        label: "Wikipedia, History of the transistor",
+        url: "https://en.wikipedia.org/wiki/History_of_the_transistor",
+      },
+    ],
+    zh: {
+      tag: "专利",
+      title: "未署名的发明人",
+      body: "1947年12月23日,巴丁与布拉顿在贝尔实验室演示锗晶体管,肖克利并不在场。专利申请后来删去了他的名字。",
+      coda: "1956年,三人共同获得诺贝尔物理学奖。",
+    },
+    en: {
+      tag: "Patent",
+      title: "The Name Left Off the Patent",
+      body: "On December 23, 1947, Bardeen and Brattain demonstrated a germanium point-contact transistor at Bell Labs. Shockley was not in the room. Lawyers found his own design too close to a 1925 patent by Julius Lilienfeld and dropped his name from this one.",
+      coda: "In 1956 all three shared the Nobel Prize in Physics.",
+    },
+  },
+  {
+    id: "dartmouth-two-month-study-1956",
+    stamp: "1956",
+    sources: [
+      {
+        label: "Wikipedia, Dartmouth workshop",
+        url: "https://en.wikipedia.org/wiki/Dartmouth_workshop",
+      },
+    ],
+    zh: {
+      tag: "提案",
+      title: "两个月的研究",
+      body: "1955年的提案写道,只需一个夏天,十个人,就能让机器模拟学习与智能的方方面面。次年会议开了六到八周,全程在场的只有三人。",
+      coda: "人工智能这个名字,自此固定下来。",
+    },
+    en: {
+      tag: "Proposal",
+      title: "A Two-Month Study",
+      body: "The 1955 proposal by McCarthy, Minsky, Rochester and Shannon asked for a two-month, ten-man study, on the premise that intelligence could be described precisely enough for a machine to simulate it. The 1956 workshop ran six to eight weeks; only three attendees stayed the whole time.",
+      coda: "The name they picked for the field, artificial intelligence, is the one that stuck.",
+    },
+  },
+  {
+    id: "traitorous-eight-lie-detector-1957",
+    stamp: "1957",
+    sources: [
+      {
+        label: "Wikipedia, Traitorous eight",
+        url: "https://en.wikipedia.org/wiki/Traitorous_eight",
+      },
+    ],
+    zh: {
+      tag: "分裂",
+      title: "测谎仪备忘录",
+      body: "1957年5月,肖克利实验室八人因主管录音、封锁数据、要求测谎而联名抗议未果,9月18日另立门户,创办费尔柴尔德。",
+      coda: "英特尔、AMD等数十家公司,后来都被记作这家公司的分支。",
+    },
+    en: {
+      tag: "Split",
+      title: "The Lie Detector Memo",
+      body: "In May 1957, eight engineers at Shockley Semiconductor demanded William Shockley be replaced as manager. He had recorded phone calls, blocked staff from sharing results, and required lie-detector tests. On September 18, 1957, the eight founded Fairchild Semiconductor instead.",
+      coda: "Wikipedia counts Intel and AMD among the dozens of companies traced back to that spinoff.",
+    },
+  },
+  {
+    id: "kilby-noyce-six-months-1958-1959",
+    stamp: "1958 · 1959",
+    sources: [
+      { label: "Wikipedia, Jack Kilby", url: "https://en.wikipedia.org/wiki/Jack_Kilby" },
+      { label: "Wikipedia, Robert Noyce", url: "https://en.wikipedia.org/wiki/Robert_Noyce" },
+    ],
+    zh: {
+      tag: "并联发明",
+      title: "六个月与一枚奖章",
+      body: "基尔比1958年9月在德州仪器展示外接引脚的原型,诺伊斯1959年7月在仙童申请可量产的硅片方案。两人都承认对方是共同发明人。",
+      coda: "2000年基尔比独自获奖,诺伊斯已在1990年去世。",
+    },
+    en: {
+      tag: "Parallel",
+      title: "Six Months, One Medal",
+      body: "Kilby demonstrated a working integrated circuit at Texas Instruments in September 1958, its parts joined by external wires. Noyce filed a monolithic silicon version at Fairchild in July 1959, mass-producible. Neither man rejected the other's claim to co-inventor.",
+      coda: "Kilby accepted the 2000 Nobel Prize alone. Noyce had died in 1990.",
+    },
+  },
+  {
+    id: "perceptron-conscious-machine-1958",
+    stamp: "1958 · 1969",
+    sources: [
+      { label: "Wikipedia, Perceptron", url: "https://en.wikipedia.org/wiki/Perceptron" },
+      { label: "Wikipedia, AI winter", url: "https://en.wikipedia.org/wiki/AI_winter" },
+    ],
+    zh: {
+      tag: "神经网络",
+      title: "会自觉的机器",
+      body: "1958年《纽约时报》称,罗森布拉特的感知机是海军预期能行走说话看写并意识到自身存在的雏形。1969年明斯基证明单层感知机算不出异或,经费随之枯竭。",
+      coda: "神经网络研究就此沉寂到上世纪八十年代。",
+    },
+    en: {
+      tag: "Neural Nets",
+      title: "The Machine That Would Wake Up",
+      body: "In 1958 the New York Times reported that Frank Rosenblatt's perceptron was the embryo of a computer the Navy expected to walk, talk, see, write, reproduce itself and be conscious of its existence. In 1969 Minsky and Papert's book proved a single-layer perceptron could not compute XOR.",
+      coda: "Funding for neural network research dried up and did not return until the 1980s.",
+    },
+  },
+  {
+    id: "hamilton-software-engineering",
+    stamp: "1960s",
+    sources: [
+      {
+        label: "Wikipedia, Margaret Hamilton (software engineer)",
+        url: "https://en.wikipedia.org/wiki/Margaret_Hamilton_(software_engineer)",
+      },
+    ],
+    zh: {
+      tag: "命名",
+      title: "一个笑话",
+      body: "阿波罗计划期间,玛格丽特·汉密尔顿开始用「软件工程」称呼自己的工作。她回忆,这曾是业内一个持续很久的玩笑,直到一位受尊敬的硬件专家在会上公开表示认同。",
+      coda: "笑话讲了很多年,后来没人再讲。",
+    },
+    en: {
+      tag: "Naming",
+      title: "An Ongoing Joke",
+      body: 'During the Apollo program, Margaret Hamilton began calling her work "software engineering" to distinguish it from hardware engineering. She said no one had heard the term before and it became an ongoing joke, until a respected hardware engineer stood up in a meeting and agreed.',
+      coda: "The joke ran for years, then nobody told it anymore.",
+    },
+  },
+  {
     id: "macau-seventeen-thousand",
     stamp: "1961.10",
     sources: [
@@ -92,6 +220,48 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Seventeen thousand",
       body: "In October 1961 a syndicate formed by Stanley Ho, Henry Fok, Yip Hon and Teddy Yip bid for the Macau gaming monopoly. They offered 3,167,000 patacas, seventeen thousand more than the rival bid.",
       coda: "The monopoly that margin bought them held for more than forty years.",
+    },
+  },
+  {
+    id: "moores-law-ten-year-bet-1965",
+    stamp: "1965",
+    sources: [
+      { label: "Wikipedia, Moore's law", url: "https://en.wikipedia.org/wiki/Moore%27s_law" },
+    ],
+    zh: {
+      tag: "预言",
+      title: "十年之约",
+      body: "摩尔1965年预测,未来十年芯片元件数每年翻倍,到1975年约6.5万个。1975年,他自己把周期改成两年。",
+      coda: "摩尔后来说,这个词几乎能指代半导体行业的任何事。",
+    },
+    en: {
+      tag: "Prediction",
+      title: "A Ten-Year Bet",
+      body: "Moore's 1965 article predicted the component count on a chip would double every year for the next decade, reaching roughly 65,000 by 1975. In 1975 he revised the doubling period to two years. The curve later called a law was his own forecast, already amended once.",
+      coda: "By 1995 Moore said the term had come to mean almost anything in the chip industry.",
+    },
+  },
+  {
+    id: "eliza-secretary-1966",
+    stamp: "1966",
+    sources: [
+      { label: "Wikipedia, ELIZA", url: "https://en.wikipedia.org/wiki/ELIZA" },
+      {
+        label: "Wikipedia, Joseph Weizenbaum",
+        url: "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
+      },
+    ],
+    zh: {
+      tag: "对话",
+      title: "伊莉莎效应",
+      body: "1966年,MIT发布的DOCTOR程序只是把使用者的话重新排列后抛回去。魏泽鲍姆自己的秘书却要他离开房间,好单独和它说话。",
+      coda: "这一现象后来被命名为伊莉莎效应。",
+    },
+    en: {
+      tag: "Chatbot",
+      title: "The Secretary and DOCTOR",
+      body: "In 1966 Joseph Weizenbaum released ELIZA's DOCTOR script at MIT, a program that mostly reflected users' own sentences back as questions. His own secretary reportedly asked him to leave the room so she could talk to it alone.",
+      coda: "The pattern he had not expected was later named the ELIZA effect.",
     },
   },
   {
@@ -394,6 +564,59 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "intel-4004-busicom-rights-1971",
+    stamp: "1971",
+    sources: [{ label: "Wikipedia, Intel 4004", url: "https://en.wikipedia.org/wiki/Intel_4004" }],
+    zh: {
+      tag: "让渡",
+      title: "属于计算器公司的芯片",
+      body: "1969年,必思康委托英特尔设计计算器芯片组,版权归必思康。1971年法金用降价换回自由使用权,4004才得以对外销售。",
+      coda: "1971年7月,4004开始面向所有客户发售。",
+    },
+    en: {
+      tag: "Rights",
+      title: "A Chip Owned by a Calculator Company",
+      body: "In 1969 Japan's Busicom commissioned Intel to design a calculator chipset, under a contract assigning the design rights to Busicom despite the work being done entirely inside Intel. In 1971 engineer Federico Faggin traded a lower price for release from that exclusivity.",
+      coda: "General sales of the Intel 4004 began that July.",
+    },
+  },
+  {
+    id: "pong-coin-overflow",
+    stamp: "1972.08",
+    sources: [{ label: "Wikipedia, Pong", url: "https://en.wikipedia.org/wiki/Pong" }],
+    zh: {
+      tag: "反馈",
+      title: "投币箱溢出",
+      body: "1972年8月,《Pong》原型机放进桑尼维尔一家酒吧。几天后老板报告故障,工程师艾尔康赶去检修,发现是投币箱被硬币塞满溢出。",
+      coda: "故障原因不是电路,是硬币太多。",
+    },
+    en: {
+      tag: "Feedback",
+      title: "The Coin Box Overflowed",
+      body: "In August 1972, Atari placed the Pong prototype in a bar in Sunnyvale. A few days later the owner reported it broken. Engineer Al Alcorn drove out to fix it and found the fault was not electrical: the coin mechanism had jammed because it was overflowing with quarters.",
+      coda: "The malfunction was not a wiring fault; it was too many coins.",
+    },
+  },
+  {
+    id: "wozniak-breakout-bonus",
+    stamp: "1973",
+    sources: [
+      { label: "Wikipedia, Steve Wozniak", url: "https://en.wikipedia.org/wiki/Steve_Wozniak" },
+    ],
+    zh: {
+      tag: "分成",
+      title: "分账",
+      body: "1973年,乔布斯让沃兹尼亚克为《打砖块》电路板减少芯片数,称拿到700美元,分给沃兹350美元。十年后沃兹才知道,奖金其实是5000美元。",
+      coda: "沃兹说,如果乔布斯开口,他会直接把钱给他。",
+    },
+    en: {
+      tag: "Bonus",
+      title: "The Split",
+      body: "In 1973 Atari asked Steve Jobs to shrink the Breakout circuit board, paying $100 per chip removed. Jobs asked Wozniak to help, promising half. Wozniak cut 50 chips. Jobs said the total came to $700, so Wozniak's share was $350. Ten years later Wozniak learned the real bonus was $5,000.",
+      coda: "Wozniak said he would have given Jobs the money if asked.",
+    },
+  },
+  {
     id: "unix-not-expected-to-understand",
     stamp: "1975",
     sources: [
@@ -413,6 +636,47 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Not Expected to Understand",
       body: "Sixth Edition Unix's slp.c contains the line 'You are not expected to understand this,' attached to process-swap stack-restoration code built on PDP-11 compiler quirks. Dennis Ritchie later said he meant it the way a teacher says this won't be on the exam.",
       coda: "The routine was rewritten for Seventh Edition Unix.",
+    },
+  },
+  {
+    id: "vi-adm3a-keys",
+    stamp: "1977",
+    sources: [
+      {
+        label: "Wikipedia, Vi (text editor)",
+        url: "https://en.wikipedia.org/wiki/Vi_(text_editor)",
+      },
+    ],
+    zh: {
+      tag: "键位",
+      title: "键位来自终端限制",
+      body: "1977年比尔·乔伊在伯克利写vi,所用终端无方向键,h j k l刻着箭头便成了移动键;慢速拨号迫使他把命令做得极短。",
+      coda: "被奉为设计哲学的按键,起点只是终端没有方向键。",
+    },
+    en: {
+      tag: "Keybinds",
+      title: "Arrows Inscribed on Letter Keys",
+      body: "Bill Joy wrote vi at Berkeley in 1977 on a Lear Siegler ADM-3A terminal that had no arrow keys; h, j, k and l were inscribed with arrows and became the movement keys. The terse one-letter commands came from typing ahead of a 300-baud modem too slow to keep up.",
+      coda: "The keys later credited to design philosophy began as a workaround for a terminal with no arrow keys.",
+    },
+  },
+  {
+    id: "kildall-flying",
+    stamp: "1980",
+    sources: [
+      { label: "Wikipedia, Gary Kildall", url: "https://en.wikipedia.org/wiki/Gary_Kildall" },
+    ],
+    zh: {
+      tag: "证词",
+      title: "那趟航班",
+      body: "1980年IBM谈CP/M授权,基尔达尔正驾机送货,谈判交给妻子多萝西。盖茨事后说他「任性地去开飞机」。IBM谈判代表杰克·萨姆斯后来坚称,从未见过基尔达尔。",
+      coda: "两人的说法,至今互不相认。",
+    },
+    en: {
+      tag: "Testimony",
+      title: "The Flight That Wasn't Confirmed",
+      body: 'In 1980 IBM came to license CP/M. Gary Kildall was flying software to a client; his wife Dorothy handled the opening talks. Bill Gates later told reporters Kildall had "capriciously gone flying." IBM\'s lead negotiator, Jack Sams, said he never met Kildall at all.',
+      coda: "The two accounts of that meeting have never been reconciled.",
     },
   },
   {
@@ -439,6 +703,130 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Reflections on Trusting Trust",
       body: "Thompson's Turing lecture described a compiler that plants a backdoor in the login program, and reinstalls the entire trick whenever it compiles a compiler. Rebuild from clean source and the backdoor survives.",
       coda: "You cannot trust code you did not totally create yourself.",
+    },
+  },
+  {
+    id: "arm-one-person-company-1985",
+    stamp: "1985",
+    sources: [
+      { label: "Wikipedia, Acorn Computers", url: "https://en.wikipedia.org/wiki/Acorn_Computers" },
+      { label: "Wikipedia, Arm Holdings", url: "https://en.wikipedia.org/wiki/Arm_Holdings" },
+    ],
+    zh: {
+      tag: "起点",
+      title: "一个人的芯片公司",
+      body: "1983年,靠教育电脑起家的Acorn启动RISC研究。他们去看了一家对手的芯片设计公司,发现6502的升级出自一家「事实上的一人公司」,于是认定自己也做得来。",
+      coda: "1985年4月26日,ARM1送到,第一次通电就跑起来了。",
+    },
+    en: {
+      tag: "Origin",
+      title: "A One-Person Chip Company",
+      body: "Acorn, which had made its name on education computers, began RISC research in 1983. A visit to a rival chip designer showed them that updates to the 6502 came out of what was effectively a one-person company, and they concluded they needed nothing more.",
+      coda: "ARM1 arrived on 26 April 1985 and worked on first power-up.",
+    },
+  },
+  {
+    id: "copyleft-all-rights-reversed",
+    stamp: "1985 · 1989",
+    sources: [
+      { label: "Wikipedia, Copyleft", url: "https://en.wikipedia.org/wiki/Copyleft" },
+      {
+        label: "Wikipedia, GNU General Public License",
+        url: "https://en.wikipedia.org/wiki/GNU_General_Public_License",
+      },
+    ],
+    zh: {
+      tag: "版权",
+      title: "反转的版权声明",
+      body: "一封信写着「Copyleft,all rights reversed」。Symbolics拒绝回馈其改进,他便用版权法本身,写出要求相反义务的许可证。",
+      coda: "GPL于1989年2月25日发布。",
+    },
+    en: {
+      tag: "Copyright",
+      title: "All Rights Reversed",
+      body: 'Someone mailed Richard Stallman a letter marked "Copyleft — all rights reversed," a pun on the standard notice. After Symbolics enhanced his Lisp interpreter and declined to share the improvements back, he used copyright law itself to write a license demanding the opposite obligation.',
+      coda: "The General Public License followed in February 1989.",
+    },
+  },
+  {
+    id: "tetris-unpaid-decade",
+    stamp: "1985 · 1996",
+    sources: [
+      { label: "Wikipedia, Tetris", url: "https://en.wikipedia.org/wiki/Tetris" },
+      { label: "Wikipedia, Alexey Pajitnov", url: "https://en.wikipedia.org/wiki/Alexey_Pajitnov" },
+    ],
+    zh: {
+      tag: "版权",
+      title: "未获分成的方块",
+      body: "1985年帕基特诺夫在苏联科学院写出俄罗斯方块时是雇员,版权归属计算中心,本人无权获利。游戏经三次转手卖给任天堂,售出数千万份。",
+      coda: "版权于1996年归还本人,此前十一年他未获分成。",
+    },
+    en: {
+      tag: "Rights",
+      title: "The Block With No Royalties",
+      body: "In 1985 Pajitnov wrote Tetris as a state employee of the USSR Academy of Sciences; the rights belonged to the Computing Center, not him. Western licenses passed through several hands before reaching Nintendo, and the game sold tens of millions of copies.",
+      coda: "The rights reverted to him in 1996, eleven years after he wrote it.",
+    },
+  },
+  {
+    id: "euv-twenty-three-hours-2018",
+    stamp: "1986 · 2018",
+    sources: [
+      {
+        label: "Wikipedia, Extreme ultraviolet lithography",
+        url: "https://en.wikipedia.org/wiki/Extreme_ultraviolet_lithography",
+      },
+    ],
+    zh: {
+      tag: "光刻",
+      title: "一张晶圆用了23小时",
+      body: "1986年,日本NTT首次展示极紫外光刻图像。2006年阿斯麦原型机曝光一片晶圆要23小时,直到2018年才真正投入量产。",
+      coda: "到2022年,一台量产机每小时可处理约200片晶圆。",
+    },
+    en: {
+      tag: "Lithography",
+      title: "Twenty-Three Hours for One Wafer",
+      body: "Hiroo Kinoshita at NTT first demonstrated extreme ultraviolet lithography images in 1986. ASML's 2006 prototype took twenty-three hours to expose one wafer. Not until 2018 did EUV reach production, in a machine MIT Technology Review called the one that saved Moore's law.",
+      coda: "By 2022 a production EUV scanner processed roughly two hundred wafers an hour.",
+    },
+  },
+  {
+    id: "tsmc-foundry-fifty-six-1987",
+    stamp: "1987",
+    sources: [
+      { label: "Wikipedia, Morris Chang", url: "https://en.wikipedia.org/wiki/Morris_Chang" },
+      { label: "Wikipedia, TSMC", url: "https://en.wikipedia.org/wiki/TSMC" },
+    ],
+    zh: {
+      tag: "代工",
+      title: "五十六岁的代工厂",
+      body: "张忠谋历任德州仪器全球半导体副总裁、通用仪器总裁,再执掌台湾工研院。1987年,56岁的他创办只代工、不设计芯片的台积电。",
+      coda: "这是世界上第一家只做代工的晶圆厂。",
+    },
+    en: {
+      tag: "Foundry",
+      title: "A Foundry at Fifty-Six",
+      body: "Morris Chang, born 1931, rose to group vice president of worldwide semiconductor operations at Texas Instruments, then served as president and COO of General Instrument, then headed Taiwan's ITRI. In 1987, at fifty-six, he founded TSMC, which designs none of the chips it makes.",
+      coda: "It was the first foundry in the world to do nothing but manufacture.",
+    },
+  },
+  {
+    id: "huawei-diet-pills",
+    stamp: "1987 · 1989",
+    sources: [
+      { label: "Wikipedia (zh), 华为", url: "https://zh.wikipedia.org/wiki/%E5%8D%8E%E4%B8%BA" },
+    ],
+    zh: {
+      tag: "代理",
+      title: "减肥药生意",
+      body: "华为注册资本2.1万元,取名「技术公司」,最初却做贸易,卖过减肥药,后代理香港鸿年的HAX交换机赚差价。1989年才组装出自研的BH01型交换机。",
+      coda: "四年后,首块电路板由公司自己画出。",
+    },
+    en: {
+      tag: "Reseller",
+      title: "Huawei's First Business Wasn't Tech",
+      body: "Huawei registered with 21,000 yuan of capital on September 15, 1987, calling itself a technology company. It began by trading goods, including diet pills, then resold Hong Kong-made HAX switches for the margin. Its own switch, the BH01, was hand-assembled only in 1989.",
+      coda: "Four years in, the company drew its own circuit board for the first time.",
     },
   },
   {
@@ -491,6 +879,45 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "mit-license-171-words",
+    stamp: "1988 · 2025",
+    sources: [
+      { label: "Wikipedia, MIT License", url: "https://en.wikipedia.org/wiki/MIT_License" },
+    ],
+    zh: {
+      tag: "条款",
+      title: "一百七十一个词",
+      body: "麻省理工的一个网络小组为了避开律师,把整份许可证压缩到约一百七十一个英文词。这份短文后来成了GitHub上使用最广的许可证,覆盖约三分之一的项目。",
+      coda: "文本长度四十年未变。",
+    },
+    en: {
+      tag: "Terms",
+      title: "171 Words",
+      body: "A group at MIT writing a TCP/IP implementation wanted to avoid legal negotiation, so they gave the software away under a notice of roughly 171 words. That short text now covers close to a third of all licensed projects on GitHub, more than any other license.",
+      coda: "The wording has stayed essentially unchanged since it was written.",
+    },
+  },
+  {
+    id: "photoshop-display-origin",
+    stamp: "1988 · 1995",
+    sources: [
+      { label: "Wikipedia, Adobe Photoshop", url: "https://en.wikipedia.org/wiki/Adobe_Photoshop" },
+      { label: "Wikipedia, Thomas Knoll", url: "https://en.wikipedia.org/wiki/Thomas_Knoll" },
+    ],
+    zh: {
+      tag: "原型",
+      title: "先叫Display",
+      body: "1988年,汤姆·诺尔在密歇根大学写了个看灰阶图片的小程序,先叫Display,再叫ImagePro,最终定名Photoshop。",
+      coda: "Adobe于1995年花3450万美元买断全部版权。",
+    },
+    en: {
+      tag: "Origin",
+      title: "It Was Called Display First",
+      body: "In 1988, Thomas Knoll, a graduate student at the University of Michigan, wrote a small program to view grayscale images on a monochrome Mac screen. He named it Display, then ImagePro, then Photoshop, before his brother John showed it to Adobe, which licensed it that year.",
+      coda: "Adobe bought full rights outright in 1995, for $34.5 million.",
+    },
+  },
+  {
     id: "sosumi-so-sue-me",
     stamp: "1991",
     sources: [{ label: "Wikipedia — Sosumi", url: "https://en.wikipedia.org/wiki/Sosumi" }],
@@ -530,6 +957,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "doom-ftp-crash",
+    stamp: "1993.12",
+    sources: [
+      {
+        label: "Wikipedia, Doom (1993 video game)",
+        url: "https://en.wikipedia.org/wiki/Doom_(1993_video_game)",
+      },
+    ],
+    zh: {
+      tag: "分发",
+      title: "连不上的首发",
+      body: "1993年12月10日,id Software按共享软件模式免费放出《毁灭战士》第一章。威斯康星大学FTP服务器因等待人数过多,团队自己一度连不上。",
+      coda: "上传完成半小时内,一万人同时下载,校方网络瘫痪。",
+    },
+    en: {
+      tag: "Shareware",
+      title: "The Server They Couldn't Reach",
+      body: "On 10 December 1993, id Software gave away Doom's first episode as shareware, betting on sales of the rest. Uploading it to a University of Wisconsin FTP server, they found so many people already waiting that the team itself could not connect.",
+      coda: "The upload finished near midnight; ten thousand downloads at once crashed the university's network.",
+    },
+  },
+  {
     id: "zlib-two-authors",
     stamp: "1995",
     sources: [{ label: 'Wikipedia, "Zlib"', url: "https://en.wikipedia.org/wiki/Zlib" }],
@@ -544,6 +993,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "The Compression Layer of Two",
       body: "zlib sits inside Linux, macOS, iOS and successive generations of game consoles; Git and OpenSSH both lean on it to compress. Two people wrote its first public release in 1995.",
       coda: "The authorship line has never grown a third name.",
+    },
+  },
+  {
+    id: "byd-battery-to-car",
+    stamp: "1995 · 2003",
+    sources: [
+      {
+        label: "Wikipedia (zh), 比亚迪",
+        url: "https://zh.wikipedia.org/wiki/%E6%AF%94%E4%BA%9A%E8%BF%AA",
+      },
+    ],
+    zh: {
+      tag: "并购",
+      title: "电池公司买了车厂",
+      body: "比亚迪1995年创立于深圳,最初生产镍镉、镍氢电池,1996年进入锂电池领域。2003年,公司收购西安秦川汽车,更名比亚迪汽车,进入汽车业。",
+      coda: "两年后,首款自主轿车F3上市。",
+    },
+    en: {
+      tag: "Acquisition",
+      title: "The Battery Company Bought a Carmaker",
+      body: "BYD was founded in Shenzhen's Longgang district on February 10, 1995, making nickel-cadmium and nickel-metal hydride batteries, then entering lithium-ion cells in 1996. In 2003 the battery maker acquired Xi'an Qinchuan Automobile, renaming it BYD Auto.",
+      coda: "Two years later, its first in-house sedan, the F3, went on sale.",
     },
   },
   {
@@ -570,6 +1041,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Thirty-seven seconds",
       body: "Thirty-seven seconds in, the inertial reference system converted a 64-bit float to a 16-bit integer and overflowed; at about forty seconds the vehicle broke up. The routine came unchanged from Ariane 4 and had no reason to be running after liftoff.",
       coda: "Roughly $370 million, spent on code that should have been switched off.",
+    },
+  },
+  {
+    id: "deep-blue-move-44-1997",
+    stamp: "1997",
+    sources: [
+      {
+        label: "Wikipedia, Deep Blue versus Garry Kasparov",
+        url: "https://en.wikipedia.org/wiki/Deep_Blue_versus_Garry_Kasparov",
+      },
+    ],
+    zh: {
+      tag: "对局",
+      title: "第四十四步的故障",
+      body: "1997年重赛第一局,卡斯帕罗夫用四十五步击败深蓝。深蓝走出的第四十四步,据称是一次故障——引擎在搜索里定不下最优着法,退回了保底选项。",
+      coda: "卡斯帕罗夫在第二局后指控IBM作弊。",
+    },
+    en: {
+      tag: "Chess",
+      title: "Move Forty-Four's Glitch",
+      body: "In game one of the 1997 rematch Kasparov beat Deep Blue in forty-five moves. Deep Blue's forty-fourth move was allegedly the result of a bug: unable to settle on a preferred move inside its search, the engine fell back to a fail-safe.",
+      coda: "After losing game two, Kasparov accused IBM of cheating.",
     },
   },
   {
@@ -642,6 +1135,88 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "open-source-coined-1998",
+    stamp: "1998.02",
+    sources: [
+      {
+        label: "Wikipedia, Christine Peterson",
+        url: "https://en.wikipedia.org/wiki/Christine_Peterson",
+      },
+      {
+        label: "Wikipedia, Open Source Initiative",
+        url: "https://en.wikipedia.org/wiki/Open_Source_Initiative",
+      },
+    ],
+    zh: {
+      tag: "造词",
+      title: "开源造词记",
+      body: "1998年2月,「free software」常被误当作免费。彼得森提议改称「open source」,会议上此词被随口说出,而非正式提案,便流传开。",
+      coda: "该词事后申请商标,未获通过。",
+    },
+    en: {
+      tag: "Naming",
+      title: "The Coining of Open Source",
+      body: 'In February 1998, Christine Peterson proposed "open source" because newcomers kept hearing "free software" as a price, not a freedom. At a VA Research meeting on February 5, Todd Anderson slipped the term into conversation rather than formally proposing it, letting it spread on its own.',
+      coda: "The group later tried to trademark the phrase and failed.",
+    },
+  },
+  {
+    id: "netscape-source-1998",
+    stamp: "1998.01 · 1998.02",
+    sources: [
+      { label: "Wikipedia, Netscape", url: "https://en.wikipedia.org/wiki/Netscape" },
+      { label: "Wikipedia, Mozilla", url: "https://en.wikipedia.org/wiki/Mozilla" },
+    ],
+    zh: {
+      tag: "公开",
+      title: "并不彻底的公开",
+      body: "1998年1月22日,网景宣布浏览器代码将公开。员工扎温斯基随后注册了mozilla.org。但他们写的许可证留了一道口子:网景自己仍可把这份代码继续用进专有产品。",
+      coda: "一年后,网景被美国在线收购。",
+    },
+    en: {
+      tag: "Release",
+      title: "Not Quite Open",
+      body: "On 22 January 1998 Netscape announced that its browser source would be released, and the employee Jamie Zawinski registered mozilla.org. But the licence they wrote kept one door open: Netscape itself could go on folding the same code into proprietary products.",
+      coda: "Netscape was acquired by AOL roughly a year later.",
+    },
+  },
+  {
+    id: "bsd-75-acknowledgments",
+    stamp: "1999.07",
+    sources: [
+      { label: "Wikipedia, BSD licenses", url: "https://en.wikipedia.org/wiki/BSD_licenses" },
+    ],
+    zh: {
+      tag: "许可",
+      title: "七十五行鸣谢",
+      body: "原始BSD许可要求广告逐一致谢版权方。到1997年,一份NetBSD已累积七十五条声明,且与GPL冲突。1999年7月,伯克利一名授权官员将条款删除。",
+      coda: "删除由一人签发,未经外部谈判。",
+    },
+    en: {
+      tag: "License",
+      title: "Seventy-Five Acknowledgments",
+      body: "The original BSD license required every advertisement to credit each contributing author by name. By 1997 a single NetBSD build carried seventy-five such acknowledgments, incompatible with the GPL. Berkeley's licensing director deleted the clause on July 22, 1999.",
+      coda: "One office's signature retired a clause that had multiplied for a decade.",
+    },
+  },
+  {
+    id: "red-hat-ipo-1999",
+    stamp: "1999.08",
+    sources: [{ label: "Wikipedia, Red Hat", url: "https://en.wikipedia.org/wiki/Red_Hat" }],
+    zh: {
+      tag: "上市",
+      title: "免费软件的股价",
+      body: "红帽把核心软件的源代码免费公开,靠支持、培训与集成服务收费。1999年8月11日公司上市,首日涨幅创下华尔街历史第八高纪录。",
+      coda: "四个月后,创始人扬被换下CEO一职。",
+    },
+    en: {
+      tag: "IPO",
+      title: "The Price of Free Software",
+      body: "Red Hat gave away the source code of its core product and charged instead for support, training and integration. On August 11, 1999 the company went public. Its first-day gain ranked eighth-largest in Wall Street history at the time.",
+      coda: "Founder Bob Young was replaced as CEO four months later.",
+    },
+  },
+  {
     id: "multics-shutdown",
     stamp: "2000.10.30",
     sources: [
@@ -681,6 +1256,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "The Database With No License",
       body: "SQLite's own page estimates over a trillion active database files worldwide, since every smartphone alone carries hundreds, ranking it second only to zlib among deployed software. There is no license, because the authors gave every line to the public domain.",
       coda: "Companies wanting legal cover buy a separate warranty of title.",
+    },
+  },
+  {
+    id: "smic-tsmc-lawsuit",
+    stamp: "2000 · 2009",
+    sources: [
+      {
+        label: "Wikipedia (zh), 中芯国际",
+        url: "https://zh.wikipedia.org/wiki/%E4%B8%AD%E8%8A%AF%E5%9B%BD%E9%99%85",
+      },
+    ],
+    zh: {
+      tag: "诉讼",
+      title: "中芯国际的官司",
+      body: "中芯国际2000年由前台积电工程师张汝京等人创立。台积电两度控告其窃取商业机密,2009年一案陪审团裁定65项指控中61项成立。",
+      coda: "2010年11月,中芯以2亿美元及约8%股权与台积电和解。",
+    },
+    en: {
+      tag: "Lawsuit",
+      title: "SMIC's Two Lawsuits",
+      body: "SMIC was founded in 2000 by Richard Chang, a former TSMC engineer, among others. TSMC sued twice for trade-secret theft; in the 2009 case a jury found SMIC liable on 61 of the 65 counts brought against it.",
+      coda: "In November 2010 SMIC settled with TSMC for $200 million and roughly 8 percent of its shares.",
     },
   },
   {
@@ -815,6 +1412,32 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Bank of San Serriffe",
       body: "Donald Knuth pays $2.56 for each error found in his books, drawn on the fictional Bank of San Serriffe. By March 2005 the checks he had signed totaled over $20,000.",
       coda: "Most recipients frame the check rather than deposit it.",
+    },
+  },
+  {
+    id: "dji-helicopter-first",
+    stamp: "2006 · 2008",
+    sources: [
+      {
+        label: "Wikipedia (zh), 大疆创新",
+        url: "https://zh.wikipedia.org/wiki/%E5%A4%A7%E7%96%86%E5%88%9B%E6%96%B0",
+      },
+      {
+        label: "Wikipedia (zh), 汪滔 (工程師)",
+        url: "https://zh.wikipedia.org/wiki/%E6%B1%AA%E6%BB%94_(%E5%B7%A5%E7%A8%8B%E5%B8%AB)",
+      },
+    ],
+    zh: {
+      tag: "转向",
+      title: "大疆的直升机",
+      body: "汪滔2006年香港科大毕业后,与同学在深圳创立大疆,最初做的是遥控直升机飞行控制系统,2008年推出首款成熟系统XP3.1。",
+      coda: "后来他们发现,云台买家多数装在多旋翼上。",
+    },
+    en: {
+      tag: "Pivot",
+      title: "DJI Started With a Helicopter",
+      body: "Frank Wang graduated from Hong Kong University of Science and Technology in 2006 and co-founded DJI in Shenzhen with classmates. Its first product was a helicopter flight-control system; the first mature version, XP3.1, shipped in 2008.",
+      coda: "The team later found most gimbal buyers were mounting them on multirotors, not helicopters.",
     },
   },
   {
@@ -967,6 +1590,47 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "The Repository With No Employer",
       body: "Homebrew is the default package manager on most Mac developer machines; in 2013 it led all of GitHub in contributors. Max Howell wrote its first release in 2009. It is maintained today by a team of 34 people, all unpaid.",
       coda: "Its funding history is one Kickstarter and an Open Source Collective account.",
+    },
+  },
+  {
+    id: "xiaomi-software-first",
+    stamp: "2010 · 2011",
+    sources: [
+      {
+        label: "Wikipedia (zh), 小米集团",
+        url: "https://zh.wikipedia.org/wiki/%E5%B0%8F%E7%B1%B3%E9%9B%86%E5%9B%A2",
+      },
+    ],
+    zh: {
+      tag: "软件",
+      title: "小米的第一款产品",
+      body: "小米公司成立于2010年4月6日,同年8月与12月先后发布内测版MIUI操作系统与米聊,均是软件产品。",
+      coda: "第一部小米手机,直到次年8月才发布。",
+    },
+    en: {
+      tag: "Software",
+      title: "Xiaomi's First Product Wasn't a Phone",
+      body: "Xiaomi was founded on April 6, 2010. That August and December it released beta versions of the MIUI operating system and the Miliao chat app, both software.",
+      coda: "The company's first phone did not ship until August of the following year.",
+    },
+  },
+  {
+    id: "ritchie-same-week",
+    stamp: "2011.10",
+    sources: [
+      { label: "Wikipedia, Dennis Ritchie", url: "https://en.wikipedia.org/wiki/Dennis_Ritchie" },
+    ],
+    zh: {
+      tag: "讣闻",
+      title: "同一周",
+      body: "里奇与肯·汤普逊共同造出Unix和C语言。2011年10月12日,他被发现在新泽西家中去世,享年70岁。一周前,史蒂夫·乔布斯已先一步去世。",
+      coda: "两条讣闻,登在同一周的报纸上。",
+    },
+    en: {
+      tag: "Obituary",
+      title: "Same Week",
+      body: "Dennis Ritchie, with Ken Thompson, created Unix and the C programming language. He was found dead at his New Jersey home on October 12, 2011, at 70. Steve Jobs had died a week earlier, on October 5. Commentators later noted Ritchie's work underlay technology Apple built its fortune on.",
+      coda: "The two obituaries ran in the same week.",
     },
   },
   {
@@ -4253,6 +4917,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "alphago-lee-sedol-2016",
+    stamp: "2016.3",
+    sources: [
+      {
+        label: "Wikipedia, AlphaGo versus Lee Sedol",
+        url: "https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol",
+      },
+    ],
+    zh: {
+      tag: "围棋",
+      title: "第一百零二手",
+      body: "2016年3月,AlphaGo以四比一击败李世石,唯一的胜局是第四局。他赛后说,第一局里电脑下出一步没有人类棋手会下的着法,自己就是在那里出的错。",
+      coda: "那一步棋后来只留下一个编号。",
+    },
+    en: {
+      tag: "Go",
+      title: "Stone One Hundred and Two",
+      body: "AlphaGo beat Lee Sedol four games to one in Seoul in March 2016; Lee's only win came in game four. Afterward he said he had made a critical error early in game one, calling the computer's play there excellent and one move unlike anything a human player would choose.",
+      coda: "The move he singled out kept only a stone number, no name.",
+    },
+  },
+  {
     id: "aws-s3-2017-typo",
     stamp: "2017.02.28",
     sources: [
@@ -4295,6 +4981,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "Five Backups, Zero",
       body: "An engineer meant to clear a lagging replica but deleted the PostgreSQL data directory on the primary instead, stopping seconds too late; roughly 300GB was already gone. GitLab found that of five backup and replication methods it had running, none could actually restore the data.",
       coda: "Recovery relied on a snapshot someone happened to take six hours earlier.",
+    },
+  },
+  {
+    id: "attention-title-beatles-2017",
+    stamp: "2017.6",
+    sources: [
+      {
+        label: "Wikipedia, Attention Is All You Need",
+        url: "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
+      },
+    ],
+    zh: {
+      tag: "论文",
+      title: "标题借自披头士",
+      body: "2017年6月,谷歌八人发表《Attention Is All You Need》,标题借自披头士歌名,论文本意是改进机器翻译序列模型,不靠循环网络。",
+      coda: "八名作者后来全部离开了谷歌。",
+    },
+    en: {
+      tag: "Paper",
+      title: "A Title Borrowed From the Beatles",
+      body: 'Eight Google researchers published "Attention Is All You Need" in June 2017; the title nods to the Beatles song "All You Need Is Love." The paper\'s stated aim was a sequence model for machine translation that dropped recurrent networks in favor of attention alone.',
+      coda: "All eight authors have since left Google.",
     },
   },
   {
