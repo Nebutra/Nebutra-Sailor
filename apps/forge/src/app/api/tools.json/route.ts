@@ -23,6 +23,8 @@ export function GET() {
       sideEffect: tool.sideEffect,
       meterId: tool.meterId,
       engine: tool.engine,
+      ...(tool.batch ? { batch: tool.batch } : {}),
+      ...(tool.compose ? { compose: tool.compose } : {}),
     }));
 
   return Response.json(
@@ -32,6 +34,15 @@ export function GET() {
       count: tools.length,
       openapi: "/api/openapi.json",
       mcp: "/api/mcp",
+      batches: {
+        create: { method: "POST", path: "/api/v1/batches" },
+        get: { method: "GET", path: "/api/v1/batches/{batchId}" },
+        retry: {
+          method: "POST",
+          path: "/api/v1/batches/{batchId}/items/{itemId}/retry",
+        },
+        download: { method: "GET", path: "/api/v1/batches/{batchId}/download" },
+      },
       tools,
     },
     {

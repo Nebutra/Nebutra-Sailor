@@ -3,6 +3,7 @@
 import { Button, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
+import { BatchQueue, imageFileToBatchInput } from "@/components/batch-queue";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 /** Image tools: drag-drop upload, sharp server transform, before/after preview. */
@@ -14,6 +15,7 @@ export function ImageToolRunner({
   mode?: "compress" | "resize" | "convert";
 }) {
   const t = useTranslations("runners");
+  const [workspace, setWorkspace] = useState<"single" | "batch">("single");
   const [fileName, setFileName] = useState("");
   const [base64, setBase64] = useState("");
   const [format, setFormat] = useState<"webp" | "jpeg" | "png">(
@@ -33,6 +35,7 @@ export function ImageToolRunner({
   const [previewOut, setPreviewOut] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const batchEnabled = mode === "compress";
 
   const onFile = useCallback((file: File | null) => {
     if (!file) return;
@@ -126,122 +129,192 @@ export function ImageToolRunner({
 
   return (
     <div className="space-y-4">
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
-      <div
-        className="flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-background p-6 text-sm text-muted-foreground"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          onFile(e.dataTransfer.files?.[0] ?? null);
-        }}
-      >
-        <input
-          type="file"
-          accept="image/*"
-          data-allow-native
-          className="mb-2 text-sm"
-          onChange={(e) => onFile(e.target.files?.[0] ?? null)}
-        />
-        <p>
-          {fileName
-            ? t("imageTool.selected", {
-                name: fileName,
-                kb: (inputBytes / 1024).toFixed(1),
-              })
-            : t("imageTool.drop")}
-        </p>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <RunnerSelect
-          label={t("imageTool.format")}
-          id="image-format"
-          value={format}
-          onChange={(v) => setFormat(v as typeof format)}
-        >
-          <option value="webp">webp</option>
-          <option value="jpeg">jpeg</option>
-          <option value="png">png</option>
-        </RunnerSelect>
-        <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-          <span className="text-xs font-medium">{t("imageTool.quality", { n: quality })}</span>
-          <input
-            data-allow-native
-            type="range"
-            min={1}
-            max={100}
-            value={quality}
-            onChange={(e) => setQuality(Number(e.target.value))}
-            className="mt-2 w-full accent-primary"
-          />
-        </label>
-        <Input
-          label={t("imageTool.maxW")}
-          id="image-width"
-          type="number"
-          placeholder={mode === "resize" ? t("imageTool.resizeEg") : t("imageTool.optional")}
-          value={width}
-          onChange={(e) => setWidth(e.target.value)}
-        />
-        <Input
-          label={t("imageTool.maxH")}
-          id="image-height"
-          type="number"
-          placeholder={t("imageTool.optional")}
-          value={height}
-          onChange={(e) => setHeight(e.target.value)}
-        />
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading ? t("imageTool.processing") : actionLabel}
-        </Button>
-        <Button type="button" variant="outline" disabled={!previewOut} onClick={download}>
-          {t("imageTool.download")}
-        </Button>
-      </div>
-
-      <RunnerError>{error}</RunnerError>
-
-      {resultMeta ? (
-        <RunnerNote>
-          {t("imageTool.outMeta", {
-            kb: (resultMeta.bytes / 1024).toFixed(1),
-            dims:
-              resultMeta.width && resultMeta.height
-                ? t("imageTool.dims", { w: resultMeta.width, h: resultMeta.height })
-                : "",
-            ratio: ratio !== null ? t("imageTool.ratio", { pct: ratio }) : "",
-            type: resultMeta.contentType,
-          })}
-        </RunnerNote>
+      {batchEnabled ? (
+        <div className="flex flex-wrap gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant={workspace === "single" ? "ink" : "outline"}
+            onClick={() => setWorkspace("single")}
+          >
+            Single
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant={workspace === "batch" ? "ink" : "outline"}
+            onClick={() => setWorkspace("batch")}
+          >
+            Batch (up to 20)
+          </Button>
+        </div>
       ) : null}
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        {previewIn ? (
-          <div>
-            <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.original")}</p>
-            <img
-              src={previewIn}
-              alt="input preview"
-              className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
-            />
+      {batchEnabled && workspace === "batch" ? (
+        <>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <RunnerSelect
+              label={t("imageTool.format")}
+              id="image-format-batch"
+              value={format}
+              onChange={(v) => setFormat(v as typeof format)}
+            >
+              <option value="webp">webp</option>
+              <option value="jpeg">jpeg</option>
+              <option value="png">png</option>
+            </RunnerSelect>
+            <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
+              <span className="text-xs font-medium">{t("imageTool.quality", { n: quality })}</span>
+              <input
+                data-allow-native
+                type="range"
+                min={1}
+                max={100}
+                value={quality}
+                onChange={(e) => setQuality(Number(e.target.value))}
+                className="mt-2 w-full accent-primary"
+              />
+            </label>
           </div>
-        ) : null}
-        {previewOut ? (
-          <div>
-            <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.result")}</p>
-            <img
-              src={previewOut}
-              alt="output preview"
-              className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
-            />
-          </div>
-        ) : null}
-      </div>
+          <BatchQueue
+            toolId={toolId}
+            accept="files"
+            resultKind="file"
+            maxItems={20}
+            sharedHint={`format=${format}, quality=${quality}`}
+            buildItemInput={(raw) =>
+              imageFileToBatchInput(raw as File, {
+                format,
+                quality,
+                ...(width ? { width: Number(width) } : {}),
+                ...(height ? { height: Number(height) } : {}),
+              })
+            }
+          />
+        </>
+      ) : null}
 
-      <RunnerNote>{t("imageTool.note")}</RunnerNote>
+      {workspace === "single" || !batchEnabled ? (
+        <>
+          {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
+          <div
+            className="flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-background p-6 text-sm text-muted-foreground"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              onFile(e.dataTransfer.files?.[0] ?? null);
+            }}
+          >
+            <input
+              type="file"
+              accept="image/*"
+              data-allow-native
+              className="mb-2 text-sm"
+              onChange={(e) => onFile(e.target.files?.[0] ?? null)}
+            />
+            <p>
+              {fileName
+                ? t("imageTool.selected", {
+                    name: fileName,
+                    kb: (inputBytes / 1024).toFixed(1),
+                  })
+                : t("imageTool.drop")}
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <RunnerSelect
+              label={t("imageTool.format")}
+              id="image-format"
+              value={format}
+              onChange={(v) => setFormat(v as typeof format)}
+            >
+              <option value="webp">webp</option>
+              <option value="jpeg">jpeg</option>
+              <option value="png">png</option>
+            </RunnerSelect>
+            <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
+              <span className="text-xs font-medium">{t("imageTool.quality", { n: quality })}</span>
+              <input
+                data-allow-native
+                type="range"
+                min={1}
+                max={100}
+                value={quality}
+                onChange={(e) => setQuality(Number(e.target.value))}
+                className="mt-2 w-full accent-primary"
+              />
+            </label>
+            <Input
+              label={t("imageTool.maxW")}
+              id="image-width"
+              type="number"
+              placeholder={mode === "resize" ? t("imageTool.resizeEg") : t("imageTool.optional")}
+              value={width}
+              onChange={(e) => setWidth(e.target.value)}
+            />
+            <Input
+              label={t("imageTool.maxH")}
+              id="image-height"
+              type="number"
+              placeholder={t("imageTool.optional")}
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
+              {loading ? t("imageTool.processing") : actionLabel}
+            </Button>
+            <Button type="button" variant="outline" disabled={!previewOut} onClick={download}>
+              {t("imageTool.download")}
+            </Button>
+          </div>
+
+          <RunnerError>{error}</RunnerError>
+
+          {resultMeta ? (
+            <RunnerNote>
+              {t("imageTool.outMeta", {
+                kb: (resultMeta.bytes / 1024).toFixed(1),
+                dims:
+                  resultMeta.width && resultMeta.height
+                    ? t("imageTool.dims", { w: resultMeta.width, h: resultMeta.height })
+                    : "",
+                ratio: ratio !== null ? t("imageTool.ratio", { pct: ratio }) : "",
+                type: resultMeta.contentType,
+              })}
+            </RunnerNote>
+          ) : null}
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {previewIn ? (
+              <div>
+                <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.original")}</p>
+                <img
+                  src={previewIn}
+                  alt="input preview"
+                  className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
+                />
+              </div>
+            ) : null}
+            {previewOut ? (
+              <div>
+                <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.result")}</p>
+                <img
+                  src={previewOut}
+                  alt="output preview"
+                  className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
+                />
+              </div>
+            ) : null}
+          </div>
+
+          <RunnerNote>{t("imageTool.privacy")}</RunnerNote>
+          <RunnerNote>{t("imageTool.note")}</RunnerNote>
+        </>
+      ) : null}
     </div>
   );
 }

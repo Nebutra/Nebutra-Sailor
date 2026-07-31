@@ -120,19 +120,27 @@ export default async function ToolPage({ params }: Props) {
         {page.related.length > 0 ? (
           <section aria-labelledby="related-tools">
             <h2 id="related-tools" className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
-              {t("related")}
+              {page.compose?.next?.length ? `${t("related")} · next` : t("related")}
             </h2>
             <ul className="flex flex-wrap gap-2">
-              {page.related.map((rel) => (
-                <li key={rel.id}>
-                  <Link
-                    href={rel.path}
-                    className="inline-flex h-9 items-center rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 text-sm text-[var(--neutral-11)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
-                  >
-                    {pickBilingual(locale, rel.title)}
-                  </Link>
-                </li>
-              ))}
+              {page.related.map((rel) => {
+                const isNext = page.compose?.next?.includes(rel.id);
+                return (
+                  <li key={rel.id}>
+                    <Link
+                      href={rel.path}
+                      className={
+                        isNext
+                          ? "inline-flex h-9 items-center rounded-full border border-[hsl(var(--primary)/0.35)] bg-[hsl(var(--primary)/0.08)] px-4 text-sm text-[var(--neutral-12)] transition-colors hover:border-[hsl(var(--primary)/0.55)]"
+                          : "inline-flex h-9 items-center rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 text-sm text-[var(--neutral-11)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+                      }
+                    >
+                      {isNext ? "→ " : ""}
+                      {pickBilingual(locale, rel.title)}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         ) : null}

@@ -381,7 +381,8 @@ export const eanUpcGtinTool = tool({
   sideEffect: "pure",
   runtime: ["client", "server"],
   meterId: "forge.life.ean_upc_gtin",
-  roots: ["verifier", "checker", "calculator"],
+  roots: ["verifier", "checker", "calculator", "processor"],
+  batch: { resultKind: "json", accept: "lines", maxItems: 200 },
   engine: {
     name: "gs1-mod10",
     upstream:

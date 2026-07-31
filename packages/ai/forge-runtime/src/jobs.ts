@@ -1,6 +1,15 @@
 import { randomUUID } from "node:crypto";
 
-export type JobStatus = "queued" | "running" | "succeeded" | "failed";
+export type JobStatus = "queued" | "running" | "succeeded" | "failed" | "skipped";
+
+export interface CreateJobOptions {
+  readonly batchId?: string;
+  readonly label?: string;
+  readonly index?: number;
+  /** Default `queued`. Use `skipped` for pre-dispatch validation failures. */
+  readonly status?: "queued" | "skipped";
+  readonly error?: string;
+}
 
 export interface ForgeJob {
   readonly id: string;
@@ -10,10 +19,14 @@ export interface ForgeJob {
   readonly updatedAt: string;
   readonly error?: string;
   readonly result?: unknown;
+  /** Present when this job is one item of a batch manifest. */
+  readonly batchId?: string;
+  readonly label?: string;
+  readonly index?: number;
 }
 
 export interface ForgeJobStore {
-  create(toolId: string): Promise<ForgeJob>;
+  create(toolId: string, options?: CreateJobOptions): Promise<ForgeJob>;
   get(id: string): Promise<ForgeJob | null>;
   markRunning(id: string): Promise<void>;
   complete(id: string, result: unknown): Promise<void>;
@@ -28,6 +41,9 @@ interface MutableJob {
   updatedAt: string;
   error?: string;
   result?: unknown;
+  batchId?: string;
+  label?: string;
+  index?: number;
 }
 
 function snapshot(job: MutableJob): ForgeJob {
@@ -39,6 +55,25 @@ function snapshot(job: MutableJob): ForgeJob {
     updatedAt: job.updatedAt,
     ...(job.error !== undefined ? { error: job.error } : {}),
     ...(job.result !== undefined ? { result: job.result } : {}),
+    ...(job.batchId !== undefined ? { batchId: job.batchId } : {}),
+    ...(job.label !== undefined ? { label: job.label } : {}),
+    ...(job.index !== undefined ? { index: job.index } : {}),
+  };
+}
+
+function newJob(toolId: string, options?: CreateJobOptions): MutableJob {
+  const now = new Date().toISOString();
+  const status = options?.status ?? "queued";
+  return {
+    id: randomUUID(),
+    toolId,
+    status,
+    createdAt: now,
+    updatedAt: now,
+    ...(options?.error !== undefined ? { error: options.error } : {}),
+    ...(options?.batchId !== undefined ? { batchId: options.batchId } : {}),
+    ...(options?.label !== undefined ? { label: options.label } : {}),
+    ...(options?.index !== undefined ? { index: options.index } : {}),
   };
 }
 
@@ -49,15 +84,8 @@ function snapshot(job: MutableJob): ForgeJob {
 export class MemoryJobStore implements ForgeJobStore {
   private readonly jobs = new Map<string, MutableJob>();
 
-  async create(toolId: string): Promise<ForgeJob> {
-    const now = new Date().toISOString();
-    const job: MutableJob = {
-      id: randomUUID(),
-      toolId,
-      status: "queued",
-      createdAt: now,
-      updatedAt: now,
-    };
+  async create(toolId: string, options?: CreateJobOptions): Promise<ForgeJob> {
+    const job = newJob(toolId, options);
     this.jobs.set(job.id, job);
     return snapshot(job);
   }
@@ -140,15 +168,8 @@ export class UpstashRedisJobStore implements ForgeJobStore {
     }
   }
 
-  async create(toolId: string): Promise<ForgeJob> {
-    const now = new Date().toISOString();
-    const job: MutableJob = {
-      id: randomUUID(),
-      toolId,
-      status: "queued",
-      createdAt: now,
-      updatedAt: now,
-    };
+  async create(toolId: string, options?: CreateJobOptions): Promise<ForgeJob> {
+    const job = newJob(toolId, options);
     await this.write(job);
     return snapshot(job);
   }

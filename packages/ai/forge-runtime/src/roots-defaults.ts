@@ -67,6 +67,8 @@ export const SLUG_ROOTS: Readonly<Record<string, readonly string[]>> = {
   timezone: ["converter", "calculator"],
   lunar: ["converter", "calculator"],
   "date-diff": ["calculator"],
+  "world-clock": ["viewer", "calculator"],
+  "js-format": ["formatter", "optimizer"],
   // life / unit / cn
   bmi: ["calculator"],
   percentage: ["calculator"],

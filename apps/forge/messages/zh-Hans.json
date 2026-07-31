@@ -467,6 +467,7 @@
     },
     "pdfCompress": {
       "file": "PDF 文件",
+      "drop": "拖入 PDF，或点击选择",
       "quality": "质量",
       "engine": "引擎",
       "qStructural": "结构压缩（qpdf，无损流）",
@@ -476,10 +477,13 @@
       "eAuto": "自动（qpdf → Ghostscript → pdf-lib）",
       "download": "下载 PDF",
       "needFile": "请先选择 PDF 文件",
+      "needPdf": "请拖入 .pdf 文件",
+      "privacy": "文件会上传到 Forge 服务端压缩，响应后丢弃。需要无损流时请优先结构压缩。",
+      "barHint": "进度条表示输出相对输入的体积（越短压缩越多）。",
       "in": "输入",
       "out": "输出",
       "saved": "节省",
-      "note": "PDF 压缩 · 宿主 qpdf / Ghostscript · pdf-lib 回落"
+      "note": "PDF 压缩 · 宿主 qpdf / Ghostscript · pdf-lib 回落 · 引擎标签如实展示"
     },
     "jsonFormat": {
       "indent": "缩进",
@@ -496,7 +500,10 @@
       "invalid": "JSON 格式错误",
       "line": "行",
       "column": "列",
-      "note": "引擎：JSON.parse/stringify · 本地即时处理 · 与 API 路径一致"
+      "sortKeys": "键排序",
+      "stats": "{chars} 字符 · {lines} 行",
+      "liveOff": "已关闭实时校验（输入过大）",
+      "note": "引擎：JSON.parse/stringify · 实时校验 · ⌘/Ctrl+Enter 格式化 · 与 API 路径一致"
     },
     "qr": {
       "size": "尺寸",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "原图",
       "result": "结果",
-      "note": "引擎：sharp（libvips）· 服务端处理 · 与 API 同一路径（imageBase64）"
+      "privacy": "图片会上传到 Forge 服务端（sharp）。多文件请用 Batch。响应后不落盘。",
+      "note": "引擎：sharp（libvips）· 服务端 · 单张 + 批处理 · 与 API 同一路径（imageBase64）"
     },
     "pptxText": {
       "file": "PPTX 文件",

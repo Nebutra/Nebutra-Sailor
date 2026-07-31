@@ -181,8 +181,130 @@ export const lunarTool = tool({
   },
 });
 
+/** Curated IANA zones for the world-clock catalog page (override via `timezones`). */
+export const WORLD_CLOCK_DEFAULT_ZONES = [
+  "UTC",
+  "America/New_York",
+  "America/Los_Angeles",
+  "America/Sao_Paulo",
+  "Europe/London",
+  "Europe/Paris",
+  "Europe/Berlin",
+  "Africa/Cairo",
+  "Asia/Dubai",
+  "Asia/Kolkata",
+  "Asia/Shanghai",
+  "Asia/Tokyo",
+  "Asia/Singapore",
+  "Australia/Sydney",
+  "Pacific/Auckland",
+] as const;
+
+export const worldClockTool = tool({
+  id: "time/world-clock",
+  slug: "world-clock",
+  category: "time",
+  title: { zh: "世界时钟", en: "World Clock" },
+  description: {
+    zh: "同一时刻下多时区对照（dayjs + IANA）",
+    en: "Compare the same instant across IANA timezones with dayjs",
+  },
+  tier: "catalog",
+  sideEffect: "pure",
+  runtime: ["client", "server"],
+  meterId: "forge.time.world_clock",
+  roots: ["viewer", "calculator"],
+  engine: { name: "dayjs", upstream: "https://github.com/iamkun/dayjs", version: "1.x" },
+  seoKeywords: {
+    zh: "世界时钟,多时区对照,世界时间",
+    en: "world clock online, multiple timezones, world time",
+  },
+  inputSchema: z.object({
+    timezones: z
+      .preprocess(
+        (value) => {
+          if (value === undefined || value === null || value === "") {
+            return [...WORLD_CLOCK_DEFAULT_ZONES];
+          }
+          if (Array.isArray(value)) return value;
+          if (typeof value === "string") {
+            const trimmed = value.trim();
+            if (!trimmed) return [...WORLD_CLOCK_DEFAULT_ZONES];
+            if (trimmed.startsWith("[")) {
+              try {
+                return JSON.parse(trimmed) as unknown;
+              } catch {
+                return trimmed;
+              }
+            }
+            return trimmed
+              .split(/[\n,]+/)
+              .map((s) => s.trim())
+              .filter(Boolean);
+          }
+          return value;
+        },
+        z.array(z.string().min(1).max(64)).min(1).max(24),
+      )
+      .default([...WORLD_CLOCK_DEFAULT_ZONES])
+      .describe("IANA timezone ids (array, JSON array string, or newline/comma list), max 24"),
+    at: z
+      .string()
+      .max(80)
+      .optional()
+      .describe("Instant to display: ISO-8601, unix seconds/ms, or omit for now"),
+    format: z.string().min(1).max(64).default("YYYY-MM-DD HH:mm:ss Z"),
+  }),
+  execute: (input: { timezones?: string[]; at?: string; format?: string }) => {
+    const zones = input.timezones?.length ? input.timezones : [...WORLD_CLOCK_DEFAULT_ZONES];
+    const format = input.format ?? "YYYY-MM-DD HH:mm:ss Z";
+    let base = dayjs();
+    if (input.at?.trim()) {
+      const raw = input.at.trim();
+      const asNum = Number(raw);
+      if (Number.isFinite(asNum) && raw !== "") {
+        base = dayjs.unix(asNum > 1e12 ? asNum / 1000 : asNum);
+      } else {
+        base = dayjs(raw);
+      }
+      if (!base.isValid()) throw new Error("Invalid `at` datetime");
+    }
+    const clocks = zones.map((tz) => {
+      try {
+        const local = base.tz(tz);
+        if (!local.isValid()) {
+          return { timezone: tz, error: "invalid_timezone", time: null, iso: null, offset: null };
+        }
+        return {
+          timezone: tz,
+          time: local.format(format),
+          iso: local.toISOString(),
+          offset: local.format("Z"),
+          unix: local.unix(),
+        };
+      } catch (err) {
+        return {
+          timezone: tz,
+          error: err instanceof Error ? err.message : String(err),
+          time: null,
+          iso: null,
+          offset: null,
+        };
+      }
+    });
+    return {
+      at: base.toISOString(),
+      unix: base.unix(),
+      format,
+      clocks,
+      engine: "dayjs",
+    };
+  },
+});
+
 export const timeExtraTools: readonly AnyForgeToolDefinition[] = [
   cronExplainTool,
   timezoneTool,
   lunarTool,
+  worldClockTool,
 ];

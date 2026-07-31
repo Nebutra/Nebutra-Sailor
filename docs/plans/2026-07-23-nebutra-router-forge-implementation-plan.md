@@ -137,7 +137,8 @@ WS4  F1 Forge density + Router CPA + growth
 | Track | Work |
 |-------|------|
 | Router | CLIProxyAPI sidecar; richer ops; enterprise prefer-official policy (internal) |
-| Forge F1 | Image (`sharp`), PDF suite, unit converters, life calcs → ~100+ tools |
+| Forge F1 | Image (`sharp`), PDF suite, unit converters, life calcs → ~100+ tools — **Done** (host registry ~176) |
+| **Forge F2** | **Active** — quality / Processor batch / W4 MVP / F0 residue. Source of truth: [2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md). **No tool-count KPI.** |
 | Growth | Ad landing templates, programmatic convert matrix with quality bar |
 | GTM | Dual-track copy, create-sailor default baseURL optional |
 

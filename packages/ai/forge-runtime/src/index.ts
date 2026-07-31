@@ -1,3 +1,29 @@
+export {
+  type BatchAccept,
+  type BatchAggregate,
+  type BatchCounts,
+  type BatchItemInput,
+  type BatchItemView,
+  type BatchResultKind,
+  type BatchStatus,
+  buildBatchAggregate,
+  type CreateBatchParams,
+  type CreateBatchResult,
+  countBatchStatuses,
+  createBatchJobs,
+  createBatchStoreFromEnv,
+  deriveBatchStatus,
+  type ForgeBatchManifest,
+  type ForgeBatchStore,
+  getDefaultBatchStore,
+  MemoryBatchStore,
+  resetDefaultBatchStoreForTests,
+  resolveBatchMaxItems,
+  retryBatchItem,
+  type ToolBatchMeta,
+  UpstashRedisBatchStore,
+} from "./batches";
+export { COMPOSE_EDGES, type ComposeEdge, resolveToolCompose } from "./compose-edges";
 export { type ForgeErrorCode, ForgeRuntimeError } from "./errors";
 export { invokeTool } from "./invoke";
 export {
@@ -7,6 +33,7 @@ export {
   resolveJobDispatchMode,
 } from "./job-dispatch";
 export {
+  type CreateJobOptions,
   createJobStoreFromEnv,
   type ForgeJob,
   type ForgeJobStore,
@@ -24,7 +51,9 @@ export {
 export {
   callMcpTool,
   createForgeMcpHandlers,
+  type ForgeMcpBatchHooks,
   listMcpTools,
+  type McpCallResult,
   type McpToolDescriptor,
 } from "./mcp";
 export { buildForgeOpenApi, type OpenApiBuildOptions } from "./openapi";
@@ -36,6 +65,7 @@ export {
 } from "./page-model";
 export { ForgeRegistry } from "./registry";
 export { resolveToolRoots, SLUG_ROOTS } from "./roots-defaults";
+export { renderCoreSkillMarkdown } from "./skill-template";
 export {
   base64Tool,
   caseConvertTool,
@@ -103,3 +133,4 @@ export type {
   ToolRuntime,
   ToolTier,
 } from "./types";
+export { buildStoreZip, extractFileFromJobResult, type ZipEntry } from "./zip-store";

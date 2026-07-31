@@ -467,6 +467,7 @@
     },
     "pdfCompress": {
       "file": "PDF file",
+      "drop": "Drop a PDF here, or browse",
       "quality": "Quality",
       "engine": "Engine",
       "qStructural": "Structural (qpdf, lossless streams)",
@@ -476,10 +477,13 @@
       "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
       "download": "Download PDF",
       "needFile": "Choose a PDF file first",
+      "needPdf": "Please drop a .pdf file",
+      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
+      "barHint": "Bar shows output size relative to input (shorter = more compression).",
       "in": "Input",
       "out": "Output",
       "saved": "Saved",
-      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback"
+      "note": "PDF Compress · qpdf / Ghostscript on host · pdf-lib fallback · honest engine label"
     },
     "jsonFormat": {
       "indent": "Indent",
@@ -496,7 +500,10 @@
       "invalid": "Invalid JSON",
       "line": "line",
       "column": "column",
-      "note": "Engine: JSON.parse/stringify · instant local · same path as API"
+      "sortKeys": "Sort keys",
+      "stats": "{chars} characters · {lines} lines",
+      "liveOff": "live validate off (large input)",
+      "note": "Engine: JSON.parse/stringify · live validate · ⌘/Ctrl+Enter formats · same path as API"
     },
     "qr": {
       "size": "Size",
@@ -844,7 +851,8 @@
       "dims": " · {w}×{h}",
       "original": "Original",
       "result": "Result",
-      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)"
+      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response.",
+      "note": "Engine: sharp (libvips) · server-side · single + batch · same path as API (imageBase64)"
     },
     "pptxText": {
       "file": "PPTX file",

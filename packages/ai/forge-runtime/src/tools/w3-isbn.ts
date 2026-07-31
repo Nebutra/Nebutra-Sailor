@@ -259,7 +259,8 @@ export const isbnTool = tool({
   sideEffect: "pure",
   runtime: ["client", "server"],
   meterId: "forge.text.isbn",
-  roots: ["verifier", "checker", "converter"],
+  roots: ["verifier", "checker", "converter", "processor"],
+  batch: { resultKind: "json", accept: "lines", maxItems: 200 },
   engine: {
     name: "isbn-check-digit",
     upstream: "ISO 2108 (ISBN) + GS1 General Specifications (EAN-13 check digit)",

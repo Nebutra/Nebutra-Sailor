@@ -1039,7 +1039,8 @@ export const secretScanTool = tool({
   sideEffect: "pure",
   runtime: ["server", "client"],
   meterId: "forge.dev.secret_scan",
-  roots: ["detector", "analyzer"],
+  roots: ["detector", "analyzer", "processor"],
+  batch: { resultKind: "json", accept: "files", maxItems: 50 },
   engine: {
     name: "forge-secret-scan",
     upstream:

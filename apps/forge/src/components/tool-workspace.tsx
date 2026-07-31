@@ -419,6 +419,10 @@ export function ToolWorkspace({
       return <CsvPreviewRunner toolId={toolId} />;
     case "sql-format":
       return <SqlFormatRunner toolId={toolId} />;
+    case "js-format":
+      return <CatalogRunnerRouter slug={slug} toolId={toolId} />;
+    case "world-clock":
+      return <CatalogRunnerRouter slug={slug} toolId={toolId} />;
     case "color-convert":
       return <ColorConvertRunner toolId={toolId} />;
     case "qr-generate":

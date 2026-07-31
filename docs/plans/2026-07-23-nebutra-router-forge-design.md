@@ -507,14 +507,14 @@ a shape, and the shape is the batch surface.
 | 37 | Converter | ✅ dense | 54 | |
 | 38 | Viewer | ✅ dense | 19 | |
 | 39 | Extractor | ✅ dense | 16 | |
-| 09 | Editor | ◐ thin | 3 | image-crop, find-replace-regex, text-replace |
-| 42 | Verifier | ◐ thin | 4 | id-card, credit-card-luhn, hmac-verify, email-validate |
-| 43 | Simulator | ◐ thin | 2 | dice-roll, cron-explain |
-| 46 | Comparator | ◐ thin | 4 | text-diff, json-diff, hash-compare, string-similarity |
-| 01 | Translator | ○ empty | 0 | Router-backed `external` shell; the only planned non-`pure` root |
-| 10 | Processor | ○ empty | 0 | J surface exists (`/api/v1/jobs` + worker); **no tool is tagged `processor`** |
-| 21 | Template | ○ empty | 0 | lorem-ipsum ships but tags as `generator`; license / gitignore / .editorconfig missing |
-| 27 | Detector | ○ empty | 0 | MIME / encoding / secret detection — read-only pre-pipeline gate |
+| 09 | Editor | ✅ dense enough | 5+ | crop / rotate / exif-strip / csv-columns / find-replace (2026-07-31) |
+| 42 | Verifier | ✅ dense enough | 8 | IBAN, USCC, VIN, ISBN, EAN, Luhn, hmac-verify, email… |
+| 43 | Simulator | ✅ dense enough | 5 | cron, dice, backoff, loan amort., business-day-shift |
+| 46 | Comparator | ✅ dense enough | 7 | text/json/yaml/csv/env diffs, hash-compare, list-set, similarity |
+| 01 | Translator | ○ empty | 0 | Router-backed `external` shell only; **W6 gate** — not F2 |
+| 10 | Processor | ○ empty shape | 0 | Design ready (`tools/_processor-batch-surface.md`); **F2 Track A** |
+| 21 | Template | ✅ opened | 7 | license, gitignore, editorconfig, dockerfile, readme, robots… |
+| 27 | Detector | ✅ opened | 5 | file-type, encoding, line-ending, language, secret-scan |
 | 03 · 20 | Example · Sample | — out | | Content formats, not tool calls |
 | 05 | Online | — out | | Query modifier, not a root |
 | 06 · 28 · 18 | Downloader · Scraper · Uploader | — out | | Abuse / copyright; upload only as temp+metered input |
@@ -626,28 +626,29 @@ degrades to an opaque `{ type: "object" }`. Registering a tool is the whole job.
 | **W1 · Intent alignment** | 0–few engines | Tag all tools with `roots` + primary EN/ZH SEO; related-by-root; `/r/{root}` hubs + sitemap | **Done** — every tool resolves roots (`roots-defaults.ts`), 13 hubs live |
 | **W2 · Fill S gaps** | → **~100–110** tools | Waves 2–5 batches; **pdf-compress** via host qpdf/Ghostscript (+ pdf-lib fallback); **exif-viewer** via exifr; docx/xlsx/pptx text via pure ZIP OOXML | **Done** — 148 tools |
 | **W2.5 · Machine surface** | 100% callable by agents | Zod → JSON Schema derivation; OpenAPI 3.1 one-op-per-tool; MCP descriptors carry real schemas; `tools.json` v2 | **Done 2026-07-28** — `json-schema.ts` / `openapi.ts`; regression test forbids opaque schemas |
-| **W3 · Close the open slots, all `pure`** | quality over count | Deepen **Verifier / Comparator** to ≥5; open **Template → Detector → Processor** (that order, see §6.7.9); bring dense roots to competitor parity | **Next** |
-| **W4 · Composition** | agent planners | `compose.next` edges, per-tool SKILL.md, schema-compatible chaining | Not started |
-| **W5 · New object domains, still `pure`** | new traffic, same doctrine | Geo and bio columns on the object axis — existing verbs over new payloads (§6.7.8) | Planned |
+| **W3 · Close the open slots, all `pure`** | quality over count | Deepen **Verifier / Comparator** to ≥5; open **Template → Detector → Processor** (that order, see §6.7.9); bring dense roots to competitor parity | **◐ Almost done 2026-07-31** — Template / Detector / thin roots ≥5; **Processor shape not shipped** (design: `tools/_processor-batch-surface.md`). Execution plan: [2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md) |
+| **W4 · Composition** | agent planners | `compose.next` edges, per-tool SKILL.md, schema-compatible chaining | **F2 Track C MVP** (see convergence doc) — full graph still later |
+| **W5 · New object domains, still `pure`** | new traffic, same doctrine | Geo and bio columns on the object axis — existing verbs over new payloads (§6.7.8) | Planned — **out of F2** |
 | **W6 · LLM-backed, gated** | only after the gate | Translator and the model-backed candidates, each as an explicit Router-backed `external` tool | **Gated — not scheduled by tool count** |
 
-**W3 is deliberately not "add 50 more tools."** §6.7.2a shows the count metric
-is already met while four root slots sit empty; density now means *opening the
-missing verbs and the async/external shapes*, not padding the Converter column.
+**W3 is deliberately not "add 50 more tools."** Pure root *counts* for thin slots
+are met; the remaining W3 deliverable is the **Processor batch shape**, not more
+Converter padding. Planning ledger: [2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md).
 
 **Still explicit non-goals:** Downloader, Scraper, general Compiler, project Manager/Dashboard, unconstrained outbound Sender.
 
 #### 6.7.7 North stars & guardrails
 
-| Metric | Target | Actual 2026-07-28 |
+| Metric | Target | Actual 2026-07-31 |
 |--------|--------|-------------------|
-| Registered tools | 79 → **120** (W2) → **150+** (W3) | **170** (169 default + host `md-to-pdf`) |
-| In-scope roots opened | 18/18 of the 51 | **16/18** — Template and Detector opened in W3; Translator (gated, §6.7.8) and Processor (a shape, designed not populated) remain |
-| S-root density | **≥5 tools each** | **11 of 11** — Verifier 9, Comparator 8 after W3 |
+| Registered tools | 79 → **120** (W2) → **150+** (W3) | **176** (175 default + host `md-to-pdf`) — **count target met; stop counting in F2** |
+| In-scope roots opened | 18/18 of the 51 | **16/18** — Template + Detector open; Translator gated (§6.7.8); Processor **designed, not shipped** |
+| S-root density | **≥5 tools each** | **Met** (Verifier / Comparator / Editor / Simulator / Template / Detector all ≥5 explicit tags) |
 | Tools on MCP + tools.json + OpenAPI | **100%** | **100%** — schemas derived from Zod, no hand-written duplicate |
-| `pure` share | ≥85% (reproducible agent steps) | **99.4%** (168/169) |
+| `pure` share | ≥85% (reproducible agent steps) | **~99%** — hold as asset |
 | Tier X tools in default agent catalog | **0** | **0** |
 | LLM-backed tools without Router meter | **0** | **0** — no LLM-backed tool ships yet |
+| F0 catalog residue | 0 missing | **2 left:** `time/world-clock`, `dev/js-format` (F2 Track B) |
 
 **Read `pure` 99.3% as an asset, not a debt.** It is the reason every Forge
 step is reproducible, cacheable, cheap to serve, and safe to put in an agent
@@ -805,16 +806,18 @@ Aligned with §6.7 waves (F* = catalog density; W* = demand-matrix + AI-Native w
 
 | Phase | Catalog feel | Focus | State |
 |-------|----------------|-------|-------|
-| **F0** | ~40–60 → **~79** + real home IA | Dual-surface pipeline proven; **W1** root tags + machine catalog honesty | Done |
-| **F1** | ~100–120 | Image/PDF/units/life + **W2** S-root gap fill; **W2.5** machine surface | Done — **148** |
-| **F2** | **quality, not count** | **W3**: dense roots to competitor parity, thin roots completed, Template/Detector/Processor opened; **W4** composition metadata | Next |
-| **F3** | new object domains | **W5** geo / bio columns — still `pure`; long-tail + Router deep links | Planned |
+| **F0** | ~40–60 → **~79** + real home IA | Dual-surface pipeline proven; **W1** root tags + machine catalog honesty | Done (2 Catalog leftovers → F2 Track B) |
+| **F1** | ~100–120 | Image/PDF/units/life + **W2** S-root gap fill; **W2.5** machine surface | Done — **148 → 176** |
+| **F2** | **quality, not count** | **Processor batch shape** + F0 close + W4 compose/SKILL MVP + 3 SOTA remediations | **Active** — [2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md) |
+| **F3** | new object domains | **W5** geo / bio columns — still `pure`; long-tail + Router deep links | Planned — blocked until F2 exit |
 | **F4** | first metered model steps | **W6** LLM-backed tools, one at a time, each through the §6.7.8 gate | Gated |
 
-**F2 deliberately has no tool-count target.** The count target was met at F1
-while four root slots stood empty and dense roots sat at "present" rather than
-"good" — so the next phase is measured by parity and completeness, not by
-inventory. Counting resumes at F3, when new object domains genuinely add rows.
+**F2 deliberately has no tool-count target.** Inventory is frozen as “enough”
+(176 host tools). The only required *new* product capability in F2 is the
+**batch/Processor shape**; everything else is residue close, agent composition,
+or quality on existing blades. Full exit criteria:
+[2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md) §2.
+Counting resumes at F3, when new object domains genuinely add rows.
 
 Commercial: free tier → login → top-up → API limits; ads allowed on free **human** tier, **never inside the tool workflow** (§6.7.10); **Agent/API path stays clean, metered, and free of Tier X clutter**.
 
@@ -998,6 +1001,8 @@ Do **not** start by forking engine UIs or copying full upstream source into the 
 | 2026-07-28 | **Pure-first**: AI-Native means the agent contract, not a model call; LLM tools are gated on validated PMF + unit economics (§6.7.8), never on schedule |
 | 2026-07-28 | Geo / bio enter as **object-axis columns shipped `pure`**, not as LLM features |
 | 2026-07-28 | F2 measured by parity and completeness, not tool count |
+| 2026-07-31 | F2 **converged**: 176 tools baseline; only open product shape is Processor batch; F0 residue = world-clock + js-format; W5/W6 out of F2. Plan: [2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md) |
+| 2026-07-31 | F2 **Tracks A–D shipped** (batch surface, F0 close, compose+SKILL, three SOTA journey passes). Exit: [2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md) |
 
 ---
 

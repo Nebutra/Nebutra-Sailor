@@ -97,6 +97,7 @@ function imageTool(opts: {
   seoKeywords: { zh: string; en: string };
   mode: "compress" | "resize" | "convert";
   roots?: readonly string[];
+  batch?: AnyForgeToolDefinition["batch"];
 }): AnyForgeToolDefinition {
   return {
     id: opts.id,
@@ -111,6 +112,7 @@ function imageTool(opts: {
     engine: { name: "sharp", upstream: "lovell/sharp", version: "0.34.x" },
     seoKeywords: opts.seoKeywords,
     ...(opts.roots ? { roots: opts.roots } : {}),
+    ...(opts.batch ? { batch: opts.batch } : {}),
     inputSchema: BufferInput,
     unitCost: 0,
     execute: (input: ImageOpsInput) => runImageTransform(input, opts.mode),
@@ -125,7 +127,8 @@ export const imageCompressTool = imageTool({
   meterId: "forge.image.compress",
   seoKeywords: { zh: "图片压缩在线", en: "compress image online" },
   mode: "compress",
-  roots: ["optimizer"],
+  roots: ["optimizer", "processor"],
+  batch: { resultKind: "file", accept: "files", maxItems: 20 },
 });
 
 export const imageResizeTool = imageTool({

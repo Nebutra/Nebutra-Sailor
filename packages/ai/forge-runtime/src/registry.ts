@@ -1,16 +1,27 @@
+import { resolveToolCompose } from "./compose-edges";
 import { ForgeRuntimeError } from "./errors";
 import { resolveToolRoots } from "./roots-defaults";
 import { F0_BATCH1_TOOLS } from "./tools/index";
 import type { AnyForgeToolDefinition, ForgeToolSummary } from "./types";
 
-function withResolvedRoots(tool: AnyForgeToolDefinition): AnyForgeToolDefinition {
+function withResolvedMeta(tool: AnyForgeToolDefinition): AnyForgeToolDefinition {
   const roots = resolveToolRoots(tool);
-  if (tool.roots === roots) return tool;
-  return { ...tool, roots };
+  const compose = resolveToolCompose(tool.id, tool.compose);
+  const rootsSame = tool.roots === roots;
+  const composeSame =
+    (tool.compose === undefined && compose === undefined) ||
+    (tool.compose?.next === compose?.next && tool.compose?.prev === compose?.prev);
+  if (rootsSame && composeSame) return tool;
+  return {
+    ...tool,
+    roots,
+    ...(compose ? { compose } : {}),
+  };
 }
 
 function toSummary(tool: AnyForgeToolDefinition): ForgeToolSummary {
   const roots = resolveToolRoots(tool);
+  const compose = resolveToolCompose(tool.id, tool.compose);
   return {
     id: tool.id,
     slug: tool.slug,
@@ -23,6 +34,8 @@ function toSummary(tool: AnyForgeToolDefinition): ForgeToolSummary {
     engine: tool.engine,
     path: `/t/${tool.slug}`,
     roots,
+    ...(tool.batch ? { batch: tool.batch } : {}),
+    ...(compose ? { compose } : {}),
   };
 }
 
@@ -32,7 +45,7 @@ export class ForgeRegistry {
 
   constructor(tools: readonly AnyForgeToolDefinition[] = F0_BATCH1_TOOLS) {
     for (const raw of tools) {
-      const tool = withResolvedRoots(raw);
+      const tool = withResolvedMeta(raw);
       if (this.byId.has(tool.id)) {
         throw new ForgeRuntimeError("execution_failed", `Duplicate tool id: ${tool.id}`);
       }

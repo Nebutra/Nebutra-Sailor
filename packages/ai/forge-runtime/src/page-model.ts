@@ -20,6 +20,9 @@ export const DEMAND_ROOTS = [
   // W3 opened these two (docs §6.7.2a): both were empty roots on the 51-root audit.
   "template",
   "detector",
+  // Processor is a shape (batch queue), not an SEO keyword play — tools may tag it
+  // for agent discovery; hub copy must stay honest (no junk "processor tools" SEO).
+  "processor",
 ] as const;
 
 export type DemandRoot = (typeof DEMAND_ROOTS)[number];
@@ -40,6 +43,10 @@ const ROOT_COPY: Record<string, LocalizedString> = {
   editor: { zh: "编辑器", en: "Editors" },
   template: { zh: "模板", en: "Templates" },
   detector: { zh: "检测器", en: "Detectors" },
+  processor: {
+    zh: "批处理（多文件 / 多条目队列）",
+    en: "Batch processing (multi-item queue)",
+  },
 };
 
 /**
@@ -57,12 +64,24 @@ export function buildToolPageModel(
   const apiPath = `/v1/tools/${tool.id}/invoke`;
 
   const roots = resolveToolRoots(tool);
+  const relatedMap = new Map<string, ForgeToolSummary>();
+  // Prefer explicit composition edges (W4 / F2 Track C) for "next" suggestions.
+  const compose = tool.compose;
+  if (compose?.next?.length) {
+    for (const id of compose.next) {
+      if (registry.has(id)) {
+        const peer = registry.list().find((t) => t.id === id);
+        if (peer) relatedMap.set(peer.id, peer);
+      }
+    }
+  }
   const byRoot = registry
     .list()
     .filter((t) => t.id !== tool.id && (t.roots ?? []).some((r) => roots.includes(r)));
   const byCategory = registry.listByCategory(tool.category).filter((t) => t.id !== tool.id);
-  const relatedMap = new Map<string, ForgeToolSummary>();
-  for (const t of [...byRoot, ...byCategory]) relatedMap.set(t.id, t);
+  for (const t of [...byRoot, ...byCategory]) {
+    if (!relatedMap.has(t.id)) relatedMap.set(t.id, t);
+  }
   const related = [...relatedMap.values()].slice(0, 8);
 
   const exampleBody = JSON.stringify({ example: true }, null, 2);
@@ -96,6 +115,7 @@ export function buildToolPageModel(
       ].join("\n"),
     },
     related,
+    ...(compose ? { compose } : {}),
   };
 }
 

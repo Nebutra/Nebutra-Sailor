@@ -1,5 +1,5 @@
 /**
- * Dev knives — regex, color (culori), SQL format, nanoid, markdown preview.
+ * Dev knives — regex, color (culori), SQL format, nanoid, markdown preview, JS/TS format.
  */
 // culori ships JS; types optional
 // @ts-expect-error — no bundled types in culori@4 for our resolution path
@@ -9,6 +9,8 @@ import { customAlphabet, nanoid } from "nanoid";
 import { format as formatSql } from "sql-formatter";
 import { z } from "zod";
 import type { AnyForgeToolDefinition } from "../types";
+
+const JS_FORMAT_MAX_CHARS = 200_000;
 
 function tool(
   def: Omit<AnyForgeToolDefinition, "unitCost"> & { unitCost?: number },
@@ -289,6 +291,82 @@ export const mdToHtmlTool = tool({
   },
 });
 
+export const jsFormatTool = tool({
+  id: "dev/js-format",
+  slug: "js-format",
+  category: "dev",
+  title: { zh: "JS/TS 格式化", en: "JS/TS Formatter" },
+  description: {
+    zh: "Prettier 格式化 JavaScript / TypeScript / JSON（有长度上限）",
+    en: "Format JavaScript, TypeScript, or JSON with Prettier (bounded input size)",
+  },
+  tier: "catalog",
+  sideEffect: "pure",
+  runtime: ["server"],
+  meterId: "forge.dev.js_format",
+  roots: ["formatter", "optimizer"],
+  engine: {
+    name: "prettier",
+    upstream: "https://github.com/prettier/prettier",
+    version: "3.x",
+  },
+  seoKeywords: {
+    zh: "js格式化,typescript格式化,prettier在线",
+    en: "javascript formatter online, typescript prettier, beautify js",
+  },
+  inputSchema: z.object({
+    text: z
+      .string()
+      .min(1)
+      .max(JS_FORMAT_MAX_CHARS)
+      .describe(`Source code, max ${JS_FORMAT_MAX_CHARS} characters`),
+    parser: z
+      .enum(["babel", "typescript", "json", "json5", "babel-ts"])
+      .default("babel")
+      .describe("Prettier parser"),
+    tabWidth: z.number().int().min(1).max(8).default(2),
+    semi: z.boolean().default(true),
+    singleQuote: z.boolean().default(false),
+    trailingComma: z.enum(["none", "es5", "all"]).default("all"),
+    printWidth: z.number().int().min(40).max(200).default(80),
+  }),
+  execute: async (input: {
+    text: string;
+    parser?: "babel" | "typescript" | "json" | "json5" | "babel-ts";
+    tabWidth?: number;
+    semi?: boolean;
+    singleQuote?: boolean;
+    trailingComma?: "none" | "es5" | "all";
+    printWidth?: number;
+  }) => {
+    if (input.text.length > JS_FORMAT_MAX_CHARS) {
+      throw new Error(`Input exceeds ${JS_FORMAT_MAX_CHARS} characters`);
+    }
+    // Dynamic import keeps cold start light for hosts that never call this tool.
+    const prettier = await import("prettier");
+    const parser = input.parser ?? "babel";
+    try {
+      const result = await prettier.format(input.text, {
+        parser,
+        tabWidth: input.tabWidth ?? 2,
+        semi: input.semi ?? true,
+        singleQuote: input.singleQuote ?? false,
+        trailingComma: input.trailingComma ?? "all",
+        printWidth: input.printWidth ?? 80,
+      });
+      return {
+        result,
+        parser,
+        engine: "prettier",
+        inputChars: input.text.length,
+        outputChars: result.length,
+      };
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : String(err));
+    }
+  },
+});
+
 export const devExtraTools: readonly AnyForgeToolDefinition[] = [
   regexTesterTool,
   colorConvertTool,
@@ -296,4 +374,5 @@ export const devExtraTools: readonly AnyForgeToolDefinition[] = [
   nanoidTool,
   markdownPreviewTool,
   mdToHtmlTool,
+  jsFormatTool,
 ];

@@ -94,30 +94,45 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
   const download = () => {
     if (!outBase64) return;
     const a = document.createElement("a");
+    // Critical: data URL, not a corrupted placeholder string.
     a.href = `data:application/pdf;base64,${outBase64}`;
     const base = fileName.replace(/\.pdf$/i, "") || "document";
     a.download = `${base}.compressed.pdf`;
     a.click();
   };
 
+  const inputBytes = base64 ? Math.ceil((base64.length * 3) / 4) : 0;
+  const savedPct =
+    meta && Number(meta.bytesIn) > 0
+      ? Math.round((Number(meta.saved ?? 0) / Number(meta.bytesIn)) * 1000) / 10
+      : null;
+
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium text-[var(--neutral-12)]">{t("pdfCompress.file")}</p>
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
+      <div
+        className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] p-6 text-sm text-[var(--neutral-10)]"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          e.preventDefault();
+          const f = e.dataTransfer.files?.[0] ?? null;
+          if (f && (f.type === "application/pdf" || f.name.toLowerCase().endsWith(".pdf"))) {
+            void onFile(f);
+          } else if (f) {
+            setError(t("pdfCompress.needPdf"));
+          }
+        }}
+      >
         <input
           data-allow-native
           type="file"
           accept="application/pdf,.pdf"
-          className="block w-full text-sm"
+          className="mb-2 block w-full max-w-md text-sm"
           onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
         />
-        {fileName ? (
-          <p className="text-xs text-[var(--neutral-11)]">
-            {fileName}
-            {base64 ? ` · ~${formatBytes(Math.ceil((base64.length * 3) / 4))}` : ""}
-          </p>
-        ) : null}
+        <p>{fileName ? `${fileName} · ~${formatBytes(inputBytes)}` : t("pdfCompress.drop")}</p>
       </div>
+      <RunnerNote>{t("pdfCompress.privacy")}</RunnerNote>
 
       <div className="grid gap-3 sm:grid-cols-2">
         <RunnerSelect
@@ -202,9 +217,25 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
           <p className="sm:col-span-2">
             <span className="text-[var(--neutral-10)]">{t("pdfCompress.saved")}: </span>
             <span className="font-semibold tabular-nums text-[var(--status-success)]">
-              {formatBytes(Number(meta.saved ?? 0))} ({String(meta.savedPercent ?? 0)}%)
+              {formatBytes(Number(meta.saved ?? 0))} ({String(meta.savedPercent ?? savedPct ?? 0)}%)
             </span>
           </p>
+          {Number(meta.bytesIn) > 0 ? (
+            <div className="sm:col-span-2">
+              <div className="h-2 overflow-hidden rounded-full bg-[var(--neutral-4)]">
+                <div
+                  className="h-full rounded-full bg-[hsl(var(--primary))] transition-all"
+                  style={{
+                    width: `${Math.min(
+                      100,
+                      Math.max(0, (Number(meta.bytesOut) / Number(meta.bytesIn)) * 100),
+                    )}%`,
+                  }}
+                />
+              </div>
+              <p className="mt-1 text-xs text-[var(--neutral-10)]">{t("pdfCompress.barHint")}</p>
+            </div>
+          ) : null}
           {meta.note ? (
             <p className="sm:col-span-2 text-xs leading-relaxed text-[var(--neutral-11)]">
               {String(meta.note)}

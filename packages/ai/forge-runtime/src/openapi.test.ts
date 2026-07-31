@@ -68,6 +68,15 @@ describe("MCP descriptors", () => {
       expect(registry.has(tool.name.replace(/__/g, "/"))).toBe(true);
     }
   });
+
+  it("advertises batch tools only when includeBatch is set", () => {
+    const plain = listMcpTools(registry);
+    expect(plain.some((t) => t.name.startsWith("forge.batch."))).toBe(false);
+    const withBatch = listMcpTools(registry, { includeBatch: true });
+    expect(withBatch.length).toBe(registry.list().length + 2);
+    expect(withBatch[0]?.name).toBe("forge.batch.create");
+    expect(withBatch[1]?.name).toBe("forge.batch.get");
+  });
 });
 
 describe("OpenAPI document", () => {

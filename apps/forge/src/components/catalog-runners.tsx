@@ -311,6 +311,47 @@ export function CatalogRunnerRouter({
         "sql-formatter",
       );
 
+    case "js-format":
+      return g(
+        toolId,
+        [
+          {
+            key: "text",
+            label: "Source",
+            kind: "textarea",
+            defaultValue: "const x={a:1,b:2,c:()=>3}",
+            rows: 12,
+          },
+          {
+            key: "parser",
+            label: "Parser",
+            kind: "select",
+            defaultValue: "babel",
+            options: [
+              { value: "babel", label: "JavaScript (babel)" },
+              { value: "typescript", label: "TypeScript" },
+              { value: "babel-ts", label: "TS via babel-ts" },
+              { value: "json", label: "JSON" },
+              { value: "json5", label: "JSON5" },
+            ],
+          },
+          {
+            key: "tabWidth",
+            label: "Tab width",
+            kind: "number",
+            defaultValue: "2",
+          },
+          {
+            key: "singleQuote",
+            label: "Single quotes",
+            kind: "boolean",
+            defaultValue: false,
+          },
+        ],
+        "prettier · max 200k chars",
+        pick("result"),
+      );
+
     case "nanoid":
       return g(
         toolId,
@@ -385,6 +426,57 @@ export function CatalogRunnerRouter({
           { key: "isLeap", label: "Lunar leap month", kind: "boolean", defaultValue: false },
         ],
         "lunar-javascript",
+      );
+
+    case "world-clock":
+      return g(
+        toolId,
+        [
+          {
+            key: "timezones",
+            label: "Timezones (JSON array of IANA ids)",
+            kind: "textarea",
+            defaultValue: JSON.stringify(
+              [
+                "UTC",
+                "America/New_York",
+                "Europe/London",
+                "Asia/Shanghai",
+                "Asia/Tokyo",
+                "Australia/Sydney",
+              ],
+              null,
+              2,
+            ),
+            rows: 8,
+          },
+          {
+            key: "at",
+            label: "At (ISO / unix, empty = now)",
+            kind: "text",
+            defaultValue: "",
+          },
+          {
+            key: "format",
+            label: "Format",
+            kind: "text",
+            defaultValue: "YYYY-MM-DD HH:mm:ss Z",
+          },
+        ],
+        "dayjs · world clock",
+        (o) => {
+          const clocks = o.clocks as
+            | Array<{ timezone?: string; time?: string; error?: string }>
+            | undefined;
+          if (!Array.isArray(clocks)) return JSON.stringify(o, null, 2);
+          return clocks
+            .map((c) =>
+              c.error
+                ? `${c.timezone}: ERROR ${c.error}`
+                : `${String(c.timezone).padEnd(28)} ${c.time ?? ""}`,
+            )
+            .join("\n");
+        },
       );
 
     case "sha512":

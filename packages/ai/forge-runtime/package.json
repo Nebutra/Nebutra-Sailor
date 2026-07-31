@@ -31,7 +31,8 @@
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "skills:generate": "vitest run src/generate-core-skills.test.ts"
   },
   "dependencies": {
     "@zxcvbn-ts/core": "^4.1.2",
@@ -42,6 +43,7 @@
     "culori": "^4.0.2",
     "dayjs": "^1.11.21",
     "diff": "^7.0.0",
+    "exifr": "^7.1.3",
     "fast-xml-parser": "^5.8.0",
     "he": "^1.2.0",
     "jose": "^6.2.0",
@@ -56,11 +58,11 @@
     "papaparse": "^5.5.4",
     "pdf-lib": "^1.17.1",
     "pinyin-pro": "^3.28.2",
+    "prettier": "^3.8.1",
     "qrcode": "^1.5.4",
     "smol-toml": "^1.6.1",
     "sql-formatter": "^15.8.2",
-    "zod": "catalog:",
-    "exifr": "^7.1.3"
+    "zod": "catalog:"
   },
   "optionalDependencies": {
     "sharp": "^0.35.0"

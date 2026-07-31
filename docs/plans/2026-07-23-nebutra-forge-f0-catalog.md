@@ -1,9 +1,9 @@
 # Nebutra Forge — F0 Tool Catalog & OSS SOTA Map
 
 **Date:** 2026-07-23  
-**Status:** Draft catalog (implementation picks may swap within the same SOTA class)  
+**Status:** **Shipped** (2026-07-31: **60/60** catalog rows live including `time/world-clock` + `dev/js-format`; inventory far beyond F0). Do **not** use this file as an open build backlog for more tools — see [2026-07-31-forge-f2-convergence.md](./2026-07-31-forge-f2-convergence.md).  
 **Parent:** [2026-07-23-nebutra-router-forge-design.md](./2026-07-23-nebutra-router-forge-design.md)  
-**Goal:** ~50–60 everyday tools that already feel like a **tool station**, each backed by **OSS SOTA** and shipped with **AI-Native dual surface** (human page + API/MCP/SKILL where Core).
+**Goal (historical):** ~50–60 everyday tools that already feel like a **tool station**, each backed by **OSS SOTA** and shipped with **AI-Native dual surface** (human page + API/MCP/SKILL where Core).
 
 ---
 
