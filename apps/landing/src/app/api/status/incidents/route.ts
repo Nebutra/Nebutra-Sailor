@@ -17,8 +17,7 @@ import {
  * not a multi-user CMS. Prefer rotating the token via env.
  */
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+// Note: do not set `export const runtime` — incompatible with nextConfig.cacheComponents.
 
 function unauthorized(): NextResponse {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
