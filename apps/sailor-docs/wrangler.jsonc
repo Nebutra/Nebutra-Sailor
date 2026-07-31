@@ -6,6 +6,8 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-06-04",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Shrink Worker upload (handler.mjs was ~99 MiB uncompressed / ~15 MiB gzip).
+  "minify": true,
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

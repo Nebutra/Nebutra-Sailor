@@ -1,25 +1,22 @@
-import { createCompiler } from "@fumadocs/mdx-remote";
-import { remarkFeedbackBlock } from "fumadocs-core/mdx-plugins/remark-feedback-block";
-import { remarkMdxMermaid } from "fumadocs-mermaid";
-import { remarkAutoTypeTable } from "fumadocs-typescript";
+/**
+ * Remote MDX compiler surface.
+ *
+ * Full `@fumadocs/mdx-remote` + rehype-code + Shiki is intentionally **not**
+ * imported here. That chain embeds ~8 MiB of language grammars into the
+ * OpenNext Worker and exceeds Cloudflare size limits. The hybrid remote demo
+ * route short-circuits on Workers; local/Vercel can re-enable a full compiler
+ * later via a separate module if needed.
+ */
 
-// Standard compilation configuration matching source.config.ts
-export const compiler = createCompiler({
-  remarkPlugins: [
-    [remarkMdxMermaid, { theme: "system" }],
-    [
-      remarkFeedbackBlock,
-      {
-        title: "How is this guide?",
-        goodLabel: "Good",
-        badLabel: "Bad",
-      },
-    ],
-    [
-      remarkAutoTypeTable,
-      {
-        cache: true,
-      },
-    ],
-  ],
-});
+type Compiler = {
+  compile: (opts: { source: string }) => Promise<{
+    body: React.ComponentType<{ components?: Record<string, unknown> }>;
+    toc?: unknown;
+  }>;
+};
+
+export const compiler: Compiler = {
+  async compile() {
+    throw new Error("Remote MDX is disabled in this build (Cloudflare Worker size / Shiki).");
+  },
+};
