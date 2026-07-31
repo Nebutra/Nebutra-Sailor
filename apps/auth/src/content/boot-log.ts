@@ -95,6 +95,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "engelbart-royalties",
+    stamp: "1968",
+    sources: [
+      {
+        label: "Douglas Engelbart, English Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Douglas_Engelbart",
+      },
+    ],
+    zh: {
+      tag: "专利",
+      title: "四万美元",
+      body: "演示过那只木盒鼠标之后,SRI给它申请了专利,却没看出它值多少钱。若干年后外界才知道,他们把授权卖给了苹果,大约四万美元。",
+      coda: "恩格尔巴特本人,从这项发明里一分版税也没拿到。",
+    },
+    en: {
+      tag: "Patent",
+      title: "Forty thousand dollars",
+      body: "SRI patented the mouse after the demo and, by its own account, had no real idea of its value. Some years later it emerged that they had licensed it to Apple for something like $40,000.",
+      coda: "Engelbart never received any royalties for inventing it.",
+    },
+  },
+  {
     id: "lo",
     stamp: "1969.10.29",
     sources: [
@@ -421,6 +443,28 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "www-royalty-free",
+    stamp: "1993.04.30",
+    sources: [
+      {
+        label: "World Wide Web, English Wikipedia",
+        url: "https://en.wikipedia.org/wiki/World_Wide_Web",
+      },
+    ],
+    zh: {
+      tag: "放弃",
+      title: "不收费的那一天",
+      body: "1993年4月30日,CERN把万维网的协议和代码免除版税公开发布。任何人都可以拿去用,不必付钱,也不必来问。",
+      coda: "此后没有人为使用它付过一分版税。",
+    },
+    en: {
+      tag: "Given away",
+      title: "The day it stopped costing",
+      body: "On 30 April 1993 CERN made the protocol and the code of the World Wide Web available royalty-free. Anyone could take it, without paying and without asking.",
+      coda: "Nobody has paid a royalty to use it since.",
+    },
+  },
+  {
     id: "ariane-501",
     stamp: "1996.06.04",
     sources: [
@@ -447,6 +491,25 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     },
   },
   {
+    id: "multics-shutdown",
+    stamp: "2000.10.30",
+    sources: [
+      { label: "Multics, English Wikipedia", url: "https://en.wikipedia.org/wiki/Multics" },
+    ],
+    zh: {
+      tag: "关机",
+      title: "最后一台",
+      body: "2000年10月30日,已知最后一台在霍尼韦尔硬件上原生运行的Multics,在加拿大国防部哈利法克斯的机房里关机。",
+      coda: "从立项算起,它跑了三十五年。",
+    },
+    en: {
+      tag: "Shutdown",
+      title: "The last one",
+      body: "On 30 October 2000 the last known Multics installation running natively on Honeywell hardware was shut down at the Canadian Department of National Defence in Halifax, Nova Scotia.",
+      coda: "Thirty-five years after the project began.",
+    },
+  },
+  {
     id: "api-mandate",
     stamp: "2002",
     sources: [
@@ -470,6 +533,66 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "The memo",
       body: "According to the post that went public by accident in 2011, Bezos ordered in 2002 that teams expose everything through service interfaces: no direct linking, no reading another team's store, no back doors.",
       coda: "The author of that post had meant it for his colleagues only.",
+    },
+  },
+  {
+    id: "hupu-rumours",
+    stamp: "2004.01",
+    sources: [
+      { label: "虎扑,中文維基百科", url: "https://zh.wikipedia.org/wiki/%E8%99%8E%E6%89%91" },
+    ],
+    zh: {
+      tag: "论坛",
+      title: "翻译流言的人",
+      body: "2004年1月,一个在芝加哥读机械学博士的中国学生,用业余时间开了个篮球论坛。主要工作是把NBA的新闻和流言翻译成中文,整理好贴出来。",
+      coda: "八年后,这个论坛开出了自己的电商平台。",
+    },
+    en: {
+      tag: "Forum",
+      title: "The one translating rumours",
+      body: "In January 2004 a Chinese student working on a mechanical engineering doctorate in Chicago started a basketball forum in his spare time. The work was mostly translating NBA news and rumours into Chinese and tidying them up.",
+      coda: "Eight years later the forum opened an online store of its own.",
+    },
+  },
+  {
+    id: "jd-the-other-name",
+    stamp: "2004",
+    sources: [
+      { label: "京東集團,中文維基百科", url: "https://zh.wikipedia.org/wiki/%E4%BA%AC%E4%B8%9C" },
+    ],
+    zh: {
+      tag: "词源",
+      title: "名字里的另一个人",
+      body: "2004年上线的那家零售平台,名字取自两个人:创始人刘强东,和他的初恋女友龚晓京。各出一个字。",
+      coda: "「京」是她。",
+    },
+    en: {
+      tag: "Etymology",
+      title: "The other half of the name",
+      body: "The retail platform that went online in 2004 took its name from two people: its founder, Liu Qiangdong, and Gong Xiaojing, the woman he had dated first. One character from each.",
+      coda: "The Jing is hers.",
+    },
+  },
+  {
+    id: "douban-hutong",
+    stamp: "2005.03.06",
+    sources: [
+      {
+        label: "豆瓣網,中文維基百科",
+        url: "https://zh.wikipedia.org/wiki/%E8%B1%86%E7%93%A3%E7%BD%91",
+      },
+    ],
+    zh: {
+      tag: "词源",
+      title: "胡同的名字",
+      body: "2005年3月6日上线的那个网站,名字不是隐喻。杨勃写它源码的时候,常去的咖啡馆在北京豆瓣胡同附近,他就用了那条胡同。",
+      coda: "网站上线二十一年,名字一次没改。",
+    },
+    en: {
+      tag: "Etymology",
+      title: "Named after the alley",
+      body: "The site that went live on 6 March 2005 is not named after a metaphor. Yang Bo wrote its source in a cafe near Douban Hutong in Beijing, and took the name of the alley.",
+      coda: "Twenty-one years on, the site still carries it.",
     },
   },
   {
@@ -3763,6 +3886,29 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
       title: "A Week of Bidding",
       body: "In 2012 a University of Toronto professor and his two graduate students crushed the field in an image-recognition contest, then incorporated a shell company to sell themselves. Google, Microsoft, Baidu, and DeepMind spent a week bidding against each other for it.",
       coda: "Hinton chose Google. One of the two students was Ilya Sutskever.",
+    },
+  },
+  {
+    id: "xiaohongshu-name",
+    stamp: "2013.10",
+    sources: [
+      {
+        label: "小紅書,中文維基百科",
+        url: "https://zh.wikipedia.org/wiki/%E5%B0%8F%E7%B4%85%E6%9B%B8",
+      },
+      { label: "Xiaohongshu, English Wikipedia", url: "https://en.wikipedia.org/wiki/Xiaohongshu" },
+    ],
+    zh: {
+      tag: "词源",
+      title: "那本红皮书不是那本",
+      body: "「小红书」这三个字,大部分人默认它指的是另一本红皮的书。创始人毛文超给出的来源要平淡得多:贝恩公司和斯坦福商学院,他工作过和读过书的地方,主色都是红的。",
+      coda: "英文名直译过去,和那本书一字不差。",
+    },
+    en: {
+      tag: "Etymology",
+      title: "Not that little red book",
+      body: "Most people assume the name points at the other red book. The founder's own account is duller: Bain & Company and the Stanford Graduate School of Business, the firm he worked at and the school he attended, both run on red.",
+      coda: "Translated into English, the name comes out identical to the other one anyway.",
     },
   },
   {
