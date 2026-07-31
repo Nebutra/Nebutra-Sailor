@@ -24,10 +24,16 @@ const OUTPUT_FILE = path.join(OUTPUT_DIR, "index.tsx");
 // Files to skip (will be deleted once migration is done)
 const SKIP_FILES = new Set(["dynamic-demos.tsx"]);
 
-// Components that use browser-only APIs and must skip SSR
+// Components that use browser-only APIs and must skip SSR.
+// Default is now ssr:false for *all* demos (see FORCE_CLIENT_ONLY_DEMOS):
+// OpenNext/Workers pack every SSR-enabled client module into handler.mjs,
+// and 290+ demos + framer-motion + mermaid blow past the 64 MiB limit.
 const SSR_EXCLUDE = new Set([
-  // Add demo names here if they break during SSR
+  // Add demo names here if they break during SSR (redundant with force flag)
 ]);
+
+/** When true, every registry demo is `dynamic(..., { ssr: false })`. */
+const FORCE_CLIENT_ONLY_DEMOS = process.env.REGISTRY_SSR !== "1";
 
 /**
  * Detect if a file uses JSX component tags that aren't imported.
@@ -121,8 +127,82 @@ function toKebab(name) {
     .toLowerCase();
 }
 
+/**
+ * Resolve export * / export { X } re-exports into local preview wrappers that
+ * only re-export from @nebutra/docs-shared (or other packages).
+ */
+function resolveReexportTargets(source, filename) {
+  const names = [];
+  const dir = PREVIEWS_DIR;
+
+  // export * from "pkg"  OR  export * from "./rel"
+  for (const m of source.matchAll(/^export\s+\*\s+from\s+["']([^"']+)["']/gm)) {
+    const spec = m[1];
+    if (spec.startsWith(".")) {
+      const target = path.resolve(dir, path.dirname(filename), spec);
+      const candidates = [`${target}.tsx`, `${target}.ts`, path.join(target, "index.tsx")];
+      const hit = candidates.find((c) => fs.existsSync(c));
+      if (hit) names.push(...extractExports(fs.readFileSync(hit, "utf-8"), path.basename(hit)));
+      continue;
+    }
+    // package re-export: try to read from monorepo package source
+    // e.g. @nebutra/docs-shared/components/previews/button-demo
+    if (spec.startsWith("@nebutra/docs-shared/")) {
+      const rel = spec.replace("@nebutra/docs-shared/", "");
+      const candidates = [
+        // common layout in this monorepo (packages/design/docs-shared)
+        ...findDocsSharedPreview(rel),
+      ];
+      const hit = candidates.find((c) => fs.existsSync(c));
+      if (hit) {
+        names.push(...extractExports(fs.readFileSync(hit, "utf-8"), path.basename(hit)));
+      } else {
+        // Fallback: derive ComponentName from file basename (button-demo → ButtonDemo)
+        // and common multi-export files still need package read — warn later.
+        const baseName = path.basename(filename, ".tsx");
+        const guess = baseName
+          .split("-")
+          .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+          .join("");
+        if (guess.endsWith("Demo") || /[A-Z]/.test(guess)) names.push(guess);
+      }
+    }
+  }
+
+  // export { Foo, Bar as Baz } from "..."
+  for (const m of source.matchAll(/^export\s+\{([^}]+)\}\s+from\s+["'][^"']+["']/gm)) {
+    for (const part of m[1].split(",")) {
+      const bits = part.trim().split(/\s+as\s+/);
+      const exported = (bits[1] || bits[0] || "").trim();
+      if (exported && /^[A-Z]/.test(exported) && !exported.endsWith("Props")) names.push(exported);
+    }
+  }
+
+  return names;
+}
+
+function findDocsSharedPreview(rel) {
+  // Canonical: packages/design/docs-shared/src/<rel>.tsx
+  // rel e.g. "components/previews/button-demo"
+  const out = [
+    path.resolve(ROOT, "../../packages/design/docs-shared/src", `${rel}.tsx`),
+    path.resolve(ROOT, "../../packages/design/docs-shared/src", `${rel}.ts`),
+    path.resolve(ROOT, "../../packages/design/docs-shared", `${rel}.tsx`),
+  ];
+  try {
+    const pkg = path.join(ROOT, "node_modules/@nebutra/docs-shared");
+    if (fs.existsSync(pkg)) {
+      const real = fs.realpathSync(pkg);
+      out.push(path.join(real, "src", `${rel}.tsx`), path.join(real, `${rel}.tsx`));
+    }
+  } catch {
+    /* ignore */
+  }
+  return out;
+}
+
 /** Extract exported component names from a file's source */
-function extractExports(source, _filename) {
+function extractExports(source, filename = "") {
   const names = [];
 
   // Strip out template literals to avoid matching code examples
@@ -143,6 +223,11 @@ function extractExports(source, _filename) {
     // Skip type aliases, interfaces, non-component constants
     if (m[1].endsWith("Props") || m[1].endsWith("Context")) continue;
     names.push(m[1]);
+  }
+
+  // Re-export barrels (local preview wrappers → docs-shared)
+  if (names.length === 0) {
+    names.push(...resolveReexportTargets(source, filename));
   }
 
   // Deduplicate
@@ -208,7 +293,8 @@ const lines = [
 // Named exports — so mdx-components.tsx can do:
 //   import { AccordionDemo, ButtonDemo } from "@/components/__registry__"
 for (const { exportName, file, key, isDefault, ssrOff: autoSsrOff } of entries) {
-  const ssrOff = SSR_EXCLUDE.has(key) || autoSsrOff ? `, { ssr: false }` : "";
+  const ssrOff =
+    FORCE_CLIENT_ONLY_DEMOS || SSR_EXCLUDE.has(key) || autoSsrOff ? `, { ssr: false }` : "";
   const accessor = isDefault ? "m.default" : `m.${exportName}`;
   lines.push(
     `export const ${exportName} = dynamic(() => import("@/components/previews/${file}").then(m => ({ default: ${accessor} }))${ssrOff});`,

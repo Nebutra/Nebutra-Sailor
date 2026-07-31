@@ -1,4 +1,3 @@
-import { brand } from "@nebutra/brand/metadata";
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
@@ -32,7 +31,34 @@ const nextConfig: NextConfig = {
       process.env.OPEN_NEXT_BUILD === "true" ||
       process.env.CI === "true",
   },
-  serverExternalPackages: ["@takumi-rs/image-response"],
+  // Keep native/heavy packages out of the OpenNext esbuild graph when possible.
+  // Mermaid is 75MB on disk; OG image renderer is native; octokit only for feedback.
+  serverExternalPackages: ["@takumi-rs/image-response", "mermaid", "playwright", "playwright-core"],
+  experimental: {
+    // Tree-shake barrel imports so icons/ui do not land wholesale in handler.mjs.
+    optimizePackageImports: [
+      "@nebutra/icons",
+      "@nebutra/ui",
+      "@nebutra/ui/primitives",
+      "@nebutra/ui/patterns",
+      "fumadocs-ui",
+      "fumadocs-ui/components",
+    ],
+  },
+  // OpenNext/Workers size cuts:
+  // - `@nebutra/ui/primitives` barrel statically imports streamdown → full shiki
+  //   (~8 MiB langs). Docs never render MessageContent; stub streamdown out.
+  // - Prefer shiki/bundle/web if anything still imports shiki.
+  ...(process.env.OPEN_NEXT_BUILD === "true"
+    ? {
+        turbopack: {
+          resolveAlias: {
+            shiki: "shiki/bundle/web",
+            streamdown: "./src/shims/streamdown-stub.ts",
+          },
+        },
+      }
+    : {}),
   transpilePackages: [
     "@nebutra/fonts",
     "@nebutra/ui",
