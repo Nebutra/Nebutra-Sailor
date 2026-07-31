@@ -3,6 +3,7 @@
 import { Compass, Sparkles, Cross as X } from "@nebutra/icons";
 import { useTour } from "@nebutra/onboarding";
 import { AnimateIn } from "@nebutra/ui/components";
+import { Button } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { DASHBOARD_TOUR_V1 } from "@/lib/onboarding/dashboard-tour";
 
@@ -63,33 +64,32 @@ export function DashboardHintCard({ cookieName }: Props) {
             </p>
 
             <div className="mt-3 flex items-center gap-2">
-              <button
+              <Button
                 type="button"
+                shape="pill"
+                size="tiny"
                 onClick={startTour}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90"
-                style={{ background: "hsl(var(--primary))" }}
+                prefix={<Compass className="size-3" />}
               >
-                <Compass className="size-3" />
                 Take the 4-step tour
-              </button>
-              <button
-                type="button"
-                onClick={dismiss}
-                className="rounded-full px-3 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
-              >
+              </Button>
+              <Button type="button" variant="ghost" shape="pill" size="tiny" onClick={dismiss}>
                 Skip
-              </button>
+              </Button>
             </div>
           </div>
 
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            shape="circle"
+            size="tiny"
+            className="absolute right-0 top-0"
             onClick={dismiss}
             aria-label="Dismiss hint"
-            className="absolute right-0 top-0 rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
           >
             <X className="size-3.5" />
-          </button>
+          </Button>
         </div>
       </div>
     </AnimateIn>

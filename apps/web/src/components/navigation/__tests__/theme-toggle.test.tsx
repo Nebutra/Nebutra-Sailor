@@ -52,39 +52,39 @@ describe("ThemeToggle", () => {
     expect(buttons.length).toBeGreaterThanOrEqual(3);
   });
 
-  it("renders three theme buttons with i18n labels", () => {
+  it("renders three theme options with i18n labels", () => {
     render(<ThemeToggle />);
-    expect(screen.getByRole("button", { name: /system/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /light/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /dark/i })).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /system/i })).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /light/i })).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /dark/i })).toBeInTheDocument();
   });
 
-  it("calls setTheme('light') when light button clicked", () => {
+  it("calls setTheme('light') when light option clicked", () => {
     render(<ThemeToggle />);
-    fireEvent.click(screen.getByRole("button", { name: /light/i }));
+    fireEvent.click(screen.getByRole("radio", { name: /light/i }));
     expect(setThemeMock).toHaveBeenCalledWith("light");
   });
 
-  it("calls setTheme('dark') when dark button clicked", () => {
+  it("calls setTheme('dark') when dark option clicked", () => {
     render(<ThemeToggle />);
-    fireEvent.click(screen.getByRole("button", { name: /dark/i }));
+    fireEvent.click(screen.getByRole("radio", { name: /dark/i }));
     expect(setThemeMock).toHaveBeenCalledWith("dark");
   });
 
-  it("calls setTheme('system') when system button clicked", () => {
+  it("calls setTheme('system') when system option clicked", () => {
     currentTheme = "light";
     render(<ThemeToggle />);
-    fireEvent.click(screen.getByRole("button", { name: /system/i }));
+    fireEvent.click(screen.getByRole("radio", { name: /system/i }));
     expect(setThemeMock).toHaveBeenCalledWith("system");
   });
 
-  it("marks the active theme button with aria-pressed=true", () => {
+  it("marks the active theme option with aria-checked=true", () => {
     currentTheme = "dark";
     render(<ThemeToggle />);
-    const dark = screen.getByRole("button", { name: /dark/i });
-    expect(dark).toHaveAttribute("aria-pressed", "true");
-    const light = screen.getByRole("button", { name: /light/i });
-    expect(light).toHaveAttribute("aria-pressed", "false");
+    const dark = screen.getByRole("radio", { name: /dark/i });
+    expect(dark).toHaveAttribute("aria-checked", "true");
+    const light = screen.getByRole("radio", { name: /light/i });
+    expect(light).toHaveAttribute("aria-checked", "false");
   });
 
   it("compact mode renders an icon-only single button with aria-label", () => {

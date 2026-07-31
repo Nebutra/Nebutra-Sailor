@@ -17,7 +17,14 @@ import {
   Sparkles as Wand2,
 } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
-import { BrandMark, Dialog, DialogContent } from "@nebutra/ui/primitives";
+import {
+  BrandMark,
+  Dialog,
+  DialogContent,
+  Entity,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@nebutra/ui/primitives";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -285,17 +292,15 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           </div>
         </div>
 
-        <button
-          type="button"
+        <Entity
+          as="button"
+          chevron
           onClick={onOpenFull}
-          className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm transition-colors hover:border-neutral-7 hover:bg-neutral-2"
+          className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 hover:bg-neutral-2"
+          left={<SettingsIcon className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
         >
-          <span className="flex items-center gap-2.5 text-neutral-12">
-            <SettingsIcon className="h-4 w-4 text-neutral-10" aria-hidden="true" />
-            <span>{t("profile.manageCta")}</span>
-          </span>
-          <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
-        </button>
+          <Entity.Content title={t("profile.manageCta")} />
+        </Entity>
       </div>
     );
   }
@@ -337,17 +342,15 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             <span>{t("subscription.upgradeCta")}</span>
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </button>
-          <button
-            type="button"
+          <Entity
+            as="button"
+            chevron
             onClick={onManage}
-            className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm text-neutral-12 transition-colors hover:border-neutral-7 hover:bg-neutral-2"
+            className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 hover:bg-neutral-2"
+            left={<CreditCard className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
           >
-            <span className="flex items-center gap-2">
-              <CreditCard className="h-4 w-4 text-neutral-10" aria-hidden="true" />
-              {t("subscription.manageCta")}
-            </span>
-            <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
-          </button>
+            <Entity.Content title={t("subscription.manageCta")} />
+          </Entity>
         </div>
       </div>
     );
@@ -370,7 +373,14 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
             {t("preferences.theme")}
           </p>
-          <div className="grid grid-cols-3 gap-2">
+          <ToggleGroup
+            type="single"
+            variant="pill"
+            value={theme ?? ""}
+            onValueChange={(value) => setTheme(value as "light" | "dark" | "system")}
+            aria-label={t("preferences.theme")}
+            className="grid w-full grid-cols-3 gap-2 rounded-none bg-transparent p-0"
+          >
             {(
               [
                 { id: "light", icon: Sun },
@@ -379,25 +389,19 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
               ] as const
             ).map((option) => {
               const Icon = option.icon;
-              const isActive = theme === option.id;
               return (
-                <button
+                <ToggleGroupItem
                   key={option.id}
-                  type="button"
-                  onClick={() => setTheme(option.id)}
-                  aria-pressed={isActive}
-                  className={`flex flex-col items-center gap-1.5 rounded-[var(--radius-xl)] border px-3 py-3 text-xs font-medium transition-colors ${
-                    isActive
-                      ? "border-primary/30 bg-primary/10 text-primary dark:border-primary/40 dark:bg-primary/5/20 dark:text-primary"
-                      : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-7 hover:bg-neutral-2"
-                  }`}
+                  value={option.id}
+                  variant="pill"
+                  className="h-auto flex-col gap-1.5 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-3 py-3 text-xs font-medium text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 data-[state=on]:border-primary/30 data-[state=on]:bg-primary/10 data-[state=on]:text-primary dark:data-[state=on]:border-primary/40 dark:data-[state=on]:bg-primary/5/20 dark:data-[state=on]:text-primary"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                   <span>{t(`preferences.${option.id}`)}</span>
-                </button>
+                </ToggleGroupItem>
               );
             })}
-          </div>
+          </ToggleGroup>
         </section>
 
         <section>
@@ -405,28 +409,24 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             {t("preferences.help")}
           </p>
           <div className="flex flex-col gap-1.5">
-            <button
-              type="button"
+            <Entity
+              as="button"
+              chevron
               onClick={onReportIssue}
-              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
+              className="rounded-[var(--radius-lg)] hover:bg-neutral-2"
+              left={<LifeBuoy className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
             >
-              <span className="flex items-center gap-2.5">
-                <LifeBuoy className="h-4 w-4 text-neutral-10" aria-hidden="true" />
-                {t("preferences.reportIssue")}
-              </span>
-              <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
-            </button>
-            <button
-              type="button"
+              <Entity.Content title={t("preferences.reportIssue")} />
+            </Entity>
+            <Entity
+              as="button"
+              chevron
               onClick={onShortcuts}
-              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
+              className="rounded-[var(--radius-lg)] hover:bg-neutral-2"
+              left={<Keyboard className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
             >
-              <span className="flex items-center gap-2.5">
-                <Keyboard className="h-4 w-4 text-neutral-10" aria-hidden="true" />
-                {t("preferences.shortcuts")}
-              </span>
-              <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
-            </button>
+              <Entity.Content title={t("preferences.shortcuts")} />
+            </Entity>
           </div>
         </section>
       </div>

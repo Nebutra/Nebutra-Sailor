@@ -973,16 +973,17 @@ function StartupBuilderHome({
                       event.target.value = "";
                     }}
                   />
-                  <button
+                  <Button
                     type="button"
+                    variant="outline"
+                    shape="circle"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={disabled || isLoading}
                     aria-label="Attach a file"
                     title="Attach a text file to fold into the proposition"
-                    className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-neutral-7 bg-neutral-1 text-neutral-11 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <Paperclip className="size-4" aria-hidden="true" />
-                  </button>
+                  </Button>
                   <Select
                     value={arena}
                     onValueChange={(value) => onArenaChange(value as StartupArena)}
@@ -1004,16 +1005,17 @@ function StartupBuilderHome({
                   </Select>
                   <StartupConnectorsMenu disabled={disabled || isLoading} />
                 </div>
-                <button
+                <Button
                   type="button"
+                  variant="ink"
+                  shape="circle"
                   disabled={!canCompile}
                   onClick={onCompile}
                   aria-label={isSaving ? "Building" : "Build"}
                   title={isSaving ? "Building…" : "Build"}
-                  className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-neutral-12 text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
                 >
                   <ArrowRight className="size-4" aria-hidden="true" />
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -1021,15 +1023,18 @@ function StartupBuilderHome({
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 <span className="text-xs text-neutral-9">Try</span>
                 {EXAMPLE_THESES[arena].map((example) => (
-                  <button
+                  <Button
                     key={example}
                     type="button"
+                    variant="outline"
+                    shape="pill"
+                    size="sm"
                     disabled={disabled || isLoading}
                     onClick={() => onThesisChange(example)}
-                    className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary disabled:cursor-not-allowed disabled:opacity-45"
+                    className="hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
                   >
                     {example}
-                  </button>
+                  </Button>
                 ))}
               </div>
             ) : null}
@@ -1781,19 +1786,21 @@ function StartupCanvasPanel({
                   <span>Approval: {selectedRun.approval}</span>
                   <span>Budget: ${selectedRun.costEstimateUsd.toFixed(2)}</span>
                 </div>
-                <button
+                <Button
                   type="button"
+                  variant="ink"
+                  size="sm"
+                  className="mt-3 w-full"
                   disabled={!selectedRunExecutable || isExecuting}
                   onClick={() => onExecuteRun(selectedRun.id)}
-                  className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-2 text-[13px] font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
+                  prefix={<Lightning className="size-3.5" aria-hidden="true" />}
                 >
-                  <Lightning className="size-3.5" aria-hidden="true" />
                   {isExecuting
                     ? "Executing..."
                     : selectedRunExecutable
                       ? "Execute selected run"
                       : "Not executable"}
-                </button>
+                </Button>
               </div>
             ) : null}
           </aside>

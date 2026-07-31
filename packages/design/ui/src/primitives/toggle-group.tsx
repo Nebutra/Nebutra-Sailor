@@ -124,7 +124,18 @@ const ToggleGroupItem = ({
     if (isDisabled) return;
 
     if (context.type === "single") {
-      context.onValueChange(isSelected ? "" : value);
+      // Re-clicking the selected item is a no-op, not a deselect. This group
+      // renders role="radiogroup" / role="radio" / aria-checked, and a radio
+      // that clears itself contradicts the contract it announces — a screen
+      // reader is told one of these is always chosen. It also drove four real
+      // call sites into an invalid state, including the site-wide theme
+      // switcher, because each one casts the value straight into a typed
+      // setter: `setTheme(v as Theme)` with v === "" is not a theme.
+      //
+      // One call site had already discovered this and guarded with `if (v)`.
+      // A hazard every consumer has to remember is a defect in the primitive.
+      if (isSelected) return;
+      context.onValueChange(value);
     } else {
       const currentArray = Array.isArray(context.value) ? context.value : [];
       context.onValueChange(

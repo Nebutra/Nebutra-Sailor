@@ -37,6 +37,8 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
+  ToggleGroup,
+  ToggleGroupItem,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
@@ -407,24 +409,24 @@ function SegmentedControl<T extends string>({
   return (
     <div className="flex items-center gap-2">
       <span className="text-muted-foreground text-xs">{label}</span>
-      <div className="flex rounded-[var(--radius-md)] border border-border bg-muted p-0.5">
+      <ToggleGroup
+        type="single"
+        aria-label={label}
+        value={value}
+        onValueChange={(next) => onChange(next as T)}
+        className="rounded-[var(--radius-md)] border border-border bg-muted p-0.5"
+      >
         {options.map((option) => (
-          <button
+          <ToggleGroupItem
             key={option.value}
-            type="button"
-            className={cn(
-              "inline-flex h-7 items-center gap-1.5 rounded-[calc(var(--radius-md)-2px)] px-2.5 font-medium text-xs transition",
-              value === option.value
-                ? "bg-background text-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-            onClick={() => onChange(option.value)}
+            value={option.value}
+            className="h-7 gap-1.5 rounded-[calc(var(--radius-md)-2px)] px-2.5 text-xs hover:text-foreground"
           >
             {option.icon}
             {option.label}
-          </button>
+          </ToggleGroupItem>
         ))}
-      </div>
+      </ToggleGroup>
     </div>
   );
 }

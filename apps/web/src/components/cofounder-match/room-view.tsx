@@ -3,6 +3,7 @@
 import { ArrowRight, LockClosed, Sparkles, Users } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { EmptyState } from "@nebutra/ui/layout";
+import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -128,16 +129,16 @@ export function RoomView({ profileId }: { profileId: string }) {
                 Team forming — invitation sent
               </div>
             ) : (
-              <button
+              <Button
                 type="button"
+                shape="pill"
+                className="mt-4"
                 onClick={formTeam}
                 disabled={formState === "forming"}
-                className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-                style={{ background: "hsl(var(--primary))" }}
+                prefix={<Users className="size-4" aria-hidden="true" />}
               >
-                <Users className="size-4" aria-hidden="true" />
                 {formState === "forming" ? "Forming…" : "Form the team"}
-              </button>
+              </Button>
             )}
             {formState === "error" ? (
               <p className="mt-2 text-xs text-[color:var(--status-danger)]">

@@ -2,6 +2,8 @@
 
 import { DeviceDesktop as Monitor, Moon, Sun } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
+import { Button, ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
@@ -55,54 +57,46 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
     const Icon = ICON_FOR_THEME[active];
     const next = NEXT_THEME[active];
     return (
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        shape="circle"
+        size="sm"
         aria-label="Toggle theme"
         title={`${t(active)} → ${t(next)}`}
         onClick={() => setTheme(next)}
-        className={
-          className ??
-          "inline-flex h-8 w-8 items-center justify-center rounded-full text-neutral-11 transition-colors hover:bg-neutral-3 hover:text-neutral-12"
-        }
+        className={className ?? "text-neutral-11 hover:bg-neutral-3 hover:text-neutral-12"}
       >
         <Icon className="h-4 w-4" />
-      </button>
+      </Button>
     );
   }
 
   const choices: ThemeChoice[] = ["system", "light", "dark"];
   return (
-    // biome-ignore lint/a11y/useSemanticElements: segmented toggle is a button group, not a radiogroup or fieldset
-    <div
-      role="group"
+    <ToggleGroup
+      type="single"
+      variant="pill"
+      value={active}
+      onValueChange={(value) => setTheme(value as ThemeChoice)}
       aria-label="Theme"
-      className={
-        className ??
-        "inline-flex items-center gap-0.5 rounded-full border border-neutral-7 bg-neutral-1 p-0.5"
-      }
+      className={cn("border border-neutral-7 bg-neutral-1 p-0.5", className)}
     >
       {choices.map((choice) => {
         const Icon = ICON_FOR_THEME[choice];
-        const isActive = active === choice;
         return (
-          <button
+          <ToggleGroupItem
             key={choice}
-            type="button"
-            aria-pressed={isActive}
+            value={choice}
+            variant="pill"
             aria-label={t(choice)}
-            onClick={() => setTheme(choice)}
-            className={[
-              "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-colors",
-              isActive
-                ? "bg-primary/5 text-primary"
-                : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",
-            ].join(" ")}
+            className="gap-1.5 px-3 py-1 text-xs hover:bg-neutral-2"
           >
             <Icon className="h-3.5 w-3.5" aria-hidden />
             <span>{t(choice)}</span>
-          </button>
+          </ToggleGroupItem>
         );
       })}
-    </div>
+    </ToggleGroup>
   );
 }

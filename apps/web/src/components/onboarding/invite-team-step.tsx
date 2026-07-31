@@ -2,7 +2,7 @@
 
 import { Plus, Cross as X } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/components";
-import { Label } from "@nebutra/ui/primitives";
+import { Button as IconButton, Label } from "@nebutra/ui/primitives";
 import { useState } from "react";
 
 interface InviteTeamStepProps {
@@ -82,14 +82,17 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
                 onChange={(e) => updateEmail(i, e.target.value)}
               />
               {emails.length > 1 && (
-                <button
+                <IconButton
                   type="button"
+                  variant="ghost"
+                  shape="circle"
+                  size="sm"
                   aria-label="Remove email"
                   onClick={() => removeField(i)}
-                  className="rounded-[var(--radius-md)] p-1.5 text-muted-foreground hover:text-destructive"
+                  className="text-muted-foreground hover:text-destructive"
                 >
                   <X className="h-4 w-4" />
-                </button>
+                </IconButton>
               )}
             </div>
           ))}

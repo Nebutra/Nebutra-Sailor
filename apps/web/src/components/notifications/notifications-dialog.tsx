@@ -9,7 +9,7 @@ import {
   Users,
 } from "@nebutra/icons";
 import type { NotificationInboxItem, NotificationSettingsSnapshot } from "@nebutra/notifications";
-import { Dialog, DialogContent } from "@nebutra/ui/primitives";
+import { Dialog, DialogContent, ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -143,23 +143,21 @@ export function NotificationsDialog() {
 
             {/* Tab bar — segmented control */}
             <div className="mt-4 flex justify-center">
-              <div className="inline-flex rounded-[var(--radius-md)] border border-border bg-muted p-0.5">
+              <ToggleGroup
+                type="single"
+                size="sm"
+                aria-label="通知分类"
+                value={tab}
+                onValueChange={(v) => {
+                  if (v) setTab(v as Tab);
+                }}
+              >
                 {TABS.map((t) => (
-                  <button
-                    key={t.id}
-                    type="button"
-                    onClick={() => setTab(t.id)}
-                    className={cn(
-                      "h-7 rounded-[calc(var(--radius-md)-2px)] px-4 text-xs font-medium transition",
-                      tab === t.id
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground",
-                    )}
-                  >
+                  <ToggleGroupItem key={t.id} value={t.id}>
                     {t.label}
-                  </button>
+                  </ToggleGroupItem>
                 ))}
-              </div>
+              </ToggleGroup>
             </div>
           </div>
 

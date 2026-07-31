@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, Select } from "@nebutra/ui/primitives";
+import { Button, Input, Select } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
@@ -185,38 +185,46 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        <button
+        <Button
           type="button"
+          shape="pill"
+          size="sm"
+          variant="outline"
           data-testid="audit-filter-range-24h"
           onClick={() => applyRangeDays(1)}
-          className="rounded-[var(--radius-md)] border border-border px-3 py-1.5 text-xs hover:bg-muted"
         >
           {t("range24h")}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          shape="pill"
+          size="sm"
+          variant="outline"
           data-testid="audit-filter-range-7d"
           onClick={() => applyRangeDays(7)}
-          className="rounded-[var(--radius-md)] border border-border px-3 py-1.5 text-xs hover:bg-muted"
         >
           {t("range7d")}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          shape="pill"
+          size="sm"
+          variant="outline"
           data-testid="audit-filter-range-30d"
           onClick={() => applyRangeDays(30)}
-          className="rounded-[var(--radius-md)] border border-border px-3 py-1.5 text-xs hover:bg-muted"
         >
           {t("range30d")}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          shape="pill"
+          size="sm"
+          variant="outline"
           data-testid="audit-filter-reset"
           onClick={reset}
-          className="rounded-[var(--radius-md)] border border-border px-3 py-1.5 text-xs hover:bg-muted"
         >
           {t("reset")}
-        </button>
+        </Button>
       </div>
     </div>
   );

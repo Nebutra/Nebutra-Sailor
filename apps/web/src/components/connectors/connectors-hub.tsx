@@ -6,7 +6,7 @@ import {
   Plus,
   Trash as Trash2,
 } from "@nebutra/icons";
-import { ConfirmDialog, toast } from "@nebutra/ui/primitives";
+import { Button, ConfirmDialog, toast } from "@nebutra/ui/primitives";
 import { useState } from "react";
 
 /**
@@ -99,15 +99,14 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           </p>
         </div>
         {onAdd && (
-          <button
+          <Button
             type="button"
+            shape="pill"
             onClick={onAdd}
-            className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: "hsl(var(--primary))" }}
+            prefix={<Plus className="h-3.5 w-3.5" />}
           >
-            <Plus className="h-3.5 w-3.5" />
             Add a connector
-          </button>
+          </Button>
         )}
       </section>
     );
@@ -182,15 +181,18 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
               </p>
 
               {onRemove && (
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  shape="circle"
+                  size="tiny"
                   onClick={() => setPendingRemove(connector)}
                   disabled={isBusy}
                   aria-label={`Remove ${connector.name}`}
-                  className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-[background-color,color,opacity] duration-150 group-hover:opacity-100 hover:bg-destructive/10 hover:text-[hsl(var(--destructive-strong))] focus-visible:opacity-100 disabled:cursor-not-allowed"
+                  className="absolute right-3 top-3 text-neutral-9 opacity-0 transition-[background-color,color,opacity] duration-150 group-hover:opacity-100 hover:bg-destructive/10 hover:text-[hsl(var(--destructive-strong))] focus-visible:opacity-100 disabled:cursor-not-allowed"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
-                </button>
+                </Button>
               )}
             </article>
           );

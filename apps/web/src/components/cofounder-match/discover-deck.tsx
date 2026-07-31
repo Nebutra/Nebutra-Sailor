@@ -2,7 +2,8 @@
 
 import { ArrowRight, Cross, Heart, PaperAirplane, Sparkles } from "@nebutra/icons";
 import { EmptyState } from "@nebutra/ui/layout";
-import { Textarea } from "@nebutra/ui/primitives";
+import { Button, Textarea } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -152,16 +153,15 @@ export function DiscoverDeck() {
         title="Join the cofounder pool"
         description="Become discoverable to other founders — opt in to start matching. You're opt-out by default; leave anytime."
         action={
-          <button
+          <Button
             type="button"
+            shape="pill"
             onClick={joinPool}
             disabled={busy}
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-            style={{ background: "hsl(var(--primary))" }}
+            suffix={<ArrowRight className="size-4" aria-hidden="true" />}
           >
             {busy ? "Joining…" : "Join the pool"}
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </button>
+          </Button>
         }
       />
     );
@@ -191,13 +191,9 @@ export function DiscoverDeck() {
         title="Couldn't load the pool"
         description="Something went wrong loading cofounder candidates."
         action={
-          <button
-            type="button"
-            onClick={() => void load()}
-            className="rounded-full border border-neutral-7 px-4 py-2 text-sm font-semibold text-neutral-12"
-          >
+          <Button type="button" variant="outline" shape="pill" onClick={() => void load()}>
             Try again
-          </button>
+          </Button>
         }
       />
     );
@@ -331,16 +327,16 @@ export function DiscoverDeck() {
             >
               Cancel
             </button>
-            <button
+            <Button
               type="button"
+              shape="pill"
+              size="sm"
               disabled={busy || pitch.trim().length === 0}
               onClick={() => void act("PITCH", pitch.trim())}
-              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
-              style={{ background: "hsl(var(--primary))" }}
+              prefix={<PaperAirplane className="size-3.5" aria-hidden="true" />}
             >
-              <PaperAirplane className="size-3.5" aria-hidden="true" />
               Send pitch
-            </button>
+            </Button>
           </div>
         </div>
       ) : (
@@ -401,16 +397,23 @@ function DeckAction({
   children: React.ReactNode;
 }) {
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
+      shape="circle"
       aria-label={`${label}${hint ? ` (${hint})` : ""}`}
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center justify-center rounded-full border border-neutral-7 bg-neutral-1 shadow-sm transition-[box-shadow,opacity] duration-150 hover:shadow-md disabled:opacity-50 ${small ? "size-12" : "size-16"} ${className ?? ""}`}
+      shadow="sm"
+      className={cn(
+        "transition-shadow duration-micro hover:shadow-md",
+        small ? "size-12" : "size-16",
+        className,
+      )}
     >
       {children}
-    </button>
+    </Button>
   );
 }
 

@@ -8,7 +8,7 @@ import {
   SettingsSlider as Settings2,
   Sparkles,
 } from "@nebutra/icons";
-import { Input } from "@nebutra/ui/primitives";
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
 
 /**
@@ -204,13 +204,16 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
                     )}
                     <span className="font-mono text-[10px] text-neutral-10">v{skill.version}</span>
                   </div>
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
+                    shape="circle"
+                    size="tiny"
                     aria-label={`${skill.name} actions`}
-                    className="rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
+                    className="text-neutral-10 hover:bg-neutral-2 hover:text-neutral-12"
                   >
                     <MoreHorizontal className="h-3.5 w-3.5" />
-                  </button>
+                  </Button>
                 </div>
               </article>
             );

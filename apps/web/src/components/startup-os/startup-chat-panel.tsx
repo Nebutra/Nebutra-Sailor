@@ -217,7 +217,7 @@ export function StartupChatPanel({
                 type="button"
                 variant="outline"
                 size="sm"
-                className="rounded-full"
+                shape="pill"
                 disabled={isStreaming}
                 onClick={() => handleSend(prompt)}
               >
@@ -470,7 +470,7 @@ function UserMessage({
             type="button"
             variant="ghost"
             size="sm"
-            className="rounded-full"
+            shape="pill"
             onClick={() => {
               setEditing(false);
               setDraft(prompt);
@@ -482,7 +482,7 @@ function UserMessage({
             type="button"
             variant="ink"
             size="sm"
-            className="rounded-full"
+            shape="pill"
             disabled={busy || draft.trim().length === 0}
             onClick={() => void revertAndResend()}
           >
@@ -709,7 +709,7 @@ function StatusRow({
           type="button"
           variant="outline"
           size="sm"
-          className="rounded-full"
+          shape="pill"
           onClick={onCancel}
           aria-label="Stop generating"
         >

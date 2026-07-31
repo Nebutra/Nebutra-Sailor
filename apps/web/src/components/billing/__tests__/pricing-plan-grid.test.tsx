@@ -86,10 +86,14 @@ describe("PricingPlanGrid", () => {
     expect(within(proCard).getByText(/recommended/i)).toBeInTheDocument();
   });
 
-  it("renders interval tabs only when at least one plan offers month + year", () => {
+  // radio, not tab. role="tab" promises an associated tabpanel, and this
+  // control reveals nothing — it re-prices the cards in place. Choosing one of
+  // two billing intervals is a radiogroup, which is what the ToggleGroup
+  // primitive announces.
+  it("renders interval options only when at least one plan offers month + year", () => {
     render(<PricingPlanGrid plans={PLANS} />);
-    expect(screen.getByRole("tab", { name: /monthly/i })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /yearly/i })).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /monthly/i })).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /yearly/i })).toBeInTheDocument();
   });
 
   it("does not render interval tabs when only month prices exist", () => {
@@ -113,7 +117,7 @@ describe("PricingPlanGrid", () => {
     const proCard = screen.getByRole("article", { name: /pro/i });
     expect(within(proCard).getByText(/\$29(\.00)?/)).toBeInTheDocument();
 
-    await user.click(screen.getByRole("tab", { name: /yearly/i }));
+    await user.click(screen.getByRole("radio", { name: /yearly/i }));
 
     expect(within(proCard).getByText(/\$279(\.00)?/)).toBeInTheDocument();
   });

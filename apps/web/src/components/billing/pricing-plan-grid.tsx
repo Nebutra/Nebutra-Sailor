@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Check, Sparkles } from "@nebutra/icons";
+import { ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
 import { useMemo, useRef, useState, useTransition } from "react";
 
 export type BillingInterval = "month" | "year";
@@ -206,23 +207,21 @@ export function PricingPlanGrid({
   return (
     <div className={className} data-testid="pricing-plan-grid">
       {showIntervalTabs && (
-        <div
-          role="tablist"
-          aria-label="Billing interval"
-          className="mb-6 flex justify-center gap-1 rounded-full border border-border bg-muted p-1"
-        >
-          <IntervalTab
-            value="month"
-            label="Monthly"
-            active={billingInterval === "month"}
-            onSelect={() => setBillingInterval("month")}
-          />
-          <IntervalTab
-            value="year"
-            label="Yearly"
-            active={billingInterval === "year"}
-            onSelect={() => setBillingInterval("year")}
-          />
+        <div className="mb-6 flex justify-center">
+          <ToggleGroup
+            type="single"
+            variant="pill"
+            value={billingInterval}
+            onValueChange={(value) => setBillingInterval(value as BillingInterval)}
+            aria-label="Billing interval"
+          >
+            <ToggleGroupItem value="month" variant="pill">
+              Monthly
+            </ToggleGroupItem>
+            <ToggleGroupItem value="year" variant="pill">
+              Yearly
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
       )}
 
@@ -249,35 +248,6 @@ export function PricingPlanGrid({
         ))}
       </div>
     </div>
-  );
-}
-
-function IntervalTab({
-  value,
-  label,
-  active,
-  onSelect,
-}: {
-  value: BillingInterval;
-  label: string;
-  active: boolean;
-  onSelect: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      role="tab"
-      aria-selected={active}
-      aria-controls={`pricing-panel-${value}`}
-      onClick={onSelect}
-      className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-        active
-          ? "bg-background text-foreground shadow-sm"
-          : "text-muted-foreground hover:text-foreground"
-      }`}
-    >
-      {label}
-    </button>
   );
 }
 
