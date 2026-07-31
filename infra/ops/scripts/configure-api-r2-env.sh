@@ -35,11 +35,13 @@ upsert() {
   fi
 }
 
-upsert "UPLOAD_PROVIDER" "s3"
+# r2 alias in @nebutra/uploads factory; also set S3_ENDPOINT for createS3Provider
+upsert "UPLOAD_PROVIDER" "r2"
 upsert "R2_ACCOUNT_ID" "$ACCOUNT_ID"
 upsert "R2_ACCESS_KEY_ID" "$R2_ACCESS_KEY_ID"
 upsert "R2_SECRET_ACCESS_KEY" "$R2_SECRET_ACCESS_KEY"
 upsert "R2_ENDPOINT" "$ENDPOINT"
+upsert "S3_ENDPOINT" "$ENDPOINT"
 upsert "PEBBLE_DIAGNOSTICS_BUCKET" "$BUCKET"
 if [ -n "${PEBBLE_DIAGNOSTICS_DIR:-}" ]; then
   upsert "PEBBLE_DIAGNOSTICS_DIR" "$PEBBLE_DIAGNOSTICS_DIR"
