@@ -49,16 +49,23 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto w-full border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]">
       <div className="mx-auto w-full max-w-[1400px] px-6 pt-14 pb-8 md:pt-16">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,2fr)] lg:gap-16">
-          <div className="flex max-w-xs flex-col gap-5">
+        {/*
+          First track needs a real min (not minmax(0,…)): CJK soft-wrap makes
+          min-content ≈ one glyph, which collapses the brand column into a
+          vertical strip of single characters under flex-col.
+        */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(14rem,1.4fr)_minmax(0,2fr)] lg:gap-16">
+          <div className="flex w-full min-w-0 max-w-sm flex-col gap-5">
             <Link
               href="/"
-              className="inline-flex w-fit rounded-[var(--radius-md)] outline-none"
+              className="inline-flex w-fit shrink-0 rounded-[var(--radius-md)] outline-none"
               aria-label={`${brand.name} Forge`}
             >
               <BrandLogo variant="horizontal" className="h-6 w-auto" />
             </Link>
-            <p className="text-[13px] leading-relaxed text-[var(--neutral-11)]">{t("blurb")}</p>
+            <p className="w-full max-w-sm text-[13px] leading-relaxed break-words text-[var(--neutral-11)]">
+              {t("blurb")}
+            </p>
             <div className="flex items-center gap-1">
               {SOCIAL.map(({ href, label, Icon }) => (
                 <a

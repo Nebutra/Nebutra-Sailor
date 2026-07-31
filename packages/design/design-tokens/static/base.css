@@ -706,9 +706,20 @@ html {
   word-break: normal;
 }
 
+/*
+ * CJK runs offer a soft-wrap opportunity between nearly every glyph, so the
+ * CSS min-content size of a paragraph is often one character. Flex/grid items
+ * with min-width:auto then collapse to a 1-glyph column. Floor min-content for
+ * common prose boxes so brand blurbs / heroes stay horizontal.
+ */
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6, li, dd, dt, blockquote) {
+  min-width: min(100%, 12rem);
+}
+
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {
   font-family: var(--font-mono);
   word-break: normal;
+  min-width: 0;
 }
 
 /* ─── Reduced Motion ─────────────────────────────────────── */
