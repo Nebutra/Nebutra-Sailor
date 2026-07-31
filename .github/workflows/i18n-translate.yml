@@ -319,9 +319,21 @@ jobs:
 
           Language wheel SSOT: \`@nebutra/i18n\` \`PRODUCT_LANGUAGES\`. Chinese: **zh-Hans** + **zh-Hant** (never bare \`zh\`).
 
-          Review focus: values that are still identical to English mean that string was seeded, not translated."; then
+          Review focus: values that are still identical to English mean that string was seeded, not translated." 2>/tmp/pr-err; then
             echo "PR opened."
+          elif grep -qi "not permitted to create or approve pull requests" /tmp/pr-err; then
+            # A standing org policy, not a breakage. Failing every run on it
+            # teaches people to ignore a red check, which is exactly the cover a
+            # real failure hides under. Say it once, loudly, and move on.
+            echo "::warning::Actions cannot open PRs in this org, so none was created. The fill is on '$BRANCH' and needs a human merge. To automate: Settings -> Actions -> General -> Allow GitHub Actions to create and approve pull requests."
+            {
+              echo "### Locale fill ready on \`$BRANCH\`"
+              echo
+              echo "No PR was opened: **Actions are not permitted to create pull requests in this org.**"
+              echo "Merge it by hand, or enable it at *Settings -> Actions -> General*."
+            } >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "::error::Could not open the PR. If this says 'GitHub Actions is not permitted to create or approve pull requests', enable that in Settings -> Actions -> General. The translations are safe on '$BRANCH' either way."
+            cat /tmp/pr-err
+            echo "::error::Could not open the PR. The translations are safe on '$BRANCH'."
             exit 1
           fi

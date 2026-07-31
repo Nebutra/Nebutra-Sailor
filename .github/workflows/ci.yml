@@ -171,6 +171,35 @@ jobs:
       - name: Check production dependency licenses
         run: npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary
 
+  # ── Full-graph typecheck (post-merge canary) ────────────────────────────
+  # Every other typecheck in this repo — CI and the pre-push hook alike — runs
+  # the *affected* graph. That makes breakage on main invisible: apps/design
+  # landed not compiling and stayed red for days, because no push happened to
+  # touch it, until an unrelated i18n change widened someone's graph and they
+  # paid for it.
+  #
+  # This runs the whole graph, but only after merge, so PR feedback stays fast
+  # and a break is attributable to the commit that caused it instead of to
+  # whoever trips over it next.
+  typecheck-full:
+    name: Typecheck (full graph)
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node
+        with:
+          node-version: "24"
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.32.1 --activate
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck (every package)
+        run: pnpm turbo typecheck
+
   # ── Lint & type-check (affected packages only) ──────────────────────────
   lint-typecheck:
     name: Lint & Typecheck
@@ -241,11 +270,14 @@ jobs:
       - name: Typecheck (affected)
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
 
-      # ── i18n integrity (landing) ────────────────────────────────────
+      # ── i18n integrity (every catalog) ──────────────────────────────
       # Key parity + ICU placeholder consistency + critical-namespace
-      # untranslated detection across all 7 locales. Cheap; runs always.
-      - name: i18n integrity (landing locales)
-        run: pnpm --filter @nebutra/landing check:i18n
+      # untranslated detection. Catalog-driven from scripts/i18n-catalogs.mjs,
+      # so landing, web, forge and router are all covered — checking only
+      # landing while translation covered four catalogs is how Forge shipped
+      # 702 English strings into a Chinese surface with CI green.
+      - name: i18n integrity (all catalogs)
+        run: pnpm i18n:check
 
       # ── SEO / locale closure unit tests ──────────────────────────────────
       # tests/architecture (run above) covers cross-app drift, but the sharded
