@@ -1,7 +1,7 @@
 /**
  * Design-language catalog — the real product surface of @nebutra/theme.
  *
- * A "language" is a full Brand Package (roles + recipe + elev + zones), proven by
+ * A "language" is a full Brand Package (roles + recipe + elev), proven by
  * external DS stress tests (Linear / GSAP / Raycast / Vercel / Vanta / Stripe / Notion).
  * Swapping `html[data-brand]` (or applyLanguage) recolors product chrome without
  * call-site edits.

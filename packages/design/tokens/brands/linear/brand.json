@@ -40,9 +40,9 @@
       "pill": "9999px"
     },
     "elevationTokens": {
-      "card": "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))",
-      "control": "var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04))",
-      "raised": "var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1))"
+      "card": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "control": "0 1px 2px 0 rgb(0 0 0 / 0.04)",
+      "raised": "0 4px 6px -1px rgb(0 0 0 / 0.1)"
     }
   },
   "typography": {
@@ -78,61 +78,6 @@
     "lg": "1rem",
     "xl": "1.5rem",
     "2xl": "2rem"
-  },
-  "zones": {
-    "product": {
-      "caption": {
-        "fontSize": "13px",
-        "lineHeight": 1.2,
-        "fontWeight": 400
-      },
-      "bodySm": {
-        "fontSize": "14px",
-        "lineHeight": 1.5,
-        "fontWeight": 400
-      },
-      "body": {
-        "fontSize": "14px",
-        "lineHeight": 1.5,
-        "fontWeight": 400
-      },
-      "bodyLg": {
-        "fontSize": "16px",
-        "lineHeight": 1.5,
-        "fontWeight": 400
-      },
-      "heading": {
-        "fontSize": "24px",
-        "lineHeight": 1.25,
-        "fontWeight": 510,
-        "letterSpacing": "-0.012em"
-      },
-      "display": {
-        "fontSize": "32px",
-        "lineHeight": 1.15,
-        "fontWeight": 510,
-        "letterSpacing": "-0.022em"
-      }
-    },
-    "marketing": {
-      "body": {
-        "fontSize": "15px",
-        "lineHeight": 1.6,
-        "fontWeight": 400
-      },
-      "heading": {
-        "fontSize": "48px",
-        "lineHeight": 1,
-        "fontWeight": 510,
-        "letterSpacing": "-0.022em"
-      },
-      "display": {
-        "fontSize": "72px",
-        "lineHeight": 1,
-        "fontWeight": 510,
-        "letterSpacing": "-0.022em"
-      }
-    }
   },
   "extensions": {
     "sourceUrl": "https://linear.app",

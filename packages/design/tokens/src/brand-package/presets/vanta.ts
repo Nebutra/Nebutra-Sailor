@@ -160,57 +160,6 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
         },
       ],
     },
-    zones: {
-      product: {
-        caption: {
-          fontSize: "12px",
-          lineHeight: 1.5,
-          fontWeight: 500,
-          letterSpacing: "-0.02px",
-        },
-        bodySm: {
-          fontSize: "14px",
-          lineHeight: 1.43,
-          fontWeight: 400,
-          letterSpacing: "-0.02px",
-        },
-        body: {
-          fontSize: "16px",
-          lineHeight: 1.5,
-          fontWeight: 400,
-          letterSpacing: "-0.02px",
-        },
-        subheading: { fontSize: "20px", lineHeight: 1.4, fontWeight: 500 },
-        headingSm: { fontSize: "24px", lineHeight: 1.35, fontWeight: 500 },
-        heading: { fontSize: "32px", lineHeight: 1.3, fontWeight: 500 },
-      },
-      marketing: {
-        body: {
-          fontSize: "16px",
-          lineHeight: 1.5,
-          fontWeight: 400,
-          letterSpacing: "-0.02px",
-        },
-        heading: {
-          fontSize: "42px",
-          lineHeight: 1.2,
-          fontWeight: 400,
-          letterSpacing: "-0.84px",
-        },
-        headingLg: {
-          fontSize: "56px",
-          lineHeight: 1.15,
-          fontWeight: 400,
-          letterSpacing: "-1.12px",
-        },
-        display: {
-          fontSize: "90px",
-          lineHeight: 1.1,
-          fontWeight: 400,
-          letterSpacing: "-1.62px",
-        },
-      },
-    },
     extensions: {
       categories: {
         brand: indigo,

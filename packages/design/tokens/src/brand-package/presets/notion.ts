@@ -155,46 +155,6 @@ export function buildNotion(ctx: CompileContext): BrandPackage {
         },
       ],
     },
-    zones: {
-      product: {
-        caption: {
-          fontSize: "12px",
-          lineHeight: 1.33,
-          fontWeight: 500,
-          letterSpacing: "0.12px",
-        },
-        bodySm: { fontSize: "14px", lineHeight: 1.43, fontWeight: 500 },
-        body: { fontSize: "16px", lineHeight: 1.5, fontWeight: 400 },
-        subheading: { fontSize: "20px", lineHeight: 1, fontWeight: 500 },
-        headingSm: {
-          fontSize: "22px",
-          lineHeight: 1.27,
-          fontWeight: 600,
-          letterSpacing: "-0.242px",
-        },
-        heading: { fontSize: "40px", lineHeight: 1.5, fontWeight: 600 },
-      },
-      marketing: {
-        body: { fontSize: "16px", lineHeight: 1.5, fontWeight: 400 },
-        heading: {
-          fontSize: "48px",
-          lineHeight: 1.5,
-          fontWeight: 700,
-        },
-        headingLg: {
-          fontSize: "54px",
-          lineHeight: 1.04,
-          fontWeight: 700,
-          letterSpacing: "-1.89px",
-        },
-        display: {
-          fontSize: "72px",
-          lineHeight: 1.21,
-          fontWeight: 700,
-          letterSpacing: "-2.016px",
-        },
-      },
-    },
     extensions: {
       categories: {
         brand: ink,

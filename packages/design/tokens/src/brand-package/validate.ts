@@ -91,6 +91,23 @@ export function validateBrandPackage(brand: unknown): ValidationResult {
     });
   }
 
+  // An elevation value that reads --shadow-* is circular: the theme block maps
+  // --shadow-md to var(--elevation-md), so a skin writing
+  // `--elevation-md: var(--shadow-md, …)` puts the property in a cycle. CSS
+  // then treats it as guaranteed-invalid — the fallback does NOT rescue it,
+  // because a fallback only applies to an undefined variable, not a cyclic one.
+  // linear shipped exactly this, written back when the skin set the alias
+  // rather than the source, and it read as a plausible "use the Tailwind
+  // default" until the names were corrected.
+  for (const [key, value] of Object.entries(b.recipe?.elevationTokens ?? {})) {
+    if (typeof value === "string" && /var\(\s*--(?:shadow|elevation)-/.test(value)) {
+      errors.push(
+        `recipe.elevationTokens.${key} references a shadow/elevation variable — ` +
+          "that is a cycle once the skin sets the source. Inline the value.",
+      );
+    }
+  }
+
   if (b.motion) {
     // Durations are milliseconds, and the emitter appends the unit. A package
     // that wrote "200ms" here would emit `200msms` — invalid, so the whole
@@ -144,12 +161,6 @@ export function validateBrandPackage(brand: unknown): ValidationResult {
         "spacing steps are not ascending — xs should be the smallest and 2xl the largest",
       );
     }
-  }
-
-  if (b.zones?.marketing?.display && !b.zones.product) {
-    warnings.push(
-      "marketing.display set without product zone — app shell may inherit display size",
-    );
   }
 
   if (

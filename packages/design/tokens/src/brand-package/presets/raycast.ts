@@ -108,38 +108,6 @@ export function buildRaycast(ctx: CompileContext): BrandPackage {
         },
       ],
     },
-    zones: {
-      product: {
-        caption: {
-          fontSize: "11px",
-          lineHeight: 0.91,
-          fontWeight: 500,
-          letterSpacing: "0.8px",
-        },
-        bodySm: { fontSize: "13px", lineHeight: 1.2, fontWeight: 500 },
-        body: { fontSize: "16px", lineHeight: 1.15, fontWeight: 400 },
-        bodyLg: { fontSize: "18px", lineHeight: 1.15, fontWeight: 400 },
-        subheading: {
-          fontSize: "20px",
-          lineHeight: 1.2,
-          fontWeight: 400,
-          letterSpacing: "0.2px",
-        },
-        headingSm: { fontSize: "24px", lineHeight: 1.15, fontWeight: 500 },
-        heading: { fontSize: "32px", lineHeight: 1.15, fontWeight: 500 },
-      },
-      marketing: {
-        body: { fontSize: "16px", lineHeight: 1.15, fontWeight: 400 },
-        heading: { fontSize: "32px", lineHeight: 1.15, fontWeight: 500 },
-        headingLg: {
-          fontSize: "56px",
-          lineHeight: 1.17,
-          fontWeight: 400,
-          letterSpacing: "0.22px",
-        },
-        display: { fontSize: "64px", lineHeight: 1.1, fontWeight: 600 },
-      },
-    },
     extensions: {
       categories: {
         brand: coral,

@@ -309,7 +309,6 @@ const MISSING_STORY_ALLOWLIST: readonly string[] = [
   "TextDotsLoader @ packages/design/ui/src/primitives/loader.tsx",
   "TextScramble @ packages/design/ui/src/primitives/text-scramble.tsx",
   "TextShimmerLoader @ packages/design/ui/src/primitives/loader.tsx",
-  "ToggleGroup @ packages/design/ui/src/primitives/toggle-group.tsx",
   "TreeExpander @ packages/design/ui/src/primitives/tree.tsx",
   "TreeIcon @ packages/design/ui/src/primitives/tree.tsx",
   "TreeLabel @ packages/design/ui/src/primitives/tree.tsx",

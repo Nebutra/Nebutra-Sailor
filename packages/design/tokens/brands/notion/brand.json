@@ -114,66 +114,6 @@
     "xl": "2.75rem",
     "2xl": "3.75rem"
   },
-  "zones": {
-    "product": {
-      "caption": {
-        "fontSize": "12px",
-        "lineHeight": 1.33,
-        "fontWeight": 500,
-        "letterSpacing": "0.12px"
-      },
-      "bodySm": {
-        "fontSize": "14px",
-        "lineHeight": 1.43,
-        "fontWeight": 500
-      },
-      "body": {
-        "fontSize": "16px",
-        "lineHeight": 1.5,
-        "fontWeight": 400
-      },
-      "subheading": {
-        "fontSize": "20px",
-        "lineHeight": 1,
-        "fontWeight": 500
-      },
-      "headingSm": {
-        "fontSize": "22px",
-        "lineHeight": 1.27,
-        "fontWeight": 600,
-        "letterSpacing": "-0.242px"
-      },
-      "heading": {
-        "fontSize": "40px",
-        "lineHeight": 1.5,
-        "fontWeight": 600
-      }
-    },
-    "marketing": {
-      "body": {
-        "fontSize": "16px",
-        "lineHeight": 1.5,
-        "fontWeight": 400
-      },
-      "heading": {
-        "fontSize": "48px",
-        "lineHeight": 1.5,
-        "fontWeight": 700
-      },
-      "headingLg": {
-        "fontSize": "54px",
-        "lineHeight": 1.04,
-        "fontWeight": 700,
-        "letterSpacing": "-1.89px"
-      },
-      "display": {
-        "fontSize": "72px",
-        "lineHeight": 1.21,
-        "fontWeight": 700,
-        "letterSpacing": "-2.016px"
-      }
-    }
-  },
   "extensions": {
     "categories": {
       "brand": "#000000",
@@ -196,10 +136,10 @@
     "notes": [
       "roles.action = Notion Blue (only filled CTA). Accent hues are decorative card washes.",
       "roles.brand = Ink Black (logo / wordmark / text hierarchy via alpha).",
-      "Canvas = Paper Warmth; cards = Pure White — never invert.",
-      "Card elev=none + hairline border; sticky nav soft shadow → elevation raised slot.",
+      "Canvas = Paper Warmth; cards = Pure White \u2014 never invert.",
+      "Card elev=none + hairline border; sticky nav soft shadow \u2192 elevation raised slot.",
       "Buttons 8px, cards 12px, pills 9999px.",
-      "Lyon Text is editorial accent only — not product chrome UI."
+      "Lyon Text is editorial accent only \u2014 not product chrome UI."
     ]
   }
 }

@@ -1,7 +1,7 @@
 # Design skins & Brand Packages
 
 **Goal:** Create Center users swap a **design language** by applying one **Brand Package**.
-This package is a *carrier* (roles + free elev/radii + zones), not a list of brand hacks.
+This package is a *carrier* (roles + free elev/radii), not a list of brand hacks.
 
 ## Two layers
 
@@ -130,11 +130,9 @@ const { iframeRef, apply: preview, writePreviewDocument } = useBrandIframePrevie
 // preview(brand)  or  writePreviewDocument(brand, "<button class='btn-brand-default'>CTA</button>")
 ```
 
-### Fonts + zones
+### Fonts
 
 - `typography.faces[]` → emitted as `@font-face` (swap URL for Create Center CDN/upload).
-- `zones.product` / `zones.marketing` → CSS vars + `[data-zone="…"]` / `.zone-…` consumers.
-- Marketing may use 224px display; product stays compact.
 
 ### design-sync
 

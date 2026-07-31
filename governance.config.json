@@ -419,6 +419,6 @@
   },
   "inertDimensions": {
     "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green.",
-    "known": ["spacing", "zones", "controls"]
+    "known": ["spacing", "controls"]
   }
 }

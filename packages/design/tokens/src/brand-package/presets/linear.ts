@@ -160,41 +160,6 @@ export function buildLinear(ctx: CompileContext): BrandPackage {
         },
       ],
     },
-    zones: {
-      product: {
-        caption: { fontSize: "13px", lineHeight: 1.2, fontWeight: 400 },
-        bodySm: { fontSize: "14px", lineHeight: 1.5, fontWeight: 400 },
-        body: { fontSize: "14px", lineHeight: 1.5, fontWeight: 400 },
-        bodyLg: { fontSize: "16px", lineHeight: 1.5, fontWeight: 400 },
-        heading: {
-          fontSize: "24px",
-          lineHeight: 1.25,
-          fontWeight: 510,
-          letterSpacing: "-0.012em",
-        },
-        display: {
-          fontSize: "32px",
-          lineHeight: 1.15,
-          fontWeight: 510,
-          letterSpacing: "-0.022em",
-        },
-      },
-      marketing: {
-        body: { fontSize: "15px", lineHeight: 1.6, fontWeight: 400 },
-        heading: {
-          fontSize: "48px",
-          lineHeight: 1,
-          fontWeight: 510,
-          letterSpacing: "-0.022em",
-        },
-        display: {
-          fontSize: "72px",
-          lineHeight: 1,
-          fontWeight: 510,
-          letterSpacing: "-0.022em",
-        },
-      },
-    },
     extensions: {
       sourceUrl: typeof ctx.refero.url === "string" ? ctx.refero.url : "https://linear.app",
       notes: ["Dual-mode: dark void default + light paper; acid-lime solid CTA in both modes."],

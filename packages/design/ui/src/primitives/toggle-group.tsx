@@ -73,7 +73,13 @@ const ToggleGroup = ({
   }
 
   return (
-    <div ref={ref} className={cn(toggleGroupVariants({ variant }), className)} {...props}>
+    <div
+      ref={ref}
+      role={type === "single" ? "radiogroup" : "group"}
+      data-toggle-group-root=""
+      className={cn(toggleGroupVariants({ variant }), className)}
+      {...props}
+    >
       <ToggleGroupTypeContext.Provider value={type}>
         <ToggleGroupValueContext.Provider value={value}>
           <ToggleGroupChangeContext.Provider value={changeToggleGroupValue}>
@@ -131,13 +137,78 @@ const ToggleGroupItem = ({
     props.onClick?.(event);
   }
 
+  // ─── Roving tabindex + arrow-key navigation (WAI-ARIA radiogroup pattern) ───
+  // Only applies to type="single" — a radiogroup is a single tab stop with
+  // arrow keys moving *and selecting* the focused item. A "multiple" group is
+  // a row of independent toggle buttons (checkbox semantics), each its own
+  // tab stop, so it opts out entirely.
+  function handleItemKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
+    props.onKeyDown?.(event);
+    if (context.type !== "single" || event.defaultPrevented) return;
+
+    const container = event.currentTarget.closest<HTMLElement>("[data-toggle-group-root]");
+    if (!container) return;
+    const items = Array.from(
+      container.querySelectorAll<HTMLButtonElement>("[data-toggle-item]:not(:disabled)"),
+    );
+    const currentIndex = items.indexOf(event.currentTarget);
+    if (currentIndex === -1 || items.length === 0) return;
+
+    const focusAndSelect = (targetIndex: number) => {
+      const wrapped = ((targetIndex % items.length) + items.length) % items.length;
+      const target = items[wrapped];
+      if (!target) return;
+      target.focus();
+      const targetValue = target.dataset.toggleValue;
+      if (targetValue !== undefined) context.onValueChange(targetValue);
+    };
+
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        event.preventDefault();
+        focusAndSelect(currentIndex + 1);
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        event.preventDefault();
+        focusAndSelect(currentIndex - 1);
+        break;
+      case "Home":
+        event.preventDefault();
+        focusAndSelect(0);
+        break;
+      case "End":
+        event.preventDefault();
+        focusAndSelect(items.length - 1);
+        break;
+      default:
+        break;
+    }
+  }
+
+  // Roving tab stop: only the selected item is tabbable once a selection
+  // exists. Before any selection is made, every item stays tabbable so the
+  // group is never unreachable by keyboard.
+  const rovingTabIndex =
+    context.type === "single" ? (isSelected || context.value === "" ? 0 : -1) : undefined;
+
+  // `role` below is a runtime ternary ("radio" for type="single", the native
+  // "button" role for "multiple"), which the static checker can't resolve —
+  // aria-checked is only ever emitted alongside role="radio".
   return (
+    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: see comment above.
     <button
       ref={ref}
       type="button"
       disabled={isDisabled}
       data-state={isSelected ? "on" : "off"}
-      aria-pressed={isSelected}
+      data-toggle-item=""
+      data-toggle-value={value}
+      role={context.type === "single" ? "radio" : undefined}
+      aria-checked={context.type === "single" ? isSelected : undefined}
+      aria-pressed={context.type === "multiple" ? isSelected : undefined}
+      tabIndex={rovingTabIndex}
       className={cn(
         toggleGroupItemVariants({
           variant: variant ?? context.variant,
@@ -148,6 +219,7 @@ const ToggleGroupItem = ({
       )}
       onClick={toggleItemSelection}
       {...props}
+      onKeyDown={handleItemKeyDown}
     >
       {children}
     </button>

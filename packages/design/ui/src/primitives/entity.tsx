@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronRight } from "@nebutra/icons";
 import type * as React from "react";
 import { cn } from "../utils/cn";
 
@@ -40,6 +41,13 @@ export interface EntityProps<T extends React.ElementType = "div"> {
   left?: React.ReactNode;
   /** Content to render in the right slot (actions, metadata, etc.) */
   right?: React.ReactNode;
+  /**
+   * When `as="button"`, append a trailing chevron affordance after `right`
+   * (or alone, if `right` is omitted) that nudges on hover via the row's
+   * `group` class. Use for nav-style rows — "go to X" — not for rows whose
+   * click just toggles a value in place.
+   */
+  chevron?: boolean;
   children?: React.ReactNode;
   className?: string;
 }
@@ -67,6 +75,7 @@ function EntityRoot<T extends React.ElementType = "div">({
   as,
   left,
   right,
+  chevron = false,
   children,
   className,
   ...props
@@ -83,9 +92,10 @@ function EntityRoot<T extends React.ElementType = "div">({
     <Comp
       className={cn(
         "flex w-full items-center gap-3 px-4 py-3 text-left",
-        // Clickable rows get hover + focus-visible affordance.
+        // Clickable rows get hover + focus-visible affordance, plus `group`
+        // so trailing affordances (the chevron below) can react to hover.
         isButton &&
-          "cursor-pointer transition-colors hover:bg-accent/40 focus-visible:outline-none",
+          "group cursor-pointer transition-colors hover:bg-accent/40 focus-visible:outline-none",
         className,
       )}
       {...buttonDefaults}
@@ -95,7 +105,17 @@ function EntityRoot<T extends React.ElementType = "div">({
 
       <div className="flex min-w-0 flex-1 items-center gap-3">{children}</div>
 
-      {right && <div className="flex shrink-0 items-center">{right}</div>}
+      {(right || (isButton && chevron)) && (
+        <div className="flex shrink-0 items-center gap-2">
+          {right}
+          {isButton && chevron && (
+            <ChevronRight
+              className="h-3.5 w-3.5 shrink-0 text-neutral-10 transition-transform group-hover:translate-x-0.5"
+              aria-hidden="true"
+            />
+          )}
+        </div>
+      )}
     </Comp>
   );
 }

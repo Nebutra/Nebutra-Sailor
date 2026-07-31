@@ -104,47 +104,6 @@ export function buildGsap(ctx: CompileContext): BrandPackage {
         },
       ],
     },
-    zones: {
-      product: {
-        caption: { fontSize: "14px", lineHeight: 1.4, fontWeight: 400, letterSpacing: "-0.14px" },
-        bodySm: { fontSize: "16px", lineHeight: 1.15, fontWeight: 400 },
-        body: { fontSize: "19px", lineHeight: 1.15, fontWeight: 400 },
-        bodyLg: { fontSize: "23px", lineHeight: 1.38, fontWeight: 400, letterSpacing: "-0.23px" },
-        subheading: {
-          fontSize: "34px",
-          lineHeight: 1.2,
-          fontWeight: 400,
-          letterSpacing: "-0.34px",
-        },
-        heading: {
-          fontSize: "44px",
-          lineHeight: 1.2,
-          fontWeight: 600,
-          letterSpacing: "-0.44px",
-        },
-      },
-      marketing: {
-        body: { fontSize: "19px", lineHeight: 1.15, fontWeight: 400 },
-        heading: {
-          fontSize: "66px",
-          lineHeight: 1.2,
-          fontWeight: 600,
-          letterSpacing: "-0.66px",
-        },
-        headingLg: {
-          fontSize: "101px",
-          lineHeight: 1,
-          fontWeight: 600,
-          letterSpacing: "-1.11px",
-        },
-        display: {
-          fontSize: "224px",
-          lineHeight: 0.9,
-          fontWeight: 600,
-          letterSpacing: "-4.48px",
-        },
-      },
-    },
     extensions: {
       categories: {
         gsap: green,
@@ -159,7 +118,6 @@ export function buildGsap(ctx: CompileContext): BrandPackage {
       notes: [
         "Outline-first product controls; category ctx.colors are marketing extensions.",
         "Replace typography.faces[].src with Create Center hosted ctx.font URLs.",
-        'Use data-zone="marketing" for hero/display; product zone for app chrome.',
       ],
     },
   };

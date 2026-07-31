@@ -48,7 +48,6 @@ export {
   type BrandPackage,
   type BrandRadii,
   type BrandRecipe,
-  type BrandZones,
   type CompileResult,
   clearBrand,
   compileReferoTokens,

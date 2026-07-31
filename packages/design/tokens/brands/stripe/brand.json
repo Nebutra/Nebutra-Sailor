@@ -99,78 +99,6 @@
     "xl": "2.25rem",
     "2xl": "3.25rem"
   },
-  "zones": {
-    "product": {
-      "caption": {
-        "fontSize": "12px",
-        "lineHeight": 1.45,
-        "fontWeight": 300,
-        "letterSpacing": "-0.12px"
-      },
-      "bodySm": {
-        "fontSize": "14px",
-        "lineHeight": 1.4,
-        "fontWeight": 400,
-        "letterSpacing": "-0.14px"
-      },
-      "body": {
-        "fontSize": "16px",
-        "lineHeight": 1.2,
-        "fontWeight": 400,
-        "letterSpacing": "-0.16px"
-      },
-      "bodyLg": {
-        "fontSize": "20px",
-        "lineHeight": 1.4,
-        "fontWeight": 300,
-        "letterSpacing": "-0.2px"
-      },
-      "subheading": {
-        "fontSize": "22px",
-        "lineHeight": 1.1,
-        "fontWeight": 300,
-        "letterSpacing": "-0.22px"
-      },
-      "headingSm": {
-        "fontSize": "26px",
-        "lineHeight": 1.12,
-        "fontWeight": 300,
-        "letterSpacing": "-0.26px"
-      },
-      "heading": {
-        "fontSize": "32px",
-        "lineHeight": 1.1,
-        "fontWeight": 300,
-        "letterSpacing": "-0.64px"
-      }
-    },
-    "marketing": {
-      "body": {
-        "fontSize": "16px",
-        "lineHeight": 1.4,
-        "fontWeight": 300,
-        "letterSpacing": "-0.16px"
-      },
-      "heading": {
-        "fontSize": "32px",
-        "lineHeight": 1.1,
-        "fontWeight": 300,
-        "letterSpacing": "-0.64px"
-      },
-      "headingLg": {
-        "fontSize": "48px",
-        "lineHeight": 1.03,
-        "fontWeight": 300,
-        "letterSpacing": "-0.96px"
-      },
-      "display": {
-        "fontSize": "56px",
-        "lineHeight": 1.03,
-        "fontWeight": 300,
-        "letterSpacing": "-1.4px"
-      }
-    }
-  },
   "extensions": {
     "categories": {
       "brand": "#061b31",
@@ -190,7 +118,7 @@
     "sourceUrl": "https://stripe.com",
     "notes": [
       "roles.action = Indigo Ink filled CTA; roles.brand = Midnight Ink wordmark.",
-      "Elevation none — tint ladder + 1px frost rules; never box-shadow.",
+      "Elevation none \u2014 tint ladder + 1px frost rules; never box-shadow.",
       "Control radius 4px (not pill); tags may stay full-pill.",
       "Typography weight 300 is the product signature (Inter Tight substitute).",
       "Pair solid CTA with ghost outline (lavender border) as secondary."

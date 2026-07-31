@@ -38,6 +38,7 @@ export const buttonVariants = cva(
         default: "",
         square: "",
         circle: "",
+        pill: "rounded-full",
       },
     },
     compoundVariants: [

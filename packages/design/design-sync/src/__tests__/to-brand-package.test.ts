@@ -43,10 +43,9 @@ describe("to-brand-package", () => {
     expect(result.brand.id).toBe("linear");
     expect(result.brand.recipe.buttonDefault).toBe("solid");
     expect(result.css).toContain("@font-face");
-    expect(result.css).toContain("zone-product");
   });
 
-  it("compiles gsap-like set with zones and font faces", () => {
+  it("compiles gsap-like set with font faces", () => {
     const sets: DesignTokenSet[] = [
       {
         name: "gsap",
@@ -70,8 +69,6 @@ describe("to-brand-package", () => {
       designMd: "gradient-stroked CTA outlined-only",
     });
     expect(result.brand.recipe.buttonDefault).toBe("gradient-stroke");
-    expect(result.brand.zones?.marketing?.display?.fontSize).toBe("224px");
     expect(result.brand.typography.faces?.length).toBeGreaterThan(0);
-    expect(result.css).toContain('data-zone="marketing"');
   });
 });

@@ -46,7 +46,7 @@ const meta = {
     },
     shape: {
       control: "select",
-      options: ["default", "square", "circle"],
+      options: ["default", "square", "circle", "pill"],
       description: "Button shape",
     },
     shadow: {
@@ -122,24 +122,41 @@ export const Sizes: Story = {
 // ─── Shapes ───────────────────────────────────────────────────────────────────
 
 export const Shapes: Story = {
-  name: "Shapes (square & circle)",
+  name: "Shapes (square, circle & pill)",
   render: () => (
-    <div className="flex items-center gap-3">
-      <Button shape="square" aria-label="Add">
-        <Plus />
-      </Button>
-      <Button shape="circle" aria-label="Add">
-        <Plus />
-      </Button>
-      <Button shape="square" size="sm" aria-label="Settings">
-        <Settings />
-      </Button>
-      <Button shape="circle" size="lg" aria-label="Search">
-        <Search />
-      </Button>
-      <Button shape="circle" size="tiny" aria-label="Add">
-        <Plus />
-      </Button>
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-3">
+        <Button shape="square" aria-label="Add">
+          <Plus />
+        </Button>
+        <Button shape="circle" aria-label="Add">
+          <Plus />
+        </Button>
+        <Button shape="square" size="sm" aria-label="Settings">
+          <Settings />
+        </Button>
+        <Button shape="circle" size="lg" aria-label="Search">
+          <Search />
+        </Button>
+        <Button shape="circle" size="tiny" aria-label="Add">
+          <Plus />
+        </Button>
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        {/* pill — auto-width, hug-content, rounded-full. Use for a stateless
+            action chip (e.g. a one-shot suggestion or filter shortcut) —
+            NOT a selectable state, that's ToggleGroup variant="pill" or
+            FilterPills. */}
+        <Button shape="pill" size="tiny" variant="tertiary">
+          Suggest a title
+        </Button>
+        <Button shape="pill" size="sm" variant="outline">
+          Try an example
+        </Button>
+        <Button shape="pill" variant="secondary">
+          Regular pill
+        </Button>
+      </div>
     </div>
   ),
 };

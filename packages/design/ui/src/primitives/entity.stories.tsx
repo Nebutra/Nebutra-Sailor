@@ -1,3 +1,4 @@
+import { Lifebuoy, SettingsGear } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { Entity } from "./entity";
@@ -177,6 +178,54 @@ export const WithIconLeft: Story = {
           </Entity>
         ))}
       </Entity.List>
+    </div>
+  ),
+};
+
+// =============================================================================
+// RowNav — as="button" + chevron: the "row that navigates" shape
+// =============================================================================
+
+export const RowNav: Story = {
+  name: 'Row Nav (as="button" + chevron)',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`as="button"` auto-injects `type="button"` and a `group` class; `chevron` ' +
+          "appends a trailing arrow that nudges on hover via that group. Use for rows whose " +
+          "click navigates somewhere — settings rows, upgrade CTAs, report-issue links — not " +
+          "rows that toggle a value in place.",
+      },
+    },
+  },
+  render: () => (
+    <div className="w-96 rounded-[var(--radius-xl)] bg-neutral-1">
+      <Entity
+        as="button"
+        chevron
+        left={<SettingsGear className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
+        onClick={() => {}}
+      >
+        <Entity.Content title="Manage profile" />
+      </Entity>
+      <Entity
+        as="button"
+        chevron
+        left={<Lifebuoy className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
+        onClick={() => {}}
+      >
+        <Entity.Content title="Report an issue" />
+      </Entity>
+      <Entity
+        as="button"
+        chevron
+        left={<SettingsGear className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
+        right={<span className="text-xs text-muted-foreground">Pro</span>}
+        onClick={() => {}}
+      >
+        <Entity.Content title="Manage subscription" description="Billed monthly" />
+      </Entity>
     </div>
   ),
 };

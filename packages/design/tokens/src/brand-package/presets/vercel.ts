@@ -156,40 +156,6 @@ export function buildVercel(ctx: CompileContext): BrandPackage {
         },
       ],
     },
-    zones: {
-      product: {
-        caption: { fontSize: "13px", lineHeight: 1.54, fontWeight: 400 },
-        bodySm: { fontSize: "14px", lineHeight: 1.43, fontWeight: 400 },
-        body: { fontSize: "16px", lineHeight: 1.5, fontWeight: 400 },
-        heading: {
-          fontSize: "30px",
-          lineHeight: 1.1,
-          fontWeight: 500,
-          letterSpacing: "-1.5px",
-        },
-      },
-      marketing: {
-        body: { fontSize: "16px", lineHeight: 1.5, fontWeight: 400 },
-        heading: {
-          fontSize: "30px",
-          lineHeight: 1.1,
-          fontWeight: 450,
-          letterSpacing: "-1.5px",
-        },
-        headingLg: {
-          fontSize: "56px",
-          lineHeight: 1,
-          fontWeight: 450,
-          letterSpacing: "-3.36px",
-        },
-        display: {
-          fontSize: "64px",
-          lineHeight: 1,
-          fontWeight: 450,
-          letterSpacing: "-3.84px",
-        },
-      },
-    },
     extensions: {
       categories: {
         carbon: carbon,

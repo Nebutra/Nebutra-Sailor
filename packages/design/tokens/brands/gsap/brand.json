@@ -93,69 +93,6 @@
     "xl": "2.5rem",
     "2xl": "3.5rem"
   },
-  "zones": {
-    "product": {
-      "caption": {
-        "fontSize": "14px",
-        "lineHeight": 1.4,
-        "fontWeight": 400,
-        "letterSpacing": "-0.14px"
-      },
-      "bodySm": {
-        "fontSize": "16px",
-        "lineHeight": 1.15,
-        "fontWeight": 400
-      },
-      "body": {
-        "fontSize": "19px",
-        "lineHeight": 1.15,
-        "fontWeight": 400
-      },
-      "bodyLg": {
-        "fontSize": "23px",
-        "lineHeight": 1.38,
-        "fontWeight": 400,
-        "letterSpacing": "-0.23px"
-      },
-      "subheading": {
-        "fontSize": "34px",
-        "lineHeight": 1.2,
-        "fontWeight": 400,
-        "letterSpacing": "-0.34px"
-      },
-      "heading": {
-        "fontSize": "44px",
-        "lineHeight": 1.2,
-        "fontWeight": 600,
-        "letterSpacing": "-0.44px"
-      }
-    },
-    "marketing": {
-      "body": {
-        "fontSize": "19px",
-        "lineHeight": 1.15,
-        "fontWeight": 400
-      },
-      "heading": {
-        "fontSize": "66px",
-        "lineHeight": 1.2,
-        "fontWeight": 600,
-        "letterSpacing": "-0.66px"
-      },
-      "headingLg": {
-        "fontSize": "101px",
-        "lineHeight": 1,
-        "fontWeight": 600,
-        "letterSpacing": "-1.11px"
-      },
-      "display": {
-        "fontSize": "224px",
-        "lineHeight": 0.9,
-        "fontWeight": 600,
-        "letterSpacing": "-4.48px"
-      }
-    }
-  },
   "extensions": {
     "categories": {
       "gsap": "#0ae448",
@@ -169,8 +106,7 @@
     "sourceUrl": "https://gsap.com",
     "notes": [
       "Outline-first product controls; category colors are marketing extensions.",
-      "Replace typography.faces[].src with Create Center hosted font URLs.",
-      "Use data-zone=\"marketing\" for hero/display; product zone for app chrome."
+      "Replace typography.faces[].src with Create Center hosted font URLs."
     ]
   },
   "roles": {

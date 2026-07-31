@@ -44,8 +44,6 @@ describe("compileReferoTokens — GSAP", () => {
     assert.match(result.css, /--btn-default-stroke-gradient:/);
     assert.match(result.css, /--btn-default-border-width: 1\.5px/);
     assert.match(result.css, /@font-face/);
-    assert.match(result.css, /zone-marketing/);
-    assert.equal(result.brand.zones?.marketing?.display?.fontSize, "224px");
     assert.ok((result.brand.typography.faces?.length ?? 0) > 0);
     assert.ok(result.warnings.some((w) => w.includes("shockingly-green")));
   });
@@ -385,7 +383,6 @@ Primary Filled Button fill #5e05c4. Logo in Reckless #260048.
     assert.match(result.css, /--radius-button: 999/);
     assert.match(result.brand.typography.fontSans, /Inter/i);
     assert.match(result.brand.typography.fontDisplay ?? "", /Reckless/i);
-    assert.equal(result.brand.zones?.marketing?.display?.fontSize, "90px");
     assert.ok(result.warnings.some((w) => /indigo-ink|brand-mark/i.test(w)));
   });
 });

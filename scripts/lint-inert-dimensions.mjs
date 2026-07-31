@@ -52,15 +52,29 @@ const DIMENSIONS = [
     declares: /--radius-[a-z0-9]+:/,
     reads: /var\(--radius-[a-z0-9]+\)|rounded-\[var\(--radius/,
   },
+  // Only the card/control/raised triad is brand-scoped. The documented ramp —
+  // shadow-ambient-*, shadow-glass-*, shadow-glow-*, shadow-sheen, the one
+  // CLAUDE.md tells people to reach for — reads --elevation-ambient-* and
+  // friends, which are declared once in the global sheet and overridden by no
+  // brand at all. Counting those utilities credited elevation with 24 consumers
+  // when 19 of them render byte-identically under all seven languages, measured
+  // with getComputedStyle against a real compiled bundle. This guard exists to
+  // catch a dimension that reports well and does nothing; it was doing it here.
   {
     id: "elevation",
-    declares: /--elevation-[a-z]+:/,
-    reads: /var\(--elevation-[a-z]+\)|shadow-(?:ambient|glass|glow|sheen)/,
+    declares: /--elevation-(?:card|control|raised|xs|sm|md|lg):/,
+    reads:
+      /var\(--elevation-(?:card|control|raised|xs|sm|md|lg)\)|(?<![-\w])shadow-(?:xs|sm|md|lg)(?![-\w])/,
   },
+  // Font family only. The per-step scale (--text-*, --leading-*, --tracking-*)
+  // used to appear in every skin, but only inside the [data-zone] blocks that
+  // nothing ever applied — deleting zones removed the declarations without
+  // changing a single rendered page. What a language actually switches about
+  // type is which faces it sets.
   {
     id: "typography",
-    declares: /--text-[a-z-]+:|--leading-[a-z-]+:/,
-    reads: /var\(--(?:text|leading|tracking)-[a-z-]+\)|--font-(?:sans|heading|display|mono)\)/,
+    declares: /--font-(?:sans|heading|display):/,
+    reads: /var\(--font-(?:sans|heading|display|mono)\)/,
   },
   {
     id: "motion",

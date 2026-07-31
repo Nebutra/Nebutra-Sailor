@@ -104,11 +104,6 @@ Create Center fills a **Brand Package**; components only read CSS variables.
 
 Elevation *presets* (`key`, `hairline`, …) are only shortcuts that expand into `elevationTokens`.
 
-### Zones
-
-`data-zone="product"` — app shell (no marketing display).  
-`data-zone="marketing"` — hero / large type / decorative vars only.
-
 ### Fixtures (proof of contract, not the product)
 
 | Language (`@nebutra/theme`) | Proves |
@@ -138,11 +133,6 @@ accumulate one-off skins forever.
 ```css
 @import "@nebutra/ui/styles/preset.css"; /* includes recipe.css */
 @import "@nebutra/tokens/skins/gsap.css";
-```
-
-```html
-<main data-zone="product">…app shell…</main>
-<section data-zone="marketing">…hero / display…</section>
 ```
 
 Compile / Create Center paths:

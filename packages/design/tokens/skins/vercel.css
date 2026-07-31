@@ -1,7 +1,7 @@
 /**
  * Brand carrier skin: Vercel (vercel) v1.0.0
  * darkDefault=false dualMode=true button=solid
- * fonts=1 zones=yes mode=global
+ * fonts=1 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
 
@@ -86,10 +86,10 @@ html[data-brand="vercel"] {
   --elevation-card: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
   --elevation-control: 0 0 #0000;
   --elevation-raised: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
-  --shadow-xs: 0 0 #0000;
-  --shadow-sm: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
-  --shadow-md: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
-  --shadow-lg: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
+  --elevation-xs: 0 0 #0000;
+  --elevation-sm: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
+  --elevation-md: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
+  --elevation-lg: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px;
   --btn-default-shadow: 0 0 #0000;
   --btn-default-bg: hsl(var(--primary));
   --btn-default-fg: hsl(var(--primary-foreground));
@@ -137,36 +137,6 @@ html[data-brand="vercel"] {
   --space-source-lg: 1.5rem;
   --space-source-xl: 2rem;
   --space-source-2xl: 3rem;
-
-  /* Zone type scales */
-  --zone-product-caption-size: 13px;
-  --zone-product-caption-leading: 1.54;
-  --zone-product-caption-weight: 400;
-  --zone-product-body-sm-size: 14px;
-  --zone-product-body-sm-leading: 1.43;
-  --zone-product-body-sm-weight: 400;
-  --zone-product-body-size: 16px;
-  --zone-product-body-leading: 1.5;
-  --zone-product-body-weight: 400;
-  --zone-product-heading-size: 30px;
-  --zone-product-heading-leading: 1.1;
-  --zone-product-heading-tracking: -1.5px;
-  --zone-product-heading-weight: 500;
-  --zone-marketing-body-size: 16px;
-  --zone-marketing-body-leading: 1.5;
-  --zone-marketing-body-weight: 400;
-  --zone-marketing-heading-size: 30px;
-  --zone-marketing-heading-leading: 1.1;
-  --zone-marketing-heading-tracking: -1.5px;
-  --zone-marketing-heading-weight: 450;
-  --zone-marketing-heading-lg-size: 56px;
-  --zone-marketing-heading-lg-leading: 1;
-  --zone-marketing-heading-lg-tracking: -3.36px;
-  --zone-marketing-heading-lg-weight: 450;
-  --zone-marketing-display-size: 64px;
-  --zone-marketing-display-leading: 1;
-  --zone-marketing-display-tracking: -3.84px;
-  --zone-marketing-display-weight: 450;
 
   /* Taxonomy / decorative (not product CTA) */
   --brand-category-carbon: #000000;
@@ -226,80 +196,4 @@ html.dark[data-brand="vercel"] {
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
-}
-
-/* Zone: product — product never inherits marketing display */
-[data-zone="product"],
-.zone-product {
-  font-size: var(--zone-product-body-size, 16px);
-  line-height: var(--zone-product-body-leading, 1.5);
-  font-weight: var(--zone-product-body-weight, 400);
-  --text-caption: var(--zone-product-caption-size, inherit);
-  --leading-caption: var(--zone-product-caption-leading, inherit);
-  --tracking-caption: var(--zone-product-caption-tracking, inherit);
-  --text-body-sm: var(--zone-product-body-sm-size, inherit);
-  --leading-body-sm: var(--zone-product-body-sm-leading, inherit);
-  --tracking-body-sm: var(--zone-product-body-sm-tracking, inherit);
-  --text-body: var(--zone-product-body-size, inherit);
-  --leading-body: var(--zone-product-body-leading, inherit);
-  --tracking-body: var(--zone-product-body-tracking, inherit);
-  --text-body-lg: var(--zone-product-body-lg-size, inherit);
-  --leading-body-lg: var(--zone-product-body-lg-leading, inherit);
-  --tracking-body-lg: var(--zone-product-body-lg-tracking, inherit);
-  --text-subheading: var(--zone-product-subheading-size, inherit);
-  --leading-subheading: var(--zone-product-subheading-leading, inherit);
-  --tracking-subheading: var(--zone-product-subheading-tracking, inherit);
-  --text-heading-sm: var(--zone-product-heading-sm-size, inherit);
-  --leading-heading-sm: var(--zone-product-heading-sm-leading, inherit);
-  --tracking-heading-sm: var(--zone-product-heading-sm-tracking, inherit);
-  --text-heading: var(--zone-product-heading-size, inherit);
-  --leading-heading: var(--zone-product-heading-leading, inherit);
-  --tracking-heading: var(--zone-product-heading-tracking, inherit);
-  --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
-  --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
-  --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
-  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
-  --leading-display: var(--zone-product-display-leading, inherit);
-  --tracking-display: var(--zone-product-display-tracking, inherit);
-}
-
-/* Zone: marketing — product never inherits marketing display */
-[data-zone="marketing"],
-.zone-marketing {
-  font-size: var(--zone-marketing-body-size, 16px);
-  line-height: var(--zone-marketing-body-leading, 1.5);
-  font-weight: var(--zone-marketing-body-weight, 400);
-  --text-caption: var(--zone-marketing-caption-size, inherit);
-  --leading-caption: var(--zone-marketing-caption-leading, inherit);
-  --tracking-caption: var(--zone-marketing-caption-tracking, inherit);
-  --text-body-sm: var(--zone-marketing-body-sm-size, inherit);
-  --leading-body-sm: var(--zone-marketing-body-sm-leading, inherit);
-  --tracking-body-sm: var(--zone-marketing-body-sm-tracking, inherit);
-  --text-body: var(--zone-marketing-body-size, inherit);
-  --leading-body: var(--zone-marketing-body-leading, inherit);
-  --tracking-body: var(--zone-marketing-body-tracking, inherit);
-  --text-body-lg: var(--zone-marketing-body-lg-size, inherit);
-  --leading-body-lg: var(--zone-marketing-body-lg-leading, inherit);
-  --tracking-body-lg: var(--zone-marketing-body-lg-tracking, inherit);
-  --text-subheading: var(--zone-marketing-subheading-size, inherit);
-  --leading-subheading: var(--zone-marketing-subheading-leading, inherit);
-  --tracking-subheading: var(--zone-marketing-subheading-tracking, inherit);
-  --text-heading-sm: var(--zone-marketing-heading-sm-size, inherit);
-  --leading-heading-sm: var(--zone-marketing-heading-sm-leading, inherit);
-  --tracking-heading-sm: var(--zone-marketing-heading-sm-tracking, inherit);
-  --text-heading: var(--zone-marketing-heading-size, inherit);
-  --leading-heading: var(--zone-marketing-heading-leading, inherit);
-  --tracking-heading: var(--zone-marketing-heading-tracking, inherit);
-  --text-heading-lg: var(--zone-marketing-heading-lg-size, inherit);
-  --leading-heading-lg: var(--zone-marketing-heading-lg-leading, inherit);
-  --tracking-heading-lg: var(--zone-marketing-heading-lg-tracking, inherit);
-  --text-display: var(--zone-marketing-display-size, inherit);
-  --leading-display: var(--zone-marketing-display-leading, inherit);
-  --tracking-display: var(--zone-marketing-display-tracking, inherit);
-}
-
-/* Product chrome must not use decorative gradients as action fills */
-[data-zone="product"] .btn-brand-default,
-.zone-product .btn-brand-default {
-  /* intentional no-op: documents contract; action uses --primary only */
 }

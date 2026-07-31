@@ -182,7 +182,7 @@ export function useBrandIframePreview(
     }
   </style>
 </head>
-<body class="${optsRef.current.bodyClassName ?? "zone-product"} bg-background text-foreground">
+<body class="${optsRef.current.bodyClassName ?? ""} bg-background text-foreground">
   ${bodyHtml}
 </body>
 </html>`;

@@ -12,9 +12,6 @@ import type {
   BrandRecipe,
   BrandSemanticColors,
   BrandSpacing,
-  BrandTypeStep,
-  BrandZones,
-  BrandZoneTypography,
 } from "./types";
 
 /** Biome CSS formatter prefers double-quoted font families over single quotes. */
@@ -118,11 +115,17 @@ function recipeVars(recipe: BrandRecipe): string[] {
     `  --elevation-card: ${elev.card};`,
     `  --elevation-control: ${elev.control ?? "0 0 #0000"};`,
     `  --elevation-raised: ${elev.raised ?? elev.card};`,
-    // Kill Tailwind drop defaults when brand uses custom elev stacks
-    `  --shadow-xs: ${elev.control ?? "0 0 #0000"};`,
-    `  --shadow-sm: ${elev.card};`,
-    `  --shadow-md: ${elev.raised ?? elev.card};`,
-    `  --shadow-lg: ${elev.raised ?? elev.card};`,
+    // --elevation-*, not --shadow-*. The theme block maps `--shadow-md` to
+    // `var(--elevation-md)` and inlines that into `.shadow-md`, so a skin that
+    // set --shadow-md was writing to the alias while the utility read the
+    // source. Every language's shadows were therefore byte-identical in the
+    // browser — measured across all seven with getComputedStyle — while the
+    // token files disagreed convincingly. Setting the source is what a brand
+    // switch needs; the alias takes care of itself.
+    `  --elevation-xs: ${elev.control ?? "0 0 #0000"};`,
+    `  --elevation-sm: ${elev.card};`,
+    `  --elevation-md: ${elev.raised ?? elev.card};`,
+    `  --elevation-lg: ${elev.raised ?? elev.card};`,
     `  --btn-default-shadow: 0 0 #0000;`,
   ];
 
@@ -243,96 +246,6 @@ function emitFontFaces(faces: BrandFontFace[] | undefined): string[] {
     out.push("");
   }
   return out;
-}
-
-function stepVars(prefix: string, step: BrandTypeStep | undefined, role: string): string[] {
-  if (!step) return [];
-  const lines = [`  --${prefix}-${role}-size: ${step.fontSize};`];
-  if (step.lineHeight != null) lines.push(`  --${prefix}-${role}-leading: ${step.lineHeight};`);
-  if (step.letterSpacing != null) {
-    lines.push(`  --${prefix}-${role}-tracking: ${step.letterSpacing};`);
-  }
-  if (step.fontWeight != null) lines.push(`  --${prefix}-${role}-weight: ${step.fontWeight};`);
-  return lines;
-}
-
-function zoneScaleVars(
-  zone: "product" | "marketing",
-  scale: BrandZoneTypography | undefined,
-): string[] {
-  if (!scale) return [];
-  const p = `zone-${zone}`;
-  return [
-    ...stepVars(p, scale.caption, "caption"),
-    ...stepVars(p, scale.bodySm, "body-sm"),
-    ...stepVars(p, scale.body, "body"),
-    ...stepVars(p, scale.bodyLg, "body-lg"),
-    ...stepVars(p, scale.subheading, "subheading"),
-    ...stepVars(p, scale.headingSm, "heading-sm"),
-    ...stepVars(p, scale.heading, "heading"),
-    ...stepVars(p, scale.headingLg, "heading-lg"),
-    ...stepVars(p, scale.display, "display"),
-  ];
-}
-
-function zoneConsumerBlock(
-  zone: "product" | "marketing",
-  scale: BrandZoneTypography | undefined,
-): string[] {
-  if (!scale) return [];
-  const p = `zone-${zone}`;
-  const body = scale.body;
-  const lines = [
-    ``,
-    `/* Zone: ${zone} — product never inherits marketing display */`,
-    // Multi-line selector list matches Biome CSS formatter output (CI governance).
-    `[data-zone="${zone}"],`,
-    `.zone-${zone} {`,
-  ];
-  if (body?.fontSize) lines.push(`  font-size: var(--${p}-body-size, ${body.fontSize});`);
-  if (body?.lineHeight != null) {
-    lines.push(`  line-height: var(--${p}-body-leading, ${body.lineHeight});`);
-  }
-  if (body?.fontWeight != null) {
-    lines.push(`  font-weight: var(--${p}-body-weight, ${body.fontWeight});`);
-  }
-  if (body?.letterSpacing != null) {
-    lines.push(`  letter-spacing: var(--${p}-body-tracking, ${body.letterSpacing});`);
-  }
-  const roles = [
-    "caption",
-    "body-sm",
-    "body",
-    "body-lg",
-    "subheading",
-    "heading-sm",
-    "heading",
-    "heading-lg",
-    "display",
-  ] as const;
-  for (const role of roles) {
-    // Product zone hard-cap: display falls back to heading if product display is unset.
-    // Emit once — a second --text-display trips biome noDuplicateCustomProperties.
-    if (zone === "product" && role === "display") {
-      lines.push(`  --text-display: var(--${p}-display-size, var(--${p}-heading-size, inherit));`);
-    } else {
-      lines.push(`  --text-${role}: var(--${p}-${role}-size, inherit);`);
-    }
-    lines.push(`  --leading-${role}: var(--${p}-${role}-leading, inherit);`);
-    lines.push(`  --tracking-${role}: var(--${p}-${role}-tracking, inherit);`);
-  }
-  lines.push(`}`);
-  return lines;
-}
-
-function emitZones(zones: BrandZones | undefined): string[] {
-  if (!zones) return [];
-  return [
-    ``,
-    `  /* Zone type scales */`,
-    ...zoneScaleVars("product", zones.product),
-    ...zoneScaleVars("marketing", zones.marketing),
-  ];
 }
 
 export type EmitBrandCssMode =
@@ -461,7 +374,7 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     `/**`,
     ` * Brand carrier skin: ${b.name} (${b.id}) v${b.version}`,
     ` * darkDefault=${b.darkDefault} dualMode=${dual} button=${b.recipe.buttonDefault}`,
-    ` * fonts=${t.faces?.length ?? 0} zones=${b.zones ? "yes" : "no"} mode=${mode}`,
+    ` * fonts=${t.faces?.length ?? 0} mode=${mode}`,
     ` * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)`,
     ` */`,
     ``,
@@ -506,7 +419,6 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     ...typeLines,
     ...motionVars(b.motion),
     ...spacingVars(b.spacing),
-    ...emitZones(b.zones),
     ...(extLines.length
       ? ["", "  /* Taxonomy / decorative (not product CTA) */", ...extLines]
       : []),
@@ -533,18 +445,6 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     parts.push(selector);
     parts.push(...emitColorVars(b.semantic, b.roles), ...sharedChrome, `}`, ``);
   }
-
-  parts.push(
-    ...zoneConsumerBlock("product", b.zones?.product),
-    ...zoneConsumerBlock("marketing", b.zones?.marketing),
-    ``,
-    `/* Product chrome must not use decorative gradients as action fills */`,
-    `[data-zone="product"] .btn-brand-default,`,
-    `.zone-product .btn-brand-default {`,
-    `  /* intentional no-op: documents contract; action uses --primary only */`,
-    `}`,
-    ``,
-  );
 
   return parts.join("\n");
 }

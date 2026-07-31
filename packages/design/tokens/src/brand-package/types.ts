@@ -7,7 +7,7 @@
  * Layers:
  *   1. roles     — color meaning (action vs brand-mark vs surface…)
  *   2. recipe    — control language (button/badge fill, radii slots, free elev CSS)
- *   3. typography / zones / fonts
+ *   3. typography / fonts
  *   4. semantic  — shadcn/Tailwind bridge (derived from roles; components keep using --primary)
  *
  * @see packages/design/ARCHITECTURE.md
@@ -31,8 +31,6 @@ export type Density = "compact" | "comfortable" | "spacious";
 
 /** Badge fill language (may diverge from action CTA) */
 export type BadgeDefaultStyle = "match-action" | "match-primary" | "muted" | "outline" | "brand";
-
-export type BrandZoneId = "product" | "marketing";
 
 /**
  * First-class color roles — what Create Center fills.
@@ -181,32 +179,6 @@ export interface BrandFontFace {
   unicodeRange?: string;
 }
 
-export interface BrandTypeStep {
-  fontSize: string;
-  lineHeight?: string | number;
-  letterSpacing?: string;
-  fontWeight?: string | number;
-}
-
-export interface BrandZoneTypography {
-  caption?: BrandTypeStep;
-  bodySm?: BrandTypeStep;
-  body?: BrandTypeStep;
-  bodyLg?: BrandTypeStep;
-  subheading?: BrandTypeStep;
-  headingSm?: BrandTypeStep;
-  heading?: BrandTypeStep;
-  headingLg?: BrandTypeStep;
-  display?: BrandTypeStep;
-}
-
-export interface BrandZones {
-  /** App shell — never inherits marketing display sizes */
-  product?: BrandZoneTypography;
-  /** Landing / hero — large display allowed */
-  marketing?: BrandZoneTypography;
-}
-
 export interface BrandTypography {
   fontSans: string;
   fontMono?: string;
@@ -277,7 +249,6 @@ export interface BrandExtensions {
   categories?: Record<string, CssColor>;
   /** Marketing-only decorative gradients (spectrum, hero floor) — never product CTA */
   decorative?: Record<string, string>;
-  /** @deprecated prefer zones.marketing.display */
   displaySizePx?: number;
   sourceUrl?: string;
   notes?: string[];
@@ -329,7 +300,6 @@ export interface BrandPackage {
   motion?: BrandMotion;
   /** How much room the language leaves around content. Falls back to the shared scale when omitted. */
   spacing?: BrandSpacing;
-  zones?: BrandZones;
   extensions?: BrandExtensions;
 }
 
