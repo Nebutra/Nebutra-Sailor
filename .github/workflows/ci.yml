@@ -188,15 +188,13 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node
+      # setup-node-pnpm rather than setup-node plus a hand-rolled corepack and
+      # install: it already installs pnpm at the root packageManager version,
+      # caches the store and runs the frozen install, and keeping one shared
+      # setup is what ci-harness-closure asks for.
+      - uses: ./.github/actions/setup-node-pnpm
         with:
           node-version: "24"
-      - name: Enable pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@10.32.1 --activate
-      - name: Install
-        run: pnpm install --frozen-lockfile
       - name: Typecheck (every package)
         run: pnpm turbo typecheck
 

@@ -19,6 +19,11 @@ on:
       - "packages/design/tokens/**"
       - "packages/platform/i18n/**"
       - ".github/workflows/deploy-landing-vercel.yml"
+  # Retries a deploy that the daily cap refused. Without it a deferral is a
+  # silent loss: the commit is on main, the check is green, and the site keeps
+  # serving the previous build until someone happens to push again.
+  schedule:
+    - cron: "17 19 * * *"
   workflow_dispatch:
 
 permissions:
@@ -37,6 +42,7 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Reconcile Root Directory and deploy
+        id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
@@ -104,16 +110,38 @@ jobs:
           set -e
           echo "$out"
           if [ "$code" -ne 0 ]; then
-            # Hobby plans cap daily deploys. Treat that as a deferral rather than
-            # a red build — the Git integration still ships the same commit.
+            # The daily deployment cap is account-wide, so a busy day on any one
+            # project exhausts it for all of them. Deferring keeps main green,
+            # because a full quota is not a defect in the commit — but it must
+            # not read as a deploy. This branch used to claim "the Git
+            # integration still ships the same commit"; it does not, and a green
+            # check over an unchanged site cost an hour of chasing a fix that
+            # had never shipped. The run summary now says so outright, and the
+            # scheduled run retries once the cap resets.
             if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours|Upload aborted'; then
-              echo "::warning::Vercel deploy deferred (quota or transient upload failure)"
+              echo "deployed=false" >> "$GITHUB_OUTPUT"
+              {
+                echo "### Not deployed"
+                echo
+                echo "Vercel refused the deployment, so **nebutra.com still serves the previous build**."
+                echo "This job is green because the commit is fine — but nothing shipped."
+                echo
+                echo '```'
+                echo "$out" | tail -3
+                echo '```'
+              } >> "$GITHUB_STEP_SUMMARY"
+              echo "::warning::Vercel deploy deferred — nebutra.com still serves the previous build"
               exit 0
             fi
             exit "$code"
           fi
+          echo "deployed=true" >> "$GITHUB_OUTPUT"
 
+      # Skipped when the deploy was deferred: the check only asserts HTTP 200,
+      # which the build that is already live answers just as well, so running it
+      # would certify the previous release as this one.
       - name: Smoke nebutra.com
+        if: steps.deploy.outputs.deployed != 'false'
         run: |
           set -euo pipefail
           # Cache-busting path: the marketing pages are statically cached, so a

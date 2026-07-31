@@ -10,6 +10,10 @@ on:
     paths:
       - "apps/pebble/**"
       - ".github/workflows/deploy-pebble-vercel.yml"
+  # Retries a deploy the daily cap refused — see the deferral branch below.
+  # Offset from the landing retry so the two do not race for the same quota.
+  schedule:
+    - cron: "37 19 * * *"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +32,7 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Ensure project, domain, and deploy
+        id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
@@ -97,14 +102,33 @@ jobs:
           set -e
           echo "$out"
           if [ "$code" -ne 0 ]; then
+            # The daily deployment cap is account-wide, so a busy day on any one
+            # project exhausts it for all of them. Deferring keeps main green,
+            # because a full quota is not a defect in the commit — but it must
+            # not read as a deploy, and the smoke below would otherwise certify
+            # the build that is already live. The scheduled run retries once the
+            # cap resets.
             if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours|Upload aborted'; then
-              echo "::warning::Vercel deploy deferred (quota or transient upload failure)"
+              echo "deployed=false" >> "$GITHUB_OUTPUT"
+              {
+                echo "### Not deployed"
+                echo
+                echo "Vercel refused the deployment, so **pebble.nebutra.com still serves the previous build**."
+                echo "This job is green because the commit is fine — but nothing shipped."
+                echo
+                echo '```'
+                echo "$out" | tail -3
+                echo '```'
+              } >> "$GITHUB_STEP_SUMMARY"
+              echo "::warning::Vercel deploy deferred — pebble.nebutra.com still serves the previous build"
               exit 0
             fi
             exit "$code"
           fi
+          echo "deployed=true" >> "$GITHUB_OUTPUT"
 
       - name: Smoke pebble.nebutra.com
+        if: steps.deploy.outputs.deployed != 'false'
         run: |
           set -euo pipefail
           for i in 1 2 3 4 5 6 7 8; do
