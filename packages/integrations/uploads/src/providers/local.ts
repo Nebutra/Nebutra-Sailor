@@ -47,11 +47,17 @@ export class LocalUploadProvider implements UploadProvider {
     return `${id}/${target.key.split("/").pop()}`;
   }
 
+  /** Prefer an explicit full object key (contains `/`) over generating a new one. */
+  private resolveKey(target: UploadTarget): string {
+    if (target.key.includes("/")) return target.key;
+    return this.buildKey(target);
+  }
+
   /**
    * Generate presigned URL for simple uploads
    */
   async createPresignedUpload(target: UploadTarget): Promise<PresignedUpload> {
-    const key = this.buildKey(target);
+    const key = this.resolveKey(target);
 
     // Ensure directory exists
     await this.ensureDir(target.bucket);

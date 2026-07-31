@@ -50,7 +50,20 @@ curl -sS -X POST 'https://pebble.nebutra.com/diagnostics/token' \
 # → 200 upload_url must be https://pebble.nebutra.com/diagnostics/upload
 ```
 
+## Diagnostic object storage
+
+Upload path stores NDJSON privately:
+
+1. **Cloud** when any of `R2_*` / `AWS_*` / `S3_ENDPOINT` / `BLOB_READ_WRITE_TOKEN` / `UPLOAD_PROVIDER=s3|blob` is set (presigned PUT with the exact object key).
+2. **Local disk** otherwise: `PEBBLE_DIAGNOSTICS_DIR` (default `./data/pebble-diagnostics` or `LOCAL_UPLOAD_DIR`). Fine for single-node ECS; switch to R2 when multi-node or durable off-box storage is required.
+
+Bucket name: `PEBBLE_DIAGNOSTICS_BUCKET` (default `nebutra-pebble-diagnostics`).
+
 ## Deploy surfaces
 
-- Gateway code: `backends/gateway` → ECS PM2 `api-gateway` (`deploy-ecs.yml` apps=`api` or monorepo map).
+- Gateway code: `backends/gateway` → ECS PM2 `api-gateway`.
+  - **Important:** `deploy-ecs.yml` **push-to-main auto-CI is forge-only**. Ship gateway with:
+    ```bash
+    gh workflow run deploy-ecs.yml -R Nebutra/Nebutra-Sailor -f apps=api -f reason="…"
+    ```
 - Brand nginx: `infra/runtime/nginx/conf.d/pebble.nebutra.com.conf` (must ship `X-Original-URI` + `Host $host` on support locations).

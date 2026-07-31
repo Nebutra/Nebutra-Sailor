@@ -17,7 +17,7 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { logger } from "@nebutra/logger";
 import { DIAGNOSTIC_MAX_BYTES, getPebbleDiagnosticTicketRepository } from "@nebutra/repositories";
-import { getUploadProvider } from "@nebutra/uploads";
+import { deleteDiagnosticBundle, putDiagnosticBundle } from "./diagnostics-store.js";
 import {
   DIAGNOSTIC_TOKEN_TTL_SECONDS,
   deriveUploadUrl,
@@ -247,28 +247,15 @@ diagnosticsRoutes.openapi(uploadRoute, async (c) => {
   const key = diagnosticObjectKey(ticket.id);
   const checksum = await sha256Hex(body);
 
-  // Private by construction: the provider is asked for a private ACL and the
-  // key is unguessable, so nothing here is reachable without the database row.
-  const provider = await getUploadProvider();
-  const presigned = await provider.createPresignedUpload({
-    bucket,
-    key,
-    contentType: NDJSON_CONTENT_TYPE,
-    maxSize: DIAGNOSTIC_MAX_BYTES,
-    acl: "private",
-    metadata: { ticket_id: ticket.id },
-  });
-
-  const stored = await fetch(presigned.url, {
-    method: presigned.method,
-    headers: { ...presigned.headers, "content-type": NDJSON_CONTENT_TYPE },
-    body: body as unknown as BodyInit,
-  });
-
-  if (!stored.ok) {
+  // Private by construction: unguessable key + private ACL / local disk under
+  // PEBBLE_DIAGNOSTICS_DIR. Prefer cloud when R2/S3 env is present; otherwise
+  // durable local write (works on single-node ECS without cloud credentials).
+  try {
+    await putDiagnosticBundle({ bucket, key, body });
+  } catch (error) {
     logger.error("Pebble diagnostic bundle storage failed", {
       ticketId: ticket.id,
-      status: stored.status,
+      error: error instanceof Error ? error.message : String(error),
     });
     return c.json({ error: "Bad Gateway", message: "Could not store the bundle." }, 400);
   }
@@ -284,7 +271,7 @@ diagnosticsRoutes.openapi(uploadRoute, async (c) => {
   });
 
   if (!marked) {
-    await provider.deleteFile(bucket, key).catch(() => undefined);
+    await deleteDiagnosticBundle({ bucket, key }).catch(() => undefined);
     return c.json({ error: "Unauthorized", message: "This token has already been used." }, 401);
   }
 
@@ -353,8 +340,12 @@ diagnosticsRoutes.openapi(deleteRoute, async (c) => {
   // order could leave a live row pointing at a deleted object, which reads to
   // a support agent as "still stored".
   if (object) {
-    const provider = await getUploadProvider();
-    await provider.deleteFile(object.bucket, object.key);
+    await deleteDiagnosticBundle({ bucket: object.bucket, key: object.key }).catch((error) => {
+      logger.warn("Pebble diagnostic object delete failed after row mark", {
+        ticketId,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    });
   }
 
   logger.info("Pebble diagnostic ticket deleted", { ticketId });
