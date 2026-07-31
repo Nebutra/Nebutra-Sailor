@@ -7,12 +7,27 @@ import {
   createGenerator,
   remarkAutoTypeTable,
 } from "fumadocs-typescript";
+import type { Pluggable } from "unified";
 import { z } from "zod";
 import { remarkComponent } from "./lib/remark-component";
 
-const generator = createGenerator({
-  cache: createFileSystemGeneratorCache(".next/fumadocs-typescript"),
-});
+// Worker / OpenNext builds must stay under Cloudflare's 64 MiB uncompressed
+// Worker limit. ts-morph (via fumadocs-typescript remarkAutoTypeTable) alone
+// is ~12 MiB; full Shiki language packs add ~8 MiB more.
+const isOpenNext = process.env.OPEN_NEXT_BUILD === "true";
+
+const typeTablePlugins: Pluggable[] = isOpenNext
+  ? []
+  : [
+      [
+        remarkAutoTypeTable,
+        {
+          generator: createGenerator({
+            cache: createFileSystemGeneratorCache(".next/fumadocs-typescript"),
+          }),
+        },
+      ],
+    ];
 
 export const docs = defineDocs({
   dir: "content/docs",
@@ -22,7 +37,10 @@ export const docs = defineDocs({
       figma: z.string().optional(),
     }),
     postprocess: {
-      includeProcessedMarkdown: true,
+      // "processed" doubles every page body into the server bundle. Prefer raw
+      // markdown for LLM routes (see get-llm-text.ts) so CF Workers stays under
+      // the 64 MiB handler limit.
+      includeProcessedMarkdown: !isOpenNext,
     },
   },
 });
@@ -30,12 +48,7 @@ export const docs = defineDocs({
 export default defineConfig({
   plugins: [lastModified()],
   mdxOptions: {
-    remarkPlugins: [
-      remarkComponent,
-      remarkMdxMermaid,
-      remarkFeedbackBlock,
-      [remarkAutoTypeTable, { generator }],
-    ],
+    remarkPlugins: [remarkComponent, remarkMdxMermaid, remarkFeedbackBlock, ...typeTablePlugins],
     rehypePlugins: [],
   },
 });

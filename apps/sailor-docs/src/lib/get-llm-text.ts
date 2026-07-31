@@ -8,6 +8,14 @@ import type { source } from "@/lib/source";
 type MdxPageData = InferPageType<typeof source>["data"] & DocData & DocMethods;
 
 export async function getLLMText(page: InferPageType<typeof source>) {
-  const processed = await (page.data as MdxPageData).getText("processed");
-  return `# ${page.data.title} (${page.url})\n\n${processed}`;
+  // Prefer "raw" so OpenNext builds can omit includeProcessedMarkdown (saves
+  // multi‑MiB of duplicated MDX in handler.mjs for Cloudflare Workers).
+  const mdxPage = page.data as MdxPageData;
+  let body: string;
+  try {
+    body = await mdxPage.getText("processed");
+  } catch {
+    body = await mdxPage.getText("raw");
+  }
+  return `# ${page.data.title} (${page.url})\n\n${body}`;
 }

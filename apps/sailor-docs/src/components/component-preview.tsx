@@ -15,8 +15,8 @@ import { Suspense, useState } from "react";
 
 const REGISTRY_BASE = "https://design.nebutra.com/r";
 
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Index } from "@/__registry__";
+import { DynamicCodeBlock } from "@/components/dynamic-codeblock";
 
 interface ComponentPreviewProps {
   children?: ReactNode;

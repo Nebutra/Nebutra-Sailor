@@ -257,9 +257,6 @@ import {
   TooltipTrigger,
   Accordion as UIAccordion,
 } from "@nebutra/ui/primitives";
-import { Mermaid } from "fumadocs-mermaid/ui";
-import * as ObsidianComponents from "fumadocs-obsidian/ui";
-import * as PythonComponents from "fumadocs-python/components";
 import { Callout } from "fumadocs-ui/components/callout";
 import { File, Files, Folder } from "fumadocs-ui/components/files";
 import { GithubInfo } from "fumadocs-ui/components/github-info";
@@ -269,8 +266,7 @@ import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
-// Registry demos: import via @/__registry__ for lazy-loading
-// Direct demos: import directly when used as inline MDX children (not via ComponentPreview name=)
+// Registry demos: client-only dynamic (ssr:false) — keeps OpenNext handler lean
 import {
   AnimatedCircularProgressBarDemo,
   AvatarFallbackDemo,
@@ -296,7 +292,6 @@ import {
   SkipLinkStyleDemo,
   VisuallyHiddenDemo,
 } from "@/components/accessibility-demos";
-import { APIPage } from "@/components/api-page";
 import { AvatarSmartGroupDemo } from "@/components/avatar-smart-group-demo";
 import { AvatarWithIconDemo } from "@/components/avatar-with-icon-demo";
 import {
@@ -308,9 +303,6 @@ import {
   BadgeTableDemo,
   BadgeVariantsDemo,
 } from "@/components/badge-demos";
-import { BrandPhilosophyVisual, LogoShowcase } from "@/components/brand-overview-visuals";
-import { ColorPalette } from "@/components/color-palette";
-import { ColorUsageDemos } from "@/components/color-usage";
 import { ComponentPreview } from "@/components/component-preview";
 import {
   CopywritingButtonsDemo,
@@ -343,8 +335,6 @@ import {
   SplitLayoutDemo,
   StandardGridDemo,
 } from "@/components/grid-layout-demos";
-import { IconGallery } from "@/components/icon-gallery";
-import { IntroductionHero } from "@/components/introduction-hero";
 import {
   AccordionGroup,
   Check,
@@ -359,6 +349,17 @@ import {
   Tip,
   Warning,
 } from "@/components/mdx-compat";
+import {
+  APIPage,
+  BrandPhilosophyVisual,
+  ColorPalette,
+  ColorUsageDemos,
+  IconGallery,
+  IntroductionHero,
+  LogoShowcase,
+  Mermaid,
+  MotionDemos,
+} from "@/components/mdx-lazy";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/mdx-resizable";
 import { ScrollArea, ScrollBar } from "@/components/mdx-scroll-area";
 import {
@@ -369,7 +370,6 @@ import {
   Tab,
 } from "@/components/mdx-tabs";
 import { Toggle, ToggleGroup, ToggleGroupItem } from "@/components/mdx-toggle";
-import { MotionDemos } from "@/components/motion-demos";
 import {
   DotPatternCardDemo,
   FlickeringGridCardDemo,
@@ -436,8 +436,9 @@ const Combobox = Object.assign(ComboboxRoot, {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   const merged = {
     ...defaultComponents,
-    ...ObsidianComponents,
-    ...PythonComponents,
+    // fumadocs-obsidian / fumadocs-python intentionally omitted from the static
+    // MDX component map — they bloat the OpenNext Worker past CF size limits.
+    // Niche pages can import them locally if needed later.
 
     // ─── Fumadocs Built-ins ────────────────────────────────────────────────────
     Callout,
