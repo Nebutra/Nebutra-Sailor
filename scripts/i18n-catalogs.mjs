@@ -126,6 +126,18 @@ export const CATALOGS = [
     },
   },
   {
+    id: "boot-log",
+    messagesDir: "packages/platform/i18n/boot-log",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    description: "Auth-center boot-log archive (editorial prose, not UI strings)",
+    // English and Chinese are hand-authored; the rest are translated from the
+    // English. Never run the translator with --force against this catalog — it
+    // would overwrite the authored Chinese with a machine pass.
+    criticalNamespaces: [],
+    advisoryNamespaces: [],
+  },
+  {
     id: "router",
     messagesDir: "apps/router/messages",
     source: "en",

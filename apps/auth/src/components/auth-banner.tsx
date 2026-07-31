@@ -1,12 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
+import { loadBootLogCatalog } from "@nebutra/i18n/boot-log";
 import { getLocale, getTranslations } from "next-intl/server";
-import {
-  BOOT_LOG_LABEL,
-  bootLogDensity,
-  bootLogSpan,
-  pickBootLogRotation,
-  resolveBootLogLocale,
-} from "@/content/boot-log";
+import { bootLogDensity, bootLogSpan, pickBootLogRotation } from "@/content/boot-log";
 import { cn } from "@/lib/cn";
 import { BootLogCard } from "./boot-log-card";
 
@@ -18,7 +13,10 @@ export async function AuthBanner({ className }: { className?: string }) {
   // Drawn per request — the sign-in route is force-dynamic, so every visit
   // gets a different entry rather than one frozen at build time.
   const locale = await getLocale();
-  const bootLog = pickBootLogRotation(locale);
+  // Editorial copy comes from its own message catalog; only the handful of
+  // records this visit will show crosses to the client.
+  const bootLogCatalog = await loadBootLogCatalog(locale);
+  const bootLog = pickBootLogRotation(bootLogCatalog);
   // The rail runs to the current year, so the last slot on it is always empty.
   const railSpan = bootLogSpan(new Date().getFullYear());
 
@@ -82,7 +80,7 @@ export async function AuthBanner({ className }: { className?: string }) {
           entries={bootLog}
           density={bootLogDensity(46, railSpan)}
           span={railSpan}
-          label={BOOT_LOG_LABEL[resolveBootLogLocale(locale)]}
+          label={bootLogCatalog.panelLabel}
         />
 
         <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">

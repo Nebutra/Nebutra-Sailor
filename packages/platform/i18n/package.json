@@ -22,7 +22,8 @@
     "./bcp47": "./src/bcp47.ts",
     "./display": "./src/display.ts",
     "./negotiate": "./src/negotiate.ts",
-    "./world": "./src/world.ts"
+    "./world": "./src/world.ts",
+    "./boot-log": "./src/boot-log.ts"
   },
   "scripts": {
     "lint": "biome check .",

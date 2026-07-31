@@ -28,7 +28,7 @@ pre-push:
       # Every catalog in scripts/i18n-catalogs.mjs, not just landing. The gate
       # used to watch one app while translation covered four, so a catalog
       # could be filled automatically and still drift silently.
-      glob: "{apps/landing/messages,apps/forge/messages,apps/router/messages,packages/platform/i18n/locales}/*.json"
+      glob: "{apps/landing/messages,apps/forge/messages,apps/router/messages,packages/platform/i18n/locales,packages/platform/i18n/boot-log}/*.json"
       # Bypass pnpm verify-deps noise in agent shells that flip injected-deps config.
       run: npm_config_verify_deps_before_run=false pnpm i18n:check
 
