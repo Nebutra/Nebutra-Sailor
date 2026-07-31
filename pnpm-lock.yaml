@@ -1764,9 +1764,6 @@ importers:
 
   backends/gateway:
     dependencies:
-      '@aws-sdk/client-s3':
-        specifier: ^3.700.0
-        version: 3.1003.0
       '@clerk/backend':
         specifier: '>=3.2.14'
         version: 3.4.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
