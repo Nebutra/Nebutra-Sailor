@@ -955,6 +955,13 @@ jobs:
           # the tenant login centre verifiable here, which is the whole thing the
           # host-only cookie in apps/admin/src/lib/auth.ts exists to prevent.
           ADMIN_AUTH_SECRET: ${{ secrets.ADMIN_AUTH_SECRET }}
+          # The Access application's aud tag. apps/admin verifies the Cloudflare
+          # assertion against it, and REFUSES every request when it is unset —
+          # without an audience the check would accept an assertion minted for any
+          # other app in this account, which is a gate in name only. Not a secret
+          # (it is in every login redirect), but it must reach the VM.
+          ACCESS_AUD: ${{ vars.ACCESS_AUD || 'cef8151fcccb2be39d01c63b68eea989aa41042789c8bef0f0ff3e7a8aa991a9' }}
+          ACCESS_TEAM_DOMAIN: ${{ vars.ACCESS_TEAM_DOMAIN || 'nebutra.cloudflareaccess.com' }}
           # Wraps the per-secret DEKs that @nebutra/vault stores in the database —
           # OAuth client secrets among them, which is what lets sso.nebutra.com
           # federate with a relying party that requires a client_secret.
@@ -1164,6 +1171,7 @@ jobs:
             AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL \
             NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY CLERK_SECRET_KEY CLERK_WEBHOOK_SECRET AUTH_SSO_DISCOVERY_PROVIDERS \
             BETTER_AUTH_SECRET BETTER_AUTH_URL ADMIN_AUTH_SECRET VAULT_LOCAL_MASTER_KEY \
+            ACCESS_AUD ACCESS_TEAM_DOMAIN \
             NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL \
             NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN \
             NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO \

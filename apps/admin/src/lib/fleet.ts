@@ -103,6 +103,19 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     note: "Model fabric edge. Supply engines stay internal.",
   },
   {
+    id: "@nebutra/pebble",
+    label: "Pebble",
+    domainKey: "pebble",
+    pm2Name: "pebble",
+    port: 3017,
+    runtime: "ecs-pm2",
+    // No deployService on purpose. pebble runs under PM2 and the smoke step
+    // references it, but it is not in DEPLOYABLE_SERVICES and not dispatchable
+    // by name — claiming a pipeline it does not have would make this inventory
+    // lie about the one thing it exists to report.
+    note: "Support intake — unauthenticated by design, non-tenant tables. No deploy pipeline yet.",
+  },
+  {
     id: "@nebutra/forge",
     label: "Forge",
     domainKey: "forge",

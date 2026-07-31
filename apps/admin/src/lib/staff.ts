@@ -9,15 +9,15 @@ import {
   type PlatformStaffRole,
 } from "@nebutra/permissions";
 import { headers } from "next/headers";
-import { auth, SSO_PROVIDER_ID } from "./auth";
+import { verifyAccessAssertion } from "./access-assertion";
 
 /**
  * Authorisation for the control plane.
  *
- * OIDC answers "who is this". This answers "what may they do", and the two are
- * deliberately separate: a valid session from sso.nebutra.com proves the person
- * exists, not that they operate the platform. Every employee, contractor and
- * test account can obtain one.
+ * Cloudflare Access answers "who is this". This answers "what may they do", and
+ * the two are deliberately separate: passing the Access policy proves the person
+ * was authenticated, not that they operate the platform. Widening that policy —
+ * to a whole email domain, say — must not silently hand anyone the fleet.
  *
  * The grant lives in the PlatformStaff table, which is orthogonal to tenant
  * membership — a tenant `owner` has no standing here, and a platform operator
@@ -30,40 +30,36 @@ import { auth, SSO_PROVIDER_ID } from "./auth";
 const db = getSystemDb();
 
 export interface StaffContext {
-  /**
-   * The platform user id — `users.id`, which is also the OIDC `sub` issued by
-   * sso.nebutra.com. This is the id that appears in audit records, NOT the
-   * Better Auth id below.
-   */
+  /** `users.id` — the id that appears in audit records. */
   userId: string;
-  /** Better Auth's own row id, for session bookkeeping only. Never an actor id. */
-  authUserId: string;
-  email: string | null;
+  email: string;
   role: PlatformStaffRole;
 }
 
 /**
- * TWO ID SPACES, AND THE GRANT LIVES IN ONLY ONE OF THEM.
+ * IDENTITY COMES FROM THE VERIFIED ACCESS ASSERTION, NOT FROM AN APP SESSION.
  *
- * `session.user.id` is an `auth_users.id` — Better Auth's own row, created the
- * first time someone completes the SSO round-trip. `PlatformStaff.userId` is a
- * `users.id`, foreign-keyed to the platform user table. The Prisma schema
- * declares NO relation between auth_users and users, so those ids never
- * coincide, and looking a grant up by the session id would deny everyone
- * forever while looking entirely correct.
+ * The original design read a Better Auth session here and mapped it to a `users`
+ * row through the SSO account link. That path cannot complete: sso.nebutra.com's
+ * login interaction is unimplemented — /oauth/login is a placeholder and nothing
+ * in the repo calls interactionFinished — so no session of that kind is ever
+ * issued, and this returned null for everyone.
  *
- * The bridge is the account link. `AuthAccount.accountId` holds the subject the
- * issuer sent, and packages/iam/oauth/src/provider.ts resolves accounts
- * out of `prisma.user` and claims `sub: user.id` — so that subject *is* the
- * platform user id. Unique on (providerId, accountId), so one row, no ordering
- * dependence.
+ * Cloudflare Access already authenticates the visitor with Google before a
+ * request reaches this process, and signs a JWT saying who they are. Consuming
+ * that removes a whole layer whose only job was to re-establish a fact already
+ * proven at the edge. The three-layer model is intact: Access is authentication,
+ * PlatformStaff is authorisation, and they stay separate — a valid assertion
+ * proves the person exists, never that they may operate the platform.
+ *
+ * Email is the join key because that is what Access asserts and what `users`
+ * carries as a unique column. It is only trustworthy because the assertion is
+ * signature-verified with a pinned audience; the plaintext
+ * Cf-Access-Authenticated-User-Email header is deliberately ignored. See
+ * ./access-assertion.
  */
-async function resolvePlatformUserId(authUserId: string): Promise<string | null> {
-  const account = await db.authAccount.findFirst({
-    where: { userId: authUserId, providerId: SSO_PROVIDER_ID },
-    select: { accountId: true },
-  });
-  return account?.accountId ?? null;
+async function resolvePlatformUser(email: string) {
+  return db.user.findUnique({ where: { email }, select: { id: true, email: true } });
 }
 
 /**
@@ -74,17 +70,16 @@ async function resolvePlatformUserId(authUserId: string): Promise<string | null>
  * is a disclosure with no operational benefit.
  */
 export async function getStaffContext(): Promise<StaffContext | null> {
-  const session = await auth.api.getSession({ headers: await headers() });
-  const authUserId = session?.user?.id;
-  if (!authUserId) return null;
+  const identity = await verifyAccessAssertion((await headers()).get("cf-access-jwt-assertion"));
+  if (!identity) return null;
 
-  // A session with no SSO account link is not a staff member — it is either a
-  // stale row or an account created by some path other than the SSO flow.
-  const userId = await resolvePlatformUserId(authUserId);
-  if (!userId) return null;
+  // Authenticated at the edge but unknown to the platform. Not an error: the
+  // Access policy may admit people who have never been provisioned here.
+  const user = await resolvePlatformUser(identity.email);
+  if (!user) return null;
 
   const grant = await db.platformStaff.findUnique({
-    where: { userId },
+    where: { userId: user.id },
     select: { role: true, revokedAt: true },
   });
 
@@ -96,7 +91,7 @@ export async function getStaffContext(): Promise<StaffContext | null> {
   const role = normalizePlatformStaffRole(grant.role);
   if (!role) return null;
 
-  return { userId, authUserId, email: session.user.email ?? null, role };
+  return { userId: user.id, email: user.email, role };
 }
 
 /**

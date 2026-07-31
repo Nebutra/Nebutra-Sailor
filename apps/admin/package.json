@@ -21,6 +21,7 @@
     "@nebutra/ui": "workspace:*",
     "better-auth": "^1.6.13",
     "geist": "catalog:",
+    "jose": "^6.1.0",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

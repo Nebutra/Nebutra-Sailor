@@ -483,6 +483,25 @@ persist_idp_runtime_env() {
     SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED
 }
 
+persist_admin_runtime_env() {
+  local app_root="$1"
+
+  # The control plane's PM2 entry sets ENV_FILE=$DEPLOY_ROOT/admin/.env, but until
+  # now nothing wrote that file — admin was relying on inheriting the deploy
+  # shell's environment, which is not what a long-lived PM2 daemon re-reads on a
+  # later restart. Every key it needs is written explicitly here.
+  #
+  # ACCESS_AUD is load-bearing: apps/admin verifies the Cloudflare Access
+  # assertion against it and refuses every request when it is missing, so an
+  # absent value takes the whole control plane down rather than degrading it.
+  persist_database_runtime_env "$app_root"
+  persist_runtime_keys "$app_root" "admin control plane" \
+    DATABASE_URL DIRECT_URL APP_DB_ROLE \
+    ADMIN_AUTH_SECRET ACCESS_AUD ACCESS_TEAM_DOMAIN \
+    OIDC_ISSUER REDIS_URL \
+    SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED
+}
+
 persist_landing_mvp_runtime_env() {
   local app_root="$1"
 
@@ -635,9 +654,18 @@ load_runtime_env() {
     log "no runtime env files found for $app"
   fi
 
-  if [ "$app" = "web" ] || [ "$app" = "api" ] || [ "$app" = "idp" ] || [ "$app" = "auth" ]; then
+  if [ "$app" = "web" ] || [ "$app" = "api" ] || [ "$app" = "idp" ] || [ "$app" = "auth" ] || [ "$app" = "admin" ]; then
     persist_database_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
+  if [ "$app" = "admin" ]; then
+    persist_admin_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+
+    if [ -z "${ACCESS_AUD:-}" ]; then
+      fail "admin runtime env missing ACCESS_AUD — the Access assertion cannot be verified and every request would be refused"
+    fi
   fi
 
   if [ "$app" = "idp" ]; then
