@@ -89,6 +89,18 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  /**
+   * `/sitemap.xml` is the URL robots.txt advertises and Search Console has on
+   * record, but the file that serves it cannot live at that path: `sitemap.ts`
+   * uses `generateSitemaps`, and Next's conflict detector claims
+   * `/sitemap.xml/route` for the metadata file even though the router then
+   * 404s it (the shards are served at `/sitemap/<locale>.xml`). Having both
+   * refuses to build. So the index lives at `/sitemap-index.xml` and this
+   * rewrite keeps the public URL working.
+   */
+  async rewrites() {
+    return [{ source: "/sitemap.xml", destination: "/sitemap-index.xml" }];
+  },
   allowedDevOrigins: ["127.0.0.1"],
 
   // `output: "standalone"` is gated by env so Vercel builds (which ignore it)

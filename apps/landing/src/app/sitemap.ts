@@ -30,7 +30,9 @@ type SitemapEntry = MetadataRoute.Sitemap[number];
 /**
  * One sitemap child per route locale — Next serves them at
  * `/sitemap/<locale>.xml`. Next emits NO index for a sharded sitemap, so the
- * index at `/sitemap.xml` is hand-written in `app/sitemap.xml/route.ts` and
+ * index is hand-written in `app/sitemap-index.xml/route.ts` and reaches
+ * `/sitemap.xml` through a rewrite in next.config.ts, because a route file at
+ * that path collides with this metadata file. It
  * shares this same shard-id SSOT.
  *
  * Sharding on the route-locale SSOT (not a hand list) means adding a language

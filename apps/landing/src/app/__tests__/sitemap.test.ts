@@ -38,7 +38,7 @@ vi.mock("@/lib/blog", () => ({
 
 import robots from "../robots";
 import sitemap, { generateSitemaps } from "../sitemap";
-import { GET as sitemapIndex } from "../sitemap.xml/route";
+import { GET as sitemapIndex } from "../sitemap-index.xml/route";
 
 const BASE_URL = "https://nebutra.com";
 

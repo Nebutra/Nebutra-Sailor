@@ -39,7 +39,8 @@ export default function robots(): MetadataRoute.Robots {
     ],
     // Sharded sitemap. Next serves the shards at /sitemap/<locale>.xml and
     // emits no index of its own, so /sitemap.xml is the hand-written
-    // <sitemapindex> in app/sitemap.xml/route.ts — the same URL crawlers and
+    // <sitemapindex> in app/sitemap-index.xml/route.ts, rewritten onto
+    // /sitemap.xml by next.config.ts — the same URL crawlers and
     // Search Console already have on record.
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
