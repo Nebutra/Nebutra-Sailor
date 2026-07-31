@@ -1,6 +1,15 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@nebutra/ui/primitives";
 import { useCallback, useEffect, useState } from "react";
 
 interface KeyRow {
@@ -87,45 +96,62 @@ export function KeysClient() {
       ) : null}
 
       <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
-        <table className="w-full min-w-[560px] border-collapse text-left text-[12px]">
-          <thead>
-            <tr className="border-b border-[var(--neutral-6)] bg-[var(--neutral-2)]/50 text-[11px] text-[var(--neutral-10)]">
-              <th className="px-3 py-1.5 font-medium">名称</th>
-              <th className="px-3 py-1.5 font-medium">prefix</th>
-              <th className="px-3 py-1.5 font-medium">scopes</th>
-              <th className="px-3 py-1.5 font-medium">创建时间</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table bare className="w-full min-w-[560px] text-[12px]">
+          <TableHeader>
+            <TableRow className="bg-[var(--neutral-2)]/50 text-[11px] text-[var(--neutral-10)]">
+              <TableHead alignment="start" className="font-medium">
+                名称
+              </TableHead>
+              <TableHead alignment="start" className="font-medium">
+                prefix
+              </TableHead>
+              <TableHead alignment="start" className="font-medium">
+                scopes
+              </TableHead>
+              <TableHead alignment="start" className="font-medium">
+                创建时间
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody bordered>
             {keys.map((k) => (
-              <tr
-                key={k.id}
-                className="border-b border-[var(--neutral-6)] last:border-0 hover:bg-[var(--neutral-2)]/40"
-              >
-                <td className="px-3 py-1.5 font-medium">{k.name}</td>
-                <td className="px-3 py-1.5 font-mono text-[11px] text-[var(--neutral-11)]">
+              <TableRow key={k.id} className="hover:bg-[var(--neutral-2)]/40">
+                <TableCell alignment="start" className="font-medium">
+                  {k.name}
+                </TableCell>
+                <TableCell
+                  alignment="start"
+                  className="font-mono text-[11px] text-[var(--neutral-11)]"
+                >
                   {k.keyPrefix}…
-                </td>
-                <td className="px-3 py-1.5 font-mono text-[10px] text-[var(--neutral-10)]">
+                </TableCell>
+                <TableCell
+                  alignment="start"
+                  className="font-mono text-[10px] text-[var(--neutral-10)]"
+                >
                   {k.scopes.join(" ")}
-                </td>
-                <td className="px-3 py-1.5 tabular-nums text-[11px] text-[var(--neutral-10)]">
+                </TableCell>
+                <TableCell
+                  alignment="start"
+                  className="tabular-nums text-[11px] text-[var(--neutral-10)]"
+                >
                   {new Date(k.createdAt).toLocaleString()}
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
             {keys.length === 0 ? (
-              <tr>
-                <td
+              <TableRow>
+                <TableCell
                   colSpan={4}
-                  className="px-3 py-6 text-center text-[12px] text-[var(--neutral-10)]"
+                  alignment="center"
+                  className="py-6 text-[12px] text-[var(--neutral-10)]"
                 >
                   还没有 Key
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ) : null}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

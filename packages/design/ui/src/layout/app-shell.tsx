@@ -46,8 +46,8 @@ const DEFAULT_HEADER_HEIGHT = 48;
  * fixed-width rail on `md+` viewports and collapses into a `Sheet` overlay on
  * mobile (triggered by the hamburger button shown in the header).
  *
- * The sidebar width animates smoothly (200ms ease-out) when toggling between
- * the expanded and collapsed states so it can host an icon-only rail.
+ * The sidebar width animates smoothly (duration-flow, ease-out) when toggling
+ * between the expanded and collapsed states so it can host an icon-only rail.
  *
  * @status stable
  *
@@ -99,7 +99,7 @@ export function AppShell({
         aria-label="Primary"
         className={cn(
           "hidden h-screen overflow-hidden bg-sidebar text-sidebar-foreground md:block",
-          "transition-[width] duration-200 ease-out",
+          "transition-[width] duration-flow ease-out",
           overlay ? "absolute inset-y-0 left-0 z-40" : "shrink-0",
           railWidth > 0 && "border-r border-sidebar-border",
           overlay && railWidth > 0 && "shadow-2xl",

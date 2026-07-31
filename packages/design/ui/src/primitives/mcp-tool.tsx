@@ -324,7 +324,7 @@ export function McpTool({
           <ChevronRight
             aria-hidden="true"
             className={cn(
-              "size-3 shrink-0 text-muted-foreground transition-transform duration-150 ease-out",
+              "size-3 shrink-0 text-muted-foreground transition-transform duration-flow ease-out",
               isOpen ? "rotate-90" : "rotate-0",
             )}
           />

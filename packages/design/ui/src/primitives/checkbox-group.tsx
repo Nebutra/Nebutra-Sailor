@@ -36,7 +36,7 @@ export interface CheckboxGroupProps {
 // =============================================================================
 const getInputClasses = (checked: boolean, disabled: boolean, indeterminate: boolean) => {
   let className =
-    "relative border w-4 h-4 duration-200 rounded inline-flex items-center justify-center";
+    "relative border w-4 h-4 duration-micro rounded inline-flex items-center justify-center";
   if (disabled) {
     if (!checked || indeterminate) {
       className += " bg-geist-gray-100 border-geist-gray-500";

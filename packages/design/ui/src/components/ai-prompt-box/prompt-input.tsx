@@ -436,7 +436,7 @@ function PromptSubmitAction({
         variant="default"
         size="icon"
         className={cn(
-          "h-8 w-8 rounded-full transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-200",
+          "h-8 w-8 rounded-full transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-micro",
           isRecording
             ? "bg-transparent hover:bg-accent text-destructive hover:text-destructive/80"
             : hasContent

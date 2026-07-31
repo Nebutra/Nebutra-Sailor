@@ -72,7 +72,7 @@ const CardRoot = React.forwardRef<HTMLDivElement, CardProps>(
         <div
           ref={ref}
           className={cn(
-            "rounded-[var(--radius-xl)] transition-[background-color,border-color,box-shadow,color] duration-200",
+            "rounded-[var(--radius-xl)] transition-[background-color,border-color,box-shadow,color] duration-micro",
             variantStyles[variant],
             paddingMap[padding],
             className,

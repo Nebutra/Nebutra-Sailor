@@ -89,7 +89,7 @@ const variantMap: Readonly<Record<ProjectBannerVariant, VariantTokens>> = {
   },
 };
 
-const ctaBase = "font-medium underline underline-offset-[5px] transition-colors duration-100";
+const ctaBase = "font-medium underline underline-offset-[5px] transition-colors duration-micro";
 
 // ---------------------------------------------------------------------------
 // Component

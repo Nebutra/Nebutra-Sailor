@@ -138,7 +138,7 @@ export function DashboardMetricTile({
     <div
       data-pattern="nebutra-dashboard-metric"
       className={cn(
-        "group h-full rounded-[var(--radius-lg)] border border-border bg-muted/40 p-3 transition-colors duration-150",
+        "group h-full rounded-[var(--radius-lg)] border border-border bg-muted/40 p-3 transition-colors duration-micro",
         "hover:border-muted-foreground/30 hover:bg-muted/65",
         className,
       )}

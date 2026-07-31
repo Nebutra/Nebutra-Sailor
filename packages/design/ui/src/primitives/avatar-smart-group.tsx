@@ -55,7 +55,7 @@ export function AvatarSmartGroup({
                 <button
                   type="button"
                   aria-label={user.role ? `${user.name}, ${user.role}` : user.name}
-                  className={`rounded-full ring-2 ${ringColor} transition-transform duration-200 cursor-pointer border-none bg-transparent p-0 outline-none`}
+                  className={`rounded-full ring-2 ${ringColor} transition-transform duration-micro cursor-pointer border-none bg-transparent p-0 outline-none`}
                   style={{
                     marginLeft: index > 0 && overlap < 0 ? `${overlap}px` : undefined,
                     transform: activeKey === userKey ? `scale(${hoverScale})` : "scale(1)",

@@ -133,6 +133,15 @@ export function buildLinear(ctx: CompileContext): BrandPackage {
       reveal: 200,
       cinematic: 320,
     },
+    // Sits close to the content it chrome — the densest of the seven.
+    spacing: {
+      xs: "0.375rem",
+      sm: "0.5rem",
+      md: "0.75rem",
+      lg: "1rem",
+      xl: "1.5rem",
+      "2xl": "2rem",
+    },
     typography: {
       fontSans: `'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontMono: `'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace`,

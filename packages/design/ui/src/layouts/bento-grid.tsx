@@ -133,7 +133,7 @@ function BentoCard({ item }: BentoCardProps) {
             {item.tags?.map((tag, i) => (
               <span
                 key={i}
-                className="px-2 py-1 rounded-[var(--radius-md)] bg-black/5 backdrop-blur-sm transition-colors duration-200 hover:bg-black/10"
+                className="px-2 py-1 rounded-[var(--radius-md)] bg-black/5 backdrop-blur-sm transition-colors duration-micro hover:bg-black/10"
               >
                 #{tag}
               </span>

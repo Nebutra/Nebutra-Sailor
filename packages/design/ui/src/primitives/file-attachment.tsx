@@ -190,7 +190,7 @@ export function FileAttachment({
           className={cn(
             "absolute -right-1.5 -top-1.5 z-10 flex size-4 items-center justify-center",
             "rounded-full border border-border bg-background text-muted-foreground",
-            "opacity-0 transition-opacity duration-150 ease-out",
+            "opacity-0 transition-opacity duration-micro ease-out",
             "group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100",
             "hover:text-foreground active:scale-[0.97]",
           )}

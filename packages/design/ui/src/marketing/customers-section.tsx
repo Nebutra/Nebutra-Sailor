@@ -84,7 +84,7 @@ export function CustomersSection({
         >
           <Link
             href={linkHref}
-            className="block text-sm text-foreground duration-150 hover:opacity-75 rounded-[var(--radius-sm)]"
+            className="block text-sm text-foreground duration-micro hover:opacity-75 rounded-[var(--radius-sm)]"
           >
             <span>{linkText}</span>
             <ChevronRight className="ml-1 inline-block size-3" aria-hidden="true" />

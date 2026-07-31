@@ -1,5 +1,5 @@
 import { normalizeBrandPackage } from "./normalize";
-import type { BrandPackage, ButtonDefaultStyle } from "./types";
+import type { BrandPackage, BrandSpacing, ButtonDefaultStyle } from "./types";
 
 const BUTTON_STYLES = new Set<ButtonDefaultStyle>(["solid", "outline", "gradient-stroke"]);
 
@@ -116,6 +116,32 @@ export function validateBrandPackage(brand: unknown): ValidationResult {
     if (ramp.length > 1 && ramp.some((v, i) => i > 0 && v < (ramp[i - 1] ?? v))) {
       warnings.push(
         "motion durations are not ascending — micro should be the shortest and cinematic the longest",
+      );
+    }
+  }
+
+  if (b.spacing) {
+    // Values are full CSS lengths, and the emitter writes them verbatim into a
+    // custom property — a bare number ("16") is a syntactically valid
+    // declaration that Tailwind's spacing utilities then read as unitless and
+    // silently treat as 0, so the language quietly loses that step rather than
+    // erroring.
+    const UNIT = /^-?\d*\.?\d+(rem|em|px|%|vh|vw|ch)$/;
+    const order: Array<[keyof BrandSpacing, number]> = [];
+    for (const key of ["xs", "sm", "md", "lg", "xl", "2xl"] as const) {
+      const value = b.spacing[key];
+      if (value == null) continue;
+      if (typeof value !== "string" || !UNIT.test(value.trim())) {
+        errors.push(
+          `spacing.${key} must be a CSS length with a unit (e.g. "1rem"), got ${JSON.stringify(value)}`,
+        );
+        continue;
+      }
+      order.push([key, Number.parseFloat(value)]);
+    }
+    if (order.length > 1 && order.some(([, v], i) => i > 0 && v < (order[i - 1]?.[1] ?? v))) {
+      warnings.push(
+        "spacing steps are not ascending — xs should be the smallest and 2xl the largest",
       );
     }
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Image as ImageIcon, PaperAirplane as Send, Sparkles } from "@nebutra/icons";
-import { motion, useReducedMotion } from "@/shared/motion";
+import { AnimateIn } from "../../AnimateIn";
 
 const convos = [
   { title: "Cybernetic landscape", time: "2m ago" },
@@ -19,14 +19,10 @@ const messages = [
 ];
 
 export function MultimodalMockup() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
-      <motion.div
-        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
-        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
+      <AnimateIn
+        preset="fadeUp"
         className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}
@@ -94,7 +90,7 @@ export function MultimodalMockup() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </AnimateIn>
     </div>
   );
 }

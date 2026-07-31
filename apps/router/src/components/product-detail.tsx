@@ -2,6 +2,14 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { BookOpen, Copy } from "@nebutra/icons";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { AuthActions } from "@/components/auth-actions";
@@ -341,40 +349,61 @@ export function ProductDetail({
               </h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] text-left text-[13px]">
-                <thead className="bg-[var(--neutral-2)]/80 text-[12px] text-[var(--neutral-10)]">
-                  <tr>
-                    <th className="px-5 py-3 font-medium md:px-6">API描述</th>
-                    <th className="px-3 py-3 font-medium">接口地址</th>
-                    <th className="px-3 py-3 font-medium">方法</th>
-                    <th className="px-3 py-3 font-medium">稳定性</th>
-                    <th className="px-5 py-3 font-medium md:px-6">参数</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <Table bare className="w-full min-w-[640px] text-[13px]">
+                <TableHeader>
+                  <TableRow className="bg-[var(--neutral-2)]/80 text-[12px] text-[var(--neutral-10)]">
+                    <TableHead alignment="start" className="px-5 font-medium md:px-6">
+                      API描述
+                    </TableHead>
+                    <TableHead alignment="start" className="px-3 font-medium">
+                      接口地址
+                    </TableHead>
+                    <TableHead alignment="start" className="px-3 font-medium">
+                      方法
+                    </TableHead>
+                    <TableHead alignment="start" className="px-3 font-medium">
+                      稳定性
+                    </TableHead>
+                    <TableHead alignment="start" className="px-5 font-medium md:px-6">
+                      参数
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody bordered>
                   {apis.map((a) => (
-                    <tr key={a.name} className="border-t border-[var(--neutral-5)]">
-                      <td className="px-5 py-3.5 font-medium text-[var(--neutral-12)] md:px-6">
+                    <TableRow key={a.name}>
+                      <TableCell
+                        alignment="start"
+                        className="px-5 py-3.5 font-medium text-[var(--neutral-12)] md:px-6"
+                      >
                         {a.name}
-                      </td>
-                      <td className="max-w-[280px] truncate px-3 py-3.5 font-mono text-[12px] text-[var(--neutral-11)]">
+                      </TableCell>
+                      <TableCell
+                        alignment="start"
+                        className="max-w-[280px] truncate px-3 py-3.5 font-mono text-[12px] text-[var(--neutral-11)]"
+                      >
                         {a.path}
-                      </td>
-                      <td className="px-3 py-3.5">
+                      </TableCell>
+                      <TableCell alignment="start" className="px-3 py-3.5">
                         <span className="rounded-md bg-[var(--neutral-3)] px-1.5 py-0.5 text-[11px] font-semibold">
                           {a.method}
                         </span>
-                      </td>
-                      <td className="px-3 py-3.5 text-[var(--status-success)]">{a.stability}</td>
-                      <td className="px-5 py-3.5 md:px-6">
+                      </TableCell>
+                      <TableCell
+                        alignment="start"
+                        className="px-3 py-3.5 text-[var(--status-success)]"
+                      >
+                        {a.stability}
+                      </TableCell>
+                      <TableCell alignment="start" className="px-5 py-3.5 md:px-6">
                         <Link href="/docs" className="text-[var(--blue-11)] hover:underline">
                           查看详情
                         </Link>
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
             </div>
           </article>
 
@@ -383,32 +412,58 @@ export function ProductDetail({
               <h2 className="text-[16px] font-semibold text-[var(--neutral-12)]">API价格表</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[560px] text-left text-[13px]">
-                <thead className="bg-[var(--neutral-2)]/80 text-[12px] text-[var(--neutral-10)]">
-                  <tr>
-                    <th className="px-5 py-3 font-medium md:px-6">模型</th>
-                    <th className="px-3 py-3 font-medium">上下文</th>
-                    <th className="px-3 py-3 font-medium">输入</th>
-                    <th className="px-3 py-3 font-medium">输出</th>
-                    <th className="px-5 py-3 font-medium md:px-6">说明</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-[var(--neutral-5)]">
-                    <td className="px-5 py-3.5 font-mono font-medium text-[var(--neutral-12)] md:px-6">
+              <Table bare className="w-full min-w-[560px] text-[13px]">
+                <TableHeader>
+                  <TableRow className="bg-[var(--neutral-2)]/80 text-[12px] text-[var(--neutral-10)]">
+                    <TableHead alignment="start" className="px-5 font-medium md:px-6">
+                      模型
+                    </TableHead>
+                    <TableHead alignment="start" className="px-3 font-medium">
+                      上下文
+                    </TableHead>
+                    <TableHead alignment="start" className="px-3 font-medium">
+                      输入
+                    </TableHead>
+                    <TableHead alignment="start" className="px-3 font-medium">
+                      输出
+                    </TableHead>
+                    <TableHead alignment="start" className="px-5 font-medium md:px-6">
+                      说明
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell
+                      alignment="start"
+                      className="px-5 py-3.5 font-mono font-medium text-[var(--neutral-12)] md:px-6"
+                    >
                       {model.publicModel}
-                    </td>
-                    <td className="px-3 py-3.5 tabular-nums">{model.context || "—"}</td>
-                    <td className="px-3 py-3.5 font-mono text-[var(--blue-11)]">
+                    </TableCell>
+                    <TableCell alignment="start" className="px-3 py-3.5 tabular-nums">
+                      {model.context || "—"}
+                    </TableCell>
+                    <TableCell
+                      alignment="start"
+                      className="px-3 py-3.5 font-mono text-[var(--blue-11)]"
+                    >
                       {formatPrice(model.inputPerMTok)}/1M
-                    </td>
-                    <td className="px-3 py-3.5 font-mono text-[var(--blue-11)]">
+                    </TableCell>
+                    <TableCell
+                      alignment="start"
+                      className="px-3 py-3.5 font-mono text-[var(--blue-11)]"
+                    >
                       {formatPrice(model.outputPerMTok)}/1M
-                    </td>
-                    <td className="px-5 py-3.5 text-[var(--neutral-10)] md:px-6">目录价 · 按量</td>
-                  </tr>
-                </tbody>
-              </table>
+                    </TableCell>
+                    <TableCell
+                      alignment="start"
+                      className="px-5 py-3.5 text-[var(--neutral-10)] md:px-6"
+                    >
+                      目录价 · 按量
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
             </div>
           </article>
 

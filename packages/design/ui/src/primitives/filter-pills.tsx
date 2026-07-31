@@ -44,7 +44,7 @@ export type FilterPillsProps = FilterPillsSingleProps | FilterPillsMultipleProps
 // ─── Style helpers ────────────────────────────────────────────────────────────
 
 const pillBaseClass =
-  "inline-flex items-center justify-center shrink-0 whitespace-nowrap rounded-full font-medium border transition-colors duration-150 cursor-pointer focus-visible:outline-none";
+  "inline-flex items-center justify-center shrink-0 whitespace-nowrap rounded-full font-medium border transition-colors duration-flow cursor-pointer focus-visible:outline-none";
 
 const pillSizeClass: Record<FilterPillsSize, string> = {
   sm: "h-8 px-3 text-xs gap-1.5",

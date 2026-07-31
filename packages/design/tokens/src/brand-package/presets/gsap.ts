@@ -75,6 +75,15 @@ export function buildGsap(ctx: CompileContext): BrandPackage {
       reveal: 400,
       cinematic: 700,
     },
+    // Room for the performance to land — more air than the product-chrome trio.
+    spacing: {
+      xs: "0.5rem",
+      sm: "0.875rem",
+      md: "1.25rem",
+      lg: "1.75rem",
+      xl: "2.5rem",
+      "2xl": "3.5rem",
+    },
     typography: {
       fontSans: `'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif`,

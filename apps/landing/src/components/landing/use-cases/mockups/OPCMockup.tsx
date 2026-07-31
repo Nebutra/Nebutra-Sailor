@@ -1,7 +1,7 @@
 "use client";
 
 import { Message as MessageSquare, MagnifyingGlass as Search, Users } from "@nebutra/icons";
-import { motion, useReducedMotion } from "@/shared/motion";
+import { AnimateIn } from "../../AnimateIn";
 
 const channels = ["# General", "# AI-Models", "# Showcase", "# Help"];
 const messages = [
@@ -33,14 +33,10 @@ const messages = [
 const members = ["Anna W.", "Carlos D.", "Priya S.", "Tom H.", "Yuki M."];
 
 export function OPCMockup() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
-      <motion.div
-        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
-        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
+      <AnimateIn
+        preset="fadeUp"
         className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}
@@ -114,7 +110,7 @@ export function OPCMockup() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </AnimateIn>
     </div>
   );
 }

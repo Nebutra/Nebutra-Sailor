@@ -245,6 +245,33 @@ export interface BrandMotion {
   cinematic?: number;
 }
 
+/**
+ * How much room a language leaves around its content.
+ *
+ * Spacing is a dimension of a language the same way motion is: Linear and
+ * Raycast sit close to the content they chrome, Notion and Vanta give it room
+ * to breathe. Before this existed, Tailwind's numeric scale (`p-4`, `gap-2`)
+ * was the only spacing vocabulary in the repo, and it is a fixed arithmetic
+ * multiplier (`--spacing: 0.25rem`) shared by width, height and line-height —
+ * repointing it per brand would rescale icons and text along with padding.
+ * This is a second, narrower, opt-in scale (`gap-md`, `p-lg`, …) a component
+ * reaches for when it wants a value the current language controls, without
+ * touching the shared multiplier at all.
+ *
+ * Values are full CSS lengths (e.g. `"1rem"`), not multiples — components
+ * consume them through generated `--spacing-*` Tailwind utilities. Only the
+ * keys a language declares are emitted; an omitted step inherits the shared
+ * default rather than being reset to it.
+ */
+export interface BrandSpacing {
+  xs?: string;
+  sm?: string;
+  md?: string;
+  lg?: string;
+  xl?: string;
+  "2xl"?: string;
+}
+
 export interface BrandExtensions {
   /** Taxonomy / category accents (GSAP disciplines, etc.) — product chrome may ignore */
   categories?: Record<string, CssColor>;
@@ -300,6 +327,8 @@ export interface BrandPackage {
   typography: BrandTypography;
   /** How the language moves. Falls back to the shared ramp when omitted. */
   motion?: BrandMotion;
+  /** How much room the language leaves around content. Falls back to the shared scale when omitted. */
+  spacing?: BrandSpacing;
   zones?: BrandZones;
   extensions?: BrandExtensions;
 }

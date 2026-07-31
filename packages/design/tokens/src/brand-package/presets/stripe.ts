@@ -100,6 +100,15 @@ export function buildStripe(ctx: CompileContext): BrandPackage {
       reveal: 260,
       cinematic: 400,
     },
+    // Clean commerce chrome — a touch more generous than the app-shell trio.
+    spacing: {
+      xs: "0.5rem",
+      sm: "0.75rem",
+      md: "1.125rem",
+      lg: "1.75rem",
+      xl: "2.25rem",
+      "2xl": "3.25rem",
+    },
     typography: {
       fontSans: `'sohne-var', 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'sohne-var', 'Inter Tight', ui-sans-serif, system-ui, sans-serif`,

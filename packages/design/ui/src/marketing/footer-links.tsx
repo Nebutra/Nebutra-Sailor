@@ -93,7 +93,7 @@ export function FooterLinkColumn({ group, className }: FooterLinkColumnProps) {
             href={link.href}
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
-            className="text-muted-foreground hover:text-primary flex items-center gap-1 duration-150"
+            className="text-muted-foreground hover:text-primary flex items-center gap-1 duration-micro"
           >
             {Icon && <Icon className="h-3.5 w-3.5" />}
             <span>{link.title}</span>
@@ -166,7 +166,7 @@ export function FooterSocialLinks({ links, title = "Social", className }: Footer
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-primary block duration-150"
+            className="text-muted-foreground hover:text-primary block duration-micro"
           >
             <span className="flex items-center gap-2">
               <Icon className="h-3.5 w-3.5" />

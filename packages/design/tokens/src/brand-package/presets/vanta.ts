@@ -120,6 +120,15 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
       reveal: 380,
       cinematic: 620,
     },
+    // The most spacious of the seven — serif editorial wants the most air.
+    spacing: {
+      xs: "0.75rem",
+      sm: "1.125rem",
+      md: "1.75rem",
+      lg: "2.5rem",
+      xl: "3.5rem",
+      "2xl": "5rem",
+    },
     typography: {
       fontSans: `'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'Reckless', 'Source Serif 4', 'Lora', ui-serif, Georgia, serif`,

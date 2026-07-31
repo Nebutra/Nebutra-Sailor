@@ -122,6 +122,15 @@ export function buildNotion(ctx: CompileContext): BrandPackage {
       reveal: 280,
       cinematic: 460,
     },
+    // Editorial — a document wants margin, not chrome density.
+    spacing: {
+      xs: "0.625rem",
+      sm: "1rem",
+      md: "1.5rem",
+      lg: "2rem",
+      xl: "2.75rem",
+      "2xl": "3.75rem",
+    },
     typography: {
       fontSans: `'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif`,
       fontDisplay: `'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif`,

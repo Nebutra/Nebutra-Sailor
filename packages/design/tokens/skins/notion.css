@@ -133,6 +133,14 @@ html[data-brand="notion"] {
   --duration-cinematic: 460ms;
   --motion-duration-cinematic: 460ms;
 
+  /* Spacing */
+  --space-source-xs: 0.625rem;
+  --space-source-sm: 1rem;
+  --space-source-md: 1.5rem;
+  --space-source-lg: 2rem;
+  --space-source-xl: 2.75rem;
+  --space-source-2xl: 3.75rem;
+
   /* Zone type scales */
   --zone-product-caption-size: 12px;
   --zone-product-caption-leading: 1.33;

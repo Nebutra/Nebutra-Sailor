@@ -91,6 +91,14 @@
     "reveal": 260,
     "cinematic": 400
   },
+  "spacing": {
+    "xs": "0.5rem",
+    "sm": "0.75rem",
+    "md": "1.125rem",
+    "lg": "1.75rem",
+    "xl": "2.25rem",
+    "2xl": "3.25rem"
+  },
   "zones": {
     "product": {
       "caption": {

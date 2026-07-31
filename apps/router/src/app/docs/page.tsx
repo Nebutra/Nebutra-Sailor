@@ -1,4 +1,12 @@
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@nebutra/ui/primitives";
 import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
 import { getBaseUrlHint, getModels } from "@/lib/demo-store";
@@ -54,29 +62,37 @@ const res = await client.chat.completions.create({
       </div>
 
       <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
-        <table className="w-full text-left text-[12px]">
-          <thead>
-            <tr className="border-b border-[var(--neutral-6)] bg-[var(--neutral-2)]/50 text-[11px] text-[var(--neutral-10)]">
-              <th className="px-3 py-1.5 font-medium">Method</th>
-              <th className="px-3 py-1.5 font-medium">Path</th>
-              <th className="px-3 py-1.5 font-medium">说明</th>
-            </tr>
-          </thead>
-          <tbody className="font-mono text-[11px]">
-            <tr className="border-b border-[var(--neutral-6)]">
-              <td className="px-3 py-1.5">GET</td>
-              <td className="px-3 py-1.5">{base}/models</td>
-              <td className="px-3 py-1.5 font-sans text-[var(--neutral-11)]">公开模型列表</td>
-            </tr>
-            <tr>
-              <td className="px-3 py-1.5">POST</td>
-              <td className="px-3 py-1.5">{base}/chat/completions</td>
-              <td className="px-3 py-1.5 font-sans text-[var(--neutral-11)]">
+        <Table bare className="w-full text-[12px]">
+          <TableHeader>
+            <TableRow className="bg-[var(--neutral-2)]/50 text-[11px] text-[var(--neutral-10)]">
+              <TableHead alignment="start" className="font-medium">
+                Method
+              </TableHead>
+              <TableHead alignment="start" className="font-medium">
+                Path
+              </TableHead>
+              <TableHead alignment="start" className="font-medium">
+                说明
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody bordered className="font-mono text-[11px]">
+            <TableRow>
+              <TableCell alignment="start">GET</TableCell>
+              <TableCell alignment="start">{base}/models</TableCell>
+              <TableCell alignment="start" className="font-sans text-[var(--neutral-11)]">
+                公开模型列表
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell alignment="start">POST</TableCell>
+              <TableCell alignment="start">{base}/chat/completions</TableCell>
+              <TableCell alignment="start" className="font-sans text-[var(--neutral-11)]">
                 对话补全（流式/非流）
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
     </PageFrame>
   );

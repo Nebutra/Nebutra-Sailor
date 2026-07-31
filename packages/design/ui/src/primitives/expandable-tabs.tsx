@@ -91,7 +91,7 @@ export function ExpandableTabs({
         const Icon = tab.icon;
         const isSelected = selected === index;
         const tabClassName = cn(
-          "relative rounded-[var(--radius-xl)] py-2 text-sm font-medium transition-colors duration-300",
+          "relative rounded-[var(--radius-xl)] py-2 text-sm font-medium transition-colors duration-flow",
           "focus-visible:outline-none",
           isSelected
             ? cn("bg-muted", activeColor)

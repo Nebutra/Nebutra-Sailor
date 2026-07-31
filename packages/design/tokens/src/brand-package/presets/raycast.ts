@@ -80,6 +80,15 @@ export function buildRaycast(ctx: CompileContext): BrandPackage {
       reveal: 220,
       cinematic: 340,
     },
+    // Command-palette density — compact, but not as tight as Linear.
+    spacing: {
+      xs: "0.375rem",
+      sm: "0.5rem",
+      md: "0.75rem",
+      lg: "1rem",
+      xl: "1.375rem",
+      "2xl": "2rem",
+    },
     typography: {
       fontSans: `'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif`,
       fontMono: `'Geist Mono', 'GeistMono', ui-monospace, Menlo, monospace`,

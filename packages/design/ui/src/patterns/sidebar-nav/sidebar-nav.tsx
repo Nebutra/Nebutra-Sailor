@@ -375,7 +375,7 @@ export function SidebarNav({
                       {section.label}
                     </span>
                     {visibleActions ? (
-                      <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-150 group-hover/section:opacity-100 focus-within:opacity-100">
+                      <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-micro group-hover/section:opacity-100 focus-within:opacity-100">
                         {visibleActions.map((action) => {
                           const ActionIcon = action.icon;
                           const defaultButton = (

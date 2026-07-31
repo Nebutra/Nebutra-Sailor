@@ -127,6 +127,16 @@ export function buildVercel(ctx: CompileContext): BrandPackage {
       reveal: 200,
       cinematic: 300,
     },
+    // Geist's default rhythm — the middle of the seven, same figures as the
+    // shared fallback rail so a page with no language selected still matches it.
+    spacing: {
+      xs: "0.5rem",
+      sm: "0.75rem",
+      md: "1rem",
+      lg: "1.5rem",
+      xl: "2rem",
+      "2xl": "3rem",
+    },
     typography: {
       fontSans: `'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif`,
       fontMono: `'Geist Mono', ui-monospace, Menlo, monospace`,

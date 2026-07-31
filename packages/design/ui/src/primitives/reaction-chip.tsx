@@ -82,7 +82,7 @@ export function ReactionChip({
         const isActive = selected === em;
         const btnClassName = cn(
           "rounded-full p-1 text-base leading-none",
-          "transition-transform duration-150 ease-out",
+          "transition-transform duration-micro ease-out",
           "hover:scale-110 focus-visible:scale-110 focus-visible:outline-none",
           isActive && "bg-muted ring-1 ring-border dark:bg-muted/70",
         );
@@ -141,7 +141,7 @@ export function ReactionBadge({ emoji, count, bump = false, className }: Reactio
       className={cn(
         "inline-flex items-center gap-1 rounded-full",
         "bg-muted px-2 py-0.5 text-xs text-foreground/80 ring-1 ring-border",
-        "transition-transform duration-200 ease-out",
+        "transition-transform duration-micro ease-out",
         bump ? "scale-110" : "scale-100",
         className,
       )}
@@ -235,7 +235,7 @@ export function MessageWithReactions({
         className={cn(
           "pointer-events-none absolute -top-3 right-0 z-10",
           "translate-y-1 opacity-0",
-          "transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-200 ease-out",
+          "transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-micro ease-out",
           "group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100",
           "focus-within:pointer-events-auto focus-within:translate-y-0 focus-within:opacity-100",
         )}

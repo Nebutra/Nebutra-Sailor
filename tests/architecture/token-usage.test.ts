@@ -227,6 +227,12 @@ describe("Property 3d: Every switchable dimension is switchable", () => {
     ["--duration-flow", "--motion-duration-flow"],
     ["--duration-reveal", "--motion-duration-reveal"],
     ["--duration-cinematic", "--motion-duration-cinematic"],
+    ["--spacing-xs", "--space-source-xs"],
+    ["--spacing-sm", "--space-source-sm"],
+    ["--spacing-md", "--space-source-md"],
+    ["--spacing-lg", "--space-source-lg"],
+    ["--spacing-xl", "--space-source-xl"],
+    ["--spacing-2xl", "--space-source-2xl"],
   ] as const;
 
   it.each(INDIRECT)("@theme %s points at %s rather than a literal", (utility, source) => {
@@ -235,7 +241,7 @@ describe("Property 3d: Every switchable dimension is switchable", () => {
     expect(declaration?.[1]?.trim()).toBe(`var(${source})`);
   });
 
-  it("declares a runtime source for every indirected motion token", () => {
+  it("declares a runtime source for every indirected motion/spacing token", () => {
     const missing = INDIRECT.map(([, source]) => source).filter(
       (source) => !new RegExp(`${source}:\\s*[^;]+;`).test(TOKENS_CSS),
     );
@@ -255,6 +261,22 @@ describe("Property 3d: Every switchable dimension is switchable", () => {
     );
     // Not all-identical: if every language shipped the same timing, the tokens
     // would exist and still leave motion out of what a brand switch changes.
+    expect(new Set(perBrand.values()).size).toBeGreaterThan(1);
+  });
+
+  it("gives each built-in language its own spacing, not just its own colours", () => {
+    const perBrand = new Map<string, string>();
+    for (const [, id, body] of SKINS_CSS.matchAll(
+      /html\[data-brand="([a-z]+)"\][^{]*\{([\s\S]*?)\n\}/g,
+    ) as unknown as Array<[string, string, string]>) {
+      const md = /--space-source-md:\s*([^;]+);/.exec(body)?.[1];
+      if (md && !perBrand.has(id)) perBrand.set(id, md.trim());
+    }
+    expect(perBrand.size, "no language declares spacing — the dimension is inert").toBeGreaterThan(
+      0,
+    );
+    // Not all-identical: if every language shipped the same spacing, the tokens
+    // would exist and still leave it out of what a brand switch changes.
     expect(new Set(perBrand.values()).size).toBeGreaterThan(1);
   });
 });

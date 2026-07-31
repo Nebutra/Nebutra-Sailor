@@ -138,6 +138,14 @@ html[data-brand="gsap"] {
   --duration-cinematic: 700ms;
   --motion-duration-cinematic: 700ms;
 
+  /* Spacing */
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.875rem;
+  --space-source-md: 1.25rem;
+  --space-source-lg: 1.75rem;
+  --space-source-xl: 2.5rem;
+  --space-source-2xl: 3.5rem;
+
   /* Zone type scales */
   --zone-product-caption-size: 14px;
   --zone-product-caption-leading: 1.4;

@@ -140,6 +140,14 @@ html[data-brand="vanta"] {
   --duration-cinematic: 620ms;
   --motion-duration-cinematic: 620ms;
 
+  /* Spacing */
+  --space-source-xs: 0.75rem;
+  --space-source-sm: 1.125rem;
+  --space-source-md: 1.75rem;
+  --space-source-lg: 2.5rem;
+  --space-source-xl: 3.5rem;
+  --space-source-2xl: 5rem;
+
   /* Zone type scales */
   --zone-product-caption-size: 12px;
   --zone-product-caption-leading: 1.5;

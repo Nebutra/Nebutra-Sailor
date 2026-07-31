@@ -1,3 +1,11 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { COMPARISON_GROUPS, type ComparisonCell, PLAN_IDS } from "@/lib/landing/pricing-features";
 
@@ -49,35 +57,36 @@ export function PricingComparisonTable() {
         </div>
 
         <div className="mt-16 overflow-x-auto rounded-[var(--radius-2xl)] border border-border bg-background">
-          <table
+          <Table
+            bare
             aria-label={t("ariaTable")}
-            className="w-full min-w-[640px] border-collapse text-left text-sm"
+            className="w-full min-w-[640px] text-left text-sm"
           >
-            <thead className="sticky top-0 z-10 bg-muted">
-              <tr>
-                <th
-                  scope="col"
-                  className="w-1/3 px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground"
+            <TableHeader className="sticky top-0 z-10 bg-muted">
+              <TableRow>
+                <TableHead
+                  alignment="start"
+                  className="w-1/3 text-xs font-bold uppercase tracking-wider text-muted-foreground"
                 >
                   &nbsp;
-                </th>
+                </TableHead>
                 {PLAN_IDS.map((plan) => (
-                  <th
+                  <TableHead
                     key={plan}
-                    scope="col"
-                    className="px-6 py-4 text-center text-sm font-bold text-foreground"
+                    alignment="center"
+                    className="text-sm font-bold text-foreground"
                   >
                     {t(`plan.${plan}`)}
-                  </th>
+                  </TableHead>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {COMPARISON_GROUPS.map((group) => (
                 <GroupBlock key={group.id} group={group} t={t} plans={PLAN_IDS} />
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </section>
@@ -95,26 +104,27 @@ interface GroupBlockProps {
 function GroupBlock({ group, plans, t }: GroupBlockProps) {
   return (
     <>
-      <tr className="bg-muted/60">
-        <th
+      <TableRow className="bg-muted/60">
+        <TableHead
           scope="colgroup"
           colSpan={plans.length + 1}
-          className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]"
+          alignment="start"
+          className="py-3 text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]"
         >
           {t(`feature.${group.id}.label`)}
-        </th>
-      </tr>
+        </TableHead>
+      </TableRow>
       {group.rows.map((row) => (
-        <tr key={row.id} className="border-t border-border hover:bg-muted/40">
-          <th scope="row" className="px-6 py-4 text-left text-sm font-medium text-foreground">
+        <TableRow key={row.id} className="border-t border-border hover:bg-muted/40">
+          <TableHead scope="row" alignment="start" className="text-sm font-medium text-foreground">
             {t(`feature.${group.id}.${row.id}`)}
-          </th>
+          </TableHead>
           {plans.map((plan) => (
-            <td key={plan} className="px-6 py-4 text-center text-sm text-muted-foreground">
+            <TableCell key={plan} alignment="center" className="text-sm text-muted-foreground">
               <CellValue value={row.values[plan]} t={t} />
-            </td>
+            </TableCell>
           ))}
-        </tr>
+        </TableRow>
       ))}
     </>
   );

@@ -123,6 +123,14 @@ html[data-brand="stripe"] {
   --duration-cinematic: 400ms;
   --motion-duration-cinematic: 400ms;
 
+  /* Spacing */
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.75rem;
+  --space-source-md: 1.125rem;
+  --space-source-lg: 1.75rem;
+  --space-source-xl: 2.25rem;
+  --space-source-2xl: 3.25rem;
+
   /* Zone type scales */
   --zone-product-caption-size: 12px;
   --zone-product-caption-leading: 1.45;

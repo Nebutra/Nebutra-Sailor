@@ -74,7 +74,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
               {/* Node dot */}
               <motion.div
                 className={cn(
-                  "w-3 h-3 rounded-full border-2 transition-colors duration-200",
+                  "w-3 h-3 rounded-full border-2 transition-colors duration-flow",
                   isActive
                     ? "bg-primary border-primary"
                     : isPast
@@ -93,7 +93,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
                   className={cn(
                     "text-xs font-medium whitespace-nowrap",
                     "opacity-0 group-hover:opacity-100",
-                    "transition-opacity duration-200 motion-reduce:transition-none",
+                    "transition-opacity duration-micro motion-reduce:transition-none",
                     isActive ? "text-foreground" : "text-muted-foreground",
                   )}
                   initial={

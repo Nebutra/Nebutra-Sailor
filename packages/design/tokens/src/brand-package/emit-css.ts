@@ -11,6 +11,7 @@ import type {
   BrandPackage,
   BrandRecipe,
   BrandSemanticColors,
+  BrandSpacing,
   BrandTypeStep,
   BrandZones,
   BrandZoneTypography,
@@ -64,6 +65,35 @@ function motionVars(motion: BrandMotion | undefined): string[] {
     lines.push(`  --motion-duration-${name}: ${value}ms;`);
   }
   return lines.length ? [``, `  /* Motion */`, ...lines] : [];
+}
+
+/**
+ * Breathing room for one language.
+ *
+ * Writes only `--space-source-*` — the runtime rail `@theme inline` points
+ * `--spacing-*` at (see static/base.css). Unlike motion, there is no second
+ * hand-written-CSS spelling to keep in sync: the only consumer today is the
+ * generated `--spacing-*` Tailwind utilities (`p-md`, `gap-lg`, …), so one
+ * rail is what is actually used — writing a second, unread spelling would
+ * just be dead weight.
+ */
+function spacingVars(spacing: BrandSpacing | undefined): string[] {
+  if (!spacing) return [];
+  const lines: string[] = [];
+  const steps: Array<[keyof BrandSpacing, string]> = [
+    ["xs", "xs"],
+    ["sm", "sm"],
+    ["md", "md"],
+    ["lg", "lg"],
+    ["xl", "xl"],
+    ["2xl", "2xl"],
+  ];
+  for (const [key, name] of steps) {
+    const value = spacing[key];
+    if (typeof value !== "string" || !value.trim()) continue;
+    lines.push(`  --space-source-${name}: ${value};`);
+  }
+  return lines.length ? [``, `  /* Spacing */`, ...lines] : [];
 }
 
 function recipeVars(recipe: BrandRecipe): string[] {
@@ -475,6 +505,7 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     `  /* Typography */`,
     ...typeLines,
     ...motionVars(b.motion),
+    ...spacingVars(b.spacing),
     ...emitZones(b.zones),
     ...(extLines.length
       ? ["", "  /* Taxonomy / decorative (not product CTA) */", ...extLines]

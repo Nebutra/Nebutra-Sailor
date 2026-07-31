@@ -882,6 +882,21 @@
   --duration-reveal: var(--motion-duration-reveal);
   --duration-cinematic: var(--motion-duration-cinematic);
 
+  /* Spacing — named breathing-room scale, additive to Tailwind's own numeric
+     scale (p-4, gap-2, ...), never a replacement for it. --spacing itself
+     (Tailwind's shared arithmetic base for width/height/line-height as well
+     as padding/gap) is intentionally untouched here — see static/base.css.
+     Indirect for the same reason as the motion rail above: pointing at the
+     runtime rail lets a Brand Package move it; a literal here could not be
+     reached by any skin. (No backticks in this block — it is inside a JS
+     template literal.) */
+  --spacing-xs: var(--space-source-xs);
+  --spacing-sm: var(--space-source-sm);
+  --spacing-md: var(--space-source-md);
+  --spacing-lg: var(--space-source-lg);
+  --spacing-xl: var(--space-source-xl);
+  --spacing-2xl: var(--space-source-2xl);
+
   /* Font family — Geist keeps Latin + numerals, self-hosted vivo Sans SC takes
      CJK, system CJK faces behind it. Order is the design decision; see the
      fontFamily $description in tokens/core.json. Mirror of those tokens — keep
@@ -930,6 +945,27 @@
   --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ─── Spacing source rail ────────────────────────────────────
+   A second, named scale — NOT Tailwind's own `--spacing` multiplier.
+   `--spacing` (0.25rem) is shared arithmetic for width, height and
+   line-height as well as padding/gap; repointing it per brand would rescale
+   icons and text along with whitespace. This rail only feeds the
+   `--spacing-xs..2xl` Tailwind utilities (see the Tailwind theme block in
+   style-dictionary.config.mjs) that a component opts into explicitly
+   (`p-md`, `gap-lg`, …) — the shared multiplier is untouched.
+   Same indirection shape as motion: an @theme entry cannot point at itself,
+   so the utility needs a source under a second name. A Brand Package
+   overrides these; nothing else should.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.75rem;
+  --space-source-md: 1rem;
+  --space-source-lg: 1.5rem;
+  --space-source-xl: 2rem;
+  --space-source-2xl: 3rem;
 }
 
 :root {

@@ -1,4 +1,124 @@
 {
+  "motionTokens": {
+    "allowlist": [
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/file-attachment-zone.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/prompt-input.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/voice-visualizer.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/components/onboarding-checklist.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/layouts/bento-grid.tsx",
+        "count": 5
+      },
+      {
+        "file": "packages/design/ui/src/marketing/Hero.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/marketing/Navbar.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/SocialProof.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/marketing/award-badge.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/cosmic-spectrum.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/marketing/cta-with-text-marquee.tsx",
+        "count": 8
+      },
+      {
+        "file": "packages/design/ui/src/marketing/customers-section.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/stagger-testimonials.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/artifact-shift-card.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/patterns/kinetic-marketing.tsx",
+        "count": 7
+      },
+      {
+        "file": "packages/design/ui/src/primitives/animated-hike-card.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/apple-liquid-glass-switcher.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/assisted-password-confirmation.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/bento-grid.tsx",
+        "count": 5
+      },
+      {
+        "file": "packages/design/ui/src/primitives/book.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/display-cards.stories.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/display-cards.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/primitives/dithering-background.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/gauge.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/globe.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/input-otp.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/interactive-frosted-glass-card.tsx",
+        "count": 5
+      },
+      {
+        "file": "packages/design/ui/src/primitives/stepper.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/tree.tsx",
+        "count": 1
+      }
+    ]
+  },
   "brandLiterals": {
     "allowlist": [
       "apps/admin/src/lib/auth.ts",
@@ -296,5 +416,9 @@
       }
     ],
     "allowlist": []
+  },
+  "inertDimensions": {
+    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green.",
+    "known": ["spacing", "zones", "controls"]
   }
 }

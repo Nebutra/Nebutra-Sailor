@@ -80,7 +80,7 @@ export const choiceboxItemVariants = cva(
   [
     "relative flex flex-1 flex-col gap-1 rounded-[var(--radius-lg)] border p-4",
     "cursor-pointer select-none",
-    "transition-colors duration-150 ease-out",
+    "transition-colors duration-micro ease-out",
     "focus-visible:outline-none",
   ].join(" "),
   {

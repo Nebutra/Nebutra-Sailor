@@ -63,7 +63,7 @@ export function NotificationMessageList({
         {messages.map((msg, i) => (
           <div
             key={i}
-            className="notification-animate-scale-up flex cursor-pointer items-start gap-3 rounded-[var(--radius-lg)] border p-3 transition duration-300 ease-in-out hover:bg-muted/50"
+            className="notification-animate-scale-up flex cursor-pointer items-start gap-3 rounded-[var(--radius-lg)] border p-3 transition duration-reveal ease-in-out hover:bg-muted/50"
             style={{ animationDelay: `${i * animationDelay}ms` }}
           >
             <div

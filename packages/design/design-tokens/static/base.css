@@ -28,6 +28,27 @@
   --motion-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* ─── Spacing source rail ────────────────────────────────────
+   A second, named scale — NOT Tailwind's own `--spacing` multiplier.
+   `--spacing` (0.25rem) is shared arithmetic for width, height and
+   line-height as well as padding/gap; repointing it per brand would rescale
+   icons and text along with whitespace. This rail only feeds the
+   `--spacing-xs..2xl` Tailwind utilities (see the Tailwind theme block in
+   style-dictionary.config.mjs) that a component opts into explicitly
+   (`p-md`, `gap-lg`, …) — the shared multiplier is untouched.
+   Same indirection shape as motion: an @theme entry cannot point at itself,
+   so the utility needs a source under a second name. A Brand Package
+   overrides these; nothing else should.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.75rem;
+  --space-source-md: 1rem;
+  --space-source-lg: 1.5rem;
+  --space-source-xl: 2rem;
+  --space-source-2xl: 3rem;
+}
+
 :root {
   --edge-faint: rgb(0 0 0 / 0.04);
   --edge-soft: rgb(0 0 0 / 0.07);
