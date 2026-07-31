@@ -334,7 +334,8 @@ export class S3UploadProvider implements UploadProvider {
  * Create S3 provider from environment variables
  */
 export function createS3Provider(): S3UploadProvider {
-  const endpoint = process.env.S3_ENDPOINT;
+  // R2 uses R2_ENDPOINT; generic S3 uses S3_ENDPOINT. Prefer explicit S3, else R2.
+  const endpoint = process.env.S3_ENDPOINT ?? process.env.R2_ENDPOINT;
   const publicUrl = process.env.S3_PUBLIC_URL ?? process.env.R2_PUBLIC_URL;
 
   const config: S3ProviderConfig = {
