@@ -92,12 +92,119 @@ export function readBearerToken(header: string | undefined | null): string | nul
 }
 
 /**
- * The client rejects an upload URL on a different host than the token endpoint,
- * so derive it from the incoming request rather than from configuration that
- * could drift out of agreement with whatever host actually served the token.
+ * Headers used to reconstruct the **client-facing** public URL behind reverse
+ * proxies (Cloudflare → origin.nebutra.com, pebble nginx → api-gateway).
  */
-export function deriveUploadUrl(requestUrl: string): string {
-  const url = new URL(requestUrl);
-  const basePath = url.pathname.replace(/\/token\/?$/, "");
-  return `${url.origin}${basePath}/upload`;
+export type PublicRequestHints = {
+  /** Full request URL as seen by the process (often internal). */
+  requestUrl: string;
+  /** First X-Forwarded-Host, or Host. */
+  forwardedHost?: string | null;
+  /** First X-Forwarded-Proto (https/http). */
+  forwardedProto?: string | null;
+  /**
+   * Original path as the browser/client requested it (e.g. `/diagnostics/token`
+   * on pebble.nebutra.com). When missing, falls back to the gateway pathname.
+   */
+  originalUri?: string | null;
+};
+
+/** Internal / alternate hosts that must never appear in client-facing URLs. */
+const HOST_ALIASES: Record<string, string> = {
+  "origin.nebutra.com": "api.nebutra.com",
+  origin: "api.nebutra.com",
+};
+
+/**
+ * Brand / legacy hosts that reverse-proxy `/diagnostics/*` → gateway
+ * `/pebble/diagnostics/*`. Client same-host checks require the public path
+ * without the `/pebble` prefix.
+ */
+const BRAND_DIAGNOSTICS_HOSTS = new Set([
+  "pebble.nebutra.com",
+  "www.pebble.nebutra.com",
+  "www.onpebble.dev",
+  "onpebble.dev",
+]);
+
+function firstHeaderValue(value: string | null | undefined): string | undefined {
+  if (!value) return undefined;
+  return value.split(",")[0]?.trim() || undefined;
+}
+
+function stripDefaultPort(host: string): string {
+  // host may include port; drop :443 / :80 for cleaner URLs
+  return host.replace(/:(443|80)$/, "");
+}
+
+/**
+ * Reconstruct the public origin + path for the token endpoint as the **client**
+ * sees it. Desktop Pebble requires:
+ * - https when the token endpoint was https
+ * - upload_url host === token endpoint host
+ * See pebble apps/desktop/.../diagnostics.rs `validate_upload_url`.
+ */
+export function resolvePublicTokenEndpoint(hints: PublicRequestHints): URL {
+  const internal = new URL(hints.requestUrl);
+
+  let host =
+    firstHeaderValue(hints.forwardedHost) || firstHeaderValue(internal.host) || internal.hostname;
+  host = stripDefaultPort(host);
+  host = HOST_ALIASES[host] ?? HOST_ALIASES[host.toLowerCase()] ?? host;
+
+  let proto =
+    firstHeaderValue(hints.forwardedProto)?.replace(/:$/, "") ||
+    internal.protocol.replace(":", "") ||
+    "https";
+
+  // Production public hosts must never advertise http — CF/nginx terminate TLS.
+  if (host.endsWith(".nebutra.com") || host.endsWith(".onpebble.dev") || host === "onpebble.dev") {
+    proto = "https";
+  }
+
+  // Prefer the path the client actually hit (brand proxy), else gateway path.
+  let pathname =
+    firstHeaderValue(hints.originalUri)?.split("?")[0] ||
+    internal.pathname ||
+    "/pebble/diagnostics/token";
+
+  // If only the gateway path is known but the public host is the brand front,
+  // strip the product namespace so same-host clients get /diagnostics/upload.
+  if (BRAND_DIAGNOSTICS_HOSTS.has(host) && pathname.startsWith("/pebble/")) {
+    pathname = pathname.slice("/pebble".length) || "/";
+  }
+
+  // Direct API host must keep /pebble prefix.
+  if (
+    (host === "api.nebutra.com" || host.endsWith(".workers.dev")) &&
+    pathname.startsWith("/diagnostics")
+  ) {
+    pathname = `/pebble${pathname}`;
+  }
+
+  if (!pathname.endsWith("/token") && !pathname.endsWith("/token/")) {
+    // Defensive: if something stripped the leaf, assume token route.
+    pathname = pathname.replace(/\/?$/, "/token");
+  }
+
+  return new URL(`${proto}://${host}${pathname.startsWith("/") ? "" : "/"}${pathname}`);
+}
+
+/**
+ * The client rejects an upload URL on a different host than the token endpoint,
+ * so derive it from the **public** request (forwarded headers), not the
+ * process-local URL (which is often http://origin.nebutra.com behind CF).
+ */
+export function deriveUploadUrl(
+  requestUrl: string,
+  hints: Omit<PublicRequestHints, "requestUrl"> = {},
+): string {
+  const tokenUrl = resolvePublicTokenEndpoint({
+    requestUrl,
+    forwardedHost: hints.forwardedHost ?? null,
+    forwardedProto: hints.forwardedProto ?? null,
+    originalUri: hints.originalUri ?? null,
+  });
+  const basePath = tokenUrl.pathname.replace(/\/token\/?$/, "");
+  return `${tokenUrl.origin}${basePath}/upload`;
 }

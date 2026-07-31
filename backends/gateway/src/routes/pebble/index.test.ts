@@ -107,10 +107,21 @@ function ndjsonBody(text: string) {
   return { bytes, length: bytes.byteLength };
 }
 
-async function issueToken(app: Awaited<ReturnType<typeof createApp>>, bytes: number) {
+async function issueToken(
+  app: Awaited<ReturnType<typeof createApp>>,
+  bytes: number,
+  extraHeaders: Record<string, string> = {},
+) {
   const response = await app.request("/pebble/diagnostics/token", {
     method: "POST",
-    headers: { "content-type": "application/json", "cf-connecting-ip": "203.0.113.7" },
+    headers: {
+      "content-type": "application/json",
+      "cf-connecting-ip": "203.0.113.7",
+      // Default: public API host (production path after CF).
+      "x-forwarded-host": "api.nebutra.com",
+      "x-forwarded-proto": "https",
+      ...extraHeaders,
+    },
     body: JSON.stringify({ bundle_submission_id: "bundle_1", bytes }),
   });
   return { response, body: (await response.json()) as Record<string, string> };
@@ -216,16 +227,36 @@ describe("pebble support intake", () => {
   });
 
   describe("POST /pebble/diagnostics/token", () => {
-    it("returns an upload URL on the same host as the token endpoint", async () => {
+    it("returns an https upload URL on the public API host", async () => {
       const app = await createApp();
       const { response, body } = await issueToken(app, 1024);
 
       expect(response.status).toBe(200);
       expect(body["max_bytes"]).toBe(4 * 1024 * 1024);
+      expect(String(body["upload_url"])).toBe("https://api.nebutra.com/pebble/diagnostics/upload");
+    });
 
-      const tokenHost = new URL("http://localhost/pebble/diagnostics/token").host;
-      expect(new URL(String(body["upload_url"])).host).toBe(tokenHost);
-      expect(String(body["upload_url"])).toMatch(/\/pebble\/diagnostics\/upload$/);
+    it("returns brand-host path without /pebble when X-Original-URI is brand", async () => {
+      const app = await createApp();
+      const { response, body } = await issueToken(app, 1024, {
+        "x-forwarded-host": "pebble.nebutra.com",
+        "x-forwarded-proto": "https",
+        "x-original-uri": "/diagnostics/token",
+      });
+
+      expect(response.status).toBe(200);
+      expect(String(body["upload_url"])).toBe("https://pebble.nebutra.com/diagnostics/upload");
+    });
+
+    it("maps origin.nebutra.com to api.nebutra.com", async () => {
+      const app = await createApp();
+      const { response, body } = await issueToken(app, 1024, {
+        "x-forwarded-host": "origin.nebutra.com",
+        "x-forwarded-proto": "http",
+      });
+
+      expect(response.status).toBe(200);
+      expect(String(body["upload_url"])).toBe("https://api.nebutra.com/pebble/diagnostics/upload");
     });
 
     it("refuses a byte count above the cap", async () => {

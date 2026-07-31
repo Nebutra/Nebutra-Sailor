@@ -140,7 +140,14 @@ diagnosticsRoutes.openapi(tokenRoute, async (c) => {
   return c.json(
     {
       token,
-      upload_url: deriveUploadUrl(c.req.url),
+      // Reconstruct client-facing host/proto/path (see deriveUploadUrl docs).
+      // Without this, CF→origin and pebble nginx rewrite Host/path break the
+      // desktop same-host + https check in validate_upload_url.
+      upload_url: deriveUploadUrl(c.req.url, {
+        forwardedHost: c.req.header("x-forwarded-host") ?? c.req.header("host") ?? null,
+        forwardedProto: c.req.header("x-forwarded-proto") ?? null,
+        originalUri: c.req.header("x-original-uri") ?? c.req.header("x-forwarded-uri") ?? null,
+      }),
       max_bytes: DIAGNOSTIC_MAX_BYTES,
     },
     200,

@@ -20,6 +20,7 @@ export const feedbackRoutes = new OpenAPIHono();
 
 feedbackRoutes.use("*", createIpRateLimit(10));
 
+/** Canonical shape after `normalizeFeedbackBody`. */
 const FeedbackRequestSchema = z.object({
   submission_id: z.string().min(1).max(191),
   kind: z.enum(["feedback", "crash"]).default("feedback"),
@@ -29,6 +30,30 @@ const FeedbackRequestSchema = z.object({
   platform: z.string().max(32).optional(),
   locale: z.string().max(35).optional(),
 });
+
+/**
+ * OpenAPI request schema must accept legacy field names; strict validation runs
+ * only after `normalizeFeedbackBody` in the handler. If we required
+ * `submission_id`/`message` here, shipped desktop clients would get 400 before
+ * normalize could synthesize them.
+ */
+const FeedbackOpenApiBodySchema = z
+  .object({
+    submission_id: z.string().max(191).optional(),
+    kind: z.string().optional(),
+    message: z.string().optional(),
+    contact_email: z.string().optional(),
+    app_version: z.string().optional(),
+    platform: z.string().optional(),
+    locale: z.string().optional(),
+    // Legacy aliases from Tauri clients
+    feedback: z.string().optional(),
+    submission_type: z.string().optional(),
+    github_email: z.string().optional(),
+    os_release: z.string().optional(),
+    arch: z.string().optional(),
+  })
+  .passthrough();
 
 const FeedbackResponseSchema = z.object({
   submission_id: z.string(),
@@ -96,8 +121,8 @@ const submitRoute = createRoute({
   request: {
     body: {
       content: {
-        "application/json": { schema: FeedbackRequestSchema },
-        "multipart/form-data": { schema: FeedbackRequestSchema },
+        "application/json": { schema: FeedbackOpenApiBodySchema },
+        "multipart/form-data": { schema: FeedbackOpenApiBodySchema },
       },
     },
   },
