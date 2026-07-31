@@ -41,12 +41,16 @@ export default async function ForgeHomePage() {
       <section className="relative w-full overflow-hidden border-b border-[var(--neutral-6)]">
         <AuroraBackground variant="subtle" position="top" intensity={0.28} />
         <PageFrame className="relative z-10 py-16 text-center md:py-24 lg:py-28">
-          <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
-            <p className="text-xs font-medium tracking-[0.12em] text-[var(--neutral-11)] uppercase">
+          {/*
+            w-full on the column + text blocks: CJK body styles must never
+            shrink flex items to min-content (one glyph) under items-center.
+          */}
+          <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-6">
+            <p className="w-full text-xs font-medium tracking-[0.12em] text-[var(--neutral-11)] uppercase">
               {t("eyebrow")}
             </p>
             <h1
-              className="text-4xl font-semibold text-balance text-[var(--neutral-12)] md:text-5xl lg:text-6xl"
+              className="w-full text-4xl font-semibold text-balance text-[var(--neutral-12)] md:text-5xl lg:text-6xl"
               style={{
                 letterSpacing: "var(--tracking-display, -0.02em)",
                 lineHeight: "var(--leading-display, 1.1)",
@@ -54,10 +58,10 @@ export default async function ForgeHomePage() {
             >
               {t("title")}
             </h1>
-            <p className="max-w-xl text-base leading-relaxed text-[var(--neutral-11)] md:text-[17px] md:leading-relaxed">
+            <p className="w-full max-w-xl text-base leading-relaxed text-[var(--neutral-11)] md:text-[17px] md:leading-relaxed">
               {t("subtitle")}
             </p>
-            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-[var(--neutral-10)]">
+            <p className="flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-[var(--neutral-10)]">
               <span className="tabular-nums">{t("toolCount", { count: hub.tools.length })}</span>
               <span
                 className="hidden h-1 w-1 rounded-full bg-[var(--neutral-7)] sm:inline-block"

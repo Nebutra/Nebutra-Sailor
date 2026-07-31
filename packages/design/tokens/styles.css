@@ -1607,8 +1607,10 @@ html {
 @utility font-cn {
   font-family: var(--font-cn);
   line-height: 1.75;
-  word-break: break-all;
+  /* Do NOT use word-break: break-all here — it collapses flex min-content
+     to a single glyph, so flex-col + items-center heroes render one char/line. */
   overflow-wrap: break-word;
+  word-break: normal;
 }
 
 /* ─── CJK Auto-Activation via :lang() ───────────────────────
@@ -1618,8 +1620,9 @@ html {
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
   font-family: var(--font-cn);
   line-height: 1.75;
-  word-break: break-all;
+  /* Same rule as .font-cn: break-all + flex items-center ⇒ vertical CJK strip. */
   overflow-wrap: break-word;
+  word-break: normal;
 }
 
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {
