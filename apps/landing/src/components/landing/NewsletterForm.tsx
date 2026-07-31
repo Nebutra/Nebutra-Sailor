@@ -85,7 +85,12 @@ export function NewsletterForm() {
         group owns the fill and the focus ring; the field goes bare inside it.
         The pill is the same shape the header's theme toggle already uses.
       */}
-      <div className="flex w-full items-center gap-1 rounded-full bg-neutral-3 p-0.5 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] sm:w-[20rem]">
+      {/*
+        --muted, not neutral-3: the footer sits on --background, and in dark mode
+        the two ramps disagree in saturation, so a neutral-3 fill reads as navy
+        against a near-neutral page.
+      */}
+      <div className="flex w-full items-center gap-1 rounded-full bg-muted p-0.5 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] sm:w-[20rem]">
         <Input
           type="email"
           size="sm"
