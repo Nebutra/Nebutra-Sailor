@@ -425,7 +425,8 @@
       "@redocly/respect-core>undici": ">=7.28.0",
       "jsdom>undici": ">=7.28.0 <8",
       "valibot": ">=1.2.0",
-      "next": "catalog:"
+      "next": "catalog:",
+      "@smithy/core": "^3.29.6"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
