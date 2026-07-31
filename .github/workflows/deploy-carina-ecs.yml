@@ -41,15 +41,12 @@ jobs:
           ref: ${{ inputs.ref || 'main' }}
           path: carina
 
-      - name: Setup Node
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: "24"
-
-      - name: Enable pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@11.13.1 --activate
+      # No Node or pnpm setup on the runner on purpose: this job only checks out
+      # two repos, opens an SSH session and builds on the ECS box. Nothing here
+      # executes node, npx or pnpm locally, so the toolchain steps installed a
+      # runtime that was never called — and calling actions/setup-node directly
+      # is what ci-harness-closure forbids, since every workflow that does need a
+      # toolchain must share one pinned setup.
 
       - name: Configure SSH
         env:
