@@ -59,8 +59,14 @@ const EXTERNAL_PREFIXES = [
  * inline. primitives/form-control.ts reads --input-focus-ring-width, which
  * primitives/input.tsx supplies through a style object.
  */
+// The `(?:\s+as\s+\w+)?\s*\]?` between the quote and the colon is what matches
+// a computed key: TypeScript rejects a plain `"--x":` in a CSSProperties
+// object, so every inline custom property in this repo is written
+// `["--x" as string]: value`. Without it the definition is invisible and the
+// property reads as undefined — which is how a component that sets its own
+// variable one line above the reference still got reported.
 const RUNTIME_DEFINITION_RE =
-  /["'`](--[a-zA-Z0-9-]+)["'`]\s*:|setProperty\(\s*["'`](--[a-zA-Z0-9-]+)["'`]|(?:^|[;{\s])(--[a-zA-Z0-9-]+)\s*:\s*[^;\n]|\[(--[a-zA-Z0-9-]+):/gm;
+  /["'`](--[a-zA-Z0-9-]+)["'`](?:\s+as\s+\w+)?\s*\]?\s*:|setProperty\(\s*["'`](--[a-zA-Z0-9-]+)["'`]|(?:^|[;{\s])(--[a-zA-Z0-9-]+)\s*:\s*[^;\n]|\[(--[a-zA-Z0-9-]+):/gm;
 
 /**
  * Bare references only. `var(--x, fallback)` degrades gracefully and is not a
@@ -115,7 +121,45 @@ const codeFiles = sh(
   .split("\n")
   .filter(Boolean);
 
-const isExternal = (name) => EXTERNAL_PREFIXES.some((p) => name.startsWith(p));
+/**
+ * Custom properties @base-ui/react sets on its own elements at runtime —
+ * `--active-tab-left` on a Tabs indicator, `--available-height` on a positioner.
+ * They carry no shared prefix, so EXTERNAL_PREFIXES cannot express them.
+ *
+ * Read from the installed package's *CssVars modules rather than listed by
+ * hand: the library owns these names, so an upgrade that renames one should
+ * move this set with it instead of leaving a stale entry that silently keeps a
+ * real defect allowlisted.
+ */
+function baseUiRuntimeVars() {
+  const files = sh(
+    "find node_modules/.pnpm -path '*@base-ui/react/*CssVars.js' -not -path '*/esm/*' 2>/dev/null",
+  )
+    .split("\n")
+    .filter(Boolean);
+  const names = new Set();
+  for (const f of files) {
+    for (const m of readFileSync(f, "utf-8").matchAll(/["'`](--[a-z0-9-]+)["'`]/g)) {
+      names.add(m[1]);
+    }
+  }
+  return names;
+}
+
+const BASE_UI_VARS = baseUiRuntimeVars();
+
+/**
+ * Comments are prose, not styling. `var(--xxx)` inside a doc block that
+ * explains what the scanner looks for is not a reference to anything.
+ */
+function blankComments(src) {
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p) => p + " ".repeat(m.length - p.length));
+}
+
+const isExternal = (name) =>
+  EXTERNAL_PREFIXES.some((p) => name.startsWith(p)) || BASE_UI_VARS.has(name);
 
 // Properties supplied at runtime by component code, anywhere in the tree.
 const runtimeDefined = new Set();
@@ -132,13 +176,22 @@ for (const file of codeFiles) {
 const violations = [];
 
 for (const [file, src] of sources) {
-  src.split("\n").forEach((line, i) => {
-    for (const m of line.matchAll(REFERENCE_RE)) {
-      const name = m[1];
-      if (isExternal(name) || defined.has(name) || runtimeDefined.has(name)) continue;
-      violations.push({ file, line: i + 1, name, text: line.trim().slice(0, 160) });
-    }
-  });
+  const original = src.split("\n");
+  // Scan the comment-blanked copy, but report the line the author wrote.
+  blankComments(src)
+    .split("\n")
+    .forEach((line, i) => {
+      for (const m of line.matchAll(REFERENCE_RE)) {
+        const name = m[1];
+        if (isExternal(name) || defined.has(name) || runtimeDefined.has(name)) continue;
+        violations.push({
+          file,
+          line: i + 1,
+          name,
+          text: (original[i] ?? line).trim().slice(0, 160),
+        });
+      }
+    });
 }
 
 if (violations.length === 0) {

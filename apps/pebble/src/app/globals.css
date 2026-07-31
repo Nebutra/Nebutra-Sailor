@@ -11,10 +11,16 @@
   --ink-muted: #5c5a56;
   --paper: #fbf8f4;
   --surface: rgba(255, 255, 255, 0.72);
-  --border: rgba(45, 48, 51, 0.1);
+  /* Named for this palette rather than --border, which is a semantic token
+     elsewhere in the monorepo and holds bare HSL channels there. Two meanings
+     under one name is a trap for whoever first imports @nebutra/tokens here:
+     every `1px solid var(--border)` would silently stop painting, because a
+     channel triple in a colour slot voids the whole declaration. */
+  --hairline: rgba(45, 48, 51, 0.1);
   --shadow: 0 24px 60px -36px rgba(45, 48, 51, 0.28);
   --radius: 18px;
-  --font: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, ui-serif, serif;
+  --font:
+    "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, ui-serif, serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
@@ -28,9 +34,22 @@ body {
   margin: 0;
   min-height: 100%;
   background:
-    radial-gradient(900px 480px at 12% -8%, color-mix(in srgb, var(--shell) 55%, transparent), transparent 70%),
-    radial-gradient(700px 420px at 92% 8%, color-mix(in srgb, var(--tide) 28%, transparent), transparent 65%),
-    linear-gradient(180deg, var(--paper) 0%, var(--mist) 55%, color-mix(in srgb, var(--stone) 35%, var(--mist)) 100%);
+    radial-gradient(
+      900px 480px at 12% -8%,
+      color-mix(in srgb, var(--shell) 55%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      700px 420px at 92% 8%,
+      color-mix(in srgb, var(--tide) 28%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(
+      180deg,
+      var(--paper) 0%,
+      var(--mist) 55%,
+      color-mix(in srgb, var(--stone) 35%, var(--mist)) 100%
+    );
   color: var(--ink);
   font-family: var(--font-sans);
   line-height: 1.55;
@@ -90,7 +109,9 @@ a {
 .nav-links a {
   padding: 0.45rem 0.7rem;
   border-radius: 999px;
-  transition: background 140ms ease, color 140ms ease;
+  transition:
+    background 140ms ease,
+    color 140ms ease;
 }
 
 .nav-links a:hover {
@@ -188,18 +209,21 @@ main {
   min-height: 2.85rem;
   padding: 0.7rem 1.2rem;
   border-radius: 999px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--hairline);
   background: var(--surface);
   backdrop-filter: blur(10px);
   font-weight: 600;
   font-size: 0.95rem;
-  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    border-color 120ms ease;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
 }
 
 .btn:hover {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--tide) 45%, var(--border));
+  border-color: color-mix(in srgb, var(--tide) 45%, var(--hairline));
   box-shadow: var(--shadow);
 }
 
@@ -243,7 +267,7 @@ main {
   position: relative;
   border-radius: calc(var(--radius) + 6px);
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--hairline);
   box-shadow: var(--shadow);
   background: var(--stone);
   aspect-ratio: 16 / 11;
@@ -294,7 +318,7 @@ main {
 
 .card {
   padding: 1.25rem 1.2rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius);
   background: var(--surface);
   backdrop-filter: blur(10px);
@@ -342,15 +366,17 @@ main {
   align-items: center;
   gap: 1rem;
   padding: 1rem 1.15rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius);
   background: var(--surface);
   backdrop-filter: blur(10px);
-  transition: border-color 120ms ease, transform 120ms ease;
+  transition:
+    border-color 120ms ease,
+    transform 120ms ease;
 }
 
 .list a:hover {
-  border-color: color-mix(in srgb, var(--tide) 40%, var(--border));
+  border-color: color-mix(in srgb, var(--tide) 40%, var(--hairline));
   transform: translateY(-1px);
 }
 
@@ -378,7 +404,7 @@ code.inline {
   width: min(1080px, calc(100% - 2rem));
   margin: 2rem auto 2.5rem;
   padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--hairline);
   color: var(--ink-muted);
   font-size: 0.88rem;
   display: flex;
@@ -414,7 +440,7 @@ code.inline {
   top: 1rem;
   padding: 1rem;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1px solid var(--hairline);
   background: var(--surface);
   backdrop-filter: blur(10px);
 }
@@ -495,7 +521,7 @@ code.inline {
 
 .docs-article th,
 .docs-article td {
-  border: 1px solid var(--border);
+  border: 1px solid var(--hairline);
   padding: 0.55rem 0.7rem;
   text-align: left;
 }

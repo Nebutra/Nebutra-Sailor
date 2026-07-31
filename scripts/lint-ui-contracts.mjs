@@ -513,11 +513,40 @@ if (BARE_TOKENS.length === 0) {
 
 const BARE_TOKEN_SET = new Set(BARE_TOKENS);
 
+/**
+ * Names the file itself declares as something other than a channel triple.
+ *
+ * The global set is read from the shared token sheet, but a file that never
+ * imports it can own the same name with a different representation — apps/pebble
+ * declared `--border: rgba(45, 48, 51, 0.1)` in its own :root and got nine
+ * reports for borders that paint correctly. A name-only match cannot tell those
+ * apart, so resolve the declaration that is actually in scope: if this file
+ * declares the token and the value is not a bare triple, the global entry does
+ * not apply here.
+ *
+ * Deliberately conservative — it reads declarations in the file under scan, not
+ * the whole cascade. scripts/audit-css-var-types.mjs resolves the built
+ * stylesheet and is what catches the cross-file cases.
+ */
+function locallyRedeclared(source) {
+  const shadowed = new Set();
+  for (const m of source.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;{}]+);/g)) {
+    const [, name, value] = m;
+    const v = value.trim();
+    if (/^[\d.]+\s+[\d.]+%\s+[\d.]+%$/.test(v)) continue; // still a triple
+    if (/^var\(--[a-z0-9-]+\)$/.test(v)) continue; // alias — passes the triple along
+    shadowed.add(name);
+  }
+  return shadowed;
+}
+
 function checkBareChannels(file, source, lines) {
+  const shadowed = locallyRedeclared(source);
   for (const m of source.matchAll(/(hsla?\(\s*|oklch\(\s*|rgba?\(\s*)?var\((--[a-z0-9-]+)\)/g)) {
     const [, wrapper, token] = m;
     if (wrapper) continue; // wrapped in a colour function — legitimate
     if (!BARE_TOKEN_SET.has(token)) continue;
+    if (shadowed.has(token)) continue;
     const line = lineAt(source, m.index);
     if (isSuppressed(lines, line)) continue;
     const raw = lines[line - 1] ?? m[0];

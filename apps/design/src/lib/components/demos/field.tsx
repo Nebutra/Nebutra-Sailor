@@ -2,6 +2,7 @@
 
 import { Field, Input, Select, Textarea } from "@nebutra/ui/primitives";
 import * as React from "react";
+import { DEMO_EMAIL } from "@/lib/demo-fixtures";
 import {
   Aside,
   ControlButton,
@@ -49,7 +50,7 @@ export default function FieldDemo() {
             htmlFor="field-email-2"
             label="Email"
           >
-            <Input defaultValue="ada@nebutra.com" error={error} id="field-email-2" type="email" />
+            <Input defaultValue={DEMO_EMAIL} error={error} id="field-email-2" type="email" />
           </Field>
         </Stack>
       </State>

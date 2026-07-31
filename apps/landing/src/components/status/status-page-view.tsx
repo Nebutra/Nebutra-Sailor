@@ -108,7 +108,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
               </p>
             </div>
 
-            <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-[color:hsl(var(--border))] bg-background shadow-[var(--shadow-ambient-sm)]">
+            <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-[color:hsl(var(--border))] bg-background shadow-ambient-sm">
               <ul className="divide-y divide-[color:hsl(var(--border))]">
                 {snapshot.services.map((service) => (
                   <ComponentRow key={service.id} service={service} />
@@ -249,11 +249,7 @@ function StatusChrome({ checkedAt }: { checkedAt: string }) {
   return (
     <header className="border-b border-[color:hsl(var(--border))] bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-[720px] items-center justify-between gap-4 px-4 sm:px-6">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]"
-          aria-label="Nebutra home"
-        >
+        <Link href="/" className="flex items-center gap-2.5 rounded-md" aria-label="Nebutra home">
           <Logo variant="en" size={120} className="hidden sm:block dark:hidden" />
           <Logo variant="en" size={120} inverted className="hidden dark:sm:block" />
           <span className="text-sm font-semibold tracking-tight sm:hidden">Nebutra</span>
@@ -270,7 +266,6 @@ function StatusChrome({ checkedAt }: { checkedAt: string }) {
               "inline-flex h-8 items-center rounded-full border border-[color:hsl(var(--border))] px-3",
               "text-xs font-medium text-muted-foreground transition-colors",
               "hover:border-border hover:text-foreground",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]",
             )}
           >
             JSON

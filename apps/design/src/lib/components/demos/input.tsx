@@ -3,6 +3,7 @@
 import { MagnifyingGlass } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
 import * as React from "react";
+import { DEMO_APP_SUFFIX, DEMO_EMAIL, DEMO_LONG_URL } from "@/lib/demo-fixtures";
 import {
   Aside,
   AxisMatrix,
@@ -80,7 +81,7 @@ export default function InputDemo({ derived }: DemoProps) {
               error={error ? "That address is already on this team." : false}
               id="demo-error"
               label="Email"
-              defaultValue="ada@nebutra.com"
+              defaultValue={DEMO_EMAIL}
             />
           </div>
           <div className="w-64">
@@ -147,7 +148,7 @@ export default function InputDemo({ derived }: DemoProps) {
             <div className="w-56">
               <Input
                 placeholder="my-project"
-                suffix={<span className="text-xs">.nebutra.app</span>}
+                suffix={<span className="text-xs">{DEMO_APP_SUFFIX}</span>}
               />
             </div>
           </Row>
@@ -166,7 +167,7 @@ export default function InputDemo({ derived }: DemoProps) {
             description={`${LONG_LABEL}. This helper text is deliberately longer than the field.`}
             id="demo-overflow"
             label={LONG_LABEL}
-            defaultValue="https://frankfurt-eu-central-1.analytics.internal.nebutra.app/v2/ingest"
+            defaultValue={DEMO_LONG_URL}
           />
         </div>
       </State>
@@ -185,12 +186,12 @@ export default function InputDemo({ derived }: DemoProps) {
           </Specimen>
           <Specimen label="filled">
             <div className="w-56">
-              <Input defaultValue="ada@nebutra.com" />
+              <Input defaultValue={DEMO_EMAIL} />
             </div>
           </Specimen>
           <Specimen label="readOnly">
             <div className="w-56">
-              <Input defaultValue="ada@nebutra.com" readOnly />
+              <Input defaultValue={DEMO_EMAIL} readOnly />
             </div>
           </Specimen>
         </Row>

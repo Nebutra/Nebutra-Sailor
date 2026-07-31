@@ -7,6 +7,7 @@ import {
   GROUPS,
 } from "@/lib/components/registry";
 import { componentExports, storyFor, type UiExport } from "@/lib/components/ui-source";
+import { SITE_NAME } from "@/lib/site";
 
 /**
  * The scan reads `packages/design/ui/src` off disk, so it has to run where the
@@ -16,7 +17,7 @@ import { componentExports, storyFor, type UiExport } from "@/lib/components/ui-s
  */
 
 export const metadata = {
-  title: "Components — Nebutra Design",
+  title: `Components — ${SITE_NAME}`,
   description:
     "Every component in @nebutra/ui, rendered live against live tokens. Covered components link to their states; the rest are listed as gaps.",
 };

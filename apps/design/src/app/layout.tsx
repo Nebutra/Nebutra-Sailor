@@ -1,18 +1,19 @@
 import "./globals.css";
+import { brand } from "@nebutra/brand/metadata";
 import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    default: "Nebutra Design",
-    template: "%s | Nebutra Design",
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "The Nebutra design system as a product surface — live tokens, live components, generated from the source.",
+  description: `The ${brand.name} design system as a product surface — live tokens, live components, generated from the source.`,
 };
 
 const NAV = [
@@ -33,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <header className="bg-background/85 backdrop-blur">
           <div className="mx-auto flex max-w-[1400px] items-baseline gap-8 px-6 py-5 md:px-10">
             <Link className="font-semibold text-[15px] tracking-tight" href="/">
-              Nebutra Design
+              {SITE_NAME}
             </Link>
             <nav className="flex items-baseline gap-5 text-[13px] text-muted-foreground">
               {NAV.map((item) => (

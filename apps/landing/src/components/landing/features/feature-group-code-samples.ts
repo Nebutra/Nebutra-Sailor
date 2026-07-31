@@ -90,7 +90,7 @@ const posts = await prisma.post.findMany({
   background: hsl(var(--primary));
   color: var(--neutral-1);
   border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-5);
+  padding: 0.75rem 1.25rem;
 }`,
     highlightedLines: [3, 4],
   },

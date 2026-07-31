@@ -11,6 +11,7 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "@nebutra/design-tokens": "workspace:*",
     "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",

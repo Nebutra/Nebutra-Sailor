@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SITE_NAME } from "@/lib/site";
 
 const ENTRIES = [
   {
@@ -18,7 +19,7 @@ export default function HomePage() {
     <div>
       <header className="mb-12 max-w-3xl">
         <h1 className="font-semibold text-3xl text-foreground tracking-tight sm:text-4xl">
-          Nebutra Design
+          {SITE_NAME}
         </h1>
         <p className="mt-5 text-[15px] text-muted-foreground leading-relaxed">
           A verification surface, not a documentation site. It imports the real packages and renders

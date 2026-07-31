@@ -13,6 +13,7 @@ import {
   findUnion,
   storyFor,
 } from "@/lib/components/ui-source";
+import { SITE_NAME } from "@/lib/site";
 
 /**
  * No `dynamic` directive on purpose. These routes touch the filesystem (see
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!entry) return {};
 
   return {
-    title: `${entry.name} — Nebutra Design`,
+    title: `${entry.name} — ${SITE_NAME}`,
     description: entry.blurb,
   };
 }

@@ -14,6 +14,7 @@ import {
   Spinner,
 } from "@nebutra/ui/primitives";
 import * as React from "react";
+import { DEMO_EMAIL_ALT } from "@/lib/demo-fixtures";
 import { Aside, DemoPage, KeyboardPath, LONG_PARAGRAPH, Row, State } from "../demo-kit";
 
 export default function DialogDemo() {
@@ -73,7 +74,7 @@ export default function DialogDemo() {
               </DialogHeader>
               <div className="py-2">
                 <Input
-                  defaultValue="grace@nebutra.com"
+                  defaultValue={DEMO_EMAIL_ALT}
                   disabled={submitting}
                   id="dialog-owner"
                   label="New owner"

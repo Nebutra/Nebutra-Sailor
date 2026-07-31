@@ -105,8 +105,12 @@ export function UptimeBar({ days, className }: { days: UptimeDay[]; className?: 
               aria-describedby={isActive ? `${chartId}-tip` : undefined}
               title={dayLabel(day)}
               className={cn(
-                "relative min-w-0 flex-1 rounded-[1px] outline-none",
-                "focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+                "relative min-w-0 flex-1 rounded-[1px]",
+                // z-10 stays: the global focus outline sits 2px outside the
+                // segment, and these segments touch, so the focused one has to
+                // rise above its neighbours for the ring to be drawn whole.
+                // The ring itself is the global rule's job.
+                "focus-visible:z-10",
                 "motion-safe:transition-[filter] motion-safe:duration-150",
                 isActive && "z-10",
               )}
