@@ -69,6 +69,32 @@ export const BOOT_LOG_LABEL: Record<BootLogLocale, string> = {
 
 export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
   {
+    id: "macau-seventeen-thousand",
+    stamp: "1961.10",
+    sources: [
+      {
+        label: "何鴻燊,中文維基百科",
+        url: "https://zh.wikipedia.org/wiki/%E4%BD%95%E9%B4%BB%E7%87%8A",
+      },
+      {
+        label: "澳門博彩業,中文維基百科",
+        url: "https://zh.wikipedia.org/wiki/%E6%BE%B3%E9%96%80%E5%8D%9A%E5%BD%A9%E6%A5%AD",
+      },
+    ],
+    zh: {
+      tag: "投标",
+      title: "一万七千元",
+      body: "1961年10月,何鸿燊与霍英东、叶汉、叶德利合组的财团投标澳门博彩专营权,出价三百一十六万七千元,比对手多出一万七千元。",
+      coda: "这个专营权,他们垄断了四十余年。",
+    },
+    en: {
+      tag: "Tender",
+      title: "Seventeen thousand",
+      body: "In October 1961 a syndicate formed by Stanley Ho, Henry Fok, Yip Hon and Teddy Yip bid for the Macau gaming monopoly. They offered 3,167,000 patacas, seventeen thousand more than the rival bid.",
+      coda: "The monopoly that margin bought them held for more than forty years.",
+    },
+  },
+  {
     id: "lo",
     stamp: "1969.10.29",
     sources: [
