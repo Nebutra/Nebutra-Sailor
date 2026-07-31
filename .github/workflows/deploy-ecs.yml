@@ -1245,8 +1245,16 @@ jobs:
             retries=5
             [ "$name" = "pebble" ] && retries=10
             for i in $(seq 1 "$retries"); do
+              # The \n is load-bearing. curl -w emits no trailing newline, and
+              # `read` returns 1 when it reaches EOF without one — under
+              # `set -euo pipefail` that killed the whole step silently, before a
+              # single echo, in about a second. The `|| echo` fallback DOES end
+              # with a newline, so the failure happened only when curl SUCCEEDED:
+              # this smoke test broke precisely when the endpoint was healthy, and
+              # passed whenever `targets` was empty. Every deploy since 2026-07-28
+              # that named a real app has been red for this and nothing else.
               read -r code final < <(curl -sSL -o /dev/null \
-                -w "%{http_code} %{url_effective}" --max-time 15 "$url" 2>/dev/null || echo "000 -")
+                -w '%{http_code} %{url_effective}\n' --max-time 15 "$url" 2>/dev/null || echo "000 -")
               if [ "$code" = "200" ] && [ "$(host_of "$final")" = "$(host_of "$url")" ]; then
                 echo "✅ $name $url -> $code $final"; ok=1; break
               fi
