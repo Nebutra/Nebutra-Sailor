@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
-import { DOWNLOADS, GITHUB_RELEASES } from "@/lib/releases";
+import { DOWNLOAD_ROWS, GITHUB_RELEASES } from "@/lib/releases";
 
 export const metadata: Metadata = {
   title: "Download",
-  description: "Download Pebble for macOS, Windows, and Linux.",
+  description: "Download Pebble for Linux now; macOS and Windows installers follow.",
 };
-
-const rows = [
-  { label: "macOS Universal", href: DOWNLOADS.macosUniversal, badge: ".dmg" },
-  { label: "Windows x64", href: DOWNLOADS.windowsX64, badge: ".exe" },
-  { label: "Linux x64", href: DOWNLOADS.linuxX64Deb, badge: ".deb" },
-  { label: "Linux arm64", href: DOWNLOADS.linuxArm64Deb, badge: ".deb" },
-] as const;
 
 export default function DownloadPage() {
   return (
@@ -22,7 +15,8 @@ export default function DownloadPage() {
           <h1>Download Pebble</h1>
           <p className="lead">
             Installers ship from GitHub Releases — this origin never becomes the artifact authority.
-            Prefer Homebrew or AUR when you can.
+            Linux <code className="inline">.deb</code> packages are live; signed macOS and Windows
+            builds land as soon as release signing is restored.
           </p>
           <div className="actions">
             <a className="btn btn-primary" href={GITHUB_RELEASES}>
@@ -33,10 +27,13 @@ export default function DownloadPage() {
       </section>
 
       <ul className="list">
-        {rows.map((row) => (
+        {DOWNLOAD_ROWS.map((row) => (
           <li key={row.label}>
-            <a href={row.href}>
-              <span>{row.label}</span>
+            <a href={row.href} aria-disabled={!row.available ? true : undefined}>
+              <span>
+                {row.label}
+                {!row.available ? " (coming soon)" : null}
+              </span>
               <span className="badge">{row.badge}</span>
             </a>
           </li>

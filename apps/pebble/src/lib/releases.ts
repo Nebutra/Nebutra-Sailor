@@ -3,6 +3,9 @@
  * Names must match `STABLE_DIRECT_DOWNLOAD_ASSETS` in
  * pebble `config/scripts/verify-release-required-assets.mjs`
  * (desktop ships `.deb` on Linux, not AppImage).
+ *
+ * macOS / Windows installers ship once CI code-signing secrets are healthy.
+ * Until then, only Linux debs are linked as direct downloads.
  */
 export const GITHUB_RELEASES = "https://github.com/Nebutra/pebble/releases/latest";
 
@@ -13,6 +16,42 @@ export const DOWNLOADS = {
   linuxArm64Deb: `${GITHUB_RELEASES}/download/pebble-linux-aarch64.deb`,
   all: GITHUB_RELEASES,
 } as const;
+
+export type DownloadRow = {
+  label: string;
+  href: string;
+  badge: string;
+  /** When false, show as coming-soon (no broken direct asset link). */
+  available: boolean;
+};
+
+/** Rows rendered on /download — only `available` rows are direct installer links. */
+export const DOWNLOAD_ROWS: readonly DownloadRow[] = [
+  {
+    label: "Linux x64",
+    href: DOWNLOADS.linuxX64Deb,
+    badge: ".deb",
+    available: true,
+  },
+  {
+    label: "Linux arm64",
+    href: DOWNLOADS.linuxArm64Deb,
+    badge: ".deb",
+    available: true,
+  },
+  {
+    label: "macOS Universal",
+    href: GITHUB_RELEASES,
+    badge: "soon",
+    available: false,
+  },
+  {
+    label: "Windows x64",
+    href: GITHUB_RELEASES,
+    badge: "soon",
+    available: false,
+  },
+] as const;
 
 /** Prefer on-origin docs while docs.nebutra.com/pebble Worker is stale. */
 export const DOCS_BASE = "https://pebble.nebutra.com/docs";
