@@ -77,18 +77,11 @@ vi.mock("@nebutra/repositories", () => ({
   getPebbleFeedbackRepository: () => feedbackRepository,
 }));
 
-vi.mock("@nebutra/uploads", () => ({
-  getUploadProvider: async () => ({
-    createPresignedUpload: async () => ({
-      url: "https://storage.test/put",
-      method: "PUT" as const,
-      headers: {},
-      expiresAt: new Date(Date.now() + 60_000),
-    }),
-    deleteFile: async (bucket: string, key: string) => {
-      deletedObjects.push({ bucket, key });
-    },
-  }),
+vi.mock("./diagnostics-store.js", () => ({
+  putDiagnosticBundle: async () => ({ backend: "local" as const }),
+  deleteDiagnosticBundle: async (input: { bucket: string; key: string }) => {
+    deletedObjects.push({ bucket: input.bucket, key: input.key });
+  },
 }));
 
 vi.mock("@nebutra/logger", () => ({
@@ -268,9 +261,6 @@ describe("pebble support intake", () => {
 
   describe("POST /pebble/diagnostics/upload", () => {
     it("stores a bundle and returns its ticket id", async () => {
-      const fetchMock = vi
-        .spyOn(globalThis, "fetch")
-        .mockResolvedValue(new Response(null, { status: 200 }));
       const app = await createApp();
       const { bytes, length } = ndjsonBody('{"event":"startup"}\n');
       const { body: token } = await issueToken(app, length);
@@ -287,8 +277,11 @@ describe("pebble support intake", () => {
       });
 
       expect(response.status).toBe(200);
-      expect((await response.json()) as Record<string, string>).toHaveProperty("ticket_id");
-      expect(fetchMock).toHaveBeenCalledWith("https://storage.test/put", expect.anything());
+      const body = (await response.json()) as Record<string, string>;
+      expect(body).toHaveProperty("ticket_id");
+      const ticket = tickets.get(body["ticket_id"] ?? "");
+      expect(ticket?.status).toBe("STORED");
+      expect(ticket?.objectKey).toMatch(/^pebble\/diagnostics\//);
     });
 
     it("rejects an upload with no token", async () => {

@@ -75,11 +75,17 @@ export class S3UploadProvider implements UploadProvider {
     return `${id}/${target.key.split("/").pop()}`;
   }
 
+  /** Prefer an explicit full object key (contains `/`) over generating a new one. */
+  private resolveKey(target: UploadTarget): string {
+    if (target.key.includes("/")) return target.key;
+    return this.buildKey(target);
+  }
+
   /**
    * Generate presigned PUT URL for simple uploads
    */
   async createPresignedUpload(target: UploadTarget): Promise<PresignedUpload> {
-    const key = this.buildKey(target);
+    const key = this.resolveKey(target);
     const expiresIn = 3600; // 1 hour
 
     const command = new PutObjectCommand({
