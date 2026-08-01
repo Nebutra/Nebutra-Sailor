@@ -3,7 +3,7 @@ import { DOWNLOAD_ROWS, GITHUB_RELEASES } from "@/lib/releases";
 
 export const metadata: Metadata = {
   title: "Download",
-  description: "Download Pebble for Linux now; macOS and Windows installers follow.",
+  description: "Download Pebble for Linux and macOS; Windows installer follows.",
 };
 
 export default function DownloadPage() {
@@ -15,8 +15,9 @@ export default function DownloadPage() {
           <h1>Download Pebble</h1>
           <p className="lead">
             Installers ship from GitHub Releases — this origin never becomes the artifact authority.
-            Linux <code className="inline">.deb</code> packages are live; signed macOS and Windows
-            builds land as soon as release signing is restored.
+            Linux <code className="inline">.deb</code> and macOS Universal{" "}
+            <code className="inline">.dmg</code> are live. Windows setup lands once code-signing is
+            restored.
           </p>
           <div className="actions">
             <a className="btn btn-primary" href={GITHUB_RELEASES}>
@@ -41,6 +42,7 @@ export default function DownloadPage() {
       </ul>
 
       <p className="muted" style={{ marginTop: "1.5rem" }}>
+        macOS is Developer ID signed. If Gatekeeper blocks first open, right-click the app → Open.
         Package managers: <code className="inline">brew install --cask nebutra/pebble/pebble</code>
         {" · "}
         AUR <code className="inline">nebutra-pebble-bin</code>

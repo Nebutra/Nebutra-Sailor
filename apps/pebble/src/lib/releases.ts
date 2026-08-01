@@ -4,8 +4,8 @@
  * pebble `config/scripts/verify-release-required-assets.mjs`
  * (desktop ships `.deb` on Linux, not AppImage).
  *
- * macOS / Windows installers ship once CI code-signing secrets are healthy.
- * Until then, only Linux debs are linked as direct downloads.
+ * Live on v1.4.124+: Linux debs + macOS Universal DMG.
+ * Windows setup.exe waits on WINDOWS_CERTIFICATE secrets.
  */
 export const GITHUB_RELEASES = "https://github.com/Nebutra/pebble/releases/latest";
 
@@ -41,9 +41,9 @@ export const DOWNLOAD_ROWS: readonly DownloadRow[] = [
   },
   {
     label: "macOS Universal",
-    href: GITHUB_RELEASES,
-    badge: "soon",
-    available: false,
+    href: DOWNLOADS.macosUniversal,
+    badge: ".dmg",
+    available: true,
   },
   {
     label: "Windows x64",
