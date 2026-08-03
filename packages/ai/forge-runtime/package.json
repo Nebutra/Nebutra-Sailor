@@ -88,6 +88,7 @@
   "devDependencies": {
     "@nebutra/ai-providers": "workspace:*",
     "@types/csso": "^5.0.4",
+    "@types/culori": "^4.0.1",
     "@types/html-minifier-terser": "^7.0.2",
     "@types/js-yaml": "^4.0.9",
     "@types/jsdom": "^28.0.3",

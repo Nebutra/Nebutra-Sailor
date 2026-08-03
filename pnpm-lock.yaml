@@ -2593,6 +2593,9 @@ importers:
       '@types/csso':
         specifier: ^5.0.4
         version: 5.0.4
+      '@types/culori':
+        specifier: ^4.0.1
+        version: 4.0.1
       '@types/html-minifier-terser':
         specifier: ^7.0.2
         version: 7.0.2
@@ -13336,6 +13339,9 @@ packages:
 
   '@types/csso@5.0.4':
     resolution: {integrity: sha512-W/FsRkm/9c04x9ON+bj+HQ0cSgNkG1LvcfuBCpkP7cpikM7+RkrNFLGtiofb++xBG6KGMUycLoDbi9/K621ZCw==}
+
+  '@types/culori@4.0.1':
+    resolution: {integrity: sha512-43M51r/22CjhbOXyGT361GZ9vncSVQ39u62x5eJdBQFviI8zWp2X5jzqg7k4M6PVgDQAClpy2bUe2dtwEgEDVQ==}
 
   '@types/d3-array@3.2.2':
     resolution: {integrity: sha512-hOLWVbm7uRza0BYXpIIW5pxfrKe0W+D5lrFiAEYR+pb6w3N2SwSMaJbXdUfSEv+dT4MfHBLtn5js0LAWaO6otw==}
@@ -32355,6 +32361,8 @@ snapshots:
   '@types/csso@5.0.4':
     dependencies:
       '@types/css-tree': 2.3.11
+
+  '@types/culori@4.0.1': {}
 
   '@types/d3-array@3.2.2': {}
 
