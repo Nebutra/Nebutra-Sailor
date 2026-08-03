@@ -805,7 +805,12 @@
       "generate": "צור PDF",
       "generating": "מייצר…",
       "download": "הורד PDF",
-      "note": "marked → HTML → הדפסת Chromium של Playwright. אם Chromium חסר, המערכת נופלת אוטומטית ל-PDF מובנה פשוט — בדוק renderEngine; פשוט אינו פריסה ברמת הדפסה."
+      "note": "marked → HTML → הדפסת Chromium של Playwright. אם Chromium חסר, המערכת נופלת אוטומטית ל-PDF מובנה פשוט — בדוק renderEngine; פשוט אינו פריסה ברמת הדפסה.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "ספור אסימונים",

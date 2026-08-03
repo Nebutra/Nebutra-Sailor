@@ -805,7 +805,12 @@
       "generate": "PDF بنائیں",
       "generating": "بن رہا ہے…",
       "download": "PDF ڈاؤن لوڈ کریں",
-      "note": "marked → HTML → Playwright Chromium پرنٹ۔ اگر Chromium غائب ہو تو خود بخود سادہ ساختہ PDF پر آ جاتا ہے — renderEngine چیک کریں؛ سادہ پرنٹ گریڈ لے آؤٹ نہیں ہے۔"
+      "note": "marked → HTML → Playwright Chromium پرنٹ۔ اگر Chromium غائب ہو تو خود بخود سادہ ساختہ PDF پر آ جاتا ہے — renderEngine چیک کریں؛ سادہ پرنٹ گریڈ لے آؤٹ نہیں ہے۔",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "ٹوکن گنیں",

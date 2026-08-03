@@ -805,7 +805,12 @@
       "generate": "Luo PDF",
       "generating": "Luodaan…",
       "download": "Lataa PDF",
-      "note": "marked → HTML → Playwright Chromium print. Jos Chromium puuttuu, käytetään automaattisesti yksinkertaistettua PDF-rakennetta — tarkista renderEngine; yksinkertainen versio ei ole painovalmis asettelu."
+      "note": "marked → HTML → Playwright Chromium print. Jos Chromium puuttuu, käytetään automaattisesti yksinkertaistettua PDF-rakennetta — tarkista renderEngine; yksinkertainen versio ei ole painovalmis asettelu.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Laske tokenit",

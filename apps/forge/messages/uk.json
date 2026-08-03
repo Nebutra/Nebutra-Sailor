@@ -805,7 +805,12 @@
       "generate": "Створити PDF",
       "generating": "Створення…",
       "download": "Завантажити PDF",
-      "note": "marked → HTML → Playwright Chromium print. Якщо Chromium відсутній, автоматично використовується простий структурований PDF — перевірте renderEngine; простий варіант не є друкованим макетом."
+      "note": "marked → HTML → Playwright Chromium print. Якщо Chromium відсутній, автоматично використовується простий структурований PDF — перевірте renderEngine; простий варіант не є друкованим макетом.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Підрахувати токени",

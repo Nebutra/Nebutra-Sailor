@@ -805,7 +805,12 @@
       "generate": "Gerar PDF",
       "generating": "Gerando…",
       "download": "Baixar PDF",
-      "note": "marked → HTML → impressão Playwright Chromium. Se o Chromium estiver ausente, usa automaticamente PDF estruturado simples — verifique renderEngine; o modo simples não é layout de impressão."
+      "note": "marked → HTML → impressão Playwright Chromium. Se o Chromium estiver ausente, usa automaticamente PDF estruturado simples — verifique renderEngine; o modo simples não é layout de impressão.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Contar tokens",

@@ -805,7 +805,12 @@
       "generate": "Générer le PDF",
       "generating": "Génération…",
       "download": "Télécharger le PDF",
-      "note": "marked → HTML → impression Chromium Playwright. Si Chromium est absent, bascule automatique vers un PDF structuré simple — vérifiez renderEngine ; le mode simple n’est pas une mise en page d’impression."
+      "note": "marked → HTML → impression Chromium Playwright. Si Chromium est absent, bascule automatique vers un PDF structuré simple — vérifiez renderEngine ; le mode simple n’est pas une mise en page d’impression.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Compter les jetons",

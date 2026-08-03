@@ -805,7 +805,12 @@
       "generate": "PDF 생성",
       "generating": "생성 중…",
       "download": "PDF 다운로드",
-      "note": "marked → HTML → Playwright Chromium 인쇄. Chromium이 없으면 간단한 구조화된 PDF로 자동 대체됩니다. renderEngine을 확인하세요. 간단한 방식은 인쇄용 레이아웃이 아닙니다."
+      "note": "marked → HTML → Playwright Chromium 인쇄. Chromium이 없으면 간단한 구조화된 PDF로 자동 대체됩니다. renderEngine을 확인하세요. 간단한 방식은 인쇄용 레이아웃이 아닙니다.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "토큰 수",

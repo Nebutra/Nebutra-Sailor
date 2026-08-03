@@ -805,6 +805,11 @@
       "generate": "Generate PDF",
       "generating": "Generating…",
       "download": "Download PDF",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned",
       "note": "Hard-correct: product path is marked → HTML → Playwright Chromium print. Missing Chromium fails closed — no silent simple fallback. Use simple only for explicit tests."
     },
     "tokenCount": {

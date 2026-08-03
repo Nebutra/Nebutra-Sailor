@@ -805,7 +805,12 @@
       "generate": "PDF তৈরি করুন",
       "generating": "জেনারেট হচ্ছে…",
       "download": "PDF ডাউনলোড করুন",
-      "note": "marked → HTML → Playwright Chromium প্রিন্ট। যদি Chromium না থাকে, স্বয়ংক্রিয়ভাবে সরল স্ট্রাকচার্ড PDF-তে ফলব্যাক হবে — renderEngine চেক করুন; সরল ভার্সন প্রিন্ট-গ্রেড লেআউট নয়।"
+      "note": "marked → HTML → Playwright Chromium প্রিন্ট। যদি Chromium না থাকে, স্বয়ংক্রিয়ভাবে সরল স্ট্রাকচার্ড PDF-তে ফলব্যাক হবে — renderEngine চেক করুন; সরল ভার্সন প্রিন্ট-গ্রেড লেআউট নয়।",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "টোকেন গণনা করুন",

@@ -805,7 +805,12 @@
       "generate": "PDF बनाएँ",
       "generating": "बना रहे हैं…",
       "download": "PDF डाउनलोड करें",
-      "note": "marked → HTML → Playwright Chromium प्रिंट। यदि Chromium अनुपलब्ध है, तो स्वचालित रूप से सरल संरचित PDF पर वापस आ जाता है — renderEngine जांचें; सरल प्रिंट-ग्रेड लेआउट नहीं है।"
+      "note": "marked → HTML → Playwright Chromium प्रिंट। यदि Chromium अनुपलब्ध है, तो स्वचालित रूप से सरल संरचित PDF पर वापस आ जाता है — renderEngine जांचें; सरल प्रिंट-ग्रेड लेआउट नहीं है।",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "टोकन गिनें",

@@ -805,7 +805,12 @@
       "generate": "تولید PDF",
       "generating": "در حال تولید…",
       "download": "دانلود PDF",
-      "note": "marked → HTML → چاپ با Playwright Chromium. اگر Chromium موجود نباشد، به‌طور خودکار به PDF ساختاریافته ساده بازمی‌گردد — موتور رندر را بررسی کنید؛ حالت ساده چیدمان چاپی ندارد."
+      "note": "marked → HTML → چاپ با Playwright Chromium. اگر Chromium موجود نباشد، به‌طور خودکار به PDF ساختاریافته ساده بازمی‌گردد — موتور رندر را بررسی کنید؛ حالت ساده چیدمان چاپی ندارد.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "شمارش توکن‌ها",

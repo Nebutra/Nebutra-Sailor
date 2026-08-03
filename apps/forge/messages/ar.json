@@ -805,7 +805,12 @@
       "generate": "إنشاء PDF",
       "generating": "جارٍ الإنشاء…",
       "download": "تحميل PDF",
-      "note": "marked → HTML → طباعة Playwright Chromium. إذا كان Chromium غير موجود، يتم التراجع تلقائيًا إلى PDF مُنظَّم بسيط — تحقق من renderEngine؛ البسيط ليس تخطيطًا بجودة الطباعة."
+      "note": "marked → HTML → طباعة Playwright Chromium. إذا كان Chromium غير موجود، يتم التراجع تلقائيًا إلى PDF مُنظَّم بسيط — تحقق من renderEngine؛ البسيط ليس تخطيطًا بجودة الطباعة.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "عد الرموز",

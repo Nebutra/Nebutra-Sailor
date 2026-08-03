@@ -805,7 +805,12 @@
       "generate": "Tengeneza PDF",
       "generating": "Inatengeneza…",
       "download": "Pakua PDF",
-      "note": "marked → HTML → Playwright Chromium print. Ikiwa Chromium haipo, inarudi moja kwa moja kwa PDF iliyoundwa kwa urahisi — angalia renderEngine; rahisi si ya kiwango cha chapisho."
+      "note": "marked → HTML → Playwright Chromium print. Ikiwa Chromium haipo, inarudi moja kwa moja kwa PDF iliyoundwa kwa urahisi — angalia renderEngine; rahisi si ya kiwango cha chapisho.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Hesabu tokens",

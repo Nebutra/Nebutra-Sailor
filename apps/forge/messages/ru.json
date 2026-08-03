@@ -805,7 +805,12 @@
       "generate": "Создать PDF",
       "generating": "Создание…",
       "download": "Скачать PDF",
-      "note": "marked → HTML → печать в Playwright Chromium. Если Chromium отсутствует, автоматически используется простой структурированный PDF — проверьте renderEngine; простой вариант не обеспечивает верстку уровня печати."
+      "note": "marked → HTML → печать в Playwright Chromium. Если Chromium отсутствует, автоматически используется простой структурированный PDF — проверьте renderEngine; простой вариант не обеспечивает верстку уровня печати.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Подсчитать токены",

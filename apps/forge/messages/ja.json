@@ -805,7 +805,12 @@
       "generate": "PDF を生成",
       "generating": "生成中…",
       "download": "PDF をダウンロード",
-      "note": "marked → HTML → Playwright Chromium 印刷。Chromium が利用できない場合、自動はシンプルな構造化 PDF にフォールバックします。renderEngine を確認してください。シンプルは印刷品質のレイアウトではありません。"
+      "note": "marked → HTML → Playwright Chromium 印刷。Chromium が利用できない場合、自動はシンプルな構造化 PDF にフォールバックします。renderEngine を確認してください。シンプルは印刷品質のレイアウトではありません。",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "トークンをカウント",

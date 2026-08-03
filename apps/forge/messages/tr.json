@@ -805,7 +805,12 @@
       "generate": "PDF oluştur",
       "generating": "Oluşturuluyor…",
       "download": "PDF İndir",
-      "note": "marked → HTML → Playwright Chromium yazdırma. Chromium eksikse, basit yapılandırılmış PDF'ye otomatik geri dönüş yapar — renderEngine değerini kontrol edin; basit mod yazdırma kalitesinde yerleşim sağlamaz."
+      "note": "marked → HTML → Playwright Chromium yazdırma. Chromium eksikse, basit yapılandırılmış PDF'ye otomatik geri dönüş yapar — renderEngine değerini kontrol edin; basit mod yazdırma kalitesinde yerleşim sağlamaz.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Token Sayısını Hesapla",

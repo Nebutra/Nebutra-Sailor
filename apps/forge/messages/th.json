@@ -805,7 +805,12 @@
       "generate": "สร้าง PDF",
       "generating": "กำลังสร้าง…",
       "download": "ดาวน์โหลด PDF",
-      "note": "marked → HTML → Playwright Chromium print หากไม่มี Chromium จะใช้ PDF แบบโครงสร้างง่ายโดยอัตโนมัติ — ตรวจสอบ renderEngine; แบบง่ายไม่ใช่เลย์เอาต์ระดับ print"
+      "note": "marked → HTML → Playwright Chromium print หากไม่มี Chromium จะใช้ PDF แบบโครงสร้างง่ายโดยอัตโนมัติ — ตรวจสอบ renderEngine; แบบง่ายไม่ใช่เลย์เอาต์ระดับ print",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "นับโทเค็น",

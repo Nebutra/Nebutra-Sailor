@@ -805,6 +805,11 @@
       "generate": "生成 PDF",
       "generating": "生成中…",
       "download": "下载 PDF",
+      "openTab": "新标签打开",
+      "preview": "PDF 预览",
+      "previewTitle": "生成的 PDF 预览",
+      "previewHint": "使用浏览器内置 PDF 查看器。部分手机浏览器仅支持下载。",
+      "noPayload": "未返回 PDF 数据",
       "note": "难而正确：产品路径为 marked → HTML → Playwright Chromium 打印。无 Chromium 时 fail closed，禁止静默回退 simple。simple 仅用于显式测试。"
     },
     "tokenCount": {

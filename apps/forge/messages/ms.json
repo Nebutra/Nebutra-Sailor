@@ -805,7 +805,12 @@
       "generate": "Jana PDF",
       "generating": "Sedang menjana…",
       "download": "Muat turun PDF",
-      "note": "marked → HTML → Playwright Chromium print. Jika Chromium tiada, auto kembali ke PDF struktur mudah — semak renderEngine; mudah bukan susun atur gred cetakan."
+      "note": "marked → HTML → Playwright Chromium print. Jika Chromium tiada, auto kembali ke PDF struktur mudah — semak renderEngine; mudah bukan susun atur gred cetakan.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Kira token",

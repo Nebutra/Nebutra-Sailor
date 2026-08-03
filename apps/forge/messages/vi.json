@@ -805,7 +805,12 @@
       "generate": "Tạo PDF",
       "generating": "Đang tạo…",
       "download": "Tải xuống PDF",
-      "note": "marked → HTML → Playwright Chromium in. Nếu thiếu Chromium, tự động chuyển sang PDF có cấu trúc đơn giản — kiểm tra renderEngine; chế độ đơn giản không đạt chuẩn in."
+      "note": "marked → HTML → Playwright Chromium in. Nếu thiếu Chromium, tự động chuyển sang PDF có cấu trúc đơn giản — kiểm tra renderEngine; chế độ đơn giản không đạt chuẩn in.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Đếm token",

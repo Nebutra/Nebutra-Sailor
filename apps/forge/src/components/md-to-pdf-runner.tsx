@@ -2,7 +2,7 @@
 
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 const SAMPLE = `# Nebutra Forge
@@ -17,6 +17,13 @@ const SAMPLE = `# Nebutra Forge
 | A | 1 |
 `;
 
+function base64ToPdfBlobUrl(base64: string): string {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+}
+
 export function MdToPdfRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
   const [markdown, setMarkdown] = useState(SAMPLE);
@@ -24,8 +31,15 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
   const [engine, setEngine] = useState<"playwright" | "simple">("playwright");
   const [meta, setMeta] = useState("");
   const [error, setError] = useState("");
-  const [downloadUrl, setDownloadUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Revoke blob URLs so large PDFs do not leak memory.
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
 
   const onFile = (file: File | null) => {
     if (!file) return;
@@ -38,8 +52,11 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
   const run = async () => {
     setLoading(true);
     setError("");
-    setDownloadUrl("");
     setMeta("");
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      setPreviewUrl("");
+    }
     try {
       const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
         method: "POST",
@@ -63,12 +80,14 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
       }
       const out = body.output;
       if (!out?.base64) {
-        setError("no pdf payload");
+        setError(t("mdToPdf.noPayload"));
         return;
       }
-      const url = `data:${out.contentType ?? "application/pdf"};base64,${out.base64}`;
-      setDownloadUrl(url);
-      setMeta(`${out.renderEngine} · ${out.bytes ?? "?"} bytes · ${out.sotaNote ?? ""}`.trim());
+      const url = base64ToPdfBlobUrl(out.base64);
+      setPreviewUrl(url);
+      setMeta(
+        `${out.renderEngine ?? "?"} · ${out.bytes ?? "?"} bytes · ${out.sotaNote ?? ""}`.trim(),
+      );
     } finally {
       setLoading(false);
     }
@@ -125,18 +144,39 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? t("mdToPdf.generating") : t("mdToPdf.generate")}
         </Button>
-        {downloadUrl ? (
-          <Button asChild variant="outline">
-            <a href={downloadUrl} download={`${title || "document"}.pdf`}>
-              {t("mdToPdf.download")}
-            </a>
-          </Button>
+        {previewUrl ? (
+          <>
+            <Button asChild variant="outline">
+              <a href={previewUrl} download={`${title || "document"}.pdf`}>
+                {t("mdToPdf.download")}
+              </a>
+            </Button>
+            <Button asChild variant="ghost">
+              <a href={previewUrl} target="_blank" rel="noopener noreferrer">
+                {t("mdToPdf.openTab")}
+              </a>
+            </Button>
+          </>
         ) : null}
       </div>
 
       <RunnerNote>{t("mdToPdf.note")}</RunnerNote>
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>{meta}</RunnerNote>
+      {meta ? <RunnerNote>{meta}</RunnerNote> : null}
+
+      {previewUrl ? (
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-[var(--neutral-12)]">{t("mdToPdf.preview")}</p>
+          <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]">
+            <iframe
+              title={t("mdToPdf.previewTitle")}
+              src={previewUrl}
+              className="h-[min(70vh,720px)] w-full bg-[var(--neutral-1)]"
+            />
+          </div>
+          <p className="text-xs text-[var(--neutral-10)]">{t("mdToPdf.previewHint")}</p>
+        </div>
+      ) : null}
     </div>
   );
 }

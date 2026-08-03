@@ -805,7 +805,12 @@
       "generate": "Generera PDF",
       "generating": "Genererar…",
       "download": "Ladda ner PDF",
-      "note": "marked → HTML → Playwright Chromium-skriv ut. Om Chromium saknas, faller automatiskt tillbaka till enkel strukturerad PDF — kontrollera renderEngine; enkel är inte skrivut-läge."
+      "note": "marked → HTML → Playwright Chromium-skriv ut. Om Chromium saknas, faller automatiskt tillbaka till enkel strukturerad PDF — kontrollera renderEngine; enkel är inte skrivut-läge.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Räkna tokens",

@@ -805,7 +805,12 @@
       "generate": "Δημιουργία PDF",
       "generating": "Δημιουργία…",
       "download": "Λήψη PDF",
-      "note": "marked → HTML → Playwright Chromium print. Αν λείπει το Chromium, γίνεται αυτόματη αναδίπλωση σε απλό δομημένο PDF — ελέγξτε το renderEngine· το απλό δεν είναι τυπογραφικής ποιότητας."
+      "note": "marked → HTML → Playwright Chromium print. Αν λείπει το Chromium, γίνεται αυτόματη αναδίπλωση σε απλό δομημένο PDF — ελέγξτε το renderEngine· το απλό δεν είναι τυπογραφικής ποιότητας.",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "Μέτρηση tokens",

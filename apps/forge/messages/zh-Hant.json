@@ -805,7 +805,12 @@
       "generate": "產生 PDF",
       "generating": "產生中…",
       "download": "下載 PDF",
-      "note": "marked → HTML → Playwright Chromium 列印。若缺少 Chromium，將自動回退至簡易結構化 PDF — 請檢查 renderEngine；簡易模式並非列印級版面。"
+      "note": "marked → HTML → Playwright Chromium 列印。若缺少 Chromium，將自動回退至簡易結構化 PDF — 請檢查 renderEngine；簡易模式並非列印級版面。",
+      "openTab": "Open in new tab",
+      "preview": "PDF preview",
+      "previewTitle": "Generated PDF preview",
+      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "noPayload": "No PDF payload returned"
     },
     "tokenCount": {
       "count": "計算 Token 數",
