@@ -1,16 +1,14 @@
 /**
  * Re-emit all skin CSS files from brands/<id>/brand.json (SSOT).
  */
-import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { emitBrandCss, normalizeBrandPackage } from "../src/brand-package/index.ts";
+import { formatGenerated } from "./format-generated.mjs";
 
 const packageRoot = resolve(import.meta.dirname, "..");
-const repoRoot = resolve(packageRoot, "../../..");
 const brandsDir = join(packageRoot, "brands");
 const skinsDir = join(packageRoot, "skins");
-const biomeBin = join(repoRoot, "node_modules/.bin/biome");
 
 if (!existsSync(brandsDir)) {
   throw new Error(`Missing brands dir: ${brandsDir}`);
@@ -43,17 +41,11 @@ for (const id of ids) {
   written.push(brand.id);
 }
 
-// Post-format so CI "governance lint guards" (biome check) stays green after
-// typecheck/build re-emits skins in the same workspace.
-if (cssPaths.length > 0 && existsSync(biomeBin)) {
-  const fmt = spawnSync(biomeBin, ["format", "--write", ...cssPaths], {
-    cwd: repoRoot,
-    encoding: "utf8",
-  });
-  if (fmt.status !== 0) {
-    process.stderr.write(fmt.stderr || fmt.stdout || "biome format failed on skins\n");
-    process.exit(fmt.status ?? 1);
-  }
+// Soft-format only. Vercel's sandbox has no .gitignore; biome.json sets
+// vcs.useIgnoreFile, so a hard exit here killed every landing/web deploy after
+// the CSS had already been emitted correctly. Same contract as sync-styles.mjs.
+if (cssPaths.length > 0) {
+  formatGenerated(...cssPaths);
 }
 
 process.stdout.write(
