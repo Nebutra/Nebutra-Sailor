@@ -57,6 +57,11 @@ jobs:
           SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
         run: |
           set -euo pipefail
+          if [ -z "${SUBREPO_MIRROR_TOKEN:-}" ]; then
+            echo "::error::SUBREPO_MIRROR_TOKEN is not configured — cannot create/push package subrepos."
+            echo "Add a PAT with repo scope as secrets.SUBREPO_MIRROR_TOKEN, or run workflow_dispatch with dry_run=true."
+            exit 1
+          fi
           args=(--cohort=first-wave --apply)
           if [ -n "${{ inputs.package }}" ]; then
             args+=(--package="${{ inputs.package }}")
@@ -80,6 +85,10 @@ jobs:
           SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
         run: |
           set -euo pipefail
+          if [ -z "${SUBREPO_MIRROR_TOKEN:-}" ]; then
+            echo "::error::SUBREPO_MIRROR_TOKEN is not configured — mirror push skipped with failure."
+            exit 1
+          fi
           args=(--cohort=first-wave --out=/tmp/nebutra-subrepo-mirrors --push)
           if [ -n "${{ inputs.package }}" ]; then
             args+=(--package="${{ inputs.package }}")
