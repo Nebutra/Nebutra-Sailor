@@ -65,10 +65,12 @@ jobs:
         uses: cla-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # If/when we want signatures stored in a different repo (e.g. a
-          # private legal repo), define PERSONAL_ACCESS_TOKEN as an org
-          # secret. Until then, GITHUB_TOKEN is sufficient.
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          # cla-assistant crashes with "Cannot read properties of undefined
+          # (reading 'some')" when PERSONAL_ACCESS_TOKEN is an empty string
+          # (secret defined but blank). Fall back to GITHUB_TOKEN for
+          # same-repo signature storage on the cla-signatures branch.
+          # For a remote legal repo, set org secret PERSONAL_ACCESS_TOKEN.
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
         with:
           # Required by the action — points at the canonical CLA text.
           path-to-document: "https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/legal/CLA.md"
