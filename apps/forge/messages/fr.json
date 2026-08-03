@@ -178,23 +178,23 @@
       "quality": "Qualité",
       "original": "Original",
       "result": "Résultat",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "downloadPdf": "Télécharger le PDF",
+      "openTab": "Ouvrir dans un nouvel onglet",
+      "pdfPreview": "Aperçu PDF",
+      "pdfPreviewTitle": "Aperçu PDF",
+      "pdfPreviewHint": "Visionneuse PDF native du navigateur. Certains mobiles ne gèrent que le téléchargement.",
+      "single": "Unitaire",
+      "batch": "Lot",
+      "privacyUpload": "Les fichiers sont envoyés à l'hôte Forge pour traitement et ne sont pas conservés après la requête.",
+      "dragDrop": "Déposez un fichier ici ou cliquez pour choisir",
+      "resultMeta": "Résultat",
+      "before": "Avant",
+      "after": "Après",
+      "liveHint": "Mise à jour pendant la saisie",
+      "tablePreview": "Aperçu du tableau",
+      "sourcePreview": "Aperçu source",
+      "metrics": "Indicateurs",
+      "thumbnail": "Aperçu"
     },
     "base64": {
       "encodeDir": "Texte → Base64",
@@ -498,10 +498,10 @@
       "out": "Sortie",
       "saved": "Enregistré",
       "note": "Compression PDF · qpdf / Ghostscript sur l'hôte · pdf-lib en secours",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "drop": "Déposez ou choisissez un PDF",
+      "needPdf": "Choisissez un fichier PDF",
+      "privacy": "Les PDF sont envoyés à l'hôte pour compression et ne sont pas conservés.",
+      "barHint": "La barre indique la taille relative de sortie"
     },
     "jsonFormat": {
       "indent": "Indentation",
@@ -519,9 +519,9 @@
       "line": "ligne",
       "column": "colonne",
       "note": "Moteur : JSON.parse/stringify · local instantané · même chemin que l'API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "sortKeys": "Trier les clés",
+      "stats": "{chars} caractères · {lines} lignes",
+      "liveOff": "Live désactivé"
     },
     "qr": {
       "size": "Taille",
@@ -580,7 +580,7 @@
       "mergeDownload": "Fusionner et télécharger",
       "done": "Fusionné · {pages} pages · {bytes} octets",
       "note": "pdf-lib · même chemin que l'API",
-      "merge": "Fusionner et télécharger"
+      "merge": "Fusionner"
     },
     "pdfSplit": {
       "file": "Fichier PDF",
@@ -592,7 +592,7 @@
       "splitDownload": "Découper et télécharger",
       "done": "Découpé · source {source} pages → sortie {pages} pages",
       "note": "pdf-lib · même chemin que l'API",
-      "split": "Découper et télécharger"
+      "split": "Découper"
     },
     "passwordStrength": {
       "check": "Vérifier la force",
@@ -826,11 +826,11 @@
       "generating": "Génération…",
       "download": "Télécharger le PDF",
       "note": "marked → HTML → impression Chromium Playwright. Si Chromium est absent, bascule automatique vers un PDF structuré simple — vérifiez renderEngine ; le mode simple n’est pas une mise en page d’impression.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "openTab": "Ouvrir dans un nouvel onglet",
+      "preview": "Aperçu PDF",
+      "previewTitle": "Aperçu PDF",
+      "previewHint": "Visionneuse PDF native. Certains mobiles ne gèrent que le téléchargement.",
+      "noPayload": "Aucune charge PDF renvoyée"
     },
     "tokenCount": {
       "count": "Compter les jetons",
@@ -876,7 +876,7 @@
       "original": "Original",
       "result": "Résultat",
       "note": "Moteur : sharp (libvips) · côté serveur · même chemin que l'API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "privacy": "Les images sont envoyées à l'hôte pour traitement et ne sont pas stockées."
     },
     "pptxText": {
       "file": "Fichier PPTX",
@@ -939,9 +939,9 @@
       "description": "Description",
       "descriptionPlaceholder": "Une phrase sur ce qu'il fait",
       "badgeLicense": "Badge de licence",
-      "badgeNpm": "npm version",
+      "badgeNpm": "version npm",
       "badgeBuild": "Statut de build",
-      "npmPackage": "npm package",
+      "npmPackage": "paquet npm",
       "npmPackagePlaceholder": "@scope/package",
       "repo": "Dépôt GitHub",
       "repoPlaceholder": "propriétaire/dépôt",
@@ -950,13 +950,13 @@
       "calloutBodyPlaceholder": "Avant la 1.0 — l'API évolue encore",
       "fenceLanguage": "Langage",
       "installCommand": "Commande d'installation",
-      "installCommandPlaceholder": "npm install your-project",
+      "installCommandPlaceholder": "npm install votre-projet",
       "usageExample": "Exemple d'utilisation",
       "usageExamplePlaceholder": "Le plus petit exemple qui montre la valeur",
       "features": "Fonctionnalités",
       "featuresPlaceholder": "Une fonctionnalité par ligne",
       "contact": "Contact",
-      "contactPlaceholder": "support@example.com",
+      "contactPlaceholder": "you@example.com",
       "license": "Licence",
       "authors": "Auteurs",
       "authorsPlaceholder": "@handle, Jane Roe",
@@ -1815,7 +1815,7 @@
       "holidaysHint": "Laisser vide pour appliquer uniquement la règle des week-ends — aucun calendrier national n’est pris en compte.",
       "makeupWorkdays": "Jours de rattrapage",
       "makeupHint": "Dates travaillées malgré un week-end ou un jour férié — les samedis de rattrapage (调休/补班) en Chine s’ajoutent ici.",
-      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesPlaceholder": "AAAA-MM-JJ (une par ligne)",
       "datesIgnored": "{n, plural, one {# entrée n’est pas une date YYYY-MM-DD et n’est pas utilisée} other {# entrées ne sont pas des dates YYYY-MM-DD et ne sont pas utilisées}}",
       "pickStart": "Sélectionnez une date de début pour commencer.",
       "emptyHintShift": "Sélectionnez une date de début et un nombre de jours ouvrés.",
@@ -1996,20 +1996,20 @@
       "summaryClean": "Aucune métadonnée supprimable trouvée. Le fichier est retourné inchangé."
     },
     "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "valid": "Valide",
+      "invalid": "Invalide",
+      "summary": "{valid} / {total} valides",
+      "match": "Correspondance",
+      "mismatch": "Différence",
+      "luhnCaveat": "Luhn ne vérifie que la structure des chiffres — pas l'existence ni le solde de la carte.",
       "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
+        "length_or_digits": "12–19 chiffres requis",
+        "luhn_failed": "Échec de la somme de contrôle Luhn"
       }
     },
     "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
+      "zones": "Fuseaux horaires (un par ligne)",
+      "at": "Instant (ISO / unix optionnel)"
     }
   },
   "roots": {

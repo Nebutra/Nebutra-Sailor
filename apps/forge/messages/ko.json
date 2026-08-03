@@ -178,23 +178,23 @@
       "quality": "품질",
       "original": "원본",
       "result": "결과",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "downloadPdf": "PDF 다운로드",
+      "openTab": "새 탭에서 열기",
+      "pdfPreview": "PDF 미리보기",
+      "pdfPreviewTitle": "PDF 미리보기",
+      "pdfPreviewHint": "브라우저 기본 PDF 뷰어입니다. 일부 모바일은 다운로드만 지원합니다.",
+      "single": "단일",
+      "batch": "일괄",
+      "privacyUpload": "파일은 처리를 위해 Forge 호스트로 전송되며 요청 후 보관되지 않습니다.",
+      "dragDrop": "파일을 놓거나 클릭하여 선택",
+      "resultMeta": "결과",
+      "before": "처리 전",
+      "after": "처리 후",
+      "liveHint": "입력 시 업데이트",
+      "tablePreview": "표 미리보기",
+      "sourcePreview": "원본 미리보기",
+      "metrics": "지표",
+      "thumbnail": "미리보기"
     },
     "base64": {
       "encodeDir": "텍스트 → Base64",
@@ -498,10 +498,10 @@
       "out": "출력",
       "saved": "저장됨",
       "note": "PDF 압축 · 호스트에서 qpdf / Ghostscript 사용 · pdf-lib 대체",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "drop": "PDF를 놓거나 선택",
+      "needPdf": "PDF 파일을 선택하세요",
+      "privacy": "PDF는 압축을 위해 호스트로 전송되며 저장되지 않습니다.",
+      "barHint": "막대는 출력 상대 크기입니다"
     },
     "jsonFormat": {
       "indent": "들여쓰기",
@@ -519,9 +519,9 @@
       "line": "줄",
       "column": "열",
       "note": "엔진: JSON.parse/stringify · 로컬 즉시 처리 · API와 동일한 경로",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "sortKeys": "키 정렬",
+      "stats": "{chars}자 · {lines}줄",
+      "liveOff": "라이브 끔"
     },
     "qr": {
       "size": "크기",
@@ -826,11 +826,11 @@
       "generating": "생성 중…",
       "download": "PDF 다운로드",
       "note": "marked → HTML → Playwright Chromium 인쇄. Chromium이 없으면 간단한 구조화된 PDF로 자동 대체됩니다. renderEngine을 확인하세요. 간단한 방식은 인쇄용 레이아웃이 아닙니다.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "openTab": "새 탭에서 열기",
+      "preview": "PDF 미리보기",
+      "previewTitle": "PDF 미리보기",
+      "previewHint": "브라우저 기본 PDF 뷰어. 일부 모바일은 다운로드만 지원합니다.",
+      "noPayload": "PDF 페이로드가 반환되지 않았습니다"
     },
     "tokenCount": {
       "count": "토큰 수",
@@ -876,7 +876,7 @@
       "original": "원본",
       "result": "결과",
       "note": "엔진: sharp (libvips) · 서버 측 · API(imageBase64)와 동일 경로",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "privacy": "이미지는 처리를 위해 호스트로 전송되며 저장되지 않습니다."
     },
     "pptxText": {
       "file": "PPTX 파일",
@@ -939,9 +939,9 @@
       "description": "설명",
       "descriptionPlaceholder": "무엇을 하는지 한 문장으로",
       "badgeLicense": "라이선스 배지",
-      "badgeNpm": "npm version",
+      "badgeNpm": "npm 버전",
       "badgeBuild": "빌드 상태",
-      "npmPackage": "npm package",
+      "npmPackage": "npm 패키지",
       "npmPackagePlaceholder": "@scope/package",
       "repo": "GitHub 저장소",
       "repoPlaceholder": "소유자/저장소",
@@ -956,7 +956,7 @@
       "features": "기능",
       "featuresPlaceholder": "한 줄에 하나의 기능",
       "contact": "연락처",
-      "contactPlaceholder": "support@example.com",
+      "contactPlaceholder": "you@example.com",
       "license": "라이선스",
       "authors": "작성자",
       "authorsPlaceholder": "@handle, Jane Roe",
@@ -1815,7 +1815,7 @@
       "holidaysHint": "비워두면 순수 주말 규칙에 따른 카운트가 적용되며, 국가별 달력은 적용되지 않습니다.",
       "makeupWorkdays": "대체 근무일",
       "makeupHint": "주말이나 공휴일에도 근무한 날짜 — 중국의 调休/补班 토요일이 여기에 포함됩니다.",
-      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesPlaceholder": "YYYY-MM-DD (한 줄에 하나)",
       "datesIgnored": "{n, plural, one {#개 항목이 YYYY-MM-DD 형식이 아니므로 사용되지 않습니다} other {#개 항목이 YYYY-MM-DD 형식이 아니므로 사용되지 않습니다}}",
       "pickStart": "시작 날짜를 선택하여 시작하세요.",
       "emptyHintShift": "시작 날짜와 영업일 수를 선택하세요.",
@@ -1996,20 +1996,20 @@
       "summaryClean": "제거 가능한 메타데이터가 없습니다. 파일이 변경되지 않았습니다."
     },
     "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "valid": "유효",
+      "invalid": "무효",
+      "summary": "{valid} / {total} 유효",
+      "match": "일치",
+      "mismatch": "불일치",
+      "luhnCaveat": "Luhn은 숫자 구조만 확인합니다. 카드 존재나 잔액은 보장하지 않습니다.",
       "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
+        "length_or_digits": "12–19자리 숫자 필요",
+        "luhn_failed": "Luhn 체크섬 실패"
       }
     },
     "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
+      "zones": "시간대 (한 줄에 하나)",
+      "at": "시각 (선택 ISO / unix)"
     }
   },
   "roots": {

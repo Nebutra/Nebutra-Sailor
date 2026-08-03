@@ -178,23 +178,23 @@
       "quality": "品質",
       "original": "原文",
       "result": "結果",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "downloadPdf": "PDFをダウンロード",
+      "openTab": "新しいタブで開く",
+      "pdfPreview": "PDFプレビュー",
+      "pdfPreviewTitle": "PDFプレビュー",
+      "pdfPreviewHint": "ブラウザ標準のPDFビューアです。一部のモバイルではダウンロードのみ対応します。",
+      "single": "単体",
+      "batch": "一括",
+      "privacyUpload": "ファイルは処理のためForgeホストに送信され、リクエスト後は保持されません。",
+      "dragDrop": "ファイルをドロップするかクリックして選択",
+      "resultMeta": "結果",
+      "before": "処理前",
+      "after": "処理後",
+      "liveHint": "入力すると更新されます",
+      "tablePreview": "表プレビュー",
+      "sourcePreview": "ソースプレビュー",
+      "metrics": "指標",
+      "thumbnail": "プレビュー"
     },
     "base64": {
       "encodeDir": "テキスト → Base64",
@@ -498,10 +498,10 @@
       "out": "出力",
       "saved": "保存済み",
       "note": "PDF圧縮 · ホスト上のqpdf / Ghostscript · pdf-libフォールバック",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "drop": "PDFをドロップまたは選択",
+      "needPdf": "PDFファイルを選択してください",
+      "privacy": "PDFは圧縮のためホストに送信され、保存されません。",
+      "barHint": "バーは出力サイズの相対値です"
     },
     "jsonFormat": {
       "indent": "インデント",
@@ -519,9 +519,9 @@
       "line": "行",
       "column": "列",
       "note": "エンジン: JSON.parse/stringify · ローカルで即時処理 · API と同じパス",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "sortKeys": "キーを並べ替え",
+      "stats": "{chars} 文字 · {lines} 行",
+      "liveOff": "ライブオフ"
     },
     "qr": {
       "size": "サイズ",
@@ -826,11 +826,11 @@
       "generating": "生成中…",
       "download": "PDF をダウンロード",
       "note": "marked → HTML → Playwright Chromium 印刷。Chromium が利用できない場合、自動はシンプルな構造化 PDF にフォールバックします。renderEngine を確認してください。シンプルは印刷品質のレイアウトではありません。",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "openTab": "新しいタブで開く",
+      "preview": "PDFプレビュー",
+      "previewTitle": "PDFプレビュー",
+      "previewHint": "ブラウザ標準のPDFビューア。一部のモバイルはダウンロードのみです。",
+      "noPayload": "PDFペイロードが返されませんでした"
     },
     "tokenCount": {
       "count": "トークンをカウント",
@@ -876,7 +876,7 @@
       "original": "オリジナル",
       "result": "結果",
       "note": "エンジン: sharp (libvips) · サーバー側処理 · APIと同じパス (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "privacy": "画像は処理のためホストに送信され、保存されません。"
     },
     "pptxText": {
       "file": "PPTX ファイル",
@@ -939,9 +939,9 @@
       "description": "説明",
       "descriptionPlaceholder": "何をするか一文で説明",
       "badgeLicense": "ライセンスバッジ",
-      "badgeNpm": "npm version",
+      "badgeNpm": "npm バージョン",
       "badgeBuild": "ビルド状況",
-      "npmPackage": "npm package",
+      "npmPackage": "npm パッケージ",
       "npmPackagePlaceholder": "@scope/package",
       "repo": "GitHub リポジトリ",
       "repoPlaceholder": "owner/repo",
@@ -956,7 +956,7 @@
       "features": "機能",
       "featuresPlaceholder": "1行につき1機能",
       "contact": "お問い合わせ",
-      "contactPlaceholder": "support@example.com",
+      "contactPlaceholder": "you@example.com",
       "license": "ライセンス",
       "authors": "著者",
       "authorsPlaceholder": "@handle, Jane Roe",
@@ -1815,7 +1815,7 @@
       "holidaysHint": "空欄の場合、祝日カレンダーは適用されず、純粋な週末ルールに基づくカウントになります。",
       "makeupWorkdays": "振替出勤日",
       "makeupHint": "週末や祝日にもかかわらず出勤する日付を指定します。中国の調休/補班による土曜出勤日もここに設定します。",
-      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesPlaceholder": "YYYY-MM-DD（1行に1つ）",
       "datesIgnored": "{n, plural, one {# エントリが YYYY-MM-DD 形式の日付ではないため使用されません} other {# エントリが YYYY-MM-DD 形式の日付ではないため使用されません}}",
       "pickStart": "開始日を選択してください。",
       "emptyHintShift": "開始日と営業日の数を選択してください。",
@@ -1996,20 +1996,20 @@
       "summaryClean": "削除可能なメタデータが見つかりませんでした。ファイルは変更せずに返却します。"
     },
     "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "valid": "有効",
+      "invalid": "無効",
+      "summary": "{valid} / {total} 有効",
+      "match": "一致",
+      "mismatch": "不一致",
+      "luhnCaveat": "Luhnは桁構造のみ確認します。カードの実在や残高は保証しません。",
       "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
+        "length_or_digits": "12–19桁が必要です",
+        "luhn_failed": "Luhnチェックサム失敗"
       }
     },
     "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
+      "zones": "タイムゾーン（1行に1つ）",
+      "at": "時点（任意のISO / unix）"
     }
   },
   "roots": {

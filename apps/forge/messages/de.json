@@ -178,23 +178,23 @@
       "quality": "Qualität",
       "original": "Original",
       "result": "Ergebnis",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "downloadPdf": "PDF herunterladen",
+      "openTab": "In neuem Tab öffnen",
+      "pdfPreview": "PDF-Vorschau",
+      "pdfPreviewTitle": "PDF-Vorschau",
+      "pdfPreviewHint": "Native PDF-Ansicht des Browsers. Manche mobilen Browser unterstützen nur den Download.",
+      "single": "Einzeln",
+      "batch": "Stapel",
+      "privacyUpload": "Dateien werden zur Verarbeitung an den Forge-Host gesendet und nach der Anfrage nicht gespeichert.",
+      "dragDrop": "Datei hierher ziehen oder klicken zum Auswählen",
+      "resultMeta": "Ergebnis",
+      "before": "Vorher",
+      "after": "Nachher",
+      "liveHint": "Aktualisiert beim Tippen",
+      "tablePreview": "Tabellenvorschau",
+      "sourcePreview": "Quellvorschau",
+      "metrics": "Kennzahlen",
+      "thumbnail": "Vorschau"
     },
     "base64": {
       "encodeDir": "Text → Base64",
@@ -498,10 +498,10 @@
       "out": "Ausgabe",
       "saved": "Gespeichert",
       "note": "PDF komprimieren · qpdf / Ghostscript auf Host · pdf-lib als Fallback",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "drop": "PDF hier ablegen oder wählen",
+      "needPdf": "Bitte eine PDF-Datei wählen",
+      "privacy": "PDFs werden zur Kompression an den Host gesendet und nicht gespeichert.",
+      "barHint": "Balken = relative Ausgabegröße"
     },
     "jsonFormat": {
       "indent": "Einrücken",
@@ -519,9 +519,9 @@
       "line": "Zeile",
       "column": "Spalte",
       "note": "Engine: JSON.parse/stringify · lokal in Echtzeit · gleicher Pfad wie API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "sortKeys": "Schlüssel sortieren",
+      "stats": "{chars} Zeichen · {lines} Zeilen",
+      "liveOff": "Live aus"
     },
     "qr": {
       "size": "Größe",
@@ -580,7 +580,7 @@
       "mergeDownload": "Zusammenführen & herunterladen",
       "done": "Zusammengeführt · {pages} Seiten · {bytes} Bytes",
       "note": "pdf-lib · gleicher Pfad wie API",
-      "merge": "Zusammenführen & herunterladen"
+      "merge": "Zusammenführen"
     },
     "pdfSplit": {
       "file": "PDF-Datei",
@@ -592,7 +592,7 @@
       "splitDownload": "Aufteilen & herunterladen",
       "done": "Geteilt · Quelle {source} Seiten → Ausgabe {pages} Seiten",
       "note": "pdf-lib · gleicher Pfad wie API",
-      "split": "Aufteilen & herunterladen"
+      "split": "Teilen"
     },
     "passwordStrength": {
       "check": "Stärke prüfen",
@@ -826,11 +826,11 @@
       "generating": "Generiere…",
       "download": "PDF herunterladen",
       "note": "marked → HTML → Playwright Chromium-Druck. Wenn Chromium fehlt, wechselt auto auf einfaches strukturiertes PDF — prüfe renderEngine; einfach ist kein druckgerechtes Layout.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "openTab": "In neuem Tab öffnen",
+      "preview": "PDF-Vorschau",
+      "previewTitle": "PDF-Vorschau",
+      "previewHint": "Native PDF-Ansicht. Manche mobilen Browser unterstützen nur den Download.",
+      "noPayload": "Keine PDF-Daten zurückgegeben"
     },
     "tokenCount": {
       "count": "Tokens zählen",
@@ -876,7 +876,7 @@
       "original": "Original",
       "result": "Ergebnis",
       "note": "Engine: sharp (libvips) · serverseitig · gleicher Pfad wie API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "privacy": "Bilder werden zur Verarbeitung an den Host gesendet und nicht gespeichert."
     },
     "pptxText": {
       "file": "PPTX-Datei",
@@ -939,9 +939,9 @@
       "description": "Beschreibung",
       "descriptionPlaceholder": "Ein Satz dazu, was es macht",
       "badgeLicense": "Lizenz-Badge",
-      "badgeNpm": "npm version",
+      "badgeNpm": "npm-Version",
       "badgeBuild": "Build-Status",
-      "npmPackage": "npm package",
+      "npmPackage": "npm-Paket",
       "npmPackagePlaceholder": "@scope/package",
       "repo": "GitHub-Repo",
       "repoPlaceholder": "owner/repo",
@@ -950,7 +950,7 @@
       "calloutBodyPlaceholder": "Pre-1.0 — die API ändert sich noch",
       "fenceLanguage": "Sprache",
       "installCommand": "Installationsbefehl",
-      "installCommandPlaceholder": "npm install your-project",
+      "installCommandPlaceholder": "npm install dein-projekt",
       "usageExample": "Nutzungsbispiel",
       "usageExamplePlaceholder": "Das kleinste Beispiel, das den Mehrwert zeigt",
       "features": "Funktionen",
@@ -1815,7 +1815,7 @@
       "holidaysHint": "Leer lassen, um die reine Wochenendregel anzuwenden – es wird kein Länderkalender berücksichtigt.",
       "makeupWorkdays": "Nachholarbeitstage",
       "makeupHint": "Arbeitsdaten, die auf ein Wochenende oder einen Feiertag fallen – Chinas 调休/补班-Samstage gehören hierher.",
-      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesPlaceholder": "YYYY-MM-DD (eine pro Zeile)",
       "datesIgnored": "{n, plural, one {# Eintrag war kein YYYY-MM-DD-Datum und wird nicht verwendet} other {# Einträge waren keine YYYY-MM-DD-Daten und werden nicht verwendet}}",
       "pickStart": "Wählen Sie ein Startdatum aus, um zu beginnen.",
       "emptyHintShift": "Wählen Sie ein Startdatum und eine Anzahl von Arbeitstagen aus.",
@@ -1996,20 +1996,20 @@
       "summaryClean": "Keine entfernbaren Metadaten gefunden. Datei unverändert zurückgegeben."
     },
     "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "valid": "Gültig",
+      "invalid": "Ungültig",
+      "summary": "{valid} / {total} gültig",
+      "match": "Übereinstimmung",
+      "mismatch": "Keine Übereinstimmung",
+      "luhnCaveat": "Luhn bestätigt nur die Ziffernstruktur — nicht, dass die Karte existiert oder guthaben hat.",
       "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
+        "length_or_digits": "12–19 Ziffern erforderlich",
+        "luhn_failed": "Luhn-Prüfsumme fehlgeschlagen"
       }
     },
     "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
+      "zones": "Zeitzonen (eine pro Zeile)",
+      "at": "Zeitpunkt (optional ISO / Unix)"
     }
   },
   "roots": {

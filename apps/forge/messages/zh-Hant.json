@@ -178,23 +178,23 @@
       "quality": "品質",
       "original": "原文",
       "result": "結果",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "downloadPdf": "下載 PDF",
+      "openTab": "在新分頁開啟",
+      "pdfPreview": "PDF 預覽",
+      "pdfPreviewTitle": "PDF 預覽",
+      "pdfPreviewHint": "瀏覽器內建 PDF 預覽。部分行動瀏覽器僅支援下載。",
+      "single": "單次",
+      "batch": "批次",
+      "privacyUpload": "檔案會傳送到 Forge 主機處理，請求結束後不會保留。",
+      "dragDrop": "將檔案拖放到此處，或點擊選擇",
+      "resultMeta": "結果",
+      "before": "處理前",
+      "after": "處理後",
+      "liveHint": "輸入即更新",
+      "tablePreview": "表格預覽",
+      "sourcePreview": "原始檔預覽",
+      "metrics": "指標",
+      "thumbnail": "預覽"
     },
     "base64": {
       "encodeDir": "文字 → Base64",
@@ -498,10 +498,10 @@
       "out": "輸出",
       "saved": "已儲存",
       "note": "PDF 壓縮 · 主機端 qpdf / Ghostscript · pdf-lib 備用",
-      "drop": "拖入 PDF，或點擊選擇",
-      "needPdf": "請拖入 .pdf 檔案",
-      "privacy": "檔案會上傳至 Forge 服務端壓縮，回應後丟棄。需要無損流時請優先結構壓縮。",
-      "barHint": "進度條表示輸出相對輸入的體積（越短壓縮越多）。"
+      "drop": "拖放或選擇 PDF",
+      "needPdf": "請選擇 PDF 檔案",
+      "privacy": "PDF 會送至主機壓縮，處理後不保留。",
+      "barHint": "長條表示輸出相對大小"
     },
     "jsonFormat": {
       "indent": "縮排",
@@ -519,9 +519,9 @@
       "line": "行",
       "column": "欄",
       "note": "引擎：JSON.parse/stringify · 即時本地處理 · 與 API 路徑相同",
-      "sortKeys": "鍵排序",
+      "sortKeys": "排序鍵",
       "stats": "{chars} 字元 · {lines} 行",
-      "liveOff": "已關閉即時校驗（輸入過大）"
+      "liveOff": "關閉即時"
     },
     "qr": {
       "size": "尺寸",
@@ -580,7 +580,7 @@
       "mergeDownload": "合併並下載",
       "done": "已合併 · {pages} 頁 · {bytes} 位元組",
       "note": "pdf-lib · 與 API 路徑相同",
-      "merge": "合併並下載"
+      "merge": "合併"
     },
     "pdfSplit": {
       "file": "PDF 檔案",
@@ -592,7 +592,7 @@
       "splitDownload": "分割並下載",
       "done": "已分割 · 來源 {source} 頁 → 輸出 {pages} 頁",
       "note": "pdf-lib · 與 API 路徑相同",
-      "split": "分割並下載"
+      "split": "拆分"
     },
     "passwordStrength": {
       "check": "檢查強度",
@@ -826,11 +826,11 @@
       "generating": "產生中…",
       "download": "下載 PDF",
       "note": "marked → HTML → Playwright Chromium 列印。若缺少 Chromium，將自動回退至簡易結構化 PDF — 請檢查 renderEngine；簡易模式並非列印級版面。",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "openTab": "在新分頁開啟",
+      "preview": "PDF 預覽",
+      "previewTitle": "PDF 預覽",
+      "previewHint": "瀏覽器內建 PDF 預覽。部分行動瀏覽器僅支援下載。",
+      "noPayload": "未回傳 PDF 內容"
     },
     "tokenCount": {
       "count": "計算 Token 數",
@@ -876,7 +876,7 @@
       "original": "原始",
       "result": "結果",
       "note": "引擎：sharp (libvips) · 伺服器端 · 與 API (imageBase64) 路徑相同",
-      "privacy": "圖片會上傳至 Forge 服務端（sharp）。多檔案請用 Batch。回應後不落盤。"
+      "privacy": "圖片會送至主機處理，處理後不保留。"
     },
     "pptxText": {
       "file": "PPTX 檔案",
@@ -939,9 +939,9 @@
       "description": "描述",
       "descriptionPlaceholder": "用一句話說明它的功能",
       "badgeLicense": "授權標章",
-      "badgeNpm": "npm version",
+      "badgeNpm": "npm 版本",
       "badgeBuild": "建置狀態",
-      "npmPackage": "npm package",
+      "npmPackage": "npm 套件",
       "npmPackagePlaceholder": "@scope/package",
       "repo": "GitHub 儲存庫",
       "repoPlaceholder": "owner/repo",
@@ -956,7 +956,7 @@
       "features": "功能",
       "featuresPlaceholder": "每行一個功能",
       "contact": "聯絡方式",
-      "contactPlaceholder": "support@example.com",
+      "contactPlaceholder": "you@example.com",
       "license": "授權條款",
       "authors": "作者",
       "authorsPlaceholder": "@handle, Jane Roe",
@@ -1815,7 +1815,7 @@
       "holidaysHint": "留空則僅按週末規則計算，不套用任何國家曆法。",
       "makeupWorkdays": "補班日",
       "makeupHint": "雖落在週末或假日但仍需上班的日期——例如中國的調休／補班週六就填在這裡。",
-      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesPlaceholder": "YYYY-MM-DD（每行一個）",
       "datesIgnored": "{n, plural, one {# 筆項目不是 YYYY-MM-DD 格式的日期，將不予使用} other {# 筆項目不是 YYYY-MM-DD 格式的日期，將不予使用}}",
       "pickStart": "請先選擇一個起始日期。",
       "emptyHintShift": "請選擇起始日期與工作日天數。",
@@ -1996,20 +1996,20 @@
       "summaryClean": "未發現可移除的元資料。檔案原樣返回。"
     },
     "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "valid": "有效",
+      "invalid": "無效",
+      "summary": "{valid} / {total} 有效",
+      "match": "一致",
+      "mismatch": "不一致",
+      "luhnCaveat": "Luhn 通過僅表示號碼結構合法，不代表卡片真實存在或可用。",
       "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
+        "length_or_digits": "需要 12–19 位數字",
+        "luhn_failed": "Luhn 校驗失敗"
       }
     },
     "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
+      "zones": "時區列表（每行一個）",
+      "at": "指定時刻（可選 ISO / unix）"
     }
   },
   "roots": {

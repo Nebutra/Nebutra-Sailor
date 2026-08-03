@@ -178,23 +178,23 @@
       "quality": "Calidad",
       "original": "Original",
       "result": "Resultado",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "downloadPdf": "Descargar PDF",
+      "openTab": "Abrir en pestaña nueva",
+      "pdfPreview": "Vista previa del PDF",
+      "pdfPreviewTitle": "Vista previa del PDF",
+      "pdfPreviewHint": "Visor PDF nativo del navegador. Algunos móviles solo admiten descarga.",
+      "single": "Individual",
+      "batch": "Lote",
+      "privacyUpload": "Los archivos se envían al host de Forge para procesarlos y no se conservan después de la solicitud.",
+      "dragDrop": "Suelta un archivo aquí o haz clic para elegir",
+      "resultMeta": "Resultado",
+      "before": "Antes",
+      "after": "Después",
+      "liveHint": "Se actualiza al escribir",
+      "tablePreview": "Vista de tabla",
+      "sourcePreview": "Vista de origen",
+      "metrics": "Métricas",
+      "thumbnail": "Vista previa"
     },
     "base64": {
       "encodeDir": "Texto → Base64",
@@ -498,10 +498,10 @@
       "out": "Salida",
       "saved": "Guardado",
       "note": "Comprimir PDF · qpdf / Ghostscript en el host · pdf-lib como respaldo",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "drop": "Suelta o elige un PDF",
+      "needPdf": "Elige un archivo PDF",
+      "privacy": "Los PDF se envían al host para comprimir y no se guardan.",
+      "barHint": "La barra es el tamaño relativo de salida"
     },
     "jsonFormat": {
       "indent": "Indentar",
@@ -519,9 +519,9 @@
       "line": "línea",
       "column": "columna",
       "note": "Motor: JSON.parse/stringify · local instantáneo · misma ruta que la API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "sortKeys": "Ordenar claves",
+      "stats": "{chars} caracteres · {lines} líneas",
+      "liveOff": "Live desactivado"
     },
     "qr": {
       "size": "Tamaño",
@@ -580,7 +580,7 @@
       "mergeDownload": "Combinar y descargar",
       "done": "Combinado · {pages} páginas · {bytes} bytes",
       "note": "pdf-lib · misma ruta que la API",
-      "merge": "Combinar y descargar"
+      "merge": "Combinar"
     },
     "pdfSplit": {
       "file": "Archivo PDF",
@@ -592,7 +592,7 @@
       "splitDownload": "Dividir y descargar",
       "done": "Dividido · origen {source} páginas → salida {pages} páginas",
       "note": "pdf-lib · misma ruta que la API",
-      "split": "Dividir y descargar"
+      "split": "Dividir"
     },
     "passwordStrength": {
       "check": "Comprobar seguridad",
@@ -826,11 +826,11 @@
       "generating": "Generando…",
       "download": "Descargar PDF",
       "note": "marked → HTML → impresión con Playwright Chromium. Si falta Chromium, se recurre automáticamente a un PDF estructurado simple; consulta renderEngine; el modo simple no ofrece diseño de impresión.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "openTab": "Abrir en pestaña nueva",
+      "preview": "Vista previa del PDF",
+      "previewTitle": "Vista previa del PDF",
+      "previewHint": "Visor PDF nativo. Algunos móviles solo admiten descarga.",
+      "noPayload": "No se devolvió el PDF"
     },
     "tokenCount": {
       "count": "Contar tokens",
@@ -876,7 +876,7 @@
       "original": "Original",
       "result": "Resultado",
       "note": "Motor: sharp (libvips) · lado servidor · misma ruta que la API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "privacy": "Las imágenes se envían al host para procesarlas y no se almacenan."
     },
     "pptxText": {
       "file": "Archivo PPTX",
@@ -939,9 +939,9 @@
       "description": "Descripción",
       "descriptionPlaceholder": "Una frase sobre lo que hace",
       "badgeLicense": "Insignia de licencia",
-      "badgeNpm": "npm version",
+      "badgeNpm": "versión npm",
       "badgeBuild": "Estado de compilación",
-      "npmPackage": "npm package",
+      "npmPackage": "paquete npm",
       "npmPackagePlaceholder": "@scope/package",
       "repo": "Repositorio de GitHub",
       "repoPlaceholder": "propietario/repositorio",
@@ -950,13 +950,13 @@
       "calloutBodyPlaceholder": "Pre-1.0 — la API aún está en movimiento",
       "fenceLanguage": "Idioma",
       "installCommand": "Comando de instalación",
-      "installCommandPlaceholder": "npm install your-project",
+      "installCommandPlaceholder": "npm install tu-proyecto",
       "usageExample": "Ejemplo de uso",
       "usageExamplePlaceholder": "El ejemplo más pequeño que muestra el valor",
       "features": "Características",
       "featuresPlaceholder": "Una característica por línea",
       "contact": "Contacto",
-      "contactPlaceholder": "support@example.com",
+      "contactPlaceholder": "you@example.com",
       "license": "Licencia",
       "authors": "Autores",
       "authorsPlaceholder": "@handle, Jane Roe",
@@ -1815,7 +1815,7 @@
       "holidaysHint": "Si se deja vacío, el resultado es el conteo puro según la regla de fines de semana — no se aplica ningún calendario nacional.",
       "makeupWorkdays": "Días de compensación",
       "makeupHint": "Fechas trabajadas a pesar de caer en fin de semana o festivo — los sábados de compensación (调休/补班) de China van aquí.",
-      "datesPlaceholder": "2026-10-01\n2026-10-02",
+      "datesPlaceholder": "YYYY-MM-DD (una por línea)",
       "datesIgnored": "{n, plural, one {# entrada no era una fecha YYYY-MM-DD y no se está utilizando} other {# entradas no eran fechas YYYY-MM-DD y no se están utilizando}}",
       "pickStart": "Selecciona una fecha de inicio para comenzar.",
       "emptyHintShift": "Selecciona una fecha de inicio y un número de días hábiles.",
@@ -1996,20 +1996,20 @@
       "summaryClean": "No se encontraron metadatos eliminables. El archivo se devolvió sin cambios."
     },
     "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "valid": "Válido",
+      "invalid": "Inválido",
+      "summary": "{valid} / {total} válidos",
+      "match": "Coincide",
+      "mismatch": "No coincide",
+      "luhnCaveat": "Luhn solo comprueba la estructura de dígitos — no que la tarjeta exista o tenga fondos.",
       "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
+        "length_or_digits": "Se necesitan 12–19 dígitos",
+        "luhn_failed": "Falló la suma de control Luhn"
       }
     },
     "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
+      "zones": "Zonas horarias (una por línea)",
+      "at": "Instante (ISO / unix opcional)"
     }
   },
   "roots": {
