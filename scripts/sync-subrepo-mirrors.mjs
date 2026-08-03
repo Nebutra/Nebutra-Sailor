@@ -190,6 +190,14 @@ function normalizePackageJson(root, mirror, targetDir, catalogVersions, workspac
     manifest.packageManager = "pnpm@10.32.1";
   }
 
+  // Typecheck scripts often need Node types that monorepo hoists at the root.
+  if (manifest.scripts?.typecheck) {
+    manifest.devDependencies = {
+      ...(manifest.devDependencies ?? {}),
+      "@types/node": manifest.devDependencies?.["@types/node"] ?? "^22.10.0",
+    };
+  }
+
   writeJson(manifestPath, manifest);
 }
 
