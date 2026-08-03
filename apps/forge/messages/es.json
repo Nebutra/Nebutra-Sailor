@@ -2062,6 +2062,25 @@
       "dialect": "Dialecto SQL",
       "parseNote": "Solo parseo e inventario. ERD visual aparte.",
       "convertNote": "@dbml/core — misma ruta que la API."
+    },
+    "dnsLeak": {
+      "probeHost": "Host de prueba",
+      "run": "Ejecutar prueba de fuga DNS",
+      "idle": "Compara rutas multi-resolver, DoH del navegador y candidatos WebRTC.",
+      "note": "Un mapa completo de fugas DNS del SO requiere zona autoritativa. Forge reporta diversidad multi-resolver + DoH/WebRTC e IP de borde — sin geo falso.",
+      "edgeIp": "IP de borde",
+      "forgePaths": "Aciertos de resolver Forge",
+      "dohPaths": "Rutas DoH del navegador",
+      "webrtcCount": "IPs WebRTC",
+      "forgeResolvers": "Respuestas A multi-resolver Forge",
+      "browserDoh": "Respuestas DoH del navegador",
+      "webrtc": "Candidatos ICE WebRTC",
+      "egressMarkers": "Marcadores de salida Forge",
+      "honestyPrefix": "Honestidad:",
+      "verdictConsistent": "Las rutas se ven coherentes en esta prueba",
+      "verdictSplit": "Respuestas divididas entre rutas DNS",
+      "verdictIpMismatch": "IP pública WebRTC distinta de la IP de borde",
+      "verdictIncomplete": "Incompleto — faltan sondas del navegador"
     }
   },
   "roots": {

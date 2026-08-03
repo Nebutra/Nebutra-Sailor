@@ -25,9 +25,9 @@ export async function POST(request: Request, context: RouteContext) {
     session,
   });
   const registry = getForgeRegistry();
-  // Host-injected connection context for net/my-ip (hard-correct: no ambient magic in runtime).
+  // Host-injected connection context (hard-correct: no ambient magic in runtime).
   let input: unknown = body.input ?? {};
-  if (toolId === "net/my-ip") {
+  if (toolId === "net/my-ip" || toolId === "net/dns-leak") {
     const base =
       input && typeof input === "object" && !Array.isArray(input)
         ? (input as Record<string, unknown>)
@@ -42,14 +42,18 @@ export async function POST(request: Request, context: RouteContext) {
         typeof base.realIp === "string"
           ? base.realIp
           : (request.headers.get("x-real-ip") ?? undefined),
-      userAgent:
-        typeof base.userAgent === "string"
-          ? base.userAgent
-          : (request.headers.get("user-agent") ?? undefined),
-      acceptLanguage:
-        typeof base.acceptLanguage === "string"
-          ? base.acceptLanguage
-          : (request.headers.get("accept-language") ?? undefined),
+      ...(toolId === "net/my-ip"
+        ? {
+            userAgent:
+              typeof base.userAgent === "string"
+                ? base.userAgent
+                : (request.headers.get("user-agent") ?? undefined),
+            acceptLanguage:
+              typeof base.acceptLanguage === "string"
+                ? base.acceptLanguage
+                : (request.headers.get("accept-language") ?? undefined),
+          }
+        : {}),
     };
   }
   const result = await invokeTool(registry, {

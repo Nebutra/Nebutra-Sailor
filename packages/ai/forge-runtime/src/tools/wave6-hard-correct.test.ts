@@ -3,6 +3,7 @@ import {
   colorDeltaETool,
   dbmlParseTool,
   dbmlToSqlTool,
+  dnsLeakTool,
   dnsLookupTool,
   mermaidRenderTool,
   myIpTool,
@@ -70,4 +71,30 @@ describe("wave6 hard-correct tools", () => {
     expect(out.diagramType.toLowerCase()).toContain("flow");
     expect(out.svg).toBeNull();
   });
+
+  it("dns-leak multi-resolver probe returns honesty + edge ip", async () => {
+    const out = (await dnsLeakTool.execute({
+      probeHost: "example.com",
+      forwardedFor: "198.51.100.20",
+      clientProbes: [
+        {
+          path: "doh-cloudflare",
+          kind: "doh",
+          name: "example.com",
+          answers: ["93.184.215.14"],
+          ms: 12,
+        },
+      ],
+      webrtcIps: ["10.0.0.5", "198.51.100.20"],
+    })) as {
+      verdict: string;
+      edgeClientIp: string | null;
+      forgeResolvers: unknown[];
+      honesty: { fullSystemDnsLeakMap: boolean };
+    };
+    expect(out.edgeClientIp).toBe("198.51.100.20");
+    expect(out.forgeResolvers.length).toBeGreaterThanOrEqual(4);
+    expect(out.honesty.fullSystemDnsLeakMap).toBe(false);
+    expect(["consistent", "split_paths", "ip_mismatch", "incomplete"]).toContain(out.verdict);
+  }, 30_000);
 });

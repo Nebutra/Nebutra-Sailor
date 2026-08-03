@@ -2062,6 +2062,25 @@
       "dialect": "SQL dialect",
       "parseNote": "Parse and inventory only. ERD canvas ships separately after the layout quality gate.",
       "convertNote": "@dbml/core — same path as the API."
+    },
+    "dnsLeak": {
+      "probeHost": "Probe host",
+      "run": "Run DNS leak check",
+      "idle": "Run a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
+      "note": "Full OS-system DNS leak maps need an authoritative leak zone (dnsleaktest-style). Forge reports multi-resolver + browser DoH/WebRTC path diversity and edge IP — not a fake geo ASN list.",
+      "edgeIp": "Edge client IP",
+      "forgePaths": "Forge resolver hits",
+      "dohPaths": "Browser DoH paths",
+      "webrtcCount": "WebRTC IPs",
+      "forgeResolvers": "Forge multi-resolver A answers",
+      "browserDoh": "Browser DoH answers",
+      "webrtc": "WebRTC ICE candidates",
+      "egressMarkers": "Forge egress markers",
+      "honestyPrefix": "Honesty:",
+      "verdictConsistent": "Paths look consistent on this check",
+      "verdictSplit": "Split answers across DNS paths",
+      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
+      "verdictIncomplete": "Incomplete — browser probes missing"
     }
   },
   "roots": {

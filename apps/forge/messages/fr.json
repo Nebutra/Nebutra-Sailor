@@ -2062,6 +2062,25 @@
       "dialect": "Dialecte SQL",
       "parseNote": "Parse/inventaire seulement. ERD à part.",
       "convertNote": "@dbml/core — même chemin que l'API."
+    },
+    "dnsLeak": {
+      "probeHost": "Hôte de sonde",
+      "run": "Lancer le test de fuite DNS",
+      "idle": "Compare chemins multi-résolveurs, DoH navigateur et candidats WebRTC.",
+      "note": "Une carte complète de fuite DNS système exige une zone autoritaire. Forge rapporte la diversité multi-résolveur + DoH/WebRTC et l’IP de bord — pas de fausse géo.",
+      "edgeIp": "IP client de bord",
+      "forgePaths": "Chemins résolveur Forge",
+      "dohPaths": "Chemins DoH navigateur",
+      "webrtcCount": "IP WebRTC",
+      "forgeResolvers": "Réponses A multi-résolveur Forge",
+      "browserDoh": "Réponses DoH navigateur",
+      "webrtc": "Candidats ICE WebRTC",
+      "egressMarkers": "Marqueurs d’egress Forge",
+      "honestyPrefix": "Honnêteté :",
+      "verdictConsistent": "Chemins cohérents sur ce test",
+      "verdictSplit": "Réponses divergentes entre chemins DNS",
+      "verdictIpMismatch": "IP publique WebRTC ≠ IP de bord",
+      "verdictIncomplete": "Incomplet — sondes navigateur manquantes"
     }
   },
   "roots": {

@@ -2062,6 +2062,25 @@
       "dialect": "SQL 方言",
       "parseNote": "硬正确：仅解析与清单。ER 图画布需布局质量过 gate 后再单独上架。",
       "convertNote": "@dbml/core 导出/导入 — 与 API 同一路径。"
+    },
+    "dnsLeak": {
+      "probeHost": "探测域名",
+      "run": "开始 DNS 泄漏检测",
+      "idle": "运行后可对照多解析器、浏览器 DoH 与 WebRTC 候选地址。",
+      "note": "完整「系统 DNS 泄漏图」需要自建权威 NS 记录递归解析器（dnsleaktest 一类）。Forge 报告多解析器 + 浏览器 DoH/WebRTC 路径差异与边缘 IP，不做虚假 Geo/ASN。",
+      "edgeIp": "边缘客户端 IP",
+      "forgePaths": "Forge 解析路径命中",
+      "dohPaths": "浏览器 DoH 路径",
+      "webrtcCount": "WebRTC IP 数",
+      "forgeResolvers": "Forge 多解析器 A 记录",
+      "browserDoh": "浏览器 DoH 应答",
+      "webrtc": "WebRTC ICE 候选",
+      "egressMarkers": "Forge 出口标记",
+      "honestyPrefix": "诚实说明：",
+      "verdictConsistent": "本轮路径表现一致",
+      "verdictSplit": "不同 DNS 路径应答不一致",
+      "verdictIpMismatch": "WebRTC 公网 IP 与边缘 IP 不一致",
+      "verdictIncomplete": "不完整 — 缺少浏览器探测"
     }
   },
   "roots": {

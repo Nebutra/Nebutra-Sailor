@@ -2062,6 +2062,25 @@
       "dialect": "SQL 방언",
       "parseNote": "파싱/목록만. ERD는 별도.",
       "convertNote": "@dbml/core — API와 동일 경로."
+    },
+    "dnsLeak": {
+      "probeHost": "프로브 호스트",
+      "run": "DNS 누수 검사 실행",
+      "idle": "다중 리졸버·브라우저 DoH·WebRTC 후보를 대조합니다.",
+      "note": "OS 시스템 DNS 전체 누수 지도는 권한 NS 영역이 필요합니다. Forge는 다중 리졸버+DoH/WebRTC 경로 차이와 엣지 IP를 보고하며 가짜 Geo를 붙이지 않습니다.",
+      "edgeIp": "엣지 클라이언트 IP",
+      "forgePaths": "Forge 리졸버 적중",
+      "dohPaths": "브라우저 DoH 경로",
+      "webrtcCount": "WebRTC IP 수",
+      "forgeResolvers": "Forge 다중 리졸버 A 응답",
+      "browserDoh": "브라우저 DoH 응답",
+      "webrtc": "WebRTC ICE 후보",
+      "egressMarkers": "Forge 이그레스 마커",
+      "honestyPrefix": "정직한 설명:",
+      "verdictConsistent": "이번 검사에서 경로가 일치함",
+      "verdictSplit": "DNS 경로 간 응답 불일치",
+      "verdictIpMismatch": "WebRTC 공인 IP가 엣지 IP와 다름",
+      "verdictIncomplete": "불완전 — 브라우저 프로브 없음"
     }
   },
   "roots": {

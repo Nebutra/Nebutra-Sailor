@@ -2062,6 +2062,25 @@
       "dialect": "SQL-Dialekt",
       "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
       "convertNote": "@dbml/core — gleicher Pfad wie die API."
+    },
+    "dnsLeak": {
+      "probeHost": "Probe-Host",
+      "run": "DNS-Leak-Prüfung starten",
+      "idle": "Vergleicht Multi-Resolver-Pfade, Browser-DoH und WebRTC-Kandidaten.",
+      "note": "Vollständige System-DNS-Leak-Karten brauchen eine autoritative Leak-Zone. Forge meldet Multi-Resolver- + Browser-DoH/WebRTC-Pfadvielfalt und Edge-IP — kein Fake-Geo.",
+      "edgeIp": "Edge-Client-IP",
+      "forgePaths": "Forge-Resolver-Treffer",
+      "dohPaths": "Browser-DoH-Pfade",
+      "webrtcCount": "WebRTC-IPs",
+      "forgeResolvers": "Forge Multi-Resolver A-Antworten",
+      "browserDoh": "Browser-DoH-Antworten",
+      "webrtc": "WebRTC-ICE-Kandidaten",
+      "egressMarkers": "Forge-Egress-Marker",
+      "honestyPrefix": "Ehrlichkeit:",
+      "verdictConsistent": "Pfade wirken in diesem Check konsistent",
+      "verdictSplit": "Antworten über DNS-Pfade gespalten",
+      "verdictIpMismatch": "WebRTC-Public-IP weicht von Edge-IP ab",
+      "verdictIncomplete": "Unvollständig — Browser-Probes fehlen"
     }
   },
   "roots": {

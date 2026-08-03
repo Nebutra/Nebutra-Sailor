@@ -2062,6 +2062,25 @@
       "dialect": "SQL方言",
       "parseNote": "解析と一覧のみ。ER図は別途。",
       "convertNote": "@dbml/core — APIと同じ経路。"
+    },
+    "dnsLeak": {
+      "probeHost": "プローブホスト",
+      "run": "DNSリーク検査を実行",
+      "idle": "複数リゾルバ・ブラウザDoH・WebRTC候補を突き合わせます。",
+      "note": "OSシステムDNSの完全なリーク図は権威DNSゾーンが必要です。Forgeは複数リゾルバ+DoH/WebRTC経路とエッジIPを報告し、偽のGeoは出しません。",
+      "edgeIp": "エッジクライアントIP",
+      "forgePaths": "Forgeリゾルバヒット",
+      "dohPaths": "ブラウザDoH経路",
+      "webrtcCount": "WebRTC IP数",
+      "forgeResolvers": "Forge複数リゾルバのA応答",
+      "browserDoh": "ブラウザDoH応答",
+      "webrtc": "WebRTC ICE候補",
+      "egressMarkers": "Forge出口マーカー",
+      "honestyPrefix": "正直な注記：",
+      "verdictConsistent": "この検査では経路は一貫",
+      "verdictSplit": "DNS経路間で応答が分岐",
+      "verdictIpMismatch": "WebRTC公開IPがエッジIPと不一致",
+      "verdictIncomplete": "不完全 — ブラウザプローブ不足"
     }
   },
   "roots": {

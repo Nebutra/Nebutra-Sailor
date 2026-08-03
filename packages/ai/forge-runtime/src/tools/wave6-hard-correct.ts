@@ -272,6 +272,252 @@ export const myIpTool = tool({
   },
 });
 
+// ── DNS leak probe (hard-correct honesty) ───────────────────────────────────
+/**
+ * Full "system DNS leak" maps (dnsleaktest.com style) need an authoritative
+ * nameserver that logs recursive resolvers. Forge does not claim that without
+ * owning a leak zone. This tool is still product-useful:
+ *  - multi-resolver A answers from the Forge egress (node:dns Resolver)
+ *  - OpenDNS myip / Google whoami style egress markers
+ *  - optional browser DoH + WebRTC candidates the human page submits
+ *  - edge client IP (host-injected, same as my-ip)
+ */
+
+const LEAK_RESOLVERS = [
+  { id: "system", label: "Forge system", servers: null as string[] | null },
+  { id: "cloudflare", label: "Cloudflare 1.1.1.1", servers: ["1.1.1.1", "1.0.0.1"] },
+  { id: "google", label: "Google 8.8.8.8", servers: ["8.8.8.8", "8.8.4.4"] },
+  { id: "quad9", label: "Quad9 9.9.9.9", servers: ["9.9.9.9"] },
+  { id: "alidns", label: "AliDNS 223.5.5.5", servers: ["223.5.5.5", "223.6.6.6"] },
+  { id: "opendns", label: "OpenDNS", servers: ["208.67.222.222", "208.67.220.220"] },
+] as const;
+
+const ClientProbeSchema = z.object({
+  path: z.string().min(1).max(64),
+  kind: z.enum(["doh", "webrtc", "trace", "other"]).default("doh"),
+  name: z.string().max(253).optional(),
+  answers: z.array(z.string().max(253)).max(32).default([]),
+  error: z.string().max(500).optional(),
+  ms: z.number().int().min(0).max(60_000).optional(),
+});
+
+async function resolveAWithServers(
+  name: string,
+  servers: readonly string[] | null,
+  timeoutMs: number,
+): Promise<{ answers: string[]; error?: string; ms: number }> {
+  const started = Date.now();
+  const resolver = new dns.Resolver();
+  if (servers?.length) resolver.setServers([...servers]);
+  try {
+    const answers = await Promise.race([
+      resolver.resolve4(name),
+      new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error(`timeout ${timeoutMs}ms`)), timeoutMs);
+      }),
+    ]);
+    return { answers: answers.slice().sort(), ms: Date.now() - started };
+  } catch (err) {
+    return {
+      answers: [],
+      error: err instanceof Error ? err.message : String(err),
+      ms: Date.now() - started,
+    };
+  }
+}
+
+async function resolveTxtWithServers(
+  name: string,
+  servers: readonly string[] | null,
+  timeoutMs: number,
+): Promise<{ answers: string[]; error?: string; ms: number }> {
+  const started = Date.now();
+  const resolver = new dns.Resolver();
+  if (servers?.length) resolver.setServers([...servers]);
+  try {
+    const chunks = await Promise.race([
+      resolver.resolveTxt(name),
+      new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error(`timeout ${timeoutMs}ms`)), timeoutMs);
+      }),
+    ]);
+    const answers = chunks
+      .map((parts) => parts.join(""))
+      .filter(Boolean)
+      .sort();
+    return { answers, ms: Date.now() - started };
+  } catch (err) {
+    return {
+      answers: [],
+      error: err instanceof Error ? err.message : String(err),
+      ms: Date.now() - started,
+    };
+  }
+}
+
+export const dnsLeakTool = tool({
+  id: "net/dns-leak",
+  slug: "dns-leak",
+  category: "dev",
+  title: { zh: "DNS 泄漏检测", en: "DNS Leak Check" },
+  description: {
+    zh: "多解析器路径 + 浏览器 DoH/WebRTC 对照；诚实说明：无自建权威 NS 时不能声称完整系统 DNS 泄漏图",
+    en: "Multi-resolver path + browser DoH/WebRTC checks; honest: full system-DNS leak maps need an authoritative leak zone",
+  },
+  tier: "core",
+  sideEffect: "pure",
+  runtime: ["server"],
+  meterId: "forge.net.dns_leak",
+  roots: ["checker", "viewer"],
+  engine: {
+    name: "node:dns.Resolver+browser-probes",
+    upstream: "https://nodejs.org/api/dns.html",
+    version: "runtime",
+  },
+  seoKeywords: {
+    zh: "dns泄漏检测,vpn dns leak,dns泄露测试",
+    en: "dns leak test online, vpn dns leak check, dns leak detector",
+  },
+  inputSchema: z.object({
+    /** Stable public name for multi-resolver A comparison. */
+    probeHost: z.string().min(1).max(253).default("cloudflare.com"),
+    sessionId: z.string().max(64).optional(),
+    clientProbes: z.array(ClientProbeSchema).max(24).optional(),
+    webrtcIps: z.array(z.string().max(64)).max(32).optional(),
+    /** Host-injected like my-ip */
+    forwardedFor: z.string().max(2_000).optional(),
+    realIp: z.string().max(128).optional(),
+    remoteAddress: z.string().max(128).optional(),
+    timeoutMs: z.coerce.number().int().min(500).max(8_000).default(3_500),
+  }),
+  execute: async (input: {
+    probeHost?: string;
+    sessionId?: string;
+    clientProbes?: Array<{
+      path: string;
+      kind?: "doh" | "webrtc" | "trace" | "other";
+      name?: string;
+      answers?: string[];
+      error?: string;
+      ms?: number;
+    }>;
+    webrtcIps?: string[];
+    forwardedFor?: string;
+    realIp?: string;
+    remoteAddress?: string;
+    timeoutMs?: number;
+  }) => {
+    const probeHost = (input.probeHost ?? "cloudflare.com").trim().replace(/\.$/, "");
+    if (!probeHost) throw new Error("probeHost required");
+    if (
+      /^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[0-1])\.|169\.254\.|0\.0\.0\.0|::1)/i.test(
+        probeHost,
+      )
+    ) {
+      throw new Error("Refusing private/link-local probe hosts (SSRF protection)");
+    }
+    const timeoutMs = input.timeoutMs ?? 3_500;
+    const chain = (input.forwardedFor ?? "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const edgeClientIp = chain[0] || input.realIp || input.remoteAddress || null;
+
+    const multi = await Promise.all(
+      LEAK_RESOLVERS.map(async (r) => {
+        const result = await resolveAWithServers(probeHost, r.servers, timeoutMs);
+        return {
+          resolverId: r.id,
+          resolverLabel: r.label,
+          servers: r.servers,
+          name: probeHost,
+          type: "A" as const,
+          ...result,
+        };
+      }),
+    );
+
+    // Egress markers via known whoami names (Forge host view, not user system DNS).
+    const [opendnsMyIp, googleWhoami] = await Promise.all([
+      resolveAWithServers("myip.opendns.com", ["208.67.222.222"], timeoutMs),
+      resolveTxtWithServers("o-o.myaddr.l.google.com", ["8.8.8.8"], timeoutMs),
+    ]);
+
+    const successful = multi.filter((m) => m.answers.length > 0);
+    const answerFingerprints = [...new Set(successful.map((m) => m.answers.join(",")))];
+    const splitAcrossResolvers = answerFingerprints.length > 1;
+
+    const clientProbes = (input.clientProbes ?? []).map((p) => ({
+      path: p.path,
+      kind: p.kind ?? "doh",
+      name: p.name ?? null,
+      answers: [...(p.answers ?? [])].sort(),
+      error: p.error ?? null,
+      ms: p.ms ?? null,
+    }));
+    const dohProbes = clientProbes.filter((p) => p.kind === "doh" && p.answers.length > 0);
+    const dohFingerprints = [...new Set(dohProbes.map((p) => p.answers.join(",")))];
+    const clientDohSplit = dohFingerprints.length > 1;
+
+    const webrtcIps = [...new Set((input.webrtcIps ?? []).map((s) => s.trim()).filter(Boolean))];
+    const privateWebrtc = webrtcIps.filter((ip) =>
+      /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[0-1])\.|fc|fd|fe80:|::1|127\.)/i.test(ip),
+    );
+    const publicWebrtc = webrtcIps.filter((ip) => !privateWebrtc.includes(ip));
+
+    const signals: string[] = [];
+    if (splitAcrossResolvers) signals.push("forge_resolvers_disagree_on_answers");
+    if (clientDohSplit) signals.push("browser_doh_paths_disagree_on_answers");
+    if (publicWebrtc.length > 0 && edgeClientIp && !publicWebrtc.includes(edgeClientIp)) {
+      signals.push("webrtc_public_ip_differs_from_edge_ip");
+    }
+    if (privateWebrtc.length > 0) signals.push("webrtc_local_candidates_present");
+    if (clientProbes.length === 0) signals.push("no_browser_probes_submitted");
+
+    let verdict: "consistent" | "split_paths" | "ip_mismatch" | "incomplete" = "consistent";
+    if (clientProbes.length === 0 && webrtcIps.length === 0) verdict = "incomplete";
+    else if (signals.includes("webrtc_public_ip_differs_from_edge_ip")) verdict = "ip_mismatch";
+    else if (splitAcrossResolvers || clientDohSplit) verdict = "split_paths";
+
+    return {
+      ok: true as const,
+      sessionId: input.sessionId ?? null,
+      probeHost,
+      edgeClientIp,
+      forwardedChain: chain,
+      forgeResolvers: multi,
+      forgeEgressMarkers: {
+        opendnsMyIp: opendnsMyIp.answers,
+        opendnsError: opendnsMyIp.error ?? null,
+        googleWhoamiTxt: googleWhoami.answers,
+        googleWhoamiError: googleWhoami.error ?? null,
+        note: "Egress markers are what OpenDNS/Google see for the Forge host, not your laptop.",
+      },
+      clientProbes,
+      webrtcIps,
+      webrtcPublic: publicWebrtc,
+      webrtcPrivate: privateWebrtc,
+      signals,
+      verdict,
+      summary: {
+        forgeResolverPaths: multi.length,
+        forgePathsWithAnswers: successful.length,
+        distinctForgeAnswerSets: answerFingerprints.length,
+        browserDohPaths: dohProbes.length,
+        distinctBrowserDohAnswerSets: dohFingerprints.length,
+      },
+      honesty: {
+        fullSystemDnsLeakMap: false,
+        reason:
+          "Mapping the recursive resolvers used by the OS resolver requires an authoritative nameserver that logs queries (dnsleaktest-style). This tool reports multi-resolver + browser DoH/WebRTC path diversity and edge IP.",
+        recommendation:
+          "On VPN: compare edgeClientIp with your expected VPN exit; use browser DoH results only as explicit DoH paths; treat WebRTC public candidates vs edge IP as an IP-leak signal.",
+      },
+      engine: "node:dns.Resolver+client-probes",
+    };
+  },
+});
+
 // ── Mermaid render ──────────────────────────────────────────────────────────
 
 /**
@@ -726,6 +972,7 @@ export const wave6HardCorrectTools: readonly AnyForgeToolDefinition[] = [
   dnsLookupTool,
   tlsCertInspectTool,
   myIpTool,
+  dnsLeakTool,
   mermaidRenderTool,
   colorDeltaETool,
   dbmlParseTool,

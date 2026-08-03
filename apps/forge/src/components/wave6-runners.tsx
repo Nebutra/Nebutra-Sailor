@@ -243,6 +243,7 @@ export function MyIpRunner({ toolId }: { toolId: string }) {
   );
 }
 
+export { DnsLeakRunner } from "@/components/dns-leak-runner";
 /** @deprecated import from @/components/mermaid-runner — re-export for stable path */
 export { MermaidRenderRunner } from "@/components/mermaid-runner";
 

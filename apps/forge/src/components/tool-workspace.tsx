@@ -147,6 +147,7 @@ import {
   ColorDeltaERunner,
   DbmlParseRunner,
   DbmlToSqlRunner,
+  DnsLeakRunner,
   DnsLookupRunner,
   MermaidRenderRunner,
   MyIpRunner,
@@ -617,6 +618,8 @@ export function ToolWorkspace({
       return <TlsCertInspectRunner toolId={toolId} />;
     case "my-ip":
       return <MyIpRunner toolId={toolId} />;
+    case "dns-leak":
+      return <DnsLeakRunner toolId={toolId} />;
     case "mermaid-render":
       return <MermaidRenderRunner toolId={toolId} />;
     case "color-delta-e":

@@ -2062,6 +2062,25 @@
       "dialect": "SQL 方言",
       "parseNote": "僅解析與清單。ER 圖另案。",
       "convertNote": "@dbml/core — 與 API 同一路徑。"
+    },
+    "dnsLeak": {
+      "probeHost": "探測網域",
+      "run": "開始 DNS 洩漏檢測",
+      "idle": "執行後可比對多解析器、瀏覽器 DoH 與 WebRTC 候選位址。",
+      "note": "完整「系統 DNS 洩漏圖」需要自建權威 NS 記錄遞迴解析器。Forge 報告多解析器 + 瀏覽器 DoH/WebRTC 路徑差異與邊緣 IP，不做虛假 Geo/ASN。",
+      "edgeIp": "邊緣客戶端 IP",
+      "forgePaths": "Forge 解析路徑命中",
+      "dohPaths": "瀏覽器 DoH 路徑",
+      "webrtcCount": "WebRTC IP 數",
+      "forgeResolvers": "Forge 多解析器 A 記錄",
+      "browserDoh": "瀏覽器 DoH 應答",
+      "webrtc": "WebRTC ICE 候選",
+      "egressMarkers": "Forge 出口標記",
+      "honestyPrefix": "誠實說明：",
+      "verdictConsistent": "本輪路徑表現一致",
+      "verdictSplit": "不同 DNS 路徑應答不一致",
+      "verdictIpMismatch": "WebRTC 公網 IP 與邊緣 IP 不一致",
+      "verdictIncomplete": "不完整 — 缺少瀏覽器探測"
     }
   },
   "roots": {
