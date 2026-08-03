@@ -22,6 +22,7 @@ import {
   NoExecutorConfiguredError,
   REFUSING_SANDBOX,
   resolveCarinaSandboxFromEnv,
+  resolveCarinaWorkspaceRoot,
   SandboxDelegationError,
 } from "./sandbox";
 import { ToolRegistry } from "./tools";
@@ -427,5 +428,115 @@ describe("Carina Phase 2 host helpers", () => {
     expect(out.exitCode).toBe(0);
     expect(out.executedOn).toBe("carina");
     expect(methods).toEqual(["gateway.hello", "session.create", "command.exec"]);
+  });
+});
+
+
+describe("Carina workspace + approval", () => {
+  it("resolveCarinaWorkspaceRoot prefers map then template then root", () => {
+    expect(
+      resolveCarinaWorkspaceRoot("org_a", {
+        CARINA_WORKSPACE_MAP: JSON.stringify({ org_a: "/a" }),
+        CARINA_WORKSPACE_ROOT: "/root",
+      }),
+    ).toBe("/a");
+    expect(
+      resolveCarinaWorkspaceRoot("org_b", {
+        CARINA_WORKSPACE_TEMPLATE: "/ws/{tenantId}",
+        CARINA_WORKSPACE_ROOT: "/root",
+      }),
+    ).toBe("/ws/org_b");
+    expect(resolveCarinaWorkspaceRoot("x", { CARINA_WORKSPACE_ROOT: "/root" })).toBe("/root");
+    expect(resolveCarinaWorkspaceRoot("x", {})).toBeUndefined();
+  });
+
+  it("resolveApproval calls governance.approval.resolve", async () => {
+    const bodies: Array<Record<string, unknown>> = [];
+    const fakeFetch = (async (_i: RequestInfo | URL, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body ?? "{}")) as Record<string, unknown>;
+      bodies.push(body);
+      if (body.method === "gateway.hello") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { protocol_version: 1 } }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "governance.approval.resolve") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { resolved: true } }),
+          { status: 200 },
+        );
+      }
+      return new Response("{}", { status: 500 });
+    }) as unknown as typeof fetch;
+
+    const sandbox = createCarinaSandbox({ baseUrl: "http://c", fetchImpl: fakeFetch });
+    const result = await sandbox.resolveApproval({
+      decisionId: "dec_1",
+      approve: true,
+      scope: "once",
+      approver: "user_1",
+    });
+    expect(result).toEqual({ resolved: true });
+    expect(bodies.some((b) => b.method === "governance.approval.resolve")).toBe(true);
+  });
+
+  it("autoApproveOnRequire retries command.exec after resolve", async () => {
+    let execCount = 0;
+    const fakeFetch = (async (_i: RequestInfo | URL, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body ?? "{}")) as { method?: string; id?: number };
+      if (body.method === "gateway.hello") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { protocol_version: 1 } }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "governance.approval.resolve") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { ok: true } }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "command.exec") {
+        execCount += 1;
+        if (execCount === 1) {
+          return new Response(
+            JSON.stringify({
+              jsonrpc: "2.0",
+              id: body.id,
+              result: { decision: { decision: "requires_approval", decision_id: "d9" } },
+            }),
+            { status: 200 },
+          );
+        }
+        return new Response(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: body.id,
+            result: {
+              decision: { decision: "allowed", decision_id: "d9" },
+              result: { exit_code: 0, stdout: ["ok"], stderr: [] },
+            },
+          }),
+          { status: 200 },
+        );
+      }
+      return new Response("{}", { status: 500 });
+    }) as unknown as typeof fetch;
+
+    const sandbox = createCarinaSandbox({
+      baseUrl: "http://c",
+      fetchImpl: fakeFetch,
+      autoApproveOnRequire: true,
+      skipHello: false,
+    });
+    const result = await sandbox.exec({
+      tenantId: "t",
+      threadId: "s",
+      command: "echo ok",
+      capabilityPolicy: DEFAULT_CAPABILITY_POLICY,
+    });
+    expect(result.exitCode).toBe(0);
+    expect(execCount).toBe(2);
   });
 });

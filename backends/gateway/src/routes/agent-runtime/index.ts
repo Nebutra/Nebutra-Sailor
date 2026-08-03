@@ -3,18 +3,13 @@
  *
  * Connects the absorbed runtime grammar into the gateway: a tenant-scoped
  * turn driven by `runTurn`, streamed to the client over SSE. Gated by the
- * off-by-default `agent-runtime-demo` feature flag and `requireAuth`.
+ * off-by-default `agent-runtime-demo` feature flag and `requireAuth`
+ * (enable with FEATURE_FLAG_AGENT_RUNTIME_DEMO=true or KILL_SWITCH_…).
  *
- * Honest scope:
- *  - ModelInvoker is a thin bridge over `@nebutra/agents` (real model stack;
- *    no provider re-port).
- *  - ApprovalGate is fail-closed (auto-denies prompts) — human-in-the-loop
- *    transport is future work; unapproved tools are never dispatched.
- *  - Track B (Carina): `createGatewayCarinaBundle()` reads CARINA_JSONRPC_URL.
- *    When set, registers `command_exec` → createCarinaSandbox + session.create
- *    (needs CARINA_WORKSPACE_ROOT). When unset, empty tools + fail-closed.
- *    Approval bridge (task.action.approve) still open — see #384.
- *  - RolloutStore: in-memory by default; AGENT_ROLLOUT_DURABLE=1 → Postgres.
+ * Track B (Carina):
+ *  - `createGatewayCarinaBundle({ tenantId, threadId })` when CARINA_JSONRPC_URL
+ *  - `GET  /carina/status`     connectivity probe (auth; no demo flag)
+ *  - `POST /carina/approvals`  governance.approval.resolve bridge (auth)
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
@@ -36,20 +31,21 @@ import { getTenantDb } from "@nebutra/db";
 import { FLAGS, featureFlagMiddleware } from "@nebutra/feature-flags";
 import { streamSSE } from "hono/streaming";
 import { getGatewayOrchestrator } from "../../agents/orchestrator-singleton.js";
-import { createGatewayCarinaBundle } from "../../lib/carina-sandbox.js";
+import {
+  createGatewayCarinaBundle,
+  getCarinaSandbox,
+} from "../../lib/carina-sandbox.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 export const agentRuntimeRoutes = new OpenAPIHono();
 
 agentRuntimeRoutes.use("*", requireAuth);
-agentRuntimeRoutes.use("*", featureFlagMiddleware(FLAGS.AGENT_RUNTIME_DEMO));
+// Demo flag only for turns — carina/status + approvals stay operator-reachable.
+agentRuntimeRoutes.use("/turns", featureFlagMiddleware(FLAGS.AGENT_RUNTIME_DEMO));
 
 /**
  * Rollout store selector. Default = process-local in-memory. The durable
- * Postgres system-of-record is opt-in via `AGENT_ROLLOUT_DURABLE=1` and
- * requires the migration applied + Prisma client regenerated (see ADR
- * 2026-05-19). The cast bridges the not-yet-regenerated client without
- * faking durability: when off, durability is simply not claimed.
+ * Postgres system-of-record is opt-in via `AGENT_ROLLOUT_DURABLE=1`.
  */
 function rolloutStore(): RolloutStore {
   if (process.env.AGENT_ROLLOUT_DURABLE !== "1") {
@@ -61,6 +57,13 @@ function rolloutStore(): RolloutStore {
       return (db as unknown as { agentRolloutLine: PrismaRolloutDelegate }).agentRolloutLine;
     }),
   );
+}
+
+function tenantFrom(c: { get: (k: string) => unknown }): {
+  organizationId?: string;
+  userId?: string;
+} {
+  return c.get("tenant") as { organizationId?: string; userId?: string };
 }
 
 /** Thin bridge: one round = the orchestrator's reply as a single text item. */
@@ -88,6 +91,135 @@ function modelInvoker(
     },
   };
 }
+
+// ── Carina ops (auth only — no demo flag so operators can probe) ─────────────
+
+const carinaStatusRoute = createRoute({
+  method: "get",
+  path: "/carina/status",
+  tags: ["Agent Runtime"],
+  operationId: "getCarinaStatus",
+  summary: "Probe Carina Track-B connectivity",
+  responses: {
+    200: {
+      description: "Carina configuration + optional hello probe",
+      content: {
+        "application/json": {
+          schema: z.object({
+            enabled: z.boolean(),
+            workspaceConfigured: z.boolean(),
+            autoApprove: z.boolean(),
+            protocolVersion: z.number().optional(),
+            error: z.string().optional(),
+          }),
+        },
+      },
+    },
+    401: { description: "Unauthenticated" },
+  },
+});
+
+agentRuntimeRoutes.openapi(carinaStatusRoute, async (c) => {
+  const env = process.env;
+  const enabled = Boolean(env.CARINA_JSONRPC_URL?.trim());
+  const workspaceConfigured = Boolean(
+    env.CARINA_WORKSPACE_ROOT?.trim() ||
+      env.CARINA_WORKSPACE_TEMPLATE?.trim() ||
+      env.CARINA_WORKSPACE_MAP?.trim(),
+  );
+  const autoApprove = env.CARINA_AUTO_APPROVE === "1" || env.CARINA_AUTO_APPROVE === "true";
+
+  if (!enabled) {
+    return c.json({ enabled: false, workspaceConfigured, autoApprove });
+  }
+
+  const sandbox = getCarinaSandbox(env);
+  if (!sandbox) {
+    return c.json({
+      enabled: false,
+      workspaceConfigured,
+      autoApprove,
+      error: "url set but sandbox resolve failed",
+    });
+  }
+
+  try {
+    const probe = await sandbox.probe();
+    return c.json({
+      enabled: true,
+      workspaceConfigured,
+      autoApprove,
+      protocolVersion: probe.protocolVersion,
+    });
+  } catch (err) {
+    return c.json({
+      enabled: true,
+      workspaceConfigured,
+      autoApprove,
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+});
+
+const carinaApprovalRoute = createRoute({
+  method: "post",
+  path: "/carina/approvals",
+  tags: ["Agent Runtime"],
+  operationId: "resolveCarinaApproval",
+  summary: "Approve or deny a Carina governance decision",
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: z.object({
+            decisionId: z.string().min(1),
+            approve: z.boolean(),
+            scope: z.enum(["once", "session", "project"]).optional(),
+          }),
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Carina resolve result",
+      content: {
+        "application/json": {
+          schema: z.object({
+            ok: z.boolean(),
+            result: z.unknown().optional(),
+            error: z.string().optional(),
+          }),
+        },
+      },
+    },
+    401: { description: "Unauthenticated" },
+    503: { description: "Carina not configured" },
+  },
+});
+
+agentRuntimeRoutes.openapi(carinaApprovalRoute, async (c) => {
+  const sandbox = getCarinaSandbox();
+  if (!sandbox) {
+    return c.json({ ok: false, error: "Carina not configured (CARINA_JSONRPC_URL)" }, 503);
+  }
+  const tenant = tenantFrom(c);
+  const body = c.req.valid("json");
+  try {
+    const result = await sandbox.resolveApproval({
+      decisionId: body.decisionId,
+      approve: body.approve,
+      approver: tenant.userId ?? tenant.organizationId ?? "gateway",
+      ...(body.scope ? { scope: body.scope } : {}),
+    });
+    return c.json({ ok: true, result });
+  } catch (err) {
+    return c.json({
+      ok: false,
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+});
 
 // ── Route: start a turn, stream events over SSE ──────────────────────────────
 
@@ -131,11 +263,7 @@ agentRuntimeRoutes.openapi(turnRoute, async (c) => {
   const orch = getGatewayOrchestrator();
   if (!orch) return c.json({ error: "model stack unavailable" }, 503);
 
-  const tenant = c.get("tenant") as {
-    organizationId?: string;
-    userId?: string;
-    plan?: string;
-  };
+  const tenant = tenantFrom(c);
   const tenantId = tenant.organizationId;
   if (!tenantId) return c.json({ error: "organization scope required" }, 401);
 
@@ -148,7 +276,10 @@ agentRuntimeRoutes.openapi(turnRoute, async (c) => {
   };
 
   return streamSSE(c, async (stream) => {
-    const { tools } = createGatewayCarinaBundle();
+    const { tools } = createGatewayCarinaBundle(process.env, {
+      tenantId,
+      threadId: body.threadId,
+    });
     const events = runTurn(body.input, {
       tenantId,
       threadId: body.threadId,
@@ -159,6 +290,8 @@ agentRuntimeRoutes.openapi(turnRoute, async (c) => {
       store: rolloutStore(),
       approvalGate: {
         async request() {
+          // Product HITL UI not shipped; deny Sailor-side prompts. Carina
+          // kernel approvals use POST /carina/approvals or CARINA_AUTO_APPROVE.
           return { kind: "denied" };
         },
       },
