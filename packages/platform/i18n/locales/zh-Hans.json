@@ -379,7 +379,8 @@
       "captchaError": "机器人校验失败,请刷新页面后重试。",
       "challengeTitle": "请完成人机验证",
       "challengeSubtitle": "通过验证后继续登录。此步骤单独进行，以免打乱登录表单布局。",
-      "challengeSubmitting": "验证完成，正在登录…"
+      "challengeSubmitting": "验证完成，正在登录…",
+      "legalNotice": "继续即表示你同意 {brandName} 的 <terms>服务条款</terms> 与 <privacy>隐私政策</privacy>。"
     },
     "signUp": {
       "title": "创建 Nebutra 账号",

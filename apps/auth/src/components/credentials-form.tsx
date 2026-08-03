@@ -1,5 +1,7 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
@@ -16,6 +18,10 @@ import {
 import { challengePath, writePendingAuth } from "@/lib/pending-auth";
 import { OAuthButtons } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
+
+const LANDING_ORIGIN = getBrandOrigin("landing");
+const TERMS_HREF = `${LANDING_ORIGIN}/terms`;
+const PRIVACY_HREF = `${LANDING_ORIGIN}/privacy`;
 
 interface CredentialsFormProps {
   mode: "sign-in" | "sign-up";
@@ -378,6 +384,36 @@ export function CredentialsForm({
             </Link>
           </>
         )}
+      </p>
+
+      {/*
+        Implied-consent legal line (Supabase-style). Links to marketing-site
+        pages — no marketing-email claim (we do not auto-subscribe on sign-in).
+      */}
+      <p className="mt-8 text-center text-xs leading-5 text-muted-foreground">
+        {tSignIn.rich("legalNotice", {
+          brandName: brand.name,
+          terms: (chunks) => (
+            <a
+              href={TERMS_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground"
+            >
+              {chunks}
+            </a>
+          ),
+          privacy: (chunks) => (
+            <a
+              href={PRIVACY_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground"
+            >
+              {chunks}
+            </a>
+          ),
+        })}
       </p>
     </div>
   );

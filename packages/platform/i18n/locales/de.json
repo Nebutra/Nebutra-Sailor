@@ -379,7 +379,8 @@
       "captchaError": "Bot-Verifizierung fehlgeschlagen. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
       "challengeTitle": "Verify you are human",
       "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…"
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "Mit dem Fortfahren stimmst du den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> von {brandName} zu."
     },
     "signUp": {
       "title": "Nebutra-Konto erstellen",

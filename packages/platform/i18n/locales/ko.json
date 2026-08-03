@@ -379,7 +379,8 @@
       "captchaError": "봇 확인이 실패했습니다. 페이지를 새로고침하고 다시 시도하세요.",
       "challengeTitle": "Verify you are human",
       "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…"
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "계속 진행하면 {brandName}의 <terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다."
     },
     "signUp": {
       "title": "Nebutra 계정 만들기",

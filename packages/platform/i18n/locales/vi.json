@@ -379,7 +379,8 @@
       "captchaError": "Xác minh chống bot thất bại. Làm mới trang và thử lại.",
       "challengeTitle": "Verify you are human",
       "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…"
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
     },
     "signUp": {
       "title": "Tạo tài khoản Nebutra",

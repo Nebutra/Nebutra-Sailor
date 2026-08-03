@@ -379,7 +379,8 @@
       "captchaError": "बॉट सत्यापन विफल। पेज रीफ़्रेश करें और पुनः प्रयास करें।",
       "challengeTitle": "Verify you are human",
       "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…"
+      "challengeSubmitting": "Verification complete — signing you in…",
+      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
     },
     "signUp": {
       "title": "अपना Nebutra खाता बनाएं",
