@@ -1607,8 +1607,7 @@ html {
 @utility font-cn {
   font-family: var(--font-cn);
   line-height: 1.75;
-  /* Do NOT use word-break: break-all here — it collapses flex min-content
-     to a single glyph, so flex-col + items-center heroes render one char/line. */
+  /* Never use word-break: break-all on CJK chrome — see CJK layout note below. */
   overflow-wrap: break-word;
   word-break: normal;
 }
@@ -1616,24 +1615,75 @@ html {
 /* ─── CJK Auto-Activation via :lang() ───────────────────────
    When <html lang="zh|ja|ko"> is set by app layouts, body
    automatically switches to the CJK font stack.
+
+   Layout note (2026-08): CJK soft-wrap offers a break between almost every
+   glyph, so the CSS *min-content* size of a text run is often one character.
+   Combined with:
+     • flex-col + items-center  (children size to fit-content/min-content)
+     • grid tracks minmax(0, fr) (tracks may size from that min-content)
+   prose collapses into a vertical one-glyph strip (forge/landing heroes &
+   footers). Do NOT "fix" this with a global min-width on all p/h* — that
+   breaks responsive cards. Prefer stretch rules below + local w-full.
    ─────────────────────────────────────────────────────────── */
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
   font-family: var(--font-cn);
   line-height: 1.75;
-  /* Same rule as .font-cn: break-all + flex items-center ⇒ vertical CJK strip. */
   overflow-wrap: break-word;
   word-break: normal;
 }
 
 /*
- * CJK runs offer a soft-wrap opportunity between nearly every glyph, so the
- * CSS min-content size of a paragraph is often one character. Flex/grid items
- * with min-width:auto then collapse to a 1-glyph column. Floor min-content for
- * common prose boxes so brand blurbs / heroes stay horizontal.
+ * flex-col + items-center: force prose children to take the flex container's
+ * cross-size instead of shrinking to 1-glyph min-content. Works with Tailwind's
+ * split classes (flex + flex-col + items-center on the same element).
  */
 :is(html:lang(zh), html:lang(ja), html:lang(ko))
-  :is(p, h1, h2, h3, h4, h5, h6, li, dd, dt, blockquote) {
-  min-width: min(100%, 12rem);
+  :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
+  > :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
+  align-self: stretch;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/*
+ * Text blocks that only set max-width (common brand blurbs: max-w-xs/sm)
+ * still need an explicit width so they don't shrink to min-content inside
+ * flex/grid parents. min(100%, <max>) keeps them responsive.
+ */
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-xs {
+  width: min(100%, 20rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-sm {
+  width: min(100%, 24rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-md {
+  width: min(100%, 28rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-lg {
+  width: min(100%, 32rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-xl {
+  width: min(100%, 36rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-2xl {
+  width: min(100%, 42rem);
+  min-width: 0;
+}
+
+/* Opt-in for wrappers (div/section) that hold CJK prose in flex/grid tracks */
+@utility cjk-prose {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {

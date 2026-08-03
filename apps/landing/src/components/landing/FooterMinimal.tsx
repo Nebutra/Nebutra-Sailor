@@ -226,11 +226,11 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
 
       <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8">
         {/* Main grid: Brand + Navigation */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,4fr)] lg:gap-12">
-          {/* Brand block — spans 2 cols on large */}
-          <div className="flex flex-col gap-5">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(14rem,2fr)_minmax(0,4fr)] lg:gap-12">
+          {/* Brand block — real track min avoids CJK 1-glyph min-content collapse */}
+          <div className="flex w-full min-w-0 max-w-sm flex-col gap-5">
             <Logo variant="en" size={120} inverted={isDark} />
-            <p className="max-w-xs text-[13px] leading-relaxed text-muted-foreground">
+            <p className="w-full max-w-sm text-[13px] leading-relaxed break-words text-muted-foreground">
               {t("brandDescription")}
             </p>
 

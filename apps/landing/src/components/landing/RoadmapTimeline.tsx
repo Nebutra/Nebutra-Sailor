@@ -92,7 +92,7 @@ export function RoadmapTimeline({ data }: { data: RoadmapPhase[] }) {
           return (
             <div key={phase.number} className="flex justify-start gap-6 pt-10 md:gap-12 md:pt-24">
               {/* Sticky phase header — parks in viewport while content scrolls past */}
-              <div className="sticky top-32 z-10 flex max-w-xs flex-col self-start md:max-w-sm md:flex-row md:items-center md:w-full">
+              <div className="sticky top-32 z-10 flex w-full min-w-0 max-w-xs flex-col self-start md:max-w-sm md:flex-row md:items-center">
                 {/* Beam node — white pill with hairline ring, the status dot inside */}
                 <div className="absolute left-3 flex h-10 w-10 items-center justify-center rounded-full bg-background shadow-[0_0_0_1px_color-mix(in_oklab,hsl(var(--foreground)),transparent_94%)] md:left-3">
                   <div className={`h-4 w-4 rounded-full ${meta.dot}`} />

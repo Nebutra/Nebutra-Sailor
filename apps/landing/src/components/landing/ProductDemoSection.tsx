@@ -39,14 +39,14 @@ export function ProductDemoSection() {
 
       <div className="container mx-auto px-4 max-w-[1400px] relative z-10">
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-12 md:mb-20 lg:mb-28">
-          <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-8">
-            <span className="text-sm font-semibold text-primary tracking-wide uppercase">
+        <div className="mb-12 flex w-full flex-col items-center text-center md:mb-20 lg:mb-28">
+          <div className="mb-8 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
+            <span className="text-sm font-semibold tracking-wide text-primary uppercase">
               {t("badge")}
             </span>
           </div>
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-6 max-w-4xl"
+            className="mb-6 w-full max-w-4xl text-balance text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",
@@ -54,7 +54,7 @@ export function ProductDemoSection() {
           >
             {t("title")}
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground text-balance max-w-2xl leading-relaxed font-medium">
+          <p className="w-full max-w-2xl text-balance text-lg font-medium leading-relaxed text-muted-foreground md:text-xl">
             {t("description")}
           </p>
         </div>
