@@ -68,7 +68,7 @@ export {
 // Import Spotlight directly. The @lobehub/ui/awesome barrel also imports Spline,
 // whose runtime uses Function() and violates the app's production CSP.
 // (Upstream types now match the default export — do not reintroduce @ts-expect-error.)
-export { default as Spotlight } from "@lobehub/ui/es/awesome/Spotlight/Spotlight";
+export { Spotlight } from "@lobehub/ui/es/awesome/Spotlight/Spotlight";
 export * from "../shared/animation/motion";
 export * from "./ai-prompt-box";
 // Animation
