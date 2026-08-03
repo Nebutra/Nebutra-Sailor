@@ -63,6 +63,8 @@ Toggles:
   -h, --help                show this help
   -v, --version             show version
 
+Requires Node.js >= 22 (same floor as the monorepo).
+
 Interactive flow:
   1. Location — new folder (name) or current directory
   2. Region / Auth / AI topology
