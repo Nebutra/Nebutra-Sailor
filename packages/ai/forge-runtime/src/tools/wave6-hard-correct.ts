@@ -4,7 +4,7 @@
  * Decisions (no degraded ship):
  * - DNS / reverse / TLS: Node built-ins; honest about resolver egress
  * - my-ip: server-only; host injects connection headers (not forge-runtime ambient)
- * - mermaid: official mermaid; parse always; SVG via JSDOM (fail-closed if DOM missing)
+ * - mermaid: official mermaid; parse always; SVG via Playwright + mermaid.min.js (not JSDOM)
  * - color-delta-e: culori CIEDE2000 (already depend on culori)
  * - DBML: @dbml/core parse + SQL convert only — NO fake ERD visualizer until layout ships
  */
