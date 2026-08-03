@@ -344,7 +344,8 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): ExternalSand
         exitCode: cr.exit_code ?? (cr.timed_out ? 124 : 0),
         aggregatedOutput,
         executedOn,
-        decisionId,
+        // exactOptionalPropertyTypes: omit key when undefined
+        ...(decisionId !== undefined ? { decisionId } : {}),
         correlationId: `${request.tenantId}:${request.threadId}`,
       };
     },
