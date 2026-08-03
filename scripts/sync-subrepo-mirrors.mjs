@@ -205,6 +205,11 @@ function normalizePackageJson(root, mirror, targetDir, catalogVersions, workspac
     manifest.packageManager = "pnpm@10.32.1";
   }
 
+  // Monorepo packages often rely on root-hoisted toolchain (tsup/vitest/tsx).
+  // Standalone mirrors must declare anything their scripts invoke, or Build
+  // hard-fails with "command not found".
+  ensureStandaloneToolchain(manifest, catalogVersions);
+
   // Typecheck scripts often need Node types that monorepo hoists at the root.
   if (manifest.scripts?.typecheck) {
     manifest.devDependencies = {
@@ -214,6 +219,46 @@ function normalizePackageJson(root, mirror, targetDir, catalogVersions, workspac
   }
 
   writeJson(manifestPath, manifest);
+}
+
+/** Default ranges when the workspace catalog does not pin a tool. */
+const STANDALONE_TOOLCHAIN_FALLBACKS = {
+  tsup: "^8.5.1",
+  vitest: "^4.1.4",
+  tsx: "^4.21.0",
+  typescript: "^5.9.3",
+};
+
+/**
+ * If package scripts reference a CLI tool but neither dependencies nor
+ * devDependencies declare it, inject it into devDependencies so standalone
+ * `pnpm install` + `pnpm run build|test` works outside the monorepo.
+ */
+function ensureStandaloneToolchain(manifest, catalogVersions) {
+  const scriptsText = Object.values(manifest.scripts ?? {}).join("\n");
+  if (!scriptsText) return;
+
+  const declared = {
+    ...(manifest.dependencies ?? {}),
+    ...(manifest.devDependencies ?? {}),
+  };
+  const dev = { ...(manifest.devDependencies ?? {}) };
+  let changed = false;
+
+  for (const [tool, fallback] of Object.entries(STANDALONE_TOOLCHAIN_FALLBACKS)) {
+    const used =
+      tool === "typescript"
+        ? /\btsc\b/.test(scriptsText) || /\btypescript\b/.test(scriptsText)
+        : new RegExp(`\\b${tool}\\b`).test(scriptsText);
+    if (!used || declared[tool]) continue;
+    const catalog = catalogVersions?.get?.(tool);
+    dev[tool] = catalog ?? fallback;
+    changed = true;
+  }
+
+  if (changed) {
+    manifest.devDependencies = dev;
+  }
 }
 
 function normalizeTsconfig(root, targetDir) {
