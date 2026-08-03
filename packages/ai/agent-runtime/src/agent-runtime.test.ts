@@ -11,6 +11,8 @@ import {
 } from "./rollout";
 import {
   assertSafePosture,
+  CarinaProtocolError,
+  createCarinaSandbox,
   createHttpSandbox,
   NoExecutorConfiguredError,
   REFUSING_SANDBOX,
@@ -156,6 +158,118 @@ describe("sandbox", () => {
         capabilityPolicy: DEFAULT_CAPABILITY_POLICY,
       }),
     ).rejects.toBeInstanceOf(SandboxDelegationError);
+  });
+
+  it("createCarinaSandbox speaks Carina JSON-RPC (hello + command.exec)", async () => {
+    const bodies: Array<Record<string, unknown>> = [];
+    const fakeFetch = (async (_input: RequestInfo | URL, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body ?? "{}")) as Record<string, unknown>;
+      bodies.push(body);
+      if (body.method === "gateway.hello") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { protocol_version: 1 } }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "command.exec") {
+        return new Response(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: body.id,
+            result: {
+              decision: { decision_id: "perm_1", decision: "allowed" },
+              result: {
+                exit_code: 0,
+                stdout: ["hi\n"],
+                stderr: [],
+                timed_out: false,
+              },
+            },
+          }),
+          { status: 200 },
+        );
+      }
+      return new Response(
+        JSON.stringify({ jsonrpc: "2.0", id: body.id, error: { code: -32601, message: "no" } }),
+        {
+          status: 200,
+        },
+      );
+    }) as unknown as typeof fetch;
+
+    const sandbox = createCarinaSandbox({
+      baseUrl: "http://carina.local:7420/jsonrpc",
+      token: "gw1_test",
+      fetchImpl: fakeFetch,
+    });
+    const result = await sandbox.exec({
+      tenantId: "org_a",
+      threadId: "sess_1",
+      command: "echo hi",
+      capabilityPolicy: DEFAULT_CAPABILITY_POLICY,
+    });
+    expect(result.exitCode).toBe(0);
+    expect(result.aggregatedOutput).toBe("hi\n");
+    expect(result.executedOn).toBe("carina");
+    expect(result.decisionId).toBe("perm_1");
+    expect(bodies[0]?.method).toBe("gateway.hello");
+    expect(bodies[1]?.method).toBe("command.exec");
+    const execParams = bodies[1]?.params as { session_id: string; argv: string[] };
+    expect(execParams.session_id).toBe("sess_1");
+    expect(execParams.argv).toEqual(["/bin/sh", "-c", "echo hi"]);
+  });
+
+  it("createCarinaSandbox fails closed on denied and low protocol version", async () => {
+    const deniedFetch = (async (_i: RequestInfo | URL, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body ?? "{}")) as { method?: string; id?: number };
+      if (body.method === "gateway.hello") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { protocol_version: 1 } }),
+          { status: 200 },
+        );
+      }
+      return new Response(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: body.id,
+          result: { decision: { decision: "denied", reason: "policy" } },
+        }),
+        { status: 200 },
+      );
+    }) as unknown as typeof fetch;
+
+    await expect(
+      createCarinaSandbox({
+        baseUrl: "http://carina.local",
+        fetchImpl: deniedFetch,
+      }).exec({
+        tenantId: "t",
+        threadId: "s",
+        command: "rm -rf /",
+        capabilityPolicy: DEFAULT_CAPABILITY_POLICY,
+      }),
+    ).rejects.toMatchObject({ name: "SandboxDelegationError", status: 403 });
+
+    const oldHello = (async (_i: RequestInfo | URL, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body ?? "{}")) as { id?: number };
+      return new Response(
+        JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { protocol_version: 0 } }),
+        { status: 200 },
+      );
+    }) as unknown as typeof fetch;
+
+    await expect(
+      createCarinaSandbox({
+        baseUrl: "http://carina.local",
+        fetchImpl: oldHello,
+        minProtocolVersion: 1,
+      }).exec({
+        tenantId: "t",
+        threadId: "s",
+        command: "echo",
+        capabilityPolicy: DEFAULT_CAPABILITY_POLICY,
+      }),
+    ).rejects.toBeInstanceOf(CarinaProtocolError);
   });
 });
 

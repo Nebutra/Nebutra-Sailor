@@ -24,9 +24,10 @@ them.
 
 - **Track A (this package)** — policy, protocol contract, model, rollout. All
   tenant-scoped. Runs inside Sailor's TS web runtime.
-- **Track B (decoupled, not this repo)** — an optional self-hosted isolator /
-  kernel sidecar that implements `ExternalSandbox` over the `./protocol`
-  contract. The protocol is the only coupling seam.
+- **Track B (Carina upstream)** — `Nebutra/carina` is the sole product kernel.
+  Sailor docks via `createCarinaSandbox` (JSON-RPC: `gateway.hello` +
+  `command.exec`). Kernel protocol is maintained in Carina; this package only
+  maps. See `docs/architecture/2026-08-03-carina-track-b-upstream.md`.
 
 ## Modules
 
