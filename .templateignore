@@ -30,6 +30,8 @@ apps/landing/public/animations/
 apps/landing/src/app/api/changelog/
 apps/landing/src/app/api/license/
 apps/landing/src/app/sitemap.ts
+# Index route imports the stripped sitemap module — leave both out of template.
+apps/landing/src/app/sitemap-index.xml/
 apps/landing/src/lib/constants/landing-data.ts
 # Tests + not-found + mockups that import stripped marketing content.
 # A generic landing 404 is a known follow-up.
@@ -197,6 +199,8 @@ tests/load/
 .github/workflows/deploy-ecs.yml
 .github/workflows/deploy.yml
 .github/workflows/sync-template.yml
+# Source-repo only — pushes package subrepos; meaningless for skeleton consumers
+.github/workflows/sync-subrepo-mirrors.yml
 .github/workflows/design-sync.yml
 .github/workflows/chromatic.yml
 .github/workflows/cla.yml
