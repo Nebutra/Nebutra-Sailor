@@ -523,21 +523,9 @@ export function assertSafePosture(policy: CapabilityPolicy, allowDanger = false)
 
 // ── Env resolution + command-exec tool (Phase 2 host helpers) ────────────────
 
-export type CarinaEnv = {
-  readonly CARINA_JSONRPC_URL?: string;
-  readonly CARINA_JSONRPC_TOKEN?: string;
-  readonly CARINA_JSONRPC_PATH?: string;
-  readonly CARINA_WORKSPACE_ROOT?: string;
-  /** JSON map tenantId → absolute workspace path on the Carina host. */
-  readonly CARINA_WORKSPACE_MAP?: string;
-  /** Template with `{tenantId}` / `{threadId}` placeholders. */
-  readonly CARINA_WORKSPACE_TEMPLATE?: string;
-  readonly CARINA_CLIENT_ID?: string;
-  /** session.create approval_mode (e.g. always-approve, on_request). */
-  readonly CARINA_SESSION_APPROVAL_MODE?: string;
-  /** "1" / "true" → auto-approve requires_approval once and retry exec. */
-  readonly CARINA_AUTO_APPROVE?: string;
-};
+/** Env bag for Carina host config. Compatible with `process.env`. */
+export type CarinaEnv = Readonly<Record<string, string | undefined>>;
+
 
 /**
  * Resolve workspace path for a tenant/thread.
@@ -545,7 +533,7 @@ export type CarinaEnv = {
  */
 export function resolveCarinaWorkspaceRoot(
   tenantId: string,
-  env: CarinaEnv = process.env as CarinaEnv,
+  env: CarinaEnv = process.env,
   threadId = "",
 ): string | undefined {
   const mapRaw = env.CARINA_WORKSPACE_MAP?.trim();
@@ -575,7 +563,7 @@ export function resolveCarinaWorkspaceRoot(
  * - unset / empty → {@link REFUSING_SANDBOX} (fail closed)
  */
 export function resolveCarinaSandboxFromEnv(
-  env: CarinaEnv = process.env as CarinaEnv,
+  env: CarinaEnv = process.env,
   overrides: Partial<CarinaSandboxOptions> = {},
 ): ExternalSandbox {
   const baseUrl = env.CARINA_JSONRPC_URL?.trim();

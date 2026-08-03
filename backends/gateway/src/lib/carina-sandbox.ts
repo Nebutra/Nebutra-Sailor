@@ -21,6 +21,7 @@ import {
   registerCommandExecTool,
   resolveCarinaSandboxFromEnv,
   resolveCarinaWorkspaceRoot,
+  type CarinaEnv,
   type CarinaSandbox,
   type ExternalSandbox,
 } from "@nebutra/agent-runtime";
@@ -38,7 +39,7 @@ export type GatewayCarinaBundle = {
  * Workspace is resolved per tenant (map → template → root).
  */
 export function createGatewayCarinaBundle(
-  env: NodeJS.ProcessEnv = process.env,
+  env: CarinaEnv = process.env,
   opts: { readonly tenantId?: string; readonly threadId?: string } = {},
 ): GatewayCarinaBundle {
   const sandbox = resolveCarinaSandboxFromEnv(env);
@@ -69,14 +70,14 @@ export function createGatewayCarinaBundle(
 }
 
 export function gatewaySandboxOrRefuse(
-  env: NodeJS.ProcessEnv = process.env,
+  env: CarinaEnv = process.env,
 ): ExternalSandbox {
   return resolveCarinaSandboxFromEnv(env);
 }
 
 /** Narrow helper for routes that need Carina-only methods. */
 export function getCarinaSandbox(
-  env: NodeJS.ProcessEnv = process.env,
+  env: CarinaEnv = process.env,
 ): CarinaSandbox | null {
   const sandbox = resolveCarinaSandboxFromEnv(env);
   return isCarinaSandbox(sandbox) ? sandbox : null;
