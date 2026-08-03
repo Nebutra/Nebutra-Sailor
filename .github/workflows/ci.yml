@@ -128,7 +128,75 @@ jobs:
 
       - name: Assert template mirror shape
         run: |
-          node -e "const fs = require('fs'); const marker = JSON.parse(fs.readFileSync('.sailor-template.json', 'utf8')); if (marker.type !== 'sailor-template-mirror') { console.error('Invalid template marker type: ' + marker.type); process.exit(1); } const forbidden = ['.templateignore', '.github/workflows/sync-template.yml', '.github/workflows/deploy-ecs.yml', '.github/workflows/deploy.yml', '.github/workflows/chromatic.yml', '.github/workflows/visual-acceptance.yml']; for (const file of forbidden) { if (fs.existsSync(file)) { console.error('Source-only file leaked into template: ' + file); process.exit(1); } }"
+          node <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+          const marker = JSON.parse(fs.readFileSync(".sailor-template.json", "utf8"));
+          if (marker.type !== "sailor-template-mirror") {
+            console.error("Invalid template marker type: " + marker.type);
+            process.exit(1);
+          }
+
+          // Source-only paths that must never land in the public skeleton.
+          const forbidden = [
+            ".templateignore",
+            "TEMPLATE.md",
+            ".github/workflows/sync-template.yml",
+            ".github/workflows/sync-subrepo-mirrors.yml",
+            ".github/workflows/deploy-ecs.yml",
+            ".github/workflows/deploy.yml",
+            ".github/workflows/deploy-pebble-vercel.yml",
+            ".github/workflows/deploy-carina-ecs.yml",
+            ".github/workflows/point-forge-dns.yml",
+            ".github/workflows/chromatic.yml",
+            ".github/workflows/visual-acceptance.yml",
+            "apps/forge",
+            "apps/router",
+            "apps/pebble",
+            "apps/typelens",
+            "apps/design",
+            "apps/admin",
+            "apps/auth",
+            "apps/sleptons",
+            "apps/studio",
+            "backends/go",
+            "backends/rust",
+            "infra/nebutra-router",
+            "backends/gateway/src/routes/pebble",
+            "backends/gateway/src/routes/startup-os",
+          ];
+          for (const file of forbidden) {
+            if (fs.existsSync(file)) {
+              console.error("Source-only path leaked into template: " + file);
+              process.exit(1);
+            }
+          }
+
+          // Skeleton apps that create-sailor consumers should always receive.
+          const required = [
+            "apps/web/package.json",
+            "apps/landing/package.json",
+            "apps/idp/package.json",
+            "backends/gateway/package.json",
+            "packages/design/ui/package.json",
+            "packages/ops/create-sailor/package.json",
+          ];
+          for (const file of required) {
+            if (!fs.existsSync(file)) {
+              console.error("Required skeleton path missing from template: " + file);
+              process.exit(1);
+            }
+          }
+
+          // Landing sitemap is stripped with marketing content; the index route
+          // must not remain as a dangling import.
+          if (fs.existsSync("apps/landing/src/app/sitemap-index.xml")) {
+            console.error("Dangling landing sitemap-index leaked into template");
+            process.exit(1);
+          }
+
+          console.log("Template mirror shape OK");
+          NODE
 
       - name: Check template governance files
         run: |
@@ -141,7 +209,30 @@ jobs:
 
       - name: Assert template CI profile gates
         run: |
-          node -e "const fs = require('fs'); const workflow = fs.readFileSync('.github/workflows/ci.yml', 'utf8'); const required = ['template-contract:', '.sailor-template.json', \"needs.detect-changes.outputs.template != 'true'\", \"needs.detect-changes.outputs.template == 'true'\"]; for (const marker of required) { if (!workflow.includes(marker)) { console.error('Missing template CI guard: ' + marker); process.exit(1); } }"
+          node <<'NODE'
+          const fs = require("fs");
+          const workflow = fs.readFileSync(".github/workflows/ci.yml", "utf8");
+          const required = [
+            "template-contract:",
+            ".sailor-template.json",
+            "needs.detect-changes.outputs.template != 'true'",
+            "needs.detect-changes.outputs.template == 'true'",
+            "typecheck-full:",
+          ];
+          for (const marker of required) {
+            if (!workflow.includes(marker)) {
+              console.error("Missing template CI guard: " + marker);
+              process.exit(1);
+            }
+          }
+          // Full-graph canary must stay off Sailor-Template profile.
+          const full = workflow.match(/typecheck-full:[\s\S]*?(?=\n  [a-z-]+:|$)/);
+          if (!full || !full[0].includes("needs.detect-changes.outputs.template != 'true'")) {
+            console.error("typecheck-full must be gated off the template profile");
+            process.exit(1);
+          }
+          console.log("Template CI gates OK");
+          NODE
 
       - name: Validate API artifacts are readable
         run: |
@@ -161,6 +252,8 @@ jobs:
     name: License Compliance
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    needs: detect-changes
+    # Useful on both source and template; cheap enough to always run after profile detect.
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -183,7 +276,11 @@ jobs:
   # whoever trips over it next.
   typecheck-full:
     name: Typecheck (full graph)
-    if: github.event_name == 'push'
+    # Source monorepo only. Sailor-Template is a stripped skeleton — full-graph
+    # typecheck fails after product apps/pages are mirror-stripped (e.g. landing
+    # sitemap). Template health is the `template-contract` job.
+    needs: detect-changes
+    if: github.event_name == 'push' && needs.detect-changes.outputs.template != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:

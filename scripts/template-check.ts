@@ -90,10 +90,13 @@ const MUST_STRIP = [
   "apps/web/src/app/[locale]/(app)/feature-flags",
   "apps/landing/public/brand/logo.svg",
   "apps/landing/public/og",
+  "apps/landing/src/app/sitemap.ts",
+  "apps/landing/src/app/sitemap-index.xml",
   // Product deploy / DNS (sample — globs cover the rest in .templateignore)
   ".github/workflows/deploy-pebble-vercel.yml",
   ".github/workflows/point-forge-dns.yml",
   ".github/workflows/deploy-carina-ecs.yml",
+  ".github/workflows/sync-subrepo-mirrors.yml",
 ];
 
 type Matcher = ReturnType<typeof ignore>;
