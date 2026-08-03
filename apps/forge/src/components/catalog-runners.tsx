@@ -656,23 +656,11 @@ export function CatalogRunnerRouter({
         "标准摊还公式",
       );
 
-    case "kinship":
-      return g(toolId, [
-        { key: "relation", label: "Relation", kind: "text", defaultValue: "爸爸的爸爸" },
-      ]);
-
     case "id-card":
       return g(
         toolId,
         [{ key: "id", label: "ID number", kind: "text", defaultValue: "11010519491231002X" }],
         "GB 11643 校验位",
-      );
-
-    case "phone-lookup":
-      return g(
-        toolId,
-        [{ key: "phone", label: "Phone", kind: "text", defaultValue: "13800138000" }],
-        "号段粗分（非完整归属地库）",
       );
 
     case "pdf-merge":

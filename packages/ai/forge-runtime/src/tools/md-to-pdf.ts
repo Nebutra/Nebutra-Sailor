@@ -6,11 +6,11 @@ const InputSchema = z.object({
   markdown: z.string().min(1).max(500_000),
   title: z.string().max(200).optional(),
   /**
-   * `auto` — Playwright print (SOTA), fall back to structured PDF if browser missing.
-   * `playwright` — require Chromium print (fail if unavailable).
-   * `simple` — structured text PDF only (tests / no browser).
+   * Hard-correct: product path is Chromium print only.
+   * `playwright` — require Chromium (fail if unavailable). Default.
+   * `simple` — structured PDF only for explicit tests/CI — never silent fallback.
    */
-  engine: z.enum(["auto", "playwright", "simple"]).default("auto"),
+  engine: z.enum(["playwright", "simple"]).default("playwright"),
 });
 
 export type MdToPdfInput = z.infer<typeof InputSchema>;
@@ -214,13 +214,13 @@ export async function renderMarkdownPdf(
   input: MdToPdfInput,
 ): Promise<{ buf: Buffer; renderEngine: "playwright" | "simple"; note: string }> {
   const title = input.title ?? "document";
-  const mode = input.engine ?? process.env.FORGE_MD_PDF_ENGINE ?? "auto";
+  const mode = input.engine ?? process.env.FORGE_MD_PDF_ENGINE ?? "playwright";
 
   if (mode === "simple") {
     return {
       buf: markdownToSimplePdf(input.markdown, title),
       renderEngine: "simple",
-      note: "Forced simple renderer (FORGE_MD_PDF_ENGINE=simple or engine=simple).",
+      note: "Explicit simple renderer (engine=simple or FORGE_MD_PDF_ENGINE=simple) — not the product path.",
     };
   }
 
@@ -232,17 +232,10 @@ export async function renderMarkdownPdf(
       note: "Render: marked → HTML → Chromium print-to-PDF (Playwright).",
     };
   } catch (err) {
-    if (mode === "playwright") {
-      const message = err instanceof Error ? err.message : String(err);
-      throw new Error(
-        `Playwright PDF required but failed: ${message}. Install browsers: npx playwright install chromium`,
-      );
-    }
-    return {
-      buf: markdownToSimplePdf(input.markdown, title),
-      renderEngine: "simple",
-      note: `Playwright unavailable (${err instanceof Error ? err.message : String(err)}); fell back to structured PDF. Install Chromium for print fidelity.`,
-    };
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(
+      `Playwright PDF required but failed: ${message}. Install browsers: npx playwright install chromium. Hard-correct: no silent simple fallback.`,
+    );
   }
 }
 

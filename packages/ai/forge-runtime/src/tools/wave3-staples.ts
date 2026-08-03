@@ -319,36 +319,7 @@ export const multiHashTool = tool({
   },
 });
 
-// ── CSS / HTML beautify (pair with minifiers) ───────────────────────────────
-
-function beautifyCss(css: string, indent = 2): string {
-  const pad = " ".repeat(indent);
-  let level = 0;
-  let out = "";
-  const flat = css.replace(/\s*([{};:,])\s*/g, "$1").replace(/;}/g, "}");
-  for (let i = 0; i < flat.length; i++) {
-    const ch = flat[i]!;
-    if (ch === "{") {
-      out += " {\n";
-      level += 1;
-      out += pad.repeat(level);
-    } else if (ch === "}") {
-      level = Math.max(0, level - 1);
-      out = out.replace(/\s+$/, "");
-      out += `\n${pad.repeat(level)}}\n${pad.repeat(level)}`;
-    } else if (ch === ";") {
-      out += ";\n" + pad.repeat(level);
-    } else {
-      out += ch;
-    }
-  }
-  return out
-    .split("\n")
-    .map((l) => l.trimEnd())
-    .filter((l, i, arr) => l.length > 0 || (i > 0 && arr[i - 1]?.length))
-    .join("\n")
-    .trim();
-}
+// ── CSS / HTML beautify (Prettier — same engine as monorepo formatters) ─────
 
 export const cssFormatTool = tool({
   id: "dev/css-format",
@@ -356,15 +327,19 @@ export const cssFormatTool = tool({
   category: "dev",
   title: { zh: "CSS 美化", en: "CSS Beautifier" },
   description: {
-    zh: "轻量 CSS 缩进美化（与 css-minify 配对）",
-    en: "Lightweight CSS pretty-print (pairs with css-minify)",
+    zh: "Prettier CSS 解析器美化（与 CSSO 压缩配对）",
+    en: "Prettier CSS parser pretty-print (pairs with CSSO minify)",
   },
   tier: "catalog",
   sideEffect: "pure",
-  runtime: ["client", "server"],
+  runtime: ["server"],
   meterId: "forge.dev.css_format",
   roots: ["formatter"],
-  engine: { name: "css-indent", upstream: "nebutra pure", version: "0.1.0" },
+  engine: {
+    name: "prettier",
+    upstream: "https://github.com/prettier/prettier",
+    version: "3.x",
+  },
   seoKeywords: {
     zh: "css美化,css格式化,css beautify",
     en: "css beautifier online, format css, pretty print css",
@@ -373,34 +348,15 @@ export const cssFormatTool = tool({
     text: z.string().max(500_000),
     indent: z.coerce.number().int().min(1).max(8).default(2),
   }),
-  execute: (input: { text: string; indent?: number }) => {
-    const result = beautifyCss(input.text, input.indent ?? 2);
-    return { result, bytes: result.length };
+  execute: async (input: { text: string; indent?: number }) => {
+    const prettier = await import("prettier");
+    const result = await prettier.format(input.text, {
+      parser: "css",
+      tabWidth: input.indent ?? 2,
+    });
+    return { result, bytes: result.length, engine: "prettier" };
   },
 });
-
-function beautifyHtml(html: string, indent = 2): string {
-  const pad = " ".repeat(indent);
-  const tokens = html
-    .replace(/>\s+</g, "><")
-    .replace(/(>)(<)(\/*)/g, "$1\n$2$3")
-    .split("\n");
-  let level = 0;
-  const out: string[] = [];
-  for (const raw of tokens) {
-    const line = raw.trim();
-    if (!line) continue;
-    if (/^<\/\w/.test(line)) level = Math.max(0, level - 1);
-    out.push(pad.repeat(level) + line);
-    if (
-      /^<\w[^>]*[^/]>$/.test(line) &&
-      !/^<(br|hr|img|input|meta|link|source|area|base|col|embed|wbr)\b/i.test(line)
-    ) {
-      level += 1;
-    }
-  }
-  return out.join("\n");
-}
 
 export const htmlFormatTool = tool({
   id: "dev/html-format",
@@ -408,15 +364,19 @@ export const htmlFormatTool = tool({
   category: "dev",
   title: { zh: "HTML 美化", en: "HTML Beautifier" },
   description: {
-    zh: "轻量 HTML 缩进美化（与 html-minify 配对）",
-    en: "Lightweight HTML pretty-print (pairs with html-minify)",
+    zh: "Prettier HTML 解析器美化（与 html-minifier-terser 压缩配对）",
+    en: "Prettier HTML parser pretty-print (pairs with html-minifier-terser)",
   },
   tier: "catalog",
   sideEffect: "pure",
-  runtime: ["client", "server"],
+  runtime: ["server"],
   meterId: "forge.dev.html_format",
   roots: ["formatter"],
-  engine: { name: "html-indent", upstream: "nebutra pure", version: "0.1.0" },
+  engine: {
+    name: "prettier",
+    upstream: "https://github.com/prettier/prettier",
+    version: "3.x",
+  },
   seoKeywords: {
     zh: "html美化,html格式化",
     en: "html beautifier online, format html, pretty print html",
@@ -425,9 +385,13 @@ export const htmlFormatTool = tool({
     text: z.string().max(500_000),
     indent: z.coerce.number().int().min(1).max(8).default(2),
   }),
-  execute: (input: { text: string; indent?: number }) => {
-    const result = beautifyHtml(input.text, input.indent ?? 2);
-    return { result, bytes: result.length };
+  execute: async (input: { text: string; indent?: number }) => {
+    const prettier = await import("prettier");
+    const result = await prettier.format(input.text, {
+      parser: "html",
+      tabWidth: input.indent ?? 2,
+    });
+    return { result, bytes: result.length, engine: "prettier" };
   },
 });
 
@@ -804,7 +768,7 @@ export const mimeLookupTool = tool({
   },
 });
 
-// ── User-Agent parse (lightweight, no dep) ──────────────────────────────────
+// ── User-Agent parse (ua-parser-js — maintained industry parser) ────────────
 
 export const userAgentParseTool = tool({
   id: "dev/user-agent-parse",
@@ -812,15 +776,19 @@ export const userAgentParseTool = tool({
   category: "dev",
   title: { zh: "UA 解析", en: "User-Agent Parser" },
   description: {
-    zh: "轻量解析 User-Agent（浏览器 / OS / 设备粗分）",
-    en: "Lightweight User-Agent parse (browser / OS / device class)",
+    zh: "ua-parser-js 解析浏览器 / 引擎 / OS / 设备 / CPU",
+    en: "ua-parser-js — browser, engine, OS, device, and CPU from a User-Agent string",
   },
   tier: "catalog",
   sideEffect: "pure",
-  runtime: ["client", "server"],
+  runtime: ["server"],
   meterId: "forge.dev.ua_parse",
   roots: ["analyzer", "viewer"],
-  engine: { name: "ua-heuristic", upstream: "nebutra pure UA heuristics", version: "0.1.0" },
+  engine: {
+    name: "ua-parser-js",
+    upstream: "https://github.com/faisalman/ua-parser-js",
+    version: "2.x",
+  },
   seoKeywords: {
     zh: "user agent解析,ua分析",
     en: "user agent parser online, parse user agent string",
@@ -828,58 +796,27 @@ export const userAgentParseTool = tool({
   inputSchema: z.object({
     text: z.string().min(1).max(2_000),
   }),
-  execute: (input: { text: string }) => {
+  execute: async (input: { text: string }) => {
+    const { UAParser } = await import("ua-parser-js");
     const ua = input.text.trim();
-    const isBot = /bot|crawl|spider|slurp|bingpreview/i.test(ua);
-    let browser = "Unknown";
-    let browserVersion: string | null = null;
-    const br =
-      /(Edg|Edge|OPR|Opera|Chrome|Firefox|Safari|MSIE|Trident)\/([\d.]+)/i.exec(ua) ??
-      /Version\/([\d.]+).*Safari/i.exec(ua);
-    if (/Edg\//i.test(ua)) {
-      browser = "Edge";
-      browserVersion = /Edg\/([\d.]+)/i.exec(ua)?.[1] ?? null;
-    } else if (/OPR\/|Opera/i.test(ua)) {
-      browser = "Opera";
-      browserVersion = /(?:OPR|Opera)\/([\d.]+)/i.exec(ua)?.[1] ?? null;
-    } else if (/Chrome\//i.test(ua) && !/Edg\//i.test(ua)) {
-      browser = "Chrome";
-      browserVersion = /Chrome\/([\d.]+)/i.exec(ua)?.[1] ?? null;
-    } else if (/Firefox\//i.test(ua)) {
-      browser = "Firefox";
-      browserVersion = /Firefox\/([\d.]+)/i.exec(ua)?.[1] ?? null;
-    } else if (/Safari\//i.test(ua)) {
-      browser = "Safari";
-      browserVersion = /Version\/([\d.]+)/i.exec(ua)?.[1] ?? br?.[1] ?? null;
-    }
-
-    let os = "Unknown";
-    if (/Windows NT 10/i.test(ua)) os = "Windows 10/11";
-    else if (/Windows NT 6\.3/i.test(ua)) os = "Windows 8.1";
-    else if (/Windows NT 6\.1/i.test(ua)) os = "Windows 7";
-    else if (/Mac OS X ([\d_]+)/i.test(ua)) {
-      os = `macOS ${/Mac OS X ([\d_]+)/i.exec(ua)?.[1]?.replace(/_/g, ".") ?? ""}`.trim();
-    } else if (/Android ([\d.]+)/i.test(ua))
-      os = `Android ${/Android ([\d.]+)/i.exec(ua)?.[1] ?? ""}`.trim();
-    else if (/iPhone OS ([\d_]+)/i.test(ua) || /iPad.*OS ([\d_]+)/i.test(ua)) {
-      const v = /OS ([\d_]+)/i.exec(ua)?.[1]?.replace(/_/g, ".") ?? "";
-      os = `iOS ${v}`.trim();
-    } else if (/Linux/i.test(ua)) os = "Linux";
-
-    let device: "desktop" | "mobile" | "tablet" | "bot" | "unknown" = "unknown";
-    if (isBot) device = "bot";
-    else if (/iPad|Tablet|Android(?!.*Mobile)/i.test(ua)) device = "tablet";
-    else if (/Mobile|iPhone|Android.*Mobile/i.test(ua)) device = "mobile";
-    else if (/Windows|Macintosh|Linux/i.test(ua)) device = "desktop";
-
+    const result = new UAParser(ua).getResult();
+    const deviceType = result.device.type ?? "desktop";
+    const isBot =
+      result.browser.type === "bot" ||
+      /bot|crawl|spider|slurp|bingpreview/i.test(ua);
     return {
       ua,
-      browser,
-      browserVersion,
-      os,
-      device,
+      browser: result.browser.name ?? "Unknown",
+      browserVersion: result.browser.version ?? null,
+      engine: result.engine.name ?? null,
+      engineVersion: result.engine.version ?? null,
+      os: [result.os.name, result.os.version].filter(Boolean).join(" ") || "Unknown",
+      device: isBot ? "bot" : deviceType,
+      deviceVendor: result.device.vendor ?? null,
+      deviceModel: result.device.model ?? null,
+      cpu: result.cpu.architecture ?? null,
       isBot,
-      engine: "ua-heuristic",
+      parser: "ua-parser-js",
     };
   },
 });
@@ -1339,7 +1276,6 @@ export const wave3StapleTools: readonly AnyForgeToolDefinition[] = [
   mimeLookupTool,
   userAgentParseTool,
   imageMetaTool,
-  // density to ≥120 catalog
   wordFrequencyTool,
   jsonXmlTool,
   sqlMinifyTool,

@@ -45,12 +45,10 @@ import {
   FullwidthHalfwidthRunner,
   IdCardRunner,
   ImageBase64Runner,
-  KinshipRunner,
   LinePrefixSuffixRunner,
   LunarRunner,
   MortgageRunner,
   NanoidRunner,
-  PhoneLookupRunner,
   QueryStringRunner,
   TextReplaceRunner,
   TrimWhitespaceRunner,
@@ -67,7 +65,6 @@ import {
   PptxTextRunner,
   QrSotaRunner,
   RegexSotaRunner,
-  RouterTranslateRunner,
   SvgOptimizeRunner,
   XlsxTextRunner,
 } from "@/components/sota-runners";
@@ -76,21 +73,27 @@ import { pickResult, TextTransformRunner } from "@/components/text-transform-run
 import { TimestampRunner } from "@/components/timestamp-runner";
 import { TokenCountRunner } from "@/components/token-count-runner";
 import { UuidRunner } from "@/components/uuid-runner";
+import { W3BusinessDayShiftRunner } from "@/components/w3-business-day-shift-runner";
+import { W3CsvColumnsRunner } from "@/components/w3-csv-columns-runner";
 import { W3CsvDiffRunner } from "@/components/w3-csv-diff-runner";
 import { W3DockerfileStarterRunner } from "@/components/w3-dockerfile-starter-runner";
 import { W3EanUpcGtinRunner } from "@/components/w3-ean-upc-gtin-runner";
 import { W3EditorconfigGeneratorRunner } from "@/components/w3-editorconfig-generator-runner";
 import { W3EncodingDetectRunner } from "@/components/w3-encoding-detect-runner";
 import { W3EnvDiffRunner } from "@/components/w3-env-diff-runner";
+import { W3ExifStripRunner } from "@/components/w3-exif-strip-runner";
 import { W3FileTypeDetectRunner } from "@/components/w3-file-type-detect-runner";
 import { W3GitignoreGeneratorRunner } from "@/components/w3-gitignore-generator-runner";
 import { W3IbanRunner } from "@/components/w3-iban-runner";
+import { W3ImageRotateFlipRunner } from "@/components/w3-image-rotate-flip-runner";
 import { W3IsbnRunner } from "@/components/w3-isbn-runner";
 import { W3LanguageDetectRunner } from "@/components/w3-language-detect-runner";
 import { W3LicenseChooserRunner } from "@/components/w3-license-chooser-runner";
 import { W3LineEndingDetectRunner } from "@/components/w3-line-ending-detect-runner";
 import { W3ListSetCompareRunner } from "@/components/w3-list-set-compare-runner";
+import { W3LoanAmortizationRunner } from "@/components/w3-loan-amortization-runner";
 import { W3ReadmeSkeletonGeneratorRunner } from "@/components/w3-readme-skeleton-generator-runner";
+import { W3RetryBackoffScheduleRunner } from "@/components/w3-retry-backoff-schedule-runner";
 import { W3RobotsTxtGeneratorRunner } from "@/components/w3-robots-txt-generator-runner";
 import { W3SecretScanRunner } from "@/components/w3-secret-scan-runner";
 import { W3UnifiedSocialCreditCodeRunner } from "@/components/w3-unified-social-credit-code-runner";
@@ -447,8 +450,6 @@ export function ToolWorkspace({
       return <PptxTextRunner toolId={toolId} />;
     case "svg-optimize":
       return <SvgOptimizeRunner toolId={toolId} />;
-    case "router-translate":
-      return <RouterTranslateRunner toolId={toolId} />;
     case "image-crop":
       return <ImageCropRunner toolId={toolId} />;
 
@@ -510,17 +511,25 @@ export function ToolWorkspace({
       return <MortgageRunner toolId={toolId} />;
     case "lunar":
       return <LunarRunner toolId={toolId} />;
-    case "phone-lookup":
-      return <PhoneLookupRunner toolId={toolId} />;
-    case "kinship":
-      return <KinshipRunner toolId={toolId} />;
     case "image-compress":
       return <ImageToolRunner toolId={toolId} mode="compress" />;
     case "image-resize":
       return <ImageToolRunner toolId={toolId} mode="resize" />;
     case "image-convert":
       return <ImageToolRunner toolId={toolId} mode="convert" />;
+    case "image-rotate-flip":
+      return <W3ImageRotateFlipRunner toolId={toolId} />;
+    case "exif-strip":
+      return <W3ExifStripRunner toolId={toolId} />;
 
+    case "business-day-shift":
+      return <W3BusinessDayShiftRunner toolId={toolId} />;
+    case "csv-columns":
+      return <W3CsvColumnsRunner toolId={toolId} />;
+    case "loan-amortization":
+      return <W3LoanAmortizationRunner toolId={toolId} />;
+    case "retry-backoff-schedule":
+      return <W3RetryBackoffScheduleRunner toolId={toolId} />;
     case "csv-diff":
       return <W3CsvDiffRunner toolId={toolId} />;
     case "dockerfile-starter":

@@ -72,6 +72,26 @@ Wallet demo: `@nebutra/prepaid-wallet` MemoryPrepaidWallet (swap to CreditBalanc
 
 ---
 
+## Hard-correct product policy
+
+**No degraded positioning.** Lab dictionaries, coarse data, silent engine
+fallbacks, and deep-link shells are **not** product blades. Either the engine
+is industry-ready, or the tool stays **out of the registry**.
+
+Source of truth: [`docs/plans/tools/_hard-correct-decisions.md`](../../docs/plans/tools/_hard-correct-decisions.md)  
+CI: `node scripts/lint-forge-hard-correct.mjs` (part of monorepo `pnpm lint`)
+
+| Gate | Rule |
+|------|------|
+| Registry | Delisted tools (kinship, phone-lookup, router-translate, toy minify/UA/SVG, …) not exported |
+| Workspace | Every registered slug has an explicit runner case |
+| md-to-pdf | Default `playwright`; missing Chromium **fails closed** |
+| Wallet | Production default `ledger` (`@nebutra/billing` CreditBalance); memory only in dev |
+| Translator root | Empty until real Router invoke (W6) |
+| SOTA engines | CSSO · Prettier · html-minifier-terser · SVGO · ua-parser-js |
+
+---
+
 ## md-to-pdf registry policy
 
 **Decision (host-only registration):** keep `doc/md-to-pdf` **out** of
@@ -81,29 +101,38 @@ registers it in `src/lib/registry.ts` via `@nebutra/forge-runtime/pdf`.
 | Layer | Choice | Why |
 |-------|--------|-----|
 | Default runtime registry | **No** md-to-pdf | Avoid optional Playwright peer on every consumer (edge, tests, non-PDF apps) |
-| `apps/forge` host | **Always register** `mdToPdfTool` | SEO landing + workspace runner require a catalog entry |
-| PDF engine | `engine: auto \| playwright \| simple` | `auto` tries Chromium print, falls back to structured PDF |
-| Playwright dependency | **optional peer** of `@nebutra/forge-runtime` | Do **not** add Playwright to every ECS/Vercel bundle by default |
+| `apps/forge` host | **Always register** `mdToPdfTool` + **depends on `playwright`** | Product path requires Chromium print |
+| PDF engine | `engine: playwright \| simple` | **Default playwright.** `simple` only when explicitly requested (tests/CI) |
+| Playwright dependency | **required on `@nebutra/forge` host**; optional peer of `@nebutra/forge-runtime` | Only the product host pays browser cost |
+
+### Install Chromium (required on every Forge product host)
+
+```bash
+# macOS / most dev machines
+pnpm forge:playwright:install
+# same as:
+pnpm --filter @nebutra/forge playwright:install
+
+# Linux ECS when shared libs are missing
+pnpm --filter @nebutra/forge playwright:install:deps
+
+# Verify product path (must print OK twice)
+pnpm forge:md-to-pdf:verify
+```
 
 ### Operator notes (ECS / self-host)
 
-1. Without Chromium, invoke still works (`engine=auto` → simple structured PDF). UI shows `renderEngine` + `sotaNote`.
-2. For print-fidelity SOTA on a host: install Playwright browsers on that machine only, e.g. `npx playwright install chromium` (and OS deps). Do not force this into monorepo install for all apps.
-3. Prefer `engine=playwright` when you must fail closed without Chromium; use `simple` in CI.
+1. After every fresh host or release root that does not inherit the Playwright
+   browser cache, run `playwright:install` (or `install:deps` on bare Linux).
+2. Without Chromium, md-to-pdf invoke **fails closed** — by design.
+3. CI unit tests may pass `engine=simple` / `FORGE_MD_PDF_ENGINE=simple` only.
+4. Never market simple structured PDF as print-grade layout.
 
 ### What we reject
 
-- Silently claiming production print quality when only the simple PDF path ran.
+- Silent fallback from Playwright → simple while returning `ok`.
 - Pulling Playwright into `F0_BATCH1_TOOLS` so every host pays install cost.
 - Leaving `/t/md-to-pdf` as a workspace-only dead link while the tool is unregistered.
+- Shipping “lab / coarse / shell” tools with honesty copy instead of real engines.
 
 See also: `docs/plans/tools/md-to-pdf.md`, `packages/ai/forge-runtime/skills/md-to-pdf/`.
-
----
-
-## Coverage honesty
-
-Some blades ship on deliberately narrow data — `kinship` uses a lightweight
-dictionary, `phone-lookup` a coarse prefix/carrier map. Say so in the tool's own
-`description`, which is the one place both the page and the API already read.
-Do not over-claim coverage in SEO titles or marketing copy.

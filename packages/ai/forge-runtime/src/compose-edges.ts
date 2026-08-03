@@ -26,7 +26,7 @@ export const COMPOSE_EDGES: Readonly<Record<string, ComposeEdge>> = {
   "dev/secret-scan": { next: ["security/secret-generate", "security/password-generate"] },
   "dev/uuid": { next: ["dev/nanoid"] },
   "doc/md-to-html": { next: ["doc/md-to-pdf"] },
-  "doc/pdf-text": { next: ["llm/router-translate", "llm/token-count"] },
+  "doc/pdf-text": { next: ["llm/token-count"] },
   "hash/md5": { next: ["hash/sha256"] },
   "hash/sha256": { next: ["hash/hash-compare", "hash/hmac"] },
   "image/exif-viewer": { next: ["image/exif-strip"] },

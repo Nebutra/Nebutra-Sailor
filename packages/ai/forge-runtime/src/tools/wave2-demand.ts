@@ -275,17 +275,7 @@ export const jsonMinifyTool: ForgeToolDefinition<
   unitCost: 0,
 };
 
-// ── CSS Minifier (lightweight pure minify — CF/edge safe) ───────────────────
-
-/** Strip comments + collapse whitespace. Not a full CSS parser (honest engine meta). */
-function minifyCss(css: string): string {
-  return css
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\s+/g, " ")
-    .replace(/\s*([{}:;,>~+])\s*/g, "$1")
-    .replace(/;}/g, "}")
-    .trim();
-}
+// ── CSS Minifier (CSSO — industry SOTA structural optimisations) ────────────
 
 export const cssMinifyTool = tool({
   id: "dev/css-minify",
@@ -293,33 +283,36 @@ export const cssMinifyTool = tool({
   category: "dev",
   title: { zh: "CSS 压缩", en: "CSS Minifier" },
   description: {
-    zh: "轻量 CSS 去注释/空白（边缘安全；复杂 CSS 建议本机构建流水线）",
-    en: "Lightweight CSS minify (comments/whitespace). Edge-safe; use build tools for advanced CSS.",
+    zh: "CSSO 结构优化压缩：合并规则、缩短选择器与声明",
+    en: "CSSO structural minify — merge rules, shorten selectors and declarations",
   },
   tier: "catalog",
   sideEffect: "pure",
-  runtime: ["client", "server"],
+  runtime: ["server"],
   meterId: "forge.dev.css_minify",
   roots: ["optimizer"],
   engine: {
-    name: "css-collapse",
-    upstream: "nebutra pure minify (not full csso)",
-    version: "0.1.0",
+    name: "csso",
+    upstream: "https://github.com/css/csso",
+    version: "5.x",
   },
   seoKeywords: {
-    zh: "css压缩,css minify在线",
-    en: "css minifier online, minify css, compress css",
+    zh: "css压缩,css minify在线,csso",
+    en: "css minifier online, minify css, csso compress css",
   },
   inputSchema: z.object({
     text: z.string().max(500_000),
   }),
-  execute: (input: { text: string }) => {
-    const result = minifyCss(input.text);
+  execute: async (input: { text: string }) => {
+    const { minify } = await import("csso");
+    const out = minify(input.text, { restructure: true });
+    const result = out.css;
     return {
       result,
       bytesIn: input.text.length,
       bytesOut: result.length,
       saved: Math.max(0, input.text.length - result.length),
+      engine: "csso",
     };
   },
 });

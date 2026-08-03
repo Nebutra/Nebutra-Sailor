@@ -1,6 +1,13 @@
 # @nebutra/forge-runtime
 
-Status: WIP — capability registry and pure tools exist; product surface, metering defaults, and host provider bindings are not production-integrated yet.
+Status: active — registry + dual-surface invoke ship; product host `apps/forge` is live.
+
+Hard-correct gate (`docs/plans/tools/_hard-correct-decisions.md`):
+
+- No lab/shell tools in the product registry
+- CSS minify = **CSSO**, format = **Prettier**, HTML minify = **html-minifier-terser**, SVG = **SVGO**, UA = **ua-parser-js**
+- Still deferred: kinship, phone-lookup, router-translate (W6)
+- Host wallet: production default **CreditLedger**; md-to-pdf fails closed without Chromium
 
 Capability registry and invoke pipeline for **Nebutra Forge** (`forge.nebutra.com`).
 

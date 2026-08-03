@@ -196,19 +196,7 @@ export const imageCropTool = tool({
   },
 });
 
-// ── SVG optimize (pure lightweight) ─────────────────────────────────────────
-
-function optimizeSvg(svg: string): string {
-  return svg
-    .replace(/<\?xml[\s\S]*?\?>/gi, "")
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/\s{2,}/g, " ")
-    .replace(/>\s+</g, "><")
-    .replace(/\s*([{}:;,])\s*/g, "$1")
-    .replace(/\s+([/>])/g, "$1")
-    .replace(/([<\w])\s+=\s+"/g, '$1="')
-    .trim();
-}
+// ── SVG optimize (SVGO — industry SOTA vector optimisations) ────────────────
 
 export const svgOptimizeTool = tool({
   id: "image/svg-optimize",
@@ -216,37 +204,39 @@ export const svgOptimizeTool = tool({
   category: "image",
   title: { zh: "SVG 优化", en: "SVG Optimize" },
   description: {
-    zh: "轻量 SVG 去注释/空白（边缘安全；非完整 SVGO）",
-    en: "Lightweight SVG minify (comments/whitespace). Edge-safe; not full SVGO.",
+    zh: "SVGO multipass 优化：去冗余、合并路径、压缩属性",
+    en: "SVGO multipass optimise — strip dead weight, merge paths, compress attributes",
   },
   tier: "catalog",
   sideEffect: "pure",
-  runtime: ["client", "server"],
+  runtime: ["server"],
   meterId: "forge.image.svg_optimize",
   roots: ["optimizer"],
   engine: {
-    name: "svg-collapse",
-    upstream: "nebutra pure (not full svgo)",
-    version: "0.1.0",
+    name: "svgo",
+    upstream: "https://github.com/svg/svgo",
+    version: "4.x",
   },
   seoKeywords: {
-    zh: "svg压缩,svg优化,svg minify",
-    en: "svg optimizer online, minify svg, compress svg",
+    zh: "svg压缩,svg优化,svg minify,svgo",
+    en: "svg optimizer online, minify svg, compress svg, svgo",
   },
   inputSchema: z.object({
     text: z.string().min(1).max(2_000_000),
   }),
-  execute: (input: { text: string }) => {
+  execute: async (input: { text: string }) => {
     if (!/<svg[\s>]/i.test(input.text)) {
       throw new Error("Input does not look like SVG (missing <svg>)");
     }
-    const result = optimizeSvg(input.text);
+    const { optimize } = await import("svgo");
+    const out = optimize(input.text, { multipass: true });
+    const result = out.data;
     return {
       result,
       bytesIn: input.text.length,
       bytesOut: result.length,
       saved: Math.max(0, input.text.length - result.length),
-      note: "Lightweight pure minify. For full path cleanup use SVGO in a build pipeline.",
+      engine: "svgo",
     };
   },
 });
@@ -309,9 +299,12 @@ export const routerTranslateTool = tool({
   },
 });
 
+/**
+ * Hard-correct: `routerTranslateTool` shell stays deferred until W6 real Router invoke.
+ * svgOptimizeTool re-entered on SVGO (2026-08-03).
+ */
 export const wave5SotaGapTools: readonly AnyForgeToolDefinition[] = [
   pdfTextTool,
   imageCropTool,
   svgOptimizeTool,
-  routerTranslateTool,
 ];

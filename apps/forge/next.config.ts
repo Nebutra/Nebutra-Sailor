@@ -10,9 +10,14 @@ const useStandalone =
 
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
+  // Hard-correct: md-to-pdf dynamically imports Playwright. Keep it external so
+  // the Node runtime can resolve the package from standalone node_modules
+  // (and so browser binaries are installable next to the release).
+  serverExternalPackages: ["playwright", "playwright-core"],
   transpilePackages: [
     "@nebutra/fonts",
     "@nebutra/auth",
+    "@nebutra/billing",
     "@nebutra/brand",
     "@nebutra/ui",
     "@nebutra/tokens",

@@ -559,6 +559,32 @@ jobs:
             cp -r "$WS/public" "$STAGE/$WS/public"
           fi
 
+          # Forge md-to-pdf: Playwright is serverExternalPackages — copy into
+          # standalone so the VM can import it and install Chromium browsers.
+          if [ "${{ matrix.app }}" = "forge" ]; then
+            echo "Copying playwright into forge standalone bundle..."
+            STAGE="$STAGE" node <<'NODE'
+const { cpSync, mkdirSync, existsSync, readdirSync, statSync } = require("node:fs");
+const { dirname, join } = require("node:path");
+const { createRequire } = require("node:module");
+const stage = process.env.STAGE;
+const req = createRequire(join(process.cwd(), "apps/forge/package.json"));
+for (const name of ["playwright", "playwright-core"]) {
+  let pkgDir;
+  try {
+    pkgDir = dirname(req.resolve(`${name}/package.json`));
+  } catch (err) {
+    console.error(`Missing ${name} for forge bundle:`, err);
+    process.exit(1);
+  }
+  const dest = join(stage, "node_modules", name);
+  mkdirSync(dirname(dest), { recursive: true });
+  cpSync(pkgDir, dest, { recursive: true });
+  console.log(`copied ${name} -> ${dest}`);
+}
+NODE
+          fi
+
           # public/brand is gitignored and produced by `pnpm brand:sync` during
           # app build (landing/web/auth/forge/router). Fail closed if the app
           # chrome expects logos but the bundle is missing them — otherwise

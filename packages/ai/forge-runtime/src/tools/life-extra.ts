@@ -160,4 +160,8 @@ function round2(n: number): number {
   return Math.round(n * 100) / 100;
 }
 
-export const lifeExtraTools: readonly AnyForgeToolDefinition[] = [mortgageTool, kinshipTool];
+/**
+ * Hard-correct gate: `kinshipTool` is deferred (dictionary-only). Re-export only
+ * when a full kinship engine ships — see docs/plans/tools/_hard-correct-decisions.md.
+ */
+export const lifeExtraTools: readonly AnyForgeToolDefinition[] = [mortgageTool];

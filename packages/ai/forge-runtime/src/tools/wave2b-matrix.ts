@@ -428,15 +428,7 @@ export const uuidValidateTool = tool({
   },
 });
 
-// ── HTML minify ─────────────────────────────────────────────────────────────
-
-function minifyHtml(html: string): string {
-  return html
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/>\s+</g, "><")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-}
+// ── HTML minify (html-minifier-terser — de-facto online/build minifier) ─────
 
 export const htmlMinifyTool = tool({
   id: "dev/html-minify",
@@ -444,18 +436,18 @@ export const htmlMinifyTool = tool({
   category: "dev",
   title: { zh: "HTML 压缩", en: "HTML Minifier" },
   description: {
-    zh: "轻量 HTML 去注释/空白（边缘安全）",
-    en: "Lightweight HTML minify (comments/whitespace). Edge-safe.",
+    zh: "html-minifier-terser：去注释、折叠空白，可选压缩内联 CSS/JS",
+    en: "html-minifier-terser — strip comments, collapse whitespace, optional inline CSS/JS minify",
   },
   tier: "catalog",
   sideEffect: "pure",
-  runtime: ["client", "server"],
+  runtime: ["server"],
   meterId: "forge.dev.html_minify",
   roots: ["optimizer"],
   engine: {
-    name: "html-collapse",
-    upstream: "nebutra pure minify (not full html-minifier)",
-    version: "0.1.0",
+    name: "html-minifier-terser",
+    upstream: "https://github.com/terser/html-minifier-terser",
+    version: "7.x",
   },
   seoKeywords: {
     zh: "html压缩,html minify在线",
@@ -464,13 +456,22 @@ export const htmlMinifyTool = tool({
   inputSchema: z.object({
     text: z.string().max(500_000),
   }),
-  execute: (input: { text: string }) => {
-    const result = minifyHtml(input.text);
+  execute: async (input: { text: string }) => {
+    const { minify } = await import("html-minifier-terser");
+    const result = await minify(input.text, {
+      collapseWhitespace: true,
+      removeComments: true,
+      minifyCSS: true,
+      minifyJS: true,
+      removeRedundantAttributes: true,
+      removeEmptyAttributes: true,
+    });
     return {
       result,
       bytesIn: input.text.length,
       bytesOut: result.length,
       saved: Math.max(0, input.text.length - result.length),
+      engine: "html-minifier-terser",
     };
   },
 });

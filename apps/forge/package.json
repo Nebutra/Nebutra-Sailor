@@ -8,11 +8,15 @@
     "build:full": "pnpm --filter @nebutra/brand sync && next build",
     "start": "next start",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "playwright:install": "playwright install chromium",
+    "playwright:install:deps": "playwright install --with-deps chromium",
+    "md-to-pdf:verify": "node ./scripts/verify-md-to-pdf.mjs"
   },
   "dependencies": {
     "@nebutra/ai-providers": "workspace:*",
     "@nebutra/auth": "workspace:*",
+    "@nebutra/billing": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
     "@nebutra/forge-runtime": "workspace:*",
@@ -24,6 +28,7 @@
     "geist": "catalog:",
     "next": "catalog:",
     "next-intl": "^4.12.0",
+    "playwright": "^1.58.2",
     "react": "catalog:",
     "react-dom": "catalog:",
     "sharp": "^0.35.0",

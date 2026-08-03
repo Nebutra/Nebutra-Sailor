@@ -800,13 +800,12 @@
       "drop": "Drop a .md file here, or paste Markdown below",
       "title": "Title",
       "engine": "Engine",
-      "eAuto": "auto (prefer Playwright)",
-      "ePlaywright": "playwright (Chromium print)",
-      "eSimple": "simple (no browser)",
+      "ePlaywright": "playwright (required product path)",
+      "eSimple": "simple (tests / explicit only)",
       "generate": "Generate PDF",
       "generating": "Generating…",
       "download": "Download PDF",
-      "note": "marked → HTML → Playwright Chromium print. If Chromium is missing, auto falls back to simple structured PDF — check renderEngine; simple is not print-grade layout."
+      "note": "Hard-correct: product path is marked → HTML → Playwright Chromium print. Missing Chromium fails closed — no silent simple fallback. Use simple only for explicit tests."
     },
     "tokenCount": {
       "count": "Count tokens",

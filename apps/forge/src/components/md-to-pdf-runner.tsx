@@ -21,7 +21,7 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
   const [markdown, setMarkdown] = useState(SAMPLE);
   const [title, setTitle] = useState("document");
-  const [engine, setEngine] = useState<"auto" | "playwright" | "simple">("auto");
+  const [engine, setEngine] = useState<"playwright" | "simple">("playwright");
   const [meta, setMeta] = useState("");
   const [error, setError] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -107,7 +107,6 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
           value={engine}
           onChange={(v) => setEngine(v as typeof engine)}
         >
-          <option value="auto">{t("mdToPdf.eAuto")}</option>
           <option value="playwright">{t("mdToPdf.ePlaywright")}</option>
           <option value="simple">{t("mdToPdf.eSimple")}</option>
         </RunnerSelect>

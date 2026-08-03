@@ -173,4 +173,8 @@ export const phoneLookupTool = tool({
   },
 });
 
-export const cnValidateTools: readonly AnyForgeToolDefinition[] = [idCardTool, phoneLookupTool];
+/**
+ * Hard-correct gate: `phoneLookupTool` deferred until a full geo/carrier data
+ * product ships — docs/plans/tools/_hard-correct-decisions.md.
+ */
+export const cnValidateTools: readonly AnyForgeToolDefinition[] = [idCardTool];

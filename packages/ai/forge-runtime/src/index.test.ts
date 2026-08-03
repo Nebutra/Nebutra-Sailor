@@ -365,23 +365,31 @@ describe("md-to-pdf + mcp", () => {
       "pdf-compress",
       "pdf-text",
       "image-crop",
+    ]) {
+      expect(registry.has(slug)).toBe(true);
+    }
+    // Hard-correct: still-deferred blades stay out of product registry.
+    for (const slug of ["router-translate", "kinship", "phone-lookup"]) {
+      expect(registry.has(slug)).toBe(false);
+    }
+    // SOTA re-entry (CSSO / Prettier / html-minifier-terser / SVGO / ua-parser-js)
+    for (const slug of [
       "svg-optimize",
-      "router-translate",
+      "css-minify",
+      "html-minify",
+      "user-agent-parse",
+      "css-format",
+      "html-format",
     ]) {
       expect(registry.has(slug)).toBe(true);
     }
     const svg = await invokeTool(registry, {
       toolId: "image/svg-optimize",
-      input: { text: "<svg>  <!--x-->  <g> </g> </svg>" },
+      input: { text: '<svg xmlns="http://www.w3.org/2000/svg">  <!--x-->  <g> </g> </svg>' },
     });
     expect(svg.ok).toBe(true);
-    const tr = await invokeTool(registry, {
-      toolId: "llm/router-translate",
-      input: { text: "hello", targetLang: "zh" },
-    });
-    expect(tr.ok).toBe(true);
-    if (tr.ok) {
-      expect(String((tr.output as { deepLink: string }).deepLink)).toContain("router");
+    if (svg.ok) {
+      expect(String((svg.output as { engine: string }).engine)).toBe("svgo");
     }
     expect(registry.get("pdf-optimize").roots).toContain("optimizer");
     expect(registry.get("pdf-compress").roots).toContain("optimizer");

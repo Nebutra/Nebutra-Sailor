@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const session = await getSessionFromRequest(request);
   const explicit = new URL(request.url).searchParams.get("tenantId");
   const tenantId = resolveTenantId({ explicit, session });
-  const wallet = getDemoWallet();
+  const wallet = await getDemoWallet();
   if (
     tenantId !== "anonymous" &&
     "seed" in wallet &&

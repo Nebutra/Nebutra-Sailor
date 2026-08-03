@@ -745,6 +745,18 @@ load_runtime_env() {
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 
+  if [ "$app" = "forge" ]; then
+    # md-to-pdf Chromium cache (survives release swaps)
+    PLAYWRIGHT_BROWSERS_PATH="${PLAYWRIGHT_BROWSERS_PATH:-$DEPLOY_ROOT/.cache/ms-playwright}"
+    replace_env_assignment "$app_root/.env" NODE_ENV "production"
+    replace_env_assignment "$app_root/.env" PORT "3105"
+    replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
+    replace_env_assignment "$app_root/.env" PLAYWRIGHT_BROWSERS_PATH "$PLAYWRIGHT_BROWSERS_PATH"
+    # Wallet: production defaults to ledger in app code; leave FORGE_WALLET_MODE
+    # unset unless operators pin it in .env.
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
   if [ "$app" = "web" ]; then
     if [ ! -f "$app_root/.env" ]; then
       bootstrap_web_runtime_env "$app_root"
@@ -1003,6 +1015,58 @@ for proc in procs:
     log "inherited $count runtime env keys from existing pm2 $pm2_name"
   else
     log "no inheritable runtime env keys found in existing pm2 $pm2_name"
+  fi
+}
+
+# Install Playwright Chromium for Forge md-to-pdf (hard-correct product path).
+# Browsers live under DEPLOY_ROOT/.cache/ms-playwright so they survive release
+# swaps; PLAYWRIGHT_BROWSERS_PATH is written into forge/.env for PM2.
+install_forge_chromium() {
+  local release="$1" app_root="$2"
+  local browsers_path="${PLAYWRIGHT_BROWSERS_PATH:-$DEPLOY_ROOT/.cache/ms-playwright}"
+  local pw="" candidate
+
+  mkdir -p "$browsers_path"
+  replace_env_assignment "$app_root/.env" PLAYWRIGHT_BROWSERS_PATH "$browsers_path"
+  export PLAYWRIGHT_BROWSERS_PATH="$browsers_path"
+
+  for candidate in \
+    "$release/node_modules/.bin/playwright" \
+    "$release/node_modules/playwright/cli.js" \
+    "$release/apps/forge/node_modules/.bin/playwright"
+  do
+    if [ -x "$candidate" ] || [ -f "$candidate" ]; then
+      pw="$candidate"
+      break
+    fi
+  done
+
+  if [ -z "$pw" ]; then
+    log "WARN: playwright binary missing from forge release — md-to-pdf will fail closed until the package is in the bundle"
+    return 0
+  fi
+
+  log "install forge Chromium browsers -> $browsers_path (via $pw)"
+  if [ -x "$pw" ]; then
+    "$pw" install chromium 2>&1 | tail -30 || log "WARN: playwright install chromium failed"
+  else
+    node "$pw" install chromium 2>&1 | tail -30 || log "WARN: playwright install chromium failed"
+  fi
+
+  # Smoke: launch Chromium headless once (best-effort; does not fail deploy).
+  if node -e "
+    const { chromium } = require(process.argv[1]);
+    chromium.launch({ headless: true }).then(async (b) => {
+      await b.close();
+      console.log('forge Chromium launch OK');
+    }).catch((e) => {
+      console.error('forge Chromium launch failed:', e && e.message ? e.message : e);
+      process.exit(1);
+    });
+  " "$release/node_modules/playwright" 2>&1; then
+    log "forge Chromium smoke OK"
+  else
+    log "WARN: forge Chromium smoke failed — md-to-pdf product path not ready on this host"
   fi
 }
 
@@ -1269,6 +1333,8 @@ for p in procs:
       ;;
     forge)
       wait_for_local_http "forge" "$pm2_name" "http://127.0.0.1:3105/"
+      # Hard-correct: md-to-pdf needs Chromium on the product host.
+      install_forge_chromium "$release" "$app_root"
       ;;
     admin)
       # Probed on the loopback, which bypasses both the nginx deny and the

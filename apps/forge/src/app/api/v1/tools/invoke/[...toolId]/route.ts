@@ -48,7 +48,7 @@ export async function POST(request: Request, context: RouteContext) {
         { status: 401 },
       );
     }
-    const wallet = getDemoWallet();
+    const wallet = await getDemoWallet();
     try {
       if (!(await wallet.hasBalance(tenantId, result.unitCost))) {
         return NextResponse.json(

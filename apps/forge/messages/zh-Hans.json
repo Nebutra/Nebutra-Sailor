@@ -800,13 +800,12 @@
       "drop": "拖拽 .md 文件，或粘贴下方 Markdown",
       "title": "标题",
       "engine": "引擎",
-      "eAuto": "auto（优先 Playwright）",
-      "ePlaywright": "playwright（Chromium 打印）",
-      "eSimple": "simple（无浏览器）",
+      "ePlaywright": "playwright（产品必选路径）",
+      "eSimple": "simple（仅测试/显式指定）",
       "generate": "生成 PDF",
       "generating": "生成中…",
       "download": "下载 PDF",
-      "note": "marked → HTML → Playwright Chromium 打印（SOTA）。宿主未装 Chromium 时 auto 回退 simple 结构化 PDF——结果区会标明 renderEngine，不得把 simple 当成打印级排版。"
+      "note": "难而正确：产品路径为 marked → HTML → Playwright Chromium 打印。无 Chromium 时 fail closed，禁止静默回退 simple。simple 仅用于显式测试。"
     },
     "tokenCount": {
       "count": "精确计数",

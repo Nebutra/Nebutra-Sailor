@@ -1,7 +1,7 @@
 import { PrepaidWalletError } from "@nebutra/prepaid-wallet";
 import { NextResponse } from "next/server";
 import { getSessionFromRequest, resolveTenantId } from "@/lib/auth";
-import { getDemoWallet } from "@/lib/wallet";
+import { getWallet, resolveWalletMode } from "@/lib/wallet";
 
 export async function POST(request: Request) {
   const session = await getSessionFromRequest(request);
@@ -11,6 +11,19 @@ export async function POST(request: Request) {
       { status: 401 },
     );
   }
+
+  // Hard-correct: ledger wallet is funded via billing checkout / webhooks, not a mock API.
+  if (resolveWalletMode() === "ledger") {
+    return NextResponse.json(
+      {
+        error: "ledger_topup_via_billing",
+        message:
+          "Production CreditLedger top-ups go through billing checkout (Stripe/Polar/etc.), not this mock endpoint.",
+      },
+      { status: 501 },
+    );
+  }
+
   let body: { tenantId?: string; amount?: number; currency?: string };
   try {
     body = (await request.json()) as typeof body;
@@ -24,20 +37,20 @@ export async function POST(request: Request) {
     ...(body.tenantId !== undefined ? { explicit: body.tenantId } : {}),
     session,
   });
-  const wallet = getDemoWallet();
+  const wallet = await getWallet();
   try {
     const result = await wallet.topUp({
       tenantId,
       amount: body.amount,
       ...(body.currency !== undefined ? { currency: body.currency } : {}),
-      description: "mock prepaid top-up",
-      relatedId: `mock_${Date.now()}`,
-      metadata: { channel: "mock", product: "forge", userId: session.userId },
+      description: "dev memory prepaid top-up",
+      relatedId: `dev_${Date.now()}`,
+      metadata: { channel: "dev-memory", product: "forge", userId: session.userId },
     });
     return NextResponse.json({
       ok: true,
-      provider: "mock",
-      message: "Top-up succeeded (demo).",
+      provider: "memory",
+      message: "Top-up succeeded (dev memory wallet).",
       ...result,
       tenantId,
     });

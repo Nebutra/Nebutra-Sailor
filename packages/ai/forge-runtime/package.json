@@ -13,9 +13,9 @@
     "category": "ai",
     "summary": "Tool-station capability registry + dual-surface invoke for forge.nebutra.com",
     "gaps": [
-      "Forge web product surface (forge.nebutra.com) not yet wired to this registry",
-      "Metering + prepaid envelope dual-write still host-injected, not defaulted",
-      "Expanded tool set (LLM/image/PDF) needs host-side provider bindings before production"
+      "kinship / phone-lookup / router-translate deferred until SOTA engines (hard-correct)",
+      "Host metering dual-write still injected per-request (not package-default)",
+      "md-to-pdf requires Playwright Chromium on product hosts (fail-closed without it)"
     ]
   },
   "main": "./src/index.ts",
@@ -40,12 +40,14 @@
     "ajv": "^8.18.0",
     "ajv-formats": "^3.0.1",
     "cron-parser": "^5.5.0",
+    "csso": "^5.0.5",
     "culori": "^4.0.2",
     "dayjs": "^1.11.21",
     "diff": "^7.0.0",
     "exifr": "^7.1.3",
     "fast-xml-parser": "^5.8.0",
     "he": "^1.2.0",
+    "html-minifier-terser": "^7.2.0",
     "jose": "^6.2.0",
     "js-tiktoken": "^1.0.21",
     "js-yaml": "^5.2.1",
@@ -62,6 +64,8 @@
     "qrcode": "^1.5.4",
     "smol-toml": "^1.6.1",
     "sql-formatter": "^15.8.2",
+    "svgo": "^4.0.2",
+    "ua-parser-js": "^2.0.10",
     "zod": "catalog:"
   },
   "optionalDependencies": {
