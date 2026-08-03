@@ -752,8 +752,17 @@ load_runtime_env() {
     replace_env_assignment "$app_root/.env" PORT "3105"
     replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
     replace_env_assignment "$app_root/.env" PLAYWRIGHT_BROWSERS_PATH "$PLAYWRIGHT_BROWSERS_PATH"
-    # Wallet: production defaults to ledger in app code; leave FORGE_WALLET_MODE
-    # unset unless operators pin it in .env.
+    # Wallet: ledger when DATABASE_URL is present; otherwise honest memory emergency
+    # so free tools keep working without a silent broken CreditLedger.
+    if [ -n "${DATABASE_URL:-}" ]; then
+      replace_env_assignment "$app_root/.env" FORGE_WALLET_MODE "ledger"
+      # Do not force-clear ALLOW; operators may still pin it.
+      log "forge wallet mode=ledger (DATABASE_URL present)"
+    else
+      replace_env_assignment "$app_root/.env" FORGE_WALLET_MODE "memory"
+      replace_env_assignment "$app_root/.env" FORGE_ALLOW_MEMORY_WALLET "1"
+      log "forge wallet mode=memory (no DATABASE_URL — set DB for CreditLedger)"
+    fi
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 
@@ -1047,16 +1056,24 @@ install_forge_chromium() {
   fi
 
   log "install forge Chromium browsers -> $browsers_path (via $pw)"
+  # Prefer --with-deps on Linux so shared libs (libnss, fonts) exist for headless.
   if [ -x "$pw" ]; then
-    "$pw" install chromium 2>&1 | tail -30 || log "WARN: playwright install chromium failed"
+    "$pw" install --with-deps chromium 2>&1 | tail -40 \
+      || "$pw" install chromium 2>&1 | tail -30 \
+      || log "WARN: playwright install chromium failed"
   else
-    node "$pw" install chromium 2>&1 | tail -30 || log "WARN: playwright install chromium failed"
+    node "$pw" install --with-deps chromium 2>&1 | tail -40 \
+      || node "$pw" install chromium 2>&1 | tail -30 \
+      || log "WARN: playwright install chromium failed"
   fi
 
-  # Smoke: launch Chromium headless once (best-effort; does not fail deploy).
+  # Smoke: same launch flags as forge-runtime md-to-pdf (server/ECS-safe).
   if node -e "
     const { chromium } = require(process.argv[1]);
-    chromium.launch({ headless: true }).then(async (b) => {
+    chromium.launch({
+      headless: true,
+      args: ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage','--disable-gpu'],
+    }).then(async (b) => {
       await b.close();
       console.log('forge Chromium launch OK');
     }).catch((e) => {

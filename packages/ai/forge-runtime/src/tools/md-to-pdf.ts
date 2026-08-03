@@ -100,16 +100,29 @@ ${body}
  * SOTA render path: Chromium print-to-PDF via Playwright.
  * Requires playwright + browser binaries on the host.
  */
+/** Server/ECS-safe Chromium flags (no GUI, limited /dev/shm, root sandbox). */
+const PLAYWRIGHT_LAUNCH_ARGS = [
+  "--no-sandbox",
+  "--disable-setuid-sandbox",
+  "--disable-dev-shm-usage",
+  "--disable-gpu",
+  "--font-render-hinting=none",
+] as const;
+
 export async function markdownToPlaywrightPdf(
   markdown: string,
   title = "document",
 ): Promise<Buffer> {
   const playwright = await import("playwright");
-  const browser = await playwright.chromium.launch({ headless: true });
+  const browser = await playwright.chromium.launch({
+    headless: true,
+    args: [...PLAYWRIGHT_LAUNCH_ARGS],
+  });
   try {
     const page = await browser.newPage();
     const html = markdownToPrintableHtml(markdown, title);
-    await page.setContent(html, { waitUntil: "networkidle" });
+    // load is enough for print CSS; networkidle can hang on trackers/fonts.
+    await page.setContent(html, { waitUntil: "load", timeout: 60_000 });
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
