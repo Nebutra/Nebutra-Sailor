@@ -4609,9 +4609,6 @@ importers:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
-      '@nebutra/brand':
-        specifier: workspace:*
-        version: link:../../design/brand
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -4625,6 +4622,9 @@ importers:
         specifier: ^1.1.0
         version: 1.1.1
     devDependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../design/brand
       '@nebutra/theme':
         specifier: workspace:*
         version: link:../../design/theme
@@ -4655,9 +4655,6 @@ importers:
       '@mrleebo/prisma-ast':
         specifier: ^0.16.0
         version: 0.16.0
-      '@nebutra/brand':
-        specifier: workspace:*
-        version: link:../../design/brand
       cfonts:
         specifier: ^3.3.0
         version: 3.3.1
@@ -4677,6 +4674,9 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1
     devDependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../design/brand
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.1
