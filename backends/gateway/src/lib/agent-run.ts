@@ -10,7 +10,6 @@ import {
   PersistentRolloutStore,
   type RolloutStore,
   runTurn,
-  ToolRegistry,
   type TurnConfig,
 } from "@nebutra/agent-runtime";
 import {
@@ -22,6 +21,7 @@ import { createAgentContext } from "@nebutra/agents";
 import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { getGatewayOrchestrator } from "../agents/orchestrator-singleton.js";
+import { createGatewayCarinaBundle } from "./carina-sandbox.js";
 
 /** Automation runs are durable: rollout lines persist for replay/debugging. */
 function durableRolloutStore(): RolloutStore {
@@ -48,9 +48,9 @@ export interface AgentTurnResult {
 }
 
 /**
- * Run a single agent turn to completion. Tools are an empty registry (text-only
- * research/synthesis on tenant-scoped data); any approval request auto-denies so
- * an automated run never stalls waiting for a human.
+ * Run a single agent turn to completion. Tools include `command_exec` when
+ * Carina is configured; Sailor ApprovalGate auto-denies so automation never
+ * stalls on product HITL (use CARINA_AUTO_APPROVE or /carina/approvals for kernel).
  */
 export async function runAgentTurn(opts: AgentTurnInput): Promise<AgentTurnResult> {
   const orch = getGatewayOrchestrator();
@@ -96,7 +96,10 @@ export async function runAgentTurn(opts: AgentTurnInput): Promise<AgentTurnResul
       config,
       approvalPolicy: { kind: "on_request" },
       model,
-      tools: new ToolRegistry(),
+      tools: createGatewayCarinaBundle(process.env, {
+        tenantId: opts.tenantId,
+        threadId: opts.threadId,
+      }).tools,
       store: durableRolloutStore(),
       approvalGate: {
         async request() {

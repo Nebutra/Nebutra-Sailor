@@ -59,8 +59,9 @@
 - **Done (Track B Phase 2a — host wire):** `ensureSession` / `session.create`,
   `resolveCarinaSandboxFromEnv`, `registerCommandExecTool` (`command_exec`),
   gateway `createGatewayCarinaBundle` on agent-runtime turns.
-- **Not yet built (Track B Phase 2b — #384):** optional approval bridge
-  (`task.action.approve` / `deny` + product UI), per-tenant workspace routing.
+- **Done (Track B Phase 2b — ship):** workspace map/template, `resolveApproval`,
+  auto-approve retry, gateway `/carina/status` + `/carina/approvals`, ops env script.
+- **Optional (product UI):** rich HITL surface beyond the API bridge.
 - **Not deeply mapped:** model catalog manager, apply-patch grammar,
   compaction *generation* logic, tool_search discovery *mechanism*, hooks
   pipeline impl, web_search/image-gen handlers.

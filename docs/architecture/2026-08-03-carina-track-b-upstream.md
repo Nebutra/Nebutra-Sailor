@@ -8,8 +8,9 @@ wiring) tracked in [Nebutra-Sailor#384](https://github.com/Nebutra/Nebutra-Sailo
 | Phase | Scope | State |
 |-------|--------|--------|
 | **1 — Dock** | `createCarinaSandbox` JSON-RPC map, fail-closed default, ADR, package tests | **Done** ([#382](https://github.com/Nebutra/Nebutra-Sailor/pull/382)) |
-| **2a — Host wire** | Env resolve, `session.create` / ensureSession, `command_exec` tool, gateway bundle | **Done** (this tree; closes inject+session+tool in #384) |
-| **2b — Product HITL** | Approval UI + `task.action.approve` / `deny`, multi-tenant workspace routing | **Open** ([#384](https://github.com/Nebutra/Nebutra-Sailor/issues/384)) |
+| **2a — Host wire** | Env resolve, `session.create` / ensureSession, `command_exec` tool, gateway bundle | **Done** (#386) |
+| **2b — Ship** | Workspace map/template, approval resolve API, auto-approve, status probe, ops script | **Done** (this change) |
+| **2c — Product UI** | Full product HITL surface (beyond API bridge) | Optional follow-up |
 
 ## Context
 
@@ -109,8 +110,9 @@ Do **not** vendor Carina source into this monorepo. Follow
 - Phase 2a: gateway `createGatewayCarinaBundle()` injects when
   `CARINA_JSONRPC_URL` is set; `command_exec` calls `ensureSession` then
   `command.exec`. Requires `CARINA_WORKSPACE_ROOT` on the Carina host.
-- Phase 2b (#384 remainder): human approval bridge and per-tenant workspace
-  routing remain open.
+- Phase 2b: `POST /api/v1/agent-runtime/carina/approvals`, workspace map/template,
+  `CARINA_AUTO_APPROVE`, `GET .../carina/status`, `configure-api-carina-env.sh`.
+- Phase 2c (optional): rich product approval UI beyond the API bridge.
 - Protocol breaks require Carina version bump + Sailor adapter pin update.
 - Approval UI bridge remains optional on top of the exec adapter.
 

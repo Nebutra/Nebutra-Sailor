@@ -196,6 +196,12 @@ export type CarinaSandboxOptions = {
    * Optional client metadata sent on hello (discovery only — not an auth grant).
    */
   readonly clientId?: string;
+  /**
+   * When true, `command.exec` that returns `requires_approval` will call
+   * `governance.approval.resolve` (approve=true) once and retry. Default false
+   * (fail closed). Operators set via CARINA_AUTO_APPROVE=1 for unattended nodes.
+   */
+  readonly autoApproveOnRequire?: boolean;
 };
 
 export type CarinaEnsureSessionRequest = {
@@ -214,6 +220,13 @@ export type CarinaEnsureSessionRequest = {
  * `command.exec` requires a Carina session; call {@link CarinaSandbox.ensureSession}
  * before the first exec for a thread (or let {@link registerCommandExecTool} do it).
  */
+export type CarinaApprovalResolveRequest = {
+  readonly decisionId: string;
+  readonly approve: boolean;
+  readonly approver?: string;
+  readonly scope?: "once" | "session" | "project";
+};
+
 export interface CarinaSandbox extends ExternalSandbox {
   /**
    * Create (or reuse cached) Carina session for a Sailor thread.
@@ -222,6 +235,12 @@ export interface CarinaSandbox extends ExternalSandbox {
   ensureSession(request: CarinaEnsureSessionRequest): Promise<string>;
   /** Peek cached Carina session id for a Sailor thread, if any. */
   resolveMappedSessionId(threadId: string): string | undefined;
+  /**
+   * Host HITL: map product approve/deny → Carina `governance.approval.resolve`.
+   */
+  resolveApproval(request: CarinaApprovalResolveRequest): Promise<unknown>;
+  /** Lightweight connectivity probe (`gateway.hello`). */
+  probe(): Promise<{ protocolVersion: number; ok: true }>;
 }
 
 function extractCarinaSessionId(session: unknown): string {
@@ -263,6 +282,7 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
     executedOn = "carina",
     resolveSessionId,
     clientId = "nebutra-sailor",
+    autoApproveOnRequire = false,
   } = options;
 
   /** Sailor threadId → Carina session_id */
@@ -345,6 +365,31 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
       return sessionByThread.get(threadId);
     },
 
+    async probe(): Promise<{ protocolVersion: number; ok: true }> {
+      await ensureHello();
+      // hello already validated version; re-call for an explicit probe result
+      const hello = await rpcCall<CarinaHello>("gateway.hello", {
+        protocol_version: minProtocolVersion,
+        client_id: clientId,
+      });
+      return { protocolVersion: hello.protocol_version ?? minProtocolVersion, ok: true };
+    },
+
+    async resolveApproval(request: CarinaApprovalResolveRequest): Promise<unknown> {
+      const decisionId = request.decisionId.trim();
+      if (!decisionId) {
+        throw new CarinaProtocolError("resolveApproval requires decisionId");
+      }
+      await ensureHello();
+      const params: Record<string, unknown> = {
+        decision_id: decisionId,
+        approve: request.approve,
+      };
+      if (request.approver) params.approver = request.approver;
+      if (request.scope) params.scope = request.scope;
+      return rpcCall<unknown>("governance.approval.resolve", params);
+    },
+
     async ensureSession(request: CarinaEnsureSessionRequest): Promise<string> {
       const cached = sessionByThread.get(request.threadId);
       if (cached) return cached;
@@ -378,7 +423,7 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
 
       const sessionId = mapSessionId(request);
       const argv = ["/bin/sh", "-c", request.command];
-      const wire = await rpcCall<CarinaExecWire>("command.exec", {
+      let wire = await rpcCall<CarinaExecWire>("command.exec", {
         session_id: sessionId,
         argv,
         // Host correlation for audit — ignored if kernel drops unknown fields.
@@ -386,8 +431,8 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
         tenant_id: request.tenantId,
       });
 
-      const decision = wire.decision?.decision ?? "denied";
-      const decisionId = wire.decision?.decision_id;
+      let decision = wire.decision?.decision ?? "denied";
+      let decisionId = wire.decision?.decision_id;
 
       if (decision === "denied") {
         throw new SandboxDelegationError(
@@ -397,11 +442,46 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
         );
       }
       if (decision === "requires_approval") {
-        throw new SandboxDelegationError(
-          `Carina requires approval` + (decisionId ? ` (decision_id=${decisionId})` : ""),
-          409,
-          "requires_approval",
-        );
+        if (autoApproveOnRequire && decisionId) {
+          await rpcCall<unknown>("governance.approval.resolve", {
+            decision_id: decisionId,
+            approve: true,
+            scope: "once",
+            approver: clientId,
+          });
+          // Retry once after host auto-approve.
+          wire = await rpcCall<CarinaExecWire>("command.exec", {
+            session_id: sessionId,
+            argv,
+            correlation_id: `${request.tenantId}:${request.threadId}`,
+            tenant_id: request.tenantId,
+          });
+          const retryDecision = wire.decision?.decision ?? "denied";
+          if (retryDecision === "allowed") {
+            decision = "allowed";
+            decisionId = wire.decision?.decision_id ?? decisionId;
+            // fall through to result handling below
+          } else if (retryDecision === "denied") {
+            throw new SandboxDelegationError(
+              `Carina denied command after auto-approve: ${wire.decision?.reason ?? "denied"}`,
+              403,
+              "denied",
+            );
+          } else {
+            throw new SandboxDelegationError(
+              `Carina still requires approval after auto-approve` +
+                (wire.decision?.decision_id ? ` (decision_id=${wire.decision.decision_id})` : ""),
+              409,
+              "requires_approval",
+            );
+          }
+        } else {
+          throw new SandboxDelegationError(
+            `Carina requires approval` + (decisionId ? ` (decision_id=${decisionId})` : ""),
+            409,
+            "requires_approval",
+          );
+        }
       }
 
       const cr = wire.result;
@@ -448,8 +528,46 @@ export type CarinaEnv = {
   readonly CARINA_JSONRPC_TOKEN?: string;
   readonly CARINA_JSONRPC_PATH?: string;
   readonly CARINA_WORKSPACE_ROOT?: string;
+  /** JSON map tenantId → absolute workspace path on the Carina host. */
+  readonly CARINA_WORKSPACE_MAP?: string;
+  /** Template with `{tenantId}` / `{threadId}` placeholders. */
+  readonly CARINA_WORKSPACE_TEMPLATE?: string;
   readonly CARINA_CLIENT_ID?: string;
+  /** session.create approval_mode (e.g. always-approve, on_request). */
+  readonly CARINA_SESSION_APPROVAL_MODE?: string;
+  /** "1" / "true" → auto-approve requires_approval once and retry exec. */
+  readonly CARINA_AUTO_APPROVE?: string;
 };
+
+/**
+ * Resolve workspace path for a tenant/thread.
+ * Order: CARINA_WORKSPACE_MAP[tenant] → TEMPLATE → CARINA_WORKSPACE_ROOT.
+ */
+export function resolveCarinaWorkspaceRoot(
+  tenantId: string,
+  env: CarinaEnv = process.env as CarinaEnv,
+  threadId = "",
+): string | undefined {
+  const mapRaw = env.CARINA_WORKSPACE_MAP?.trim();
+  if (mapRaw) {
+    try {
+      const map = JSON.parse(mapRaw) as Record<string, unknown>;
+      const hit = map[tenantId];
+      if (typeof hit === "string" && hit.trim()) return hit.trim();
+    } catch {
+      // ignore bad JSON — fall through
+    }
+  }
+  const template = env.CARINA_WORKSPACE_TEMPLATE?.trim();
+  if (template) {
+    return template
+      .replaceAll("{tenantId}", tenantId)
+      .replaceAll("{threadId}", threadId)
+      .trim();
+  }
+  const root = env.CARINA_WORKSPACE_ROOT?.trim();
+  return root || undefined;
+}
 
 /**
  * Resolve Track-B sandbox from environment.
@@ -463,11 +581,15 @@ export function resolveCarinaSandboxFromEnv(
   const baseUrl = env.CARINA_JSONRPC_URL?.trim();
   if (!baseUrl) return REFUSING_SANDBOX;
 
+  const auto =
+    env.CARINA_AUTO_APPROVE === "1" || env.CARINA_AUTO_APPROVE === "true";
+
   const options: CarinaSandboxOptions = {
     baseUrl,
     ...(env.CARINA_JSONRPC_TOKEN ? { token: env.CARINA_JSONRPC_TOKEN } : {}),
     ...(env.CARINA_JSONRPC_PATH ? { rpcPath: env.CARINA_JSONRPC_PATH } : {}),
     ...(env.CARINA_CLIENT_ID ? { clientId: env.CARINA_CLIENT_ID } : {}),
+    ...(auto ? { autoApproveOnRequire: true } : {}),
     ...overrides,
   };
   return createCarinaSandbox(options);
