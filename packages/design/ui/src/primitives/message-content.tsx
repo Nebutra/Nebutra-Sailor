@@ -30,6 +30,7 @@ import {
   messageContentTokens,
 } from "../tokens/components/message-content";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 
 const codeFenceLanguages = new Set<string>([
   "bash",
@@ -98,7 +99,7 @@ export function normalizeMessageMarkdown(markdown: string): string {
 
 function getMessageContentStyle(
   density: MessageContentDensity,
-  style: React.CSSProperties | undefined,
+  style: unknown,
 ): MessageContentCssVars {
   const densityToken = messageContentTokens.density[density];
 
@@ -112,7 +113,7 @@ function getMessageContentStyle(
     "--message-content-paragraph-margin": `${densityToken.paragraphMargin}px`,
     "--message-content-heading-margin": `${densityToken.headingMargin}px`,
     "--message-content-pre-margin": `${densityToken.preMargin}px`,
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 

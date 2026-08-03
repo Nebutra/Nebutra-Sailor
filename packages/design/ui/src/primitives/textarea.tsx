@@ -3,6 +3,7 @@
 import * as React from "react";
 import { type TextareaSize, textareaTokens } from "../tokens/components/textarea";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 import { formControlFocusClassNames, formControlInvalidClassNames } from "./form-control";
 
 type NativeTextareaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "size">;
@@ -54,7 +55,7 @@ const fieldErrorClassName = "text-xs font-medium text-destructive";
 
 function getTextareaStyle(
   size: TextareaSize,
-  style: React.CSSProperties | undefined,
+  style: unknown,
 ): TextareaCssVars {
   const token = textareaTokens.sizes[size];
 
@@ -67,7 +68,7 @@ function getTextareaStyle(
     "--textarea-focus-ring-width": `${textareaTokens.focusRingWidth}px`,
     borderRadius: "var(--textarea-radius)",
     outline: "none",
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 

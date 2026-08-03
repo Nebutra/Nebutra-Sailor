@@ -1,5 +1,16 @@
 import type * as React from "react";
 
+/**
+ * Base UI (and some Radix peers) type `style` as CSSProperties | state-function.
+ * Token merge helpers only need the plain object branch — drop functions so DTS
+ * builds stay green across monorepo and standalone package mirrors.
+ * Returns `{}` (never undefined) so spreads stay exactOptionalPropertyTypes-safe.
+ */
+export function asPlainStyle(style: unknown): React.CSSProperties {
+  if (style == null || typeof style === "function") return {};
+  return style as React.CSSProperties;
+}
+
 export type PrimitiveProps<T> = React.PropsWithChildren<T & { className?: string | undefined }>;
 
 export type PrimitiveComponent<TElement, TProps> = React.ForwardRefExoticComponent<

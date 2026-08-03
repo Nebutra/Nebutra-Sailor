@@ -8,6 +8,7 @@ import * as React from "react";
 import { overlayClassNames, overlayTokens, overlayZIndex } from "../tokens/components/overlay";
 import { sheetTokens } from "../tokens/components/sheet";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 
 type SheetCssVar =
   | "--sheet-inset"
@@ -33,7 +34,7 @@ type SheetCssVar =
 
 type SheetCssVars = React.CSSProperties & Record<SheetCssVar, string>;
 
-function getSheetStyle(style: React.CSSProperties | undefined): SheetCssVars {
+function getSheetStyle(style: unknown): SheetCssVars {
   return {
     "--sheet-inset": `${sheetTokens.inset}px`,
     "--sheet-side-width": `${sheetTokens.sideWidth}px`,
@@ -55,7 +56,7 @@ function getSheetStyle(style: React.CSSProperties | undefined): SheetCssVars {
     "--sheet-shadow": sheetTokens.surface.shadow,
     "--sheet-duration": `${overlayTokens.motion.duration}ms`,
     "--sheet-easing": overlayTokens.motion.easing,
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 

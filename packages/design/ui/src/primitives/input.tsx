@@ -6,6 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { type InputSize, inputTokens } from "../tokens/components/input";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 import { formControlFocusClassNames, formControlInvalidClassNames } from "./form-control";
 import { Kbd } from "./kbd";
 
@@ -181,7 +182,7 @@ function assignRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
   }
 }
 
-function getInputStyle(size: InputSize, style: React.CSSProperties | undefined): InputCssVars {
+function getInputStyle(size: InputSize, style: unknown): InputCssVars {
   const token = inputTokens.sizes[size];
 
   return {
@@ -199,7 +200,7 @@ function getInputStyle(size: InputSize, style: React.CSSProperties | undefined):
     "--input-focus-ring-width": `${inputTokens.focusRingWidth}px`,
     borderRadius: "var(--input-radius)",
     outline: "none",
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 

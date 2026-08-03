@@ -1,5 +1,7 @@
 "use client";
 
+import { asPlainStyle } from "../utils/primitive-props";
+
 import * as React from "react";
 
 import { sliderTokens } from "../tokens/components/slider";
@@ -81,7 +83,7 @@ function getProgress(value: number, min: number, max: number) {
   return clamp(((value - min) / (max - min)) * 100, 0, 100);
 }
 
-function getSliderStyle(progress: number, style: React.CSSProperties | undefined): SliderCssVars {
+function getSliderStyle(progress: number, style: unknown): SliderCssVars {
   return {
     "--slider-height": `${sliderTokens.height}px`,
     "--slider-track-height": `${sliderTokens.trackHeight}px`,
@@ -97,7 +99,7 @@ function getSliderStyle(progress: number, style: React.CSSProperties | undefined
     "--slider-duration": `${sliderTokens.motion.duration}ms`,
     "--slider-easing": sliderTokens.motion.easing,
     "--slider-progress": `${progress}%`,
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 

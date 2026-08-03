@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { type SwitchSize, switchSizes, switchTokens } from "../tokens/components/switch";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 
 type SwitchCssVar =
   | "--switch-height"
@@ -53,7 +54,7 @@ export interface SwitchProps
   value?: string;
 }
 
-function getSwitchStyle(size: SwitchSize, style: React.CSSProperties | undefined) {
+function getSwitchStyle(size: SwitchSize, style: unknown) {
   const sizeTokens = switchSizes[size];
 
   return {
@@ -69,11 +70,11 @@ function getSwitchStyle(size: SwitchSize, style: React.CSSProperties | undefined
     "--switch-control-radius": `${switchTokens.controlRadius}px`,
     "--switch-duration": `${switchTokens.motion.duration}ms`,
     "--switch-easing": switchTokens.motion.easing,
-    ...style,
+    ...asPlainStyle(style),
   } satisfies SwitchCssVars;
 }
 
-function getSwitchControlStyle(size: SwitchSize, style: React.CSSProperties | undefined) {
+function getSwitchControlStyle(size: SwitchSize, style: unknown) {
   const sizeTokens = switchSizes[size];
 
   return {
@@ -82,7 +83,7 @@ function getSwitchControlStyle(size: SwitchSize, style: React.CSSProperties | un
     "--switch-control-padding-x": `${sizeTokens.paddingX}px`,
     "--switch-icon-size": `${sizeTokens.iconSize}px`,
     "--switch-font-size": `${sizeTokens.fontSize}px`,
-    ...style,
+    ...asPlainStyle(style),
   } satisfies Pick<
     SwitchCssVars,
     | "--switch-control-height"

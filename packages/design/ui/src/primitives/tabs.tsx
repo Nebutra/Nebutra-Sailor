@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { type TabsSize, tabsSizes, tabsTokens } from "../tokens/components/tabs";
 import { cn } from "../utils";
-import { withHtmlProps } from "../utils/primitive-props";
+import { asPlainStyle, withHtmlProps } from "../utils/primitive-props";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 type BaseTabsRootChangeDetails = {
@@ -235,7 +235,7 @@ export interface TabsContentProps
   value: string;
 }
 
-function getTabsStyle(size: TabsSize, style: React.CSSProperties | undefined): TabsCssVars {
+function getTabsStyle(size: TabsSize, style: unknown): TabsCssVars {
   const token = tabsSizes[size];
 
   return {
@@ -259,7 +259,7 @@ function getTabsStyle(size: TabsSize, style: React.CSSProperties | undefined): T
     "--tabs-badge-font-size": `${tabsTokens.badgeFontSize}px`,
     "--tabs-duration": `${tabsTokens.motion.duration}ms`,
     "--tabs-easing": tabsTokens.motion.easing,
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 
