@@ -2029,7 +2029,30 @@
     "mermaid": {
       "source": "Mermaid 原始碼",
       "idle": "合法圖會渲染在這裡",
-      "note": "官方 mermaid（strict）。不是 DBML ERD。"
+      "note": "官方 mermaid 11（securityLevel=strict）。瀏覽器 live 預覽 · Agent 側 Playwright 出 SVG。不是 DBML ERD 產品。",
+      "sample": "範例",
+      "theme": "主題",
+      "theme_default": "預設",
+      "theme_dark": "深色",
+      "theme_forest": "森林",
+      "theme_neutral": "中性",
+      "theme_base": "Base",
+      "sample_flowchart": "流程圖",
+      "sample_sequence": "時序圖",
+      "sample_class": "類別圖",
+      "sample_er": "ER 圖",
+      "sample_state": "狀態圖",
+      "sample_gantt": "甘特圖",
+      "sample_pie": "圓餅圖",
+      "sample_mindmap": "心智圖",
+      "zoomIn": "放大",
+      "zoomOut": "縮小",
+      "zoomReset": "重設檢視",
+      "copySvg": "複製 SVG",
+      "downloadSvg": "下載 SVG",
+      "downloadPng": "下載 PNG",
+      "previewAria": "Mermaid 圖預覽",
+      "canvasHint": "拖曳平移 · ⌘/Ctrl+滾輪縮放"
     },
     "colorDeltaE": {
       "note": "culori CIEDE2000。閾值僅供 UI 審視。"

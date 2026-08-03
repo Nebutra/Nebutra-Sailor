@@ -34,13 +34,6 @@ Table posts {
 }
 `;
 
-const MERMAID_SAMPLE = `flowchart LR
-  A[User] --> B[Forge]
-  B --> C[DNS]
-  B --> D[TLS]
-  B --> E[Mermaid]
-`;
-
 export function DnsLookupRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
   const [name, setName] = useState("example.com");
@@ -250,88 +243,8 @@ export function MyIpRunner({ toolId }: { toolId: string }) {
   );
 }
 
-export function MermaidRenderRunner({ toolId }: { toolId: string }) {
-  const t = useTranslations("runners");
-  const [text, setText] = useState(MERMAID_SAMPLE);
-  const [svg, setSvg] = useState("");
-  const [meta, setMeta] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  /**
-   * Human path: render in the browser (real DOM).
-   * Agent path: same toolId with mode=svg uses Playwright on the host.
-   */
-  const runClient = async (source = text) => {
-    if (!source.trim()) {
-      setSvg("");
-      setMeta("");
-      return;
-    }
-    setLoading(true);
-    setError("");
-    try {
-      const mermaid = (await import("mermaid")).default;
-      mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: "neutral" });
-      await mermaid.parse(source);
-      const id = `mmd_${Date.now().toString(36)}`;
-      const { svg: out } = await mermaid.render(id, source);
-      setSvg(out);
-      setMeta(`client · ${out.length} chars`);
-      // Server parse keeps agent/API contract warm (ignore SVG cost for humans).
-      void invokeForge(toolId, { text: source, mode: "parse_only" });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
-      setSvg("");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const live = useDebouncedCallback((source: string) => {
-    void runClient(source);
-  }, 400);
-
-  useEffect(() => {
-    live(text);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text]);
-
-  return (
-    <div className="space-y-4">
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Textarea
-          label={t("mermaid.source")}
-          id="mmd-src"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          rows={16}
-          className="font-mono text-sm"
-        />
-        <div className="space-y-2">
-          <p className="text-xs text-[var(--neutral-10)]">
-            {loading ? t("common.running") : t("common.liveHint")}
-            {meta ? ` · ${meta}` : ""}
-          </p>
-          <RunnerError>{error}</RunnerError>
-          {svg ? (
-            <div
-              className="overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4"
-              // mermaid SVG is produced client-side with securityLevel=strict
-              dangerouslySetInnerHTML={{ __html: svg }}
-            />
-          ) : (
-            <ShellNote>{t("mermaid.idle")}</ShellNote>
-          )}
-          {svg ? (
-            <TextResultActions text={svg} downloadName="diagram.svg" contentType="image/svg+xml" />
-          ) : null}
-        </div>
-      </div>
-      <RunnerNote>{t("mermaid.note")}</RunnerNote>
-    </div>
-  );
-}
+/** @deprecated import from @/components/mermaid-runner — re-export for stable path */
+export { MermaidRenderRunner } from "@/components/mermaid-runner";
 
 export function ColorDeltaERunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");

@@ -2029,7 +2029,30 @@
     "mermaid": {
       "source": "Mermaid 源码",
       "idle": "合法图会渲染在这里",
-      "note": "官方 mermaid，securityLevel=strict。不是 DBML ERD 产品。"
+      "note": "官方 mermaid 11（securityLevel=strict）。浏览器 live 预览 · Agent 侧 Playwright 出 SVG。不是 DBML ERD 产品。",
+      "sample": "示例",
+      "theme": "主题",
+      "theme_default": "默认",
+      "theme_dark": "深色",
+      "theme_forest": "森林",
+      "theme_neutral": "中性",
+      "theme_base": "Base",
+      "sample_flowchart": "流程图",
+      "sample_sequence": "时序图",
+      "sample_class": "类图",
+      "sample_er": "ER 图",
+      "sample_state": "状态图",
+      "sample_gantt": "甘特图",
+      "sample_pie": "饼图",
+      "sample_mindmap": "思维导图",
+      "zoomIn": "放大",
+      "zoomOut": "缩小",
+      "zoomReset": "重置视图",
+      "copySvg": "复制 SVG",
+      "downloadSvg": "下载 SVG",
+      "downloadPng": "下载 PNG",
+      "previewAria": "Mermaid 图预览",
+      "canvasHint": "拖拽平移 · ⌘/Ctrl+滚轮缩放"
     },
     "colorDeltaE": {
       "note": "culori CIEDE2000。阈值仅供 UI 评审参考。OKLCH 已在颜色转换工具中提供。"

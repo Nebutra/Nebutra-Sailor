@@ -2029,7 +2029,30 @@
     "mermaid": {
       "source": "Mermaid-Quelle",
       "idle": "Gültige Diagramme erscheinen hier",
-      "note": "Offizielles mermaid (strict). Kein DBML-ERD."
+      "note": "Offizielles mermaid 11 (securityLevel=strict). Live-Vorschau im Browser · Agent-SVG via Playwright. Kein DBML-ERD.",
+      "sample": "Beispiel",
+      "theme": "Thema",
+      "theme_default": "Standard",
+      "theme_dark": "Dunkel",
+      "theme_forest": "Wald",
+      "theme_neutral": "Neutralgrau",
+      "theme_base": "Basis",
+      "sample_flowchart": "Flussdiagramm",
+      "sample_sequence": "Sequenz",
+      "sample_class": "Klassendiagramm",
+      "sample_er": "ER-Diagramm",
+      "sample_state": "Zustandsdiagramm",
+      "sample_gantt": "Gantt-Diagramm",
+      "sample_pie": "Kreisdiagramm",
+      "sample_mindmap": "Gedankenkarte",
+      "zoomIn": "Vergrößern",
+      "zoomOut": "Verkleinern",
+      "zoomReset": "Ansicht zurücksetzen",
+      "copySvg": "SVG kopieren",
+      "downloadSvg": "SVG herunterladen",
+      "downloadPng": "PNG herunterladen",
+      "previewAria": "Mermaid-Diagrammvorschau",
+      "canvasHint": "Ziehen zum Verschieben · ⌘/Strg+Scrollen zum Zoomen"
     },
     "colorDeltaE": {
       "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."

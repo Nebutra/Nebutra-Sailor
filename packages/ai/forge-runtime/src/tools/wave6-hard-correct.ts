@@ -293,7 +293,20 @@ async function mermaidParseOnly(definition: string): Promise<{ diagramType: stri
   };
 }
 
-async function mermaidToSvg(definition: string): Promise<{ svg: string; diagramType: string }> {
+const MERMAID_THEMES = ["default", "dark", "forest", "neutral", "base"] as const;
+type MermaidTheme = (typeof MERMAID_THEMES)[number];
+
+function normalizeMermaidTheme(theme: string | undefined): MermaidTheme {
+  if (theme && (MERMAID_THEMES as readonly string[]).includes(theme)) {
+    return theme as MermaidTheme;
+  }
+  return "neutral";
+}
+
+async function mermaidToSvg(
+  definition: string,
+  theme: MermaidTheme = "neutral",
+): Promise<{ svg: string; diagramType: string }> {
   const { diagramType } = await mermaidParseOnly(definition);
 
   let chromium: typeof import("playwright").chromium;
@@ -323,6 +336,7 @@ async function mermaidToSvg(definition: string): Promise<{ svg: string; diagramT
   try {
     const page = await browser.newPage();
     const payload = JSON.stringify(definition);
+    const themeJson = JSON.stringify(theme);
     await page.setContent(
       `<!DOCTYPE html><html><head><meta charset="utf-8"/></head><body>
 <div id="app"></div>
@@ -330,7 +344,7 @@ async function mermaidToSvg(definition: string): Promise<{ svg: string; diagramT
 <script>
 (async () => {
   try {
-    mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: 'neutral' });
+    mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: ${themeJson} });
     const { svg } = await mermaid.render('forge_mmd', ${payload});
     window.__FORGE_MMD__ = { ok: true, svg };
   } catch (e) {
@@ -365,8 +379,8 @@ export const mermaidRenderTool = tool({
   category: "doc",
   title: { zh: "Mermaid 渲染", en: "Mermaid Render" },
   description: {
-    zh: "官方 mermaid 校验并渲染 SVG（服务端 JSDOM；非 DBML ERD）",
-    en: "Official mermaid parse + SVG render (server JSDOM; not a DBML ERD)",
+    zh: "官方 mermaid 11 live 渲染 + Agent SVG（Playwright）；主题/样本/导出，非 DBML ERD",
+    en: "Official mermaid 11 live preview + Agent SVG (Playwright); themes, samples, export — not a DBML ERD",
   },
   tier: "core",
   sideEffect: "pure",
@@ -379,34 +393,38 @@ export const mermaidRenderTool = tool({
     version: "11.x",
   },
   seoKeywords: {
-    zh: "mermaid在线,流程图渲染,时序图",
-    en: "mermaid live editor online, render mermaid diagram, flowchart svg",
+    zh: "mermaid在线,mermaid.live替代,流程图渲染,时序图,导出svg png",
+    en: "mermaid live editor online, mermaid.live alternative, render mermaid diagram, flowchart svg png",
   },
   inputSchema: z.object({
     text: z.string().min(1).max(100_000),
     /** parse_only skips Chromium SVG (cheap syntax check for agents). */
     mode: z.enum(["svg", "parse_only"]).default("svg"),
+    theme: z.enum(["default", "dark", "forest", "neutral", "base"]).default("neutral"),
   }),
-  execute: async (input: { text: string; mode?: "svg" | "parse_only" }) => {
+  execute: async (input: { text: string; mode?: "svg" | "parse_only"; theme?: MermaidTheme }) => {
     const text = input.text.trim();
     if (!text) throw new Error("text required");
     const mode = input.mode ?? "svg";
+    const theme = normalizeMermaidTheme(input.theme);
     try {
       if (mode === "parse_only") {
         const { diagramType } = await mermaidParseOnly(text);
         return {
           ok: true as const,
           mode,
+          theme,
           diagramType,
           svg: null,
           engine: "mermaid.parse",
           note: "parse_only — no SVG. Use mode=svg on a Playwright-equipped product host.",
         };
       }
-      const { svg, diagramType } = await mermaidToSvg(text);
+      const { svg, diagramType } = await mermaidToSvg(text, theme);
       return {
         ok: true as const,
         mode,
+        theme,
         diagramType,
         svg,
         bytes: Buffer.byteLength(svg, "utf8"),

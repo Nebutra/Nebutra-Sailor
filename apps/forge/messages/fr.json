@@ -2029,7 +2029,30 @@
     "mermaid": {
       "source": "Source Mermaid",
       "idle": "Le diagramme valide s'affiche ici",
-      "note": "mermaid officiel (strict). Pas un ERD DBML."
+      "note": "mermaid 11 officiel (securityLevel=strict). Aperçu live · SVG agent via Playwright. Pas un ERD DBML.",
+      "sample": "Exemple",
+      "theme": "Thème",
+      "theme_default": "Par défaut",
+      "theme_dark": "Sombre",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutre",
+      "theme_base": "Base",
+      "sample_flowchart": "Organigramme",
+      "sample_sequence": "Séquence",
+      "sample_class": "Classes",
+      "sample_er": "Diagramme ER",
+      "sample_state": "États",
+      "sample_gantt": "Gantt",
+      "sample_pie": "Camembert",
+      "sample_mindmap": "Carte mentale",
+      "zoomIn": "Zoom +",
+      "zoomOut": "Zoom −",
+      "zoomReset": "Réinitialiser",
+      "copySvg": "Copier le SVG",
+      "downloadSvg": "Télécharger SVG",
+      "downloadPng": "Télécharger PNG",
+      "previewAria": "Aperçu du diagramme Mermaid",
+      "canvasHint": "Glisser pour déplacer · ⌘/Ctrl+molette pour zoomer"
     },
     "colorDeltaE": {
       "note": "CIEDE2000 via culori. Seuils indicatifs UI."

@@ -2029,7 +2029,30 @@
     "mermaid": {
       "source": "Mermaidソース",
       "idle": "有効な図がここに表示されます",
-      "note": "公式mermaid（strict）。DBML ERDではありません。"
+      "note": "公式 mermaid 11（securityLevel=strict）。ブラウザ live プレビュー · Agent は Playwright SVG。DBML ERD ではありません。",
+      "sample": "サンプル",
+      "theme": "テーマ",
+      "theme_default": "デフォルト",
+      "theme_dark": "ダーク",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "フローチャート",
+      "sample_sequence": "シーケンス",
+      "sample_class": "クラス図",
+      "sample_er": "ER図",
+      "sample_state": "状態図",
+      "sample_gantt": "ガント",
+      "sample_pie": "円グラフ",
+      "sample_mindmap": "マインドマップ",
+      "zoomIn": "拡大",
+      "zoomOut": "縮小",
+      "zoomReset": "表示をリセット",
+      "copySvg": "SVGをコピー",
+      "downloadSvg": "SVGをダウンロード",
+      "downloadPng": "PNGをダウンロード",
+      "previewAria": "Mermaid図のプレビュー",
+      "canvasHint": "ドラッグで移動 · ⌘/Ctrl+スクロールでズーム"
     },
     "colorDeltaE": {
       "note": "culoriのCIEDE2000。しきい値はUIレビュー用。"

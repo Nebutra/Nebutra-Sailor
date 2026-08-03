@@ -2029,7 +2029,30 @@
     "mermaid": {
       "source": "Mermaid 소스",
       "idle": "유효한 다이어그램이 여기에 표시됩니다",
-      "note": "공식 mermaid(strict). DBML ERD 아님."
+      "note": "공식 mermaid 11(securityLevel=strict). 브라우저 라이브 미리보기 · Agent SVG는 Playwright. DBML ERD 아님.",
+      "sample": "샘플",
+      "theme": "테마",
+      "theme_default": "기본",
+      "theme_dark": "다크",
+      "theme_forest": "Forest",
+      "theme_neutral": "Neutral",
+      "theme_base": "Base",
+      "sample_flowchart": "플로차트",
+      "sample_sequence": "시퀀스",
+      "sample_class": "클래스",
+      "sample_er": "ER 다이어그램",
+      "sample_state": "상태",
+      "sample_gantt": "간트",
+      "sample_pie": "파이",
+      "sample_mindmap": "마인드맵",
+      "zoomIn": "확대",
+      "zoomOut": "축소",
+      "zoomReset": "보기 초기화",
+      "copySvg": "SVG 복사",
+      "downloadSvg": "SVG 다운로드",
+      "downloadPng": "PNG 다운로드",
+      "previewAria": "Mermaid 다이어그램 미리보기",
+      "canvasHint": "드래그로 이동 · ⌘/Ctrl+스크롤 확대/축소"
     },
     "colorDeltaE": {
       "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
