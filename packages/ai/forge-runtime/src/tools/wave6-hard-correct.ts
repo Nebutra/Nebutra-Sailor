@@ -11,8 +11,6 @@
 import { promises as dns } from "node:dns";
 import { connect as tlsConnect } from "node:tls";
 import { importer, ModelExporter, Parser } from "@dbml/core";
-// culori ships JS; types optional (same as dev-extra.ts)
-// @ts-expect-error — no bundled types in culori@4 for our resolution path
 import {
   differenceCiede2000 as ciede2000Factory,
   converter,

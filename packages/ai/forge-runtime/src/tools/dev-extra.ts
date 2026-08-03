@@ -1,8 +1,6 @@
 /**
  * Dev knives — regex, color (culori), SQL format, nanoid, markdown preview, JS/TS format.
  */
-// culori ships JS; types optional
-// @ts-expect-error — no bundled types in culori@4 for our resolution path
 import { converter, formatCss, formatHex, formatHsl, formatRgb, parse } from "culori";
 import { marked } from "marked";
 import { customAlphabet, nanoid } from "nanoid";
