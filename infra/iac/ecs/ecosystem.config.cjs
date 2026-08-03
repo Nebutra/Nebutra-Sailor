@@ -231,6 +231,8 @@ module.exports = {
         // Full Chromium for md-to-pdf (not headless_shell-only).
         PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL: "0",
         PLAYWRIGHT_BROWSERS_PATH: "/var/www/nebutra/.cache/ms-playwright",
+        // Authoritative DNS leak control plane (localhost only).
+        FORGE_DNS_LEAK_URL: "http://127.0.0.1:3953",
       },
       max_memory_restart: "450M",
       instances: 1,
@@ -239,6 +241,34 @@ module.exports = {
       max_restarts: 10,
       kill_timeout: 8000,
       listen_timeout: 10000,
+    },
+    {
+      // Authoritative leak zone (UDP/TCP 53) + localhost control API :3953.
+      // Requires NS for leak.nebutra.com → ns1.leak.nebutra.com (DNS-only A).
+      // Port 53: setcap cap_net_bind_service=+ep on node, or CAP in systemd.
+      name: "forge-dns-leak",
+      cwd: "/var/www/nebutra/forge/current",
+      script: "/var/www/nebutra/node-with-env.sh",
+      interpreter: "bash",
+      args: "node_modules/tsx/dist/cli.mjs packages/ai/forge-dns-leak/src/cli.ts",
+      env: {
+        NODE_ENV: "production",
+        ENV_FILE: "/var/www/nebutra/forge/.env",
+        FORGE_DNS_LEAK_ZONE: "leak.nebutra.com",
+        FORGE_DNS_LEAK_NS: "ns1.leak.nebutra.com",
+        FORGE_DNS_LEAK_ANSWER_IP: "127.0.0.1",
+        FORGE_DNS_LEAK_DNS_HOST: "0.0.0.0",
+        FORGE_DNS_LEAK_DNS_PORT: "53",
+        FORGE_DNS_LEAK_API_HOST: "127.0.0.1",
+        FORGE_DNS_LEAK_API_PORT: "3953",
+      },
+      max_memory_restart: "120M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 20,
+      kill_timeout: 4000,
+      listen_timeout: 8000,
     },
   ],
 };

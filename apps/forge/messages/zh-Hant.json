@@ -2080,7 +2080,12 @@
       "verdictConsistent": "本輪路徑表現一致",
       "verdictSplit": "不同 DNS 路徑應答不一致",
       "verdictIpMismatch": "WebRTC 公網 IP 與邊緣 IP 不一致",
-      "verdictIncomplete": "不完整 — 缺少瀏覽器探測"
+      "verdictIncomplete": "不完整 — 缺少瀏覽器探測",
+      "verdictAuthority": "已捕獲系統 DNS 遞迴解析器（權威區）",
+      "infraOn": "權威區在線",
+      "infraOff": "權威區離線 — 僅多路徑對照",
+      "authorityResolvers": "權威區遞迴解析器捕獲",
+      "authorityNote": "這些 IP 是查詢你唯一探測名的遞迴解析器（作業系統 DNS 路徑）。請與 VPN/DNS 提供商對照。"
     }
   },
   "roots": {

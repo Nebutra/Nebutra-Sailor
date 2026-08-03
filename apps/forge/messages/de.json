@@ -2080,7 +2080,12 @@
       "verdictConsistent": "Pfade wirken in diesem Check konsistent",
       "verdictSplit": "Antworten über DNS-Pfade gespalten",
       "verdictIpMismatch": "WebRTC-Public-IP weicht von Edge-IP ab",
-      "verdictIncomplete": "Unvollständig — Browser-Probes fehlen"
+      "verdictIncomplete": "Unvollständig — Browser-Probes fehlen",
+      "verdictAuthority": "System-DNS-Recursives erfasst (Authority-Zone)",
+      "infraOn": "Authority-Zone online",
+      "infraOff": "Authority-Zone offline — nur Multi-Pfad",
+      "authorityResolvers": "Authority: erfasste Recursives",
+      "authorityNote": "Das sind Recursives, die Ihre eindeutigen Probe-Namen abgefragt haben (OS-System-DNS). Mit VPN/DNS-Anbieter vergleichen."
     }
   },
   "roots": {

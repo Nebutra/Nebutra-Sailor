@@ -2080,7 +2080,12 @@
       "verdictConsistent": "Paths look consistent on this check",
       "verdictSplit": "Split answers across DNS paths",
       "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing"
+      "verdictIncomplete": "Incomplete — browser probes missing",
+      "verdictAuthority": "System DNS recursives captured (authority zone)",
+      "infraOn": "Authority zone online",
+      "infraOff": "Authority zone offline — multi-path only",
+      "authorityResolvers": "Authoritative recursive captures",
+      "authorityNote": "These IPs are recursive resolvers that queried your unique probe names (OS system DNS path). Compare with your VPN/DNS provider."
     }
   },
   "roots": {

@@ -157,6 +157,73 @@ function verdictTone(verdict: string | undefined): ShellTone {
   }
 }
 
+type AuthoritySession = {
+  id: string;
+  probeNames: string[];
+  zone: string;
+  resolvers?: Array<{ ip: string; count: number; firstSeenAt: string; lastSeenAt: string }>;
+  ready?: boolean;
+  queryCount?: number;
+  infrastructure?: boolean;
+};
+
+/** Force browser *system* DNS (not DoH) via speculative fetches the OS resolves. */
+function triggerSystemDns(names: string[]) {
+  if (typeof document === "undefined") return;
+  for (const name of names) {
+    const img = new Image();
+    img.referrerPolicy = "no-referrer";
+    // http:// forces a DNS lookup; connection may fail — that is fine.
+    img.src = `http://${name}/forge-dns-leak.gif?t=${Date.now()}`;
+    const link = document.createElement("link");
+    link.rel = "dns-prefetch";
+    link.href = `//${name}`;
+    document.head.appendChild(link);
+    // cleanup nodes after a tick so we do not leak DOM forever
+    window.setTimeout(() => {
+      link.remove();
+      img.src = "";
+    }, 8_000);
+  }
+}
+
+async function createAuthoritySession(): Promise<AuthoritySession | null> {
+  try {
+    const res = await fetch("/api/v1/dns-leak/sessions", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ probeCount: 8, ttlSec: 120 }),
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as AuthoritySession;
+  } catch {
+    return null;
+  }
+}
+
+async function pollAuthoritySession(
+  id: string,
+  opts: { attempts?: number; delayMs?: number } = {},
+): Promise<AuthoritySession | null> {
+  const attempts = opts.attempts ?? 10;
+  const delayMs = opts.delayMs ?? 700;
+  let last: AuthoritySession | null = null;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const res = await fetch(`/api/v1/dns-leak/sessions/${id}`, { cache: "no-store" });
+      if (res.ok) {
+        last = (await res.json()) as AuthoritySession;
+        if (last.ready && (last.resolvers?.length ?? 0) > 0) return last;
+      }
+    } catch {
+      /* keep polling */
+    }
+    await new Promise((r) => setTimeout(r, delayMs));
+  }
+  return last;
+}
+
 export function DnsLeakRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
   const [probeHost, setProbeHost] = useState("cloudflare.com");
@@ -165,18 +232,27 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
   const [out, setOut] = useState<Record<string, unknown> | null>(null);
   const [localProbes, setLocalProbes] = useState<ClientProbe[]>([]);
   const [localWebrtc, setLocalWebrtc] = useState<string[]>([]);
+  const [authority, setAuthority] = useState<AuthoritySession | null>(null);
 
   const run = useCallback(async () => {
     setLoading(true);
     setError("");
     setOut(null);
+    setAuthority(null);
     const host = probeHost.trim() || "cloudflare.com";
-    const sessionId =
-      typeof crypto !== "undefined" && "randomUUID" in crypto
-        ? crypto.randomUUID().slice(0, 12)
-        : `s${Date.now().toString(36)}`;
 
     try {
+      // 1) Prefer real infrastructure: unique names → system DNS → auth zone logs recursives
+      const authSession = await createAuthoritySession();
+      let authResult: AuthoritySession | null = null;
+      if (authSession?.probeNames?.length) {
+        setAuthority(authSession);
+        triggerSystemDns(authSession.probeNames);
+        authResult = await pollAuthoritySession(authSession.id);
+        if (authResult) setAuthority(authResult);
+      }
+
+      // 2) Always collect DoH + WebRTC + multi-resolver (complements authority mode)
       const [dohResults, webrtcIps] = await Promise.all([
         Promise.all(DOH_ENDPOINTS.map((ep) => queryDoh(ep, host))),
         gatherWebrtcIps(),
@@ -186,15 +262,22 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
 
       const r = await invokeForge(toolId, {
         probeHost: host,
-        sessionId,
+        sessionId: authSession?.id ?? authResult?.id,
         clientProbes: dohResults,
         webrtcIps,
+        authorityResolvers: authResult?.resolvers ?? authSession?.resolvers ?? [],
+        authorityQueryCount: authResult?.queryCount ?? 0,
+        authorityReady: Boolean(authResult?.ready),
+        authorityZone: authSession?.zone ?? authResult?.zone,
       });
       if (!r.ok) {
         setError(r.message);
         return;
       }
-      setOut(r.output);
+      setOut({
+        ...r.output,
+        authority: authResult ?? authSession,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -217,16 +300,25 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
       ? (out.forgeEgressMarkers as Record<string, unknown>)
       : null;
 
+  const authorityMode =
+    Boolean((out?.authority as AuthoritySession | undefined)?.infrastructure) ||
+    Boolean(authority?.infrastructure) ||
+    Boolean(out?.authorityReady);
+
   const headline =
-    verdict === "consistent"
-      ? t("dnsLeak.verdictConsistent")
-      : verdict === "split_paths"
-        ? t("dnsLeak.verdictSplit")
-        : verdict === "ip_mismatch"
-          ? t("dnsLeak.verdictIpMismatch")
-          : verdict === "incomplete"
-            ? t("dnsLeak.verdictIncomplete")
-            : t("dnsLeak.idle");
+    verdict === "authority_captured"
+      ? t("dnsLeak.verdictAuthority")
+      : verdict === "consistent"
+        ? t("dnsLeak.verdictConsistent")
+        : verdict === "split_paths"
+          ? t("dnsLeak.verdictSplit")
+          : verdict === "ip_mismatch"
+            ? t("dnsLeak.verdictIpMismatch")
+            : verdict === "incomplete"
+              ? t("dnsLeak.verdictIncomplete")
+              : t("dnsLeak.idle");
+
+  const authBlock = (out?.authority as AuthoritySession | undefined) ?? authority ?? null;
 
   return (
     <div className="space-y-4">
@@ -242,6 +334,11 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("common.running") : t("dnsLeak.run")}
         </Button>
+        {authorityMode ? (
+          <ShellBadge tone="success">{t("dnsLeak.infraOn")}</ShellBadge>
+        ) : (
+          <ShellBadge tone="warning">{t("dnsLeak.infraOff")}</ShellBadge>
+        )}
       </div>
 
       <RunnerError>{error}</RunnerError>
@@ -331,6 +428,29 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
               </pre>
             </div>
           </div>
+
+          {authBlock ? (
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-[var(--neutral-11)]">
+                {t("dnsLeak.authorityResolvers")}
+              </p>
+              <pre className="max-h-72 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-[11px] leading-relaxed">
+                {JSON.stringify(
+                  {
+                    sessionId: authBlock.id,
+                    zone: authBlock.zone,
+                    ready: authBlock.ready,
+                    queryCount: authBlock.queryCount,
+                    probeNames: authBlock.probeNames,
+                    resolvers: authBlock.resolvers ?? [],
+                  },
+                  null,
+                  2,
+                )}
+              </pre>
+              <RunnerNote>{t("dnsLeak.authorityNote")}</RunnerNote>
+            </div>
+          ) : null}
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1">

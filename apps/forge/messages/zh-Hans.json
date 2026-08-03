@@ -2080,7 +2080,12 @@
       "verdictConsistent": "本轮路径表现一致",
       "verdictSplit": "不同 DNS 路径应答不一致",
       "verdictIpMismatch": "WebRTC 公网 IP 与边缘 IP 不一致",
-      "verdictIncomplete": "不完整 — 缺少浏览器探测"
+      "verdictIncomplete": "不完整 — 缺少浏览器探测",
+      "verdictAuthority": "已捕获系统 DNS 递归解析器（权威区）",
+      "infraOn": "权威区在线",
+      "infraOff": "权威区离线 — 仅多路径对照",
+      "authorityResolvers": "权威区递归解析器捕获",
+      "authorityNote": "这些 IP 是查询你唯一探测名的递归解析器（操作系统系统 DNS 路径）。请与 VPN/DNS 提供商对照。"
     }
   },
   "roots": {

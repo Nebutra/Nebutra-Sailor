@@ -2080,7 +2080,12 @@
       "verdictConsistent": "Las rutas se ven coherentes en esta prueba",
       "verdictSplit": "Respuestas divididas entre rutas DNS",
       "verdictIpMismatch": "IP pública WebRTC distinta de la IP de borde",
-      "verdictIncomplete": "Incompleto — faltan sondas del navegador"
+      "verdictIncomplete": "Incompleto — faltan sondas del navegador",
+      "verdictAuthority": "Recursivos DNS del sistema capturados (zona autoritativa)",
+      "infraOn": "Zona autoritativa en línea",
+      "infraOff": "Zona autoritativa fuera — solo multipath",
+      "authorityResolvers": "Capturas recursivas autoritativas",
+      "authorityNote": "Estas IP son recursivos que consultaron sus nombres de prueba (DNS del SO). Compárelas con su VPN/DNS."
     }
   },
   "roots": {

@@ -384,6 +384,21 @@ export const dnsLeakTool = tool({
     sessionId: z.string().max(64).optional(),
     clientProbes: z.array(ClientProbeSchema).max(24).optional(),
     webrtcIps: z.array(z.string().max(64)).max(32).optional(),
+    /** From forge-dns-leak authority (recursive IPs observed for this session). */
+    authorityResolvers: z
+      .array(
+        z.object({
+          ip: z.string().max(64),
+          count: z.number().int().min(1).optional(),
+          firstSeenAt: z.string().max(40).optional(),
+          lastSeenAt: z.string().max(40).optional(),
+        }),
+      )
+      .max(64)
+      .optional(),
+    authorityQueryCount: z.number().int().min(0).max(10_000).optional(),
+    authorityReady: z.boolean().optional(),
+    authorityZone: z.string().max(253).optional(),
     /** Host-injected like my-ip */
     forwardedFor: z.string().max(2_000).optional(),
     realIp: z.string().max(128).optional(),
@@ -402,6 +417,15 @@ export const dnsLeakTool = tool({
       ms?: number;
     }>;
     webrtcIps?: string[];
+    authorityResolvers?: Array<{
+      ip: string;
+      count?: number;
+      firstSeenAt?: string;
+      lastSeenAt?: string;
+    }>;
+    authorityQueryCount?: number;
+    authorityReady?: boolean;
+    authorityZone?: string;
     forwardedFor?: string;
     realIp?: string;
     remoteAddress?: string;
@@ -465,7 +489,18 @@ export const dnsLeakTool = tool({
     );
     const publicWebrtc = webrtcIps.filter((ip) => !privateWebrtc.includes(ip));
 
+    const authorityResolvers = (input.authorityResolvers ?? [])
+      .map((r) => ({
+        ip: r.ip.trim(),
+        count: r.count ?? 1,
+        firstSeenAt: r.firstSeenAt ?? null,
+        lastSeenAt: r.lastSeenAt ?? null,
+      }))
+      .filter((r) => r.ip.length > 0);
+    const authorityReady = Boolean(input.authorityReady && authorityResolvers.length > 0);
+
     const signals: string[] = [];
+    if (authorityReady) signals.push("authority_zone_captured_recursives");
     if (splitAcrossResolvers) signals.push("forge_resolvers_disagree_on_answers");
     if (clientDohSplit) signals.push("browser_doh_paths_disagree_on_answers");
     if (publicWebrtc.length > 0 && edgeClientIp && !publicWebrtc.includes(edgeClientIp)) {
@@ -473,9 +508,16 @@ export const dnsLeakTool = tool({
     }
     if (privateWebrtc.length > 0) signals.push("webrtc_local_candidates_present");
     if (clientProbes.length === 0) signals.push("no_browser_probes_submitted");
+    if (!authorityReady) signals.push("authority_zone_not_ready");
 
-    let verdict: "consistent" | "split_paths" | "ip_mismatch" | "incomplete" = "consistent";
-    if (clientProbes.length === 0 && webrtcIps.length === 0) verdict = "incomplete";
+    let verdict:
+      | "authority_captured"
+      | "consistent"
+      | "split_paths"
+      | "ip_mismatch"
+      | "incomplete" = "consistent";
+    if (authorityReady) verdict = "authority_captured";
+    else if (clientProbes.length === 0 && webrtcIps.length === 0) verdict = "incomplete";
     else if (signals.includes("webrtc_public_ip_differs_from_edge_ip")) verdict = "ip_mismatch";
     else if (splitAcrossResolvers || clientDohSplit) verdict = "split_paths";
 
@@ -497,6 +539,13 @@ export const dnsLeakTool = tool({
       webrtcIps,
       webrtcPublic: publicWebrtc,
       webrtcPrivate: privateWebrtc,
+      authority: {
+        ready: authorityReady,
+        zone: input.authorityZone ?? null,
+        queryCount: input.authorityQueryCount ?? 0,
+        resolvers: authorityResolvers,
+      },
+      authorityReady,
       signals,
       verdict,
       summary: {
@@ -505,15 +554,20 @@ export const dnsLeakTool = tool({
         distinctForgeAnswerSets: answerFingerprints.length,
         browserDohPaths: dohProbes.length,
         distinctBrowserDohAnswerSets: dohFingerprints.length,
+        authorityResolverCount: authorityResolvers.length,
       },
       honesty: {
-        fullSystemDnsLeakMap: false,
-        reason:
-          "Mapping the recursive resolvers used by the OS resolver requires an authoritative nameserver that logs queries (dnsleaktest-style). This tool reports multi-resolver + browser DoH/WebRTC path diversity and edge IP.",
-        recommendation:
-          "On VPN: compare edgeClientIp with your expected VPN exit; use browser DoH results only as explicit DoH paths; treat WebRTC public candidates vs edge IP as an IP-leak signal.",
+        fullSystemDnsLeakMap: authorityReady,
+        reason: authorityReady
+          ? "Authoritative leak zone observed recursive resolvers for unique probe names (system DNS path)."
+          : "Authoritative leak zone not ready on this host. Showing multi-resolver + browser DoH/WebRTC only.",
+        recommendation: authorityReady
+          ? "Compare listed recursive IPs with your expected VPN/DNS provider. Unexpected ISP resolvers while on VPN usually means DNS leak."
+          : "Deploy @nebutra/forge-dns-leak + NS for leak.nebutra.com (DNS-only) for full system-DNS capture; until then treat DoH/WebRTC as complementary signals.",
       },
-      engine: "node:dns.Resolver+client-probes",
+      engine: authorityReady
+        ? "forge-dns-leak-authority+node:dns+client-probes"
+        : "node:dns.Resolver+client-probes",
     };
   },
 });

@@ -60,6 +60,7 @@ on:
       - "apps/pebble/**"
       - "backends/gateway/**"
       - "packages/ai/forge-runtime/**"
+      - "packages/ai/forge-dns-leak/**"
       - "packages/platform/router-supply/**"
       - "infra/runtime/nginx/conf.d/*.nebutra.com.conf"
       - "infra/runtime/nginx/nginx.conf"

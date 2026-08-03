@@ -2080,7 +2080,12 @@
       "verdictConsistent": "Chemins cohérents sur ce test",
       "verdictSplit": "Réponses divergentes entre chemins DNS",
       "verdictIpMismatch": "IP publique WebRTC ≠ IP de bord",
-      "verdictIncomplete": "Incomplet — sondes navigateur manquantes"
+      "verdictIncomplete": "Incomplet — sondes navigateur manquantes",
+      "verdictAuthority": "Récursifs DNS système capturés (zone autoritaire)",
+      "infraOn": "Zone autoritaire en ligne",
+      "infraOff": "Zone autoritaire hors ligne — multipath seul",
+      "authorityResolvers": "Captures récursives autoritaires",
+      "authorityNote": "Ces IP sont les récursifs qui ont interrogé vos noms de sonde (DNS système). Comparez avec VPN/DNS."
     }
   },
   "roots": {

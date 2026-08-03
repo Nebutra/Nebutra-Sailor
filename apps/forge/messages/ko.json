@@ -2080,7 +2080,12 @@
       "verdictConsistent": "이번 검사에서 경로가 일치함",
       "verdictSplit": "DNS 경로 간 응답 불일치",
       "verdictIpMismatch": "WebRTC 공인 IP가 엣지 IP와 다름",
-      "verdictIncomplete": "불완전 — 브라우저 프로브 없음"
+      "verdictIncomplete": "불완전 — 브라우저 프로브 없음",
+      "verdictAuthority": "시스템 DNS 재귀 리졸버 포착(권한 영역)",
+      "infraOn": "권한 영역 온라인",
+      "infraOff": "권한 영역 오프라인 — 다중 경로만",
+      "authorityResolvers": "권한 영역 재귀 포착",
+      "authorityNote": "이 IP는 고유 프로브 이름을 질의한 재귀 리졸버(OS 시스템 DNS 경로)입니다. VPN/DNS 사업자와 비교하세요."
     }
   },
   "roots": {
