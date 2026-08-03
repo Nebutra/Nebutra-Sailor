@@ -801,9 +801,8 @@ export const userAgentParseTool = tool({
     const ua = input.text.trim();
     const result = new UAParser(ua).getResult();
     const deviceType = result.device.type ?? "desktop";
-    const isBot =
-      result.browser.type === "bot" ||
-      /bot|crawl|spider|slurp|bingpreview/i.test(ua);
+    // ua-parser-js BrowserTypes/DeviceTypes omit "bot"; use UA heuristics.
+    const isBot = /bot|crawl|spider|slurp|bingpreview/i.test(ua);
     return {
       ua,
       browser: result.browser.name ?? "Unknown",

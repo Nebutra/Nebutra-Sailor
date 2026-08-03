@@ -22,9 +22,7 @@ const globalForWallet = globalThis as unknown as {
 
 export type ForgeWalletMode = "memory" | "ledger";
 
-export function resolveWalletMode(
-  env: NodeJS.ProcessEnv = process.env,
-): ForgeWalletMode {
+export function resolveWalletMode(env: NodeJS.ProcessEnv = process.env): ForgeWalletMode {
   const explicit = env.FORGE_WALLET_MODE?.trim().toLowerCase();
   if (explicit === "memory" || explicit === "ledger") return explicit;
   return env.NODE_ENV === "production" ? "ledger" : "memory";
@@ -47,9 +45,7 @@ async function createLedgerWallet(): Promise<PrepaidWallet> {
   });
 }
 
-async function buildWallet(
-  env: NodeJS.ProcessEnv = process.env,
-): Promise<PrepaidWallet> {
+async function buildWallet(env: NodeJS.ProcessEnv = process.env): Promise<PrepaidWallet> {
   const mode = resolveWalletMode(env);
   if (mode === "memory") {
     if (env.NODE_ENV === "production" && env.FORGE_ALLOW_MEMORY_WALLET !== "1") {

@@ -40,9 +40,7 @@ describe("SOTA engine re-entry", () => {
     const out = r.output as { result: string; engine: string };
     expect(out.engine).toBe("html-minifier-terser");
     expect(out.result).not.toContain("<!--");
-    expect(out.result.length).toBeLessThan(
-      "<html>  <!--x-->  <body>  hi  </body></html>".length,
-    );
+    expect(out.result.length).toBeLessThan("<html>  <!--x-->  <body>  hi  </body></html>".length);
   });
 
   it("html-format uses Prettier", async () => {

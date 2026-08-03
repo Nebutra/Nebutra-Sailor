@@ -10,7 +10,7 @@
  *
  * Run: node scripts/lint-forge-hard-correct.mjs
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -43,10 +43,7 @@ function extractCases(source) {
 }
 
 function extractExportArraySlugs(fileText, arrayName) {
-  const re = new RegExp(
-    `export const ${arrayName}[\\s\\S]*?=\\s*\\[([\\s\\S]*?)\\];`,
-    "m",
-  );
+  const re = new RegExp(`export const ${arrayName}[\\s\\S]*?=\\s*\\[([\\s\\S]*?)\\];`, "m");
   const m = fileText.match(re);
   if (!m) return [];
   // Collect tool const names referenced in the array
@@ -108,9 +105,7 @@ function slugsFromExportArray(text, arrayName) {
 function collectProductSlugs() {
   const files = walkTs(toolsDir);
   const indexText = readFileSync(indexPath, "utf8");
-  const arrMatch = indexText.match(
-    /export const F0_BATCH1_TOOLS[\s\S]*?=\s*\[([\s\S]*?)\];/m,
-  );
+  const arrMatch = indexText.match(/export const F0_BATCH1_TOOLS[\s\S]*?=\s*\[([\s\S]*?)\];/m);
   if (!arrMatch) {
     throw new Error("Could not parse F0_BATCH1_TOOLS from tools/index.ts");
   }
@@ -184,9 +179,7 @@ function main() {
 
   const missingUi = [...productSlugs].filter((s) => !ui.has(s)).sort();
   for (const s of missingUi) {
-    errors.push(
-      `registered slug "${s}" has no explicit tool-workspace/catalog case (orphan UI)`,
-    );
+    errors.push(`registered slug "${s}" has no explicit tool-workspace/catalog case (orphan UI)`);
   }
 
   // Ban degradation language on **product-exported** tool objects only.

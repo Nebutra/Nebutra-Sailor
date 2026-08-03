@@ -16,11 +16,11 @@ describe("resolveWalletMode", () => {
   });
 
   it("honors explicit FORGE_WALLET_MODE", () => {
-    expect(
-      resolveWalletMode({ NODE_ENV: "production", FORGE_WALLET_MODE: "memory" }),
-    ).toBe("memory");
-    expect(
-      resolveWalletMode({ NODE_ENV: "development", FORGE_WALLET_MODE: "ledger" }),
-    ).toBe("ledger");
+    expect(resolveWalletMode({ NODE_ENV: "production", FORGE_WALLET_MODE: "memory" })).toBe(
+      "memory",
+    );
+    expect(resolveWalletMode({ NODE_ENV: "development", FORGE_WALLET_MODE: "ledger" })).toBe(
+      "ledger",
+    );
   });
 });
