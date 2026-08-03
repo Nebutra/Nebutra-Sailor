@@ -1,7 +1,7 @@
+import { existsSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { ExitCode } from "../utils/exit-codes";
@@ -10,104 +10,65 @@ import { logger } from "../utils/logger";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
- * Resolve create-sailor binary from multiple sources:
- * 1. Sibling package in monorepo (development)
- * 2. Installed as dependency in node_modules
- * 3. Global system PATH
+ * Resolve create-sailor binary:
+ * 1. Sibling package in monorepo (development / workspace)
+ * 2. Fallback to PATH (`create-sailor`)
  */
 function resolveCreateSailorBinary(): string {
-  const strategies = [
-    // Strategy 1: Monorepo sibling (pnpm/yarn workspace)
-    () => {
-      const siblingPath = resolve(__dirname, "../../../create-sailor/dist/index.js");
-      return siblingPath;
-    },
-  ];
-
-  for (const strategy of strategies) {
-    try {
-      const path = strategy();
-      return path;
-    } catch (error) {
-      logger.debug("create-sailor binary resolution strategy failed", { error });
-    }
-  }
-
-  // Fallback: try to find via 'which' or assume it's in PATH
+  const siblingPath = resolve(__dirname, "../../../create-sailor/dist/index.js");
+  if (existsSync(siblingPath)) return siblingPath;
   return "create-sailor";
 }
 
-interface SpawnError extends Error {
-  code?: string;
-  signal?: string;
-}
-
-function _isSpawnError(error: unknown): error is SpawnError {
-  return error instanceof Error && "code" in error;
+/**
+ * Forward argv after `create` so flags like `--region=cn` reach create-sailor.
+ * Commander does not put unknown options into `cmd.args` reliably.
+ */
+function passthroughArgs(dir: string | undefined): string[] {
+  const raw = process.argv.slice(2);
+  const createIdx = raw.findIndex((a) => a === "create");
+  if (createIdx < 0) return dir ? [dir] : [];
+  return raw.slice(createIdx + 1);
 }
 
 export function registerCreateCommand(program: Command) {
   program
     .command("create [dir]")
-    .description("Scaffold a new Nebutra-Sailor project")
+    .description("Scaffold a new Sailor project (delegates to create-sailor)")
     .allowUnknownOption(true)
-    .action(async (dir: string | undefined, _options: Record<string, unknown>, cmd: Command) => {
-      p.intro(pc.bgCyan(pc.black(" nebutra create ")));
+    .allowExcessArguments(true)
+    .action(async (dir: string | undefined) => {
+      // Thin wrapper: no second banner/outro — create-sailor owns the UX.
+      const createSailorBin = resolveCreateSailorBinary();
+      const args = passthroughArgs(dir);
+      const useNode = createSailorBin.endsWith(".js");
 
-      try {
-        const createSailorBin = resolveCreateSailorBinary();
+      const child = useNode
+        ? spawn(process.execPath, [createSailorBin, ...args], {
+            stdio: "inherit",
+            env: { ...process.env },
+          })
+        : spawn(createSailorBin, args, {
+            stdio: "inherit",
+            env: { ...process.env },
+            shell: true,
+          });
 
-        // Build arguments: if dir is provided, pass it; include any remaining args
-        const args = dir ? [dir] : [];
+      child.on("close", (code) => {
+        process.exit(code ?? 0);
+      });
 
-        // Add any additional arguments passed to the command
-        if (cmd.args && cmd.args.length > (dir ? 1 : 0)) {
-          const additionalArgs = cmd.args.slice(dir ? 1 : 0);
-          args.push(...additionalArgs);
+      child.on("error", (err: NodeJS.ErrnoException) => {
+        logger.error(`Failed to launch create-sailor: ${err.message}`);
+        if (err.code === "ENOENT") {
+          process.stderr.write(
+            `\n${pc.yellow("Tip:")} install the scaffolder:\n` +
+              `  ${pc.cyan("npm i -g create-sailor")}\n` +
+              `  ${pc.cyan("npx create-sailor@latest")}\n\n`,
+          );
+          process.exit(ExitCode.NOT_FOUND);
         }
-
-        const spinner = p.spinner();
-        spinner.start(pc.cyan(`Launching create-sailor${dir ? ` in ${dir}` : ""}...`));
-
-        const child = spawn(process.execPath, [createSailorBin, ...args], {
-          stdio: "inherit",
-          env: { ...process.env },
-        });
-
-        child.on("close", (code) => {
-          spinner.stop();
-          if (code === 0) {
-            p.outro(
-              pc.green(
-                "Project created successfully! Run 'npm install && npm run dev' to get started.",
-              ),
-            );
-          }
-          process.exit(code ?? 0);
-        });
-
-        child.on("error", (err: SpawnError) => {
-          spinner.stop();
-          logger.error(`\nFailed to launch create-sailor: ${err.message}`);
-
-          if (err.code === "ENOENT") {
-            logger.warn("\nTip: Ensure create-sailor is installed or available in your PATH.");
-            logger.info("  Install globally: npm install -g create-sailor");
-            process.exit(ExitCode.NOT_FOUND);
-          }
-
-          process.exit(ExitCode.ERROR);
-        });
-      } catch (error: unknown) {
-        p.log.error(
-          pc.red("Error: Unable to start create-sailor. Ensure it is properly installed."),
-        );
-
-        if (error instanceof Error) {
-          logger.error(error.message);
-        }
-
         process.exit(ExitCode.ERROR);
-      }
+      });
     });
 }

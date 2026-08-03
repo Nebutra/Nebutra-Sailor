@@ -12,6 +12,10 @@ const failures = [
     (entry) =>
       `${entry.packageName} ${entry.field} includes private workspace package ${entry.dependencyName} (${entry.dependencyDir})`,
   ),
+  ...diagnostics.monorepoProtocolRuntimeDependencies.map(
+    (entry) =>
+      `${entry.packageName} ${entry.field}.${entry.dependencyName} is "${entry.range}" — CLI packages must not declare monorepo-only protocols as production deps (npm cannot resolve workspace:/catalog:; bundle via tsup noExternal and keep the dep in devDependencies)`,
+  ),
   ...diagnostics.requiredMetadataMissing.map(
     (entry) => `${entry.packageName} is missing ${entry.field}; expected ${entry.expected}`,
   ),

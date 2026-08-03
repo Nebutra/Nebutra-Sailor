@@ -3,6 +3,7 @@ import { homedir, platform } from "node:os";
 import { join } from "node:path";
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import pc from "picocolors";
 
 function getConfigDir(): string {
   if (platform() === "win32") {
@@ -16,6 +17,15 @@ function getConfigDir(): string {
 function isTelemetryExplicitlyOff(): boolean {
   const v = process.env.NEBUTRA_TELEMETRY;
   return v === "0" || v === "false" || v === "no";
+}
+
+function writeMarker(dir: string, marker: string): void {
+  try {
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(marker, "");
+  } catch {
+    // ignore
+  }
 }
 
 export function maybeShowFirstRunBanner(): void {
@@ -32,19 +42,15 @@ export function maybeShowFirstRunBanner(): void {
   }
 
   if (isTelemetryExplicitlyOff()) {
-    try {
-      mkdirSync(dir, { recursive: true });
-      writeFileSync(marker, "");
-    } catch {
-      // ignore
-    }
+    writeMarker(dir, marker);
     return;
   }
 
+  const info = pc.cyan("ℹ");
   const lines = [
-    `[36mℹ[0m ${brand.name} collects anonymous usage analytics to improve the CLI.`,
-    "  Opt out at any time:  export NEBUTRA_TELEMETRY=0",
-    `  Privacy policy:       ${getBrandOrigin("landing")}/legal/cli-analytics`,
+    `${info} ${brand.name} collects anonymous usage analytics to improve the CLI.`,
+    `  Opt out at any time:  ${pc.dim("export NEBUTRA_TELEMETRY=0")}`,
+    `  Privacy policy:       ${pc.dim(`${getBrandOrigin("landing")}/legal/cli-analytics`)}`,
     "",
   ];
   try {
@@ -53,10 +59,5 @@ export function maybeShowFirstRunBanner(): void {
     // ignore
   }
 
-  try {
-    mkdirSync(dir, { recursive: true });
-    writeFileSync(marker, "");
-  } catch {
-    // silently ignore - banner is informational
-  }
+  writeMarker(dir, marker);
 }

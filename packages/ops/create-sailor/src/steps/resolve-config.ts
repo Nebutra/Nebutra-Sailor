@@ -98,9 +98,9 @@ async function runInteractivePrompts(
       p.select({
         message: "Target region?",
         options: [
-          { value: "global", label: "global — 海外优先" },
-          { value: "cn", label: "cn     — 国内优先" },
-          { value: "hybrid", label: "hybrid — 双轨（国内+出海）" },
+          { value: "global", label: "Global", hint: "Stripe · Resend · R2 defaults" },
+          { value: "cn", label: "China", hint: "WeChat Pay · Aliyun DM/OSS defaults" },
+          { value: "hybrid", label: "Hybrid", hint: "global + CN dual track" },
         ],
         initialValue: "global",
       }) as Promise<unknown>;

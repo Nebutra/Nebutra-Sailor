@@ -123,6 +123,13 @@ function fileReferenceIncludedByFiles(reference, files) {
   return false;
 }
 
+/** Protocols that only resolve inside a pnpm/yarn monorepo — not on the public npm registry. */
+function isMonorepoOnlyProtocol(range) {
+  return (
+    typeof range === "string" && (range.startsWith("workspace:") || range.startsWith("catalog:"))
+  );
+}
+
 export function getReleaseSurfaceDiagnostics(root = process.cwd()) {
   const packages = readWorkspacePackages(root);
   const byName = new Map(packages.map((entry) => [entry.manifest.name, entry]));
@@ -133,9 +140,26 @@ export function getReleaseSurfaceDiagnostics(root = process.cwd()) {
   );
 
   const privateRuntimeDependencies = [];
+  const monorepoProtocolRuntimeDependencies = [];
   for (const entry of publishable) {
     for (const field of ["dependencies", "optionalDependencies"]) {
-      for (const dependencyName of Object.keys(entry.manifest[field] ?? {})) {
+      for (const [dependencyName, range] of Object.entries(entry.manifest[field] ?? {})) {
+        if (typeof range === "string" && isMonorepoOnlyProtocol(range)) {
+          // Unscoped CLI bins (`npx create-sailor`, `npx nebutra`) are installed
+          // by plain npm, which cannot resolve workspace:/catalog:. Keep those
+          // protocols out of production deps and bundle workspace packages at
+          // build time. Scoped @nebutra/* packages (and libraries) may keep
+          // workspace:* — pnpm publish rewrites them on a correct release.
+          if (entry.manifest.bin && !entry.manifest.name.startsWith("@")) {
+            monorepoProtocolRuntimeDependencies.push({
+              packageName: entry.manifest.name,
+              dependencyName,
+              field,
+              range,
+            });
+          }
+        }
+
         const dependency = byName.get(dependencyName);
         if (dependency?.manifest.private === true) {
           privateRuntimeDependencies.push({
@@ -211,6 +235,7 @@ export function getReleaseSurfaceDiagnostics(root = process.cwd()) {
     publishable,
     missingChangesetPackages,
     privateRuntimeDependencies,
+    monorepoProtocolRuntimeDependencies,
     requiredMetadataMissing,
     manifestRuntimeFilesExcludedByFiles,
   };

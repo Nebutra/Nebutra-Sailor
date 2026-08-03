@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { homedir, platform } from "node:os";
 import { join } from "node:path";
+import pc from "picocolors";
 
 // Deliberately a duplicate of packages/ops/cli/src/utils/first-run.ts.
 // Keeping the implementation inline (rather than depending on the nebutra
@@ -23,6 +24,15 @@ function isTelemetryExplicitlyOff(): boolean {
   return v === "0" || v === "false" || v === "no";
 }
 
+function writeMarker(dir: string, marker: string): void {
+  try {
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(marker, "");
+  } catch {
+    // ignore
+  }
+}
+
 export function maybeShowFirstRunBanner(): void {
   if (!process.stderr.isTTY || !process.stdin.isTTY) return;
   if (process.env.CI) return;
@@ -37,19 +47,16 @@ export function maybeShowFirstRunBanner(): void {
   }
 
   if (isTelemetryExplicitlyOff()) {
-    try {
-      mkdirSync(dir, { recursive: true });
-      writeFileSync(marker, "");
-    } catch {
-      // ignore
-    }
+    writeMarker(dir, marker);
     return;
   }
 
+  // Use picocolors — never raw ANSI escapes (breaks some terminals / themes).
+  const info = pc.cyan("ℹ");
   const lines = [
-    "[36mℹ[0m Nebutra collects anonymous usage analytics to improve the scaffolder.",
-    "  Opt out at any time:  export NEBUTRA_TELEMETRY=0",
-    "  Privacy policy:       https://nebutra.com/legal/cli-analytics",
+    `${info} Nebutra collects anonymous usage analytics to improve the scaffolder.`,
+    `  Opt out at any time:  ${pc.dim("export NEBUTRA_TELEMETRY=0")}`,
+    `  Privacy policy:       ${pc.dim("https://nebutra.com/legal/cli-analytics")}`,
     "",
   ];
   try {
@@ -58,10 +65,5 @@ export function maybeShowFirstRunBanner(): void {
     // ignore
   }
 
-  try {
-    mkdirSync(dir, { recursive: true });
-    writeFileSync(marker, "");
-  } catch {
-    // silently ignore - banner is informational
-  }
+  writeMarker(dir, marker);
 }

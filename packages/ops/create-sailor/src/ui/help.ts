@@ -1,7 +1,7 @@
 export const HELP_TEXT = `Usage: create-sailor [name] [options]
 
 Arguments:
-  name                      project directory (default: ./my-saas-app)
+  name                      project name or path (default: my-app; use . for cwd)
 
 Core options:
   -p, --pm <id>             npm | pnpm | yarn | bun (auto-detected)
@@ -63,12 +63,19 @@ Toggles:
   -h, --help                show this help
   -v, --version             show version
 
+Interactive flow:
+  1. Location — new folder (name) or current directory
+  2. Region / Auth / AI topology
+  3. Plan summary — confirm or customize payment · email · storage · deploy
+  4. Scaffold + golden-path next steps
+
 Examples:
   $ npx create-sailor@latest
   $ npx create-sailor@latest my-app -y
+  $ npx create-sailor@latest . --region=cn
   $ npx create-sailor@latest my-app --region=cn --auth=clerk
   $ npx create-sailor@latest my-app --region=hybrid --ai=openai,deepseek
-  $ npm create sailor@latest --dry-run --region=cn
+  $ npx create-sailor@latest my-app --dry-run --region=cn
 `;
 
 export function showHelp(): void {

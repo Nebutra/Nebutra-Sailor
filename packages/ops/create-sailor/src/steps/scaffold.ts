@@ -541,13 +541,19 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
         stdio: useJson ? "ignore" : "inherit",
       });
       emitJson(useJson, { event: "step", step: "install", status: "ok" });
+      if (!useJson) {
+        process.stdout.write(pc.green(`  ✓ Dependencies installed (${resolvedPm})\n`));
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       if (useJson) {
         emitJson(true, { event: "step", step: "install", status: "error", error: msg });
       } else {
         process.stdout.write(
-          pc.yellow(`  ⚠ install failed — run '${resolvedPm} install' manually.\n`),
+          pc.yellow(
+            `\n  ⚠ Install failed — the project files are ready, but deps are incomplete.\n` +
+              `    Fix: ${pc.cyan(`cd ${resolvedTarget} && ${resolvedPm} install`)}\n\n`,
+          ),
         );
       }
       // Non-fatal — project was still scaffolded.
@@ -624,9 +630,10 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
     showDone({
       elapsedSec,
       targetDir: resolvedTarget,
+      packageManager: resolvedPm,
       skippedInstall: opts.install === false,
+      hasDatabase: database !== "none",
       previewSelections,
-      waveFeatures: waveToggles,
     });
   }
 

@@ -289,6 +289,16 @@ export function buildProgram(options: BuildProgramOptions): Command {
           );
         }
 
+        // Post-scaffold golden path when create-sailor marker is present
+        if (fs.existsSync(scaffoldMetaFile) || fs.existsSync(path.join(root, "nebutra.config.json"))) {
+          logger.info("");
+          logger.info("Golden path to a running app:");
+          logger.info("  1. Fill .env.local (copy keys from .env.example)");
+          logger.info("  2. pnpm infra:up     # local Postgres/Redis if needed");
+          logger.info("  3. pnpm db:migrate && pnpm db:seed");
+          logger.info("  4. pnpm dev          # http://localhost:3000");
+        }
+
         if (hasErrors) {
           throw new CommandError({
             code: "doctor_failed",
