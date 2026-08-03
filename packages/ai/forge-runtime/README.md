@@ -1,6 +1,6 @@
 # @nebutra/forge-runtime
 
-Status: active — registry + dual-surface invoke ship; product host `apps/forge` is live.
+Status: **WIP** — registry + dual-surface invoke ship; product host `apps/forge` is live (remaining gaps in package.json nebutra.gaps).
 
 Hard-correct gate (`docs/plans/tools/_hard-correct-decisions.md`):
 
