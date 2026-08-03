@@ -114,7 +114,8 @@ export async function markdownToPlaywrightPdf(
   title = "document",
 ): Promise<Buffer> {
   // Full Chromium is more reliable on servers than headless_shell alone.
-  process.env.PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL ??= "0";
+  // Force (do not ??=): host .env may leave headless_shell enabled.
+  process.env.PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL = "0";
   const playwright = await import("playwright");
   const browser = await playwright.chromium.launch({
     headless: true,

@@ -21,10 +21,11 @@ const globalForWallet = globalThis as unknown as {
 export type ForgeWalletMode = "memory" | "ledger";
 
 export function resolveWalletMode(env: NodeJS.ProcessEnv = process.env): ForgeWalletMode {
-  const explicit = env.FORGE_WALLET_MODE?.trim().toLowerCase();
-  if (explicit === "ledger") return "ledger";
-  if (explicit === "memory") return "memory";
-  // Opt-in ledger only — free tool station default is in-process memory.
+  // Dual opt-in: leftover FORGE_WALLET_MODE=ledger in host .env must not force
+  // a broken CreditBalance (missing app_user). Require FORGE_ENABLE_LEDGER=1.
+  if (env.FORGE_ENABLE_LEDGER === "1" && env.FORGE_WALLET_MODE?.trim().toLowerCase() === "ledger") {
+    return "ledger";
+  }
   return "memory";
 }
 
