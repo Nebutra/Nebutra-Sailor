@@ -3151,6 +3151,7 @@
         "refer.infrastructure.data.eyebrow": "f6068daa29dbb05a7ead1e3b5a48bbee"
       },
       "da": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.badge": "3008a0f8ccb2cf8c9f218b40aa85cb82",
         "designSystem.flowBrand": "1be6f9eb563f3bf85c78b4219bf09de9",
         "designSystem.flowTokens": "f6861770bdf2fb702a665f1b34e4f9ed",
@@ -3222,10 +3223,12 @@
         "refer.infrastructure.api.eyebrow": "db974238714ca8de634a7ce1d083a14f",
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e",
         "refer.infrastructure.data.eyebrow": "f6068daa29dbb05a7ead1e3b5a48bbee",
+        "roadmapMeta.title": "1cdad54a616ef39b70913fe25cfcddd6",
         "stats.ctaStart": "91f682d64d42feb8038713442ce8c4b9",
         "useCases.tabs.multimodal": "303b017d242eea6993432f593e8a4376"
       },
       "de": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.flowUI": "71ff71526d15db86eb50fcac245d183b",
         "featuresPage.sections.billing_f1_title": "a46dca7a2f846c496e175923a281339a",
         "featuresPage.sections.sec_f2_title": "870fb7f26084facf5565f5ee407c6a81",
@@ -3285,6 +3288,7 @@
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
       },
       "el": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.flowTokens": "f6861770bdf2fb702a665f1b34e4f9ed",
         "designSystem.flowUI": "71ff71526d15db86eb50fcac245d183b",
         "featuresPage.sections.billing_f1_title": "a46dca7a2f846c496e175923a281339a",
@@ -3335,6 +3339,7 @@
         "useCases.content.multimodal.features.f1": "27c2a3aae9300994aed48dd2d13a8985"
       },
       "es": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.flowTokens": "f6861770bdf2fb702a665f1b34e4f9ed",
         "footer.columns.legal": "a10a9bcd450087de1ce1f80b35f44883",
         "footer.links.blog": "be8df1f28c0abc85a0ed0c6860e5d832",
@@ -3446,6 +3451,7 @@
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
       },
       "fr": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "featuresPage.sections.infra_category": "cba4f4cee5c6a3e6d8be8da68fa1234e",
         "footer.links.blog": "be8df1f28c0abc85a0ed0c6860e5d832",
         "footer.links.contact": "bbaff12800505b22a853e8b7f4eb6a22",
@@ -3617,6 +3623,8 @@
         "useCases.tabs.enterprise": "afff6996265327247cd1f78b8b424afb"
       },
       "id": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
+        "changelogMeta.title": "d861043d1be75c67f5da3a3279e0951d",
         "designSystem.flowUI": "71ff71526d15db86eb50fcac245d183b",
         "featuresPage.sections.billing_f1_title": "a46dca7a2f846c496e175923a281339a",
         "footer.columns.legal": "a10a9bcd450087de1ce1f80b35f44883",
@@ -3673,6 +3681,7 @@
         "refer.infrastructure.data.eyebrow": "f6068daa29dbb05a7ead1e3b5a48bbee"
       },
       "it": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.flowBrand": "1be6f9eb563f3bf85c78b4219bf09de9",
         "designSystem.flowUI": "71ff71526d15db86eb50fcac245d183b",
         "footer.links.blog": "be8df1f28c0abc85a0ed0c6860e5d832",
@@ -3797,6 +3806,7 @@
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
       },
       "ms": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.flowUI": "71ff71526d15db86eb50fcac245d183b",
         "featuresPage.sections.billing_f1_title": "a46dca7a2f846c496e175923a281339a",
         "featuresPage.sections.sec_f2_title": "870fb7f26084facf5565f5ee407c6a81",
@@ -3846,6 +3856,7 @@
         "refer.infrastructure.data.eyebrow": "f6068daa29dbb05a7ead1e3b5a48bbee"
       },
       "nl": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "blogShowcase.title": "9c401ecf0ac605463254962e8be63a9b",
         "designSystem.flowTokens": "f6861770bdf2fb702a665f1b34e4f9ed",
         "designSystem.flowUI": "71ff71526d15db86eb50fcac245d183b",
@@ -3928,6 +3939,7 @@
         "refer.infrastructure.api.eyebrow": "db974238714ca8de634a7ce1d083a14f",
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e",
         "refer.infrastructure.data.eyebrow": "f6068daa29dbb05a7ead1e3b5a48bbee",
+        "roadmapMeta.title": "1cdad54a616ef39b70913fe25cfcddd6",
         "useCases.tabs.enterprise": "afff6996265327247cd1f78b8b424afb"
       },
       "no": {
@@ -3998,6 +4010,7 @@
         "useCases.tabs.multimodal": "303b017d242eea6993432f593e8a4376"
       },
       "pl": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.flowUI": "71ff71526d15db86eb50fcac245d183b",
         "featuresPage.sections.sec_f2_title": "870fb7f26084facf5565f5ee407c6a81",
         "footer.links.blog": "be8df1f28c0abc85a0ed0c6860e5d832",
@@ -4044,6 +4057,7 @@
         "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
       },
       "pt": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "designSystem.flowTokens": "f6861770bdf2fb702a665f1b34e4f9ed",
         "footer.columns.legal": "a10a9bcd450087de1ce1f80b35f44883",
         "footer.links.blog": "be8df1f28c0abc85a0ed0c6860e5d832",
@@ -4354,6 +4368,7 @@
         "stats.github": "87aea0fbadc6d8ffa05b6d471a7cdf56"
       },
       "tr": {
+        "blogMeta.title": "d4067cd50b5fc9a4b121edf7944dcf2d",
         "featuresPage.sections.sec_f2_title": "870fb7f26084facf5565f5ee407c6a81",
         "footer.links.blog": "be8df1f28c0abc85a0ed0c6860e5d832",
         "footer.links.discord": "8f5cc6430613f1c12f36965050bb7197",
