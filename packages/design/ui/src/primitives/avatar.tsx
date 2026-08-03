@@ -41,15 +41,30 @@ function getAvatarFallbackClass(size: AvatarSize): string {
   return isPresetSize(size) ? sizeClasses[size].fallback : "text-[var(--avatar-font-size)]";
 }
 
-function getAvatarStyle(
-  size: AvatarSize,
-  style?: React.CSSProperties,
-): React.CSSProperties | undefined {
+/**
+ * Merge numeric avatar CSS vars with Base UI's `style` prop.
+ * Base UI types `style` as a CSSProperties / state-function intersection that
+ * is awkward to express; keep the helper loosely typed and let call sites
+ * pass through whatever Root/Fallback accept.
+ */
+function getAvatarStyle(size: AvatarSize, style?: unknown): unknown {
   if (typeof size !== "number") return style;
-  return {
+
+  const numericVars = {
     "--avatar-size": `${size}px`,
     "--avatar-font-size": `${Math.max(10, Math.round(size * 0.375))}px`,
-    ...style,
+  } as React.CSSProperties;
+
+  if (typeof style === "function") {
+    return (state: unknown) => ({
+      ...numericVars,
+      ...(style as (s: unknown) => React.CSSProperties | undefined)(state),
+    });
+  }
+
+  return {
+    ...numericVars,
+    ...(style as React.CSSProperties | undefined),
   } as React.CSSProperties;
 }
 
@@ -140,7 +155,7 @@ const Avatar = ({
           getAvatarRootClass(size),
           className,
         )}
-        style={getAvatarStyle(size, style)}
+        style={getAvatarStyle(size, style) as React.CSSProperties | undefined}
         {...props}
       >
         {shouldRenderConvenienceContent ? (
@@ -209,7 +224,7 @@ const AvatarFallback = ({
         getAvatarFallbackClass(resolvedSize),
         className,
       )}
-      style={getAvatarStyle(resolvedSize, style)}
+      style={getAvatarStyle(resolvedSize, style) as React.CSSProperties | undefined}
       {...props}
     >
       {children}
