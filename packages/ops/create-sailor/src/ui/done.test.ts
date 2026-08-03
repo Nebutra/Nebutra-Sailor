@@ -13,7 +13,7 @@ describe("showDone", () => {
     }
   });
 
-  it("prints only scaffolded pnpm next steps", () => {
+  it("prints a short golden path with db steps when database is enabled", () => {
     process.env.NO_COLOR = "1";
 
     let output = "";
@@ -25,19 +25,41 @@ describe("showDone", () => {
     showDone({
       elapsedSec: 12,
       targetDir: "demo-app",
+      packageManager: "pnpm",
       skippedInstall: true,
+      hasDatabase: true,
     });
 
-    expect(output).toContain("pnpm install");
     expect(output).toContain("cd demo-app");
+    expect(output).toContain("pnpm install");
     expect(output).toContain("pnpm db:migrate");
-    expect(output).toContain("pnpm db:seed");
-    expect(output).toContain("pnpm brand:init");
-    expect(output).toContain("pnpm brand:apply");
-    expect(output).toContain("pnpm preset:env");
-    expect(output).toContain("pnpm generate:api-types");
-    expect(output).not.toContain("pnpm sailor");
-    expect(output).not.toContain("sailor add");
+    expect(output).toContain("pnpm dev");
+    expect(output).toContain("nebutra doctor");
+    // Advanced noise removed from golden path
+    expect(output).not.toContain("pnpm brand:init");
+    expect(output).not.toContain("pnpm audit");
+    expect(output).not.toContain("Free license");
+  });
+
+  it("omits db steps when database is none", () => {
+    process.env.NO_COLOR = "1";
+
+    let output = "";
+    vi.spyOn(process.stdout, "write").mockImplementation(((chunk: string | Uint8Array) => {
+      output += String(chunk);
+      return true;
+    }) as typeof process.stdout.write);
+
+    showDone({
+      elapsedSec: 3,
+      targetDir: "demo-app",
+      skippedInstall: false,
+      hasDatabase: false,
+    });
+
+    expect(output).not.toContain("db:migrate");
+    expect(output).not.toContain("infra:up");
+    expect(output).toContain("pnpm dev");
   });
 
   it("skips cd when scaffolded into the current directory", () => {
@@ -53,6 +75,7 @@ describe("showDone", () => {
       elapsedSec: 3,
       targetDir: ".",
       skippedInstall: false,
+      hasDatabase: true,
     });
 
     expect(output).toContain("· .");

@@ -38,7 +38,14 @@ bunx create-sailor@latest
 npx create-sailor@latest
 ```
 
-Interactive flow starts with **where to create** (new folder vs current directory — defaults based on whether cwd looks empty), then **project name** (only for a new folder), then region / auth / AI topology. Everything else uses region-aware smart defaults.
+Interactive flow:
+
+1. **Where** — new folder (name, default `my-app`) or current directory (smart default if cwd is empty)
+2. **Region / Auth / AI topology**
+3. **Plan** — compact summary; confirm or customize payment · email · storage · deploy
+4. **Done** — short golden path (`cd` → env → migrate → dev)
+
+Everything else uses region-aware smart defaults (`--yes` skips prompts).
 
 ```bash
 npx create-sailor@latest my-app   # new folder

@@ -1,8 +1,16 @@
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Command } from "commander";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 import { checkForUpdate } from "../utils/update-notifier";
+
+const PKG_JSON_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "package.json");
+const CURRENT_VERSION = (
+  JSON.parse(readFileSync(PKG_JSON_PATH, "utf8")) as { version: string }
+).version;
 
 interface UpgradeOptions {
   yes?: boolean;
@@ -47,8 +55,6 @@ function upgradeCommandFor(installer: Installer): string {
       return "npm i -g nebutra@latest";
   }
 }
-
-const CURRENT_VERSION = "0.1.0";
 
 async function handleUpgrade(options: UpgradeOptions) {
   const installer = detectInstaller();

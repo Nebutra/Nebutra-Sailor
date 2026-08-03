@@ -33,6 +33,7 @@ import {
   promptProjectTarget,
   resolveTargetFromInput,
 } from "./utils/project-target";
+import { confirmAndMaybeReview } from "./utils/review-defaults";
 import { VERSION } from "./version";
 
 // ---------------------------------------------------------------------------
@@ -262,48 +263,46 @@ async function run(): Promise<void> {
   const resolvedPm = opts.pm ?? detectPm();
 
   // ---- Config resolution (interactive or non-interactive) ----
-  const resolved = await resolveConfig(opts, useJson);
+  let resolved = await resolveConfig(opts, useJson);
 
-  // ---- Progress summary table ----
+  // ---- Compact summary (core + region defaults) ----
   const steps: Array<[string, string]> = [
-    ["Project name", projectName],
+    ["Project", projectName],
     ["Region", resolved.region],
     ["Auth", resolved.auth],
-    [
-      "Social login",
-      resolved.socialLoginIds.length > 0
-        ? resolved.socialLoginIds
-            .map((id) => SOCIAL_LOGIN_PROVIDERS.find((p) => p.id === id)?.name ?? id)
-            .join(", ")
-        : "none",
-    ],
-    ["ORM", resolved.orm],
-    ["Database", resolved.database],
-    ["Database Host", resolved.databaseHost],
     ["Payment", resolved.paymentChoice],
     [
-      "AI topology",
-      `${resolved.aiMode}${resolved.aiProviders.length > 0 ? ` (${resolved.aiProviders.join(", ")} seed)` : ""}${
-        resolved.customAiEndpoint ? " + custom endpoint" : ""
-      }`,
+      "AI",
+      `${resolved.aiMode}${resolved.aiProviders.length > 0 ? ` (${resolved.aiProviders.join(", ")})` : ""}`,
     ],
+    ["Database", `${resolved.database} · ${resolved.databaseHost}`],
     ["Email", resolved.email],
     ["Storage", resolved.storage],
-    ["Monitoring", resolved.monitoring],
-    ["Analytics", resolved.analytics],
-    ["SMS", resolved.sms],
-    ["Deploy Target", resolved.deployTarget],
-    ["Docs Framework", resolved.docs],
-    ["Access gate", resolved.accessGate],
+    ["Deploy", resolved.deployTarget],
   ];
+  if (resolved.socialLoginIds.length > 0) {
+    steps.push([
+      "Social login",
+      resolved.socialLoginIds
+        .map((id) => SOCIAL_LOGIN_PROVIDERS.find((p) => p.id === id)?.name ?? id)
+        .join(", "),
+    ]);
+  }
   if (!useJson) {
+    process.stdout.write(pc.dim("\n  Plan\n"));
     steps.forEach(([label, value], i) => {
       printProgressLine({ index: i + 1, total: steps.length, label, value });
     });
+    process.stdout.write("\n");
   } else {
     steps.forEach(([label, value], i) => {
       emitJson(true, { event: "step", step: label, value, index: i + 1, total: steps.length });
     });
+  }
+
+  // Confirm / customize before writing (interactive only; --yes / CI skip).
+  if (!nonInteractive && !useJson) {
+    resolved = await confirmAndMaybeReview(resolved, cancel);
   }
 
   // ---- Dry run ----
