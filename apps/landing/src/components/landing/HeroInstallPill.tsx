@@ -36,8 +36,8 @@ export function HeroInstallPill({ command, copiedLabel }: HeroInstallPillProps) 
   };
 
   return (
-    <div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-neutral-3 py-1 pr-1 pl-4 text-xs font-medium shadow-ambient-sm transition-colors hover:bg-neutral-4">
-      <code className="font-mono text-[12px] tracking-tight text-neutral-12">
+    <div className="mx-auto flex max-w-full items-center gap-2 rounded-full bg-neutral-3 py-1 pr-1 pl-3 text-xs font-medium shadow-ambient-sm transition-colors hover:bg-neutral-4 sm:w-fit sm:pl-4">
+      <code className="min-w-0 flex-1 truncate font-mono text-[11px] tracking-tight text-neutral-12 sm:flex-none sm:text-[12px]">
         <span className="select-none text-neutral-10">$ </span>
         {command}
       </code>

@@ -76,17 +76,17 @@ export function Hero({
 
         <div
           className={cn(
-            "mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 lg:px-8 relative z-10 w-full",
+            "relative z-10 mx-auto w-full min-w-0 max-w-[var(--container-wide)] px-4 sm:px-6 lg:px-8",
             variant === "split"
-              ? "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center"
+              ? "grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8"
               : "flex flex-col items-center",
           )}
         >
           {/* Content Layer */}
           <div
             className={cn(
-              "flex flex-col",
-              variant === "split" ? "max-w-xl" : "items-center max-w-3xl mx-auto",
+              "flex w-full min-w-0 flex-col",
+              variant === "split" ? "max-w-xl" : "mx-auto max-w-3xl items-center",
             )}
           >
             <AnimateInGroup stagger="fast">
@@ -94,7 +94,7 @@ export function Hero({
               <AnimateIn preset="fadeUp">
                 <h1
                   className={cn(
-                    "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground",
+                    "w-full text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl",
                     variant === "split" ? "mb-6" : "mb-8 text-center",
                   )}
                 >
@@ -111,8 +111,8 @@ export function Hero({
               <AnimateIn preset="fadeUp">
                 <p
                   className={cn(
-                    "text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed lg:leading-relaxed",
-                    variant === "split" ? "mb-8" : "mb-10 text-center max-w-2xl mx-auto",
+                    "w-full text-base leading-relaxed text-muted-foreground sm:text-lg md:text-xl lg:text-2xl lg:leading-relaxed",
+                    variant === "split" ? "mb-8" : "mx-auto mb-10 max-w-2xl text-center",
                   )}
                 >
                   {subheadline ||

@@ -1633,24 +1633,33 @@ html {
 }
 
 /*
- * flex-col + items-center: force prose children to take the flex container's
- * cross-size instead of shrinking to 1-glyph min-content. Works with Tailwind's
- * split classes (flex + flex-col + items-center on the same element).
+ * flex-col + items-center:
+ * 1) Direct children (incl. AnimateIn wrappers) get a sane box — max 100% of
+ *    the column, min-width 0 so they can wrap instead of forcing the column
+ *    to min-content.
+ * 2) Nested prose (p/h*) under those columns takes width:100% so Chinese
+ *    copy does not collapse to a 1-glyph strip. We deliberately do NOT set
+ *    max-width here — leave Tailwind max-w-* / max-w-[…] in control.
  */
 :is(html:lang(zh), html:lang(ja), html:lang(ko))
   :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
-  > :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
-  align-self: stretch;
+  > * {
   box-sizing: border-box;
-  width: 100%;
   max-width: 100%;
   min-width: 0;
 }
 
+:is(html:lang(zh), html:lang(ja), html:lang(ko))
+  :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
+  :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
 /*
- * Text blocks that only set max-width (common brand blurbs: max-w-xs/sm)
- * still need an explicit width so they don't shrink to min-content inside
- * flex/grid parents. min(100%, <max>) keeps them responsive.
+ * Brand blurbs that only set max-w-*: give an explicit width so flex/grid
+ * parents don't size them to 1-glyph min-content. min(100%, …) stays mobile-safe.
  */
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-xs {
   width: min(100%, 20rem);
@@ -1676,6 +1685,14 @@ html {
   width: min(100%, 42rem);
   min-width: 0;
 }
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-3xl {
+  width: min(100%, 48rem);
+  min-width: 0;
+}
+:is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(p, h1, h2, h3, h4, h5, h6).max-w-4xl {
+  width: min(100%, 56rem);
+  min-width: 0;
+}
 
 /* Opt-in for wrappers (div/section) that hold CJK prose in flex/grid tracks */
 @utility cjk-prose {
@@ -1684,6 +1701,28 @@ html {
   max-width: 100%;
   overflow-wrap: break-word;
   word-break: normal;
+}
+
+/*
+ * Mobile: kill horizontal page scroll from 100vw / wide tables / marquees.
+ * clip (not hidden) preserves sticky headers.
+ */
+@media (max-width: 767px) {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  /* Grid/flex children should be allowed to shrink below min-content */
+  .grid > *,
+  .flex > *,
+  .inline-flex > * {
+    min-width: 0;
+  }
 }
 
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {

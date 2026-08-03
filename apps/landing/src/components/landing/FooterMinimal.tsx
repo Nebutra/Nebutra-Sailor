@@ -224,7 +224,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         </section>
       )}
 
-      <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8">
+      <div className="mx-auto w-full min-w-0 max-w-[1400px] px-4 pt-12 pb-8 sm:px-6 sm:pt-16">
         {/* Main grid: Brand + Navigation */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(14rem,2fr)_minmax(0,4fr)] lg:gap-12">
           {/* Brand block — real track min avoids CJK 1-glyph min-content collapse */}

@@ -308,7 +308,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   return (
     <section
       aria-label={isZh ? "最新文章" : "Latest posts"}
-      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-border"
+      className="relative left-1/2 w-[100dvw] max-w-[100dvw] -translate-x-1/2 overflow-x-clip overflow-y-hidden border-b border-border"
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => {
         setPaused(false);

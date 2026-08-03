@@ -27,10 +27,10 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[var(--neutral-6)] bg-[color-mix(in_srgb,var(--neutral-1)_92%,transparent)] backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-8 px-6">
+      <div className="mx-auto flex h-16 w-full max-w-[1400px] min-w-0 items-center gap-2 px-4 sm:gap-4 sm:px-6 md:gap-6">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2.5"
+          className="flex shrink-0 items-center gap-2 sm:gap-2.5"
           aria-label={t("homeAria", { brandName: brand.name })}
         >
           <BrandLogo variant="mark" className="h-8 w-8 sm:hidden" />
@@ -40,7 +40,10 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
           <ForgeMark className="h-6 w-6 sm:h-7 sm:w-7" />
           <span className="sr-only">Forge</span>
         </Link>
-        <nav aria-label={t("main")} className="flex min-w-0 flex-1 items-center gap-1">
+        <nav
+          aria-label={t("main")}
+          className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1"
+        >
           {NAV_KEYS.map(({ href, key }) => {
             const active =
               href === "/"
@@ -51,7 +54,7 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
                 key={href}
                 href={href}
                 className={cn(
-                  "shrink-0 px-3 py-2 text-[13px]",
+                  "shrink-0 rounded-[var(--radius-md)] px-2 py-2 text-[13px] sm:px-3",
                   active ? "font-medium text-[var(--neutral-12)]" : "text-[var(--neutral-11)]",
                 )}
               >
@@ -60,7 +63,7 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
             );
           })}
         </nav>
-        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+        <div className="flex shrink-0 items-center gap-0.5 sm:gap-2">
           <LocaleSwitcher />
           <a
             href={ROUTER_URL}

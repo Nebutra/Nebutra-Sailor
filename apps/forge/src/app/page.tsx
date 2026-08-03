@@ -45,12 +45,12 @@ export default async function ForgeHomePage() {
             w-full on the column + text blocks: CJK body styles must never
             shrink flex items to min-content (one glyph) under items-center.
           */}
-          <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-6">
+          <div className="mx-auto flex w-full min-w-0 max-w-2xl flex-col items-center gap-5 sm:gap-6">
             <p className="w-full text-xs font-medium tracking-[0.12em] text-[var(--neutral-11)] uppercase">
               {t("eyebrow")}
             </p>
             <h1
-              className="w-full text-4xl font-semibold text-balance text-[var(--neutral-12)] md:text-5xl lg:text-6xl"
+              className="w-full text-balance text-3xl font-semibold text-[var(--neutral-12)] sm:text-4xl md:text-5xl lg:text-6xl"
               style={{
                 letterSpacing: "var(--tracking-display, -0.02em)",
                 lineHeight: "var(--leading-display, 1.1)",
@@ -58,7 +58,7 @@ export default async function ForgeHomePage() {
             >
               {t("title")}
             </h1>
-            <p className="w-full max-w-xl text-base leading-relaxed text-[var(--neutral-11)] md:text-[17px] md:leading-relaxed">
+            <p className="w-full max-w-xl text-sm leading-relaxed text-[var(--neutral-11)] sm:text-base md:text-[17px] md:leading-relaxed">
               {t("subtitle")}
             </p>
             <p className="flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-[var(--neutral-10)]">

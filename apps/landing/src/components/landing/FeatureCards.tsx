@@ -58,11 +58,11 @@ export function FeatureCards() {
       {/* Decorative background glows */}
       <AuroraBackground variant="subtle" />
 
-      <div className="feature-cards-cq mx-auto max-w-[1400px] px-6 md:px-12 relative z-10">
-        <AnimateIn preset="emerge" inView>
-          <div className="flex justify-center mb-16">
+      <div className="feature-cards-cq relative z-10 mx-auto w-full min-w-0 max-w-[1400px] px-4 sm:px-6 md:px-12">
+        <AnimateIn preset="emerge" inView className="w-full min-w-0">
+          <div className="mb-12 flex w-full justify-center md:mb-16">
             <h2
-              className="text-center text-4xl md:text-5xl font-semibold text-foreground max-w-3xl text-balance leading-tight"
+              className="w-full max-w-3xl text-balance text-center text-3xl font-semibold leading-tight text-foreground sm:text-4xl md:text-5xl"
               style={{ letterSpacing: "var(--tracking-heading)" }}
             >
               {t("sectionTitle")}
@@ -73,7 +73,7 @@ export function FeatureCards() {
         <AnimateInGroup
           inView
           stagger="normal"
-          className="feature-cards-grid grid grid-cols-1 gap-8 lg:grid-cols-3"
+          className="feature-cards-grid grid w-full min-w-0 grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3"
         >
           {features.map((feature, idx) => {
             return (

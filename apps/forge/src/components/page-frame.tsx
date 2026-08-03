@@ -21,7 +21,9 @@ export function PageFrame({
 }) {
   const max = width === "wide" ? "max-w-[1400px]" : width === "content" ? "max-w-6xl" : "max-w-3xl";
 
-  const classes = ["mx-auto w-full px-6", max, className].filter(Boolean).join(" ");
+  // min-w-0 + tighter mobile padding: prevents CJK/flex children from forcing
+  // horizontal scroll on small viewports.
+  const classes = ["mx-auto w-full min-w-0 px-4 sm:px-6", max, className].filter(Boolean).join(" ");
 
   return <Tag className={classes}>{children}</Tag>;
 }
