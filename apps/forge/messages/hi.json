@@ -800,7 +800,6 @@
       "drop": "यहाँ एक .md फ़ाइल छोड़ें, या नीचे Markdown पेस्ट करें",
       "title": "शीर्षक",
       "engine": "इंजन",
-      "eAuto": "स्वचालित (Playwright प्राथमिक)",
       "ePlaywright": "playwright (Chromium प्रिंट)",
       "eSimple": "सरल (ब्राउज़र नहीं)",
       "generate": "PDF बनाएँ",

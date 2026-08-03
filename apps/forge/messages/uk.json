@@ -800,7 +800,6 @@
       "drop": "Перетягніть файл .md сюди або вставте Markdown нижче",
       "title": "Назва",
       "engine": "Рушій",
-      "eAuto": "авто (надавати перевагу Playwright)",
       "ePlaywright": "playwright (друк через Chromium)",
       "eSimple": "простий (без браузера)",
       "generate": "Створити PDF",

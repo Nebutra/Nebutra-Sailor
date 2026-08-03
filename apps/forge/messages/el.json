@@ -800,7 +800,6 @@
       "drop": "Αφήστε ένα αρχείο .md εδώ ή επικολλήστε Markdown παρακάτω",
       "title": "Τίτλος",
       "engine": "Κινητήρας",
-      "eAuto": "αυτόματο (προτίμηση Playwright)",
       "ePlaywright": "playwright (εκτύπωση Chromium)",
       "eSimple": "απλό (χωρίς browser)",
       "generate": "Δημιουργία PDF",

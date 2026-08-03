@@ -800,7 +800,6 @@
       "drop": "Seret fail .md ke sini, atau tampal Markdown di bawah",
       "title": "Tajuk",
       "engine": "Enjin",
-      "eAuto": "auto (utamakan Playwright)",
       "ePlaywright": "playwright (cetak Chromium)",
       "eSimple": "simple (tanpa pelayar)",
       "generate": "Jana PDF",

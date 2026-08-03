@@ -800,7 +800,6 @@
       "drop": "Træk en .md-fil her, eller indsæt Markdown nedenfor",
       "title": "Titel",
       "engine": "Motor",
-      "eAuto": "auto (foretræk Playwright)",
       "ePlaywright": "playwright (Chromium-udskrift)",
       "eSimple": "simple (uden browser)",
       "generate": "Generer PDF",

@@ -800,7 +800,6 @@
       "drop": "Sleep hier een .md-bestand, of plak Markdown hieronder",
       "title": "Titel",
       "engine": "Engine",
-      "eAuto": "auto (voorkeur Playwright)",
       "ePlaywright": "playwright (Chromium print)",
       "eSimple": "simple (geen browser)",
       "generate": "PDF genereren",

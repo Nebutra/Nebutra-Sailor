@@ -800,7 +800,6 @@
       "drop": "Pudota .md-tiedosto tähän tai liitä Markdown alla",
       "title": "Otsikko",
       "engine": "Moottori",
-      "eAuto": "auto (suosi Playwright)",
       "ePlaywright": "playwright (Chromium-tulostus)",
       "eSimple": "yksinkertainen (ei selainta)",
       "generate": "Luo PDF",

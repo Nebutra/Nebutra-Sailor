@@ -800,7 +800,6 @@
       "drop": "Перетащите файл .md сюда или вставьте Markdown ниже",
       "title": "Заголовок",
       "engine": "Движок",
-      "eAuto": "авто (предпочитать Playwright)",
       "ePlaywright": "playwright (печать в Chromium)",
       "eSimple": "простой (без браузера)",
       "generate": "Создать PDF",

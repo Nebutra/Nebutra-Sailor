@@ -800,7 +800,6 @@
       "drop": ".md ファイルをここにドロップするか、下に Markdown を貼り付けてください",
       "title": "タイトル",
       "engine": "エンジン",
-      "eAuto": "自動（Playwright 優先）",
       "ePlaywright": "Playwright（Chromium 印刷）",
       "eSimple": "シンプル（ブラウザなし）",
       "generate": "PDF を生成",

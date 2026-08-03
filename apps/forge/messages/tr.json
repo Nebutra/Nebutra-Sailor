@@ -800,7 +800,6 @@
       "drop": "Buraya bir .md dosyası bırakın veya aşağıya Markdown yapıştırın",
       "title": "Başlık",
       "engine": "Motor",
-      "eAuto": "otomatik (Playwright tercih edilir)",
       "ePlaywright": "playwright (Chromium yazdırma)",
       "eSimple": "basit (tarayıcı yok)",
       "generate": "PDF oluştur",

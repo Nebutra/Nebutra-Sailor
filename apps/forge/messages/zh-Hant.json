@@ -800,7 +800,6 @@
       "drop": "將 .md 檔案拖曳至此處，或於下方貼上 Markdown",
       "title": "標題",
       "engine": "引擎",
-      "eAuto": "自動（優先 Playwright）",
       "ePlaywright": "Playwright（Chromium 列印）",
       "eSimple": "簡易（無瀏覽器）",
       "generate": "產生 PDF",

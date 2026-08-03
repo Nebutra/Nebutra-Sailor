@@ -800,7 +800,6 @@
       "drop": "Letakkan file .md di sini, atau tempel Markdown di bawah",
       "title": "Judul",
       "engine": "Engine",
-      "eAuto": "otomatis (utamakan Playwright)",
       "ePlaywright": "playwright (cetak Chromium)",
       "eSimple": "sederhana (tanpa browser)",
       "generate": "Buat PDF",

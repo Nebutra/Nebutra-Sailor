@@ -800,7 +800,6 @@
       "drop": "Déposez un fichier .md ici ou collez du Markdown ci-dessous",
       "title": "Titre",
       "engine": "Moteur",
-      "eAuto": "auto (Playwright en priorité)",
       "ePlaywright": "playwright (impression Chromium)",
       "eSimple": "simple (sans navigateur)",
       "generate": "Générer le PDF",

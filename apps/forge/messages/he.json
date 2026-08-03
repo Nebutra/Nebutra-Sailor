@@ -800,7 +800,6 @@
       "drop": "גרור לכאן קובץ .md, או הדבק Markdown למטה",
       "title": "כותרת",
       "engine": "מנוע",
-      "eAuto": "אוטומטי (העדף Playwright)",
       "ePlaywright": "playwright (הדפסת Chromium)",
       "eSimple": "פשוט (ללא דפדפן)",
       "generate": "צור PDF",

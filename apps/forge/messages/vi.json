@@ -800,7 +800,6 @@
       "drop": "Kéo thả tệp .md vào đây, hoặc dán Markdown bên dưới",
       "title": "Tiêu đề",
       "engine": "Engine",
-      "eAuto": "tự động (ưu tiên Playwright)",
       "ePlaywright": "playwright (in Chromium)",
       "eSimple": "đơn giản (không dùng trình duyệt)",
       "generate": "Tạo PDF",

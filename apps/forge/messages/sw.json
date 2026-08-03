@@ -800,7 +800,6 @@
       "drop": "Acha faili ya .md hapa, au bandika Markdown hapa chini",
       "title": "Kichwa",
       "engine": "Injini",
-      "eAuto": "auto (pendelea Playwright)",
       "ePlaywright": "playwright (chapisho la Chromium)",
       "eSimple": "simple (bila kivinjari)",
       "generate": "Tengeneza PDF",

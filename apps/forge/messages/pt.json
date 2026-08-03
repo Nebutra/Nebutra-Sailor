@@ -800,7 +800,6 @@
       "drop": "Arraste um arquivo .md aqui ou cole Markdown abaixo",
       "title": "Título",
       "engine": "Motor",
-      "eAuto": "automático (preferir Playwright)",
       "ePlaywright": "playwright (impressão Chromium)",
       "eSimple": "simples (sem navegador)",
       "generate": "Gerar PDF",

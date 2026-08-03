@@ -800,7 +800,6 @@
       "drop": "วางไฟล์ .md ที่นี่ หรือวาง Markdown ด้านล่าง",
       "title": "ชื่อเรื่อง",
       "engine": "เอนจิน",
-      "eAuto": "อัตโนมัติ (เลือก Playwright ก่อน)",
       "ePlaywright": "playwright (พิมพ์ด้วย Chromium)",
       "eSimple": "simple (ไม่ใช้เบราว์เซอร์)",
       "generate": "สร้าง PDF",
