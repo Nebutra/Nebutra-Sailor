@@ -198,20 +198,61 @@ export type CarinaSandboxOptions = {
   readonly clientId?: string;
 };
 
+export type CarinaEnsureSessionRequest = {
+  /** Sailor thread id — used as cache key and default correlation. */
+  readonly threadId: string;
+  /** Absolute workspace path on the Carina host (catalog-required). */
+  readonly workspaceRoot: string;
+  readonly tenantId?: string;
+  readonly profile?: string;
+  /** Carina session approval_mode when supported by the daemon. */
+  readonly approvalMode?: string;
+};
+
+/**
+ * Track-B handle: {@link ExternalSandbox} plus host session lifecycle.
+ * `command.exec` requires a Carina session; call {@link CarinaSandbox.ensureSession}
+ * before the first exec for a thread (or let {@link registerCommandExecTool} do it).
+ */
+export interface CarinaSandbox extends ExternalSandbox {
+  /**
+   * Create (or reuse cached) Carina session for a Sailor thread.
+   * Maps `threadId` → Carina `session_id` for subsequent `command.exec`.
+   */
+  ensureSession(request: CarinaEnsureSessionRequest): Promise<string>;
+  /** Peek cached Carina session id for a Sailor thread, if any. */
+  resolveMappedSessionId(threadId: string): string | undefined;
+}
+
+function extractCarinaSessionId(session: unknown): string {
+  if (!session || typeof session !== "object") {
+    throw new CarinaProtocolError("Carina session.create returned non-object Session");
+  }
+  const rec = session as Record<string, unknown>;
+  for (const key of ["id", "session_id", "sessionId"] as const) {
+    const v = rec[key];
+    if (typeof v === "string" && v.length > 0) return v;
+  }
+  throw new CarinaProtocolError(
+    "Carina session.create Session missing id/session_id/sessionId",
+  );
+}
+
 /**
  * Track-B adapter: Sailor control plane → **Carina** public RPC catalog (v0.8.1+).
  *
  * Mapping (Sailor → Carina, never the reverse ownership):
- * - `threadId` → `command.exec` `session_id` (session must exist in Carina)
+ * - `threadId` → `command.exec` `session_id` (via ensureSession cache, else threadId)
  * - `command` → `argv` via `/bin/sh -c` (kernel still gates the joined command string)
  * - denied / requires_approval → {@link SandboxDelegationError} (fail closed)
  * - allowed + CommandResult → {@link SandboxExecResult}
+ * - host lifecycle → `session.create` via {@link CarinaSandbox.ensureSession}
  *
  * Kernel protocol is maintained in `Nebutra/carina`. This file only maps.
  *
  * @see docs/architecture/2026-08-03-carina-track-b-upstream.md
  */
-export function createCarinaSandbox(options: CarinaSandboxOptions): ExternalSandbox {
+export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbox {
   const {
     baseUrl,
     token,
@@ -220,9 +261,12 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): ExternalSand
     minProtocolVersion = CARINA_MIN_PROTOCOL_VERSION,
     skipHello = false,
     executedOn = "carina",
-    resolveSessionId = (r) => r.threadId,
+    resolveSessionId,
     clientId = "nebutra-sailor",
   } = options;
+
+  /** Sailor threadId → Carina session_id */
+  const sessionByThread = new Map<string, string>();
 
   const endpoint = `${baseUrl.replace(/\/$/, "")}${
     !rpcPath ? "" : rpcPath.startsWith("/") ? rpcPath : `/${rpcPath}`
@@ -292,13 +336,47 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): ExternalSand
     await helloDone;
   }
 
+  const defaultResolveSessionId = (r: SandboxExecRequest): string =>
+    sessionByThread.get(r.threadId) ?? r.threadId;
+  const mapSessionId = resolveSessionId ?? defaultResolveSessionId;
+
   return {
+    resolveMappedSessionId(threadId: string): string | undefined {
+      return sessionByThread.get(threadId);
+    },
+
+    async ensureSession(request: CarinaEnsureSessionRequest): Promise<string> {
+      const cached = sessionByThread.get(request.threadId);
+      if (cached) return cached;
+
+      const root = request.workspaceRoot.trim();
+      if (!root) {
+        throw new CarinaProtocolError(
+          "Carina session.create requires a non-empty workspaceRoot",
+        );
+      }
+
+      await ensureHello();
+
+      const params: Record<string, unknown> = { workspace_root: root };
+      if (request.profile) params.profile = request.profile;
+      if (request.approvalMode) params.approval_mode = request.approvalMode;
+      // Audit hint only — not a privilege grant (cloud boundary).
+      if (request.tenantId) params.tenant_id = request.tenantId;
+      params.correlation_id = request.threadId;
+
+      const session = await rpcCall<unknown>("session.create", params);
+      const sessionId = extractCarinaSessionId(session);
+      sessionByThread.set(request.threadId, sessionId);
+      return sessionId;
+    },
+
     async exec(request: SandboxExecRequest): Promise<SandboxExecResult> {
       assertSafePosture(request.capabilityPolicy);
 
       await ensureHello();
 
-      const sessionId = resolveSessionId(request);
+      const sessionId = mapSessionId(request);
       const argv = ["/bin/sh", "-c", request.command];
       const wire = await rpcCall<CarinaExecWire>("command.exec", {
         session_id: sessionId,
@@ -361,3 +439,44 @@ export function assertSafePosture(policy: CapabilityPolicy, allowDanger = false)
     );
   }
 }
+
+
+// ── Env resolution + command-exec tool (Phase 2 host helpers) ────────────────
+
+export type CarinaEnv = {
+  readonly CARINA_JSONRPC_URL?: string;
+  readonly CARINA_JSONRPC_TOKEN?: string;
+  readonly CARINA_JSONRPC_PATH?: string;
+  readonly CARINA_WORKSPACE_ROOT?: string;
+  readonly CARINA_CLIENT_ID?: string;
+};
+
+/**
+ * Resolve Track-B sandbox from environment.
+ * - `CARINA_JSONRPC_URL` set → {@link createCarinaSandbox}
+ * - unset / empty → {@link REFUSING_SANDBOX} (fail closed)
+ */
+export function resolveCarinaSandboxFromEnv(
+  env: CarinaEnv = process.env as CarinaEnv,
+  overrides: Partial<CarinaSandboxOptions> = {},
+): ExternalSandbox {
+  const baseUrl = env.CARINA_JSONRPC_URL?.trim();
+  if (!baseUrl) return REFUSING_SANDBOX;
+
+  const options: CarinaSandboxOptions = {
+    baseUrl,
+    ...(env.CARINA_JSONRPC_TOKEN ? { token: env.CARINA_JSONRPC_TOKEN } : {}),
+    ...(env.CARINA_JSONRPC_PATH ? { rpcPath: env.CARINA_JSONRPC_PATH } : {}),
+    ...(env.CARINA_CLIENT_ID ? { clientId: env.CARINA_CLIENT_ID } : {}),
+    ...overrides,
+  };
+  return createCarinaSandbox(options);
+}
+
+export function isCarinaSandbox(sandbox: ExternalSandbox): sandbox is CarinaSandbox {
+  return (
+    typeof (sandbox as CarinaSandbox).ensureSession === "function" &&
+    typeof (sandbox as CarinaSandbox).resolveMappedSessionId === "function"
+  );
+}
+
