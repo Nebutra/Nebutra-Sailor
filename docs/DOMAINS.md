@@ -63,6 +63,7 @@ and do **not** get a parallel `api.carina.*` origin.
 |---|---|
 | Product docs / LLM surface | `carina.nebutra.com` (**CF A → ECS** `106.15.4.31`, proxied — same pattern as pebble) |
 | Skills / catalog URLs | `carina.nebutra.com/llms.txt`, `/data/rpc-catalog-*.json` |
+| Agent **execution** (Track B) | **Not this host.** Self-deployed Carina daemon; Sailor docks via private JSON-RPC (`CARINA_JSONRPC_URL`). See ADR 2026-08-03 + issue #384 |
 | Staging | **no host** — preview deploys / project isolation only |
 
 **Owner topology (2026-07-30):** DNS **A** record is correct — do **not** point carina at Vercel CNAME.
