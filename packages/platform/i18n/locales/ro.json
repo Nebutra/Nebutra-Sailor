@@ -376,7 +376,10 @@
       "homeLink": "Acasă",
       "signInFailed": "Autentificarea a eșuat",
       "genericError": "A apărut o eroare. Vă rugăm să încercați din nou.",
-      "captchaError": "Verificarea botului a eșuat. Reîmprospătați pagina și încercați din nou."
+      "captchaError": "Verificarea botului a eșuat. Reîmprospătați pagina și încercați din nou.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Creați-vă contul Nebutra",

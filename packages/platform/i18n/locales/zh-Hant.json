@@ -376,7 +376,10 @@
       "homeLink": "主页",
       "signInFailed": "登录失败",
       "genericError": "出现错误,请重试。",
-      "captchaError": "机器人校验失败,请刷新页面后重试。"
+      "captchaError": "机器人校验失败,请刷新页面后重试。",
+      "challengeTitle": "請完成人機驗證",
+      "challengeSubtitle": "通過驗證後繼續登入。此步驟單獨進行，以免打亂登入表單版面。",
+      "challengeSubmitting": "驗證完成，正在登入…"
     },
     "signUp": {
       "title": "创建 Nebutra 账号",

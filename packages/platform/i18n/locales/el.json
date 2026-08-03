@@ -376,7 +376,10 @@
       "homeLink": "Αρχική",
       "signInFailed": "Η σύνδεση απέτυχε",
       "genericError": "Προέκυψε σφάλμα. Δοκιμάστε ξανά.",
-      "captchaError": "Η επαλήθευση bot απέτυχε. Ανανεώστε τη σελίδα και δοκιμάστε ξανά."
+      "captchaError": "Η επαλήθευση bot απέτυχε. Ανανεώστε τη σελίδα και δοκιμάστε ξανά.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Δημιουργία λογαριασμού Nebutra",

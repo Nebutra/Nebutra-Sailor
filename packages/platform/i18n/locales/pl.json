@@ -376,7 +376,10 @@
       "homeLink": "Strona główna",
       "signInFailed": "Logowanie nie powiodło się",
       "genericError": "Wystąpił błąd. Spróbuj ponownie.",
-      "captchaError": "Weryfikacja botów nie powiodła się. Odśwież stronę i spróbuj ponownie."
+      "captchaError": "Weryfikacja botów nie powiodła się. Odśwież stronę i spróbuj ponownie.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Utwórz konto Nebutra",

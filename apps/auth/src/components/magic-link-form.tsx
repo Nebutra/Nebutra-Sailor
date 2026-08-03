@@ -1,10 +1,11 @@
 "use client";
 
-import { Turnstile } from "@marsidev/react-turnstile";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { challengePath, writePendingAuth } from "@/lib/pending-auth";
 
 interface MagicLinkFormProps {
   returnTo: string;
@@ -14,38 +15,43 @@ interface MagicLinkFormProps {
 export function MagicLinkForm({ returnTo, turnstileSiteKey }: MagicLinkFormProps) {
   const t = useTranslations("auth.magicLink");
   const tSignIn = useTranslations("auth.signIn");
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
+      const body = { email, callbackURL: returnTo };
+      const cancelTo = `/sign-in/magic-link?returnTo=${encodeURIComponent(returnTo)}`;
+
+      if (turnstileSiteKey) {
+        writePendingAuth({
+          kind: "magic-link",
+          endpoint: "/api/auth/sign-in/magic-link",
+          body,
+          cancelTo,
+        });
+        router.push(challengePath(cancelTo));
+        return;
+      }
 
       const res = await fetch("/api/auth/sign-in/magic-link", {
         method: "POST",
-        headers,
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ email, callbackURL: returnTo }),
+        body: JSON.stringify(body),
       });
       if (!res.ok) {
         const data = (await res.json().catch(() => null)) as {
           message?: string;
           error?: string;
-          code?: string;
         } | null;
-        const code = data?.code ?? data?.error;
-        if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
-          setError(tSignIn("captchaError"));
-        } else {
-          setError(data?.message || data?.error || tSignIn("genericError"));
-        }
+        setError(data?.message || data?.error || tSignIn("genericError"));
         return;
       }
       setSent(true);
@@ -78,22 +84,6 @@ export function MagicLinkForm({ returnTo, turnstileSiteKey }: MagicLinkFormProps
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
-
-      {turnstileSiteKey ? (
-        <div className="mb-4">
-          <Turnstile
-            siteKey={turnstileSiteKey}
-            options={{
-              size: "invisible",
-              appearance: "interaction-only",
-              action: "turnstile-spin-v2",
-            }}
-            onSuccess={setTurnstileToken}
-            onError={() => setTurnstileToken(null)}
-            onExpire={() => setTurnstileToken(null)}
-          />
-        </div>
-      ) : null}
 
       <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
         <div className="flex flex-col gap-1.5">

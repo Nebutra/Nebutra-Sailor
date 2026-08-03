@@ -376,7 +376,10 @@
       "homeLink": "Hjem",
       "signInFailed": "Logon mislykkedes",
       "genericError": "Der opstod en fejl. Prøv igen.",
-      "captchaError": "Bot-verificering mislykkedes. Opdater siden og prøv igen."
+      "captchaError": "Bot-verificering mislykkedes. Opdater siden og prøv igen.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Opret din Nebutra-konto",

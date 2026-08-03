@@ -376,7 +376,10 @@
       "homeLink": "Home",
       "signInFailed": "Sign in failed",
       "genericError": "An error occurred. Please try again.",
-      "captchaError": "Bot verification failed. Refresh the page and try again."
+      "captchaError": "Bot verification failed. Refresh the page and try again.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Create your Nebutra account",

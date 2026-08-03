@@ -1,10 +1,11 @@
 "use client";
 
-import { Turnstile } from "@marsidev/react-turnstile";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { challengePath, writePendingAuth } from "@/lib/pending-auth";
 
 interface ForgotPasswordFormProps {
   returnTo: string;
@@ -14,15 +15,16 @@ interface ForgotPasswordFormProps {
 /**
  * Better Auth `forget-password` (British spelling on the API path).
  * Visual shell matches apps/web forgot-password page (split layout + title).
+ * Turnstile runs on `/challenge` after submit so the form column stays aligned.
  */
 export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswordFormProps) {
   const t = useTranslations("auth.forgotPassword");
   const tSignIn = useTranslations("auth.signIn");
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -30,30 +32,35 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
     setError(null);
     try {
       const origin = window.location.origin;
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
+      const body = {
+        email,
+        redirectTo: `${origin}/reset-password`,
+      };
+      const cancelTo = `/forgot-password?returnTo=${encodeURIComponent(returnTo)}`;
+
+      if (turnstileSiteKey) {
+        writePendingAuth({
+          kind: "forgot-password",
+          endpoint: "/api/auth/forget-password",
+          body,
+          cancelTo,
+        });
+        router.push(challengePath(cancelTo));
+        return;
+      }
 
       const res = await fetch("/api/auth/forget-password", {
         method: "POST",
-        headers,
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({
-          email,
-          redirectTo: `${origin}/reset-password`,
-        }),
+        body: JSON.stringify(body),
       });
       if (!res.ok) {
         const data = (await res.json().catch(() => null)) as {
           message?: string;
           error?: string;
-          code?: string;
         } | null;
-        const code = data?.code ?? data?.error;
-        if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
-          setError(tSignIn("captchaError"));
-        } else {
-          setError(data?.message || data?.error || tSignIn("genericError"));
-        }
+        setError(data?.message || data?.error || tSignIn("genericError"));
         return;
       }
       setSubmitted(true);
@@ -91,20 +98,6 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
-
-      {turnstileSiteKey ? (
-        <Turnstile
-          siteKey={turnstileSiteKey}
-          options={{
-            size: "invisible",
-            appearance: "interaction-only",
-            action: "turnstile-spin-v2",
-          }}
-          onSuccess={setTurnstileToken}
-          onError={() => setTurnstileToken(null)}
-          onExpire={() => setTurnstileToken(null)}
-        />
-      ) : null}
 
       <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
         <div className="flex flex-col gap-1.5">

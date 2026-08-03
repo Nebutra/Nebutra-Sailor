@@ -376,7 +376,10 @@
       "homeLink": "Accueil",
       "signInFailed": "Échec de la connexion",
       "genericError": "Une erreur s'est produite. Veuillez réessayer.",
-      "captchaError": "La vérification de bot a échoué. Actualisez la page et réessayez."
+      "captchaError": "La vérification de bot a échoué. Actualisez la page et réessayez.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Créez votre compte Nebutra",

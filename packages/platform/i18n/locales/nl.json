@@ -376,7 +376,10 @@
       "homeLink": "Home",
       "signInFailed": "Inloggen mislukt",
       "genericError": "Er is een fout opgetreden. Probeer het opnieuw.",
-      "captchaError": "Botverificatie mislukt. Vernieuw de pagina en probeer het opnieuw."
+      "captchaError": "Botverificatie mislukt. Vernieuw de pagina en probeer het opnieuw.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Maak je Nebutra-account aan",

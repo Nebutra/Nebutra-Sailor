@@ -376,7 +376,10 @@
       "homeLink": "Inicio",
       "signInFailed": "Falló el inicio de sesión",
       "genericError": "Ocurrió un error. Por favor intenta de nuevo.",
-      "captchaError": "La verificación de bot falló. Actualiza la página e intenta de nuevo."
+      "captchaError": "La verificación de bot falló. Actualiza la página e intenta de nuevo.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Crea tu cuenta de Nebutra",

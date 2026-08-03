@@ -376,7 +376,10 @@
       "homeLink": "होम",
       "signInFailed": "साइन इन विफल",
       "genericError": "एक त्रुटि हुई। कृपया पुनः प्रयास करें।",
-      "captchaError": "बॉट सत्यापन विफल। पेज रीफ़्रेश करें और पुनः प्रयास करें।"
+      "captchaError": "बॉट सत्यापन विफल। पेज रीफ़्रेश करें और पुनः प्रयास करें।",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "अपना Nebutra खाता बनाएं",

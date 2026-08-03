@@ -376,7 +376,10 @@
       "homeLink": "ہوم",
       "signInFailed": "سائن ان ناکام رہا",
       "genericError": "ایک خرابی پیش آئی۔ براہ کرم دوبارہ کوشش کریں۔",
-      "captchaError": "بوٹ تصدیق ناکام رہی۔ صفحہ ریفریش کریں اور دوبارہ کوشش کریں۔"
+      "captchaError": "بوٹ تصدیق ناکام رہی۔ صفحہ ریفریش کریں اور دوبارہ کوشش کریں۔",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "اپنا Nebutra اکاؤنٹ بنائیں",

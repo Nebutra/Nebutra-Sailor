@@ -376,7 +376,10 @@
       "homeLink": "Domů",
       "signInFailed": "Přihlášení se nezdařilo",
       "genericError": "Došlo k chybě. Zkuste to prosím znovu.",
-      "captchaError": "Ověření proti botům se nezdařilo. Obnovte stránku a zkuste to znovu."
+      "captchaError": "Ověření proti botům se nezdařilo. Obnovte stránku a zkuste to znovu.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Vytvořte si účet Nebutra",

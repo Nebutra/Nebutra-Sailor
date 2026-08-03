@@ -376,7 +376,10 @@
       "homeLink": "Startseite",
       "signInFailed": "Anmeldung fehlgeschlagen",
       "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
-      "captchaError": "Bot-Verifizierung fehlgeschlagen. Aktualisieren Sie die Seite und versuchen Sie es erneut."
+      "captchaError": "Bot-Verifizierung fehlgeschlagen. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Nebutra-Konto erstellen",

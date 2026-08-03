@@ -376,7 +376,10 @@
       "homeLink": "Kezdőlap",
       "signInFailed": "Bejelentkezés sikertelen",
       "genericError": "Hiba történt. Kérjük, próbáld újra.",
-      "captchaError": "A bot-ellenőrzés sikertelen. Frissítsd az oldalt, és próbáld újra."
+      "captchaError": "A bot-ellenőrzés sikertelen. Frissítsd az oldalt, és próbáld újra.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Hozd létre a Nebutra-fiókod",

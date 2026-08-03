@@ -376,7 +376,10 @@
       "homeLink": "হোম",
       "signInFailed": "সাইন ইন ব্যর্থ হয়েছে",
       "genericError": "একটি ত্রুটি হয়েছে. অনুগ্রহ করে আবার চেষ্টা করুন।",
-      "captchaError": "বট যাচাই ব্যর্থ হয়েছে। পেজটি রিফ্রেশ করে আবার চেষ্টা করুন।"
+      "captchaError": "বট যাচাই ব্যর্থ হয়েছে। পেজটি রিফ্রেশ করে আবার চেষ্টা করুন।",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "আপনার Nebutra অ্যাকাউন্ট তৈরি করুন",

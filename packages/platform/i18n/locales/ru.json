@@ -376,7 +376,10 @@
       "homeLink": "Главная",
       "signInFailed": "Не удалось войти",
       "genericError": "Произошла ошибка. Пожалуйста, попробуйте снова.",
-      "captchaError": "Проверка на бота не пройдена. Обновите страницу и попробуйте снова."
+      "captchaError": "Проверка на бота не пройдена. Обновите страницу и попробуйте снова.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Создайте аккаунт Nebutra",

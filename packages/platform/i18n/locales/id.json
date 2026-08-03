@@ -376,7 +376,10 @@
       "homeLink": "Beranda",
       "signInFailed": "Gagal masuk",
       "genericError": "Terjadi kesalahan. Silakan coba lagi.",
-      "captchaError": "Verifikasi bot gagal. Muat ulang halaman dan coba lagi."
+      "captchaError": "Verifikasi bot gagal. Muat ulang halaman dan coba lagi.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Buat akun Nebutra Anda",

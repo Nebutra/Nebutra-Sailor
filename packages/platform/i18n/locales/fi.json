@@ -376,7 +376,10 @@
       "homeLink": "Koti",
       "signInFailed": "Kirjautuminen epäonnistui",
       "genericError": "Tapahtui virhe. Yritä uudelleen.",
-      "captchaError": "Bot-tunnistus epäonnistui. Päivitä sivu ja yritä uudelleen."
+      "captchaError": "Bot-tunnistus epäonnistui. Päivitä sivu ja yritä uudelleen.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Luo Nebutra-tilisi",

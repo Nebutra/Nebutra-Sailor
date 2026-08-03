@@ -376,7 +376,10 @@
       "homeLink": "หน้าแรก",
       "signInFailed": "เข้าสู่ระบบไม่สำเร็จ",
       "genericError": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
-      "captchaError": "การยืนยันว่าไม่ใช่บอทล้มเหลว กรุณารีเฟรชหน้าแล้วลองอีกครั้ง"
+      "captchaError": "การยืนยันว่าไม่ใช่บอทล้มเหลว กรุณารีเฟรชหน้าแล้วลองอีกครั้ง",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "สร้างบัญชี Nebutra ของคุณ",

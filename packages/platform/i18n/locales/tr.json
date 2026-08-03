@@ -376,7 +376,10 @@
       "homeLink": "Ana sayfa",
       "signInFailed": "Giriş başarısız oldu",
       "genericError": "Bir hata oluştu. Lütfen tekrar deneyin.",
-      "captchaError": "Bot doğrulaması başarısız oldu. Sayfayı yenileyin ve tekrar deneyin."
+      "captchaError": "Bot doğrulaması başarısız oldu. Sayfayı yenileyin ve tekrar deneyin.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Nebutra hesabınızı oluşturun",

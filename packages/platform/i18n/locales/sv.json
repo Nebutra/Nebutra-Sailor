@@ -376,7 +376,10 @@
       "homeLink": "Hem",
       "signInFailed": "Inloggningen misslyckades",
       "genericError": "Ett fel uppstod. Försök igen.",
-      "captchaError": "Bot-verifieringen misslyckades. Uppdatera sidan och försök igen."
+      "captchaError": "Bot-verifieringen misslyckades. Uppdatera sidan och försök igen.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Skapa ditt Nebutra-konto",

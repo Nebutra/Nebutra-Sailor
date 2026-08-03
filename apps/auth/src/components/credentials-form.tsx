@@ -1,9 +1,9 @@
 "use client";
 
-import { Turnstile } from "@marsidev/react-turnstile";
 import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import type { OAuthProvider } from "@/lib/oauth-providers";
@@ -13,6 +13,7 @@ import {
   PasskeyError,
   signInWithPasskey,
 } from "@/lib/passkey-client";
+import { challengePath, writePendingAuth } from "@/lib/pending-auth";
 import { OAuthButtons } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
 
@@ -33,7 +34,11 @@ interface CredentialsFormProps {
 /**
  * Full Agent OS / apps/web SignInForm parity for the login center:
  * OAuth, email/password, eye toggle, caps-lock, forgot-password,
- * Turnstile, secondary methods, next-intl copy (sign-in + sign-up).
+ * secondary methods, next-intl copy (sign-in + sign-up).
+ *
+ * Bot protection (Turnstile) is not mounted here — on submit we hand off to
+ * `/challenge` so the widget never sits between the password field and the
+ * primary button (which broke the column alignment).
  */
 export function CredentialsForm({
   mode,
@@ -45,6 +50,7 @@ export function CredentialsForm({
 }: CredentialsFormProps) {
   const tSignIn = useTranslations("auth.signIn");
   const tSignUp = useTranslations("auth.signUp");
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -54,7 +60,6 @@ export function CredentialsForm({
   const [showPassword, setShowPassword] = useState(false);
   const [passkeyLoading, setPasskeyLoading] = useState(false);
   const [passkeyAvailable, setPasskeyAvailable] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const { capsLockOn, onKeyEvent } = useCapsLock();
   const conditionalUIStartedRef = useRef(false);
 
@@ -99,12 +104,24 @@ export function CredentialsForm({
           ? { email, password, callbackURL: returnTo }
           : { email, password, name, callbackURL: returnTo };
 
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
+      // When Turnstile is configured, never mount the widget on this form —
+      // park the request and challenge on a dedicated page so layout stays stable.
+      if (turnstileSiteKey) {
+        const cancelTo = withReturnTo(mode === "sign-in" ? "/sign-in" : "/sign-up");
+        writePendingAuth({
+          kind: mode,
+          endpoint,
+          body,
+          successRedirect: returnTo,
+          cancelTo,
+        });
+        router.push(challengePath(cancelTo));
+        return;
+      }
 
       const res = await fetch(endpoint, {
         method: "POST",
-        headers,
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(body),
       });
@@ -115,16 +132,11 @@ export function CredentialsForm({
           error?: string;
           code?: string;
         } | null;
-        const code = data?.code ?? data?.error;
-        if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
-          setError(tSignIn("captchaError"));
-        } else {
-          setError(
-            data?.message ||
-              data?.error ||
-              (mode === "sign-in" ? tSignIn("signInFailed") : tSignUp("signUpFailed")),
-          );
-        }
+        setError(
+          data?.message ||
+            data?.error ||
+            (mode === "sign-in" ? tSignIn("signInFailed") : tSignUp("signUpFailed")),
+        );
         return;
       }
 
@@ -298,20 +310,6 @@ export function CredentialsForm({
             </p>
           ) : null}
         </div>
-
-        {turnstileSiteKey ? (
-          <Turnstile
-            siteKey={turnstileSiteKey}
-            options={{
-              size: "invisible",
-              appearance: "interaction-only",
-              action: "turnstile-spin-v2",
-            }}
-            onSuccess={setTurnstileToken}
-            onError={() => setTurnstileToken(null)}
-            onExpire={() => setTurnstileToken(null)}
-          />
-        ) : null}
 
         {error ? (
           <p

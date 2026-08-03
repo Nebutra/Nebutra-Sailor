@@ -376,7 +376,10 @@
       "homeLink": "Laman Utama",
       "signInFailed": "Log masuk gagal",
       "genericError": "Ralat berlaku. Sila cuba lagi.",
-      "captchaError": "Pengesahan bot gagal. Muat semula halaman dan cuba lagi."
+      "captchaError": "Pengesahan bot gagal. Muat semula halaman dan cuba lagi.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Cipta akaun Nebutra anda",

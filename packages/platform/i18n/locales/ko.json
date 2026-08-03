@@ -376,7 +376,10 @@
       "homeLink": "홈",
       "signInFailed": "로그인 실패",
       "genericError": "오류가 발생했습니다. 다시 시도하세요.",
-      "captchaError": "봇 확인이 실패했습니다. 페이지를 새로고침하고 다시 시도하세요."
+      "captchaError": "봇 확인이 실패했습니다. 페이지를 새로고침하고 다시 시도하세요.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Nebutra 계정 만들기",

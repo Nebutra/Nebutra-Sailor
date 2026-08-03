@@ -376,7 +376,10 @@
       "homeLink": "Trang chủ",
       "signInFailed": "Đăng nhập thất bại",
       "genericError": "Đã xảy ra lỗi. Vui lòng thử lại.",
-      "captchaError": "Xác minh chống bot thất bại. Làm mới trang và thử lại."
+      "captchaError": "Xác minh chống bot thất bại. Làm mới trang và thử lại.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Tạo tài khoản Nebutra",

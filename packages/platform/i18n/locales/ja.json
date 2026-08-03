@@ -376,7 +376,10 @@
       "homeLink": "ホーム",
       "signInFailed": "サインイン失敗",
       "genericError": "エラーが発生しました。もう一度試してください。",
-      "captchaError": "ボット認証に失敗しました。ページを更新して再度お試しください。"
+      "captchaError": "ボット認証に失敗しました。ページを更新して再度お試しください。",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Nebutra アカウントを作成",

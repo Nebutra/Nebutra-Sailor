@@ -376,7 +376,10 @@
       "homeLink": "Nyumbani",
       "signInFailed": "Uingizaji umeshindwa",
       "genericError": "Hitilafu imetokea. Tafadhali jaribu tena.",
-      "captchaError": "Uthibitisho wa bot umeshindwa. Onyesha upya ukurasa na jaribu tena."
+      "captchaError": "Uthibitisho wa bot umeshindwa. Onyesha upya ukurasa na jaribu tena.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "Unda akaunti yako ya Nebutra",

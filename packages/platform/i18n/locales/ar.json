@@ -376,7 +376,10 @@
       "homeLink": "الرئيسية",
       "signInFailed": "فشل تسجيل الدخول",
       "genericError": "حدث خطأ. يرجى المحاولة مرة أخرى.",
-      "captchaError": "فشل التحقق من البوت. قم بتحديث الصفحة وحاول مرة أخرى."
+      "captchaError": "فشل التحقق من البوت. قم بتحديث الصفحة وحاول مرة أخرى.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "أنشئ حسابك في Nebutra",

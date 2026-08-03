@@ -376,7 +376,10 @@
       "homeLink": "خانه",
       "signInFailed": "ورود ناموفق بود",
       "genericError": "خطایی رخ داد. لطفاً دوباره تلاش کنید.",
-      "captchaError": "تأیید ربات ناموفق بود. صفحه را تازه کنید و دوباره تلاش کنید."
+      "captchaError": "تأیید ربات ناموفق بود. صفحه را تازه کنید و دوباره تلاش کنید.",
+      "challengeTitle": "Verify you are human",
+      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
+      "challengeSubmitting": "Verification complete — signing you in…"
     },
     "signUp": {
       "title": "حساب Nebutra خود را بسازید",
