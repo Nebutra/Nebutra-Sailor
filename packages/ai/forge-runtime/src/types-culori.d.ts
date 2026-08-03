@@ -1,6 +1,18 @@
 /** Minimal ambient types for culori@4 (package ships JS only). */
 declare module "culori" {
-  export type Color = Record<string, unknown> | string;
+  /** Loose color object — culori modes expose different channel keys. */
+  export type Color = {
+    mode?: string;
+    l?: number;
+    c?: number;
+    h?: number;
+    a?: number;
+    b?: number;
+    r?: number;
+    g?: number;
+    alpha?: number;
+    [key: string]: unknown;
+  };
 
   export function parse(color: string): Color | undefined;
   export function converter(mode: string): (color: Color | string) => Color | undefined;
