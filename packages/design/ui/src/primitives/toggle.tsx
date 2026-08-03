@@ -1,5 +1,7 @@
 "use client";
 
+import { asPlainStyle } from "../utils/primitive-props";
+
 import * as React from "react";
 import {
   type ToggleColor,
@@ -69,7 +71,7 @@ function getColorToken(color: ToggleColor) {
 function getToggleStyle(
   size: ToggleSize,
   color: ToggleColor,
-  style: React.CSSProperties | undefined,
+  style: unknown,
 ) {
   const sizeTokens = toggleTokens.size[size];
   const colorTokens = getColorToken(color);
@@ -93,7 +95,7 @@ function getToggleStyle(
     "--toggle-thumb": colorTokens.thumb,
     "--toggle-icon-on": colorTokens.iconOn,
     "--toggle-icon-off": colorTokens.iconOff,
-    ...style,
+    ...asPlainStyle(style),
   } satisfies ToggleCssVars;
 }
 

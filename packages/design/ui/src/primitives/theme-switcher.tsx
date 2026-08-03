@@ -10,6 +10,7 @@ import {
   themeSwitcherTokens,
 } from "../tokens/components/theme-switcher";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 
 export type ThemeSwitcherValue = "system" | "light" | "dark";
 
@@ -61,7 +62,7 @@ export interface ThemeSwitcherProps
 
 function getThemeSwitcherStyle(
   size: ThemeSwitcherSize,
-  style: React.CSSProperties | undefined,
+  style: unknown,
 ): ThemeSwitcherCssVars {
   const token = themeSwitcherSizes[size];
 
@@ -80,7 +81,7 @@ function getThemeSwitcherStyle(
     "--theme-switcher-focus-ring-offset": `${themeSwitcherTokens.focusRingOffset}px`,
     "--theme-switcher-duration": `${themeSwitcherTokens.motion.duration}ms`,
     "--theme-switcher-easing": themeSwitcherTokens.motion.easing,
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 

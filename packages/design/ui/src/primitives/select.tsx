@@ -7,6 +7,7 @@ import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { type SelectSize, selectTokens } from "../tokens/components/select";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 import { ErrorMessage } from "./error-message";
 import { formControlFocusClassNames, formControlInvalidClassNames } from "./form-control";
 import { Label } from "./label";
@@ -21,7 +22,7 @@ type SelectTriggerCssVars = React.CSSProperties & {
 
 function getSelectTriggerStyle(
   size: SelectSize,
-  style: React.CSSProperties | undefined,
+  style: unknown,
 ): SelectTriggerCssVars {
   const token = selectTokens.sizes[size];
 
@@ -33,7 +34,7 @@ function getSelectTriggerStyle(
     "--select-focus-ring-width": `${selectTokens.focusRingWidth}px`,
     borderRadius: "var(--select-radius)",
     outline: "none",
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 
@@ -114,10 +115,7 @@ export type CompoundSelectProps = SelectRoot.Props<string, false> & {
 
 export type SelectProps = OptionsSelectProps | CompoundSelectProps;
 
-function getNativeSelectStyle(
-  size: SelectSize,
-  style: React.CSSProperties | undefined,
-): NativeSelectCssVars {
+function getNativeSelectStyle(size: SelectSize, style: unknown): NativeSelectCssVars {
   const token = selectTokens.sizes[size];
 
   return {
@@ -134,11 +132,11 @@ function getNativeSelectStyle(
     "--select-message-gap": `${selectTokens.messageGap}px`,
     "--select-duration": `${selectTokens.motion.duration}ms`,
     "--select-easing": selectTokens.motion.easing,
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 
-function getSelectContentStyle(style: React.CSSProperties | undefined): SelectContentCssVars {
+function getSelectContentStyle(style: unknown): SelectContentCssVars {
   return {
     "--select-content-max-height": `${selectTokens.content.maxHeight}px`,
     "--select-content-min-width": `${selectTokens.content.minWidth}px`,
@@ -155,7 +153,7 @@ function getSelectContentStyle(style: React.CSSProperties | undefined): SelectCo
     "--select-item-indicator-size": `${selectTokens.item.indicatorSize}px`,
     "--select-item-indicator-icon-size": `${selectTokens.item.indicatorIconSize}px`,
     zIndex: overlayZIndex.popover,
-    ...style,
+    ...asPlainStyle(style),
   };
 }
 

@@ -5,6 +5,7 @@ import { useReducedMotion } from "../hooks/use-reduced-motion";
 import { motion } from "../shared/animation/motion";
 import { type ThemeToggleSize, themeToggleTokens } from "../tokens/components/theme-toggle";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 
 type MotionButtonProps = React.ComponentProps<typeof motion.button>;
 type MotionStyle = NonNullable<MotionButtonProps["style"]>;
@@ -68,8 +69,8 @@ function getThemeToggleStyle(
     "--theme-toggle-radius": `${token.radius}px`,
     "--theme-toggle-duration": `${themeToggleTokens.motion.duration}ms`,
     "--theme-toggle-easing": themeToggleTokens.motion.easing,
-    ...style,
-  };
+    ...asPlainStyle(style),
+  } as ThemeToggleStyle;
 }
 
 function readDocumentTheme(): ThemeToggleValue {

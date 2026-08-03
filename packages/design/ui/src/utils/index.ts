@@ -7,6 +7,7 @@
  * Uses twMerge(clsx(...)) to correctly resolve Tailwind class conflicts.
  */
 export { cn } from "./cn";
+export { asPlainStyle, withHtmlProps, type PrimitiveProps, type PrimitiveComponent } from "./primitive-props";
 
 /**
  * Breakpoint values (matches Primer)

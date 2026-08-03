@@ -10,6 +10,7 @@ import {
   spinnerTones,
 } from "../tokens/components/spinner";
 import { cn } from "../utils/cn";
+import { asPlainStyle } from "../utils/primitive-props";
 
 export type SpinnerVariant =
   | "default"
@@ -59,7 +60,7 @@ function resolveSize(size: SpinnerProps["size"]) {
   return `${spinnerSizes[size ?? spinnerTokens.defaultSize]}px`;
 }
 
-function getSpinnerStyle(size: SpinnerProps["size"], style: CSSProperties | undefined) {
+function getSpinnerStyle(size: SpinnerProps["size"], style: unknown) {
   return {
     "--spinner-size": resolveSize(size),
     "--spinner-bar-width": spinnerTokens.barWidth,
@@ -70,7 +71,7 @@ function getSpinnerStyle(size: SpinnerProps["size"], style: CSSProperties | unde
     "--spinner-bar-radius": `${spinnerTokens.barRadius}px`,
     "--spinner-duration": `${spinnerTokens.motion.duration}ms`,
     "--spinner-easing": spinnerTokens.motion.easing,
-    ...style,
+    ...asPlainStyle(style),
   } satisfies SpinnerCssVars;
 }
 
