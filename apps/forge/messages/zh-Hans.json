@@ -2010,6 +2010,35 @@
     "worldClock": {
       "zones": "时区列表（每行一个）",
       "at": "指定时刻（可选 ISO / unix）"
+    },
+    "dns": {
+      "name": "域名 / 主机",
+      "type": "记录类型",
+      "note": "由 Forge 主机 DNS 解析器查询，可能与本地 stub 或浏览器 DoH 不一致。"
+    },
+    "tls": {
+      "host": "主机",
+      "expired": "证书已过期",
+      "validDays": "剩余 {n} 天",
+      "note": "从 Forge 主机发起连接。为便于检视关闭了信任拒绝，这不等于信任结论。"
+    },
+    "myIp": {
+      "refresh": "刷新",
+      "note": "展示请求到达 Forge 时的观测。无授权数据源时不做 ASN/归属地推断。"
+    },
+    "mermaid": {
+      "source": "Mermaid 源码",
+      "idle": "合法图会渲染在这里",
+      "note": "官方 mermaid，securityLevel=strict。不是 DBML ERD 产品。"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000。阈值仅供 UI 评审参考。OKLCH 已在颜色转换工具中提供。"
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 方言",
+      "parseNote": "硬正确：仅解析与清单。ER 图画布需布局质量过 gate 后再单独上架。",
+      "convertNote": "@dbml/core 导出/导入 — 与 API 同一路径。"
     }
   },
   "roots": {

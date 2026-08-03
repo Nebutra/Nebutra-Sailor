@@ -2010,6 +2010,35 @@
     "worldClock": {
       "zones": "Timezones (one per line)",
       "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Name / host",
+      "type": "Record type",
+      "note": "Resolved by the Forge host DNS resolver — may differ from your local stub or browser DoH."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Certificate expired",
+      "validDays": "{n} days remaining",
+      "note": "Connects from the Forge host. Inspection disables trust rejection so you can still read an untrusted leaf."
+    },
+    "myIp": {
+      "refresh": "Refresh",
+      "note": "Shows how this request reached Forge. No ASN/geo without a licensed data feed."
+    },
+    "mermaid": {
+      "source": "Mermaid source",
+      "idle": "Valid diagram renders here",
+      "note": "Official mermaid with securityLevel=strict. Not a DBML ERD product."
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Thresholds are UI review heuristics, not print contracts. color-convert already covers OKLCH."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL dialect",
+      "parseNote": "Hard-correct: parse & inventory only. Visual ERD ships only when layout quality passes the ship gate.",
+      "convertNote": "@dbml/core ModelExporter / importer — same path as the API."
     }
   },
   "roots": {

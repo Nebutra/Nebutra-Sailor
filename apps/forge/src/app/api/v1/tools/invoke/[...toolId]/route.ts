@@ -25,9 +25,36 @@ export async function POST(request: Request, context: RouteContext) {
     session,
   });
   const registry = getForgeRegistry();
+  // Host-injected connection context for net/my-ip (hard-correct: no ambient magic in runtime).
+  let input: unknown = body.input ?? {};
+  if (toolId === "net/my-ip") {
+    const base =
+      input && typeof input === "object" && !Array.isArray(input)
+        ? (input as Record<string, unknown>)
+        : {};
+    input = {
+      ...base,
+      forwardedFor:
+        typeof base.forwardedFor === "string"
+          ? base.forwardedFor
+          : (request.headers.get("x-forwarded-for") ?? undefined),
+      realIp:
+        typeof base.realIp === "string"
+          ? base.realIp
+          : (request.headers.get("x-real-ip") ?? undefined),
+      userAgent:
+        typeof base.userAgent === "string"
+          ? base.userAgent
+          : (request.headers.get("user-agent") ?? undefined),
+      acceptLanguage:
+        typeof base.acceptLanguage === "string"
+          ? base.acceptLanguage
+          : (request.headers.get("accept-language") ?? undefined),
+    };
+  }
   const result = await invokeTool(registry, {
     toolId,
-    input: body.input ?? {},
+    input,
     tenantId,
     ...(body.requestId !== undefined ? { requestId: body.requestId } : {}),
   });

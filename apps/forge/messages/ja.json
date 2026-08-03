@@ -2010,6 +2010,35 @@
     "worldClock": {
       "zones": "タイムゾーン（1行に1つ）",
       "at": "時点（任意のISO / unix）"
+    },
+    "dns": {
+      "name": "名前 / ホスト",
+      "type": "レコード種別",
+      "note": "ForgeホストのDNSリゾルバで解決します。"
+    },
+    "tls": {
+      "host": "ホスト",
+      "expired": "証明書期限切れ",
+      "validDays": "残り {n} 日",
+      "note": "Forgeホストから接続。検査用に信頼検証を緩和。"
+    },
+    "myIp": {
+      "refresh": "更新",
+      "note": "Forgeから見たIP。ライセンス済みGeoなし。"
+    },
+    "mermaid": {
+      "source": "Mermaidソース",
+      "idle": "有効な図がここに表示されます",
+      "note": "公式mermaid（strict）。DBML ERDではありません。"
+    },
+    "colorDeltaE": {
+      "note": "culoriのCIEDE2000。しきい値はUIレビュー用。"
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL方言",
+      "parseNote": "解析と一覧のみ。ER図は別途。",
+      "convertNote": "@dbml/core — APIと同じ経路。"
     }
   },
   "roots": {

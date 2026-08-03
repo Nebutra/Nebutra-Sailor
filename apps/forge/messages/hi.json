@@ -2010,6 +2010,35 @@
     "worldClock": {
       "zones": "Timezones (one per line)",
       "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "Nom / hôte",
+      "type": "Type d'enregistrement",
+      "note": "Résolu par le DNS de l'hôte Forge."
+    },
+    "tls": {
+      "host": "Hôte",
+      "expired": "Certificat expiré",
+      "validDays": "{n} jours restants",
+      "note": "Connexion depuis l'hôte Forge. Inspection seule."
+    },
+    "myIp": {
+      "refresh": "Actualiser",
+      "note": "IP vue par Forge. Pas de géo sans source licenciée."
+    },
+    "mermaid": {
+      "source": "Source Mermaid",
+      "idle": "Le diagramme valide s'affiche ici",
+      "note": "mermaid officiel (strict). Pas un ERD DBML."
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Seuils indicatifs UI."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "Dialecte SQL",
+      "parseNote": "Parse/inventaire seulement. ERD à part.",
+      "convertNote": "@dbml/core — même chemin que l'API."
     }
   },
   "roots": {

@@ -2010,6 +2010,35 @@
     "worldClock": {
       "zones": "Timezones (one per line)",
       "at": "Instant (optional ISO / unix)"
+    },
+    "dns": {
+      "name": "이름 / 호스트",
+      "type": "레코드 유형",
+      "note": "Forge 호스트 DNS로 해석합니다."
+    },
+    "tls": {
+      "host": "호스트",
+      "expired": "인증서 만료",
+      "validDays": "{n}일 남음",
+      "note": "Forge 호스트에서 연결. 검사용으로 신뢰 검증 완화."
+    },
+    "myIp": {
+      "refresh": "새로고침",
+      "note": "Forge가 본 IP. 라이선스 geo 없음."
+    },
+    "mermaid": {
+      "source": "Mermaid 소스",
+      "idle": "유효한 다이어그램이 여기에 표시됩니다",
+      "note": "공식 mermaid(strict). DBML ERD 아님."
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 방언",
+      "parseNote": "파싱/목록만. ERD는 별도.",
+      "convertNote": "@dbml/core — API와 동일 경로."
     }
   },
   "roots": {

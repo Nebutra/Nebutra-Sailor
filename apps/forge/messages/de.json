@@ -2010,6 +2010,35 @@
     "worldClock": {
       "zones": "Zeitzonen (eine pro Zeile)",
       "at": "Zeitpunkt (optional ISO / Unix)"
+    },
+    "dns": {
+      "name": "Name / Host",
+      "type": "Record-Typ",
+      "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
+    },
+    "tls": {
+      "host": "Host",
+      "expired": "Zertifikat abgelaufen",
+      "validDays": "Noch {n} Tage",
+      "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
+    },
+    "myIp": {
+      "refresh": "Aktualisieren",
+      "note": "IP wie vom Forge-Edge gesehen. Kein Geo ohne Lizenzdaten."
+    },
+    "mermaid": {
+      "source": "Mermaid-Quelle",
+      "idle": "Gültige Diagramme erscheinen hier",
+      "note": "Offizielles mermaid (strict). Kein DBML-ERD."
+    },
+    "colorDeltaE": {
+      "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL-Dialekt",
+      "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
+      "convertNote": "@dbml/core — gleicher Pfad wie die API."
     }
   },
   "roots": {

@@ -26,6 +26,7 @@
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "geist": "catalog:",
+    "mermaid": "catalog:",
     "next": "catalog:",
     "next-intl": "^4.12.0",
     "playwright": "^1.58.2",

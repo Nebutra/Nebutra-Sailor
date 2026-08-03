@@ -61,6 +61,7 @@ import { wave2bMatrixTools } from "./wave2b-matrix";
 import { wave3StapleTools } from "./wave3-staples";
 import { wave4LongtailTools } from "./wave4-longtail";
 import { wave5SotaGapTools } from "./wave5-sota-gaps";
+import { wave6HardCorrectTools } from "./wave6-hard-correct";
 import { wordCountTool } from "./word-count";
 import { xlsxTextTools } from "./xlsx-text";
 
@@ -117,6 +118,8 @@ export const F0_BATCH1_TOOLS: readonly AnyForgeToolDefinition[] = [
   ...wave4LongtailTools,
   // W5 SOTA matrix gaps
   ...wave5SotaGapTools,
+  // W6 hard-correct: DNS/TLS/my-ip, mermaid, ΔE, DBML parse+SQL (no fake ERD)
+  ...wave6HardCorrectTools,
   // Office-lite extractors (pure ZIP OOXML)
   ...docxTextTools,
   ...xlsxTextTools,

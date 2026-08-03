@@ -2010,6 +2010,35 @@
     "worldClock": {
       "zones": "時區列表（每行一個）",
       "at": "指定時刻（可選 ISO / unix）"
+    },
+    "dns": {
+      "name": "網域 / 主機",
+      "type": "紀錄類型",
+      "note": "由 Forge 主機 DNS 解析，可能與本地不同。"
+    },
+    "tls": {
+      "host": "主機",
+      "expired": "憑證已過期",
+      "validDays": "剩餘 {n} 天",
+      "note": "從 Forge 主機連線。僅供檢視，不代表信任結論。"
+    },
+    "myIp": {
+      "refresh": "重新整理",
+      "note": "請求到達 Forge 時的 IP。無授權資料源不做歸屬地。"
+    },
+    "mermaid": {
+      "source": "Mermaid 原始碼",
+      "idle": "合法圖會渲染在這裡",
+      "note": "官方 mermaid（strict）。不是 DBML ERD。"
+    },
+    "colorDeltaE": {
+      "note": "culori CIEDE2000。閾值僅供 UI 審視。"
+    },
+    "dbml": {
+      "source": "DBML",
+      "dialect": "SQL 方言",
+      "parseNote": "僅解析與清單。ER 圖另案。",
+      "convertNote": "@dbml/core — 與 API 同一路徑。"
     }
   },
   "roots": {

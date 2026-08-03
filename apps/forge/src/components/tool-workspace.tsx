@@ -143,6 +143,16 @@ import { W3SecretScanRunner } from "@/components/w3-secret-scan-runner";
 import { W3UnifiedSocialCreditCodeRunner } from "@/components/w3-unified-social-credit-code-runner";
 import { W3VinRunner } from "@/components/w3-vin-runner";
 import { W3YamlDiffRunner } from "@/components/w3-yaml-diff-runner";
+import {
+  ColorDeltaERunner,
+  DbmlParseRunner,
+  DbmlToSqlRunner,
+  DnsLookupRunner,
+  MermaidRenderRunner,
+  MyIpRunner,
+  SqlToDbmlRunner,
+  TlsCertInspectRunner,
+} from "@/components/wave6-runners";
 import { WordCountRunner } from "@/components/word-count-runner";
 
 function titleCase(text: string): string {
@@ -601,6 +611,22 @@ export function ToolWorkspace({
       return <MarkdownTocRunner toolId={toolId} />;
     case "hash-compare":
       return <HashCompareRunner toolId={toolId} />;
+    case "dns-lookup":
+      return <DnsLookupRunner toolId={toolId} />;
+    case "tls-cert-inspect":
+      return <TlsCertInspectRunner toolId={toolId} />;
+    case "my-ip":
+      return <MyIpRunner toolId={toolId} />;
+    case "mermaid-render":
+      return <MermaidRenderRunner toolId={toolId} />;
+    case "color-delta-e":
+      return <ColorDeltaERunner toolId={toolId} />;
+    case "dbml-parse":
+      return <DbmlParseRunner toolId={toolId} />;
+    case "dbml-to-sql":
+      return <DbmlToSqlRunner toolId={toolId} />;
+    case "sql-to-dbml":
+      return <SqlToDbmlRunner toolId={toolId} />;
     case "color-contrast":
       return <ColorContrastRunner toolId={toolId} />;
     case "age-calculator":

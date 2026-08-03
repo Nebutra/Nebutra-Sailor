@@ -35,6 +35,7 @@
     "skills:generate": "vitest run src/generate-core-skills.test.ts"
   },
   "dependencies": {
+    "@dbml/core": "^9.1.1",
     "@zxcvbn-ts/core": "^4.1.2",
     "@zxcvbn-ts/language-common": "^4.1.3",
     "ajv": "^8.18.0",
@@ -55,6 +56,7 @@
     "jsqr": "^1.4.0",
     "lunar-javascript": "^1.7.7",
     "marked": "^15.0.12",
+    "mermaid": "catalog:",
     "nanoid": "^6.0.0",
     "opencc-js": "^1.4.1",
     "papaparse": "^5.5.4",
@@ -88,6 +90,7 @@
     "@types/csso": "^5.0.4",
     "@types/html-minifier-terser": "^7.0.2",
     "@types/js-yaml": "^4.0.9",
+    "@types/jsdom": "^28.0.3",
     "@types/node": "catalog:",
     "@types/papaparse": "^5.5.2",
     "@types/qrcode": "^1.5.6",
