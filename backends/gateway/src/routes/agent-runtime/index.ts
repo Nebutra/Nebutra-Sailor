@@ -11,8 +11,10 @@
  *  - ApprovalGate is fail-closed (auto-denies prompts) — human-in-the-loop
  *    transport is future work; unapproved tools are never dispatched.
  *  - No command-exec tool is registered here yet, so the external-sandbox
- *    seam has nothing to delegate; it is wired the moment such a tool is
- *    added (`createHttpSandbox(AGENT_SANDBOX_URL)`), not before.
+ *    seam has nothing to delegate. Product Track B is Carina:
+ *    `createCarinaSandbox({ baseUrl: process.env.CARINA_JSONRPC_URL })` when
+ *    the endpoint is set; otherwise fail-closed. Host wiring (session + tool)
+ *    tracked in Nebutra-Sailor#384 — not `createHttpSandbox(AGENT_SANDBOX_URL)`.
  *  - RolloutStore is process-local `InMemoryRolloutStore`. The durable
  *    tenant-scoped store needs a DB model (infra change) and is deliberately
  *    deferred — not faked. Use `PersistentRolloutStore` + a real port adapter

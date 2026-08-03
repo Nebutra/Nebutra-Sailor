@@ -111,18 +111,30 @@ backend. Nothing else changes.
 ## Step 6 — run code without running code
 
 ```ts
-import { REFUSING_SANDBOX, type ExternalSandbox } from "@nebutra/agent-runtime/sandbox";
+import {
+  createCarinaSandbox,
+  REFUSING_SANDBOX,
+  type ExternalSandbox,
+} from "@nebutra/agent-runtime/sandbox";
 
 // Default: refuses. That is correct — a multi-tenant web process must not
-// execute untrusted code. Provide a real isolator (a self-hosted sidecar,
-// a remote sandbox service, anything) implementing ExternalSandbox:
-const sandbox: ExternalSandbox = myDelegatedIsolator ?? REFUSING_SANDBOX;
+// execute untrusted code. Product Track B = self-deployed Carina:
+const sandbox: ExternalSandbox = process.env.CARINA_JSONRPC_URL
+  ? createCarinaSandbox({
+      baseUrl: process.env.CARINA_JSONRPC_URL,
+      token: process.env.CARINA_JSONRPC_TOKEN,
+    })
+  : REFUSING_SANDBOX;
+
 const result = await sandbox.exec({ tenantId, threadId, command, capabilityPolicy });
 ```
 
-This is the seam where a separate, isolated execution backend plugs in over
-the protocol contract. Your web tier never gains the ability to run arbitrary
-code; it only gains the ability to *ask something else to*.
+This is the seam where **Carina** (upstream kernel) plugs in over the public
+JSON-RPC catalog. Your web tier never gains the ability to run arbitrary code;
+it only gains the ability to *ask the self-deployed daemon to*. Host still must
+ensure a Carina session exists before `command.exec` (see #384).
+
+ADR: `docs/architecture/2026-08-03-carina-track-b-upstream.md`.
 
 ## What you did NOT have to build
 
