@@ -1060,15 +1060,34 @@ install_forge_chromium() {
   export PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL=0
   replace_env_assignment "$app_root/.env" PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL "0"
 
-  log "install forge Chromium browsers (full, not headless_shell only) -> $browsers_path"
-  # Prefer --with-deps on Linux so shared libs (libnss, fonts) exist for headless.
+  # OS shared libs for Chromium (libatk-1.0.so.0 etc.). Without these, launch
+  # fails with "Target page, context or browser has been closed".
+  log "install forge Chromium OS dependencies (playwright install-deps / package manager)"
   if [ -x "$pw" ]; then
-    "$pw" install --with-deps chromium 2>&1 | tail -50 \
-      || "$pw" install chromium 2>&1 | tail -40 \
+    "$pw" install-deps chromium 2>&1 | tail -40 \
+      || log "WARN: playwright install-deps failed (may need root)"
+  else
+    node "$pw" install-deps chromium 2>&1 | tail -40 \
+      || log "WARN: playwright install-deps failed (may need root)"
+  fi
+  if command -v dnf >/dev/null 2>&1; then
+    # Alibaba Cloud Linux / RHEL family — best-effort if install-deps cannot run.
+    dnf install -y \
+      atk at-spi2-atk cups-libs libdrm libXcomposite libXdamage libXrandr \
+      mesa-libgbm pango alsa-lib nss nspr libxkbcommon libX11 libXext libXfixes \
+      libxcb libXcursor gtk3 2>&1 | tail -25 \
+      || log "WARN: dnf Chromium OS deps install failed"
+  elif command -v yum >/dev/null 2>&1; then
+    yum install -y atk at-spi2-atk cups-libs nss nspr pango alsa-lib 2>&1 | tail -25 \
+      || log "WARN: yum Chromium OS deps install failed"
+  fi
+
+  log "install forge Chromium browsers (full, not headless_shell only) -> $browsers_path"
+  if [ -x "$pw" ]; then
+    "$pw" install chromium 2>&1 | tail -40 \
       || log "WARN: playwright install chromium failed"
   else
-    node "$pw" install --with-deps chromium 2>&1 | tail -50 \
-      || node "$pw" install chromium 2>&1 | tail -40 \
+    node "$pw" install chromium 2>&1 | tail -40 \
       || log "WARN: playwright install chromium failed"
   fi
 
