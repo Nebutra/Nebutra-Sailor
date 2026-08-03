@@ -185,6 +185,11 @@ function normalizePackageJson(root, mirror, targetDir, catalogVersions, workspac
     canonicalSource: "monorepo",
   };
 
+  // Standalone clones need packageManager for pnpm/action-setup + Corepack.
+  if (!manifest.packageManager) {
+    manifest.packageManager = "pnpm@10.32.1";
+  }
+
   writeJson(manifestPath, manifest);
 }
 
@@ -257,6 +262,9 @@ function writeMirrorMetadata(targetDir, mirror) {
 function writeMirrorWorkflow(targetDir) {
   const workflowDir = join(targetDir, ".github", "workflows");
   mkdirSync(workflowDir, { recursive: true });
+  // Standalone package CI — must not assume monorepo layout or CJS require().
+  // pnpm/action-setup needs an explicit version; script detection uses jq
+  // because package.json often has "type":"module" (require() throws).
   writeFileSync(
     join(workflowDir, "ci.yml"),
     [
@@ -273,20 +281,39 @@ function writeMirrorWorkflow(targetDir) {
       "jobs:",
       "  package:",
       "    runs-on: ubuntu-latest",
+      "    timeout-minutes: 15",
       "    steps:",
-      "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd",
-      "      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1",
-      "      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+      "      - uses: actions/checkout@v4",
+      "      - uses: pnpm/action-setup@v4",
+      "        with:",
+      "          version: 10.32.1",
+      "      - uses: actions/setup-node@v4",
       "        with:",
       "          node-version: 22",
       "          cache: pnpm",
-      "      - run: pnpm install --no-frozen-lockfile --ignore-scripts",
+      "      - name: Install",
+      "        run: pnpm install --no-frozen-lockfile --ignore-scripts",
       "      - name: Build",
-      "        run: node -e \"process.exit(require('./package.json').scripts?.build ? 0 : 1)\" && pnpm build || echo 'no build script'",
+      "        run: |",
+      "          if jq -e '.scripts.build // empty' package.json >/dev/null; then",
+      "            pnpm run build",
+      "          else",
+      "            echo 'no build script'",
+      "          fi",
       "      - name: Typecheck",
-      "        run: node -e \"process.exit(require('./package.json').scripts?.typecheck ? 0 : 1)\" && pnpm typecheck || echo 'no typecheck script'",
+      "        run: |",
+      "          if jq -e '.scripts.typecheck // empty' package.json >/dev/null; then",
+      "            pnpm run typecheck",
+      "          else",
+      "            echo 'no typecheck script'",
+      "          fi",
       "      - name: Test",
-      "        run: node -e \"process.exit(require('./package.json').scripts?.test ? 0 : 1)\" && pnpm test || echo 'no test script'",
+      "        run: |",
+      "          if jq -e '.scripts.test // empty' package.json >/dev/null; then",
+      "            pnpm run test",
+      "          else",
+      "            echo 'no test script'",
+      "          fi",
       "",
     ].join("\n"),
   );
