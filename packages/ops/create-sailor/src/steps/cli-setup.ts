@@ -17,7 +17,11 @@ export function buildProgram(): Command {
     .description("Nebutra-Sailor — AI-Native SaaS template")
     .version(VERSION, "-v, --version")
     .helpOption(false) // we render our own help
-    .argument("[name]", "project directory", undefined)
+    .argument(
+      "[name]",
+      "project name or path (default: my-app; use . for current directory)",
+      undefined,
+    )
     .option("-p, --pm <id>", "npm | pnpm | yarn | bun")
     .option("--region <id>", "global | cn | hybrid")
     .option(

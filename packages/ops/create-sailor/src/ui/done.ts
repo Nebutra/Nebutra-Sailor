@@ -30,17 +30,23 @@ export function showDone(opts: DoneOptions): void {
   const star = decor ? "★" : "*";
   const mail = decor ? "📧" : "*";
 
-  const title = decor
-    ? pc.bold(`${anchor}  Done in ${opts.elapsedSec}s · ${opts.targetDir}/`)
-    : `${anchor} Done in ${opts.elapsedSec}s · ${opts.targetDir}/`;
+  const isCwd = opts.targetDir === "." || opts.targetDir === "./" || opts.targetDir === ".\\";
+  const locationLabel = isCwd
+    ? "."
+    : opts.targetDir.endsWith("/")
+      ? opts.targetDir
+      : `${opts.targetDir}/`;
 
-  const lines: string[] = [
-    "",
-    `   ${title}`,
-    "",
-    `   ${decor ? pc.bold("Next:") : "Next:"}`,
-    `     ${arrow} cd ${opts.targetDir}`,
-  ];
+  const title = decor
+    ? pc.bold(`${anchor}  Done in ${opts.elapsedSec}s · ${locationLabel}`)
+    : `${anchor} Done in ${opts.elapsedSec}s · ${locationLabel}`;
+
+  const lines: string[] = ["", `   ${title}`, "", `   ${decor ? pc.bold("Next:") : "Next:"}`];
+
+  // Skip a no-op `cd .` when the user scaffolded into the current directory.
+  if (!isCwd) {
+    lines.push(`     ${arrow} cd ${opts.targetDir}`);
+  }
 
   if (opts.skippedInstall) {
     lines.push(`     ${arrow} pnpm install       (if --no-install was set)`);

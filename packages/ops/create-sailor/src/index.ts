@@ -16,7 +16,6 @@
 
 import { execSync } from "node:child_process";
 import fs from "node:fs";
-import path from "node:path";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { buildProgram } from "./steps/cli-setup";
@@ -29,6 +28,11 @@ import { showHelp } from "./ui/help";
 import { printProgressLine } from "./ui/progress";
 import { SOCIAL_LOGIN_PROVIDERS } from "./utils/auth-social";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
+import {
+  DEFAULT_PROJECT_NAME,
+  promptProjectTarget,
+  resolveTargetFromInput,
+} from "./utils/project-target";
 import { VERSION } from "./version";
 
 // ---------------------------------------------------------------------------
@@ -220,40 +224,41 @@ async function run(): Promise<void> {
     }
   }
 
-  // ---- Project-name resolution ----
-  const targetDir = nameArg ?? (autoYes ? "./my-saas-app" : undefined);
-  let resolvedTarget: string;
+  // ---- Project location resolution ----
+  // Interactive: pick "new folder" vs "current directory" (smart default from
+  // cwd emptiness). Non-interactive / --yes: ./my-app. CLI arg: name or path.
+  const cancel = (): never => {
+    process.stdout.write(pc.red("✘ Cancelled\n"));
+    process.exit(130);
+  };
 
-  if (!targetDir) {
-    if (nonInteractive) {
-      resolvedTarget = "./my-saas-app";
-    } else {
-      const project = await p.group(
-        {
-          name: () =>
-            p.text({
-              message: "Where should we create your project?",
-              placeholder: "./my-saas-app",
-              defaultValue: "./my-saas-app",
-              validate: (value) => {
-                if (!value?.length) return "Please enter a path.";
-              },
-            }),
-        },
-        {
-          onCancel: () => {
-            process.stdout.write(pc.red("✘ Cancelled\n"));
-            process.exit(130);
-          },
-        },
-      );
-      resolvedTarget = String(project.name);
+  let resolvedTarget: string;
+  let projectName: string;
+
+  if (nameArg) {
+    try {
+      const resolved = resolveTargetFromInput(nameArg);
+      resolvedTarget = resolved.targetDir;
+      projectName = resolved.projectName;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      process.stderr.write(`\n${pc.red("✘")} ${msg}\n\n`);
+      emitJson(useJson, { event: "error", code: "INVALID_PROJECT_NAME", message: msg });
+      process.exit(1);
     }
+  } else if (nonInteractive) {
+    const resolved = resolveTargetFromInput(DEFAULT_PROJECT_NAME);
+    resolvedTarget = resolved.targetDir;
+    projectName = resolved.projectName;
   } else {
-    resolvedTarget = targetDir;
+    const resolved = await promptProjectTarget({ onCancel: cancel });
+    resolvedTarget = resolved.targetDir;
+    projectName = resolved.projectName;
+    if (!useJson) {
+      process.stdout.write(pc.dim(`  → ${resolved.absoluteDir}\n`));
+    }
   }
 
-  const projectName = path.basename(path.resolve(resolvedTarget));
   const resolvedPm = opts.pm ?? detectPm();
 
   // ---- Config resolution (interactive or non-interactive) ----

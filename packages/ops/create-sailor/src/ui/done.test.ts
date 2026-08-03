@@ -29,6 +29,7 @@ describe("showDone", () => {
     });
 
     expect(output).toContain("pnpm install");
+    expect(output).toContain("cd demo-app");
     expect(output).toContain("pnpm db:migrate");
     expect(output).toContain("pnpm db:seed");
     expect(output).toContain("pnpm brand:init");
@@ -37,5 +38,24 @@ describe("showDone", () => {
     expect(output).toContain("pnpm generate:api-types");
     expect(output).not.toContain("pnpm sailor");
     expect(output).not.toContain("sailor add");
+  });
+
+  it("skips cd when scaffolded into the current directory", () => {
+    process.env.NO_COLOR = "1";
+
+    let output = "";
+    vi.spyOn(process.stdout, "write").mockImplementation(((chunk: string | Uint8Array) => {
+      output += String(chunk);
+      return true;
+    }) as typeof process.stdout.write);
+
+    showDone({
+      elapsedSec: 3,
+      targetDir: ".",
+      skippedInstall: false,
+    });
+
+    expect(output).toContain("· .");
+    expect(output).not.toMatch(/cd \./);
   });
 });

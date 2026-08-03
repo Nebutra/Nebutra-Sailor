@@ -38,7 +38,12 @@ bunx create-sailor@latest
 npx create-sailor@latest
 ```
 
-Asks just 4 questions: **project name / region / auth / AI topology**. Everything else uses region-aware smart defaults.
+Interactive flow starts with **where to create** (new folder vs current directory — defaults based on whether cwd looks empty), then **project name** (only for a new folder), then region / auth / AI topology. Everything else uses region-aware smart defaults.
+
+```bash
+npx create-sailor@latest my-app   # new folder
+npx create-sailor@latest .        # current directory
+```
 
 The AI prompt is topology-first:
 

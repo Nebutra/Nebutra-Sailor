@@ -1,7 +1,7 @@
 export const HELP_TEXT = `Usage: create-sailor [name] [options]
 
 Arguments:
-  name                      project directory (default: ./my-saas-app)
+  name                      project name or path (default: my-app; use . for cwd)
 
 Core options:
   -p, --pm <id>             npm | pnpm | yarn | bun (auto-detected)
