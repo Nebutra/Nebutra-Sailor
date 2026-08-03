@@ -113,8 +113,23 @@ function toPosix(path) {
   return path.split(sep).join("/");
 }
 
+function stripJsonComments(text) {
+  // tsconfig often uses // comments; package.json must stay strict JSON.
+  return text
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/^\s*\/\/.*$/gm, "");
+}
+
 function readJson(path) {
-  return JSON.parse(readFileSync(path, "utf8"));
+  const raw = readFileSync(path, "utf8");
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    if (path.endsWith("tsconfig.json") || path.endsWith(".jsonc")) {
+      return JSON.parse(stripJsonComments(raw));
+    }
+    throw error;
+  }
 }
 
 function writeJson(path, value) {
