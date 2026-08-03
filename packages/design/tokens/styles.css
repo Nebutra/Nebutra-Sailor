@@ -882,20 +882,16 @@
   --duration-reveal: var(--motion-duration-reveal);
   --duration-cinematic: var(--motion-duration-cinematic);
 
-  /* Spacing — named breathing-room scale, additive to Tailwind's own numeric
-     scale (p-4, gap-2, ...), never a replacement for it. --spacing itself
-     (Tailwind's shared arithmetic base for width/height/line-height as well
-     as padding/gap) is intentionally untouched here — see static/base.css.
-     Indirect for the same reason as the motion rail above: pointing at the
-     runtime rail lets a Brand Package move it; a literal here could not be
-     reached by any skin. (No backticks in this block — it is inside a JS
-     template literal.) */
-  --spacing-xs: var(--space-source-xs);
-  --spacing-sm: var(--space-source-sm);
-  --spacing-md: var(--space-source-md);
-  --spacing-lg: var(--space-source-lg);
-  --spacing-xl: var(--space-source-xl);
-  --spacing-2xl: var(--space-source-2xl);
+  /* Spacing — DO NOT register --spacing-sm|md|lg|xl|2xl here.
+     Tailwind v4 puts every --spacing-{key} on the shared size rail, so
+     max-w-sm / max-w-2xl (and width/height/gap utilities with the same keys)
+     resolve to the breathing-room lengths (0.75rem to 3rem) instead of the
+     container scale (24rem to 42rem). That shipped as one-word-per-line prose
+     and a 32px install box on nebutra.com (measured 2026-08-03).
+     Brand Packages still override --space-source-*; consumers must read
+     those vars directly (var(--space-source-md, ...)), never via a @theme
+     --spacing-{step} alias. --spacing itself (0.25rem arithmetic base) stays
+     untouched. See static/base.css. */
 
   /* Font family — Geist keeps Latin + numerals, self-hosted vivo Sans SC takes
      CJK, system CJK faces behind it. Order is the design decision; see the
@@ -951,13 +947,14 @@
    A second, named scale — NOT Tailwind's own `--spacing` multiplier.
    `--spacing` (0.25rem) is shared arithmetic for width, height and
    line-height as well as padding/gap; repointing it per brand would rescale
-   icons and text along with whitespace. This rail only feeds the
-   `--spacing-xs..2xl` Tailwind utilities (see the Tailwind theme block in
-   style-dictionary.config.mjs) that a component opts into explicitly
-   (`p-md`, `gap-lg`, …) — the shared multiplier is untouched.
-   Same indirection shape as motion: an @theme entry cannot point at itself,
-   so the utility needs a source under a second name. A Brand Package
-   overrides these; nothing else should.
+   icons and text along with whitespace.
+
+   Brand Packages override `--space-source-*`. Consumers MUST read these
+   vars directly (`var(--space-source-md, ...)`). Do NOT bridge them into
+   `@theme --spacing-sm|md|xl|2xl`: Tailwind v4 maps every --spacing-{key}
+   onto max-width / width / height utilities as well as padding / gap, so
+   those keys hijack the container max-width scale (max-w-2xl became 48px
+   on production 2026-08-03).
    ─────────────────────────────────────────────────────────── */
 :root {
   --space-source-xs: 0.5rem;

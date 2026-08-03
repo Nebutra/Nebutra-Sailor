@@ -226,14 +226,15 @@ export interface BrandMotion {
  * was the only spacing vocabulary in the repo, and it is a fixed arithmetic
  * multiplier (`--spacing: 0.25rem`) shared by width, height and line-height —
  * repointing it per brand would rescale icons and text along with padding.
- * This is a second, narrower, opt-in scale (`gap-md`, `p-lg`, …) a component
- * reaches for when it wants a value the current language controls, without
- * touching the shared multiplier at all.
  *
- * Values are full CSS lengths (e.g. `"1rem"`), not multiples — components
- * consume them through generated `--spacing-*` Tailwind utilities. Only the
- * keys a language declares are emitted; an omitted step inherits the shared
- * default rather than being reset to it.
+ * This is a second, narrower, opt-in scale emitted as `--space-source-*`.
+ * Components read those vars directly. Never bridge them into `@theme` as
+ * `--spacing-sm` / `--spacing-md` / etc.: Tailwind v4 treats those keys as
+ * size tokens, which hijacks `max-w-sm` through `max-w-2xl`.
+ *
+ * Values are full CSS lengths (e.g. `"1rem"`), not multiples. Only the keys a
+ * language declares are emitted; an omitted step inherits the shared default
+ * rather than being reset to it.
  */
 export interface BrandSpacing {
   xs?: string;

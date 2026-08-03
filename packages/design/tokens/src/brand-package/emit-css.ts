@@ -67,12 +67,11 @@ function motionVars(motion: BrandMotion | undefined): string[] {
 /**
  * Breathing room for one language.
  *
- * Writes only `--space-source-*` — the runtime rail `@theme inline` points
- * `--spacing-*` at (see static/base.css). Unlike motion, there is no second
- * hand-written-CSS spelling to keep in sync: the only consumer today is the
- * generated `--spacing-*` Tailwind utilities (`p-md`, `gap-lg`, …), so one
- * rail is what is actually used — writing a second, unread spelling would
- * just be dead weight.
+ * Writes only `--space-source-*`. Consumers read those vars directly
+ * (`var(--space-source-md, …)`). We deliberately do NOT also emit
+ * `--spacing-sm|md|…` into @theme: Tailwind v4 treats every --spacing-{key}
+ * as a size token, so max-w-sm / max-w-2xl would resolve to the breathing
+ * lengths (0.75rem…3rem) instead of the container scale (24rem…42rem).
  */
 function spacingVars(spacing: BrandSpacing | undefined): string[] {
   if (!spacing) return [];

@@ -227,13 +227,12 @@ describe("Property 3d: Every switchable dimension is switchable", () => {
     ["--duration-flow", "--motion-duration-flow"],
     ["--duration-reveal", "--motion-duration-reveal"],
     ["--duration-cinematic", "--motion-duration-cinematic"],
-    ["--spacing-xs", "--space-source-xs"],
-    ["--spacing-sm", "--space-source-sm"],
-    ["--spacing-md", "--space-source-md"],
-    ["--spacing-lg", "--space-source-lg"],
-    ["--spacing-xl", "--space-source-xl"],
-    ["--spacing-2xl", "--space-source-2xl"],
   ] as const;
+
+  // Spacing is NOT on this list on purpose. Bridging --space-source-* into
+  // @theme as --spacing-sm|md|xl|2xl made max-w-sm…max-w-2xl resolve to the
+  // breathing lengths (12px…48px) instead of the container scale. Consumers
+  // read --space-source-* directly.
 
   it.each(INDIRECT)("@theme %s points at %s rather than a literal", (utility, source) => {
     const declaration = new RegExp(`${utility}:\\s*([^;]+);`).exec(themeBlock);
@@ -241,11 +240,27 @@ describe("Property 3d: Every switchable dimension is switchable", () => {
     expect(declaration?.[1]?.trim()).toBe(`var(${source})`);
   });
 
-  it("declares a runtime source for every indirected motion/spacing token", () => {
+  it("declares a runtime source for every indirected motion token", () => {
     const missing = INDIRECT.map(([, source]) => source).filter(
       (source) => !new RegExp(`${source}:\\s*[^;]+;`).test(TOKENS_CSS),
     );
     expect(missing, "indirection with no source resolves to nothing at all").toEqual([]);
+  });
+
+  it("does not register --spacing-sm|md|xl|2xl in @theme (hijacks max-w-*)", () => {
+    for (const key of ["xs", "sm", "md", "lg", "xl", "2xl"] as const) {
+      const re = new RegExp(`--spacing-${key}:\\s*[^;]+;`);
+      expect(re.test(themeBlock), `--spacing-${key} must not be in @theme`).toBe(false);
+    }
+  });
+
+  it("declares --space-source-* for brand-switchable breathing room", () => {
+    for (const key of ["xs", "sm", "md", "lg", "xl", "2xl"] as const) {
+      expect(
+        new RegExp(`--space-source-${key}:\\s*[^;]+;`).test(TOKENS_CSS),
+        `--space-source-${key} missing`,
+      ).toBe(true);
+    }
   });
 
   it("gives each built-in language its own motion, not just its own colours", () => {

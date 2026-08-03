@@ -851,20 +851,16 @@ function buildTailwindThemeInline() {
   --duration-reveal: var(--motion-duration-reveal);
   --duration-cinematic: var(--motion-duration-cinematic);
 
-  /* Spacing — named breathing-room scale, additive to Tailwind's own numeric
-     scale (p-4, gap-2, ...), never a replacement for it. --spacing itself
-     (Tailwind's shared arithmetic base for width/height/line-height as well
-     as padding/gap) is intentionally untouched here — see static/base.css.
-     Indirect for the same reason as the motion rail above: pointing at the
-     runtime rail lets a Brand Package move it; a literal here could not be
-     reached by any skin. (No backticks in this block — it is inside a JS
-     template literal.) */
-  --spacing-xs: var(--space-source-xs);
-  --spacing-sm: var(--space-source-sm);
-  --spacing-md: var(--space-source-md);
-  --spacing-lg: var(--space-source-lg);
-  --spacing-xl: var(--space-source-xl);
-  --spacing-2xl: var(--space-source-2xl);
+  /* Spacing — DO NOT register --spacing-sm|md|lg|xl|2xl here.
+     Tailwind v4 puts every --spacing-{key} on the shared size rail, so
+     max-w-sm / max-w-2xl (and width/height/gap utilities with the same keys)
+     resolve to the breathing-room lengths (0.75rem to 3rem) instead of the
+     container scale (24rem to 42rem). That shipped as one-word-per-line prose
+     and a 32px install box on nebutra.com (measured 2026-08-03).
+     Brand Packages still override --space-source-*; consumers must read
+     those vars directly (var(--space-source-md, ...)), never via a @theme
+     --spacing-{step} alias. --spacing itself (0.25rem arithmetic base) stays
+     untouched. See static/base.css. */
 
   /* Font family — Geist keeps Latin + numerals, self-hosted vivo Sans SC takes
      CJK, system CJK faces behind it. Order is the design decision; see the

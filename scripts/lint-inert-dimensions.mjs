@@ -97,23 +97,19 @@ const DIMENSIONS = [
   // with this scale, and spacing reports consumers it does not have — which is
   // exactly the false-positive class that kept lint-defined-css-vars out of CI.
   //
-  // The trailing `(?:,[^)]*)?` is load-bearing too, and was missing until
-  // 2026-07-31: every real caller of --spacing-* and --control-height-* writes
-  // a CSS custom-property fallback (`var(--spacing-md, var(--playground-gap))`,
-  // `var(--control-height-md,2.5rem)`), because that is the only defensible way
-  // to consume a token that a given brand might not override. A `reads` pattern
-  // requiring the var() to close immediately after the property name never
-  // matches that shape, so it reported these two dimensions as having zero
-  // consumers when apps/web/src/components/theme-playground and
-  // packages/design/ui/src/primitives/button-variants.ts (58 arbitrary-value
-  // call sites) both compile to real, per-brand-varying properties — confirmed
-  // by compiling apps/web's actual globals.css with @tailwindcss/node against
-  // real candidates and grepping the output, not by reading source.
+  // The trailing `(?:,[^)]*)?` is load-bearing: real callers write CSS
+  // fallbacks (`var(--space-source-md, var(--playground-gap))`,
+  // `var(--control-height-md,2.5rem)`). A pattern that requires the var() to
+  // close immediately never matches that shape.
+  //
+  // Spacing consumers read --space-source-* directly. We do NOT count
+  // --spacing-sm|md|… or p-md/gap-lg utilities: registering those keys in
+  // @theme hijacked max-w-sm…max-w-2xl (Tailwind v4 size rail) and was
+  // removed 2026-08-03.
   {
     id: "spacing",
-    declares: /--space-source-[a-z0-9]+:/,
-    reads:
-      /var\(--spacing-(?:xs|sm|md|lg|xl|2xl)(?:,[^)]*)?\)|(?<![-\w])(?:p|px|py|pt|pb|pl|pr|m|mx|my|gap|space-[xy])-(?:xs|sm|md|lg|xl|2xl)(?![-\w])/,
+    declares: /--space-source-[\w-]+:/,
+    reads: /var\(--space-source-[\w-]+(?:,[^)]*)?\)/,
   },
   { id: "zones", declares: /--zone-[a-z-]+:/, reads: /var\(--zone-[a-z-]+\)/ },
   {

@@ -548,7 +548,7 @@ function PreviewCanvas({
             densityScale[density],
           )}
         >
-          <div className="theme-preview-grid gap-[var(--spacing-md,var(--playground-gap))] p-[var(--spacing-lg,var(--playground-pad))]">
+          <div className="theme-preview-grid gap-[var(--space-source-md,var(--playground-gap))] p-[var(--space-source-lg,var(--playground-pad))]">
             <FormsPanel active={activeSuite === "forms"} />
             <PricingPanel active={activeSuite === "pricing"} />
             <DashboardPanel active={activeSuite === "dashboard"} />
@@ -584,7 +584,7 @@ function PreviewCard({
         // The theme's --shadow-md is layered on top of the hairline ring so
         // an imported/built-in elevation token visibly takes effect on cards.
         // Fallback mirrors the original soft drop so themes without shadow tokens look unchanged.
-        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--spacing-lg,var(--playground-pad))] text-[color:var(--color-card-foreground)]",
+        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--space-source-lg,var(--playground-pad))] text-[color:var(--color-card-foreground)]",
         "shadow-[0_0_0_1px_var(--edge-soft),var(--shadow-md,0_2px_8px_-2px_rgb(0_0_0/0.08))]",
         active &&
           "shadow-[0_0_0_1px_var(--edge-medium),var(--shadow-md,0_4px_12px_-2px_rgb(0_0_0/0.12))]",

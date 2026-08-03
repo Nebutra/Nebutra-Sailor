@@ -123,10 +123,10 @@ export default function SwitchabilityPage() {
               variables have real consumers in <Mono>packages/design/ui</Mono>.
             </p>
             <p>
-              <strong className="font-medium text-foreground">spacing</strong> is live because the
-              playground and a handful of layout surfaces read <Mono>--spacing-md</Mono> /{" "}
-              <Mono>--spacing-lg</Mono>. It is not a second Tailwind spacing scale for product code
-              — reach for the existing Tailwind numbers there.
+              <strong className="font-medium text-foreground">spacing</strong> is live as{" "}
+              <Mono>--space-source-*</Mono> (Brand Packages override it; playground reads it
+              directly). It is not registered as <Mono>@theme --spacing-sm|md|…</Mono> — those keys
+              hijack Tailwind <Mono>max-w-*</Mono> on the shared size rail.
             </p>
             <p>
               <strong className="font-medium text-foreground">zones</strong> is undeclared: the
