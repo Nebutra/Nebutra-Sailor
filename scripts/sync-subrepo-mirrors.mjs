@@ -313,7 +313,7 @@ function writeMirrorWorkflow(targetDir) {
       "      - uses: actions/setup-node@v4",
       "        with:",
       "          node-version: 22",
-      "          cache: pnpm",
+      "          # No pnpm-lock.yaml in standalone mirrors — caching requires a lockfile.",
       "      - name: Install",
       "        run: pnpm install --no-frozen-lockfile --ignore-scripts",
       "      - name: Build",
