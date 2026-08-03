@@ -42,7 +42,7 @@ export default function DownloadPage() {
       </ul>
 
       <p className="muted" style={{ marginTop: "1.5rem" }}>
-        macOS is Developer ID signed. If Gatekeeper blocks first open, right-click the app → Open.
+        macOS builds are Developer ID signed and notarized when release CI completes successfully.
         Package managers: <code className="inline">brew install --cask nebutra/pebble/pebble</code>
         {" · "}
         AUR <code className="inline">nebutra-pebble-bin</code>
