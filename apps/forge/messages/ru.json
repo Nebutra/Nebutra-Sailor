@@ -177,7 +177,24 @@
       "copyText": "Копировать текст",
       "quality": "Качество",
       "original": "Оригинал",
-      "result": "Результат"
+      "result": "Результат",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "Текст → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "PDF-файл",
-      "note": "PDF Light Optimize · переписывание через pdf-lib (без перекомпрессии изображений)"
+      "note": "PDF Light Optimize · переписывание через pdf-lib (без перекомпрессии изображений)",
+      "needFile": "Сначала выберите PDF-файл"
     },
     "pdfCompress": {
       "file": "PDF-файл",
@@ -561,7 +579,8 @@
       "merging": "Объединение…",
       "mergeDownload": "Объединить и скачать",
       "done": "Объединено · {pages} страниц · {bytes} байт",
-      "note": "pdf-lib · тот же путь, что и API"
+      "note": "pdf-lib · тот же путь, что и API",
+      "merge": "Объединить и скачать"
     },
     "pdfSplit": {
       "file": "PDF-файл",
@@ -572,7 +591,8 @@
       "splitting": "Разделение…",
       "splitDownload": "Разделить и скачать",
       "done": "Разделение · исходник {source} стр. → результат {pages} стр.",
-      "note": "pdf-lib · тот же путь, что и API"
+      "note": "pdf-lib · тот же путь, что и API",
+      "split": "Разделить и скачать"
     },
     "passwordStrength": {
       "check": "Проверить надёжность",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "Блок вендора",
       "summaryStripped": "Удалено {fields} полей метаданных ({families}), {kb} КБ. Изображение в остальном не изменено.",
       "summaryClean": "Удаляемых метаданных не найдено. Файл возвращён без изменений."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

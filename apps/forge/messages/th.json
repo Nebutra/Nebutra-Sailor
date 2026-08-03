@@ -177,7 +177,24 @@
       "copyText": "คัดลอกข้อความ",
       "quality": "คุณภาพ",
       "original": "ต้นฉบับ",
-      "result": "ผลลัพธ์"
+      "result": "ผลลัพธ์",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "ข้อความ → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "ไฟล์ PDF",
-      "note": "PDF Light Optimize · pdf-lib rewrite (ไม่ recompress ภาพ)"
+      "note": "PDF Light Optimize · pdf-lib rewrite (ไม่ recompress ภาพ)",
+      "needFile": "เลือกไฟล์ PDF ก่อน"
     },
     "pdfCompress": {
       "file": "ไฟล์ PDF",
@@ -561,7 +579,8 @@
       "merging": "กำลังรวมไฟล์…",
       "mergeDownload": "รวมและดาวน์โหลด",
       "done": "รวมเสร็จ · {pages} หน้า · {bytes} ไบต์",
-      "note": "pdf-lib · ใช้ path เดียวกับ API"
+      "note": "pdf-lib · ใช้ path เดียวกับ API",
+      "merge": "รวมและดาวน์โหลด"
     },
     "pdfSplit": {
       "file": "ไฟล์ PDF",
@@ -572,7 +591,8 @@
       "splitting": "กำลังแยกไฟล์…",
       "splitDownload": "แยกและดาวน์โหลด",
       "done": "แยก · แหล่ง {source} หน้า → ผลลัพธ์ {pages} หน้า",
-      "note": "pdf-lib · ใช้เส้นทางเดียวกับ API"
+      "note": "pdf-lib · ใช้เส้นทางเดียวกับ API",
+      "split": "แยกและดาวน์โหลด"
     },
     "passwordStrength": {
       "check": "ตรวจสอบความแข็งแรง",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "Vendor block",
       "summaryStripped": "ลบฟิลด์ข้อมูล {fields} ({families}) แล้ว {kb} KB รูปภาพไม่มีการเปลี่ยนแปลงอื่น",
       "summaryClean": "ไม่พบข้อมูลที่สามารถลบได้ ส่งคืนไฟล์โดยไม่มีการเปลี่ยนแปลง"
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

@@ -177,7 +177,24 @@
       "copyText": "텍스트 복사",
       "quality": "품질",
       "original": "원본",
-      "result": "결과"
+      "result": "결과",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "텍스트 → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "PDF 파일",
-      "note": "PDF 경량 최적화 · pdf-lib 재작성 (이미지 재압축 아님)"
+      "note": "PDF 경량 최적화 · pdf-lib 재작성 (이미지 재압축 아님)",
+      "needFile": "먼저 PDF 파일을 선택하세요"
     },
     "pdfCompress": {
       "file": "PDF 파일",
@@ -561,7 +579,8 @@
       "merging": "병합 중…",
       "mergeDownload": "병합 및 다운로드",
       "done": "병합 완료 · {pages}페이지 · {bytes}바이트",
-      "note": "pdf-lib · API와 동일한 경로"
+      "note": "pdf-lib · API와 동일한 경로",
+      "merge": "병합 및 다운로드"
     },
     "pdfSplit": {
       "file": "PDF 파일",
@@ -572,7 +591,8 @@
       "splitting": "분할 중…",
       "splitDownload": "분할 및 다운로드",
       "done": "분할 완료 · 원본 {source}페이지 → 출력 {pages}페이지",
-      "note": "pdf-lib · API와 동일한 경로"
+      "note": "pdf-lib · API와 동일한 경로",
+      "split": "분할 및 다운로드"
     },
     "passwordStrength": {
       "check": "강도 확인",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "벤더 블록",
       "summaryStripped": "{fields}개 메타데이터 필드({families})를 제거하고 {kb} KB를 절약했습니다. 이미지는 그 외 변경되지 않았습니다.",
       "summaryClean": "제거 가능한 메타데이터가 없습니다. 파일이 변경되지 않았습니다."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

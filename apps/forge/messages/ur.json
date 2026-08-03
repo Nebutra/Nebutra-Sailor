@@ -177,7 +177,24 @@
       "copyText": "متن کاپی کریں",
       "quality": "معیار",
       "original": "اصلی",
-      "result": "نتیجہ"
+      "result": "نتیجہ",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "متن → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "PDF فائل",
-      "note": "PDF لائٹ آپٹیمائز · pdf-lib ری رائٹ (تصویر دوبارہ کمپریس نہیں)"
+      "note": "PDF لائٹ آپٹیمائز · pdf-lib ری رائٹ (تصویر دوبارہ کمپریس نہیں)",
+      "needFile": "سب سے پہلے ایک PDF فائل منتخب کریں"
     },
     "pdfCompress": {
       "file": "PDF فائل",
@@ -561,7 +579,8 @@
       "merging": "مل کر رہے ہیں…",
       "mergeDownload": "ملائیں اور ڈاؤن لوڈ کریں",
       "done": "مل گئے · {pages} صفحات · {bytes} بائٹس",
-      "note": "pdf-lib · API جیسا ہی راستہ"
+      "note": "pdf-lib · API جیسا ہی راستہ",
+      "merge": "ملائیں اور ڈاؤن لوڈ کریں"
     },
     "pdfSplit": {
       "file": "PDF فائل",
@@ -572,7 +591,8 @@
       "splitting": "تقسیم کر رہے ہیں…",
       "splitDownload": "تقسیم کریں اور ڈاؤن لوڈ کریں",
       "done": "تقسیم · ماخذ {source} صفحات → آؤٹ پٹ {pages} صفحات",
-      "note": "pdf-lib · API جیسا ہی راستہ"
+      "note": "pdf-lib · API جیسا ہی راستہ",
+      "split": "تقسیم کریں اور ڈاؤن لوڈ کریں"
     },
     "passwordStrength": {
       "check": "طاقت چیک کریں",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "وینڈر بلاک",
       "summaryStripped": "{fields} میٹا ڈیٹا فیلڈز ({families}) ہٹا دی گئیں، {kb} KB۔ تصویر ورنہ غیر تبدیل شدہ رہی۔",
       "summaryClean": "کوئی قابلِ ہٹاؤ میٹا ڈیٹا نہیں ملا۔ فائل غیر تبدیل شدہ واپس کی گئی۔"
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

@@ -12,6 +12,7 @@ import { ArrowDown, Check, Copy } from "@nebutra/icons";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { fileToBase64, PdfResultPanel, TextResultActions } from "@/components/result-panels";
 import { RunnerError, RunnerNote, RunnerOutput, RunnerSelect } from "@/components/runner-ui";
 
 async function invokeTool(
@@ -467,14 +468,9 @@ export function PdfTextRunner({ toolId }: { toolId: string }) {
   const onFile = async (file: File | null) => {
     if (!file) return;
     setFileName(file.name);
-    const buf = await file.arrayBuffer();
-    const bytes = new Uint8Array(buf);
-    let binary = "";
-    const chunk = 0x8000;
-    for (let i = 0; i < bytes.length; i += chunk) {
-      binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
-    }
-    setBase64(btoa(binary));
+    setText("");
+    setMeta("");
+    setBase64(await fileToBase64(file));
   };
 
   const run = async () => {
@@ -520,14 +516,49 @@ export function PdfTextRunner({ toolId }: { toolId: string }) {
       </Button>
       <RunnerError>{error}</RunnerError>
       {meta ? <RunnerNote>{meta}</RunnerNote> : null}
-      {text ? (
-        <RunnerOutput className="max-h-96 overflow-auto whitespace-pre-wrap text-sm">
-          {text}
-        </RunnerOutput>
-      ) : null}
+      <div className="grid gap-4 lg:grid-cols-2">
+        {base64 ? <PdfResultPanel base64={base64} filename={fileName || "source.pdf"} /> : null}
+        <div className="space-y-2">
+          {text ? (
+            <>
+              <TextResultActions text={text} downloadName="extracted.txt" />
+              <RunnerOutput className="max-h-96 overflow-auto whitespace-pre-wrap text-sm">
+                {text}
+              </RunnerOutput>
+            </>
+          ) : null}
+        </div>
+      </div>
       <RunnerNote>{t("pdfText.note")}</RunnerNote>
     </div>
   );
+}
+
+function parseCsvPreview(csv: string, maxRows = 40): string[][] {
+  const lines = csv
+    .split(/\r?\n/)
+    .filter((l) => l.length > 0)
+    .slice(0, maxRows);
+  return lines.map((line) => {
+    // Lightweight CSV split — good enough for preview grids (not a full parser).
+    const cells: string[] = [];
+    let cur = "";
+    let inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i]!;
+      if (ch === '"') {
+        if (inQ && line[i + 1] === '"') {
+          cur += '"';
+          i++;
+        } else inQ = !inQ;
+      } else if (ch === "," && !inQ) {
+        cells.push(cur);
+        cur = "";
+      } else cur += ch;
+    }
+    cells.push(cur);
+    return cells;
+  });
 }
 
 export function XlsxTextRunner({ toolId }: { toolId: string }) {
@@ -544,14 +575,7 @@ export function XlsxTextRunner({ toolId }: { toolId: string }) {
     setFileName(file.name);
     setCsv("");
     setMeta("");
-    const buf = await file.arrayBuffer();
-    const bytes = new Uint8Array(buf);
-    let binary = "";
-    const chunk = 0x8000;
-    for (let i = 0; i < bytes.length; i += chunk) {
-      binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
-    }
-    setBase64(btoa(binary));
+    setBase64(await fileToBase64(file));
   };
 
   const run = async () => {
@@ -572,6 +596,8 @@ export function XlsxTextRunner({ toolId }: { toolId: string }) {
       `${String(r.output.engine)} · ${String(r.output.rows ?? 0)}×${String(r.output.cols ?? 0)}`,
     );
   };
+
+  const grid = csv ? parseCsvPreview(csv) : [];
 
   return (
     <div className="space-y-4">
@@ -596,19 +622,36 @@ export function XlsxTextRunner({ toolId }: { toolId: string }) {
           {loading ? t("xlsxText.extracting") : t("xlsxText.extract")}
         </Button>
         {csv ? (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => void navigator.clipboard.writeText(csv)}
-          >
-            {t("common.copy")}
-          </Button>
+          <TextResultActions text={csv} downloadName="sheet.csv" contentType="text/csv" />
         ) : null}
       </div>
       <RunnerError>{error}</RunnerError>
       {meta ? <RunnerNote>{meta}</RunnerNote> : null}
+      {grid.length > 0 ? (
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-[var(--neutral-12)]">{t("common.tablePreview")}</p>
+          <div className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+            <table className="w-full min-w-[32rem] text-left text-xs">
+              <tbody>
+                {grid.map((row, ri) => (
+                  <tr key={ri} className={ri === 0 ? "font-medium text-[var(--neutral-12)]" : ""}>
+                    {row.map((cell, ci) => (
+                      <td
+                        key={ci}
+                        className="border-b border-[var(--neutral-4)] px-2 py-1.5 font-mono text-[var(--neutral-11)]"
+                      >
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : null}
       {csv ? (
-        <RunnerOutput className="max-h-96 overflow-auto whitespace-pre-wrap text-sm">
+        <RunnerOutput className="max-h-48 overflow-auto whitespace-pre-wrap text-sm">
           {csv}
         </RunnerOutput>
       ) : null}

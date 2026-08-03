@@ -2,8 +2,53 @@
 
 import { useTranslations } from "next-intl";
 import { Base64Runner } from "@/components/base64-runner";
+import {
+  AgeCalculatorRunner,
+  AspectRatioRunner,
+  ChecksumTextRunner,
+  ColorContrastRunner,
+  CountCharsRunner,
+  DiceRollRunner,
+  EpochConvertRunner,
+  FindReplaceRegexRunner,
+  HexRgbRunner,
+  HmacVerifyRunner,
+  JwtGenerateRunner,
+  LoremWordsRunner,
+  MimeLookupRunner,
+  PercentageChangeRunner,
+  RandomNumberRunner,
+  RomanNumeralsRunner,
+  SecretGenerateRunner,
+  StringSimilarityRunner,
+  TipCalculatorRunner,
+  UrlParseRunner,
+  UserAgentParseRunner,
+  WeekdayRunner,
+  WordFrequencyRunner,
+} from "@/components/catalog-converge-runners";
+import {
+  CreditCardLuhnRunner,
+  EmailValidateRunner,
+  HashCompareRunner,
+  IpValidateRunner,
+  LoremIpsumRunner,
+  MarkdownTocRunner,
+  PasswordEntropyRunner,
+  RandomStringRunner,
+  ReadingTimeRunner,
+  UrlValidateRunner,
+  UuidValidateRunner,
+  WorldClockRunner,
+} from "@/components/catalog-polish-runners";
 import { CatalogRunnerRouter } from "@/components/catalog-runners";
 import { CodecModeRunner } from "@/components/codec-mode-runner";
+import {
+  ExifViewerRunner,
+  ImageMetaRunner,
+  PdfInfoRunner,
+  PdfOptimizeRunner,
+} from "@/components/file-inspect-runners";
 import {
   BmiRunner,
   DataSizeRunner,
@@ -11,6 +56,7 @@ import {
   PercentageRunner,
   RmbUppercaseRunner,
 } from "@/components/form-runners";
+import { FormatLiveRunner } from "@/components/format-live-runner";
 import { HashRunner } from "@/components/hash-runner";
 import { ImageToolRunner } from "@/components/image-tool-runner";
 import { JsonDiffRunner } from "@/components/json-diff-runner";
@@ -25,9 +71,7 @@ import {
   CsvPreviewRunner,
   JsonPathRunner,
   QrDecodeRunner,
-  SqlFormatRunner,
   TimezoneRunner,
-  XmlFormatRunner,
 } from "@/components/p0-runners";
 import {
   CostEstimateRunner,
@@ -417,15 +461,341 @@ export function ToolWorkspace({
     case "json-path":
       return <JsonPathRunner toolId={toolId} />;
     case "xml-format":
-      return <XmlFormatRunner toolId={toolId} />;
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={'<root><item id="1">a</item><item id="2">b</item></root>'}
+          downloadName="data.xml"
+          note="XML format · same path as API"
+        />
+      );
     case "csv-preview":
       return <CsvPreviewRunner toolId={toolId} />;
     case "sql-format":
-      return <SqlFormatRunner toolId={toolId} />;
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"select id,name from users where active=1 order by id"}
+          downloadName="query.sql"
+          note="SQL format · same path as API"
+        />
+      );
     case "js-format":
-      return <CatalogRunnerRouter slug={slug} toolId={toolId} />;
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"const x={a:1,b:2}\nfunction f(){return x}"}
+          downloadName="formatted.js"
+          note="Prettier · same path as API"
+          extraFields={[
+            {
+              key: "parser",
+              label: "Parser",
+              kind: "select",
+              defaultValue: "babel",
+              options: [
+                { value: "babel", label: "babel" },
+                { value: "typescript", label: "typescript" },
+                { value: "json", label: "json" },
+              ],
+            },
+          ]}
+        />
+      );
+    case "css-format":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={".btn{color:#0033FE;margin:0 auto}"}
+          downloadName="styles.css"
+          extraFields={[{ key: "indent", label: "Indent", kind: "number", defaultValue: "2" }]}
+        />
+      );
+    case "html-format":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"<div><p>Hello</p><span>Forge</span></div>"}
+          downloadName="page.html"
+          extraFields={[{ key: "indent", label: "Indent", kind: "number", defaultValue: "2" }]}
+        />
+      );
+    case "yaml-format":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"name:  Nebutra\ntools:  [forge,  tools]"}
+          downloadName="config.yaml"
+          extraFields={[{ key: "indent", label: "Indent", kind: "number", defaultValue: "2" }]}
+        />
+      );
+    case "toml-format":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={'title = "Forge"\nport = 3105'}
+          downloadName="config.toml"
+        />
+      );
+    case "css-minify":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={".btn {\n  color: #0033FE;\n  margin: 0 auto;\n}\n"}
+          downloadName="styles.min.css"
+        />
+      );
+    case "html-minify":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"<div>\n  <p>Hello</p>\n  <span>Forge</span>\n</div>"}
+          downloadName="page.min.html"
+        />
+      );
+    case "xml-minify":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={'<root>\n  <item id="1">a</item>\n</root>'}
+          downloadName="data.min.xml"
+        />
+      );
+    case "json-minify":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={'{\n  "name": "Nebutra",\n  "ok": true\n}'}
+          downloadName="data.min.json"
+        />
+      );
+    case "sql-minify":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"SELECT  id,\n  name\nFROM users\nWHERE active = 1;"}
+          downloadName="query.min.sql"
+        />
+      );
     case "world-clock":
-      return <CatalogRunnerRouter slug={slug} toolId={toolId} />;
+      return <WorldClockRunner toolId={toolId} />;
+    case "email-validate":
+      return <EmailValidateRunner toolId={toolId} />;
+    case "url-validate":
+      return <UrlValidateRunner toolId={toolId} />;
+    case "ip-validate":
+      return <IpValidateRunner toolId={toolId} />;
+    case "uuid-validate":
+      return <UuidValidateRunner toolId={toolId} />;
+    case "credit-card-luhn":
+      return <CreditCardLuhnRunner toolId={toolId} />;
+    case "reading-time":
+      return <ReadingTimeRunner toolId={toolId} />;
+    case "password-entropy":
+      return <PasswordEntropyRunner toolId={toolId} />;
+    case "random-string":
+      return <RandomStringRunner toolId={toolId} />;
+    case "lorem-ipsum":
+      return <LoremIpsumRunner toolId={toolId} />;
+    case "markdown-toc":
+      return <MarkdownTocRunner toolId={toolId} />;
+    case "hash-compare":
+      return <HashCompareRunner toolId={toolId} />;
+    case "color-contrast":
+      return <ColorContrastRunner toolId={toolId} />;
+    case "age-calculator":
+      return <AgeCalculatorRunner toolId={toolId} />;
+    case "tip-calculator":
+      return <TipCalculatorRunner toolId={toolId} />;
+    case "aspect-ratio":
+      return <AspectRatioRunner toolId={toolId} />;
+    case "percentage-change":
+      return <PercentageChangeRunner toolId={toolId} />;
+    case "count-chars":
+      return <CountCharsRunner toolId={toolId} />;
+    case "word-frequency":
+      return <WordFrequencyRunner toolId={toolId} />;
+    case "find-replace-regex":
+      return <FindReplaceRegexRunner toolId={toolId} />;
+    case "string-similarity":
+      return <StringSimilarityRunner toolId={toolId} />;
+    case "mime-lookup":
+      return <MimeLookupRunner toolId={toolId} />;
+    case "user-agent-parse":
+      return <UserAgentParseRunner toolId={toolId} />;
+    case "roman-numerals":
+      return <RomanNumeralsRunner toolId={toolId} />;
+    case "epoch-convert":
+      return <EpochConvertRunner toolId={toolId} />;
+    case "hex-rgb":
+      return <HexRgbRunner toolId={toolId} />;
+    case "url-parse":
+      return <UrlParseRunner toolId={toolId} />;
+    case "random-number":
+      return <RandomNumberRunner toolId={toolId} />;
+    case "dice-roll":
+      return <DiceRollRunner toolId={toolId} />;
+    case "jwt-generate":
+      return <JwtGenerateRunner toolId={toolId} />;
+    case "hmac-verify":
+      return <HmacVerifyRunner toolId={toolId} />;
+    case "secret-generate":
+      return <SecretGenerateRunner toolId={toolId} />;
+    case "checksum-text":
+      return <ChecksumTextRunner toolId={toolId} />;
+    case "weekday":
+      return <WeekdayRunner toolId={toolId} />;
+    case "lorem-words":
+      return <LoremWordsRunner toolId={toolId} />;
+    case "rot13":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample="Hello Nebutra"
+          downloadName="rot13.txt"
+          extraFields={[{ key: "shift", label: "Shift", kind: "number", defaultValue: "13" }]}
+        />
+      );
+    case "morse":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample="SOS HELP"
+          downloadName="morse.txt"
+          extraFields={[
+            {
+              key: "mode",
+              label: "Mode",
+              kind: "select",
+              defaultValue: "encode",
+              options: [
+                { value: "encode", label: "Text → Morse" },
+                { value: "decode", label: "Morse → Text" },
+              ],
+            },
+          ]}
+        />
+      );
+    case "text-binary":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample="Hello"
+          downloadName="binary.txt"
+          extraFields={[
+            {
+              key: "mode",
+              label: "Mode",
+              kind: "select",
+              defaultValue: "encode",
+              options: [
+                { value: "encode", label: "Text → Binary" },
+                { value: "decode", label: "Binary → Text" },
+              ],
+            },
+          ]}
+        />
+      );
+    case "base32":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample="Hello Nebutra"
+          downloadName="base32.txt"
+          extraFields={[
+            {
+              key: "mode",
+              label: "Mode",
+              kind: "select",
+              defaultValue: "encode",
+              options: [
+                { value: "encode", label: "Encode" },
+                { value: "decode", label: "Decode" },
+              ],
+            },
+          ]}
+        />
+      );
+    case "base64url":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample="Hello Nebutra"
+          downloadName="base64url.txt"
+          extraFields={[
+            {
+              key: "mode",
+              label: "Mode",
+              kind: "select",
+              defaultValue: "encode",
+              options: [
+                { value: "encode", label: "Encode" },
+                { value: "decode", label: "Decode" },
+              ],
+            },
+          ]}
+        />
+      );
+    case "line-numbers":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"alpha\nbeta\ngamma"}
+          downloadName="numbered.txt"
+        />
+      );
+    case "unique-words":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample="one two one THREE three"
+          downloadName="unique-words.txt"
+        />
+      );
+    case "remove-extra-spaces":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"hello   world\n\n  forge  "}
+          downloadName="trimmed.txt"
+        />
+      );
+    case "json-xml":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={'{"name":"Nebutra","ok":true}'}
+          downloadName="converted.xml"
+          extraFields={[
+            {
+              key: "mode",
+              label: "Direction",
+              kind: "select",
+              defaultValue: "json_to_xml",
+              options: [
+                { value: "json_to_xml", label: "JSON → XML" },
+                { value: "xml_to_json", label: "XML → JSON" },
+              ],
+            },
+          ]}
+        />
+      );
+    case "csv-to-json-lite":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={"id,name\n1,Ada\n2,Lin"}
+          downloadName="data.json"
+        />
+      );
+    case "json-to-csv-lite":
+      return (
+        <FormatLiveRunner
+          toolId={toolId}
+          sample={'[{"id":1,"name":"Ada"},{"id":2,"name":"Lin"}]'}
+          downloadName="data.csv"
+        />
+      );
     case "color-convert":
       return <ColorConvertRunner toolId={toolId} />;
     case "qr-generate":
@@ -464,6 +834,14 @@ export function ToolWorkspace({
       return <PdfSplitRunner toolId={toolId} />;
     case "pdf-compress":
       return <PdfCompressRunner toolId={toolId} />;
+    case "pdf-optimize":
+      return <PdfOptimizeRunner toolId={toolId} />;
+    case "pdf-info":
+      return <PdfInfoRunner toolId={toolId} />;
+    case "image-meta":
+      return <ImageMetaRunner toolId={toolId} />;
+    case "exif-viewer":
+      return <ExifViewerRunner toolId={toolId} />;
     case "password-strength":
       return <PasswordStrengthRunner toolId={toolId} />;
     case "hmac":

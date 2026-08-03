@@ -12,6 +12,12 @@ import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { type ChangeEvent, type DragEvent, useMemo, useRef, useState } from "react";
 import {
+  FileDropZone,
+  fileToBase64,
+  formatBytes,
+  PdfResultPanel,
+} from "@/components/result-panels";
+import {
   RunnerError,
   RunnerNote,
   RunnerOutput,
@@ -38,23 +44,6 @@ async function invokeTool(
     return { ok: false, message: body.message ?? body.error ?? `HTTP ${res.status}` };
   }
   return { ok: true, output: body.output ?? {} };
-}
-
-async function fileToBase64(file: File): Promise<string> {
-  const buf = await file.arrayBuffer();
-  const bytes = new Uint8Array(buf);
-  let binary = "";
-  for (let i = 0; i < bytes.length; i++) {
-    binary += String.fromCharCode(bytes[i] ?? 0);
-  }
-  return btoa(binary);
-}
-
-function downloadBase64(base64: string, filename: string, contentType: string) {
-  const a = document.createElement("a");
-  a.href = `data:${contentType};base64,${base64}`;
-  a.download = filename;
-  a.click();
 }
 
 // ─── Markdown preview / HTML ────────────────────────────────────────────────
@@ -179,6 +168,7 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState("");
   const [meta, setMeta] = useState("");
+  const [outBase64, setOutBase64] = useState("");
   const [loading, setLoading] = useState(false);
 
   const run = async () => {
@@ -189,6 +179,7 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
     setLoading(true);
     setError("");
     setMeta("");
+    setOutBase64("");
     try {
       const filesBase64 = await Promise.all(files.map((f) => fileToBase64(f)));
       const r = await invokeTool(toolId, { filesBase64 });
@@ -197,7 +188,7 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
         return;
       }
       const b64 = typeof r.output.base64 === "string" ? r.output.base64 : "";
-      if (b64) downloadBase64(b64, "merged.pdf", "application/pdf");
+      setOutBase64(b64);
       setMeta(
         t("pdfMerge.done", {
           pages: String(r.output.pageCount ?? "?"),
@@ -213,33 +204,37 @@ export function PdfMergeRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-        <span className="text-xs font-medium">{t("pdfMerge.files")}</span>
-        <input
-          data-allow-native
-          type="file"
-          accept="application/pdf"
-          multiple
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setFiles(Array.from(e.target.files ?? []))
-          }
-          className="text-sm"
-        />
-      </label>
-      {files.length > 0 ? (
-        <ul className="space-y-1 text-xs font-mono text-[var(--neutral-11)]">
-          {files.map((f, i) => (
-            <li key={`${f.name}-${i}`}>
-              {i + 1}. {f.name} ({f.size} B)
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? t("pdfMerge.merging") : t("pdfMerge.mergeDownload")}
+      <FileDropZone
+        accept="application/pdf,.pdf"
+        multiple
+        label={t("pdfMerge.files")}
+        hint={t("common.dragDrop")}
+        {...(files.length
+          ? {
+              fileLabel: files
+                .map((f, i) => `${i + 1}. ${f.name} (${formatBytes(f.size)})`)
+                .join(" · "),
+            }
+          : {})}
+        onFiles={(next) => {
+          setFiles(next.filter((f) => f.type === "application/pdf" || f.name.endsWith(".pdf")));
+          setOutBase64("");
+          setMeta("");
+        }}
+      />
+      <Button
+        type="button"
+        variant="ink"
+        disabled={loading || files.length < 2}
+        onClick={() => void run()}
+      >
+        {loading ? t("pdfMerge.merging") : (t("pdfMerge.merge") as string)}
       </Button>
       <RunnerError>{error}</RunnerError>
       <RunnerNote>{meta || t("pdfMerge.note")}</RunnerNote>
+      {outBase64 ? (
+        <PdfResultPanel base64={outBase64} filename="merged.pdf" meta={meta || undefined} />
+      ) : null}
     </div>
   );
 }
@@ -251,6 +246,7 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
   const [toPage, setToPage] = useState("");
   const [error, setError] = useState("");
   const [meta, setMeta] = useState("");
+  const [outBase64, setOutBase64] = useState("");
   const [loading, setLoading] = useState(false);
 
   const run = async () => {
@@ -261,6 +257,7 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
     setLoading(true);
     setError("");
     setMeta("");
+    setOutBase64("");
     try {
       const fileBase64 = await fileToBase64(file);
       const input: Record<string, unknown> = {
@@ -274,7 +271,7 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
         return;
       }
       const b64 = typeof r.output.base64 === "string" ? r.output.base64 : "";
-      if (b64) downloadBase64(b64, "split.pdf", "application/pdf");
+      setOutBase64(b64);
       setMeta(
         t("pdfSplit.done", {
           source: String(r.output.sourcePages ?? "?"),
@@ -290,16 +287,17 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
-        <span className="text-xs font-medium">{t("pdfSplit.file")}</span>
-        <input
-          data-allow-native
-          type="file"
-          accept="application/pdf"
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setFile(e.target.files?.[0] ?? null)}
-          className="text-sm"
-        />
-      </label>
+      <FileDropZone
+        accept="application/pdf,.pdf"
+        label={t("pdfSplit.file")}
+        hint={t("common.dragDrop")}
+        {...(file ? { fileLabel: `${file.name} (${formatBytes(file.size)})` } : {})}
+        onFiles={(files) => {
+          setFile(files[0] ?? null);
+          setOutBase64("");
+          setMeta("");
+        }}
+      />
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
           label={t("pdfSplit.fromPage")}
@@ -325,11 +323,14 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
           placeholder={t("pdfSplit.toPlaceholder")}
         />
       </div>
-      <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-        {loading ? t("pdfSplit.splitting") : t("pdfSplit.splitDownload")}
+      <Button type="button" variant="ink" disabled={loading || !file} onClick={() => void run()}>
+        {loading ? t("pdfSplit.splitting") : (t("pdfSplit.split") as string)}
       </Button>
       <RunnerError>{error}</RunnerError>
       <RunnerNote>{meta || t("pdfSplit.note")}</RunnerNote>
+      {outBase64 ? (
+        <PdfResultPanel base64={outBase64} filename="split.pdf" meta={meta || undefined} />
+      ) : null}
     </div>
   );
 }

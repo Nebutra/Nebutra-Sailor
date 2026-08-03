@@ -177,7 +177,24 @@
       "copyText": "Tekst kopiëren",
       "quality": "Kwaliteit",
       "original": "Origineel",
-      "result": "Resultaat"
+      "result": "Resultaat",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "Tekst → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "PDF-bestand",
-      "note": "PDF Light Optimize · pdf-lib herschrijven (geen hercompressie van afbeeldingen)"
+      "note": "PDF Light Optimize · pdf-lib herschrijven (geen hercompressie van afbeeldingen)",
+      "needFile": "Kies eerst een PDF-bestand"
     },
     "pdfCompress": {
       "file": "PDF-bestand",
@@ -561,7 +579,8 @@
       "merging": "Samenvoegen…",
       "mergeDownload": "Samenvoegen & downloaden",
       "done": "Samengevoegd · {pages} pagina's · {bytes} bytes",
-      "note": "pdf-lib · zelfde pad als API"
+      "note": "pdf-lib · zelfde pad als API",
+      "merge": "Samenvoegenen"
     },
     "pdfSplit": {
       "file": "PDF-bestand",
@@ -572,7 +591,8 @@
       "splitting": "Splitsen…",
       "splitDownload": "Splitsen & downloaden",
       "done": "Gesplitst · bron {source} pagina's → uitvoer {pages} pagina's",
-      "note": "pdf-lib · zelfde pad als API"
+      "note": "pdf-lib · zelfde pad als API",
+      "split": "Splitsenen"
     },
     "passwordStrength": {
       "check": "Controleer sterkte",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "Vendorblok",
       "summaryStripped": "{fields} metadatavelden verwijderd ({families}), {kb} KB. Afbeelding verder ongewijzigd.",
       "summaryClean": "Geen verwijderbare metadata gevonden. Bestand ongewijzigd teruggegeven."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

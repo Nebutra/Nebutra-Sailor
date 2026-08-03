@@ -177,7 +177,24 @@
       "copyText": "Nakili maandishi",
       "quality": "Ubora",
       "original": "Asili",
-      "result": "Matokeo"
+      "result": "Matokeo",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "Maandishi → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "Faili ya PDF",
-      "note": "Bora PDF Nyeupe · kuandika upya kwa pdf-lib (si kukomaa picha)"
+      "note": "Bora PDF Nyeupe · kuandika upya kwa pdf-lib (si kukomaa picha)",
+      "needFile": "Chagua faili la PDF kwanza"
     },
     "pdfCompress": {
       "file": "Faili ya PDF",
@@ -561,7 +579,8 @@
       "merging": "Inachanganya…",
       "mergeDownload": "Changanya na pakua",
       "done": "Imechanganywa · {pages} kurasa · {bytes} baiti",
-      "note": "pdf-lib · njia ileile kama API"
+      "note": "pdf-lib · njia ileile kama API",
+      "merge": "Changanya na pakua"
     },
     "pdfSplit": {
       "file": "Faili ya PDF",
@@ -572,7 +591,8 @@
       "splitting": "Inagawanya…",
       "splitDownload": "Gawanya na pakua",
       "done": "Gawanya · kurasa {source} za chanzo → kurasa {pages} za pato",
-      "note": "pdf-lib · njia ileile kama API"
+      "note": "pdf-lib · njia ileile kama API",
+      "split": "Gawanya na pakua"
     },
     "passwordStrength": {
       "check": "Angalia nguvu",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "Kizuizi cha muuzaji",
       "summaryStripped": "Imeondolewa sehemu {fields} za metadata ({families}), {kb} KB. Picha haijabadilishwa.",
       "summaryClean": "Hakuna metadata inayoweza kuondolewa iliyopatikana. Faili imerejeshwa bila mabadiliko."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

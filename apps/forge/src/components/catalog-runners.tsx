@@ -690,16 +690,6 @@ export function CatalogRunnerRouter({
         "pdf-lib",
       );
 
-    case "image-watermark":
-      return g(
-        toolId,
-        [
-          { key: "imageBase64", label: t("common.file"), kind: "file-base64", accept: "image/*" },
-          { key: "text", label: "Watermark", kind: "text", defaultValue: "Nebutra" },
-        ],
-        "sharp",
-      );
-
     case "trim-whitespace":
       return g(toolId, [TEXT_FIELD("  hello   world  \n\n  你好  ")], undefined, (o) =>
         typeof o.collapse === "string" ? o.collapse : JSON.stringify(o, null, 2),

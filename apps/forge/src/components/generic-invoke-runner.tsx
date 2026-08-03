@@ -1,9 +1,10 @@
 "use client";
 
-import { Check, Copy } from "@nebutra/icons";
+import { ArrowDown, Check, Copy } from "@nebutra/icons";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { downloadBase64, downloadText, PdfResultPanel } from "@/components/result-panels";
 import { RunnerError, RunnerNote, RunnerOutput, RunnerSelect } from "@/components/runner-ui";
 
 export type FieldDef =
@@ -102,6 +103,10 @@ export function GenericInvokeRunner({
   });
   const [result, setResult] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
+  const [pdfBase64, setPdfBase64] = useState("");
+  const [fileBase64, setFileBase64] = useState<{ b64: string; type: string; name: string } | null>(
+    null,
+  );
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -128,6 +133,8 @@ export function GenericInvokeRunner({
     setLoading(true);
     setError("");
     setPreviewUrl("");
+    setPdfBase64("");
+    setFileBase64(null);
     const input: Record<string, unknown> = {};
     for (const f of fields) {
       const raw = values[f.key];
@@ -141,6 +148,10 @@ export function GenericInvokeRunner({
         input[f.key] = n;
       } else if (f.kind === "boolean") {
         input[f.key] = Boolean(raw);
+      } else if (f.kind === "file-base64") {
+        // API tools expect raw base64, not data-URL prefix.
+        const s = String(raw ?? "");
+        input[f.key] = s.includes(",") ? (s.split(",").pop() ?? s) : s;
       } else {
         input[f.key] = raw;
       }
@@ -152,8 +163,21 @@ export function GenericInvokeRunner({
       return;
     }
     const out = r.output;
-    if (typeof out.base64 === "string" && typeof out.contentType === "string") {
-      setPreviewUrl(`data:${out.contentType};base64,${out.base64}`);
+    if (typeof out.base64 === "string") {
+      const ct = typeof out.contentType === "string" ? out.contentType : "application/octet-stream";
+      if (ct.includes("pdf") || ct === "application/pdf") {
+        setPdfBase64(out.base64);
+        setFileBase64({ b64: out.base64, type: "application/pdf", name: "result.pdf" });
+      } else if (ct.startsWith("image/")) {
+        setPreviewUrl(`data:${ct};base64,${out.base64}`);
+        setFileBase64({
+          b64: out.base64,
+          type: ct,
+          name: `result.${ct.split("/")[1] || "bin"}`,
+        });
+      } else {
+        setFileBase64({ b64: out.base64, type: ct, name: "result.bin" });
+      }
     } else if (typeof out.data === "string" && String(out.data).startsWith("data:")) {
       setPreviewUrl(String(out.data));
     } else if (typeof out.data === "string" && out.format === "svg") {
@@ -257,9 +281,30 @@ export function GenericInvokeRunner({
             {copied ? t("copied") : t("copy")}
           </Button>
         ) : null}
+        {result && !fileBase64 && !pdfBase64 ? (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => downloadText(result, "forge-result.txt")}
+          >
+            <ArrowDown className="h-4 w-4" />
+            {t("download")}
+          </Button>
+        ) : null}
+        {fileBase64 && !pdfBase64 ? (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => downloadBase64(fileBase64.b64, fileBase64.name, fileBase64.type)}
+          >
+            <ArrowDown className="h-4 w-4" />
+            {t("download")}
+          </Button>
+        ) : null}
       </div>
       <RunnerError>{error}</RunnerError>
-      {previewUrl ? (
+      {pdfBase64 ? <PdfResultPanel base64={pdfBase64} filename="result.pdf" /> : null}
+      {previewUrl && !pdfBase64 ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={previewUrl}

@@ -3,7 +3,8 @@
 import { brand } from "@nebutra/brand/metadata";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { invokeForge, useDebouncedCallback } from "@/components/result-panels";
 import { RunnerError, RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
 /**
@@ -41,32 +42,39 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
   const [error, setError] = useState("");
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
-  const count = async () => {
+  const count = async (nextText = text, nextEncoding = encoding) => {
+    abortRef.current?.abort();
+    const ac = new AbortController();
+    abortRef.current = ac;
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: { text, encoding } }),
-      });
-      const body = (await res.json()) as {
-        ok?: boolean;
-        output?: { tokens?: number; encoding?: string; engine?: string };
-        message?: string;
-      };
-      if (!res.ok || body.ok === false) {
-        setError(body.message ?? "count failed");
+      const r = await invokeForge(toolId, { text: nextText, encoding: nextEncoding }, ac.signal);
+      if (ac.signal.aborted) return;
+      if (!r.ok) {
+        setError(r.message);
         setTokens(null);
         return;
       }
-      setTokens(body.output?.tokens ?? null);
-      setNote(`${body.output?.engine ?? "js-tiktoken"} · ${body.output?.encoding ?? encoding}`);
+      setTokens(typeof r.output.tokens === "number" ? r.output.tokens : null);
+      setNote(
+        `${String(r.output.engine ?? "js-tiktoken")} · ${String(r.output.encoding ?? nextEncoding)}`,
+      );
     } finally {
-      setLoading(false);
+      if (!ac.signal.aborted) setLoading(false);
     }
   };
+
+  const debounced = useDebouncedCallback((value: string, enc: string) => {
+    void count(value, enc as (typeof ENCODINGS)[number]["id"]);
+  }, 320);
+
+  useEffect(() => {
+    debounced(text, encoding);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- debounce on text/encoding only
+  }, [text, encoding]);
 
   return (
     <div className="space-y-4">
@@ -93,11 +101,11 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
         className="font-mono text-sm"
       />
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="button" variant="ink" onClick={() => void count()} disabled={loading}>
+        <Button type="button" variant="outline" onClick={() => void count()} disabled={loading}>
           {loading ? t("tokenCount.counting") : t("tokenCount.count")}
         </Button>
         <span className="text-sm text-[var(--neutral-11)]">
-          {t("tokenCount.chars", { n: text.length })}
+          {t("tokenCount.chars", { n: text.length })} · {t("common.liveHint")}
         </span>
       </div>
       <RunnerError>{error}</RunnerError>

@@ -1,40 +1,21 @@
 "use client";
 
 /**
- * PDF compress runner — upload → invoke host qpdf/gs → download result.
+ * PDF compress runner — upload → invoke host qpdf/gs → preview + download.
  */
-import { ArrowDown, Check, Copy } from "@nebutra/icons";
+import { Check, Copy } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import {
+  FileDropZone,
+  fileToBase64,
+  formatBytes,
+  invokeForge,
+  MetaCards,
+  PdfResultPanel,
+} from "@/components/result-panels";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
-
-async function invoke(
-  toolId: string,
-  input: Record<string, unknown>,
-): Promise<{ ok: true; output: Record<string, unknown> } | { ok: false; message: string }> {
-  const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ input }),
-  });
-  const body = (await res.json()) as {
-    ok?: boolean;
-    output?: Record<string, unknown>;
-    message?: string;
-    error?: string;
-  };
-  if (!res.ok || body.ok === false) {
-    return { ok: false, message: body.message ?? body.error ?? `HTTP ${res.status}` };
-  }
-  return { ok: true, output: body.output ?? {} };
-}
-
-function formatBytes(n: number): string {
-  if (n < 1024) return `${n} B`;
-  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
-  return `${(n / (1024 * 1024)).toFixed(2)} MB`;
-}
 
 export function PdfCompressRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
@@ -50,18 +31,15 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
 
   const onFile = async (file: File | null) => {
     if (!file) return;
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+      setError(t("pdfCompress.needPdf"));
+      return;
+    }
     setFileName(file.name);
     setError("");
     setMeta(null);
     setOutBase64("");
-    const buf = await file.arrayBuffer();
-    const bytes = new Uint8Array(buf);
-    const chunk = 0x8000;
-    let binary = "";
-    for (let i = 0; i < bytes.length; i += chunk) {
-      binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
-    }
-    setBase64(btoa(binary));
+    setBase64(await fileToBase64(file));
   };
 
   const run = async () => {
@@ -71,7 +49,7 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
     }
     setLoading(true);
     setError("");
-    const r = await invoke(toolId, { fileBase64: base64, quality, engine });
+    const r = await invokeForge(toolId, { fileBase64: base64, quality, engine });
     setLoading(false);
     if (!r.ok) {
       setError(r.message);
@@ -91,47 +69,21 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
     setOutBase64(typeof o.base64 === "string" ? o.base64 : "");
   };
 
-  const download = () => {
-    if (!outBase64) return;
-    const a = document.createElement("a");
-    // Critical: data URL, not a corrupted placeholder string.
-    a.href = `data:application/pdf;base64,${outBase64}`;
-    const base = fileName.replace(/\.pdf$/i, "") || "document";
-    a.download = `${base}.compressed.pdf`;
-    a.click();
-  };
-
   const inputBytes = base64 ? Math.ceil((base64.length * 3) / 4) : 0;
   const savedPct =
     meta && Number(meta.bytesIn) > 0
       ? Math.round((Number(meta.saved ?? 0) / Number(meta.bytesIn)) * 1000) / 10
       : null;
+  const outName = `${(fileName || "document").replace(/\.pdf$/i, "")}.compressed.pdf`;
 
   return (
     <div className="space-y-4">
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
-      <div
-        className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] p-6 text-sm text-[var(--neutral-10)]"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          const f = e.dataTransfer.files?.[0] ?? null;
-          if (f && (f.type === "application/pdf" || f.name.toLowerCase().endsWith(".pdf"))) {
-            void onFile(f);
-          } else if (f) {
-            setError(t("pdfCompress.needPdf"));
-          }
-        }}
-      >
-        <input
-          data-allow-native
-          type="file"
-          accept="application/pdf,.pdf"
-          className="mb-2 block w-full max-w-md text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        <p>{fileName ? `${fileName} · ~${formatBytes(inputBytes)}` : t("pdfCompress.drop")}</p>
-      </div>
+      <FileDropZone
+        accept="application/pdf,.pdf"
+        label={fileName ? `${fileName} · ~${formatBytes(inputBytes)}` : t("pdfCompress.drop")}
+        hint={t("common.dragDrop")}
+        onFiles={(files) => void onFile(files[0] ?? null)}
+      />
       <RunnerNote>{t("pdfCompress.privacy")}</RunnerNote>
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -168,12 +120,6 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
         >
           {loading ? t("common.running") : t("common.run")}
         </Button>
-        {outBase64 ? (
-          <Button type="button" variant="ghost" onClick={download}>
-            <ArrowDown className="h-4 w-4" />
-            {t("pdfCompress.download")}
-          </Button>
-        ) : null}
         {meta ? (
           <Button
             type="button"
@@ -193,35 +139,25 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
       <RunnerError>{error}</RunnerError>
 
       {meta ? (
-        <div className="grid gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 p-4 text-sm sm:grid-cols-2">
-          <p>
-            <span className="text-[var(--neutral-10)]">{t("pdfCompress.engine")}: </span>
-            <span className="font-mono text-[var(--neutral-12)]">{String(meta.engine)}</span>
-          </p>
-          <p>
-            <span className="text-[var(--neutral-10)]">{t("pdfCompress.quality")}: </span>
-            <span className="font-mono text-[var(--neutral-12)]">{String(meta.quality)}</span>
-          </p>
-          <p>
-            <span className="text-[var(--neutral-10)]">{t("pdfCompress.in")}: </span>
-            <span className="tabular-nums text-[var(--neutral-12)]">
-              {formatBytes(Number(meta.bytesIn ?? 0))}
-            </span>
-          </p>
-          <p>
-            <span className="text-[var(--neutral-10)]">{t("pdfCompress.out")}: </span>
-            <span className="tabular-nums text-[var(--neutral-12)]">
-              {formatBytes(Number(meta.bytesOut ?? 0))}
-            </span>
-          </p>
-          <p className="sm:col-span-2">
-            <span className="text-[var(--neutral-10)]">{t("pdfCompress.saved")}: </span>
-            <span className="font-semibold tabular-nums text-[var(--status-success)]">
-              {formatBytes(Number(meta.saved ?? 0))} ({String(meta.savedPercent ?? savedPct ?? 0)}%)
-            </span>
-          </p>
+        <div className="space-y-3">
+          <MetaCards
+            items={[
+              { label: t("pdfCompress.engine"), value: String(meta.engine ?? "—") },
+              { label: t("pdfCompress.quality"), value: String(meta.quality ?? "—") },
+              { label: t("pdfCompress.in"), value: formatBytes(Number(meta.bytesIn ?? 0)) },
+              { label: t("pdfCompress.out"), value: formatBytes(Number(meta.bytesOut ?? 0)) },
+              {
+                label: t("pdfCompress.saved"),
+                value: `${formatBytes(Number(meta.saved ?? 0))} (${String(meta.savedPercent ?? savedPct ?? 0)}%)`,
+              },
+              {
+                label: t("common.metrics"),
+                value: meta.pageCount != null ? `${String(meta.pageCount)} pages` : "—",
+              },
+            ]}
+          />
           {Number(meta.bytesIn) > 0 ? (
-            <div className="sm:col-span-2">
+            <div>
               <div className="h-2 overflow-hidden rounded-full bg-[var(--neutral-4)]">
                 <div
                   className="h-full rounded-full bg-[hsl(var(--primary))] transition-all"
@@ -237,12 +173,12 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
             </div>
           ) : null}
           {meta.note ? (
-            <p className="sm:col-span-2 text-xs leading-relaxed text-[var(--neutral-11)]">
-              {String(meta.note)}
-            </p>
+            <p className="text-xs leading-relaxed text-[var(--neutral-11)]">{String(meta.note)}</p>
           ) : null}
         </div>
       ) : null}
+
+      {outBase64 ? <PdfResultPanel base64={outBase64} filename={outName} /> : null}
 
       <RunnerNote>{t("pdfCompress.note")}</RunnerNote>
     </div>

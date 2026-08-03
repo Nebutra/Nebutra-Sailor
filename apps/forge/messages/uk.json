@@ -177,7 +177,24 @@
       "copyText": "Копіювати текст",
       "quality": "Якість",
       "original": "Оригінал",
-      "result": "Результат"
+      "result": "Результат",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "Текст → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "Файл PDF",
-      "note": "Оптимізація PDF Light · переписування pdf-lib (без стиснення зображень)"
+      "note": "Оптимізація PDF Light · переписування pdf-lib (без стиснення зображень)",
+      "needFile": "Спочатку виберіть PDF-файл"
     },
     "pdfCompress": {
       "file": "Файл PDF",
@@ -561,7 +579,8 @@
       "merging": "Об’єднання…",
       "mergeDownload": "Об’єднати та завантажити",
       "done": "Об’єднано · {pages} стор. · {bytes} байт",
-      "note": "pdf-lib · той самий шлях, що й API"
+      "note": "pdf-lib · той самий шлях, що й API",
+      "merge": "Об’єднати та завантажити"
     },
     "pdfSplit": {
       "file": "Файл PDF",
@@ -572,7 +591,8 @@
       "splitting": "Розділення…",
       "splitDownload": "Розділити та завантажити",
       "done": "Розділено · джерело {source} стор. → вихід {pages} стор.",
-      "note": "pdf-lib · той самий шлях, що й API"
+      "note": "pdf-lib · той самий шлях, що й API",
+      "split": "Розділити та завантажити"
     },
     "passwordStrength": {
       "check": "Перевірити міцність",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "Блок постачальника",
       "summaryStripped": "Видалено {fields} полів метаданих ({families}), {kb} КБ. Зображення інакше не змінене.",
       "summaryClean": "Метадані для видалення не знайдено. Файл повернуто без змін."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

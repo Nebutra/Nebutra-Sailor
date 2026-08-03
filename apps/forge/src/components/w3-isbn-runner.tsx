@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { BatchWorkspace } from "@/components/batch-workspace";
 import {
   InstantTransformShell,
   ShellBadge,
@@ -191,23 +192,32 @@ export function W3IsbnRunner({ toolId }: { toolId: string }) {
   };
 
   return (
-    <InstantTransformShell<IsbnOutput>
-      engine={{ toolId }}
-      inputLabel={t("isbn.inputLabel")}
-      inputKind="block"
-      inputPlaceholder={t("isbn.placeholder")}
-      rows={6}
-      sample={SAMPLE}
-      buildInput={(text) => (text.trim().length > 0 ? { text } : null)}
-      renderResult={renderResult}
-      idle={<ShellNote>{t("isbn.idle")}</ShellNote>}
-      exit={(output) => ({
-        text: csv(output),
-        json: output,
-        filename: "isbn-results.csv",
-        mimeType: "text/csv;charset=utf-8",
-      })}
-      note={t("isbn.scope")}
-    />
+    <BatchWorkspace
+      toolId={toolId}
+      accept="lines"
+      resultKind="json"
+      maxItems={200}
+      buildItemInput={(raw) => ({ text: String(raw) })}
+      sharedHint="One ISBN per line · batch API"
+    >
+      <InstantTransformShell<IsbnOutput>
+        engine={{ toolId }}
+        inputLabel={t("isbn.inputLabel")}
+        inputKind="block"
+        inputPlaceholder={t("isbn.placeholder")}
+        rows={6}
+        sample={SAMPLE}
+        buildInput={(text) => (text.trim().length > 0 ? { text } : null)}
+        renderResult={renderResult}
+        idle={<ShellNote>{t("isbn.idle")}</ShellNote>}
+        exit={(output) => ({
+          text: csv(output),
+          json: output,
+          filename: "isbn-results.csv",
+          mimeType: "text/csv;charset=utf-8",
+        })}
+        note={t("isbn.scope")}
+      />
+    </BatchWorkspace>
   );
 }

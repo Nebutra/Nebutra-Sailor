@@ -6,7 +6,8 @@
  */
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useDebouncedCallback } from "@/components/result-panels";
 import {
   RunnerError,
   RunnerNote,
@@ -294,10 +295,10 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
   const [result, setResult] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const run = async () => {
+  const run = async (value = color) => {
     setLoading(true);
     setError("");
-    const r = await invokeTool(toolId, { color });
+    const r = await invokeTool(toolId, { color: value });
     setLoading(false);
     if (!r.ok) {
       setError(r.message);
@@ -306,6 +307,15 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
     }
     setResult(r.output);
   };
+
+  const live = useDebouncedCallback((value: string) => {
+    if (value.trim()) void run(value);
+  }, 280);
+
+  useEffect(() => {
+    live(color);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [color]);
 
   const hex = typeof result?.hex === "string" ? result.hex : null;
 
@@ -331,6 +341,7 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("colorConvert.converting") : t("colorConvert.convert")}
         </Button>
+        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
       </div>
       <RunnerError>{error}</RunnerError>
       {result ? (
@@ -479,10 +490,10 @@ export function CronExplainRunner({ toolId }: { toolId: string }) {
   const [next, setNext] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const run = async () => {
+  const run = async (expr = expression, zone = tz) => {
     setLoading(true);
     setError("");
-    const r = await invokeTool(toolId, { expression, tz, count: 8 });
+    const r = await invokeTool(toolId, { expression: expr, tz: zone, count: 8 });
     setLoading(false);
     if (!r.ok) {
       setError(r.message);
@@ -491,6 +502,15 @@ export function CronExplainRunner({ toolId }: { toolId: string }) {
     }
     setNext(Array.isArray(r.output.next) ? (r.output.next as string[]) : []);
   };
+
+  const live = useDebouncedCallback((expr: string, zone: string) => {
+    if (expr.trim()) void run(expr, zone);
+  }, 360);
+
+  useEffect(() => {
+    live(expression, tz);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expression, tz]);
 
   return (
     <div className="space-y-4">
@@ -511,9 +531,12 @@ export function CronExplainRunner({ toolId }: { toolId: string }) {
           placeholder="UTC / Asia/Shanghai"
         />
       </div>
-      <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? t("cron.parsing") : t("cron.parse")}
-      </Button>
+      <div className="flex flex-wrap items-center gap-2">
+        <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
+          {loading ? t("cron.parsing") : t("cron.parse")}
+        </Button>
+        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
+      </div>
       <RunnerError>{error}</RunnerError>
       {next.length > 0 ? (
         <RunnerPanel title={t("cron.nextTitle")}>
@@ -554,10 +577,10 @@ export function TimezoneRunner({ toolId }: { toolId: string }) {
   const [meta, setMeta] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const run = async () => {
+  const run = async (dt = datetime, from = fromTz, to = toTz) => {
     setLoading(true);
     setError("");
-    const r = await invokeTool(toolId, { datetime, fromTz, toTz });
+    const r = await invokeTool(toolId, { datetime: dt, fromTz: from, toTz: to });
     setLoading(false);
     if (!r.ok) {
       setError(r.message);
@@ -573,6 +596,15 @@ export function TimezoneRunner({ toolId }: { toolId: string }) {
         .join(" · "),
     );
   };
+
+  const live = useDebouncedCallback((dt: string, from: string, to: string) => {
+    if (dt.trim()) void run(dt, from, to);
+  }, 320);
+
+  useEffect(() => {
+    live(datetime, fromTz, toTz);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datetime, fromTz, toTz]);
 
   return (
     <div className="space-y-4">
@@ -600,9 +632,12 @@ export function TimezoneRunner({ toolId }: { toolId: string }) {
           ))}
         </RunnerSelect>
       </div>
-      <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
-        {loading ? t("timezone.converting") : t("timezone.convert")}
-      </Button>
+      <div className="flex flex-wrap items-center gap-2">
+        <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
+          {loading ? t("timezone.converting") : t("timezone.convert")}
+        </Button>
+        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
+      </div>
       <RunnerError>{error}</RunnerError>
       {result ? (
         <RunnerPanel>

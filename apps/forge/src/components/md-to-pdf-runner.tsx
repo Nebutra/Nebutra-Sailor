@@ -2,7 +2,8 @@
 
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { FileDropZone, invokeForge, PdfResultPanel } from "@/components/result-panels";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 const SAMPLE = `# Nebutra Forge
@@ -17,13 +18,6 @@ const SAMPLE = `# Nebutra Forge
 | A | 1 |
 `;
 
-function base64ToPdfBlobUrl(base64: string): string {
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-  return URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
-}
-
 export function MdToPdfRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
   const [markdown, setMarkdown] = useState(SAMPLE);
@@ -31,15 +25,8 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
   const [engine, setEngine] = useState<"playwright" | "simple">("playwright");
   const [meta, setMeta] = useState("");
   const [error, setError] = useState("");
-  const [previewUrl, setPreviewUrl] = useState("");
+  const [outBase64, setOutBase64] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Revoke blob URLs so large PDFs do not leak memory.
-  useEffect(() => {
-    return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-    };
-  }, [previewUrl]);
 
   const onFile = (file: File | null) => {
     if (!file) return;
@@ -53,40 +40,22 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
     setLoading(true);
     setError("");
     setMeta("");
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-      setPreviewUrl("");
-    }
+    setOutBase64("");
     try {
-      const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: { markdown, title, engine } }),
-      });
-      const body = (await res.json()) as {
-        ok?: boolean;
-        output?: {
-          base64?: string;
-          contentType?: string;
-          renderEngine?: string;
-          sotaNote?: string;
-          bytes?: number;
-        };
-        message?: string;
-      };
-      if (!res.ok || body.ok === false) {
-        setError(body.message ?? `HTTP ${res.status}`);
+      const r = await invokeForge(toolId, { markdown, title, engine });
+      if (!r.ok) {
+        setError(r.message);
         return;
       }
-      const out = body.output;
-      if (!out?.base64) {
+      const out = r.output;
+      const b64 = typeof out.base64 === "string" ? out.base64 : "";
+      if (!b64) {
         setError(t("mdToPdf.noPayload"));
         return;
       }
-      const url = base64ToPdfBlobUrl(out.base64);
-      setPreviewUrl(url);
+      setOutBase64(b64);
       setMeta(
-        `${out.renderEngine ?? "?"} · ${out.bytes ?? "?"} bytes · ${out.sotaNote ?? ""}`.trim(),
+        `${String(out.renderEngine ?? "?")} · ${String(out.bytes ?? "?")} bytes · ${String(out.sotaNote ?? "")}`.trim(),
       );
     } finally {
       setLoading(false);
@@ -95,23 +64,11 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
-      <div
-        className="rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 text-sm text-[var(--neutral-11)]"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          onFile(e.dataTransfer.files?.[0] ?? null);
-        }}
-      >
-        <input
-          type="file"
-          accept=".md,text/markdown,text/plain"
-          data-allow-native
-          onChange={(e) => onFile(e.target.files?.[0] ?? null)}
-        />
-        <p className="mt-2">{t("mdToPdf.drop")}</p>
-      </div>
+      <FileDropZone
+        accept=".md,text/markdown,text/plain"
+        label={t("mdToPdf.drop")}
+        onFiles={(files) => onFile(files[0] ?? null)}
+      />
 
       <div className="grid gap-3 sm:grid-cols-2">
         <Input
@@ -140,42 +97,18 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
         className="font-mono text-sm"
       />
 
-      <div className="flex flex-wrap gap-2">
-        <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
-          {loading ? t("mdToPdf.generating") : t("mdToPdf.generate")}
-        </Button>
-        {previewUrl ? (
-          <>
-            <Button asChild variant="outline">
-              <a href={previewUrl} download={`${title || "document"}.pdf`}>
-                {t("mdToPdf.download")}
-              </a>
-            </Button>
-            <Button asChild variant="ghost">
-              <a href={previewUrl} target="_blank" rel="noopener noreferrer">
-                {t("mdToPdf.openTab")}
-              </a>
-            </Button>
-          </>
-        ) : null}
-      </div>
+      <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
+        {loading ? t("mdToPdf.generating") : t("mdToPdf.generate")}
+      </Button>
 
       <RunnerNote>{t("mdToPdf.note")}</RunnerNote>
       <RunnerError>{error}</RunnerError>
-      {meta ? <RunnerNote>{meta}</RunnerNote> : null}
-
-      {previewUrl ? (
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-[var(--neutral-12)]">{t("mdToPdf.preview")}</p>
-          <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]">
-            <iframe
-              title={t("mdToPdf.previewTitle")}
-              src={previewUrl}
-              className="h-[min(70vh,720px)] w-full bg-[var(--neutral-1)]"
-            />
-          </div>
-          <p className="text-xs text-[var(--neutral-10)]">{t("mdToPdf.previewHint")}</p>
-        </div>
+      {outBase64 ? (
+        <PdfResultPanel
+          base64={outBase64}
+          filename={`${title || "document"}.pdf`}
+          meta={meta || undefined}
+        />
       ) : null}
     </div>
   );

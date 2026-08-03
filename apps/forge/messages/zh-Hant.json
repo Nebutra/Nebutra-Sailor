@@ -177,7 +177,24 @@
       "copyText": "複製文字",
       "quality": "品質",
       "original": "原文",
-      "result": "結果"
+      "result": "結果",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "文字 → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "PDF 檔案",
-      "note": "PDF Light Optimize · pdf-lib 重寫（非影像重新壓縮）"
+      "note": "PDF Light Optimize · pdf-lib 重寫（非影像重新壓縮）",
+      "needFile": "請先選擇 PDF 檔案"
     },
     "pdfCompress": {
       "file": "PDF 檔案",
@@ -561,7 +579,8 @@
       "merging": "合併中…",
       "mergeDownload": "合併並下載",
       "done": "已合併 · {pages} 頁 · {bytes} 位元組",
-      "note": "pdf-lib · 與 API 路徑相同"
+      "note": "pdf-lib · 與 API 路徑相同",
+      "merge": "合併並下載"
     },
     "pdfSplit": {
       "file": "PDF 檔案",
@@ -572,7 +591,8 @@
       "splitting": "分割中…",
       "splitDownload": "分割並下載",
       "done": "已分割 · 來源 {source} 頁 → 輸出 {pages} 頁",
-      "note": "pdf-lib · 與 API 路徑相同"
+      "note": "pdf-lib · 與 API 路徑相同",
+      "split": "分割並下載"
     },
     "passwordStrength": {
       "check": "檢查強度",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "廠商區塊",
       "summaryStripped": "已移除 {fields} 個元資料欄位（{families}），共 {kb} KB。影像其餘部分維持不變。",
       "summaryClean": "未發現可移除的元資料。檔案原樣返回。"
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

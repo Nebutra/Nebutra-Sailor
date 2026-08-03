@@ -18,6 +18,7 @@
  */
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { BatchWorkspace } from "@/components/batch-workspace";
 import {
   InstantTransformShell,
   ShellBadge,
@@ -266,48 +267,61 @@ export function W3EanUpcGtinRunner({ toolId }: { toolId: string }) {
   };
 
   return (
-    <InstantTransformShell<Output>
-      engine={{ toolId, parse: (raw) => raw as unknown as Output }}
-      inputLabel={t("eanUpcGtin.inputLabel")}
-      inputPlaceholder={t("eanUpcGtin.placeholder")}
-      rows={8}
-      sample={SAMPLE}
-      buildInput={buildInput}
-      renderResult={renderResult}
-      idle={<ShellNote>{t("eanUpcGtin.idle")}</ShellNote>}
-      exit={(output) => ({
-        text: toCsv(output),
-        json: output,
-        filename: "gtin-check.csv",
-        mimeType: "text/csv;charset=utf-8",
+    <BatchWorkspace
+      toolId={toolId}
+      accept="lines"
+      resultKind="json"
+      maxItems={200}
+      buildItemInput={(raw) => ({
+        codes: [String(raw).trim()].filter(Boolean),
+        operation,
+        type: forcedType,
       })}
-      options={
-        <>
-          <RunnerSelect
-            id="ean-upc-gtin-operation"
-            label={t("eanUpcGtin.operationLabel")}
-            value={operation}
-            onChange={(next) => setOperation(next as Operation)}
-            options={[
-              { value: "validate", label: t("eanUpcGtin.operationValidate") },
-              { value: "calculate", label: t("eanUpcGtin.operationCalculate") },
-            ]}
-          />
-          <RunnerSelect
-            id="ean-upc-gtin-type"
-            label={t("eanUpcGtin.typeLabel")}
-            value={forcedType}
-            onChange={setForcedType}
-            options={[
-              { value: "auto", label: t("eanUpcGtin.typeAuto") },
-              ...FORCED_TYPES.map((type) => ({ value: type, label: type })),
-            ]}
-          />
-        </>
-      }
-      optionsKey={`${operation}|${forcedType}`}
-      note={t("eanUpcGtin.scopeNote")}
-    />
+      sharedHint={`${operation} · ${forcedType}`}
+    >
+      <InstantTransformShell<Output>
+        engine={{ toolId, parse: (raw) => raw as unknown as Output }}
+        inputLabel={t("eanUpcGtin.inputLabel")}
+        inputPlaceholder={t("eanUpcGtin.placeholder")}
+        rows={8}
+        sample={SAMPLE}
+        buildInput={buildInput}
+        renderResult={renderResult}
+        idle={<ShellNote>{t("eanUpcGtin.idle")}</ShellNote>}
+        exit={(output) => ({
+          text: toCsv(output),
+          json: output,
+          filename: "gtin-check.csv",
+          mimeType: "text/csv;charset=utf-8",
+        })}
+        options={
+          <>
+            <RunnerSelect
+              id="ean-upc-gtin-operation"
+              label={t("eanUpcGtin.operationLabel")}
+              value={operation}
+              onChange={(next) => setOperation(next as Operation)}
+              options={[
+                { value: "validate", label: t("eanUpcGtin.operationValidate") },
+                { value: "calculate", label: t("eanUpcGtin.operationCalculate") },
+              ]}
+            />
+            <RunnerSelect
+              id="ean-upc-gtin-type"
+              label={t("eanUpcGtin.typeLabel")}
+              value={forcedType}
+              onChange={setForcedType}
+              options={[
+                { value: "auto", label: t("eanUpcGtin.typeAuto") },
+                ...FORCED_TYPES.map((type) => ({ value: type, label: type })),
+              ]}
+            />
+          </>
+        }
+        optionsKey={`${operation}|${forcedType}`}
+        note={t("eanUpcGtin.scopeNote")}
+      />
+    </BatchWorkspace>
   );
 }
 

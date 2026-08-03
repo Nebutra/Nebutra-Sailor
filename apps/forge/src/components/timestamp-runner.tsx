@@ -3,6 +3,7 @@
 import { Button, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { invokeForge, useDebouncedCallback } from "@/components/result-panels";
 import {
   RunnerError,
   RunnerNote,
@@ -27,22 +28,27 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
 
   const run = async (body: Record<string, unknown>) => {
     setError("");
-    const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ input: body }),
-    });
-    const data = (await res.json()) as {
-      ok?: boolean;
-      output?: unknown;
-      message?: string;
-    };
-    if (!res.ok || data.ok === false) {
-      setError(data.message ?? "error");
+    const data = await invokeForge(toolId, body);
+    if (!data.ok) {
+      setError(data.message);
       return;
     }
     setOutput(JSON.stringify(data.output, null, 2));
   };
+
+  const liveConvert = useDebouncedCallback((m: typeof mode, v: string, u: typeof unit) => {
+    if (!v.trim()) {
+      setOutput("");
+      setError("");
+      return;
+    }
+    void run({ mode: m, value: v, unit: u });
+  }, 280);
+
+  useEffect(() => {
+    liveConvert(mode, value, unit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, value, unit]);
 
   return (
     <div className="space-y-4">
@@ -90,6 +96,7 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
+      <p className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</p>
       <Button type="button" variant="outline" onClick={() => void run({ mode, value, unit })}>
         {t("timestamp.convert")}
       </Button>

@@ -177,7 +177,24 @@
       "copyText": "Kopioi teksti",
       "quality": "Laatu",
       "original": "Alkuperäinen",
-      "result": "Tulos"
+      "result": "Tulos",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "Teksti → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "PDF-tiedosto",
-      "note": "PDF Light Optimize · pdf-lib uudelleenkirjoitus (ei kuvien uudelleenpakkausta)"
+      "note": "PDF Light Optimize · pdf-lib uudelleenkirjoitus (ei kuvien uudelleenpakkausta)",
+      "needFile": "Valitse ensin PDF-tiedosto"
     },
     "pdfCompress": {
       "file": "PDF-tiedosto",
@@ -561,7 +579,8 @@
       "merging": "Yhdistetään…",
       "mergeDownload": "Yhdistä ja lataa",
       "done": "Yhdistetty · {pages} sivua · {bytes} tavua",
-      "note": "pdf-lib · sama polku kuin API"
+      "note": "pdf-lib · sama polku kuin API",
+      "merge": "Yhdistä ja lataa"
     },
     "pdfSplit": {
       "file": "PDF-tiedosto",
@@ -572,7 +591,8 @@
       "splitting": "Jaetaan…",
       "splitDownload": "Jaa ja lataa",
       "done": "Jako · lähteessä {source} sivua → tuloksessa {pages} sivua",
-      "note": "pdf-lib · sama polku kuin API"
+      "note": "pdf-lib · sama polku kuin API",
+      "split": "Jaa ja lataa"
     },
     "passwordStrength": {
       "check": "Tarkista vahvuus",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "Valmistajan lohko",
       "summaryStripped": "Poistettiin {fields} metatietokenttää ({families}), {kb} KB. Kuva muuten muuttumaton.",
       "summaryClean": "Poistettavaa metatietoa ei löytynyt. Tiedosto palautettu muuttumattomana."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

@@ -177,7 +177,24 @@
       "copyText": "Kopier tekst",
       "quality": "Kvalitet",
       "original": "Original",
-      "result": "Resultat"
+      "result": "Resultat",
+      "downloadPdf": "Download PDF",
+      "openTab": "Open in new tab",
+      "pdfPreview": "PDF preview",
+      "pdfPreviewTitle": "PDF preview",
+      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
+      "single": "Single",
+      "batch": "Batch",
+      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
+      "dragDrop": "Drop a file here or click to choose",
+      "resultMeta": "Result",
+      "before": "Before",
+      "after": "After",
+      "liveHint": "Updates as you type",
+      "tablePreview": "Table preview",
+      "sourcePreview": "Source preview",
+      "metrics": "Metrics",
+      "thumbnail": "Preview"
     },
     "base64": {
       "encodeDir": "Tekst → Base64",
@@ -463,7 +480,8 @@
     },
     "pdfOptimize": {
       "file": "PDF-fil",
-      "note": "PDF Light Optimize · pdf-lib-omskrivning (ikke bildekomprimering)"
+      "note": "PDF Light Optimize · pdf-lib-omskrivning (ikke bildekomprimering)",
+      "needFile": "Velg en PDF-fil først"
     },
     "pdfCompress": {
       "file": "PDF-fil",
@@ -561,7 +579,8 @@
       "merging": "Sammer…",
       "mergeDownload": "Samle og last ned",
       "done": "Samlet · {pages} sider · {bytes} bytes",
-      "note": "pdf-lib · samme sti som API"
+      "note": "pdf-lib · samme sti som API",
+      "merge": "Samle og last ned"
     },
     "pdfSplit": {
       "file": "PDF-fil",
@@ -572,7 +591,8 @@
       "splitting": "Del opp…",
       "splitDownload": "Del og last ned",
       "done": "Delte · kilde {source} sider → utdata {pages} sider",
-      "note": "pdf-lib · samme sti som API"
+      "note": "pdf-lib · samme sti som API",
+      "split": "Del og last ned"
     },
     "passwordStrength": {
       "check": "Sjekk styrke",
@@ -1974,6 +1994,22 @@
       "segmentVendor": "Leverandørblokk",
       "summaryStripped": "Fjernet {fields} metadata-felter ({families}), {kb} KB. Bildet er ellers uendret.",
       "summaryClean": "Ingen fjernbare metadata funnet. Filen returneres uendret."
+    },
+    "validate": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "summary": "{valid} / {total} valid",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "luhnReason": {
+        "length_or_digits": "Need 12–19 digits",
+        "luhn_failed": "Luhn checksum failed"
+      }
+    },
+    "worldClock": {
+      "zones": "Timezones (one per line)",
+      "at": "Instant (optional ISO / unix)"
     }
   },
   "roots": {

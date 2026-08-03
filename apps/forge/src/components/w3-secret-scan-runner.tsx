@@ -9,6 +9,7 @@ import {
   secretScanInputSchema,
 } from "@nebutra/forge-runtime/secret-scan";
 import { useTranslations } from "next-intl";
+import { BatchWorkspace } from "@/components/batch-workspace";
 import {
   DropVerdictShell,
   ShellBadge,
@@ -50,7 +51,7 @@ export function W3SecretScanRunner({ toolId }: { toolId: string }) {
   const confidenceLabel = (confidence: SecretFinding["confidence"]) =>
     t(`secretScan.confidence.${confidence}`);
 
-  return (
+  const single = (
     <DropVerdictShell<SecretScanOutput>
       engine={{
         // `compute` wins over `toolId` in the shell, which is the point: the
@@ -199,5 +200,22 @@ export function W3SecretScanRunner({ toolId }: { toolId: string }) {
         </div>
       )}
     />
+  );
+
+  return (
+    <BatchWorkspace
+      toolId={toolId}
+      accept="files"
+      resultKind="json"
+      maxItems={50}
+      buildItemInput={async (raw) => {
+        if (typeof raw === "string") return { text: raw };
+        const text = await raw.text();
+        return { text };
+      }}
+      sharedHint={t("secretScan.privacy")}
+    >
+      {single}
+    </BatchWorkspace>
   );
 }
