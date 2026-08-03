@@ -8,14 +8,15 @@
  * untrusted-code execution.
  *
  * Track A (this package): policy + protocol + model + rollout, all tenant-scoped.
- * Track B (decoupled, not this repo): an optional isolator/kernel sidecar that
- * implements {@link ExternalSandbox} over the ./protocol contract.
+ * Track B (Carina upstream): self-deployed kernel docked via {@link createCarinaSandbox};
+ * product wire (gateway inject / session / command_exec) tracked in Nebutra-Sailor#384.
  */
 
 export * from "./artifact-stream";
 export * from "./channel-gateway";
 export * from "./code-review";
 export * from "./command-suggestions";
+export * from "./command-exec";
 export * from "./commands";
 export * from "./commit-message";
 export * from "./context-compaction";

@@ -8,7 +8,8 @@ wiring) tracked in [Nebutra-Sailor#384](https://github.com/Nebutra/Nebutra-Sailo
 | Phase | Scope | State |
 |-------|--------|--------|
 | **1 — Dock** | `createCarinaSandbox` JSON-RPC map, fail-closed default, ADR, package tests | **Done** ([#382](https://github.com/Nebutra/Nebutra-Sailor/pull/382)) |
-| **2 — Wire** | Gateway inject, `session.create`, command-exec tool, optional approval UI | **Open** ([#384](https://github.com/Nebutra/Nebutra-Sailor/issues/384)) |
+| **2a — Host wire** | Env resolve, `session.create` / ensureSession, `command_exec` tool, gateway bundle | **Done** (this tree; closes inject+session+tool in #384) |
+| **2b — Product HITL** | Approval UI + `task.action.approve` / `deny`, multi-tenant workspace routing | **Open** ([#384](https://github.com/Nebutra/Nebutra-Sailor/issues/384)) |
 
 ## Context
 
@@ -105,8 +106,11 @@ Do **not** vendor Carina source into this monorepo. Follow
 ## Consequences
 
 - Phase 1: adapter + tests on main; without endpoint, exec **fail-closed**.
-- Phase 2 (#384): production injects only when `CARINA_JSONRPC_URL` (or product
-  config) is set; host owns `session.create` and command-exec tool registration.
+- Phase 2a: gateway `createGatewayCarinaBundle()` injects when
+  `CARINA_JSONRPC_URL` is set; `command_exec` calls `ensureSession` then
+  `command.exec`. Requires `CARINA_WORKSPACE_ROOT` on the Carina host.
+- Phase 2b (#384 remainder): human approval bridge and per-tenant workspace
+  routing remain open.
 - Protocol breaks require Carina version bump + Sailor adapter pin update.
 - Approval UI bridge remains optional on top of the exec adapter.
 

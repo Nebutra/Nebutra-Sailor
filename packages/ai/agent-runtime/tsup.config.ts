@@ -7,6 +7,7 @@ export default defineConfig({
     "adapters/dispatcher-sse": "src/adapters/dispatcher-sse.ts",
     "adapters/mcp-catalog": "src/adapters/mcp-catalog.ts",
     "adapters/prisma-rollout": "src/adapters/prisma-rollout.ts",
+    "command-exec": "src/command-exec.ts",
     commands: "src/commands.ts",
     cli: "src/cli.ts",
     definitions: "src/definitions.ts",

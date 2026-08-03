@@ -6,7 +6,8 @@ Status: **Track A live (grammar + gateway demo); Track B Phase 1 docked**
 |-------|--------|
 | Track A grammar (`runTurn`, policy, rollout, tools) | Shipped; gateway demo route behind `agent-runtime-demo` |
 | Track B adapter (`createCarinaSandbox` → Carina JSON-RPC) | **Phase 1 done** ([#382](https://github.com/Nebutra/Nebutra-Sailor/pull/382)) |
-| Track B product wire (gateway inject, session, exec tool) | **Open** ([#384](https://github.com/Nebutra/Nebutra-Sailor/issues/384)) |
+| Track B host wire (env, ensureSession, `command_exec`, gateway bundle) | **Phase 2a done** |
+| Track B HITL / multi-tenant workspace routing | **Open** ([#384](https://github.com/Nebutra/Nebutra-Sailor/issues/384)) |
 | Default without Carina endpoint | **Fail-closed** (`REFUSING_SANDBOX`) |
 
 Multi-tenant **agent-runtime grammar**. A faithful re-expression of a terminal

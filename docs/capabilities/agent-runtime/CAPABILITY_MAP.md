@@ -56,9 +56,11 @@
 - **Done (Track B Phase 1 — catalog dock):** `createCarinaSandbox` maps to
   Carina v0.8.1 JSON-RPC (`gateway.hello` + `command.exec`); package tests;
   ADR 2026-08-03; PR #382. Default remains `REFUSING_SANDBOX` when no endpoint.
-- **Not yet built (Track B Phase 2 — #384):** gateway inject of
-  `CARINA_JSONRPC_URL`, host `session.create`, command-exec tool registration,
-  optional approval bridge (`task.action.approve` / `deny`).
+- **Done (Track B Phase 2a — host wire):** `ensureSession` / `session.create`,
+  `resolveCarinaSandboxFromEnv`, `registerCommandExecTool` (`command_exec`),
+  gateway `createGatewayCarinaBundle` on agent-runtime turns.
+- **Not yet built (Track B Phase 2b — #384):** optional approval bridge
+  (`task.action.approve` / `deny` + product UI), per-tenant workspace routing.
 - **Not deeply mapped:** model catalog manager, apply-patch grammar,
   compaction *generation* logic, tool_search discovery *mechanism*, hooks
   pipeline impl, web_search/image-gen handlers.

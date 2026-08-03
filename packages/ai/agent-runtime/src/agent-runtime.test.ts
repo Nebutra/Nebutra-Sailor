@@ -10,12 +10,18 @@ import {
   sanitizeForPersist,
 } from "./rollout";
 import {
+  COMMAND_EXEC_TOOL_NAME,
+  registerCommandExecTool,
+} from "./command-exec";
+import {
   assertSafePosture,
   CarinaProtocolError,
   createCarinaSandbox,
   createHttpSandbox,
+  isCarinaSandbox,
   NoExecutorConfiguredError,
   REFUSING_SANDBOX,
+  resolveCarinaSandboxFromEnv,
   SandboxDelegationError,
 } from "./sandbox";
 import { ToolRegistry } from "./tools";
@@ -286,5 +292,140 @@ describe("tools", () => {
     await expect(
       reg.dispatch("echo", { v: 1 }, { tenantId: "t1", threadId: "th" }),
     ).rejects.toBeTruthy();
+  });
+});
+
+
+describe("Carina Phase 2 host helpers", () => {
+  it("resolveCarinaSandboxFromEnv fails closed without URL", () => {
+    expect(resolveCarinaSandboxFromEnv({})).toBe(REFUSING_SANDBOX);
+    expect(resolveCarinaSandboxFromEnv({ CARINA_JSONRPC_URL: "   " })).toBe(REFUSING_SANDBOX);
+  });
+
+  it("resolveCarinaSandboxFromEnv builds a Carina sandbox when URL is set", () => {
+    const sandbox = resolveCarinaSandboxFromEnv({
+      CARINA_JSONRPC_URL: "http://127.0.0.1:7420/jsonrpc",
+      CARINA_JSONRPC_TOKEN: "gw1_test",
+    });
+    expect(isCarinaSandbox(sandbox)).toBe(true);
+  });
+
+  it("ensureSession caches session_id and command.exec uses it", async () => {
+    const bodies: Array<Record<string, unknown>> = [];
+    const fakeFetch = (async (_input: RequestInfo | URL, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body ?? "{}")) as Record<string, unknown>;
+      bodies.push(body);
+      if (body.method === "gateway.hello") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { protocol_version: 1 } }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "session.create") {
+        return new Response(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: body.id,
+            result: { id: "carina_sess_99", status: "active" },
+          }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "command.exec") {
+        return new Response(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: body.id,
+            result: {
+              decision: { decision: "allowed", decision_id: "d1" },
+              result: { exit_code: 0, stdout: ["ok\n"], stderr: [] },
+            },
+          }),
+          { status: 200 },
+        );
+      }
+      return new Response(
+        JSON.stringify({ jsonrpc: "2.0", id: body.id, error: { code: -32601, message: "no" } }),
+        { status: 200 },
+      );
+    }) as unknown as typeof fetch;
+
+    const sandbox = createCarinaSandbox({
+      baseUrl: "http://carina.local",
+      fetchImpl: fakeFetch,
+    });
+
+    const sid1 = await sandbox.ensureSession({
+      threadId: "thread_a",
+      workspaceRoot: "/work/repo",
+      tenantId: "org_a",
+    });
+    expect(sid1).toBe("carina_sess_99");
+    // second call is cached — no extra session.create
+    const sid2 = await sandbox.ensureSession({
+      threadId: "thread_a",
+      workspaceRoot: "/work/repo",
+    });
+    expect(sid2).toBe("carina_sess_99");
+    expect(bodies.filter((b) => b.method === "session.create")).toHaveLength(1);
+
+    const result = await sandbox.exec({
+      tenantId: "org_a",
+      threadId: "thread_a",
+      command: "echo ok",
+      capabilityPolicy: DEFAULT_CAPABILITY_POLICY,
+    });
+    expect(result.exitCode).toBe(0);
+    const exec = bodies.find((b) => b.method === "command.exec");
+    expect((exec?.params as { session_id: string }).session_id).toBe("carina_sess_99");
+  });
+
+  it("registerCommandExecTool ensures session then execs", async () => {
+    const methods: string[] = [];
+    const fakeFetch = (async (_i: RequestInfo | URL, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body ?? "{}")) as { method?: string; id?: number };
+      methods.push(body.method ?? "");
+      if (body.method === "gateway.hello") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { protocol_version: 1 } }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "session.create") {
+        return new Response(
+          JSON.stringify({ jsonrpc: "2.0", id: body.id, result: { session_id: "s_42" } }),
+          { status: 200 },
+        );
+      }
+      if (body.method === "command.exec") {
+        return new Response(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: body.id,
+            result: {
+              decision: { decision: "allowed" },
+              result: { exit_code: 0, stdout: ["done"], stderr: [] },
+            },
+          }),
+          { status: 200 },
+        );
+      }
+      return new Response("{}", { status: 500 });
+    }) as unknown as typeof fetch;
+
+    const sandbox = createCarinaSandbox({ baseUrl: "http://c", fetchImpl: fakeFetch });
+    const reg = new ToolRegistry();
+    registerCommandExecTool(reg, { sandbox, workspaceRoot: "/tmp/ws" });
+    expect(reg.list().map((t) => t.definition.name)).toContain(COMMAND_EXEC_TOOL_NAME);
+
+    const out = (await reg.dispatch(
+      COMMAND_EXEC_TOOL_NAME,
+      { command: "true" },
+      { tenantId: "org", threadId: "th1" },
+    )) as { exitCode: number; executedOn: string };
+
+    expect(out.exitCode).toBe(0);
+    expect(out.executedOn).toBe("carina");
+    expect(methods).toEqual(["gateway.hello", "session.create", "command.exec"]);
   });
 });

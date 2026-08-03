@@ -10,15 +10,11 @@
  *    no provider re-port).
  *  - ApprovalGate is fail-closed (auto-denies prompts) — human-in-the-loop
  *    transport is future work; unapproved tools are never dispatched.
- *  - No command-exec tool is registered here yet, so the external-sandbox
- *    seam has nothing to delegate. Product Track B is Carina:
- *    `createCarinaSandbox({ baseUrl: process.env.CARINA_JSONRPC_URL })` when
- *    the endpoint is set; otherwise fail-closed. Host wiring (session + tool)
- *    tracked in Nebutra-Sailor#384 — not `createHttpSandbox(AGENT_SANDBOX_URL)`.
- *  - RolloutStore is process-local `InMemoryRolloutStore`. The durable
- *    tenant-scoped store needs a DB model (infra change) and is deliberately
- *    deferred — not faked. Use `PersistentRolloutStore` + a real port adapter
- *    once that lands.
+ *  - Track B (Carina): `createGatewayCarinaBundle()` reads CARINA_JSONRPC_URL.
+ *    When set, registers `command_exec` → createCarinaSandbox + session.create
+ *    (needs CARINA_WORKSPACE_ROOT). When unset, empty tools + fail-closed.
+ *    Approval bridge (task.action.approve) still open — see #384.
+ *  - RolloutStore: in-memory by default; AGENT_ROLLOUT_DURABLE=1 → Postgres.
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
@@ -28,7 +24,6 @@ import {
   PersistentRolloutStore,
   type RolloutStore,
   runTurn,
-  ToolRegistry,
   type TurnConfig,
 } from "@nebutra/agent-runtime";
 import {
@@ -41,6 +36,7 @@ import { getTenantDb } from "@nebutra/db";
 import { FLAGS, featureFlagMiddleware } from "@nebutra/feature-flags";
 import { streamSSE } from "hono/streaming";
 import { getGatewayOrchestrator } from "../../agents/orchestrator-singleton.js";
+import { createGatewayCarinaBundle } from "../../lib/carina-sandbox.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 export const agentRuntimeRoutes = new OpenAPIHono();
@@ -152,13 +148,14 @@ agentRuntimeRoutes.openapi(turnRoute, async (c) => {
   };
 
   return streamSSE(c, async (stream) => {
+    const { tools } = createGatewayCarinaBundle();
     const events = runTurn(body.input, {
       tenantId,
       threadId: body.threadId,
       config,
       approvalPolicy: { kind: "on_request" },
       model: modelInvoker(orch, body.input, tenantId, tenant.userId ?? "anonymous", body.threadId),
-      tools: new ToolRegistry(),
+      tools,
       store: rolloutStore(),
       approvalGate: {
         async request() {
