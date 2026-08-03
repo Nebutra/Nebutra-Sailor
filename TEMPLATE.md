@@ -31,12 +31,13 @@ my-app/ contains only the reusable skeleton
 
 ## What gets stripped
 
-- **Marketing pages** — `apps/landing/src/app/[lang]/(marketing)/*`
-- **Legal pages** — `apps/landing/src/app/[lang]/(legal)/*`
-- **Nebutra landing components** — `apps/landing/src/components/landing/`
-- **Dashboard business pages** — admin, billing, tenants, chat, etc.
-- **Nebutra-owned apps** — `apps/sleptons`, `apps/studio`,
-  content from `apps/design-docs` and `apps/docs`
+- **Marketing / legal** — landing marketing + legal routes and brand assets
+- **Dashboard business pages** — admin, billing, tenants, chat, feature-flags, …
+- **Nebutra product apps** — `forge`, `router`, `pebble`, `typelens`, `design`,
+  `admin`, `auth` (auth-center), `sleptons`, `studio`, `sailor-docs`
+- **Product backends / infra** — `backends/go`, `backends/rust`,
+  `infra/nebutra-router`, gateway routes for pebble / startup-os
+- **Product CI / DNS** — `deploy-pebble*`, `deploy-carina*`, `point-*-dns`, …
 - **Press / PR** — `marketing/`, `changelog/`
 - **Internal planning / governance** — `docs/plans/`, `governance/*.current.json`
 - **Build artifacts** — `artifacts/`, `playwright-report/`, `test-results/`
@@ -45,12 +46,19 @@ my-app/ contains only the reusable skeleton
 ## What is preserved
 
 - Every `packages/*` primitive (UI, tokens, queue, search, metering, vault, …)
+- Scaffold apps: `web`, `landing` (shell), `idp`, `mail-preview`, `storybook`,
+  `design-docs` (shell without Nebutra content)
 - App shells: `layout.tsx`, `globals.css`, `package.json`, `next.config.ts`
 - Build config: `turbo.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`,
   `biome.json`
 - The `create-sailor` CLI itself
-- API gateway skeleton (`backends/gateway`)
+- API gateway core (`backends/gateway`, minus product-only routes)
+- Python AI backend tree when present (`backends/python`)
 - `e2e/` and `tests/` (skeleton tests, minus Nebutra-only specs)
+- Generic CI: `ci`, `codeql`, `secrets-scan`, `dependency-review`, …
+
+> **Contract:** Sailor-Template is a *skeleton monorepo*, not a fork of every
+> Nebutra product surface. Product apps stay in `Nebutra-Sailor` only.
 
 ## Adding new Nebutra business code
 

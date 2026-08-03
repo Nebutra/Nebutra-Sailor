@@ -33,19 +33,30 @@ interface TypecheckOptions extends DevOptions {
 }
 
 /**
- * List of valid app filters for turbo dev
+ * Valid turbo `--filter` short names for monorepo apps/backends.
+ * Product apps (forge/router/…) exist only in Nebutra-Sailor; scaffolded
+ * projects omit them via .templateignore — filter will simply no-op if missing.
  */
 const VALID_APPS = [
+  // Scaffold core
   "landing",
   "web",
   "storybook",
   "design-docs",
-  "sailor-docs",
-  "studio",
-  "docs",
   "idp",
   "mail-preview",
   "gateway",
+  // Monorepo product surfaces (stripped from Sailor-Template)
+  "admin",
+  "auth",
+  "design",
+  "forge",
+  "router",
+  "pebble",
+  "typelens",
+  "sailor-docs",
+  "studio",
+  "sleptons",
 ];
 
 /**

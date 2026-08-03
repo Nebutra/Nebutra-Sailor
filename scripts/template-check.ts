@@ -59,6 +59,19 @@ const MUST_STRIP = [
   "apps/docs",
   "apps/studio",
   "apps/sailor-docs",
+  // Product lines — must never ship in create-sailor output
+  "apps/forge",
+  "apps/router",
+  "apps/pebble",
+  "apps/typelens",
+  "apps/design",
+  "apps/admin",
+  "apps/auth",
+  "backends/go",
+  "backends/rust",
+  "infra/nebutra-router",
+  "backends/gateway/src/routes/pebble",
+  "backends/gateway/src/routes/startup-os",
   "docs/plans",
   "docs/DOMAINS.md",
   ".env",
@@ -77,6 +90,10 @@ const MUST_STRIP = [
   "apps/web/src/app/[locale]/(app)/feature-flags",
   "apps/landing/public/brand/logo.svg",
   "apps/landing/public/og",
+  // Product deploy / DNS (sample — globs cover the rest in .templateignore)
+  ".github/workflows/deploy-pebble-vercel.yml",
+  ".github/workflows/point-forge-dns.yml",
+  ".github/workflows/deploy-carina-ecs.yml",
 ];
 
 type Matcher = ReturnType<typeof ignore>;
