@@ -752,17 +752,19 @@ load_runtime_env() {
     replace_env_assignment "$app_root/.env" PORT "3105"
     replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
     replace_env_assignment "$app_root/.env" PLAYWRIGHT_BROWSERS_PATH "$PLAYWRIGHT_BROWSERS_PATH"
-    # Wallet: ledger when DATABASE_URL is present; otherwise honest memory emergency
-    # so free tools keep working without a silent broken CreditLedger.
-    if [ -n "${DATABASE_URL:-}" ]; then
-      replace_env_assignment "$app_root/.env" FORGE_WALLET_MODE "ledger"
-      # Do not force-clear ALLOW; operators may still pin it.
-      log "forge wallet mode=ledger (DATABASE_URL present)"
+    # Wallet: default memory on forge host until CreditBalance / app_user role is
+    # proven. Operators may pin FORGE_WALLET_MODE=ledger in forge/.env after the
+    # DB role is provisioned. Hard-correct: never pretend ledger works when it does not.
+    if [ -n "${FORGE_WALLET_MODE:-}" ]; then
+      replace_env_assignment "$app_root/.env" FORGE_WALLET_MODE "$FORGE_WALLET_MODE"
+      log "forge wallet mode=$FORGE_WALLET_MODE (from deploy env)"
     else
       replace_env_assignment "$app_root/.env" FORGE_WALLET_MODE "memory"
       replace_env_assignment "$app_root/.env" FORGE_ALLOW_MEMORY_WALLET "1"
-      log "forge wallet mode=memory (no DATABASE_URL — set DB for CreditLedger)"
+      log "forge wallet mode=memory (default until CreditBalance/app_user is ready; pin FORGE_WALLET_MODE=ledger when ready)"
     fi
+    # Prefer full Chromium over headless_shell for print fidelity on the VM.
+    replace_env_assignment "$app_root/.env" PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL "0"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 
@@ -1055,20 +1057,23 @@ install_forge_chromium() {
     return 0
   fi
 
-  log "install forge Chromium browsers -> $browsers_path (via $pw)"
+  export PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL=0
+  replace_env_assignment "$app_root/.env" PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL "0"
+
+  log "install forge Chromium browsers (full, not headless_shell only) -> $browsers_path"
   # Prefer --with-deps on Linux so shared libs (libnss, fonts) exist for headless.
   if [ -x "$pw" ]; then
-    "$pw" install --with-deps chromium 2>&1 | tail -40 \
-      || "$pw" install chromium 2>&1 | tail -30 \
+    "$pw" install --with-deps chromium 2>&1 | tail -50 \
+      || "$pw" install chromium 2>&1 | tail -40 \
       || log "WARN: playwright install chromium failed"
   else
-    node "$pw" install --with-deps chromium 2>&1 | tail -40 \
-      || node "$pw" install chromium 2>&1 | tail -30 \
+    node "$pw" install --with-deps chromium 2>&1 | tail -50 \
+      || node "$pw" install chromium 2>&1 | tail -40 \
       || log "WARN: playwright install chromium failed"
   fi
 
   # Smoke: same launch flags as forge-runtime md-to-pdf (server/ECS-safe).
-  if node -e "
+  if env PLAYWRIGHT_BROWSERS_PATH="$browsers_path" PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL=0 node -e "
     const { chromium } = require(process.argv[1]);
     chromium.launch({
       headless: true,
