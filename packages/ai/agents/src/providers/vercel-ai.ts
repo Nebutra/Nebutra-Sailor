@@ -34,7 +34,7 @@ export class VercelAIAgent extends BaseAgent {
               inputSchema: assertSafeToolSchema(t.name, t.inputSchema) as Parameters<
                 typeof dynamicTool
               >[0]["inputSchema"],
-              execute: async (args) => t.execute(args, context),
+              execute: async (args: unknown) => t.execute(args, context),
             }),
           ]),
         )
