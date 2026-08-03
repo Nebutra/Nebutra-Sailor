@@ -3,18 +3,38 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { resolveSubrepoMirrors } from "./lib/subrepo-mirrors.mjs";
 
-const STALE_PATTERNS = [
+/**
+ * Patterns that indicate a package README is still monorepo-internal or outdated.
+ * Prefer precise import/path markers over bare package names — architecture
+ * diagrams may legitimately mention sibling packages (e.g. tokens → theme).
+ */
+const STALE_SUBSTRINGS = [
   "AI Chat",
   "apps/web /chat",
   "AGPL",
   "workspace:*",
   "@workspace:",
-  "@nebutra/theme",
   "Proprietary",
   "Internal monorepo dependency",
   "console.log",
   "Do not import",
   "inherits from Lobe",
+];
+
+/** Regex patterns with labels (import-style stale guidance). */
+const STALE_REGEXES = [
+  {
+    re: /from\s+["']@nebutra\/theme["']/,
+    label: 'import from "@nebutra/theme" (use @nebutra/tokens for CSS vars)',
+  },
+  {
+    re: /import\s+["']@nebutra\/theme["']/,
+    label: 'import "@nebutra/theme" (use @nebutra/tokens for CSS vars)',
+  },
+  {
+    re: /require\(\s*["']@nebutra\/theme["']\s*\)/,
+    label: 'require("@nebutra/theme")',
+  },
 ];
 
 function readText(path) {
@@ -27,7 +47,11 @@ function h1Of(markdown) {
 
 function staleMatches(markdown) {
   const lower = markdown.toLowerCase();
-  return STALE_PATTERNS.filter((pattern) => lower.includes(pattern.toLowerCase()));
+  const hits = STALE_SUBSTRINGS.filter((pattern) => lower.includes(pattern.toLowerCase()));
+  for (const { re, label } of STALE_REGEXES) {
+    if (re.test(markdown)) hits.push(label);
+  }
+  return hits;
 }
 
 const cohortArg = process.argv.find((arg) => arg.startsWith("--cohort="));

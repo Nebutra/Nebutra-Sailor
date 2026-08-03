@@ -11,6 +11,7 @@
     "custom",
     "dashboard",
     "experimental",
+    "npm-dependencies",
     "primitive",
     "tokens"
   ],
@@ -21,7 +22,9 @@
     "registry": "https://ui.nebutra.com/r/entity.json"
   },
   "dependencies": {
-    "npm": [],
+    "npm": [
+      "@nebutra/icons"
+    ],
     "registry": []
   },
   "files": [

@@ -53,6 +53,9 @@
     "--control-font-size-md",
     "--control-font-size-sm",
     "--control-font-size-tiny",
+    "--control-height-icon-lg",
+    "--control-height-icon-md",
+    "--control-height-icon-sm",
     "--control-height-lg",
     "--control-height-md",
     "--control-height-sm",
@@ -63,6 +66,7 @@
     "--neutral-12",
     "--radius-lg",
     "--radius-md",
+    "--radius-pill",
     "--radius-sm"
   ],
   "evidence": {
