@@ -1,6 +1,7 @@
 "use client";
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { ButtonLink } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -65,14 +66,17 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
         </nav>
         <div className="flex shrink-0 items-center gap-0.5 sm:gap-2">
           <LocaleSwitcher />
-          <a
+          <ButtonLink
             href={ROUTER_URL}
+            variant="ghost"
+            shape="square"
+            iconSize="lg"
             aria-label={t("routerAria", { brandName: brand.name })}
             title="Router"
-            className="hidden h-9 w-9 items-center justify-center rounded-[var(--radius-md)] transition hover:bg-[var(--neutral-3)] sm:inline-flex"
+            className="hidden sm:inline-flex hover:bg-[var(--neutral-3)]"
           >
             <RouterMark className="h-7 w-7" />
-          </a>
+          </ButtonLink>
           <AuthActions
             {...(signInHref ? { signInHref } : {})}
             {...(signUpHref ? { signUpHref } : {})}

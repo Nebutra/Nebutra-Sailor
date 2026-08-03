@@ -14,7 +14,7 @@ import type {
   NotificationRuntimeStatus,
   NotificationSettingsSnapshot,
 } from "@nebutra/notifications";
-import { Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 import {
@@ -140,16 +140,22 @@ export function NotificationCenter({
   const canMarkAllRead = snapshot.runtime.canMarkInboxRead && unreadItems.length > 0;
   return (
     <Popover defaultOpen={defaultOpen}>
-      <PopoverTrigger
-        aria-label="Open notifications"
-        className="relative flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-      >
-        <Bell className="size-4" aria-hidden />
-        {unreadBadge ? (
-          <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground">
-            {unreadBadge}
-          </span>
-        ) : null}
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          shape="square"
+          iconSize="md"
+          aria-label="Open notifications"
+          className="relative text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        >
+          <Bell className="size-4" aria-hidden />
+          {unreadBadge ? (
+            <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground">
+              {unreadBadge}
+            </span>
+          ) : null}
+        </Button>
       </PopoverTrigger>
 
       {/* Not a menu: the panel holds a heading, two forms and a list of link

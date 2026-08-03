@@ -124,6 +124,9 @@ html[data-brand="gsap"] {
   --control-height-sm: 1.75rem;
   --control-height-md: 2rem;
   --control-height-lg: 2.5rem;
+  --control-height-icon-sm: 1.5rem;
+  --control-height-icon-md: 1.75rem;
+  --control-height-icon-lg: 2rem;
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
@@ -273,6 +276,9 @@ html[data-brand="linear"] {
   --control-height-sm: 1.75rem;
   --control-height-md: 2rem;
   --control-height-lg: 2.5rem;
+  --control-height-icon-sm: 1.5rem;
+  --control-height-icon-md: 1.75rem;
+  --control-height-icon-lg: 2rem;
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
@@ -660,6 +666,9 @@ html[data-brand="raycast"] {
   --control-height-sm: 1.75rem;
   --control-height-md: 2rem;
   --control-height-lg: 2.5rem;
+  --control-height-icon-sm: 1.5rem;
+  --control-height-icon-md: 1.75rem;
+  --control-height-icon-lg: 2rem;
   --control-font-size-md: 0.8125rem;
 
   /* Typography */
@@ -1113,6 +1122,9 @@ html[data-brand="vercel"] {
   --control-height-sm: 1.75rem;
   --control-height-md: 2rem;
   --control-height-lg: 2.5rem;
+  --control-height-icon-sm: 1.5rem;
+  --control-height-icon-md: 1.75rem;
+  --control-height-icon-lg: 2rem;
   --control-font-size-md: 0.8125rem;
 
   /* Typography */

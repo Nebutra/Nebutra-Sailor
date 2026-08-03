@@ -43,6 +43,11 @@
   --control-height-sm: 2rem; /* 32 */
   --control-height-md: 2.5rem; /* 40 */
   --control-height-lg: 3rem; /* 48 */
+  /* Icon-only triggers — orthogonal to the text-button ladder above.
+     apps use 28/32/36 rounded-md squares; circle uses the same boxes. */
+  --control-height-icon-sm: 1.75rem; /* 28 */
+  --control-height-icon-md: 2rem; /* 32 */
+  --control-height-icon-lg: 2.25rem; /* 36 */
   --control-font-size-tiny: 0.6875rem; /* 11 */
   --control-font-size-sm: 0.75rem; /* 12 */
   --control-font-size-md: 0.875rem; /* 14 */
@@ -253,6 +258,24 @@
   syntax: "<length>";
   inherits: true;
   initial-value: 48px;
+}
+
+@property --control-height-icon-sm {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 28px;
+}
+
+@property --control-height-icon-md {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 32px;
+}
+
+@property --control-height-icon-lg {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 36px;
 }
 
 @property --control-font-size-tiny {

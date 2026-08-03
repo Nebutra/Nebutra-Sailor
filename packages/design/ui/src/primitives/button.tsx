@@ -23,7 +23,15 @@ function Spinner({ className }: { className?: string }) {
 
 // ─── Icon size class mapping ──────────────────────────────────────────────────
 
-function getIconSizeClass(size: string | null | undefined): string {
+// iconSize (28/32/36px box) takes precedence over size (text-button scale)
+// when both are present — an icon-only button sets iconSize, not size.
+function getIconSizeClass(
+  size: string | null | undefined,
+  iconSize?: "sm" | "md" | "lg" | undefined,
+): string {
+  if (iconSize === "sm") return "[&>svg]:size-3.5"; // 14px, 28px box
+  if (iconSize === "md") return "[&>svg]:size-3.5"; // 14px, 32px box
+  if (iconSize === "lg") return "[&>svg]:size-4"; // 16px, 36px box
   switch (size) {
     case "tiny":
       return "[&>svg]:size-3"; // 12px
@@ -36,7 +44,13 @@ function getIconSizeClass(size: string | null | undefined): string {
   }
 }
 
-function getSpinnerSizeClass(size: string | null | undefined): string {
+function getSpinnerSizeClass(
+  size: string | null | undefined,
+  iconSize?: "sm" | "md" | "lg" | undefined,
+): string {
+  if (iconSize === "sm") return "size-3.5"; // 14px, 28px box
+  if (iconSize === "md") return "size-3.5"; // 14px, 32px box
+  if (iconSize === "lg") return "size-4"; // 16px, 36px box
   switch (size) {
     case "tiny":
       return "size-3"; // 12px
@@ -70,15 +84,16 @@ interface ButtonContentProps {
   prefix?: React.ReactNode | undefined;
   suffix?: React.ReactNode | undefined;
   size?: string | null | undefined;
+  iconSize?: "sm" | "md" | "lg" | undefined;
   children?: React.ReactNode | undefined;
 }
 
-function ButtonContent({ loading, prefix, suffix, size, children }: ButtonContentProps) {
-  const iconSizeClass = getIconSizeClass(size);
+function ButtonContent({ loading, prefix, suffix, size, iconSize, children }: ButtonContentProps) {
+  const iconSizeClass = getIconSizeClass(size, iconSize);
 
   return (
     <>
-      {loading && <Spinner className={getSpinnerSizeClass(size)} />}
+      {loading && <Spinner className={getSpinnerSizeClass(size, iconSize)} />}
       {prefix != null && (
         <span aria-hidden="true" className={cn("shrink-0", iconSizeClass)}>
           {prefix}
@@ -109,6 +124,13 @@ export interface ButtonProps
   suffix?: React.ReactNode;
   /** Elevation shadow level. `true` resolves to `"md"` */
   shadow?: boolean | "sm" | "md" | "lg";
+  /**
+   * Icon-only box size (28 / 32 / 36px) — only takes effect with
+   * `shape="square"` or `shape="circle"`. Independent of `size`: use this
+   * instead of `size` when the button carries only an icon, so its
+   * dimensions don't inherit the text-button height/padding/font scale.
+   */
+  iconSize?: "sm" | "md" | "lg";
 }
 
 const Button = ({
@@ -116,6 +138,7 @@ const Button = ({
   variant,
   size,
   shape,
+  iconSize,
   asChild = false,
   loading = false,
   disabled,
@@ -133,7 +156,7 @@ const Button = ({
   return (
     <Comp
       ref={ref}
-      className={cn(buttonVariants({ variant, size, shape }), shadowClass, className)}
+      className={cn(buttonVariants({ variant, size, shape, iconSize }), shadowClass, className)}
       disabled={isDisabled}
       aria-busy={loading || undefined}
       {...props}
@@ -141,7 +164,13 @@ const Button = ({
       {asChild ? (
         children
       ) : (
-        <ButtonContent loading={loading} prefix={prefix} suffix={suffix} size={size}>
+        <ButtonContent
+          loading={loading}
+          prefix={prefix}
+          suffix={suffix}
+          size={size}
+          iconSize={iconSize}
+        >
           {children}
         </ButtonContent>
       )}
@@ -163,6 +192,13 @@ export interface ButtonLinkProps
   shadow?: boolean | "sm" | "md" | "lg";
   /** Show loading spinner */
   loading?: boolean;
+  /**
+   * Icon-only box size (28 / 32 / 36px) — only takes effect with
+   * `shape="square"` or `shape="circle"`. Independent of `size`: use this
+   * instead of `size` when the link carries only an icon, so its
+   * dimensions don't inherit the text-button height/padding/font scale.
+   */
+  iconSize?: "sm" | "md" | "lg";
 }
 
 const ButtonLink = ({
@@ -170,6 +206,7 @@ const ButtonLink = ({
   variant,
   size,
   shape,
+  iconSize,
   prefix,
   suffix,
   shadow,
@@ -192,7 +229,7 @@ const ButtonLink = ({
     <a
       ref={ref}
       className={cn(
-        buttonVariants({ variant, size, shape }),
+        buttonVariants({ variant, size, shape, iconSize }),
         shadowClass,
         loading && "pointer-events-none opacity-50",
         className,
@@ -200,7 +237,13 @@ const ButtonLink = ({
       {...loadingProps}
       {...props}
     >
-      <ButtonContent loading={loading} prefix={prefix} suffix={suffix} size={size}>
+      <ButtonContent
+        loading={loading}
+        prefix={prefix}
+        suffix={suffix}
+        size={size}
+        iconSize={iconSize}
+      >
         {children}
       </ButtonContent>
     </a>

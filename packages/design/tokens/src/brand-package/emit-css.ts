@@ -212,6 +212,9 @@ function recipeVars(recipe: BrandRecipe): string[] {
     lines.push("  --control-height-sm: 1.75rem;");
     lines.push("  --control-height-md: 2rem;");
     lines.push("  --control-height-lg: 2.5rem;");
+    lines.push("  --control-height-icon-sm: 1.5rem;");
+    lines.push("  --control-height-icon-md: 1.75rem;");
+    lines.push("  --control-height-icon-lg: 2rem;");
     lines.push("  --control-font-size-md: 0.8125rem;");
   } else if (recipe.density === "spacious") {
     lines.push("  --btn-default-padding-y: 0.875rem;");
@@ -220,6 +223,9 @@ function recipeVars(recipe: BrandRecipe): string[] {
     lines.push("  --control-height-sm: 2.25rem;");
     lines.push("  --control-height-md: 2.75rem;");
     lines.push("  --control-height-lg: 3.25rem;");
+    lines.push("  --control-height-icon-sm: 2rem;");
+    lines.push("  --control-height-icon-md: 2.25rem;");
+    lines.push("  --control-height-icon-lg: 2.5rem;");
   }
 
   return lines;

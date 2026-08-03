@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-08-03T02:15:43.130Z",
+  "source": "scripts/lint-inert-dimensions.mjs",
+  "knownInert": [],
+  "dimensions": [
+    {
+      "id": "colour",
+      "declared": true,
+      "consumers": 368,
+      "status": "live"
+    },
+    {
+      "id": "radius",
+      "declared": true,
+      "consumers": 584,
+      "status": "live"
+    },
+    {
+      "id": "elevation",
+      "declared": true,
+      "consumers": 204,
+      "status": "live"
+    },
+    {
+      "id": "typography",
+      "declared": true,
+      "consumers": 10,
+      "status": "live"
+    },
+    {
+      "id": "motion",
+      "declared": true,
+      "consumers": 55,
+      "status": "live"
+    },
+    {
+      "id": "spacing",
+      "declared": true,
+      "consumers": 1,
+      "status": "live"
+    },
+    {
+      "id": "zones",
+      "declared": false,
+      "consumers": 0,
+      "status": "undeclared"
+    },
+    {
+      "id": "controls",
+      "declared": true,
+      "consumers": 1,
+      "status": "live"
+    }
+  ]
+}

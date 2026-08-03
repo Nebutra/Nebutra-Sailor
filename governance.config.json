@@ -418,7 +418,7 @@
     "allowlist": []
   },
   "inertDimensions": {
-    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green.",
-    "known": ["spacing", "controls"]
+    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green. spacing and controls were removed 2026-07-31: both were false positives from a detector bug (scripts/lint-inert-dimensions.mjs required var(--x) to close immediately, but every real caller writes a CSS fallback, var(--spacing-md, ...)). Compiling apps/web's real globals.css with @tailwindcss/node confirmed --spacing-md/--spacing-lg vary per brand (consumed by apps/web/src/components/theme-playground) and --control-height-* is read at 58 call sites in packages/design/ui/src/primitives/button-variants.ts and switch.tsx, density-driven via packages/design/tokens/src/brand-package/emit-css.ts. Both dimensions were already wired; only the guard was blind to it.",
+    "known": []
   }
 }

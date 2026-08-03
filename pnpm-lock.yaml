@@ -404,6 +404,9 @@ importers:
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
+      '@nebutra/theme':
+        specifier: workspace:*
+        version: link:../../packages/design/theme
       '@nebutra/tokens':
         specifier: workspace:*
         version: link:../../packages/design/tokens

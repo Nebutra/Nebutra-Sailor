@@ -59,6 +59,11 @@ const PAGES = [
     title: "Two traps",
     body: "The two ways a correct token silently renders nothing, demonstrated live and side by side with the version that works.",
   },
+  {
+    href: "/tokens/switchability",
+    title: "Switchability",
+    body: "Which Brand Package dimensions actually move a pixel — measured by the same CI guard that fails on inert dimensions, regenerated on every design-site build.",
+  },
 ];
 
 export default function TokensIndexPage() {

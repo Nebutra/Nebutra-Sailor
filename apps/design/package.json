@@ -4,6 +4,8 @@
   "private": true,
   "description": "VERIFIER SCAFFOLD — minimal app shell created only to render and screenshot the token/component pages. Replace with the real shell.",
   "scripts": {
+    "predev": "node ../../scripts/lint-inert-dimensions.mjs --write apps/design/src/lib/generated/switchability.json",
+    "prebuild": "node ../../scripts/lint-inert-dimensions.mjs --write apps/design/src/lib/generated/switchability.json",
     "dev": "next dev --port 3109",
     "build": "next build --webpack",
     "start": "next start --port 3109",
@@ -15,6 +17,7 @@
     "@nebutra/design-tokens": "workspace:*",
     "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",
+    "@nebutra/theme": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "geist": "catalog:",

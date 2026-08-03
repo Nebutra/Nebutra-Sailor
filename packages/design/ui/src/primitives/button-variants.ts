@@ -36,9 +36,27 @@ export const buttonVariants = cva(
       },
       shape: {
         default: "",
-        square: "",
-        circle: "",
-        pill: "rounded-full",
+        // Radius from --btn-default-radius / --radius-md — brand-switchable.
+        // Do not hardcode rounded-md here; a language must be able to retarget
+        // the corner treatment of every icon trigger at once.
+        square: "rounded-[var(--btn-default-radius,var(--radius-md))]",
+        // Pill radius token, not Tailwind rounded-full — same 9999px default,
+        // but a brand that ships a softer "circle" can override --radius-pill.
+        circle: "rounded-[var(--radius-pill,9999px)]",
+        pill: "rounded-[var(--radius-pill,9999px)]",
+      },
+      // Icon-only box size — orthogonal to `size` (which tunes text-button
+      // height/padding/font together) and to `shape` (which picks the
+      // corner treatment). Only takes effect combined with shape="square"
+      // or shape="circle" (see compoundVariants below); every other
+      // combination ignores it. 28/32/36 cover the icon-trigger sizes that
+      // actually occur in the app — 24/40/48 are already reachable via
+      // shape + size (tiny/default/lg). Heights read --control-height-icon-*
+      // so density-aware Brand Packages can scale them with the ladder.
+      iconSize: {
+        sm: "", // 28px default
+        md: "", // 32px default
+        lg: "", // 36px default
       },
     },
     compoundVariants: [
@@ -49,22 +67,62 @@ export const buttonVariants = cva(
       {
         shape: "circle",
         size: "tiny",
-        className: "w-[var(--control-height-tiny,1.5rem)] px-0 rounded-full",
+        className: "w-[var(--control-height-tiny,1.5rem)] px-0",
       },
       {
         shape: "circle",
         size: "sm",
-        className: "w-[var(--control-height-sm,2rem)] px-0 rounded-full",
+        className: "w-[var(--control-height-sm,2rem)] px-0",
       },
       {
         shape: "circle",
         size: "default",
-        className: "w-[var(--control-height-md,2.5rem)] px-0 rounded-full",
+        className: "w-[var(--control-height-md,2.5rem)] px-0",
       },
       {
         shape: "circle",
         size: "lg",
-        className: "w-[var(--control-height-lg,3rem)] px-0 rounded-full",
+        className: "w-[var(--control-height-lg,3rem)] px-0",
+      },
+      // iconSize wins over the size-driven box above — matched on shape +
+      // iconSize only, so it applies regardless of whatever `size` was
+      // passed (or left at its "default" fallback). Corner treatment stays
+      // on the shape variant (token-backed); only the box is set here.
+      {
+        shape: "square",
+        iconSize: "sm",
+        className:
+          "h-[var(--control-height-icon-sm,1.75rem)] w-[var(--control-height-icon-sm,1.75rem)] px-0",
+      },
+      {
+        shape: "square",
+        iconSize: "md",
+        className:
+          "h-[var(--control-height-icon-md,2rem)] w-[var(--control-height-icon-md,2rem)] px-0",
+      },
+      {
+        shape: "square",
+        iconSize: "lg",
+        className:
+          "h-[var(--control-height-icon-lg,2.25rem)] w-[var(--control-height-icon-lg,2.25rem)] px-0",
+      },
+      {
+        shape: "circle",
+        iconSize: "sm",
+        className:
+          "h-[var(--control-height-icon-sm,1.75rem)] w-[var(--control-height-icon-sm,1.75rem)] px-0",
+      },
+      {
+        shape: "circle",
+        iconSize: "md",
+        className:
+          "h-[var(--control-height-icon-md,2rem)] w-[var(--control-height-icon-md,2rem)] px-0",
+      },
+      {
+        shape: "circle",
+        iconSize: "lg",
+        className:
+          "h-[var(--control-height-icon-lg,2.25rem)] w-[var(--control-height-icon-lg,2.25rem)] px-0",
       },
     ],
     defaultVariants: {

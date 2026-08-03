@@ -153,11 +153,12 @@ function RowAction({
     <Button
       type="button"
       variant="ghost"
-      size="sm"
+      shape="square"
+      iconSize="sm"
       disabled={disabled}
       aria-label={label}
       onClick={onClick}
-      className="size-7 shrink-0 p-0 text-neutral-9 hover:text-neutral-12"
+      className="shrink-0 text-neutral-9 hover:text-neutral-12"
     >
       <IconCmp aria-hidden="true" className="size-3.5" />
     </Button>

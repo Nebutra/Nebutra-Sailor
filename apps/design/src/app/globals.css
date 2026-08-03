@@ -3,8 +3,13 @@
  *
  * preset.css wires tailwind + @nebutra/tokens/styles.css +
  * @nebutra/tokens/recipe.css + @nebutra/ui/styles/sources.css + fonts.
+ *
+ * skins.css is the multi-language catalog, scoped to html[data-brand].
+ * The header BrandLanguageSwitcher flips that attribute so every live
+ * component on the site re-renders under the chosen design language.
  */
 @import "@nebutra/ui/styles/preset.css";
+@import "@nebutra/theme/skins.css";
 
 /* Scan this app's source so its utility classes generate */
 @source "../**/*.{ts,tsx}";

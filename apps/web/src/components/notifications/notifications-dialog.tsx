@@ -9,7 +9,13 @@ import {
   Users,
 } from "@nebutra/icons";
 import type { NotificationInboxItem, NotificationSettingsSnapshot } from "@nebutra/notifications";
-import { Dialog, DialogContent, ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -116,12 +122,15 @@ export function NotificationsDialog() {
 
   return (
     <>
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        shape="square"
+        iconSize="md"
         onClick={() => setOpen(true)}
         aria-label="Open notifications"
         title="Notifications"
-        className="relative inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="relative shrink-0 text-muted-foreground hover:text-foreground"
       >
         <Bell className="size-4" aria-hidden="true" />
         {unreadBadge ? (
@@ -129,7 +138,7 @@ export function NotificationsDialog() {
             {unreadBadge}
           </span>
         ) : null}
-      </button>
+      </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent

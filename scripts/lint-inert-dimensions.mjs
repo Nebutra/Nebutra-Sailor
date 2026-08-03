@@ -10,9 +10,19 @@
  * Measured 2026-07-31, by compiling the real pipeline rather than reading source:
  *   - colour, radius, typography and motion switch, and are read by shipped code
  *   - zone typography declares 48 properties per language and has ZERO consumers
- *   - spacing declares 6 and has ZERO consumers
- * Both were counted as evidence that the system "switches everything". They do
+ * That was counted as evidence that the system "switches everything". It does
  * not switch anything, and nothing in the build said so.
+ *
+ * spacing and controls were on this same list until 2026-07-31's re-audit: the
+ * `reads` patterns for both required `var(--x)` to close immediately, but every
+ * real caller writes a CSS custom-property fallback (`var(--spacing-md, ...)`,
+ * `var(--control-height-md,2.5rem)`) — the correct way to consume a token a
+ * given brand might not override. That is a detector bug, not a dead
+ * dimension: apps/web's theme-playground reads --spacing-md/--spacing-lg as
+ * real per-brand-varying properties, and button-variants.ts/switch.tsx read
+ * --control-height-* at 58 call sites, both confirmed by compiling apps/web's
+ * actual globals.css with @tailwindcss/node and grepping the output. Fixed the
+ * patterns; both dimensions came off the known-inert list.
  *
  * This is a bidirectional ratchet, like the doc-claims and repository-seam
  * guards. It fails when:
@@ -86,17 +96,31 @@ const DIMENSIONS = [
   // `--section-gap-md`, a local token in apps/landing that has nothing to do
   // with this scale, and spacing reports consumers it does not have — which is
   // exactly the false-positive class that kept lint-defined-css-vars out of CI.
+  //
+  // The trailing `(?:,[^)]*)?` is load-bearing too, and was missing until
+  // 2026-07-31: every real caller of --spacing-* and --control-height-* writes
+  // a CSS custom-property fallback (`var(--spacing-md, var(--playground-gap))`,
+  // `var(--control-height-md,2.5rem)`), because that is the only defensible way
+  // to consume a token that a given brand might not override. A `reads` pattern
+  // requiring the var() to close immediately after the property name never
+  // matches that shape, so it reported these two dimensions as having zero
+  // consumers when apps/web/src/components/theme-playground and
+  // packages/design/ui/src/primitives/button-variants.ts (58 arbitrary-value
+  // call sites) both compile to real, per-brand-varying properties — confirmed
+  // by compiling apps/web's actual globals.css with @tailwindcss/node against
+  // real candidates and grepping the output, not by reading source.
   {
     id: "spacing",
     declares: /--space-source-[a-z0-9]+:/,
     reads:
-      /var\(--spacing-(?:xs|sm|md|lg|xl|2xl)\)|(?<![-\w])(?:p|px|py|pt|pb|pl|pr|m|mx|my|gap|space-[xy])-(?:xs|sm|md|lg|xl|2xl)(?![-\w])/,
+      /var\(--spacing-(?:xs|sm|md|lg|xl|2xl)(?:,[^)]*)?\)|(?<![-\w])(?:p|px|py|pt|pb|pl|pr|m|mx|my|gap|space-[xy])-(?:xs|sm|md|lg|xl|2xl)(?![-\w])/,
   },
   { id: "zones", declares: /--zone-[a-z-]+:/, reads: /var\(--zone-[a-z-]+\)/ },
   {
     id: "controls",
-    declares: /--control-height-[a-z]+:/,
-    reads: /var\(--control-(?:height|font-size)-[a-z]+\)/,
+    // icon-sm / icon-md / icon-lg are multi-segment names — allow hyphens.
+    declares: /--control-height-[\w-]+:/,
+    reads: /var\(--control-(?:height|font-size)-[\w-]+(?:,[^)]*)?\)/,
   },
 ];
 
@@ -166,6 +190,41 @@ const stale = [...KNOWN_INERT].filter((id) => {
   return found && found.consumers > 0;
 });
 const unknown = [...KNOWN_INERT].filter((id) => !report.some((d) => d.id === id));
+
+// Optional machine-readable emit for the design site. Same source as the
+// human report above — never hand-type the numbers into docs (they drift
+// within a week). Usage: `node scripts/lint-inert-dimensions.mjs --write
+// apps/design/src/lib/generated/switchability.json`
+const writeIdx = process.argv.indexOf("--write");
+if (writeIdx !== -1) {
+  const outPath = process.argv[writeIdx + 1];
+  if (!outPath) {
+    process.stderr.write("lint-inert-dimensions: --write requires a path\n");
+    process.exit(2);
+  }
+  const { mkdirSync, writeFileSync } = await import("node:fs");
+  const { dirname: dirOf } = await import("node:path");
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    source: "scripts/lint-inert-dimensions.mjs",
+    knownInert: [...KNOWN_INERT],
+    dimensions: report.map((d) => ({
+      id: d.id,
+      declared: d.declared,
+      consumers: d.consumers,
+      status: !d.declared
+        ? "undeclared"
+        : d.consumers === 0
+          ? KNOWN_INERT.has(d.id)
+            ? "known-inert"
+            : "inert"
+          : "live",
+    })),
+  };
+  mkdirSync(dirOf(resolve(ROOT, outPath)), { recursive: true });
+  writeFileSync(resolve(ROOT, outPath), `${JSON.stringify(payload, null, 2)}\n`);
+  process.stdout.write(`wrote ${outPath}\n`);
+}
 
 const width = Math.max(...report.map((d) => d.id.length));
 for (const d of report) {

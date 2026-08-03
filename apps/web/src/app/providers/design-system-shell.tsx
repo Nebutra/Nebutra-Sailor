@@ -21,6 +21,7 @@ import type {
 } from "@nebutra/ui/patterns";
 import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -538,15 +539,18 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
                 tenantLogoUrl={tenantLogoUrl}
               />
             </ViewTransitionLink>
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              shape="square"
+              iconSize="sm"
               onClick={toggle}
               aria-label={webBrandLabels.collapseSidebar}
               title={webBrandLabels.collapseSidebar}
-              className="inline-flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 group-hover/sidebar:opacity-100"
+              className="shrink-0 text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 group-hover/sidebar:opacity-100"
             >
               <SidebarLeft className="size-4" aria-hidden="true" />
-            </button>
+            </Button>
           </>
         )}
       </div>

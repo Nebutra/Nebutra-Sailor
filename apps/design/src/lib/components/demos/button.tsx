@@ -66,9 +66,9 @@ export default function ButtonDemo({ derived }: DemoProps) {
       </State>
 
       <State
-        breaks="A square/circle compound variant that stops being square because the width rule and the size rule fell out of sync."
+        breaks="A square/circle compound variant that stops being square because the width rule and the size rule fell out of sync — or a corner radius hardcoded as rounded-md / rounded-full so a Brand Package cannot retarget the shape."
         id="shapes"
-        note="shape crosses with size through compound variants — square and circle take their width from the same height token."
+        note="shape crosses with size through compound variants — square and circle take their width from the same height token. Radius is token-backed: square → --btn-default-radius / --radius-md, circle/pill → --radius-pill."
         title="Shapes"
       >
         <AxisMatrix
@@ -85,6 +85,30 @@ export default function ButtonDemo({ derived }: DemoProps) {
           }
           values={shapes}
         />
+      </State>
+
+      <State
+        breaks="An icon trigger forced through size=icon (40px) or shape=circle when the product surface actually wants a 28/32/36 rounded-md square — the recurring toolbar / bell / sidebar pattern."
+        id="icon-size"
+        note="iconSize is orthogonal to size and only combines with shape=square|circle. Boxes read --control-height-icon-sm|md|lg (28/32/36 by default, density-scaled by Brand Packages)."
+        title="Icon-only triggers"
+      >
+        <Row>
+          {(["sm", "md", "lg"] as const).map((iconSize) => (
+            <Specimen key={iconSize} label={`square · ${iconSize}`}>
+              <Button shape="square" iconSize={iconSize} aria-label="Add" variant="outline">
+                <Plus />
+              </Button>
+            </Specimen>
+          ))}
+          {(["sm", "md", "lg"] as const).map((iconSize) => (
+            <Specimen key={`c-${iconSize}`} label={`circle · ${iconSize}`}>
+              <Button shape="circle" iconSize={iconSize} aria-label="Add" variant="outline">
+                <Plus />
+              </Button>
+            </Specimen>
+          ))}
+        </Row>
       </State>
 
       <State
@@ -224,8 +248,10 @@ export default function ButtonDemo({ derived }: DemoProps) {
       <Aside title="Why there is no empty state here">
         <p>
           A button with no children is not a state worth pinning — it is a bug at the call site. The
-          nearest real case is an icon-only button, which is covered by <code>size="icon"</code> and{" "}
-          <code>shape="square"</code> above and requires an <code>aria-label</code>.
+          nearest real case is an icon-only button: use <code>shape=&quot;square&quot;</code> +{" "}
+          <code>iconSize</code> (28/32/36 rounded-md triggers) or{" "}
+          <code>shape=&quot;circle&quot;</code> when a perfect disc is intentional, always with an{" "}
+          <code>aria-label</code>.
         </p>
       </Aside>
     </DemoPage>

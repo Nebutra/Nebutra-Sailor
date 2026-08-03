@@ -1,6 +1,7 @@
 "use client";
 
 import { Bell } from "@nebutra/icons";
+import { Button } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import pLimit from "p-limit";
@@ -236,16 +237,19 @@ export function InboxBell({
 
   return (
     <div ref={containerRef} className="relative">
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        shape="square"
+        iconSize="lg"
         aria-label={`Notifications${unreadCount > 0 ? ` (${badgeLabel} unread)` : ""}`}
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={() => setOpen((current) => !current)}
-        className="relative inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="relative text-muted-foreground hover:text-foreground"
         data-testid="inbox-bell-trigger"
       >
-        <Bell className="h-5 w-5" aria-hidden="true" />
+        <Bell className="size-5" aria-hidden="true" />
         {unreadCount > 0 ? (
           <span
             aria-hidden="true"
@@ -255,7 +259,7 @@ export function InboxBell({
             {badgeLabel}
           </span>
         ) : null}
-      </button>
+      </Button>
 
       {open ? (
         <section

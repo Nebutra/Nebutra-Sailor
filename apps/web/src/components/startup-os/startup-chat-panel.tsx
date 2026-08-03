@@ -500,29 +500,35 @@ function UserMessage({
       </div>
       <div className="flex items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100">
         {canRevert ? (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            shape="square"
+            iconSize="sm"
             aria-label="Edit and resend"
             title="Edit and resend"
             onClick={() => setEditing(true)}
-            className="flex size-7 items-center justify-center rounded-md text-neutral-9 transition-colors hover:bg-neutral-3"
+            className="text-neutral-9 hover:bg-neutral-3"
           >
             <PencilEdit className="size-3.5" aria-hidden="true" />
-          </button>
+          </Button>
         ) : null}
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          shape="square"
+          iconSize="sm"
           aria-label={copied ? "Copied" : "Copy"}
           title="Copy"
           onClick={() => void copy()}
-          className="flex size-7 items-center justify-center rounded-md text-neutral-9 transition-colors hover:bg-neutral-3"
+          className="text-neutral-9 hover:bg-neutral-3"
         >
           {copied ? (
             <Check className="size-3.5 text-success" aria-hidden="true" />
           ) : (
             <Copy className="size-3.5" aria-hidden="true" />
           )}
-        </button>
+        </Button>
       </div>
     </div>
   );
