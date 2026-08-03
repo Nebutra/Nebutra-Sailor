@@ -224,6 +224,13 @@ module.exports = {
         PORT: 3105,
         HOSTNAME: "127.0.0.1",
         ENV_FILE: "/var/www/nebutra/forge/.env",
+        // Free tools default: memory prepaid. Set FORGE_WALLET_MODE=ledger in
+        // forge/.env only after CreditBalance / app_user is provisioned.
+        FORGE_WALLET_MODE: "memory",
+        FORGE_ALLOW_MEMORY_WALLET: "1",
+        // Full Chromium for md-to-pdf (not headless_shell-only).
+        PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL: "0",
+        PLAYWRIGHT_BROWSERS_PATH: "/var/www/nebutra/.cache/ms-playwright",
       },
       max_memory_restart: "450M",
       instances: 1,

@@ -1297,6 +1297,14 @@ for p in procs:
     pm2 logs "$pm2_name" --nostream --lines 60 --raw --no-color 2>&1 | tail -70 || true
   fi
 
+  # Forge: always force-recreate so ecosystem env (wallet mode, Playwright
+  # paths) is re-read. Zero-downtime reload keeps stale PM2 env and ignores
+  # ecosystem.config.cjs changes.
+  if [ "$app" = "forge" ] && [ "$can_reload" = "yes" ]; then
+    log "forge: force-recreate so ecosystem env (wallet/Playwright) is applied"
+    can_reload="no"
+  fi
+
   if [ "$can_reload" = "yes" ]; then
     log "reload pm2 $pm2_name (cwd=$pm_cwd, zero-downtime)"
     pm2 reload "$pm2_name" --update-env
