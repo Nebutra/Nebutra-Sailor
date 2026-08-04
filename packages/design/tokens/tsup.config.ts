@@ -3,9 +3,11 @@ import { join } from "node:path";
 import { defineConfig } from "tsup";
 
 /**
- * Entries that re-export client hooks/components (ThemeProvider, useBrand).
- * tsup/esbuild strips the source "use client" directive; without re-stamping
- * the dist file, Next RSC fails on ECS `build:next` with useState-in-RSC.
+ * Client entrypoints that re-export hooks / ThemeProvider.
+ * tsup/esbuild strips source "use client"; re-stamp so Next RSC accepts them.
+ *
+ * brand-package/index is intentionally server-safe (no useBrand) — do not
+ * mark it "use client" or design-sync server imports break.
  */
 const CLIENT_DIST_ENTRIES = ["index", "brand-package/use-brand"] as const;
 
@@ -24,6 +26,9 @@ export default defineConfig({
   },
   format: ["esm"],
   dts: true,
+  // Prevent shared chunks that mix useBrand hooks into brand-package/index
+  // (RSC import of compileReferoTokens would then pull useState).
+  splitting: false,
   sourcemap: true,
   clean: true,
   target: "es2022",

@@ -36,11 +36,10 @@ export type ThemeId = (typeof THEME_IDS)[number];
 
 export const DEFAULT_THEME: ThemeId = "dark";
 
-/** Create Center brand package: carrier contract + runtime apply */
+/** Create Center brand package: carrier contract + runtime apply (server-safe) */
 export {
   applyBrandCss,
   applyBrandPackage,
-  applyBrandToIframe,
   BRAND_STORAGE_KEY,
   type BrandColorRoles,
   type BrandElevationTokens,
@@ -59,8 +58,16 @@ export {
   restorePersistedBrand,
   rolesFromSemantic,
   semanticFromRoles,
-  useBrand,
-  useBrandIframePreview,
   type ValidationResult,
   validateBrandPackage,
 } from "./brand-package";
+
+/** Client-only brand hooks — separate entry so brand-package stays RSC-safe */
+export {
+  applyBrandToIframe,
+  type BrandIframePreviewOptions,
+  type UseBrandOptions,
+  type UseBrandResult,
+  useBrand,
+  useBrandIframePreview,
+} from "./brand-package/use-brand";

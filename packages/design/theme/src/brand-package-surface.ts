@@ -7,7 +7,6 @@
 export {
   applyBrandCss,
   applyBrandPackage,
-  applyBrandToIframe,
   BRAND_STORAGE_KEY,
   type BrandPackage,
   type BrandPackageInput,
@@ -23,8 +22,12 @@ export {
   getActiveBrandId,
   normalizeBrandPackage,
   restorePersistedBrand,
-  useBrand,
-  useBrandIframePreview,
   type ValidationResult,
   validateBrandPackage,
 } from "@nebutra/tokens/brand-package";
+
+export {
+  applyBrandToIframe,
+  useBrand,
+  useBrandIframePreview,
+} from "@nebutra/tokens/use-brand";

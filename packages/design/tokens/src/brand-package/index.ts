@@ -55,13 +55,12 @@ export type {
   ElevationStyle,
   HslChannels,
 } from "./types";
-export {
-  applyBrandToIframe,
-  type BrandIframePreviewOptions,
-  type UseBrandIframePreviewResult,
-  type UseBrandOptions,
-  type UseBrandResult,
-  useBrand,
-  useBrandIframePreview,
+// Client hooks: import from `@nebutra/tokens/use-brand` or package root only.
+// Keep this entry free of useBrand so server importers (design-sync) stay RSC-safe.
+export type {
+  BrandIframePreviewOptions,
+  UseBrandIframePreviewResult,
+  UseBrandOptions,
+  UseBrandResult,
 } from "./use-brand";
 export { type ValidationResult, validateBrandPackage } from "./validate";
