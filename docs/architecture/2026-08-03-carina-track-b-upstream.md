@@ -104,6 +104,22 @@ non-Carina isolators. Production Track B **prefers** `createCarinaSandbox`.
 Do **not** vendor Carina source into this monorepo. Follow
 `protocol/jsonrpc/methods.json` and Carina release notes.
 
+
+## Same-host co-deploy (default)
+
+Sailor + Carina on **one machine** is the product default:
+
+```text
+api-gateway  ──unix NDJSON──►  carina-daemon
+  CARINA_DAEMON_SOCK=/var/carina/run/daemon.sock
+  CARINA_WORKSPACE_ROOT=/var/carina/ws
+```
+
+- Install/start: `infra/ops/scripts/carina-codeploy.sh`
+- PM2: `carina-daemon` in `infra/iac/ecs/ecosystem.config.cjs`
+- Opt out: `CARINA_CODEPLOY=0` (fail closed without URL)
+- Optional HTTP `CARINA_JSONRPC_URL` remains for non-socket bridges
+
 ## Consequences
 
 - Phase 1: adapter + tests on main; without endpoint, exec **fail-closed**.

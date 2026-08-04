@@ -145,11 +145,33 @@ module.exports = {
       listen_timeout: 10000,
     },
     {
+      // Carina Track-B kernel — same host as api-gateway (local-first co-deploy).
+      // Install binary: infra/ops/scripts/install-carina-daemon.sh
+      // Socket: /var/carina/run/daemon.sock → CARINA_DAEMON_SOCK on api-gateway.
+      name: "carina-daemon",
+      cwd: "/var/carina",
+      script: "/var/carina/bin/carina-daemon",
+      args: "-socket /var/carina/run/daemon.sock -state /var/carina/state -approval-mode always-approve",
+      interpreter: "none",
+      env: {
+        HOME: "/var/carina",
+        CARINA_HOME: "/var/carina",
+      },
+      max_memory_restart: "512M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 20,
+      kill_timeout: 8000,
+      listen_timeout: 15000,
+    },
+    {
       name: "api-gateway",
       // start.sh sources /var/www/nebutra/api/.env then `exec node dist/node.js`.
       // Plain `node dist/node.js` from PM2 does not load that env file, so DB/cache
       // probes fail (DATABASE_URL missing or mis-parsed). Packaging still strips
       // the tsx emergency loader — start.sh must stay on node, never tsx.
+      // Carina co-deploy defaults (override via /var/www/nebutra/api/.env).
       cwd: "/var/www/nebutra/api",
       script: "start.sh",
       interpreter: "bash",
@@ -157,6 +179,9 @@ module.exports = {
         NODE_ENV: "production",
         PORT: 3002,
         HOSTNAME: "127.0.0.1",
+        CARINA_CODEPLOY: "1",
+        CARINA_DAEMON_SOCK: "/var/carina/run/daemon.sock",
+        CARINA_WORKSPACE_ROOT: "/var/carina/ws",
       },
       // Gateway imports Prisma, provider SDKs, workers, and Hono route graphs
       // at startup. The real VM process settles near the old 300M limit,

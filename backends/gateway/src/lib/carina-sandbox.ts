@@ -12,7 +12,10 @@
  *   CARINA_AUTO_APPROVE           1|true → auto resolve requires_approval once
  *   CARINA_CLIENT_ID              optional hello client_id
  *
- * Fail-closed: without CARINA_JSONRPC_URL → REFUSING_SANDBOX + empty tools.
+ * Co-deploy (default): unix socket /var/carina/run/daemon.sock + workspace
+ * /var/carina/ws — same host as api-gateway. Opt out: CARINA_CODEPLOY=0.
+ *
+ * Fail-closed only when co-deploy is disabled and no URL/socket is set.
  */
 
 import {
@@ -20,7 +23,7 @@ import {
   isCarinaSandbox,
   registerCommandExecTool,
   resolveCarinaSandboxFromEnv,
-  resolveCarinaWorkspaceRoot,
+  resolveCarinaWorkspaceRootWithCodeploy,
   type CarinaEnv,
   type CarinaSandbox,
   type ExternalSandbox,
@@ -48,7 +51,7 @@ export function createGatewayCarinaBundle(
 
   let workspaceRoot: string | undefined;
   if (carinaEnabled) {
-    workspaceRoot = resolveCarinaWorkspaceRoot(
+    workspaceRoot = resolveCarinaWorkspaceRootWithCodeploy(
       opts.tenantId ?? "_default",
       env,
       opts.threadId ?? "",

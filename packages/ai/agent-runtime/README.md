@@ -43,12 +43,10 @@ import {
 } from "@nebutra/agent-runtime";
 
 // Production: only when a reachable Carina JSON-RPC base URL is configured.
-const sandbox: ExternalSandbox = process.env.CARINA_JSONRPC_URL
-  ? createCarinaSandbox({
-      baseUrl: process.env.CARINA_JSONRPC_URL,
-      token: process.env.CARINA_JSONRPC_TOKEN, // product/gateway cred — never owner unlock
-    })
-  : REFUSING_SANDBOX;
+// Same-host co-deploy (default): unix socket /var/carina/run/daemon.sock
+import { resolveCarinaSandboxFromEnv } from "@nebutra/agent-runtime";
+const sandbox = resolveCarinaSandboxFromEnv();
+// Opt out: CARINA_CODEPLOY=0  |  optional HTTP: CARINA_JSONRPC_URL=…
 ```
 
 See `docs/architecture/2026-08-03-carina-track-b-upstream.md`.

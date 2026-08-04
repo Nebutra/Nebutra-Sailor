@@ -298,9 +298,12 @@ describe("tools", () => {
 
 
 describe("Carina Phase 2 host helpers", () => {
-  it("resolveCarinaSandboxFromEnv fails closed without URL", () => {
-    expect(resolveCarinaSandboxFromEnv({})).toBe(REFUSING_SANDBOX);
-    expect(resolveCarinaSandboxFromEnv({ CARINA_JSONRPC_URL: "   " })).toBe(REFUSING_SANDBOX);
+  it("resolveCarinaSandboxFromEnv fails closed when co-deploy is off", () => {
+    expect(resolveCarinaSandboxFromEnv({ CARINA_CODEPLOY: "0" })).toBe(REFUSING_SANDBOX);
+  });
+
+  it("resolveCarinaSandboxFromEnv co-deploys by default (socket sandbox)", () => {
+    expect(isCarinaSandbox(resolveCarinaSandboxFromEnv({}))).toBe(true);
   });
 
   it("resolveCarinaSandboxFromEnv builds a Carina sandbox when URL is set", () => {
