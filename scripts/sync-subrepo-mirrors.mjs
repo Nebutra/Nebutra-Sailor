@@ -553,9 +553,19 @@ function writeMirrorMetadata(targetDir, mirror) {
       "",
     ].join("\n"),
   );
+  // Root `/dist` only — vendor/*/dist must remain tracked for file: deps.
   writeFileSync(
     join(targetDir, ".gitignore"),
-    ["node_modules", "dist", "coverage", ".turbo", ".DS_Store", ""].join("\n"),
+    [
+      "node_modules",
+      "/dist",
+      "!vendor/**/dist",
+      "!vendor/**/dist/**",
+      "coverage",
+      ".turbo",
+      ".DS_Store",
+      "",
+    ].join("\n"),
   );
 }
 
