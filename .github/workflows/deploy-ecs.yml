@@ -926,10 +926,28 @@ jobs:
             infra/ops/scripts/install-carina-daemon.sh \
             infra/ops/scripts/configure-api-carina-env.sh \
             "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/"
+          # Pre-stage carina-daemon on the GH runner (US) then scp — ECS cannot
+          # reliably pull GitHub Releases in reasonable time from CN.
+          CARINA_VERSION="${CARINA_VERSION:-0.8.1}"
+          ARCH_TAG="linux_amd64"
+          ASSET="carina_${CARINA_VERSION}_${ARCH_TAG}.tar.gz"
+          URL="https://github.com/Nebutra/carina/releases/download/v${CARINA_VERSION}/${ASSET}"
+          echo "Pre-staging carina-daemon from $URL"
+          mkdir -p /tmp/carina-stage
+          curl -fsSL --connect-timeout 30 --max-time 300 --retry 3 \
+            "$URL" -o "/tmp/carina-stage/$ASSET"
+          tar -xzf "/tmp/carina-stage/$ASSET" -C /tmp/carina-stage
+          BIN="$(find /tmp/carina-stage -type f -name carina-daemon | head -1)"
+          if [ -z "$BIN" ]; then
+            echo "::warning::carina-daemon not found in release archive — VM will try network install"
+          else
+            scp "${SCP_OPTS[@]}" "$BIN" \
+              "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/carina-daemon"
+          fi
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               "${ECS_USER}@${ECS_HOST}" \
-              'chmod +x /tmp/carina-ops/*.sh'
+              'chmod +x /tmp/carina-ops/*.sh /tmp/carina-ops/carina-daemon 2>/dev/null || chmod +x /tmp/carina-ops/*.sh'
           scp "${SCP_OPTS[@]}" infra/iac/ecs/ecosystem.config.cjs \
             "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/ecosystem.config.cjs"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/nginx.conf \
