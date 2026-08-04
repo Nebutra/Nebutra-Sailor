@@ -42,6 +42,11 @@ export type { AuthFeature, AuthFeatureContext } from "./features";
 export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
 // Middleware factory
 export { createAuthMiddleware } from "./middleware";
+// OAuth start: preserve BA state cookies on 302 (do not use bare Response.redirect)
+export {
+  appendSetCookieHeaders,
+  buildOAuthStartRedirectResponse,
+} from "./oauth-start-response";
 // Static multi-provider matrix (declared support + product tier)
 export type { AuthProviderProfile, AuthProviderTier } from "./provider-matrix";
 export {
@@ -73,6 +78,7 @@ export type {
   Session,
   SetActiveResult,
   SignInMethod,
+  SignInResult,
   User,
 } from "./types";
 // Utilities: login-center URLs, returnUrl sanitization, Turnstile

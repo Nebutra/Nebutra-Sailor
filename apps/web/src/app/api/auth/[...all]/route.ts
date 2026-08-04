@@ -18,7 +18,12 @@
 import { createAccessGate, createPrismaAccessInviteStore } from "@nebutra/access-gate";
 import { auditLogger } from "@nebutra/audit";
 import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
-import { getAuditableContext, getConfiguredAuthProvider, sanitizeReturnUrl } from "@nebutra/auth";
+import {
+  buildOAuthStartRedirectResponse,
+  getAuditableContext,
+  getConfiguredAuthProvider,
+  sanitizeReturnUrl,
+} from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import { isOAuthProvider, type OAuthProvider } from "@/lib/auth/oauth-providers";
@@ -120,14 +125,10 @@ async function handleOAuthStartRequest(request: Request): Promise<Response | nul
       redirectUrl: oauthStart.callbackURL,
     });
 
-    if (result.ok && result.redirectTo) {
-      return Response.redirect(new URL(result.redirectTo, request.url).toString(), 302);
-    }
-
-    const signInUrl = new URL("/sign-in", request.url);
-    signInUrl.searchParams.set("error", result.error?.code ?? "oauth_unavailable");
-    signInUrl.searchParams.set("provider", oauthStart.provider);
-    return Response.redirect(signInUrl, 302);
+    // Must forward BA state cookies — bare Response.redirect drops them.
+    return buildOAuthStartRedirectResponse(result, request.url, {
+      provider: oauthStart.provider,
+    });
   } catch (error) {
     logger.error("[auth] OAuth start failed", {
       provider: oauthStart.provider,

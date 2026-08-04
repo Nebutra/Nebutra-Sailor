@@ -103,41 +103,99 @@ interface OAuthButtonsProps {
 }
 
 /**
+ * Start social OAuth via Better Auth's native POST `/api/auth/sign-in/social`.
+ *
+ * That endpoint sets `__Secure-better-auth.state` on the response. A full-page
+ * GET to `/api/auth/oauth/:provider` used to drop those cookies (bare
+ * Response.redirect), so the IdP callback always failed. Prefer POST here so
+ * the browser stores the state cookie before navigating to the IdP.
+ *
+ * Falls back to the GET start path only if fetch cannot run (rare).
+ */
+async function startSocialOAuth(provider: OAuthProvider, callbackURL: string): Promise<string> {
+  const response = await fetch("/api/auth/sign-in/social", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ provider, callbackURL }),
+  });
+
+  let data: { url?: string; redirect?: boolean | string } | null = null;
+  try {
+    data = (await response.json()) as { url?: string; redirect?: boolean | string };
+  } catch {
+    data = null;
+  }
+
+  const url =
+    (typeof data?.url === "string" && data.url) ||
+    (typeof data?.redirect === "string" && data.redirect) ||
+    response.headers.get("Location");
+
+  if (!response.ok || !url) {
+    throw new Error(`oauth_start_failed:${provider}`);
+  }
+
+  return url;
+}
+
+/**
  * Social login buttons — same visual contract as apps/web OAuthButtons.
  * Brand-colored provider icons are intentional (platform identity).
  */
 export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
   const t = useTranslations("auth.signIn");
   const [loadingProvider, setLoadingProvider] = useState<OAuthProvider | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   if (providers.length === 0) return null;
 
-  function handleOAuth(provider: OAuthProvider) {
+  async function handleOAuth(provider: OAuthProvider) {
+    setError(null);
     setLoadingProvider(provider);
-    window.location.assign(buildOAuthStartPath(provider, returnTo));
+    try {
+      const url = await startSocialOAuth(provider, returnTo);
+      window.location.assign(url);
+      // Keep loading state while the browser navigates to the IdP.
+    } catch {
+      // Fall back to GET start path (server now forwards state cookies too).
+      try {
+        window.location.assign(buildOAuthStartPath(provider, returnTo));
+      } catch {
+        setLoadingProvider(null);
+        setError(t("genericError"));
+      }
+    }
   }
 
   return (
-    <div className={AUTH_OAUTH_GRID_CLASS}>
-      {providers.map((provider) => {
-        const Icon = PROVIDER_ICON[provider];
-        const label =
-          t(`providers.${provider}` as "providers.google") || OAUTH_PROVIDER_LABEL[provider];
-        return (
-          <Button
-            key={provider}
-            type="button"
-            variant="outline"
-            className={AUTH_OAUTH_BUTTON_CLASS}
-            disabled={loadingProvider !== null}
-            aria-label={`${t("continueWith")} ${label}`}
-            onClick={() => handleOAuth(provider)}
-          >
-            <Icon />
-            {loadingProvider === provider ? t("providerLoading") : label}
-          </Button>
-        );
-      })}
+    <div className="flex flex-col gap-3">
+      <div className={AUTH_OAUTH_GRID_CLASS}>
+        {providers.map((provider) => {
+          const Icon = PROVIDER_ICON[provider];
+          const label =
+            t(`providers.${provider}` as "providers.google") || OAUTH_PROVIDER_LABEL[provider];
+          return (
+            <Button
+              key={provider}
+              type="button"
+              variant="outline"
+              className={AUTH_OAUTH_BUTTON_CLASS}
+              disabled={loadingProvider !== null}
+              aria-label={`${t("continueWith")} ${label}`}
+              onClick={() => void handleOAuth(provider)}
+            >
+              <Icon />
+              {loadingProvider === provider ? t("providerLoading") : label}
+            </Button>
+          );
+        })}
+      </div>
+      {error ? (
+        <p role="alert" className="text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

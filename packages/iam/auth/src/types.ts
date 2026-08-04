@@ -106,6 +106,16 @@ export interface SignInResult {
   organizationId?: string;
   /** For OAuth / magic-link flows where the browser must be redirected. */
   redirectTo?: string;
+  /**
+   * Provider response headers that the HTTP layer MUST forward.
+   *
+   * Better Auth social sign-in writes `__Secure-better-auth.state` (signed OAuth
+   * state + PKCE verifier binding). Dropping these cookies makes the Google /
+   * GitHub callback fail with `state_mismatch` after the IdP round-trip — the
+   * browser appears to "redirect forever" or bounce back to sign-in with no
+   * session. Same contract as {@link SetActiveResult.headers}.
+   */
+  headers?: Headers;
   error?: { code: string; message: string };
 }
 

@@ -112,38 +112,84 @@ const PROVIDER_ICON: Record<OAuthProvider, () => React.ReactElement> = {
   feishu: FeishuIcon,
 };
 
+async function startSocialOAuth(provider: OAuthProvider, callbackURL: string): Promise<string> {
+  const response = await fetch("/api/auth/sign-in/social", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ provider, callbackURL }),
+  });
+
+  let data: { url?: string; redirect?: boolean | string } | null = null;
+  try {
+    data = (await response.json()) as { url?: string; redirect?: boolean | string };
+  } catch {
+    data = null;
+  }
+
+  const url =
+    (typeof data?.url === "string" && data.url) ||
+    (typeof data?.redirect === "string" && data.redirect) ||
+    response.headers.get("Location");
+
+  if (!response.ok || !url) {
+    throw new Error(`oauth_start_failed:${provider}`);
+  }
+
+  return url;
+}
+
 export function OAuthButtons({ mode, providers = OAUTH_PROVIDERS, returnUrl }: OAuthButtonsProps) {
   const t = useTranslations("auth.signIn");
   const [loadingProvider, setLoadingProvider] = useState<OAuthProvider | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleOAuth(provider: OAuthProvider) {
+  async function handleOAuth(provider: OAuthProvider) {
+    setError(null);
     setLoadingProvider(provider);
     const callbackURL = returnUrl ?? (mode === "signIn" ? "/" : "/onboarding");
-    window.location.assign(buildOAuthStartPath(provider, callbackURL));
+    try {
+      const url = await startSocialOAuth(provider, callbackURL);
+      window.location.assign(url);
+    } catch {
+      try {
+        window.location.assign(buildOAuthStartPath(provider, callbackURL));
+      } catch {
+        setLoadingProvider(null);
+        setError(t("genericError"));
+      }
+    }
   }
 
   if (providers.length === 0) return null;
 
   return (
-    <div className={AUTH_OAUTH_GRID_CLASS}>
-      {providers.map((provider) => {
-        const Icon = PROVIDER_ICON[provider];
-        const label = t(`providers.${provider}`);
-        return (
-          <Button
-            key={provider}
-            type="button"
-            variant="outline"
-            className={AUTH_OAUTH_BUTTON_CLASS}
-            disabled={loadingProvider !== null}
-            aria-label={`${t("continueWith")} ${label}`}
-            onClick={() => handleOAuth(provider)}
-          >
-            <Icon />
-            {loadingProvider === provider ? t("providerLoading") : label}
-          </Button>
-        );
-      })}
+    <div className="flex flex-col gap-3">
+      <div className={AUTH_OAUTH_GRID_CLASS}>
+        {providers.map((provider) => {
+          const Icon = PROVIDER_ICON[provider];
+          const label = t(`providers.${provider}`);
+          return (
+            <Button
+              key={provider}
+              type="button"
+              variant="outline"
+              className={AUTH_OAUTH_BUTTON_CLASS}
+              disabled={loadingProvider !== null}
+              aria-label={`${t("continueWith")} ${label}`}
+              onClick={() => void handleOAuth(provider)}
+            >
+              <Icon />
+              {loadingProvider === provider ? t("providerLoading") : label}
+            </Button>
+          );
+        })}
+      </div>
+      {error ? (
+        <p role="alert" className="text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

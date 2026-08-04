@@ -9,23 +9,37 @@ const middlewareMock = vi.fn(
 );
 const validateMock = vi.fn(async () => ({ id: "aic_1", status: "active" }));
 const redeemMock = vi.fn(async () => ({ status: "redeemed" }));
-const signInMock = vi.fn(async () => ({
-  ok: true,
-  redirectTo: "https://accounts.example/oauth/google",
-}));
+const signInMock = vi.fn(async () => {
+  const headers = new Headers();
+  headers.append(
+    "Set-Cookie",
+    "__Secure-better-auth.state=test-state.sig; Max-Age=300; Path=/; HttpOnly; Secure; SameSite=Lax",
+  );
+  return {
+    ok: true,
+    redirectTo: "https://accounts.example/oauth/google",
+    headers,
+  };
+});
 
-vi.mock("@nebutra/auth", () => ({
-  getAuditableContext: vi.fn(async () => ({
-    actor: { id: "user_1", type: "user" },
-    tenantId: "tenant_1",
-  })),
-  getConfiguredAuthProvider: vi.fn(() => "better-auth"),
-  sanitizeReturnUrl: vi.fn((input: string | null | undefined, options?: { fallback?: string }) => {
-    const fallback = options?.fallback ?? "/";
-    if (!input || !input.startsWith("/") || input.startsWith("//")) return fallback;
-    return input;
-  }),
-}));
+vi.mock("@nebutra/auth", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@nebutra/auth")>();
+  return {
+    ...actual,
+    getAuditableContext: vi.fn(async () => ({
+      actor: { id: "user_1", type: "user" },
+      tenantId: "tenant_1",
+    })),
+    getConfiguredAuthProvider: vi.fn(() => "better-auth"),
+    sanitizeReturnUrl: vi.fn(
+      (input: string | null | undefined, options?: { fallback?: string }) => {
+        const fallback = options?.fallback ?? "/";
+        if (!input || !input.startsWith("/") || input.startsWith("//")) return fallback;
+        return input;
+      },
+    ),
+  };
+});
 
 vi.mock("@nebutra/auth/server", () => ({
   createAuth: vi.fn(async () => ({
@@ -196,6 +210,8 @@ describe("/api/auth OAuth start compatibility", () => {
 
     expect(response.status).toBe(302);
     expect(response.headers.get("location")).toBe("https://accounts.example/oauth/google");
+    const setCookies = response.headers.getSetCookie();
+    expect(setCookies.some((c) => c.startsWith("__Secure-better-auth.state="))).toBe(true);
     expect(signInMock).toHaveBeenCalledWith({
       type: "oauth",
       provider: "google",

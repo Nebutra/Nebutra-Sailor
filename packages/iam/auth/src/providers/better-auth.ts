@@ -637,16 +637,44 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
                 },
               };
             }
+            // `returnHeaders: true` is required: BA writes the signed OAuth
+            // state cookie (`__Secure-better-auth.state`) onto response headers.
+            // Without forwarding those cookies, the IdP callback fails with
+            // state_mismatch even though the authorize URL looks fine.
             const raw = (await signInSocial({
               body: {
                 provider: method.provider,
                 callbackURL: method.redirectUrl,
               },
-            })) as { url?: string; redirect?: string } | null;
-            const redirectTo = raw?.url ?? raw?.redirect;
+              returnHeaders: true,
+            })) as {
+              headers?: Headers | Record<string, string>;
+              response?: { url?: string; redirect?: boolean | string } | null;
+              url?: string;
+              redirect?: boolean | string;
+            } | null;
+
+            const body = raw && typeof raw === "object" && "response" in raw ? raw.response : raw;
+            const bodyRecord =
+              body && typeof body === "object" ? (body as Record<string, unknown>) : null;
+            const redirectCandidate =
+              (typeof bodyRecord?.url === "string" ? bodyRecord.url : undefined) ??
+              (typeof bodyRecord?.redirect === "string" ? bodyRecord.redirect : undefined) ??
+              (typeof raw?.url === "string" ? raw.url : undefined) ??
+              (typeof raw?.redirect === "string" ? raw.redirect : undefined);
+
+            const rawHeaders = raw && "headers" in (raw as object) ? raw.headers : undefined;
+            const headers =
+              rawHeaders instanceof Headers
+                ? rawHeaders
+                : rawHeaders
+                  ? new Headers(rawHeaders as Record<string, string>)
+                  : undefined;
+
             return {
               ok: true,
-              ...(redirectTo ? { redirectTo } : {}),
+              ...(redirectCandidate ? { redirectTo: redirectCandidate } : {}),
+              ...(headers ? { headers } : {}),
             };
           }
           case "phone": {
