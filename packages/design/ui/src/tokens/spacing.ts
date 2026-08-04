@@ -55,7 +55,7 @@ export const semanticSpacing = {
  */
 export const containerWidths = {
   /** Credentials / auth form column — login-card scale, not page-form. */
-  authForm: "max-w-xs", // 20rem / 320px — SSOT: AUTH_FORM_COLUMN_CLASS in utils/auth-surfaces
+  authForm: "max-w-[360px]", // login-card — SSOT: AUTH_FORM_COLUMN_CLASS in utils/auth-surfaces
   narrow: "max-w-[var(--container-text)]", // 896px - FAQ, focused reading
   medium: "max-w-[var(--container-content)]", // 1152px - Architecture, Pricing
   wide: "max-w-[var(--container-wide)]", // 1400px - Full layouts, Bento
