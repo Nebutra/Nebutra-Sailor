@@ -28,6 +28,7 @@
     "@simplewebauthn/browser": "^13.3.0",
     "next": "^16.2.11",
     "next-intl": "catalog:",
+    "pg-cloudflare": "1.3.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "zod": "catalog:"

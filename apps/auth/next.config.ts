@@ -36,6 +36,15 @@ const nextConfig: NextConfig = {
     // Keep client graph small; mirrors apps/web for design-system packages.
     optimizePackageImports: ["@nebutra/ui", "@nebutra/ui/primitives", "@nebutra/icons"],
   },
+  // Keep Prisma/`pg` stack outside the Next webpack graph so OpenNext can
+  // install + resolve `pg-cloudflare` for the workerd socket path.
+  serverExternalPackages: [
+    "@prisma/client",
+    "@prisma/adapter-pg",
+    "pg",
+    "pg-cloudflare",
+    "pg-native",
+  ],
   typescript: {
     ignoreBuildErrors:
       process.env.OPEN_NEXT_BUILD === "true" ||
