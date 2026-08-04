@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "../shared/animation/motion";
+import { type MotionStyle, motion, useReducedMotion } from "../shared/animation/motion";
 
 import { cn } from "../utils/cn";
 
@@ -61,9 +61,9 @@ const Ray = ({ left, rotate, width, swing, delay, duration, intensity }: LightRa
       className="pointer-events-none absolute -top-[12%] left-[var(--ray-left)] h-[var(--light-rays-length)] w-[var(--ray-width)] origin-top -translate-x-1/2 rounded-full bg-gradient-to-b from-[color-mix(in_srgb,var(--light-rays-color)_70%,transparent)] to-transparent opacity-0 mix-blend-screen blur-[var(--light-rays-blur)]"
       style={
         {
-          "--ray-left": `${left}%`,
-          "--ray-width": `${width}px`,
-        } as any // eslint-disable-line @typescript-eslint/no-explicit-any
+          ["--ray-left" as string]: `${left}%`,
+          ["--ray-width" as string]: `${width}px`,
+        } as MotionStyle
       }
       initial={{ rotate: rotate }}
       animate={{
@@ -133,11 +133,11 @@ export function LightRays({
       )}
       style={
         {
-          "--light-rays-color": color,
-          "--light-rays-blur": `${blur}px`,
-          "--light-rays-length": length,
+          ["--light-rays-color" as string]: color,
+          ["--light-rays-blur" as string]: `${blur}px`,
+          ["--light-rays-length" as string]: length,
           ...style,
-        } as any
+        } as React.CSSProperties
       }
       {...props}
     >
@@ -149,7 +149,7 @@ export function LightRays({
             {
               background:
                 "radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--light-rays-color) 45%, transparent), transparent 70%)",
-            } as any // eslint-disable-line @typescript-eslint/no-explicit-any
+            } as React.CSSProperties
           }
         />
         <div
@@ -159,7 +159,7 @@ export function LightRays({
             {
               background:
                 "radial-gradient(circle at 80% 10%, color-mix(in srgb, var(--light-rays-color) 35%, transparent), transparent 75%)",
-            } as any // eslint-disable-line @typescript-eslint/no-explicit-any
+            } as React.CSSProperties
           }
         />
         {rays.map((ray) => (

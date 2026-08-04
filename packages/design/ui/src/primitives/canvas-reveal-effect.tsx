@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // Note: Type checking disabled due to @react-three/fiber JSX type incompatibilities with React 19
 // The component works correctly at runtime

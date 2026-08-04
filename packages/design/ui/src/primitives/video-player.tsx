@@ -234,7 +234,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+      {/* No <track>: this player is handed arbitrary sources by the caller
+          and has no caption file to reference. A caption track belongs to
+          the media, so the prop for it belongs to the consumer. */}
       <video
         ref={videoRef}
         className="w-full"

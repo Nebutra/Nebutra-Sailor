@@ -52,7 +52,7 @@ type ElementForTag<E extends keyof React.JSX.IntrinsicElements> = E extends "but
  */
 
 export function withHtmlProps<E extends keyof React.JSX.IntrinsicElements, Extra = object>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: polymorphic render — the element type is only known at the call site, and naming it here makes the emitted declaration a union of every intrinsic tag
   Component: any,
 ): React.ForwardRefExoticComponent<
   React.ComponentPropsWithoutRef<E> & Extra & React.RefAttributes<ElementForTag<E>>

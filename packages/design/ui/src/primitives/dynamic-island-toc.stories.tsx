@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DynamicIslandTOC } from "./dynamic-island-toc";
 
-/* eslint-disable react/no-array-index-key */
-
 const meta: Meta<typeof DynamicIslandTOC> = {
   title: "Primitives/DynamicIslandTOC",
   component: DynamicIslandTOC,

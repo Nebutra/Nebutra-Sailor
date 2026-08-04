@@ -60,10 +60,7 @@ export interface ThemeSwitcherProps
   name?: string;
 }
 
-function getThemeSwitcherStyle(
-  size: ThemeSwitcherSize,
-  style: unknown,
-): ThemeSwitcherCssVars {
+function getThemeSwitcherStyle(size: ThemeSwitcherSize, style: unknown): ThemeSwitcherCssVars {
   const token = themeSwitcherSizes[size];
 
   return {

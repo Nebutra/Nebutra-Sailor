@@ -62,7 +62,8 @@ export function Awards({
     };
 
     // Create curved text path
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // _id is accepted so call sites read symmetrically with the other path
+    // builders; the id is applied by the caller, not here.
     const createTextPath = (radius: number, _id: string) => {
       const centerX = 96;
       const centerY = 96;

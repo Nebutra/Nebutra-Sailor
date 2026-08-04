@@ -11,13 +11,10 @@ import {
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useTranslations } from "next-intl";
+import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useDebounceValue } from "usehooks-ts";
-
-/* eslint-disable react-hooks/incompatible-library */
-
-import type { CSSProperties } from "react";
 import type { DataTableProps } from "../types";
 import { getFilterValue, getPinnedStyles } from "../utils";
 import { useCellSelection } from "./use-cell-selection";

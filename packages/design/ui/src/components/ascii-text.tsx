@@ -6,7 +6,8 @@ import { slant, useAsciiText } from "react-ascii-text";
 interface AsciiTextProps {
   text: string;
   className?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: the font object comes from the
+  // caller's ASCII renderer and this package does not depend on that library
   font?: any;
 }
 

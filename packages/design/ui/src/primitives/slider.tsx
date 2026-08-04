@@ -1,11 +1,9 @@
 "use client";
 
-import { asPlainStyle } from "../utils/primitive-props";
-
 import * as React from "react";
-
 import { sliderTokens } from "../tokens/components/slider";
 import { cn } from "../utils";
+import { asPlainStyle } from "../utils/primitive-props";
 
 type SliderCssVar =
   | "--slider-height"

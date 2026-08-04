@@ -20,10 +20,7 @@ type SelectTriggerCssVars = React.CSSProperties & {
   "--select-focus-ring-width"?: string;
 };
 
-function getSelectTriggerStyle(
-  size: SelectSize,
-  style: unknown,
-): SelectTriggerCssVars {
+function getSelectTriggerStyle(size: SelectSize, style: unknown): SelectTriggerCssVars {
   const token = selectTokens.sizes[size];
 
   return {

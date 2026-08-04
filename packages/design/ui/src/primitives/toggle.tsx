@@ -1,7 +1,5 @@
 "use client";
 
-import { asPlainStyle } from "../utils/primitive-props";
-
 import * as React from "react";
 import {
   type ToggleColor,
@@ -10,6 +8,7 @@ import {
   toggleTokens,
 } from "../tokens/components/toggle";
 import { cn } from "../utils";
+import { asPlainStyle } from "../utils/primitive-props";
 
 export type ToggleDirection = "label-first" | "switch-first" | "switch-last";
 export type ToggleLabelCasing = "title" | "normal";
@@ -68,11 +67,7 @@ function getColorToken(color: ToggleColor) {
   return toggleTokens.color[resolvedColor as keyof typeof toggleTokens.color];
 }
 
-function getToggleStyle(
-  size: ToggleSize,
-  color: ToggleColor,
-  style: unknown,
-) {
+function getToggleStyle(size: ToggleSize, color: ToggleColor, style: unknown) {
   const sizeTokens = toggleTokens.size[size];
   const colorTokens = getColorToken(color);
 

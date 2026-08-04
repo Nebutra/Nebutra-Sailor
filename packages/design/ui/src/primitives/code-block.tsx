@@ -751,7 +751,9 @@ export function CodeBlock(props: CodeBlockProps) {
       )}
 
       {/* Code content */}
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+      {/* The click here selects text in a scroll container; it adds nothing a
+          keyboard user cannot already do by focusing the region and using
+          the normal selection keys. */}
       <div
         className="overflow-auto"
         style={{

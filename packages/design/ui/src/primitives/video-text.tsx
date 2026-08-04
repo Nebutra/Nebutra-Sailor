@@ -91,7 +91,7 @@ export function VideoText({
 
   const dataUrlMask = `url("data:image/svg+xml,${encodeURIComponent(svgMask)}")`;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: polymorphic render — the element type is only known at the call site, and naming it here makes the emitted declaration a union of every intrinsic tag
   const Comp = Component as any;
   return (
     <Comp className={cn("relative size-full", className)}>
@@ -109,7 +109,8 @@ export function VideoText({
           WebkitMaskPosition: "center",
         }}
       >
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        {/* No <track>: the video here is a fill for text, not content —
+            it is decorative and carries no audio to caption. */}
         <video
           className="h-full w-full object-cover"
           autoPlay={autoPlay}

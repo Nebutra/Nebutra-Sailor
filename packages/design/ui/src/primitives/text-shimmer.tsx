@@ -1,6 +1,6 @@
 "use client";
 import { type JSX, useMemo } from "react";
-import { motion } from "../shared/animation/motion";
+import { type MotionStyle, motion } from "../shared/animation/motion";
 import { cn } from "../utils";
 
 export interface TextShimmerProps {
@@ -48,9 +48,9 @@ export function TextShimmer({
       }}
       style={
         {
-          "--spread": `${dynamicSpread}px`,
+          ["--spread" as string]: `${dynamicSpread}px`,
           backgroundImage: `var(--bg), linear-gradient(var(--base-color), var(--base-color))`,
-        } as any // eslint-disable-line @typescript-eslint/no-explicit-any
+        } as MotionStyle
       }
     >
       {children}

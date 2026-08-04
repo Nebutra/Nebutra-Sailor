@@ -56,7 +56,7 @@ export const Text = ({
   ...props
 }: TextProps & { ref?: React.Ref<HTMLElement> | undefined }) => {
   // Keep polymorphic render simple for declaration emit (tsup dts).
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: polymorphic render — the element type is only known at the call site, and naming it here makes the emitted declaration a union of every intrinsic tag
   const Comp = Component as any;
   return (
     <Comp

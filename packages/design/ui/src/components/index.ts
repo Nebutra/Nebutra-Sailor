@@ -67,7 +67,7 @@ export {
 } from "@lobehub/ui/chat";
 // Import Spotlight directly. The @lobehub/ui/awesome barrel also imports Spline,
 // whose runtime uses Function() and violates the app's production CSP.
-// @ts-ignore — lobehub Spotlight typings flip between default-only and named across
+// @ts-expect-error — lobehub Spotlight typings flip between default-only and named across
 // versions; @ts-expect-error fails the unused case on standalone mirrors.
 export { default as Spotlight } from "@lobehub/ui/es/awesome/Spotlight/Spotlight";
 export * from "../shared/animation/motion";

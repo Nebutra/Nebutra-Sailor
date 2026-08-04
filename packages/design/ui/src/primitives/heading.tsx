@@ -65,7 +65,7 @@ export const Heading = ({
   const styleClass =
     display && (level === 1 || level === 2) ? displayStyle[level as 1 | 2] : levelToStyle[level];
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: polymorphic render — the element type is only known at the call site, and naming it here makes the emitted declaration a union of every intrinsic tag
   const Comp = Component as any;
   return (
     <Comp

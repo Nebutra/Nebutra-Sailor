@@ -53,10 +53,7 @@ type TextareaFieldCssVars = React.CSSProperties & {
 const fieldMessageClassName = "text-xs text-muted-foreground";
 const fieldErrorClassName = "text-xs font-medium text-destructive";
 
-function getTextareaStyle(
-  size: TextareaSize,
-  style: unknown,
-): TextareaCssVars {
+function getTextareaStyle(size: TextareaSize, style: unknown): TextareaCssVars {
   const token = textareaTokens.sizes[size];
 
   return {
