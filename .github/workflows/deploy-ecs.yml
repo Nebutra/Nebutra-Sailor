@@ -65,6 +65,9 @@ on:
       - "infra/runtime/nginx/conf.d/*.nebutra.com.conf"
       - "infra/runtime/nginx/nginx.conf"
       - "infra/ops/scripts/ecs-deploy-remote.sh"
+      - "infra/ops/scripts/carina-codeploy.sh"
+      - "infra/ops/scripts/install-carina-daemon.sh"
+      - "infra/ops/scripts/configure-api-carina-env.sh"
       - ".github/workflows/deploy-ecs.yml"
 
 permissions:
@@ -913,6 +916,20 @@ jobs:
           # Always re-upload the helper + runtime configs so the box stays in sync.
           scp "${SCP_OPTS[@]}" infra/ops/scripts/ecs-deploy-remote.sh \
             "${ECS_USER}@${ECS_HOST}:/tmp/ecs-deploy-remote.sh"
+          # Carina same-host co-deploy helpers (api-gateway post-start)
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              'mkdir -p /tmp/carina-ops'
+          scp "${SCP_OPTS[@]}" \
+            infra/ops/scripts/carina-codeploy.sh \
+            infra/ops/scripts/install-carina-daemon.sh \
+            infra/ops/scripts/configure-api-carina-env.sh \
+            "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/"
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "${ECS_USER}@${ECS_HOST}" \
+              'chmod +x /tmp/carina-ops/*.sh'
           scp "${SCP_OPTS[@]}" infra/iac/ecs/ecosystem.config.cjs \
             "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/ecosystem.config.cjs"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/nginx.conf \

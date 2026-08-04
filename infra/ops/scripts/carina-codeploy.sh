@@ -9,7 +9,7 @@
 #   bash infra/ops/scripts/carina-codeploy.sh
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
+SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
 CARINA_ROOT="${CARINA_ROOT:-/var/carina}"
 API_ENV_FILE="${API_ENV_FILE:-/var/www/nebutra/api/.env}"
 SOCKET_PATH="${CARINA_DAEMON_SOCK:-$CARINA_ROOT/run/daemon.sock}"
@@ -19,7 +19,7 @@ APPROVAL_MODE="${CARINA_SESSION_APPROVAL_MODE:-always-approve}"
 
 if [ ! -x "$CARINA_ROOT/bin/carina-daemon" ]; then
   echo "Installing carina-daemon…"
-  bash "$ROOT_DIR/infra/ops/scripts/install-carina-daemon.sh"
+  bash "$SCRIPTS_DIR/install-carina-daemon.sh"
 fi
 
 mkdir -p "$CARINA_ROOT/run" "$WS_ROOT" "$STATE_DIR"
@@ -68,7 +68,7 @@ if [ ! -S "$SOCKET_PATH" ]; then
 fi
 
 # Inject api-gateway env (defaults for co-deploy)
-bash "$ROOT_DIR/infra/ops/scripts/configure-api-carina-env.sh"
+bash "$SCRIPTS_DIR/configure-api-carina-env.sh"
 
 echo "Carina co-deploy complete."
 echo "  socket:    $SOCKET_PATH"

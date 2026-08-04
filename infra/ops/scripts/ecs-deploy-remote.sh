@@ -1343,6 +1343,31 @@ for p in procs:
     pm2 start "$PM2_CONFIG" --only "$pm2_name"
   fi
 
+
+# Same-host Carina Track-B co-deploy (install daemon + socket env for api-gateway).
+# Scripts are uploaded by deploy-ecs.yml to /tmp/carina-ops/.
+# Opt out: CARINA_CODEPLOY=0 on the remote env.
+ensure_carina_codeploy() {
+  local mode="${CARINA_CODEPLOY:-1}"
+  case "$mode" in
+    0|false|off|no) log "CARINA_CODEPLOY=$mode — skip carina-daemon co-deploy"; return 0 ;;
+  esac
+
+  local scripts="${CARINA_OPS_SCRIPTS:-/tmp/carina-ops}"
+  if [ ! -f "$scripts/carina-codeploy.sh" ]; then
+    log "WARNING: $scripts/carina-codeploy.sh missing — skip Carina co-deploy (gateway remains fail-closed without daemon)"
+    return 0
+  fi
+
+  log "Carina same-host co-deploy via $scripts/carina-codeploy.sh"
+  # Soft-fail: gateway health already passed; daemon install should not roll back API.
+  if ! bash "$scripts/carina-codeploy.sh"; then
+    log "WARNING: carina-codeploy.sh failed — api-gateway is up; Track-B exec will fail closed until fixed"
+    return 0
+  fi
+  log "Carina co-deploy finished (socket + api env)"
+}
+
   # Surface PM2 status + recent logs so CI can see crash reasons. Without
   # this, deploys that succeed at the SSH level but crash at startup return
   # exit 0 here and only fail later in the workflow's HTTP smoke test —
@@ -1355,6 +1380,7 @@ for p in procs:
   case "$pm2_name" in
     api-gateway)
       wait_for_local_http "api-gateway" "$pm2_name" "http://127.0.0.1:3002/api/misc/health" "^200$"
+      ensure_carina_codeploy
       ;;
     landing)
       wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/get-license"
