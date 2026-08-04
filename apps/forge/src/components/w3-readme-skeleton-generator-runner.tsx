@@ -17,11 +17,11 @@ import { type ReactNode, useId, useMemo, useState } from "react";
 import {
   ConfigureGenerateShell,
   ShellBadge,
-  ShellCode,
   ShellDrill,
   ShellNote,
 } from "@/components/journey-shells";
 import { RunnerSelect } from "@/components/runner-select";
+import { FilePaperSpecimen, filePaperStats } from "@/components/specimens";
 
 /** Same ids, same fixed order as the engine's `README_SECTIONS`. */
 const SECTION_GROUPS = [
@@ -307,7 +307,19 @@ export function W3ReadmeSkeletonGeneratorRunner({ toolId }: { toolId: string }) 
               </ShellBadge>
             ) : null}
           </div>
-          <ShellCode label={out.filename}>{out.markdown}</ShellCode>
+          {(() => {
+            const stats = filePaperStats(out.markdown);
+            return (
+              <FilePaperSpecimen
+                filename={out.filename || "README.md"}
+                content={out.markdown}
+                kindLabel="Markdown"
+                linesLabel={t("filePaper.lines", { n: stats.lines })}
+                charsLabel={t("filePaper.chars", { n: stats.chars })}
+                emptyLabel={t("filePaper.empty")}
+              />
+            );
+          })()}
           {out.sectionsOmitted.length > 0 || out.warnings.length > 0 ? (
             <ShellDrill summary={t("readmeSkeleton.omittedTitle")}>
               <ul className="space-y-1 text-sm text-[var(--neutral-11)]">

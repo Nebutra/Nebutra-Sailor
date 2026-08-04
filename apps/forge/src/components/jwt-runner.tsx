@@ -1,13 +1,19 @@
 "use client";
 
-import { Check, Copy } from "@nebutra/icons";
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
+import { InstantTransformShell, ShellNote } from "@/components/journey-shells";
+import { JwtTokenSpecimen, splitJwtParts } from "@/components/specimens";
 
 const SAMPLE =
   "eyJhbGciOiJub25lIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5lYnV0cmEiLCJpYXQiOjE1MTYyMzkwMjJ9.";
+
+type JwtOutput = {
+  header?: Record<string, unknown>;
+  payload?: Record<string, unknown>;
+  note?: string;
+  engine?: string;
+};
 
 function formatUnix(sec: unknown, locale: string): string | null {
   if (typeof sec !== "number" || !Number.isFinite(sec)) return null;
@@ -20,157 +26,85 @@ function formatUnix(sec: unknown, locale: string): string | null {
 
 export function JwtRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
-  const [token, setToken] = useState(SAMPLE);
-  const [header, setHeader] = useState("");
-  const [payload, setPayload] = useState("");
-  const [claims, setClaims] = useState<Record<string, unknown> | null>(null);
-  const [note, setNote] = useState("");
-  const [error, setError] = useState("");
-  const [copied, setCopied] = useState<string | null>(null);
-
-  const copy = (label: string, value: string) => {
-    void navigator.clipboard.writeText(value);
-    setCopied(label);
-    setTimeout(() => setCopied(null), 1200);
-  };
-
-  const decode = async () => {
-    setError("");
-    const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ input: { token: token.trim() } }),
-    });
-    const body = (await res.json()) as {
-      ok?: boolean;
-      output?: {
-        header?: Record<string, unknown>;
-        payload?: Record<string, unknown>;
-        note?: string;
-        engine?: string;
-      };
-      message?: string;
-    };
-    if (!res.ok || body.ok === false) {
-      setError(body.message ?? "decode failed");
-      setHeader("");
-      setPayload("");
-      setClaims(null);
-      return;
-    }
-    const h = body.output?.header ?? {};
-    const p = body.output?.payload ?? {};
-    setHeader(JSON.stringify(h, null, 2));
-    setPayload(JSON.stringify(p, null, 2));
-    setClaims(p);
-    setNote(t("jwt.decodeNote", { engine: body.output?.engine ?? "jose" }));
-  };
-
-  const expHuman = formatUnix(claims?.exp, "en-US");
-  const iatHuman = formatUnix(claims?.iat, "en-US");
+  const locale = useLocale();
+  const [raw, setRaw] = useState(SAMPLE);
 
   return (
-    <div className="space-y-4">
-      <Textarea
-        label="JWT"
-        id="jwt-token"
-        value={token}
-        onChange={(e) => setToken(e.target.value)}
-        rows={5}
-        className="font-mono text-xs"
-        placeholder={t("jwt.tokenPlaceholder")}
-      />
-      <div className="flex flex-wrap gap-2">
-        <Button type="button" variant="ink" onClick={() => void decode()}>
-          {t("jwt.decode")}
-        </Button>
-        <Button type="button" variant="outline" onClick={() => setToken(SAMPLE)}>
-          {t("jwt.sample")}
-        </Button>
-        <Button type="button" variant="ghost" onClick={() => copy("token", token)}>
-          {copied === "token" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          {t("common.copy")}
-        </Button>
-      </div>
-      <RunnerError>{error}</RunnerError>
-      {note ? <RunnerNote>{note}</RunnerNote> : null}
+    <InstantTransformShell<JwtOutput>
+      engine={{ toolId }}
+      inputKind="block"
+      rows={4}
+      inputLabel={t("jwt.tokenPlaceholder")}
+      inputPlaceholder={t("jwt.tokenPlaceholder")}
+      initialValue={SAMPLE}
+      sample={SAMPLE}
+      note={t("jwt.footerNote")}
+      onTextChange={setRaw}
+      buildInput={(text) => {
+        const token = text.trim();
+        if (!token || !token.includes(".")) return null;
+        return { token };
+      }}
+      idle={<ShellNote>{t("common.liveHint")}</ShellNote>}
+      exit={(o) => ({
+        text: JSON.stringify({ header: o.header, payload: o.payload }, null, 2),
+        json: o,
+      })}
+      renderResult={(o) => {
+        const [h, p, s] = splitJwtParts(raw);
+        const headerPretty = o.header ? JSON.stringify(o.header, null, 2) : h;
+        const payloadPretty = o.payload ? JSON.stringify(o.payload, null, 2) : p;
+        const claims = o.payload ?? {};
+        const expHuman = formatUnix(claims.exp, locale);
+        const iatHuman = formatUnix(claims.iat, locale);
 
-      {(claims?.exp != null || claims?.iat != null) && (
-        <div className="flex flex-wrap gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 px-3 py-2 text-xs text-[var(--neutral-11)]">
-          {claims?.iat != null ? (
-            <span>
-              iat: <span className="font-mono text-[var(--neutral-12)]">{String(claims.iat)}</span>
-              {iatHuman ? ` · ${iatHuman}` : ""}
-            </span>
-          ) : null}
-          {claims?.exp != null ? (
-            <span>
-              exp: <span className="font-mono text-[var(--neutral-12)]">{String(claims.exp)}</span>
-              {expHuman ? ` · ${expHuman}` : ""}
-            </span>
-          ) : null}
-        </div>
-      )}
-
-      {(header || payload) && (
-        <div className="grid gap-3 md:grid-cols-2">
-          <div>
-            <div className="mb-1 flex items-center justify-between">
-              <p className="text-xs font-medium text-[var(--neutral-10)]">Header</p>
-              <Button
-                type="button"
-                variant="ghost"
-                className="h-7 px-2 text-xs"
-                onClick={() => copy("h", header)}
-              >
-                {copied === "h" ? t("common.copied") : t("common.copy")}
-              </Button>
-            </div>
-            <RunnerOutput className="text-xs">{header}</RunnerOutput>
-          </div>
-          <div>
-            <div className="mb-1 flex items-center justify-between">
-              <p className="text-xs font-medium text-[var(--neutral-10)]">Payload</p>
-              <Button
-                type="button"
-                variant="ghost"
-                className="h-7 px-2 text-xs"
-                onClick={() => copy("p", payload)}
-              >
-                {copied === "p" ? t("common.copied") : t("common.copy")}
-              </Button>
-            </div>
-            <RunnerOutput className="text-xs">{payload}</RunnerOutput>
-          </div>
-        </div>
-      )}
-      <RunnerNote>{t("jwt.footerNote")}</RunnerNote>
-      <p className="text-xs text-[var(--neutral-10)]">
-        {t("jwt.generateHint")}{" "}
-        <a className="text-[var(--blue-11)] underline" href="/t/jwt-generate">
-          jwt-generate
-        </a>
-      </p>
-    </div>
-  );
-}
-
-/** Optional compact secret field for generate page reuse */
-export function JwtSecretField({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  const t = useTranslations("runners");
-  return (
-    <Input
-      label={t("jwt.secret")}
-      id="jwt-secret"
-      type="password"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
+        return (
+          <JwtTokenSpecimen
+            parts={[
+              { label: t("jwt.header"), raw: h, pretty: headerPretty, tone: "header" },
+              {
+                label: t("jwt.payloadLabel"),
+                raw: p,
+                pretty: payloadPretty,
+                tone: "payload",
+              },
+              {
+                label: t("jwt.signature"),
+                raw: s,
+                pretty: s || t("jwt.emptySignature"),
+                tone: "signature",
+              },
+            ]}
+            claimsSummary={
+              claims.exp != null || claims.iat != null ? (
+                <div className="flex flex-wrap gap-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2 text-xs text-[var(--neutral-11)]">
+                  {claims.iat != null ? (
+                    <span>
+                      iat:{" "}
+                      <span className="font-mono text-[var(--neutral-12)]">
+                        {String(claims.iat)}
+                      </span>
+                      {iatHuman ? ` · ${iatHuman}` : ""}
+                    </span>
+                  ) : null}
+                  {claims.exp != null ? (
+                    <span>
+                      exp:{" "}
+                      <span className="font-mono text-[var(--neutral-12)]">
+                        {String(claims.exp)}
+                      </span>
+                      {expHuman ? ` · ${expHuman}` : ""}
+                    </span>
+                  ) : null}
+                </div>
+              ) : null
+            }
+            note={t("honesty.signatureNotVerified", {
+              engine: o.engine ?? "jose",
+            })}
+          />
+        );
+      }}
     />
   );
 }

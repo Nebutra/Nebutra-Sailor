@@ -244,7 +244,11 @@
     },
     "creditCardLuhn": {
       "number": "卡號",
-      "note": "Luhn 檢查器 · 離線處理，永不儲存"
+      "note": "Luhn 檢查器 · 離線處理，永不儲存",
+      "digits": "位",
+      "specimenLabel": "樣張",
+      "structureOnly": "僅 Luhn 結構",
+      "unknownBrand": "銀行卡"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -448,7 +452,11 @@
       "secret": "密鑰",
       "exp": "過期時間（秒）",
       "payload": "Payload JSON",
-      "note": "JWT 產生 · HS256（僅限開發／測試）"
+      "note": "JWT 產生 · HS256（僅限開發／測試）",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "（空簽名段）"
     },
     "rand": {
       "min": "最小值",
@@ -2132,6 +2140,35 @@
         "webrtcLocal": "本機 WebRTC 候選",
         "noBrowser": "無瀏覽器探測"
       }
+    },
+    "honesty": {
+      "algorithmOnly": "僅演算法校驗 · 不查戶籍/銀行庫",
+      "signatureNotVerified": "{engine} · 僅解碼 · 未驗證簽名",
+      "localOnly": "僅本次處理 · 不儲存卡號或憑證"
+    },
+    "idCard": {
+      "number": "身分證字號",
+      "note": "GB 11643 校驗位 · 不查庫 · 與 API 同一路徑",
+      "specimenTitle": "居民身分證 · 結構樣張",
+      "segRegion": "區劃",
+      "segBirth": "生日",
+      "segSeq": "順序碼",
+      "segCheck": "校驗位",
+      "metaBirth": "出生日期",
+      "metaGender": "性別",
+      "metaRegion": "行政區劃碼",
+      "genderMale": "男",
+      "genderFemale": "女",
+      "reasonFormat": "格式應為 18 位（末位可為 X）",
+      "reasonBirth": "出生日期段無效",
+      "reasonCheck": "校驗位錯誤",
+      "reasonCheckExpected": "校驗位錯誤 · 期望 {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} 行",
+      "chars": "{n} 字元",
+      "empty": "（空檔案）",
+      "readyToShip": "可直接放進倉庫"
     }
   },
   "roots": {

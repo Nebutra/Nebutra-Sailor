@@ -6,10 +6,10 @@ import { useCallback, useId, useMemo, useRef, useState } from "react";
 import {
   ConfigureGenerateShell,
   ShellBadge,
-  ShellCode,
   ShellDrill,
   ShellNote,
 } from "@/components/journey-shells";
+import { FilePaperSpecimen, filePaperStats } from "@/components/specimens";
 
 /* The roster the tool ships with: current search crawlers plus the 2026 AI
    crawlers. Deliberately no dead 2010s engines — see the brief §9.4. */
@@ -158,7 +158,18 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
             ) : null}
           </div>
 
-          <ShellCode label={t("robotsTxt.outputLabel")}>{output.content}</ShellCode>
+          {(() => {
+            const stats = filePaperStats(output.content);
+            return (
+              <FilePaperSpecimen
+                filename={output.filename || "robots.txt"}
+                content={output.content}
+                linesLabel={t("filePaper.lines", { n: stats.lines })}
+                charsLabel={t("filePaper.chars", { n: stats.chars })}
+                emptyLabel={t("filePaper.empty")}
+              />
+            );
+          })()}
 
           {output.warnings.length > 0 ? (
             <ShellDrill

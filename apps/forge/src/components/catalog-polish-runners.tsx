@@ -23,6 +23,7 @@ import {
   useDebouncedCallback,
 } from "@/components/result-panels";
 import { RunnerError, RunnerNote, RunnerPanel, RunnerSelect } from "@/components/runner-ui";
+import { BankCardSpecimen, formatCardGroups } from "@/components/specimens";
 
 /* ── shared batch-validate result shape ─────────────────────────────────── */
 
@@ -235,6 +236,7 @@ export function UuidValidateRunner({ toolId }: { toolId: string }) {
 
 export function CreditCardLuhnRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
+  const [raw, setRaw] = useState("4111111111111111");
   return (
     <InstantTransformShell<{
       valid: boolean;
@@ -247,45 +249,59 @@ export function CreditCardLuhnRunner({ toolId }: { toolId: string }) {
       inputKind="line"
       inputLabel={t("creditCardLuhn.number")}
       inputPlaceholder="4111 1111 1111 1111"
+      initialValue="4111111111111111"
       sample="4111111111111111"
       note={t("creditCardLuhn.note")}
+      onTextChange={setRaw}
       buildInput={(text) => (text.trim() ? { number: text } : null)}
       idle={<ShellNote>{t("common.liveHint")}</ShellNote>}
-      exit={(o) => ({
-        text: [
-          o.valid ? t("validate.valid") : t("validate.invalid"),
-          o.brand,
-          o.masked ?? "",
-          o.reason ?? "",
-        ]
-          .filter(Boolean)
-          .join("\n"),
-        json: o,
-      })}
-      renderResult={(o) => (
-        <div className="space-y-3">
-          <ShellVerdict
-            tone={o.valid ? "success" : "danger"}
-            headline={o.valid ? t("validate.valid") : t("validate.invalid")}
-            caveat={
-              o.valid
-                ? t("validate.luhnCaveat")
-                : o.reason === "length_or_digits"
-                  ? t("validate.luhnReason.length_or_digits")
-                  : o.reason === "luhn_failed"
-                    ? t("validate.luhnReason.luhn_failed")
-                    : o.reason
-            }
-            badges={
-              <>
-                <ShellBadge tone="info">{o.brand}</ShellBadge>
-                <ShellBadge>{o.length} digits</ShellBadge>
-                {o.masked ? <ShellBadge tone="neutral">{o.masked}</ShellBadge> : null}
-              </>
+      exit={(o) => {
+        const grouped = formatCardGroups(raw.replace(/\D/g, "") || raw);
+        return {
+          text: [
+            o.valid ? t("validate.valid") : t("validate.invalid"),
+            o.brand,
+            grouped,
+            o.reason ?? "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+          json: o,
+        };
+      }}
+      renderResult={(o) => {
+        const digits = raw.replace(/\D/g, "");
+        const display = digits ? formatCardGroups(digits) : formatCardGroups(raw);
+        const brand =
+          !o.brand || o.brand === "unknown" ? t("creditCardLuhn.unknownBrand") : o.brand;
+        const caveat = o.valid
+          ? t("validate.luhnCaveat")
+          : o.reason === "length_or_digits"
+            ? t("validate.luhnReason.length_or_digits")
+            : o.reason === "luhn_failed"
+              ? t("validate.luhnReason.luhn_failed")
+              : (o.reason ?? t("honesty.algorithmOnly"));
+        return (
+          <BankCardSpecimen
+            brand={brand}
+            numberDisplay={display}
+            valid={o.valid}
+            statusLabel={o.valid ? t("validate.valid") : t("validate.invalid")}
+            specimenLabel={t("creditCardLuhn.specimenLabel")}
+            structureLabel={t("creditCardLuhn.structureOnly")}
+            fallbackBrand={t("creditCardLuhn.unknownBrand")}
+            caveat={caveat}
+            footer={
+              <div className="flex flex-wrap gap-2">
+                <ShellBadge tone="info">{brand}</ShellBadge>
+                <ShellBadge>
+                  {o.length} {t("creditCardLuhn.digits")}
+                </ShellBadge>
+              </div>
             }
           />
-        </div>
-      )}
+        );
+      }}
     />
   );
 }

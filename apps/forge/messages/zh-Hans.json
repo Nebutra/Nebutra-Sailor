@@ -244,7 +244,11 @@
     },
     "creditCardLuhn": {
       "number": "卡号",
-      "note": "Luhn 校验 · 离线、不存储"
+      "note": "Luhn 校验 · 离线、不存储",
+      "digits": "位",
+      "specimenLabel": "样张",
+      "structureOnly": "仅 Luhn 结构",
+      "unknownBrand": "银行卡"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -448,7 +452,11 @@
       "secret": "密钥",
       "exp": "过期（秒）",
       "payload": "负载 JSON",
-      "note": "JWT 生成 · HS256（仅开发/测试）"
+      "note": "JWT 生成 · HS256（仅开发/测试）",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "（空签名段）"
     },
     "rand": {
       "min": "最小",
@@ -2132,6 +2140,35 @@
         "webrtcLocal": "本地 WebRTC 候选",
         "noBrowser": "无浏览器探测"
       }
+    },
+    "honesty": {
+      "algorithmOnly": "仅算法校验 · 不查户籍/银行库",
+      "signatureNotVerified": "{engine} · 仅解码 · 未验证签名",
+      "localOnly": "仅本次处理 · 不保存卡号或凭证"
+    },
+    "idCard": {
+      "number": "身份证号",
+      "note": "GB 11643 校验位 · 不查库 · 与 API 同一路径",
+      "specimenTitle": "居民身份证 · 结构样张",
+      "segRegion": "区划",
+      "segBirth": "生日",
+      "segSeq": "顺序码",
+      "segCheck": "校验位",
+      "metaBirth": "出生日期",
+      "metaGender": "性别",
+      "metaRegion": "行政区划码",
+      "genderMale": "男",
+      "genderFemale": "女",
+      "reasonFormat": "格式应为 18 位（末位可为 X）",
+      "reasonBirth": "出生日期段无效",
+      "reasonCheck": "校验位错误",
+      "reasonCheckExpected": "校验位错误 · 期望 {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} 行",
+      "chars": "{n} 字符",
+      "empty": "（空文件）",
+      "readyToShip": "可直接放进仓库"
     }
   },
   "roots": {

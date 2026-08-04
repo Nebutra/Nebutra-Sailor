@@ -13,13 +13,8 @@ import { CrossSmall, Plus } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
-import {
-  ConfigureGenerateShell,
-  invokeForgeTool,
-  ShellBadge,
-  ShellCode,
-  ShellNote,
-} from "./journey-shells";
+import { FilePaperSpecimen, filePaperStats } from "@/components/specimens";
+import { ConfigureGenerateShell, invokeForgeTool, ShellBadge, ShellNote } from "./journey-shells";
 
 /** Corpus index tool — same registry, so autocomplete never forks the corpus. */
 const STACKS_TOOL_ID = "template/gitignore-stacks";
@@ -137,7 +132,18 @@ export function W3GitignoreGeneratorRunner({ toolId }: { toolId: string }) {
               </ShellBadge>
             ) : null}
           </div>
-          <ShellCode label={t("gitignore.fileLabel")}>{output.content}</ShellCode>
+          {(() => {
+            const stats = filePaperStats(output.content);
+            return (
+              <FilePaperSpecimen
+                filename=".gitignore"
+                content={output.content}
+                linesLabel={t("filePaper.lines", { n: stats.lines })}
+                charsLabel={t("filePaper.chars", { n: stats.chars })}
+                emptyLabel={t("filePaper.empty")}
+              />
+            );
+          })()}
           {output.globalScoped.length > 0 ? (
             <ShellNote>
               {t("gitignore.globalScope", { stacks: output.globalScoped.join(", ") })}

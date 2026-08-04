@@ -50,6 +50,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { FilePaperSpecimen, filePaperStats } from "@/components/specimens";
 
 /* ── tone + surface vocabulary ─────────────────────────────────────────── */
 
@@ -760,7 +761,7 @@ export function ConfigureGenerateShell<TOutput>({
   });
 
   return (
-    <div className="space-y-4">
+    <div className="grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-6">
       <section className={cx(PANEL, "space-y-4")} aria-label={t("shell.options")}>
         {children}
         {regenerateLabel ? (
@@ -773,19 +774,20 @@ export function ConfigureGenerateShell<TOutput>({
         ) : null}
       </section>
 
-      <ShellStateView
-        state={state}
-        idle={<p className="text-sm text-[var(--neutral-11)]">{emptyHint}</p>}
-      >
-        {(output) => (
-          <div className="space-y-3">
-            {renderResult(output)}
-            {exit ? <ShellExitActions exit={exit(output)} idPrefix={uid} /> : null}
-          </div>
-        )}
-      </ShellStateView>
-
-      <ShellNote>{note}</ShellNote>
+      <div className="min-w-0 space-y-3 lg:sticky lg:top-4">
+        <ShellStateView
+          state={state}
+          idle={<p className="text-sm text-[var(--neutral-11)]">{emptyHint}</p>}
+        >
+          {(output) => (
+            <div className="space-y-3">
+              {renderResult(output)}
+              {exit ? <ShellExitActions exit={exit(output)} idPrefix={uid} /> : null}
+            </div>
+          )}
+        </ShellStateView>
+        <ShellNote>{note}</ShellNote>
+      </div>
     </div>
   );
 }
@@ -801,25 +803,36 @@ export interface ShellArtifact {
 
 /** Labelled panels for multi-file generators — never one concatenated blob. */
 export function ShellArtifacts({ artifacts }: { artifacts: readonly ShellArtifact[] }) {
+  const t = useTranslations("runners");
   const uid = useId();
   const first = artifacts[0];
   const [activeId, setActiveId] = useState(first?.id ?? "");
   const current = artifacts.find((a) => a.id === activeId) ?? first;
   if (!current) return null;
 
-  const panel = (a: ShellArtifact) => (
-    <>
-      <ShellCode label={a.label}>{a.body}</ShellCode>
-      <ShellExitActions
-        exit={{
-          text: a.body,
-          filename: a.filename ?? a.label,
-          ...(a.mimeType ? { mimeType: a.mimeType } : {}),
-        }}
-        idPrefix={`${uid}-${a.id}`}
-      />
-    </>
-  );
+  const panel = (a: ShellArtifact) => {
+    const stats = filePaperStats(a.body);
+    return (
+      <>
+        <FilePaperSpecimen
+          filename={a.filename ?? a.label}
+          content={a.body}
+          kindLabel={a.label !== (a.filename ?? a.label) ? a.label : undefined}
+          linesLabel={t("filePaper.lines", { n: stats.lines })}
+          charsLabel={t("filePaper.chars", { n: stats.chars })}
+          emptyLabel={t("filePaper.empty")}
+        />
+        <ShellExitActions
+          exit={{
+            text: a.body,
+            filename: a.filename ?? a.label,
+            ...(a.mimeType ? { mimeType: a.mimeType } : {}),
+          }}
+          idPrefix={`${uid}-${a.id}`}
+        />
+      </>
+    );
+  };
 
   // One artifact means there is nothing to navigate, so no tab strip either.
   if (artifacts.length === 1) {

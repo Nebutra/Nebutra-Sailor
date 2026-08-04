@@ -15,10 +15,10 @@ import {
   ConfigureGenerateShell,
   invokeForgeTool,
   ShellBadge,
-  ShellCode,
   ShellNote,
 } from "@/components/journey-shells";
 import { RunnerSelect } from "@/components/runner-ui";
+import { FilePaperSpecimen, filePaperStats } from "@/components/specimens";
 
 interface Warning {
   code: string;
@@ -181,7 +181,18 @@ export function W3EditorconfigGeneratorRunner({ toolId }: { toolId: string }) {
       })}
       renderResult={(o) => (
         <div className="space-y-3">
-          <ShellCode label={o.filename}>{o.editorconfig}</ShellCode>
+          {(() => {
+            const stats = filePaperStats(o.editorconfig);
+            return (
+              <FilePaperSpecimen
+                filename={o.filename || ".editorconfig"}
+                content={o.editorconfig}
+                linesLabel={t("filePaper.lines", { n: stats.lines })}
+                charsLabel={t("filePaper.chars", { n: stats.chars })}
+                emptyLabel={t("filePaper.empty")}
+              />
+            );
+          })()}
           {o.warnings.length > 0 ? (
             <ul className="space-y-1.5" aria-label={t("editorconfig.checks")}>
               {o.warnings.map((w) => (

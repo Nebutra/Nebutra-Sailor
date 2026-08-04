@@ -244,7 +244,11 @@
     },
     "creditCardLuhn": {
       "number": "Número de tarjeta",
-      "note": "Comprobador Luhn · sin conexión, nunca se almacena"
+      "note": "Comprobador Luhn · sin conexión, nunca se almacena",
+      "digits": "digits",
+      "specimenLabel": "Specimen",
+      "structureOnly": "Luhn structure only",
+      "unknownBrand": "Card"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -448,7 +452,11 @@
       "secret": "Secreto",
       "exp": "Expira (segundos)",
       "payload": "Carga útil JSON",
-      "note": "Generar JWT · HS256 (solo desarrollo/pruebas)"
+      "note": "Generar JWT · HS256 (solo desarrollo/pruebas)",
+      "header": "Header",
+      "payloadLabel": "Payload",
+      "signature": "Signature",
+      "emptySignature": "(empty signature segment)"
     },
     "rand": {
       "min": "Mín",
@@ -2132,6 +2140,35 @@
         "webrtcLocal": "Local WebRTC candidates",
         "noBrowser": "No browser probes"
       }
+    },
+    "honesty": {
+      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
+      "signatureNotVerified": "{engine} · decode only · signature not verified",
+      "localOnly": "Processed for this request · not stored as a card or credential"
+    },
+    "idCard": {
+      "number": "Resident ID number",
+      "note": "GB 11643 check digit · no household registry lookup · same path as API",
+      "specimenTitle": "Resident ID · structure specimen",
+      "segRegion": "Region",
+      "segBirth": "Birth",
+      "segSeq": "Seq",
+      "segCheck": "Check",
+      "metaBirth": "Birth",
+      "metaGender": "Gender",
+      "metaRegion": "Region code",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "reasonFormat": "Format should be 18 characters (last may be X)",
+      "reasonBirth": "Birth date segment is invalid",
+      "reasonCheck": "Check digit is wrong",
+      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+    },
+    "filePaper": {
+      "lines": "{n} lines",
+      "chars": "{n} chars",
+      "empty": "(empty file)",
+      "readyToShip": "Ready to drop into the repo"
     }
   },
   "roots": {
