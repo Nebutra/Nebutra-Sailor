@@ -30,7 +30,7 @@ trap 'rm -rf "$TMP"' EXIT
 
 echo "Downloading $URL"
 # Hard timeouts — GH Actions SSH session must not hang forever on a bad release CDN.
-if ! curl -fsSL --connect-timeout 20 --max-time 180 --retry 2 --retry-delay 3     "$URL" -o "$TMP/$ASSET"; then
+if ! curl -fsSL --connect-timeout 30 --max-time 480 --retry 3 --retry-delay 5     "$URL" -o "$TMP/$ASSET"; then
   echo "ERROR: failed to download $URL" >&2
   exit 1
 fi
