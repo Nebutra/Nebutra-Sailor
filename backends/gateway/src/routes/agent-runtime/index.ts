@@ -122,7 +122,6 @@ agentRuntimeRoutes.openapi(carinaStatusRoute, async (c) => {
   // Co-deploy (unix socket) is the product default; HTTP URL is optional.
   // Do not gate on CARINA_JSONRPC_URL alone — that leaves socket hosts as enabled:false.
   const sandbox = getCarinaSandbox(env);
-  const enabled = Boolean(sandbox);
   const workspaceConfigured = Boolean(
     env.CARINA_WORKSPACE_ROOT?.trim() ||
       env.CARINA_WORKSPACE_TEMPLATE?.trim() ||
