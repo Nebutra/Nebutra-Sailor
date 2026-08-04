@@ -1427,12 +1427,36 @@ jobs:
           fi
 
           if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then
-            code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 "https://auth.nebutra.com/sign-in" || echo 000)
+            # HTTP alone is not enough: a green health check can leave a stale
+            # auth bundle live (skipped matrix job reports success). Assert the
+            # login-card SSOT markers from AUTH_FORM_* / AUTH_OAUTH_* so we
+            # never ship "deployed" with a wide form or stacked OAuth again.
+            html_file="${RUNNER_TEMP}/auth-sign-in.html"
+            code=$(curl -sS -L -o "$html_file" -w "%{http_code}" --max-time 20 "https://auth.nebutra.com/sign-in" || echo 000)
             if [ "$code" != "200" ]; then
               echo "::error::Smoke test failed for auth-sign-in at https://auth.nebutra.com/sign-in (expected 200, got $code)"
               exit 1
             fi
             echo "✅ auth-sign-in https://auth.nebutra.com/sign-in -> $code"
+            if ! grep -qF 'min(100%,360px)' "$html_file"; then
+              echo "::error::auth-sign-in HTML missing login-card width SSOT (expected w-[min(100%,360px)]). Bundle is stale or not the auth app we just deployed."
+              grep -oE 'class="[^"]*(max-w-|min\(100%|w-\[min)[^"]*"' "$html_file" | head -20 || true
+              exit 1
+            fi
+            if ! grep -qF 'grid-cols-2' "$html_file"; then
+              echo "::error::auth-sign-in HTML missing Neon OAuth grid (expected grid-cols-2). Stacked OAuth must not ship."
+              grep -oE 'class="[^"]*grid-cols-[0-9][^"]*"' "$html_file" | head -20 || true
+              exit 1
+            fi
+            if ! grep -qF 'rounded-2xl' "$html_file"; then
+              echo "::error::auth-sign-in HTML missing auth card chrome (expected rounded-2xl from AUTH_FORM_CARD_CLASS)."
+              exit 1
+            fi
+            if grep -qE 'class="[^"]*max-w-xs[^"]*"' "$html_file"; then
+              echo "::error::auth-sign-in still serves pre-#426 max-w-xs form column — auth bundle did not update."
+              exit 1
+            fi
+            echo "✅ auth-sign-in layout markers: min(100%,360px) + grid-cols-2 + rounded-2xl"
           fi
 
       - name: Emit deployment verification analytics
