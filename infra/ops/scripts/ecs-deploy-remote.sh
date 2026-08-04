@@ -1405,6 +1405,10 @@ ensure_carina_codeploy() {
       ;;
     landing)
       # ORIGIN_EDGE_TOKEN is host-local (landing/.env); never hardcode.
+      # Prefer /api/e2e/health: apps/landing/src/proxy.ts matcher skips /api/**
+      # so Host/edge-token gates cannot 421 a healthy process. /get-license
+      # goes through the marketing proxy and fails loopback health when the
+      # edge token is missing from .env but present in the running process.
       local landing_edge_token=""
       if [ -f "$app_root/.env" ]; then
         landing_edge_token="$(
@@ -1413,7 +1417,7 @@ ensure_carina_codeploy() {
             | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
         )"
       fi
-      wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/get-license" "^(200|301|302|307)$" "nebutra.com" "$landing_edge_token"
+      wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/api/e2e/health" "^200$" "nebutra.com" "$landing_edge_token"
       ;;
     web)
       wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/" "^(200|301|302|307)$" "app.nebutra.com"
