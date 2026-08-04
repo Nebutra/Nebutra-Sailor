@@ -89,8 +89,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*pebble*|*sailor-docs*|*router*|*forge*|*admin*) : ;;
-  *) fail "APPS must contain at least one of: landing web api idp auth design-docs pebble sailor-docs router forge admin (got: $APPS)" ;;
+  *landing*|*web*|*api*|*idp*|*auth*|*design*|*pebble*|*sailor-docs*|*router*|*forge*|*admin*) : ;;
+  *) fail "APPS must contain at least one of: landing web api idp auth design design-docs pebble sailor-docs router forge admin (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -1428,6 +1428,9 @@ ensure_carina_codeploy() {
     auth-center|auth)
       wait_for_local_http "auth-center" "$pm2_name" "http://127.0.0.1:3101/health" "^200$"
       ;;
+    design)
+      wait_for_local_http "design" "$pm2_name" "http://127.0.0.1:3109/" "^(200|301|302|307)$" "design.nebutra.com"
+      ;;
     design-docs)
       wait_for_local_http "design-docs" "$pm2_name" "http://127.0.0.1:3004/" "^(200|301|302|307)$" "design-docs.nebutra.com"
       ;;
@@ -1486,6 +1489,7 @@ pm2_name_for_app() {
     api)          printf '%s\n' "api-gateway" ;;
     idp)          printf '%s\n' "idp" ;;
     auth)         printf '%s\n' "auth-center" ;;
+    design)       printf '%s\n' "design" ;;
     design-docs)  printf '%s\n' "design-docs" ;;
     pebble)       printf '%s\n' "pebble" ;;
     sailor-docs)  printf '%s\n' "sailor-docs" ;;
@@ -1750,7 +1754,7 @@ verify_nginx_web_origin() {
 
 run_selected_apps() {
   local action="$1" app pm2_name
-  for app in api landing web idp auth design-docs pebble sailor-docs router forge admin; do
+  for app in api landing web idp auth design design-docs pebble sailor-docs router forge admin; do
     case " $APPS " in
       *" $app "*) : ;;
       *) continue ;;
@@ -1768,7 +1772,7 @@ if [ "$MODE" = "rollback" ]; then
   exit 0
 fi
 
-for app in api landing web idp auth design-docs pebble sailor-docs router forge admin; do
+for app in api landing web idp auth design design-docs pebble sailor-docs router forge admin; do
   case " $APPS " in
     *" $app "*) : ;;
     *) continue ;;
