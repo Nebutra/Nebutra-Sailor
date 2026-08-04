@@ -2085,7 +2085,17 @@
       "infraOn": "Authority-Zone online",
       "infraOff": "Authority-Zone offline — nur Multi-Pfad",
       "authorityResolvers": "Authority: erfasste Recursives",
-      "authorityNote": "Das sind Recursives, die Ihre eindeutigen Probe-Namen abgefragt haben (OS-System-DNS). Mit VPN/DNS-Anbieter vergleichen."
+      "authorityNote": "Das sind Recursives, die Ihre eindeutigen Probe-Namen abgefragt haben (OS-System-DNS). Mit VPN/DNS-Anbieter vergleichen.",
+      "infraChecking": "Checking authority zone…",
+      "idleOnline": "Authority zone is online. Run a check to capture your system-DNS recursives (plus DoH / WebRTC).",
+      "noteOnline": "Authority zone leak.nebutra.com is live. Unique probe names reveal recursive resolvers on the OS DNS path; DoH/WebRTC are complementary.",
+      "phaseSession": "Creating authority session…",
+      "phaseSystemDns": "Triggering system DNS probes…",
+      "phasePoll": "Waiting for recursive hits ({n}/18)…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "authorityNoHits": "Authority online, but no recursive queries hit your probes this round — try disabling browser Secure DNS and re-run.",
+      "authorityDetail": "Authority session detail"
     }
   },
   "roots": {

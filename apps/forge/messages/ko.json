@@ -2085,7 +2085,17 @@
       "infraOn": "권한 영역 온라인",
       "infraOff": "권한 영역 오프라인 — 다중 경로만",
       "authorityResolvers": "권한 영역 재귀 포착",
-      "authorityNote": "이 IP는 고유 프로브 이름을 질의한 재귀 리졸버(OS 시스템 DNS 경로)입니다. VPN/DNS 사업자와 비교하세요."
+      "authorityNote": "이 IP는 고유 프로브 이름을 질의한 재귀 리졸버(OS 시스템 DNS 경로)입니다. VPN/DNS 사업자와 비교하세요.",
+      "infraChecking": "Checking authority zone…",
+      "idleOnline": "Authority zone is online. Run a check to capture your system-DNS recursives (plus DoH / WebRTC).",
+      "noteOnline": "Authority zone leak.nebutra.com is live. Unique probe names reveal recursive resolvers on the OS DNS path; DoH/WebRTC are complementary.",
+      "phaseSession": "Creating authority session…",
+      "phaseSystemDns": "Triggering system DNS probes…",
+      "phasePoll": "Waiting for recursive hits ({n}/18)…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "authorityNoHits": "Authority online, but no recursive queries hit your probes this round — try disabling browser Secure DNS and re-run.",
+      "authorityDetail": "Authority session detail"
     }
   },
   "roots": {

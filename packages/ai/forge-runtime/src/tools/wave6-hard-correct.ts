@@ -361,8 +361,8 @@ export const dnsLeakTool = tool({
   category: "dev",
   title: { zh: "DNS 泄漏检测", en: "DNS Leak Check" },
   description: {
-    zh: "多解析器路径 + 浏览器 DoH/WebRTC 对照；诚实说明：无自建权威 NS 时不能声称完整系统 DNS 泄漏图",
-    en: "Multi-resolver path + browser DoH/WebRTC checks; honest: full system-DNS leak maps need an authoritative leak zone",
+    zh: "权威区系统 DNS 递归捕获 + 多解析器路径 + 浏览器 DoH/WebRTC；无命中时诚实降级，不伪造 Geo/ASN",
+    en: "Authority-zone system-DNS recursive capture + multi-resolver + browser DoH/WebRTC; honest degrade when no hits, no fake Geo/ASN",
   },
   tier: "core",
   sideEffect: "pure",
@@ -399,6 +399,8 @@ export const dnsLeakTool = tool({
     authorityQueryCount: z.number().int().min(0).max(10_000).optional(),
     authorityReady: z.boolean().optional(),
     authorityZone: z.string().max(253).optional(),
+    /** True when the control API accepted a session (zone process reachable). */
+    infrastructureAvailable: z.boolean().optional(),
     /** Host-injected like my-ip */
     forwardedFor: z.string().max(2_000).optional(),
     realIp: z.string().max(128).optional(),
@@ -426,6 +428,7 @@ export const dnsLeakTool = tool({
     authorityQueryCount?: number;
     authorityReady?: boolean;
     authorityZone?: string;
+    infrastructureAvailable?: boolean;
     forwardedFor?: string;
     realIp?: string;
     remoteAddress?: string;
@@ -498,6 +501,9 @@ export const dnsLeakTool = tool({
       }))
       .filter((r) => r.ip.length > 0);
     const authorityReady = Boolean(input.authorityReady && authorityResolvers.length > 0);
+    const infrastructureAvailable = Boolean(
+      input.infrastructureAvailable || input.sessionId || input.authorityZone,
+    );
 
     const signals: string[] = [];
     if (authorityReady) signals.push("authority_zone_captured_recursives");
@@ -508,7 +514,11 @@ export const dnsLeakTool = tool({
     }
     if (privateWebrtc.length > 0) signals.push("webrtc_local_candidates_present");
     if (clientProbes.length === 0) signals.push("no_browser_probes_submitted");
-    if (!authorityReady) signals.push("authority_zone_not_ready");
+    if (!authorityReady && infrastructureAvailable) {
+      signals.push("authority_zone_online_no_recursive_hits");
+    } else if (!authorityReady) {
+      signals.push("authority_zone_not_ready");
+    }
 
     let verdict:
       | "authority_captured"
@@ -520,6 +530,30 @@ export const dnsLeakTool = tool({
     else if (clientProbes.length === 0 && webrtcIps.length === 0) verdict = "incomplete";
     else if (signals.includes("webrtc_public_ip_differs_from_edge_ip")) verdict = "ip_mismatch";
     else if (splitAcrossResolvers || clientDohSplit) verdict = "split_paths";
+
+    const honesty = authorityReady
+      ? {
+          fullSystemDnsLeakMap: true as const,
+          reason:
+            "Authoritative leak zone observed recursive resolvers for unique probe names (system DNS path).",
+          recommendation:
+            "Compare listed recursive IPs with your expected VPN/DNS provider. Unexpected ISP resolvers while on VPN usually means DNS leak.",
+        }
+      : infrastructureAvailable
+        ? {
+            fullSystemDnsLeakMap: false as const,
+            reason:
+              "Authority zone is online, but no recursive queries hit your probe names in this window (browser DoH-only path, blocked system DNS, or slow resolver).",
+            recommendation:
+              "Disable browser Secure DNS temporarily, re-run, and wait for the poll window. Multi-resolver + DoH/WebRTC remain complementary signals.",
+          }
+        : {
+            fullSystemDnsLeakMap: false as const,
+            reason:
+              "Authoritative leak zone not ready on this host. Showing multi-resolver + browser DoH/WebRTC only.",
+            recommendation:
+              "Deploy @nebutra/forge-dns-leak + NS for leak.nebutra.com (DNS-only) for full system-DNS capture; until then treat DoH/WebRTC as complementary signals.",
+          };
 
     return {
       ok: true as const,
@@ -544,8 +578,10 @@ export const dnsLeakTool = tool({
         zone: input.authorityZone ?? null,
         queryCount: input.authorityQueryCount ?? 0,
         resolvers: authorityResolvers,
+        infrastructureAvailable,
       },
       authorityReady,
+      infrastructureAvailable,
       signals,
       verdict,
       summary: {
@@ -556,18 +592,12 @@ export const dnsLeakTool = tool({
         distinctBrowserDohAnswerSets: dohFingerprints.length,
         authorityResolverCount: authorityResolvers.length,
       },
-      honesty: {
-        fullSystemDnsLeakMap: authorityReady,
-        reason: authorityReady
-          ? "Authoritative leak zone observed recursive resolvers for unique probe names (system DNS path)."
-          : "Authoritative leak zone not ready on this host. Showing multi-resolver + browser DoH/WebRTC only.",
-        recommendation: authorityReady
-          ? "Compare listed recursive IPs with your expected VPN/DNS provider. Unexpected ISP resolvers while on VPN usually means DNS leak."
-          : "Deploy @nebutra/forge-dns-leak + NS for leak.nebutra.com (DNS-only) for full system-DNS capture; until then treat DoH/WebRTC as complementary signals.",
-      },
+      honesty,
       engine: authorityReady
         ? "forge-dns-leak-authority+node:dns+client-probes"
-        : "node:dns.Resolver+client-probes",
+        : infrastructureAvailable
+          ? "forge-dns-leak-authority-online+node:dns+client-probes"
+          : "node:dns.Resolver+client-probes",
     };
   },
 });
