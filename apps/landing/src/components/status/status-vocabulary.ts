@@ -17,18 +17,49 @@ export const overallCopy: Record<
   { label: string; description: string }
 > = {
   operational: {
-    label: "All Systems Operational",
+    label: "All systems operational",
     description: "All monitored public surfaces are responding normally.",
   },
   degraded: {
-    label: "Degraded Performance",
+    label: "Degraded performance",
     description: "At least one surface is slow, partially healthy, or returning warnings.",
   },
   outage: {
-    label: "Major Service Outage",
+    label: "Major service outage",
     description: "One or more monitored services failed a public health check.",
   },
 };
+
+/**
+ * Overall banner body — name the failing surfaces when possible so the
+ * headline is not a hollow marketing callout.
+ */
+export function overallDetail(
+  overall: Exclude<ServiceState, "unknown">,
+  services: ReadonlyArray<{ name: string; state: ServiceState }>,
+): string {
+  if (overall === "operational") {
+    return overallCopy.operational.description;
+  }
+
+  const priority: ServiceState[] =
+    overall === "outage" ? ["outage", "degraded", "unknown"] : ["degraded", "outage", "unknown"];
+  const affected = services.filter((s) => priority.includes(s.state));
+  if (affected.length === 0) {
+    return overallCopy[overall].description;
+  }
+
+  const names = affected.map((s) => s.name);
+  if (names.length === 1) {
+    return overall === "outage"
+      ? `${names[0]} is unavailable.`
+      : `${names[0]} is degraded. See components below.`;
+  }
+  if (names.length === 2) {
+    return `${names[0]} and ${names[1]} need attention. See components below.`;
+  }
+  return `${names[0]}, ${names[1]}, and ${names.length - 2} more need attention. See components below.`;
+}
 
 export const componentStatusLabel: Record<ServiceState, string> = {
   operational: "Operational",
@@ -54,13 +85,14 @@ export const stateFillClass: Record<DayCellStatus, string> = {
   no_data: "bg-[color:hsl(var(--muted-foreground))]/18",
 };
 
-/** Full-width overall banner. */
+/**
+ * Overall banner chrome — Statuspage / GitHub pattern:
+ * white card + 3–4px state rail, not a full-bleed tinted callout.
+ */
 export const overallBannerClass: Record<Exclude<ServiceState, "unknown">, string> = {
-  operational:
-    "border-success/25 bg-success/10 text-[hsl(var(--success-strong))] dark:bg-success/15",
-  degraded: "border-warning/30 bg-warning/10 text-[hsl(var(--warning-strong))] dark:bg-warning/15",
-  outage:
-    "border-destructive/30 bg-destructive/10 text-[hsl(var(--destructive-strong))] dark:bg-destructive/15",
+  operational: "border-border border-l-success bg-background",
+  degraded: "border-border border-l-warning bg-background",
+  outage: "border-border border-l-destructive bg-background",
 };
 
 export const UPTIME_WINDOW_DAYS = 90;
