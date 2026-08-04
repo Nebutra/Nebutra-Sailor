@@ -4688,6 +4688,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../design/brand
+      '@nebutra/preset':
+        specifier: workspace:*
+        version: link:../preset
       '@nebutra/theme':
         specifier: workspace:*
         version: link:../../design/theme
@@ -4740,6 +4743,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../design/brand
+      '@nebutra/preset':
+        specifier: workspace:*
+        version: link:../preset
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.1
