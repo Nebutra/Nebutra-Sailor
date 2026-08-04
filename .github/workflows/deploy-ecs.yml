@@ -197,6 +197,15 @@ jobs:
             design:
               - 'apps/design/**'
               - 'packages/design/**'
+              # The four every other app lists. Without them a change to the
+              # deploy script, the vhost, the task definition or this workflow
+              # redeploys the whole fleet except the design site, which then
+              # runs on an older image than everything around it.
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
             design-docs:
               - 'apps/design-docs/**'
               - 'packages/**'
