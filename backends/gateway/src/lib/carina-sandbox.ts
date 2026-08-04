@@ -2,7 +2,9 @@
  * Gateway Track-B wiring — resolve Carina from env and attach command_exec.
  *
  * Env (operator / self-deployed daemon):
- *   CARINA_JSONRPC_URL            HTTP JSON-RPC base (required to enable)
+ *   CARINA_CODEPLOY               1 (default) same-host; 0 = opt out
+ *   CARINA_DAEMON_SOCK            unix NDJSON path (default /var/carina/run/daemon.sock)
+ *   CARINA_JSONRPC_URL            optional HTTP JSON-RPC base (non-socket bridge)
  *   CARINA_JSONRPC_TOKEN          product/gateway Bearer (never local owner unlock)
  *   CARINA_JSONRPC_PATH           optional path under base (e.g. /jsonrpc)
  *   CARINA_WORKSPACE_ROOT         default absolute path on Carina host
@@ -19,20 +21,20 @@
  */
 
 import {
-  RuntimeToolRegistry,
-  isCarinaSandbox,
-  registerCommandExecTool,
-  resolveCarinaSandboxFromEnv,
-  resolveCarinaWorkspaceRootWithCodeploy,
   type CarinaEnv,
   type CarinaSandbox,
   type ExternalSandbox,
+  isCarinaSandbox,
+  RuntimeToolRegistry,
+  registerCommandExecTool,
+  resolveCarinaSandboxFromEnv,
+  resolveCarinaWorkspaceRootWithCodeploy,
 } from "@nebutra/agent-runtime";
 
 export type GatewayCarinaBundle = {
   readonly sandbox: ExternalSandbox;
   readonly tools: RuntimeToolRegistry;
-  /** True when CARINA_JSONRPC_URL is set (sandbox is Carina, not refuse stub). */
+  /** True when sandbox is Carina (socket co-deploy and/or HTTP URL), not refuse stub. */
   readonly carinaEnabled: boolean;
   readonly workspaceRoot?: string;
 };
@@ -72,16 +74,12 @@ export function createGatewayCarinaBundle(
   };
 }
 
-export function gatewaySandboxOrRefuse(
-  env: CarinaEnv = process.env,
-): ExternalSandbox {
+export function gatewaySandboxOrRefuse(env: CarinaEnv = process.env): ExternalSandbox {
   return resolveCarinaSandboxFromEnv(env);
 }
 
 /** Narrow helper for routes that need Carina-only methods. */
-export function getCarinaSandbox(
-  env: CarinaEnv = process.env,
-): CarinaSandbox | null {
+export function getCarinaSandbox(env: CarinaEnv = process.env): CarinaSandbox | null {
   const sandbox = resolveCarinaSandboxFromEnv(env);
   return isCarinaSandbox(sandbox) ? sandbox : null;
 }
