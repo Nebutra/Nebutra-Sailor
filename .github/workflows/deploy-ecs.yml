@@ -313,12 +313,17 @@ jobs:
             forge="${F_FORGE:-false}"
             router="${F_ROUTER:-false}"
             pebble="${F_PEBBLE:-false}"
-            if [ "$api" != "true" ] && [ "$forge" != "true" ] && [ "$router" != "true" ] && [ "$pebble" != "true" ]; then
+            # design is on the push list because it is the acceptance surface for
+            # the token pipeline: when a token or a component changes, the page
+            # that renders them is the thing that should show it. Its filter
+            # includes packages/design/**, so that is exactly when it fires.
+            design="${F_DESIGN:-false}"
+            if [ "$api" != "true" ] && [ "$forge" != "true" ] && [ "$router" != "true" ] && [ "$pebble" != "true" ] && [ "$design" != "true" ]; then
               # Shared deploy/nginx/workflow-only change: ship via forge so vhosts update.
               forge=true
             fi
             any=false
-            if [ "$api" = "true" ] || [ "$forge" = "true" ] || [ "$router" = "true" ] || [ "$pebble" = "true" ]; then
+            if [ "$api" = "true" ] || [ "$forge" = "true" ] || [ "$router" = "true" ] || [ "$pebble" = "true" ] || [ "$design" = "true" ]; then
               any=true
             fi
             {
@@ -327,7 +332,7 @@ jobs:
               echo "api=$api"
               echo "idp=false"
               echo "auth=false"
-              echo "design=false"
+              echo "design=$design"
               echo "design-docs=false"
               echo "pebble=$pebble"
               echo "sailor-docs=false"
@@ -335,9 +340,9 @@ jobs:
               echo "forge=$forge"
               echo "admin=false"
               echo "any=$any"
-              emit_next_matrix false false false false false "$pebble" false "$router" "$forge" false false
+              emit_next_matrix false false false false false "$pebble" false "$router" "$forge" false "$design"
             } >> "$GITHUB_OUTPUT"
-            echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble any=$any"
+            echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble design=$design any=$any"
             exit 0
           fi
 
