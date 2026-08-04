@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/typelens-catalog",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Type Lens — works, pairings, and agent extract packs for designers and design agents",
   "private": false,
   "license": "MIT",
@@ -18,16 +18,21 @@
       "Agent extract pack generation pipeline is scaffold only"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "research:fiu": "node ./scripts/fiu-research-coldstart.mjs",
-    "research:fiu:quick": "node ./scripts/fiu-research-coldstart.mjs --max-uses-per-face=3 --delay-ms=3000 --max-pages=24"
+    "research:fiu:quick": "node ./scripts/fiu-research-coldstart.mjs --max-uses-per-face=3 --delay-ms=3000 --max-pages=24",
+    "build": "tsup"
   },
   "dependencies": {
     "zod": "catalog:"
@@ -35,7 +40,8 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "tsup": "catalog:"
   },
   "repository": {
     "type": "git",
@@ -44,5 +50,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }
