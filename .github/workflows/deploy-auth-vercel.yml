@@ -37,9 +37,10 @@ jobs:
   vercel:
     name: Trigger Vercel production
     runs-on: ubuntu-latest
+    # Production path is Cloudflare Workers. Vercel is emergency-only:
+    # require explicit DEPLOY_TARGET_AUTH=vercel, or manual workflow_dispatch.
     if: >-
       vars.DEPLOY_TARGET_AUTH == 'vercel' ||
-      vars.DEPLOY_TARGET_AUTH == '' ||
       github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
