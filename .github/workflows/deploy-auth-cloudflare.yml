@@ -1,0 +1,94 @@
+name: Deploy Auth Center (Cloudflare Workers)
+
+# Production path for auth.nebutra.com: OpenNext → Worker + Assets.
+# Replaces Vercel Hobby as the overseas host for Google OAuth token exchange.
+# PlanetScale Postgres via Hyperdrive binding (same config as gateway).
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps/auth/**"
+      - "packages/iam/auth/**"
+      - "packages/platform/db/**"
+      - "packages/platform/i18n/**"
+      - "packages/design/brand/**"
+      - "packages/design/ui/**"
+      - "packages/design/tokens/**"
+      - "packages/design/icons/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/deploy-auth-cloudflare.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-auth-cloudflare-production
+  cancel-in-progress: true
+
+jobs:
+  cloudflare:
+    name: OpenNext → Cloudflare Workers
+    runs-on: ubuntu-latest
+    # Default production path when DEPLOY_TARGET_AUTH is cloudflare-* or unset
+    # after cutover. Vercel remains optional via deploy-auth-vercel.yml only.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      vars.DEPLOY_TARGET_AUTH == 'cloudflare-workers' ||
+      vars.DEPLOY_TARGET_AUTH == 'cloudflare-pages' ||
+      vars.DEPLOY_TARGET_AUTH == ''
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup pnpm + Node
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build OpenNext worker
+        env:
+          # Build-time placeholders; runtime uses Hyperdrive + wrangler secrets.
+          DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
+          BETTER_AUTH_SECRET: "build-placeholder-secret-not-for-production-use-32b"
+          BETTER_AUTH_URL: "https://auth.nebutra.com"
+          NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com"
+          NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
+          AUTH_COOKIE_DOMAIN: ".nebutra.com"
+          AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          OPEN_NEXT_BUILD: "true"
+        run: |
+          set -euo pipefail
+          pnpm --filter @nebutra/brand sync
+          pnpm --filter @nebutra/auth-center build:worker
+
+      - name: Deploy worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        working-directory: apps/auth
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_WORKERS_API_TOKEN missing"; exit 1; }
+          pnpm exec wrangler deploy
+
+      - name: Smoke workers.dev + optional custom host
+        run: |
+          set -euo pipefail
+          for url in \
+            https://nebutra-auth.nebutra.workers.dev/health \
+            https://auth.nebutra.com/health
+          do
+            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            echo "GET $url -> $code"
+            if [ "$code" = "200" ]; then
+              head -c 400 /tmp/ah.json || true
+              echo
+            fi
+          done
+          code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 45 \
+            'https://nebutra-auth.nebutra.workers.dev/health?probe=google' || echo 000)
+          echo "GET workers.dev health?probe=google -> $code"
+          if [ "$code" = "200" ]; then
+            python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))' || true
+          fi

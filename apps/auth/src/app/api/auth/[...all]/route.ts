@@ -15,10 +15,23 @@ import {
   sanitizeReturnUrl,
 } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
+import { applyCloudflareAuthSecrets, applyCloudflareDatabaseEnv } from "@/lib/cloudflare-env";
 import { applyAuthCors } from "@/lib/cors";
 import { isOAuthProvider, type OAuthProvider } from "@/lib/oauth-providers";
 import { resolveAppOrigin } from "@/lib/return-to";
 import { applySessionHint } from "@/lib/session-hint";
+
+/** Hyperdrive / secrets from OpenNext Cloudflare Worker (no-op on ECS/Node). */
+async function bindCloudflareEnv(): Promise<void> {
+  try {
+    const { getCloudflareContext } = await import("@opennextjs/cloudflare");
+    const { env } = await getCloudflareContext({ async: true });
+    applyCloudflareDatabaseEnv(env as Partial<CloudflareEnv>);
+    applyCloudflareAuthSecrets(env as Partial<CloudflareEnv>);
+  } catch {
+    // Not running on OpenNext Cloudflare — ECS / local use process.env only.
+  }
+}
 
 const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set([
   "better-auth",
@@ -124,6 +137,9 @@ async function handle(request: Request): Promise<Response> {
   if (request.method.toUpperCase() === "OPTIONS") {
     return applyAuthCors(request, new Response(null, { status: 204 }));
   }
+
+  // OpenNext Worker: Hyperdrive → DATABASE_URL before Prisma/Better Auth init.
+  await bindCloudflareEnv();
 
   if (!PROVIDERS_USING_THIS_ROUTE.has(provider)) {
     return applyAuthCors(

@@ -1,19 +1,22 @@
 name: Point auth DNS
 
-# Flip auth.nebutra.com between ECS (China origin) and Vercel (iad1, Google-reachable).
-# Default target for production cutover: vercel (OAuth token exchange needs Google).
+# Flip auth.nebutra.com between:
+# - cloudflare-workers (production): OpenNext Worker, Google-reachable + Hyperdrive
+# - ecs: China ECS PM2 fallback
+# - vercel: emergency-only (Hobby quota / temporary)
 
 on:
   workflow_dispatch:
     inputs:
       target:
-        description: "DNS target for auth.nebutra.com"
+        description: "DNS target for auth.nebutra.com (production = cloudflare-workers)"
         required: true
-        default: "vercel"
+        default: "cloudflare-workers"
         type: choice
         options:
-          - vercel
+          - cloudflare-workers
           - ecs
+          - vercel
 
 permissions:
   contents: read
@@ -28,16 +31,15 @@ jobs:
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Point auth.nebutra.com → Vercel
-        if: inputs.target == 'vercel'
+      - name: Point auth.nebutra.com → Cloudflare Worker
+        if: inputs.target == 'cloudflare-workers'
         env:
-          # Prefer DNS-capable token; fall back to workers token when it also has Zone DNS Edit.
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN (or WORKERS) secret missing"; exit 1; }
-          bash infra/ops/scripts/point-auth-dns-vercel.sh
+          bash infra/ops/scripts/point-auth-dns-cloudflare-worker.sh
 
       - name: Point auth.nebutra.com → ECS
         if: inputs.target == 'ecs'
@@ -49,7 +51,18 @@ jobs:
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN (or WORKERS) secret missing"; exit 1; }
           bash infra/ops/scripts/point-auth-dns-ecs.sh
-      - name: Smoke auth health (+ Google pairing when on Vercel path)
+
+      - name: Point auth.nebutra.com → Vercel (emergency only)
+        if: inputs.target == 'vercel'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN (or WORKERS) secret missing"; exit 1; }
+          bash infra/ops/scripts/point-auth-dns-vercel.sh
+
+      - name: Smoke auth health (+ Google pairing off China)
         run: |
           set -euo pipefail
           for i in 1 2 3 4 5 6 7 8; do
@@ -61,11 +74,11 @@ jobs:
             fi
             sleep 12
           done
-          if [ "${{ inputs.target }}" != "vercel" ]; then
-            curl -sSI --max-time 15 https://auth.nebutra.com/health || true
+          if [ "${{ inputs.target }}" = "ecs" ]; then
+            echo "ECS origin: Google probe may network_error (expected in CN)."
             exit 0
           fi
-          echo "=== Google pairing probe (expect pair_ok when origin is Vercel iad1) ==="
+          echo "=== Google pairing probe (expect pair_ok on CF Worker / overseas) ==="
           for i in 1 2 3 4 5 6; do
             code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 40 \
               'https://auth.nebutra.com/health?probe=google' || echo 000)
@@ -82,11 +95,11 @@ jobs:
                 exit 0
                 ;;
               network_error)
-                echo "still network_error — DNS may not have reached Vercel yet"
+                echo "still network_error — DNS may not have reached overseas origin yet"
                 sleep 12
                 ;;
               invalid_client)
-                echo "::error::invalid_client — set GOOGLE_CLIENT_SECRET on Vercel nebutra-auth env"
+                echo "::error::invalid_client — fix GOOGLE_CLIENT_SECRET on Worker secrets"
                 exit 1
                 ;;
               *)
@@ -95,5 +108,5 @@ jobs:
                 ;;
             esac
           done
-          echo "::warning::health ok but google probe not pair_ok yet — re-run smoke after DNS TTL"
+          echo "::warning::health ok but google probe not pair_ok yet"
           exit 0

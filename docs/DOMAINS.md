@@ -91,7 +91,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
 | `docs.nebutra.com` | CNAME → Worker `nebutra-sailor-docs` **proxied** (or Vercel grey-cloud fallback) | **Cloudflare Worker** (OpenNext) preferred | Vercel Hobby daily cap; CF path: `deploy-sailor-docs.yml` |
 | `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
-| `auth.nebutra.com` | CNAME `cname.vercel-dns.com` proxied (**cutover required**) | **Vercel** `nebutra-auth` (iad1) — Google OAuth token exchange | Rollback: A → ECS `106.15.4.31` via `point-auth-dns.yml` target=ecs |
+| `auth.nebutra.com` | CNAME → `nebutra-auth.nebutra.workers.dev` **proxied** | **Cloudflare Worker** (OpenNext) — Google OAuth + Hyperdrive→PlanetScale | Rollback: `point-auth-dns.yml` target=ecs; emergency Vercel only |
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
 | `sso.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `idp` | **Permanent OIDC issuer** — do not move lightly |
 | `router.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `router` | Product edge :3106; Vercel project `nebutra-router` exists for future cutover |
@@ -122,7 +122,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `DEPLOY_TARGET_LANDING` | `vercel` | Primary deploy path |
 | `DEPLOY_TARGET_SAILOR_DOCS` | `vercel` (temp) / `cloudflare-workers` (target) | Push path for `deploy-sailor-docs.yml`. Prefer CF Workers when token has **Workers Scripts Edit**; until then set `vercel`. Token ops: [ops/cloudflare-ci-token.md](./ops/cloudflare-ci-token.md) |
 | `DEPLOY_TARGET_WEB` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
-| `DEPLOY_TARGET_AUTH` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
+| `DEPLOY_TARGET_AUTH` | `cloudflare-workers` | OpenNext Worker; ECS is fallback; Vercel is emergency-only |
 | `DEPLOY_TARGET_ADMIN` | `standalone` | Control plane — ECS origin only; a Vercel project would create a second origin outside Cloudflare Access |
 | `DEPLOY_TARGET_GATEWAY` | `cloudflare-workers` | Edge API |
 | `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` | Login center origin |
