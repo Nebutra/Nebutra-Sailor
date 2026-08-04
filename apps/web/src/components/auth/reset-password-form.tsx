@@ -1,8 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nebutra/ui/components";
-import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
+import { Button as LobeButton } from "@nebutra/ui/components";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Input,
+} from "@nebutra/ui/primitives";
 import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -166,9 +174,9 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
             )}
           />
 
-          <Button disabled={pending} htmlType="submit" type="primary">
+          <LobeButton disabled={pending} htmlType="submit" type="primary">
             {t("submit")}
-          </Button>
+          </LobeButton>
         </form>
       </Form>
     </section>
