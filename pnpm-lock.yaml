@@ -3503,9 +3503,6 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
-      '@nebutra/db':
-        specifier: workspace:*
-        version: link:../../platform/db
       '@vitest/coverage-v8':
         specifier: 'catalog:'
         version: 4.1.4(vitest@4.1.4)
