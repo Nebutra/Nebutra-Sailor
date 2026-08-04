@@ -380,7 +380,11 @@
       "challengeTitle": "Verify you are human",
       "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
       "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "Ao continuar, você concorda com os <terms>Termos de Serviço</terms> e a <privacy>Política de Privacidade</privacy> da {brandName}."
+      "legalNotice": "Ao continuar, você concorda com os <terms>Termos de Serviço</terms> e a <privacy>Política de Privacidade</privacy> da {brandName}.",
+      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
+      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
+      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
+      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
     },
     "signUp": {
       "title": "Crie sua conta Nebutra",

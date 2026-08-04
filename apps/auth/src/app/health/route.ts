@@ -32,6 +32,21 @@ export function GET() {
       providers: oauthProviders,
       /** Register these in Google/GitHub/Apple/Microsoft developer consoles. */
       callbackUrls: oauthProviders.map((p) => `${origin}/api/auth/callback/${p}`),
+      /**
+       * Presence flags only (never secrets). `invalid_code` after Google almost
+       * always means secret/redirect mismatch when clientId is configured but
+       * secret is missing or wrong on this host.
+       */
+      env: {
+        googleClientId: Boolean(process.env.GOOGLE_CLIENT_ID?.trim()),
+        googleClientSecret: Boolean(process.env.GOOGLE_CLIENT_SECRET?.trim()),
+        githubClientId: Boolean(process.env.GITHUB_CLIENT_ID?.trim()),
+        githubClientSecret: Boolean(process.env.GITHUB_CLIENT_SECRET?.trim()),
+        betterAuthUrl: Boolean(
+          process.env.BETTER_AUTH_URL?.trim() || process.env.NEXT_PUBLIC_AUTH_URL?.trim(),
+        ),
+        authCookieDomain: Boolean(process.env.AUTH_COOKIE_DOMAIN?.trim()),
+      },
     },
     passkey: {
       rpID: process.env.PASSKEY_RP_ID || new URL(origin).hostname,

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { type AuthSignInOauthMessageKey, resolveOauthErrorMessageKey } from "@/lib/oauth-errors";
 import type { OAuthProvider } from "@/lib/oauth-providers";
 import {
   enablePasskeyConditionalUI,
@@ -54,22 +55,10 @@ interface CredentialsFormProps {
  */
 function oauthErrorMessage(
   code: string | null | undefined,
-  t: (key: "genericError" | "signInFailed") => string,
+  t: (key: AuthSignInOauthMessageKey) => string,
 ): string | null {
-  if (!code) return null;
-  // BA codes we commonly surface after Google/GitHub round-trips.
-  switch (code) {
-    case "state_mismatch":
-    case "state_not_found":
-    case "state_security_mismatch":
-    case "please_restart_the_process":
-      return t("genericError");
-    case "oauth_unavailable":
-    case "unsupported":
-      return t("signInFailed");
-    default:
-      return t("genericError");
-  }
+  const key = resolveOauthErrorMessageKey(code);
+  return key ? t(key) : null;
 }
 
 export function CredentialsForm({

@@ -397,7 +397,11 @@
       "challengeTitle": "请完成人机验证",
       "challengeSubtitle": "通过验证后继续登录。此步骤单独进行，以免打乱登录表单布局。",
       "challengeSubmitting": "验证完成，正在登录…",
-      "legalNotice": "继续即表示你同意 {brandName} 的 <terms>服务条款</terms> 与 <privacy>隐私政策</privacy>。"
+      "legalNotice": "继续即表示你同意 {brandName} 的 <terms>服务条款</terms> 与 <privacy>隐私政策</privacy>。",
+      "oauthInvalidCode": "第三方登录失败（授权码无效）。请再试一次。若反复出现，通常是 Google/GitHub 的 Client Secret 或回调地址配置不正确。",
+      "oauthStateMismatch": "登录流程已过期或被中断。请关闭多余标签页后，重新点击 Google 或 GitHub。",
+      "oauthAccessDenied": "你已取消登录。需要时再选择一次登录方式即可。",
+      "oauthUnavailable": "该登录方式暂时不可用。请改用邮箱密码，或换一种方式。"
     },
     "signUp": {
       "title": "创建 Nebutra 账号",
