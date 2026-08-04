@@ -7,7 +7,7 @@ import { AUTH_FORM_COLUMN_CLASS, AUTH_PRIMARY_CTA_CLASS } from "../auth-surfaces
  * Auth form-column + primary CTA contracts.
  *
  * Hard-and-correct: one width, one CTA recipe. Both product shells
- * (auth-center + Agent OS web) must import the SSOT; magic pixel max-widths
+ * (auth-center + Agent OS web) must import the SSOT; ad-hoc max-widths
  * and bg-[hsl(var(--foreground))] fights against btn-brand-default are
  * banned so the column cannot silently widen or re-paint identity blue.
  *
@@ -30,12 +30,18 @@ const AUTH_SURFACES = [
   "apps/web/src/components/auth/clerk-enterprise-sso-handoff.tsx",
 ] as const;
 
+const OAUTH_BUTTONS = [
+  "apps/auth/src/components/oauth-buttons.tsx",
+  "apps/web/src/components/auth/oauth-buttons.tsx",
+] as const;
+
 const FOREGROUND_FILL_FIGHT =
   /bg-\[hsl\(var\(--foreground\)\)\][\s\S]{0,120}text-\[hsl\(var\(--background\)\)\]/;
 
 describe("auth surface layout contracts", () => {
-  it("exports a form-scale column (max-w-sm), not a magic pixel width", () => {
-    expect(AUTH_FORM_COLUMN_CLASS).toContain("max-w-sm");
+  it("exports a login-card column (max-w-xs / 20rem), not looser form scales", () => {
+    expect(AUTH_FORM_COLUMN_CLASS).toContain("max-w-xs");
+    expect(AUTH_FORM_COLUMN_CLASS).not.toContain("max-w-sm");
     expect(AUTH_FORM_COLUMN_CLASS).not.toMatch(/max-w-\[\d+px\]/);
     expect(AUTH_PRIMARY_CTA_CLASS).toContain("w-full");
   });
@@ -45,8 +51,8 @@ describe("auth surface layout contracts", () => {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
       expect(source, rel).toContain("AUTH_FORM_COLUMN_CLASS");
       expect(source, rel).toContain('from "@nebutra/ui/utils"');
-      // No ad-hoc pixel form columns (historical 440px drift).
       expect(source, rel).not.toMatch(/max-w-\[\d+px\]/);
+      expect(source, rel).not.toMatch(/max-w-sm(?![\w-])/);
     }
   });
 
@@ -54,6 +60,15 @@ describe("auth surface layout contracts", () => {
     for (const rel of AUTH_SURFACES) {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
       expect(source, rel).not.toMatch(FOREGROUND_FILL_FIGHT);
+    }
+  });
+
+  it("OAuth grids stay single-column for two providers (no stretched dual pills)", () => {
+    for (const rel of OAUTH_BUTTONS) {
+      const source = readFileSync(join(REPO_ROOT, rel), "utf8");
+      expect(source, rel).toMatch(/providers\.length\s*>=\s*3/);
+      expect(source, rel).not.toMatch(/className="grid grid-cols-1 gap-3 sm:grid-cols-2"/);
+      expect(source, rel).not.toMatch(/className="grid gap-3 grid-cols-1 sm:grid-cols-2"/);
     }
   });
 });

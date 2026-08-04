@@ -116,8 +116,12 @@ export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
     window.location.assign(buildOAuthStartPath(provider, returnTo));
   }
 
+  // Two providers side-by-side stretches empty pills across the login card;
+  // dual columns only pay off at three or more.
+  const multiCol = providers.length >= 3;
+
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <div className={multiCol ? "grid grid-cols-1 gap-3 sm:grid-cols-2" : "grid grid-cols-1 gap-3"}>
       {providers.map((provider) => {
         const Icon = PROVIDER_ICON[provider];
         const label =

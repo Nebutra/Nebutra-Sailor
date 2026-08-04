@@ -4,12 +4,14 @@
  * Split-shell login (apps/auth + apps/web) and the marketing AuthPage must
  * share one form-column width. Inventing a second max-width on either shell
  * is how the credentials column drifts wider than the design (e.g. the
- * historical 440px one-off that shipped on auth-center).
+ * historical 440px one-off, then 384px max-w-sm that still felt wide with
+ * dual OAuth side-by-side on a 64vw white pane).
  *
- * `max-w-sm` = 24rem / 384px — form-scale, not page-scale. Matches the
- * credentials column on Marketing/AuthPage.
+ * `max-w-xs` = 20rem / 320px — login-card scale (Clerk / Linear band), not
+ * the looser page-form `max-w-sm` (24rem). Pair with single-column OAuth
+ * when only two providers so controls do not stretch into empty pills.
  */
-export const AUTH_FORM_COLUMN_CLASS = "relative w-full max-w-sm";
+export const AUTH_FORM_COLUMN_CLASS = "relative w-full max-w-xs";
 
 /**
  * Primary auth CTA sizing. Pair with `variant="ink"` on Button — never fight
