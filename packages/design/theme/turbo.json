@@ -18,7 +18,8 @@
         "keyframes.css",
         "themes.css",
         "src/languages.json",
-        "src/built-in-packages.generated.ts"
+        "src/built-in-packages.generated.ts",
+        "dist/**"
       ]
     }
   }

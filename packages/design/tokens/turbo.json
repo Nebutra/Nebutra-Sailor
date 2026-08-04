@@ -9,7 +9,10 @@
         "brands/**",
         "scripts/**"
       ],
-      "outputs": ["styles.css", "skins/**"]
+      // dist/** is required: design-sync (and others) import
+      // @nebutra/tokens/brand-package from dist. Omitting it made turbo
+      // cache hits restore only CSS and leave dist/ empty → TS2307 on ECS.
+      "outputs": ["styles.css", "skins/**", "dist/**"]
     }
   }
 }
