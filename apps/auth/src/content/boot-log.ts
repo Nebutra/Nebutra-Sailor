@@ -59,6 +59,13 @@ export interface BootLogRecord extends BootLogCopy {
 
 export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
   {
+    id: "tesla-westinghouse-royalty",
+    stamp: "1888 · 1897",
+    sources: [
+      { label: "Wikipedia, Nikola Tesla", url: "https://en.wikipedia.org/wiki/Nikola_Tesla" },
+    ],
+  },
+  {
     id: "transistor-name-off-patent-1947",
     stamp: "1947.12",
     sources: [
@@ -66,6 +73,14 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
         label: "Wikipedia, History of the transistor",
         url: "https://en.wikipedia.org/wiki/History_of_the_transistor",
       },
+    ],
+  },
+  {
+    id: "salk-polio-patent",
+    stamp: "1955.04",
+    sources: [
+      { label: "Wikipedia, Jonas Salk", url: "https://en.wikipedia.org/wiki/Jonas_Salk" },
+      { label: "Wikipedia, Polio vaccine", url: "https://en.wikipedia.org/wiki/Polio_vaccine" },
     ],
   },
   {
@@ -105,12 +120,27 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "cobol-two-hundred-billion-lines",
+    stamp: "1959 · 2020",
+    sources: [{ label: "Wikipedia, COBOL", url: "https://en.wikipedia.org/wiki/COBOL" }],
+  },
+  {
     id: "hamilton-software-engineering",
     stamp: "1960s",
     sources: [
       {
         label: "Wikipedia, Margaret Hamilton (software engineer)",
         url: "https://en.wikipedia.org/wiki/Margaret_Hamilton_(software_engineer)",
+      },
+    ],
+  },
+  {
+    id: "sabre-sage-to-booking",
+    stamp: "1960 · 1964",
+    sources: [
+      {
+        label: "Wikipedia, Sabre (travel reservation system)",
+        url: "https://en.wikipedia.org/wiki/Sabre_(travel_reservation_system)",
       },
     ],
   },
@@ -144,6 +174,17 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
         label: "Wikipedia, Joseph Weizenbaum",
         url: "https://en.wikipedia.org/wiki/Joseph_Weizenbaum",
       },
+    ],
+  },
+  {
+    id: "kay-objects-messaging",
+    stamp: "1967",
+    sources: [
+      {
+        label: "Wikipedia, Object-oriented programming",
+        url: "https://en.wikipedia.org/wiki/Object-oriented_programming",
+      },
+      { label: "Wikipedia, Alan Kay", url: "https://en.wikipedia.org/wiki/Alan_Kay" },
     ],
   },
   {
@@ -339,6 +380,14 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "voyager-68-kilobits",
+    stamp: "1977.09",
+    sources: [
+      { label: "Wikipedia, Voyager 1", url: "https://en.wikipedia.org/wiki/Voyager_1" },
+      { label: "Wikipedia, Voyager program", url: "https://en.wikipedia.org/wiki/Voyager_program" },
+    ],
+  },
+  {
     id: "kildall-flying",
     stamp: "1980",
     sources: [
@@ -412,6 +461,11 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "gif-lzw-unisys",
+    stamp: "1987 · 1994",
+    sources: [{ label: "Wikipedia, GIF", url: "https://en.wikipedia.org/wiki/GIF" }],
+  },
+  {
     id: "morris",
     stamp: "1988.11.02",
     sources: [
@@ -455,6 +509,13 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     id: "sosumi-so-sue-me",
     stamp: "1991",
     sources: [{ label: "Wikipedia — Sosumi", url: "https://en.wikipedia.org/wiki/Sosumi" }],
+  },
+  {
+    id: "zimmermann-pgp-release",
+    stamp: "1991 · 1996",
+    sources: [
+      { label: "Wikipedia, Phil Zimmermann", url: "https://en.wikipedia.org/wiki/Phil_Zimmermann" },
+    ],
   },
   {
     id: "www-royalty-free",
@@ -608,6 +669,22 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
         label: "Wikipedia (zh), 中芯国际",
         url: "https://zh.wikipedia.org/wiki/%E4%B8%AD%E8%8A%AF%E5%9B%BD%E9%99%85",
       },
+    ],
+  },
+  {
+    id: "json-good-not-evil",
+    stamp: "2001 · 2002",
+    sources: [
+      { label: "Wikipedia, JSON", url: "https://en.wikipedia.org/wiki/JSON" },
+      { label: "JSON license", url: "https://www.json.org/license.html" },
+    ],
+  },
+  {
+    id: "sogou-movie-line",
+    stamp: "2001 · 2004.08",
+    sources: [
+      { label: "Wikipedia, 搜狗", url: "https://zh.wikipedia.org/wiki/%E6%90%9C%E7%8B%97" },
+      { label: "Wikipedia, 大腕", url: "https://zh.wikipedia.org/wiki/%E5%A4%A7%E8%85%95" },
     ],
   },
   {
@@ -767,6 +844,24 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     ],
   },
   {
+    id: "tbl-double-slash",
+    stamp: "2009.10",
+    sources: [
+      { label: "Wikipedia, URL", url: "https://en.wikipedia.org/wiki/URL" },
+      { label: "Wikipedia, Tim Berners-Lee", url: "https://en.wikipedia.org/wiki/Tim_Berners-Lee" },
+    ],
+  },
+  {
+    id: "bilibili-mikufans",
+    stamp: "2009.06 · 2010.01",
+    sources: [
+      {
+        label: "Wikipedia, 哔哩哔哩",
+        url: "https://zh.wikipedia.org/wiki/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9",
+      },
+    ],
+  },
+  {
     id: "xiaomi-software-first",
     stamp: "2010 · 2011",
     sources: [
@@ -781,6 +876,23 @@ export const BOOT_LOG_ENTRIES: readonly BootLogEntry[] = [
     stamp: "2011.10",
     sources: [
       { label: "Wikipedia, Dennis Ritchie", url: "https://en.wikipedia.org/wiki/Dennis_Ritchie" },
+    ],
+  },
+  {
+    id: "kuaishou-gif-app",
+    stamp: "2011.03 · 2014",
+    sources: [
+      {
+        label: "Wikipedia, 快手 (軟體)",
+        url: "https://zh.wikipedia.org/wiki/%E5%BF%AB%E6%89%8B_(%E8%BB%9F%E9%AB%94)",
+      },
+    ],
+  },
+  {
+    id: "zhihu-invite-only",
+    stamp: "2011.01 · 2013.03",
+    sources: [
+      { label: "Wikipedia, 知乎", url: "https://zh.wikipedia.org/wiki/%E7%9F%A5%E4%B9%8E" },
     ],
   },
   {

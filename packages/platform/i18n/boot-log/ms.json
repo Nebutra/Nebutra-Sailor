@@ -1302,6 +1302,90 @@
       "title": "The Patch Nobody Replaced",
       "body": "core-js ships inside WhatsApp, Netflix, Apple and PayPal, logging roughly 250 million downloads a month. Its author, Denis Pushkarev, was in a fatal 2019 car accident, served about ten months in prison starting January 2020, and kept maintaining the library throughout.",
       "coda": "Monthly donations fell from about 2,500 dollars to 400."
+    },
+    "tesla-westinghouse-royalty": {
+      "tag": "Patents",
+      "title": "The Royalty Tesla Waived",
+      "body": "Westinghouse's contract paid Tesla $2.50 per horsepower in royalties. In early 1891, with the company close to failure, Tesla released it from the royalty clause.",
+      "coda": "In 1897 Westinghouse bought his patents outright for $216,000."
+    },
+    "salk-polio-patent": {
+      "tag": "Patents",
+      "title": "The Sun Has No Patent",
+      "body": "Edward Murrow asked who owned the polio vaccine patent. Salk answered there was none, could you patent the sun. Foundation lawyers had already examined the question and found the vaccine lacked patentable novelty because of prior art.",
+      "coda": "The unpatented vaccine was later valued at seven billion dollars."
+    },
+    "cobol-two-hundred-billion-lines": {
+      "tag": "Legacy",
+      "title": "Two Hundred Billion Lines",
+      "body": "By 1997 Gartner estimated 200 billion lines of COBOL running eighty percent of business programs worldwide. In 2020, as COVID-era unemployment claims surged, several US state governments publicly appealed for COBOL programmers to keep their decades-old benefits systems running.",
+      "coda": "Six years have passed since that appeal."
+    },
+    "sabre-sage-to-booking": {
+      "tag": "Booking",
+      "title": "From Radar to Reservations",
+      "body": "American Airlines and IBM signed their partnership in 1957, adapting the Air Force's Cold War SAGE air-defense architecture into a booking system. SABRE ran its first online test in 1960 and launched fully in 1964, becoming the world's first online transaction processing system.",
+      "coda": "The parent company still operates, more than sixty years later."
+    },
+    "kay-objects-messaging": {
+      "tag": "Naming",
+      "title": "Objects, Not the Point",
+      "body": "By 1967 Alan Kay was using \"object-oriented\" for a design built on cells or network nodes talking only through messages. He later wrote he was sorry he ever coined the term \"objects,\" because it draws attention to the lesser idea and buries the one he meant: messaging.",
+      "coda": "The word he regretted outlived the idea he meant it to carry."
+    },
+    "voyager-68-kilobits": {
+      "tag": "Deep Space",
+      "title": "Around the broken chip",
+      "body": "Voyager 1 launched in September 1977. Forty-seven years out, a memory chip in its flight data subsystem failed, three percent of it corrupted beyond repair. On 20 April 2024 engineers rearranged the code around the damaged area and the signal came back.",
+      "coda": "Its generators may supply enough power to return engineering data until 2036."
+    },
+    "gif-lzw-unisys": {
+      "tag": "Patents",
+      "title": "The Free Format That Wasn't",
+      "body": "CompuServe shipped GIF in June 1987 using LZW compression without realizing Sperry Corporation already held the patent on it. In December 1994 Unisys, formed from Sperry's merger, announced it would collect licensing fees, prompting developers to build PNG as a replacement.",
+      "coda": "The patents ran out worldwide in 2004, and only then was GIF free."
+    },
+    "zimmermann-pgp-release": {
+      "tag": "Crypto",
+      "title": "PGP Given Away, Then Investigated",
+      "body": "Phil Zimmermann released PGP with its source code on public FTP in 1991, the first widely available public-key encryption program. US Customs opened a criminal investigation for export-control violations. It ran three years and was dropped without indictment in early 1996.",
+      "coda": "Three years under investigation, no charges filed, no royalties ever collected."
+    },
+    "json-good-not-evil": {
+      "tag": "License",
+      "title": "For Good, Not Evil",
+      "body": "Douglas Crockford's 2002 license for the JSON libraries adds one clause: the software shall be used for Good, not Evil. JSON itself spread free and unpatented into nearly every API on the internet, but that single sentence made the license incompatible with standard open-source terms.",
+      "coda": "The format became universal; the joke clause it shipped with did not survive contact with corporate legal."
+    },
+    "sogou-movie-line": {
+      "tag": "Naming",
+      "title": "Sogou's Line Was a Joke First",
+      "body": "The 2001 comedy Big Shot's Funeral has a wordplay line about search engines: \"They search Sohu, we search Sogou, everyone searches their own way.\" Three years later, in 2004, Sohu's team took the joke and launched it as a real search engine, Sogou.",
+      "coda": "The punchline became the product name, unedited."
+    },
+    "tbl-double-slash": {
+      "tag": "Design",
+      "title": "The Extra Slashes",
+      "body": "Tim Berners-Lee put \"//\" in front of the domain name when he designed the URL. In October 2009 he admitted, given the colon already there, the two slashes were not needed at all — \"it seemed like a good idea at the time,\" he said.",
+      "coda": "Every URL since has still typed both of them."
+    },
+    "bilibili-mikufans": {
+      "tag": "Naming",
+      "title": "Bilibili's First Name Was Mikufans",
+      "body": "The site launched in June 2009 as Mikufans, built for fans of the vocaloid Hatsune Miku. In January 2010 it was renamed Bilibili, after a nickname the protagonist of a light novel series gives Misaka Mikoto — an onomatopoeia for electric discharge.",
+      "coda": "The renamed site kept the name through every subsequent redesign."
+    },
+    "kuaishou-gif-app": {
+      "tag": "Naming",
+      "title": "Kuaishou Began as a GIF App",
+      "body": "Kuaishou launched in March 2011 as GIF Kuaishou, a phone app for making and sharing GIF images. In 2012 it pivoted to short video, and in 2014 the GIF prefix was dropped, leaving the name it carries as a video platform today.",
+      "coda": "The GIF prefix is gone; the underlying company name never changed."
+    },
+    "zhihu-invite-only": {
+      "tag": "Naming",
+      "title": "Zhihu Needed an Invitation",
+      "body": "Zhihu went live on January 26, 2011, and for its first two years registration required an invitation code. Open sign-up did not arrive until March 2013. The name itself is classical Chinese for \"do you know\" — a question, not a slogan.",
+      "coda": "Registration has required no invitation since March 2013."
     }
   }
 }
