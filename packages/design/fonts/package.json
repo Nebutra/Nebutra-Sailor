@@ -40,14 +40,14 @@
       "default": "./dist/index.js"
     },
     "./next": {
-      "types": "./dist/next.d.ts",
-      "import": "./dist/next.js",
-      "default": "./dist/next.js"
+      "types": "./src/next.ts",
+      "import": "./src/next.ts",
+      "default": "./src/next.ts"
     },
     "./next/cjk": {
-      "types": "./dist/next-cjk.d.ts",
-      "import": "./dist/next-cjk.js",
-      "default": "./dist/next-cjk.js"
+      "types": "./src/next-cjk.ts",
+      "import": "./src/next-cjk.ts",
+      "default": "./src/next-cjk.ts"
     },
     "./cjk": {
       "types": "./dist/generated/index.d.ts",
