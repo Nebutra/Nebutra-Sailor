@@ -130,10 +130,15 @@ export default function HomePage() {
         ))}
       </dl>
 
+      {/* Five entries in a two-column grid leave the last one beside a hole.
+          The odd card takes the full row instead, which reads as a closing band
+          rather than a gap where a sixth thing was meant to go. */}
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        {SECTIONS.map((section) => (
+        {SECTIONS.map((section, index) => (
           <Link
-            className="flex flex-col rounded-panel bg-card p-5 shadow-ambient-sm transition-shadow duration-flow ease-out hover:shadow-ambient-md"
+            className={`flex flex-col rounded-panel bg-card p-5 shadow-ambient-sm transition-shadow duration-flow ease-out hover:shadow-ambient-md${
+              index === SECTIONS.length - 1 && SECTIONS.length % 2 === 1 ? " sm:col-span-2" : ""
+            }`}
             href={section.href}
             key={section.href}
           >
