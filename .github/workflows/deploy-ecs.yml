@@ -107,6 +107,9 @@ jobs:
       forge:       ${{ steps.resolve.outputs.forge }}
       admin:       ${{ steps.resolve.outputs.admin }}
       any:         ${{ steps.resolve.outputs.any }}
+      # Dynamic Next build matrix — only selected apps (no false-green skips).
+      next_matrix: ${{ steps.resolve.outputs.next_matrix }}
+      next_any:    ${{ steps.resolve.outputs.next_any }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -251,6 +254,35 @@ jobs:
             esac
           }
 
+
+          # Build dynamic Next matrix — only selected apps (no false-green skips).
+          emit_next_matrix() {
+            local landing="$1" web="$2" idp="$3" auth="$4" design_docs="$5"
+            local pebble="$6" sailor_docs="$7" router="$8" forge="$9" admin="${10}"
+            local items=()
+            [ "$landing" = "true" ] && items+=('{"app":"landing","package":"@nebutra/landing","workspace":"apps/landing","kind":"next-standalone","build_command":"build","site_url":"https://nebutra.com"}')
+            [ "$web" = "true" ] && items+=('{"app":"web","package":"@nebutra/web","workspace":"apps/web","kind":"next-standalone","build_command":"build:next","site_url":"https://app.nebutra.com"}')
+            [ "$idp" = "true" ] && items+=('{"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","kind":"next-standalone","build_command":"build","site_url":"https://sso.nebutra.com"}')
+            [ "$auth" = "true" ] && items+=('{"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","kind":"next-standalone","build_command":"build","site_url":"https://auth.nebutra.com"}')
+            [ "$design_docs" = "true" ] && items+=('{"app":"design-docs","package":"@nebutra/design-docs","workspace":"apps/design-docs","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}')
+            [ "$pebble" = "true" ] && items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}')
+            [ "$sailor_docs" = "true" ] && items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}')
+            [ "$router" = "true" ] && items+=('{"app":"router","package":"@nebutra/router","workspace":"apps/router","kind":"next-standalone","build_command":"build","site_url":"https://router.nebutra.com"}')
+            [ "$forge" = "true" ] && items+=('{"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","kind":"next-standalone","build_command":"build","site_url":"https://forge.nebutra.com"}')
+            [ "$admin" = "true" ] && items+=('{"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","kind":"next-standalone","build_command":"build","site_url":"https://admin.nebutra.com"}')
+            local joined=""
+            if [ "${#items[@]}" -gt 0 ]; then
+              local IFS=,
+              joined="${items[*]}"
+            fi
+            echo "next_matrix=[${joined}]"
+            if [ "${#items[@]}" -gt 0 ]; then
+              echo "next_any=true"
+            else
+              echo "next_any=false"
+            fi
+          }
+
           # main push auto-CI allowlist: product edges + api-gateway on this VM.
           # Use api-core (backends/gateway only) so packages/** does not fan out.
           # Nginx-only edits still match forge/router/api/pebble filters via
@@ -282,6 +314,7 @@ jobs:
               echo "forge=$forge"
               echo "admin=false"
               echo "any=$any"
+              emit_next_matrix false false false false false "$pebble" false "$router" "$forge" false
             } >> "$GITHUB_OUTPUT"
             echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble any=$any"
             exit 0
@@ -306,18 +339,30 @@ jobs:
 
           {
             if [ -n "$normalized_apps" ]; then
-              echo "landing=$(contains_app "$normalized_apps" landing)"
-              echo "web=$(contains_app "$normalized_apps" web)"
-              echo "api=$(contains_app "$normalized_apps" api)"
-              echo "idp=$(contains_app "$normalized_apps" idp)"
-              echo "auth=$(contains_app "$normalized_apps" auth)"
-              echo "design-docs=$(contains_app "$normalized_apps" design-docs)"
-              echo "pebble=$(contains_app "$normalized_apps" pebble)"
-              echo "sailor-docs=$(contains_app "$normalized_apps" sailor-docs)"
-              echo "router=$(contains_app "$normalized_apps" router)"
-              echo "forge=$(contains_app "$normalized_apps" forge)"
-              echo "admin=$(contains_app "$normalized_apps" admin)"
+              landing=$(contains_app "$normalized_apps" landing)
+              web=$(contains_app "$normalized_apps" web)
+              api=$(contains_app "$normalized_apps" api)
+              idp=$(contains_app "$normalized_apps" idp)
+              auth=$(contains_app "$normalized_apps" auth)
+              design_docs=$(contains_app "$normalized_apps" design-docs)
+              pebble=$(contains_app "$normalized_apps" pebble)
+              sailor_docs=$(contains_app "$normalized_apps" sailor-docs)
+              router=$(contains_app "$normalized_apps" router)
+              forge=$(contains_app "$normalized_apps" forge)
+              admin=$(contains_app "$normalized_apps" admin)
+              echo "landing=$landing"
+              echo "web=$web"
+              echo "api=$api"
+              echo "idp=$idp"
+              echo "auth=$auth"
+              echo "design-docs=$design_docs"
+              echo "pebble=$pebble"
+              echo "sailor-docs=$sailor_docs"
+              echo "router=$router"
+              echo "forge=$forge"
+              echo "admin=$admin"
               echo "any=true"
+              emit_next_matrix "$landing" "$web" "$idp" "$auth" "$design_docs" "$pebble" "$sailor_docs" "$router" "$forge" "$admin"
             else
               echo "landing=$F_LANDING"
               echo "web=$F_WEB"
@@ -331,6 +376,7 @@ jobs:
               echo "forge=$F_FORGE"
               echo "admin=$F_ADMIN"
               echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_PEBBLE" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
+              emit_next_matrix "$F_LANDING" "$F_WEB" "$F_IDP" "$F_AUTH" "$F_DESIGN_DOCS" "$F_PEBBLE" "$F_SAILOR_DOCS" "$F_ROUTER" "$F_FORGE" "$F_ADMIN"
             fi
           } >> "$GITHUB_OUTPUT"
 
@@ -344,90 +390,16 @@ jobs:
   build-next:
     name: Build ${{ matrix.app }} VM artifact
     needs: detect-changes
-    # Per-matrix gate: only *selected* apps run. Unselected combinations are
-    # **skipped** (grey), never a 4-second green "Skip if not needed" success —
-    # that false-green hid "auth never built" for hours.
-    # Parent needs.detect-changes still supplies matrix.condition values.
-    if: matrix.condition == 'true'
+    # Dynamic matrix: only *selected* apps appear. Unselected apps are absent
+    # (not a green 4s "Skip if not needed" job that hid "auth never built").
+    # Job-level `if: matrix.*` is invalid in GHA — use fromJson matrix instead.
+    if: needs.detect-changes.outputs.next_any == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - app: landing
-            package: "@nebutra/landing"
-            workspace: apps/landing
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs.landing }}
-            site_url: "https://nebutra.com"
-          - app: web
-            package: "@nebutra/web"
-            workspace: apps/web
-            kind: "next-standalone"
-            build_command: "build:next"
-            condition: ${{ needs.detect-changes.outputs.web }}
-            site_url: "https://app.nebutra.com"
-          - app: idp
-            package: "@nebutra/idp"
-            workspace: apps/idp
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs.idp }}
-            site_url: "https://sso.nebutra.com"
-          - app: auth
-            package: "@nebutra/auth-center"
-            workspace: apps/auth
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs.auth }}
-            site_url: "https://auth.nebutra.com"
-          - app: design-docs
-            package: "@nebutra/design-docs"
-            workspace: apps/design-docs
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs['design-docs'] }}
-            site_url: "https://design.nebutra.com"
-          - app: pebble
-            package: "@nebutra/pebble-site"
-            workspace: apps/pebble
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs.pebble }}
-            site_url: "https://pebble.nebutra.com"
-          - app: sailor-docs
-            package: "@nebutra/sailor-docs"
-            workspace: apps/sailor-docs
-            kind: "next-standalone"
-            # Webpack for VM: Turbopack standalone externalizes shiki as
-            # shiki-<hash> packages that are not reliably resolvable at runtime
-            # (MODULE_NOT_FOUND → Internal Server Error on every page).
-            build_command: "build:vm"
-            condition: ${{ needs.detect-changes.outputs['sailor-docs'] }}
-            site_url: "https://docs.nebutra.com"
-          - app: router
-            package: "@nebutra/router"
-            workspace: apps/router
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs.router }}
-            site_url: "https://router.nebutra.com"
-          - app: forge
-            package: "@nebutra/forge"
-            workspace: apps/forge
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs.forge }}
-            site_url: "https://forge.nebutra.com"
-          - app: admin
-            package: "@nebutra/admin"
-            workspace: apps/admin
-            kind: "next-standalone"
-            build_command: "build"
-            condition: ${{ needs.detect-changes.outputs.admin }}
-            site_url: "https://admin.nebutra.com"
+        include: ${{ fromJson(needs.detect-changes.outputs.next_matrix) }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
