@@ -129,14 +129,17 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         <Demo derived={derived} />
       </PreviewTheme>
 
-      <footer className="max-w-prose rounded-xl bg-muted/30 p-5 text-muted-foreground text-sm">
+      {/* Full width, matching every section above it. At max-w-prose this sat
+          at roughly two-fifths the width of the specimens and read as a stray
+          box rather than the page's closing note. */}
+      <footer className="rounded-xl bg-muted/30 p-5 text-muted-foreground text-sm">
         <p className="font-medium text-foreground">Why there is no prop table</p>
-        <p className="mt-2">
+        <p className="mt-2 max-w-prose">
           A prop table has to be extracted from the TypeScript types to be trustworthy, and this app
           does not extract them. A hand-written one would be wrong within a release — the
           design-docs site currently documents props that do not exist, including one rendered with
           a package that was removed from the repo. Until the extraction is real, the source file
-          above is the authority, and the states below are the behaviour.
+          named at the top of this page is the authority, and the specimens above are the behaviour.
         </p>
       </footer>
     </div>
