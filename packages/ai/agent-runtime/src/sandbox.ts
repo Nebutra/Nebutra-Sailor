@@ -17,6 +17,14 @@
  */
 
 import type { CapabilityPolicy } from "./policy";
+import {
+  CODEPLOY_CARINA_SOCKET_PATH,
+  CODEPLOY_CARINA_WORKSPACE_ROOT,
+  CarinaNdjsonError,
+  createCarinaNdjsonClient,
+  defaultCarinaSocketPath,
+  type NdjsonRpcClient,
+} from "./carina-ndjson";
 
 export interface SandboxExecRequest {
   /** Mandatory tenant scope — every delegated exec is tenant-bound. */
@@ -168,20 +176,22 @@ type CarinaHello = {
 
 export type CarinaSandboxOptions = {
   /**
-   * Base URL of a Carina JSON-RPC endpoint reachable over HTTP POST.
-   * Typically a local daemon bridge or product connector that forwards to
-   * `~/.carina/daemon.sock` / Gateway WS — not a public multi-tenant API.
+   * HTTP JSON-RPC base URL (optional if {@link socketPath} is set).
+   * Prefer unix socket co-deploy on the same host as the gateway.
    */
-  readonly baseUrl: string;
+  readonly baseUrl?: string;
   /**
-   * Gateway token (`gw1`, transport-bound) or product connector credential.
-   * Never a local owner/admin unlock token.
+   * Native Carina unix socket path (NDJSON JSON-RPC). Preferred for same-host
+   * co-deploy — full command.exec authority (TCP diagnostic is read-limited).
+   */
+  readonly socketPath?: string;
+  /**
+   * Gateway token for HTTP transport only. Never a local owner unlock token.
    */
   readonly token?: string;
   readonly fetchImpl?: typeof fetch;
   /**
    * Path under baseUrl for JSON-RPC POST. Default `""` posts to baseUrl itself.
-   * Connectors often use `/jsonrpc` or `/rpc`.
    */
   readonly rpcPath?: string;
   /** Fail closed if hello reports a lower protocol_version. Default {@link CARINA_MIN_PROTOCOL_VERSION}. */
@@ -274,6 +284,7 @@ function extractCarinaSessionId(session: unknown): string {
 export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbox {
   const {
     baseUrl,
+    socketPath,
     token,
     fetchImpl = fetch,
     rpcPath = "",
@@ -285,17 +296,36 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
     autoApproveOnRequire = false,
   } = options;
 
+  const httpBase = baseUrl?.trim();
+  const sock = socketPath?.trim();
+  if (!httpBase && !sock) {
+    throw new CarinaProtocolError(
+      "createCarinaSandbox requires baseUrl (HTTP) or socketPath (unix NDJSON)",
+    );
+  }
+
   /** Sailor threadId → Carina session_id */
   const sessionByThread = new Map<string, string>();
 
-  const endpoint = `${baseUrl.replace(/\/$/, "")}${
-    !rpcPath ? "" : rpcPath.startsWith("/") ? rpcPath : `/${rpcPath}`
-  }`;
+  const endpoint = httpBase
+    ? `${httpBase.replace(/\/$/, "")}${
+        !rpcPath ? "" : rpcPath.startsWith("/") ? rpcPath : `/${rpcPath}`
+      }`
+    : "";
 
   let helloDone: Promise<void> | null = null;
   let rpcId = 0;
+  let ndjson: NdjsonRpcClient | null = null;
 
-  async function rpcCall<T>(method: string, params: Record<string, unknown>): Promise<T> {
+  function getNdjson(): NdjsonRpcClient {
+    if (!sock) {
+      throw new CarinaProtocolError("socket transport requested without socketPath");
+    }
+    if (!ndjson) ndjson = createCarinaNdjsonClient(sock);
+    return ndjson;
+  }
+
+  async function rpcCallHttp<T>(method: string, params: Record<string, unknown>): Promise<T> {
     const id = ++rpcId;
     const headers = new Headers({ "content-type": "application/json" });
     if (token) {
@@ -331,6 +361,20 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
       throw new CarinaProtocolError(`Carina RPC ${method} returned no result`);
     }
     return body.result;
+  }
+
+  async function rpcCall<T>(method: string, params: Record<string, unknown>): Promise<T> {
+    if (sock && !httpBase) {
+      try {
+        return await getNdjson().call<T>(method, params);
+      } catch (err) {
+        if (err instanceof CarinaNdjsonError) {
+          throw new SandboxDelegationError(err.message, err.status, err.code);
+        }
+        throw err;
+      }
+    }
+    return rpcCallHttp<T>(method, params);
   }
 
   async function ensureHello(): Promise<void> {
@@ -558,29 +602,78 @@ export function resolveCarinaWorkspaceRoot(
 }
 
 /**
+ * Co-deploy is on unless explicitly disabled (`CARINA_CODEPLOY=0|false`).
+ * Same-host default: unix socket {@link CODEPLOY_CARINA_SOCKET_PATH}.
+ */
+export function isCarinaCodeployEnabled(env: CarinaEnv = process.env): boolean {
+  const v = env.CARINA_CODEPLOY?.trim().toLowerCase();
+  if (v === "0" || v === "false" || v === "off") return false;
+  // Explicit enable, or any socket/url/path hint, or default co-deploy on Node hosts.
+  if (v === "1" || v === "true" || v === "on") return true;
+  if (env.CARINA_JSONRPC_URL?.trim()) return true;
+  if (env.CARINA_DAEMON_SOCK?.trim()) return true;
+  // Default: co-deploy mode for production Node gateway (opt-out with CARINA_CODEPLOY=0).
+  return v === undefined || v === "";
+}
+
+/**
  * Resolve Track-B sandbox from environment.
- * - `CARINA_JSONRPC_URL` set → {@link createCarinaSandbox}
- * - unset / empty → {@link REFUSING_SANDBOX} (fail closed)
+ *
+ * Priority:
+ * 1. `CARINA_JSONRPC_URL` → HTTP JSON-RPC
+ * 2. `CARINA_DAEMON_SOCK` → unix NDJSON
+ * 3. co-deploy default → {@link CODEPLOY_CARINA_SOCKET_PATH}
+ * 4. developer home socket → `~/.carina/daemon.sock` when co-deploy and no prod path intent
+ * 5. otherwise {@link REFUSING_SANDBOX}
  */
 export function resolveCarinaSandboxFromEnv(
   env: CarinaEnv = process.env,
   overrides: Partial<CarinaSandboxOptions> = {},
 ): ExternalSandbox {
-  const baseUrl = env.CARINA_JSONRPC_URL?.trim();
-  if (!baseUrl) return REFUSING_SANDBOX;
-
   const auto =
     env.CARINA_AUTO_APPROVE === "1" || env.CARINA_AUTO_APPROVE === "true";
-
-  const options: CarinaSandboxOptions = {
-    baseUrl,
-    ...(env.CARINA_JSONRPC_TOKEN ? { token: env.CARINA_JSONRPC_TOKEN } : {}),
-    ...(env.CARINA_JSONRPC_PATH ? { rpcPath: env.CARINA_JSONRPC_PATH } : {}),
+  const common: Partial<CarinaSandboxOptions> = {
     ...(env.CARINA_CLIENT_ID ? { clientId: env.CARINA_CLIENT_ID } : {}),
     ...(auto ? { autoApproveOnRequire: true } : {}),
     ...overrides,
   };
-  return createCarinaSandbox(options);
+
+  const baseUrl = env.CARINA_JSONRPC_URL?.trim();
+  if (baseUrl) {
+    return createCarinaSandbox({
+      baseUrl,
+      ...(env.CARINA_JSONRPC_TOKEN ? { token: env.CARINA_JSONRPC_TOKEN } : {}),
+      ...(env.CARINA_JSONRPC_PATH ? { rpcPath: env.CARINA_JSONRPC_PATH } : {}),
+      ...common,
+    });
+  }
+
+  if (!isCarinaCodeployEnabled(env) && !env.CARINA_DAEMON_SOCK?.trim()) {
+    return REFUSING_SANDBOX;
+  }
+
+  const sock =
+    env.CARINA_DAEMON_SOCK?.trim() ||
+    (env.CARINA_CODEPLOY_HOME === "1" || env.CARINA_CODEPLOY_HOME === "true"
+      ? defaultCarinaSocketPath()
+      : CODEPLOY_CARINA_SOCKET_PATH);
+
+  return createCarinaSandbox({
+    socketPath: sock,
+    ...common,
+  });
+}
+
+/** Default workspace when co-deploy is enabled and no override is set. */
+export function resolveCarinaWorkspaceRootWithCodeploy(
+  tenantId: string,
+  env: CarinaEnv = process.env,
+  threadId = "",
+): string | undefined {
+  return (
+    resolveCarinaWorkspaceRoot(tenantId, env, threadId) ??
+    (isCarinaCodeployEnabled(env) ? CODEPLOY_CARINA_WORKSPACE_ROOT : undefined)
+  );
 }
 
 export function isCarinaSandbox(sandbox: ExternalSandbox): sandbox is CarinaSandbox {
@@ -590,3 +683,8 @@ export function isCarinaSandbox(sandbox: ExternalSandbox): sandbox is CarinaSand
   );
 }
 
+export {
+  CODEPLOY_CARINA_SOCKET_PATH,
+  CODEPLOY_CARINA_WORKSPACE_ROOT,
+  defaultCarinaSocketPath,
+} from "./carina-ndjson";

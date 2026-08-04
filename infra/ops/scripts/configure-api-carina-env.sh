@@ -1,25 +1,17 @@
 #!/usr/bin/env bash
-# Merge Carina Track-B env into ECS api-gateway env file and restart PM2.
+# Inject Carina Track-B co-deploy defaults into api-gateway env + restart PM2.
 #
-# Run on the VM (or via SSH from CI):
-#   CARINA_JSONRPC_URL=http://127.0.0.1:7420/jsonrpc \
-#   CARINA_WORKSPACE_ROOT=/var/carina/ws \
-#   bash configure-api-carina-env.sh
+# Same-host defaults (no remote URL needed):
+#   CARINA_CODEPLOY=1
+#   CARINA_DAEMON_SOCK=/var/carina/run/daemon.sock
+#   CARINA_WORKSPACE_ROOT=/var/carina/ws
+#   FEATURE_FLAG_AGENT_RUNTIME_DEMO=true
 #
-# Optional:
-#   CARINA_JSONRPC_TOKEN, CARINA_JSONRPC_PATH, CARINA_WORKSPACE_TEMPLATE,
-#   CARINA_WORKSPACE_MAP, CARINA_SESSION_APPROVAL_MODE, CARINA_AUTO_APPROVE,
-#   CARINA_CLIENT_ID, ENABLE_AGENT_RUNTIME_DEMO=true
-#
-# Env file default: /var/www/nebutra/api/.env
+# Optional overrides via env before running.
 set -euo pipefail
 
 ENV_FILE="${API_ENV_FILE:-/var/www/nebutra/api/.env}"
-
-if [ -z "${CARINA_JSONRPC_URL:-}" ]; then
-  echo "CARINA_JSONRPC_URL is required" >&2
-  exit 1
-fi
+CARINA_ROOT="${CARINA_ROOT:-/var/carina}"
 
 mkdir -p "$(dirname "$ENV_FILE")"
 touch "$ENV_FILE"
@@ -37,10 +29,15 @@ upsert() {
   fi
 }
 
-upsert "CARINA_JSONRPC_URL" "$CARINA_JSONRPC_URL"
+# Co-deploy defaults
+upsert "CARINA_CODEPLOY" "${CARINA_CODEPLOY:-1}"
+upsert "CARINA_DAEMON_SOCK" "${CARINA_DAEMON_SOCK:-$CARINA_ROOT/run/daemon.sock}"
+upsert "CARINA_WORKSPACE_ROOT" "${CARINA_WORKSPACE_ROOT:-$CARINA_ROOT/ws}"
+
+# Optional HTTP still supported
+[ -n "${CARINA_JSONRPC_URL:-}" ] && upsert "CARINA_JSONRPC_URL" "$CARINA_JSONRPC_URL"
 [ -n "${CARINA_JSONRPC_TOKEN:-}" ] && upsert "CARINA_JSONRPC_TOKEN" "$CARINA_JSONRPC_TOKEN"
 [ -n "${CARINA_JSONRPC_PATH:-}" ] && upsert "CARINA_JSONRPC_PATH" "$CARINA_JSONRPC_PATH"
-[ -n "${CARINA_WORKSPACE_ROOT:-}" ] && upsert "CARINA_WORKSPACE_ROOT" "$CARINA_WORKSPACE_ROOT"
 [ -n "${CARINA_WORKSPACE_TEMPLATE:-}" ] && upsert "CARINA_WORKSPACE_TEMPLATE" "$CARINA_WORKSPACE_TEMPLATE"
 [ -n "${CARINA_WORKSPACE_MAP:-}" ] && upsert "CARINA_WORKSPACE_MAP" "$CARINA_WORKSPACE_MAP"
 [ -n "${CARINA_SESSION_APPROVAL_MODE:-}" ] && upsert "CARINA_SESSION_APPROVAL_MODE" "$CARINA_SESSION_APPROVAL_MODE"
@@ -52,7 +49,7 @@ if [ "${ENABLE_AGENT_RUNTIME_DEMO:-true}" = "true" ]; then
 fi
 
 chmod 600 "$ENV_FILE"
-echo "Updated $ENV_FILE (Carina Track B)"
+echo "Updated $ENV_FILE (Carina co-deploy)"
 
 if command -v pm2 >/dev/null 2>&1; then
   pm2 restart api-gateway --update-env || pm2 restart api-gateway

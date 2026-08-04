@@ -41,6 +41,7 @@ export * from "./protocol";
 export * from "./pulsar";
 export * from "./rollout";
 export * from "./rollout-store-persistent";
+export * from "./carina-ndjson";
 export * from "./sandbox";
 export * from "./session-share";
 export * from "./skill-distillation";
