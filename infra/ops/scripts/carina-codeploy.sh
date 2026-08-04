@@ -49,12 +49,13 @@ if [ -S "$SOCKET_PATH" ] && ! pgrep -f "carina-daemon.*$SOCKET_PATH" >/dev/null 
   rm -f "$SOCKET_PATH" || true
 fi
 
-# Detect whether the binary can run on the host (GLIBC). Official linux_amd64
-# builds need GLIBC_2.34+; older ECS images fall back to Docker (ubuntu:22.04).
+# Detect whether the binary can run on the host (GLIBC).
+# Official linux_amd64: carina-daemon needs GLIBC_2.34+; Rust carina-kernel-service
+# currently needs GLIBC_2.39+ (Ubuntu 24.04). Older ECS hosts use Docker.
 needs_docker=0
 if ! "$DAEMON_BIN" -h >/dev/null 2>&1; then
   if "$DAEMON_BIN" -h 2>&1 | grep -qi 'GLIBC'; then
-    echo "Host glibc too old for carina-daemon — using Docker (ubuntu:22.04)"
+    echo "Host glibc too old for carina-daemon — using Docker (ubuntu:24.04)"
     needs_docker=1
   else
     # Binary may print help to stderr and exit non-zero; only force docker on GLIBC.
@@ -65,6 +66,13 @@ if ! "$DAEMON_BIN" -h >/dev/null 2>&1; then
       echo "Shared library mismatch for carina-kernel-service — using Docker"
       needs_docker=1
     fi
+  fi
+fi
+# Kernel alone may need a newer glibc than the daemon (seen: daemon 2.34, kernel 2.39).
+if [ "$needs_docker" = "0" ] && [ -x "$KERNEL_BIN" ]; then
+  if ldd "$KERNEL_BIN" 2>&1 | grep -qi 'not found\|GLIBC'; then
+    echo "Host glibc too old for carina-kernel-service — using Docker (ubuntu:24.04)"
+    needs_docker=1
   fi
 fi
 
@@ -111,14 +119,15 @@ start_docker() {
     pm2 save || true
   fi
   docker rm -f carina-daemon >/dev/null 2>&1 || true
-  # Pull once (cached thereafter). ubuntu:22.04 has GLIBC_2.35.
+  # Pull once (cached thereafter). ubuntu:24.04 ships GLIBC_2.39 required by
+  # carina-kernel-service (22.04 only has 2.35 — kernel exits immediately).
   # Prefer CN registry mirrors when Docker Hub is slow.
   pull_ubuntu() {
     local refs=(
       "${CARINA_DOCKER_IMAGE:-}"
-      "docker.m.daocloud.io/library/ubuntu:22.04"
-      "dockerproxy.net/library/ubuntu:22.04"
-      "ubuntu:22.04"
+      "docker.m.daocloud.io/library/ubuntu:24.04"
+      "dockerproxy.net/library/ubuntu:24.04"
+      "ubuntu:24.04"
     )
     local r
     for r in "${refs[@]}"; do
@@ -126,7 +135,7 @@ start_docker() {
       echo "docker pull $r"
       if docker pull "$r"; then
         # Retag so run uses a stable local name
-        docker tag "$r" carina-runtime-ubuntu:22.04 2>/dev/null || true
+        docker tag "$r" carina-runtime-ubuntu:24.04 2>/dev/null || true
         echo "$r"
         return 0
       fi
@@ -134,12 +143,12 @@ start_docker() {
     return 1
   }
   IMAGE_REF="$(pull_ubuntu)" || {
-    echo "ERROR: failed to pull ubuntu:22.04 (try CARINA_DOCKER_IMAGE=...)" >&2
+    echo "ERROR: failed to pull ubuntu:24.04 (try CARINA_DOCKER_IMAGE=...)" >&2
     return 1
   }
   # Prefer retagged name when available
-  if docker image inspect carina-runtime-ubuntu:22.04 >/dev/null 2>&1; then
-    IMAGE_REF="carina-runtime-ubuntu:22.04"
+  if docker image inspect carina-runtime-ubuntu:24.04 >/dev/null 2>&1; then
+    IMAGE_REF="carina-runtime-ubuntu:24.04"
   fi
   # Ensure host dirs exist and are writable from container (root)
   mkdir -p "$CARINA_ROOT/run" "$STATE_DIR" "$WS_ROOT" "$CARINA_ROOT/home"
