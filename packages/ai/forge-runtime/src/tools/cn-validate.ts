@@ -1,4 +1,5 @@
 /**
+ * Deploy marker: wave3-p7 reasonCode live (2026-08-04).
  * CN validators — 身份证校验（国标 GB 11643 算法）+ 手机号格式/运营商粗分.
  * Phone geo uses prefix table subset (expandable); not a full phone.dat dump.
  */

@@ -9,6 +9,6 @@
 | P1 baseline + i18n | TextTransformRunner live-local + full label i18n |
 | Loan amortization (P9) | stack layout · KPI nowrap · form grid |
 | id-card reasonCode | engine + runner |
-| Wave 3 P7 | color-contrast swatches · mermaid canvas frame |
+| Wave 3 P7 | color-contrast swatches · mermaid canvas frame · ship via forge ECS |
 | Wave 3 P5 | Pending |
 | Wave 4 full P1 long-tail | Pending |
