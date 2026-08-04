@@ -169,11 +169,181 @@ function normalizeDependencyBlock(block, workspaceVersions, catalogVersions) {
   );
 }
 
-function normalizePackageJson(root, mirror, targetDir, catalogVersions, workspaceVersions) {
+function packageVendorSlug(packageName) {
+  return packageName.replace(/^@/, "").replace(/\//g, "__");
+}
+
+function copyDirRecursive(src, dst) {
+  mkdirSync(dst, { recursive: true });
+  for (const entry of readdirSync(src, { withFileTypes: true })) {
+    const from = join(src, entry.name);
+    const to = join(dst, entry.name);
+    if (entry.isDirectory()) copyDirRecursive(from, to);
+    else if (entry.isFile()) copyFileSync(from, to);
+  }
+}
+
+/**
+ * Prefer dist-based exports for vendored packages. Monorepo packages may still
+ * point at src for DX; vendored copies always ship built artifacts.
+ */
+function distExportsForManifest(manifest) {
+  if (manifest.exports && typeof manifest.exports === "object" && !Array.isArray(manifest.exports)) {
+    const rewritten = {};
+    for (const [key, value] of Object.entries(manifest.exports)) {
+      if (typeof value === "string") {
+        if (value.startsWith("./dist/")) {
+          rewritten[key] = value;
+          continue;
+        }
+        // ./src/foo.ts -> ./dist/foo.js (+ types)
+        const base = value
+          .replace(/^\.\/src\//, "")
+          .replace(/\.tsx?$/, "")
+          .replace(/\/index$/, "/index");
+        const js = `./dist/${base}.js`;
+        const dts = `./dist/${base}.d.ts`;
+        rewritten[key] = { types: dts, import: js, default: js };
+      } else if (value && typeof value === "object") {
+        rewritten[key] = value;
+      }
+    }
+    if (Object.keys(rewritten).length > 0) return rewritten;
+  }
+
+  return {
+    ".": {
+      types: "./dist/index.d.ts",
+      import: "./dist/index.js",
+      default: "./dist/index.js",
+    },
+  };
+}
+
+/**
+ * Vendor workspace @nebutra/* dependencies as file:./vendor/* packages built
+ * from monorepo dist/. This avoids standalone typecheck walking into npm
+ * packages that still publish types: ./src/index.ts.
+ */
+function vendorWorkspaceDependencies(
+  root,
+  targetDir,
+  manifest,
+  packageByName,
+  catalogVersions,
+  workspaceVersions,
+) {
+  const vendorRoot = join(targetDir, "vendor");
+  const seen = new Set();
+
+  function vendorOne(packageName) {
+    if (seen.has(packageName)) return true;
+    const entry = packageByName.get(packageName);
+    if (!entry) return false;
+
+    const sourceDir = join(root, entry.relativeDir);
+    const distDir = join(sourceDir, "dist");
+    if (!existsSync(distDir)) {
+      console.warn(`[subrepo-sync] cannot vendor ${packageName}: missing dist/ (build first)`);
+      return false;
+    }
+
+    seen.add(packageName);
+    const sourceManifest = readJson(join(sourceDir, "package.json"));
+
+    // Vendor nested workspace deps first so file: links resolve.
+    for (const field of ["dependencies", "optionalDependencies"]) {
+      const block = sourceManifest[field] ?? {};
+      for (const [depName, range] of Object.entries(block)) {
+        if (typeof range === "string" && range.startsWith("workspace:")) {
+          vendorOne(depName);
+        }
+      }
+    }
+
+    const slug = packageVendorSlug(packageName);
+    const outDir = join(vendorRoot, slug);
+    rmSync(outDir, { recursive: true, force: true });
+    mkdirSync(outDir, { recursive: true });
+    copyDirRecursive(distDir, join(outDir, "dist"));
+
+    const deps = {};
+    for (const [depName, range] of Object.entries(sourceManifest.dependencies ?? {})) {
+      if (typeof range !== "string") continue;
+      if (range.startsWith("workspace:") && seen.has(depName)) {
+        deps[depName] = `file:../${packageVendorSlug(depName)}`;
+      } else {
+        deps[depName] = resolveDependencyVersion(
+          depName,
+          range,
+          workspaceVersions,
+          catalogVersions,
+        );
+      }
+    }
+
+    const vendoredManifest = {
+      name: packageName,
+      version: sourceManifest.version,
+      description: sourceManifest.description,
+      license: sourceManifest.license ?? "MIT",
+      type: sourceManifest.type ?? "module",
+      main: "./dist/index.js",
+      types: "./dist/index.d.ts",
+      exports: distExportsForManifest(sourceManifest),
+      files: ["dist"],
+      dependencies: deps,
+      private: false,
+    };
+    writeJson(join(outDir, "package.json"), vendoredManifest);
+    return true;
+  }
+
+  let vendoredAny = false;
+  for (const field of ["dependencies", "optionalDependencies"]) {
+    const block = manifest[field] ?? {};
+    for (const [depName, range] of Object.entries(block)) {
+      if (typeof range !== "string") continue;
+      if (!range.startsWith("workspace:") && !depName.startsWith("@nebutra/")) continue;
+      if (!packageByName.has(depName)) continue;
+      if (vendorOne(depName)) {
+        block[depName] = `file:./vendor/${packageVendorSlug(depName)}`;
+        vendoredAny = true;
+      }
+    }
+    if (Object.keys(block).length > 0) manifest[field] = block;
+  }
+
+  if (vendoredAny) {
+    console.log(
+      `[subrepo-sync] vendored ${seen.size} workspace package(s) into ${toPosix(join(targetDir, "vendor"))}`,
+    );
+  }
+  return seen;
+}
+
+function normalizePackageJson(
+  root,
+  mirror,
+  targetDir,
+  catalogVersions,
+  workspaceVersions,
+  packageByName,
+) {
   const manifestPath = join(targetDir, "package.json");
   const manifest = readJson(manifestPath);
   const repoUrl = `git+https://github.com/${mirror.owner}/${mirror.repoName}.git`;
   const sourceSha = getCurrentGitSha(root);
+
+  // Vendor monorepo workspace deps (built dist) before rewriting ranges to ^x.y.z.
+  vendorWorkspaceDependencies(
+    root,
+    targetDir,
+    manifest,
+    packageByName,
+    catalogVersions,
+    workspaceVersions,
+  );
 
   for (const field of [
     "dependencies",
@@ -181,7 +351,21 @@ function normalizePackageJson(root, mirror, targetDir, catalogVersions, workspac
     "peerDependencies",
     "optionalDependencies",
   ]) {
-    manifest[field] = normalizeDependencyBlock(manifest[field], workspaceVersions, catalogVersions);
+    // Skip file: vendor paths — already finalized.
+    const block = manifest[field];
+    if (!block) continue;
+    const next = {};
+    for (const [name, range] of Object.entries(block)) {
+      if (typeof range === "string" && range.startsWith("file:")) {
+        next[name] = range;
+      } else {
+        next[name] =
+          typeof range === "string"
+            ? resolveDependencyVersion(name, range, workspaceVersions, catalogVersions)
+            : range;
+      }
+    }
+    manifest[field] = next;
   }
 
   manifest.repository = {
@@ -347,25 +531,14 @@ function writeMirrorMetadata(targetDir, mirror) {
   );
 }
 
-/**
- * Packages whose standalone typecheck still walks into published @nebutra/*
- * *source* entrypoints (types: ./src/index.ts) and their missing transitive
- * deps. Install + build stay hard; typecheck soft-fails until those packages
- * publish dist + .d.ts.
- */
-const SOFT_TYPECHECK_PACKAGES = new Set([
-  "@nebutra/mcp",
-  "@nebutra/tool-registry",
-  "@nebutra/code-execution",
-]);
-
-function writeMirrorWorkflow(targetDir, mirror) {
+function writeMirrorWorkflow(targetDir) {
   const workflowDir = join(targetDir, ".github", "workflows");
   mkdirSync(workflowDir, { recursive: true });
-  const softTypecheck = SOFT_TYPECHECK_PACKAGES.has(mirror.packageName);
   // Standalone package CI — must not assume monorepo layout or CJS require().
   // pnpm/action-setup needs an explicit version; script detection uses jq
   // because package.json often has "type":"module" (require() throws).
+  // Workspace @nebutra/* deps are vendored as file:./vendor/* with dist+.d.ts
+  // so typecheck is a hard gate for all first-wave packages.
   writeFileSync(
     join(workflowDir, "ci.yml"),
     [
@@ -402,13 +575,6 @@ function writeMirrorWorkflow(targetDir, mirror) {
       "            echo 'no build script'",
       "          fi",
       "      - name: Typecheck",
-      ...(softTypecheck
-        ? [
-            "        # Soft-fail: depends on @nebutra/* packages that still publish",
-            "        # TypeScript sources (types: ./src) with incomplete transitive deps.",
-            "        continue-on-error: true",
-          ]
-        : ["        # Hard gate for packages that typecheck cleanly standalone."]),
       "        run: |",
       "          if jq -e '.scripts.typecheck // empty' package.json >/dev/null; then",
       "            pnpm run typecheck",
@@ -417,7 +583,7 @@ function writeMirrorWorkflow(targetDir, mirror) {
       "          fi",
       "      - name: Test",
       "        # Soft-fail: monorepo-only harnesses (extensionless node:test, etc.).",
-      "        # Install + build remain hard gates.",
+      "        # Install + build + typecheck remain hard gates.",
       "        continue-on-error: true",
       "        run: |",
       "          if jq -e '.scripts.test // empty' package.json >/dev/null; then",
@@ -430,15 +596,22 @@ function writeMirrorWorkflow(targetDir, mirror) {
   );
 }
 
-function buildMirror(root, mirror, targetDir, catalogVersions, workspaceVersions) {
+function buildMirror(root, mirror, targetDir, catalogVersions, workspaceVersions, packageByName) {
   const sourceDir = join(root, mirror.sourceDir);
   rmSync(targetDir, { recursive: true, force: true });
   copyTree(sourceDir, targetDir);
-  normalizePackageJson(root, mirror, targetDir, catalogVersions, workspaceVersions);
+  normalizePackageJson(
+    root,
+    mirror,
+    targetDir,
+    catalogVersions,
+    workspaceVersions,
+    packageByName,
+  );
   normalizeTsconfig(root, targetDir);
   prependReadmeBanner(targetDir, mirror);
   writeMirrorMetadata(targetDir, mirror);
-  writeMirrorWorkflow(targetDir, mirror);
+  writeMirrorWorkflow(targetDir);
 
   const fileCount = countFiles(targetDir);
   if (fileCount < 5) {
@@ -524,6 +697,9 @@ function main() {
   const workspaceVersions = new Map(
     releaseSurface.publishable.map((entry) => [entry.manifest.name, entry.manifest.version]),
   );
+  const packageByName = new Map(
+    releaseSurface.publishable.map((entry) => [entry.manifest.name, entry]),
+  );
   const sourceSha = getCurrentGitSha(root);
 
   rmSync(outputRoot, { recursive: true, force: true });
@@ -532,7 +708,7 @@ function main() {
   for (const mirror of selectedMirrors) {
     const targetDir =
       selectedMirrors.length === 1 && !args.all ? outputRoot : join(outputRoot, mirror.repoName);
-    buildMirror(root, mirror, targetDir, catalogVersions, workspaceVersions);
+    buildMirror(root, mirror, targetDir, catalogVersions, workspaceVersions, packageByName);
     if (args.push) pushMirror(mirror, targetDir, sourceSha);
   }
 
