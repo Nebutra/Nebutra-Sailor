@@ -27,7 +27,7 @@
     "emit-skins": "node scripts/emit-skins.mjs",
     "compile-brand": "node scripts/compile-brand.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test src/brand-package/__tests__/*.test.ts"
+    "test": "tsx --test src/brand-package/__tests__/*.test.ts"
   },
   "dependencies": {
     "@nebutra/design-tokens": "workspace:*"
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "@types/react": "^19.2.14",
+    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/design/tokens#readme",
