@@ -1,22 +1,21 @@
 name: Deploy Auth Center (Cloudflare Workers)
 
-# Production path for auth.nebutra.com: OpenNext → Worker + Assets.
-# Replaces Vercel Hobby as the overseas host for Google OAuth token exchange.
-# PlanetScale Postgres via Hyperdrive binding (same config as gateway).
+# Production path for auth.nebutra.com: thin auth-edge Worker (not OpenNext).
+#
+# Hard-correct size strategy (Free plan 3 MiB):
+#   · /api/auth/*  → Better Auth + Hyperdrive (Google-reachable)
+#   · UI           → ECS origin via cf.resolveOverride
+# Full Next OpenNext (~8.5 MiB gzip) is intentionally NOT deployed here.
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - "apps/auth/**"
+      - "apps/auth/src/worker-edge.ts"
+      - "apps/auth/wrangler.edge.jsonc"
+      - "apps/auth/package.json"
       - "packages/iam/auth/**"
-      - "packages/platform/db/**"
-      - "packages/platform/i18n/**"
-      - "packages/design/brand/**"
-      - "packages/design/ui/**"
-      - "packages/design/tokens/**"
-      - "packages/design/icons/**"
       - "pnpm-lock.yaml"
       - ".github/workflows/deploy-auth-cloudflare.yml"
 
@@ -29,10 +28,8 @@ concurrency:
 
 jobs:
   cloudflare:
-    name: OpenNext → Cloudflare Workers
+    name: Auth edge → Cloudflare Workers
     runs-on: ubuntu-latest
-    # Default production path when DEPLOY_TARGET_AUTH is cloudflare-* or unset
-    # after cutover. Vercel remains optional via deploy-auth-vercel.yml only.
     if: >-
       github.event_name == 'workflow_dispatch' ||
       vars.DEPLOY_TARGET_AUTH == 'cloudflare-workers' ||
@@ -45,29 +42,7 @@ jobs:
       - name: Setup pnpm + Node
         uses: ./.github/actions/setup-node-pnpm
 
-      # Workspace packages export dist/ (gitignored). Same as typelens / sailor-docs.
-      - name: Build workspace dependencies
-        run: pnpm turbo build --filter="@nebutra/auth-center^..."
-
-      - name: Build OpenNext worker
-        working-directory: apps/auth
-        env:
-          # Build-time placeholders; runtime uses Hyperdrive + wrangler secrets.
-          DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
-          BETTER_AUTH_SECRET: "build-placeholder-secret-not-for-production-use-32b"
-          BETTER_AUTH_URL: "https://auth.nebutra.com"
-          NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com"
-          NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
-          AUTH_COOKIE_DOMAIN: ".nebutra.com"
-          AUTH_PROVIDER: "better-auth"
-          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
-          OPEN_NEXT_BUILD: "true"
-          CI: "true"
-        run: |
-          set -euo pipefail
-          pnpm exec opennextjs-cloudflare build
-
-      - name: Deploy worker
+      - name: Deploy auth-edge worker
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -76,24 +51,20 @@ jobs:
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_WORKERS_API_TOKEN missing"; exit 1; }
           set +e
-          out=$(pnpm exec wrangler deploy --config wrangler.jsonc 2>&1)
+          out=$(pnpm exec wrangler deploy --config wrangler.edge.jsonc 2>&1)
           code=$?
           set -e
           echo "$out"
           if [ "$code" -ne 0 ]; then
             if echo "$out" | grep -qiE 'size limit of 3 MiB|code: 10027'; then
-              echo "::error::Worker gzip size exceeds Free plan 3 MiB (auth OpenNext ~8–9 MiB)."
-              echo "::error::Enable Workers Paid (\$5/mo → 10 MiB limit) for account a4248a5738df319996a70092fe598d37:"
-              echo "::error::  https://dash.cloudflare.com/a4248a5738df319996a70092fe598d37/workers/plans"
-              echo "::error::Then re-run: gh workflow run deploy-auth-cloudflare.yml"
+              echo "::error::Worker still exceeds Free 3 MiB — investigate edge bundle (should be ~200 KiB gzip)."
             fi
             exit "$code"
           fi
+          # Surface gzip size for operators
+          echo "$out" | grep -iE 'Total Upload|gzip|Uploaded' || true
 
-      # Runtime secrets (Hyperdrive covers DB when bound; secrets are OAuth + session).
-      # Prefer GitHub secrets; if BETTER_AUTH_SECRET missing, pull once from the
-      # legacy Vercel project so session crypto matches existing cookies / RPs.
-      - name: Sync Worker secrets from GitHub (+ Vercel fallback for session secret)
+      - name: Sync Worker secrets
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -103,7 +74,6 @@ jobs:
           GITHUB_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID || secrets.GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET || secrets.GITHUB_CLIENT_SECRET }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY || secrets.TURNSTILE_SECRET }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
           VERCEL_AUTH_PROJECT_ID: ${{ secrets.VERCEL_AUTH_PROJECT_ID || vars.VERCEL_AUTH_PROJECT_ID }}
@@ -114,28 +84,24 @@ jobs:
         working-directory: apps/auth
         run: |
           set -euo pipefail
-          # Bridge session secret from legacy hosts when GH secret is absent.
           if [ -z "${BETTER_AUTH_SECRET:-}" ] && [ -n "${VERCEL_TOKEN:-}" ] && [ -n "${VERCEL_AUTH_PROJECT_ID:-}" ]; then
             echo "BETTER_AUTH_SECRET missing in GH — try Vercel env decrypt"
             BETTER_AUTH_SECRET=$(
               python3 <<'PY'
-          import json, os, urllib.error, urllib.request
+          import json, os, urllib.request
           token = os.environ["VERCEL_TOKEN"]
           project = os.environ["VERCEL_AUTH_PROJECT_ID"]
           team = os.environ.get("VERCEL_ORG_ID") or ""
           q = f"?teamId={team}" if team.startswith("team_") else ""
           headers = {"Authorization": f"Bearer {token}"}
-
           def get(url):
               req = urllib.request.Request(url, headers=headers)
               with urllib.request.urlopen(req, timeout=30) as r:
                   return json.load(r)
-
           try:
               data = get(f"https://api.vercel.com/v9/projects/{project}/env{q}")
-          except Exception as e:
-              print("", end="")
-              raise SystemExit(0) from e
+          except Exception:
+              raise SystemExit(0)
           for row in data.get("envs") or []:
               if row.get("key") != "BETTER_AUTH_SECRET":
                   continue
@@ -146,34 +112,30 @@ jobs:
               eid = row.get("id")
               if not eid:
                   continue
-              # Encrypted env values need decrypt=true
               sep = "&" if q else "?"
-              try:
-                  dec = get(f"https://api.vercel.com/v1/env/{eid}{q}{sep}decrypt=true")
-                  val = (dec.get("value") or "").strip()
-                  if val:
-                      print(val, end="")
-                      raise SystemExit(0)
-              except Exception:
-                  pass
-              try:
-                  dec = get(f"https://api.vercel.com/v9/projects/{project}/env/{eid}{q}{sep}decrypt=true")
-                  val = (dec.get("value") or "").strip()
-                  if val:
-                      print(val, end="")
-              except Exception:
-                  pass
+              for path in (
+                  f"https://api.vercel.com/v1/env/{eid}{q}{sep}decrypt=true",
+                  f"https://api.vercel.com/v9/projects/{project}/env/{eid}{q}{sep}decrypt=true",
+              ):
+                  try:
+                      dec = get(path)
+                      val = (dec.get("value") or "").strip()
+                      if val:
+                          print(val, end="")
+                          raise SystemExit(0)
+                  except SystemExit:
+                      raise
+                  except Exception:
+                      pass
               break
           PY
             ) || true
             if [ -n "${BETTER_AUTH_SECRET:-}" ]; then
               echo "recovered BETTER_AUTH_SECRET from Vercel (length=${#BETTER_AUTH_SECRET})"
-            else
-              echo "Vercel decrypt did not yield BETTER_AUTH_SECRET"
             fi
           fi
           if [ -z "${BETTER_AUTH_SECRET:-}" ] && [ -n "${ECS_SSH_PRIVATE_KEY:-}" ]; then
-            echo "try ECS /var/www/nebutra/auth .env for BETTER_AUTH_SECRET"
+            echo "try ECS auth .env for BETTER_AUTH_SECRET"
             mkdir -p ~/.ssh
             printf '%s\n' "$ECS_SSH_PRIVATE_KEY" > ~/.ssh/ecs_key
             chmod 600 ~/.ssh/ecs_key
@@ -185,7 +147,7 @@ jobs:
             BETTER_AUTH_SECRET=$(
               ssh -i ~/.ssh/ecs_key -o BatchMode=yes -o ConnectTimeout=15 \
                 "${ECS_USER}@${ECS_HOST}" \
-                "set -e; for f in /var/www/nebutra/auth/current/.env /var/www/nebutra/auth/.env /var/www/nebutra/apps/auth/.env; do
+                "for f in /var/www/nebutra/auth/current/.env /var/www/nebutra/auth/.env /var/www/nebutra/apps/auth/.env; do
                    [ -f \"\$f\" ] || continue
                    grep -E '^BETTER_AUTH_SECRET=' \"\$f\" | head -1 | cut -d= -f2- | tr -d '\"' | tr -d \"'\"
                    break
@@ -194,8 +156,6 @@ jobs:
             rm -f ~/.ssh/ecs_key
             if [ -n "${BETTER_AUTH_SECRET:-}" ]; then
               echo "recovered BETTER_AUTH_SECRET from ECS (length=${#BETTER_AUTH_SECRET})"
-            else
-              echo "ECS did not yield BETTER_AUTH_SECRET"
             fi
           fi
           put() {
@@ -204,7 +164,7 @@ jobs:
               echo "skip secret $name (empty)"
               return 0
             fi
-            printf '%s' "$value" | pnpm exec wrangler secret put "$name" --config wrangler.jsonc
+            printf '%s' "$value" | pnpm exec wrangler secret put "$name" --config wrangler.edge.jsonc
             echo "set secret $name"
           }
           put BETTER_AUTH_SECRET "${BETTER_AUTH_SECRET:-}"
@@ -213,25 +173,23 @@ jobs:
           put GITHUB_CLIENT_ID "${GITHUB_CLIENT_ID:-}"
           put GITHUB_CLIENT_SECRET "${GITHUB_CLIENT_SECRET:-}"
           put DATABASE_URL "${DATABASE_URL:-}"
-          put TURNSTILE_SECRET_KEY "${TURNSTILE_SECRET_KEY:-}"
           if [ -z "${BETTER_AUTH_SECRET:-}" ]; then
-            echo "::warning::BETTER_AUTH_SECRET still unset — Worker session crypto will fail until set"
+            echo "::warning::BETTER_AUTH_SECRET still unset — OAuth/session crypto will fail until set"
           fi
 
-      - name: Smoke workers.dev + optional custom host
+      - name: Smoke workers.dev
         run: |
           set -euo pipefail
-          # workers.dev can lag a few seconds after first deploy
-          for i in 1 2 3 4 5 6; do
+          for i in 1 2 3 4 5 6 7 8; do
             code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 \
               https://nebutra-auth.nebutra.workers.dev/health || echo 000)
             echo "try $i workers.dev/health -> $code"
             if [ "$code" = "200" ]; then
-              head -c 500 /tmp/ah.json || true
+              head -c 600 /tmp/ah.json || true
               echo
               break
             fi
-            sleep 8
+            sleep 5
           done
           code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 45 \
             'https://nebutra-auth.nebutra.workers.dev/health?probe=google' || echo 000)
@@ -239,10 +197,9 @@ jobs:
           if [ "$code" = "200" ]; then
             python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))' || true
           fi
-          # Custom host only healthy after DNS points at Worker (not Vercel).
-          code=$(curl -sS -o /tmp/ac.json -w '%{http_code}' --max-time 20 \
-            https://auth.nebutra.com/health || echo 000)
-          echo "GET auth.nebutra.com/health -> $code (may still be Vercel until DNS cutover)"
+          code=$(curl -sS -o /tmp/edge.json -w '%{http_code}' --max-time 20 \
+            https://nebutra-auth.nebutra.workers.dev/__edge/health || echo 000)
+          echo "GET __edge/health -> $code"
 
       - name: Point DNS auth → Worker (soft-fail if token lacks DNS Edit)
         continue-on-error: true

@@ -1,0 +1,40 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nebutra-auth",
+  // Same account as gateway-edge / typelens.
+  "account_id": "a4248a5738df319996a70092fe598d37",
+  // Thin edge — NOT OpenNext. Free plan 3 MiB is enough (~200 KiB gzip).
+  "main": "src/worker-edge.ts",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "minify": true,
+  "observability": {
+    "enabled": true
+  },
+  // Edge pool → PlanetScale (same Hyperdrive id as gateway).
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "8a0e4251ae014472879ae3b2a57276cb",
+      "localConnectionString": "postgresql://postgres:postgres@localhost:5432/nebutra"
+    }
+  ],
+  "vars": {
+    "BETTER_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_AUTH_URL": "https://auth.nebutra.com",
+    "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
+    "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
+    "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    // ECS auth-center host IP for UI pass-through (resolveOverride).
+    "ORIGIN_IP": "106.15.4.31",
+    "DEPLOY_TARGET_AUTH": "cloudflare-workers"
+  },
+  // Secrets: BETTER_AUTH_SECRET, GOOGLE_*, GITHUB_*, optional DATABASE_URL fallback.
+  "routes": [
+    {
+      "pattern": "auth.nebutra.com/*",
+      "zone_name": "nebutra.com"
+    }
+  ],
+  "workers_dev": true
+}
