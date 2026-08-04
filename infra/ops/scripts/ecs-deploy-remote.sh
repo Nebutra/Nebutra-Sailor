@@ -1112,12 +1112,21 @@ install_forge_chromium() {
 }
 
 wait_for_local_http() {
-  local label="$1" pm2_name="$2" url="$3" ok_regex="${4:-^(200|301|302|307)$}"
+  local label="$1" pm2_name="$2" url="$3" ok_regex="${4:-^(200|301|302|307)$}" host_header="${5:-}"
   local code="000"
+  local curl_host_args=()
 
-  log "wait for $label local health: $url"
+  # Next.js App Router (and some edge middleware) answer 421 Misdirected Request
+  # when the request hits 127.0.0.1 without a product Host. Public probes use the
+  # real hostname; local health must do the same or deploys abort after a healthy
+  # process start (seen on landing /get-license → 421).
+  if [ -n "$host_header" ]; then
+    curl_host_args=(-H "Host: ${host_header}")
+  fi
+
+  log "wait for $label local health: $url${host_header:+ (Host: $host_header)}"
   for attempt in 1 2 3 4 5 6 7 8 9 10; do
-    code="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 "$url" 2>/dev/null || true)"
+    code="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 "${curl_host_args[@]}" "$url" 2>/dev/null || true)"
     [ -n "$code" ] || code="000"
     if [[ "$code" =~ $ok_regex ]]; then
       log "$label local health -> $code"
@@ -1127,7 +1136,7 @@ wait_for_local_http() {
       log "$label local health failed after $attempt attempts (last code: $code)"
       pm2 describe "$pm2_name" --no-color 2>&1 || true
       pm2 logs "$pm2_name" --nostream --lines 160 --raw --no-color 2>&1 | tail -180 || true
-      command -v ss >/dev/null 2>&1 && ss -ltnp 2>/dev/null | grep -E ':(3000|3001|3002|3004|3005)\b' || true
+      command -v ss >/dev/null 2>&1 && ss -ltnp 2>/dev/null | grep -E ':(3000|3001|3002|3004|3005|3105|3106|3101)\b' || true
       fail "$label failed local health check"
     fi
     sleep 6
@@ -1389,10 +1398,10 @@ ensure_carina_codeploy() {
       ensure_carina_codeploy
       ;;
     landing)
-      wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/get-license"
+      wait_for_local_http "landing" "$pm2_name" "http://127.0.0.1:3001/get-license" "^(200|301|302|307)$" "nebutra.com"
       ;;
     web)
-      wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/"
+      wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/" "^(200|301|302|307)$" "app.nebutra.com"
       ;;
     idp)
       wait_for_local_http "idp" "$pm2_name" "http://127.0.0.1:3100/health" "^200$"
@@ -1401,19 +1410,19 @@ ensure_carina_codeploy() {
       wait_for_local_http "auth-center" "$pm2_name" "http://127.0.0.1:3101/health" "^200$"
       ;;
     design-docs)
-      wait_for_local_http "design-docs" "$pm2_name" "http://127.0.0.1:3004/"
+      wait_for_local_http "design-docs" "$pm2_name" "http://127.0.0.1:3004/" "^(200|301|302|307)$" "design-docs.nebutra.com"
       ;;
     pebble)
-      wait_for_local_http "pebble" "$pm2_name" "http://127.0.0.1:3017/"
+      wait_for_local_http "pebble" "$pm2_name" "http://127.0.0.1:3017/" "^(200|301|302|307)$" "pebble.nebutra.com"
       ;;
     sailor-docs)
-      wait_for_local_http "sailor-docs" "$pm2_name" "http://127.0.0.1:3005/"
+      wait_for_local_http "sailor-docs" "$pm2_name" "http://127.0.0.1:3005/" "^(200|301|302|307)$" "docs.nebutra.com"
       ;;
     router)
-      wait_for_local_http "router" "$pm2_name" "http://127.0.0.1:3106/"
+      wait_for_local_http "router" "$pm2_name" "http://127.0.0.1:3106/" "^(200|301|302|307)$" "router.nebutra.com"
       ;;
     forge)
-      wait_for_local_http "forge" "$pm2_name" "http://127.0.0.1:3105/"
+      wait_for_local_http "forge" "$pm2_name" "http://127.0.0.1:3105/" "^(200|301|302|307)$" "forge.nebutra.com"
       # Hard-correct: md-to-pdf needs Chromium on the product host.
       install_forge_chromium "$release" "$app_root"
       ;;
