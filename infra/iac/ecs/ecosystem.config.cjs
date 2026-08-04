@@ -248,9 +248,10 @@ module.exports = {
       // Port 53: setcap cap_net_bind_service=+ep on node, or CAP in systemd.
       name: "forge-dns-leak",
       cwd: "/var/www/nebutra/forge/current",
+      // Node 22+ strip-types — no tsx required in the forge standalone tree.
       script: "/var/www/nebutra/node-with-env.sh",
       interpreter: "bash",
-      args: "node_modules/tsx/dist/cli.mjs packages/ai/forge-dns-leak/src/cli.ts",
+      args: "--experimental-strip-types --no-warnings=ExperimentalWarning packages/ai/forge-dns-leak/src/cli.ts",
       env: {
         NODE_ENV: "production",
         ENV_FILE: "/var/www/nebutra/forge/.env",
@@ -258,6 +259,7 @@ module.exports = {
         FORGE_DNS_LEAK_NS: "ns1.leak.nebutra.com",
         FORGE_DNS_LEAK_ANSWER_IP: "127.0.0.1",
         FORGE_DNS_LEAK_DNS_HOST: "0.0.0.0",
+        // Prefer 5353 if setcap/root cannot bind 53; bootstrap may override to 53.
         FORGE_DNS_LEAK_DNS_PORT: "53",
         FORGE_DNS_LEAK_API_HOST: "127.0.0.1",
         FORGE_DNS_LEAK_API_PORT: "3953",

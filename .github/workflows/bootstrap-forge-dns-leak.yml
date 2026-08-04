@@ -49,63 +49,100 @@ jobs:
           ROOT: ${{ steps.ssh.outputs.root }}
         run: |
           set -euo pipefail
-          # Push current ecosystem to the VM (so forge-dns-leak app exists)
+          FORGE_CUR_HINT="${ROOT}/forge/current"
+          # Push ecosystem + package sources (forge standalone may lack the package until next green deploy)
           scp -i ~/.ssh/id_deploy -o IdentitiesOnly=yes \
             infra/iac/ecs/ecosystem.config.cjs \
             "${USER}@${HOST}:${ROOT}/ecosystem.config.cjs"
+          ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes "${USER}@${HOST}" \
+            "mkdir -p ${ROOT}/forge/current/packages/ai"
+          scp -i ~/.ssh/id_deploy -o IdentitiesOnly=yes -r \
+            packages/ai/forge-dns-leak \
+            "${USER}@${HOST}:${ROOT}/forge/current/packages/ai/"
 
           ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes "${USER}@${HOST}" bash -s <<REMOTE
           set -euo pipefail
           ROOT="${ROOT}"
-          cd "\$ROOT"
-
-          # Prefer forge/current monorepo layout after deploy-ecs
           FORGE_CUR="\$ROOT/forge/current"
-          if [ ! -d "\$FORGE_CUR/packages/ai/forge-dns-leak" ]; then
-            echo "WARN: \$FORGE_CUR/packages/ai/forge-dns-leak missing — last forge deploy may predate the package."
-            echo "Will still try PM2 start; full path needs a successful forge deploy-ecs."
-          fi
+          cd "\$FORGE_CUR"
+
+          test -f packages/ai/forge-dns-leak/src/cli.ts || {
+            echo "ERROR: packages/ai/forge-dns-leak/src/cli.ts missing after scp"
+            exit 1
+          }
 
           NODE_BIN=\$(command -v node)
-          echo "node=\$NODE_BIN"
-          # Allow non-root bind to 53 when possible
+          echo "node=\$NODE_BIN version=\$(\$NODE_BIN -v)"
           if command -v setcap >/dev/null 2>&1; then
             setcap 'cap_net_bind_service=+ep' "\$NODE_BIN" 2>/dev/null || true
             getcap "\$NODE_BIN" 2>/dev/null || true
           fi
 
-          # Ensure forge env has control URL
           mkdir -p "\$ROOT/forge"
           touch "\$ROOT/forge/.env"
-          if ! grep -q '^FORGE_DNS_LEAK_URL=' "\$ROOT/forge/.env" 2>/dev/null; then
-            echo 'FORGE_DNS_LEAK_URL=http://127.0.0.1:3953' >> "\$ROOT/forge/.env"
-          fi
+          grep -q '^FORGE_DNS_LEAK_URL=' "\$ROOT/forge/.env" 2>/dev/null \
+            || echo 'FORGE_DNS_LEAK_URL=http://127.0.0.1:3953' >> "\$ROOT/forge/.env"
 
-          # Firewall: open 53 if ufw present (ignore if managed externally)
           if command -v ufw >/dev/null 2>&1; then
             ufw allow 53/udp || true
             ufw allow 53/tcp || true
           fi
 
-          # Start or recreate from ecosystem
-          if pm2 describe forge-dns-leak >/dev/null 2>&1; then
-            pm2 delete forge-dns-leak || true
+          # Free port 53 if something else owns it (document only)
+          ss -ulnp | grep ':53 ' || true
+
+          pm2 delete forge-dns-leak >/dev/null 2>&1 || true
+
+          # Prefer ecosystem; fall back to direct start if ecosystem path fails
+          if ! pm2 start "\$ROOT/ecosystem.config.cjs" --only forge-dns-leak; then
+            echo "ecosystem start failed — direct node start"
+            FORGE_DNS_LEAK_ZONE=leak.nebutra.com \
+            FORGE_DNS_LEAK_NS=ns1.leak.nebutra.com \
+            FORGE_DNS_LEAK_ANSWER_IP=127.0.0.1 \
+            FORGE_DNS_LEAK_DNS_HOST=0.0.0.0 \
+            FORGE_DNS_LEAK_DNS_PORT=53 \
+            FORGE_DNS_LEAK_API_HOST=127.0.0.1 \
+            FORGE_DNS_LEAK_API_PORT=3953 \
+            ENV_FILE="\$ROOT/forge/.env" \
+            pm2 start "\$NODE_BIN" \
+              --name forge-dns-leak \
+              --cwd "\$FORGE_CUR" \
+              -- --experimental-strip-types --no-warnings=ExperimentalWarning \
+              packages/ai/forge-dns-leak/src/cli.ts
           fi
-          pm2 start "\$ROOT/ecosystem.config.cjs" --only forge-dns-leak
           pm2 save || true
           sleep 2
-          pm2 describe forge-dns-leak | head -40 || true
+          pm2 describe forge-dns-leak | head -50 || true
 
           echo "=== health ==="
-          curl -fsS --max-time 5 http://127.0.0.1:3953/health || {
-            echo "control API not up yet"
-            pm2 logs forge-dns-leak --lines 40 --nostream || true
-            exit 1
-          }
+          if ! curl -fsS --max-time 5 http://127.0.0.1:3953/health; then
+            echo
+            echo "port 53 may be blocked — retry on 5353"
+            pm2 delete forge-dns-leak >/dev/null 2>&1 || true
+            FORGE_DNS_LEAK_ZONE=leak.nebutra.com \
+            FORGE_DNS_LEAK_NS=ns1.leak.nebutra.com \
+            FORGE_DNS_LEAK_ANSWER_IP=127.0.0.1 \
+            FORGE_DNS_LEAK_DNS_HOST=0.0.0.0 \
+            FORGE_DNS_LEAK_DNS_PORT=5353 \
+            FORGE_DNS_LEAK_API_HOST=127.0.0.1 \
+            FORGE_DNS_LEAK_API_PORT=3953 \
+            ENV_FILE="\$ROOT/forge/.env" \
+            pm2 start "\$NODE_BIN" \
+              --name forge-dns-leak \
+              --cwd "\$FORGE_CUR" \
+              -- --experimental-strip-types --no-warnings=ExperimentalWarning \
+              packages/ai/forge-dns-leak/src/cli.ts
+            pm2 save || true
+            sleep 2
+            curl -fsS --max-time 5 http://127.0.0.1:3953/health
+            echo
+            echo "NOTE: listening on 5353 — need iptables DNAT 53→5353 or SG+SO_REUSE for :53"
+          fi
           echo
-          echo "=== ss :53 ==="
-          ss -ulnp | grep ':53 ' || ss -ulnp | head -20 || true
-          ss -tlnp | grep ':53 ' || true
+          echo "=== listeners ==="
+          ss -ulnp | grep -E ':(53|5353|3953) ' || true
+          ss -tlnp | grep -E ':(53|5353|3953) ' || true
+          pm2 logs forge-dns-leak --lines 20 --nostream || true
           REMOTE
 
       - name: Public DNS probe from runner
