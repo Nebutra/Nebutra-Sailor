@@ -2,7 +2,6 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  AUTH_FORM_CARD_CLASS,
   AUTH_FORM_COLUMN_CLASS,
   AUTH_OAUTH_BUTTON_CLASS,
   AUTH_OAUTH_GRID_CLASS,
@@ -35,29 +34,35 @@ const FOREGROUND_FILL_FIGHT =
   /bg-\[hsl\(var\(--foreground\)\)\][\s\S]{0,120}text-\[hsl\(var\(--background\)\)\]/;
 
 describe("auth surface layout contracts", () => {
-  it("forces login-card width (min 360px cap), not soft max-w-sm/xs alone", () => {
+  it("forces login-column width (min 360px cap), not soft max-w-sm/xs alone", () => {
     expect(AUTH_FORM_COLUMN_CLASS).toMatch(/360px|min\(100%/);
     expect(AUTH_FORM_COLUMN_CLASS).toContain("min-w-0");
     expect(AUTH_FORM_COLUMN_CLASS).not.toContain("max-w-sm");
     expect(AUTH_FORM_COLUMN_CLASS).not.toContain("max-w-xs");
-    expect(AUTH_FORM_CARD_CLASS).toContain("rounded");
+    // Split shell must not reintroduce nested card chrome.
+    expect(AUTH_FORM_COLUMN_CLASS).not.toContain("rounded-2xl");
+    expect(AUTH_FORM_COLUMN_CLASS).not.toContain("shadow-sm");
     expect(AUTH_PRIMARY_CTA_CLASS).toContain("w-full");
   });
 
-  it("both product AuthSplitLayouts apply column + card SSOT", () => {
+  it("both product AuthSplitLayouts apply width SSOT without card chrome", () => {
     for (const rel of SPLIT_LAYOUTS) {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
       expect(source, rel).toContain("AUTH_FORM_COLUMN_CLASS");
-      expect(source, rel).toContain("AUTH_FORM_CARD_CLASS");
+      expect(source, rel).not.toContain("AUTH_FORM_CARD_CLASS");
       // Server-safe path only — @nebutra/ui/utils was once client-stamped and
       // RSC treated AUTH_FORM_* as client proxies (login card className empty).
       expect(source, rel).toContain('from "@nebutra/ui/utils/auth-surfaces"');
       // Forbid bare barrel import of AUTH_FORM_* (cn from @nebutra/ui/utils is fine).
       expect(source, rel).not.toMatch(
-        /import\s*\{[^}]*AUTH_FORM_(COLUMN|CARD)_CLASS[^}]*\}\s*from\s*["']@nebutra\/ui\/utils["']/,
+        /import\s*\{[^}]*AUTH_FORM_COLUMN_CLASS[^}]*\}\s*from\s*["']@nebutra\/ui\/utils["']/,
       );
       expect(source, rel).not.toMatch(/max-w-sm(?![\w-])/);
       expect(source, rel).not.toMatch(/max-w-xs(?![\w-])/);
+      // Nested card chrome ban (border + rounded + shadow wrappers).
+      expect(source, rel).not.toMatch(
+        /rounded-2xl border border-border bg-background p-6 shadow-sm/,
+      );
     }
   });
 

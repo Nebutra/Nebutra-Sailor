@@ -1394,30 +1394,31 @@ jobs:
             echo "✅ auth-sign-in https://auth.nebutra.com/sign-in -> $code"
             # RSC client-proxy regression: AUTH_FORM_* imported from a "use client"
             # utils barrel rendered as digression instead of className.
-            if grep -qF 'AUTH_FORM_CARD_CLASS is on the client' "$html_file" \
-              || grep -qF 'AUTH_FORM_COLUMN_CLASS is on the client' "$html_file"; then
+            if grep -qF 'AUTH_FORM_COLUMN_CLASS is on the client' "$html_file"; then
               echo "::error::auth-sign-in HTML contains RSC client-proxy digression for AUTH_FORM_*. @nebutra/ui/utils must not stamp use client on auth-surfaces."
               exit 1
             fi
             if ! grep -qF 'min(100%,360px)' "$html_file"; then
-              echo "::error::auth-sign-in HTML missing login-card width SSOT (expected w-[min(100%,360px)]). Bundle is stale, not deployed, or AUTH_FORM_* failed to render."
+              echo "::error::auth-sign-in HTML missing login-column width SSOT (expected w-[min(100%,360px)]). Bundle is stale, not deployed, or AUTH_FORM_* failed to render."
               grep -oE 'class="[^"]*(max-w-|min\(100%|w-\[min)[^"]*"' "$html_file" | head -20 || true
               exit 1
             fi
             if ! grep -qF 'grid-cols-2' "$html_file"; then
-              echo "::error::auth-sign-in HTML missing Neon OAuth grid (expected grid-cols-2). Stacked OAuth must not ship."
+              echo "::error::auth-sign-in HTML missing compact OAuth grid (expected grid-cols-2). Stacked OAuth must not ship."
               grep -oE 'class="[^"]*grid-cols-[0-9][^"]*"' "$html_file" | head -20 || true
               exit 1
             fi
-            if ! grep -qF 'rounded-2xl' "$html_file"; then
-              echo "::error::auth-sign-in HTML missing auth card chrome (expected rounded-2xl from AUTH_FORM_CARD_CLASS)."
+            # Nested card chrome was a mistaken #426 addition — ban it on sign-in.
+            if grep -qE 'class="[^"]*rounded-2xl[^"]*border[^"]*shadow-sm[^"]*"' "$html_file" \
+              || grep -qE 'class="[^"]*min\(100%,360px\)[^"]*rounded-2xl[^"]*"' "$html_file"; then
+              echo "::error::auth-sign-in still wraps the form in nested card chrome (rounded-2xl+border+shadow). Remove AUTH_FORM_CARD_CLASS."
               exit 1
             fi
             if grep -qE 'class="[^"]*max-w-xs[^"]*"' "$html_file"; then
               echo "::error::auth-sign-in still serves pre-#426 max-w-xs form column — auth bundle did not update."
               exit 1
             fi
-            echo "✅ auth-sign-in layout markers: min(100%,360px) + grid-cols-2 + rounded-2xl"
+            echo "✅ auth-sign-in layout markers: min(100%,360px) + grid-cols-2, no nested card chrome"
           fi
 
       - name: Emit deployment verification analytics

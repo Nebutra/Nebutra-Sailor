@@ -1,6 +1,6 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { ArrowLeft } from "@nebutra/icons";
-import { AUTH_FORM_CARD_CLASS, AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
+import { AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
 import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/cn";
 import { AuthBanner } from "./auth-banner";
@@ -11,8 +11,9 @@ import { LocaleSwitcher } from "./locale-switcher";
  * including top-right locale switcher.
  *
  * Form column width is SSOT via AUTH_FORM_COLUMN_CLASS
- * (@nebutra/ui/utils/auth-surfaces — RSC-safe) — do not reintroduce a magic
- * pixel max-width on this shell.
+ * (@nebutra/ui/utils/auth-surfaces — RSC-safe). No nested card chrome —
+ * fields sit on the white pane. Do not reintroduce magic max-width or
+ * border/rounded card wrappers here.
  */
 export async function AuthSplitLayout({
   children,
@@ -57,7 +58,7 @@ export async function AuthSplitLayout({
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,hsl(var(--muted))_80%,transparent),transparent)] lg:hidden"
         />
-        <div className={cn(AUTH_FORM_COLUMN_CLASS, AUTH_FORM_CARD_CLASS)}>{children}</div>
+        <div className={AUTH_FORM_COLUMN_CLASS}>{children}</div>
       </main>
     </div>
   );

@@ -4,7 +4,6 @@
 
 /** Auth split-shell + primary CTA contracts (width + ink CTA pairing). */
 export {
-  AUTH_FORM_CARD_CLASS,
   AUTH_FORM_COLUMN_CLASS,
   AUTH_OAUTH_BUTTON_CLASS,
   AUTH_OAUTH_GRID_CLASS,

@@ -14,19 +14,20 @@
  *
  * 360px matches the Neon / Clerk login-card band (not page-form 24rem).
  *
- * ## OAuth (Neon)
+ * ## No card chrome on split shell
+ * Do NOT wrap the credentials column in border / rounded-2xl / shadow card.
+ * Split already has a marketing panel + white form pane; a nested card is
+ * double framing. Fields sit on the pane like Neon console login.
+ *
+ * ## OAuth
  * Always a 2-column compact grid — never full-width stacked bars, never
  * "stack when only two providers". Buttons fill the *cell*, not the pane.
  */
 export const AUTH_FORM_COLUMN_CLASS = "relative mx-auto min-w-0 w-[min(100%,360px)] shrink-0";
 
-/** Optional card chrome — same width SSOT, visual containment like Neon. */
-export const AUTH_FORM_CARD_CLASS =
-  "rounded-2xl border border-border bg-background p-6 shadow-sm sm:p-8";
-
 export const AUTH_PRIMARY_CTA_CLASS = "h-11 w-full";
 
-/** Neon-style OAuth: always 2 columns, tight gap. */
+/** Compact OAuth: always 2 columns, tight gap. */
 export const AUTH_OAUTH_GRID_CLASS = "grid grid-cols-2 gap-2";
 
 /** Compact OAuth chip — fills grid cell only. */

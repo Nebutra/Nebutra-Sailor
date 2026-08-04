@@ -1,6 +1,6 @@
 import { ArrowLeft } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
-import { AUTH_FORM_CARD_CLASS, AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
+import { AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { AuthBanner } from "./auth-banner";
@@ -13,8 +13,7 @@ interface AuthSplitLayoutProps {
 /**
  * Agent OS split login shell. Form column width is SSOT via
  * AUTH_FORM_COLUMN_CLASS (@nebutra/ui/utils/auth-surfaces, RSC-safe) —
- * keep in lock-step with apps/auth AuthSplitLayout; do not reintroduce a
- * magic pixel max-width here.
+ * keep in lock-step with apps/auth. No nested card chrome on the form.
  */
 export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
   const t = useTranslations("auth.signIn");
@@ -52,7 +51,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,hsl(var(--muted))_80%,transparent),transparent)] lg:hidden"
         />
-        <div className={cn(AUTH_FORM_COLUMN_CLASS, AUTH_FORM_CARD_CLASS)}>{children}</div>
+        <div className={AUTH_FORM_COLUMN_CLASS}>{children}</div>
       </main>
     </div>
   );
