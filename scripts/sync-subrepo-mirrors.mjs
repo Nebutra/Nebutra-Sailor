@@ -115,9 +115,7 @@ function toPosix(path) {
 
 function stripJsonComments(text) {
   // tsconfig often uses // comments; package.json must stay strict JSON.
-  return text
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/^\s*\/\/.*$/gm, "");
+  return text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
 }
 
 function readJson(path) {
@@ -188,7 +186,11 @@ function copyDirRecursive(src, dst) {
  * point at src for DX; vendored copies always ship built artifacts.
  */
 function distExportsForManifest(manifest) {
-  if (manifest.exports && typeof manifest.exports === "object" && !Array.isArray(manifest.exports)) {
+  if (
+    manifest.exports &&
+    typeof manifest.exports === "object" &&
+    !Array.isArray(manifest.exports)
+  ) {
     const rewritten = {};
     for (const [key, value] of Object.entries(manifest.exports)) {
       if (typeof value === "string") {
@@ -454,6 +456,7 @@ function ensureStandaloneToolchain(manifest, catalogVersions) {
   const declared = {
     ...(manifest.dependencies ?? {}),
     ...(manifest.devDependencies ?? {}),
+    ...(manifest.peerDependencies ?? {}),
   };
   const dev = { ...(manifest.devDependencies ?? {}) };
   let changed = false;
@@ -474,10 +477,27 @@ function ensureStandaloneToolchain(manifest, catalogVersions) {
             scriptsText.includes("jsdom"),
         );
     }
-    if (!used || declared[tool]) continue;
+    if (!used || declared[tool] || dev[tool]) continue;
     const catalog = catalogVersions?.get?.(tool);
     dev[tool] = catalog ?? fallback;
     changed = true;
+  }
+
+  // React entrypoints need types + a local react install for standalone tsc.
+  // Monorepos often hoist these from apps; mirrors do not.
+  const needsReact =
+    Boolean(declared.react || declared["@types/react"] || declared["react-dom"]) ||
+    Object.keys(manifest.exports ?? {}).some((key) => key.includes("react")) ||
+    /react/.test(JSON.stringify(manifest.peerDependencies ?? {}));
+  if (needsReact) {
+    if (!dev.react && !manifest.dependencies?.react) {
+      dev.react = declared.react ?? "^19.0.0";
+      changed = true;
+    }
+    if (!dev["@types/react"] && !manifest.dependencies?.["@types/react"]) {
+      dev["@types/react"] = "^19.0.0";
+      changed = true;
+    }
   }
 
   if (changed) {
@@ -567,6 +587,13 @@ function writeMirrorMetadata(targetDir, mirror) {
       "",
     ].join("\n"),
   );
+  // Match monorepo hoist so nested AWS/Smithy (and similar) type packages resolve
+  // under TypeScript `moduleResolution: bundler`. Without this, standalone
+  // `tsc` sees Client bases without `.send` and Build fails hard.
+  writeFileSync(
+    join(targetDir, ".npmrc"),
+    ["public-hoist-pattern[]=*", "shamefully-hoist=false", ""].join("\n"),
+  );
 }
 
 function writeMirrorWorkflow(targetDir) {
@@ -636,14 +663,7 @@ function buildMirror(root, mirror, targetDir, catalogVersions, workspaceVersions
   const sourceDir = join(root, mirror.sourceDir);
   rmSync(targetDir, { recursive: true, force: true });
   copyTree(sourceDir, targetDir);
-  normalizePackageJson(
-    root,
-    mirror,
-    targetDir,
-    catalogVersions,
-    workspaceVersions,
-    packageByName,
-  );
+  normalizePackageJson(root, mirror, targetDir, catalogVersions, workspaceVersions, packageByName);
   normalizeTsconfig(root, targetDir);
   prependReadmeBanner(targetDir, mirror);
   writeMirrorMetadata(targetDir, mirror);

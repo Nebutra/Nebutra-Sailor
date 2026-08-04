@@ -105,6 +105,7 @@ export class NovuProvider implements NotificationProvider {
       });
 
       // Novu trigger — sends to all channels configured in the template
+      const novuOverrides = this.mapOverridesToNovu(payload.overrides);
       const response = await this.novu.trigger(payload.type, {
         to: {
           subscriberId: payload.recipientId,
@@ -114,7 +115,7 @@ export class NovuProvider implements NotificationProvider {
           ...payload.data,
           ...(payload.metadata && { _metadata: payload.metadata }),
         },
-        overrides: this.mapOverridesToNovu(payload.overrides),
+        ...(novuOverrides ? { overrides: novuOverrides } : {}),
       });
 
       const transactionId = (response as NovuTriggerResponse).transactionId;
@@ -373,9 +374,11 @@ export class NovuProvider implements NotificationProvider {
    */
   private mapOverridesToNovu(
     overrides?: NotificationPayload["overrides"],
-  ): Record<string, unknown> {
-    if (!overrides) return {};
+  ): NonNullable<Parameters<Novu["trigger"]>[1]>["overrides"] | undefined {
+    if (!overrides) return undefined;
 
+    // Project provider-agnostic overrides into Novu's channel map.
+    // Cast at the boundary: Novu's ITriggerOverrides is narrower / versioned.
     const mapped: Record<string, unknown> = {};
 
     if (overrides.email) {
@@ -411,7 +414,9 @@ export class NovuProvider implements NotificationProvider {
       };
     }
 
-    return mapped;
+    return Object.keys(mapped).length > 0
+      ? (mapped as NonNullable<Parameters<Novu["trigger"]>[1]>["overrides"])
+      : undefined;
   }
 }
 

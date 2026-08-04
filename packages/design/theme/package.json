@@ -39,7 +39,8 @@
     "./skins.css": "./skins.css"
   },
   "scripts": {
-    "build": "node scripts/sync-languages.mjs && node ../tokens/scripts/emit-skins.mjs && node scripts/sync-skins.mjs && tsup",
+    "build": "tsup",
+    "build:codegen": "node scripts/sync-languages.mjs && node ../tokens/scripts/emit-skins.mjs && node scripts/sync-skins.mjs && tsup",
     "sync": "node scripts/sync-languages.mjs && node scripts/sync-skins.mjs",
     "sync:languages": "node scripts/sync-languages.mjs",
     "sync:skins": "node scripts/sync-skins.mjs",

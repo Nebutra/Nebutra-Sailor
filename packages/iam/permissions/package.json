@@ -67,6 +67,7 @@
     "hono": "^4.0.0"
   },
   "devDependencies": {
+    "@types/react": "^19.0.0",
     "react": "^19.0.0",
     "typescript": "catalog:",
     "vitest": "catalog:"
