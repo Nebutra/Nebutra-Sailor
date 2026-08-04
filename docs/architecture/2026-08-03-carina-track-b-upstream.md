@@ -76,8 +76,17 @@ Bearer tokens are **Gateway / product credentials**, never local owner tokens.
 
 ## Appendix A — v0.8.1 wire mapping (Phase 1)
 
-Catalog baseline: **Carina v0.8.1+** (co-deploy binary pin tracks latest 0.8.x
-release via `CARINA_VERSION` in ops scripts; currently **0.8.5**).
+Catalog baseline: **Carina v0.8.1+**.
+Co-deploy binary pin is the single file **`infra/ops/carina.pin`**
+(`version=`), read by install + `deploy-ecs` prestage. Maintenance is
+automated:
+
+| Mechanism | Role |
+|-----------|------|
+| Renovate regex manager | bumps `carina.pin` when `Nebutra/carina` publishes; patch automerge |
+| `.github/workflows/carina-upstream-sync.yml` | scheduled/manual belt-and-suspenders PR |
+| `carina-codeploy.sh` | always refreshes `/var/carina/bin` from staged binaries |
+
 Protocol pin: `CARINA_MIN_PROTOCOL_VERSION = 1`.
 
 | Sailor | Carina (catalog) |
