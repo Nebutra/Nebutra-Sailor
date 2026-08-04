@@ -29,10 +29,19 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   margin: 0;
   min-height: 100%;
+}
+
+body {
+  margin: 0;
+  /* Why: short pages (e.g. /download) used to leave a dead band under the
+     footer. Flex column + flex:1 main pins the footer to the viewport bottom. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   background:
     radial-gradient(
       900px 480px at 12% -8%,
@@ -137,6 +146,7 @@ main {
   width: min(1080px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 1.25rem 0 4rem;
+  flex: 1 0 auto;
 }
 
 /* ── Hero ────────────────────────────────────────────────────────── */
@@ -413,8 +423,8 @@ code.inline {
 
 .footer {
   width: min(1080px, calc(100% - 2rem));
-  margin: 2rem auto 2.5rem;
-  padding-top: 1.25rem;
+  margin: 2rem auto 0;
+  padding: 1.25rem 0 2rem;
   border-top: 1px solid var(--hairline);
   color: var(--ink-muted);
   font-size: 0.88rem;
@@ -422,6 +432,7 @@ code.inline {
   flex-wrap: wrap;
   gap: 0.75rem 1.25rem;
   justify-content: space-between;
+  flex-shrink: 0;
 }
 
 .footer a:hover {
