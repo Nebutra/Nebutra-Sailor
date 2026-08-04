@@ -116,7 +116,7 @@ describe("handleGoogleOneTapSignIn", () => {
 
     expect(verifyIdToken).toHaveBeenCalledWith("google.jwt");
     expect(response.status).toBe(303);
-    expect(response.headers.get("location")).toBe("https://app.nebutra.com/dashboard");
+    expect(response.headers.get("location")).toBe("https://app.nebutra.com/workspace");
     expect(response.headers.get("set-cookie")).toContain("__Secure-authjs.session-token=");
     expect(response.headers.get("set-cookie")).toContain("nebutra_session_hint=1");
   });

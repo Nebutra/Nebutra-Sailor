@@ -8,7 +8,9 @@
 
 import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
 import {
+  buildDefaultPostLoginUrl,
   buildOAuthStartRedirectResponse,
+  DEFAULT_POST_LOGIN_PATH,
   getConfiguredAuthProvider,
   sanitizeReturnUrl,
 } from "@nebutra/auth";
@@ -56,13 +58,13 @@ function readOAuthStartRequest(request: Request): OAuthStartRequest | null {
   // through NEXT_PUBLIC_SITE_URL — the marketing origin — and then to a
   // hardcoded app host.
   const appOrigin = resolveAppOrigin();
-  const fallback = `${appOrigin}/dashboard`;
+  const fallback = buildDefaultPostLoginUrl(appOrigin);
 
   let callbackURL = fallback;
   if (rawCallback?.trim()) {
     const trimmed = rawCallback.trim();
     if (trimmed.startsWith("/")) {
-      callbackURL = `${appOrigin}${sanitizeReturnUrl(trimmed, { fallback: "/dashboard" })}`;
+      callbackURL = `${appOrigin}${sanitizeReturnUrl(trimmed, { fallback: DEFAULT_POST_LOGIN_PATH })}`;
     } else {
       callbackURL = sanitizeReturnUrl(trimmed, { fallback });
     }

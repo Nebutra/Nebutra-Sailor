@@ -90,6 +90,8 @@ export type {
 export {
   buildAuthCenterSignInUrl,
   buildAuthCenterSignUpUrl,
+  buildDefaultPostLoginUrl,
+  DEFAULT_POST_LOGIN_PATH,
   getAuthCenterOrigin,
   getAuthReturnAllowedHosts,
   getSanitizedReturnUrl,

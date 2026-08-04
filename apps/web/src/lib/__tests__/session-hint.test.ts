@@ -139,7 +139,7 @@ describe("applySessionHint", () => {
     const req = new Request("https://app.nebutra.com/api/auth/callback/google");
     const resp = new Response(null, {
       status: 302,
-      headers: { location: "https://app.nebutra.com/dashboard" },
+      headers: { location: "https://app.nebutra.com/workspace" },
     });
     resp.headers.append(
       "Set-Cookie",

@@ -9,7 +9,7 @@ import { rootRoute } from "./__root";
 function SignInRoute() {
   useEffect(() => {
     const appOrigin = window.location.origin;
-    window.location.replace(buildAuthCenterSignInUrl(`${appOrigin}/dashboard`));
+    window.location.replace(buildAuthCenterSignInUrl(`${appOrigin}/workspace`));
   }, []);
 
   return (

@@ -194,7 +194,8 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
       req.nextUrl.searchParams.get("returnTo") ||
       req.nextUrl.searchParams.get("returnUrl") ||
       req.nextUrl.searchParams.get("redirect");
-    const returnTo = existing || `${thisOrigin}/dashboard`;
+    // DEFAULT_POST_LOGIN_PATH — /workspace (not /dashboard; that route 404s).
+    const returnTo = existing || `${thisOrigin}/workspace`;
     const authOrigin = getAuthCenterOrigin();
     let target: string;
     if (pathname.startsWith("/sign-up")) {

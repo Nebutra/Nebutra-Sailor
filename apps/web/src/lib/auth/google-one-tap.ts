@@ -157,8 +157,9 @@ export async function buildGoogleOneTapSessionCookie(input: SessionCookieInput):
   return parts.join("; ");
 }
 
-function buildDashboardRedirect(requestUrl: URL): URL {
-  return new URL("/dashboard", requestUrl.origin);
+function buildPostLoginRedirect(requestUrl: URL): URL {
+  // Stable product home alias → /startup-os (see apps/web workspace page).
+  return new URL("/workspace", requestUrl.origin);
 }
 
 export async function handleGoogleOneTapSignIn(
@@ -171,7 +172,7 @@ export async function handleGoogleOneTapSignIn(
   const requestUrl = new URL(request.url);
   const response = new Response(null, {
     status: 303,
-    headers: { location: buildDashboardRedirect(requestUrl).toString() },
+    headers: { location: buildPostLoginRedirect(requestUrl).toString() },
   });
   response.headers.append(
     "Set-Cookie",

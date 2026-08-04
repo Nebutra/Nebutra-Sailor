@@ -8,6 +8,22 @@
 const LOCAL_AUTH_ORIGIN = "http://localhost:3101";
 const PRODUCTION_AUTH_ORIGIN = "https://auth.nebutra.com";
 
+/**
+ * Default relative path after successful sign-in on the product app
+ * (`app.nebutra.com`).
+ *
+ * Product home converged into Startup OS; `/workspace` is the stable alias
+ * that redirects to `/startup-os`. Do **not** use `/dashboard` — that route
+ * was removed and 404s, which made OAuth look like "login did nothing".
+ */
+export const DEFAULT_POST_LOGIN_PATH = "/workspace" as const;
+
+/** Absolute post-login URL for a product origin (no trailing slash). */
+export function buildDefaultPostLoginUrl(appOrigin: string): string {
+  const origin = appOrigin.replace(/\/$/, "");
+  return `${origin}${DEFAULT_POST_LOGIN_PATH}`;
+}
+
 function stripTrailingSlash(value: string): string {
   let end = value.length;
   while (end > 0 && value.charCodeAt(end - 1) === 47 /* / */) end -= 1;

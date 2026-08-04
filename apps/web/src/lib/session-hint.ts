@@ -14,7 +14,7 @@
  *    on every response; success paths under /sign-in, /sign-up, /callback
  *    set it, /sign-out clears it.
  *  - `apps/landing/src/proxy.ts` reads `nebutra_session_hint` and
- *    redirects root + bare-locale roots to `${NEXT_PUBLIC_APP_URL}/dashboard`
+ *    redirects root + bare-locale roots to product home (`/workspace`)
  *    when the value is `"1"`.
  *
  * Dev/preview: `NEBUTRA_SESSION_HINT_DOMAIN` is undefined, so the cookie

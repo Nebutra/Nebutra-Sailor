@@ -57,13 +57,13 @@ function getParentDomain(appUrl: string): string | undefined {
   }
 }
 
-function getDashboardUrl(appUrl: string): string {
-  return new URL("/dashboard", appUrl).toString();
+function getPostLoginUrl(appUrl: string): string {
+  return new URL("/workspace", appUrl).toString();
 }
 
 function BetterAuthOneTap({ appUrl, clientId }: { appUrl: string; clientId: string }) {
   const authBaseUrl = new URL("/api/auth", appUrl).toString();
-  const callbackUrl = getDashboardUrl(appUrl);
+  const callbackUrl = getPostLoginUrl(appUrl);
   const stateCookieDomain = getParentDomain(appUrl);
 
   useEffect(() => {
@@ -116,7 +116,7 @@ function BetterAuthOneTap({ appUrl, clientId }: { appUrl: string; clientId: stri
 }
 
 function ClerkOneTap({ appUrl, publishableKey }: { appUrl: string; publishableKey: string }) {
-  const dashboardUrl = getDashboardUrl(appUrl);
+  const postLoginUrl = getPostLoginUrl(appUrl);
   const [runtime, setRuntime] = useState<ClerkOneTapRuntime | null>(null);
 
   useEffect(() => {
@@ -143,8 +143,8 @@ function ClerkOneTap({ appUrl, publishableKey }: { appUrl: string; publishableKe
       <runtime.GoogleOneTap
         cancelOnTapOutside
         fedCmSupport
-        signInForceRedirectUrl={dashboardUrl}
-        signUpForceRedirectUrl={dashboardUrl}
+        signInForceRedirectUrl={postLoginUrl}
+        signUpForceRedirectUrl={postLoginUrl}
       />
     </runtime.ClerkProvider>
   ) : null;
@@ -152,7 +152,7 @@ function ClerkOneTap({ appUrl, publishableKey }: { appUrl: string; publishableKe
   return (
     <>
       <span
-        data-dashboard-url={dashboardUrl}
+        data-dashboard-url={postLoginUrl}
         data-publishable-key={publishableKey}
         data-testid="clerk-google-one-tap"
         hidden

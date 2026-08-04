@@ -176,7 +176,7 @@ export default function proxy(request: NextRequest): NextResponse {
     isAppRedirectablePath(pathname) &&
     request.cookies.get(SESSION_HINT_COOKIE)?.value === "1"
   ) {
-    const redirect = NextResponse.redirect(new URL("/dashboard", APP_REDIRECT_URL), 302);
+    const redirect = NextResponse.redirect(new URL("/workspace", APP_REDIRECT_URL), 302);
     redirect.headers.set("Cache-Control", "private, no-store");
     return withSecurityHeaders(redirect);
   }

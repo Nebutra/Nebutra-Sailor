@@ -221,7 +221,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
 
           <div className="my-1 h-px bg-neutral-6" aria-hidden />
 
-          <MenuLink href={`${APP_URL}/dashboard`} icon={User} label={t("dashboard")} />
+          <MenuLink href={`${APP_URL}/workspace`} icon={User} label={t("dashboard")} />
           <MenuLink href={`${APP_URL}/settings/account`} icon={Settings} label={t("account")} />
           <MenuLink href={`${APP_URL}/settings/billing`} icon={CreditCard} label={t("billing")} />
           <MenuLink href="/docs" icon={BookOpen} label={t("docs")} external={false} />

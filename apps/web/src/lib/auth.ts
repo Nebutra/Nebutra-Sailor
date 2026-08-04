@@ -1,7 +1,11 @@
 import "server-only";
 
 import type { Session, User } from "@nebutra/auth";
-import { buildAuthCenterSignInUrl, getConfiguredAuthProvider } from "@nebutra/auth";
+import {
+  buildAuthCenterSignInUrl,
+  buildDefaultPostLoginUrl,
+  getConfiguredAuthProvider,
+} from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -202,7 +206,7 @@ export async function requireAuth() {
 
   if (!userId) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || defaultPublicUrls.appUrl;
-    redirect(buildAuthCenterSignInUrl(`${appUrl.replace(/\/$/, "")}/dashboard`));
+    redirect(buildAuthCenterSignInUrl(buildDefaultPostLoginUrl(appUrl)));
   }
 
   return { userId };

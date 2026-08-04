@@ -2,6 +2,8 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   buildAuthCenterSignInUrl,
   buildAuthCenterSignUpUrl,
+  buildDefaultPostLoginUrl,
+  DEFAULT_POST_LOGIN_PATH,
   getAuthCenterOrigin,
   getAuthReturnAllowedHosts,
 } from "../utils/auth-center";
@@ -26,8 +28,15 @@ describe("auth center URL helpers", () => {
 
   it("builds sign-in URL with returnTo", () => {
     process.env.NEXT_PUBLIC_AUTH_URL = "https://auth.nebutra.com";
-    expect(buildAuthCenterSignInUrl("https://app.nebutra.com/dashboard")).toBe(
-      "https://auth.nebutra.com/sign-in?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fdashboard",
+    expect(buildAuthCenterSignInUrl("https://app.nebutra.com/workspace")).toBe(
+      "https://auth.nebutra.com/sign-in?returnTo=https%3A%2F%2Fapp.nebutra.com%2Fworkspace",
+    );
+  });
+
+  it("exposes product workspace as the default post-login path", () => {
+    expect(DEFAULT_POST_LOGIN_PATH).toBe("/workspace");
+    expect(buildDefaultPostLoginUrl("https://app.nebutra.com/")).toBe(
+      "https://app.nebutra.com/workspace",
     );
   });
 

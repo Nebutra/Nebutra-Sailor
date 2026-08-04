@@ -62,7 +62,7 @@ describe("GoogleOneTap", () => {
 
     const bridge = screen.getByTestId("better-auth-google-one-tap");
     expect(bridge).toHaveAttribute("data-auth-base-url", "https://app.nebutra.com/api/auth");
-    expect(bridge).toHaveAttribute("data-callback-url", "https://app.nebutra.com/dashboard");
+    expect(bridge).toHaveAttribute("data-callback-url", "https://app.nebutra.com/workspace");
     expect(bridge).toHaveAttribute("data-state-cookie-domain", "nebutra.com");
   });
 
@@ -77,7 +77,7 @@ describe("GoogleOneTap", () => {
     );
 
     const bridge = screen.getByTestId("clerk-google-one-tap");
-    expect(bridge).toHaveAttribute("data-dashboard-url", "https://app.nebutra.com/dashboard");
+    expect(bridge).toHaveAttribute("data-dashboard-url", "https://app.nebutra.com/workspace");
     expect(bridge).toHaveAttribute("data-publishable-key", "pk_test_123");
   });
 });

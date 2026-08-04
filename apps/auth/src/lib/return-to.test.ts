@@ -6,9 +6,9 @@ describe("resolvePostLoginReturnTo", () => {
     delete process.env.NEXT_PUBLIC_APP_URL;
   });
 
-  it("defaults to app dashboard", () => {
+  it("defaults to product workspace home", () => {
     process.env.NEXT_PUBLIC_APP_URL = "https://app.nebutra.com";
-    expect(resolvePostLoginReturnTo(null)).toBe("https://app.nebutra.com/dashboard");
+    expect(resolvePostLoginReturnTo(null)).toBe("https://app.nebutra.com/workspace");
   });
 
   it("joins relative paths to app origin", () => {
@@ -26,7 +26,7 @@ describe("resolvePostLoginReturnTo", () => {
   it("rejects evil absolute hosts", () => {
     process.env.NEXT_PUBLIC_APP_URL = "https://app.nebutra.com";
     expect(resolvePostLoginReturnTo("https://evil.com/phish")).toBe(
-      "https://app.nebutra.com/dashboard",
+      "https://app.nebutra.com/workspace",
     );
   });
 });

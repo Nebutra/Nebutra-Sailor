@@ -935,7 +935,7 @@ export function LicenseWizard({
                   Explore Nebutra Community →
                 </a>
                 <a
-                  href="https://app.nebutra.com/dashboard"
+                  href="https://app.nebutra.com/workspace"
                   className="rounded-[var(--radius-lg)] border border-border px-6 py-3 text-center font-semibold text-foreground transition-colors hover:bg-muted"
                 >
                   Go to Console

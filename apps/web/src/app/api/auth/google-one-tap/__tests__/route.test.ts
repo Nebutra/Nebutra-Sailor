@@ -5,7 +5,7 @@ const handleGoogleOneTapSignInMock = vi.fn(
   async (_request: Request) =>
     new Response(null, {
       status: 303,
-      headers: { location: "https://app.nebutra.com/dashboard" },
+      headers: { location: "https://app.nebutra.com/workspace" },
     }),
 );
 
@@ -65,7 +65,7 @@ describe("/api/auth/google-one-tap", () => {
     const response = await POST(makeRequest());
 
     expect(response.status).toBe(303);
-    expect(response.headers.get("location")).toBe("https://app.nebutra.com/dashboard");
+    expect(response.headers.get("location")).toBe("https://app.nebutra.com/workspace");
     expect(handleGoogleOneTapSignInMock).toHaveBeenCalledTimes(1);
   });
 });

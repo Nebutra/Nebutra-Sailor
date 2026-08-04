@@ -74,7 +74,7 @@ async function SignInPageContent({
       isAuthCenterHost = false;
     }
     if (!isAuthCenterHost) {
-      const returnTo = returnUrl || `${thisOrigin}/dashboard`;
+      const returnTo = returnUrl || `${thisOrigin}/workspace`;
       // Preserve subroutes as query only — magic/passkey live on auth-center.
       if (subroute === "magic-link") {
         redirect(
