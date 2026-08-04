@@ -309,6 +309,11 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       baseURL: process.env.BETTER_AUTH_URL,
       ...(trustedOrigins.length > 0 ? { trustedOrigins } : {}),
       ...crossSubDomainCookies,
+      // OAuth / API failures must land on the login UX, not `/api/auth/error`
+      // (JSON) or bare `/?error=` with no copy. Sign-in page renders `?error=`.
+      onAPIError: {
+        errorURL: "/sign-in",
+      },
       emailAndPassword: { enabled: true },
       socialProviders,
       database: prismaAdapter(
@@ -645,6 +650,8 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
               body: {
                 provider: method.provider,
                 callbackURL: method.redirectUrl,
+                // Prefer human-readable sign-in over BA default error page.
+                errorCallbackURL: "/sign-in",
               },
               returnHeaders: true,
             })) as {

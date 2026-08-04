@@ -36,6 +36,11 @@ interface CredentialsFormProps {
   passkeyEnabled?: boolean;
   /** Cloudflare Turnstile site key — widget omitted when unset. */
   turnstileSiteKey?: string;
+  /**
+   * OAuth / BA error code from `?error=` (e.g. state_mismatch). Surfaced as a
+   * human-readable alert so IdP round-trips that fail don't look like a dead UI.
+   */
+  oauthErrorCode?: string | null;
 }
 
 /**
@@ -47,6 +52,26 @@ interface CredentialsFormProps {
  * `/challenge` so the widget never sits between the password field and the
  * primary button (which broke the column alignment).
  */
+function oauthErrorMessage(
+  code: string | null | undefined,
+  t: (key: "genericError" | "signInFailed") => string,
+): string | null {
+  if (!code) return null;
+  // BA codes we commonly surface after Google/GitHub round-trips.
+  switch (code) {
+    case "state_mismatch":
+    case "state_not_found":
+    case "state_security_mismatch":
+    case "please_restart_the_process":
+      return t("genericError");
+    case "oauth_unavailable":
+    case "unsupported":
+      return t("signInFailed");
+    default:
+      return t("genericError");
+  }
+}
+
 export function CredentialsForm({
   mode,
   returnTo,
@@ -54,6 +79,7 @@ export function CredentialsForm({
   magicLinkEnabled = false,
   passkeyEnabled = false,
   turnstileSiteKey,
+  oauthErrorCode = null,
 }: CredentialsFormProps) {
   const tSignIn = useTranslations("auth.signIn");
   const tSignUp = useTranslations("auth.signUp");
@@ -73,6 +99,11 @@ export function CredentialsForm({
   useEffect(() => {
     setPasskeyAvailable(isPasskeySupported());
   }, []);
+
+  useEffect(() => {
+    const msg = oauthErrorMessage(oauthErrorCode, tSignIn);
+    if (msg) setError(msg);
+  }, [oauthErrorCode, tSignIn]);
 
   // WebAuthn Conditional UI — autofill passkeys on the email field when enabled.
   useEffect(() => {

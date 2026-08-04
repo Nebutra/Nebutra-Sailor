@@ -21,6 +21,8 @@ export default async function SignInPage({
   const returnTo = resolvePostLoginReturnTo(raw);
   const enabledOAuthProviders = detectEnabledOAuthProviders();
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
+  const oauthErrorCode =
+    typeof query.error === "string" && query.error.trim() ? query.error.trim() : null;
   const [magicLinkEnabled, passkeyEnabled] = await Promise.all([
     isAuthFeatureEnabled("magicLink"),
     isAuthFeatureEnabled("passkeys"),
@@ -35,6 +37,7 @@ export default async function SignInPage({
         magicLinkEnabled={magicLinkEnabled}
         passkeyEnabled={passkeyEnabled}
         turnstileSiteKey={turnstileSiteKey}
+        oauthErrorCode={oauthErrorCode}
       />
     </AuthSplitLayout>
   );
