@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/reel",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Typed node-graph dataflow for generative-media production: versioned IO envelope, multi-transport execution, storyboard pipeline",
   "private": false,
   "license": "MIT",
@@ -11,15 +11,34 @@
     "surface": "media-graph",
     "summary": "Node-graph dataflow + storyboard pipeline for generative media"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./transport": "./src/transport/index.ts",
-    "./storyboard": "./src/storyboard/index.ts",
-    "./store/memory": "./src/store/memory.ts",
-    "./canvas": "./src/canvas/index.ts",
-    "./canvas/binding": "./src/canvas/binding.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./canvas": {
+      "types": "./dist/canvas/index.d.ts",
+      "import": "./dist/canvas/index.js",
+      "default": "./dist/canvas/index.js"
+    },
+    "./store": {
+      "types": "./dist/store/index.d.ts",
+      "import": "./dist/store/index.js",
+      "default": "./dist/store/index.js"
+    },
+    "./storyboard": {
+      "types": "./dist/storyboard/index.d.ts",
+      "import": "./dist/storyboard/index.js",
+      "default": "./dist/storyboard/index.js"
+    },
+    "./transport": {
+      "types": "./dist/transport/index.d.ts",
+      "import": "./dist/transport/index.js",
+      "default": "./dist/transport/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -78,5 +97,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

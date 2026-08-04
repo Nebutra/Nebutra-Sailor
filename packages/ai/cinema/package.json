@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/cinema",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Agentic film-production IP: acyclic camera-continuity tree, consistency-ranked best-frame selection, novel→scene/event segmentation, film-director composition. Pure + dependency-injected; sits on reel/agents/graph-model.",
   "private": false,
   "license": "MIT",
@@ -11,10 +11,14 @@
     "surface": "product-orchestration",
     "summary": "Multi-agent film-production orchestration over the reel media graph"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -42,5 +46,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

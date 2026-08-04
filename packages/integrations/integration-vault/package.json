@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/integration-vault",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Tenant-scoped SaaS OAuth and credential vault for tool calling",
   "private": false,
   "license": "MIT",
@@ -10,10 +10,14 @@
     "category": "integrations",
     "summary": "OAuth, secret storage, and SaaS action invocation boundary"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -42,5 +46,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }
