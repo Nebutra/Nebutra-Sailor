@@ -28,7 +28,7 @@ html[data-brand="linear"] {
   --role-muted: 220 14% 96%;
   --role-muted-fg: 218 5% 41%;
   --role-border: 220 13% 91%;
-  --role-input: 0 0% 100%;
+  --role-input: 220 13% 91%;
   --role-ring: 64 89% 54%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
@@ -49,7 +49,7 @@ html[data-brand="linear"] {
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
   --border: 220 13% 91%;
-  --input: 0 0% 100%;
+  --input: 220 13% 91%;
   --ring: 64 89% 54%;
   --success: 134 62% 40%;
   --success-foreground: 0 0% 100%;

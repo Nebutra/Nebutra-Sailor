@@ -27,7 +27,7 @@ html[data-brand="stripe"] {
   --role-muted: 216 56% 98%;
   --role-muted-fg: 217 17% 47%;
   --role-border: 210 44% 93%;
-  --role-input: 0 0% 100%;
+  --role-input: 210 44% 93%;
   --role-ring: 248 98% 61%;
   --role-brand: 211 78% 11%;
   --role-brand-fg: 0 0% 100%;
@@ -52,7 +52,7 @@ html[data-brand="stripe"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 44% 93%;
-  --input: 0 0% 100%;
+  --input: 210 44% 93%;
   --ring: 248 98% 61%;
   --info: 231 100% 73%;
   --info-foreground: 211 78% 11%;

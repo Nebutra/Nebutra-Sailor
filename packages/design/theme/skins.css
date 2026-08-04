@@ -197,7 +197,7 @@ html[data-brand="linear"] {
   --role-muted: 220 14% 96%;
   --role-muted-fg: 218 5% 41%;
   --role-border: 220 13% 91%;
-  --role-input: 0 0% 100%;
+  --role-input: 220 13% 91%;
   --role-ring: 64 89% 54%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
@@ -218,7 +218,7 @@ html[data-brand="linear"] {
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
   --border: 220 13% 91%;
-  --input: 0 0% 100%;
+  --input: 220 13% 91%;
   --ring: 64 89% 54%;
   --success: 134 62% 40%;
   --success-foreground: 0 0% 100%;
@@ -402,7 +402,7 @@ html[data-brand="notion"] {
   --role-muted: 208 92% 95%;
   --role-muted-fg: 0 0% 46%;
   --role-border: 30 5% 88%;
-  --role-input: 0 0% 100%;
+  --role-input: 30 5% 88%;
   --role-ring: 208 100% 44%;
   --role-brand: 0 0% 0%;
   --role-brand-fg: 0 0% 100%;
@@ -427,7 +427,7 @@ html[data-brand="notion"] {
   --destructive: 7 92% 58%;
   --destructive-foreground: 0 0% 100%;
   --border: 30 5% 88%;
-  --input: 0 0% 100%;
+  --input: 30 5% 88%;
   --ring: 208 100% 44%;
   --warning: 40 100% 53%;
   --warning-foreground: 0 0% 0%;
@@ -553,7 +553,7 @@ html[data-brand="raycast"] {
   --role-muted: 220 8% 7%;
   --role-muted-fg: 210 1% 42%;
   --role-border: 210 2% 19%;
-  --role-input: 220 8% 7%;
+  --role-input: 210 2% 19%;
   --role-ring: 240 1% 61%;
   --role-brand: 0 100% 69%;
   --role-brand-fg: 210 1% 27%;
@@ -578,7 +578,7 @@ html[data-brand="raycast"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 2% 19%;
-  --input: 220 8% 7%;
+  --input: 210 2% 19%;
   --ring: 240 1% 61%;
   --success: 151 59% 59%;
   --success-foreground: 210 20% 2%;
@@ -736,7 +736,7 @@ html[data-brand="stripe"] {
   --role-muted: 216 56% 98%;
   --role-muted-fg: 217 17% 47%;
   --role-border: 210 44% 93%;
-  --role-input: 0 0% 100%;
+  --role-input: 210 44% 93%;
   --role-ring: 248 98% 61%;
   --role-brand: 211 78% 11%;
   --role-brand-fg: 0 0% 100%;
@@ -761,7 +761,7 @@ html[data-brand="stripe"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 44% 93%;
-  --input: 0 0% 100%;
+  --input: 210 44% 93%;
   --ring: 248 98% 61%;
   --info: 231 100% 73%;
   --info-foreground: 211 78% 11%;
@@ -897,7 +897,7 @@ html[data-brand="vanta"] {
   --role-muted: 240 20% 93%;
   --role-muted-fg: 238 11% 48%;
   --role-border: 240 17% 11%;
-  --role-input: 0 0% 100%;
+  --role-input: 240 17% 11%;
   --role-ring: 268 95% 39%;
   --role-brand: 272 100% 14%;
   --role-brand-fg: 0 0% 100%;
@@ -922,7 +922,7 @@ html[data-brand="vanta"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 240 17% 11%;
-  --input: 0 0% 100%;
+  --input: 240 17% 11%;
   --ring: 268 95% 39%;
   --warning: 44 100% 53%;
   --warning-foreground: 240 17% 11%;
@@ -1043,7 +1043,7 @@ html[data-brand="vercel"] {
   --role-muted: 0 0% 92%;
   --role-muted-fg: 0 0% 40%;
   --role-border: 0 0% 92%;
-  --role-input: 0 0% 100%;
+  --role-input: 0 0% 92%;
   --role-ring: 0 0% 9%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
@@ -1064,7 +1064,7 @@ html[data-brand="vercel"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 92%;
-  --input: 0 0% 100%;
+  --input: 0 0% 92%;
   --ring: 0 0% 9%;
   --success: 133 50% 32%;
   --success-foreground: 0 0% 100%;
@@ -1175,7 +1175,7 @@ html.dark[data-brand="vercel"] {
   --role-muted: 0 0% 12%;
   --role-muted-fg: 0 0% 63%;
   --role-border: 0 0% 16%;
-  --role-input: 0 0% 4%;
+  --role-input: 0 0% 16%;
   --role-ring: 0 0% 100%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
@@ -1196,7 +1196,7 @@ html.dark[data-brand="vercel"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 16%;
-  --input: 0 0% 4%;
+  --input: 0 0% 16%;
   --ring: 0 0% 100%;
   --success: 133 49% 40%;
   --success-foreground: 0 0% 100%;

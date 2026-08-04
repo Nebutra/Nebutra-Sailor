@@ -35,7 +35,7 @@ html[data-brand="notion"] {
   --role-muted: 208 92% 95%;
   --role-muted-fg: 0 0% 46%;
   --role-border: 30 5% 88%;
-  --role-input: 0 0% 100%;
+  --role-input: 30 5% 88%;
   --role-ring: 208 100% 44%;
   --role-brand: 0 0% 0%;
   --role-brand-fg: 0 0% 100%;
@@ -60,7 +60,7 @@ html[data-brand="notion"] {
   --destructive: 7 92% 58%;
   --destructive-foreground: 0 0% 100%;
   --border: 30 5% 88%;
-  --input: 0 0% 100%;
+  --input: 30 5% 88%;
   --ring: 208 100% 44%;
   --warning: 40 100% 53%;
   --warning-foreground: 0 0% 0%;

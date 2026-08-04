@@ -42,7 +42,7 @@ html[data-brand="vanta"] {
   --role-muted: 240 20% 93%;
   --role-muted-fg: 238 11% 48%;
   --role-border: 240 17% 11%;
-  --role-input: 0 0% 100%;
+  --role-input: 240 17% 11%;
   --role-ring: 268 95% 39%;
   --role-brand: 272 100% 14%;
   --role-brand-fg: 0 0% 100%;
@@ -67,7 +67,7 @@ html[data-brand="vanta"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 240 17% 11%;
-  --input: 0 0% 100%;
+  --input: 240 17% 11%;
   --ring: 268 95% 39%;
   --warning: 44 100% 53%;
   --warning-foreground: 240 17% 11%;

@@ -61,7 +61,15 @@ export interface BrandColorRoles {
   muted: HslChannels;
   mutedForeground: HslChannels;
   border: HslChannels;
-  input: HslChannels;
+  /**
+   * Field stroke. `--input` is consumed only as a border colour (`border-input`
+   * on Input, Textarea, Select, Combobox, InputOTP) — never as a fill. Omit it
+   * and it derives from `border`, which is what every language wants: six of
+   * the seven built-ins had written their own card fill here, producing a field
+   * whose outline was the same colour as the surface behind it. Set it only to
+   * give fields a stroke that genuinely differs from every other hairline.
+   */
+  input?: HslChannels;
   ring: HslChannels;
   destructive: HslChannels;
   destructiveForeground: HslChannels;
@@ -115,7 +123,15 @@ export interface BrandSemanticColors {
   destructive: HslChannels;
   destructiveForeground: HslChannels;
   border: HslChannels;
-  input: HslChannels;
+  /**
+   * Field stroke. `--input` is consumed only as a border colour (`border-input`
+   * on Input, Textarea, Select, Combobox, InputOTP) — never as a fill. Omit it
+   * and it derives from `border`, which is what every language wants: six of
+   * the seven built-ins had written their own card fill here, producing a field
+   * whose outline was the same colour as the surface behind it. Set it only to
+   * give fields a stroke that genuinely differs from every other hairline.
+   */
+  input?: HslChannels;
   ring: HslChannels;
   success?: HslChannels;
   successForeground?: HslChannels;

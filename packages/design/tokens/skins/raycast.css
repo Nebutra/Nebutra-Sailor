@@ -29,7 +29,7 @@ html[data-brand="raycast"] {
   --role-muted: 220 8% 7%;
   --role-muted-fg: 210 1% 42%;
   --role-border: 210 2% 19%;
-  --role-input: 220 8% 7%;
+  --role-input: 210 2% 19%;
   --role-ring: 240 1% 61%;
   --role-brand: 0 100% 69%;
   --role-brand-fg: 210 1% 27%;
@@ -54,7 +54,7 @@ html[data-brand="raycast"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 2% 19%;
-  --input: 220 8% 7%;
+  --input: 210 2% 19%;
   --ring: 240 1% 61%;
   --success: 151 59% 59%;
   --success-foreground: 210 20% 2%;

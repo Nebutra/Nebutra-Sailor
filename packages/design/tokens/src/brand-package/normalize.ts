@@ -80,11 +80,14 @@ export function rolesFromSemantic(
     muted: s.muted,
     mutedForeground: s.mutedForeground,
     border: s.border,
-    input: s.input,
     ring: s.ring,
     destructive: s.destructive,
     destructiveForeground: s.destructiveForeground,
   };
+  // Optional under exactOptionalPropertyTypes: an absent field stroke must stay
+  // absent so the emitter derives it from border, not become an explicit
+  // undefined the emitter's ?? would then have to defend against twice.
+  if (s.input) roles.input = s.input;
   const brand = asChannels(brandMark?.brand);
   if (brand) roles.brand = brand;
   const brandFg = asChannels(brandMark?.brandForeground);
@@ -120,9 +123,9 @@ export function semanticFromRoles(r: BrandColorRoles): BrandSemanticColors {
     destructive: r.destructive,
     destructiveForeground: r.destructiveForeground,
     border: r.border,
-    input: r.input,
     ring: r.ring,
   };
+  if (r.input) semantic.input = r.input;
   if (r.success) semantic.success = r.success;
   if (r.successForeground) semantic.successForeground = r.successForeground;
   if (r.warning) semantic.warning = r.warning;
@@ -198,11 +201,11 @@ export function normalizeModePalette(
     muted: baseRoles.muted,
     mutedForeground: baseRoles.mutedForeground,
     border: baseRoles.border,
-    input: baseRoles.input,
     ring: baseRoles.ring,
     destructive: baseRoles.destructive,
     destructiveForeground: baseRoles.destructiveForeground,
   };
+  if (baseRoles.input) roles.input = baseRoles.input;
   const brandCh = asChannels(baseRoles.brand);
   if (brandCh) roles.brand = brandCh;
   const brandFg = asChannels(baseRoles.brandForeground) ?? baseRoles.actionForeground;

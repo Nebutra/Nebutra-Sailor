@@ -303,7 +303,7 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
     `  --role-muted: ${r?.muted ?? s.muted};`,
     `  --role-muted-fg: ${r?.mutedForeground ?? s.mutedForeground};`,
     `  --role-border: ${r?.border ?? s.border};`,
-    `  --role-input: ${r?.input ?? s.input};`,
+    `  --role-input: ${r?.input ?? s.input ?? s.border};`,
     `  --role-ring: ${r?.ring ?? s.ring};`,
   ];
   if (r?.brand) {
@@ -337,7 +337,11 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
     `  --destructive: ${s.destructive};`,
     `  --destructive-foreground: ${s.destructiveForeground};`,
     `  --border: ${s.border};`,
-    `  --input: ${s.input};`,
+    // Field stroke, not field fill: --input reaches the DOM only through
+    // `border-input`. A language that omits it inherits the hairline colour,
+    // which is always a visible boundary — writing the surface colour here
+    // drew the outline in the same colour as what sits behind it.
+    `  --input: ${s.input ?? s.border};`,
     `  --ring: ${s.ring};`,
   ];
 

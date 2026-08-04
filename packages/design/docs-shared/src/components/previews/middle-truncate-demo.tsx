@@ -135,7 +135,7 @@ export function MiddleTruncateDemo() {
           <button
             aria-checked={isAnimating}
             aria-label="Animate width"
-            className={`relative inline-flex h-6 w-11 items-center rounded-full border-2 border-transparent ${isAnimating ? "bg-primary" : "bg-input"}`}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full border-2 border-transparent ${isAnimating ? "bg-primary" : "bg-muted"}`}
             onClick={() => setIsAnimating((current) => !current)}
             role="switch"
             type="button"

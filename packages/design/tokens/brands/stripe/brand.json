@@ -15,7 +15,6 @@
     "muted": "216 56% 98%",
     "mutedForeground": "217 17% 47%",
     "border": "210 44% 93%",
-    "input": "0 0% 100%",
     "ring": "248 98% 61%",
     "destructive": "0 72% 51%",
     "destructiveForeground": "0 0% 100%",
@@ -42,7 +41,6 @@
     "destructive": "0 72% 51%",
     "destructiveForeground": "0 0% 100%",
     "border": "210 44% 93%",
-    "input": "0 0% 100%",
     "ring": "248 98% 61%",
     "info": "231 100% 73%",
     "infoForeground": "211 78% 11%"
