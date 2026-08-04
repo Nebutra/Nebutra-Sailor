@@ -1293,7 +1293,11 @@
         "noIsbn10": "Awalan 979 tiada padanan ISBN-10",
         "nonBookland": "ISBN 13 digit mesti bermula dengan 978 atau 979",
         "ismn": "979-0 ialah julat ISMN (muzik cetakan), bukan ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Potongan kod",
@@ -1360,7 +1364,11 @@
         "pass": "lulus",
         "fail": "gagal",
         "skipped": "tidak dicapai"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Tampal kod, konfigurasi atau .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Jumlah {sum} → digit semakan {check}",
       "truncatedRows": "Menunjukkan {shown} baris pertama daripada {total}. Salin dan muat turun untuk membawa kesemuanya.",
       "privacy": "Kod dihantar ke API Forge untuk diperiksa dan tidak disimpan.",
-      "scopeNote": "Digit semakan yang betul bermaksud nombor itu terbentuk dengan baik. Ia tidak bermaksud GS1 pernah melantiknya kepada produk, syarikat atau lokasi sebenar — hanya carian daftar GEPIR yang menjawab itu."
+      "scopeNote": "Digit semakan yang betul bermaksud nombor itu terbentuk dengan baik. Ia tidak bermaksud GS1 pernah melantiknya kepada produk, syarikat atau lokasi sebenar — hanya carian daftar GEPIR yang menjawab itu.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 aksara)",
@@ -1485,7 +1496,8 @@
           "product": "Hasil"
         },
         "formula": "jumlah = {sum};  {sum} mod 11 = {remainder}  →  digit semakan {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Persekitaran A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Semua kod",
         "disclaimer": "Kod ini sah dari segi struktur tetapi tidak dimiliki oleh mana-mana organisasi berdaftar. Jangan gunakan untuk mewakili entiti sebenar.",
         "note": "Janaan menggunakan benih: pilihan dan benih yang sama sentiasa mengembalikan luaran yang sama, jadi fixture kekal boleh diulang. Setiap kod ditandakan isTestData dalam JSON serta di sini."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Asal",

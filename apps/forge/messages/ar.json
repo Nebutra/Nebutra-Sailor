@@ -1293,7 +1293,11 @@
         "noIsbn10": "لا يوجد مقابل لـ ISBN-10 للبادئة 979",
         "nonBookland": "يجب أن تبدأ أرقام ISBN المكونة من 13 رقمًا بـ 978 أو 979",
         "ismn": "النطاق 979-0 مخصص لـ ISMN (الموسيقى المطبوعة) وليس ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "مقتطف كود",
@@ -1360,7 +1364,11 @@
         "pass": "نجاح",
         "fail": "فشل",
         "skipped": "لم يتم الوصول"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "الصق الكود أو الإعدادات أو ملف .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "المجموع {sum} → رقم التحقق {check}",
       "truncatedRows": "يُعرض أول {shown} من أصل {total} صف. النسخ والتحميل يشمل الكل.",
       "privacy": "يتم إرسال الرموز إلى واجهة Forge API للتحقق منها ولا تُخزَّن.",
-      "scopeNote": "يشير رقم تحقق صحيح إلى أن الرقم مُشكَّل بشكل سليم. ولا يعني ذلك أن GS1 قد خصصته لمنتج أو شركة أو موقع حقيقي — فقط البحث في سجل GEPIR يجيب على ذلك."
+      "scopeNote": "يشير رقم تحقق صحيح إلى أن الرقم مُشكَّل بشكل سليم. ولا يعني ذلك أن GS1 قد خصصته لمنتج أو شركة أو موقع حقيقي — فقط البحث في سجل GEPIR يجيب على ذلك.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "رقم الهيكل (VIN) (17 حرفًا)",
@@ -1485,7 +1496,8 @@
           "product": "المنتج"
         },
         "formula": "المجموع = {sum}؛  {sum} mod 11 = {remainder}  →  رقم التحقق {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "البيئة أ",
@@ -1646,7 +1658,8 @@
         "allCodes": "جميع الرموز",
         "disclaimer": "هذه الرموز صالحة من الناحية الهيكلية لكنها لا تنتمي إلى أي جهة مسجلة. لا تستخدمها لتمثيل كيان حقيقي.",
         "note": "التوليد مبذّر: نفس الخيارات والبذرة تعيد دائماً نفس الدفعة، لذا يبقى العنصر قابلاً للتكرار. كل رمز مُعلّم بـ isTestData في ملف JSON وكذلك هنا."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "الأصلي",

@@ -27,6 +27,7 @@ import {
   ShellVerdict,
 } from "@/components/journey-shells";
 import { RunnerSelect } from "@/components/runner-ui";
+import { type CodeSegment, SegmentedCodeSpecimen, usccSegments } from "@/components/specimens";
 
 /* ── contract mirror (cn/unified-social-credit-code) ───────────────────── */
 
@@ -217,30 +218,6 @@ const RANDOM = "__random__";
  */
 const SAMPLE = "91500000059926748X";
 
-/** Where each field sits in the 18 characters — numerals, not prose. */
-const SEGMENTS = [
-  { key: "registrationDept", span: "1" },
-  { key: "orgCategory", span: "2" },
-  { key: "adminDivision", span: "3–8" },
-  { key: "orgIdentifier", span: "9–17" },
-  { key: "checkDigit", span: "18" },
-] as const;
-
-type SegmentKey = (typeof SEGMENTS)[number]["key"];
-
-/** The check digit reports `actual`; every other field reports `value`. */
-function segmentState(
-  fields: Fields | undefined,
-  key: SegmentKey,
-): { value: string; ok?: boolean } {
-  if (!fields) return { value: "" };
-  if (key === "checkDigit") {
-    return { value: fields.checkDigit.actual, ok: fields.checkDigit.valid };
-  }
-  const field = fields[key];
-  return { value: field.value, ok: field.valid };
-}
-
 const NOTE_KEY: Record<string, string> = {
   empty: "uscc.note.empty",
   incomplete: "uscc.note.incomplete",
@@ -309,24 +286,79 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
 
   /* ── verify rendering ────────────────────────────────────────────── */
 
-  const anatomy = (fields?: Fields) => (
-    <ul className="grid gap-2 sm:grid-cols-5">
-      {SEGMENTS.map((segment) => {
-        const { value, ok } = segmentState(fields, segment.key);
-        const tone: ShellTone = ok === undefined ? "neutral" : ok ? "success" : "danger";
-        return (
-          <li key={segment.key} className="space-y-1 rounded-[var(--radius-md)] p-2">
-            <p className="text-xs text-[var(--neutral-10)]">
-              {segment.span} · {t(`uscc.field.${segment.key}`)}
-            </p>
-            <ShellBadge tone={tone}>
-              <span className="font-mono">{value || "—"}</span>
-            </ShellBadge>
-          </li>
-        );
-      })}
-    </ul>
-  );
+  const anatomy = (output?: VerifyOutput) => {
+    if (!output) {
+      const { segments } = usccSegments(SAMPLE);
+      const labels = [
+        t("uscc.field.registrationDept"),
+        t("uscc.field.orgCategory"),
+        t("uscc.field.adminDivision"),
+        t("uscc.field.orgIdentifier"),
+        t("uscc.field.checkDigit"),
+      ];
+      return (
+        <SegmentedCodeSpecimen
+          title={t("uscc.specimenTitle")}
+          subtitle={t("honesty.algorithmOnly")}
+          segments={segments.map((s, i) => ({ ...s, label: labels[i] ?? s.label }))}
+          statusTone="neutral"
+          statusLabel={t("uscc.idle")}
+        />
+      );
+    }
+    const fields = output.fields;
+    const code = output.normalized || output.input || "";
+    const { segments, complete } = usccSegments(code);
+    const checkFail = complete && !output.valid && fields ? !fields.checkDigit.valid : false;
+    const labeled: CodeSegment[] = [
+      {
+        id: "dept",
+        label: t("uscc.field.registrationDept"),
+        value: segments[0]?.value || fields?.registrationDept.value || "",
+        tone: output.valid ? "info" : "neutral",
+      },
+      {
+        id: "category",
+        label: t("uscc.field.orgCategory"),
+        value: segments[1]?.value || fields?.orgCategory.value || "",
+        tone: "neutral",
+      },
+      {
+        id: "division",
+        label: t("uscc.field.adminDivision"),
+        value: segments[2]?.value || fields?.adminDivision.value || "",
+        tone: "neutral",
+      },
+      {
+        id: "org",
+        label: t("uscc.field.orgIdentifier"),
+        value: segments[3]?.value || fields?.orgIdentifier.value || "",
+        tone: "neutral",
+      },
+      {
+        id: "check",
+        label: t("uscc.field.checkDigit"),
+        value: segments[4]?.value || fields?.checkDigit.actual || "",
+        error: checkFail,
+        tone: output.valid ? "success" : checkFail ? "danger" : "warning",
+      },
+    ];
+    return (
+      <SegmentedCodeSpecimen
+        title={t("uscc.specimenTitle")}
+        subtitle={t("honesty.algorithmOnly")}
+        segments={labeled}
+        statusTone={output.valid ? "success" : output.complete ? "danger" : "neutral"}
+        statusLabel={
+          output.valid
+            ? t("uscc.valid")
+            : output.complete
+              ? t("uscc.invalid")
+              : t("uscc.incomplete", { n: output.length })
+        }
+      />
+    );
+  };
 
   const renderVerify = (output: VerifyOutput) => {
     const fields = output.fields;
@@ -378,7 +410,7 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
           }
         />
 
-        {anatomy(fields)}
+        {anatomy(output)}
 
         {output.illegalCharacters.length > 0 ? (
           <ul className="space-y-1">

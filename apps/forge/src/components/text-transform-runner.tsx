@@ -3,7 +3,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput, RunnerSelect } from "@/components/runner-ui";
 
 export type ModeOption = { value: string; label: string };
@@ -43,7 +43,7 @@ export function TextTransformRunner({
   modeField = "mode",
   extraFields,
   pickOutput,
-  note = "与 API 同一 invoke 路径",
+  note = "Same path as API",
   rows = 10,
   localRun,
 }: TextTransformRunnerProps) {
@@ -59,6 +59,21 @@ export function TextTransformRunner({
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  /* P1 baseline: live local */
+  useEffect(() => {
+    if (!localRun) return;
+    const handle = window.setTimeout(() => {
+      try {
+        setError("");
+        setResult(localRun(text, modes?.length ? mode : undefined, extras));
+        setStatus("local · live");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : String(e));
+      }
+    }, 160);
+    return () => window.clearTimeout(handle);
+  }, [text, mode, extras, localRun, modes]);
 
   const buildInput = useCallback(() => {
     const input: Record<string, unknown> = { text };
@@ -175,7 +190,7 @@ export function TextTransformRunner({
             </Button>
           </div>
           <RunnerOutput className="min-h-[220px] whitespace-pre-wrap break-all">
-            {result || <span className="text-[var(--neutral-9)]">结果会显示在这里</span>}
+            {result || <span className="text-[var(--neutral-9)]">Result appears here</span>}
           </RunnerOutput>
         </div>
       </div>

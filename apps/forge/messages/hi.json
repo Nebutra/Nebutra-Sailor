@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 prefix has no ISBN-10 equivalent",
         "nonBookland": "13-digit ISBNs must start with 978 or 979",
         "ismn": "979-0 is the ISMN range (printed music), not ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Code snippet",
@@ -1360,7 +1364,11 @@
         "pass": "पास",
         "fail": "असफल",
         "skipped": "नहीं पहुंचा"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "कोड, कॉन्फ़िग या .env पेस्ट करें",
@@ -1438,7 +1446,10 @@
       "mathSum": "योग {sum} → चेक अंक {check}",
       "truncatedRows": "कुल {total} पंक्तियों में से पहले {shown} दिखाए जा रहे हैं। कॉपी और डाउनलोड सभी को ले जाते हैं।",
       "privacy": "कोड Forge API पर भेजे जाते हैं जांच के लिए और सहेजे नहीं जाते।",
-      "scopeNote": "सही चेक अंक का मतलब है कि नंबर सही ढंग से बना है। इसका मतलब यह नहीं कि GS1 ने इसे किसी वास्तविक उत्पाद, कंपनी या स्थान के लिए कभी आवंटित किया है — इसका उत्तर केवल GEPIR रजिस्ट्री लुकअप दे सकता है।"
+      "scopeNote": "सही चेक अंक का मतलब है कि नंबर सही ढंग से बना है। इसका मतलब यह नहीं कि GS1 ने इसे किसी वास्तविक उत्पाद, कंपनी या स्थान के लिए कभी आवंटित किया है — इसका उत्तर केवल GEPIR रजिस्ट्री लुकअप दे सकता है।",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 अक्षर)",
@@ -1485,7 +1496,8 @@
           "product": "गुणनफल"
         },
         "formula": "योग = {sum};  {sum} mod 11 = {remainder}  →  चेक अंक {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "वातावरण A",
@@ -1646,7 +1658,8 @@
         "allCodes": "सभी कोड",
         "disclaimer": "ये कोड संरचनात्मक रूप से वैध हैं लेकिन किसी पंजीकृत संस्था से संबंधित नहीं हैं। किसी वास्तविक संस्था का प्रतिनिधित्व करने के लिए इन्हें न उपयोग करें।",
         "note": "Generation seed-based है: एक ही options और seed हमेशा एक ही batch return करते हैं, इसलिए fixture reproducible रहता है। हर code को JSON में और यहाँ isTestData flag किया गया है।"
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "मूल",

@@ -1293,7 +1293,11 @@
         "noIsbn10": "Префікс 979 не має еквівалента ISBN-10",
         "nonBookland": "13-значні ISBN мають починатися з 978 або 979",
         "ismn": "979-0 — це діапазон ISMN (друкована музика), а не ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Уривок коду",
@@ -1360,7 +1364,11 @@
         "pass": "вдалося",
         "fail": "не вдалося",
         "skipped": "не досягнуто"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Вставте код, конфіг або .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Сума {sum} → контрольна цифра {check}",
       "truncatedRows": "Показано перші {shown} із {total} рядків. Копіювання та завантаження містять усі.",
       "privacy": "Коди надсилаються до Forge API для перевірки і не зберігаються.",
-      "scopeNote": "Правильна контрольна цифра означає, що номер сформовано коректно. Це не означає, що GS1 коли-небудь призначав його реальному продукту, компанії чи місцю — це відповідає лише пошук у реєстрі GEPIR."
+      "scopeNote": "Правильна контрольна цифра означає, що номер сформовано коректно. Це не означає, що GS1 коли-небудь призначав його реальному продукту, компанії чи місцю — це відповідає лише пошук у реєстрі GEPIR.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 символів)",
@@ -1485,7 +1496,8 @@
           "product": "Добуток"
         },
         "formula": "сума = {sum};  {sum} mod 11 = {remainder}  →  контрольна цифра {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Середовище A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Усі коди",
         "disclaimer": "Ці коди структурно валідні, але не належать жодній зареєстрованій організації. Не використовуйте їх для представлення реальної особи.",
         "note": "Генерація використовує сід: однакові параметри та сід завжди повертають той самий набір, тому фікстура залишається відтворюваною. Кожен код позначено як isTestData у JSON, а також тут."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Оригінал",

@@ -1293,7 +1293,11 @@
         "noIsbn10": "Prefiks 979 nie ma odpowiednika w ISBN-10",
         "nonBookland": "13-cyfrowe ISBN musi zaczynać się od 978 lub 979",
         "ismn": "979-0 to zakres ISMN (muzyka drukowana), a nie ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Fragment kodu",
@@ -1360,7 +1364,11 @@
         "pass": "przeszedł",
         "fail": "nie przeszedł",
         "skipped": "nie osiągnięty"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Wklej kod, konfigurację lub plik .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Suma {sum} → cyfra kontrolna {check}",
       "truncatedRows": "Wyświetlono pierwsze {shown} z {total} wierszy. Kopiowanie i pobieranie obejmuje wszystkie.",
       "privacy": "Kody są wysyłane do API Forge w celu sprawdzenia i nie są przechowywane.",
-      "scopeNote": "Poprawna cyfra kontrolna oznacza, że numer jest poprawnie zbudowany. Nie oznacza to, że GS1 kiedykolwiek przypisał go do rzeczywistego produktu, firmy lub lokalizacji – tylko zapytanie w rejestrze GEPIR daje odpowiedź."
+      "scopeNote": "Poprawna cyfra kontrolna oznacza, że numer jest poprawnie zbudowany. Nie oznacza to, że GS1 kiedykolwiek przypisał go do rzeczywistego produktu, firmy lub lokalizacji – tylko zapytanie w rejestrze GEPIR daje odpowiedź.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 znaków)",
@@ -1485,7 +1496,8 @@
           "product": "Iloczyn"
         },
         "formula": "suma = {sum};  {sum} mod 11 = {remainder}  →  cyfra kontrolna {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Środowisko A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Wszystkie kody",
         "disclaimer": "Te kody są strukturalnie poprawne, ale nie należą do żadnej zarejestrowanej organizacji. Nie używaj ich do reprezentowania rzeczywistej podmiotu.",
         "note": "Generowanie jest oparte na ziarnie: te same opcje i ziarno zawsze zwracają tę samą partię, więc fixture pozostaje odtwarzalny. Każdy kod jest oznaczony jako isTestData zarówno w JSON, jak i tutaj."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Oryginał",

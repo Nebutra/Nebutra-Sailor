@@ -1293,7 +1293,11 @@
         "noIsbn10": "Το πρόθεμα 979 δεν έχει αντίστοιχο ISBN-10",
         "nonBookland": "Τα ISBN 13 ψηφίων πρέπει να ξεκινούν με 978 ή 979",
         "ismn": "Το 979-0 είναι το εύρος ISMN (τυπωμένη μουσική), όχι ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Απόσπασμα κώδικα",
@@ -1360,7 +1364,11 @@
         "pass": "επιτυχία",
         "fail": "αποτυχία",
         "skipped": "δεν ελέγχθηκε"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Επικόλλησε κώδικα, ρύθμιση ή αρχείο .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Άθροισμα {sum} → ψηφίο ελέγχου {check}",
       "truncatedRows": "Εμφανίζονται οι πρώτες {shown} από {total} γραμμές. Το αντιγραφή και λήψη περιλαμβάνει όλες.",
       "privacy": "Οι κωδικοί αποστέλλονται στο Forge API για έλεγχο και δεν αποθηκεύονται.",
-      "scopeNote": "Ένα σωστό ψηφίο ελέγχου σημαίνει ότι ο αριθμός είναι σωστά διαμορφωμένος. Δεν σημαίνει ότι το GS1 τον έχει εκχωρήσει ποτέ σε πραγματικό προϊόν, εταιρεία ή τοποθεσία — μόνο η αναζήτηση στο μητρώο GEPIR απαντά αυτό."
+      "scopeNote": "Ένα σωστό ψηφίο ελέγχου σημαίνει ότι ο αριθμός είναι σωστά διαμορφωμένος. Δεν σημαίνει ότι το GS1 τον έχει εκχωρήσει ποτέ σε πραγματικό προϊόν, εταιρεία ή τοποθεσία — μόνο η αναζήτηση στο μητρώο GEPIR απαντά αυτό.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 χαρακτήρες)",
@@ -1485,7 +1496,8 @@
           "product": "Γινόμενο"
         },
         "formula": "άθροισμα = {sum};  {sum} mod 11 = {remainder}  →  ψηφίο ελέγχου {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Περιβάλλον Α",
@@ -1646,7 +1658,8 @@
         "allCodes": "Όλοι οι κωδικοί",
         "disclaimer": "Αυτοί οι κωδικοί είναι δομικά έγκυροι αλλά δεν ανήκουν σε κανέναν εγγεγραμμένο οργανισμό. Μην τους χρησιμοποιείτε για να αναπαραστήσετε μια πραγματική οντότητα.",
         "note": "Η δημιουργία βασίζεται σε seed: οι ίδιες επιλογές και το ίδιο seed επιστρέφουν πάντα την ίδια παρτίδα, ώστε ένα fixture να παραμένει αναπαραγώγιμο. Κάθε κωδικός επισημαίνεται ως isTestData στο JSON, καθώς και εδώ."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Πρωτότυπο",

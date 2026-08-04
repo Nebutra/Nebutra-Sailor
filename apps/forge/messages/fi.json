@@ -1293,7 +1293,11 @@
         "noIsbn10": "979-alkiolla ei ole ISBN-10-vastaavaa",
         "nonBookland": "13 merkin ISBN:n on aloitettava 978- tai 979-alkiolla",
         "ismn": "979-0 on ISMN-alue (painettu musiikki), ei ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Koodinpätkä",
@@ -1360,7 +1364,11 @@
         "pass": "läpäisi",
         "fail": " epäonnistui",
         "skipped": "ei saavutettu"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Liitä koodi, konfiguraatio tai .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Summa {sum} → tarkistekirjain {check}",
       "truncatedRows": "Näytetään ensimmäiset {shown} rivistä yhteensä {total}. Kopioi ja lataa kaikki.",
       "privacy": "Koodit lähetetään Forge API:lle tarkistettavaksi eivätkä niitä tallenneta.",
-      "scopeNote": "Oikea tarkistekirjain tarkoittaa, että numero on muodoltaan oikea. Se ei tarkoita sitä, että GS1 olisi koskaan osoittanut sitä todelliselle tuotteelle, yritykselle tai sijainnille — vain GEPIR-rekisterin hakemalla saa vastauksen siihen."
+      "scopeNote": "Oikea tarkistekirjain tarkoittaa, että numero on muodoltaan oikea. Se ei tarkoita sitä, että GS1 olisi koskaan osoittanut sitä todelliselle tuotteelle, yritykselle tai sijainnille — vain GEPIR-rekisterin hakemalla saa vastauksen siihen.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 merkkiä)",
@@ -1485,7 +1496,8 @@
           "product": "Tulo"
         },
         "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  tarkistusmerkki {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Ympäristö A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Kaikki koodit",
         "disclaimer": "Nämä koodit ovat rakenteellisesti kelvollisia, mutta ne eivät kuulu mihinkään rekisteröityyn organisaatioon. Älä käytä niitä todellisen entiteetin edustamiseen.",
         "note": "Generointi on siemenpohjainen: samat vaihtoehdot ja siemen tuottavat aina saman erän, joten fixture pysyy toistettavana. Jokainen koodi on merkitty isTestData-kentällä sekä JSON:ssä että tässä."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Alkuperäinen",

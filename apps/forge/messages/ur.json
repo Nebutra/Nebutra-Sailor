@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 پریفکس کا کوئی ISBN-10 متبادل نہیں ہے",
         "nonBookland": "13 ہندسوں والا ISBN 978 یا 979 سے شروع ہونا چاہیے",
         "ismn": "979-0 ISMN رینج ہے (چھپی ہوئی موسیقی)، ISBN نہیں"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "کوڈ سنیپٹ",
@@ -1360,7 +1364,11 @@
         "pass": "پاس",
         "fail": "فیل",
         "skipped": "نہ پہنچا"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "کوڈ، کنفیگریشن یا .env پیسٹ کریں",
@@ -1438,7 +1446,10 @@
       "mathSum": "مجموع {sum} → چیک ڈیجٹ {check}",
       "truncatedRows": "{total} میں سے پہلے {shown} قطاروں کو دکھایا جا رہا ہے۔ ان سب کو کاپی اور ڈاؤن لوڈ کریں۔",
       "privacy": "کوڈز چیک کرنے کے لیے Forge API کو بھیجے جاتے ہیں اور محفوظ نہیں کیے جاتے۔",
-      "scopeNote": "صحیح چیک ڈیجٹ کا مطلب ہے کہ نمبر درست ہے۔ اس کا مطلب یہ نہیں کہ GS1 نے اسے کسی حقیقی پروڈکٹ، کمپنی یا مقام کے لیے کبھی تفویض کیا ہے — صرف GEPIR رجسٹری لک اپ اس کا جواب دے سکتی ہے۔"
+      "scopeNote": "صحیح چیک ڈیجٹ کا مطلب ہے کہ نمبر درست ہے۔ اس کا مطلب یہ نہیں کہ GS1 نے اسے کسی حقیقی پروڈکٹ، کمپنی یا مقام کے لیے کبھی تفویض کیا ہے — صرف GEPIR رجسٹری لک اپ اس کا جواب دے سکتی ہے۔",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 حروف)",
@@ -1485,7 +1496,8 @@
           "product": "پروڈکٹ"
         },
         "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  چیک ڈیجٹ {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "ماحول A",
@@ -1646,7 +1658,8 @@
         "allCodes": "تمام کوڈز",
         "disclaimer": "یہ کوڈز ساختی طور پر درست ہیں لیکن کسی رجسٹرڈ تنظیم سے تعلق نہیں رکھتے۔ ان کا استعمال کسی حقیقی ادارے کی نمائندگی کے لیے نہ کریں۔",
         "note": "جنریشن سیڈ شدہ ہے: ایک جیسے آپشنز اور سیڈ ہمیشہ ایک جیسا بیچ واپس دیتے ہیں، اس لیے فکسچر قابلِ تکرار رہتا ہے۔ ہر کوڈ JSON میں اور یہاں بھی isTestData کے طور پر نشان زد ہے۔"
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "اصل",

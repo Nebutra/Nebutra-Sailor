@@ -1293,7 +1293,11 @@
         "noIsbn10": "Prefixet 979 har ingen motsvarighet i ISBN-10",
         "nonBookland": "13-siffriga ISBN-nummer måste börja med 978 eller 979",
         "ismn": "979-0 är ISMN-området (tryckt musik), inte ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Kodavsnitt",
@@ -1360,7 +1364,11 @@
         "pass": "godkänd",
         "fail": "misslyckad",
         "skipped": "ej nådd"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Klistra in kod, konfiguration eller en .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Summa {sum} → kontrollsiffra {check}",
       "truncatedRows": "Visar de första {shown} av {total} raderna. Kopiera och ladda ner innehåller alla.",
       "privacy": "Koder skickas till Forge API för kontroll och lagras inte.",
-      "scopeNote": "En korrekt kontrollsiffra innebär att numret är välformat. Det betyder inte att GS1 någonsin tilldelat det till en verklig produkt, ett företag eller en plats – endast en GEPIR-registersökning kan ge svar på det."
+      "scopeNote": "En korrekt kontrollsiffra innebär att numret är välformat. Det betyder inte att GS1 någonsin tilldelat det till en verklig produkt, ett företag eller en plats – endast en GEPIR-registersökning kan ge svar på det.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 tecken)",
@@ -1485,7 +1496,8 @@
           "product": "Produkt"
         },
         "formula": "summa = {sum};  {sum} mod 11 = {remainder}  →  kontrolltecken {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Miljö A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Alla koder",
         "disclaimer": "Dessa koder är strukturellt giltiga men tillhör ingen registrerad organisation. Använd dem inte för att representera en verklig enhet.",
         "note": "Genereringen är seedad: samma alternativ och seed ger alltid samma batch, så en fixture förblir reproducerbar. Varje kod är märkt isTestData i JSON såväl som här."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Original",

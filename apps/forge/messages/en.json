@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 prefix has no ISBN-10 equivalent",
         "nonBookland": "13-digit ISBNs must start with 978 or 979",
         "ismn": "979-0 is the ISMN range (printed music), not ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Code snippet",
@@ -1360,7 +1364,11 @@
         "pass": "pass",
         "fail": "fail",
         "skipped": "not reached"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Paste code, config or a .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Sum {sum} → check digit {check}",
       "truncatedRows": "Showing the first {shown} of {total} rows. Copy and download carry all of them.",
       "privacy": "Codes are sent to the Forge API to be checked and are not stored.",
-      "scopeNote": "A correct check digit means the number is well formed. It does not mean GS1 ever assigned it to a real product, company or location — only a GEPIR registry lookup answers that."
+      "scopeNote": "A correct check digit means the number is well formed. It does not mean GS1 ever assigned it to a real product, company or location — only a GEPIR registry lookup answers that.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 characters)",
@@ -1485,7 +1496,8 @@
           "product": "Product"
         },
         "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  check digit {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Environment A",
@@ -1646,7 +1658,8 @@
         "allCodes": "All codes",
         "disclaimer": "These codes are structurally valid but belong to no registered organisation. Do not use them to represent a real entity.",
         "note": "Generation is seeded: the same options and seed always return the same batch, so a fixture stays reproducible. Every code is flagged isTestData in the JSON as well as here."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Original",

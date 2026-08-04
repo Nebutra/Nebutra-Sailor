@@ -1293,7 +1293,11 @@
         "noIsbn10": "Kiambishi awali 979 hakina sawa ya ISBN-10",
         "nonBookland": "ISBN za tarakimu 13 lazima ziweze na 978 au 979",
         "ismn": "979-0 ni eneo la ISMN (muziki wa kuchapishwa), si ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Sehemu ya msimbo",
@@ -1360,7 +1364,11 @@
         "pass": "imepita",
         "fail": "imefeli",
         "skipped": "haijafiki"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Nakili kodu, usanidi au .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Jumla {sum} → namba ya ukaguzi {check}",
       "truncatedRows": "Inaonyesha safu {shown} za kwanza kati ya {total}. Nakili na pako zote.",
       "privacy": "Nambari zinatumwa kwa Forge API kukaguliwa na hazihifadhiwi.",
-      "scopeNote": "Namba ya ukaguzi sahihi inamaanisha nambari imeundwa vizuri. Haimaanishi GS1 ilikuwa imetoa kwa bidhaa, kampuni au eneo halisi — tu utafutaji wa rejista ya GEPIR unajibu hilo."
+      "scopeNote": "Namba ya ukaguzi sahihi inamaanisha nambari imeundwa vizuri. Haimaanishi GS1 ilikuwa imetoa kwa bidhaa, kampuni au eneo halisi — tu utafutaji wa rejista ya GEPIR unajibu hilo.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (herufi 17)",
@@ -1485,7 +1496,8 @@
           "product": "Zao"
         },
         "formula": "jumla = {sum};  {sum} mod 11 = {remainder}  →  herufi ya ukaguzi {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Mazingira A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Kodi zote",
         "disclaimer": "Kodi hizi zina muundo sahihi lakini hazihusiani na taasisi yoyote iliyosajiliwa. Usizitumie kuwakilisha kiumbe halisi.",
         "note": "Uzalishaji una kibegu: chaguzi na kibegu sawa zinarudisha mkoba uleule, hivyo kifaa kinabaki kinaweza kurudishwa. Kila kodi imealitiwa kama isTestData katika JSON na hapa."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Asili",

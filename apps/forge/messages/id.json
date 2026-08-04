@@ -1293,7 +1293,11 @@
         "noIsbn10": "Prefiks 979 tidak memiliki padanan ISBN-10",
         "nonBookland": "ISBN 13 digit harus diawali dengan 978 atau 979",
         "ismn": "979-0 adalah rentang ISMN (musik cetak), bukan ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Potongan kode",
@@ -1360,7 +1364,11 @@
         "pass": "lulus",
         "fail": "gagal",
         "skipped": "tidak tercapai"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Tempel kode, konfigurasi, atau .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Jumlah {sum} → digit kontrol {check}",
       "truncatedRows": "Menampilkan {shown} dari {total} baris pertama. Salin dan unduh untuk mendapatkan semuanya.",
       "privacy": "Kode dikirim ke API Forge untuk diperiksa dan tidak disimpan.",
-      "scopeNote": "Digit kontrol yang benar berarti nomor tersebut terbentuk dengan baik. Ini tidak berarti GS1 pernah menugaskannya ke produk, perusahaan, atau lokasi nyata — hanya pencarian registri GEPIR yang dapat menjawab hal itu."
+      "scopeNote": "Digit kontrol yang benar berarti nomor tersebut terbentuk dengan baik. Ini tidak berarti GS1 pernah menugaskannya ke produk, perusahaan, atau lokasi nyata — hanya pencarian registri GEPIR yang dapat menjawab hal itu.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 karakter)",
@@ -1485,7 +1496,8 @@
           "product": "Hasil"
         },
         "formula": "jumlah = {sum};  {sum} mod 11 = {remainder}  →  digit kontrol {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Lingkungan A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Semua kode",
         "disclaimer": "Kode ini valid secara struktur namun tidak dimiliki oleh organisasi terdaftar. Jangan gunakan untuk mewakili entitas nyata.",
         "note": "Pembuatan menggunakan seed: opsi dan seed yang sama selalu menghasilkan batch yang sama, sehingga fixture tetap dapat direproduksi. Setiap kode ditandai isTestData di JSON maupun di sini."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Asli",

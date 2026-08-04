@@ -1293,7 +1293,11 @@
         "noIsbn10": "979-voorvoegsel heeft geen ISBN-10-equivalent",
         "nonBookland": "13-cijferige ISBN's moeten beginnen met 978 of 979",
         "ismn": "979-0 is het ISMN-bereik (gedrukte muziek), geen ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Codefragment",
@@ -1360,7 +1364,11 @@
         "pass": "geslaagd",
         "fail": "mislukt",
         "skipped": "niet bereikt"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Plak code, config of een .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Som {sum} → controlecijfer {check}",
       "truncatedRows": "De eerste {shown} van de {total} rijen worden weergegeven. Kopiëren en downloaden bevat ze allemaal.",
       "privacy": "Codes worden naar de Forge API gestuurd om te controleren en worden niet opgeslagen.",
-      "scopeNote": "Een correct controlecijfer betekent dat het nummer correct is opgebouwd. Het betekent niet dat GS1 het ooit heeft toegewezen aan een echt product, bedrijf of locatie — alleen een GEPIR-registeropzoekactie geeft daar antwoord op."
+      "scopeNote": "Een correct controlecijfer betekent dat het nummer correct is opgebouwd. Het betekent niet dat GS1 het ooit heeft toegewezen aan een echt product, bedrijf of locatie — alleen een GEPIR-registeropzoekactie geeft daar antwoord op.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 tekens)",
@@ -1485,7 +1496,8 @@
           "product": "Product"
         },
         "formula": "som = {sum};  {sum} mod 11 = {remainder}  →  controlecijfer {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Omgeving A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Alle codes",
         "disclaimer": "Deze codes zijn structureel geldig, maar behoren niet tot een geregistreerde organisatie. Gebruik ze niet om een echt entiteit te vertegenwoordigen.",
         "note": "Generatie is gezaaid: dezelfde opties en seed leveren altijd dezelfde batch op, zodat een fixture reproduceerbaar blijft. Elke code is gemarkeerd als isTestData in de JSON en hier."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Oorspronkelijk",

@@ -1293,7 +1293,11 @@
         "noIsbn10": "ל־979 אין מקביל ב־ISBN-10",
         "nonBookland": "ISBN בן 13 ספרות חייב להתחיל ב־978 או 979",
         "ismn": "979-0 הוא טווח ISMN (מוזיקה מודפסת), לא ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "קטע קוד",
@@ -1360,7 +1364,11 @@
         "pass": "עבר",
         "fail": "נכשל",
         "skipped": "לא הושג"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "הדבק קוד, קובץ תצורה או .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "סכום {sum} → ספרת ביקורת {check}",
       "truncatedRows": "מוצגות {shown} השורות הראשונות מתוך {total}. העתקה והורדה כוללות את כולן.",
       "privacy": "הקודים נשלחים ל-Forge API לבדיקה ואינם נשמרים.",
-      "scopeNote": "ספרת ביקורת תקינה פירושה שהמספר תקין מבחינה מבנית. אין זה אומר ש-GS1 הקצתה אותו למוצר, חברה או מיקום אמיתי — רק חיפוש במרשם GEPIR עונה על שאלה זו."
+      "scopeNote": "ספרת ביקורת תקינה פירושה שהמספר תקין מבחינה מבנית. אין זה אומר ש-GS1 הקצתה אותו למוצר, חברה או מיקום אמיתי — רק חיפוש במרשם GEPIR עונה על שאלה זו.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 תווים)",
@@ -1485,7 +1496,8 @@
           "product": "מכפלה"
         },
         "formula": "סכום = {sum};  {sum} mod 11 = {remainder}  →  ספרת ביקורת {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "סביבה A",
@@ -1646,7 +1658,8 @@
         "allCodes": "כל הקודים",
         "disclaimer": "קודים אלה תקינים מבחינה מבנית אך אינם שייכים לארגון רשום. אין להשתמש בהם לייצוג ישות אמיתית.",
         "note": "הייצור מבוסס זרע: אותן אפשרויות ואותו זרע תמיד מחזירים את אותה סדרה, כך שפיקסורה נשארת ניתנת לשחזור. כל קוד מסומן כ-isTestData ב-JSON וגם כאן."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "מקורי",

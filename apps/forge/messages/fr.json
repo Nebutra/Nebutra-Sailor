@@ -245,10 +245,10 @@
     "creditCardLuhn": {
       "number": "Numéro de carte",
       "note": "Vérificateur Luhn · hors ligne, jamais stocké",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "digits": "chiffres",
+      "specimenLabel": "Spécimen",
+      "structureOnly": "Structure Luhn uniquement",
+      "unknownBrand": "Carte"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -453,10 +453,10 @@
       "exp": "Expire (secondes)",
       "payload": "Charge utile JSON",
       "note": "Génération JWT · HS256 (dev/test uniquement)",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "header": "En-tête",
+      "payloadLabel": "Charge utile",
+      "signature": "Signature (jeton)",
+      "emptySignature": "(signature vide)"
     },
     "rand": {
       "min": "Min",
@@ -1293,7 +1293,11 @@
         "noIsbn10": "Le préfixe 979 n'a pas d'équivalent ISBN-10",
         "nonBookland": "Les ISBN à 13 chiffres doivent commencer par 978 ou 979",
         "ismn": "979-0 correspond à la plage ISMN (musique imprimée), pas ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure",
+      "segPrefix": "Préfixe",
+      "segBody": "Corps",
+      "segCheck": "Clé"
     },
     "languageDetect": {
       "inputLabel": "Extrait de code",
@@ -1360,7 +1364,11 @@
         "pass": "réussite",
         "fail": "échec",
         "skipped": "non atteint"
-      }
+      },
+      "specimenTitle": "IBAN · structure",
+      "segCountry": "Pays",
+      "segCheck": "Clé",
+      "segBban": "BBAN (compte)"
     },
     "secretScan": {
       "pasteLabel": "Coller du code, une config ou un .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Somme {sum} → chiffre de contrôle {check}",
       "truncatedRows": "Affichage des {shown} premières lignes sur {total}. La copie et le téléchargement incluent toutes les lignes.",
       "privacy": "Les codes sont envoyés à l'API Forge pour être vérifiés et ne sont pas stockés.",
-      "scopeNote": "Un chiffre de contrôle correct signifie que le numéro est bien formé. Cela ne signifie pas que GS1 l’a attribué à un produit, une entreprise ou un lieu réel — seule une recherche dans le registre GEPIR peut le confirmer."
+      "scopeNote": "Un chiffre de contrôle correct signifie que le numéro est bien formé. Cela ne signifie pas que GS1 l’a attribué à un produit, une entreprise ou un lieu réel — seule une recherche dans le registre GEPIR peut le confirmer.",
+      "specimenTitle": "GTIN · structure",
+      "segPayload": "Charge utile",
+      "segCheck": "Clé"
     },
     "vin": {
       "inputLabel": "VIN (17 caractères)",
@@ -1485,7 +1496,8 @@
           "product": "Produit"
         },
         "formula": "somme = {sum};  {sum} mod 11 = {remainder}  →  chiffre de contrôle {expected}"
-      }
+      },
+      "specimenTitle": "NIV · structure"
     },
     "envDiff": {
       "envA": "Environnement A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Tous les codes",
         "disclaimer": "Ces codes sont structurellement valides mais n’appartiennent à aucune organisation enregistrée. Ne les utilisez pas pour représenter une entité réelle.",
         "note": "La génération est initialisée : les mêmes options et la même graine produisent toujours le même lot, ce qui garantit la reproductibilité d’un jeu de test. Chaque code est marqué isTestData dans le JSON ainsi qu’ici."
-      }
+      },
+      "specimenTitle": "Code de crédit social · structure"
     },
     "yamlDiff": {
       "original": "Original",
@@ -2142,33 +2155,33 @@
       }
     },
     "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
+      "algorithmOnly": "Algorithme seul · pas de registre",
+      "signatureNotVerified": "{engine} · décodage seul · signature non vérifiée",
+      "localOnly": "Cette requête seule · non stocké"
     },
     "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+      "number": "Numéro d'identité",
+      "note": "Chiffre GB 11643 · pas de registre · même API",
+      "specimenTitle": "Identité · structure",
+      "segRegion": "Région",
+      "segBirth": "Naiss.",
+      "segSeq": "Séquence",
+      "segCheck": "Clé",
+      "metaBirth": "Date de naissance",
+      "metaGender": "Sexe",
+      "metaRegion": "Code région",
+      "genderMale": "Homme",
+      "genderFemale": "Femme",
+      "reasonFormat": "Format : 18 caractères (dernier peut être X)",
+      "reasonBirth": "Date de naissance invalide",
+      "reasonCheck": "Clé incorrecte",
+      "reasonCheckExpected": "Clé incorrecte · attendu {expected}"
     },
     "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
+      "lines": "{n} lignes",
+      "chars": "{n} caractères",
+      "empty": "(fichier vide)",
+      "readyToShip": "Prêt pour le dépôt"
     }
   },
   "roots": {

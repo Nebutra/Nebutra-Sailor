@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 প্রিফিক্সের কোনো ISBN-10 সমতুল্য নেই",
         "nonBookland": "১৩-অঙ্কের ISBN অবশ্যই 978 বা 979 দিয়ে শুরু হতে হবে",
         "ismn": "979-0 হলো ISMN রেঞ্জ (মুদ্রিত সঙ্গীত), ISBN নয়"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "কোড স্নিপেট",
@@ -1360,7 +1364,11 @@
         "pass": "পাস",
         "fail": "ফেল",
         "skipped": "অপহিত"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "কোড, কনফিগ বা .env পেস্ট করুন",
@@ -1438,7 +1446,10 @@
       "mathSum": "যোগফল {sum} → চেক ডিজিট {check}",
       "truncatedRows": "মোট {total} এর মধ্যে প্রথম {shown} সারি দেখানো হচ্ছে। সবগুলো কপি এবং ডাউনলোড করুন।",
       "privacy": "কোডগুলো Forge API-তে পাঠানো হয় যাচাইয়ের জন্য এবং সেভ করা হয় না।",
-      "scopeNote": "সঠিক চেক ডিজিট মানে সংখ্যাটি সঠিকভাবে গঠিত। এর মানে নয় যে GS1 এটি কোনো বাস্তব পণ্য, কোম্পানি বা অবস্থানের জন্য বরাদ্দ করেছে — শুধুমাত্র GEPIR রেজিস্ট্রি লুকআপ সেই প্রশ্নের উত্তর দেয়।"
+      "scopeNote": "সঠিক চেক ডিজিট মানে সংখ্যাটি সঠিকভাবে গঠিত। এর মানে নয় যে GS1 এটি কোনো বাস্তব পণ্য, কোম্পানি বা অবস্থানের জন্য বরাদ্দ করেছে — শুধুমাত্র GEPIR রেজিস্ট্রি লুকআপ সেই প্রশ্নের উত্তর দেয়।",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (১৭ অক্ষর)",
@@ -1485,7 +1496,8 @@
           "product": "ফলাফল"
         },
         "formula": "যোগফল = {sum};  {sum} mod 11 = {remainder}  →  চেক ডিজিট {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "এনভায়রনমেন্ট A",
@@ -1646,7 +1658,8 @@
         "allCodes": "সব কোড",
         "disclaimer": "এই কোডগুলো কাঠামোগতভাবে বৈধ কিন্তু কোনো নিবন্ধিত প্রতিষ্ঠানের নয়। এগুলো দিয়ে কোনো বাস্তব প্রতিষ্ঠানকে উপস্থাপন করবেন না।",
         "note": "Generation is seeded: the same options and seed always return the same batch, so a fixture stays reproducible. Every code is flagged isTestData in the JSON as well as here."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "মূল",

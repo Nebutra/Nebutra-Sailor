@@ -245,10 +245,10 @@
     "creditCardLuhn": {
       "number": "カード番号",
       "note": "Luhn チェッカー · オフライン、保存なし",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "digits": "桁",
+      "specimenLabel": "見本",
+      "structureOnly": "Luhn構造のみ",
+      "unknownBrand": "カード"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -453,10 +453,10 @@
       "exp": "有効期限（秒）",
       "payload": "ペイロード JSON",
       "note": "JWT 生成 · HS256（開発/テスト用）",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "header": "ヘッダー",
+      "payloadLabel": "ペイロード",
+      "signature": "署名",
+      "emptySignature": "（空の署名）"
     },
     "rand": {
       "min": "最小値",
@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 プレフィックスには ISBN-10 相当がありません",
         "nonBookland": "13桁のISBNは 978 または 979 で始まる必要があります",
         "ismn": "979-0 は ISMN の範囲（印刷楽譜）であり、ISBN ではありません"
-      }
+      },
+      "specimenTitle": "ISBN · 構造見本",
+      "segPrefix": "接頭",
+      "segBody": "本体",
+      "segCheck": "検査"
     },
     "languageDetect": {
       "inputLabel": "コードスニペット",
@@ -1360,7 +1364,11 @@
         "pass": "合格",
         "fail": "不合格",
         "skipped": "未到達"
-      }
+      },
+      "specimenTitle": "IBAN · 構造見本",
+      "segCountry": "国",
+      "segCheck": "検査",
+      "segBban": "BBAN（口座）"
     },
     "secretScan": {
       "pasteLabel": "コード、設定、.env を貼り付け",
@@ -1438,7 +1446,10 @@
       "mathSum": "合計 {sum} → チェック桁 {check}",
       "truncatedRows": "{total}行中、最初の{shown}行を表示しています。コピーとダウンロードではすべてが対象になります。",
       "privacy": "コードはForge APIに送信されて検証されますが、保存されません。",
-      "scopeNote": "正しいチェック桁は、番号が形式として正しいことを意味します。GS1が実際の製品、企業、または場所に割り当てたことを意味するわけではありません。その確認にはGEPIRレジストリの照会が必要です。"
+      "scopeNote": "正しいチェック桁は、番号が形式として正しいことを意味します。GS1が実際の製品、企業、または場所に割り当てたことを意味するわけではありません。その確認にはGEPIRレジストリの照会が必要です。",
+      "specimenTitle": "GTIN · 構造見本",
+      "segPayload": "ペイロード",
+      "segCheck": "検査"
     },
     "vin": {
       "inputLabel": "VIN（17文字）",
@@ -1485,7 +1496,8 @@
           "product": "積"
         },
         "formula": "合計 = {sum};  {sum} mod 11 = {remainder}  →  チェックディジット {expected}"
-      }
+      },
+      "specimenTitle": "VIN · 構造見本"
     },
     "envDiff": {
       "envA": "環境 A",
@@ -1646,7 +1658,8 @@
         "allCodes": "すべてのコード",
         "disclaimer": "これらのコードは構造上は有効ですが、登録された組織には属しません。実在のエンティティを表すために使用しないでください。",
         "note": "生成はシードされています。同じオプションとシードを使用すると常に同じバッチが返されるため、フィクスチャは再現可能です。すべてのコードは JSON およびここでは isTestData としてフラグが付けられています。"
-      }
+      },
+      "specimenTitle": "統一社会信用コード · 構造見本"
     },
     "yamlDiff": {
       "original": "元",
@@ -2142,33 +2155,33 @@
       }
     },
     "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
+      "algorithmOnly": "アルゴリズムのみ · 台帳照会なし",
+      "signatureNotVerified": "{engine} · デコードのみ · 署名未検証",
+      "localOnly": "このリクエストのみ · 保存しません"
     },
     "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+      "number": "身分証番号",
+      "note": "GB 11643 検査桁 · 台帳照会なし · API 同一",
+      "specimenTitle": "身分証 · 構造見本",
+      "segRegion": "区划",
+      "segBirth": "生年月日",
+      "segSeq": "順序",
+      "segCheck": "検査",
+      "metaBirth": "生年月日",
+      "metaGender": "性別",
+      "metaRegion": "行政区划码",
+      "genderMale": "男",
+      "genderFemale": "女",
+      "reasonFormat": "18桁（末尾はX可）",
+      "reasonBirth": "生年月日が無効",
+      "reasonCheck": "検査桁が誤り",
+      "reasonCheckExpected": "検査桁が誤り · 期待 {expected}"
     },
     "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
+      "lines": "{n} 行",
+      "chars": "{n} 文字",
+      "empty": "（空ファイル）",
+      "readyToShip": "リポジトリに投入可能"
     }
   },
   "roots": {

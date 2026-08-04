@@ -453,9 +453,9 @@
       "exp": "过期（秒）",
       "payload": "负载 JSON",
       "note": "JWT 生成 · HS256（仅开发/测试）",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
+      "header": "令牌头",
+      "payloadLabel": "载荷",
+      "signature": "签名",
       "emptySignature": "（空签名段）"
     },
     "rand": {
@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 前缀没有对应的 ISBN-10",
         "nonBookland": "13 位 ISBN 必须以 978 或 979 开头",
         "ismn": "979-0 是 ISMN 范围（印刷乐谱），不是 ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · 结构样张",
+      "segPrefix": "前缀",
+      "segBody": "主体",
+      "segCheck": "校验位"
     },
     "languageDetect": {
       "inputLabel": "代码片段",
@@ -1360,7 +1364,11 @@
         "pass": "通过",
         "fail": "失败",
         "skipped": "未执行"
-      }
+      },
+      "specimenTitle": "IBAN · 结构样张",
+      "segCountry": "国家",
+      "segCheck": "校验位",
+      "segBban": "账号主体（BBAN）"
     },
     "secretScan": {
       "pasteLabel": "粘贴代码、配置或 .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "总和 {sum} → 校验位 {check}",
       "truncatedRows": "仅显示前 {shown} 行，共 {total} 行。复制和下载将包含全部数据。",
       "privacy": "编码将发送至 Forge API 进行检查，不会存储。",
-      "scopeNote": "校验位正确仅表示编号格式规范，并不代表 GS1 曾将其分配给真实的产品、公司或地点——只有查询 GEPIR 注册库才能确认。"
+      "scopeNote": "校验位正确仅表示编号格式规范，并不代表 GS1 曾将其分配给真实的产品、公司或地点——只有查询 GEPIR 注册库才能确认。",
+      "specimenTitle": "GTIN · 结构样张",
+      "segPayload": "载荷",
+      "segCheck": "校验位"
     },
     "vin": {
       "inputLabel": "VIN（17 位字符）",
@@ -1485,7 +1496,8 @@
           "product": "乘积"
         },
         "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  校验位 {expected}"
-      }
+      },
+      "specimenTitle": "VIN · 结构样张"
     },
     "envDiff": {
       "envA": "环境 A",
@@ -1646,7 +1658,8 @@
         "allCodes": "所有代码",
         "disclaimer": "这些代码在结构上有效，但不属于任何已注册机构。请勿将其用于代表真实实体。",
         "note": "生成过程基于种子：相同的选项和种子始终返回相同的批次，因此 fixture 可复现。每段代码在 JSON 和此处均标记为 isTestData。"
-      }
+      },
+      "specimenTitle": "统一社会信用代码 · 结构样张"
     },
     "yamlDiff": {
       "original": "原始",

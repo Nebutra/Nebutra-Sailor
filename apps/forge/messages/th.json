@@ -1293,7 +1293,11 @@
         "noIsbn10": "รหัส 979 ไม่มี ISBN-10 ที่เทียบเท่า",
         "nonBookland": "ISBN 13 หลักต้องขึ้นต้นด้วย 978 หรือ 979",
         "ismn": "979-0 เป็นช่วงของ ISMN (ดนตรีพิมพ์) ไม่ใช่ ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "โค้ดตัวอย่าง",
@@ -1360,7 +1364,11 @@
         "pass": "ผ่าน",
         "fail": "ไม่ผ่าน",
         "skipped": "ไม่ได้ตรวจสอบ"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "วางโค้ด การตั้งค่า หรือไฟล์ .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "ผลรวม {sum} → หลักตรวจสอบ {check}",
       "truncatedRows": "แสดง {shown} จาก {total} แถวแรก คัดลอกและดาวน์โหลดเพื่อรับข้อมูลทั้งหมด",
       "privacy": "รหัสจะถูกส่งไปยัง Forge API เพื่อตรวจสอบและไม่มีการเก็บไว้",
-      "scopeNote": "หลักตรวจสอบที่ถูกต้องหมายความว่าหมายเลขมีรูปแบบถูกต้อง ไม่ได้หมายความว่า GS1 เคยมอบหมายให้ผลิตภัณฑ์ บริษัท หรือสถานที่จริง — มีเพียงการค้นหาในทะเบียน GEPIR เท่านั้นที่จะตอบคำถามนั้น"
+      "scopeNote": "หลักตรวจสอบที่ถูกต้องหมายความว่าหมายเลขมีรูปแบบถูกต้อง ไม่ได้หมายความว่า GS1 เคยมอบหมายให้ผลิตภัณฑ์ บริษัท หรือสถานที่จริง — มีเพียงการค้นหาในทะเบียน GEPIR เท่านั้นที่จะตอบคำถามนั้น",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 ตัวอักษร)",
@@ -1485,7 +1496,8 @@
           "product": "ผลคูณ"
         },
         "formula": "ผลรวม = {sum};  {sum} mod 11 = {remainder}  →  หลักตรวจสอบ {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "สภาพแวดล้อม A",
@@ -1646,7 +1658,8 @@
         "allCodes": "รหัสทั้งหมด",
         "disclaimer": "รหัสเหล่านี้มีโครงสร้างที่ถูกต้อง แต่ไม่ได้เป็นขององค์กรที่จดทะเบียนจริง ห้ามใช้เพื่อแสดงถึงหน่วยงานจริง",
         "note": "การสร้างใช้ Seed: ตัวเลือกและ Seed เดียวกันจะให้ชุดผลลัพธ์เดิมเสมอ ทำให้ข้อมูลทดสอบสามารถทำซ้ำได้ ทุกโค้ดจะถูกทำเครื่องหมาย isTestData ใน JSON และที่นี่"
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "ต้นฉบับ",

@@ -21,5 +21,10 @@ export {
   cnIdCardSegments,
   filePaperStats,
   formatCardGroups,
+  gtinSegments,
+  ibanSegments,
+  isbnSegments,
   splitJwtParts,
+  usccSegments,
+  vinSegments,
 } from "./specimen-utils";

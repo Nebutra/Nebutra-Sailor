@@ -1293,7 +1293,11 @@
         "noIsbn10": "Tiền tố 979 không có tương đương ISBN-10",
         "nonBookland": "ISBN 13 chữ số phải bắt đầu bằng 978 hoặc 979",
         "ismn": "979-0 là dải ISMN (âm nhạc in), không phải ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Đoạn mã",
@@ -1360,7 +1364,11 @@
         "pass": "đạt",
         "fail": "không đạt",
         "skipped": "chưa thực hiện"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Dán mã, cấu hình hoặc .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Tổng {sum} → chữ số kiểm tra {check}",
       "truncatedRows": "Hiển thị {shown} dòng đầu tiên trong tổng số {total} dòng. Sao chép và tải xuống sẽ bao gồm tất cả.",
       "privacy": "Mã được gửi đến Forge API để kiểm tra và không được lưu trữ.",
-      "scopeNote": "Chữ số kiểm tra đúng nghĩa là số có cấu trúc hợp lệ. Điều này không có nghĩa là GS1 đã cấp nó cho một sản phẩm, công ty hoặc địa điểm thực tế — chỉ tra cứu trong sổ đăng ký GEPIR mới trả lời được điều đó."
+      "scopeNote": "Chữ số kiểm tra đúng nghĩa là số có cấu trúc hợp lệ. Điều này không có nghĩa là GS1 đã cấp nó cho một sản phẩm, công ty hoặc địa điểm thực tế — chỉ tra cứu trong sổ đăng ký GEPIR mới trả lời được điều đó.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 ký tự)",
@@ -1485,7 +1496,8 @@
           "product": "Tích"
         },
         "formula": "tổng = {sum};  {sum} mod 11 = {remainder}  →  chữ số kiểm tra {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Môi trường A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Tất cả mã",
         "disclaimer": "Các mã này hợp lệ về cấu trúc nhưng không thuộc bất kỳ tổ chức nào đã đăng ký. Không sử dụng chúng để đại diện cho một thực thể thực tế.",
         "note": "Việc tạo mã có hạt: cùng các tùy chọn và hạt luôn trả về cùng một lô, nên fixture luôn tái lập được. Mỗi mã đều được đánh dấu isTestData trong JSON cũng như ở đây."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Gốc",

@@ -17,6 +17,7 @@ import {
   type ShellTone,
   ShellVerdict,
 } from "@/components/journey-shells";
+import { type CodeSegment, SegmentedCodeSpecimen, vinSegments } from "@/components/specimens";
 
 const VIN_LENGTH = 17;
 
@@ -123,32 +124,52 @@ export function W3VinRunner({ toolId }: { toolId: string }) {
   };
 
   const renderSegments = (output: VinCheckResult) => {
-    const s = output.segments;
-    if (!s) return null;
-    const cells: { key: string; label: string; value: string; highlight?: boolean }[] = [
-      { key: "wmi", label: t("vin.segment.wmi"), value: s.wmi },
-      { key: "vds", label: t("vin.segment.vds"), value: s.vds },
-      { key: "check", label: t("vin.segment.checkDigit"), value: s.checkDigit, highlight: true },
-      { key: "year", label: t("vin.segment.modelYear"), value: s.modelYearCode },
-      { key: "plant", label: t("vin.segment.plant"), value: s.plantCode },
-      { key: "serial", label: t("vin.segment.serial"), value: s.serial },
+    const source = output.normalized || output.input || "";
+    if (!source) return null;
+    const { segments, complete } = vinSegments(source);
+    const checkFail = complete && !output.valid && output.reason === "check-digit-mismatch";
+    const labeled: CodeSegment[] = [
+      {
+        id: "wmi",
+        label: t("vin.segment.wmi"),
+        value: segments[0]?.value ?? "",
+        tone: output.valid ? "info" : "neutral",
+      },
+      { id: "vds", label: t("vin.segment.vds"), value: segments[1]?.value ?? "", tone: "neutral" },
+      {
+        id: "check",
+        label: t("vin.segment.checkDigit"),
+        value: segments[2]?.value ?? "",
+        error: checkFail,
+        tone: output.valid ? "success" : checkFail ? "danger" : "warning",
+      },
+      {
+        id: "year",
+        label: t("vin.segment.modelYear"),
+        value: segments[3]?.value ?? "",
+        tone: "neutral",
+      },
+      {
+        id: "plant",
+        label: t("vin.segment.plant"),
+        value: segments[4]?.value ?? "",
+        tone: "neutral",
+      },
+      {
+        id: "serial",
+        label: t("vin.segment.serial"),
+        value: segments[5]?.value ?? "",
+        tone: "neutral",
+      },
     ];
     return (
-      <div className="flex flex-wrap gap-2">
-        {cells.map((cell) => (
-          <div
-            key={cell.key}
-            className={`rounded-[var(--radius-lg)] px-3 py-2 ${
-              cell.highlight ? "bg-[var(--blue-3)]" : "bg-[var(--neutral-2)]"
-            }`}
-          >
-            <p className="text-xs text-[var(--neutral-10)]">{cell.label}</p>
-            <p className="font-mono text-sm tracking-wider text-[var(--neutral-12)]">
-              {cell.value}
-            </p>
-          </div>
-        ))}
-      </div>
+      <SegmentedCodeSpecimen
+        title={t("vin.specimenTitle")}
+        subtitle={t("honesty.algorithmOnly")}
+        segments={labeled}
+        statusTone={verdictTone(output)}
+        statusLabel={headlineFor(output)}
+      />
     );
   };
 

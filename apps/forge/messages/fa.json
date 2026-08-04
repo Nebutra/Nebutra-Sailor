@@ -1293,7 +1293,11 @@
         "noIsbn10": "پیشوند 979 معادل ISBN-10 ندارد",
         "nonBookland": "ISBN‌های 13 رقمی باید با 978 یا 979 شروع شوند",
         "ismn": "979-0 محدوده ISMN (موسیقی چاپی) است، نه ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "تکه کد",
@@ -1360,7 +1364,11 @@
         "pass": "قبول",
         "fail": "رد",
         "skipped": "عدم بررسی"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "کد، تنظیمات یا یک فایل .env را جای‌گذاری کنید",
@@ -1438,7 +1446,10 @@
       "mathSum": "مجموع {sum} → رقم کنترل {check}",
       "truncatedRows": "نمایش {shown} ردیف اول از {total} ردیف. کپی و دانلود شامل همه ردیف‌ها می‌شود.",
       "privacy": "کدها برای بررسی به Forge API ارسال می‌شوند و ذخیره نمی‌شوند.",
-      "scopeNote": "رقم کنترل صحیح به معنای ساختار درست عدد است. این به معنای اختصاص آن به یک محصول، شرکت یا مکان واقعی توسط GS1 نیست — تنها جستجو در ثبت GEPIR این موضوع را مشخص می‌کند."
+      "scopeNote": "رقم کنترل صحیح به معنای ساختار درست عدد است. این به معنای اختصاص آن به یک محصول، شرکت یا مکان واقعی توسط GS1 نیست — تنها جستجو در ثبت GEPIR این موضوع را مشخص می‌کند.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (۱۷ کاراکتر)",
@@ -1485,7 +1496,8 @@
           "product": "حاصل‌ضرب"
         },
         "formula": "مجموع = {sum}؛  {sum} mod 11 = {remainder}  →  رقم کنترل {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "محیط A",
@@ -1646,7 +1658,8 @@
         "allCodes": "همه کدها",
         "disclaimer": "این کدها از نظر ساختاری معتبر هستند اما متعلق به هیچ سازمان ثبت‌شده‌ای نیستند. از آن‌ها برای نشان دادن یک نهاد واقعی استفاده نکنید.",
         "note": "تولید بر اساس دانه انجام می‌شود: همان گزینه‌ها و دانه همیشه همان بسته را برمی‌گردانند، بنابراین یک فیکسچر قابل بازتولید می‌ماند. هر کد در JSON و همچنین اینجا با isTestData علامت‌گذاری شده است."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "اصلی",

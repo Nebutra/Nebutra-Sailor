@@ -27,6 +27,7 @@ import {
   type ShellTone,
 } from "@/components/journey-shells";
 import { RunnerSelect } from "@/components/runner-select";
+import { type CodeSegment, gtinSegments, SegmentedCodeSpecimen } from "@/components/specimens";
 
 /* ── the tool's I/O contract, mirrored ─────────────────────────────────── */
 
@@ -222,6 +223,46 @@ export function W3EanUpcGtinRunner({ toolId }: { toolId: string }) {
                   </ShellBadge>
                 ))}
               </div>
+
+              {(() => {
+                const code =
+                  r.verdict === "calculated"
+                    ? (r.correctedCode ?? r.normalized ?? r.input)
+                    : (r.normalized ?? r.input);
+                const { segments, complete } = gtinSegments(code);
+                const checkFail = complete && r.verdict === "invalid";
+                const labeled: CodeSegment[] = [
+                  {
+                    id: "payload",
+                    label: t("eanUpcGtin.segPayload"),
+                    value: segments[0]?.value ?? "",
+                    tone: r.verdict === "valid" || r.verdict === "calculated" ? "info" : "neutral",
+                  },
+                  {
+                    id: "check",
+                    label: t("eanUpcGtin.segCheck"),
+                    value:
+                      segments[1]?.value ??
+                      (r.checkDigit !== undefined ? String(r.checkDigit) : ""),
+                    error: checkFail,
+                    tone:
+                      r.verdict === "valid" || r.verdict === "calculated"
+                        ? "success"
+                        : checkFail
+                          ? "danger"
+                          : "warning",
+                  },
+                ];
+                return (
+                  <SegmentedCodeSpecimen
+                    title={t("eanUpcGtin.specimenTitle")}
+                    subtitle={t("honesty.algorithmOnly")}
+                    segments={labeled}
+                    statusTone={VERDICT_TONE[r.verdict]}
+                    statusLabel={t(`eanUpcGtin.verdict.${r.verdict}` as never)}
+                  />
+                );
+              })()}
 
               <dl className="flex flex-wrap gap-x-5 gap-y-1 text-xs">
                 {r.checkDigit !== undefined ? (

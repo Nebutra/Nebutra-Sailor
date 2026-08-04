@@ -1293,7 +1293,11 @@
         "noIsbn10": "Префикс 979 не имеет аналога в ISBN-10",
         "nonBookland": "13-значные ISBN должны начинаться с 978 или 979",
         "ismn": "979-0 — это диапазон ISMN (печатная музыка), а не ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Фрагмент кода",
@@ -1360,7 +1364,11 @@
         "pass": "пройден",
         "fail": "не пройден",
         "skipped": "не достигнут"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Вставьте код, конфигурацию или .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Сумма {sum} → контрольная цифра {check}",
       "truncatedRows": "Показаны первые {shown} из {total} строк. Копирование и загрузка включают все строки.",
       "privacy": "Коды отправляются в Forge API для проверки и не сохраняются.",
-      "scopeNote": "Правильная контрольная цифра означает, что номер сформирован верно. Это не означает, что GS1 когда-либо присваивал его реальному продукту, компании или месту — на это отвечает только поиск в реестре GEPIR."
+      "scopeNote": "Правильная контрольная цифра означает, что номер сформирован верно. Это не означает, что GS1 когда-либо присваивал его реальному продукту, компании или месту — на это отвечает только поиск в реестре GEPIR.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 символов)",
@@ -1485,7 +1496,8 @@
           "product": "Произведение"
         },
         "formula": "сумма = {sum};  {sum} mod 11 = {remainder}  →  контрольная цифра {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Окружение A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Все коды",
         "disclaimer": "Эти коды структурно валидны, но не принадлежат ни одной зарегистрированной организации. Не используйте их для обозначения реального субъекта.",
         "note": "Генерация детерминирована: одинаковые параметры и seed всегда дают одинаковый набор, поэтому фикстура остаётся воспроизводимой. Каждый код помечен isTestData как в JSON, так и здесь."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Оригинал",

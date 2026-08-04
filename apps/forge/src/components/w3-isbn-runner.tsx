@@ -9,6 +9,7 @@ import {
   type ShellTone,
   ShellVerdict,
 } from "@/components/journey-shells";
+import { type CodeSegment, isbnSegments, SegmentedCodeSpecimen } from "@/components/specimens";
 
 /** Mirrors the `text/isbn` output contract. */
 type IsbnType = "isbn10" | "isbn13";
@@ -130,6 +131,59 @@ export function W3IsbnRunner({ toolId }: { toolId: string }) {
             ) : null
           }
         />
+
+        {output.results.slice(0, 5).map((row, i) => {
+          const { segments, kind } = isbnSegments(row.normalized || row.input);
+          const checkFail = !row.valid && row.noteCode === "check-digit-mismatch";
+          const labeled: CodeSegment[] =
+            kind === "isbn13"
+              ? [
+                  {
+                    id: "prefix",
+                    label: t("isbn.segPrefix"),
+                    value: segments[0]?.value ?? "",
+                    tone: row.valid ? "info" : "neutral",
+                  },
+                  {
+                    id: "body",
+                    label: t("isbn.segBody"),
+                    value: segments[1]?.value ?? "",
+                    tone: "neutral",
+                  },
+                  {
+                    id: "check",
+                    label: t("isbn.segCheck"),
+                    value: segments[2]?.value ?? "",
+                    error: checkFail,
+                    tone: row.valid ? "success" : checkFail ? "danger" : "warning",
+                  },
+                ]
+              : [
+                  {
+                    id: "body",
+                    label: t("isbn.segBody"),
+                    value: segments[0]?.value ?? "",
+                    tone: "neutral",
+                  },
+                  {
+                    id: "check",
+                    label: t("isbn.segCheck"),
+                    value: segments[1]?.value ?? "",
+                    error: checkFail,
+                    tone: row.valid ? "success" : checkFail ? "danger" : "warning",
+                  },
+                ];
+          return (
+            <SegmentedCodeSpecimen
+              key={`${i}-${row.normalized}`}
+              title={t("isbn.specimenTitle")}
+              subtitle={t("honesty.algorithmOnly")}
+              segments={labeled}
+              statusTone={row.valid ? "success" : "danger"}
+              statusLabel={row.valid ? t("isbn.valid") : t("isbn.invalid")}
+            />
+          );
+        })}
 
         {output.results.length > 0 ? (
           <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">

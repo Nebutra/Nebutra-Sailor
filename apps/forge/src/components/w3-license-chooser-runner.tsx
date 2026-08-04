@@ -19,12 +19,12 @@ import {
   type ShellArtifact,
   ShellArtifacts,
   ShellBadge,
-  ShellCode,
   ShellDrill,
   ShellNote,
   type ShellTone,
   ShellVerdict,
 } from "@/components/journey-shells";
+import { FilePaperSpecimen, filePaperStats } from "@/components/specimens";
 import { pickBilingual } from "@/lib/bilingual";
 
 const RECOMMEND_TOOL_ID = "template/license-recommend";
@@ -368,11 +368,22 @@ function LicenseFile({
               <ShellNote>{t("licenseChooser.verbatim", { name: file.name })}</ShellNote>
             )}
             <ShellDrill summary={t("licenseChooser.manifest")}>
-              <ShellCode label={t("licenseChooser.manifest")}>
-                {Object.entries(file.manifest)
+              {(() => {
+                const body = Object.entries(file.manifest)
                   .map(([manifestFile, line]) => `${manifestFile}: ${line}`)
-                  .join("\n")}
-              </ShellCode>
+                  .join("\n");
+                const stats = filePaperStats(body);
+                return (
+                  <FilePaperSpecimen
+                    filename="manifest.txt"
+                    content={body}
+                    linesLabel={t("filePaper.lines", { n: stats.lines })}
+                    charsLabel={t("filePaper.chars", { n: stats.chars })}
+                    emptyLabel={t("filePaper.empty")}
+                    maxHeightClassName="max-h-48"
+                  />
+                );
+              })()}
             </ShellDrill>
             <ShellNote>
               {pickBilingual(locale, { zh: file.placementZh, en: file.placement })}

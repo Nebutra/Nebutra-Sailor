@@ -16,6 +16,7 @@
  */
 
 import { useTranslations } from "next-intl";
+import { type CodeSegment, ibanSegments, SegmentedCodeSpecimen } from "@/components/specimens";
 import {
   InstantTransformShell,
   ShellBadge,
@@ -125,6 +126,39 @@ export function W3IbanRunner({ toolId }: { toolId: string }) {
                 ) : null}
               </>
             }
+          />
+
+          <SegmentedCodeSpecimen
+            title={t("iban.specimenTitle")}
+            subtitle={t("honesty.algorithmOnly")}
+            segments={(() => {
+              const { segments } = ibanSegments(output.normalized || output.formatted || "");
+              const checkFail =
+                !output.valid && !output.incomplete && output.reason === "checksum_failed";
+              return [
+                {
+                  id: "country",
+                  label: t("iban.segCountry"),
+                  value: segments[0]?.value ?? output.country?.code ?? "",
+                  tone: output.valid ? "success" : "neutral",
+                },
+                {
+                  id: "check",
+                  label: t("iban.segCheck"),
+                  value: segments[1]?.value ?? output.checkDigits ?? "",
+                  error: checkFail,
+                  tone: output.valid ? "success" : checkFail ? "danger" : "neutral",
+                },
+                {
+                  id: "bban",
+                  label: t("iban.segBban"),
+                  value: segments[2]?.value ?? output.bban ?? "",
+                  tone: "neutral",
+                },
+              ] satisfies CodeSegment[];
+            })()}
+            statusTone={verdictTone(output)}
+            statusLabel={headline(output)}
           />
 
           {output.valid ? (

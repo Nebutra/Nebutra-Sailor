@@ -245,10 +245,10 @@
     "creditCardLuhn": {
       "number": "카드 번호",
       "note": "Luhn 체크기 · 오프라인, 저장 안 함",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "digits": "자리",
+      "specimenLabel": "견본",
+      "structureOnly": "Luhn 구조만",
+      "unknownBrand": "카드"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -453,10 +453,10 @@
       "exp": "만료 (초)",
       "payload": "페이로드 JSON",
       "note": "JWT 생성 · HS256 (개발/테스트 전용)",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "header": "헤더",
+      "payloadLabel": "페이로드",
+      "signature": "서명",
+      "emptySignature": "(빈 서명)"
     },
     "rand": {
       "min": "최소값",
@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 접두사는 ISBN-10 대응값이 없습니다",
         "nonBookland": "13자리 ISBN은 978 또는 979로 시작해야 합니다",
         "ismn": "979-0은 ISMN 범위(인쇄 악보)이며 ISBN이 아닙니다"
-      }
+      },
+      "specimenTitle": "ISBN · 구조 견본",
+      "segPrefix": "접두",
+      "segBody": "본문",
+      "segCheck": "검사"
     },
     "languageDetect": {
       "inputLabel": "코드 스니펫",
@@ -1360,7 +1364,11 @@
         "pass": "통과",
         "fail": "실패",
         "skipped": "도달하지 않음"
-      }
+      },
+      "specimenTitle": "IBAN · 구조 견본",
+      "segCountry": "국가",
+      "segCheck": "검사",
+      "segBban": "BBAN(계좌)"
     },
     "secretScan": {
       "pasteLabel": "코드, 설정 또는 .env 파일을 붙여넣으세요",
@@ -1438,7 +1446,10 @@
       "mathSum": "합계 {sum} → 체크 디짓 {check}",
       "truncatedRows": "총 {total}개 중 처음 {shown}개 행을 표시합니다. 복사 및 다운로드 시 모든 행이 포함됩니다.",
       "privacy": "코드는 검증을 위해 Forge API로 전송되며 저장되지 않습니다.",
-      "scopeNote": "올바른 체크 디짓은 숫자가 올바르게 구성되었음을 의미합니다. GS1이 실제 제품, 회사 또는 위치에 할당했음을 의미하지는 않습니다. 이는 GEPIR 레지스트리 조회를 통해서만 확인할 수 있습니다."
+      "scopeNote": "올바른 체크 디짓은 숫자가 올바르게 구성되었음을 의미합니다. GS1이 실제 제품, 회사 또는 위치에 할당했음을 의미하지는 않습니다. 이는 GEPIR 레지스트리 조회를 통해서만 확인할 수 있습니다.",
+      "specimenTitle": "GTIN · 구조 견본",
+      "segPayload": "페이로드",
+      "segCheck": "검사"
     },
     "vin": {
       "inputLabel": "VIN(17자)",
@@ -1485,7 +1496,8 @@
           "product": "곱"
         },
         "formula": "합계 = {sum};  {sum} mod 11 = {remainder}  →  체크 자리수 {expected}"
-      }
+      },
+      "specimenTitle": "VIN · 구조 견본"
     },
     "envDiff": {
       "envA": "환경 A",
@@ -1646,7 +1658,8 @@
         "allCodes": "전체 코드",
         "disclaimer": "이 코드들은 구조적으로 유효하지만 실제 등록된 조직에 속하지 않습니다. 실제 실체를 나타내는 용도로 사용하지 마세요.",
         "note": "생성은 시드 기반으로 동작합니다. 동일한 옵션과 시드를 사용하면 항상 동일한 배치가 반환되어 테스트 데이터가 재현 가능합니다. 모든 코드는 여기뿐만 아니라 JSON에서도 isTestData로 표시됩니다."
-      }
+      },
+      "specimenTitle": "통합 사회신용코드 · 구조 견본"
     },
     "yamlDiff": {
       "original": "원본",
@@ -2142,33 +2155,33 @@
       }
     },
     "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
+      "algorithmOnly": "알고리즘만 · 등기 조회 없음",
+      "signatureNotVerified": "{engine} · 디코딩만 · 서명 미검증",
+      "localOnly": "이 요청만 · 저장 안 함"
     },
     "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+      "number": "신분증 번호",
+      "note": "GB 11643 검사 자리 · 등기 없음 · 동일 API",
+      "specimenTitle": "신분증 · 구조 견본",
+      "segRegion": "지역",
+      "segBirth": "생년월일",
+      "segSeq": "순번",
+      "segCheck": "검사",
+      "metaBirth": "생년월일",
+      "metaGender": "성별",
+      "metaRegion": "지역 코드",
+      "genderMale": "남",
+      "genderFemale": "여",
+      "reasonFormat": "18자리(마지막 X 가능)",
+      "reasonBirth": "생년월일 무효",
+      "reasonCheck": "검사 자리 오류",
+      "reasonCheckExpected": "검사 자리 오류 · 기대 {expected}"
     },
     "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
+      "lines": "{n}줄",
+      "chars": "{n}자",
+      "empty": "(빈 파일)",
+      "readyToShip": "저장소에 바로 사용 가능"
     }
   },
   "roots": {

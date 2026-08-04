@@ -1293,7 +1293,11 @@
         "noIsbn10": "979-prefikset har ingen ISBN-10-ekvivalent",
         "nonBookland": "13-sifrede ISBN må starte med 978 eller 979",
         "ismn": "979-0 er ISMN-området (trykt musikk), ikke ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Kodebit",
@@ -1360,7 +1364,11 @@
         "pass": "bestått",
         "fail": "feilet",
         "skipped": "ikke nådd"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Lim inn kode, konfigurasjon eller en .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Sum {sum} → kontrolltall {check}",
       "truncatedRows": "Viser de første {shown} av {total} rader. Kopier og last ned for å få alle.",
       "privacy": "Koder sendes til Forge API for sjekk og lagres ikke.",
-      "scopeNote": "Et korrekt kontrolltall betyr at nummeret er godt formet. Det betyr ikke at GS1 noen gang har tildelt det til et ekte produkt, selskap eller sted — bare en GEPIR-registersøk kan svare på det."
+      "scopeNote": "Et korrekt kontrolltall betyr at nummeret er godt formet. Det betyr ikke at GS1 noen gang har tildelt det til et ekte produkt, selskap eller sted — bare en GEPIR-registersøk kan svare på det.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 tegn)",
@@ -1485,7 +1496,8 @@
           "product": "Produkt"
         },
         "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  kontrolltall {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Miljø A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Alle koder",
         "disclaimer": "Disse kodene er strukturelt gyldige, men tilhører ingen registrert organisasjon. Bruk dem ikke til å representere en virkelig enhet.",
         "note": "Generering er frøbasert: samme alternativer og frø gir alltid samme batch, slik at en fixture forblir reproduserbar. Hver kode er merket isTestData i JSON, samt her."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Original",

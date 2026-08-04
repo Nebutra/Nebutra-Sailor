@@ -1293,7 +1293,11 @@
         "noIsbn10": "O prefixo 979 não tem equivalente em ISBN-10",
         "nonBookland": "ISBNs de 13 dígitos devem começar com 978 ou 979",
         "ismn": "979-0 é o intervalo ISMN (música impressa), não ISBN"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Trecho de código",
@@ -1360,7 +1364,11 @@
         "pass": "passou",
         "fail": "falhou",
         "skipped": "não alcançado"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Cole código, configuração ou um .env",
@@ -1438,7 +1446,10 @@
       "mathSum": "Soma {sum} → dígito verificador {check}",
       "truncatedRows": "Mostrando as primeiras {shown} de {total} linhas. Copiar e baixar inclui todas elas.",
       "privacy": "Os códigos são enviados à API do Forge para verificação e não são armazenados.",
-      "scopeNote": "Um dígito verificador correto significa que o número está bem formado. Isso não significa que a GS1 o tenha atribuído a um produto, empresa ou local real — apenas uma consulta ao registro GEPIR responde isso."
+      "scopeNote": "Um dígito verificador correto significa que o número está bem formado. Isso não significa que a GS1 o tenha atribuído a um produto, empresa ou local real — apenas uma consulta ao registro GEPIR responde isso.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 caracteres)",
@@ -1485,7 +1496,8 @@
           "product": "Produto"
         },
         "formula": "soma = {sum};  {sum} mod 11 = {remainder}  →  dígito verificador {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Ambiente A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Todos os códigos",
         "disclaimer": "Estes códigos são estruturalmente válidos, mas não pertencem a nenhuma organização registrada. Não os use para representar uma entidade real.",
         "note": "A geração é baseada em seed: as mesmas opções e seed sempre retornam o mesmo lote, então um fixture permanece reproduzível. Cada código é marcado como isTestData no JSON, assim como aqui."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Original",

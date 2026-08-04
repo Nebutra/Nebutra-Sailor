@@ -1293,7 +1293,11 @@
         "noIsbn10": "979 öneki için ISBN-10 eşdeğeri yoktur",
         "nonBookland": "13 haneli ISBN'ler 978 veya 979 ile başlamalıdır",
         "ismn": "979-0, ISBN değil ISMN aralığıdır (basılı müzik)"
-      }
+      },
+      "specimenTitle": "ISBN · structure specimen",
+      "segPrefix": "Prefix",
+      "segBody": "Body",
+      "segCheck": "Check"
     },
     "languageDetect": {
       "inputLabel": "Kod parçacığı",
@@ -1360,7 +1364,11 @@
         "pass": "geçti",
         "fail": "başarısız",
         "skipped": "ulaşılamadı"
-      }
+      },
+      "specimenTitle": "IBAN · structure specimen",
+      "segCountry": "Country",
+      "segCheck": "Check",
+      "segBban": "BBAN"
     },
     "secretScan": {
       "pasteLabel": "Kodu, yapılandırmayı veya .env dosyasını yapıştır",
@@ -1438,7 +1446,10 @@
       "mathSum": "Toplam {sum} → kontrol basamağı {check}",
       "truncatedRows": "{total} satırdan ilk {shown} tanesi gösteriliyor. Kopyalama ve indirme tümünü içerir.",
       "privacy": "Kodlar Forge API'ye doğrulanmak üzere gönderilir ve saklanmaz.",
-      "scopeNote": "Doğru bir kontrol basamağı, numaranın iyi yapılandırıldığını gösterir. GS1'in bunu gerçek bir ürüne, şirkete veya konuma atadığı anlamına gelmez — bunu yalnızca GEPIR kayıt defteri sorgusu yanıtlar."
+      "scopeNote": "Doğru bir kontrol basamağı, numaranın iyi yapılandırıldığını gösterir. GS1'in bunu gerçek bir ürüne, şirkete veya konuma atadığı anlamına gelmez — bunu yalnızca GEPIR kayıt defteri sorgusu yanıtlar.",
+      "specimenTitle": "GTIN · structure specimen",
+      "segPayload": "Payload",
+      "segCheck": "Check"
     },
     "vin": {
       "inputLabel": "VIN (17 karakter)",
@@ -1485,7 +1496,8 @@
           "product": "Çarpım"
         },
         "formula": "toplam = {sum};  {sum} mod 11 = {remainder}  →  kontrol basamağı {expected}"
-      }
+      },
+      "specimenTitle": "VIN · structure specimen"
     },
     "envDiff": {
       "envA": "Ortam A",
@@ -1646,7 +1658,8 @@
         "allCodes": "Tüm kodlar",
         "disclaimer": "Bu kodlar yapısal olarak geçerlidir ancak kayıtlı hiçbir örgüte ait değildir. Gerçek bir varlığı temsil etmek için kullanmayın.",
         "note": "Oluşturma işlemi tohumlanır: aynı seçenekler ve tohum her zaman aynı partiyi döndürür, böylece bir sabit veri tekrarlanabilir kalır. Her kod, JSON'da da burada da isTestData olarak işaretlenir."
-      }
+      },
+      "specimenTitle": "Unified social credit code · structure specimen"
     },
     "yamlDiff": {
       "original": "Orijinal",
