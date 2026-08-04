@@ -75,7 +75,20 @@ jobs:
         run: |
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_WORKERS_API_TOKEN missing"; exit 1; }
-          pnpm exec wrangler deploy --config wrangler.jsonc
+          set +e
+          out=$(pnpm exec wrangler deploy --config wrangler.jsonc 2>&1)
+          code=$?
+          set -e
+          echo "$out"
+          if [ "$code" -ne 0 ]; then
+            if echo "$out" | grep -qiE 'size limit of 3 MiB|code: 10027'; then
+              echo "::error::Worker gzip size exceeds Free plan 3 MiB (auth OpenNext ~8–9 MiB)."
+              echo "::error::Enable Workers Paid (\$5/mo → 10 MiB limit) for account a4248a5738df319996a70092fe598d37:"
+              echo "::error::  https://dash.cloudflare.com/a4248a5738df319996a70092fe598d37/workers/plans"
+              echo "::error::Then re-run: gh workflow run deploy-auth-cloudflare.yml"
+            fi
+            exit "$code"
+          fi
 
       # Runtime secrets (Hyperdrive covers DB when bound; secrets are OAuth + session).
       # Prefer GitHub secrets; if BETTER_AUTH_SECRET missing, pull once from the
