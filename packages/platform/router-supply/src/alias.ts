@@ -1,8 +1,8 @@
+import type { ModelAliasEntry } from "@nebutra/prepaid-wallet";
 import {
   DEFAULT_PUBLIC_MODEL as FRONTIER_DEFAULT_PUBLIC,
   ROUTER_PUBLIC_MODEL_IDS,
-} from "@nebutra/ai-providers/frontier";
-import type { ModelAliasEntry } from "@nebutra/prepaid-wallet";
+} from "./frontier-defaults";
 
 export interface AliasTable {
   readonly entries: readonly ModelAliasEntry[];
@@ -51,8 +51,8 @@ export function listPublicModels(table: AliasTable): string[] {
 }
 
 /**
- * Lab defaults — public ids from `@nebutra/ai-providers/frontier` SSOT.
- * Do not hand-edit model strings here; update frontier.ts.
+ * Lab defaults — public ids from `./frontier-defaults` (snapshot of frontier SSOT).
+ * Prefer updating packages/ai/ai-providers/src/frontier.ts first, then sync the snapshot.
  */
 function buildDefaultAliases(): ModelAliasEntry[] {
   const entries: ModelAliasEntry[] = [];

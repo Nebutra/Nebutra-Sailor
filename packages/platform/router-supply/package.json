@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/router-supply",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Nebutra Router supply orchestration: model aliases, engine endpoints, upstream resolution for New-API/Sub2API sidecars",
   "private": false,
   "license": "MIT",
