@@ -1,4 +1,4 @@
-import { Logo } from "@nebutra/brand";
+import { LogomarkSVG } from "@nebutra/brand";
 import { cn } from "@nebutra/ui/utils";
 import { Link } from "@/i18n/navigation";
 import type { ServiceProbe, StatusSnapshot } from "@/lib/status-checks";
@@ -255,32 +255,46 @@ function IncidentCard({ incident }: { incident: StatusIncident }) {
   );
 }
 
+/**
+ * Trust-page chrome — GitHub Status / Atlassian Statuspage pattern:
+ * small monochrome mark + “Status” word, quiet meta, no marketing mega-logo.
+ */
 function StatusChrome({ checkedAt }: { checkedAt: string }) {
   return (
-    <header className="border-b border-[color:hsl(var(--border))] bg-background/95 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-[720px] items-center justify-between gap-4 px-4 sm:px-6">
-        {/* Stay on the trust surface — do not bounce to marketing home. */}
+    <header className="border-b border-border/80 bg-background">
+      <div className="mx-auto flex h-12 max-w-[720px] items-center justify-between gap-4 px-4 sm:h-[3.25rem] sm:px-6">
         <Link
           href="/status"
-          className="flex items-center gap-2.5 rounded-md"
+          className="group flex min-w-0 items-center gap-2 rounded-md outline-offset-2"
           aria-label="Nebutra Status"
         >
-          <Logo variant="en" size={120} className="hidden sm:block dark:hidden" />
-          <Logo variant="en" size={120} inverted className="hidden dark:sm:block" />
-          <span className="text-sm font-semibold tracking-tight sm:hidden">Nebutra</span>
-          <span className="hidden text-sm text-muted-foreground sm:inline">Status</span>
+          <LogomarkSVG
+            className="h-5 w-5 shrink-0 text-foreground sm:h-[1.375rem] sm:w-[1.375rem]"
+            aria-hidden
+          />
+          <span className="flex min-w-0 items-baseline gap-1.5">
+            <span className="truncate text-[13px] font-semibold tracking-tight text-foreground sm:text-sm">
+              Nebutra
+            </span>
+            <span aria-hidden className="hidden h-3 w-px shrink-0 bg-border sm:block" />
+            <span className="text-[13px] font-medium tracking-tight text-muted-foreground sm:text-sm">
+              Status
+            </span>
+          </span>
         </Link>
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          <span className="hidden text-[11px] tabular-nums text-muted-foreground md:inline">
+        <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+          <time
+            dateTime={checkedAt}
+            className="hidden text-[11px] tabular-nums tracking-tight text-muted-foreground sm:inline"
+          >
             {formatUtcMedium(checkedAt)}
-          </span>
+          </time>
           <a
             href="/status.json"
             className={cn(
-              "inline-flex h-8 items-center rounded-full border border-[color:hsl(var(--border))] px-3",
-              "text-xs font-medium text-muted-foreground transition-colors",
-              "hover:border-border hover:text-foreground",
+              "text-[11px] font-medium tracking-wide text-muted-foreground",
+              "underline-offset-4 transition-colors hover:text-foreground hover:underline",
             )}
           >
             JSON
@@ -334,8 +348,11 @@ function ComponentRow({ service }: { service: ServiceProbe }) {
 export function StatusPageSkeleton() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="border-b border-[color:hsl(var(--border))]">
-        <div className="mx-auto h-14 max-w-[720px] px-4" />
+      <div className="border-b border-border/80">
+        <div className="mx-auto flex h-12 max-w-[720px] items-center px-4 sm:h-[3.25rem] sm:px-6">
+          <div className="h-5 w-5 animate-pulse rounded bg-muted" />
+          <div className="ml-2 h-3.5 w-28 animate-pulse rounded bg-muted" />
+        </div>
       </div>
       <div className="mx-auto max-w-[720px] px-4 pt-8 sm:px-6">
         <div className="h-16 animate-pulse rounded-xl border border-border bg-muted/60" />
