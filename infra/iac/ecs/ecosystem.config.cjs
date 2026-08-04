@@ -257,7 +257,9 @@ module.exports = {
         ENV_FILE: "/var/www/nebutra/forge/.env",
         FORGE_DNS_LEAK_ZONE: "leak.nebutra.com",
         FORGE_DNS_LEAK_NS: "ns1.leak.nebutra.com",
+        // Probe A rdata (harmless). NS host A uses FORGE_DNS_LEAK_NS_IP.
         FORGE_DNS_LEAK_ANSWER_IP: "127.0.0.1",
+        FORGE_DNS_LEAK_NS_IP: "106.15.4.31",
         FORGE_DNS_LEAK_DNS_HOST: "0.0.0.0",
         // Prefer 5353 if setcap/root cannot bind 53; bootstrap may override to 53.
         FORGE_DNS_LEAK_DNS_PORT: "53",

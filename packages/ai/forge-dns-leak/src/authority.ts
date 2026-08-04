@@ -45,11 +45,13 @@ function buildResponse(opts: {
   qname: string;
   qtype: number;
   answerIp: string;
+  /** Public IP for the nameserver host itself (ns1.leak…), never 127.0.0.1 */
+  nsIp: string;
   zone: string;
   nsHostname: string;
   ttl: number;
 }): Buffer {
-  const { id, qname, qtype, answerIp, zone, nsHostname, ttl } = opts;
+  const { id, qname, qtype, answerIp, nsIp, zone, nsHostname, ttl } = opts;
   const flags = 0x8400; // QR=1, AA=1, RD=0, RA=0
   const qnameBuf = encodeName(qname);
   const question = Buffer.concat([
@@ -58,8 +60,13 @@ function buildResponse(opts: {
   ]);
 
   const answers: Buffer[] = [];
+  const qn = qname.replace(/\.$/, "").toLowerCase();
+  const nsHost = nsHostname.replace(/\.$/, "").toLowerCase();
+  // A for the NS hostname must be the public server IP (glue). Probe names use answerIp.
+  const aIp = qn === nsHost || qn.startsWith("ns1.") ? nsIp : answerIp;
+
   if (qtype === TYPE_A || qtype === 255 /* ANY simplified */) {
-    const rdata = encodeIpv4(answerIp);
+    const rdata = encodeIpv4(aIp);
     answers.push(
       Buffer.concat([
         encodeName(qname),
@@ -148,6 +155,8 @@ export async function startAuthority(
     host?: string;
     port?: number;
     nsHostname: string;
+    /** Public IP returned for ns1… A queries (defaults to FORGE_DNS_LEAK_NS_IP or 106.15.4.31) */
+    nsIp?: string;
     ttlSec?: number;
   },
 ): Promise<AuthorityServer> {
@@ -155,6 +164,7 @@ export async function startAuthority(
   const port = opts.port ?? 5353;
   const ttl = opts.ttlSec ?? 30;
   const nsHostname = opts.nsHostname.replace(/\.$/, "").toLowerCase();
+  const nsIp = opts.nsIp ?? process.env.FORGE_DNS_LEAK_NS_IP ?? "106.15.4.31";
 
   const handle = (msg: Buffer, rinfo: { address: string; port: number }): Buffer | null => {
     const q = parseQuery(msg);
@@ -167,12 +177,17 @@ export async function startAuthority(
       header.writeUInt16BE(0, 4);
       return header;
     }
-    store.recordQuery(q.qname, rinfo.address);
+    // Only count probe queries toward sessions (not NS/SOA/glue chatter)
+    const qn = q.qname.replace(/\.$/, "").toLowerCase();
+    if (qn.includes(".s.") && qn.endsWith(`.${store.zoneName}`)) {
+      store.recordQuery(q.qname, rinfo.address);
+    }
     return buildResponse({
       id: q.id,
       qname: q.qname,
       qtype: q.qtype,
       answerIp: store.answer,
+      nsIp,
       zone: store.zoneName,
       nsHostname,
       ttl,

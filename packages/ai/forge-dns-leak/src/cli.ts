@@ -25,10 +25,12 @@ const apiPort = Number(process.env.FORGE_DNS_LEAK_API_PORT ?? "3953");
 
 const store = new SessionStore({ zone, answerIp });
 
+const nsIp = process.env.FORGE_DNS_LEAK_NS_IP ?? "106.15.4.31";
 const authority = await startAuthority(store, {
   host: dnsHost,
   port: dnsPort,
   nsHostname,
+  nsIp,
 });
 const api = await startControlApi(store, {
   host: apiHost,
