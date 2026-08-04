@@ -14,16 +14,26 @@ function tool(
 const WEIGHTS = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
 const CHECK_CODES = ["1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"];
 
+export type IdCardReasonCode = "format" | "birth" | "check_digit";
+
 function validateIdCard(id: string): {
   valid: boolean;
+  /** Stable machine code for UI i18n — prefer this over `reason`. */
+  reasonCode?: IdCardReasonCode;
+  /** @deprecated Prefer reasonCode; kept for older clients (Chinese prose). */
   reason?: string;
+  expectedCheckDigit?: string;
   regionCode?: string;
   birth?: string;
   gender?: "M" | "F";
 } {
   const s = id.trim().toUpperCase();
   if (!/^\d{17}[\dX]$/.test(s)) {
-    return { valid: false, reason: "格式应为 18 位（末位可为 X）" };
+    return {
+      valid: false,
+      reasonCode: "format",
+      reason: "格式应为 18 位（末位可为 X）",
+    };
   }
   const birth = `${s.slice(6, 10)}-${s.slice(10, 12)}-${s.slice(12, 14)}`;
   const birthDate = new Date(birth);
@@ -33,7 +43,7 @@ function validateIdCard(id: string): {
     const m = Number(s.slice(10, 12));
     const d = Number(s.slice(12, 14));
     if (y < 1900 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) {
-      return { valid: false, reason: "出生日期无效" };
+      return { valid: false, reasonCode: "birth", reason: "出生日期无效" };
     }
   }
   let sum = 0;
@@ -42,7 +52,12 @@ function validateIdCard(id: string): {
   }
   const expected = CHECK_CODES[sum % 11];
   if (s[17] !== expected) {
-    return { valid: false, reason: `校验位错误，期望 ${expected}` };
+    return {
+      valid: false,
+      reasonCode: "check_digit",
+      ...(expected ? { expectedCheckDigit: expected } : {}),
+      reason: `校验位错误，期望 ${expected}`,
+    };
   }
   const seq = Number(s.slice(14, 17));
   return {

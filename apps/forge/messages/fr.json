@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "Premier plan (#hex)",
       "bg": "Arrière-plan (#hex)",
-      "note": "Contraste des couleurs · WCAG 2.x"
+      "note": "Contraste des couleurs · WCAG 2.x",
+      "sampleHeadline": "Texte d'exemple",
+      "pass": "ok",
+      "fail": "échec",
+      "aaNormal": "AA corps",
+      "aaLarge": "AA grand",
+      "aaaNormal": "AAA corps",
+      "aaaLarge": "AAA grand"
     },
     "exif": {
       "file": "Fichier image",
@@ -2182,6 +2189,18 @@
       "chars": "{n} caractères",
       "empty": "(fichier vide)",
       "readyToShip": "Prêt pour le dépôt"
+    },
+    "textTransform": {
+      "mode": "Mode d'emploi",
+      "input": "Entrée",
+      "output": "Sortie",
+      "emptyResult": "Le résultat apparaît ici",
+      "runLocal": "Exécuter en local",
+      "runServer": "Exécuter sur le serveur",
+      "statusLocalLive": "Local · temps réel",
+      "statusLocal": "En local",
+      "statusServer": "Serveur · même chemin API",
+      "noteDefault": "Même chemin API"
     }
   },
   "roots": {

@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "전경 (#hex)",
       "bg": "배경 (#hex)",
-      "note": "색상 대비 · WCAG 2.x"
+      "note": "색상 대비 · WCAG 2.x",
+      "sampleHeadline": "샘플 텍스트",
+      "pass": "통과",
+      "fail": "실패",
+      "aaNormal": "AA 본문",
+      "aaLarge": "AA 큰 글씨",
+      "aaaNormal": "AAA 본문",
+      "aaaLarge": "AAA 큰 글씨"
     },
     "exif": {
       "file": "이미지 파일",
@@ -2182,6 +2189,18 @@
       "chars": "{n}자",
       "empty": "(빈 파일)",
       "readyToShip": "저장소에 바로 사용 가능"
+    },
+    "textTransform": {
+      "mode": "모드",
+      "input": "입력",
+      "output": "출력",
+      "emptyResult": "결과가 여기에 표시됩니다",
+      "runLocal": "로컬 실행",
+      "runServer": "서버 실행",
+      "statusLocalLive": "로컬 · 실시간",
+      "statusLocal": "로컬",
+      "statusServer": "서버 · API 동일",
+      "noteDefault": "API 동일 경로"
     }
   },
   "roots": {

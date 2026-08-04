@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "Primer plano (#hex)",
       "bg": "Fondo (#hex)",
-      "note": "Contraste de color · WCAG 2.x"
+      "note": "Contraste de color · WCAG 2.x",
+      "sampleHeadline": "Texto de ejemplo",
+      "pass": "ok",
+      "fail": "fallo",
+      "aaNormal": "AA texto",
+      "aaLarge": "AA grande",
+      "aaaNormal": "AAA texto",
+      "aaaLarge": "AAA grande"
     },
     "exif": {
       "file": "Archivo de imagen",
@@ -2182,6 +2189,18 @@
       "chars": "{n} caracteres",
       "empty": "(archivo vacío)",
       "readyToShip": "Listo para el repo"
+    },
+    "textTransform": {
+      "mode": "Modo",
+      "input": "Entrada",
+      "output": "Salida",
+      "emptyResult": "El resultado aparece aquí",
+      "runLocal": "Ejecutar local",
+      "runServer": "Ejecutar en servidor",
+      "statusLocalLive": "Local · en vivo",
+      "statusLocal": "Localmente",
+      "statusServer": "Servidor · misma ruta API",
+      "noteDefault": "Misma ruta API"
     }
   },
   "roots": {

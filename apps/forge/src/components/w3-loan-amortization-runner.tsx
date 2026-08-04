@@ -119,7 +119,7 @@ function rollUp(output: Output): YearRow[] {
   return out;
 }
 
-const CELL = "px-3 py-1.5 text-right tabular-nums";
+const CELL = "px-3 py-1.5 text-right font-mono tabular-nums whitespace-nowrap";
 const HEAD = "px-3 py-2 text-right text-xs font-medium text-[var(--neutral-11)]";
 
 export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
@@ -223,6 +223,7 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
       input={effective}
       emptyHint={t("loanAmortization.emptyHint")}
       note={t("loanAmortization.note")}
+      layout="stack"
       exit={(o) => ({
         text: toCsv(o),
         json: o,
@@ -236,7 +237,7 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
         const years = view === "annual" ? rollUp(o) : [];
         return (
           <div className="space-y-4">
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {[
                 {
                   key: "payment",
@@ -260,10 +261,10 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
               ].map((item) => (
                 <div
                   key={item.key}
-                  className="rounded-[var(--radius-lg)] bg-[var(--neutral-3)] p-3"
+                  className="min-w-0 rounded-[var(--radius-lg)] bg-[var(--neutral-3)] px-4 py-3"
                 >
                   <p className="text-xs text-[var(--neutral-11)]">{item.label}</p>
-                  <p className="mt-1 font-semibold text-[var(--neutral-12)] tabular-nums">
+                  <p className="mt-1.5 truncate font-mono text-lg font-semibold tracking-tight text-[var(--neutral-12)] tabular-nums whitespace-nowrap sm:text-xl">
                     {item.value}
                   </p>
                 </div>
@@ -420,7 +421,7 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
         );
       }}
     >
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <Input
           id={`${uid}-principal`}
           label={t("loanAmortization.principal")}
@@ -468,6 +469,7 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
           placeholder="2026-01"
           autoComplete="off"
           spellCheck={false}
+          className="font-mono sm:col-span-2 lg:col-span-1"
           onChange={(e) => setStartMonth(e.target.value)}
           description={t("loanAmortization.startMonthHint")}
           {...(errors.startMonth ? { error: errors.startMonth } : {})}

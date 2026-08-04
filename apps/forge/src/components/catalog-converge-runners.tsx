@@ -133,11 +133,30 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
       <RunnerError>{error}</RunnerError>
       {out ? (
         <div className="space-y-3">
-          <div
-            className="rounded-[var(--radius-lg)] p-6 text-center text-lg font-semibold"
-            style={{ color: fg, background: bg }}
-          >
-            Sample text · {String(out.ratioLabel ?? `${ratio}:1`)}
+          <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-stretch">
+            <div
+              className="flex min-h-[8rem] flex-col justify-center rounded-[var(--radius-lg)] p-6 text-center shadow-ambient-sm ring-1 ring-inset ring-[var(--neutral-6)]"
+              style={{ color: fg, background: bg }}
+            >
+              <p className="text-lg font-semibold leading-snug">{t("contrast.sampleHeadline")}</p>
+              <p className="mt-2 font-mono text-sm opacity-90">
+                {String(out.ratioLabel ?? `${ratio}:1`)}
+              </p>
+            </div>
+            <div className="flex gap-2 sm:flex-col sm:justify-center">
+              <div
+                className="h-14 w-14 shrink-0 rounded-[var(--radius-md)] ring-1 ring-inset ring-[var(--neutral-6)] sm:h-16 sm:w-16"
+                style={{ background: fg }}
+                title={fg}
+                aria-label={t("contrast.fg")}
+              />
+              <div
+                className="h-14 w-14 shrink-0 rounded-[var(--radius-md)] ring-1 ring-inset ring-[var(--neutral-6)] sm:h-16 sm:w-16"
+                style={{ background: bg }}
+                title={bg}
+                aria-label={t("contrast.bg")}
+              />
+            </div>
           </div>
           <ShellVerdict
             tone={allPass as ShellTone}
@@ -145,16 +164,17 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
             badges={
               <>
                 <ShellBadge tone={out.aaNormal ? "success" : "danger"}>
-                  AA normal {out.aaNormal ? "pass" : "fail"}
+                  {t("contrast.aaNormal")} {out.aaNormal ? t("contrast.pass") : t("contrast.fail")}
                 </ShellBadge>
                 <ShellBadge tone={out.aaLarge ? "success" : "danger"}>
-                  AA large {out.aaLarge ? "pass" : "fail"}
+                  {t("contrast.aaLarge")} {out.aaLarge ? t("contrast.pass") : t("contrast.fail")}
                 </ShellBadge>
                 <ShellBadge tone={out.aaaNormal ? "success" : "danger"}>
-                  AAA normal {out.aaaNormal ? "pass" : "fail"}
+                  {t("contrast.aaaNormal")}{" "}
+                  {out.aaaNormal ? t("contrast.pass") : t("contrast.fail")}
                 </ShellBadge>
                 <ShellBadge tone={out.aaaLarge ? "success" : "danger"}>
-                  AAA large {out.aaaLarge ? "pass" : "fail"}
+                  {t("contrast.aaaLarge")} {out.aaaLarge ? t("contrast.pass") : t("contrast.fail")}
                 </ShellBadge>
               </>
             }

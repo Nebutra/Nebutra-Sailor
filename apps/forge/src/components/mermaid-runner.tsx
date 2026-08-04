@@ -436,9 +436,10 @@ export function MermaidRenderRunner({ toolId }: { toolId: string }) {
           <RunnerError>{error}</RunnerError>
           <div
             ref={stageRef}
+            data-specimen="mermaid-canvas"
             role="img"
             aria-label={t("mermaid.previewAria")}
-            className="relative flex-1 cursor-grab overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] active:cursor-grabbing"
+            className="relative flex-1 cursor-grab overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] ring-1 ring-inset ring-[var(--neutral-6)] active:cursor-grabbing"
             style={{ background: previewBg(theme) }}
             onWheel={onWheel}
             onPointerDown={onPointerDown}

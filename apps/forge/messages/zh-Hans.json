@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "前景色 (#hex)",
       "bg": "背景色 (#hex)",
-      "note": "颜色对比度 · WCAG 2.x"
+      "note": "颜色对比度 · WCAG 2.x",
+      "sampleHeadline": "示例文本",
+      "pass": "通过",
+      "fail": "未通过",
+      "aaNormal": "AA 正文",
+      "aaLarge": "AA 大字",
+      "aaaNormal": "AAA 正文",
+      "aaaLarge": "AAA 大字"
     },
     "exif": {
       "file": "图片文件",
@@ -2182,6 +2189,18 @@
       "chars": "{n} 字符",
       "empty": "（空文件）",
       "readyToShip": "可直接放进仓库"
+    },
+    "textTransform": {
+      "mode": "模式",
+      "input": "输入",
+      "output": "输出",
+      "emptyResult": "结果会显示在这里",
+      "runLocal": "本地运行",
+      "runServer": "服务端运行",
+      "statusLocalLive": "本地 · 实时",
+      "statusLocal": "本地",
+      "statusServer": "服务端 · 与 API 同一路径",
+      "noteDefault": "与 API 同一路径"
     }
   },
   "roots": {

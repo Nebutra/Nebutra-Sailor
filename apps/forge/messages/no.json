@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "Forgrunn (#hex)",
       "bg": "Bakgrunn (#hex)",
-      "note": "Fargekontrast · WCAG 2.x"
+      "note": "Fargekontrast · WCAG 2.x",
+      "sampleHeadline": "Sample text",
+      "pass": "pass",
+      "fail": "fail",
+      "aaNormal": "AA normal",
+      "aaLarge": "AA large",
+      "aaaNormal": "AAA normal",
+      "aaaLarge": "AAA large"
     },
     "exif": {
       "file": "Bildefil",
@@ -2182,6 +2189,18 @@
       "chars": "{n} chars",
       "empty": "(empty file)",
       "readyToShip": "Ready to drop into the repo"
+    },
+    "textTransform": {
+      "mode": "Mode",
+      "input": "Input",
+      "output": "Output",
+      "emptyResult": "Result appears here",
+      "runLocal": "Run locally",
+      "runServer": "Run on server",
+      "statusLocalLive": "Local · live",
+      "statusLocal": "Local",
+      "statusServer": "Server · same path as API",
+      "noteDefault": "Same path as API"
     }
   },
   "roots": {

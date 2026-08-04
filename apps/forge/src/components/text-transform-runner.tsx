@@ -3,6 +3,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput, RunnerSelect } from "@/components/runner-ui";
 
@@ -34,6 +35,7 @@ export type TextTransformRunnerProps = {
 /**
  * Shared text-in → text-out runner for pure catalog tools
  * (sort lines, case convert, camel/snake, extractors, …).
+ * P1 baseline: dual-pane, live local when available, i18n labels, honest empty.
  */
 export function TextTransformRunner({
   toolId,
@@ -43,10 +45,11 @@ export function TextTransformRunner({
   modeField = "mode",
   extraFields,
   pickOutput,
-  note = "Same path as API",
+  note,
   rows = 10,
   localRun,
 }: TextTransformRunnerProps) {
+  const t = useTranslations("runners");
   const [text, setText] = useState(sample);
   const [mode, setMode] = useState(defaultMode ?? modes?.[0]?.value ?? "");
   const [extras, setExtras] = useState<Record<string, string>>(() => {
@@ -67,13 +70,13 @@ export function TextTransformRunner({
       try {
         setError("");
         setResult(localRun(text, modes?.length ? mode : undefined, extras));
-        setStatus("local · live");
+        setStatus(t("textTransform.statusLocalLive"));
       } catch (e) {
         setError(e instanceof Error ? e.message : String(e));
       }
     }, 160);
     return () => window.clearTimeout(handle);
-  }, [text, mode, extras, localRun, modes]);
+  }, [text, mode, extras, localRun, modes, t]);
 
   const buildInput = useCallback(() => {
     const input: Record<string, unknown> = { text };
@@ -89,7 +92,7 @@ export function TextTransformRunner({
     setError("");
     try {
       setResult(localRun(text, modes?.length ? mode : undefined, extras));
-      setStatus("本地运行");
+      setStatus(t("textTransform.statusLocal"));
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -116,7 +119,7 @@ export function TextTransformRunner({
         return;
       }
       setResult(pickOutput(body.output ?? {}));
-      setStatus("服务端 · 与 API 同一路径");
+      setStatus(t("textTransform.statusServer"));
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -131,12 +134,19 @@ export function TextTransformRunner({
     setTimeout(() => setCopied(false), 1200);
   };
 
+  const footerNote = note ?? t("textTransform.noteDefault");
+
   return (
     <div className="space-y-5">
       {(modes?.length || (extraFields && extraFields.length > 0)) && (
         <div className="flex flex-wrap items-end gap-3">
           {modes?.length ? (
-            <RunnerSelect label="模式" id={`${toolId}-mode`} value={mode} onChange={setMode}>
+            <RunnerSelect
+              label={t("textTransform.mode")}
+              id={`${toolId}-mode`}
+              value={mode}
+              onChange={setMode}
+            >
               {modes.map((m) => (
                 <option key={m.value} value={m.value}>
                   {m.label}
@@ -160,7 +170,7 @@ export function TextTransformRunner({
 
       <div className="grid gap-4 md:grid-cols-2">
         <Textarea
-          label="输入"
+          label={t("textTransform.input")}
           id={`${toolId}-input`}
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -170,7 +180,9 @@ export function TextTransformRunner({
         />
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-[var(--neutral-11)]">输出</span>
+            <span className="text-xs font-medium text-[var(--neutral-11)]">
+              {t("textTransform.output")}
+            </span>
             <Button
               type="button"
               variant="ghost"
@@ -180,17 +192,19 @@ export function TextTransformRunner({
             >
               {copied ? (
                 <>
-                  <Check className="h-3.5 w-3.5" /> 已复制
+                  <Check className="h-3.5 w-3.5" /> {t("common.copied")}
                 </>
               ) : (
                 <>
-                  <Copy className="h-3.5 w-3.5" /> 复制
+                  <Copy className="h-3.5 w-3.5" /> {t("common.copy")}
                 </>
               )}
             </Button>
           </div>
           <RunnerOutput className="min-h-[220px] whitespace-pre-wrap break-all">
-            {result || <span className="text-[var(--neutral-9)]">Result appears here</span>}
+            {result || (
+              <span className="text-[var(--neutral-9)]">{t("textTransform.emptyResult")}</span>
+            )}
           </RunnerOutput>
         </div>
       </div>
@@ -198,7 +212,7 @@ export function TextTransformRunner({
       <div className="flex flex-wrap gap-2">
         {localRun ? (
           <Button type="button" variant="ink" onClick={runLocal}>
-            本地运行
+            {t("textTransform.runLocal")}
           </Button>
         ) : null}
         <Button
@@ -207,14 +221,27 @@ export function TextTransformRunner({
           onClick={() => void runServer()}
           disabled={loading}
         >
-          {loading ? "运行中…" : localRun ? "服务端校验" : "运行"}
+          {loading
+            ? t("common.running")
+            : localRun
+              ? t("textTransform.runServer")
+              : t("common.run")}
         </Button>
-        <Button type="button" variant="ghost" onClick={() => setText("")}>
-          清空
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => {
+            setText("");
+            setResult("");
+            setError("");
+            setStatus("");
+          }}
+        >
+          {t("common.clear")}
         </Button>
       </div>
       <RunnerError>{error}</RunnerError>
-      <RunnerNote>{status || note}</RunnerNote>
+      <RunnerNote>{status || footerNote}</RunnerNote>
     </div>
   );
 }

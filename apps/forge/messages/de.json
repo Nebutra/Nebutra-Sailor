@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "Vordergrund (#hex)",
       "bg": "Hintergrund (#hex)",
-      "note": "Farbkontrast · WCAG 2.x"
+      "note": "Farbkontrast · WCAG 2.x",
+      "sampleHeadline": "Beispieltext",
+      "pass": "bestanden",
+      "fail": "nicht bestanden",
+      "aaNormal": "AA Fließtext",
+      "aaLarge": "AA groß",
+      "aaaNormal": "AAA Fließtext",
+      "aaaLarge": "AAA groß"
     },
     "exif": {
       "file": "Bilddatei",
@@ -2182,6 +2189,18 @@
       "chars": "{n} Zeichen",
       "empty": "(leere Datei)",
       "readyToShip": "Bereit fürs Repo"
+    },
+    "textTransform": {
+      "mode": "Modus",
+      "input": "Eingabe",
+      "output": "Ausgabe",
+      "emptyResult": "Ergebnis erscheint hier",
+      "runLocal": "Lokal ausführen",
+      "runServer": "Auf Server ausführen",
+      "statusLocalLive": "Lokal · live",
+      "statusLocal": "Lokal",
+      "statusServer": "Server · gleicher API-Pfad",
+      "noteDefault": "Gleicher API-Pfad"
     }
   },
   "roots": {

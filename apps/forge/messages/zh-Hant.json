@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "前景色 (#hex)",
       "bg": "背景色 (#hex)",
-      "note": "色彩對比度 · WCAG 2.x"
+      "note": "色彩對比度 · WCAG 2.x",
+      "sampleHeadline": "範例文字",
+      "pass": "通過",
+      "fail": "未通過",
+      "aaNormal": "AA 正文",
+      "aaLarge": "AA 大字",
+      "aaaNormal": "AAA 正文",
+      "aaaLarge": "AAA 大字"
     },
     "exif": {
       "file": "影像檔案",
@@ -2182,6 +2189,18 @@
       "chars": "{n} 字元",
       "empty": "（空檔案）",
       "readyToShip": "可直接放進倉庫"
+    },
+    "textTransform": {
+      "mode": "模式",
+      "input": "輸入",
+      "output": "輸出",
+      "emptyResult": "結果會顯示在這裡",
+      "runLocal": "本機執行",
+      "runServer": "伺服器執行",
+      "statusLocalLive": "本機 · 即時",
+      "statusLocal": "本機",
+      "statusServer": "伺服器 · 與 API 同一路徑",
+      "noteDefault": "與 API 同一路徑"
     }
   },
   "roots": {

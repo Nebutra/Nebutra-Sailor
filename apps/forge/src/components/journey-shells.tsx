@@ -729,6 +729,8 @@ export interface ConfigureGenerateShellProps<TOutput> {
   debounceMs?: number;
   /** Optional no-op affordance for people who expect a button. Never required. */
   regenerateLabel?: string;
+  /** `split` = options | result side-by-side (default). `stack` = full-width (schedules, wide tables). */
+  layout?: "split" | "stack";
 }
 
 /**
@@ -746,6 +748,7 @@ export function ConfigureGenerateShell<TOutput>({
   note,
   debounceMs = 120,
   regenerateLabel,
+  layout = "split",
 }: ConfigureGenerateShellProps<TOutput>) {
   const t = useTranslations("runners");
   const uid = useId();
@@ -761,7 +764,13 @@ export function ConfigureGenerateShell<TOutput>({
   });
 
   return (
-    <div className="grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-6">
+    <div
+      className={
+        layout === "stack"
+          ? "flex flex-col gap-4"
+          : "grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-6"
+      }
+    >
       <section className={cx(PANEL, "space-y-4")} aria-label={t("shell.options")}>
         {children}
         {regenerateLabel ? (
@@ -774,7 +783,11 @@ export function ConfigureGenerateShell<TOutput>({
         ) : null}
       </section>
 
-      <div className="min-w-0 space-y-3 lg:sticky lg:top-4">
+      <div
+        className={
+          layout === "stack" ? "min-w-0 space-y-3" : "min-w-0 space-y-3 lg:sticky lg:top-4"
+        }
+      >
         <ShellStateView
           state={state}
           idle={<p className="text-sm text-[var(--neutral-11)]">{emptyHint}</p>}

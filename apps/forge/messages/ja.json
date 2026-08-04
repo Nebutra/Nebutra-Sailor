@@ -424,7 +424,14 @@
     "contrast": {
       "fg": "前景色 (#hex)",
       "bg": "背景色 (#hex)",
-      "note": "色相対比 · WCAG 2.x"
+      "note": "色相対比 · WCAG 2.x",
+      "sampleHeadline": "サンプルテキスト",
+      "pass": "合格",
+      "fail": "不合格",
+      "aaNormal": "AA 通常",
+      "aaLarge": "AA 大",
+      "aaaNormal": "AAA 通常",
+      "aaaLarge": "AAA 大"
     },
     "exif": {
       "file": "画像ファイル",
@@ -2182,6 +2189,18 @@
       "chars": "{n} 文字",
       "empty": "（空ファイル）",
       "readyToShip": "リポジトリに投入可能"
+    },
+    "textTransform": {
+      "mode": "モード",
+      "input": "入力",
+      "output": "出力",
+      "emptyResult": "結果はここに表示されます",
+      "runLocal": "ローカル実行",
+      "runServer": "サーバー実行",
+      "statusLocalLive": "ローカル · ライブ",
+      "statusLocal": "ローカル",
+      "statusServer": "サーバー · API 同一",
+      "noteDefault": "API 同一パス"
     }
   },
   "roots": {

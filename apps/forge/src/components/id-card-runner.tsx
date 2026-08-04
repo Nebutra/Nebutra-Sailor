@@ -12,7 +12,9 @@ import {
 
 type IdCardOutput = {
   valid: boolean;
+  reasonCode?: "format" | "birth" | "check_digit";
   reason?: string;
+  expectedCheckDigit?: string;
   regionCode?: string;
   birth?: string;
   gender?: "M" | "F" | string;
@@ -28,9 +30,18 @@ function genderLabel(gender: string | undefined, t: (key: string) => string): st
 }
 
 function formatIdReason(
-  reason: string | undefined,
+  o: IdCardOutput,
   t: (key: string, values?: Record<string, string>) => string,
 ): string {
+  const code = o.reasonCode;
+  if (code === "check_digit") {
+    const expected = o.expectedCheckDigit;
+    return expected ? t("idCard.reasonCheckExpected", { expected }) : t("idCard.reasonCheck");
+  }
+  if (code === "birth") return t("idCard.reasonBirth");
+  if (code === "format") return t("idCard.reasonFormat");
+  // Legacy prose fallback for older engine responses
+  const reason = o.reason;
   if (!reason) return "";
   if (/校验位|check/i.test(reason)) {
     const m = reason.match(/期望\s*([0-9X])/i) ?? reason.match(/expected[:\s]*([0-9X])/i);
@@ -67,7 +78,7 @@ export function IdCardRunner({ toolId }: { toolId: string }) {
           o.birth ?? "",
           o.gender ? genderLabel(o.gender, t) : "",
           o.regionCode ?? "",
-          formatIdReason(o.reason, t),
+          formatIdReason(o, t),
         ]
           .filter(Boolean)
           .join("\n"),
@@ -78,7 +89,9 @@ export function IdCardRunner({ toolId }: { toolId: string }) {
         const checkFailed =
           complete &&
           !o.valid &&
-          (typeof o.reason === "string" ? /校验位|check/i.test(o.reason) : true);
+          (o.reasonCode === "check_digit" ||
+            (o.reasonCode == null &&
+              (typeof o.reason === "string" ? /校验位|check/i.test(o.reason) : true)));
 
         const segs: CodeSegment[] = [
           {
@@ -109,7 +122,7 @@ export function IdCardRunner({ toolId }: { toolId: string }) {
         ];
 
         const statusTone: SpecimenTone = o.valid ? "success" : "danger";
-        const reasonText = formatIdReason(o.reason, t);
+        const reasonText = formatIdReason(o, t);
 
         return (
           <SegmentedCodeSpecimen
