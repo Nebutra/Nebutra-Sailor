@@ -17,6 +17,10 @@ STATE_DIR="${CARINA_STATE_DIR:-$CARINA_ROOT/state}"
 WS_ROOT="${CARINA_WORKSPACE_ROOT:-$CARINA_ROOT/ws}"
 APPROVAL_MODE="${CARINA_SESSION_APPROVAL_MODE:-always-approve}"
 
+# Env first — gateway can fail-closed cleanly while daemon installs.
+echo "Injecting api-gateway Carina env (co-deploy defaults)…"
+bash "$SCRIPTS_DIR/configure-api-carina-env.sh" || true
+
 if [ ! -x "$CARINA_ROOT/bin/carina-daemon" ]; then
   echo "Installing carina-daemon…"
   if ! bash "$SCRIPTS_DIR/install-carina-daemon.sh"; then
@@ -70,8 +74,8 @@ if [ ! -S "$SOCKET_PATH" ]; then
   echo "warning: socket not ready yet at $SOCKET_PATH" >&2
 fi
 
-# Inject api-gateway env (defaults for co-deploy)
-bash "$SCRIPTS_DIR/configure-api-carina-env.sh"
+# Re-inject after daemon start (idempotent)
+bash "$SCRIPTS_DIR/configure-api-carina-env.sh" || true
 
 echo "Carina co-deploy complete."
 echo "  socket:    $SOCKET_PATH"
