@@ -236,17 +236,45 @@ function vendorWorkspaceDependencies(
   const vendorRoot = join(targetDir, "vendor");
   const seen = new Set();
 
+  function ensurePackageDist(packageName, sourceDir) {
+    const distIndex = join(sourceDir, "dist", "index.js");
+    const distDts = join(sourceDir, "dist", "index.d.ts");
+    if (existsSync(distIndex) || existsSync(distDts)) return true;
+
+    const pkgManifest = readJson(join(sourceDir, "package.json"));
+    if (!pkgManifest.scripts?.build) {
+      console.warn(`[subrepo-sync] cannot vendor ${packageName}: no build script and no dist/`);
+      return false;
+    }
+
+    console.log(`[subrepo-sync] building ${packageName} for vendor…`);
+    try {
+      execFileSync("pnpm", ["run", "build"], {
+        cwd: sourceDir,
+        stdio: "inherit",
+        env: process.env,
+      });
+    } catch (error) {
+      console.warn(
+        `[subrepo-sync] build failed for ${packageName}: ${error instanceof Error ? error.message : error}`,
+      );
+      return false;
+    }
+
+    return existsSync(distIndex) || existsSync(distDts);
+  }
+
   function vendorOne(packageName) {
     if (seen.has(packageName)) return true;
     const entry = packageByName.get(packageName);
     if (!entry) return false;
 
     const sourceDir = join(root, entry.relativeDir);
-    const distDir = join(sourceDir, "dist");
-    if (!existsSync(distDir)) {
-      console.warn(`[subrepo-sync] cannot vendor ${packageName}: missing dist/ (build first)`);
+    if (!ensurePackageDist(packageName, sourceDir)) {
+      console.warn(`[subrepo-sync] cannot vendor ${packageName}: missing dist/ after build`);
       return false;
     }
+    const distDir = join(sourceDir, "dist");
 
     seen.add(packageName);
     const sourceManifest = readJson(join(sourceDir, "package.json"));
