@@ -6,6 +6,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -20,6 +21,9 @@ import {
  * the panel in a different stacking and scroll context than the header that
  * owns it. This shell stays in the header's own context with a solid
  * background, which is what the marketing picker always did.
+ *
+ * Mobile (<640px): fixed full-bleed sheet with body scroll lock so long locale
+ * lists are not clipped under the viewport (flex min-height:auto trap).
  */
 
 export interface LocalePanelCopy {
@@ -58,6 +62,21 @@ export interface LocalePanelProps {
   onOpen?: () => void;
 }
 
+const MOBILE_MQ = "(max-width: 639px)";
+
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mql = window.matchMedia(MOBILE_MQ);
+    const update = () => setIsMobile(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+  return isMobile;
+}
+
 export function LocalePanel({
   copy,
   trigger,
@@ -72,6 +91,9 @@ export function LocalePanel({
   const [query, setQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const isMobile = useIsMobile();
+  const [desktopMaxHeight, setDesktopMaxHeight] = useState<string>("min(70vh, 560px)");
 
   useEffect(() => {
     if (!open || !showSearch) return;
@@ -79,35 +101,80 @@ export function LocalePanel({
     return () => cancelAnimationFrame(id);
   }, [open, showSearch]);
 
+  // Lock document scroll while the mobile sheet is open.
+  useEffect(() => {
+    if (!open || !isMobile) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open, isMobile]);
+
+  // Desktop: keep the panel inside the remaining viewport below the trigger.
+  useLayoutEffect(() => {
+    if (!open || isMobile || !triggerRef.current) return;
+    const measure = () => {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const spaceBelow = window.innerHeight - rect.bottom - 16;
+      const cap = Math.max(200, Math.min(560, spaceBelow, window.innerHeight * 0.7));
+      setDesktopMaxHeight(`${Math.floor(cap)}px`);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [open, isMobile]);
+
   const close = useCallback(() => setOpen(false), []);
 
-  const panelStyle: CSSProperties = {
-    position: "absolute",
-    right: 0,
-    top: "100%",
-    marginTop: 8,
-    // Above password-toggle / form chrome on auth split layout (z-10–ish).
-    zIndex: 100,
-    width,
-    maxHeight: "min(70vh, 560px)",
-    display: "flex",
-    flexDirection: "column",
-    // Inline solid fill — never rely only on Tailwind utility generation.
-    // Auth/forge shells use hsl(var(--background)); keep a white/black fallback
-    // so missing CSS variables cannot leave the panel translucent over the form.
-    backgroundColor: "hsl(var(--background, 0 0% 100%))",
-    background: "hsl(var(--background, 0 0% 100%))",
-    backdropFilter: "none",
-    WebkitBackdropFilter: "none",
-    isolation: "isolate",
-    // Contact + ambient, no hairline ring. The ring was doing the separating
-    // work a shadow should do, which is why the panel read as a pasted-on box:
-    // a 1px line at 4% alpha is too faint to be a deliberate edge and too
-    // present to disappear. The two-layer form gives 2px of contact and 24px of
-    // visible ambient spread (48px blur against -24px spread) so the surface
-    // lifts off the page instead of being outlined against it.
-    boxShadow: "0 1px 2px rgb(0 0 0 / 0.06), 0 24px 48px -24px rgb(0 0 0 / 0.28)",
-  };
+  const panelStyle: CSSProperties = isMobile
+    ? {
+        position: "fixed",
+        left: "max(0.75rem, env(safe-area-inset-left))",
+        right: "max(0.75rem, env(safe-area-inset-right))",
+        top: "max(0.75rem, env(safe-area-inset-top))",
+        bottom: "max(0.75rem, env(safe-area-inset-bottom))",
+        marginTop: 0,
+        zIndex: 200,
+        width: "auto",
+        maxHeight: "none",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "hsl(var(--background, 0 0% 100%))",
+        background: "hsl(var(--background, 0 0% 100%))",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
+        isolation: "isolate",
+        boxShadow: "0 1px 2px rgb(0 0 0 / 0.06), 0 24px 48px -24px rgb(0 0 0 / 0.28)",
+      }
+    : {
+        position: "absolute",
+        right: 0,
+        top: "100%",
+        marginTop: 8,
+        // Above password-toggle / form chrome on auth split layout (z-10–ish).
+        zIndex: 100,
+        width,
+        maxHeight: desktopMaxHeight,
+        display: "flex",
+        flexDirection: "column",
+        // Inline solid fill — never rely only on Tailwind utility generation.
+        // Auth/forge shells use hsl(var(--background)); keep a white/black fallback
+        // so missing CSS variables cannot leave the panel translucent over the form.
+        backgroundColor: "hsl(var(--background, 0 0% 100%))",
+        background: "hsl(var(--background, 0 0% 100%))",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
+        isolation: "isolate",
+        // Contact + ambient, no hairline ring. The ring was doing the separating
+        // work a shadow should do, which is why the panel read as a pasted-on box:
+        // a 1px line at 4% alpha is too faint to be a deliberate edge and too
+        // present to disappear. The two-layer form gives 2px of contact and 24px of
+        // visible ambient spread (48px blur against -24px spread) so the surface
+        // lifts off the page instead of being outlined against it.
+        boxShadow: "0 1px 2px rgb(0 0 0 / 0.06), 0 24px 48px -24px rgb(0 0 0 / 0.28)",
+      };
 
   return (
     <div
@@ -122,6 +189,7 @@ export function LocalePanel({
       }}
     >
       <button
+        ref={triggerRef}
         type="button"
         aria-label={copy.triggerAria}
         aria-haspopup="dialog"
@@ -140,11 +208,20 @@ export function LocalePanel({
         {trigger}
       </button>
 
+      {open && isMobile ? (
+        <button
+          type="button"
+          aria-label={copy.closeAria}
+          className="fixed inset-0 z-[190] bg-black/40"
+          onClick={close}
+        />
+      ) : null}
+
       {open ? (
         <div
           role="dialog"
           aria-label={copy.menuAria}
-          aria-modal="false"
+          aria-modal={isMobile ? "true" : "false"}
           style={panelStyle}
           className="overflow-hidden rounded-[var(--radius-lg)] bg-background"
         >
@@ -160,7 +237,7 @@ export function LocalePanel({
             // surface, so the header read as a different material rather than a
             // lighter part of the same one. Everything on this surface now comes
             // from the semantic ramp.
-            <div className="bg-muted px-4 py-3">
+            <div className="shrink-0 bg-muted px-4 py-3">
               {copy.title ? (
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -173,7 +250,7 @@ export function LocalePanel({
                     type="button"
                     aria-label={copy.closeAria}
                     onClick={close}
-                    className="-mr-1 -mt-1 rounded-[var(--radius-sm)] p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                    className="-mr-1 -mt-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-[var(--radius-sm)] p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                   >
                     <Cross className="h-4 w-4" aria-hidden />
                   </button>
@@ -186,7 +263,7 @@ export function LocalePanel({
                   // light mode and darker in dark mode, so it reads as inset in
                   // both without a stroke. The ring appears on focus only —
                   // that is feedback, not decoration.
-                  className={`flex items-center gap-2 rounded-[var(--radius-md)] bg-background px-2.5 py-2 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-[hsl(var(--ring)/0.5)] ${
+                  className={`flex min-h-11 items-center gap-2 rounded-[var(--radius-md)] bg-background px-2.5 py-2 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-[hsl(var(--ring)/0.5)] ${
                     copy.title ? "mt-3" : ""
                   }`}
                 >
@@ -209,10 +286,11 @@ export function LocalePanel({
             </div>
           ) : null}
 
-          {/* overscroll-contain stops the wheel chaining to the document once
-              the list hits its end — without it the whole page scrolls
-              underneath an open picker. */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-2">
+          {/* min-h-0 is required so flex-1 + overflow-y-auto can shrink and
+              scroll. Without it, long locale lists are clipped and cannot
+              scroll (mobile / short viewports). overscroll-contain stops the
+              wheel chaining to the document once the list hits its end. */}
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
             {children(query.trim().toLowerCase(), close)}
           </div>
         </div>
