@@ -10,7 +10,8 @@
 | `app.nebutra.com` | web | Main SaaS dashboard (RP — redirects unauthenticated users to auth) |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
 | `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |
-| `design.nebutra.com` | design-docs | Design system docs (optional) |
+| `design.nebutra.com` | design-docs | Design system docs (ECS PM2 :3004) |
+| `status.nebutra.com` | landing (host alias) | Public status page — Vercel landing, rewrite `/` → `/status` |
 | `docs.nebutra.com` | sailor-docs (Cloudflare Worker / Vercel fallback) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias |
@@ -100,6 +101,8 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `admin.nebutra.com` | **not yet created** | **ECS PM2** `admin` :3108 (PM2 slot reserved, not deployed) | Blocked on the Cloudflare Access policy + OIDC gate — do not create the DNS record before both exist. No Vercel project by design |
 | `pebble.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `pebble` :3017 | Brand front. Owner topology 2026-07-30: same ECS A pattern as app/api (not Vercel). nginx `conf.d/pebble.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`pebble`. Legacy `POST /v1/feedback` + `/diagnostics/*` reverse-proxy to api-gateway `/pebble/*`. |
 | `carina.nebutra.com` | A `106.15.4.31` proxied | **ECS nginx static** `/var/www/nebutra/carina/current` | Product docs (Astro). Owner topology 2026-07-30: same ECS A as pebble. nginx `conf.d/carina.nebutra.com.conf`. Deploy: `deploy-carina-ecs.yml`. |
+| `status.nebutra.com` | CNAME → `cname.vercel-dns.com` proxied | **Vercel** `nebutra-landing` | Host alias: landing `proxy.ts` rewrites `/` → `/status`. **Never** point at ECS (default 443 301s to apex). DNS script: `point-status-dns-vercel.sh` / workflow `point-status-dns.yml`. Also bind domain on Vercel project. |
+| `design.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `design-docs` :3004 | nginx `conf.d/design.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`design-docs`. Without PM2 → CF 502; without vhost → 301 apex. DNS: `point-design-dns-ecs.sh`. |
 
 ### Topology layers
 

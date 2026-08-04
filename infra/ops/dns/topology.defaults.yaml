@@ -12,9 +12,14 @@ mail:
 # Pebble brand front is ECS (same A pattern as app/api) — owner topology 2026-07-30.
 # Brand product fronts on ECS (same A pattern as app/api) — owner 2026-07-30.
 # pebble: PM2 Next; carina: nginx static Astro from Nebutra/carina apps/docs.
-ecs_surfaces: [app, auth, api, sso, router, forge, design, status, admin, pebble, carina]
-# No product brand fronts on Vercel.
-vercel_surfaces: []
+# design: PM2 design-docs :3004 + nginx conf.d/design.nebutra.com.conf
+#
+# status is NOT on ECS. It is a Vercel landing host alias (proxy rewrites / → /status)
+# so the public status page stays up when the ECS origin is degraded. Pointing
+# status at 106.15.4.31 made nginx fall through to the default 443 block and
+# 301 to nebutra.com — the "flash back to marketing" bug.
+ecs_surfaces: [app, auth, api, sso, router, forge, design, admin, pebble, carina]
+vercel_surfaces: [status]
 proxy:
   proxied:
     [

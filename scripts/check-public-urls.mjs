@@ -43,6 +43,17 @@ const endpoints = [
     okStatuses: [200],
   },
   {
+    // Host alias on Vercel landing — must stay on status.nebutra.com (not 301 to apex).
+    id: "status",
+    url: "https://status.nebutra.com",
+    okStatuses: [200],
+  },
+  {
+    id: "status-json",
+    url: "https://status.nebutra.com/status.json",
+    okStatuses: [200],
+  },
+  {
     id: "sailor-docs",
     url: "https://docs.nebutra.com",
     okStatuses: [200],
