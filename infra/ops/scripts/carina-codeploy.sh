@@ -19,7 +19,10 @@ APPROVAL_MODE="${CARINA_SESSION_APPROVAL_MODE:-always-approve}"
 
 if [ ! -x "$CARINA_ROOT/bin/carina-daemon" ]; then
   echo "Installing carina-daemon…"
-  bash "$SCRIPTS_DIR/install-carina-daemon.sh"
+  if ! bash "$SCRIPTS_DIR/install-carina-daemon.sh"; then
+    echo "ERROR: install-carina-daemon.sh failed" >&2
+    exit 1
+  fi
 fi
 
 mkdir -p "$CARINA_ROOT/run" "$WS_ROOT" "$STATE_DIR"

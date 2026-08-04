@@ -1360,9 +1360,15 @@ ensure_carina_codeploy() {
   fi
 
   log "Carina same-host co-deploy via $scripts/carina-codeploy.sh"
+  # Soft-fail + hard wall clock: never hang the ECS SSH deploy session.
   # Soft-fail: gateway health already passed; daemon install should not roll back API.
-  if ! bash "$scripts/carina-codeploy.sh"; then
-    log "WARNING: carina-codeploy.sh failed — api-gateway is up; Track-B exec will fail closed until fixed"
+  if command -v timeout >/dev/null 2>&1; then
+    if ! timeout 240 bash "$scripts/carina-codeploy.sh"; then
+      log "WARNING: carina-codeploy.sh failed/timed out — api-gateway is up; Track-B fail-closed until fixed"
+      return 0
+    fi
+  elif ! bash "$scripts/carina-codeploy.sh"; then
+    log "WARNING: carina-codeploy.sh failed — api-gateway is up; Track-B fail-closed until fixed"
     return 0
   fi
   log "Carina co-deploy finished (socket + api env)"
