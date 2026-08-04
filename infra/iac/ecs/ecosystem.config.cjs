@@ -53,6 +53,29 @@ module.exports = {
       listen_timeout: 10000,
     },
     {
+      // Serves design.nebutra.com. Renders the real @nebutra/ui against the
+      // real token source, so a token that breaks a component breaks the page —
+      // which is the point of it. Replaced design-docs at that hostname.
+      name: "design",
+      cwd: "/var/www/nebutra/design/current",
+      script: "apps/design/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3109,
+        HOSTNAME: "127.0.0.1",
+      },
+      max_memory_restart: "400M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
+      // Legacy. 442 MDX pages the live surface above supersedes; kept
+      // deployable so nothing is lost while its content is triaged, but no
+      // vhost points at it any more.
       name: "design-docs",
       cwd: "/var/www/nebutra/design-docs/current",
       script: "apps/design-docs/server.js",

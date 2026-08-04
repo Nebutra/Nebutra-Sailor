@@ -44,7 +44,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api idp auth design-docs pebble sailor-docs router forge admin). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api idp auth design design-docs pebble sailor-docs router forge admin). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -55,6 +55,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "apps/design/**"
       - "apps/forge/**"
       - "apps/router/**"
       - "apps/pebble/**"
@@ -102,6 +103,7 @@ jobs:
       api:         ${{ steps.resolve.outputs.api }}
       idp:         ${{ steps.resolve.outputs.idp }}
       auth:        ${{ steps.resolve.outputs.auth }}
+      design:      ${{ steps.resolve.outputs.design }}
       design-docs: ${{ steps.resolve.outputs['design-docs'] }}
       pebble:      ${{ steps.resolve.outputs.pebble }}
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
@@ -184,6 +186,9 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
+            design:
+              - 'apps/design/**'
+              - 'packages/design/**'
             design-docs:
               - 'apps/design-docs/**'
               - 'packages/**'
@@ -248,6 +253,7 @@ jobs:
           F_API_CORE:     ${{ steps.filter.outputs['api-core'] }}
           F_IDP:          ${{ steps.filter.outputs.idp }}
           F_AUTH:         ${{ steps.filter.outputs.auth }}
+          F_DESIGN:       ${{ steps.filter.outputs.design }}
           F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
           F_PEBBLE:       ${{ steps.filter.outputs.pebble }}
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
@@ -271,11 +277,13 @@ jobs:
           emit_next_matrix() {
             local landing="$1" web="$2" idp="$3" auth="$4" design_docs="$5"
             local pebble="$6" sailor_docs="$7" router="$8" forge="$9" admin="${10}"
+            local design="${11}"
             local items=()
             [ "$landing" = "true" ] && items+=('{"app":"landing","package":"@nebutra/landing","workspace":"apps/landing","kind":"next-standalone","build_command":"build","site_url":"https://nebutra.com"}')
             [ "$web" = "true" ] && items+=('{"app":"web","package":"@nebutra/web","workspace":"apps/web","kind":"next-standalone","build_command":"build:next","site_url":"https://app.nebutra.com"}')
             [ "$idp" = "true" ] && items+=('{"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","kind":"next-standalone","build_command":"build","site_url":"https://sso.nebutra.com"}')
             [ "$auth" = "true" ] && items+=('{"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","kind":"next-standalone","build_command":"build","site_url":"https://auth.nebutra.com"}')
+            [ "$design" = "true" ] && items+=('{"app":"design","package":"@nebutra/design","workspace":"apps/design","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}')
             [ "$design_docs" = "true" ] && items+=('{"app":"design-docs","package":"@nebutra/design-docs","workspace":"apps/design-docs","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}')
             [ "$pebble" = "true" ] && items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}')
             [ "$sailor_docs" = "true" ] && items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}')
@@ -319,6 +327,7 @@ jobs:
               echo "api=$api"
               echo "idp=false"
               echo "auth=false"
+              echo "design=false"
               echo "design-docs=false"
               echo "pebble=$pebble"
               echo "sailor-docs=false"
@@ -326,7 +335,7 @@ jobs:
               echo "forge=$forge"
               echo "admin=false"
               echo "any=$any"
-              emit_next_matrix false false false false false "$pebble" false "$router" "$forge" false
+              emit_next_matrix false false false false false "$pebble" false "$router" "$forge" false false
             } >> "$GITHUB_OUTPUT"
             echo "Auto-CI push: api=$api forge=$forge router=$router pebble=$pebble any=$any"
             exit 0
@@ -338,13 +347,13 @@ jobs:
             unknown_apps=""
             for app in $normalized_apps; do
               case "$app" in
-                landing|web|api|idp|auth|design-docs|pebble|sailor-docs|router|forge|admin) ;;
+                landing|web|api|idp|auth|design|design-docs|pebble|sailor-docs|router|forge|admin) ;;
                 *) unknown_apps="$unknown_apps $app" ;;
               esac
             done
 
             if [ -n "$unknown_apps" ]; then
-              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design-docs pebble sailor-docs router forge admin"
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design design-docs pebble sailor-docs router forge admin"
               exit 1
             fi
           fi
@@ -356,6 +365,7 @@ jobs:
               api=$(contains_app "$normalized_apps" api)
               idp=$(contains_app "$normalized_apps" idp)
               auth=$(contains_app "$normalized_apps" auth)
+              design=$(contains_app "$normalized_apps" design)
               design_docs=$(contains_app "$normalized_apps" design-docs)
               pebble=$(contains_app "$normalized_apps" pebble)
               sailor_docs=$(contains_app "$normalized_apps" sailor-docs)
@@ -367,6 +377,7 @@ jobs:
               echo "api=$api"
               echo "idp=$idp"
               echo "auth=$auth"
+              echo "design=$design"
               echo "design-docs=$design_docs"
               echo "pebble=$pebble"
               echo "sailor-docs=$sailor_docs"
@@ -374,13 +385,14 @@ jobs:
               echo "forge=$forge"
               echo "admin=$admin"
               echo "any=true"
-              emit_next_matrix "$landing" "$web" "$idp" "$auth" "$design_docs" "$pebble" "$sailor_docs" "$router" "$forge" "$admin"
+              emit_next_matrix "$landing" "$web" "$idp" "$auth" "$design_docs" "$pebble" "$sailor_docs" "$router" "$forge" "$admin" "$design"
             else
               echo "landing=$F_LANDING"
               echo "web=$F_WEB"
               echo "api=$F_API"
               echo "idp=$F_IDP"
               echo "auth=$F_AUTH"
+              echo "design=$F_DESIGN"
               echo "design-docs=$F_DESIGN_DOCS"
               echo "pebble=$F_PEBBLE"
               echo "sailor-docs=$F_SAILOR_DOCS"
@@ -388,7 +400,7 @@ jobs:
               echo "forge=$F_FORGE"
               echo "admin=$F_ADMIN"
               echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_PEBBLE" == "true" || "$F_SAILOR_DOCS" == "true" || "$F_ROUTER" == "true" || "$F_FORGE" == "true" || "$F_ADMIN" == "true" ]] && echo true || echo false)"
-              emit_next_matrix "$F_LANDING" "$F_WEB" "$F_IDP" "$F_AUTH" "$F_DESIGN_DOCS" "$F_PEBBLE" "$F_SAILOR_DOCS" "$F_ROUTER" "$F_FORGE" "$F_ADMIN"
+              emit_next_matrix "$F_LANDING" "$F_WEB" "$F_IDP" "$F_AUTH" "$F_DESIGN_DOCS" "$F_PEBBLE" "$F_SAILOR_DOCS" "$F_ROUTER" "$F_FORGE" "$F_ADMIN" "$F_DESIGN"
             fi
           } >> "$GITHUB_OUTPUT"
 
@@ -681,6 +693,13 @@ jobs:
           name: bundle-web
           path: ${{ runner.temp }}/bundles
 
+      - name: Download design bundle
+        if: needs.detect-changes.outputs.design == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-design
+          path: ${{ runner.temp }}/bundles
+
       - name: Download design-docs bundle
         if: needs.detect-changes.outputs['design-docs'] == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
@@ -783,6 +802,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.api }}" = "true" ] && prune_apps="$prune_apps api"
           [ "${{ needs.detect-changes.outputs.idp }}" = "true" ] && prune_apps="$prune_apps idp"
           [ "${{ needs.detect-changes.outputs.auth }}" = "true" ] && prune_apps="$prune_apps auth"
+          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && prune_apps="$prune_apps design"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && prune_apps="$prune_apps design-docs"
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && prune_apps="$prune_apps pebble"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && prune_apps="$prune_apps sailor-docs"
@@ -1201,6 +1221,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
+          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && APPS="$APPS design"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs.pebble }}"         = "true" ] && APPS="$APPS pebble"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
@@ -1304,7 +1325,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && targets[idp]="https://sso.nebutra.com/.well-known/openid-configuration"
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && targets[auth]="https://auth.nebutra.com/health"
-          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && targets[design]="https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && targets[pebble]="https://pebble.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && targets[router]="https://router.nebutra.com"
@@ -1513,6 +1534,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
+          [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && APPS="$APPS design"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs.pebble }}"         = "true" ] && APPS="$APPS pebble"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
