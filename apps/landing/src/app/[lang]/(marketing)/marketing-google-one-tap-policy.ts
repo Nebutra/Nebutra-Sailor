@@ -1,7 +1,15 @@
 import { legacyLocalePathRedirect } from "@nebutra/i18n/locales";
 import { routing } from "@/i18n/routing";
 
-const oneTapSuppressedPaths = new Set(["/refer"]);
+/**
+ * Paths that must never mount Google One Tap.
+ *
+ * - `/refer` — waitlist handoff must not steal focus / conflict with invite flow
+ * - `/status` — public trust surface (also served on status.nebutra.com). One Tap
+ *   here looked like "status requires login" and still pointed some clients at
+ *   the legacy app `/dashboard` dead-end after auth.
+ */
+const oneTapSuppressedPaths = new Set(["/refer", "/status"]);
 
 function normalizePathname(pathname: string): string {
   const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
