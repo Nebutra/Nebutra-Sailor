@@ -65,13 +65,13 @@ const ROWS = [
  * `var()`, because these tokens hold bare HSL channels and a colour slot given
  * bare channels silently voids the whole declaration. */
 const ROLES = [
-  { className: "bg-primary", label: "primary" },
-  { className: "bg-secondary", label: "secondary" },
-  { className: "bg-accent", label: "accent" },
-  { className: "bg-muted", label: "muted" },
-  { className: "bg-success", label: "success" },
-  { className: "bg-warning", label: "warning" },
-  { className: "bg-destructive", label: "destructive" },
+  { className: "bg-primary", label: "primary", short: "prim" },
+  { className: "bg-secondary", label: "secondary", short: "sec" },
+  { className: "bg-accent", label: "accent", short: "acc" },
+  { className: "bg-muted", label: "muted", short: "mut" },
+  { className: "bg-success", label: "success", short: "ok" },
+  { className: "bg-warning", label: "warning", short: "warn" },
+  { className: "bg-destructive", label: "destructive", short: "err" },
 ];
 
 function Stat({ label, value }: { label: string; value: string }) {
@@ -208,11 +208,21 @@ export function LiveSpecimen() {
               readout of what the active language points each role at. */}
           <div className="rounded-panel bg-card p-5 shadow-ambient-sm">
             <p className="text-[12px] text-muted-foreground">Semantic fills, live</p>
-            <div className="mt-3 grid grid-cols-7 gap-px overflow-hidden rounded-[var(--radius-sm)]">
+            {/* Named, not merely shown. Three of these roles are near-white in
+                several languages, and an unlabelled strip of pale cells reads
+                as a rendering fault rather than as the honest answer that
+                secondary, accent and muted are all pale there. The seam is a
+                gap over a tinted backdrop, so adjacent pale cells still part. */}
+            <ul className="mt-3 grid grid-cols-7 gap-px overflow-hidden rounded-[var(--radius-sm)] bg-border/50">
               {ROLES.map((role) => (
-                <div className={`h-10 ${role.className}`} key={role.label} title={role.label} />
+                <li className="flex flex-col bg-card" key={role.label}>
+                  <span className={`h-10 ${role.className}`} />
+                  <span className="pt-1.5 pb-0.5 text-center text-[9px] text-muted-foreground">
+                    {role.short}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
             <p className="mt-3 text-[12px] text-muted-foreground leading-relaxed">
               Seven roles. A language re-points them; nothing above imports a colour.
             </p>

@@ -109,11 +109,13 @@ export default function HomePage() {
           picker sits directly above the surface it rewrites, so the causal link
           is visible in one glance instead of requiring a trip to the header. */}
       <section className="flex flex-col gap-8">
-        <header className="max-w-3xl">
-          <h1 className="font-semibold text-4xl text-foreground tracking-tight sm:text-[52px] sm:leading-[1.05]">
+        <header className="max-w-4xl">
+          {/* text-balance so the two clauses stay on their own lines instead of
+              breaking mid-phrase at the container edge. */}
+          <h1 className="text-balance font-semibold text-4xl text-foreground tracking-tight sm:text-[52px] sm:leading-[1.05]">
             One switch, <span className="text-primary">the whole language</span>.
           </h1>
-          <p className="mt-5 text-[16px] text-muted-foreground leading-relaxed">
+          <p className="mt-5 max-w-3xl text-[16px] text-muted-foreground leading-relaxed">
             {SITE_NAME} is a verification surface, not a documentation site. It imports the real
             packages and renders them — so a token that breaks a component breaks this page, and
             changing the design language below changes an actual product screen rather than a

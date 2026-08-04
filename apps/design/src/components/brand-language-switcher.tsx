@@ -21,6 +21,7 @@
  */
 
 import { cn } from "@nebutra/ui/utils";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 
 const STORAGE_KEY = "nebutra.design.brand";
@@ -88,8 +89,18 @@ function useBrandLanguage(): [string, (id: string) => void, boolean] {
   return [active, select, ready];
 }
 
+/**
+ * The persistent control in the site header, for every page that is not the
+ * home page. The home page mounts the full-size picker directly above the
+ * surface it rewrites, and rendering both put two identical eight-button rows
+ * within a screen of each other — the second one reads as a broken duplicate,
+ * not as a convenience.
+ */
 export function BrandLanguageSwitcher({ className }: { className?: string }) {
   const [active, select, ready] = useBrandLanguage();
+  const pathname = usePathname();
+
+  if (pathname === "/") return null;
 
   return (
     <fieldset
