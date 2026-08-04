@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/local-embedding",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Deterministic zero-config local text embedding primitive shared by file and RAG indexes",
   "private": false,
   "license": "MIT",
