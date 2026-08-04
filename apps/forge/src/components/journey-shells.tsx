@@ -817,7 +817,7 @@ export function ShellArtifacts({ artifacts }: { artifacts: readonly ShellArtifac
         <FilePaperSpecimen
           filename={a.filename ?? a.label}
           content={a.body}
-          kindLabel={a.label !== (a.filename ?? a.label) ? a.label : undefined}
+          {...(a.label !== (a.filename ?? a.label) ? { kindLabel: a.label } : {})}
           linesLabel={t("filePaper.lines", { n: stats.lines })}
           charsLabel={t("filePaper.chars", { n: stats.chars })}
           emptyLabel={t("filePaper.empty")}
