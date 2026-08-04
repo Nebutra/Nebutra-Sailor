@@ -3,7 +3,13 @@
  */
 
 /** Auth split-shell + primary CTA contracts (width + ink CTA pairing). */
-export { AUTH_FORM_COLUMN_CLASS, AUTH_PRIMARY_CTA_CLASS } from "./auth-surfaces";
+export {
+  AUTH_FORM_CARD_CLASS,
+  AUTH_FORM_COLUMN_CLASS,
+  AUTH_OAUTH_BUTTON_CLASS,
+  AUTH_OAUTH_GRID_CLASS,
+  AUTH_PRIMARY_CTA_CLASS,
+} from "./auth-surfaces";
 /**
  * Merge class names — canonical implementation from ./cn.ts
  * Uses twMerge(clsx(...)) to correctly resolve Tailwind class conflicts.

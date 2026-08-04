@@ -1,18 +1,14 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { AUTH_FORM_COLUMN_CLASS, AUTH_PRIMARY_CTA_CLASS } from "../auth-surfaces";
+import {
+  AUTH_FORM_CARD_CLASS,
+  AUTH_FORM_COLUMN_CLASS,
+  AUTH_OAUTH_BUTTON_CLASS,
+  AUTH_OAUTH_GRID_CLASS,
+  AUTH_PRIMARY_CTA_CLASS,
+} from "../auth-surfaces";
 
-/**
- * Auth form-column + primary CTA contracts.
- *
- * Hard-and-correct: one width, one CTA recipe. Both product shells
- * (auth-center + Agent OS web) must import the SSOT; ad-hoc max-widths
- * and bg-[hsl(var(--foreground))] fights against btn-brand-default are
- * banned so the column cannot silently widen or re-paint identity blue.
- *
- * Paths are monorepo-relative from packages/design/ui (vitest cwd).
- */
 const REPO_ROOT = join(process.cwd(), "../../..");
 
 const SPLIT_LAYOUTS = [
@@ -39,20 +35,23 @@ const FOREGROUND_FILL_FIGHT =
   /bg-\[hsl\(var\(--foreground\)\)\][\s\S]{0,120}text-\[hsl\(var\(--background\)\)\]/;
 
 describe("auth surface layout contracts", () => {
-  it("exports a login-card column (max-w-xs / 20rem), not looser form scales", () => {
-    expect(AUTH_FORM_COLUMN_CLASS).toContain("max-w-xs");
+  it("forces login-card width (min 360px cap), not soft max-w-sm/xs alone", () => {
+    expect(AUTH_FORM_COLUMN_CLASS).toMatch(/360px|min\(100%/);
+    expect(AUTH_FORM_COLUMN_CLASS).toContain("min-w-0");
     expect(AUTH_FORM_COLUMN_CLASS).not.toContain("max-w-sm");
-    expect(AUTH_FORM_COLUMN_CLASS).not.toMatch(/max-w-\[\d+px\]/);
+    expect(AUTH_FORM_COLUMN_CLASS).not.toContain("max-w-xs");
+    expect(AUTH_FORM_CARD_CLASS).toContain("rounded");
     expect(AUTH_PRIMARY_CTA_CLASS).toContain("w-full");
   });
 
-  it("both product AuthSplitLayouts import and apply AUTH_FORM_COLUMN_CLASS", () => {
+  it("both product AuthSplitLayouts apply column + card SSOT", () => {
     for (const rel of SPLIT_LAYOUTS) {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
       expect(source, rel).toContain("AUTH_FORM_COLUMN_CLASS");
+      expect(source, rel).toContain("AUTH_FORM_CARD_CLASS");
       expect(source, rel).toContain('from "@nebutra/ui/utils"');
-      expect(source, rel).not.toMatch(/max-w-\[\d+px\]/);
       expect(source, rel).not.toMatch(/max-w-sm(?![\w-])/);
+      expect(source, rel).not.toMatch(/max-w-xs(?![\w-])/);
     }
   });
 
@@ -63,12 +62,19 @@ describe("auth surface layout contracts", () => {
     }
   });
 
-  it("OAuth grids stay single-column for two providers (no stretched dual pills)", () => {
+  it("OAuth is Neon-style always-2-col compact grid (never stacked full-width bars)", () => {
+    expect(AUTH_OAUTH_GRID_CLASS).toContain("grid-cols-2");
+    expect(AUTH_OAUTH_BUTTON_CLASS).toContain("h-9");
     for (const rel of OAUTH_BUTTONS) {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
-      expect(source, rel).toMatch(/providers\.length\s*>=\s*3/);
+      expect(source, rel).toContain("AUTH_OAUTH_GRID_CLASS");
+      expect(source, rel).toContain("AUTH_OAUTH_BUTTON_CLASS");
+      // Forbidden: stack-when-two gate or always-single-col for 2 providers
+      expect(source, rel).not.toMatch(/providers\.length\s*>=\s*3/);
+      expect(source, rel).not.toMatch(/multiCol/);
       expect(source, rel).not.toMatch(/className="grid grid-cols-1 gap-3 sm:grid-cols-2"/);
       expect(source, rel).not.toMatch(/className="grid gap-3 grid-cols-1 sm:grid-cols-2"/);
+      expect(source, rel).not.toMatch(/className="grid grid-cols-1 gap-3"/);
     }
   });
 });

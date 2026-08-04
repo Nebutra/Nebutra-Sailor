@@ -1,5 +1,5 @@
 import { ArrowLeft } from "@nebutra/icons";
-import { AUTH_FORM_COLUMN_CLASS, cn } from "@nebutra/ui/utils";
+import { AUTH_FORM_CARD_CLASS, AUTH_FORM_COLUMN_CLASS, cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { AuthBanner } from "./auth-banner";
@@ -50,7 +50,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,hsl(var(--muted))_80%,transparent),transparent)] lg:hidden"
         />
-        <div className={AUTH_FORM_COLUMN_CLASS}>{children}</div>
+        <div className={cn(AUTH_FORM_COLUMN_CLASS, AUTH_FORM_CARD_CLASS)}>{children}</div>
       </main>
     </div>
   );

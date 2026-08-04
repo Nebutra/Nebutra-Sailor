@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/primitives";
+import { AUTH_OAUTH_BUTTON_CLASS, AUTH_OAUTH_GRID_CLASS } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
@@ -123,12 +124,8 @@ export function OAuthButtons({ mode, providers = OAUTH_PROVIDERS, returnUrl }: O
 
   if (providers.length === 0) return null;
 
-  // Two providers side-by-side stretches empty pills across the login card;
-  // dual columns only pay off at three or more.
-  const multiCol = providers.length >= 3;
-
   return (
-    <div className={multiCol ? "grid gap-3 grid-cols-1 sm:grid-cols-2" : "grid gap-3 grid-cols-1"}>
+    <div className={AUTH_OAUTH_GRID_CLASS}>
       {providers.map((provider) => {
         const Icon = PROVIDER_ICON[provider];
         const label = t(`providers.${provider}`);
@@ -137,7 +134,7 @@ export function OAuthButtons({ mode, providers = OAUTH_PROVIDERS, returnUrl }: O
             key={provider}
             type="button"
             variant="outline"
-            className="h-10 w-full justify-center gap-2.5 border-border bg-background px-3 text-foreground shadow-none hover:bg-muted"
+            className={AUTH_OAUTH_BUTTON_CLASS}
             disabled={loadingProvider !== null}
             aria-label={`${t("continueWith")} ${label}`}
             onClick={() => handleOAuth(provider)}
