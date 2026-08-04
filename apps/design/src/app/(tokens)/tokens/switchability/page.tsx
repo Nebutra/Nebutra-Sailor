@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
-import { Chip, Mono, Note, PageHeader, Panel, Section } from "../_components/primitives";
+import { Mono, Note, PageHeader, Panel, Section } from "../_components/primitives";
 
 export const metadata: Metadata = {
   title: "Switchability",
@@ -96,15 +96,12 @@ export default function SwitchabilityPage() {
                     ? "Declared by every language; nothing reads it."
                     : `${d.consumers} consuming file${d.consumers === 1 ? "" : "s"}.`}
               </p>
-              {d.status === "live" ? (
-                <Chip tone="pass">{d.consumers} readers</Chip>
-              ) : d.status === "known-inert" ? (
-                <Chip tone="warn">allowlisted</Chip>
-              ) : d.status === "undeclared" ? (
-                <Chip tone="neutral">no emitters</Chip>
-              ) : (
-                <Chip tone="fail">inert</Chip>
-              )}
+              {/* No chip here. The badge in the corner already states the
+                  status and the line above already states the count, so a
+                  third element saying "368 readers" next to "368 consuming
+                  files." was repeating the card back to itself — and the
+                  duplication is what produced "1 readers", since only one of
+                  the two copies bothered to pluralise. */}
             </Panel>
           ))}
         </div>
