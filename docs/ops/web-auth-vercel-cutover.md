@@ -51,6 +51,25 @@ Local proof (2026-07-22): `pnpm --filter @nebutra/web run build:next` emits
 - Re-enable auto-deploy on marketing apps after cutover, or upgrade the
   team off Hobby if monorepo velocity needs more than ~100 deploys/day.
 
+### CI quota hygiene (2026-08)
+
+GitHub Actions CLI deploys **bypass** `scripts/vercel-ignore-build.sh` (that
+script only runs for Vercel Git-connected builds). To stop burning the daily
+cap on monorepo noise:
+
+| Control | Where |
+|---------|--------|
+| Narrow path filters (no `packages/**`) | `deploy-web-vercel.yml`, `deploy-auth-vercel.yml` |
+| `cancel-in-progress: true` | all Vercel deploy workflows |
+| `vercel deploy --archive=tgz` | all CLI deploys (15k-file monorepo limit) |
+| Root `.vercelignore` | drop backends / typelens / storybook / research from upload |
+| Pebble Vercel = workflow_dispatch only | `deploy-pebble-vercel.yml` (ECS primary) |
+| Landing deferred retry cron | `deploy-landing-vercel.yml` `19:17` UTC only |
+| Quota soft-fail (job green, site unchanged) | all deploy workflows |
+
+**Ship logo / web UI without Vercel:** production `app.nebutra.com` is ECS —
+use `deploy-ecs.yml` or the existing PM2 path. Vercel is optional edge only.
+
 ## Free unblocking playbook (recommended order)
 
 1. **Ship product on ECS** — always works; no Vercel quota involved.

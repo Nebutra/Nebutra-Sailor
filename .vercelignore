@@ -1,0 +1,60 @@
+# Monorepo upload trim for `vercel deploy` from repo root.
+# Root Directory (apps/web, apps/landing, …) still selects the app; this only
+# drops trees no Vercel frontend build needs. Pairs with --archive=tgz in CI.
+#
+# Hobby: smaller uploads fail less often; fewer files avoid the CLI 15k limit.
+
+# VCS / agent / IDE noise
+.git
+.github
+.claude
+.cursor
+.grok
+.vscode
+.idea
+.turbo
+
+# Backend / non-Vercel surfaces (CF Workers, ECS, research crawls)
+backends
+e2e
+tests
+infra
+workflows
+research
+coverage
+
+# Apps not deployed via this monorepo's Vercel CLI workflows
+apps/typelens
+apps/storybook
+apps/design-docs
+apps/studio
+apps/sleptons
+apps/mail-preview
+apps/idp
+apps/admin
+apps/forge
+apps/router
+apps/design
+
+# Heavy Type Lens crawl / research (catalog package keeps src/generated)
+packages/design/typelens-catalog/research
+packages/design/typelens-catalog/scripts
+
+# Build outputs & deps (never upload)
+**/node_modules
+**/.next
+**/dist
+**/out
+**/.turbo
+**/coverage
+**/.open-next
+**/.wrangler
+**/.vercel
+**/*.tsbuildinfo
+**/playwright-report
+**/test-results
+
+# Local env (secrets must come from Vercel project env)
+**/.env
+**/.env.*
+!**/.env.example

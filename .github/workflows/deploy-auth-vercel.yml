@@ -1,7 +1,8 @@
 name: Deploy Auth Center (Vercel)
 
-# Login center on Vercel — same pattern as docs/landing.
-# ECS keeps api + sso only; auth is multi-app RP session authority on the edge.
+# Login center on Vercel — same pattern as web. ECS keeps api + sso only;
+# auth is multi-app RP session authority on the edge when DNS is flipped.
+# Hobby: narrow paths, cancel superseded runs, --archive=tgz; manual retry only.
 
 on:
   workflow_dispatch:
@@ -9,20 +10,28 @@ on:
     branches: [main]
     paths:
       - "apps/auth/**"
+      - "apps/auth/vercel.json"
       - "packages/iam/auth/**"
+      - "packages/iam/captcha/**"
       - "packages/platform/db/**"
+      - "packages/platform/i18n/**"
+      - "packages/platform/logger/**"
       - "packages/design/brand/**"
       - "packages/design/ui/**"
       - "packages/design/tokens/**"
-      - "pnpm-lock.yaml"
-      - "apps/auth/vercel.json"
+      - "packages/design/design-tokens/**"
+      - "packages/design/icons/**"
+      - "pnpm-workspace.yaml"
+      - "turbo.json"
+      - ".github/workflows/deploy-auth-vercel.yml"
+  # No daily cron — same rationale as deploy-web (ECS primary; manual retry).
 
 permissions:
   contents: read
 
 concurrency:
   group: deploy-auth-vercel-production
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   vercel:
@@ -37,6 +46,7 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Deploy to Vercel (production)
+        id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
@@ -45,6 +55,7 @@ jobs:
           set -euo pipefail
           if [ -z "${VERCEL_TOKEN:-}" ]; then
             echo "::notice::VERCEL_TOKEN not set — relying on Vercel Git integration only."
+            echo "deployed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           if [ -z "${VERCEL_PROJECT_ID:-}" ]; then
@@ -53,30 +64,39 @@ jobs:
           fi
           npm i -g vercel@56.5.0
           # Deploy from monorepo root. Dashboard Root Directory is already
-          # apps/auth — do NOT also pass --cwd apps/auth (doubles to apps/auth/apps/auth).
+          # apps/auth — do NOT also pass --cwd apps/auth (doubles path).
           mkdir -p .vercel
           cat > .vercel/project.json <<EOF
           {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
           EOF
           set +e
-          out=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
+          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" \
             --scope "${VERCEL_ORG_ID:-}" 2>&1)
           code=$?
           set -e
           echo "$out"
           if [ "$code" -ne 0 ]; then
-            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours'; then
-              echo "::warning::Vercel Hobby daily deploy quota exhausted. Rely on Git integration or retry after ~24h."
-              exit 0
-            fi
-            if echo "$out" | grep -qiE 'Upload aborted'; then
-              echo "::warning::Vercel upload aborted (transient network/quota). Retry later."
+            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours|Upload aborted'; then
+              echo "deployed=false" >> "$GITHUB_OUTPUT"
+              {
+                echo "### Not deployed"
+                echo
+                echo "Vercel refused the deployment — **auth.nebutra.com still serves the previous build**."
+                echo "After the cap resets (~24h), re-run **Deploy Auth Center (Vercel)** via workflow_dispatch."
+                echo
+                echo '```'
+                echo "$out" | tail -5
+                echo '```'
+              } >> "$GITHUB_STEP_SUMMARY"
+              echo "::warning::Vercel Hobby daily deploy quota exhausted / upload deferred. Retry after ~24h via workflow_dispatch."
               exit 0
             fi
             exit "$code"
           fi
+          echo "deployed=true" >> "$GITHUB_OUTPUT"
 
       - name: Smoke auth.nebutra.com
+        if: steps.deploy.outputs.deployed != 'false'
         run: |
           set -euo pipefail
           code=$(curl -sS -o /tmp/auth-health.json -w '%{http_code}' --max-time 30 \

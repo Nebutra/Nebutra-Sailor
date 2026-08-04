@@ -5,15 +5,16 @@ name: Deploy Pebble brand front (Vercel)
 # which owns the Cloudflare CNAME.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "apps/pebble/**"
-      - ".github/workflows/deploy-pebble-vercel.yml"
-  # Retries a deploy the daily cap refused — see the deferral branch below.
-  # Offset from the landing retry so the two do not race for the same quota.
-  schedule:
-    - cron: "37 19 * * *"
+  # DOMAINS.md: pebble production is ECS PM2; Vercel is optional. Manual only
+  # so Hobby quota is not burned on push or nightly no-op deploys.
+  # Uncomment push/schedule if you re-cut pebble.nebutra.com DNS to Vercel.
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "apps/pebble/**"
+  #     - ".github/workflows/deploy-pebble-vercel.yml"
+  # schedule:
+  #   - cron: "37 19 * * *"
   workflow_dispatch:
 
 permissions:
@@ -97,7 +98,7 @@ jobs:
           export VERCEL_PROJECT_ID="$PROJECT_ID"
 
           set +e
-          out=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID" 2>&1)
+          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID" 2>&1)
           code=$?
           set -e
           echo "$out"

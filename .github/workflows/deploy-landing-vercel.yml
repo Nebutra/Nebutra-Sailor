@@ -105,7 +105,8 @@ jobs:
           export VERCEL_PROJECT_ID="$PROJECT_ID"
 
           set +e
-          out=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}" 2>&1)
+          # --archive=tgz: one tarball upload (Hobby monorepo + 15k-file CLI limit).
+          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" --scope "${VERCEL_ORG_ID:-}" 2>&1)
           code=$?
           set -e
           echo "$out"

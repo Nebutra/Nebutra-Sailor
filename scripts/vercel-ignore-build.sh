@@ -198,17 +198,23 @@ EOF
       ;;
     apps/web)
       # Broad product app — still narrower than entire packages/
+      # Keep in sync with .github/workflows/deploy-web-vercel.yml paths.
       cat <<'EOF'
 apps/web
 packages/commerce
 packages/design
 packages/iam
 packages/platform
+packages/integrations
 packages/ai/agents
 packages/ai/agent-runtime
 packages/ai/startup-os
+packages/ai/cinema
+packages/ai/reel
+packages/ai/atelier-canvas
 packages/ops/preset
 packages/ops/sanity
+packages/ops/china-compliance
 EOF
       ;;
     backends/gateway)
