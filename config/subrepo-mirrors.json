@@ -142,6 +142,114 @@
       "category": "integrations",
       "description": "Outbound webhook contracts and delivery primitives for Nebutra services.",
       "topics": ["nebutra", "webhooks", "svix", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/notifications",
+      "repoName": "notifications",
+      "sourceDir": "packages/integrations/notifications",
+      "cohort": "second-wave",
+      "category": "integrations",
+      "description": "Multi-channel notification center for in-app, email, push, SMS, and chat delivery.",
+      "topics": ["nebutra", "notifications", "novu", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/search",
+      "repoName": "search",
+      "sourceDir": "packages/integrations/search",
+      "cohort": "second-wave",
+      "category": "integrations",
+      "description": "Provider-agnostic full-text search across Meilisearch, Typesense, and Algolia.",
+      "topics": ["nebutra", "search", "meilisearch", "typesense", "algolia", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/uploads",
+      "repoName": "uploads",
+      "sourceDir": "packages/integrations/uploads",
+      "cohort": "second-wave",
+      "category": "integrations",
+      "description": "Large file uploads with S3/R2 multipart, Tus resumable, and presigned URLs.",
+      "topics": ["nebutra", "uploads", "s3", "tus", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/vault",
+      "repoName": "vault",
+      "sourceDir": "packages/iam/vault",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "Application-layer envelope encryption for tenant secrets (AWS KMS + local HKDF).",
+      "topics": ["nebutra", "vault", "encryption", "kms", "security", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/permissions",
+      "repoName": "permissions",
+      "sourceDir": "packages/iam/permissions",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "RBAC/ABAC authorization engine with CASL and OpenFGA adapters.",
+      "topics": ["nebutra", "permissions", "rbac", "abac", "casl", "openfga", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tenant",
+      "repoName": "tenant",
+      "sourceDir": "packages/iam/tenant",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "Multi-tenancy context with AsyncLocalStorage, RLS helpers, and isolation strategies.",
+      "topics": ["nebutra", "tenant", "multi-tenancy", "rls", "iam", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/identity",
+      "repoName": "identity",
+      "sourceDir": "packages/iam/identity",
+      "cohort": "second-wave",
+      "category": "iam",
+      "description": "Provider-agnostic identity adapter layer (Clerk-first, Auth.js-ready).",
+      "topics": ["nebutra", "identity", "auth", "clerk", "iam", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/metering",
+      "repoName": "metering",
+      "sourceDir": "packages/commerce/metering",
+      "cohort": "second-wave",
+      "category": "commerce",
+      "description": "Usage metering pipeline with ClickHouse real-time aggregation for consumption billing.",
+      "topics": ["nebutra", "metering", "clickhouse", "billing", "usage", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/design-sync",
+      "repoName": "design-sync",
+      "sourceDir": "packages/design/design-sync",
+      "cohort": "second-wave",
+      "category": "design-system",
+      "description": "Provider-agnostic design-tool sync for Figma, Penpot, and git-only token workflows.",
+      "topics": ["nebutra", "design-sync", "figma", "penpot", "design-tokens", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/theme",
+      "repoName": "theme",
+      "sourceDir": "packages/design/theme",
+      "cohort": "second-wave",
+      "category": "design-system",
+      "description": "Design-language catalog and Brand Packages for global product chrome swap.",
+      "topics": ["nebutra", "theme", "design-system", "brand-packages", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/brand",
+      "repoName": "brand",
+      "sourceDir": "packages/design/brand",
+      "cohort": "second-wave",
+      "category": "design-system",
+      "description": "Nebutra brand assets, logos, and identity components.",
+      "topics": ["nebutra", "brand", "logo", "design-system", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/knowledge-rag",
+      "repoName": "knowledge-rag",
+      "sourceDir": "packages/ai/knowledge-rag",
+      "cohort": "second-wave",
+      "category": "ai-runtime",
+      "description": "Knowledge retrieval with zero-config local embedder and pluggable vector/keyword ports.",
+      "topics": ["nebutra", "rag", "knowledge", "embeddings", "ai", "typescript"]
     }
   ]
 }
