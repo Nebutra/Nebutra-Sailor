@@ -120,7 +120,13 @@ start_docker() {
   if docker image inspect carina-runtime-ubuntu:22.04 >/dev/null 2>&1; then
     IMAGE_REF="carina-runtime-ubuntu:22.04"
   fi
+  # Ensure host dirs exist and are writable from container (root)
+  mkdir -p "$CARINA_ROOT/run" "$STATE_DIR" "$WS_ROOT"
+  chmod 755 "$CARINA_ROOT/run" "$STATE_DIR" "$WS_ROOT" || true
+  rm -f "$SOCKET_PATH" || true
+
   docker run -d --name carina-daemon --restart unless-stopped \
+    -e HOME="$CARINA_ROOT" \
     -v "$CARINA_ROOT/run:$CARINA_ROOT/run" \
     -v "$STATE_DIR:$STATE_DIR" \
     -v "$WS_ROOT:$WS_ROOT" \
@@ -130,7 +136,10 @@ start_docker() {
       -socket "$SOCKET_PATH" \
       -state "$STATE_DIR" \
       -approval-mode "$APPROVAL_MODE"
-  echo "carina-daemon running in docker (ubuntu:22.04)"
+  echo "carina-daemon running in docker ($IMAGE_REF)"
+  # Brief settle before wait loop
+  sleep 2
+  docker ps --filter name=carina-daemon --format 'table {{.Names}}\t{{.Status}}' || true
 }
 
 if [ "$needs_docker" = "1" ]; then
@@ -139,16 +148,39 @@ else
   start_native
 fi
 
-# Wait for socket
-for i in $(seq 1 30); do
+# Wait for socket (docker cold start / first pull can take a bit)
+wait_secs=90
+if [ "${needs_docker:-0}" = "1" ]; then
+  wait_secs=120
+fi
+echo "Waiting up to ${wait_secs}s for $SOCKET_PATH …"
+ready=0
+for i in $(seq 1 "$wait_secs"); do
   if [ -S "$SOCKET_PATH" ]; then
-    echo "carina socket ready: $SOCKET_PATH"
+    echo "carina socket ready: $SOCKET_PATH (after ${i}s)"
+    ready=1
     break
   fi
-  sleep 0.5
+  # If docker mode, surface crash early
+  if [ "${needs_docker:-0}" = "1" ] && command -v docker >/dev/null 2>&1; then
+    if ! docker ps --format '{{.Names}}' | grep -qx carina-daemon; then
+      echo "ERROR: carina-daemon container not running" >&2
+      docker logs carina-daemon 2>&1 | tail -40 >&2 || true
+      break
+    fi
+  fi
+  sleep 1
 done
-if [ ! -S "$SOCKET_PATH" ]; then
-  echo "warning: socket not ready yet at $SOCKET_PATH" >&2
+if [ "$ready" != "1" ]; then
+  echo "ERROR: socket not ready at $SOCKET_PATH" >&2
+  if command -v docker >/dev/null 2>&1; then
+    docker ps -a --filter name=carina-daemon 2>&1 | tail -5 >&2 || true
+    docker logs carina-daemon 2>&1 | tail -40 >&2 || true
+  fi
+  if command -v pm2 >/dev/null 2>&1; then
+    pm2 describe carina-daemon 2>&1 | tail -20 >&2 || true
+  fi
+  exit 1
 fi
 
 # Re-inject after daemon start (idempotent)
