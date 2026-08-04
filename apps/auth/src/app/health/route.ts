@@ -1,5 +1,6 @@
 // @brand-exempt: health payload defaults for production hostnames
 import { isAuthFeatureEnabledSync, isTurnstileConfigured } from "@nebutra/auth";
+import { probeGoogleOAuthPairing } from "@/lib/google-oauth-probe";
 import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
 
 export const dynamic = "force-dynamic";
@@ -7,8 +8,11 @@ export const dynamic = "force-dynamic";
 /**
  * Liveness + operator surface for the login center.
  * Includes feature flags and OAuth callback base so redirect-URI setup is checkable.
+ *
+ * Optional: `GET /health?probe=google` — safe client/secret pairing check against
+ * Google's token endpoint (never returns secrets; only Google error codes).
  */
-export function GET() {
+export async function GET(request: Request) {
   const origin = (
     process.env.NEXT_PUBLIC_AUTH_URL ||
     process.env.BETTER_AUTH_URL ||
@@ -16,6 +20,10 @@ export function GET() {
   ).replace(/\/$/, "");
 
   const oauthProviders = detectEnabledOAuthProviders();
+  const url = new URL(request.url);
+  const wantGoogleProbe = url.searchParams.get("probe") === "google";
+
+  const googlePairing = wantGoogleProbe ? await probeGoogleOAuthPairing(origin) : undefined;
 
   return Response.json({
     service: "nebutra-auth-center",
@@ -47,6 +55,7 @@ export function GET() {
         ),
         authCookieDomain: Boolean(process.env.AUTH_COOKIE_DOMAIN?.trim()),
       },
+      ...(googlePairing ? { googlePairing } : {}),
     },
     passkey: {
       rpID: process.env.PASSKEY_RP_ID || new URL(origin).hostname,
