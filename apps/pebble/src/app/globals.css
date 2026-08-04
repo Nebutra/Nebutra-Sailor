@@ -280,18 +280,29 @@ main {
   display: block;
 }
 
+/* Why: mark sits over a soft rounded product frame — hard white square edges
+   read as a sticker. Match hero-frame radius/hairline and warm paper fill so
+   the badge feels like part of the same material language. */
 .hero-float {
   position: absolute;
-  right: -0.6rem;
-  bottom: -1.1rem;
-  width: min(8.5rem, 34%);
-  filter: drop-shadow(0 18px 28px rgba(45, 48, 51, 0.22));
+  right: 0.55rem;
+  bottom: 0.45rem;
+  width: min(6.75rem, 28%);
+  border-radius: calc(var(--radius) + 2px);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--paper) 88%, white);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 16px 40px -28px rgba(45, 48, 51, 0.35);
 }
 
 .hero-float img {
   width: 100%;
   height: auto;
   display: block;
+  /* Soften any baked-in hard white edges of mark.png against the card fill. */
+  border-radius: inherit;
 }
 
 /* ── Feature cards ───────────────────────────────────────────────── */
