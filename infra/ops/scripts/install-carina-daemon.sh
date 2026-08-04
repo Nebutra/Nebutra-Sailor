@@ -25,6 +25,16 @@ ASSET="carina_${CARINA_VERSION}_${ARCH_TAG}.tar.gz"
 URL="${CARINA_RELEASE_URL:-https://github.com/Nebutra/carina/releases/download/v${CARINA_VERSION}/${ASSET}}"
 
 mkdir -p "$CARINA_ROOT/bin" "$CARINA_ROOT/run" "$CARINA_ROOT/ws" "$CARINA_ROOT/state" "$CARINA_ROOT/tmp"
+
+# Prefer a binary pre-staged by CI (avoids slow GH→China ECS download).
+STAGED="${CARINA_STAGED_BIN:-/tmp/carina-ops/carina-daemon}"
+if [ -f "$STAGED" ] && [ -s "$STAGED" ]; then
+  install -m 0755 "$STAGED" "$CARINA_ROOT/bin/carina-daemon"
+  echo "Installed $CARINA_ROOT/bin/carina-daemon from staged $STAGED"
+  "$CARINA_ROOT/bin/carina-daemon" -h 2>&1 | head -5 || true
+  exit 0
+fi
+
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
