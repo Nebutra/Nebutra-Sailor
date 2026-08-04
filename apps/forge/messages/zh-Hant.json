@@ -2085,7 +2085,17 @@
       "infraOn": "權威區在線",
       "infraOff": "權威區離線 — 僅多路徑對照",
       "authorityResolvers": "權威區遞迴解析器捕獲",
-      "authorityNote": "這些 IP 是查詢你唯一探測名的遞迴解析器（作業系統 DNS 路徑）。請與 VPN/DNS 提供商對照。"
+      "authorityNote": "這些 IP 是查詢你唯一探測名的遞迴解析器（作業系統 DNS 路徑）。請與 VPN/DNS 提供商對照。",
+      "infraChecking": "正在檢測權威區…",
+      "idleOnline": "權威區在線。點擊開始以捕獲系統 DNS 遞迴解析器（並對照 DoH / WebRTC）。",
+      "noteOnline": "權威區 leak.nebutra.com 已上線。唯一探測名會暴露作業系統 DNS 路徑上的遞迴解析器；DoH/WebRTC 為互補信號。",
+      "phaseSession": "正在建立權威區工作階段…",
+      "phaseSystemDns": "正在觸發系統 DNS 探測…",
+      "phasePoll": "等待遞迴命中（{n}/18）…",
+      "phaseBrowser": "瀏覽器 DoH + WebRTC…",
+      "phaseServer": "Forge 多解析器探測…",
+      "authorityNoHits": "權威區在線，但本輪未捕獲到遞迴查詢 — 可暫時關閉瀏覽器「安全 DNS」後重試。",
+      "authorityDetail": "權威區工作階段詳情"
     }
   },
   "roots": {

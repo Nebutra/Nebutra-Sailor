@@ -97,4 +97,33 @@ describe("wave6 hard-correct tools", () => {
     expect(out.honesty.fullSystemDnsLeakMap).toBe(false);
     expect(["consistent", "split_paths", "ip_mismatch", "incomplete"]).toContain(out.verdict);
   }, 30_000);
+
+  it("dns-leak honesty distinguishes online-no-hits from offline infra", async () => {
+    const online = (await dnsLeakTool.execute({
+      probeHost: "example.com",
+      infrastructureAvailable: true,
+      authorityZone: "leak.nebutra.com",
+      sessionId: "abc123",
+      clientProbes: [{ path: "doh-google", kind: "doh", answers: ["93.184.215.14"] }],
+    })) as {
+      honesty: { recommendation: string; reason: string };
+      signals: string[];
+      infrastructureAvailable: boolean;
+    };
+    expect(online.infrastructureAvailable).toBe(true);
+    expect(online.signals).toContain("authority_zone_online_no_recursive_hits");
+    expect(online.honesty.recommendation).not.toMatch(/Deploy @nebutra\/forge-dns-leak/);
+    expect(online.honesty.reason).toMatch(/online/i);
+
+    const captured = (await dnsLeakTool.execute({
+      probeHost: "example.com",
+      infrastructureAvailable: true,
+      authorityReady: true,
+      authorityZone: "leak.nebutra.com",
+      authorityResolvers: [{ ip: "8.8.8.8", count: 2 }],
+      clientProbes: [{ path: "doh-google", kind: "doh", answers: ["93.184.215.14"] }],
+    })) as { verdict: string; honesty: { fullSystemDnsLeakMap: boolean } };
+    expect(captured.verdict).toBe("authority_captured");
+    expect(captured.honesty.fullSystemDnsLeakMap).toBe(true);
+  }, 30_000);
 });

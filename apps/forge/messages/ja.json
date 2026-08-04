@@ -2085,7 +2085,17 @@
       "infraOn": "権威ゾーン稼働中",
       "infraOff": "権威ゾーン停止 — 多経路のみ",
       "authorityResolvers": "権威ゾーンの再帰リゾルバ",
-      "authorityNote": "これらは一意のプローブ名を問い合わせた再帰リゾルバ（OSのシステムDNS経路）です。VPN/DNS事業者と照合してください。"
+      "authorityNote": "これらは一意のプローブ名を問い合わせた再帰リゾルバ（OSのシステムDNS経路）です。VPN/DNS事業者と照合してください。",
+      "infraChecking": "Checking authority zone…",
+      "idleOnline": "Authority zone is online. Run a check to capture your system-DNS recursives (plus DoH / WebRTC).",
+      "noteOnline": "Authority zone leak.nebutra.com is live. Unique probe names reveal recursive resolvers on the OS DNS path; DoH/WebRTC are complementary.",
+      "phaseSession": "Creating authority session…",
+      "phaseSystemDns": "Triggering system DNS probes…",
+      "phasePoll": "Waiting for recursive hits ({n}/18)…",
+      "phaseBrowser": "Browser DoH + WebRTC…",
+      "phaseServer": "Forge multi-resolver…",
+      "authorityNoHits": "Authority online, but no recursive queries hit your probes this round — try disabling browser Secure DNS and re-run.",
+      "authorityDetail": "Authority session detail"
     }
   },
   "roots": {

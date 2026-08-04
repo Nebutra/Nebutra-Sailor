@@ -2085,7 +2085,17 @@
       "infraOn": "权威区在线",
       "infraOff": "权威区离线 — 仅多路径对照",
       "authorityResolvers": "权威区递归解析器捕获",
-      "authorityNote": "这些 IP 是查询你唯一探测名的递归解析器（操作系统系统 DNS 路径）。请与 VPN/DNS 提供商对照。"
+      "authorityNote": "这些 IP 是查询你唯一探测名的递归解析器（操作系统系统 DNS 路径）。请与 VPN/DNS 提供商对照。",
+      "infraChecking": "正在检测权威区…",
+      "idleOnline": "权威区在线。点击开始以捕获系统 DNS 递归解析器（并对照 DoH / WebRTC）。",
+      "noteOnline": "权威区 leak.nebutra.com 已上线。唯一探测名会暴露操作系统 DNS 路径上的递归解析器；DoH/WebRTC 为互补信号。",
+      "phaseSession": "正在创建权威区会话…",
+      "phaseSystemDns": "正在触发系统 DNS 探测…",
+      "phasePoll": "等待递归命中（{n}/18）…",
+      "phaseBrowser": "浏览器 DoH + WebRTC…",
+      "phaseServer": "Forge 多解析器探测…",
+      "authorityNoHits": "权威区在线，但本轮未捕获到递归查询 — 可暂时关闭浏览器「安全 DNS」后重试。",
+      "authorityDetail": "权威区会话详情"
     }
   },
   "roots": {

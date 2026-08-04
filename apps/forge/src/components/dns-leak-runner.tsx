@@ -3,15 +3,16 @@
 /**
  * DNS leak workbench — dual-surface.
  *
- * Browser: DoH multi-path + WebRTC ICE candidates.
+ * Browser: DoH multi-path + WebRTC ICE candidates + system-DNS probes against
+ * the authoritative leak zone (when online).
  * Server: multi-resolver A probes + egress whoami markers + edge IP.
  *
- * Hard-correct: we do NOT claim a full OS-system DNS leak map without an
- * authoritative leak zone (dnsleaktest.com style).
+ * Hard-correct: full OS-system DNS leak maps require the authority zone to
+ * observe recursive queries; we never invent Geo/ASN.
  */
 import { Button, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ShellBadge, type ShellTone, ShellVerdict } from "@/components/journey-shells";
 import { invokeForge, MetaCards } from "@/components/result-panels";
 import { RunnerError, RunnerNote } from "@/components/runner-ui";
@@ -33,6 +34,7 @@ type DohEndpoint = {
   parse: (json: unknown) => string[];
 };
 
+const DOH_TIMEOUT_MS = 3_500;
 const DOH_ENDPOINTS: readonly DohEndpoint[] = [
   {
     path: "doh-cloudflare",
@@ -69,6 +71,7 @@ async function queryDoh(ep: DohEndpoint, name: string): Promise<ClientProbe> {
     const res = await fetch(ep.url(name), {
       headers: { Accept: "application/dns-json" },
       cache: "no-store",
+      signal: AbortSignal.timeout(DOH_TIMEOUT_MS),
     });
     if (!res.ok) {
       return {
@@ -89,20 +92,20 @@ async function queryDoh(ep: DohEndpoint, name: string): Promise<ClientProbe> {
       ms: Date.now() - started,
     };
   } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    const timedOut = /abort|timeout/i.test(msg);
     return {
       path: ep.path,
       kind: "doh",
       name,
       answers: [],
-      error: err instanceof Error ? err.message : String(err),
+      error: timedOut ? `timeout ${DOH_TIMEOUT_MS}ms` : msg,
       ms: Date.now() - started,
     };
   }
 }
 
 function extractIpFromCandidate(candidate: string): string | null {
-  // host candidates: candidate:… typ host …
-  // srflx/relay may embed IPv4/IPv6
   const v4 = candidate.match(/\b(\d{1,3}(?:\.\d{1,3}){3})\b/);
   if (v4?.[1] && v4[1] !== "0.0.0.0") return v4[1];
   const v6 = candidate.match(/\b([a-fA-F0-9:]*:[a-fA-F0-9:]+)\b/);
@@ -146,6 +149,7 @@ async function gatherWebrtcIps(timeoutMs = 2_500): Promise<string[]> {
 
 function verdictTone(verdict: string | undefined): ShellTone {
   switch (verdict) {
+    case "authority_captured":
     case "consistent":
       return "success";
     case "split_paths":
@@ -167,23 +171,61 @@ type AuthoritySession = {
   infrastructure?: boolean;
 };
 
-/** Force browser *system* DNS (not DoH) via speculative fetches the OS resolves. */
+type InfraStatus = "checking" | "online" | "offline";
+
+/**
+ * Force browser *system* DNS (not app-level DoH) via speculative resources the
+ * OS resolver must look up. Connection failures are expected and fine.
+ */
 function triggerSystemDns(names: string[]) {
   if (typeof document === "undefined") return;
+  const stamp = Date.now();
   for (const name of names) {
+    // 1) Classic image probe (http forces a real lookup)
     const img = new Image();
     img.referrerPolicy = "no-referrer";
-    // http:// forces a DNS lookup; connection may fail — that is fine.
-    img.src = `http://${name}/forge-dns-leak.gif?t=${Date.now()}`;
-    const link = document.createElement("link");
-    link.rel = "dns-prefetch";
-    link.href = `//${name}`;
-    document.head.appendChild(link);
-    // cleanup nodes after a tick so we do not leak DOM forever
+    img.src = `http://${name}/forge-dns-leak.gif?t=${stamp}`;
+
+    // 2) dns-prefetch / preconnect hints
+    const prefetch = document.createElement("link");
+    prefetch.rel = "dns-prefetch";
+    prefetch.href = `//${name}`;
+    document.head.appendChild(prefetch);
+
+    const preconnect = document.createElement("link");
+    preconnect.rel = "preconnect";
+    preconnect.href = `http://${name}`;
+    document.head.appendChild(preconnect);
+
+    // 3) no-cors fetch — some browsers resolve even when mixed content blocks images
+    void fetch(`http://${name}/forge-dns-leak-probe?t=${stamp}`, {
+      mode: "no-cors",
+      cache: "no-store",
+      credentials: "omit",
+    }).catch(() => {
+      /* expected network / mixed-content failure */
+    });
+
     window.setTimeout(() => {
-      link.remove();
+      prefetch.remove();
+      preconnect.remove();
       img.src = "";
-    }, 8_000);
+    }, 20_000);
+  }
+}
+
+async function probeAuthorityHealth(): Promise<boolean> {
+  try {
+    const res = await fetch("/api/v1/dns-leak/sessions", {
+      method: "GET",
+      cache: "no-store",
+      signal: AbortSignal.timeout(3_000),
+    });
+    if (!res.ok) return false;
+    const json = (await res.json()) as { ok?: boolean };
+    return json.ok === true;
+  } catch {
+    return false;
   }
 }
 
@@ -194,6 +236,7 @@ async function createAuthoritySession(): Promise<AuthoritySession | null> {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ probeCount: 8, ttlSec: 120 }),
       cache: "no-store",
+      signal: AbortSignal.timeout(5_000),
     });
     if (!res.ok) return null;
     return (await res.json()) as AuthoritySession;
@@ -204,20 +247,34 @@ async function createAuthoritySession(): Promise<AuthoritySession | null> {
 
 async function pollAuthoritySession(
   id: string,
-  opts: { attempts?: number; delayMs?: number } = {},
+  opts: {
+    attempts?: number;
+    delayMs?: number;
+    onTick?: (session: AuthoritySession | null, attempt: number) => void;
+  } = {},
 ): Promise<AuthoritySession | null> {
-  const attempts = opts.attempts ?? 10;
-  const delayMs = opts.delayMs ?? 700;
+  const attempts = opts.attempts ?? 18; // ~18s with 1s delay
+  const delayMs = opts.delayMs ?? 1_000;
   let last: AuthoritySession | null = null;
   for (let i = 0; i < attempts; i++) {
     try {
-      const res = await fetch(`/api/v1/dns-leak/sessions/${id}`, { cache: "no-store" });
+      const res = await fetch(`/api/v1/dns-leak/sessions/${id}`, {
+        cache: "no-store",
+        signal: AbortSignal.timeout(3_000),
+      });
       if (res.ok) {
         last = (await res.json()) as AuthoritySession;
+        opts.onTick?.(last, i + 1);
         if (last.ready && (last.resolvers?.length ?? 0) > 0) return last;
+      } else {
+        opts.onTick?.(last, i + 1);
       }
     } catch {
-      /* keep polling */
+      opts.onTick?.(last, i + 1);
+    }
+    // Re-fire system DNS mid-poll — resolvers are often lazy / cached cold path
+    if (last?.probeNames?.length && i > 0 && i % 3 === 0) {
+      triggerSystemDns(last.probeNames);
     }
     await new Promise((r) => setTimeout(r, delayMs));
   }
@@ -228,17 +285,31 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
   const [probeHost, setProbeHost] = useState("cloudflare.com");
   const [loading, setLoading] = useState(false);
+  const [phase, setPhase] = useState("");
   const [error, setError] = useState("");
   const [out, setOut] = useState<Record<string, unknown> | null>(null);
   const [localProbes, setLocalProbes] = useState<ClientProbe[]>([]);
   const [localWebrtc, setLocalWebrtc] = useState<string[]>([]);
   const [authority, setAuthority] = useState<AuthoritySession | null>(null);
+  const [infraStatus, setInfraStatus] = useState<InfraStatus>("checking");
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const online = await probeAuthorityHealth();
+      if (!cancelled) setInfraStatus(online ? "online" : "offline");
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const run = useCallback(async () => {
     setLoading(true);
     setError("");
     setOut(null);
     setAuthority(null);
+    setPhase(t("dnsLeak.phaseSession"));
     const host = probeHost.trim() || "cloudflare.com";
 
     try {
@@ -246,13 +317,25 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
       const authSession = await createAuthoritySession();
       let authResult: AuthoritySession | null = null;
       if (authSession?.probeNames?.length) {
+        setInfraStatus("online");
         setAuthority(authSession);
+        setPhase(t("dnsLeak.phaseSystemDns"));
         triggerSystemDns(authSession.probeNames);
-        authResult = await pollAuthoritySession(authSession.id);
+        // Second wave after a short settle — helps flaky resolvers
+        window.setTimeout(() => triggerSystemDns(authSession.probeNames), 400);
+        authResult = await pollAuthoritySession(authSession.id, {
+          onTick: (session, attempt) => {
+            if (session) setAuthority(session);
+            setPhase(t("dnsLeak.phasePoll", { n: attempt }));
+          },
+        });
         if (authResult) setAuthority(authResult);
+      } else {
+        setInfraStatus("offline");
       }
 
       // 2) Always collect DoH + WebRTC + multi-resolver (complements authority mode)
+      setPhase(t("dnsLeak.phaseBrowser"));
       const [dohResults, webrtcIps] = await Promise.all([
         Promise.all(DOH_ENDPOINTS.map((ep) => queryDoh(ep, host))),
         gatherWebrtcIps(),
@@ -260,6 +343,7 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
       setLocalProbes(dohResults);
       setLocalWebrtc(webrtcIps);
 
+      setPhase(t("dnsLeak.phaseServer"));
       const r = await invokeForge(toolId, {
         probeHost: host,
         sessionId: authSession?.id ?? authResult?.id,
@@ -267,8 +351,9 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
         webrtcIps,
         authorityResolvers: authResult?.resolvers ?? authSession?.resolvers ?? [],
         authorityQueryCount: authResult?.queryCount ?? 0,
-        authorityReady: Boolean(authResult?.ready),
+        authorityReady: Boolean(authResult?.ready && (authResult.resolvers?.length ?? 0) > 0),
         authorityZone: authSession?.zone ?? authResult?.zone,
+        infrastructureAvailable: Boolean(authSession?.infrastructure ?? authSession?.id),
       });
       if (!r.ok) {
         setError(r.message);
@@ -281,9 +366,10 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
+      setPhase("");
       setLoading(false);
     }
-  }, [probeHost, toolId]);
+  }, [probeHost, toolId, t]);
 
   const verdict = typeof out?.verdict === "string" ? out.verdict : undefined;
   const tone = verdictTone(verdict);
@@ -300,7 +386,8 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
       ? (out.forgeEgressMarkers as Record<string, unknown>)
       : null;
 
-  const authorityMode =
+  const authorityOnline =
+    infraStatus === "online" ||
     Boolean((out?.authority as AuthoritySession | undefined)?.infrastructure) ||
     Boolean(authority?.infrastructure) ||
     Boolean(out?.authorityReady);
@@ -319,6 +406,16 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
               : t("dnsLeak.idle");
 
   const authBlock = (out?.authority as AuthoritySession | undefined) ?? authority ?? null;
+  const authResolvers = authBlock?.resolvers;
+  const outAuthResolvers = (
+    out?.authority as { resolvers?: Array<{ ip: string; count?: number }> } | undefined
+  )?.resolvers;
+  const capturedResolvers =
+    authResolvers && authResolvers.length > 0
+      ? authResolvers
+      : Array.isArray(outAuthResolvers)
+        ? outAuthResolvers
+        : [];
 
   return (
     <div className="space-y-4">
@@ -334,12 +431,16 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("common.running") : t("dnsLeak.run")}
         </Button>
-        {authorityMode ? (
+        {infraStatus === "checking" ? (
+          <ShellBadge tone="info">{t("dnsLeak.infraChecking")}</ShellBadge>
+        ) : authorityOnline ? (
           <ShellBadge tone="success">{t("dnsLeak.infraOn")}</ShellBadge>
         ) : (
           <ShellBadge tone="warning">{t("dnsLeak.infraOff")}</ShellBadge>
         )}
       </div>
+
+      {loading && phase ? <RunnerNote>{phase}</RunnerNote> : null}
 
       <RunnerError>{error}</RunnerError>
 
@@ -350,6 +451,28 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
             headline={headline}
             caveat={honesty?.recommendation ? String(honesty.recommendation) : t("dnsLeak.note")}
           />
+
+          {capturedResolvers.length > 0 ? (
+            <div className="space-y-2 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-4">
+              <p className="text-sm font-medium text-[var(--neutral-12)]">
+                {t("dnsLeak.authorityResolvers")}
+              </p>
+              <ul className="space-y-1 font-mono text-sm text-[var(--neutral-12)]">
+                {capturedResolvers.map((r) => (
+                  <li key={r.ip}>
+                    {r.ip}
+                    {typeof r.count === "number" ? (
+                      <span className="text-[var(--neutral-11)]"> ×{r.count}</span>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+              <RunnerNote>{t("dnsLeak.authorityNote")}</RunnerNote>
+            </div>
+          ) : authorityOnline ? (
+            <RunnerNote>{t("dnsLeak.authorityNoHits")}</RunnerNote>
+          ) : null}
+
           <MetaCards
             items={[
               {
@@ -367,7 +490,7 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
                 label: t("dnsLeak.dohPaths"),
                 value: String(
                   (out.summary as { browserDohPaths?: number } | undefined)?.browserDohPaths ??
-                    localProbes.length,
+                    localProbes.filter((p) => p.answers.length > 0).length,
                 ),
               },
               {
@@ -432,7 +555,7 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
           {authBlock ? (
             <div className="space-y-2">
               <p className="text-xs font-medium text-[var(--neutral-11)]">
-                {t("dnsLeak.authorityResolvers")}
+                {t("dnsLeak.authorityDetail")}
               </p>
               <pre className="max-h-72 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-[11px] leading-relaxed">
                 {JSON.stringify(
@@ -448,7 +571,6 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
                   2,
                 )}
               </pre>
-              <RunnerNote>{t("dnsLeak.authorityNote")}</RunnerNote>
             </div>
           ) : null}
 
@@ -484,10 +606,12 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
           ) : null}
         </div>
       ) : (
-        <RunnerNote>{t("dnsLeak.idle")}</RunnerNote>
+        <RunnerNote>
+          {infraStatus === "online" ? t("dnsLeak.idleOnline") : t("dnsLeak.idle")}
+        </RunnerNote>
       )}
 
-      <RunnerNote>{t("dnsLeak.note")}</RunnerNote>
+      <RunnerNote>{authorityOnline ? t("dnsLeak.noteOnline") : t("dnsLeak.note")}</RunnerNote>
     </div>
   );
 }
