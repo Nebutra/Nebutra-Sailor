@@ -147,11 +147,13 @@ describe("UI/UX audit remediation invariants", () => {
     );
 
     expect(brandAssets).toContain('from "@nebutra/brand"');
-    expect(brandAssets).toContain("LogoEnSVG");
     expect(brandAssets).toContain("LogomarkSVG");
+    expect(brandAssets).toContain("WordmarkEnSVG");
+    expect(brandAssets).toContain("logo-color.svg");
     expect(brandAssets).toContain("data-brand-source={webBrandAssets.source}");
-    expect(brandAssets).toContain("text-brand-mark");
-    expect(brandAssets).not.toContain('src: "/brand/logo-color.svg"');
+    // Must not paint nav logo as mono solid brand-mark blue
+    expect(brandAssets).not.toContain("LogoEnSVG");
+    expect(brandAssets).not.toContain("text-brand-mark");
     expect(brandAssets).not.toContain('src: "/brand/logo-horizontal-en.svg"');
     expect(shell).toContain("BrandLogo");
     expect(shell).toContain("webBrandLabels.homeLink");
