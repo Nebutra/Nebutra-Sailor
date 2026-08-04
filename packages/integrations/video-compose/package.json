@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/video-compose",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Pure timeline / edit-decision-list builder + provider-agnostic video compositor (concat, crossfade transitions, mux). Zero-config deterministic mock default; ffmpeg adapter documented.",
   "private": false,
   "license": "MIT",
@@ -10,10 +10,14 @@
     "category": "integrations",
     "summary": "Timeline builder + multi-tenant video compositor abstraction"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -41,5 +45,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

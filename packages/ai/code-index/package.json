@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/code-index",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -21,14 +21,14 @@
     "surface": "semantic-index",
     "summary": "Multi-tenant codebase semantic-index grammar: deterministic content-hash chunking (structural / line / markdown), incremental scan, embedding-profile drift recreate, cosine retrieval — all behind provider-agnostic Embedder/VectorStore ports"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./interfaces": "./src/interfaces.ts",
-    "./chunker": "./src/chunker.ts",
-    "./index-engine": "./src/index-engine.ts",
-    "./provider": "./src/provider.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -57,5 +57,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

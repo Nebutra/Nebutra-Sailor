@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/knowledge-graph",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -21,16 +21,14 @@
     "category": "ai",
     "summary": "Multi-tenant self-wiring knowledge-graph substrate: zero-LLM typed entity-edge extraction, markdown-canonical bitemporal typed-fact model with supersession + trajectory, idempotent consolidation, and graph/backlink-boosted hybrid fusion — all behind injected GraphStore/VectorRetriever ports"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./interfaces": "./src/interfaces.ts",
-    "./link-extraction": "./src/link-extraction.ts",
-    "./temporal-facts": "./src/temporal-facts.ts",
-    "./consolidate": "./src/consolidate.ts",
-    "./hybrid-fusion": "./src/hybrid-fusion.ts",
-    "./provider": "./src/provider.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -59,5 +57,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

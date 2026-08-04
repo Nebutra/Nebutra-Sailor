@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/tts",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Provider-agnostic text-to-speech / narration synthesis. Zero-config deterministic mock default; ElevenLabs/OpenAI/Volces adapters wired via the shared provider-factory pattern.",
   "private": false,
   "license": "MIT",
@@ -10,10 +10,14 @@
     "category": "integrations",
     "summary": "Multi-tenant text-to-speech provider abstraction"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -41,5 +45,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }

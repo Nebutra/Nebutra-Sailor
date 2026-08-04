@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/atelier-canvas",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Server-authoritative creative-canvas engine: scene model, non-overlap placement, write-then-broadcast consistency, tenant-scoped locking",
   "private": false,
   "license": "MIT",
@@ -11,13 +11,14 @@
     "surface": "creative-surface",
     "summary": "Server-authoritative creative-canvas engine"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./store/memory": "./src/store/memory.ts",
-    "./store/prisma": "./src/store/prisma.ts",
-    "./agent": "./src/agent/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -54,5 +55,11 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }
