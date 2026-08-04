@@ -56,6 +56,14 @@ on:
     branches: [main]
     paths:
       - "apps/design/**"
+      # The design site renders @nebutra/ui against the token source, so a change
+      # confined to these packages is precisely the change it exists to show. The
+      # per-app filter below already tests `packages/design/**` in five places,
+      # but those filters only run once the workflow has been triggered — and
+      # without this line it never was. A token fix landed, CI went green, and
+      # design.nebutra.com kept serving the old skins with nothing reporting a
+      # failure.
+      - "packages/design/**"
       - "apps/forge/**"
       - "apps/router/**"
       - "apps/pebble/**"
