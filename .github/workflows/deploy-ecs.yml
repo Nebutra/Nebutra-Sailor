@@ -957,16 +957,41 @@ jobs:
           fi
           tar -xzf "/tmp/carina-stage/$ASSET" -C /tmp/carina-stage
           BIN="$(find /tmp/carina-stage -type f -name carina-daemon | head -1)"
+          KERNEL="$(find /tmp/carina-stage -type f -name carina-kernel-service | head -1)"
           if [ -z "$BIN" ]; then
             echo "::warning::carina-daemon not found in release archive — VM will try network install"
           else
             scp "${SCP_OPTS[@]}" "$BIN" \
               "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/carina-daemon"
           fi
+          if [ -z "$KERNEL" ]; then
+            echo "::warning::carina-kernel-service not found in release archive — daemon will not start without it"
+          else
+            # Required child process of carina-daemon (capability kernel).
+            scp "${SCP_OPTS[@]}" "$KERNEL" \
+              "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/carina-kernel-service"
+          fi
+          # Optional zig native tools (carina-scan, carina-patch, …) next to daemon.
+          mkdir -p /tmp/carina-stage/tools-out
+          while IFS= read -r -d '' tool; do
+            base="$(basename "$tool")"
+            case "$base" in
+              carina-daemon|carina-kernel-service|carina|carina-cli|carina-worker|carina-tui|carina-ui) continue ;;
+            esac
+            cp "$tool" "/tmp/carina-stage/tools-out/$base"
+          done < <(find /tmp/carina-stage -type f -name 'carina-*' -print0 2>/dev/null || true)
+          if [ -n "$(ls -A /tmp/carina-stage/tools-out 2>/dev/null || true)" ]; then
+            ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+                -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+                "${ECS_USER}@${ECS_HOST}" \
+                'mkdir -p /tmp/carina-ops/tools'
+            scp "${SCP_OPTS[@]}" /tmp/carina-stage/tools-out/* \
+              "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/tools/" || true
+          fi
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               "${ECS_USER}@${ECS_HOST}" \
-              'chmod +x /tmp/carina-ops/*.sh /tmp/carina-ops/carina-daemon 2>/dev/null || chmod +x /tmp/carina-ops/*.sh'
+              'chmod +x /tmp/carina-ops/*.sh /tmp/carina-ops/carina-daemon /tmp/carina-ops/carina-kernel-service /tmp/carina-ops/tools/* 2>/dev/null || chmod +x /tmp/carina-ops/*.sh'
           scp "${SCP_OPTS[@]}" infra/iac/ecs/ecosystem.config.cjs \
             "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/ecosystem.config.cjs"
           scp "${SCP_OPTS[@]}" infra/runtime/nginx/nginx.conf \
