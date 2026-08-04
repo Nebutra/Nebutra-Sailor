@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nebutra/ui/components";
 import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -94,13 +95,11 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
         <h3 className="text-sm font-medium text-foreground">{t("successTitle")}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{t("successDescription")}</p>
         <div className="mt-5">
-          <Link
-            href="/sign-in"
-            onClick={() => router.push("/sign-in")}
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
-          >
-            {t("signInCta")}
-          </Link>
+          <Button asChild variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
+            <Link href="/sign-in" onClick={() => router.push("/sign-in")}>
+              {t("signInCta")}
+            </Link>
+          </Button>
         </div>
       </section>
     );

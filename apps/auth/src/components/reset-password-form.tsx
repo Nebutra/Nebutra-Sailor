@@ -2,6 +2,7 @@
 
 import { Eye, EyeOff } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
+import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -69,12 +70,9 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           </h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("successDescription")}</p>
         </div>
-        <Link
-          href="/sign-in"
-          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
-        >
-          {t("signInCta")}
-        </Link>
+        <Button asChild variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
+          <Link href="/sign-in">{t("signInCta")}</Link>
+        </Button>
       </div>
     );
   }
@@ -160,11 +158,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           </p>
         ) : null}
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="h-11 w-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-70"
-        >
+        <Button type="submit" disabled={loading} variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
           {loading ? tSignIn("providerLoading") : t("submit")}
         </Button>
       </form>

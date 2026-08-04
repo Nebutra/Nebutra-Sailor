@@ -1,5 +1,5 @@
 import { ArrowLeft } from "@nebutra/icons";
-import { cn } from "@nebutra/ui/utils";
+import { AUTH_FORM_COLUMN_CLASS, cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { AuthBanner } from "./auth-banner";
@@ -9,6 +9,11 @@ interface AuthSplitLayoutProps {
   className?: string;
 }
 
+/**
+ * Agent OS split login shell. Form column width is SSOT via
+ * AUTH_FORM_COLUMN_CLASS (@nebutra/ui/utils) — keep in lock-step with
+ * apps/auth AuthSplitLayout; do not reintroduce a magic pixel max-width here.
+ */
 export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
   const t = useTranslations("auth.signIn");
 
@@ -45,7 +50,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,hsl(var(--muted))_80%,transparent),transparent)] lg:hidden"
         />
-        <div className="relative w-full max-w-[440px]">{children}</div>
+        <div className={AUTH_FORM_COLUMN_CLASS}>{children}</div>
       </main>
     </div>
   );
