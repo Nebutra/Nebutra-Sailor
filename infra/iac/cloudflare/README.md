@@ -33,7 +33,7 @@ User ──────────────►│  │ WAF │──│Cache
 | `auth.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (auth-center / login UX; multi-app RPs) |
 | `sso.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (OIDC IdP; permanent issuer) |
 | `api.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (api-gateway; EC2/ECS/CVM/GCE compatible) |
-| `status.nebutra.com` | ✅ Proxied | No cache | Vercel landing (`nebutra-landing`) — CNAME `cname.vercel-dns.com`, **not** ECS |
+| `status.nebutra.com` | ✅ Proxied | No cache | Cloud VM nginx reverse-proxy → landing `/status` (future: pure Vercel) |
 | `design.nebutra.com` | ✅ Proxied | No cache | Cloud VM (design-docs PM2 :3004) |
 | `docs.nebutra.com` | DNS only (CNAME → Vercel) | Docs/static | Vercel project `docs` (`apps/sailor-docs`); grey-cloud avoids CF↔Vercel 525 |
 | `studio.nebutra.com` | ✅ Proxied when active | No cache | Optional branded Studio alias |
@@ -52,7 +52,7 @@ A       app       106.15.4.31              ✅      Auto   # ECS (target: Vercel
 A       auth      106.15.4.31              ✅      Auto   # ECS login center (target: Vercel nebutra-auth)
 A       api       106.15.4.31              ✅      Auto
 A       sso       106.15.4.31              ✅      Auto   # permanent OIDC issuer
-CNAME   status    cname.vercel-dns.com     ✅      Auto   # landing status host alias (never ECS A)
+A       status    106.15.4.31              ✅      Auto   # ECS nginx → landing /status (no apex 301)
 A       design    106.15.4.31              ✅      Auto   # design-docs PM2 :3004
 CNAME   docs      331816c5997d8344.vercel-dns-017.com  DNS only  # project-specific Auto  # grey cloud
 CNAME   studio    <active studio host>     ✅      Auto
@@ -68,14 +68,13 @@ Prefer **DNS only** (not orange-cloud) for the Vercel CNAME to avoid origin SSL 
 > bundle is ~87 MiB uncompressed and exceeds the Workers 64 MiB script limit.
 > CF remains the DNS/CDN edge in front of Vercel.
 
-Keep `status` on Vercel/landing, not the VM. The status surface is designed to
-stay reachable when the VM-hosted app/API/docs stack is degraded, and exposes a
-machine-readable snapshot at `https://status.nebutra.com/status.json`.
-Use **CNAME status → cname.vercel-dns.com** (proxied) and bind the hostname on
-the `nebutra-landing` Vercel project. Do **not** use an ECS A record — unknown
-hosts on the VM fall through to `301 → https://nebutra.com`. Ops scripts:
-`infra/ops/scripts/point-status-dns-vercel.sh` and
-`infra/ops/scripts/point-design-dns-ecs.sh`.
+**status (current):** A → ECS, nginx `status.nebutra.com.conf` reverse-proxies
+landing `/status` + `/status.json` so the host never falls through to the
+default 443 `301 → nebutra.com`. Content still comes from Vercel landing.
+**status (target cutover):** CNAME → `cname.vercel-dns.com` + bind on
+`nebutra-landing` once CF token has Zone DNS Edit and production deploys are
+green — see `point-status-dns-vercel.sh`. Design stays on ECS
+(`point-design-dns-ecs.sh`).
 
 The checked-in Sanity Studio deploy command targets Sanity-hosted
 `https://nebutra.sanity.studio`. Only point `studio.nebutra.com` at Vercel,
