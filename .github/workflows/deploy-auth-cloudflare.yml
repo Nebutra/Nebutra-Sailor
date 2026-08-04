@@ -182,7 +182,7 @@ jobs:
           set -euo pipefail
           for i in 1 2 3 4 5 6 7 8; do
             code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 \
-              https://nebutra-auth.nebutra.workers.dev/health || echo 000)
+              https://nebutra-auth.omichiliriku.workers.dev/health || echo 000)
             echo "try $i workers.dev/health -> $code"
             if [ "$code" = "200" ]; then
               head -c 600 /tmp/ah.json || true
@@ -192,13 +192,13 @@ jobs:
             sleep 5
           done
           code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 45 \
-            'https://nebutra-auth.nebutra.workers.dev/health?probe=google' || echo 000)
+            'https://nebutra-auth.omichiliriku.workers.dev/health?probe=google' || echo 000)
           echo "GET workers.dev health?probe=google -> $code"
           if [ "$code" = "200" ]; then
             python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))' || true
           fi
           code=$(curl -sS -o /tmp/edge.json -w '%{http_code}' --max-time 20 \
-            https://nebutra-auth.nebutra.workers.dev/__edge/health || echo 000)
+            https://nebutra-auth.omichiliriku.workers.dev/__edge/health || echo 000)
           echo "GET __edge/health -> $code"
 
       - name: Point DNS auth → Worker (soft-fail if token lacks DNS Edit)

@@ -10,12 +10,13 @@
 #     bash infra/ops/scripts/point-auth-dns-cloudflare-worker.sh
 #
 # Optional:
-#   AUTH_WORKER_TARGET=nebutra-auth.nebutra.workers.dev
+#   AUTH_WORKER_TARGET=nebutra-auth.omichiliriku.workers.dev
 set -euo pipefail
 
 TOKEN="${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN required}"
 ZONE_NAME="${CF_ZONE_NAME:-nebutra.com}"
-TARGET="${AUTH_WORKER_TARGET:-nebutra-auth.nebutra.workers.dev}"
+# Account workers.dev subdomain is omichiliriku (not nebutra).
+TARGET="${AUTH_WORKER_TARGET:-nebutra-auth.omichiliriku.workers.dev}"
 RECORD_NAME="auth"
 
 auth_get() {
@@ -77,7 +78,7 @@ if not ok:
   codes=[e.get("code") for e in errs if isinstance(e, dict)]
   if 10000 in codes:
     print("::error::CLOUDFLARE_API_TOKEN cannot write DNS (code 10000).")
-    print("::error::In CF dashboard: CNAME auth → nebutra-auth.nebutra.workers.dev (proxied).")
+    print("::error::In CF dashboard: CNAME auth → nebutra-auth.omichiliriku.workers.dev (proxied).")
   sys.exit(1)
 result=d.get("result") or {}
 print("record", result.get("name"), "→", result.get("content"), "proxied=", result.get("proxied"))
