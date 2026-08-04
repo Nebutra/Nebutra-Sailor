@@ -231,6 +231,10 @@ function distExportsForManifest(manifest) {
  * Vendor workspace @nebutra/* dependencies as file:./vendor/* packages built
  * from monorepo dist/. This avoids standalone typecheck walking into npm
  * packages that still publish types: ./src/index.ts.
+ *
+ * Also vendors private / source-only workspace packages from devDependencies
+ * (CLI tools that tsup-bundle @nebutra/* via noExternal, e.g. create-sailor).
+ * Public packages in devDependencies stay as ^x.y.z from npm so mirrors stay lean.
  */
 function vendorWorkspaceDependencies(
   root,
@@ -247,9 +251,9 @@ function vendorWorkspaceDependencies(
    * Resolve build artifact roots. Most packages emit `dist/`; design-tokens and
    * similar pipelines emit Style Dictionary output under `build/`.
    */
-  function packageArtifactHints(manifest) {
-    const main = String(manifest.main ?? "");
-    const files = Array.isArray(manifest.files) ? manifest.files.map(String) : [];
+  function packageArtifactHints(pkgManifest) {
+    const main = String(pkgManifest.main ?? "");
+    const files = Array.isArray(pkgManifest.files) ? pkgManifest.files.map(String) : [];
     const usesBuild =
       main.includes("/build/") ||
       main.startsWith("./build/") ||
@@ -272,16 +276,38 @@ function vendorWorkspaceDependencies(
     };
   }
 
+  /**
+   * Detect private/DX packages that only ship TypeScript sources (exports →
+   * ./src/*.ts, no dist). Used as a vendor fallback when there is no build.
+   */
+  function sourceOnlyExportEntries(pkgManifest) {
+    const exportsMap = pkgManifest.exports;
+    if (!exportsMap || typeof exportsMap !== "object" || Array.isArray(exportsMap)) return null;
+    const entries = [];
+    for (const [key, value] of Object.entries(exportsMap)) {
+      if (typeof value !== "string") return null;
+      if (!value.startsWith("./src/") || !/\.tsx?$/.test(value)) return null;
+      entries.push({ exportKey: key, relPath: value.replace(/^\.\//, "") });
+    }
+    return entries.length > 0 ? entries : null;
+  }
+
   function ensurePackageDist(packageName, sourceDir) {
     const pkgManifest = readJson(join(sourceDir, "package.json"));
     const hints = packageArtifactHints(pkgManifest);
-    if (hints.readyPaths.some((rel) => existsSync(join(sourceDir, rel)))) return true;
+    if (hints.readyPaths.some((rel) => existsSync(join(sourceDir, rel)))) return "dist";
+
+    // Source-only package (e.g. @nebutra/preset) — no build needed.
+    const sourceEntries = sourceOnlyExportEntries(pkgManifest);
+    if (sourceEntries && sourceEntries.every((e) => existsSync(join(sourceDir, e.relPath)))) {
+      return "source";
+    }
 
     if (!pkgManifest.scripts?.build) {
       console.warn(
         `[subrepo-sync] cannot vendor ${packageName}: no build script and no ${hints.kind}/`,
       );
-      return false;
+      return null;
     }
 
     console.log(`[subrepo-sync] building ${packageName} for vendor…`);
@@ -295,10 +321,49 @@ function vendorWorkspaceDependencies(
       console.warn(
         `[subrepo-sync] build failed for ${packageName}: ${error instanceof Error ? error.message : error}`,
       );
-      return false;
+      return null;
     }
 
-    return hints.readyPaths.some((rel) => existsSync(join(sourceDir, rel)));
+    return hints.readyPaths.some((rel) => existsSync(join(sourceDir, rel))) ? "dist" : null;
+  }
+
+  function vendorSourceOnly(packageName, sourceDir, sourceManifest, sourceEntries) {
+    const slug = packageVendorSlug(packageName);
+    const outDir = join(vendorRoot, slug);
+    rmSync(outDir, { recursive: true, force: true });
+    mkdirSync(outDir, { recursive: true });
+
+    // Prefer dependency-free leaf modules only — copy export targets, not the
+    // whole package graph (preset → theme would pull the design system).
+    const vendoredFiles = new Set();
+    const exportsMap = {};
+    for (const { exportKey, relPath } of sourceEntries) {
+      const from = join(sourceDir, relPath);
+      const to = join(outDir, relPath);
+      mkdirSync(dirname(to), { recursive: true });
+      copyFileSync(from, to);
+      vendoredFiles.add(relPath);
+      exportsMap[exportKey] = `./${relPath}`;
+    }
+
+    const vendoredManifest = {
+      name: packageName,
+      version: sourceManifest.version,
+      description: sourceManifest.description,
+      license: sourceManifest.license ?? "MIT",
+      type: sourceManifest.type ?? "module",
+      // Source-only leaf modules — no runtime deps (callers tsup-inline them).
+      main: exportsMap["."] ?? Object.values(exportsMap)[0],
+      exports: exportsMap,
+      files: [...vendoredFiles],
+      dependencies: {},
+      private: false,
+    };
+    writeJson(join(outDir, "package.json"), vendoredManifest);
+    console.log(
+      `[subrepo-sync] vendored ${packageName} as source-only (${sourceEntries.length} export(s))`,
+    );
+    return true;
   }
 
   function vendorOne(packageName) {
@@ -307,13 +372,20 @@ function vendorWorkspaceDependencies(
     if (!entry) return false;
 
     const sourceDir = join(root, entry.relativeDir);
-    if (!ensurePackageDist(packageName, sourceDir)) {
+    const mode = ensurePackageDist(packageName, sourceDir);
+    if (!mode) {
       console.warn(`[subrepo-sync] cannot vendor ${packageName}: missing artifacts after build`);
       return false;
     }
 
     seen.add(packageName);
     const sourceManifest = readJson(join(sourceDir, "package.json"));
+
+    if (mode === "source") {
+      const sourceEntries = sourceOnlyExportEntries(sourceManifest);
+      return vendorSourceOnly(packageName, sourceDir, sourceManifest, sourceEntries);
+    }
+
     const hints = packageArtifactHints(sourceManifest);
 
     // Vendor nested workspace deps first so file: links resolve.
@@ -415,12 +487,28 @@ function vendorWorkspaceDependencies(
   }
 
   let vendoredAny = false;
-  for (const field of ["dependencies", "optionalDependencies"]) {
+  // dependencies / optionalDependencies: always vendor workspace @nebutra/*
+  // when possible (standalone typecheck needs built dist, not monorepo src).
+  //
+  // devDependencies: only vendor packages that cannot resolve from npm —
+  // private packages or source-only DX packages (e.g. @nebutra/preset).
+  // Public packages like @nebutra/ui stay as ^x.y.z so CLI mirrors stay lean
+  // (tsup noExternal still bundles them from the installed npm tarball).
+  for (const field of ["dependencies", "optionalDependencies", "devDependencies"]) {
     const block = manifest[field] ?? {};
     for (const [depName, range] of Object.entries(block)) {
       if (typeof range !== "string") continue;
       if (!range.startsWith("workspace:") && !depName.startsWith("@nebutra/")) continue;
       if (!packageByName.has(depName)) continue;
+
+      if (field === "devDependencies") {
+        const entry = packageByName.get(depName);
+        const depManifest = readJson(join(root, entry.relativeDir, "package.json"));
+        const needsLocalVendor =
+          depManifest.private === true || Boolean(sourceOnlyExportEntries(depManifest));
+        if (!needsLocalVendor) continue;
+      }
+
       if (vendorOne(depName)) {
         block[depName] = `file:./vendor/${packageVendorSlug(depName)}`;
         vendoredAny = true;
@@ -837,11 +925,13 @@ function main() {
     args.all || args.packageName || args.repoName ? mirrors : mirrors.slice(0, 1);
   const outputRoot = resolve(args.out);
   const catalogVersions = readCatalogVersions(root);
+  // Include private workspace packages so vendor can resolve build-time deps
+  // (e.g. @nebutra/preset leaf modules inlined by CLI tsup builds).
   const workspaceVersions = new Map(
-    releaseSurface.publishable.map((entry) => [entry.manifest.name, entry.manifest.version]),
+    releaseSurface.packages.map((entry) => [entry.manifest.name, entry.manifest.version]),
   );
   const packageByName = new Map(
-    releaseSurface.publishable.map((entry) => [entry.manifest.name, entry]),
+    releaseSurface.packages.map((entry) => [entry.manifest.name, entry]),
   );
   const sourceSha = getCurrentGitSha(root);
 

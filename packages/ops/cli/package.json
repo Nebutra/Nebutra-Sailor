@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@nebutra/brand": "workspace:*",
+    "@nebutra/preset": "workspace:*",
     "@nebutra/theme": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@types/node": "catalog:",

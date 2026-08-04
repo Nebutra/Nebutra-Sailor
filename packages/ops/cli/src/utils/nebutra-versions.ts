@@ -3,9 +3,12 @@
  *
  * Thin RE-EXPORT of the single source of truth:
  *   `packages/ops/preset/src/nebutra-package-versions.ts`
+ *   (package export: `@nebutra/preset/nebutra-package-versions`)
  *
- * Relative import (not `@nebutra/preset`) so the published `nebutra` binary
- * stays self-contained — tsup inlines the dependency-free registry module.
+ * Package subpath import (not a monorepo-relative path) so standalone mirror
+ * CI can resolve via workspace / vendored `file:./vendor/*`, while tsup still
+ * inlines the dependency-free registry into the published binary
+ * (`noExternal: [/^@nebutra\//]`).
  *
  * Do NOT edit version numbers here. Edit the shared registry, then:
  *   pnpm package-versions:sync
@@ -21,4 +24,4 @@ export {
   getNebutraPackageVersionOrNull as getNebutraPackageVersion,
   getNebutraPackageVersionOrNull,
   NEBUTRA_PACKAGE_VERSIONS,
-} from "../../../preset/src/nebutra-package-versions";
+} from "@nebutra/preset/nebutra-package-versions";

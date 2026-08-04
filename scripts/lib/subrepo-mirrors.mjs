@@ -65,8 +65,14 @@ export function resolveSubrepoMirrors(options = {}) {
   const root = options.root ?? process.cwd();
   const config = readSubrepoMirrorConfig(root);
   const releaseSurface = getReleaseSurfaceDiagnostics(root);
-  const byPackageName = new Map(
+  // Mirrors themselves must be publishable packages.
+  const byPublishableName = new Map(
     releaseSurface.publishable.map((entry) => [entry.manifest.name, entry]),
+  );
+  // Vendor resolution needs every workspace package (including private ones
+  // like @nebutra/preset) so standalone CLI mirrors can file:-vendor them.
+  const byWorkspaceName = new Map(
+    releaseSurface.packages.map((entry) => [entry.manifest.name, entry]),
   );
 
   const packageNames = new Set();
@@ -91,7 +97,7 @@ export function resolveSubrepoMirrors(options = {}) {
     packageNames.add(mirror.packageName);
     repoNames.add(mirror.repoName);
 
-    const packageEntry = byPackageName.get(mirror.packageName);
+    const packageEntry = byPublishableName.get(mirror.packageName);
     if (!packageEntry) {
       throw new Error(`${mirror.packageName} is not a publishable workspace package`);
     }
@@ -112,9 +118,25 @@ export function resolveSubrepoMirrors(options = {}) {
     ]) {
       for (const [dependencyName, range] of Object.entries(packageEntry.manifest[field] ?? {})) {
         if (typeof range !== "string" || !range.startsWith("workspace:")) continue;
-        if (!byPackageName.has(dependencyName)) {
+        // Private workspace deps are allowed when they exist in the monorepo —
+        // sync vendors them as file:./vendor/* (source-only for packages with
+        // no dist, e.g. @nebutra/preset leaf modules used by CLIs).
+        if (!byWorkspaceName.has(dependencyName)) {
           throw new Error(
-            `${mirror.packageName} ${field} references non-publishable workspace dependency ${dependencyName}`,
+            `${mirror.packageName} ${field} references missing workspace dependency ${dependencyName}`,
+          );
+        }
+        if (
+          !byPublishableName.has(dependencyName) &&
+          (field === "dependencies" ||
+            field === "optionalDependencies" ||
+            field === "peerDependencies")
+        ) {
+          // Runtime/peer deps must still be publishable — CLIs must not ship a
+          // private package as a production dependency of the published binary.
+          // Build-time (devDependencies) private packages are vendored instead.
+          throw new Error(
+            `${mirror.packageName} ${field} references non-publishable workspace dependency ${dependencyName} (use devDependencies + tsup noExternal to bundle, or publish the dependency)`,
           );
         }
       }

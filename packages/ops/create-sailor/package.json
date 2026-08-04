@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@nebutra/brand": "workspace:*",
+    "@nebutra/preset": "workspace:*",
     "@types/node": "catalog:",
     "@types/update-notifier": "^6.0.8",
     "tsup": "catalog:",

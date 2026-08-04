@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { type DeployTargetMap, getDefaultDeployTargets } from "../../../preset/src/deploy-target";
+import { type DeployTargetMap, getDefaultDeployTargets } from "@nebutra/preset/deploy-target";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

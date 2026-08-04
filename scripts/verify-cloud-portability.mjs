@@ -151,7 +151,7 @@ const createSailorDeploy = readText("packages/ops/create-sailor/src/utils/deploy
 // duplication that import removed, and went red the moment the two were
 // deduplicated. Assert the derivation instead.
 assert(
-  createSailorDeploy.includes('from "../../../preset/src/deploy-target"') &&
+  createSailorDeploy.includes('from "@nebutra/preset/deploy-target"') &&
     createSailorDeploy.includes("getDefaultDeployTargets"),
   "create-sailor must derive its deploy target map from @nebutra/preset",
   failures,

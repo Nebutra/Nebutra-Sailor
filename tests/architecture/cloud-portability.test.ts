@@ -78,7 +78,7 @@ describe("cloud platform portability contract", () => {
     // reaches create-sailor without a second edit. Grepping for the literal
     // "gcp" here asserted the duplication that import removed, and went red the
     // moment the two were deduplicated.
-    expect(createSailorDeploy).toContain('from "../../../preset/src/deploy-target"');
+    expect(createSailorDeploy).toContain('from "@nebutra/preset/deploy-target"');
     expect(createSailorDeploy).toContain("getDefaultDeployTargets");
     expect(createSailorDeploy).not.toMatch(/originBackend:\s*\[/);
   });

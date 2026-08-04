@@ -4,9 +4,9 @@
  *
  * This module is intentionally DEPENDENCY-FREE (no imports) so it can be
  * re-exported by the npm-published CLIs (`create-sailor`, `nebutra`) via
- * relative path (tsup inlines it with zero added runtime dependency) and
- * consumed by `apps/web` / `@nebutra/startup-os` without dragging in the rest
- * of `@nebutra/preset`'s graph.
+ * `@nebutra/preset/nebutra-package-versions` (tsup inlines it with zero added
+ * runtime dependency) and consumed by `apps/web` / `@nebutra/startup-os`
+ * without dragging in the rest of `@nebutra/preset`'s graph.
  *
  * Source of truth for *numbers*: the `version` field of each declassified
  * (`private: false`) package.json in this monorepo. Keep this map equal to
