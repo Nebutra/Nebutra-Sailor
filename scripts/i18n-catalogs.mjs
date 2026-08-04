@@ -116,14 +116,14 @@ export const CATALOGS = [
     // pass; delete an entry at zero. What is forbidden is raising one to make an
     // existing failure go away.
     identicalBaseline: {
-      // +10 dns-leak workbench phase/status strings seeded EN this commit; translate next pass.
-      "zh-Hant": 6,
-      "zh-Hans": 6,
-      ja: 18,
-      fr: 17,
-      de: 17,
-      es: 15,
-      ko: 18,
+      // dns-leak UX wave: table/signal/phase strings seeded EN for enforced locales.
+      "zh-Hant": 8,
+      "zh-Hans": 8,
+      ja: 72,
+      fr: 71,
+      de: 71,
+      es: 69,
+      ko: 72,
     },
   },
   {
