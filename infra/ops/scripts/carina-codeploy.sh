@@ -91,13 +91,41 @@ start_docker() {
   fi
   docker rm -f carina-daemon >/dev/null 2>&1 || true
   # Pull once (cached thereafter). ubuntu:22.04 has GLIBC_2.35.
-  docker pull ubuntu:22.04 >/dev/null
+  # Prefer CN registry mirrors when Docker Hub is slow.
+  pull_ubuntu() {
+    local refs=(
+      "${CARINA_DOCKER_IMAGE:-}"
+      "docker.m.daocloud.io/library/ubuntu:22.04"
+      "dockerproxy.net/library/ubuntu:22.04"
+      "ubuntu:22.04"
+    )
+    local r
+    for r in "${refs[@]}"; do
+      [ -n "$r" ] || continue
+      echo "docker pull $r"
+      if docker pull "$r"; then
+        # Retag so run uses a stable local name
+        docker tag "$r" carina-runtime-ubuntu:22.04 2>/dev/null || true
+        echo "$r"
+        return 0
+      fi
+    done
+    return 1
+  }
+  IMAGE_REF="$(pull_ubuntu)" || {
+    echo "ERROR: failed to pull ubuntu:22.04 (try CARINA_DOCKER_IMAGE=...)" >&2
+    return 1
+  }
+  # Prefer retagged name when available
+  if docker image inspect carina-runtime-ubuntu:22.04 >/dev/null 2>&1; then
+    IMAGE_REF="carina-runtime-ubuntu:22.04"
+  fi
   docker run -d --name carina-daemon --restart unless-stopped \
     -v "$CARINA_ROOT/run:$CARINA_ROOT/run" \
     -v "$STATE_DIR:$STATE_DIR" \
     -v "$WS_ROOT:$WS_ROOT" \
     -v "$CARINA_ROOT/bin/carina-daemon:/usr/local/bin/carina-daemon:ro" \
-    ubuntu:22.04 \
+    "$IMAGE_REF" \
     /usr/local/bin/carina-daemon \
       -socket "$SOCKET_PATH" \
       -state "$STATE_DIR" \
