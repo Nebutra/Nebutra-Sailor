@@ -16,12 +16,21 @@
 #
 # Usage (on the VM):
 #   sudo bash install-carina-daemon.sh
-#   CARINA_VERSION=0.8.1 bash install-carina-daemon.sh
+#   CARINA_VERSION=0.8.5 bash install-carina-daemon.sh
 #   CARINA_RELEASE_MIRRORS="https://ghfast.top/ https://ghproxy.net/" bash install-carina-daemon.sh
 set -euo pipefail
 
-CARINA_VERSION="${CARINA_VERSION:-0.8.1}"
+# Default tracks latest published Carina release pin for co-deploy.
+# Override with CARINA_VERSION=… when you need to hold a known-good.
+# CI may stage /tmp/carina-ops/VERSION so refresh installs report the true pin.
 CARINA_ROOT="${CARINA_ROOT:-/var/carina}"
+STAGED_DIR="${CARINA_STAGED_DIR:-/tmp/carina-ops}"
+STAGED_DAEMON="${CARINA_STAGED_BIN:-$STAGED_DIR/carina-daemon}"
+STAGED_KERNEL="${CARINA_STAGED_KERNEL:-$STAGED_DIR/carina-kernel-service}"
+if [ -z "${CARINA_VERSION:-}" ] && [ -f "$STAGED_DIR/VERSION" ]; then
+  CARINA_VERSION="$(tr -d '[:space:]' <"$STAGED_DIR/VERSION")"
+fi
+CARINA_VERSION="${CARINA_VERSION:-0.8.5}"
 ARCH="$(uname -m)"
 case "$ARCH" in
   x86_64|amd64) ARCH_TAG="linux_amd64" ;;
@@ -33,10 +42,6 @@ ASSET="carina_${CARINA_VERSION}_${ARCH_TAG}.tar.gz"
 ORIGIN_URL="https://github.com/Nebutra/carina/releases/download/v${CARINA_VERSION}/${ASSET}"
 
 mkdir -p "$CARINA_ROOT/bin" "$CARINA_ROOT/run" "$CARINA_ROOT/ws" "$CARINA_ROOT/state" "$CARINA_ROOT/tmp"
-
-STAGED_DIR="${CARINA_STAGED_DIR:-/tmp/carina-ops}"
-STAGED_DAEMON="${CARINA_STAGED_BIN:-$STAGED_DIR/carina-daemon}"
-STAGED_KERNEL="${CARINA_STAGED_KERNEL:-$STAGED_DIR/carina-kernel-service}"
 
 install_bin() {
   local src="$1" dest="$2"
@@ -67,7 +72,8 @@ if [ ! -x "$CARINA_ROOT/bin/carina-daemon" ] || [ ! -x "$CARINA_ROOT/bin/carina-
 fi
 
 if [ "$need_archive" = "0" ]; then
-  echo "Carina binaries ready under $CARINA_ROOT/bin (staged path)"
+  printf '%s\n' "$CARINA_VERSION" >"$CARINA_ROOT/VERSION"
+  echo "Carina binaries ready under $CARINA_ROOT/bin (staged path, v${CARINA_VERSION})"
   "$CARINA_ROOT/bin/carina-daemon" -h 2>&1 | head -8 || true
   exit 0
 fi
@@ -178,5 +184,6 @@ if [ ! -x "$CARINA_ROOT/bin/carina-daemon" ] || [ ! -x "$CARINA_ROOT/bin/carina-
   exit 1
 fi
 
+printf '%s\n' "$CARINA_VERSION" >"$CARINA_ROOT/VERSION"
 echo "Installed carina-daemon + carina-kernel-service (v${CARINA_VERSION}) → $CARINA_ROOT/bin"
 "$CARINA_ROOT/bin/carina-daemon" -h 2>&1 | head -8 || true

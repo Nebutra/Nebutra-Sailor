@@ -928,7 +928,7 @@ jobs:
             "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/"
           # Pre-stage carina-daemon on the GH runner (US) then scp — ECS cannot
           # reliably pull GitHub Releases in reasonable time from CN.
-          CARINA_VERSION="${CARINA_VERSION:-0.8.1}"
+          CARINA_VERSION="${CARINA_VERSION:-0.8.5}"
           ARCH_TAG="linux_amd64"
           ASSET="carina_${CARINA_VERSION}_${ARCH_TAG}.tar.gz"
           URL="https://github.com/Nebutra/carina/releases/download/v${CARINA_VERSION}/${ASSET}"
@@ -958,6 +958,9 @@ jobs:
           tar -xzf "/tmp/carina-stage/$ASSET" -C /tmp/carina-stage
           BIN="$(find /tmp/carina-stage -type f -name carina-daemon | head -1)"
           KERNEL="$(find /tmp/carina-stage -type f -name carina-kernel-service | head -1)"
+          printf '%s\n' "$CARINA_VERSION" > /tmp/carina-stage/VERSION
+          scp "${SCP_OPTS[@]}" /tmp/carina-stage/VERSION \
+            "${ECS_USER}@${ECS_HOST}:/tmp/carina-ops/VERSION" || true
           if [ -z "$BIN" ]; then
             echo "::warning::carina-daemon not found in release archive — VM will try network install"
           else

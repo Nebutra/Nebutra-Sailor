@@ -24,13 +24,12 @@ TOOLS_DIR="${CARINA_TOOLS_DIR:-$CARINA_ROOT/bin}"
 echo "Injecting api-gateway Carina env (co-deploy defaults)…"
 bash "$SCRIPTS_DIR/configure-api-carina-env.sh" || true
 
+# Always refresh binaries so version pin bumps (CI-staged) actually land.
 # Daemon alone is not enough — kernel child is required for capability startup.
-if [ ! -x "$DAEMON_BIN" ] || [ ! -x "$KERNEL_BIN" ]; then
-  echo "Installing carina-daemon + carina-kernel-service…"
-  if ! bash "$SCRIPTS_DIR/install-carina-daemon.sh"; then
-    echo "ERROR: install-carina-daemon.sh failed" >&2
-    exit 1
-  fi
+echo "Installing/refreshing carina-daemon + carina-kernel-service…"
+if ! bash "$SCRIPTS_DIR/install-carina-daemon.sh"; then
+  echo "ERROR: install-carina-daemon.sh failed" >&2
+  exit 1
 fi
 
 if [ ! -x "$DAEMON_BIN" ]; then

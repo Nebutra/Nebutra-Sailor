@@ -16,15 +16,15 @@
  * @see docs/architecture/2026-08-03-carina-track-b-upstream.md
  */
 
-import type { CapabilityPolicy } from "./policy";
 import {
+  CarinaNdjsonError,
   CODEPLOY_CARINA_SOCKET_PATH,
   CODEPLOY_CARINA_WORKSPACE_ROOT,
-  CarinaNdjsonError,
   createCarinaNdjsonClient,
   defaultCarinaSocketPath,
   type NdjsonRpcClient,
 } from "./carina-ndjson";
+import type { CapabilityPolicy } from "./policy";
 
 export interface SandboxExecRequest {
   /** Mandatory tenant scope — every delegated exec is tenant-bound. */
@@ -127,7 +127,7 @@ export function createHttpSandbox(
   };
 }
 
-// ── Carina v0.8.1 JSON-RPC mapping ───────────────────────────────────────────
+// ── Carina v0.8.x JSON-RPC mapping (catalog baseline 0.8.1; pin co-deploy binary separately) ─
 
 /** Minimum `protocol_version` we accept from `gateway.hello` (Carina catalog). */
 export const CARINA_MIN_PROTOCOL_VERSION = 1;
@@ -262,13 +262,11 @@ function extractCarinaSessionId(session: unknown): string {
     const v = rec[key];
     if (typeof v === "string" && v.length > 0) return v;
   }
-  throw new CarinaProtocolError(
-    "Carina session.create Session missing id/session_id/sessionId",
-  );
+  throw new CarinaProtocolError("Carina session.create Session missing id/session_id/sessionId");
 }
 
 /**
- * Track-B adapter: Sailor control plane → **Carina** public RPC catalog (v0.8.1+).
+ * Track-B adapter: Sailor control plane → **Carina** public RPC catalog (v0.8.x).
  *
  * Mapping (Sailor → Carina, never the reverse ownership):
  * - `threadId` → `command.exec` `session_id` (via ensureSession cache, else threadId)
@@ -440,9 +438,7 @@ export function createCarinaSandbox(options: CarinaSandboxOptions): CarinaSandbo
 
       const root = request.workspaceRoot.trim();
       if (!root) {
-        throw new CarinaProtocolError(
-          "Carina session.create requires a non-empty workspaceRoot",
-        );
+        throw new CarinaProtocolError("Carina session.create requires a non-empty workspaceRoot");
       }
 
       await ensureHello();
@@ -564,12 +560,10 @@ export function assertSafePosture(policy: CapabilityPolicy, allowDanger = false)
   }
 }
 
-
 // ── Env resolution + command-exec tool (Phase 2 host helpers) ────────────────
 
 /** Env bag for Carina host config. Compatible with `process.env`. */
 export type CarinaEnv = Readonly<Record<string, string | undefined>>;
-
 
 /**
  * Resolve workspace path for a tenant/thread.
@@ -592,10 +586,7 @@ export function resolveCarinaWorkspaceRoot(
   }
   const template = env.CARINA_WORKSPACE_TEMPLATE?.trim();
   if (template) {
-    return template
-      .replaceAll("{tenantId}", tenantId)
-      .replaceAll("{threadId}", threadId)
-      .trim();
+    return template.replaceAll("{tenantId}", tenantId).replaceAll("{threadId}", threadId).trim();
   }
   const root = env.CARINA_WORKSPACE_ROOT?.trim();
   return root || undefined;
@@ -630,8 +621,7 @@ export function resolveCarinaSandboxFromEnv(
   env: CarinaEnv = process.env,
   overrides: Partial<CarinaSandboxOptions> = {},
 ): ExternalSandbox {
-  const auto =
-    env.CARINA_AUTO_APPROVE === "1" || env.CARINA_AUTO_APPROVE === "true";
+  const auto = env.CARINA_AUTO_APPROVE === "1" || env.CARINA_AUTO_APPROVE === "true";
   const common: Partial<CarinaSandboxOptions> = {
     ...(env.CARINA_CLIENT_ID ? { clientId: env.CARINA_CLIENT_ID } : {}),
     ...(auto ? { autoApproveOnRequire: true } : {}),
