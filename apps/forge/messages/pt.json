@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Tokens · custo · schema"
     },
+    "net": {
+      "label": "Rede",
+      "hint": "DNS · TLS · IP · vazamento"
+    },
     "security": {
       "label": "Segurança",
       "hint": "Gerador de senhas"

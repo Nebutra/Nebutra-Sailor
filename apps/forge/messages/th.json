@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "โทเค็น · ค่าใช้จ่าย · schema"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "ความปลอดภัย",
       "hint": "สร้างรหัสผ่าน"

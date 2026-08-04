@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Token · chi phí · schema"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "Bảo mật",
       "hint": "Tạo mật khẩu"

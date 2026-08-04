@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "トークン · コスト · スキーマ"
     },
+    "net": {
+      "label": "ネットワーク",
+      "hint": "DNS · TLS · IP · 漏洩確認"
+    },
     "security": {
       "label": "セキュリティ",
       "hint": "パスワード生成"

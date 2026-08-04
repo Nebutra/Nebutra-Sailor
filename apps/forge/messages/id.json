@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Token · biaya · skema"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "Keamanan",
       "hint": "Generator sandi"

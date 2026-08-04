@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "টোকেন · খরচ · স্কিমা"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "নিরাপত্তা",
       "hint": "পাসওয়ার্ড জেনারেটর"

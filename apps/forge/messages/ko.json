@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "토큰 · 비용 · 스키마"
     },
+    "net": {
+      "label": "네트워크",
+      "hint": "DNS · TLS · IP · 누출 검사"
+    },
     "security": {
       "label": "보안",
       "hint": "비밀번호 생성기"

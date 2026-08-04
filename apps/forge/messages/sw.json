@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Tokens · gharama · schema"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "Usalama",
       "hint": "Kizalishaji cha neno siri"

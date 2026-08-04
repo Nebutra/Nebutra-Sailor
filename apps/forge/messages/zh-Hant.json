@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Token · 費用 · Schema"
     },
+    "net": {
+      "label": "網路",
+      "hint": "DNS · TLS · IP · 洩露檢測"
+    },
     "security": {
       "label": "安全",
       "hint": "密碼產生器"

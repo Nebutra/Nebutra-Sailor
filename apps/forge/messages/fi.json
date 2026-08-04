@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Tokenit · kustannus · skeema"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "Turvallisuus",
       "hint": "Salasanageneraattori"

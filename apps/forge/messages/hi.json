@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "टोकन · लागत · स्कीमा"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "सुरक्षा",
       "hint": "पासवर्ड जनरेटर"

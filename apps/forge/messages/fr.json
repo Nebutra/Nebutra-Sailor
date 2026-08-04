@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Jetons · coût · schéma"
     },
+    "net": {
+      "label": "Réseau",
+      "hint": "DNS · TLS · IP · fuite"
+    },
     "security": {
       "label": "Sécurité",
       "hint": "Générateur de mots de passe"

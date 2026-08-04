@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Tokens · omkostning · skema"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "Sikkerhed",
       "hint": "Adgangskodegenerator"

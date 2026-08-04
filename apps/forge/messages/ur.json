@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "ٹوکنز · لاگت · اسکیم"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "سیکیورٹی",
       "hint": "پاس ورڈ جنریٹر"

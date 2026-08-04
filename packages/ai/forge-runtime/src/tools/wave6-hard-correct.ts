@@ -34,7 +34,7 @@ const DNS_TYPES = ["A", "AAAA", "CNAME", "MX", "TXT", "NS", "SOA", "PTR"] as con
 export const dnsLookupTool = tool({
   id: "net/dns-lookup",
   slug: "dns-lookup",
-  category: "dev",
+  category: "net",
   title: { zh: "DNS 解析", en: "DNS Lookup" },
   description: {
     zh: "解析 A/AAAA/MX/TXT/NS/CNAME 等记录（Node dns，结果随 Forge 出口解析器）",
@@ -101,7 +101,7 @@ export const dnsLookupTool = tool({
 export const tlsCertInspectTool = tool({
   id: "net/tls-cert-inspect",
   slug: "tls-cert-inspect",
-  category: "dev",
+  category: "net",
   title: { zh: "TLS 证书检测", en: "TLS Certificate Inspect" },
   description: {
     zh: "连接主机 443 读取证书主体、SAN、有效期与指纹",
@@ -219,7 +219,7 @@ export const tlsCertInspectTool = tool({
 export const myIpTool = tool({
   id: "net/my-ip",
   slug: "my-ip",
-  category: "dev",
+  category: "net",
   title: { zh: "我的 IP", en: "My IP" },
   description: {
     zh: "查看请求到达 Forge 时的客户端 IP 与关键头（由主机注入，不含虚假 Geo）",
@@ -358,7 +358,7 @@ async function resolveTxtWithServers(
 export const dnsLeakTool = tool({
   id: "net/dns-leak",
   slug: "dns-leak",
-  category: "dev",
+  category: "net",
   title: { zh: "DNS 泄漏检测", en: "DNS Leak Check" },
   description: {
     zh: "权威区系统 DNS 递归捕获 + 多解析器路径 + 浏览器 DoH/WebRTC；无命中时诚实降级，不伪造 Geo/ASN",

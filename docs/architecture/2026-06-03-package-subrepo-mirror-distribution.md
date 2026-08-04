@@ -72,7 +72,18 @@ Negative:
 
 ## Follow-Up
 
-- Backfill package READMEs for the first wave.
-- Graduate `@nebutra/queue` only after its optional private `@nebutra/db` scheduled-job boundary is extracted or made public.
-- Add adoption metrics after the mirrors are live.
-- Decide whether mature second-wave packages should graduate after first-wave sync has run cleanly for at least one release.
+- Backfill package READMEs for high-traffic mirrors (first-wave still highest leverage).
+- Add adoption metrics after the mirrors are live (clones, npm installs, inbound PRs).
+- ~~Graduate `@nebutra/queue` after optional private `@nebutra/db` boundary extraction~~ — done (`configure` DI).
+- ~~Second-wave and later cohorts~~ — graduated through seventh-wave libraries + eighth-wave CLIs; hard Install/Build/Typecheck gates green.
+
+### Cohort inventory (as of 2026-08)
+
+| Cohort | Role |
+|---|---|
+| first-wave | AI runtime + design system + platform primitives |
+| second-wave | IAM + integrations + design languages |
+| third-wave | Queue, stores, contracts, knowledge primitives |
+| fourth–sixth | Commerce, pipelines, agent product surfaces |
+| seventh-wave | `ai-providers`, `forge-runtime`, `design-tokens` |
+| eighth-wave | Published CLIs (`create-sailor`, `nebutra`) |

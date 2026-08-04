@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Tokens · coste · esquema"
     },
+    "net": {
+      "label": "Red",
+      "hint": "DNS · TLS · IP · fugas"
+    },
     "security": {
       "label": "Seguridad",
       "hint": "Generador de contraseñas"

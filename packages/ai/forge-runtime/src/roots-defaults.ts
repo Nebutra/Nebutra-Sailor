@@ -104,6 +104,7 @@ const CATEGORY_ROOTS: Readonly<Record<string, readonly string[]>> = {
   hash: ["generator"],
   security: ["generator"],
   dev: ["converter"],
+  net: ["checker", "viewer"],
   time: ["calculator"],
   life: ["calculator"],
   unit: ["converter", "calculator"],

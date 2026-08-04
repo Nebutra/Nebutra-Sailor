@@ -14,6 +14,7 @@ const ACCENT: Record<string, string> = {
   image: "var(--cyan-9)",
   life: "hsl(var(--primary))",
   llm: "var(--cyan-9)",
+  net: "hsl(var(--primary))",
   security: "hsl(var(--primary))",
   text: "var(--cyan-9)",
   time: "hsl(var(--primary))",

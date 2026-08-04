@@ -91,6 +91,10 @@
       "label": "LLM",
       "hint": "Tokens · kostnad · skjema"
     },
+    "net": {
+      "label": "Network",
+      "hint": "DNS · TLS · IP · leak check"
+    },
     "security": {
       "label": "Sikkerhet",
       "hint": "Passordgenerator"

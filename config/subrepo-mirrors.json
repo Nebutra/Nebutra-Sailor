@@ -718,6 +718,24 @@
       "category": "design-system",
       "description": "W3C DTCG token SSOT with Style Dictionary 4 pipeline for Nebutra brands.",
       "topics": ["nebutra", "design-tokens", "dtcg", "style-dictionary", "typescript"]
+    },
+    {
+      "packageName": "create-sailor",
+      "repoName": "create-sailor",
+      "sourceDir": "packages/ops/create-sailor",
+      "cohort": "eighth-wave",
+      "category": "ops",
+      "description": "Governed AI-native SaaS scaffolder — bootstrap a production monorepo with multi-tenant defaults.",
+      "topics": ["nebutra", "create-sailor", "scaffold", "cli", "typescript"]
+    },
+    {
+      "packageName": "nebutra",
+      "repoName": "nebutra-cli",
+      "sourceDir": "packages/ops/cli",
+      "cohort": "eighth-wave",
+      "category": "ops",
+      "description": "Governance-first Nebutra CLI for topology scaffolding and platform operations.",
+      "topics": ["nebutra", "cli", "ops", "scaffold", "typescript"]
     }
   ]
 }
