@@ -48,6 +48,14 @@ export class AWSKMSProvider implements VaultProvider {
   }
 
   /**
+   * AWS SDK `Client.send` types sometimes fail to resolve under standalone pnpm +
+   * moduleResolution bundler; call through a narrow helper so builds stay portable.
+   */
+  private send<T>(command: unknown): Promise<T> {
+    return (this.client as unknown as { send(cmd: unknown): Promise<T> }).send(command);
+  }
+
+  /**
    * Encrypt a plaintext secret using AWS KMS.
    * 1. KMS generates plaintext DEK + encrypted DEK
    * 2. Use plaintext DEK to encrypt secret with AES-256-GCM
@@ -59,7 +67,10 @@ export class AWSKMSProvider implements VaultProvider {
   ): Promise<EncryptedSecret> {
     try {
       // 1. Generate DEK from AWS KMS
-      const generateDekResult = await this.client.send(
+      const generateDekResult = await this.send<{
+        Plaintext?: Uint8Array;
+        CiphertextBlob?: Uint8Array;
+      }>(
         new GenerateDataKeyCommand({
           KeyId: this.keyId,
           KeySpec: "AES_256",
@@ -116,7 +127,7 @@ export class AWSKMSProvider implements VaultProvider {
       }
 
       // 1. KMS decrypts the encrypted DEK
-      const decryptResult = await this.client.send(
+      const decryptResult = await this.send<{ Plaintext?: Uint8Array }>(
         new DecryptCommand({
           CiphertextBlob: fromBase64(encrypted.encryptedDek),
         }),
@@ -190,7 +201,7 @@ export class AWSKMSProvider implements VaultProvider {
    */
   async generateDek(): Promise<Buffer> {
     try {
-      const result = await this.client.send(
+      const result = await this.send<{ Plaintext?: Uint8Array }>(
         new GenerateDataKeyCommand({
           KeyId: this.keyId,
           KeySpec: "AES_256",

@@ -198,6 +198,11 @@ function distExportsForManifest(manifest) {
           rewritten[key] = value;
           continue;
         }
+        // Keep non-source assets as-is (CSS, JSON brands, skins, fonts, etc.).
+        if (!value.startsWith("./src/") && !/\.tsx?$/.test(value)) {
+          rewritten[key] = value;
+          continue;
+        }
         // ./src/foo.ts -> ./dist/foo.js (+ types)
         const base = value
           .replace(/^\.\/src\//, "")
@@ -297,6 +302,23 @@ function vendorWorkspaceDependencies(
     mkdirSync(outDir, { recursive: true });
     copyDirRecursive(distDir, join(outDir, "dist"));
 
+    // Ship non-dist publish assets (brands/*.json, skins/*.css, styles.css, …).
+    const shippedFiles = Array.isArray(sourceManifest.files) ? sourceManifest.files : ["dist"];
+    const vendoredFiles = new Set(["dist"]);
+    for (const entry of shippedFiles) {
+      if (typeof entry !== "string" || entry === "dist" || entry.startsWith("dist/")) continue;
+      const from = join(sourceDir, entry);
+      if (!existsSync(from)) continue;
+      const to = join(outDir, entry);
+      if (statSync(from).isDirectory()) {
+        copyDirRecursive(from, to);
+      } else {
+        mkdirSync(dirname(to), { recursive: true });
+        copyFileSync(from, to);
+      }
+      vendoredFiles.add(entry);
+    }
+
     const deps = {};
     for (const [depName, range] of Object.entries(sourceManifest.dependencies ?? {})) {
       if (typeof range !== "string") continue;
@@ -321,7 +343,7 @@ function vendorWorkspaceDependencies(
       main: "./dist/index.js",
       types: "./dist/index.d.ts",
       exports: distExportsForManifest(sourceManifest),
-      files: ["dist"],
+      files: [...vendoredFiles],
       dependencies: deps,
       private: false,
     };
@@ -592,7 +614,9 @@ function writeMirrorMetadata(targetDir, mirror) {
   // `tsc` sees Client bases without `.send` and Build fails hard.
   writeFileSync(
     join(targetDir, ".npmrc"),
-    ["public-hoist-pattern[]=*", "shamefully-hoist=false", ""].join("\n"),
+    // shamefully-hoist mirrors monorepo public-hoist so nested AWS/Smithy
+    // (and similar) packages resolve for TypeScript `moduleResolution: bundler`.
+    ["public-hoist-pattern[]=*", "shamefully-hoist=true", ""].join("\n"),
   );
 }
 

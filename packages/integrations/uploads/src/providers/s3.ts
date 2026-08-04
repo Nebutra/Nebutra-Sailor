@@ -65,6 +65,14 @@ export class S3UploadProvider implements UploadProvider {
   }
 
   /**
+   * AWS SDK `Client.send` types sometimes fail to resolve under standalone pnpm +
+   * moduleResolution bundler; call through a narrow helper so builds stay portable.
+   */
+  private send<T>(command: unknown): Promise<T> {
+    return (this.client as unknown as { send(cmd: unknown): Promise<T> }).send(command);
+  }
+
+  /**
    * Build object key with tenant prefix
    */
   private buildKey(target: UploadTarget): string {
@@ -125,7 +133,7 @@ export class S3UploadProvider implements UploadProvider {
       ...(target.acl !== undefined ? { ACL: target.acl } : {}),
     });
 
-    const response = await this.client.send(createCmd);
+    const response = await this.send<{ UploadId?: string }>(createCmd);
 
     if (!response.UploadId) {
       throw new Error("Failed to initiate multipart upload: no UploadId returned");
@@ -221,7 +229,7 @@ export class S3UploadProvider implements UploadProvider {
       },
     });
 
-    const response = await this.client.send(command);
+    const response = await this.send<{ ETag?: string }>(command);
 
     const url = this.generateDownloadUrl(key);
 
@@ -250,7 +258,7 @@ export class S3UploadProvider implements UploadProvider {
       UploadId: uploadId,
     });
 
-    await this.client.send(command);
+    await this.send(command);
     this.uploadTracking.delete(uploadId);
 
     logger.info("Multipart upload aborted", { key, bucket, uploadId });
@@ -269,7 +277,7 @@ export class S3UploadProvider implements UploadProvider {
       ContentType: target.contentType,
     });
 
-    const response = await this.client.send(createCmd);
+    const response = await this.send<{ UploadId?: string }>(createCmd);
 
     if (!response.UploadId) {
       throw new Error("Failed to create Tus upload session");
@@ -296,7 +304,7 @@ export class S3UploadProvider implements UploadProvider {
       Key: key,
     });
 
-    await this.client.send(command);
+    await this.send(command);
 
     logger.debug("File deleted from S3", { key, bucket });
   }
