@@ -1,6 +1,6 @@
-import { getSystemDb } from "@nebutra/db";
 import { sendLicenseCreatedEmail } from "@nebutra/email";
 import { logger } from "@nebutra/logger";
+import { requireLicenseDb } from "../db";
 import { generateSlug } from "../generate-slug";
 import type { LicenseIssuedEvent } from "../types";
 
@@ -15,6 +15,8 @@ const log = logger.child({ service: "license:on-issued" });
  *
  * Designed to be registered with `@nebutra/queue`:
  *   queue.registerHandler("license", "issued", onLicenseIssued)
+ *
+ * Requires `configureLicenseSystemDb(getSystemDb)` at host bootstrap.
  */
 export async function onLicenseIssued(job: { data: LicenseIssuedEvent }): Promise<void> {
   const {
@@ -31,7 +33,7 @@ export async function onLicenseIssued(job: { data: LicenseIssuedEvent }): Promis
 
   // AUDIT(no-tenant): Sleptons member profiles are keyed on user_id and
   // are not per-tenant — they belong to the global community namespace.
-  const db = getSystemDb();
+  const db = requireLicenseDb();
 
   // 1. Create Sleptons member profile
   const existingProfile = await db.sleptonsaMemberProfile.findUnique({

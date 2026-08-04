@@ -9,9 +9,11 @@ import { configureAuditSystemDb } from "@nebutra/audit";
 import { deductCredits, dollarsToCredits } from "@nebutra/billing";
 import { getSystemDb } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
+import { configureLicenseSystemDb } from "@nebutra/license";
 
-// Host injects durable audit storage — @nebutra/audit stays free of private @nebutra/db.
+// Host injects durable audit + license storage — packages stay free of private @nebutra/db.
 configureAuditSystemDb(getSystemDb);
+configureLicenseSystemDb(getSystemDb);
 
 import {
   calculateCost,

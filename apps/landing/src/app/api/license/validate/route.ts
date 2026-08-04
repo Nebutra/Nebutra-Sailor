@@ -2,6 +2,7 @@ import { validateLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import "@/lib/license-bootstrap";
 
 /**
  * GET /api/license/validate?key=<licenseKey>

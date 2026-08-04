@@ -5,6 +5,7 @@ import { logger } from "@nebutra/logger";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getSessionFromRequest, getUserById } from "@/lib/auth";
+import "@/lib/license-bootstrap";
 
 // AUDIT(no-tenant): community profiles + licenses are user-scoped and predate
 // any tenant/organization context. The authenticated user's auth id is the

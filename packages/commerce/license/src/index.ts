@@ -1,3 +1,8 @@
+export {
+  configureLicenseSystemDb,
+  type LicenseDb,
+  type LicenseRecord,
+} from "./db";
 export { generateSlug } from "./generate-slug";
 export { issueLicense } from "./issue-license";
 export type {

@@ -1,20 +1,22 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { configureLicenseSystemDb } from "../db";
 
 const mockFindFirst = vi.fn();
 const mockPrisma = {
   license: {
     findFirst: (...args: unknown[]) => mockFindFirst(...args),
   },
+  sleptonsaMemberProfile: {
+    findUnique: vi.fn(),
+    create: vi.fn(),
+    update: vi.fn(),
+  },
 };
-
-vi.mock("@nebutra/db", () => ({
-  getSystemDb: () => mockPrisma,
-  prisma: mockPrisma,
-}));
 
 describe("validateLicense", () => {
   beforeEach((): void => {
     vi.clearAllMocks();
+    configureLicenseSystemDb(() => mockPrisma);
   });
 
   it("returns valid=true for an active, non-expired license", async () => {

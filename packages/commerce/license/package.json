@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/license",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "License domain logic — issuance, validation, and lifecycle events",
   "private": false,
   "license": "MIT",
@@ -8,7 +8,14 @@
   "nebutra": {
     "featureId": "license",
     "category": "commerce",
-    "summary": "License key generation + validation"
+    "summary": "License key generation + validation",
+    "status": "foundation",
+    "productionReady": false,
+    "requires": [
+      "Host-injected getSystemDb via configureLicenseSystemDb",
+      "@nebutra/queue for license.issued fan-out",
+      "@nebutra/email for welcome mail (handler)"
+    ]
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -39,16 +46,7 @@
     "@nebutra/queue": "workspace:*",
     "zod": "catalog:"
   },
-  "peerDependencies": {
-    "@nebutra/db": "workspace:*"
-  },
-  "peerDependenciesMeta": {
-    "@nebutra/db": {
-      "optional": true
-    }
-  },
   "devDependencies": {
-    "@nebutra/db": "workspace:*",
     "@vitest/coverage-v8": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

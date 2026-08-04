@@ -484,6 +484,114 @@
       "category": "ai-runtime",
       "description": "Multi-tenant codebase semantic-index grammar with content-hash identity.",
       "topics": ["nebutra", "code-index", "search", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/license",
+      "repoName": "license",
+      "sourceDir": "packages/commerce/license",
+      "cohort": "fifth-wave",
+      "category": "commerce",
+      "description": "License key issuance, validation, and lifecycle events with host-injected DB.",
+      "topics": ["nebutra", "license", "commerce", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/document-pipeline",
+      "repoName": "document-pipeline",
+      "sourceDir": "packages/ai/document-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Document parse and ingestion pipeline for tenant knowledge products.",
+      "topics": ["nebutra", "document-pipeline", "ingestion", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/knowledge-base",
+      "repoName": "knowledge-base",
+      "sourceDir": "packages/ai/knowledge-base",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Tenant-scoped knowledge product layer over content-store and knowledge-rag.",
+      "topics": ["nebutra", "knowledge-base", "rag", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/browser-control",
+      "repoName": "browser-control",
+      "sourceDir": "packages/ai/browser-control",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Browser task execution, recording, and deterministic replay ports.",
+      "topics": ["nebutra", "browser-control", "automation", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/workflow-runtime",
+      "repoName": "workflow-runtime",
+      "sourceDir": "packages/ai/workflow-runtime",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Workflow runtime contracts for durable multi-step agent execution.",
+      "topics": ["nebutra", "workflow-runtime", "workflows", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/voice-realtime",
+      "repoName": "voice-realtime",
+      "sourceDir": "packages/ai/voice-realtime",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Realtime voice session ports and provider adapters.",
+      "topics": ["nebutra", "voice-realtime", "voice", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/support-deflector",
+      "repoName": "support-deflector",
+      "sourceDir": "packages/ai/support-deflector",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Confidence-gated support deflection and answer assist primitives.",
+      "topics": ["nebutra", "support-deflector", "support", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/time-machine",
+      "repoName": "time-machine",
+      "sourceDir": "packages/ai/time-machine",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Temporal replay and time-travel debugging helpers for agent runs.",
+      "topics": ["nebutra", "time-machine", "replay", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/video-pipeline",
+      "repoName": "video-pipeline",
+      "sourceDir": "packages/ai/video-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first video generation and pipeline routing surface.",
+      "topics": ["nebutra", "video-pipeline", "video", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/image-pipeline",
+      "repoName": "image-pipeline",
+      "sourceDir": "packages/ai/image-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first image generation and workflow routing surface.",
+      "topics": ["nebutra", "image-pipeline", "image", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/audio-pipeline",
+      "repoName": "audio-pipeline",
+      "sourceDir": "packages/ai/audio-pipeline",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "BrandContext-first audio generation with license and loudness helpers.",
+      "topics": ["nebutra", "audio-pipeline", "audio", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/cofounder-match",
+      "repoName": "cofounder-match",
+      "sourceDir": "packages/ai/cofounder-match",
+      "cohort": "fifth-wave",
+      "category": "ai-runtime",
+      "description": "Cofounder matching play surface for startup agent OS.",
+      "topics": ["nebutra", "cofounder-match", "matching", "ai", "typescript"]
     }
   ]
 }

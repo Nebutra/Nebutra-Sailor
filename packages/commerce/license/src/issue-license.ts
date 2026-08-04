@@ -1,6 +1,6 @@
-import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { createJob, getQueue } from "@nebutra/queue";
+import { requireLicenseDb } from "./db";
 import type {
   IssueLicenseParams,
   IssueLicenseResult,
@@ -24,13 +24,15 @@ function resolveLicenseType(tier: IssueLicenseParams["tier"]): LicenseType {
  * - Enqueues a `license.issued` event for downstream handlers
  *   (member profile creation, welcome email, etc.)
  * - Idempotent: returns existing license if user+tier already exists
+ *
+ * Requires `configureLicenseSystemDb(getSystemDb)` at host bootstrap.
  */
 export async function issueLicense(params: IssueLicenseParams): Promise<IssueLicenseResult> {
   const { userId, tier } = params;
 
   // AUDIT(no-tenant): licenses are user-scoped (not tenant-scoped); they pre-
   // date any Organization membership and are queried by userId/licenseKey.
-  const db = getSystemDb();
+  const db = requireLicenseDb();
 
   // Idempotency: check for existing license
   const existing = await db.license.findFirst({

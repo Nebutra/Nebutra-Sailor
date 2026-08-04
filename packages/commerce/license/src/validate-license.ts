@@ -1,4 +1,4 @@
-import { getSystemDb } from "@nebutra/db";
+import { requireLicenseDb } from "./db";
 import type { ValidateLicenseResult } from "./types";
 
 /**
@@ -8,11 +8,13 @@ import type { ValidateLicenseResult } from "./types";
  * Used by the CLI `nebutra license activate` and the public
  * `/api/license/validate` endpoint.
  *
+ * Requires `configureLicenseSystemDb(getSystemDb)` at host bootstrap.
+ *
  * AUDIT(no-tenant): licenses are keyed on userId and are not scoped to any
  * Organization; the validate flow runs pre-auth against a global key space.
  */
 export async function validateLicense(key: string): Promise<ValidateLicenseResult> {
-  const license = await getSystemDb().license.findFirst({
+  const license = await requireLicenseDb().license.findFirst({
     where: { licenseKey: key, isActive: true },
     select: { tier: true, type: true, expiresAt: true },
   });

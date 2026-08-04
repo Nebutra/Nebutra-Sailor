@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { configureLicenseSystemDb } from "../db";
 import type { IssueLicenseParams } from "../types";
 
 // ── Mocks ───────────────────────────────────────────────────────────────────
@@ -10,12 +11,12 @@ const mockPrisma = {
     create: (...args: unknown[]) => mockLicenseCreate(...args),
     findFirst: (...args: unknown[]) => mockLicenseFindFirst(...args),
   },
+  sleptonsaMemberProfile: {
+    findUnique: vi.fn(),
+    create: vi.fn(),
+    update: vi.fn(),
+  },
 };
-
-vi.mock("@nebutra/db", () => ({
-  getSystemDb: () => mockPrisma,
-  prisma: mockPrisma,
-}));
 
 const mockEnqueue = vi
   .fn()
@@ -50,6 +51,7 @@ describe("issueLicense", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    configureLicenseSystemDb(() => mockPrisma);
     mockLicenseFindFirst.mockResolvedValue(null); // no existing license
     mockLicenseCreate.mockResolvedValue({
       id: "lic_1",
