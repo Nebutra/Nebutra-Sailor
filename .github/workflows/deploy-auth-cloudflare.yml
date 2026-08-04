@@ -177,29 +177,45 @@ jobs:
             echo "::warning::BETTER_AUTH_SECRET still unset — OAuth/session crypto will fail until set"
           fi
 
-      - name: Smoke workers.dev
+      - name: Smoke product host + internal workers.dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          for i in 1 2 3 4 5 6 7 8; do
-            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 \
-              https://nebutra-auth.omichiliriku.workers.dev/health || echo 000)
-            echo "try $i workers.dev/health -> $code"
-            if [ "$code" = "200" ]; then
-              head -c 600 /tmp/ah.json || true
-              echo
-              break
-            fi
-            sleep 5
-          done
-          code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 45 \
-            'https://nebutra-auth.omichiliriku.workers.dev/health?probe=google' || echo 000)
-          echo "GET workers.dev health?probe=google -> $code"
-          if [ "$code" = "200" ]; then
-            python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))' || true
+          # Discover account workers.dev slug (never hardcode personal names).
+          SUB=$(
+            curl -sS -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+              "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/workers/subdomain" \
+              | python3 -c 'import json,sys; r=(json.load(sys.stdin).get("result") or {}); print(r.get("subdomain") or "")' \
+              || true
+          )
+          INTERNAL=""
+          if [ -n "$SUB" ]; then
+            INTERNAL="https://nebutra-auth.${SUB}.workers.dev"
+            echo "internal smoke host: ${INTERNAL} (not a product URL)"
           fi
-          code=$(curl -sS -o /tmp/edge.json -w '%{http_code}' --max-time 20 \
-            https://nebutra-auth.omichiliriku.workers.dev/__edge/health || echo 000)
-          echo "GET __edge/health -> $code"
+          # Product host first — this is what customers use.
+          for url in \
+            https://auth.nebutra.com/health \
+            ${INTERNAL:+${INTERNAL}/health}
+          do
+            [ -n "$url" ] || continue
+            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            echo "GET $url -> $code"
+            if [ "$code" = "200" ]; then
+              head -c 500 /tmp/ah.json || true
+              echo
+            fi
+          done
+          if [ -n "$INTERNAL" ]; then
+            code=$(curl -sS -o /tmp/ag.json -w '%{http_code}' --max-time 45 \
+              "${INTERNAL}/health?probe=google" || echo 000)
+            echo "GET internal health?probe=google -> $code"
+            if [ "$code" = "200" ]; then
+              python3 -c 'import json; d=json.load(open("/tmp/ag.json")); print(json.dumps((d.get("oauth") or {}).get("googlePairing"), indent=2))' || true
+            fi
+          fi
 
       - name: Point DNS auth → Worker (soft-fail if token lacks DNS Edit)
         continue-on-error: true
