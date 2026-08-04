@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/forge-runtime",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Nebutra Forge capability registry, invoke pipeline, pure tools, and human page models",
   "private": false,
   "license": "MIT",

@@ -1,7 +1,7 @@
 {
   "name": "@nebutra/ai-providers",
-  "version": "1.0.0",
-  "private": true,
+  "version": "1.0.1",
+  "private": false,
   "description": "Provider registry metadata for Nebutra — meta-only, consumed by @nebutra/create-sailor and docs. Runtime lives in @nebutra/agents.",
   "sideEffects": false,
   "type": "module",
@@ -15,32 +15,36 @@
     "role": "meta-only",
     "runtime": "@nebutra/agents"
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./meta": {
-      "types": "./src/meta.ts",
-      "import": "./src/meta.ts",
-      "default": "./src/meta.ts"
+      "types": "./dist/meta.d.ts",
+      "import": "./dist/meta.js",
+      "default": "./dist/meta.js"
     },
     "./catalog": {
-      "types": "./src/catalog.ts",
-      "import": "./src/catalog.ts",
-      "default": "./src/catalog.ts"
+      "types": "./dist/catalog.d.ts",
+      "import": "./dist/catalog.js",
+      "default": "./dist/catalog.js"
     },
     "./frontier": {
-      "types": "./src/frontier.ts",
-      "import": "./src/frontier.ts",
-      "default": "./src/frontier.ts"
+      "types": "./dist/frontier.d.ts",
+      "import": "./dist/frontier.js",
+      "default": "./dist/frontier.js"
     },
     "./templates/*": "./templates/*"
   },
   "files": [
     "dist",
-    "templates"
+    "templates",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsup",
@@ -56,10 +60,23 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "tsup": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "license": "AGPL-3.0-only"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/ai/ai-providers#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/ai/ai-providers"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  }
 }

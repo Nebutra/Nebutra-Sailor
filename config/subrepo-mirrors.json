@@ -691,6 +691,33 @@
       "category": "ai-runtime",
       "description": "Short-form reel composition and generation contracts.",
       "topics": ["nebutra", "reel", "video", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ai-providers",
+      "repoName": "ai-providers",
+      "sourceDir": "packages/ai/ai-providers",
+      "cohort": "seventh-wave",
+      "category": "ai-runtime",
+      "description": "Provider registry metadata and frontier model SSOT for Nebutra products.",
+      "topics": ["nebutra", "ai-providers", "models", "metadata", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/forge-runtime",
+      "repoName": "forge-runtime",
+      "sourceDir": "packages/ai/forge-runtime",
+      "cohort": "seventh-wave",
+      "category": "ai-runtime",
+      "description": "Forge capability registry, invoke pipeline, and pure tool station runtime.",
+      "topics": ["nebutra", "forge-runtime", "tools", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/design-tokens",
+      "repoName": "design-tokens",
+      "sourceDir": "packages/design/design-tokens",
+      "cohort": "seventh-wave",
+      "category": "design-system",
+      "description": "W3C DTCG token SSOT with Style Dictionary 4 pipeline for Nebutra brands.",
+      "topics": ["nebutra", "design-tokens", "dtcg", "style-dictionary", "typescript"]
     }
   ]
 }

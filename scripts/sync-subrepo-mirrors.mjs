@@ -243,14 +243,44 @@ function vendorWorkspaceDependencies(
   const vendorRoot = join(targetDir, "vendor");
   const seen = new Set();
 
-  function ensurePackageDist(packageName, sourceDir) {
-    const distIndex = join(sourceDir, "dist", "index.js");
-    const distDts = join(sourceDir, "dist", "index.d.ts");
-    if (existsSync(distIndex) || existsSync(distDts)) return true;
+  /**
+   * Resolve build artifact roots. Most packages emit `dist/`; design-tokens and
+   * similar pipelines emit Style Dictionary output under `build/`.
+   */
+  function packageArtifactHints(manifest) {
+    const main = String(manifest.main ?? "");
+    const files = Array.isArray(manifest.files) ? manifest.files.map(String) : [];
+    const usesBuild =
+      main.includes("/build/") ||
+      main.startsWith("./build/") ||
+      files.includes("build") ||
+      files.some((f) => f === "build" || f.startsWith("build/"));
+    if (usesBuild) {
+      return {
+        kind: "build",
+        readyPaths: [
+          "build/ts/index.js",
+          "build/ts/index.d.ts",
+          "build/ts/light.js",
+          "build/index.js",
+        ],
+      };
+    }
+    return {
+      kind: "dist",
+      readyPaths: ["dist/index.js", "dist/index.d.ts"],
+    };
+  }
 
+  function ensurePackageDist(packageName, sourceDir) {
     const pkgManifest = readJson(join(sourceDir, "package.json"));
+    const hints = packageArtifactHints(pkgManifest);
+    if (hints.readyPaths.some((rel) => existsSync(join(sourceDir, rel)))) return true;
+
     if (!pkgManifest.scripts?.build) {
-      console.warn(`[subrepo-sync] cannot vendor ${packageName}: no build script and no dist/`);
+      console.warn(
+        `[subrepo-sync] cannot vendor ${packageName}: no build script and no ${hints.kind}/`,
+      );
       return false;
     }
 
@@ -268,7 +298,7 @@ function vendorWorkspaceDependencies(
       return false;
     }
 
-    return existsSync(distIndex) || existsSync(distDts);
+    return hints.readyPaths.some((rel) => existsSync(join(sourceDir, rel)));
   }
 
   function vendorOne(packageName) {
@@ -278,13 +308,13 @@ function vendorWorkspaceDependencies(
 
     const sourceDir = join(root, entry.relativeDir);
     if (!ensurePackageDist(packageName, sourceDir)) {
-      console.warn(`[subrepo-sync] cannot vendor ${packageName}: missing dist/ after build`);
+      console.warn(`[subrepo-sync] cannot vendor ${packageName}: missing artifacts after build`);
       return false;
     }
-    const distDir = join(sourceDir, "dist");
 
     seen.add(packageName);
     const sourceManifest = readJson(join(sourceDir, "package.json"));
+    const hints = packageArtifactHints(sourceManifest);
 
     // Vendor nested workspace deps first so file: links resolve.
     for (const field of ["dependencies", "optionalDependencies"]) {
@@ -300,13 +330,37 @@ function vendorWorkspaceDependencies(
     const outDir = join(vendorRoot, slug);
     rmSync(outDir, { recursive: true, force: true });
     mkdirSync(outDir, { recursive: true });
-    copyDirRecursive(distDir, join(outDir, "dist"));
+
+    const distDir = join(sourceDir, "dist");
+    const buildDir = join(sourceDir, "build");
+    if (existsSync(distDir)) {
+      copyDirRecursive(distDir, join(outDir, "dist"));
+    }
+    if (existsSync(buildDir)) {
+      copyDirRecursive(buildDir, join(outDir, "build"));
+    }
 
     // Ship non-dist publish assets (brands/*.json, skins/*.css, styles.css, …).
-    const shippedFiles = Array.isArray(sourceManifest.files) ? sourceManifest.files : ["dist"];
-    const vendoredFiles = new Set(["dist"]);
+    const shippedFiles = Array.isArray(sourceManifest.files)
+      ? sourceManifest.files
+      : hints.kind === "build"
+        ? ["build"]
+        : ["dist"];
+    const vendoredFiles = new Set(
+      existsSync(join(outDir, "dist"))
+        ? ["dist"]
+        : existsSync(join(outDir, "build"))
+          ? ["build"]
+          : [],
+    );
     for (const entry of shippedFiles) {
-      if (typeof entry !== "string" || entry === "dist" || entry.startsWith("dist/")) continue;
+      if (typeof entry !== "string") continue;
+      if (entry === "dist" || entry.startsWith("dist/")) continue;
+      if (entry === "build" || entry.startsWith("build/")) {
+        // Already copied above when present.
+        if (existsSync(join(outDir, "build"))) vendoredFiles.add("build");
+        continue;
+      }
       const from = join(sourceDir, entry);
       if (!existsSync(from)) continue;
       const to = join(outDir, entry);
@@ -334,15 +388,24 @@ function vendorWorkspaceDependencies(
       }
     }
 
+    const defaultMain = hints.kind === "build" ? "./build/ts/index.js" : "./dist/index.js";
+    const defaultTypes = hints.kind === "build" ? "./build/ts/index.d.ts" : "./dist/index.d.ts";
+
     const vendoredManifest = {
       name: packageName,
       version: sourceManifest.version,
       description: sourceManifest.description,
       license: sourceManifest.license ?? "MIT",
       type: sourceManifest.type ?? "module",
-      main: "./dist/index.js",
-      types: "./dist/index.d.ts",
-      exports: distExportsForManifest(sourceManifest),
+      main: sourceManifest.main ?? defaultMain,
+      types: sourceManifest.types ?? sourceManifest.typings ?? defaultTypes,
+      // Preserve package-native exports (build/css, tokens JSON, etc.).
+      exports:
+        sourceManifest.exports &&
+        typeof sourceManifest.exports === "object" &&
+        !Array.isArray(sourceManifest.exports)
+          ? sourceManifest.exports
+          : distExportsForManifest(sourceManifest),
       files: [...vendoredFiles],
       dependencies: deps,
       private: false,
