@@ -1,6 +1,13 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
-import { invitationCleanup, sessionCleanup } from "./scheduled";
+import {
+  createInvitationCleanup,
+  createSessionCleanup,
+  type InvitationCleanupClient,
+  invitationCleanup,
+  type SessionCleanupClient,
+  sessionCleanup,
+} from "./scheduled";
 
 export type QueuebaseBackoff = "fixed" | "exponential" | "linear";
 
@@ -157,6 +164,11 @@ export function listQueuebaseSchedules<TRouter extends QueuebaseJobRouter>(
     .map(([name, definition]) => ({ name, schedule: definition.schedule }));
 }
 
+/**
+ * Built-in Queuebase job router. Schedule metadata is always available;
+ * handlers require host DI via `createDefaultQueuebaseJobs({ getSystemDb })`.
+ * The default handlers throw if invoked without wiring.
+ */
 export const queuebaseJobs = createJobRouter({
   invitationCleanup: defineQueueJob({
     input: z.object({}),
@@ -171,6 +183,29 @@ export const queuebaseJobs = createJobRouter({
 });
 
 export type QueuebaseJobs = typeof queuebaseJobs;
+
+/**
+ * Build the built-in Queuebase jobs with a host-owned DB accessor.
+ * Prefer this over `queuebaseJobs` when handlers actually run.
+ */
+export function createDefaultQueuebaseJobs(options: { getSystemDb: () => unknown }): QueuebaseJobs {
+  const invitation = createInvitationCleanup(
+    () => options.getSystemDb() as InvitationCleanupClient,
+  );
+  const session = createSessionCleanup(() => options.getSystemDb() as SessionCleanupClient);
+  return createJobRouter({
+    invitationCleanup: defineQueueJob({
+      input: z.object({}),
+      schedule: { cron: invitation.cron, timezone: "UTC", overlap: "skip" },
+      handler: async () => invitation.handler(),
+    }),
+    sessionCleanup: defineQueueJob({
+      input: z.object({}),
+      schedule: { cron: session.cron, timezone: "UTC", overlap: "skip" },
+      handler: async () => session.handler(),
+    }),
+  });
+}
 
 export const queuebaseWebhookHandler = createQueuebaseWebhookHandler(queuebaseJobs, {
   ...(process.env.QUEUEBASE_WEBHOOK_SECRET

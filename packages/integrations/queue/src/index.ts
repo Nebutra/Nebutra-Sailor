@@ -42,6 +42,7 @@ export type {
 } from "./queuebase";
 // ── Queuebase-style typed jobs ──────────────────────────────────────────────
 export {
+  createDefaultQueuebaseJobs,
   createJobClient,
   createJobRouter,
   createQueuebaseWebhookHandler,
@@ -52,10 +53,18 @@ export {
   queuebaseJobs,
   queuebaseWebhookHandler,
 } from "./queuebase";
-export type { ScheduledJob, ScheduledJobResult } from "./scheduled/index";
 // ── Scheduled (cron) jobs ────────────────────────────────────────────────────
+export type {
+  InvitationCleanupClient,
+  RegisterDefaultScheduledJobsOptions,
+  ScheduledJob,
+  ScheduledJobResult,
+  SessionCleanupClient,
+} from "./scheduled/index";
 export {
   clearScheduledJobs,
+  createInvitationCleanup,
+  createSessionCleanup,
   getScheduledJob,
   invitationCleanup,
   listScheduledJobs,

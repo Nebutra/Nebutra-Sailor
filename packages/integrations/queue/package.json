@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/queue",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -11,7 +11,8 @@
       "QSTASH_TOKEN (+ signing keys) for serverless",
       "Configured QStash dlqFetcher/dlqEndpoint for provider-side DLQ observability",
       "REDIS_URL for BullMQ self-hosted",
-      "AWS_SQS_QUEUE_URL (+ AWS credentials) for SQS"
+      "AWS_SQS_QUEUE_URL (+ AWS credentials) for SQS",
+      "Host-injected getSystemDb for registerDefaultScheduledJobs (optional scheduled jobs)"
     ],
     "gaps": [
       "Worker auto-scaling TODO"
@@ -67,17 +68,9 @@
     "ioredis": "^5.4.2",
     "zod": "catalog:"
   },
-  "peerDependencies": {
-    "@nebutra/db": "workspace:*"
-  },
-  "peerDependenciesMeta": {
-    "@nebutra/db": {
-      "optional": true
-    }
-  },
   "devDependencies": {
-    "@nebutra/db": "workspace:*",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/queue#readme",
   "repository": {

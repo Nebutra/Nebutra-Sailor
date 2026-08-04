@@ -7,8 +7,9 @@
 // The job is implemented as two layers:
 //   - `runInvitationCleanup({ client })` is the pure async unit, easily
 //      testable with an injected fake Prisma client.
-//   - `invitationCleanup` is the registry-shaped `ScheduledJob` whose
-//      handler resolves the real Prisma client from `@nebutra/db` lazily.
+//   - `createInvitationCleanup(getClient)` builds the registry-shaped
+//      `ScheduledJob`. Callers (apps / backends) inject their DB client —
+//      this package never imports the private `@nebutra/db` surface.
 // =============================================================================
 
 import { logger } from "@nebutra/logger";
@@ -18,7 +19,7 @@ import type { ScheduledJob, ScheduledJobResult } from "../scheduler";
  * Minimal subset of the Prisma client surface this job needs.
  * Keeps the test fakes tiny and avoids pulling Prisma's full type into hot paths.
  */
-interface InvitationCleanupClient {
+export interface InvitationCleanupClient {
   organizationInvitation: {
     updateMany(args: {
       where: { status: string; expiresAt: { lt: Date } };
@@ -59,15 +60,35 @@ export async function runInvitationCleanup(
   return { ok: true, details: { expired: count } };
 }
 
+export type GetInvitationCleanupClient = () =>
+  | InvitationCleanupClient
+  | Promise<InvitationCleanupClient>;
+
 /**
- * Registry-shaped definition. The handler resolves the real Prisma client
- * lazily via dynamic import so tests don't need a live database.
+ * Build a registry-shaped job with an injected client getter.
+ * Apps typically pass `() => getSystemDb()` from their own data layer.
+ */
+export function createInvitationCleanup(getClient: GetInvitationCleanupClient): ScheduledJob {
+  return {
+    name: "invitation-cleanup",
+    cron: "0 */6 * * *",
+    handler: async () => {
+      const client = await getClient();
+      return runInvitationCleanup({ client });
+    },
+  };
+}
+
+/**
+ * Metadata-only placeholder. Calling `handler` without DI throws —
+ * use `createInvitationCleanup(getClient)` or `registerDefaultScheduledJobs`.
  */
 export const invitationCleanup: ScheduledJob = {
   name: "invitation-cleanup",
   cron: "0 */6 * * *",
   handler: async () => {
-    const { getSystemDb } = await import("@nebutra/db");
-    return runInvitationCleanup({ client: getSystemDb() as unknown as InvitationCleanupClient });
+    throw new Error(
+      "@nebutra/queue invitationCleanup requires a DB client. Use createInvitationCleanup(getClient) or registerDefaultScheduledJobs({ getSystemDb }).",
+    );
   },
 };

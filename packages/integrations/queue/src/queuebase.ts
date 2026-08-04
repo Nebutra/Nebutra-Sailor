@@ -15,6 +15,7 @@ export type {
   QueuebaseWebhookOptions,
 } from "./queuebase-webhook";
 export {
+  createDefaultQueuebaseJobs,
   createJobRouter,
   createQueuebaseWebhookHandler,
   defineQueueJob,

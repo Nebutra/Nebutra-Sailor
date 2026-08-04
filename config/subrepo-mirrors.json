@@ -250,6 +250,123 @@
       "category": "ai-runtime",
       "description": "Knowledge retrieval with zero-config local embedder and pluggable vector/keyword ports.",
       "topics": ["nebutra", "rag", "knowledge", "embeddings", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/queue",
+      "repoName": "queue",
+      "sourceDir": "packages/integrations/queue",
+      "cohort": "third-wave",
+      "category": "integrations",
+      "description": "Provider-agnostic message queue with QStash, BullMQ, SQS, and scheduled job DI.",
+      "topics": ["nebutra", "queue", "qstash", "bullmq", "sqs", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/capability-kit",
+      "repoName": "capability-kit",
+      "sourceDir": "packages/platform/capability-kit",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Neutral capability primitives shared by every Nebutra capability package.",
+      "topics": ["nebutra", "capability-kit", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tenant-store",
+      "repoName": "tenant-store",
+      "sourceDir": "packages/platform/tenant-store",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Lowest-layer multi-tenant storage primitives for per-tenant resource isolation.",
+      "topics": ["nebutra", "tenant-store", "multi-tenancy", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/trace-store",
+      "repoName": "trace-store",
+      "sourceDir": "packages/platform/trace-store",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Async trace emit layer for agent, tool, and LLM spans.",
+      "topics": ["nebutra", "trace-store", "observability", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/graph-model",
+      "repoName": "graph-model",
+      "sourceDir": "packages/platform/graph-model",
+      "cohort": "third-wave",
+      "category": "platform",
+      "description": "Neutral structural DAG contract with generic GraphNode and GraphEdge types.",
+      "topics": ["nebutra", "graph-model", "dag", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/contracts",
+      "repoName": "contracts",
+      "sourceDir": "packages/commerce/contracts",
+      "cohort": "third-wave",
+      "category": "commerce",
+      "description": "Canonical API, event, and domain contracts for Nebutra superstarter packages.",
+      "topics": ["nebutra", "contracts", "events", "api", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ai-primitives",
+      "repoName": "ai-primitives",
+      "sourceDir": "packages/ai/ai-primitives",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Zero-dependency AI primitives for deterministic hashing and numeric helpers.",
+      "topics": ["nebutra", "ai-primitives", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/local-embedding",
+      "repoName": "local-embedding",
+      "sourceDir": "packages/ai/local-embedding",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Deterministic zero-config local text embedding primitive for file and RAG indexes.",
+      "topics": ["nebutra", "embeddings", "local-embedding", "rag", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/content-store",
+      "repoName": "content-store",
+      "sourceDir": "packages/ai/content-store",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Tenant-scoped content file truth layer for knowledge and document pipelines.",
+      "topics": ["nebutra", "content-store", "storage", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/event-log",
+      "repoName": "event-log",
+      "sourceDir": "packages/ai/event-log",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Append-only event log primitives for agent and workflow observability.",
+      "topics": ["nebutra", "event-log", "observability", "ai", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/execution-policy",
+      "repoName": "execution-policy",
+      "sourceDir": "packages/ai/execution-policy",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Policy contracts for governed AI tool and code execution.",
+      "topics": ["nebutra", "execution-policy", "security", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/integration-vault",
+      "repoName": "integration-vault",
+      "sourceDir": "packages/integrations/integration-vault",
+      "cohort": "third-wave",
+      "category": "integrations",
+      "description": "Tenant-scoped SaaS OAuth and credential vault for tool calling.",
+      "topics": ["nebutra", "integration-vault", "oauth", "credentials", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/agent-runtime",
+      "repoName": "agent-runtime",
+      "sourceDir": "packages/ai/agent-runtime",
+      "cohort": "third-wave",
+      "category": "ai-runtime",
+      "description": "Multi-tenant agent-runtime grammar with thread, turn, and approval model.",
+      "topics": ["nebutra", "agent-runtime", "agents", "multi-tenant", "typescript"]
     }
   ]
 }

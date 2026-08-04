@@ -13,6 +13,7 @@
 // =============================================================================
 
 import { auditLogger } from "@nebutra/audit";
+import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import {
   getScheduledJob,
@@ -22,8 +23,8 @@ import {
 
 // Register the built-in jobs once on module load. `registerScheduledJob` is
 // idempotent (overwrites on re-register) so repeated cold-start invocations
-// are safe.
-registerDefaultScheduledJobs();
+// are safe. Host injects the private `@nebutra/db` surface — queue stays free of it.
+registerDefaultScheduledJobs({ getSystemDb });
 
 const BEARER_PREFIX = "Bearer ";
 
