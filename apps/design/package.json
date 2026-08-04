@@ -10,7 +10,8 @@
     "build": "next build --webpack",
     "start": "next start --port 3109",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
-    "clean": "rm -rf .next"
+    "clean": "rm -rf .next",
+    "audit:contrast": "node scripts/audit-rendered-contrast.mjs"
   },
   "dependencies": {
     "@nebutra/brand": "workspace:*",
